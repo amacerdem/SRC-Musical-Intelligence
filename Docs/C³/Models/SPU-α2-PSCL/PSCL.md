@@ -4,7 +4,7 @@
 **Unit**: SPU (Spectral Processing Unit)
 **Circuit**: Perceptual (Cortical Auditory)
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, PPC/TPC mechanism)
+**Version**: 2.1.0 (Phase 1 revision: deep literature cross-reference, 1→14 papers, Allen/Briley/Tabas/Schonwiesner cortical evidence, distributed vs focal qualification)
 **Date**: 2026-02-12
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
@@ -41,6 +41,18 @@ cortex (which handles tonotopy). Instead, it is computed in the
 anterolateral HG — a non-primary auditory area. This dissociation
 means pitch perception and frequency encoding are anatomically
 separate processes.
+
+IMPORTANT QUALIFICATION (Allen et al. 2022, 7T fMRI): The
+anterolateral HG "pitch center" is a critical node but NOT the
+sole locus of pitch processing. High-resolution 7T fMRI reveals
+pitch-tuned (F0-selective) voxels distributed throughout auditory
+cortex, with ~18% of pitch-only voxels OUTSIDE HG. Furthermore,
+"pitch sensitivity" (stronger response to higher salience, as in
+Penagos 2004) is distinct from "pitch selectivity" (tuning to
+specific F0 values, which is more broadly distributed). The PSCL
+model captures the convergent finding across 6+ methods (fMRI,
+MEG, EEG, ECoG, intracranial depth) that anterolateral HG is the
+primary cortical pitch salience hub.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -101,11 +113,26 @@ PSCL occupies the middle of the SPU hierarchy:
 ║                                                                              ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
-CRITICAL EVIDENCE:
-─────────────────
-Penagos 2004:  Pitch salience in anterolateral HG; NOT in subcortical
-               or primary AC. Matched temporal regularity controls.
-               n = 6, fMRI.
+CRITICAL EVIDENCE (6 methods converge on anterolateral HG):
+─────────────────────────────────────────────────────────────
+Penagos 2004:       fMRI, N=6. Pitch salience in anterolateral HG; NOT in
+                    subcortical or primary AC. Matched temporal regularity.
+                    Talairach: R(48,-11,3), L(-55,-5,3).
+Briley 2013:        EEG, N=15/12/8. Pitch chroma mapping in alHG. IRN sources
+                    7mm more lateral/anterior than pure-tone sources.
+                    F(1,28)=29.865, p<0.001 (chroma effect).
+Tabas 2019:         MEG, N=37. POR latency 36ms earlier for consonant than
+                    dissonant in alHG. p<.0001. Computational model matches.
+Allen 2022:         7T fMRI, N=10. Pitch-tuned voxels concentrated anterolateral
+                    to HG. Pitch selectivity ≠ pitch sensitivity.
+Schonwiesner 2008:  Intracranial, N=1. Double dissociation: lateral HG = pitch,
+                    medial HG = sound onset. Direct depth electrode evidence.
+Fishman 2001:       Intracranial, N=3(monkey)+2(human). Phase-locked activity
+                    in HG for dissonance. HG vs PT dissociation. F>8.5, p<10⁻⁵.
+Foo 2016:           ECoG, N=8. Dissonant-sensitive sites anterior in right STG.
+                    Chi²(1)=8.6, p=0.003 (spatial organization).
+Bravo 2017:         fMRI, N=12. Right HG (48,-10,7) upregulated for low-salience
+                    (ambiguous) stimuli. t=4.22, p=.033 FWE.
 ```
 
 ### 2.2 Information Flow Architecture (EAR → BRAIN → PPC/TPC → PSCL)
@@ -190,11 +217,22 @@ Penagos 2004:  Pitch salience in anterolateral HG; NOT in subcortical
 
 ### 3.1 Core Evidence Table
 
-| Study | Method | N | Key Finding | Effect Size | MI Relevance |
-|-------|--------|---|-------------|-------------|-------------|
-| **Penagos 2004** | fMRI | 6 | Pitch salience in anterolateral HG; NOT in subcortical or primary AC | Significant | **f01_salience + f02_hg_activation: cortical locus** |
-| **Penagos 2004** | fMRI | 6 | Graded activation: strong > weak > noise | Parametric | **f03_gradient: hierarchy confirmed** |
-| **Penagos 2004** | fMRI | 6 | Temporal regularity matched across conditions | Controlled | **f04_regularity: not a confound** |
+| # | Study | Method | N | Key Finding | Effect Size | MI Relevance |
+|---|-------|--------|---|-------------|-------------|-------------|
+| 1 | **Penagos et al. 2004** | fMRI 3T | 6 | Pitch salience in anterolateral HG; NOT in subcortical or primary AC | p<0.01 (Fisher's LSD), 9/10 hemispheres | **f01_salience + f02_hg_activation: cortical locus** |
+| 2 | **Penagos et al. 2004** | fMRI 3T | 6 | Graded: strong > weak > noise; Talairach R(48,-11,3) L(-55,-5,3) | p=0.013 (high-spec noise<weak); p=0.0001 (weak<strong) | **f03_gradient: hierarchy confirmed** |
+| 3 | **Allen et al. 2022** | 7T fMRI | 10 | Pitch-tuned (F0-selective) voxels concentrated outside/anterolateral HG; ~18% pitch-only voxels outside HG | Pure-tone/pitch CF: r=0.79; pitch outside>inside HG: p<0.01 | **Distributed pitch selectivity qualifies focal model** |
+| 4 | **Allen et al. 2022** | 7T fMRI | 10 | Pitch sensitivity ≠ pitch selectivity; ~30% tuned voxels show F0 tuning | No hemisphere asymmetry: p=0.58 | **Bilateral, distributed pitch architecture** |
+| 5 | **Briley et al. 2013** | EEG (32/64ch) | 15/12/8 | Pitch chroma mapping (helical) in alHG; chroma effect for IRN but NOT pure tones | F(1,28)=29.865, p<0.001; R²=92.7% (helical model, resolved) | **Pitch chroma builds on salience in same alHG region** |
+| 6 | **Briley et al. 2013** | EEG source | 8 | IRN sources 7mm lateral + anterior vs pure-tone sources in medial HG | Permutation: L p=0.024, R p=0.047 | **Anterolateral shift confirmed: primary → non-primary AC** |
+| 7 | **Tabas et al. 2019** | MEG | 37 | POR latency up to 36ms earlier for consonant than dissonant dyads in alHG | p<.0001 (latency); p<.0001 (amplitude) | **Salience speeds cortical processing in alHG** |
+| 8 | **Schonwiesner & Zatorre 2008** | Intracranial depth | 1 | Double dissociation: lateral HG = pitch onset, medial HG = sound onset | Direct intracranial; noise-to-IRN transition | **First depth-electrode confirmation of pitch center** |
+| 9 | **Fishman et al. 2001** | Intracortical (monkey) + intracranial (human) | 3+2 | Phase-locked activity in A1/HG correlates with dissonance; PT shows no phase-locking | F>8.5, p<0.00001; Spearman p<0.00001 | **HG vs PT functional dissociation for pitch** |
+| 10 | **Foo et al. 2016** | ECoG | 8 | Dissonant-sensitive sites anterior in right STG; high-gamma correlates with roughness | χ²(1)=8.6, p=0.003 (spatial); r=0.43 roughness | **Anterior-posterior gradient in STG extends alHG hierarchy** |
+| 11 | **Bravo et al. 2017** | fMRI 3T | 12 | Right HG upregulated for intermediate dissonance (low salience); PPI: HG→bilateral STG | t=4.22, z=3.19, p=.033 FWE; MNI(48,-10,7) | **Low salience → increased HG processing load** |
+| 12 | **Wöhrle et al. 2024** | MEG | 30 | Consonance/dissonance N1m modulation in auditory cortex; musical aptitude interaction | η²p=.101 (N1m CHORD3); η²p=.592 (perceptual) | **Pitch salience cortical encoding is experience-dependent** |
+| 13 | **Bidelman 2013** | Review (FFR) | Multiple | Brainstem neural pitch salience predicts consonance hierarchy; cortical N2 varies with consonance | Correlations significant across studies | **Subcortical pitch salience input to PSCL** |
+| 14 | **Samiee et al. 2022** | MEG | ~20+20 | Cross-frequency PAC in auditory cortex for pitch change detection; disrupted in amusia | Slow (2-4Hz) → IFG; beta (15-35Hz) ← motor | **Pitch processing network dynamics beyond alHG** |
 
 ### 3.2 The Salience Hierarchy
 
@@ -219,10 +257,47 @@ KEY: Anterolateral HG responds parametrically with pitch salience.
 ### 3.3 Effect Size Summary
 
 ```
-Evidence Type:     fMRI (direct neural localization)
-Quality:           α-tier (controlled paradigm, matched confounds)
-Replication:       Paradigm well-established (IRN stimuli)
-Specificity:       Anterolateral HG only — not subcortical, not primary AC
+MULTI-METHOD CONVERGENCE (6 independent methods):
+─────────────────────────────────────────────────────────────────
+Method          │ Papers   │ Total N  │ Key Effect Sizes
+────────────────┼──────────┼──────────┼──────────────────────────
+fMRI (3T)       │ 2        │ 18       │ p<.01 (Penagos); p=.033 FWE (Bravo)
+fMRI (7T)       │ 1        │ 10       │ r=0.79 (pitch CF); p<.01 (outside HG)
+MEG             │ 2        │ 67       │ p<.0001 (Tabas POR); η²p=.101 (Wöhrle)
+EEG             │ 1        │ 35       │ F(1,28)=29.865, p<.001 (chroma)
+ECoG            │ 1        │ 8        │ χ²=8.6, p=.003 (spatial)
+Intracranial    │ 2        │ 6        │ F>8.5, p<10⁻⁵ (Fishman); double
+                │          │          │ dissociation (Schonwiesner)
+
+CONVERGENT FINDING:
+  Anterolateral HG is the primary cortical pitch salience hub.
+  Confirmed by fMRI, MEG, EEG, ECoG, intracranial depth electrodes.
+  Bilateral processing (no significant lateralization: Allen p=0.58).
+
+IMPORTANT QUALIFICATION (Allen et al. 2022):
+┌─────────────────────────────────────────────────────────────────┐
+│ "Pitch sensitivity" (Penagos 2004 — graded response to pitch   │
+│ salience) is DISTINCT from "pitch selectivity" (Allen 2022 —   │
+│ tuning to specific F0 values). Selectivity is broadly           │
+│ distributed (~18% pitch-only voxels outside HG). The PSCL      │
+│ model targets sensitivity (salience magnitude in alHG), not    │
+│ selectivity. The model retains α-tier because the convergent    │
+│ evidence across 6 methods is overwhelming for the salience      │
+│ claim; the distributed selectivity finding adds nuance but does │
+│ not contradict the focal salience finding.                       │
+└─────────────────────────────────────────────────────────────────┘
+
+COORDINATE CONVERGENCE (Talairach):
+  Penagos 2004:  R(48,-11,3)   L(-55,-5,3)    — fMRI
+  Briley 2013:   R(43,-6,18)   L(-49,-21,17)  — EEG source
+  Bravo 2017:    MNI(48,-10,7) — fMRI (right HG only)
+  Note: 5-15mm spread across studies reflects method variance
+        (fMRI vs EEG dipole), individual anatomy, and stimuli.
+
+Quality:           α-tier (multi-method convergence, matched confounds)
+Replication:       6+ independent labs, 3+ paradigms (IRN, dyads, chords)
+Specificity:       Anterolateral HG (non-primary AC), not subcortical
+                   or primary AC (which is tonotopic only)
 ```
 
 ---
@@ -432,11 +507,26 @@ f04 = σ(mean(R³.x_l0l5[25:33]) · mean(TPC.spectral_envelope[0:10]))
 
 ### 8.1 Pipeline Validated Regions
 
-| Region | MNI Coordinates | Mentions | Evidence Type | PSCL Function |
-|--------|-----------------|----------|---------------|---------------|
-| **Anterolateral Heschl's Gyrus** | ±52, -16, 8 | 2+ | Direct (fMRI) | Pitch salience representation |
-| **Non-primary AC** | ±50, -18, 6 | 3 | Direct (fMRI) | Pitch processing |
-| **Primary AC** | ±42, -22, 10 | 2 | Control (no effect) | Tonotopy only (not salience) |
+| Region | Coordinates | Space | Source | Evidence Type | PSCL Function |
+|--------|-------------|-------|--------|---------------|---------------|
+| **Anterolateral HG (R)** | 48, -11, 3 | Talairach | Penagos 2004 (fMRI) | Direct | Pitch salience representation |
+| **Anterolateral HG (L)** | -55, -5, 3 | Talairach | Penagos 2004 (fMRI) | Direct | Pitch salience representation |
+| **Anterolateral HG (R)** | 43, -6, 18 | Talairach | Briley 2013 (EEG source) | Direct | Pitch chroma source (IRN) |
+| **Anterolateral HG (L)** | -49, -21, 17 | Talairach | Briley 2013 (EEG source) | Direct | Pitch chroma source (IRN) |
+| **Right HG** | 48, -10, 7 | MNI | Bravo 2017 (fMRI) | Direct | Low-salience upregulation |
+| **Right HG** | 48, -19, 10 | MNI | Bravo 2017 (fMRI) | Baseline | All-sound activation |
+| **Left HG** | -36, -28, 7 | MNI | Bravo 2017 (fMRI) | Baseline | All-sound activation |
+| **Anterolateral HG** | (bilateral, dipole) | Talairach | Tabas 2019 (MEG) | Direct | POR generator for consonance |
+| **Lateral HG** | (anatomical) | — | Schonwiesner 2008 (depth) | Direct | Pitch onset (double dissociation) |
+| **Medial HG** | (anatomical) | — | Schonwiesner 2008 (depth) | Control | Sound onset only (NOT pitch) |
+| **Heschl's Gyrus (R)** | (depth electrode) | — | Fishman 2001 (intracranial) | Direct | Phase-locked consonance/dissonance |
+| **Planum Temporale** | (depth electrode) | — | Fishman 2001 (intracranial) | Control | NO phase-locking (dissociation) |
+| **Right STG (anterior)** | (ECoG grid) | MNI | Foo 2016 (ECoG) | Direct | Dissonant-sensitive, anterior gradient |
+| **Bilateral STG** | L(-51,-16,4) R(60,-7,1) | MNI | Bravo 2017 (PPI) | Connectivity | HG→STG during low-salience |
+| **Primary AC (medial HG, R)** | 44, -13, 13 | Talairach | Briley 2013 (EEG source) | Control | Pure-tone tonotopy only |
+| **Primary AC (medial HG, L)** | -42, -19, 16 | Talairach | Briley 2013 (EEG source) | Control | Pure-tone tonotopy only |
+
+> **Note**: Anterolateral HG coordinates vary 5-15mm across studies due to method variance (fMRI BOLD vs EEG dipole vs MEG), individual anatomy, and stimuli (IRN vs harmonic complexes). All converge on the same anatomical region: anterolateral end of Heschl's gyrus, at the boundary with non-primary auditory cortex.
 
 ---
 
@@ -610,19 +700,43 @@ class PSCL(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 1 | Penagos 2004 |
-| **Evidence Modality** | fMRI | Direct neural localization |
+| **Papers** | 14 | Multi-method convergence (see Section 3.1) |
+| **Evidence Modalities** | fMRI (3T+7T), MEG, EEG, ECoG, intracranial depth | 6 independent methods |
+| **Total N** | ~190+ | Across all studies |
 | **Falsification Tests** | 2/4 confirmed | High validity |
 | **R³ Features Used** | 27D of 49D | Focused on salience |
 | **H³ Demand** | 14 tuples (0.61%) | Sparse, efficient |
 | **Mechanisms** | PPC (primary) + TPC (secondary) | Dual mechanism |
 | **Output Dimensions** | **12D** | 4-layer structure |
+| **Key Qualification** | Pitch sensitivity (focal, alHG) ≠ pitch selectivity (distributed) | Allen et al. 2022 |
+| **Coordinate Convergence** | alHG bilateral, 5-15mm spread across methods | Penagos/Briley/Bravo |
 
 ---
 
 ## 13. Scientific References
 
+### Primary (Pitch Salience Cortical Localization)
+
 1. **Penagos, H., Melcher, J. R., & Oxenham, A. J. (2004)**. A neural representation of pitch salience in nonprimary human auditory cortex revealed with functional magnetic resonance imaging. *Journal of Neuroscience*, 24(30), 6810-6815.
+2. **Allen, E. J., Mesik, J., Kay, K. N., & Oxenham, A. J. (2022)**. Distinct representations of tonotopy and pitch in human auditory cortex. *Journal of Neuroscience*, 42(3), 416-434.
+3. **Briley, P. M., Breakey, C., & Krumbholz, K. (2013)**. Evidence for pitch chroma mapping in human auditory cortex. *Cerebral Cortex*, 23(11), 2601-2610.
+4. **Schonwiesner, M., & Zatorre, R. J. (2008)**. Depth electrode recordings show double dissociation between pitch processing in lateral Heschl's gyrus and sound onset processing in medial Heschl's gyrus. *Experimental Brain Research*, 187, 97-105.
+5. **Norman-Haignere, S., Kanwisher, N., & McDermott, J. H. (2013)**. Cortical pitch regions in humans respond primarily to resolved harmonics and are located in specific tonotopic regions of anterior auditory cortex. *Journal of Neuroscience*, 33(50), 19451-19469.
+
+### Supporting (Consonance/Dissonance Cortical Processing)
+
+6. **Tabas, A., Andermann, M., Schuberth, V., Riedel, H., Balaguer-Ballester, E., & Rupp, A. (2019)**. Modeling and MEG evidence of early consonance processing in auditory cortex. *PLoS Computational Biology*, 15(2), e1006820.
+7. **Fishman, Y. I., Volkov, I. O., Noh, M. D., Garell, P. C., Bakken, H., Arezzo, J. C., Howard, M. A., & Steinschneider, M. (2001)**. Consonance and dissonance of musical chords: Neural correlates in auditory cortex of monkeys and humans. *Journal of Neurophysiology*, 86, 2761-2788.
+8. **Foo, F., King-Stephens, D., Weber, P., Laxer, K., Parvizi, J., & Knight, R. T. (2016)**. Differential processing of consonance and dissonance within the human superior temporal gyrus. *Frontiers in Human Neuroscience*, 10, 154.
+9. **Bravo, F., Cross, I., Stamatakis, E. A., & Rohrmeier, M. (2017)**. Sensory cortical response to uncertainty and low salience during recognition of affective cues in musical intervals. *PLoS ONE*, 12(4), e0175991.
+
+### Contextual (Broader Pitch/Auditory Cortex)
+
+10. **Wöhrle, S. D., Reuter, C., Rupp, A., & Andermann, M. (2024)**. Neuromagnetic representation of musical roundness in chord progressions. *Frontiers in Neuroscience*, 18, 1383554.
+11. **Bidelman, G. M. (2013)**. The role of the auditory brainstem in processing musically relevant pitch. *Frontiers in Psychology*, 4, 264.
+12. **Bidelman, G. M., & Heinz, M. G. (2011)**. Auditory-nerve responses predict pitch attributes related to musical consonance-dissonance for normal and impaired hearing. *Journal of the Acoustical Society of America*, 130(3), 1488-1502.
+13. **Samiee, S., Vuvan, D., Florin, E., Albouy, P., Peretz, I., & Baillet, S. (2022)**. Cross-frequency brain network dynamics support pitch change detection. *Journal of Neuroscience*, 42(18), 3823-3835.
+14. **Alluri, V., Toiviainen, P., Jääskeläinen, I. P., Glerean, E., Sams, M., & Brattico, E. (2012)**. Large-scale brain networks emerge from dynamic processing of musical timbre, key and rhythm. *NeuroImage*, 59, 3677-3689.
 
 ---
 
