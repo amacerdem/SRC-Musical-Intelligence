@@ -1,6 +1,6 @@
 # C³ Model Index
 
-**Total**: 94 models across 9 cognitive units
+**Total**: 96 models across 9 cognitive units (48 Core + 48 Experimental)
 **Version**: 2.0.0 (MI naming: R³/H³/C³)
 **Date**: 2026-02-12
 
@@ -22,14 +22,15 @@
 | **ASU** | Auditory Salience | Salience (aInsula, dACC, TPJ) | 9 | α3 β3 γ3 |
 | **NDU** | Novelty Detection | Salience + Perceptual (aInsula, IFG) | 9 | α3 β3 γ3 |
 | **MPU** | Motor Planning | Sensorimotor (SMA, PMC, Cerebellum) | 10 | α3 β4 γ3 |
-| **PCU** | Predictive Coding | Imagery (AC, IFG, STS, Hipp.) | 9 | α3 β3 γ3 |
-| **RPU** | Reward Processing | Mesolimbic (NAcc, VTA, vmPFC) | 9 | α3 β3 γ3 |
-| | | **Total** | **94** | α27 β38 γ29 |
+| **PCU** | Predictive Coding | Imagery (AC, IFG, STS, Hipp.) | 10 | α3 β4 γ3 |
+| **RPU** | Reward Processing | Mesolimbic (NAcc, VTA, vmPFC) | 10 | α3 β4 γ3 |
+| | | **Total** | **96** | α27 β40 γ29 |
 
 ### Validation Status
 
 - **Core-4** (SPU, STU, IMU, ARU): k ≥ 10 studies, pooled effect sizes validated
 - **Experimental-5** (ASU, NDU, MPU, PCU, RPU): k < 10 studies, under validation
+- **Symmetry**: Core-4 = 48 models, Experimental-5 = 48 models
 
 ---
 
@@ -172,6 +173,7 @@
 | [PCU-β1-PWUP](PCU-β1-PWUP/PWUP.md) | PWUP | Precision-Weighted Uncertainty Processing | β | — |
 | [PCU-β2-WMED](PCU-β2-WMED/WMED.md) | WMED | Working Memory-Entrainment Dissociation | β | — |
 | [PCU-β3-UDP](PCU-β3-UDP/UDP.md) | UDP | Uncertainty-Driven Pleasure | β | — |
+| [PCU-β4-CHPI](PCU-β4-CHPI/CHPI.md) | CHPI | Cross-Modal Harmonic Predictive Integration | β | 11D |
 | [PCU-γ1-IGFE](PCU-γ1-IGFE/IGFE.md) | IGFE | Individual Gamma Frequency Enhancement | γ | — |
 | [PCU-γ2-MAA](PCU-γ2-MAA/MAA.md) | MAA | Multifactorial Atonal Appreciation | γ | — |
 | [PCU-γ3-PSH](PCU-γ3-PSH/PSH.md) | PSH | Prediction Silencing Hypothesis | γ | — |
@@ -189,6 +191,7 @@
 | [RPU-β1-IUCP](RPU-β1-IUCP/IUCP.md) | IUCP | Inverted-U Complexity Preference | β | — |
 | [RPU-β2-MCCN](RPU-β2-MCCN/MCCN.md) | MCCN | Musical Chills Cortical Network | β | — |
 | [RPU-β3-MEAMR](RPU-β3-MEAMR/MEAMR.md) | MEAMR | Music-Evoked Autobiographical Memory Reward | β | — |
+| [RPU-β4-SSRI](RPU-β4-SSRI/SSRI.md) | SSRI | Social Synchrony Reward Integration | β | 11D |
 | [RPU-γ1-LDAC](RPU-γ1-LDAC/LDAC.md) | LDAC | Liking-Dependent Auditory Cortex | γ | — |
 | [RPU-γ2-IOTMS](RPU-γ2-IOTMS/IOTMS.md) | IOTMS | Individual Opioid Tone Music Sensitivity | γ | — |
 | [RPU-γ3-SSPS](RPU-γ3-SSPS/SSPS.md) | SSPS | Saddle-Shaped Preference Surface | γ | — |
@@ -224,4 +227,6 @@
 | `Library/Auditory/C⁰/Models/MPU-*.md` | `C³/Models/MPU-*/` | 10 | v2.0.0 |
 | `Library/Auditory/C⁰/Models/PCU-*.md` | `C³/Models/PCU-*/` | 9 | v2.0.0 |
 | `Library/Auditory/C⁰/Models/RPU-*.md` | `C³/Models/RPU-*/` | 9 | v2.0.0 |
-| | | **94** | **All migrated** |
+| `Docs/C³/Models/PCU-β4-CHPI/` | `C³/Models/PCU-β4-CHPI/` | 1 | v2.0.0 (new) |
+| `Docs/C³/Models/RPU-β4-SSRI/` | `C³/Models/RPU-β4-SSRI/` | 1 | v2.0.0 (new) |
+| | | **96** | **All migrated + 2 new** |
