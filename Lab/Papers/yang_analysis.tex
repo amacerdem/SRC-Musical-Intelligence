@@ -1,0 +1,459 @@
+% ════════════════════════════════════════════════════════════════════════
+% Yang — SRP Model Analysis Report
+% Musical Intelligence (MI) System
+% Generated: February 2026
+% ════════════════════════════════════════════════════════════════════════
+\documentclass[11pt]{article}
+
+% ─── PACKAGES ─────────────────────────────────────────────────────────
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{times}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage{colortbl}
+\usepackage{array}
+
+% ─── FORMATTING ───────────────────────────────────────────────────────
+\hypersetup{colorlinks=true, linkcolor=blue!60!black, citecolor=blue!60!black, urlcolor=blue!60!black}
+\setlength{\parindent}{0em}
+\setlength{\parskip}{0.6em}
+\setlist{nosep,leftmargin=1.5em}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textit{Yang --- SRP Analysis Report}}
+\fancyhead[R]{\small\textit{Musical Intelligence}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ─── CUSTOM ──────────────────────────────────────────────────────────
+\definecolor{wanting}{HTML}{FF7043}
+\definecolor{liking}{HTML}{66BB6A}
+\definecolor{pleasure}{HTML}{FFD54F}
+\definecolor{tension}{HTML}{EF5350}
+\definecolor{caudate}{HTML}{4FC3F7}
+\definecolor{nacc}{HTML}{AB47BC}
+\definecolor{lightbg}{HTML}{F5F5F5}
+
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+
+% ════════════════════════════════════════════════════════════════════════
+\begin{document}
+
+% ─── TITLE ───────────────────────────────────────────────────────────
+\begin{center}
+{\LARGE\bfseries SRP Model Analysis Report}\\[0.3em]
+{\Large\bfseries ``Yang''}\\[1em]
+{\large Musical Intelligence (MI) System --- Striatal Reward Pathway Model}\\[0.5em]
+{\normalsize S\textsuperscript{3} Spectral Sound Space}\\[1.5em]
+{\small Analysis Date: February 2026 \quad|\quad Duration: 544.3 seconds (9:04) \quad|\quad Frames: 93{,}766 @ 172.27 Hz}
+\end{center}
+
+\vspace{1em}
+\hrule height 0.5pt
+\vspace{1em}
+
+% ─── SECTION 1: WHAT THIS REPORT IS ─────────────────────────────────
+\section{About This Report}
+
+This report presents the output of the \textbf{Striatal Reward Pathway (SRP)} model applied to the piece ``Yang.'' The SRP is a \textbf{deterministic, zero-parameter} computational model that simulates aspects of the brain's reward circuitry in response to audio input. It contains no learned weights and no subjective judgments---every number reported here is a direct, reproducible output of the model.
+
+The SRP produces a \textbf{19-dimensional} output vector at each time frame (172.27 frames per second), modeling:
+\begin{itemize}
+    \item \textbf{Dopaminergic signals}: caudate dopamine, nucleus accumbens dopamine, VTA drive, opioid proxy
+    \item \textbf{Reward states}: wanting (anticipatory), liking (consummatory), pleasure (combined)
+    \item \textbf{Musical tension}: harmonic tension, dynamic intensity, overall tension
+    \item \textbf{Prediction}: prediction error, prediction match
+    \item \textbf{Affective response}: reaction, appraisal, chills proximity, peak detection
+    \item \textbf{Planning}: reward forecast, resolution expectation
+\end{itemize}
+
+The model's equations are grounded in neuroscience literature (Salimpoor et al.\ 2011; Berridge \& Robinson 2003; Howe et al.\ 2013). See the companion paper for full derivations.
+
+\textbf{Important caveat}: The SRP is a mathematical model, not a brain scanner. It computes what the reward pathway \emph{would} do based on psychoacoustic features. Individual listeners will vary.
+
+% ─── SECTION 2: GLOBAL SUMMARY ──────────────────────────────────────
+\section{Global Summary}
+
+\begin{table}[H]
+\centering
+\caption{Yang --- 19D SRP Global Statistics}
+\label{tab:global}
+\small
+\begin{tabular}{l R{1.3cm} R{1.3cm} R{1.3cm} R{1.3cm} R{1.8cm} R{1.8cm}}
+\toprule
+\textbf{Dimension} & \textbf{Mean} & \textbf{Std} & \textbf{Min} & \textbf{Max} & \textbf{Peak (s)} & \textbf{Trough (s)} \\
+\midrule
+\rowcolor{wanting!15} wanting & 0.361 & 0.034 & 0.167 & 0.526 & 128.5 & 132.1 \\
+\rowcolor{liking!15} liking & 0.387 & 0.028 & 0.267 & 0.565 & 131.1 & 374.4 \\
+\rowcolor{pleasure!15} pleasure & 0.747 & 0.042 & 0.524 & 0.984 & 131.1 & 132.1 \\
+\midrule
+\rowcolor{caudate!10} da\_caudate & 0.508 & 0.047 & 0.235 & 0.740 & 128.5 & 132.1 \\
+\rowcolor{nacc!10} da\_nacc & 0.460 & 0.033 & 0.318 & 0.673 & 131.1 & 374.4 \\
+opioid\_proxy & 0.536 & 0.042 & 0.390 & 0.625 & 363.3 & 509.3 \\
+vta\_drive & 0.484 & 0.028 & 0.331 & 0.637 & 128.5 & 132.1 \\
+stg\_nacc\_coupling & 0.435 & 0.195 & 0.029 & 0.899 & 131.1 & 374.0 \\
+\midrule
+\rowcolor{tension!10} tension & 0.476 & 0.052 & 0.320 & 0.777 & 131.1 & 312.6 \\
+harmonic\_tension & 0.448 & 0.106 & 0.009 & 1.000 & 131.1 & 89.2 \\
+dynamic\_intensity & 0.378 & 0.081 & 0.211 & 0.872 & 131.8 & 512.0 \\
+\midrule
+prediction\_error & $-$0.008 & 0.460 & $-$1.000 & 1.000 & 544.3 & 416.7 \\
+prediction\_match & $-$0.580 & 0.043 & $-$0.716 & $-$0.435 & 313.2 & 98.3 \\
+reaction & 0.592 & 0.086 & 0.459 & 0.731 & 89.4 & 383.7 \\
+appraisal & 0.571 & 0.005 & 0.542 & 0.592 & 87.5 & 131.6 \\
+peak\_detection & 0.481 & 0.040 & 0.363 & 0.718 & 131.2 & 496.7 \\
+reward\_forecast & 0.465 & 0.038 & 0.253 & 0.653 & 128.5 & 132.1 \\
+chills\_proximity & 0.482 & 0.033 & 0.360 & 0.715 & 131.1 & 544.2 \\
+resolution\_expect & 0.581 & 0.034 & 0.457 & 0.780 & 131.1 & 374.2 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Key Observations from Global Statistics}
+
+\begin{enumerate}
+    \item \textbf{Pleasure is sustained and high}: Mean pleasure = 0.747 with low standard deviation (0.042), indicating the model finds consistent reward value throughout the piece. The range is narrow (0.524--0.984), never dropping to low values.
+
+    \item \textbf{Wanting and liking are moderate}: Mean wanting = 0.361, mean liking = 0.387. Both are below 0.5, suggesting the piece generates reward through \emph{sustained engagement} rather than intense peaks.
+
+    \item \textbf{Opioid proxy is notably high}: At 0.536, this is the highest opioid proxy value the model has produced across all tested pieces (see Section~\ref{sec:comparison}). The opioid proxy models the endogenous opioid system associated with consummatory pleasure.
+
+    \item \textbf{Dynamic intensity is low}: At 0.378, this is the lowest across all tested pieces, reflecting a piece that operates within a relatively narrow dynamic band---the model detects minimal loudness contrast.
+
+    \item \textbf{Appraisal is remarkably stable}: Standard deviation of only 0.005 across 544 seconds. The model's cognitive evaluation of the piece barely fluctuates.
+
+    \item \textbf{Prediction match is consistently negative} ($-$0.580): The model finds the piece persistently unpredictable. The negative mean indicates that the audio consistently deviates from what the temporal context would predict.
+\end{enumerate}
+
+% ─── SECTION 3: REWARD CORE ─────────────────────────────────────────
+\section{Reward Core: Wanting, Liking, and Pleasure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{yang_reward_core.png}
+    \caption{Temporal trajectories of the three reward dimensions. Dashed lines indicate global means. The wanting signal (top, orange) shows anticipatory reward, peaking at 128.5s. The liking signal (middle, green) shows consummatory reward, peaking 2.6 seconds later at 131.1s. Pleasure (bottom, gold) combines both pathways.}
+    \label{fig:reward}
+\end{figure}
+
+\subsection{Wanting--Liking Temporal Dissociation}
+
+A central prediction of the SRP model (following Berridge \& Robinson, 2003) is that \textbf{wanting} (anticipatory dopamine in caudate) should peak \emph{before} \textbf{liking} (consummatory dopamine in nucleus accumbens). This temporal lag reflects the brain's prediction-then-reward sequence.
+
+\begin{table}[H]
+\centering
+\caption{Wanting--Liking Peak Analysis}
+\begin{tabular}{l c c c}
+\toprule
+& \textbf{Peak Time} & \textbf{Peak Value} & \textbf{DA Source} \\
+\midrule
+\textcolor{wanting}{\textbf{Wanting}} & 128.5s & 0.526 & DA Caudate = 0.740 \\
+\textcolor{liking}{\textbf{Liking}} & 131.1s & 0.565 & DA NAcc = 0.673 \\
+\textcolor{pleasure}{\textbf{Pleasure}} & 131.1s & 0.984 & Combined \\
+\midrule
+\textbf{Temporal Lag} & \multicolumn{3}{c}{\textbf{2.6 seconds} (wanting $\rightarrow$ liking)} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The 2.6-second lag falls within the Salimpoor et al.\ (2011) criterion of 2--30 seconds, indicating that the model detects a valid anticipation-then-reward sequence in Yang. The global pleasure maximum (0.984) occurs at the moment of liking peak, suggesting that the most rewarding moment in the piece occurs when anticipation is fulfilled.
+
+\subsection{Pleasure Peak Analysis}
+
+\begin{table}[H]
+\centering
+\caption{Top 10 Pleasure Peaks}
+\label{tab:peaks}
+\small
+\begin{tabular}{c R{1.4cm} R{1.4cm} R{1.4cm} R{1.4cm} R{1.4cm}}
+\toprule
+\textbf{Rank} & \textbf{Time (s)} & \textbf{Pleasure} & \textbf{Wanting} & \textbf{Liking} & \textbf{Tension} \\
+\midrule
+1 & 131.1 & 0.984 & 0.419 & 0.565 & 0.777 \\
+2 & 128.5 & 0.975 & 0.522 & 0.453 & 0.574 \\
+3 & 126.5 & 0.939 & 0.507 & 0.431 & 0.561 \\
+4 & 85.2 & 0.925 & 0.477 & 0.448 & 0.555 \\
+5 & 87.5 & 0.921 & 0.475 & 0.446 & 0.535 \\
+6 & 122.8 & 0.916 & 0.466 & 0.451 & 0.698 \\
+7 & 348.9 & 0.909 & 0.432 & 0.477 & 0.537 \\
+8 & 78.9 & 0.907 & 0.471 & 0.436 & 0.598 \\
+9 & 81.6 & 0.901 & 0.443 & 0.458 & 0.652 \\
+10 & 346.5 & 0.893 & 0.477 & 0.416 & 0.609 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The pleasure peaks cluster in two temporal regions:
+\begin{itemize}
+    \item \textbf{Region A (78--131s)}: 8 of the top 10 peaks. This is the primary reward zone.
+    \item \textbf{Region B (346--349s)}: 2 peaks. A secondary reward zone in the second half.
+\end{itemize}
+
+Note that the highest pleasure (0.984 at 131.1s) coincides with the highest tension (0.777), highest harmonic tension (1.000), and highest liking (0.565). The model indicates that the most rewarding moment occurs at a point of maximum musical tension.
+
+% ─── SECTION 4: DOPAMINERGIC PROFILE ────────────────────────────────
+\section{Dopaminergic Profile}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{yang_dopamine.png}
+    \caption{Four dopaminergic dimensions over time. DA Caudate (anticipatory) and DA NAcc (consummatory) show distinct temporal profiles. The opioid proxy, modeling endogenous opioid release, remains elevated throughout. VTA drive tracks overall midbrain activation.}
+    \label{fig:dopamine}
+\end{figure}
+
+\subsection{DA Caudate vs.\ DA NAcc}
+
+The correlation between caudate and NAcc dopamine is \textbf{r = $-$0.075}, indicating that these two pathways operate nearly independently in Yang. This weak negative correlation means that when anticipatory dopamine rises, consummatory dopamine slightly decreases, and vice versa. This is consistent with the wanting/liking dissociation theory.
+
+\subsection{Opioid Proxy}
+
+The opioid proxy dimension models the endogenous opioid system, which mediates the ``liking'' component of hedonic experience. Key findings:
+\begin{itemize}
+    \item Mean = 0.536 (range: 0.390--0.625)
+    \item Peak at 363.3s (deep into the second half of the piece)
+    \item Trough at 509.3s (near the end)
+    \item Correlation with pleasure: r = +0.057 (nearly independent)
+\end{itemize}
+
+The opioid proxy peaking in the second half, separate from the dopaminergic pleasure peaks in the first half, suggests a two-phase reward structure: dopamine-driven anticipatory pleasure early on, opioid-mediated consummatory satisfaction later.
+
+% ─── SECTION 5: TENSION & HARMONIC PROFILE ──────────────────────────
+\section{Tension and Harmonic Profile}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{yang_tension.png}
+    \caption{Tension (overall), harmonic tension, and dynamic intensity over time. Harmonic tension shows wide fluctuations (std=0.106) while dynamic intensity remains relatively low (mean=0.378). Overall tension strongly tracks harmonic tension (r=+0.921).}
+    \label{fig:tension}
+\end{figure}
+
+\subsection{Harmonic Tension Trajectory}
+
+\begin{table}[H]
+\centering
+\caption{Harmonic Tension by 60-Second Windows}
+\small
+\begin{tabular}{l R{1.3cm} R{1.3cm} R{1.3cm} R{1.3cm}}
+\toprule
+\textbf{Time Window} & \textbf{Mean} & \textbf{Std} & \textbf{Min} & \textbf{Max} \\
+\midrule
+0--60s & 0.444 & 0.091 & 0.063 & 0.997 \\
+60--120s & 0.449 & 0.125 & 0.009 & 1.000 \\
+120--180s & 0.444 & 0.116 & 0.014 & 1.000 \\
+180--240s & 0.448 & 0.103 & 0.073 & 0.986 \\
+240--300s & 0.434 & 0.082 & 0.177 & 0.789 \\
+300--360s & 0.439 & 0.104 & 0.010 & 1.000 \\
+360--420s & 0.457 & 0.120 & 0.053 & 0.994 \\
+420--480s & 0.441 & 0.094 & 0.162 & 0.888 \\
+480--540s & 0.468 & 0.103 & 0.138 & 0.874 \\
+540--544s & 0.562 & 0.095 & 0.317 & 0.813 \\
+\midrule
+\textbf{Overall} & \textbf{0.448} & \textbf{0.106} & \textbf{0.009} & \textbf{1.000} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The harmonic tension shows a \textbf{gradually rising trajectory} toward the end of the piece (0.444 $\rightarrow$ 0.562), with the final segment showing the highest mean. Notably:
+\begin{itemize}
+    \item The model detects that harmonic tension spans the full range (0.009--1.000) in the 60--180s region
+    \item The 240--300s window shows the \emph{narrowest} range (0.177--0.789), suggesting a period of relative harmonic stability
+    \item The piece ends with elevated harmonic tension (0.562), meaning the model does not detect a conventional harmonic resolution
+\end{itemize}
+
+\subsection{Dynamic Intensity}
+
+Dynamic intensity (mean = 0.378) is low throughout, indicating that the model finds the piece to operate in a \emph{contained dynamic range}. The peak (0.872 at 131.8s) coincides with the primary reward zone, but outside this region, dynamics remain subdued. This is consistent with contemporary compositional approaches that derive expressivity from timbral and harmonic variation rather than loudness contrast.
+
+% ─── SECTION 6: CROSS-CORRELATIONS ──────────────────────────────────
+\section{Cross-Dimensional Relationships}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{yang_correlations.png}
+    \caption{Correlation matrix across 16 key SRP dimensions. Strong positive correlations (red) between da\_caudate/wanting (r=1.00) and da\_nacc/liking (r=1.00) are by construction. The strongest \emph{non-trivial} correlation is harmonic\_tension $\times$ tension (r=+0.92).}
+    \label{fig:corr}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Key Cross-Dimensional Correlations}
+\begin{tabular}{l l R{1.5cm} l}
+\toprule
+\textbf{Dimension A} & \textbf{Dimension B} & \textbf{Pearson r} & \textbf{Interpretation} \\
+\midrule
+harmonic\_tension & tension & +0.921 & Very strong positive \\
+peak\_detection & chills\_proximity & +0.719 & Strong positive \\
+wanting & pleasure & +0.752 & Strong positive \\
+liking & pleasure & +0.601 & Moderate positive \\
+harmonic\_tension & pleasure & +0.344 & Moderate positive \\
+prediction\_error & tension & +0.103 & Weak positive \\
+wanting & liking & $-$0.075 & Near zero (dissociated) \\
+dynamic\_intensity & pleasure & $-$0.081 & Near zero \\
+opioid\_proxy & pleasure & +0.057 & Near zero \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Notable Relationships}
+
+\begin{enumerate}
+    \item \textbf{Harmonic tension dominates overall tension} (r=+0.921): In Yang, the model's tension output is almost entirely driven by harmonic content, not dynamics. This means the piece's tension profile is \emph{harmonically constructed}.
+
+    \item \textbf{Wanting and liking are dissociated} (r=$-$0.075): The anticipatory and consummatory reward pathways are nearly independent. This is a key neuroscientific feature---the piece activates these two systems at different times for different reasons.
+
+    \item \textbf{Wanting correlates more strongly with pleasure than liking does} (0.752 vs.\ 0.601): The model indicates that in Yang, anticipatory engagement contributes more to overall pleasure than consummatory satisfaction. The piece is \emph{driven by expectation}.
+
+    \item \textbf{Dynamic intensity is decoupled from pleasure} (r=$-$0.081): Loudness changes do not predict reward in this piece. Pleasure comes from harmonic and temporal structure, not from dynamic contrast.
+
+    \item \textbf{Opioid proxy is independent of pleasure} (r=+0.057): The endogenous opioid pathway operates on its own temporal trajectory, suggesting a separate layer of hedonic response.
+\end{enumerate}
+
+% ─── SECTION 7: WANTING-LIKING SCATTER ──────────────────────────────
+\section{Wanting--Liking Dissociation Detail}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{yang_scatter.png}
+    \caption{Scatter plot of wanting vs.\ liking, colored by pleasure (magma colormap). Each dot is one time frame (downsampled to 3{,}000 points). The spread pattern with no clear diagonal trend confirms that wanting and liking are dissociated (r=$-$0.075). High-pleasure moments (bright yellow) appear at various wanting--liking combinations.}
+    \label{fig:scatter}
+\end{figure}
+
+The scatter plot reveals that high pleasure (bright yellow points) occurs both when wanting is high/liking is moderate (upper-left region) and when liking is high/wanting is moderate (lower-right region). This confirms the two-pathway nature of reward in this piece.
+
+% ─── SECTION 8: PHASE ANALYSIS ──────────────────────────────────────
+\section{Temporal Phase Analysis}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{yang_phases.png}
+    \caption{Mean values of 7 key dimensions compared across three temporal phases (thirds). The darkest bars represent the opening, medium the middle, and lightest the closing phase.}
+    \label{fig:phases}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Phase Analysis --- Mean Values by Temporal Third}
+\small
+\begin{tabular}{l R{1.8cm} R{1.8cm} R{1.8cm} R{2cm}}
+\toprule
+\textbf{Dimension} & \textbf{Opening} \newline (0--181s) & \textbf{Middle} \newline (181--363s) & \textbf{Closing} \newline (363--544s) & \textbf{Trajectory} \\
+\midrule
+\textcolor{wanting}{\textbf{wanting}} & 0.369 & 0.356 & 0.358 & Slight decline \\
+\textcolor{liking}{\textbf{liking}} & 0.388 & 0.393 & 0.378 & Rise then fall \\
+\textcolor{pleasure}{\textbf{pleasure}} & 0.756 & 0.750 & 0.736 & Gradual decline \\
+\textcolor{tension}{\textbf{tension}} & 0.477 & 0.472 & 0.479 & Stable \\
+harmonic\_tension & 0.446 & 0.441 & 0.458 & Gradual rise \\
+opioid\_proxy & 0.541 & 0.525 & 0.542 & U-curve \\
+dynamic\_intensity & 0.400 & 0.382 & 0.354 & Steady decline \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Phase Trajectory Summary}
+
+\begin{enumerate}
+    \item \textbf{Opening (0--181s)}: Highest wanting (0.369), highest dynamic intensity (0.400), highest pleasure (0.756). The model finds the opening the most dynamically active and anticipation-driven.
+
+    \item \textbf{Middle (181--363s)}: Highest liking (0.393), lowest opioid proxy (0.525), lowest tension (0.472). The middle section shows the most consummatory reward and the least tension---a relative plateau.
+
+    \item \textbf{Closing (363--544s)}: Highest harmonic tension (0.458), highest overall tension (0.479), lowest pleasure (0.736), lowest dynamic intensity (0.354). The model detects increasing harmonic tension with decreasing dynamics toward the end---the piece becomes more harmonically tense while growing quieter.
+\end{enumerate}
+
+The overall arc according to the model: the piece opens with the most active reward-seeking and dynamic activity, settles into a consummatory plateau in the middle, and closes with rising harmonic tension against fading dynamics---\textbf{the model detects no conventional resolution}.
+
+% ─── SECTION 9: COMPARISON WITH OTHER PIECES ────────────────────────
+\section{Comparison with Other Analyzed Pieces}
+\label{sec:comparison}
+
+The SRP model has been applied to six pieces. Yang's profile can be compared:
+
+\begin{table}[H]
+\centering
+\caption{Cross-Piece Comparison (Global Means)}
+\small
+\begin{tabular}{l R{1cm} R{1cm} R{1cm} R{1cm} R{1cm} R{1cm} R{1.2cm}}
+\toprule
+\textbf{Piece} & \textbf{Dur.} & \textbf{Want.} & \textbf{Like.} & \textbf{Pleas.} & \textbf{Opioid} & \textbf{Dyn.I.} & \textbf{W$\rightarrow$L Lag} \\
+\midrule
+Swan Lake & 183s & 0.362 & 0.386 & 0.748 & 0.502 & 0.413 & 14.5s \\
+Duel of the Fates & 177s & 0.387 & 0.393 & 0.780 & 0.472 & 0.505 & 98.9s \\
+Herald of the Change & 301s & 0.376 & 0.381 & 0.757 & 0.499 & 0.445 & 56.3s \\
+Bach Cello Suite & 152s & 0.377 & 0.380 & 0.757 & 0.485 & 0.436 & 2.2s \\
+Beethoven Path\'{e}tique & 498s & 0.369 & 0.395 & 0.764 & 0.512 & 0.430 & $-$302.7s \\
+\rowcolor{pleasure!20} \textbf{Yang} & \textbf{544s} & \textbf{0.361} & \textbf{0.387} & \textbf{0.747} & \textbf{0.536} & \textbf{0.378} & \textbf{2.6s} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Where Yang Stands}
+
+\begin{itemize}
+    \item \textbf{Highest opioid proxy} (0.536): Yang generates the strongest endogenous opioid signal of all tested pieces. The model interprets the piece as providing sustained, deep hedonic satisfaction.
+
+    \item \textbf{Lowest dynamic intensity} (0.378): Yang operates in the narrowest dynamic range. Expressivity is derived from other parameters.
+
+    \item \textbf{Lowest wanting} (0.361): The model finds the lowest anticipatory drive among all pieces, suggesting the piece does not rely on setting up and fulfilling conventional musical expectations.
+
+    \item \textbf{Valid wanting$\rightarrow$liking lag} (2.6s): Despite low wanting amplitude, the temporal ordering is correct and falls within the neuroscientific criterion (2--30s from Salimpoor et al., 2011).
+
+    \item \textbf{Longest duration} (544s): Yang is the longest piece analyzed, yet maintains consistent reward values throughout (low standard deviations across all dimensions).
+\end{itemize}
+
+% ─── SECTION 10: SRP OVERVIEW ────────────────────────────────────────
+\section{Full SRP Visualization}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Yang_srp.png}
+    \caption{Complete 6-panel SRP visualization for Yang. Top to bottom: (1) Wanting/Liking/Pleasure, (2) DA Caudate/DA NAcc, (3) Tension/Harmonic Tension/Dynamic Intensity, (4) Prediction Error/Prediction Match, (5) Peak Detection/Chills Proximity, (6) Reward Forecast/Resolution Expectation.}
+    \label{fig:full}
+\end{figure}
+
+% ─── SECTION 11: TECHNICAL NOTES ────────────────────────────────────
+\section{Technical Notes}
+
+\subsection{Model Pipeline}
+\begin{enumerate}
+    \item \textbf{Cochlea}: Audio (44.1 kHz) $\rightarrow$ 128-band log-mel spectrogram
+    \item \textbf{R\textsuperscript{3} Spectral} (49D): Consonance (7D), Energy (5D), Timbre (9D), Change (4D), Interactions (24D)
+    \item \textbf{H\textsuperscript{3} Temporal} (2304D): 32 horizons (5.8ms--981s) $\times$ 24 morphs $\times$ 3 temporal laws
+    \item \textbf{Mechanisms} (90D): AED (Affective Entrainment, 30D), CPD (Chills/Peak Detection, 30D), C0P (Cognitive Projection, 30D)
+    \item \textbf{SRP} (19D): Striatal reward pathway simulation using equations from neuroscience
+\end{enumerate}
+
+\subsection{Key Equations}
+The SRP wanting and liking are computed as:
+\begin{align}
+    \text{anticipation} &= \sigma\!\Big(0.5\,(E_{\text{future},15\text{s}} - E_{\text{current}}) + 0.5\,(E_{\text{future},5\text{s}} - E_{\text{current}})\Big) \\
+    \text{DA}_{\text{caudate}} &= 0.6 \cdot \text{anticipation} + 0.3 \cdot \text{cpd}_{\text{climax}} + 0.1 \cdot \text{aed}_{\text{expect}} \\
+    \text{DA}_{\text{NAcc}} &= 0.6 \cdot \text{c0p}_{\text{cognitive}} + 0.3 \cdot \text{cpd}_{\text{release}} + 0.1 \cdot \text{aed}_{\text{arousal}} \\
+    \text{wanting} &= \min(1,\; \beta_{\text{Caudate}} \cdot \text{DA}_{\text{caudate}}), \quad \beta_{\text{Caudate}} = 0.71 \\
+    \text{liking} &= \min(1,\; \beta_{\text{NAcc}} \cdot \text{DA}_{\text{NAcc}}), \quad \beta_{\text{NAcc}} = 0.84
+\end{align}
+where $\beta$ coefficients are from Salimpoor et al.\ (2011, Nature Neuroscience).
+
+\subsection{Reproducibility}
+This analysis is fully deterministic and reproducible. The same audio file processed through the same MI pipeline will produce identical results. No random seeds, no stochastic components, no learned parameters.
+
+\vspace{2em}
+\hrule height 0.5pt
+\vspace{0.5em}
+\begin{center}
+\small\textit{Generated by Musical Intelligence (MI) --- S\textsuperscript{3} Spectral Sound Space}\\
+\small\textit{Zero learned parameters. Deterministic. Reproducible.}
+\end{center}
+
+\end{document}

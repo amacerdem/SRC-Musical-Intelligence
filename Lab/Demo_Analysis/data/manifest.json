@@ -1,0 +1,98 @@
+{
+  "pieces": [
+    {
+      "id": "swan-lake",
+      "title": "Swan Lake Suite, Op. 20a: I. Scene",
+      "composer": "Pyotr Ilyich Tchaikovsky",
+      "genre": "Classical Orchestral",
+      "genre_tr": "Klasik Orkestra",
+      "duration_s": 182.596,
+      "data_file": "swan-lake.mi.bin",
+      "audio_file": "swan-lake.mp3",
+      "description": "Where the brain's reward system comes alive",
+      "description_tr": "Beynin od\u00fcl sisteminin canlandi\u011fi yer"
+    }
+  ],
+  "format": {
+    "magic": "MI01",
+    "version": 1,
+    "dims": 307,
+    "layout": {
+      "cochlea": [
+        0,
+        128
+      ],
+      "r3": [
+        128,
+        177
+      ],
+      "brain": [
+        177,
+        203
+      ],
+      "l3": [
+        203,
+        307
+      ]
+    },
+    "brain_pathways": {
+      "shared": [
+        177,
+        181
+      ],
+      "reward": [
+        181,
+        190
+      ],
+      "affect": [
+        190,
+        196
+      ],
+      "autonomic": [
+        196,
+        201
+      ],
+      "integration": [
+        201,
+        203
+      ]
+    },
+    "l3_groups": {
+      "alpha": [
+        203,
+        209
+      ],
+      "beta": [
+        209,
+        223
+      ],
+      "gamma": [
+        223,
+        236
+      ],
+      "delta": [
+        236,
+        248
+      ],
+      "epsilon": [
+        248,
+        267
+      ],
+      "zeta": [
+        267,
+        279
+      ],
+      "eta": [
+        279,
+        291
+      ],
+      "theta": [
+        291,
+        307
+      ]
+    }
+  },
+  "frame_rate": 172.265625,
+  "sample_rate": 44100,
+  "hop_length": 256
+}

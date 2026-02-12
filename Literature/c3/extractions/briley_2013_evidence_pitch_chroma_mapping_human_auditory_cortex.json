@@ -1,0 +1,431 @@
+{
+  "metadata": {
+    "paper_id": "briley_2013_evidence_pitch_chroma_mapping_human_auditory_cortex",
+    "title": "Evidence for Pitch Chroma Mapping in Human Auditory Cortex",
+    "authors": [
+      "Paul M. Briley",
+      "Charlotte Breakey",
+      "Katrin Krumbholz"
+    ],
+    "year": 2013,
+    "journal": "Cerebral Cortex",
+    "doi": "10.1093/cercor/bhs242",
+    "schema_version": "3.0",
+    "extraction_run_id": "v3.0-window-2-041",
+    "extraction_date": "2025-01-25T21:00:00Z",
+    "tooling": {
+      "extractor": "cursor-ai-claude",
+      "model": "claude-3.5-sonnet",
+      "registry_version": "R3_Schema_v2"
+    },
+    "paper_type": "original_research",
+    "note": "Original EEG study using adaptation paradigm to investigate pitch representation in human auditory cortex. Examines whether pitch is represented by physical dimension (repetition rate) or perceptual dimensions (pitch height and pitch chroma). Uses iterated rippled noise (IRN) and pure tone stimuli."
+  },
+  "claims": [
+    {
+      "claim_id": "briley_2013.C01",
+      "claim_text": "The probe response size for IRN stimuli was related nonmonotonically to the pitch separation between adapter and probe, with the response size for the 1-octave pitch separation being significantly smaller than the average response size for the 0.5- and 1.5-octave pitch separations (main effect of chroma: F(1,28)=29.865, p<0.001), suggesting that adaptation for IRN stimuli is influenced by pitch chroma",
+      "relation_type": "effect",
+      "causal_strength": "strong",
+      "evidence_level": "EEG",
+      "independent_variable": {
+        "name": "Pitch separation between adapter and probe (pitch chroma)",
+        "r3_axis": "r3:L5.pitch_hz",
+        "levels": ["0.5_octave", "1_octave", "1.5_octave"],
+        "values": null,
+        "unit": "octaves"
+      },
+      "dependent_variable": {
+        "name": "Probe response size (N1-P2 peak-to-peak difference)",
+        "r3_axis": "r3:UNMAPPED",
+        "axis_proposal": {
+          "suggested_id": "r3:X56.adaptation_probe_response",
+          "definition": "EEG probe response size measured as N1-P2 peak-to-peak difference, reflecting adaptation effect and neural representation similarity between adapter and probe stimuli",
+          "expected_range": [0.0, 50.0],
+          "unit": "microvolts",
+          "psychoacoustic_basis": "Adaptation paradigm: adapter stimulus produces temporary reduction in sensitivity of responsive neurons. Strongly adapted probe response indicates adapter and probe represented by same or similar groups of neurons. Smaller probe response indicates stronger adaptation and greater representational similarity."
+        },
+        "levels": ["strong_adaptation", "weak_adaptation"],
+        "values": null,
+        "unit": "microvolts"
+      },
+      "statistics": {
+        "reported": true,
+        "test_type": "linear_mixed_model",
+        "f_value": "F(1,28)=29.865, p<0.001",
+        "p_value": "<0.001",
+        "post_hoc": null,
+        "effect_size": null,
+        "note": "Nonmonotonic adaptation function for IRN stimuli with dip at 1-octave separation. Response size for 1-octave separation significantly smaller than average for 0.5- and 1.5-octave separations. Effect similar for resolved and unresolved IRN conditions (chroma by resolvability interaction: F(1,27)=0.026, p=0.874), ruling out harmonic overlap confound."
+      },
+      "brain_regions": [
+        {
+          "region": "Anterolateral Heschl's gyrus (nonprimary auditory cortex)",
+          "brodmann_area": "BA41|BA42",
+          "mni_coordinates": "Talairach coordinates: unresolved IRN [left/right]: -49.1, -21.2, 17.2/42.9, -5.5, 17.6 mm (anterior and lateral to pure-tone sources)",
+          "hemisphere": "bilateral",
+          "evidence_type": "EEG_source_localization",
+          "context": "Source analysis (Experiment 3) indicated IRN responses located somewhat anterior and lateral to pure-tone responses, suggesting nonprimary auditory cortex. Pure-tone responses centered on medial Heschl's gyrus (primary auditory cortex, TE1.0)."
+        }
+      ],
+      "methodology": {
+        "techniques": ["EEG", "adaptation_paradigm", "source_localization"],
+        "task": "Each trial: adapter stimulus (1500 ms) followed immediately by probe stimulus (250 ms). Adapter and probe were either pure tones or iterated rippled noise (IRN). Pitch separations: 0.5, 1, and 1.5 octaves. Participants watched subtitled movie to remain alert.",
+        "control_conditions": "Within-subjects design. IRN conditions: resolved (harmonics resolved by cochlear filters) vs unresolved (harmonics unresolved). Pure-tone condition for comparison. Adapter frequencies both above and below probe frequency used.",
+        "sample_size": 15,
+        "participant_characteristics": "Experiment 1: 15 participants (7 males, mean age 23.5±4.9 years). 6 completed IRN session only, 5 pure-tone session only, 4 completed both. Hearing thresholds ≤20 dB HL at 250-4000 Hz. No audiological or neurological disease.",
+        "analysis_details": "EEG recorded from 32 electrodes (10-20 system). Data preprocessed: lowpass-filtered at 35 Hz, down-sampled to 250 Hz, re-referenced to average reference, segmented into 2350-ms epochs, baseline-corrected. Source analysis using BESA with 2 equivalent current dipoles at centroids of primary area TE1.0 in left and right hemispheres."
+      }
+    },
+    {
+      "claim_id": "briley_2013.C02",
+      "claim_text": "The size of the responses to pure-tone probes increased monotonically with increasing pitch separation from the adapter (main effect of pitch separation: F(1,17)=19.548, p<0.001), suggesting that pure-tone responses were produced by different generators than IRN responses",
+      "relation_type": "effect",
+      "causal_strength": "strong",
+      "evidence_level": "EEG",
+      "independent_variable": {
+        "name": "Pitch separation between adapter and probe (frequency separation)",
+        "r3_axis": "r3:L5.pitch_hz",
+        "levels": ["0.5_octave", "1_octave", "1.5_octave"],
+        "values": null,
+        "unit": "octaves"
+      },
+      "dependent_variable": {
+        "name": "Probe response size (N1-P2 peak-to-peak difference)",
+        "r3_axis": "r3:UNMAPPED",
+        "axis_proposal": {
+          "suggested_id": "r3:X57.frequency_separation_adaptation",
+          "definition": "EEG probe response size for pure-tone stimuli, measured as N1-P2 peak-to-peak difference, reflecting frequency-selective adaptation in primary auditory cortex",
+          "expected_range": [0.0, 50.0],
+          "unit": "microvolts",
+          "psychoacoustic_basis": "Pure-tone responses reflect frequency-selective adaptation in primary auditory cortex. Monotonic increase with frequency separation suggests tonotopic representation with logarithmic frequency gradient."
+        },
+        "levels": ["low_separation", "high_separation"],
+        "values": null,
+        "unit": "microvolts"
+      },
+      "statistics": {
+        "reported": true,
+        "test_type": "linear_mixed_model",
+        "f_value": "F(1,17)=19.548, p<0.001",
+        "p_value": "<0.001",
+        "post_hoc": null,
+        "effect_size": null,
+        "note": "Monotonic increase in pure-tone probe response size with increasing frequency separation. Amount of increase similar between 0.5- and 1-octave separations and between 1- and 1.5-octave separations (normality of residuals confirmed). Pure-tone responses occurred at much shorter latencies than IRN responses (101 vs 147 ms on average), suggesting lower processing level."
+      },
+      "brain_regions": [
+        {
+          "region": "Medial Heschl's gyrus (primary auditory cortex, TE1.0)",
+          "brodmann_area": "BA41",
+          "mni_coordinates": "Talairach coordinates [left/right]: -41.9, -18.8, 15.8/44.2, -13.4, 13.4 mm",
+          "hemisphere": "bilateral",
+          "evidence_type": "EEG_source_localization",
+          "context": "Source analysis (Experiment 3) indicated pure-tone responses centered on medial Heschl's gyrus, close to centroid of primary area TE1.0, suggesting primary auditory cortex with tonotopic representation."
+        }
+      ],
+      "methodology": {
+        "techniques": ["EEG", "adaptation_paradigm", "source_localization"],
+        "task": "Same as C01. Pure-tone condition: adapter and probe were pure tones differing in frequency. Pitch separations: 0.5, 1, and 1.5 octaves.",
+        "control_conditions": "Within-subjects design. Pure-tone condition compared to IRN conditions. Adapter frequencies both above and below probe frequency used.",
+        "sample_size": 15,
+        "participant_characteristics": "Same as C01",
+        "analysis_details": "Same as C01. Pure-tone probe responses averaged across frequency difference direction (adapter above vs below probe) as no interaction found."
+      }
+    },
+    {
+      "claim_id": "briley_2013.C03",
+      "claim_text": "The difference in probe response size between the 1-octave and half-octave pitch separations was similar for the resolved and unresolved IRN conditions (chroma by resolvability interaction: F(1,27)=0.026, p=0.874), and the pitch chroma effect was found in both the N1 (F(1,28)=5.273, p=0.029) and P2 (F(1,28)=20.983, p<0.001) deflections",
+      "relation_type": "effect",
+      "causal_strength": "strong",
+      "evidence_level": "EEG",
+      "independent_variable": {
+        "name": "Harmonic resolvability (resolved vs unresolved IRN)",
+        "r3_axis": null,
+        "levels": ["resolved", "unresolved"],
+        "values": null,
+        "unit": "categorical"
+      },
+      "dependent_variable": {
+        "name": "Pitch chroma effect (difference between 1-octave and half-octave separations)",
+        "r3_axis": "r3:UNMAPPED",
+        "axis_proposal": {
+          "suggested_id": "r3:X58.pitch_chroma_effect_independence",
+          "definition": "Pitch chroma effect measured as difference in probe response size between 1-octave and half-octave pitch separations, independent of harmonic resolvability",
+          "expected_range": [-50.0, 50.0],
+          "unit": "microvolts",
+          "psychoacoustic_basis": "Pitch chroma effect independent of harmonic resolvability rules out confound of spectral overlap. Unresolved harmonics produce uniform activity distribution across tonotopic array, so pitch chroma effect must reflect pitch-selective neurons rather than frequency-selective neurons."
+        },
+        "levels": ["small_effect", "large_effect"],
+        "values": null,
+        "unit": "microvolts"
+      },
+      "statistics": {
+        "reported": true,
+        "test_type": "linear_mixed_model",
+        "f_value": "Chroma by resolvability interaction: F(1,27)=0.026, p=0.874; N1 chroma effect: F(1,28)=5.273, p=0.029; P2 chroma effect: F(1,28)=20.983, p<0.001",
+        "p_value": "Chroma by resolvability: p=0.874 (n.s.); N1: p=0.029; P2: p<0.001",
+        "post_hoc": null,
+        "effect_size": null,
+        "note": "Pitch chroma effect independent of harmonic resolvability for both N1 and P2 (chroma by resolvability interactions: N1: F(1,27)=0.285, p=0.598; P2: F(1,27)=0.086, p=0.771). This rules out confound that 1-octave separated notes have greater spectral overlap (they share every other harmonic) than half-octave separated notes."
+      },
+      "brain_regions": [
+        {
+          "region": "Anterolateral Heschl's gyrus (nonprimary auditory cortex)",
+          "brodmann_area": "BA41|BA42",
+          "mni_coordinates": "Talairach coordinates: unresolved IRN [left/right]: -49.1, -21.2, 17.2/42.9, -5.5, 17.6 mm",
+          "hemisphere": "bilateral",
+          "evidence_type": "EEG_source_localization",
+          "context": "Same as C01. Pitch chroma effect found in both resolved and unresolved IRN conditions, suggesting pitch-selective neurons in nonprimary auditory cortex."
+        }
+      ],
+      "methodology": {
+        "techniques": ["EEG", "adaptation_paradigm"],
+        "task": "Same as C01. IRN stimuli bandpass-filtered between 800 Hz and 3.2 kHz. Resolved adapters: repetition rates above probe (higher rates resolved within at least half of passband). Unresolved adapters: repetition rates below probe (unresolved over practically entire band).",
+        "control_conditions": "Within-subjects design. Resolved vs unresolved IRN conditions. Resolved harmonics produce peaks in tonotopic map, unresolved harmonics produce uniform activity distribution.",
+        "sample_size": 15,
+        "participant_characteristics": "Same as C01",
+        "analysis_details": "Same as C01. Separate analyses of N1 and P2 peaks to examine pitch chroma effect in each component."
+      }
+    },
+    {
+      "claim_id": "briley_2013.C04",
+      "claim_text": "The source of the IRN responses was located somewhat anterior and lateral to the source of the pure-tone responses, with significant differences in dipole locations (Euclidean distance: left hemisphere P=0.024, right hemisphere P=0.047) and orientations (central angle: left P<0.001, right P=0.040), suggesting that IRN responses were generated in nonprimary auditory cortex",
+      "relation_type": "effect",
+      "causal_strength": "strong",
+      "evidence_level": "EEG",
+      "independent_variable": {
+        "name": "Stimulus type (IRN vs pure tone)",
+        "r3_axis": null,
+        "levels": ["pure_tone", "IRN"],
+        "values": null,
+        "unit": "categorical"
+      },
+      "dependent_variable": {
+        "name": "Dipole source location (Talairach coordinates)",
+        "r3_axis": null,
+        "levels": ["medial_HG", "anterolateral_HG"],
+        "values": null,
+        "unit": "millimeters"
+      },
+      "statistics": {
+        "reported": true,
+        "test_type": "permutation_test",
+        "f_value": null,
+        "p_value": "Euclidean distance: left P=0.024, right P=0.047; Central angle: left P<0.001, right P=0.040",
+        "post_hoc": null,
+        "effect_size": null,
+        "note": "IRN dipoles located 7.2 mm more lateral in left hemisphere and 7.9 mm more anterior in right hemisphere compared to pure-tone dipoles. Both differences significant (left: P<0.001, right: P=0.026). Dipole orientations also significantly different, with IRN dipoles more forward pointing (sagittal: left P=0.014, right P=0.016; transversal: left P=0.013, right P=0.037)."
+      },
+      "brain_regions": [
+        {
+          "region": "Medial Heschl's gyrus (primary auditory cortex, TE1.0)",
+          "brodmann_area": "BA41",
+          "mni_coordinates": "Talairach coordinates [left/right]: -41.9, -18.8, 15.8/44.2, -13.4, 13.4 mm",
+          "hemisphere": "bilateral",
+          "evidence_type": "EEG_source_localization",
+          "context": "Pure-tone responses: centered on medial Heschl's gyrus, close to centroid of primary area TE1.0."
+        },
+        {
+          "region": "Anterolateral Heschl's gyrus (nonprimary auditory cortex)",
+          "brodmann_area": "BA41|BA42",
+          "mni_coordinates": "Talairach coordinates: unresolved IRN [left/right]: -49.1, -21.2, 17.2/42.9, -5.5, 17.6 mm",
+          "hemisphere": "bilateral",
+          "evidence_type": "EEG_source_localization",
+          "context": "IRN responses: located anterior and lateral to pure-tone responses, suggesting nonprimary auditory cortex network specifically sensitive to pitch or pitch change (melody)."
+        }
+      ],
+      "methodology": {
+        "techniques": ["EEG", "source_localization", "dipole_modeling"],
+        "task": "Experiment 3: source localization with 64 electrodes (extended 10-20 system). Only largest pitch separation (1.5 octaves) used to maximize response-to-noise ratio. 6 blocks: 2 for unresolved IRN, 2 for resolved IRN, 2 for pure tones.",
+        "control_conditions": "Within-subjects design. IRN vs pure-tone conditions. Resolved vs unresolved IRN conditions.",
+        "sample_size": 8,
+        "participant_characteristics": "Experiment 3: 8 participants (3 male, age 22.0±2.0 years). Screened for large EEG responses (vertex N1 amplitudes ≥7 μV). Hearing thresholds ≤20 dB HL.",
+        "analysis_details": "Source model: 2 equivalent current dipoles unconstrained in both location and orientation. Fitted to voltage maps over 40-ms time window around N1 peak. Goodness of fit ≥98%. Dipole locations and orientations submitted to permutation procedure (1000 resamples) to test for differences between conditions."
+      }
+    }
+  ],
+  "c3_associations": [
+    {
+      "unit": "SPU",
+      "process": "Pitch chroma mapping in human auditory cortex, with nonmonotonic adaptation functions for IRN stimuli showing selectivity for pitch chroma (cyclical dimension of pitch) independent of harmonic resolvability",
+      "confidence": 0.95,
+      "supported_claim_ids": [
+        "briley_2013.C01",
+        "briley_2013.C03",
+        "briley_2013.C04"
+      ],
+      "brain_regions": [
+        {
+          "region": "Anterolateral Heschl's gyrus (nonprimary auditory cortex)",
+          "role": "Pitch chroma representation, with neurons selective for pitch chroma independent of pitch height",
+          "evidence_type": "EEG_source_localization"
+        }
+      ],
+      "r3_layers": ["L5"],
+      "r3_dimensions": [
+        "r3:L5.pitch_hz"
+      ],
+      "evidence": "Probe response size for IRN stimuli nonmonotonically related to pitch separation, with dip at 1-octave separation (same pitch chroma) compared to 0.5- and 1.5-octave separations (different pitch chroma). Effect independent of harmonic resolvability, ruling out spectral overlap confound. Source localization indicates IRN responses in anterolateral Heschl's gyrus (nonprimary auditory cortex), anterior and lateral to pure-tone responses in primary auditory cortex.",
+      "evidence_source": "direct_measurement"
+    },
+    {
+      "unit": "PCU",
+      "process": "Predictive coding of pitch representation, with adaptation paradigm revealing neural representation similarity between adapter and probe stimuli, suggesting pitch chroma selectivity in nonprimary auditory cortex",
+      "confidence": 0.80,
+      "supported_claim_ids": [
+        "briley_2013.C01",
+        "briley_2013.C03"
+      ],
+      "brain_regions": [
+        {
+          "region": "Anterolateral Heschl's gyrus (nonprimary auditory cortex)",
+          "role": "Pitch-selective neurons showing adaptation based on pitch chroma similarity",
+          "evidence_type": "EEG_source_localization"
+        }
+      ],
+      "r3_layers": ["L5"],
+      "r3_dimensions": [
+        "r3:L5.pitch_hz"
+      ],
+      "evidence": "Adaptation paradigm: adapter stimulus produces temporary reduction in sensitivity of responsive neurons. Strongly adapted probe response indicates adapter and probe represented by same or similar groups of neurons. Nonmonotonic adaptation function for IRN stimuli with dip at 1-octave separation suggests pitch chroma selectivity. Effect found in both N1 and P2 deflections.",
+      "evidence_source": "direct_measurement"
+    }
+  ],
+  "r3_coordinates": {
+    "primary_axes": [
+      {
+        "axis_id": "r3:L5.pitch_hz",
+        "values": [125, 500],
+        "unit": "Hz",
+        "role": "IV",
+        "note": "Probe repetition rate (IRN) or frequency (pure tones): nominal values 125 or 500 Hz. Exact values varied within one-third-octave range around nominal value. Pitch separations: 0.5, 1, and 1.5 octaves between adapter and probe."
+      }
+    ],
+    "derived_coordinates": [],
+    "note": "Pitch chroma is cyclical dimension of pitch (cycle of notes within each octave: C, D, E, etc.). Pitch height is monotonic dimension (octave within which note resides). Study examines whether pitch represented by physical dimension (repetition rate) or perceptual dimensions (pitch height and pitch chroma). IRN stimuli: bandpass-filtered 800-3200 Hz. Adapter duration 1500 ms, probe duration 250 ms."
+  },
+  "brain_regions_summary": {
+    "regions_mentioned": [
+      {
+        "region": "Medial Heschl's gyrus (primary auditory cortex, TE1.0)",
+        "full_name": "Medial Heschl's gyrus (primary auditory cortex, TE1.0, BA41)",
+        "mentions": [
+          {
+            "claim_id": "briley_2013.C02",
+            "context": "Pure-tone responses centered on medial Heschl's gyrus, close to centroid of primary area TE1.0, suggesting primary auditory cortex with tonotopic representation",
+            "evidence_type": "EEG_source_localization"
+          },
+          {
+            "claim_id": "briley_2013.C04",
+            "context": "Pure-tone responses: centered on medial Heschl's gyrus, close to centroid of primary area TE1.0",
+            "evidence_type": "EEG_source_localization"
+          }
+        ],
+        "total_mentions": 2
+      },
+      {
+        "region": "Anterolateral Heschl's gyrus (nonprimary auditory cortex)",
+        "full_name": "Anterolateral Heschl's gyrus (nonprimary auditory cortex, BA41/BA42)",
+        "mentions": [
+          {
+            "claim_id": "briley_2013.C01",
+            "context": "Source analysis indicated IRN responses located somewhat anterior and lateral to pure-tone responses, suggesting nonprimary auditory cortex",
+            "evidence_type": "EEG_source_localization"
+          },
+          {
+            "claim_id": "briley_2013.C03",
+            "context": "Pitch chroma effect found in both resolved and unresolved IRN conditions, suggesting pitch-selective neurons in nonprimary auditory cortex",
+            "evidence_type": "EEG_source_localization"
+          },
+          {
+            "claim_id": "briley_2013.C04",
+            "context": "IRN responses: located anterior and lateral to pure-tone responses, suggesting nonprimary auditory cortex network specifically sensitive to pitch or pitch change",
+            "evidence_type": "EEG_source_localization"
+          },
+          {
+            "c3_association": "SPU",
+            "context": "Pitch chroma representation, with neurons selective for pitch chroma independent of pitch height",
+            "evidence_type": "EEG_source_localization"
+          },
+          {
+            "c3_association": "PCU",
+            "context": "Pitch-selective neurons showing adaptation based on pitch chroma similarity",
+            "evidence_type": "EEG_source_localization"
+          }
+        ],
+        "total_mentions": 5
+      }
+    ],
+    "total_unique_regions": 2,
+    "evidence_types": {
+      "EEG_source_localization": 7,
+      "direct_measurement": 7
+    },
+    "note": "All brain regions identified through EEG source localization using BESA with 2 equivalent current dipoles. Pure-tone responses: medial Heschl's gyrus (primary auditory cortex, TE1.0). IRN responses: anterolateral Heschl's gyrus (nonprimary auditory cortex). Talairach coordinates provided for both conditions. Significant differences in dipole locations and orientations between conditions (permutation tests)."
+  },
+  "validation": {
+    "r3_registry_checked": true,
+    "registry_version": "R3_Schema_v2",
+    "registry_check_date": "2025-01-25T21:00:00Z",
+    "unmapped_axes_count": 3,
+    "unmapped_axes": [
+      {
+        "claim_id": "briley_2013.C01",
+        "variable": "dependent_variable",
+        "axis_proposal": {
+          "suggested_id": "r3:X56.adaptation_probe_response",
+          "status": "proposed"
+        }
+      },
+      {
+        "claim_id": "briley_2013.C02",
+        "variable": "dependent_variable",
+        "axis_proposal": {
+          "suggested_id": "r3:X57.frequency_separation_adaptation",
+          "status": "proposed"
+        }
+      },
+      {
+        "claim_id": "briley_2013.C03",
+        "variable": "dependent_variable",
+        "axis_proposal": {
+          "suggested_id": "r3:X58.pitch_chroma_effect_independence",
+          "status": "proposed"
+        }
+      }
+    ],
+    "c3_unit_validation": {
+      "all_units_valid": true,
+      "units_checked": ["SPU", "PCU"],
+      "invalid_units": []
+    },
+    "claim_id_format_validation": {
+      "all_valid": true,
+      "format": "paper_id.C##"
+    },
+    "schema_compliance": {
+      "version": "3.0",
+      "compliant": true,
+      "warnings": [
+        "3 DV r3_axis unmapped (axis_proposal provided for all)",
+        "EEG source localization with Talairach coordinates (not MNI, but acceptable)",
+        "Pitch chroma is cyclical dimension (not directly mappable to linear R³ axes)",
+        "Adaptation paradigm measures representational similarity (indirect measure)"
+      ],
+      "errors": []
+    },
+    "data_quality": {
+      "statistics_structured": true,
+      "effect_sizes_present": 0,
+      "effect_sizes_missing": 4,
+      "sample_characteristics_complete": true,
+      "r3_coordinates_complete": true,
+      "brain_regions_collected": true,
+      "brain_regions_count": 2,
+      "brain_regions_with_context": 2,
+      "roi_mentions": 0,
+      "note": "Original EEG study with 15 participants (Experiment 1), 12 participants (Experiment 2), 8 participants (Experiment 3). All statistics reported (linear mixed models, permutation tests, p-values, F-values). Brain regions identified through EEG source localization (Talairach coordinates). R³ coordinates mapped for L5.pitch_hz (probe repetition rates: 125, 500 Hz). Pitch chroma is cyclical dimension, not directly mappable to linear R³ axes, but pitch height (octave) could map to L5.pitch_hz."
+    }
+  }
+}
+

@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Test / Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Large binary files
+Test-Audio/
+Literature/c3/papers/
+Lab/Experiments/
+Lab/Demo_Analysis/data/*.bin
+
+# Misc
+*.log
+.env

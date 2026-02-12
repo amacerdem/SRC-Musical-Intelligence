@@ -1,0 +1,550 @@
+# ASU-β1-BARM: Beat Ability Regulatory Model
+
+**Model**: Beat Ability Regulatory Model
+**Unit**: ASU (Auditory Salience Unit)
+**Circuit**: Salience (Anterior Insula, dACC, TPJ)
+**Tier**: β (Bridging) — 70-90% confidence
+**Version**: 2.0.0 (MI naming, R³/H³ demand, ASA+BEP mechanisms)
+**Date**: 2026-02-12
+
+> **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
+> **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
+> **Legacy**: Replaces `Library/Auditory/C⁰/Models/ASU-β1-BARM.md` (v1.0.0, S⁰/HC⁰ naming).
+
+---
+
+## 1. What Does This Model Simulate?
+
+The **Beat Ability Regulatory Model** (BARM) describes how individual differences in beat perception ability (BAT) modulate perceptual regularization tendencies. Low BAT individuals show stronger regularization effects and benefit more from sensorimotor synchronization (tapping), while high BAT individuals show more veridical perception.
+
+```
+BEAT ABILITY REGULATORY MODEL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+                     ┌─────────────────┐
+                     │  Beat Ability   │
+                     │    (BAT)        │
+                     └────────┬────────┘
+                              │
+         ┌────────────────────┴────────────────────┐
+         │                                         │
+         ▼                                         ▼
+    LOW BAT                                   HIGH BAT
+         │                                         │
+         ▼                                         ▼
+  ┌─────────────────┐                     ┌─────────────────┐
+  │ Strong          │                     │ Minimal         │
+  │ Regularization  │                     │ Regularization  │
+  │ Effect          │                     │ Effect          │
+  └────────┬────────┘                     └────────┬────────┘
+           │                                       │
+           │  + Sensorimotor                       │
+           │    Synchronization                    │
+           ▼                                       ▼
+  ┌─────────────────┐                     ┌─────────────────┐
+  │ Regularization↓ │                     │   Consistent    │
+  │ (Benefit from   │                     │   Performance   │
+  │  movement)      │                     │   (No change)   │
+  └─────────────────┘                     └─────────────────┘
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+KEY INSIGHT: Low BAT individuals benefit MOST from tapping.
+Individual differences in beat perception ability modulate both
+regularization and the benefit of sensorimotor synchronization.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+### 1.1 Why BARM Matters for ASU
+
+BARM bridges individual differences into salience processing:
+
+1. **SNEM** (α1) provides beat entrainment baseline — BARM modulates this by individual ability.
+2. **BARM** (β1) explains why the same rhythmic stimulus produces different salience responses across individuals.
+3. **DGTP** (γ2) extends BARM's individual differences to domain-general temporal processing.
+
+---
+
+## 2. Neural Circuit: Complete Anatomy
+
+### 2.1 Information Flow Architecture (EAR → BRAIN → ASA+BEP → BARM)
+
+```
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                    BARM COMPUTATION ARCHITECTURE                             ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║                                                                              ║
+║  AUDIO (44.1kHz waveform)                                                    ║
+║       │                                                                      ║
+║       ▼                                                                      ║
+║  ┌──────────────────┐                                                        ║
+║  │ COCHLEA          │  128 mel bins x 172.27Hz frame rate                    ║
+║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
+║  └────────┬─────────┘                                                        ║
+║           │                                                                  ║
+║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
+║           │                                                                  ║
+║           ▼                                                                  ║
+║  ┌──────────────────────────────────────────────────────────────────┐        ║
+║  │  SPECTRAL (R³): 49D per frame                                    │        ║
+║  │                         BARM reads: ~12D                         │        ║
+║  └────────────────────────────┬─────────────────────────────────────┘        ║
+║                               │                                              ║
+║                               ▼                                              ║
+║  ┌──────────────────────────────────────────────────────────────────┐        ║
+║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
+║  │                         BARM demand: ~14 of 2304 tuples          │        ║
+║  └────────────────────────────┬─────────────────────────────────────┘        ║
+║                               │                                              ║
+║  ═════════════════════════════╪═══════ BRAIN: Salience Circuit ════════     ║
+║                               │                                              ║
+║                       ┌───────┴───────┐                                      ║
+║                       ▼               ▼                                      ║
+║  ┌─────────────────┐  ┌─────────────────┐                                   ║
+║  │  BEP (30D)      │  │  ASA (30D)      │                                   ║
+║  │ Beat Entr[0:10] │  │ Scene An [0:10] │                                   ║
+║  │ Motor Coup      │  │ Attention       │                                   ║
+║  │         [10:20] │  │ Gating  [10:20] │                                   ║
+║  │ Groove  [20:30] │  │ Salience        │                                   ║
+║  │                 │  │ Weight  [20:30] │                                   ║
+║  └────────┬────────┘  └────────┬────────┘                                   ║
+║           │                    │                                              ║
+║           └────────┬───────────┘                                             ║
+║                    ▼                                                          ║
+║  ┌──────────────────────────────────────────────────────────────────┐        ║
+║  │                    BARM MODEL (10D Output)                       │        ║
+║  │                                                                  │        ║
+║  │  Layer E: f10_regularization, f11_beat_alignment, f12_sync_ben  │        ║
+║  │  Layer M: veridical_perception, regularization_effect            │        ║
+║  │  Layer P: beat_alignment_accuracy, regularization_strength       │        ║
+║  │  Layer F: beat_accuracy_pred, sync_benefit_pred, indiv_diff_pred│        ║
+║  └──────────────────────────────────────────────────────────────────┘        ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+```
+
+---
+
+## 3. Scientific Foundation
+
+### 3.1 Core Evidence Table
+
+| Study | Method | N | Key Finding | Effect Size | MI Relevance |
+|-------|--------|---|-------------|-------------|-------------|
+| **Rathcke 2024** | Behavioral | 87 | High BAT → less regularization | ER > 19 (strong) | **f10 regularization tendency** |
+| **Rathcke 2024** | Behavioral | 87 | Tap-exposure enhances veridicality | ER > 3999 (decisive) | **f12 synchronization benefit** |
+| **Rathcke 2024** | Behavioral | 87 | Low BAT benefits most from movement | ER = 59.61 (strong) | **BAT × Exposure interaction** |
+| **Grahn & Brett 2007** | fMRI | — | Rhythm/beat in motor areas | r = 0.70 | **Motor cortex involvement** |
+
+### 3.2 Effect Size Summary
+
+```
+Primary Evidence (k=3):
+  - BAT modulation: ER > 19 (strong)
+  - Tapping benefit: ER > 3999 (decisive)
+  - Interaction: ER = 59.61 (strong)
+Quality Assessment:      β-tier (behavioral with strong Bayesian stats)
+Sample Size:             n = 87 (adequate)
+```
+
+---
+
+## 4. R³ Input Mapping: What BARM Reads
+
+### 4.1 R³ Feature Dependencies (~12D of 49D)
+
+| R³ Group | Index | Feature | BARM Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **B: Energy** | [7] | amplitude | Beat strength proxy | Temporal intensity |
+| **B: Energy** | [8] | loudness | Perceptual loudness | Arousal correlate |
+| **B: Energy** | [10] | spectral_flux | Onset detection | Beat salience marker |
+| **B: Energy** | [11] | onset_strength | Beat marker strength | Rhythmic event detection |
+| **D: Change** | [21] | spectral_change | Tempo change tracking | Beat interval dynamics |
+| **D: Change** | [22] | energy_change | Energy dynamics | Regularization detection |
+| **E: Interactions** | [25:33] | x_l0l5 (8D) | Automatic entrainment | Motor-auditory coupling |
+
+### 4.2 Physical → Cognitive Transformation
+
+```
+R³ Physical Input                    Cognitive Output
+────────────────────────────────    ──────────────────────────────────────
+R³[10] spectral_flux ───────────┐
+R³[11] onset_strength ──────────┼──► Beat detection / tempo estimation
+BEP.beat_entrainment[0:10] ────┘   Reference beat for BAT assessment
+
+R³[21] spectral_change ─────────┐
+R³[22] energy_change ───────────┼──► Tempo change tracking
+BEP.motor_coupling[10:20] ─────┘   Beat-to-beat interval dynamics
+
+R³[7] amplitude ─────────────────┐
+R³[8] loudness ──────────────────┼──► Beat strength / perceptual loudness
+BEP.groove[20:30] ──────────────┘   Groove-based regularization
+
+R³[25:33] x_l0l5 ───────────────┐
+ASA.attention_gating[10:20] ────┼──► Motor-auditory coupling
+H³ periodicity/velocity tuples ┘   Sensorimotor synchronization
+```
+
+---
+
+## 5. H³ Temporal Demand
+
+### 5.1 Demand Specification
+
+BARM requires H³ features at BEP horizons for beat/timing tracking and ASA horizons for regularization assessment. The demand reflects individual-difference modulation of temporal perception.
+
+| R³ Index | Feature | H | Morph | Law | Purpose |
+|----------|---------|---|-------|-----|---------|
+| 10 | spectral_flux | 3 | M0 (value) | L2 (bidi) | Onset at 100ms alpha |
+| 10 | spectral_flux | 8 | M14 (periodicity) | L2 (bidi) | Beat periodicity at 500ms |
+| 10 | spectral_flux | 16 | M14 (periodicity) | L2 (bidi) | Beat periodicity at 1000ms |
+| 11 | onset_strength | 3 | M1 (mean) | L2 (bidi) | Mean onset strength 100ms |
+| 11 | onset_strength | 16 | M14 (periodicity) | L2 (bidi) | Onset periodicity 1s |
+| 7 | amplitude | 3 | M0 (value) | L2 (bidi) | Beat amplitude at 100ms |
+| 7 | amplitude | 16 | M1 (mean) | L2 (bidi) | Mean amplitude over 1s |
+| 21 | spectral_change | 8 | M8 (velocity) | L0 (fwd) | Tempo velocity at 500ms |
+| 21 | spectral_change | 8 | M14 (periodicity) | L0 (fwd) | Tempo periodicity 500ms |
+| 22 | energy_change | 8 | M8 (velocity) | L0 (fwd) | Energy velocity at 500ms |
+| 25 | x_l0l5[0] | 3 | M14 (periodicity) | L2 (bidi) | Coupling periodicity 100ms |
+| 25 | x_l0l5[0] | 8 | M0 (value) | L2 (bidi) | Coupling value at 500ms |
+| 25 | x_l0l5[0] | 16 | M14 (periodicity) | L2 (bidi) | Coupling periodicity 1s |
+| 25 | x_l0l5[0] | 16 | M21 (zero_crossings) | L2 (bidi) | Coupling phase resets 1s |
+
+**Total BARM H³ demand**: 14 tuples of 2304 theoretical = 0.61%
+
+### 5.2 BEP + ASA Mechanism Binding
+
+| Mechanism | Sub-section | Range | BARM Role | Weight |
+|-----------|-------------|-------|-----------|--------|
+| **BEP** | Beat Entrainment | BEP[0:10] | Beat tracking for BAT | **1.0** (primary) |
+| **BEP** | Motor Coupling | BEP[10:20] | Sensorimotor synchronization | **0.9** |
+| **BEP** | Groove Processing | BEP[20:30] | Regularization drive | 0.7 |
+| **ASA** | Scene Analysis | ASA[0:10] | Auditory pattern segmentation | 0.4 |
+| **ASA** | Attention Gating | ASA[10:20] | Beat attention modulation | 0.6 |
+| **ASA** | Salience Weighting | ASA[20:30] | Beat salience for BAT | 0.5 |
+
+---
+
+## 6. Output Space: 10D Multi-Layer Representation
+
+### 6.1 Complete Output Specification
+
+```
+BARM OUTPUT TENSOR: 10D PER FRAME (172.27 Hz)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+LAYER E — EXPLICIT FEATURES
+─────────────────────────────────────────────────────────────────────────────
+idx │ Name                     │ Range  │ Neuroscience Basis
+────┼──────────────────────────┼────────┼────────────────────────────────────
+ 0  │ f10_regularization_tend  │ [0, 1] │ Bias toward isochrony.
+    │                          │        │ f10 = σ(0.35 * (1-BAT) * groove_mean
+    │                          │        │       + 0.35 * tempo_periodicity
+    │                          │        │       + 0.30 * mean(BEP.groove[20:30]))
+────┼──────────────────────────┼────────┼────────────────────────────────────
+ 1  │ f11_beat_alignment       │ [0, 1] │ Individual BAT ability level.
+    │                          │        │ f11 = σ(0.40 * beat_periodicity_1s
+    │                          │        │       + 0.30 * mean(BEP.beat[0:10])
+    │                          │        │       + 0.30 * onset_periodicity_1s)
+────┼──────────────────────────┼────────┼────────────────────────────────────
+ 2  │ f12_sync_benefit         │ [0, 1] │ Movement enhancement effect.
+    │                          │        │ f12 = σ(0.40 * mean(BEP.motor[10:20])
+    │                          │        │       + 0.30 * coupling_period_1s
+    │                          │        │       + 0.30 * (1-f11) * motor_mean)
+
+LAYER M — MATHEMATICAL MODEL OUTPUTS
+─────────────────────────────────────────────────────────────────────────────
+idx │ Name                     │ Range  │ Neuroscience Basis
+────┼──────────────────────────┼────────┼────────────────────────────────────
+ 3  │ veridical_perception     │ [0, 1] │ α·BAT + β·Exposure + γ·Interaction.
+────┼──────────────────────────┼────────┼────────────────────────────────────
+ 4  │ regularization_effect    │ [0, 1] │ Regularization magnitude f(BAT).
+
+LAYER P — PRESENT PROCESSING
+─────────────────────────────────────────────────────────────────────────────
+idx │ Name                     │ Range  │ Neuroscience Basis
+────┼──────────────────────────┼────────┼────────────────────────────────────
+ 5  │ beat_alignment_accuracy  │ [0, 1] │ BEP beat-locked alignment.
+────┼──────────────────────────┼────────┼────────────────────────────────────
+ 6  │ regularization_strength  │ [0, 1] │ BEP groove-driven regularization.
+
+LAYER F — FUTURE PREDICTIONS
+─────────────────────────────────────────────────────────────────────────────
+idx │ Name                     │ Range  │ Neuroscience Basis
+────┼──────────────────────────┼────────┼────────────────────────────────────
+ 7  │ beat_accuracy_pred_0.75s │ [0, 1] │ Veridical perception prediction.
+────┼──────────────────────────┼────────┼────────────────────────────────────
+ 8  │ sync_benefit_pred        │ [0, 1] │ Trial-level movement benefit.
+────┼──────────────────────────┼────────┼────────────────────────────────────
+ 9  │ individual_diff_pred     │ [0, 1] │ Session-level BAT screening.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TOTAL: 10D per frame at 172.27 Hz
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+---
+
+## 7. Mathematical Formulation
+
+### 7.1 Veridical Perception Function
+
+```
+Veridical_Perception = α·BAT + β·Exposure_Type + γ·(BAT × Exposure)
+
+Parameters:
+    BAT = Beat Alignment Test score [0-1]
+    Exposure_Type = Listen-Only: 0, Listen-and-Tap: 1
+    α = Main effect of BAT (positive)
+    β = Main effect of tapping (positive)
+    γ = Interaction (negative: low BAT gains more)
+
+Evidence Ratios:
+    High BAT → less regularization:    ER > 19 (strong)
+    Tap-exposure enhances veridicality: ER > 3999 (decisive)
+    Low BAT benefits most from tapping: ER = 59.61 (strong)
+```
+
+### 7.2 Feature Formulas
+
+```python
+# COEFFICIENT SATURATION RULE: For sigmoid(Σ wi*gi), |wi| must sum <= 1.0
+
+# f10: Regularization Tendency
+f10 = σ(0.35 * (1 - beat_alignment) * groove_mean
+       + 0.35 * tempo_periodicity_500ms
+       + 0.30 * mean(BEP.groove[20:30]))
+# coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
+
+# f11: Beat Alignment
+f11 = σ(0.40 * beat_periodicity_1s
+       + 0.30 * mean(BEP.beat_entrainment[0:10])
+       + 0.30 * onset_periodicity_1s)
+# coefficients: 0.40 + 0.30 + 0.30 = 1.0 ✓
+
+# f12: Synchronization Benefit
+f12 = σ(0.40 * mean(BEP.motor_coupling[10:20])
+       + 0.30 * coupling_periodicity_1s
+       + 0.30 * (1 - f11) * motor_coupling_mean)
+# coefficients: 0.40 + 0.30 + 0.30 = 1.0 ✓
+```
+
+---
+
+## 8. Brain Regions
+
+### 8.1 Pipeline Validated Regions
+
+| Region | MNI Coordinates | Mentions | Evidence Type | BARM Function |
+|--------|-----------------|----------|---------------|---------------|
+| **SMA** | 0, -6, 58 | 2 | Literature inference | Temporal regularization |
+| **PMC** | ±40, -8, 54 | 2 | Literature inference | Motor preparation |
+| **ACC** | 0, 24, 32 | 1 | Literature inference | Timing monitoring |
+| **Basal Ganglia** | ±12, 8, -4 | 1 | Literature inference | Beat perception |
+
+---
+
+## 9. Cross-Unit Pathways
+
+### 9.1 BARM ↔ Other Models
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    BARM INTERACTIONS                                         │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  INTRA-UNIT (ASU):                                                         │
+│  BARM.beat_alignment ────────────► SNEM (modulates entrainment strength)  │
+│  BARM.regularization_tendency ───► DGTP (individual differences)          │
+│  BARM.sync_benefit ──────────────► STANM (network configuration)          │
+│                                                                             │
+│  CROSS-UNIT (ASU → STU):                                                   │
+│  BARM.beat_alignment ────────────► STU (sensorimotor timing precision)    │
+│  BARM.individual_diff_pred ──────► STU (trait-level modulation)           │
+│                                                                             │
+│  UPSTREAM DEPENDENCIES:                                                     │
+│  BEP mechanism (30D) ────────────► BARM (beat/motor/groove, primary)      │
+│  ASA mechanism (30D) ────────────► BARM (attention/salience)              │
+│  R³ (~12D) ──────────────────────► BARM (direct spectral features)        │
+│  H³ (14 tuples) ─────────────────► BARM (temporal dynamics)               │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 10. Falsification Criteria
+
+| Criterion | Testable Prediction | Status |
+|-----------|---------------------|--------|
+| **BAT independence** | Low BAT should show stronger regularization | **Confirmed** |
+| **Tapping benefit** | Movement should enhance veridical perception | **Confirmed** |
+| **Interaction** | Low BAT should benefit more from tapping | **Confirmed** |
+| **Neural correlates** | BAT should correlate with SMA/PMC activity | Testable |
+| **Training effects** | Musical training should increase BAT | Testable |
+
+---
+
+## 11. Implementation
+
+### 11.1 Pseudocode
+
+```python
+class BARM(BaseModel):
+    """Beat Ability Regulatory Model.
+
+    Output: 10D per frame.
+    Reads: BEP mechanism (30D), ASA mechanism (30D), R³ direct.
+    """
+    NAME = "BARM"
+    UNIT = "ASU"
+    TIER = "β1"
+    OUTPUT_DIM = 10
+    MECHANISM_NAMES = ("BEP", "ASA")
+
+    ALPHA_BAT = 0.7        # BAT main effect weight
+    BETA_TAP = 0.5         # Tapping main effect
+    GAMMA_INTERACT = -0.3  # Interaction (negative)
+    TAU_DECAY = 4.0        # Integration window (seconds)
+
+    @property
+    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+        """14 tuples for BARM computation."""
+        return [
+            # (r3_idx, horizon, morph, law)
+            # ── BEP horizons: beat tracking ──
+            (10, 3, 0, 2),     # spectral_flux, 100ms, value, bidi
+            (10, 8, 14, 2),    # spectral_flux, 500ms, periodicity, bidi
+            (10, 16, 14, 2),   # spectral_flux, 1000ms, periodicity, bidi
+            (11, 3, 1, 2),     # onset_strength, 100ms, mean, bidi
+            (11, 16, 14, 2),   # onset_strength, 1000ms, periodicity, bidi
+            (7, 3, 0, 2),      # amplitude, 100ms, value, bidi
+            (7, 16, 1, 2),     # amplitude, 1000ms, mean, bidi
+            # ── Timing dynamics ──
+            (21, 8, 8, 0),     # spectral_change, 500ms, velocity, fwd
+            (21, 8, 14, 0),    # spectral_change, 500ms, periodicity, fwd
+            (22, 8, 8, 0),     # energy_change, 500ms, velocity, fwd
+            # ── Motor-auditory coupling ──
+            (25, 3, 14, 2),    # x_l0l5[0], 100ms, periodicity, bidi
+            (25, 8, 0, 2),     # x_l0l5[0], 500ms, value, bidi
+            (25, 16, 14, 2),   # x_l0l5[0], 1000ms, periodicity, bidi
+            (25, 16, 21, 2),   # x_l0l5[0], 1000ms, zero_crossings, bidi
+        ]
+
+    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
+                r3: Tensor) -> Tensor:
+        bep = mechanism_outputs["BEP"]    # (B, T, 30)
+        asa = mechanism_outputs["ASA"]    # (B, T, 30)
+
+        # BEP sub-sections
+        bep_beat = bep[..., 0:10]
+        bep_motor = bep[..., 10:20]
+        bep_groove = bep[..., 20:30]
+
+        # ASA sub-sections
+        asa_attn = asa[..., 10:20]
+
+        # H³ direct features
+        beat_period_1s = h3_direct[(10, 16, 14, 2)].unsqueeze(-1)
+        onset_period_1s = h3_direct[(11, 16, 14, 2)].unsqueeze(-1)
+        tempo_period_500ms = h3_direct[(21, 8, 14, 0)].unsqueeze(-1)
+        coupling_period_1s = h3_direct[(25, 16, 14, 2)].unsqueeze(-1)
+
+        # ═══ LAYER E ═══
+        f11 = torch.sigmoid(
+            0.40 * beat_period_1s
+            + 0.30 * bep_beat.mean(-1, keepdim=True)
+            + 0.30 * onset_period_1s
+        )
+        f10 = torch.sigmoid(
+            0.35 * (1 - f11) * bep_groove.mean(-1, keepdim=True)
+            + 0.35 * tempo_period_500ms
+            + 0.30 * bep_groove.mean(-1, keepdim=True)
+        )
+        f12 = torch.sigmoid(
+            0.40 * bep_motor.mean(-1, keepdim=True)
+            + 0.30 * coupling_period_1s
+            + 0.30 * (1 - f11) * bep_motor.mean(-1, keepdim=True)
+        )
+
+        # ═══ LAYER M ═══
+        veridical = torch.sigmoid(0.5 * f11 + 0.5 * f12)
+        reg_effect = torch.sigmoid(0.5 * f10 + 0.5 * (1 - f11))
+
+        # ═══ LAYER P ═══
+        beat_acc = bep_beat.mean(-1, keepdim=True)
+        reg_strength = torch.sigmoid(
+            0.5 * bep_groove.mean(-1, keepdim=True)
+            + 0.5 * f10
+        )
+
+        # ═══ LAYER F ═══
+        beat_pred = torch.sigmoid(0.5 * f11 + 0.5 * beat_period_1s)
+        sync_pred = torch.sigmoid(0.5 * f12 + 0.5 * coupling_period_1s)
+        indiv_pred = f11
+
+        return torch.cat([
+            f10, f11, f12,                          # E: 3D
+            veridical, reg_effect,                   # M: 2D
+            beat_acc, reg_strength,                  # P: 2D
+            beat_pred, sync_pred, indiv_pred,        # F: 3D
+        ], dim=-1)  # (B, T, 10)
+```
+
+---
+
+## 12. Validation Summary
+
+| Metric | Value | Source |
+|--------|-------|--------|
+| **Papers** | 1 (Rathcke 2024) | Primary evidence |
+| **Evidence Ratios** | 3 | All strong (ER > 19) |
+| **Sample Size** | n = 87 | Adequate |
+| **Evidence Modality** | Behavioral | Bayesian analysis |
+| **Falsification Tests** | 3/5 confirmed | Moderate validity |
+| **R³ Features Used** | ~12D of 49D | Energy + change + interactions |
+| **H³ Demand** | 14 tuples (0.61%) | Sparse, efficient |
+| **BEP Mechanism** | 30D (3 sub-sections) | Beat/motor processing (primary) |
+| **ASA Mechanism** | 30D (3 sub-sections) | Attention/salience |
+| **Output Dimensions** | **10D** | 4-layer structure |
+
+---
+
+## 13. Scientific References
+
+1. **Rathcke, T., et al. (2024)**. Beat alignment ability modulates perceptual regularization and sensorimotor synchronization benefits. *Journal of Experimental Psychology: Human Perception and Performance*, (in press).
+
+2. **Grahn, J. A., & Brett, M. (2007)**. Rhythm and beat perception in motor areas of the brain. *Journal of Cognitive Neuroscience*, 19(5), 893-906.
+
+3. **Repp, B. H. (2005)**. Sensorimotor synchronization: A review of the tapping literature. *Psychonomic Bulletin & Review*, 12(6), 969-992.
+
+4. **Fujii, S., & Schlaug, G. (2013)**. The Harvard Beat Assessment Test (H-BAT): A battery for assessing beat perception and production and their dissociation. *Frontiers in Human Neuroscience*, 7, 771.
+
+---
+
+## 14. Migration Notes (D0 → MI)
+
+### What Changed from v1.0.0
+
+| Aspect | D0 (v1.0.0) | MI (v2.0.0) |
+|--------|-------------|-------------|
+| Input space | S⁰ (256D) | R³ (49D) |
+| Temporal | HC⁰ mechanisms (NPL, PTM, GRV) | BEP (30D) + ASA (30D) mechanisms |
+| Beat tracking | S⁰.L4.velocity_T[15] + HC⁰.NPL | R³.spectral_flux[10] + BEP.beat_entrainment |
+| Regularization | S⁰.L9.std_T[108] + HC⁰.PTM | R³.spectral_change[21] + BEP.groove |
+| Synchronization | S⁰.X_L0L1[128:136] + HC⁰.GRV | R³.x_l0l5[25:33] + BEP.motor_coupling |
+| Demand format | HC⁰ index ranges | H³ 4-tuples (sparse) |
+| Total demand | 12/2304 = 0.52% | 14/2304 = 0.61% |
+| Output | 10D | 10D (same) |
+
+### Why BEP + ASA replaces HC⁰ mechanisms
+
+- **NPL → BEP.beat_entrainment** [0:10]: Neural phase locking for beat tracking maps to BEP's beat frequency monitoring.
+- **PTM → BEP.groove** [20:30] + H³ velocity tuples: Predictive timing maps to BEP's groove processing and H³ temporal dynamics.
+- **GRV → BEP.motor_coupling** [10:20]: Groove/motor coupling maps to BEP's sensorimotor synchronization.
+
+---
+
+**Model Status**: **VALIDATED**
+**Output Dimensions**: **10D**
+**Evidence Tier**: **β (Bridging)**
+**Confidence**: **70-90%**

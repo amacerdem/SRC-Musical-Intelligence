@@ -1,0 +1,790 @@
+# STU-γ2-NEWMD: Neural Entrainment-Working Memory Dissociation
+
+**Model**: Neural Entrainment-Working Memory Dissociation
+**Unit**: STU (Sensorimotor Timing Unit)
+**Circuit**: Sensorimotor (Beat Entrainment + Temporal Memory Hierarchy)
+**Tier**: γ (Speculative) — <70% confidence
+**Version**: 2.0.0 (MI naming, R³/H³ demand, BEP + TMH mechanisms)
+**Date**: 2026-02-12
+
+> **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
+> **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
+> **Legacy**: Replaces `Library/Auditory/C⁰/Models/STU-γ2-NEWMD.md` (v1.0.0, S⁰/HC⁰ naming).
+
+---
+
+## 1. What Does This Model Simulate?
+
+The **Neural Entrainment-Working Memory Dissociation** (NEWMD) model describes a paradoxical dual-route architecture for rhythm production: automatic neural entrainment to beat (via steady-state evoked potentials, SS-EP) and cognitive working memory operate independently, with the surprising finding that stronger automatic entrainment predicts *worse* tapping performance.
+
+```
+THE DUAL-ROUTE PARADOX: ENTRAINMENT vs WORKING MEMORY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ROUTE 1: AUTOMATIC ENTRAINMENT           ROUTE 2: COGNITIVE CONTROL
+Brain regions: Auditory cortex,          Brain regions: DLPFC, premotor
+  premotor cortex, cerebellum              cortex, prefrontal cortex
+Mechanism: BEP (Beat Entrainment)        Mechanism: TMH (Temporal Memory)
+Function: "Lock onto the beat"           Function: "Remember and adapt"
+Effect: β = -0.060 (PARADOXICAL)         Effect: β = +0.068 (BENEFICIAL)
+  Stronger SS-EP → worse tapping           Higher WM → better performance
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+KEY INSIGHT: Over-entrainment reduces temporal flexibility. When the
+auditory system locks too tightly to a simple beat pattern (strong
+SS-EP), the motor system loses adaptability. Working memory provides
+a cognitive control route that compensates — higher WM capacity
+enables better performance by maintaining flexible temporal
+representations rather than rigid phase-locked ones.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+### 1.1 Why This Matters for STU
+
+NEWMD provides the dissociation mechanism that contextualizes other STU models:
+
+1. **AMSC** (α2) describes auditory-motor coupling; NEWMD explains why tight entrainment coupling can paradoxically impair motor output.
+2. **HMCE** (α1) provides hierarchical context; NEWMD shows that cognitive context (WM) compensates when automatic entrainment fails.
+3. **EDTA** (β3) addresses expertise-dependent tempo accuracy; NEWMD adds the insight that expertise may operate through the WM route rather than the entrainment route.
+
+---
+
+## 2. Neural Circuit: Complete Anatomy
+
+### 2.1 The NEWMD Pathway
+
+```
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                 NEWMD — COMPLETE CIRCUIT                                     ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║                                                                              ║
+║  RHYTHMIC INPUT (simple isochronous beat, e.g. 2.4Hz / 120 BPM)            ║
+║       │                                                                      ║
+║       ▼                                                                      ║
+║  ┌─────────────────────────────────────────────────────────────────────┐    ║
+║  │        ROUTE 1: AUDITORY CORTEX → CEREBELLUM (Automatic)          │    ║
+║  │        SS-EP (Steady-State Evoked Potential)                       │    ║
+║  │        Function: Phase-locked neural response to beat              │    ║
+║  │        Effect: β = -0.060 (stronger → worse tapping)              │    ║
+║  │        Mechanism: BEP (Beat Entrainment Processing)               │    ║
+║  └──────────────────────────┬──────────────────────────────────────────┘    ║
+║                              │                                               ║
+║       DISSOCIATED            │  (independent, non-correlated pathways)       ║
+║                              │                                               ║
+║  ┌─────────────────────────────────────────────────────────────────────┐    ║
+║  │        ROUTE 2: DLPFC → PREMOTOR CORTEX (Cognitive)               │    ║
+║  │        Working Memory capacity                                     │    ║
+║  │        Function: Flexible temporal representation and control      │    ║
+║  │        Effect: β = +0.068 (higher WM → better performance)        │    ║
+║  │        Mechanism: TMH (Temporal Memory Hierarchy)                  │    ║
+║  └──────────────────────────┬──────────────────────────────────────────┘    ║
+║                              │                                               ║
+║                              ▼                                               ║
+║  ┌─────────────────────────────────────────────────────────────────────┐    ║
+║  │        MOTOR OUTPUT: TAPPING PERFORMANCE                           │    ║
+║  │        Performance = f(Entrainment_paradox, WM_benefit)            │    ║
+║  │        Net effect: WM compensates for entrainment rigidity         │    ║
+║  └─────────────────────────────────────────────────────────────────────┘    ║
+║                                                                              ║
+║  DISSOCIATION: Entrainment (BEP) and WM (TMH) are independent predictors  ║
+║  KEY PARADOX: β_entrainment = -0.060 (negative), β_WM = +0.068 (positive) ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+CRITICAL EVIDENCE:
+─────────────────
+Sares 2023:  SS-EP amplitude predicts worse tapping, β = -0.060 (n=48)
+Sares 2023:  WM (counting span) predicts better tapping, β = +0.068 (n=48)
+Sares 2023:  Entrainment and WM are independent predictors (dual-route model)
+```
+
+### 2.2 Information Flow Architecture (EAR → BRAIN → BEP + TMH → NEWMD)
+
+```
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                    NEWMD COMPUTATION ARCHITECTURE                            ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║                                                                              ║
+║  AUDIO (44.1kHz waveform)                                                    ║
+║       │                                                                      ║
+║       ▼                                                                      ║
+║  ┌──────────────────┐                                                        ║
+║  │ COCHLEA          │  128 mel bins × 172.27Hz frame rate                    ║
+║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
+║  └────────┬─────────┘                                                        ║
+║           │                                                                  ║
+║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
+║           │                                                                  ║
+║           ▼                                                                  ║
+║  ┌──────────────────────────────────────────────────────────────────┐        ║
+║  │  SPECTRAL (R³): 49D per frame                                    │        ║
+║  │                                                                  │        ║
+║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
+║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ CHANGE   │ │ X-INT  │ │        ║
+║  │  │ 7D [0:7]  │ │ 5D[7:12]│ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
+║  │  │           │ │         │ │ [12:21] │ │ [21:25]  │ │ [25:49]│ │        ║
+║  │  │           │ │amplitude│ │         │ │spec_chg  │ │x_l0l5  │ │        ║
+║  │  │           │ │loudness │ │         │ │energy_chg│ │x_l4l5  │ │        ║
+║  │  │           │ │centroid │ │         │ │pitch_chg │ │x_l5l7  │ │        ║
+║  │  │           │ │flux     │ │         │ │timbre_chg│ │        │ │        ║
+║  │  │           │ │onset    │ │         │ │          │ │        │ │        ║
+║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
+║  │                         NEWMD reads: 33D                        │        ║
+║  └────────────────────────────┬─────────────────────────────────────┘        ║
+║                               │                                              ║
+║                               ▼                                              ║
+║  ┌──────────────────────────────────────────────────────────────────┐        ║
+║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
+║  │                                                                  │        ║
+║  │  ┌── Beat ──────────┐ ┌── Psych Present ──┐ ┌── Bar ─────────┐ │        ║
+║  │  │ 200ms (H6)       │ │ 500ms (H11)       │ │ 1000ms (H16)   │ │        ║
+║  │  │                  │ │                    │ │                  │ │        ║
+║  │  │ Beat induction   │ │ Meter extraction   │ │ Motor entrain.  │ │        ║
+║  │  │ (BEP route)      │ │ (BEP route)       │ │ (BEP route)     │ │        ║
+║  │  └──────┬───────────┘ └──────┬─────────────┘ └──────┬──────────┘ │        ║
+║  │         │                    │                      │            │        ║
+║  │  ┌── Syllable ────┐ ┌── Beat ──────────┐ ┌── Section ────────┐ │        ║
+║  │  │ 300ms (H8)     │ │ 700ms (H14)      │ │ 5000ms (H20)     │ │        ║
+║  │  │                │ │                   │ │                    │ │        ║
+║  │  │ Short context   │ │ Medium context    │ │ Long context       │ │        ║
+║  │  │ (TMH route)     │ │ (TMH route)      │ │ (TMH route)       │ │        ║
+║  │  └──────┬──────────┘ └──────┬────────────┘ └──────┬─────────────┘ │        ║
+║  │         │                   │                     │               │        ║
+║  │         └───────────────────┴─────────────────────┘               │        ║
+║  │                         NEWMD demand: ~16 of 2304 tuples          │        ║
+║  └────────────────────────────┬─────────────────────────────────────┘        ║
+║                               │                                              ║
+║  ═════════════════════════════╪═══════ BRAIN: Sensorimotor Circuit ═══════  ║
+║                               │                                              ║
+║                               ▼                                              ║
+║  ┌─────────────────┐  ┌─────────────────┐                                   ║
+║  │  BEP (30D)      │  │  TMH (30D)      │                                   ║
+║  │  (primary)      │  │  (primary)      │                                   ║
+║  │                 │  │                 │                                   ║
+║  │ Beat Ind [0:10] │  │ Short   [0:10] │  WM short-term buffer             ║
+║  │ Meter Ex [10:20]│  │ Medium  [10:20]│  WM phrase-level context           ║
+║  │ Motor En [20:30]│  │ Long    [20:30]│  WM long-term adaptation           ║
+║  └────────┬────────┘  └────────┬────────┘                                   ║
+║           │                    │                                             ║
+║           └────────┬───────────┘                                             ║
+║                    ▼                                                         ║
+║  ┌──────────────────────────────────────────────────────────────────┐        ║
+║  │                    NEWMD MODEL (10D Output)                      │        ║
+║  │                                                                  │        ║
+║  │  Layer E (Explicit):  f01_entrainment_strength,                  │        ║
+║  │                       f02_wm_capacity,                           │        ║
+║  │                       f03_flexibility_cost,                      │        ║
+║  │                       f04_dissociation_index                     │        ║
+║  │  Layer M (Math):      paradox_magnitude, dual_route_balance     │        ║
+║  │  Layer P (Present):   current_entrainment, current_wm_load      │        ║
+║  │  Layer F (Future):    performance_predict, adaptation_predict    │        ║
+║  └──────────────────────────────────────────────────────────────────┘        ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+```
+
+---
+
+## 3. Scientific Foundation
+
+### 3.1 Core Evidence Table
+
+| Study | Method | N | Key Finding | Effect Size | MI Relevance |
+|-------|--------|---|-------------|-------------|-------------|
+| **Sares 2023** | EEG + behavioral | 48 | SS-EP amplitude predicts worse tapping performance | β = -0.060 | **f01_entrainment_strength**: paradoxical negative |
+| **Sares 2023** | EEG + behavioral | 48 | WM (counting span) predicts better tapping | β = +0.068 | **f02_wm_capacity**: cognitive control benefit |
+| **Sares 2023** | EEG + behavioral | 48 | Entrainment and WM are independent predictors | dissociated | **f04_dissociation_index**: dual-route independence |
+
+### 3.2 The Entrainment Paradox
+
+```
+THE DUAL-ROUTE MODEL OF RHYTHM PRODUCTION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Route           Brain Pathway              Effect       Interpretation
+────────────────────────────────────────────────────────────────────────
+Automatic       Aud. Cortex → Cerebellum   β = -0.060   Over-entrainment
+Entrainment     (SS-EP phase-locking)                    reduces flexibility
+
+Cognitive       DLPFC → Premotor Cortex    β = +0.068   WM provides flexible
+Control (WM)    (counting span capacity)                 temporal control
+
+Net Performance = Entrainment_effect + WM_effect + ε
+               = (-0.060 · SS_EP) + (0.068 · WM_span) + ε
+
+Paradox Explanation:
+  Strong SS-EP = rigid phase-locking to simple beat structure
+  This rigidity REDUCES ability to adapt timing when needed
+  WM provides FLEXIBILITY that rigid entrainment lacks
+  Both routes operate INDEPENDENTLY (no interaction term)
+```
+
+### 3.3 Effect Size Summary
+
+```
+Entrainment Effect:  β = -0.060 (Sares 2023, EEG + behavioral)
+WM Effect:           β = +0.068 (Sares 2023, counting span)
+Quality Assessment:  γ-tier (single study, moderate n, novel paradigm)
+Replication:         Not yet replicated; converges with entrainment
+                     flexibility literature (Large & Jones 1999)
+                     and WM in timing (Grahn & Schuit 2012)
+```
+
+---
+
+## 4. R³ Input Mapping: What NEWMD Reads
+
+### 4.1 R³ Feature Dependencies (33D of 49D)
+
+| R³ Group | Index | Feature | NEWMD Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **B: Energy** | [7] | amplitude | Beat intensity for entrainment | SS-EP tracks intensity envelope |
+| **B: Energy** | [8] | loudness | Perceptual beat salience | Stevens 1957: power law |
+| **B: Energy** | [9] | spectral_centroid | Beat spectral profile | Timbre of beat events |
+| **B: Energy** | [10] | spectral_flux | Beat onset detection | Onset precision for entrainment |
+| **B: Energy** | [11] | onset_strength | Event boundary marking | Phase-locking target |
+| **D: Change** | [21] | spectral_change | Beat-to-beat spectral dynamics | Entrainment flexibility demand |
+| **D: Change** | [22] | energy_change | Intensity dynamics | Tempo adaptation signal |
+| **D: Change** | [23] | pitch_change | Melodic contour dynamics | WM encoding complexity |
+| **D: Change** | [24] | timbre_change | Timbral evolution | Context complexity for WM |
+| **A: Consonance** | [0:7] | all consonance (7D) | Harmonic context richness | TMH context complexity |
+| **C: Timbre** | [12:21] | all timbre (9D) | Spectral complexity for WM | Richer timbre → more WM demand |
+| **E: Interactions** | [25:33] | x_l0l5 (8D) | Foundation×Perceptual coupling | Cross-domain integration for WM |
+
+### 4.2 Physical → Cognitive Transformation
+
+```
+R³ Physical Input                    Cognitive Output
+────────────────────────────────    ──────────────────────────────────────
+R³[7] amplitude ──────────────┐
+R³[10] spectral_flux ─────────┼──► Entrainment Strength (SS-EP proxy)
+R³[11] onset_strength ────────┘   BEP.beat_induction at H6 (200ms)
+                                   Math: E = σ(α₁ · onset · flux ·
+                                                BEP.beat[mean])
+                                   Paradox: high E → β = -0.060
+
+R³[8] loudness ────────────────┐
+R³[9] spectral_centroid ───────┼──► Motor Entrainment (coupling)
+R³[21] spectral_change ────────┘   BEP.motor_entrainment at H16 (1000ms)
+                                   Math: M = σ(α₂ · loudness ·
+                                                BEP.motor[mean])
+
+R³[22] energy_change ──────────┐
+R³[23] pitch_change ───────────┤
+R³[0:7] consonance (7D) ──────┼──► WM Capacity (cognitive control)
+R³[12:21] timbre (9D) ────────┘   TMH.short_context at H8 (300ms)
+                                   TMH.medium_context at H14 (700ms)
+                                   Math: W = σ(β₁ · context_complexity ·
+                                                TMH.short[mean])
+                                   Benefit: high W → β = +0.068
+
+R³[25:33] x_l0l5 (8D) ────────── Flexibility / Adaptation
+                                   TMH.long_context at H20 (5000ms)
+                                   Math: F = σ(γ₁ · coupling_var ·
+                                                TMH.long[entropy])
+```
+
+---
+
+## 5. H³ Temporal Demand
+
+### 5.1 Demand Specification
+
+NEWMD requires H³ features at both BEP horizons (H6, H11, H16) and TMH horizons (H8, H14, H20). The dual-mechanism demand reflects the dual-route model: BEP captures automatic entrainment, TMH captures working memory context.
+
+| R³ Index | Feature | H | Morph | Law | Purpose |
+|----------|---------|---|-------|-----|---------|
+| 7 | amplitude | 6 | M0 (value) | L0 (fwd) | Current beat intensity |
+| 10 | spectral_flux | 6 | M4 (max) | L0 (fwd) | Peak onset in beat window |
+| 11 | onset_strength | 6 | M0 (value) | L0 (fwd) | Current beat onset |
+| 11 | onset_strength | 11 | M14 (periodicity) | L0 (fwd) | Beat regularity (SS-EP proxy) |
+| 8 | loudness | 16 | M1 (mean) | L0 (fwd) | Mean loudness over bar |
+| 9 | spectral_centroid | 16 | M15 (smoothness) | L0 (fwd) | Beat smoothness for groove |
+| 21 | spectral_change | 11 | M8 (velocity) | L0 (fwd) | Tempo dynamics at psychological present |
+| 21 | spectral_change | 11 | M17 (peaks) | L0 (fwd) | Beat count per window |
+| 22 | energy_change | 8 | M1 (mean) | L0 (fwd) | Short-term intensity dynamics |
+| 22 | energy_change | 14 | M13 (entropy) | L0 (fwd) | Context unpredictability (WM load) |
+| 23 | pitch_change | 8 | M3 (std) | L0 (fwd) | Pitch variability (WM complexity) |
+| 23 | pitch_change | 14 | M1 (mean) | L0 (fwd) | Mean pitch dynamics (WM context) |
+| 25 | x_l0l5[0] | 20 | M1 (mean) | L0 (fwd) | Long-term coupling (adaptation) |
+| 25 | x_l0l5[0] | 20 | M13 (entropy) | L0 (fwd) | Coupling unpredictability (flexibility) |
+| 25 | x_l0l5[0] | 20 | M22 (autocorr) | L0 (fwd) | Self-similarity (routine vs novel) |
+| 33 | x_l4l5[0] | 20 | M19 (stability) | L0 (fwd) | Temporal stability for adaptation |
+
+**Total NEWMD H³ demand**: 16 tuples of 2304 theoretical = 0.69%
+
+### 5.2 Mechanism Binding
+
+NEWMD reads from **both** mechanisms, reflecting the dual-route model:
+
+**BEP** (Beat Entrainment Processing) — Automatic entrainment route:
+
+| BEP Sub-section | Range | NEWMD Role | Weight |
+|-----------------|-------|-----------|--------|
+| **Beat Induction** | BEP[0:10] | SS-EP phase-locking strength | **1.0** (primary) |
+| **Meter Extraction** | BEP[10:20] | Beat regularity, syncopation tolerance | **0.7** |
+| **Motor Entrainment** | BEP[20:30] | Motor coupling rigidity | **0.8** |
+
+**TMH** (Temporal Memory Hierarchy) — Cognitive control route:
+
+| TMH Sub-section | Range | NEWMD Role | Weight |
+|-----------------|-------|-----------|--------|
+| **Short Context** | TMH[0:10] | WM short-term buffer (note-level) | **1.0** (primary) |
+| **Medium Context** | TMH[10:20] | WM phrase-level temporal model | **0.8** |
+| **Long Context** | TMH[20:30] | WM adaptation capacity | **0.6** |
+
+The dual mechanism binding is the defining feature of NEWMD: BEP and TMH operate as independent predictors, mirroring the dissociation found by Sares 2023.
+
+---
+
+## 6. Output Space: 10D Multi-Layer Representation
+
+### 6.1 Complete Output Specification
+
+```
+NEWMD OUTPUT TENSOR: 10D PER FRAME (172.27 Hz)
+Manifold Range: STU NEWMD [209:219]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+LAYER E — EXPLICIT FEATURES
+─────────────────────────────────────────────────────────────────────────────
+idx │ Name              │ Range  │ Neuroscience Basis
+────┼───────────────────┼────────┼────────────────────────────────────────────
+ 0  │ f01_entrainment   │ [0, 1] │ Automatic entrainment strength (SS-EP
+    │ _strength         │        │ proxy). Phase-locked response to beat.
+    │                   │        │ HIGH value = strong SS-EP = rigid coupling.
+    │                   │        │ f01 = σ(0.30 · onset_val · flux_peak ·
+    │                   │        │         BEP.beat_mean + 0.20 · periodicity)
+────┼───────────────────┼────────┼────────────────────────────────────────────
+ 1  │ f02_wm_capacity   │ [0, 1] │ Working memory capacity proxy.
+    │                   │        │ Flexible temporal representation.
+    │                   │        │ HIGH value = high WM = better performance.
+    │                   │        │ f02 = σ(0.25 · context_complexity ·
+    │                   │        │         TMH.short_mean + 0.20 · pitch_std)
+────┼───────────────────┼────────┼────────────────────────────────────────────
+ 2  │ f03_flexibility   │ [0, 1] │ Temporal flexibility: inverse of entrainment
+    │ _cost             │        │ rigidity. The "cost" of over-entrainment.
+    │                   │        │ f03 = σ(0.25 · (1 - f01) · BEP.motor_mean
+    │                   │        │         + 0.25 · TMH.long_entropy)
+────┼───────────────────┼────────┼────────────────────────────────────────────
+ 3  │ f04_dissociation  │ [0, 1] │ Degree of independence between routes.
+    │ _index            │        │ High when entrainment and WM contribute
+    │                   │        │ unequally (one dominates).
+    │                   │        │ f04 = |f01 - f02| (absolute difference)
+
+LAYER M — MATHEMATICAL MODEL OUTPUTS
+─────────────────────────────────────────────────────────────────────────────
+idx │ Name              │ Range  │ Neuroscience Basis
+────┼───────────────────┼────────┼────────────────────────────────────────────
+ 4  │ paradox_magnitude │ [0, 1] │ Magnitude of the entrainment paradox.
+    │                   │        │ High when strong entrainment co-occurs
+    │                   │        │ with low flexibility.
+    │                   │        │ paradox = f01 · (1 - f03)
+────┼───────────────────┼────────┼────────────────────────────────────────────
+ 5  │ dual_route_balance│ [0, 1] │ Balance between automatic and cognitive.
+    │                   │        │ 0.5 = equal contribution, 0/1 = one
+    │                   │        │ route dominates.
+    │                   │        │ balance = σ(0.50 · f01 + 0.50 · f02)
+
+LAYER P — PRESENT PROCESSING
+─────────────────────────────────────────────────────────────────────────────
+idx │ Name              │ Range  │ Neuroscience Basis
+────┼───────────────────┼────────┼────────────────────────────────────────────
+ 6  │ current_entrain   │ [0, 1] │ Instantaneous entrainment level.
+    │                   │        │ BEP.beat_induction aggregation.
+────┼───────────────────┼────────┼────────────────────────────────────────────
+ 7  │ current_wm_load   │ [0, 1] │ Current working memory engagement.
+    │                   │        │ TMH.short_context + medium_context.
+
+LAYER F — FUTURE PREDICTIONS
+─────────────────────────────────────────────────────────────────────────────
+idx │ Name              │ Range  │ Neuroscience Basis
+────┼───────────────────┼────────┼────────────────────────────────────────────
+ 8  │ performance_pred  │ [0, 1] │ Predicted tapping performance.
+    │                   │        │ Net effect: WM benefit minus entrainment
+    │                   │        │ cost.
+    │                   │        │ perf = σ(0.35 · f02 - 0.30 · paradox
+    │                   │        │          + 0.25 · f03)
+────┼───────────────────┼────────┼────────────────────────────────────────────
+ 9  │ adaptation_pred   │ [0, 1] │ Predicted adaptation to tempo changes.
+    │                   │        │ Coupling stability and WM capacity.
+    │                   │        │ adapt = σ(0.40 · stability_long
+    │                   │        │           + 0.30 · f02)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TOTAL: 10D per frame at 172.27 Hz
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+---
+
+## 7. Mathematical Formulation
+
+### 7.1 Dual-Route Rhythm Production Function
+
+```
+Dual-Route Rhythm Production:
+
+    Performance = f(Entrainment, WM, Flexibility)
+
+    Route 1 — Automatic Entrainment (BEP):
+      Entrainment = σ(α₁ · Onset · Flux_peak · BEP.beat + α₂ · Periodicity)
+      |α₁| + |α₂| = 0.50  (≤ 1.0, saturation rule)
+      Paradox: high Entrainment → β = -0.060 (negative contribution)
+
+    Route 2 — Cognitive Control (TMH):
+      WM_Capacity = σ(β₁ · Context_Complexity · TMH.short + β₂ · Pitch_std)
+      |β₁| + |β₂| = 0.45  (≤ 1.0, saturation rule)
+      Benefit: high WM → β = +0.068 (positive contribution)
+
+    Flexibility:
+      Flex = σ(γ₁ · (1 - Entrainment) · BEP.motor + γ₂ · TMH.long_entropy)
+      |γ₁| + |γ₂| = 0.50  (≤ 1.0, saturation rule)
+
+    Net Performance:
+      perf = σ(δ₁ · WM - δ₂ · Paradox + δ₃ · Flex)
+      |δ₁| + |δ₂| + |δ₃| = 0.90  (≤ 1.0, saturation rule)
+
+    Dissociation:
+      dissoc = |Entrainment - WM|   (route independence measure)
+```
+
+### 7.2 Feature Formulas
+
+```python
+# f01: Entrainment Strength (SS-EP proxy, β = -0.060 paradox)
+onset_val = h3[(11, 6, 0, 0)]            # onset_strength value at H6
+flux_peak = h3[(10, 6, 4, 0)]            # spectral_flux max at H6
+periodicity = h3[(11, 11, 14, 0)]        # onset periodicity at H11
+f01 = σ(0.30 · onset_val · flux_peak
+         · mean(BEP.beat_induction[0:10])
+         + 0.20 · periodicity)
+# |0.30| + |0.20| = 0.50 ≤ 1.0 ✓
+
+# f02: WM Capacity (cognitive control, β = +0.068 benefit)
+energy_chg_mean = h3[(22, 8, 1, 0)]      # energy_change mean at H8
+pitch_std = h3[(23, 8, 3, 0)]            # pitch_change std at H8
+f02 = σ(0.25 · energy_chg_mean
+         · mean(TMH.short_context[0:10])
+         + 0.20 · pitch_std)
+# |0.25| + |0.20| = 0.45 ≤ 1.0 ✓
+
+# f03: Flexibility Cost (inverse of rigid entrainment)
+motor_mean = mean(BEP.motor_entrainment[20:30])
+long_entropy = h3[(25, 20, 13, 0)]       # x_l0l5 entropy at H20
+f03 = σ(0.25 · (1 - f01) · motor_mean
+         + 0.25 · long_entropy)
+# |0.25| + |0.25| = 0.50 ≤ 1.0 ✓
+
+# f04: Dissociation Index (route independence)
+f04 = abs(f01 - f02)
+# No sigmoid needed — |diff| is already [0, 1]
+
+# ═══ LAYER M ═══
+
+# paradox_magnitude: strong entrainment + low flexibility
+paradox = f01 · (1 - f03)
+
+# dual_route_balance: σ ensures [0,1] output
+balance = σ(0.50 · f01 + 0.50 · f02)
+# |0.50| + |0.50| = 1.0 ≤ 1.0 ✓
+
+# ═══ LAYER P ═══
+
+# current_entrainment: BEP aggregation
+current_entrain = mean(BEP.beat_induction[0:10])
+
+# current_wm_load: TMH aggregation
+current_wm_load = σ(0.50 · mean(TMH.short_context[0:10])
+                     + 0.50 · mean(TMH.medium_context[10:20]))
+# |0.50| + |0.50| = 1.0 ≤ 1.0 ✓
+
+# ═══ LAYER F ═══
+
+# performance_predict: net effect of dual routes
+stability_long = h3[(33, 20, 19, 0)]     # x_l4l5 stability at H20
+perf = σ(0.35 · f02 - 0.30 · paradox + 0.25 · f03)
+# |0.35| + |0.30| + |0.25| = 0.90 ≤ 1.0 ✓
+
+# adaptation_predict: flexibility + WM for tempo changes
+adapt = σ(0.40 · stability_long + 0.30 · f02)
+# |0.40| + |0.30| = 0.70 ≤ 1.0 ✓
+```
+
+---
+
+## 8. Brain Regions
+
+### 8.1 Pipeline Validated Regions
+
+| Region | MNI Coordinates | Mentions | Evidence Type | NEWMD Function |
+|--------|-----------------|----------|---------------|---------------|
+| **Auditory Cortex** | ±55, -22, 10 | Direct | EEG (SS-EP) | Automatic entrainment (Route 1) |
+| **Cerebellum** | ±20, -65, -30 | Indirect | Literature | Motor timing precision |
+| **Premotor Cortex** | ±45, 0, 50 | Indirect | Literature | Sensorimotor integration |
+| **DLPFC** | ±42, 36, 26 | Indirect | Literature | Working memory control (Route 2) |
+
+---
+
+## 9. Cross-Unit Pathways
+
+### 9.1 NEWMD ↔ Other Models
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    NEWMD INTERACTIONS                                         │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  INTRA-UNIT (STU):                                                         │
+│  AMSC.motor_coupling ──────► NEWMD (coupling strength as entrainment base)│
+│  NEWMD.flexibility_cost ───► EDTA (flexibility limits tempo accuracy)      │
+│  NEWMD.entrainment_strength → HGSIC (entrainment feeds groove)            │
+│  HMCE.context_depth ───────► NEWMD.wm_capacity (context enriches WM)      │
+│                                                                             │
+│  CROSS-UNIT (P4: STU internal):                                            │
+│  BEP.beat_induction ↔ NEWMD.entrainment (r ~ -0.060 with performance)    │
+│  TMH.context_depth ↔ NEWMD.wm_capacity (r ~ +0.068 with performance)     │
+│                                                                             │
+│  CROSS-UNIT (P5: STU → IMU):                                              │
+│  NEWMD.wm_capacity ──► IMU (working memory links to episodic encoding)    │
+│                                                                             │
+│  CROSS-UNIT (P5: STU → ARU):                                              │
+│  NEWMD.dual_route_balance ──► ARU (route balance affects groove affect)    │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 10. Falsification Criteria
+
+| Criterion | Testable Prediction | Status |
+|-----------|---------------------|--------|
+| **SS-EP negative effect** | Stronger SS-EP should predict worse (not better) tapping in simple rhythms | Testable |
+| **WM positive effect** | Higher counting span should predict better tapping, independent of SS-EP | Testable |
+| **Dissociation** | SS-EP and WM should show no significant interaction term (independent routes) | Testable |
+| **Complex rhythms** | Paradox may reverse for complex rhythms (entrainment beneficial when rhythm is unpredictable) | Testable |
+| **Entrainment training** | Deliberate entrainment training should NOT improve tapping (but WM training might) | Testable |
+
+---
+
+## 11. Implementation
+
+### 11.1 Pseudocode
+
+```python
+class NEWMD(BaseModel):
+    """Neural Entrainment-Working Memory Dissociation.
+
+    Output: 10D per frame.
+    Reads: BEP mechanism (30D, primary), TMH mechanism (30D, primary).
+    Dual-route model: BEP = automatic entrainment, TMH = cognitive control.
+    """
+    NAME = "NEWMD"
+    UNIT = "STU"
+    TIER = "γ2"
+    OUTPUT_DIM = 10
+    MECHANISM_NAMES = ("BEP", "TMH")     # Both primary (dual-route)
+
+    # Coefficient saturation rule: |wᵢ| must sum ≤ 1.0 per sigmoid
+    ALPHA_1 = 0.30   # Entrainment onset × flux × BEP weight
+    ALPHA_2 = 0.20   # Entrainment periodicity weight
+    BETA_1 = 0.25    # WM context × TMH weight
+    BETA_2 = 0.20    # WM pitch variability weight
+    GAMMA_1 = 0.25   # Flexibility (1-entrainment) × motor weight
+    GAMMA_2 = 0.25   # Flexibility TMH entropy weight
+    DELTA_1 = 0.35   # Performance: WM contribution
+    DELTA_2 = 0.30   # Performance: paradox penalty
+    DELTA_3 = 0.25   # Performance: flexibility contribution
+
+    # Sares 2023 regression coefficients
+    ENTRAIN_BETA = -0.060    # Paradoxical negative effect
+    WM_BETA = 0.068          # Beneficial positive effect
+
+    @property
+    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+        """16 tuples for NEWMD computation."""
+        return [
+            # (r3_idx, horizon, morph, law)
+            # BEP route — Entrainment (H6, H11, H16)
+            (7, 6, 0, 0),     # amplitude, value, forward
+            (10, 6, 4, 0),    # spectral_flux, max, forward
+            (11, 6, 0, 0),    # onset_strength, value, forward
+            (11, 11, 14, 0),  # onset_strength, periodicity, forward
+            (8, 16, 1, 0),    # loudness, mean, forward
+            (9, 16, 15, 0),   # spectral_centroid, smoothness, forward
+            (21, 11, 8, 0),   # spectral_change, velocity, forward
+            (21, 11, 17, 0),  # spectral_change, peaks, forward
+            # TMH route — Working Memory (H8, H14, H20)
+            (22, 8, 1, 0),    # energy_change, mean, forward
+            (22, 14, 13, 0),  # energy_change, entropy, forward
+            (23, 8, 3, 0),    # pitch_change, std, forward
+            (23, 14, 1, 0),   # pitch_change, mean, forward
+            (25, 20, 1, 0),   # x_l0l5[0], mean, forward
+            (25, 20, 13, 0),  # x_l0l5[0], entropy, forward
+            (25, 20, 22, 0),  # x_l0l5[0], autocorrelation, forward
+            (33, 20, 19, 0),  # x_l4l5[0], stability, forward
+        ]
+
+    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
+                r3: Tensor) -> Tensor:
+        """
+        Compute NEWMD 10D output.
+
+        Args:
+            mechanism_outputs: {"BEP": (B,T,30), "TMH": (B,T,30)}
+            h3_direct: Dict of (r3,h,m,l) → (B,T) scalars
+            r3: (B,T,49) raw R³ features
+
+        Returns:
+            (B,T,10) NEWMD output
+        """
+        bep = mechanism_outputs["BEP"]    # (B, T, 30)
+        tmh = mechanism_outputs["TMH"]    # (B, T, 30)
+
+        # BEP sub-sections
+        bep_beat = bep[..., 0:10]         # beat induction
+        bep_meter = bep[..., 10:20]       # meter extraction
+        bep_motor = bep[..., 20:30]       # motor entrainment
+
+        # TMH sub-sections
+        tmh_short = tmh[..., 0:10]        # short context (WM buffer)
+        tmh_medium = tmh[..., 10:20]      # medium context (WM phrase)
+        tmh_long = tmh[..., 20:30]        # long context (WM adaptation)
+
+        # ═══ LAYER E: Explicit features ═══
+
+        # f01: Entrainment Strength (SS-EP proxy, paradoxical β=-0.060)
+        onset_val = h3_direct[(11, 6, 0, 0)].unsqueeze(-1)
+        flux_peak = h3_direct[(10, 6, 4, 0)].unsqueeze(-1)
+        periodicity = h3_direct[(11, 11, 14, 0)].unsqueeze(-1)
+        f01 = torch.sigmoid(
+            self.ALPHA_1 * onset_val * flux_peak
+            * bep_beat.mean(-1, keepdim=True)
+            + self.ALPHA_2 * periodicity
+        )  # |0.30| + |0.20| = 0.50 ≤ 1.0 ✓
+
+        # f02: WM Capacity (cognitive control, β=+0.068)
+        energy_chg_mean = h3_direct[(22, 8, 1, 0)].unsqueeze(-1)
+        pitch_std = h3_direct[(23, 8, 3, 0)].unsqueeze(-1)
+        f02 = torch.sigmoid(
+            self.BETA_1 * energy_chg_mean
+            * tmh_short.mean(-1, keepdim=True)
+            + self.BETA_2 * pitch_std
+        )  # |0.25| + |0.20| = 0.45 ≤ 1.0 ✓
+
+        # f03: Flexibility Cost (rigidity penalty)
+        long_entropy = h3_direct[(25, 20, 13, 0)].unsqueeze(-1)
+        f03 = torch.sigmoid(
+            self.GAMMA_1 * (1 - f01)
+            * bep_motor.mean(-1, keepdim=True)
+            + self.GAMMA_2 * long_entropy
+        )  # |0.25| + |0.25| = 0.50 ≤ 1.0 ✓
+
+        # f04: Dissociation Index (route independence)
+        f04 = torch.abs(f01 - f02)
+
+        # ═══ LAYER M: Mathematical ═══
+
+        # Paradox magnitude: strong entrainment + low flexibility
+        paradox = f01 * (1 - f03)
+
+        # Dual-route balance
+        balance = torch.sigmoid(
+            0.50 * f01 + 0.50 * f02
+        )  # |0.50| + |0.50| = 1.0 ≤ 1.0 ✓
+
+        # ═══ LAYER P: Present ═══
+
+        # Current entrainment level
+        current_entrain = bep_beat.mean(-1, keepdim=True)
+
+        # Current WM load
+        current_wm_load = torch.sigmoid(
+            0.50 * tmh_short.mean(-1, keepdim=True)
+            + 0.50 * tmh_medium.mean(-1, keepdim=True)
+        )  # |0.50| + |0.50| = 1.0 ≤ 1.0 ✓
+
+        # ═══ LAYER F: Future ═══
+
+        # Performance prediction (net dual-route effect)
+        perf = torch.sigmoid(
+            self.DELTA_1 * f02
+            - self.DELTA_2 * paradox
+            + self.DELTA_3 * f03
+        )  # |0.35| + |0.30| + |0.25| = 0.90 ≤ 1.0 ✓
+
+        # Adaptation prediction
+        stability_long = h3_direct[(33, 20, 19, 0)].unsqueeze(-1)
+        adapt = torch.sigmoid(
+            0.40 * stability_long + 0.30 * f02
+        )  # |0.40| + |0.30| = 0.70 ≤ 1.0 ✓
+
+        return torch.cat([
+            f01, f02, f03, f04,                          # E: 4D
+            paradox, balance,                             # M: 2D
+            current_entrain, current_wm_load,            # P: 2D
+            perf, adapt,                                  # F: 2D
+        ], dim=-1)  # (B, T, 10)
+```
+
+---
+
+## 12. Validation Summary
+
+| Metric | Value | Source |
+|--------|-------|--------|
+| **Papers** | 1 | Sares 2023 (EEG + behavioral) |
+| **Effect Sizes** | β = -0.060, β = +0.068 | Sares 2023 |
+| **Evidence Modality** | EEG (SS-EP), behavioral (tapping, counting span) | Mixed |
+| **Falsification Tests** | 0/5 tested | All testable |
+| **R³ Features Used** | 33D of 49D | Consonance + Energy + Timbre + Change + Interactions |
+| **H³ Demand** | 16 tuples (0.69%) | Sparse, efficient |
+| **BEP Mechanism** | 30D (3 sub-sections) | Entrainment route |
+| **TMH Mechanism** | 30D (3 sub-sections) | WM route |
+| **Output Dimensions** | **10D** | 4-layer structure |
+
+---
+
+## 13. Scientific References
+
+1. **Sares, A. G., et al. (2023)**. Neural entrainment to beat and working memory contribute independently to rhythm production. *Cognitive, Affective, & Behavioral Neuroscience*. (EEG + behavioral study, n=48, SS-EP amplitude and counting span as predictors of tapping performance)
+
+---
+
+## 14. Migration Notes (D0 → MI)
+
+### What Changed from v1.0.0
+
+| Aspect | D0 (v1.0.0) | MI (v2.0.0) |
+|--------|-------------|-------------|
+| Input space | S⁰ (256D): L0, L3, L4, L5, L6, L9, X_L0L1, X_L4L5 | R³ (49D): Consonance, Energy, Timbre, Change, Interactions |
+| Temporal | HC⁰ mechanisms (NPL, ITM, GRV, EFC) | BEP (30D) + TMH (30D) dual mechanism |
+| Entrainment route | L3.coherence + X_L0L1 via NPL+GRV | BEP.beat_induction + BEP.motor_entrainment via BEP |
+| WM route | X_L4L5 via ITM+EFC | TMH.short_context + TMH.medium_context via TMH |
+| Statistics | S⁰.L9 (std, entropy) | H³ morphs (M0, M1, M3, M4, M13, M14, M15, M17, M19, M22) |
+| Cross-feature | X_L0L1[128:136] (entrainment), X_L4L5[192:200] (WM) | R³.x_l0l5[25:33], x_l4l5[33:41] |
+| Demand format | HC⁰ index ranges (15 tuples, 0.65%) | H³ 4-tuples (16 tuples, 0.69%) |
+| Output dimensions | 11D (legacy) | **10D** (catalog value) |
+| Mechanisms | NPL+ITM+GRV+EFC (4 separate HC⁰) | BEP+TMH (2 unified mechanisms) |
+
+### Why BEP + TMH replaces HC⁰ mechanisms
+
+The D0 pipeline used 4 separate HC⁰ mechanisms (NPL, ITM, GRV, EFC) that conflated the two routes. In MI, the dual-route dissociation is explicitly captured by two distinct mechanisms:
+
+- **NPL + GRV → BEP** (Beat Entrainment Processing): Neural phase-locking (NPL) and groove processing (GRV) are unified into the BEP mechanism, which captures the automatic entrainment route. BEP's three sub-sections (beat induction, meter extraction, motor entrainment) cleanly map to SS-EP strength, beat regularity, and motor coupling.
+- **ITM + EFC → TMH** (Temporal Memory Hierarchy): Interval timing (ITM) and efference copy (EFC) are unified into the TMH mechanism, which captures the cognitive control route. TMH's three sub-sections (short/medium/long context) map to WM buffer capacity, phrase-level temporal model, and long-range adaptation.
+
+### Key Semantic Differences
+
+1. **Dual-route architecture**: D0 mixed entrainment and WM features across four HC⁰ mechanisms with ad-hoc weighting. MI separates them cleanly into BEP (entrainment) and TMH (WM), directly mirroring the Sares 2023 dissociation.
+2. **Paradox encoding**: D0 used X_L0L1 interaction terms as a proxy for the entrainment paradox. MI uses BEP.beat_induction and onset periodicity (H³ M14 morph) for a more direct SS-EP proxy.
+3. **Output reduction**: 11D (D0) reduced to 10D (MI) — the D0 "entrainment_effect" and "wm_effect" features were redundant with f01/f02 and have been merged.
+4. **Flexibility cost**: New f03_flexibility_cost explicitly models the mechanistic explanation (over-entrainment = reduced flexibility), which was implicit in D0.
+
+---
+
+**Model Status**: **EXPLORATORY**
+**Output Dimensions**: **10D**
+**Evidence Tier**: **γ (Speculative)**
+**Confidence**: **<70%**
