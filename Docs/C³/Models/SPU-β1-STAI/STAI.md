@@ -4,7 +4,7 @@
 **Unit**: SPU (Spectral Processing Unit)
 **Circuit**: Perceptual (Brainstem-Cortical)
 **Tier**: β (Integrative) — 70-90% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, PPC+TPC mechanisms)
+**Version**: 2.1.0 (Phase 1 revision: deep literature cross-reference, 1→14 papers, Kim citation CORRECTED to Sci Reports, Alluri parallel streams, Cheung/Gold reward, Sarasso/Bellmann spectral aesthetics)
 **Date**: 2026-02-12
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
@@ -38,8 +38,19 @@ Evidence: d=0.52 (Kim 2019)              Evidence: d=0.52 (Kim 2019)
 KEY INSIGHT: Aesthetic preference peaks at intermediate spectral
 complexity x temporal predictability. Neither dimension alone
 suffices — the INTERACTION term (Spectral x Temporal) drives the
-full aesthetic response. Kim 2019 used a 2x2 factorial design
+full aesthetic response. Kim et al. 2019 used a 2x2 factorial
 (consonant/dissonant x forward/reversed) to demonstrate this.
+Behavioral interaction: d=0.709 (Exp I), d=0.735 (Exp II).
+
+CONVERGENT SUPPORT: Alluri et al. (2012, fMRI, naturalistic)
+showed spectral (timbral), temporal (rhythmic), and tonal streams
+recruit largely NON-OVERLAPPING brain networks that must integrate
+downstream. Cheung et al. (2019) and Gold et al. (2019, 2023)
+confirmed uncertainty × surprise interaction drives pleasure in
+amygdala/hippocampus/auditory cortex and VS. Singer et al. (2023)
+showed temporal predictability positively predicts valence across
+1780 songs. Sarasso et al. (2019) showed consonance drives
+aesthetic judgments (η²p=0.685) via N1-P2/N2-P3 ERP complexes.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -98,13 +109,23 @@ STAI sits at the integrative level of the spectral processing hierarchy. It comb
 ║                                                                              ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
-CRITICAL EVIDENCE:
-─────────────────
-Kim 2019:   2x2 design (consonant/dissonant x forward/reversed)
-Kim 2019:   vmPFC-IFG connectivity ↓ with both disrupted, d=0.52
-Kim 2019:   STG, NAcc, putamen ↓ with partial disruption, d=0.52
-Kim 2019:   Spectral disruption → ↓bilateral STG, planum temporale
-Kim 2019:   Temporal disruption → ↓NAcc, putamen, globus pallidus
+CRITICAL EVIDENCE (spectral-temporal aesthetic integration):
+─────────────────────────────────────────────────────────────
+Kim 2019:           fMRI, N=16+23. 2x2 factorial (consonant/dissonant x
+                    forward/reversed). Interaction in vmPFC, NAc, caudate,
+                    putamen, ACC, thalami. d=0.709-0.735 (behavioral).
+                    vmPFC-IFG connectivity ↓ with both disrupted.
+Alluri 2012:        fMRI, N=11 musicians. Naturalistic listening. Parallel
+                    streams: timbral→STG/HG, rhythmic→motor/limbic,
+                    tonal→prefrontal. Brightness→putamen (Z=3.63).
+Cheung 2019:        fMRI. Uncertainty × surprise → pleasure. Amygdala,
+                    hippocampus, auditory cortex reflect interaction.
+Gold 2023:          fMRI, N=24. R STG + VS reflect liking. VS integrates
+                    uncertainty × surprise × liking interactions.
+Sarasso 2019:       EEG, N=22. Consonance → aesthetic judgment
+                    η²p=0.685. N1-P2 enhanced for appreciated intervals.
+Bellmann 2024:      ALE meta-analysis (18 experiments). Timbre processing
+                    in BA41/42/22/40/13. Dual-stream model.
 ```
 
 ### 2.2 Information Flow Architecture (EAR → BRAIN → PPC+TPC → STAI)
@@ -197,12 +218,22 @@ Kim 2019:   Temporal disruption → ↓NAcc, putamen, globus pallidus
 
 ### 3.1 Core Evidence Table
 
-| Study | Method | N | Key Finding | Effect Size | MI Relevance |
-|-------|--------|---|-------------|-------------|-------------|
-| **Kim 2019** | fMRI, 2x2 factorial | 23 | vmPFC-IFG connectivity ↓ with both spectral+temporal disrupted | d = 0.52, p < 0.05 | **Primary coefficient**: f04_vmpfc_ifg_connectivity |
-| **Kim 2019** | fMRI, 2x2 factorial | 16 | STG, NAcc, putamen ↓ with partial disruption | d = 0.52, p < 1e-05 | **f01/f02 independent effects on spectral/temporal regions** |
-| **Kim 2019** | fMRI, whole-brain | 23 | Spectral disruption → ↓bilateral STG, planum temporale | Significant | **f01_spectral_integrity tracks STG activation** |
-| **Kim 2019** | fMRI, whole-brain | 23 | Temporal disruption → ↓NAcc, putamen, globus pallidus | Significant | **f02_temporal_integrity tracks reward response** |
+| # | Study | Method | N | Key Finding | Effect Size | MI Relevance |
+|---|-------|--------|---|-------------|-------------|-------------|
+| 1 | **Kim et al. 2019** | fMRI 2x2 factorial | 16+23 | Spectral×Temporal interaction in vmPFC, NAc, caudate, putamen, ACC, thalami | d=0.709 (Exp I), d=0.735 (Exp II) | **f03_aesthetic_integration: interaction drives reward** |
+| 2 | **Kim et al. 2019** | fMRI PPI | 23 | vmPFC-IFG connectivity ↓ with both spectral+temporal disrupted | Significant PPI contrast | **f04_vmpfc_ifg_connectivity** |
+| 3 | **Kim et al. 2019** | fMRI whole-brain | 23 | Spectral disruption → ↓bilateral STG, PT (auditory cortex additive) | Max T=6.852 (ACC interaction) | **f01_spectral_integrity tracks STG** |
+| 4 | **Kim et al. 2019** | fMRI whole-brain | 23 | Temporal disruption → ↓NAcc, putamen, GP (reward circuit) | Behavioral d=-1.433 to -1.635 (dissonance) | **f02_temporal_integrity tracks reward** |
+| 5 | **Alluri et al. 2012** | fMRI naturalistic | 11 | Timbral→STG/HG; Rhythmic→motor/limbic; Tonal→prefrontal. Parallel streams. | Brightness→putamen Z=3.63; Fullness→STG Z=7.35 | **Parallel processing architecture** |
+| 6 | **Alluri et al. 2012** | fMRI naturalistic | 11 | Pulse clarity negatively correlated with amygdala, hippocampus, putamen | r=0.51-0.80 (perceptual validation) | **Temporal predictability → limbic circuit** |
+| 7 | **Cheung et al. 2019** | fMRI + behavioral | Group | Uncertainty×surprise → pleasure (nonlinear). Amygdala, hippocampus, auditory cortex reflect interaction. | Quadratic + interaction effects | **Prediction-aesthetic link confirmed** |
+| 8 | **Gold et al. 2023** | fMRI | 24 | R STG + ventral striatum reflect liking. VS integrates uncertainty×surprise×liking. | Significant VS interaction | **Auditory-reward circuit for aesthetics** |
+| 9 | **Sarasso et al. 2019** | EEG | 22 | Consonance → aesthetic judgment. N1-P2 enhanced for appreciated intervals. | η²p=0.685 (F=45.682, p<0.001) | **Spectral aesthetics via early ERP** |
+| 10 | **Bellmann & Asano 2024** | ALE meta-analysis | 18 studies | Timbre processing: BA41/42/22/40/13. Dual-stream: ventral (object) + dorsal (temporal). | Consistent activations | **Neural substrate of spectral features** |
+| 11 | **Singer et al. 2023** | Behavioral | 40 | Temporal predictability positively predicts valence; confirmed in 1780-song database. | Positive correlation in 4/5 sections | **Temporal integrity → pleasure** |
+| 12 | **Gold et al. 2019** | Behavioral | 43+27 | Inverted-U for information content × entropy on liking. IC×entropy interaction. | Significant quadratic + interaction | **Complexity-preference relationship** |
+| 13 | **Mas-Herrero et al. 2014** | Behavioral + physio | 30 | Musical anhedonia: no autonomic response to music despite normal perception | Dissociation: music vs monetary | **Auditory-to-reward pathway required** |
+| 14 | **Brattico et al. 2017** | Theoretical | — | Global sensory qualities (spectral statistics) contribute independently to aesthetics | Theoretical framework | **Spectral features as aesthetic dimension** |
 
 ### 3.2 The 2x2 Factorial Design
 
@@ -237,10 +268,43 @@ INTERACTION EFFECT:
 ### 3.3 Effect Size Summary
 
 ```
-Primary Effect Size:  d = 0.52 (Kim 2019)
-Quality Assessment:   β-tier (fMRI, single study, n=23)
-Replication:          Single study, awaiting replication
-Design Strength:      2x2 factorial — strong internal validity
+BEHAVIORAL INTERACTION EFFECT (Kim et al. 2019):
+─────────────────────────────────────────────────────────────────
+Spectral × Temporal interaction:  d = 0.709 (Exp I, N=16)
+                                   d = 0.735 (Exp II, N=23)
+Dissonance main effect:           d = -1.433 (Exp I)
+                                   d = -1.635 (Exp II)
+Pleasantness ratings:             FC=3.483, FD=2.051, BC=2.002, BD=1.278
+
+NEURAL INTERACTION EFFECT (Kim et al. 2019):
+─────────────────────────────────────────────────────────────────
+Interaction loci (MNI):  R ACC (3,23,20) T=6.852 p<10⁻⁵
+                         R Caudate/NAc (9,2,11) T=6.603 p<10⁻⁵
+                         L Thalamus (-12,-1,8) T=5.964 p<10⁻⁵
+                         R PCC (3,-28,41) T=5.663 p<10⁻⁵
+vmPFC-IFG connectivity:  Reduced for both-disrupted vs both-intact (PPI)
+
+CONVERGENT EFFECTS:
+─────────────────────────────────────────────────────────────────
+Sarasso 2019:      η²p=0.685 (consonance→aesthetic, EEG)
+Alluri 2012:       r=0.51-0.80 (perceptual validation)
+Foo 2016:          r=0.43 (roughness-gamma, ECoG)
+Singer 2023:       Temporal predictability→valence (4/5 sections)
+Teixeira Borges:   r≈0.33 (scaling change→pleasure, temporal EEG)
+
+IMPORTANT CORRECTION:
+┌─────────────────────────────────────────────────────────────────┐
+│ Previous version cited d=0.52 for the Kim 2019 interaction.     │
+│ The actual behavioral interaction effect sizes are d=0.709-     │
+│ 0.735 (Scientific Reports, not Neuroscience Letters). The       │
+│ d=0.52 appeared to reference the wrong Kim 2019 paper.          │
+│ The f04 scaling coefficient has been updated accordingly.        │
+└─────────────────────────────────────────────────────────────────┘
+
+Quality Assessment:   β-tier (strong 2x2 factorial, but limited replication)
+Replication:          Core interaction replicated across 2 experiments
+                      within Kim et al. 2019; convergent with Cheung/Gold
+Design Strength:      2x2 factorial (gold standard for interaction effects)
 ```
 
 ---
@@ -289,7 +353,7 @@ R³[33:41] x_l4l5 mean ──────────┼──► Aesthetic Inte
 H³ aesthetic periodicity ────────┘   Combined spectral x temporal
 
 f03 (integration quality) ──────── vmPFC-IFG Connectivity (f04)
-                                     Scaled by empirical d=0.52
+                                     Scaled by empirical d=0.72
 ```
 
 ---
@@ -371,7 +435,7 @@ idx │ Name                     │ Range  │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
  3  │ f04_vmpfc_ifg_connect.   │ [0, 1] │ vmPFC-IFG functional connectivity.
     │                          │        │ Marker of aesthetic integration.
-    │                          │        │ f04 = 0.52 * f03
+    │                          │        │ f04 = 0.72 * f03
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
@@ -436,8 +500,9 @@ Condition Hierarchy:
     Both disrupted:   Aesthetic ≈ 0 (minimal)
 
 Connectivity Function:
-    vmPFC_IFG(t) = 0.52 · Aesthetic(t)
-    where 0.52 = empirical effect size (Kim 2019)
+    vmPFC_IFG(t) = 0.72 · Aesthetic(t)
+    where 0.72 ≈ mean(d=0.709, d=0.735) from Kim et al. 2019
+    (CORRECTED from v2.0.0 which used d=0.52 from wrong paper)
 
 Brain Region Activation:
     STG(t) ∝ Spectral(t)               — auditory cortex
@@ -469,7 +534,7 @@ f03 = σ(0.40 * f01 * f02               # interaction term
 # coefficients: 0.40 + 0.30 + 0.30 = 1.0 ✓
 
 # f04: vmPFC-IFG Connectivity
-f04 = 0.52 * f03  # empirical correlation d=0.52 (Kim 2019)
+f04 = 0.72 * f03  # empirical d=0.72 (Kim et al. 2019, corrected)
 ```
 
 ---
@@ -478,13 +543,23 @@ f04 = 0.52 * f03  # empirical correlation d=0.52 (Kim 2019)
 
 ### 8.1 Pipeline Validated Regions
 
-| Region | MNI Coordinates | Mentions | Evidence Type | STAI Function |
-|--------|-----------------|----------|---------------|---------------|
-| **Superior Temporal Gyrus (STG)** | ±60, -30, 8 | 4+ | Direct (fMRI) | Spectral processing — ↓ with dissonance |
-| **Nucleus Accumbens (NAcc)** | ±10, 8, -8 | 3 | Direct (fMRI) | Reward response — ↓ with temporal disruption |
-| **Putamen** | ±24, 4, 0 | 3 | Direct (fMRI) | Reward response — ↓ with temporal disruption |
-| **vmPFC** | 0, 50, -10 | 2 | Direct (connectivity) | Valuation — aesthetic judgment network |
-| **IFG** | ±50, 28, 8 | 2 | Direct (connectivity) | Integration — aesthetic integration network |
+| Region | MNI Coordinates | Source | Evidence Type | STAI Function |
+|--------|-----------------|--------|---------------|---------------|
+| **R ACC** | 3, 23, 20 | Kim 2019 (interaction) | Direct (fMRI) | Spectral×Temporal interaction hub |
+| **R Caudate/NAc** | 9, 2, 11 | Kim 2019 (interaction) | Direct (fMRI) | Reward integration — interaction locus |
+| **L Thalamus** | -12, -1, 8 | Kim 2019 (interaction) | Direct (fMRI) | Sensory relay — interaction |
+| **R PCC** | 3, -28, 41 | Kim 2019 (interaction) | Direct (fMRI) | Self-referential — aesthetic evaluation |
+| **L Frontal Pole** | -36, 41, 29 | Kim 2019 (interaction) | Direct (fMRI) | Higher-order integration |
+| **R Thalamus** | 9, -22, 5 | Kim 2019 (interaction) | Direct (fMRI) | Sensory relay — interaction |
+| **vmPFC** | 0, 46, -10 | Kim 2019 (PPI) | Direct (connectivity) | Aesthetic valuation hub (vmPFC-IFG coupling) |
+| **IFG** | -48, 18, 4 | Kim 2019 (PPI) | Direct (connectivity) | Musical syntax/temporal pattern |
+| **R STG** | 51, -14, 1 | Alluri 2012 | Direct (fMRI) | Spectral/timbral processing (fullness) |
+| **L STG** | -50, -21, 3 | Alluri 2012 | Direct (fMRI) | Spectral/timbral processing (fullness) |
+| **R Putamen** | 24, 11, -6 | Alluri 2012 | Direct (fMRI) | Brightness→reward circuit link |
+| **L Amygdala** | -28, -8, -10 | Alluri 2012 | Direct (fMRI) | Pulse clarity→emotion |
+| **Ventral Striatum** | (bilateral) | Gold 2023 | Direct (fMRI) | Liking-prediction integration |
+
+> **Note**: Auditory cortex (STG/PT) shows ADDITIVE effects of disruption, while reward regions (vmPFC/NAc/caudate/putamen) show the INTERACTION. This dissociation (Kim et al. 2019) means aesthetic integration happens at a higher level than sensory processing.
 
 ---
 
@@ -552,7 +627,7 @@ class STAI(BaseModel):
     ALPHA_SPECTRAL = 0.35    # Spectral weight
     BETA_TEMPORAL = 0.35     # Temporal weight
     GAMMA_INTERACTION = 0.30 # Interaction weight
-    VMPFC_IFG_CORR = 0.52   # Kim 2019 effect size
+    VMPFC_IFG_CORR = 0.72   # Kim et al. 2019 mean(d=0.709,0.735)
 
     @property
     def h3_demand(self) -> List[Tuple[int, int, int, int]]:
@@ -696,21 +771,44 @@ class STAI(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 1 | Kim 2019 |
-| **Effect Sizes** | d = 0.52 | vmPFC-IFG connectivity |
-| **Evidence Modality** | fMRI | Direct neural |
+| **Papers** | 14 | Multi-method convergence (see Section 3.1) |
+| **Core Effect** | d=0.709-0.735 (behavioral interaction) | Kim et al. 2019 (Scientific Reports) |
+| **Evidence Modalities** | fMRI, EEG, ECoG, behavioral, meta-analysis | 5+ methods |
 | **Falsification Tests** | 1/5 confirmed | 2x2 factorial validated |
 | **R³ Features Used** | ~20D of 49D | Consonance + timbre + change + interactions |
 | **H³ Demand** | 14 tuples (0.61%) | Sparse, efficient |
 | **PPC Mechanism** | 30D (3 sub-sections) | Consonance processing |
 | **TPC Mechanism** | 30D (3 sub-sections) | Temporal envelope processing |
 | **Output Dimensions** | **12D** | 4-layer structure |
+| **Key Correction** | d=0.52 from v2.0.0 was from WRONG Kim 2019 paper | See Section 3.3 |
+| **Code Discrepancy** | Code has MECHANISM_NAMES=("TPC",) but doc says ("PPC","TPC") | Fix in Phase 5 |
 
 ---
 
 ## 13. Scientific References
 
-1. **Kim, S. G., Kim, J. S., & Chung, C. K. (2019)**. The effect of conditional musical expectation on the neural responses to musical consonance and dissonance. *Neuroscience Letters*, 692, 78-84.
+### Primary (Spectral-Temporal Aesthetic Integration)
+
+1. **Kim, S.-G., Mueller, K., Lepsien, J., Mildner, T., & Fritz, T. H. (2019)**. Brain networks underlying aesthetic appreciation as modulated by interaction of the spectral and temporal organisations of music. *Scientific Reports*, 9, 19446. *(CORRECTED: v2.0.0 erroneously cited a different Kim 2019 from Neuroscience Letters)*
+2. **Alluri, V., Toiviainen, P., Jääskeläinen, I. P., Glerean, E., Sams, M., & Brattico, E. (2012)**. Large-scale brain networks emerge from dynamic processing of musical timbre, key and rhythm. *NeuroImage*, 59, 3677-3689.
+
+### Supporting (Aesthetic Judgment + Spectral or Temporal)
+
+3. **Cheung, V. K. M., Harrison, P. M. C., Meyer, L., Pearce, M. T., Haynes, J.-D., & Koelsch, S. (2019)**. Uncertainty and surprise jointly predict musical pleasure and amygdala, hippocampus, and auditory cortex activity. *Current Biology*, 29, 4084-4092.
+4. **Gold, B. P., Pearce, M. T., McIntosh, A. R., Chang, C., Dagher, A., & Zatorre, R. J. (2023)**. Auditory and reward structures reflect the pleasure of musical expectancies during naturalistic listening. *Frontiers in Neuroscience*, 17, 1209398.
+5. **Gold, B. P., Pearce, M. T., Mas-Herrero, E., Dagher, A., & Zatorre, R. J. (2019)**. Predictability and uncertainty in the pleasure of music: A reward for learning? *Journal of Neuroscience*, 39(47), 9397-9409.
+6. **Sarasso, P., Ronga, I., Pistis, A., Forte, E., Garbarini, F., Ricci, R., & Neppi-Modona, M. (2019)**. Aesthetic appreciation of musical intervals enhances behavioural and neurophysiological indexes of attentional engagement and motor inhibition. *Scientific Reports*, 9, 18550.
+7. **Bellmann, O. T., & Asano, R. (2024)**. Neural correlates of musical timbre: an ALE meta-analysis of neuroimaging data. *Frontiers in Neuroscience*, 18, 1373232.
+8. **Singer, N., Jacoby, N., Hendler, T., & Granot, R. (2023)**. Feeling the beat: Temporal predictability is associated with ongoing changes in music-induced pleasantness. *Journal of Cognition*, 6(1), 34, 1-19.
+9. **Brattico, P., Brattico, E., & Vuust, P. (2017)**. Global sensory qualities and aesthetic experience in music. *Frontiers in Neuroscience*, 11, 159.
+
+### Contextual (Sensory Encoding + Reward)
+
+10. **Mas-Herrero, E., Zatorre, R. J., Rodriguez-Fornells, A., & Marco-Pallarés, J. (2014)**. Dissociation between musical and monetary reward responses in specific musical anhedonia. *Current Biology*, 24, 699-704.
+11. **Fishman, Y. I., et al. (2001)**. Consonance and dissonance of musical chords: Neural correlates in auditory cortex of monkeys and humans. *Journal of Neurophysiology*, 86, 2761-2788.
+12. **Foo, F., et al. (2016)**. Differential processing of consonance and dissonance within the human superior temporal gyrus. *Frontiers in Human Neuroscience*, 10, 154.
+13. **Teixeira Borges, A. F., et al. (2019)**. Scaling behaviour in music and cortical dynamics interplay to mediate music listening pleasure. *Scientific Reports*, 9, 17700.
+14. **Santoyo, A. E., et al. (2023)**. Neurophysiological time course of timbre-induced music-like perception. *Journal of Neurophysiology*, 130, 291-302.
 
 ---
 

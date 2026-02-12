@@ -2160,7 +2160,7 @@ PHASE 5 (Weeks 17+): Social & Scale
 
 ---
 
-*SRC⁹ Musical Intelligence — Musical Intelligence for Multi-Sensory Experience*
+*SRC⁹ Musical Intelligence*
 *Version 5.0.0 — February 12, 2026*
 *Every dimension has meaning. Every meaning has science. Every science has music.*
-*v5: Analyze. Compose. Hybrid. One model, both directions, one elegant training.*
+*v5: Analyze. Compose. Hybrid. One model, both directions, one elegant training. White-Box.*

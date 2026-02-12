@@ -12,8 +12,8 @@
 - [x] #1 SPU-α1-BCH — Brainstem Consonance Hierarchy (v2.1.0: 4→14 papers, Cousineau qualifier, Fishman/Foo/Tabas cortical evidence)
 - [x] #2 SPU-α2-PSCL — Pitch Salience Cortical Localization (v2.1.0: 1→14 papers, Allen 7T qualification, Briley/Tabas/Schonwiesner/Fishman/Foo/Bravo evidence, multi-method convergence)
 - [x] #3 SPU-α3-PCCR — Pitch Chroma Cortical Representation (v2.1.0: 1→14 papers, Allen/Patterson/Norman-Haignere anatomy, helical model R²=92.7%, replication qualification noted)
-- [ ] #4 SPU-β1-STAI — Spectral-Temporal Aesthetic Integration
-- [ ] #5 SPU-β2-TSCP — Timbre-Specific Cortical Plasticity
+- [x] #4 SPU-β1-STAI — Spectral-Temporal Aesthetic Integration (v2.1.0: 1→14 papers, Kim citation CORRECTED to Sci Reports, d=0.52→0.72, Alluri/Cheung/Gold/Sarasso/Bellmann convergence, MNI coords added)
+- [x] #5 SPU-β2-TSCP — Timbre-Specific Cortical Plasticity (v2.1.0: 1→12 papers, Bellmann ALE meta-analysis 4 clusters, Whiteford subcortical null constraint, Halpern/Alluri/Santoyo convergence, no direct replication noted)
 - [ ] #6 SPU-β3-MIAA — Musical Imagery Auditory Activation
 - [ ] #7 SPU-γ1-SDNPS — Stimulus-Dependent Neural Pitch Salience
 - [ ] #8 SPU-γ2-ESME — Expertise-Specific MMN Enhancement

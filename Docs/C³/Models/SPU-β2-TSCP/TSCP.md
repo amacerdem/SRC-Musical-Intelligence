@@ -4,7 +4,7 @@
 **Unit**: SPU (Spectral Processing Unit)
 **Circuit**: Perceptual (Brainstem-Cortical)
 **Tier**: β (Integrative) — 70-90% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, TPC mechanism)
+**Version**: 2.1.0 (1→12 papers, Bellmann ALE meta-analysis, Whiteford subcortical null constraint, Halpern/Alluri/Santoyo convergence)
 **Date**: 2026-02-12
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
@@ -38,9 +38,19 @@ Evidence: Pantev et al. 2001 (MEG)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 KEY INSIGHT: Cortical plasticity for timbre is SPECIFIC, not general.
 Violinists show enhanced N1m responses to violin tones but NOT to
-trumpet or pure tones. This specificity emerges from use-dependent
-refinement of spectral envelope templates in auditory cortex, and
-represents training-induced reorganization of tonotopic maps.
+trumpet or pure tones (Pantev 2001, F(1,15)=28.55, p=.00008). This
+specificity emerges from use-dependent refinement of spectral
+envelope templates in auditory cortex. Convergent evidence:
+  • ALE meta-analysis (Bellmann & Asano 2024, k=18, N=338) localizes
+    timbre to bilateral pSTG/HG/SMG + right anterior insula — the
+    exact substrate where plasticity operates
+  • Naturalistic fMRI (Alluri 2012) shows all timbral features
+    (fullness, brightness, complexity) map to bilateral STG (Z>7)
+  • EEG (Santoyo 2023) shows musicians have enhanced theta phase-
+    locking for timbre-based musical streams — even without pitch
+  • Large preregistered study (Whiteford 2025, N>260) shows NO
+    subcortical enhancement from training, constraining TSCP's
+    plasticity locus to cortical mechanisms
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -109,10 +119,30 @@ TSCP captures how the spectral processing unit adapts through experience. While 
 
 CRITICAL EVIDENCE:
 ─────────────────
-Pantev et al. 2001:  Timbre-specific enhancement of N1m in musicians (MEG)
-                     Violinists: violin > trumpet > pure tone
-                     Trumpeters: trumpet > violin > pure tone
-                     Enhancement correlates with years of training
+1. Pantev et al. 2001:  Timbre-specific N1m enhancement (MEG, N=17)
+                        Double-dissociation: F(1,15)=28.55, p=.00008
+                        Violinists: violin > trumpet > pure tone
+                        Trumpeters: trumpet > violin > pure tone
+                        Age-of-inception: r=-0.634, p=.026
+
+2. Bellmann & Asano 2024: ALE meta-analysis of timbre neuroimaging
+                          (k=18 experiments, N=338), 4 clusters:
+                          L-SMG/HG, R-pSTG/PT, R-anterior insula, L-pSTG
+                          NO subcortical clusters → cortical locus
+
+3. Alluri et al. 2012:    Naturalistic fMRI (N=11 musicians)
+                          Timbral brightness: bilateral STG Z=8.13
+                          Timbral fullness: bilateral STG Z=7.35
+
+4. Halpern et al. 2004:   Timbre perception AND imagery overlap (fMRI)
+                          Right posterior STG: perception t=6.89
+                          Conjunction: right STG + left PT
+
+5. Santoyo et al. 2023:   Musicians > non-musicians theta phase-locking
+                          for timbre-based musical streams (EEG, N=23)
+
+6. Whiteford et al. 2025: CONSTRAINT — N>260 preregistered: NO subcortical
+                          musician enhancement (d=-0.064, BF=0.13 for null)
 ```
 
 ### 2.2 Information Flow Architecture (EAR → BRAIN → TPC → TSCP)
@@ -203,9 +233,20 @@ Pantev et al. 2001:  Timbre-specific enhancement of N1m in musicians (MEG)
 
 ### 3.1 Core Evidence Table
 
-| Study | Method | N | Key Finding | Effect Size | MI Relevance |
-|-------|--------|---|-------------|-------------|-------------|
-| **Pantev et al. 2001** | MEG (N1m) | 12 musicians, 12 controls | Timbre-specific N1m enhancement for trained instrument | Significant (p < 0.01) | **Primary evidence**: f01, f02, f03 — trained > untrained > pure tone |
+| # | Study | Method | N | Key Finding | Effect Size | MI Relevance |
+|---|-------|--------|---|-------------|-------------|-------------|
+| 1 | **Pantev et al. 2001** | MEG (N1m) | 17 musicians (8 violin, 9 trumpet) | Timbre-specific N1m enhancement — double dissociation between violinists/trumpeters | **F(1,15)=28.55, p=.00008**; age-of-inception r=-0.634 | **Primary**: f01, f02, f03 — trained > untrained > pure tone |
+| 2 | **Bellmann & Asano 2024** | ALE meta-analysis | k=18, N=338 | 4 timbre clusters: bilateral pSTG/HG/SMG + R anterior insula | ALE 0.018-0.023, FWE p<.05 | **Anatomical ground truth**: defines the cortical substrate where plasticity operates |
+| 3 | **Halpern et al. 2004** | fMRI (1.5T) | 10 trained musicians | Timbre imagery activates posterior PT overlapping with perception; right > left | Perception: t=8.40 (R PT); imagery: t=4.66 (R STG) | f07 timbre_continuation, f04 recognition_quality — imagery templates |
+| 4 | **Alluri et al. 2012** | fMRI (3T) | 11 musicians | Timbral features (fullness, brightness, complexity, activity) correlate with bilateral STG + cerebellum during naturalistic music | Z=7.05-8.13 bilateral STG; ISC r=0.64 | R³ timbre features → bilateral STG mapping — validates f01 R³ dependency |
+| 5 | **Santoyo et al. 2023** | EEG (64ch) | 23 (11 mus, 12 non-mus) | Musicians show enhanced theta phase-locking for timbre-based musical streams — right-lateralized hierarchy | Musicians > non-musicians theta PL | f03 plasticity — training enhances even pitchless timbre processing |
+| 6 | **Leipold et al. 2021** | fMRI + DWI | 153 (52 AP, 51 non-AP, 50 non-mus) | Robust musicianship effects on structural + functional connectivity; replicable across AP/non-AP | Replicable across 2 musician groups | Network-level plasticity framework — f03 plasticity magnitude context |
+| 7 | **Olszewska et al. 2021** | Systematic review | Review | Longitudinal studies: functional changes in motor-auditory networks; structural: arcuate fasciculus predicts learning | Predisposition + plasticity dual model | Theoretical framework: plasticity vs. predisposition for training effects |
+| 8 | **Whiteford et al. 2025** | EEG/FFR | >260 (preregistered, 6 sites) | **NULL**: No subcortical musician enhancement for F0 or harmonics | d=-0.064, BF₊₀=0.13 (7.8× null support) | **CONSTRAINT**: plasticity locus must be cortical, not brainstem |
+| 9 | **Foo et al. 2016** | ECoG (high-γ) | 8 neurosurgical | Dissonance-sensitive sites anterior in right STG; spatial gradient for spectral complexity | χ²(1)=8.6, p=.003 (y-axis) | Fine-grained STG topography for spectral features — substrate for timbre templates |
+| 10 | **Sturm et al. 2014** | ECoG (high-γ) | 10 neurosurgical | Spectral centroid (timbre) has distinct activation spots separate from lyrics and harmony in STG | Subject-individual ECoG mapping | Timbre processed in distinct STG sub-regions — supports f02 specificity |
+| 11 | **Zatorre & Halpern 2005** | Review | Review | Musical imagery framework: auditory cortex supports veridical timbre representation during imagery | Theoretical (perception-imagery overlap) | Theoretical basis for f07 timbre_continuation and imagery template mechanism |
+| 12 | **Criscuolo et al. 2022** | ALE meta-analysis | k=84 studies | Right IPL activation for timbre; IFG involvement; broader musician plasticity network | Meta-analytic ALE clusters | Musician expertise network that contextualizes timbre-specific plasticity |
 
 ### 3.2 The Timbre Specificity Hierarchy
 
@@ -234,11 +275,40 @@ Cross-instrument note:
 ### 3.3 Effect Size Summary
 
 ```
-Primary Evidence:     Pantev et al. 2001 (MEG, N1m dipole moments)
-Quality Assessment:   β-tier (integrative — single key study, MEG evidence)
-Replication:          Consistent with broader musician plasticity literature
-Key Metric:           Trained > Untrained instrument response (p < 0.01)
+MULTI-METHOD CONVERGENCE TABLE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Method         Study                    N     Key Statistic          Region
+───────────────────────────────────────────────────────────────────────────────
+MEG (N1m)      Pantev 2001              17    F(1,15)=28.55,p=.00008 Sec. AC
+fMRI 1.5T      Halpern 2004             10    t=8.40 (perception)    R PT
+fMRI 3T        Alluri 2012              11    Z=8.13 (brightness)    Bilat STG
+ALE meta       Bellmann & Asano 2024    338   4 clusters FWE<.05     pSTG/HG/SMG
+EEG (theta)    Santoyo 2023             23    Mus > Non-mus PL       R HG→STG
+fMRI+DWI       Leipold 2021             153   Replicable effects     Network
+EEG/FFR        Whiteford 2025           >260  d=-0.064 (NULL)        Subcortical
+ECoG (high-γ)  Foo 2016                 8     χ²=8.6, p=.003        R STG
+ECoG (high-γ)  Sturm 2014               10    Individual mapping     L STG
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Quality Assessment:   β-tier (integrative — strong flagship + multi-method convergence)
+Key Metric:           Trained > Untrained instrument response (F(1,15)=28.55, p=.00008)
 Specificity:          Timbre-specific, NOT general auditory enhancement
+Convergence:          6 methods (MEG, fMRI, EEG, ECoG, DWI, meta-analysis)
+                      agree on cortical (pSTG/HG/PT) locus of timbre processing
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ QUALIFICATION: Pantev 2001 remains the ONLY direct test of timbre-specific │
+│ plasticity (violin vs trumpet double dissociation). No independent         │
+│ replication of the N=17 design exists. The ALE meta-analyses (Bellmann     │
+│ 2024: timbre anatomy; Criscuolo 2022: musician expertise) provide strong   │
+│ convergent support for the cortical substrate and training effects, but    │
+│ the specific instrument×musician interaction has not been replicated.      │
+│                                                                            │
+│ CORTICAL CONSTRAINT: Whiteford et al. 2025 (N>260, preregistered) show    │
+│ NO subcortical musician enhancement (BF 7.8× favoring null), supporting   │
+│ that TSCP's plasticity operates at cortical, not brainstem, level — fully │
+│ consistent with Pantev's ECD localization to secondary auditory cortex.    │
+└─────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -515,11 +585,36 @@ generalization_pred = σ(0.50 * recognition_quality
 
 ### 8.1 Pipeline Validated Regions
 
-| Region | MNI Coordinates | Evidence Type | TSCP Function |
-|--------|-----------------|---------------|---------------|
-| **Auditory Cortex (bilateral)** | ±50, -20, 8 | Direct (MEG N1m) | Timbre-specific plasticity — enhanced N1m for trained instrument |
-| **Planum Temporale** | ±50, -24, 8 | Direct (MEG source) | Spectral processing — template-based timbre analysis |
-| **BA22 (Auditory Association)** | ±60, -30, 8 | Indirect | Auditory association — generalization and timbre identity |
+| # | Region | Coordinates | System | Source | TSCP Function |
+|---|--------|-------------|--------|--------|---------------|
+| 1 | **L SMG / HG (BA 40/41)** | -44, -34, — / -56, -20, — | MNI | Bellmann & Asano 2024 (ALE peak, 4640 mm³) | Primary timbre processing cluster — template storage |
+| 2 | **R pSTG / PT (BA 22)** | ~54, -24, — | MNI | Bellmann & Asano 2024 (ALE peak, 3128 mm³) | Right hemisphere timbre discrimination |
+| 3 | **R anterior insula / aSTG (BA 13/22)** | ~40, -2, -6 | MNI | Bellmann & Asano 2024 (ALE peak, 1696 mm³, passive only) | Categorical timbre identity recognition |
+| 4 | **L pSTG / PT** | -60, -40, — | MNI | Bellmann & Asano 2024 (ALE cluster 4) | Left hemisphere timbre processing |
+| 5 | **Secondary auditory cortex (bilat)** | ECD posterior/lateral to HG | Head-based | Pantev et al. 2001 (MEG N1m source) | Timbre-specific plasticity — enhanced N1m for trained instrument |
+| 6 | **R posterior STG** | ~58, -42, — | Talairach | Halpern et al. 2004 (perception t=6.89) | Timbre perception — spectral analysis |
+| 7 | **R posterior STG** | ~58, -42, — | Talairach | Halpern et al. 2004 (imagery t=4.66) | Timbre imagery — perception-imagery overlap |
+| 8 | **L PT** | -56, -44, — | Talairach | Halpern et al. 2004 (conjunction t=4.98) | Perception-imagery conjunction site |
+| 9 | **R STG (BA 22)** | 51, -14, 1 | Talairach | Alluri et al. 2012 (fullness Z=7.35) | Naturalistic timbral fullness processing |
+| 10 | **R STG (BA 22)** | 50, -19, 3 | Talairach | Alluri et al. 2012 (brightness Z=8.13) | Naturalistic timbral brightness processing |
+| 11 | **L STG (BA 22)** | -55, -15, 3 | Talairach | Alluri et al. 2012 (brightness Z=8.13) | Left hemisphere timbral brightness |
+| 12 | **R HG → STG hierarchy** | — | Scalp EEG | Santoyo et al. 2023 (theta PL) | Timbre-based musicality — right-lateralized |
+| 13 | **R STG anterior gradient** | y-axis significant | ECoG | Foo et al. 2016 (χ²=8.6, p=.003) | Fine-grained spatial organization for spectral complexity |
+| 14 | **STG (individual spots)** | Subject-specific | ECoG | Sturm et al. 2014 (high-γ) | Spectral centroid (timbre) distinct from lyrics/harmony |
+
+```
+NOTE ON COORDINATES: Pantev et al. 2001 used individual head-based ECD
+modeling, not MNI/Talairach. ECD was localized "posterior and lateral to
+Heschl's gyrus in secondary auditory cortex." The ALE meta-analysis
+(Bellmann & Asano 2024) provides the definitive MNI coordinate map for
+timbre processing, with 4 clusters totaling ~10,000+ mm³ of cortical
+territory in bilateral pSTG/HG/SMG and right anterior insula.
+
+Code file (tscp.py) currently lists:
+  A1 (-48,-22,8) and PT (-52,-26,12)
+These are approximate and should be updated to ALE-validated coordinates
+in Phase 5.
+```
 
 ---
 
@@ -723,20 +818,47 @@ class TSCP(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 1 | Primary evidence (Pantev et al. 2001) |
-| **Effect Sizes** | Significant (p < 0.01) | Pantev 2001 (MEG N1m) |
-| **Evidence Modality** | MEG (N1m dipole moments) | Direct neural |
+| **Papers** | **12** (v2.1.0, was 1 in v2.0.0) | 1 direct + 2 ALE meta-analyses + 2 fMRI + 2 ECoG + 1 EEG + 1 DWI + 1 FFR + 2 reviews |
+| **Effect Sizes** | **F(1,15)=28.55, p=.00008** (flagship) | Pantev 2001 (MEG N1m double dissociation) |
+| **Evidence Modality** | **6 methods**: MEG, fMRI, EEG, ECoG, DWI, meta-analysis | Multi-method convergence on cortical locus |
+| **ALE Meta-analysis** | 4 clusters (k=18, N=338) | Bellmann & Asano 2024 — bilateral pSTG/HG/SMG + R anterior insula |
+| **Cortical Constraint** | Subcortical: d=-0.064, BF=0.13 (NULL) | Whiteford 2025 (N>260) — plasticity must be cortical |
+| **Replication Status** | **No direct replication** of timbre-specific double dissociation (N=17 only) | ALE meta-analyses provide convergent anatomical support |
 | **Falsification Tests** | 3/6 confirmed | Moderate validity |
 | **R³ Features Used** | ~18D of 49D | Timbre-focused |
 | **H³ Demand** | 12 tuples (0.52%) | Sparse, efficient |
 | **TPC Mechanism** | 30D (3 sub-sections) | Full coverage |
 | **Output Dimensions** | **10D** | 4-layer structure |
 
+```
+v2.1.0 CHANGES:
+  • Evidence table expanded: 1 → 12 papers
+  • KEY INSIGHT updated with convergent evidence from 6 methods
+  • CRITICAL EVIDENCE expanded to 6 core findings
+  • Effect size summary: multi-method convergence table added
+  • Qualification box: no direct replication of Pantev 2001 design noted
+  • Cortical constraint: Whiteford 2025 null subcortical result incorporated
+  • Brain regions: 3 → 14 entries with ALE-validated MNI coordinates
+  • Code discrepancy: tscp.py brain_regions use approximate coords
+    (A1: -48,-22,8; PT: -52,-26,12) — update to ALE peaks in Phase 5
+```
+
 ---
 
 ## 13. Scientific References
 
 1. **Pantev, C., Roberts, L. E., Schulz, M., Engelien, A., & Ross, B. (2001)**. Timbre-specific enhancement of auditory cortical representations in musicians. *NeuroReport*, 12(1), 169-174.
+2. **Bellmann, O. T., & Asano, R. (2024)**. Neural correlates of musical timbre: an ALE meta-analysis of neuroimaging data. *Frontiers in Neuroscience*, 18, 1373232. doi: 10.3389/fnins.2024.1373232.
+3. **Halpern, A. R., Zatorre, R. J., Bouffard, M., & Johnson, J. A. (2004)**. Behavioral and neural correlates of perceived and imagined musical timbre. *Neuropsychologia*, 42, 1281-1292.
+4. **Alluri, V., Toiviainen, P., Jääskeläinen, I. P., Glerean, E., Sams, M., & Brattico, E. (2012)**. Large-scale brain networks emerge from dynamic processing of musical timbre, key and rhythm. *NeuroImage*, 59, 3677-3689.
+5. **Santoyo, A. E., Gonzales, M. G., Iqbal, Z. J., Backer, K. C., Balasubramaniam, R., Bortfeld, H., & Shahin, A. J. (2023)**. Neurophysiological time course of timbre-induced music-like perception. *Journal of Neurophysiology*, 130, 291-302.
+6. **Leipold, S., Klein, C., & Jäncke, L. (2021)**. Musical expertise shapes functional and structural brain networks independent of absolute pitch ability. *Journal of Neuroscience*, 41(11), 2496-2511.
+7. **Olszewska, A. M., Gaca, M., Herman, A. M., Jednoróg, K., & Marchewka, A. (2021)**. How musical training shapes the adult brain: Predispositions and neuroplasticity. *Frontiers in Neuroscience*, 15, 630829.
+8. **Whiteford, K. L., Baltzell, L. S., Chiu, M., Cooper, J. K., Faucher, S., Goh, P. Y., ... & Oxenham, A. J. (2025)**. Large-scale multi-site study shows no association between musical training and early auditory neural sound encoding. *Nature Communications*, 16, 7152.
+9. **Foo, F., King-Stephens, D., Weber, P., Laxer, K., Parvizi, J., & Knight, R. T. (2016)**. Differential processing of consonance and dissonance within the human superior temporal gyrus. *Frontiers in Human Neuroscience*, 10, 154.
+10. **Sturm, I., Blankertz, B., Potes, C., Schalk, G., & Curio, G. (2014)**. ECoG high gamma activity reveals distinct cortical representations of lyrics passages, harmonic and timbre-related changes in a rock song. *Frontiers in Human Neuroscience*, 8, 798.
+11. **Zatorre, R. J., & Halpern, A. R. (2005)**. Mental concerts: Musical imagery and auditory cortex. *Neuron*, 47(1), 9-12.
+12. **Criscuolo, A., Pando-Naude, V., Bonetti, L., Vuust, P., & Brattico, E. (2022)**. An ALE meta-analytic review of musical expertise. *Scientific Reports*, 12, 11726.
 
 ---
 
