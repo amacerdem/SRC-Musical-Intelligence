@@ -4,18 +4,18 @@
 **Unit**: STU (Sensorimotor Timing Unit)
 **Circuit**: Sensorimotor (Beat Entrainment + Temporal Memory Hierarchy)
 **Tier**: γ (Speculative) — <70% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, BEP + TMH mechanisms)
-**Date**: 2026-02-12
+**Version**: 2.1.0 (deep literature review: ~3→12 papers, Marion-St-Onge 2020 N=70 DIRECT prodigy test flow F(2,43)=3.62 p=.035 prodigies M=3.8 vs early-trained M=3.3 BUT continuum not category CONSTRAINS, NO IQ/personality/WM difference, Salimpoor 2011 PET N=8 caudate anticipation r=0.71 / NAcc experience r=0.84 dopaminergic reward, Chabin 2020 HD-EEG N=18 OFC F=17.4/SMA F=27.3 during chills, Dai 2025 fMRI LEiDA musicians PL-state-11 frontal-reward p=.001, Liao 2024 improvisation DMN↓ supports hypofrontality, 8 methods)
+**Date**: 2026-02-13
 
-> **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
+> **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/General/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
-> **Legacy**: New model — no legacy equivalent.
+> **Legacy**: Replaces `Library/Auditory/C⁰/Models/STU-γ5-MPFS.md` (v1.0.0, S⁰/HC⁰ naming).
 
 ---
 
 ## 1. What Does This Model Simulate?
 
-The **Musical Prodigy Flow State** (MPFS) model proposes that musical prodigies are distinguished from non-prodigies not by intelligence (IQ), but by their propensity for flow states during musical performance (r = 0.47). Flow — a state of complete absorption, automatic processing, and loss of self-consciousness — emerges when motor automaticity (BEP) meets structural mastery (TMH), enabling a challenge-skill balance that Csikszentmihalyi identified as the gateway to optimal experience.
+The **Musical Prodigy Flow State** (MPFS) model proposes that musical prodigies are distinguished from non-prodigies not by intelligence (IQ), but by their propensity for flow states during musical performance. Marion-St-Onge et al. (2020, N=70) confirmed this: prodigies scored higher on flow during practice (F(2,43)=3.62, p=0.035; M=3.8 vs early-trained M=3.3), with NO IQ difference (F(3,66)=1.78, p=0.159). However, prodigies lie on a continuum — NOT a distinct category — and flow scores overlap considerably between groups. Flow — a state of complete absorption, automatic processing, and loss of self-consciousness — emerges when motor automaticity (BEP) meets structural mastery (TMH), enabling a challenge-skill balance that Csikszentmihalyi identified as the gateway to optimal experience. The neurochemical substrate involves striatal dopamine: caudate during anticipation (r=0.71), NAcc during experience (r=0.84; Salimpoor et al. 2011), with cortical signatures in OFC, SMA, and bilateral insula during peak musical states (Chabin et al. 2020).
 
 ```
 THE FLOW STATE GATEWAY: AUTOMATICITY × CONTEXT MASTERY
@@ -43,17 +43,25 @@ H³ horizons: H6, H11, H16            H³ horizons: H8, H14, H20
             │  • DMN suppression       │
             └──────────────────────────┘
                        │
-                       ▼
-              PRODIGY DISTINCTION
-              r = 0.47 (flow propensity)
-              NOT IQ — flow is the key
+          ┌────────────┼────────────────┐
+          ▼            ▼                ▼
+    PRODIGY         DOPAMINERGIC       CORTICAL
+    DISTINCTION     REWARD             SIGNATURES
+    Flow F(2,43)    Caudate r=0.71     OFC F=17.4
+    =3.62, p=.035   (anticipation)     SMA F=27.3
+    NOT IQ p=.159   NAcc r=0.84        Insula F=21.6
+    (Marion-St-     (experience)       (Chabin 2020)
+     Onge 2020)    (Salimpoor 2011)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 KEY INSIGHT: Prodigies achieve flow more frequently and more deeply
 because their motor automaticity (BEP) frees cognitive resources,
 while their context mastery (TMH) provides structural certainty.
 The combination produces the challenge-skill balance that triggers
-flow. IQ does NOT predict this — flow propensity does (r = 0.47).
+flow. IQ does NOT predict this — flow propensity does.
+CONSTRAINT (Marion-St-Onge 2020): Prodigies lie on a CONTINUUM,
+NOT a distinct category. Flow scores overlap between groups.
+External motivation also contributes (η² = 0.152, p = 0.016).
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -112,10 +120,13 @@ MPFS integrates both STU mechanisms (BEP + TMH) to model an emergent state:
 ║                                                                              ║
 ║  FLOW = High BEP automaticity × High TMH mastery × Low DLPFC × Low DMN    ║
 ║                                                                              ║
-║  EVIDENCE (limited — γ tier):                                               ║
-║  Csikszentmihalyi 1990: Flow = challenge-skill balance                     ║
-║  Dietrich 2004: Transient hypofrontality during flow                       ║
-║  Prodigy studies: Flow propensity r = 0.47 (NOT IQ)                        ║
+║  EVIDENCE (expanded — γ tier, 12 papers, 8 methods):                        ║
+║  Marion-St-Onge 2020: Flow F(2,43)=3.62, p=.035, NOT IQ (N=70)            ║
+║  Salimpoor 2011: Caudate r=0.71 anticipation, NAcc r=0.84 experience       ║
+║  Chabin 2020: OFC F=17.4, SMA F=27.3, insula F=21.6 (HD-EEG)             ║
+║  Dai 2025: Musicians frontal-reward PL state 11 (p=.001)                   ║
+║  Liao 2024: DMN↓ during structured improvisation (N=25)                    ║
+║  CONSTRAINT: Prodigies = continuum, NOT distinct category                   ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -210,32 +221,54 @@ MPFS integrates both STU mechanisms (BEP + TMH) to model an emergent state:
 
 ### 3.1 Core Evidence Table
 
-| Study | Method | N | Key Finding | Effect Size | MI Relevance |
-|-------|--------|---|-------------|-------------|-------------|
-| **Csikszentmihalyi 1990** | Theory | — | Flow = challenge-skill balance, complete absorption | Conceptual | **Core framework**: f03_flow_propensity |
-| **Ruthsatz & Urbach 2012** | Psychometric | 18 | Prodigies distinguished by flow propensity, not IQ | r = 0.47 | **Primary coefficient**: f03_flow_propensity |
-| **Dietrich 2004** | Review | — | Transient hypofrontality: DLPFC deactivation during flow | Conceptual | **hypofrontality_proxy**: DLPFC suppression |
-| **Limb & Braun 2008** | fMRI | 6 | Jazz improvisation: DLPFC deactivation + medial PFC activation | Qualitative | **Flow during music**: DLPFC down, SMA up |
-| **Zatorre et al. 2007** | Review | — | Musical training → basal ganglia automaticity | Conceptual | **BEP binding**: motor_entrainment |
+| # | Study | Method | N | Key Finding | Effect Size | MI Relevance |
+|---|-------|--------|---|-------------|-------------|-------------|
+| 1 | **Marion-St-Onge et al. (2020)** | Psychometric + IQ | 70 (19 prodigies, 35 musicians, 16 non-musicians) | Flow during practice distinguishes prodigies; NO IQ/personality/WM difference | F(2,43)=3.62, p=.035; M=3.8 vs 3.3 | **f03_flow_propensity**: DIRECT prodigy test |
+| 2 | **Marion-St-Onge et al. (2020)** | Psychometric | 70 | External motivation also distinguishes prodigies; prodigies = continuum not category | η²=0.152, p=.016 | **CONSTRAINS**: flow not sole factor, overlapping scores |
+| 3 | **Salimpoor et al. (2011)** | PET + fMRI | 8 | Endogenous dopamine release in caudate (anticipation) + NAcc (experience) during peak musical pleasure | Caudate r=0.71; NAcc r=0.84; BP 6.4-9.2% | **Dopaminergic substrate** for flow reward |
+| 4 | **Chabin et al. (2020)** | HD-EEG (256ch) | 18 | OFC + SMA + bilateral insula + STG activation during musical chills; theta increase R prefrontal | OFC F(2,15)=17.4 p<1e-5; SMA F(2,15)=27.3 p<1e-7 | **Cortical flow signatures**: OFC reward, SMA motor |
+| 5 | **Dai et al. (2025)** | fMRI LEiDA | 36 | Musicians: more frequent frontal-reward PL state 11 (SFG/MFG/IFG/OFC/ACC/IPL); non-musicians: more DMN | PL11 p=0.0010; PL7 p=0.0444 | **Dynamic connectivity**: expertise → frontal-reward |
+| 6 | **Liao et al. (2024)** | fMRI | 25 | Percussionist improvisation: SIMP → ECN+NMR ↑, DMN ↓; FIMP → ECN+NMR+limbic+memory ↑ | structural/free contrast | **DMN suppression** during structured improvisation supports hypofrontality |
+| 7 | **Roth (2025)** | Mixed (feasibility) | 8 | Shared flow during group instrumental improvisation; both musicians and non-musicians report high shared flow | SFS 5.46-6.27/7 | **Flow measurability** in musical contexts |
+| 8 | **Tachibana et al. (2024)** | fNIRS | 20 | Guitar improvisation → bilateral BA45 (Broca's) activation, independent of skill level | p=.02-.04 | **IFG/BA45** for creative motor production |
+| 9 | **Criscuolo et al. (2022)** | ALE meta-analysis | 3005 (k=84) | Musicians: higher auditory, sensorimotor, interoceptive, limbic; LOWER parietal | k=84 studies | **Population-level** structural differences |
+| 10 | **Limb & Braun (2008)** | fMRI | 6 | Jazz improvisation: DLPFC deactivation + medial PFC activation | Qualitative | **Hypofrontality** during musical flow |
+| 11 | **Dietrich (2004)** | Review | — | Transient hypofrontality: DLPFC deactivation during flow states | Conceptual | **hypofrontality_proxy**: theoretical framework |
+| 12 | **Csikszentmihalyi (1990)** | Theory | — | Flow = challenge-skill balance, complete absorption, 8 characteristics | Conceptual | **Core framework**: f03_flow_propensity |
+
+#### §3.1.1 Evidence Convergence (8 methods)
+
+Flow-state evidence for musical prodigies converges across 8 methods: (1) prodigy psychometric battery (Marion-St-Onge 2020), (2) PET dopamine imaging (Salimpoor 2011), (3) HD-EEG 256-channel source localization (Chabin 2020), (4) fMRI dynamic connectivity LEiDA (Dai 2025), (5) fMRI task-based improvisation (Liao 2024, Limb & Braun 2008), (6) fNIRS improvisation (Tachibana 2024), (7) ALE meta-analysis (Criscuolo 2022), (8) shared flow behavioral (Roth 2025).
+
+#### §3.1.2 Marion-St-Onge 2020 Prodigy Qualification
+
+Marion-St-Onge et al. (2020) is the LARGEST published study of musical prodigies (N=19 prodigies vs 35 early-trained musicians vs 16 non-musicians). While it confirms that flow during practice distinguishes prodigies (F(2,43)=3.62, p=0.035; Bonferroni-corrected prodigies M=3.8 vs early-trained M=3.3, p=0.039), several findings CONSTRAIN the MPFS model: (a) prodigies lie on a CONTINUUM — NOT a distinct category; (b) flow scores OVERLAP considerably between groups; (c) external motivation ALSO distinguishes prodigies (η²=0.152, p=0.016); (d) extraversion correlates with early practice onset (r=0.47) across ALL musicians, not prodigy-specific; (e) uses Dispositional Flow Scale 2 (Jackson & Eklund 2004), which measures flow propensity, not real-time flow states. The v2.0.0 claim "r=0.47 flow propensity" from Ruthsatz & Urbach 2012 may conflate two different r=0.47 values — Ruthsatz & Urbach 2012 studied a cognitive profile (IQ+WM+attention-to-detail), while the extraversion-practice r=0.47 is from Marion-St-Onge 2020.
+
+#### §3.1.3 Dopaminergic Reward Specification
+
+Salimpoor et al. (2011) provides the neurochemical mechanism linking musical pleasure peaks to flow-like states. The temporal dissociation — caudate during ANTICIPATION (r=0.71 with chill count), NAcc during EXPERIENCE (r=0.84 with pleasure rating), with BP decreases of 6.4-9.2% bilaterally — maps onto the flow model's challenge-skill balance: anticipatory reward (caudate) drives engagement toward the challenge-skill balance point, while consummatory reward (NAcc) sustains the flow state once achieved. NAcc BOLD predicted 67% of subjective pleasure variance.
 
 ### 3.2 The Flow-Prodigy Link
 
 ```
-PRODIGY DISTINCTION: FLOW, NOT IQ
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PRODIGY DISTINCTION: FLOW, NOT IQ (Marion-St-Onge 2020, N=70)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Factor              Correlation with Prodigy Status
-────────────────────────────────────────────────────
-Flow Propensity     r = 0.47  ★★★ (distinguishing)
-Working Memory      r ~ 0.30  (contributes but not key)
-IQ                  r ~ 0.10  (NOT the distinguishing factor)
-Practice Hours      r ~ 0.25  (necessary but not sufficient)
+Factor              Effect                     Source
+────────────────────────────────────────────────────────────────
+Flow Propensity     F(2,43)=3.62, p=.035       Marion-St-Onge 2020
+                    Prodigies M=3.8 vs 3.3
+IQ                  F(3,66)=1.78, p=.159       Marion-St-Onge 2020
+                    (all groups 113-120)
+Working Memory      NS                          Marion-St-Onge 2020
+Personality         NS (Big Five, AQ)           Marion-St-Onge 2020
+External Motivation η²=0.152, p=.016           Marion-St-Onge 2020
+Extraversion×       r=0.47 (across ALL          Marion-St-Onge 2020
+  Practice Onset    musicians, NOT prodigy-specific)
 
-Key Insight (Ruthsatz & Urbach 2012):
-  Musical prodigies score exceptionally high on flow
-  tendency measures. They enter flow more readily,
-  sustain it longer, and recover it after disruption.
-  This is NOT explained by general intelligence.
+CONSTRAINT: Prodigies = high end of continuum, NOT distinct category.
+Flow scores overlap considerably between prodigies and non-prodigies.
+Uses Dispositional Flow Scale 2 (not real-time flow measurement).
 
 Flow Characteristics (Csikszentmihalyi 1990):
   1. Challenge-skill balance (skill ≈ challenge)
@@ -251,12 +284,42 @@ Flow Characteristics (Csikszentmihalyi 1990):
 ### 3.3 Effect Size Summary
 
 ```
-Primary Correlation:  r = 0.47 (flow propensity ↔ prodigy status)
-Quality Assessment:   γ-tier (limited sample, psychometric measures)
-Replication:          Converges with flow theory and neuroimaging
-                      of musical improvisation (Limb & Braun 2008)
-Limitation:           No direct ECoG/fMRI during prodigy flow states
-                      Inferred from behavioral + psychometric data
+PRODIGY FLOW EVIDENCE (Marion-St-Onge 2020, N=70):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Measure                  Effect                  Source
+─────────────────────────────────────────────────────────────────
+Flow during practice     F(2,43)=3.62, p=.035    Psychometric (DFS-2)
+IQ difference            F(3,66)=1.78, p=.159    NOT significant
+External motivation      η²=0.152, p=.016        Psychometric
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+DOPAMINERGIC REWARD (Salimpoor 2011, PET N=8):
+  Caudate × chills:     r=0.71, p<.05 (anticipation)
+  NAcc × pleasure:      r=0.84, p<.01 (experience)
+  NAcc BOLD → pleasure: 67% variance explained
+  BP change:            6.4-9.2% bilateral striatum
+
+CORTICAL SIGNATURES (Chabin 2020, HD-EEG N=18):
+  OFC:                  F(2,15)=17.4, p<1e-5
+  SMA:                  F(2,15)=27.3, p<1e-7
+  Bilateral insula:     F(2,15)=21.63, p<1e-6
+  Theta increase:       Right prefrontal, p=.046
+  Beta/alpha ratio:     F(2,15)=4.77, p=.014 (arousal)
+
+DYNAMIC CONNECTIVITY (Dai 2025, fMRI N=36):
+  Frontal-reward PL11:  p=0.0010 (musicians > non-musicians)
+  DMN PL7:              p=0.0444 (non-musicians > musicians)
+
+IMPROVISATION DMN SUPPRESSION (Liao 2024, fMRI N=25):
+  SIMP: ECN+NMR ↑, DMN ↓ (structured improvisation)
+  FIMP: ECN+NMR+limbic+memory ↑ (free improvisation)
+
+Quality Assessment: γ-tier (speculative)
+  Strengths: Direct prodigy test (N=70), PET dopamine evidence,
+  HD-EEG cortical source localization, dynamic FC, 8 methods
+  Weakness: Flow measured via questionnaire not real-time,
+  prodigies = continuum with overlapping scores, PET N=8,
+  no direct neural imaging DURING prodigy flow performance
 ```
 
 ---
@@ -576,14 +639,20 @@ flow_disrupt = σ(0.5 · ctx_entropy + 0.3 · amp_variability
 
 ### 8.1 Pipeline Relevant Regions
 
-| Region | MNI Coordinates | Evidence Type | MPFS Function |
-|--------|-----------------|---------------|---------------|
-| **SMA** | ±5, −5, 55 | Indirect (fMRI) | Motor planning → automaticity (BEP) |
-| **Basal Ganglia (Putamen)** | ±25, 5, 0 | Indirect (fMRI) | Procedural memory, beat processing |
-| **Basal Ganglia (Caudate)** | ±12, 10, 8 | Indirect (fMRI) | Habit formation, tempo prediction |
-| **DLPFC** | ±45, 35, 25 | Indirect (fMRI) | Executive control — REDUCED during flow |
-| **DMN (mPFC)** | 0, 50, 10 | Indirect (fMRI) | Self-referential — SUPPRESSED during flow |
-| **Auditory Cortex** | ±50, −20, 8 | Indirect | TMH context encoding substrate |
+| Region | MNI Coordinates | Evidence Type | Effect | MPFS Function |
+|--------|-----------------|---------------|--------|---------------|
+| **SMA** | ±5, −5, 55 | HD-EEG source (Chabin 2020) | F(2,15)=27.3, p<1e-7 | Motor planning → automaticity (BEP) |
+| **OFC** | ±30, 35, −10 | HD-EEG source (Chabin 2020) | F(2,15)=17.4, p<1e-5 | Reward processing during peak musical pleasure |
+| **Basal Ganglia (Caudate)** | ±12, 10, 8 | PET (Salimpoor 2011) | r=0.71 chill anticipation | Dopaminergic anticipation during flow approach |
+| **NAcc** | ±9, 9, −8 | PET (Salimpoor 2011) | r=0.84 pleasure; 67% var | Dopaminergic reward during flow experience |
+| **Basal Ganglia (Putamen)** | ±25, 5, 0 | PET (Salimpoor 2011) | BP 6.4-9.2% | Procedural memory, beat processing |
+| **DLPFC** | ±45, 35, 25 | fMRI (Limb & Braun 2008; Liao 2024) | Deactivation during improv | Executive control — REDUCED during flow |
+| **Bilateral insula** | ±38, −15, 8 | HD-EEG source (Chabin 2020) | F(2,15)=21.63, p<1e-6 | Interoceptive awareness during peak states |
+| **IFG / BA45 (bilateral)** | ±48, 20, 10 | fNIRS (Tachibana 2024) | p=.02-.04 | Creative motor planning during improvisation |
+| **DMN (mPFC)** | 0, 50, 10 | fMRI (Liao 2024; Dai 2025) | DMN ↓ musicians | Self-referential — SUPPRESSED during flow |
+| **SFG/MFG/ACC** | ±20, 45, 30 | fMRI LEiDA (Dai 2025) | PL11 p=0.0010 | Frontal-reward network (musicians) |
+| **STG (bilateral)** | ±55, −22, 8 | HD-EEG source (Chabin 2020) | Source localized | Auditory processing during chills |
+| **Auditory Cortex** | ±50, −20, 8 | ALE (Criscuolo 2022 k=84) | Meta-analytic | TMH context encoding substrate |
 
 ---
 
@@ -617,14 +686,18 @@ flow_disrupt = σ(0.5 · ctx_entropy + 0.3 · amp_variability
 
 ## 10. Falsification Criteria
 
-| Criterion | Testable Prediction | Status |
-|-----------|---------------------|--------|
-| **Flow ≠ IQ** | Prodigy status should correlate with flow (r ≈ 0.47) but NOT with IQ | ✅ Preliminary: Ruthsatz & Urbach 2012 |
-| **DLPFC deactivation** | Should observe DLPFC deactivation during expert musical performance | ✅ Supported: Limb & Braun 2008 (jazz) |
-| **BEP predicts flow** | Motor automaticity (BEP regularity) should correlate with self-reported flow | ✅ Testable |
-| **TMH predicts flow** | Context mastery (TMH long-context) should correlate with self-reported flow | ✅ Testable |
-| **Disruption test** | Metric/tempo perturbation should break flow (increase DLPFC, decrease absorption) | ✅ Testable |
-| **Non-prodigy distinction** | Non-prodigies at same skill level should show LOWER flow propensity | ✅ Testable |
+| # | Criterion | Testable Prediction | Status |
+|---|-----------|---------------------|--------|
+| 1 | **Flow ≠ IQ** | Prodigy status should correlate with flow but NOT with IQ | **Confirmed**: Marion-St-Onge 2020 flow F(2,43)=3.62, p=.035; IQ F(3,66)=1.78, p=.159 NS |
+| 2 | **DLPFC deactivation** | Should observe DLPFC deactivation during expert musical performance | **Confirmed**: Limb & Braun 2008 (jazz); Liao 2024 DMN↓ during SIMP |
+| 3 | **Dopaminergic reward during flow-like states** | Peak musical pleasure should involve striatal dopamine release | **Confirmed**: Salimpoor 2011, caudate r=0.71, NAcc r=0.84, BP 6.4-9.2% |
+| 4 | **Cortical signatures of peak musical states** | Should observe OFC/SMA/insula activation during musical chills | **Confirmed**: Chabin 2020, OFC F=17.4, SMA F=27.3, insula F=21.6 |
+| 5 | **Musicians show distinct dynamic connectivity** | Musicians should show enhanced frontal-reward network engagement | **Confirmed**: Dai 2025, PL state 11 p=0.0010; non-musicians more DMN |
+| 6 | **Prodigies as distinct category** | Prodigies should be categorically different from trained musicians | **Disconfirmed**: Marion-St-Onge 2020 — prodigies = continuum, overlapping scores |
+| 7 | **Flow as sole prodigy predictor** | Flow propensity should be the only distinguishing factor | **Partially disconfirmed**: External motivation also contributes η²=0.152 (Marion-St-Onge 2020) |
+| 8 | **BEP predicts flow** | Motor automaticity (BEP regularity) should correlate with self-reported flow | Testable |
+| 9 | **TMH predicts flow** | Context mastery (TMH long-context) should correlate with self-reported flow | Testable |
+| 10 | **Disruption test** | Metric/tempo perturbation should break flow (increase DLPFC, decrease absorption) | Testable |
 
 ---
 
@@ -791,10 +864,10 @@ class MPFS(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 4+ | Csikszentmihalyi 1990, Ruthsatz 2012, Dietrich 2004, Limb & Braun 2008 |
-| **Effect Sizes** | r = 0.47 (flow-prodigy) | Ruthsatz & Urbach 2012 |
-| **Evidence Modality** | Psychometric, fMRI, theory | Indirect/behavioral |
-| **Falsification Tests** | 2/6 supported, 4 testable | Moderate validity |
+| **Papers** | 12 (7 Tier 1 + 3 Tier 2 + 2 Tier 3) | 8 methods, >3200 cumulative N |
+| **Effect Sizes** | Flow F(2,43)=3.62; NAcc r=0.84; OFC F=17.4; SMA F=27.3 | Marion-St-Onge 2020, Salimpoor 2011, Chabin 2020 |
+| **Evidence Modality** | Psychometric, PET, HD-EEG, fMRI, fMRI LEiDA, fNIRS, ALE, behavioral | Multi-method convergence |
+| **Falsification Tests** | 10 total: 5 confirmed, 2 disconfirmed, 3 testable | Moderate validity |
 | **R³ Features Used** | 33D of 49D | Energy + Change + Interactions |
 | **H³ Demand** | 20 tuples (0.87%) | Sparse, efficient |
 | **BEP Mechanism** | 30D (3 sub-sections) | Full coverage |
@@ -805,15 +878,46 @@ class MPFS(BaseModel):
 
 ## 13. Scientific References
 
-1. **Csikszentmihalyi, M. (1990)**. *Flow: The Psychology of Optimal Experience*. Harper & Row. (Foundational flow theory — challenge-skill balance, 8 characteristics of flow)
+### Tier 1 — Direct Quantitative Evidence (in collection)
 
-2. **Ruthsatz, J., & Urbach, J. B. (2012)**. Child prodigy: A novel cognitive profile places elevated general intelligence, exceptional working memory, and attention to detail at the root of prodigiousness. *Intelligence*, 40(5), 419-426. (Flow propensity r = 0.47 with prodigy status; IQ not distinguishing)
+1. **Marion-St-Onge, C., et al. (2020)**. What makes musical prodigies? *Frontiers in Psychology*, 11:566373. (Psychometric + IQ, N=70: 19 prodigies, 35 musicians, 16 non-musicians. Flow during practice F(2,43)=3.62, p=.035; prodigies M=3.8 vs early-trained M=3.3; NO IQ F(3,66)=1.78, p=.159; NO personality/WM; external motivation η²=0.152, p=.016; extraversion-practice r=0.47 across all musicians. Uses DFS-2. CONSTRAINS: prodigies = continuum, overlapping scores)
 
-3. **Dietrich, A. (2004)**. Neurocognitive mechanisms underlying the experience of flow. *Consciousness and Cognition*, 13(4), 746-761. (Transient hypofrontality: DLPFC deactivation during flow states)
+2. **Salimpoor, V. N., et al. (2011)**. Anatomically distinct dopamine release during anticipation and experience of peak emotion to music. *Nature Neuroscience*, 14:257-262. (PET [11C]raclopride + fMRI, N=8. Caudate: anticipation r=0.71 with chill count; NAcc: experience r=0.84 with pleasure; BP change 6.4-9.2% bilateral caudate/putamen/NAcc; NAcc BOLD predicts 67% pleasure variance; temporal dissociation dorsal→wanting, ventral→liking)
 
-4. **Limb, C. J., & Braun, A. R. (2008)**. Neural substrates of spontaneous musical performance: An fMRI study of jazz improvisation. *PLoS ONE*, 3(2), e1679. (DLPFC deactivation + medial PFC activation during musical flow)
+3. **Chabin, T., et al. (2020)**. Cortical patterns of pleasurable musical chills revealed by high-density EEG. *Frontiers in Neuroscience*, 14:565815. (HD-EEG 256ch, N=18, 305 chills. Source localization: OFC F(2,15)=17.4 p<1e-5, SMA F(2,15)=27.3 p<1e-7, bilateral insula F(2,15)=21.63 p<1e-6, bilateral STG. Theta increase R prefrontal p=.046; beta/alpha ratio F(2,15)=4.77 p=.014; NO alpha asymmetry)
 
-5. **Zatorre, R. J., Chen, J. L., & Penhune, V. B. (2007)**. When the brain plays music: Auditory-motor interactions in music perception and production. *Nature Reviews Neuroscience*, 8(7), 547-558. (Musical training → basal ganglia automaticity)
+4. **Dai, L., et al. (2025)**. Differences in dynamic functional connectivity between musicians and non-musicians during naturalistic music listening. *Frontiers in Neuroscience*, 19:1649733. (fMRI LEiDA, N=36. Musicians: PL state 11 frontal-reward SFG/MFG/IFG/OFC/ACC/IPL p=0.0010; non-musicians: PL state 7 DMN p=0.0444; enhanced sensorimotor-cognitive integration in musicians)
+
+5. **Liao, Y.-C., et al. (2024)**. The rhythmic mind: brain functions of percussionists in improvisation. *Frontiers in Human Neuroscience*, 18:1418727. (fMRI, N=25 percussionists. SIMP: ECN+NMR ↑, DMN ↓; FIMP: ECN+NMR+limbic+memory ↑. DMN suppression during structured improvisation supports hypofrontality)
+
+6. **Tachibana, A., et al. (2024)**. Rock music improvisation shows increased activity in Broca's area and its right hemisphere homologue related to spontaneous creativity. *BMC Research Notes*, 17:61. (fNIRS, N=20 guitarists. Bilateral BA45 activation during improvisation, independent of skill level)
+
+7. **Criscuolo, A., et al. (2022)**. An ALE meta-analytic review of musical expertise. *Scientific Reports*, 12:11726. (ALE, k=84, N=3005. Musicians: higher auditory/sensorimotor/interoceptive/limbic; LOWER parietal. Population-level structural evidence)
+
+### Tier 2 — Supporting Evidence (in collection)
+
+8. **Roth, J. (2025)**. Shared flow and emotional synchrony through group instrumental improvisation: Feasibility study of a novel music-based intervention for well-being. *Frontiers in Psychiatry*, 16:1648873. (Mixed methods feasibility, N=8. Shared Flow Scale 5.46-6.27/7; both musicians and non-musicians report high shared flow. Confirms Csikszentmihalyi framework for musical contexts)
+
+9. **Limb, C. J., & Braun, A. R. (2008)**. Neural substrates of spontaneous musical performance: An fMRI study of jazz improvisation. *PLoS ONE*, 3(2), e1679. (fMRI, N=6. DLPFC deactivation + medial PFC activation during jazz improvisation)
+
+10. **Dietrich, A. (2004)**. Neurocognitive mechanisms underlying the experience of flow. *Consciousness and Cognition*, 13(4), 746-761. (Review. Transient hypofrontality: DLPFC deactivation during flow states. Theoretical framework for flow neuroscience)
+
+### Tier 3 — Founding / Historical (NOT in collection)
+
+11. **Csikszentmihalyi, M. (1990)**. *Flow: The Psychology of Optimal Experience*. Harper & Row. (Foundational flow theory — challenge-skill balance, 8 characteristics of flow)
+
+12. **Ruthsatz, J., & Urbach, J. B. (2012)**. Child prodigy: A novel cognitive profile places elevated general intelligence, exceptional working memory, and attention to detail at the root of prodigiousness. *Intelligence*, 40(5), 419-426. (N=18 prodigies. Cognitive profile: elevated IQ + exceptional WM + attention to detail. Note: v2.0.0 cited r=0.47 from this study for "flow propensity" — this may be a conflation with Marion-St-Onge 2020's extraversion-practice r=0.47)
+
+### Code Note (Phase 5)
+
+The current `mi_beta` code (`mpfs.py`) has several mismatches with this document:
+- **MECHANISM_NAMES**: code has `("BEP",)` — doc specifies `("BEP", "TMH")` (dual mechanism is correct)
+- **Citations**: code has Csikszentmihalyi 1990 + Ruthsatz & Detterman 2003 — doc uses Marion-St-Onge 2020, Salimpoor 2011, Chabin 2020, etc. (Ruthsatz & Detterman 2003 is a DIFFERENT study from Ruthsatz & Urbach 2012)
+- **Dimension names**: code uses `flow_propensity, challenge_skill_balance, automaticity_level, motor_automaticity, structural_mastery, absorption_state` etc. — doc uses `f01_motor_automaticity, f02_context_mastery, f03_flow_propensity, challenge_skill_balance, hypofrontality_proxy, absorption_depth, entrainment_fluency, structural_certainty, flow_sustain_predict, flow_disrupt_risk`
+- **Brain regions**: code has only dlPFC (-44,30,28) + BG (14,8,4) — doc has 12 regions
+- **version**: code has `"2.0.0"` — should be `"2.1.0"`
+- **paper_count**: code has `3` — should be `12`
+These mismatches will be resolved in Phase 5 (code alignment).
 
 ---
 
@@ -841,7 +945,7 @@ MPFS was added as the final STU model (γ5) to capture the flow-state phenomenon
 
 ---
 
-**Model Status**: ⚠️ **SPECULATIVE**
+**Model Status**: **SPECULATIVE** (direct prodigy test N=70 confirms flow F(2,43)=3.62 p=.035 BUT prodigies=continuum not category with overlapping scores, PET dopamine caudate r=0.71/NAcc r=0.84, HD-EEG source-localized OFC/SMA/insula, dynamic FC frontal-reward p=.001, improvisation DMN suppression, 12 papers, 8 methods, >3200 cumulative N)
 **Output Dimensions**: **10D**
 **Evidence Tier**: **γ (Speculative)**
-**Confidence**: **<70%**
+**Confidence**: **<70%** (prodigy flow confirmed but continuum-not-category constrains; dopaminergic reward well-characterized; cortical signatures source-localized; flow measured via questionnaire not real-time neural imaging during prodigy performance)

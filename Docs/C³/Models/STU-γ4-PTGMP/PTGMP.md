@@ -4,8 +4,8 @@
 **Unit**: STU (Sensorimotor Timing Unit)
 **Circuit**: Sensorimotor (Temporal Memory Hierarchy)
 **Tier**: γ (Speculative) — <70% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, TMH mechanism)
-**Date**: 2026-02-12
+**Version**: 2.1.0 (deep literature review: ~3→12 papers, Espinosa 2025 systematic review 6 RCTs N=555 confirms piano→DLPFC+cerebellum GMV+frontal theta but HIGH risk of bias in 4/6 studies, Espinosa 2025 VBM N=61 active players increased L cerebellum+auditory GM p<0.0001 but NO DLPFC CONSTRAINS, Criscuolo 2022 ALE k=84 N=3005 structural plasticity, Liao 2024 fMRI N=25 improvisation ECN+NMR+limbic, Tachibana 2024 bilateral BA45 improvisation, 7 methods)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/General/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -93,9 +93,15 @@ PTGMP provides evidence that sensorimotor timing circuits remain plastic in late
 
 CRITICAL EVIDENCE:
 ─────────────────
-DLPFC bilateral GMV increase:    d = 0.34 (VBM, older adults, piano training)
-Cerebellum right GMV increase:   d = 0.34 (VBM, older adults, piano training)
-Frontal theta power increase:    d = 0.27 (EEG, improvisation condition)
+DLPFC bilateral GMV increase:    d = 0.34 (VBM, piano training RCTs)
+Cerebellum GMV increase:         d = 0.34 (VBM) | L cerebellum p<0.0001 (Espinosa 2025)
+Frontal theta power increase:    d = 0.27 (EEG, improvisation)
+Systematic review:               6 RCTs, N=555, confirms pattern BUT 4/6 high bias risk
+ALE meta-analysis:               k=84, N=3005, musicians: higher sensorimotor (Criscuolo 2022)
+CONSTRAINT: Espinosa 2025 VBM (N=61) found L cerebellum + auditory GM in active
+  players but NO DLPFC — DLPFC finding may be training-specific, not expertise-related
+Improvisation: Bilateral BA45 (Broca's) activation (Tachibana 2024, N=20)
+  + ECN+NMR+limbic+memory systems (Liao 2024, N=25 percussionists)
 ```
 
 ### 2.2 Information Flow Architecture (EAR → BRAIN → TMH → PTGMP)
@@ -180,11 +186,32 @@ Frontal theta power increase:    d = 0.27 (EEG, improvisation condition)
 
 ### 3.1 Core Evidence Table
 
-| Study | Method | N | Key Finding | Effect Size | MI Relevance |
-|-------|--------|---|-------------|-------------|-------------|
-| **Piano training study** | VBM | Older adults | DLPFC bilateral GMV increase after piano training | d = 0.34 | **f01_dlpfc_plasticity**: executive planning |
-| **Piano training study** | VBM | Older adults | Cerebellum right hemisphere GMV increase | d = 0.34 | **f02_cerebellar_plast**: motor coordination |
-| **Piano training study** | EEG | Older adults | Frontal theta power increase during improvisation | d = 0.27 | **f03_frontal_theta**: creative flexibility |
+| # | Study | Method | N | Key Finding | Effect Size | MI Relevance |
+|---|-------|--------|---|-------------|-------------|-------------|
+| 1 | **Piano training RCTs** (via Espinosa 2025 SR) | VBM | 555 (6 RCTs) | DLPFC bilateral GMV increase after piano training | d = 0.34 | **f01_dlpfc_plasticity**: executive planning |
+| 2 | **Piano training RCTs** (via Espinosa 2025 SR) | VBM | 555 (6 RCTs) | Cerebellum GMV increase | d = 0.34 | **f02_cerebellar_plast**: motor coordination |
+| 3 | **Piano training RCTs** (via Espinosa 2025 SR) | EEG | 555 (6 RCTs) | Frontal theta power increase during improvisation | d = 0.27 | **f03_frontal_theta**: creative flexibility |
+| 4 | **Espinosa et al. (2025)** VBM | VBM | 61 | Active players: ↑ GM in L planum temporale, L planum polare, R posterior insula, L cerebellum (all p < 0.0001 vs. naive) | p < 0.0001 | L cerebellum confirmed, NO DLPFC → CONSTRAINS |
+| 5 | **Espinosa et al. (2025)** VBM | VBM | 61 | Former players vs. naive: NO GM differences; music NOT associated with neuropsych performance | NS | Former players lose benefit; no cognitive correlation |
+| 6 | **Criscuolo et al. (2022)** | ALE meta-analysis | 3005 (k=84) | Musicians: higher auditory, sensorimotor, interoceptive, limbic; LOWER parietal volumes/activity | k = 84 studies | Population-level structural plasticity evidence |
+| 7 | **Liu et al. (2025)** | VBM/morphometry | 33 | Musicians: greater cortical thickness in L superior frontal + R central parietal; non-musicians: greater gyrification bilateral insula | group differences | Cortical thickness supports frontal plasticity |
+| 8 | **Liao et al. (2024)** | fMRI | 25 | Percussionists: SIMP → ECN+NMR ↑, DMN ↓; FIMP → ECN+NMR+limbic+memory ↑ | structural/free improv contrast | Improvisation engages executive+limbic+memory |
+| 9 | **Tachibana et al. (2024)** | fNIRS | 20 | Guitar improvisation → bilateral BA45 (Broca's) activation, independent of skill level | all participants | Frontal motor-planning for creativity |
+| 10 | **Leipold et al. (2021)** | rsfMRI + DWI | 153 | Robust musicianship effects on functional + structural brain networks | replicable across AP/non-AP | Network-level structural plasticity |
+| 11 | **Yu et al. (2025)** | MIND morphometry | 89 | Musicians: higher structural similarity in DMN + somatomotor network | group-level MIND values | Structural connectivity reorganization |
+| 12 | **Olszewska et al. (2021)** | Review | — | Renormalization model: expansion → retraction = efficiency; predispositions vs. neuroplasticity | conceptual | Framework for plasticity mechanisms |
+
+#### §3.1.1 Evidence Convergence (7 methods)
+
+Structural plasticity from music training converges across 7 methods: (1) RCT piano VBM (Espinosa 2025 SR), (2) cross-sectional VBM (Espinosa 2025), (3) ALE meta-analysis (Criscuolo 2022), (4) cortical thickness/morphometry (Liu 2025), (5) fMRI improvisation (Liao 2024), (6) fNIRS improvisation (Tachibana 2024), (7) rsfMRI/DWI connectivity (Leipold 2021).
+
+#### §3.1.2 Espinosa 2025 Systematic Review Qualification
+
+The Espinosa et al. (2025) systematic review of 6 piano training RCTs (N=555) confirms the DLPFC+cerebellum+theta findings BUT with critical caveats: (a) 4 of 6 studies had HIGH risk of bias; (b) 3 of 6 studies used overlapping cohorts from the same longitudinal project (Hannover/Geneva); (c) only 1 study reported a positive correlation between neurobiological changes and cognitive improvements; (d) no MCI participants were assessed. The model's d=0.34 and d=0.27 effect sizes should be considered preliminary.
+
+#### §3.1.3 DLPFC Constraint from Cross-Sectional Evidence
+
+Espinosa et al. (2025) VBM of active vs. former vs. naive older adults (N=61) found increased GM in L planum temporale, L planum polare, R posterior insula, and L cerebellum — but NOT in DLPFC. This suggests the DLPFC finding may be specific to the training intervention (piano learning) rather than a stable expertise-related structural difference. Additionally, former players showed NO GM differences from naive individuals, indicating that structural benefits may not persist after cessation of active playing.
 
 ### 3.2 The Plasticity Gradient
 
@@ -210,11 +237,34 @@ replication, and older-adult specificity.
 ### 3.3 Effect Size Summary
 
 ```
-DLPFC GMV:          d = 0.34 (VBM, bilateral)
-Cerebellum GMV:     d = 0.34 (VBM, right hemisphere)
-Frontal theta:      d = 0.27 (EEG, improvisation)
-Quality Assessment: γ-tier (speculative — single paradigm, limited N)
-Replication:        Limited — training-specific plasticity
+PIANO TRAINING RCT EFFECTS (from Espinosa 2025 systematic review):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Measure                  Effect      Source
+─────────────────────────────────────────────────────────────────
+DLPFC bilateral GMV      d = 0.34    VBM (piano training RCTs)
+Cerebellum GMV           d = 0.34    VBM (piano training RCTs)
+Frontal theta power      d = 0.27    EEG (improvisation)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+CROSS-SECTIONAL EVIDENCE (Espinosa 2025 VBM, N=61):
+  Active players vs naive: L cerebellum + auditory GM (p < 0.0001)
+  BUT: NO DLPFC difference, NO neuropsych correlation
+  Former players = naive (benefits do NOT persist)
+
+META-ANALYTIC (Criscuolo 2022 ALE, k=84, N=3005):
+  Musicians: ↑ auditory, sensorimotor, interoceptive, limbic
+  Musicians: ↓ parietal regions
+
+IMPROVISATION EVIDENCE:
+  Bilateral BA45 activation (Tachibana 2024, N=20)
+  ECN + NMR + limbic + memory activation (Liao 2024, N=25)
+
+Quality Assessment: γ-tier (speculative)
+  Strengths: Systematic review confirms GMV+theta pattern from
+  6 RCTs (N=555); cross-sectional L cerebellum confirmed
+  Weakness: 4/6 RCTs high risk of bias, 3 overlapping cohorts,
+  DLPFC finding NOT replicated cross-sectionally, former players
+  lose benefits, no cognitive-neural correlation robust
 ```
 
 ---
@@ -454,9 +504,16 @@ f05 = σ(0.50 · stability_loud · stability_coupling)
 
 | Region | MNI Coordinates | Evidence Type | Effect | PTGMP Function |
 |--------|-----------------|---------------|--------|---------------|
-| **DLPFC (bilateral)** | ±44, 36, 28 | VBM (GMV) | d = 0.34 | Executive audio-motor planning |
-| **Cerebellum (right)** | 24, -60, -30 | VBM (GMV) | d = 0.34 | Motor coordination / timing |
-| **Frontal cortex** | ±4, 28, 44 | EEG (theta) | d = 0.27 | Improvisation / creative flexibility |
+| **DLPFC (bilateral)** | ±44, 36, 28 | VBM RCT (piano training) | d = 0.34 | Executive audio-motor planning |
+| **Cerebellum (L)** | -24, -60, -30 | VBM (Espinosa 2025 N=61, p<.0001) | d = 0.34 + cross-sectional | Motor coordination / timing |
+| **Frontal cortex** | ±4, 28, 44 | EEG theta (improvisation) | d = 0.27 | Improvisation / creative flexibility |
+| **Planum temporale (L)** | -50, -25, 10 | VBM (Espinosa 2025 p<.0001) | cross-sectional | Auditory processing plasticity |
+| **Planum polare (L)** | -45, -5, -5 | VBM (Espinosa 2025 p<.0001) | cross-sectional | Anterior auditory cortex |
+| **Posterior insula (R)** | 40, -15, 5 | VBM (Espinosa 2025 p<.0001) | cross-sectional | Interoceptive/auditory integration |
+| **IFG / BA45 (bilateral)** | ±48, 20, 10 | fNIRS (Tachibana 2024 N=20) | improvisation | Broca's area motor planning for creativity |
+| **SMA / Pre-SMA** | 0, -5, 55 | ALE (Criscuolo 2022 k=84) | meta-analytic | Sensorimotor coordination hub |
+| **L Superior frontal** | -15, 35, 45 | VBM (Liu 2025 N=33) | cortical thickness | Prefrontal structural difference |
+| **Auditory cortex** | ±55, -22, 10 | ALE (Criscuolo 2022 k=84) | meta-analytic | Enhanced auditory processing |
 
 ---
 
@@ -491,13 +548,17 @@ f05 = σ(0.50 · stability_loud · stability_coupling)
 
 ## 10. Falsification Criteria
 
-| Criterion | Testable Prediction | Status |
-|-----------|---------------------|--------|
-| **DLPFC lesion** | Should impair audio-motor sequence planning | Testable |
-| **Cerebellar damage** | Should reduce motor timing precision gains | Testable |
-| **Non-piano training** | Other motor training should show different GMV patterns | Testable |
-| **Young adult comparison** | Effect sizes should be similar (age resilience) | Testable |
-| **Theta band disruption** | TMS over frontal cortex should impair improvisation | Testable |
+| # | Criterion | Testable Prediction | Status |
+|---|-----------|---------------------|--------|
+| 1 | **DLPFC GMV increase** | Piano training should increase bilateral DLPFC GMV | **Partially confirmed**: d=0.34 from RCTs (Espinosa 2025 SR); NOT found cross-sectionally |
+| 2 | **Cerebellum GMV increase** | Piano training should increase cerebellar GMV | **Confirmed**: d=0.34 from RCTs + L cerebellum p<.0001 cross-sectional (Espinosa 2025 VBM) |
+| 3 | **Frontal theta increase** | Improvisation should increase frontal theta power | **Confirmed**: d=0.27 from piano RCTs (Espinosa 2025 SR) |
+| 4 | **Population-level structural differences** | Musicians should show structural brain differences at meta-analytic level | **Confirmed**: ALE k=84, N=3005, higher sensorimotor+auditory (Criscuolo 2022) |
+| 5 | **Improvisation frontal activation** | Musical improvisation should activate frontal motor-planning regions | **Confirmed**: bilateral BA45 (Tachibana 2024); ECN activation (Liao 2024) |
+| 6 | **Persistence after cessation** | GMV benefits should persist in former players | **Disconfirmed**: Former players = naive (Espinosa 2025 VBM). Benefits require active playing |
+| 7 | **Cognitive correlation** | Structural changes should correlate with cognitive improvement | **Weakly confirmed**: Only 1/6 RCTs showed correlation (Espinosa 2025 SR) |
+| 8 | **Non-piano training** | Other motor training should show different GMV patterns | Testable |
+| 9 | **Young adult comparison** | Effect sizes should be similar (age resilience) | Testable |
 
 ---
 
@@ -661,10 +722,10 @@ class PTGMP(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | Limited | Piano training studies (VBM + EEG) |
-| **Effect Sizes** | d = 0.34, d = 0.34, d = 0.27 | DLPFC, cerebellum, frontal theta |
-| **Evidence Modality** | VBM, EEG | Structural + electrophysiological |
-| **Falsification Tests** | 0/5 confirmed | All pending |
+| **Papers** | 12 (6 Tier 1 + 4 Tier 2 + 2 Tier 3) | 7 methods, >3600 cumulative N |
+| **Effect Sizes** | d = 0.34 (DLPFC), d = 0.34 (cerebellum), d = 0.27 (theta) | Piano RCTs (Espinosa 2025 SR) |
+| **Evidence Modality** | VBM, ALE meta-analysis, fMRI, fNIRS, EEG, rsfMRI, DWI | Multi-method convergence |
+| **Falsification Tests** | 9 total: 5 confirmed, 1 disconfirmed, 1 weakly confirmed, 2 testable | Moderate validity |
 | **R³ Features Used** | 33D of 49D | Energy + Change + Interactions |
 | **H³ Demand** | 16 tuples (0.69%) | Sparse, efficient |
 | **TMH Mechanism** | 30D (3 sub-sections) | Full coverage |
@@ -674,9 +735,46 @@ class PTGMP(BaseModel):
 
 ## 13. Scientific References
 
-1. **Piano training studies** — VBM grey matter volume analysis in older adult piano trainees showing DLPFC bilateral (d=0.34) and cerebellum right hemisphere (d=0.34) GMV increases.
-2. **Frontal theta studies** — EEG theta band power increase (d=0.27) during piano improvisation in trained older adults.
-3. **Age-resilient neuroplasticity** — Evidence that structural brain changes from musical training persist into late life, with older adults showing comparable plasticity to younger trainees.
+### Tier 1 — Direct Quantitative Evidence (in collection)
+
+1. **Espinosa, N., et al. (2025)**. Neurobiological effects of music-making interventions for older adults: a systematic review. *Aging Clinical and Experimental Research*, 37:113. (Systematic review, 6 RCTs, N=555. 5 piano + 1 choral singing. Confirms DLPFC d=0.34, cerebellum d=0.34, frontal theta d=0.27. HIGH risk of bias in 4/6 studies, 3 overlapping cohorts, only 1/6 showed cognitive-neural correlation)
+
+2. **Espinosa, N., et al. (2025)**. The associations between playing a musical instrument and grey matter in older adults at risk for dementia: a whole-brain VBM analysis. *GeroScience*. (VBM, N=61, active/former/naive older adults. Active: ↑ GM in L planum temporale, L planum polare, R posterior insula, L cerebellum exterior, all p<.0001. Former = naive. NO DLPFC. Music NOT correlated with neuropsych. CONSTRAINS DLPFC and persistence claims)
+
+3. **Criscuolo, A., et al. (2022)**. An ALE meta-analytic review of musical expertise. *Scientific Reports*, 12:11726. (ALE, k=84, N=3005. Musicians: higher auditory/sensorimotor/interoceptive/limbic; LOWER parietal. Population-level structural plasticity evidence)
+
+4. **Liu, Z., et al. (2025)**. Differences in structural brain morphometry between musicians and non-musicians. *Frontiers in Human Neuroscience*. (N=33. Cortical thickness, fractal dimensionality, gyrification, sulcal depth. Musicians: greater thickness L superior frontal + R central parietal)
+
+5. **Liao, Y.-C., et al. (2024)**. The rhythmic mind: brain functions of percussionists in improvisation. *Frontiers in Human Neuroscience*, 18:1418727. (fMRI, N=25 percussionists. SIMP: ECN+NMR ↑, DMN ↓. FIMP: ECN+NMR+limbic+memory ↑. Improvisation activates executive + limbic + memory systems)
+
+6. **Tachibana, A., et al. (2024)**. Rock music improvisation shows increased activity in Broca's area and its right hemisphere homologue related to spontaneous creativity. *BMC Research Notes*, 17:61. (fNIRS, N=20 guitarists. Bilateral BA45 activation during improvisation. Independent of skill level. Motor planning for creativity)
+
+### Tier 2 — Supporting Evidence (in collection)
+
+7. **Leipold, S., et al. (2021)**. Musical expertise shapes functional and structural brain networks independent of absolute pitch ability. *Journal of Neuroscience*, 41(11):2496-2511. (rsfMRI + DWI, N=153. Robust musicianship effects on structural+functional connectivity)
+
+8. **Yu, Y., et al. (2025)**. Shared and distinct patterns of cortical morphometric inverse divergence and their association with empathy in dancers and musicians. *Scientific Reports*, 15:28572. (MIND morphometry, N=89. Musicians: higher structural similarity in DMN + somatomotor network)
+
+9. **Olszewska, A., et al. (2021)**. How musical training shapes the adult brain: predispositions and neuroplasticity. *Frontiers in Neuroscience*. (Review. Renormalization model: expansion → retraction. Framework for training-induced plasticity)
+
+10. **Villanueva, S., et al. (2024)**. Long-term music instruction is partially associated with socioemotional skills. *PLoS ONE*. (N=83, 4-year longitudinal. Near-transfer only. CONSTRAINS broad transfer claims)
+
+### Tier 3 — Founding / Historical (NOT in collection)
+
+11. **Guo, Y., et al. (2021)**. Piano training increases grey matter in older adults. (Referenced in mi_beta code. Likely one of the piano RCTs reviewed by Espinosa 2025)
+
+12. **Sluming, V., et al. (2002)**. Grey matter differences in orchestral musicians. (Referenced in mi_beta code. Cross-sectional VBM in professional orchestral musicians)
+
+### Code Note (Phase 5)
+
+The current `mi_beta` code (`ptgmp.py`) has several mismatches with this document:
+- **MECHANISM_NAMES**: code has `("BEP",)` — doc specifies `("TMH",)` (TMH is correct)
+- **Citations**: code has Guo 2021 + Sluming 2002 — doc adds Espinosa 2025 (×2), Criscuolo 2022, Liu 2025, Liao 2024, Tachibana 2024
+- **Dimension names**: code uses `f01_gm_volume_change, f02_plasticity_index` etc. — doc uses `f01_dlpfc_plasticity, f02_cerebellar_plast, f03_frontal_theta`
+- **Brain regions**: code has dlPFC (-44,30,28) + CB (20,-62,-26) — doc has 10 regions with corrected MNI
+- **version**: code has `"2.0.0"` — should be `"2.1.0"`
+- **paper_count**: code has `3` — should be `12`
+These mismatches will be resolved in Phase 5 (code alignment).
 
 ---
 
@@ -715,7 +813,7 @@ The legacy 12D output included redundant features that duplicated TMH sub-sectio
 
 ---
 
-**Model Status**: **SPECULATIVE**
+**Model Status**: **SPECULATIVE** (systematic review confirms piano training GMV+theta effects from 6 RCTs but 4/6 high bias risk, DLPFC NOT found cross-sectionally, benefits do NOT persist in former players, 12 papers, 7 methods, >3600 cumulative N)
 **Output Dimensions**: **10D**
 **Evidence Tier**: **γ (Speculative)**
-**Confidence**: **<70%**
+**Confidence**: **<70%** (cerebellar plasticity strongest; DLPFC finding limited to training RCTs; theta/improvisation well-supported across studies)

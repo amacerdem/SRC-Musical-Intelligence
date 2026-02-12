@@ -440,6 +440,50 @@ When resuming this work:
 - Social bonding neural synchronization (prefrontal synchronization during group bonding)
 - Groove pupillometry (noradrenergic arousal, precision-weighted prediction error)
 
+## Parallel Chat Assignment (Phase 1 Remaining — 73 models)
+
+**Status:** BATCH 1 (SPU, 9 models) and BATCH 2 (STU, 14 models) are COMPLETE (23/96).
+**Remaining:** 73 models across 7 batches, assigned to 7 parallel chats.
+
+| Chat | Batch | Unit | Models | Range | Progress File |
+|------|-------|------|--------|-------|---------------|
+| Chat 1 | BATCH 3 | IMU (Integrative Memory) | 15 | #24-#38 | `Docs/Beta/PROGRESS-BATCH3-IMU.md` |
+| Chat 2 | BATCH 4 | ASU (Auditory Salience) | 9 | #39-#47 | `Docs/Beta/PROGRESS-BATCH4-ASU.md` |
+| Chat 3 | BATCH 5 | NDU (Novelty Detection) | 9 | #48-#56 | `Docs/Beta/PROGRESS-BATCH5-NDU.md` |
+| Chat 4 | BATCH 6 | MPU (Motor Planning) | 10 | #57-#66 | `Docs/Beta/PROGRESS-BATCH6-MPU.md` |
+| Chat 5 | BATCH 7 | PCU (Predictive Coding) | 10 | #67-#76 | `Docs/Beta/PROGRESS-BATCH7-PCU.md` |
+| Chat 6 | BATCH 8 | ARU (Affective Resonance) | 10 | #77-#86 | `Docs/Beta/PROGRESS-BATCH8-ARU.md` |
+| Chat 7 | BATCH 9 | RPU (Reward Processing) | 10 | #87-#96 | `Docs/Beta/PROGRESS-BATCH9-RPU.md` |
+
+### Parallel Execution Rules
+
+1. **Each chat ONLY edits files in its assigned unit's model folders** (e.g., Chat 1 only touches `Docs/C³/Models/IMU-*/`)
+2. **Each chat updates ONLY its own progress file** (e.g., `PROGRESS-BATCH3-IMU.md`)
+3. **Do NOT edit the master `PROGRESS.md`** — will be updated centrally after all chats complete
+4. **Write R³ gaps to unit-specific gap files**: `Docs/R³/R3-GAP-LOG-{UNIT}.md` (e.g., `R3-GAP-LOG-IMU.md`)
+5. **Do NOT git commit** — commits will be done centrally after merge
+6. **`Literature/` and `mi_beta/` are READ-ONLY** — read for research, never modify
+7. **Follow the per-model workflow** (STEP 1-5) from the "Phase 1: C³ Model Revision" section above for EVERY model
+
+### Chat Prompt Template
+
+Each chat receives this prompt (replace N with chat number):
+
+```
+Docs/Beta/Beta_upgrade.md dosyasını oku. "Parallel Chat Assignment" tablosuna bak.
+Sen Chat {N}'sin. Tablodaki batch'ini, modellerini ve progress dosyanı bul.
+
+Görevin: Per-model workflow'un 5 adımını (STEP 1-5) batch'indeki HER model için sırayla uygula.
+
+Kurallar:
+- Sadece kendi unit klasöründeki model dosyalarını düzenle
+- Her model bittikten sonra kendi progress dosyanı güncelle (PROGRESS-BATCH{B}-{UNIT}.md)
+- R³ gap'leri Docs/R³/R3-GAP-LOG-{UNIT}.md dosyasına yaz
+- Master PROGRESS.md'yi güncelleme
+- Git commit yapma
+- Literature/ ve mi_beta/ sadece oku, düzenleme
+```
+
 ## Verification
 
 After full completion:
