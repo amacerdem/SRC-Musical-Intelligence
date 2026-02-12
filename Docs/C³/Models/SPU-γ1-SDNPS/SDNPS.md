@@ -4,7 +4,7 @@
 **Unit**: SPU (Spectral Processing Unit)
 **Circuit**: Perceptual (Brainstem-Cortical)
 **Tier**: γ (Speculative) — <70% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, PPC mechanism)
+**Version**: 2.1.0 (1→12 papers, Cousineau citation CORRECTED to PLoS ONE, Penagos alHG pitch center added, Bidelman/Fishman/Tabas/Basinski convergence)
 **Date**: 2026-02-12
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
@@ -36,9 +36,20 @@ NPS ↔ Roughness: r=-0.57, p<1e-05                            r=-0.10 (voice, n
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 KEY INSIGHT: NPS from brainstem FFR is NOT a universal consonance
 predictor. It works for synthetic tones (r=0.34) but fails for
-natural saxophone (r=0.24, n.s.) and natural voice (r=-0.10, n.s.).
-This challenges BCH's universality claim — peripheral encoding is
-necessary but NOT sufficient for real-world consonance perception.
+natural saxophone (r=0.24, n.s.) and voice (r=-0.10, n.s.)
+(Cousineau et al. 2015, PLoS ONE). Convergent evidence:
+  • Pitch salience (resolved vs unresolved harmonics) is encoded in
+    anterolateral Heschl's gyrus, NOT subcortically (Penagos 2004)
+  • Subcortical IC shows no pitch salience sensitivity — only
+    physical temporal regularity (Penagos 2004, fMRI, N=6)
+  • Pitch chroma representation is IDENTICAL for resolved and
+    unresolved harmonics (Briley 2013, F(1,27)=0.026, p=.874)
+  • AN pitch salience predicts consonance hierarchy but hearing
+    impairment compresses the gradient (Bidelman & Heinz 2011)
+  • CI users (temporal code only) show pitch plateaus at 200-300pps
+    confirming place code necessity (de Groote 2025)
+  • Inharmonic sounds trigger P3a attentional capture (Basinski 2025,
+    p=.0007) — low pitch salience gets qualitatively different processing
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -100,10 +111,28 @@ SDNPS serves as a critical constraint on the SPU hierarchy. While BCH (alpha-1) 
 
 CRITICAL EVIDENCE:
 ─────────────────
-Cousineau et al. 2015:  NPS predicts behavior for synthetic (r=0.34) NOT natural
-                         NPS ↔ Roughness: r=-0.57 (invariant across stimulus types)
-                         14 musical intervals, 3 timbres (synthetic, sax, voice)
-                         Published in PNAS — high-impact, peer-reviewed
+1. Cousineau et al. 2015:  NPS predicts for synthetic (r=0.34) NOT natural
+   (PLoS ONE, N=14)       NPS ↔ Roughness: r=-0.57 (stimulus-invariant)
+                           14 intervals × 3 timbres (synthetic, sax, voice)
+                           ⚠ CITATION CORRECTED: PLoS ONE not PNAS
+
+2. Penagos et al. 2004:   Pitch salience in anterolateral HG, NOT subcortical
+   (J Neurosci, N=6)      Resolved > unresolved harmonics in alHG (p<.01)
+                           IC shows NO pitch salience sensitivity
+                           Talairach: R 48,-11,3 / L -55,-5,3
+
+3. Briley et al. 2013:    Pitch chroma same for resolved/unresolved
+   (Cerebral Cortex, N=35) Resolvability×chroma: F(1,27)=0.026, p=.874
+
+4. Bidelman & Heinz 2011:  AN pitch salience predicts consonance hierarchy
+   (JASA, modeling)        Best predictor among AN/acoustic measures
+                           SNHL compresses pitch salience gradient
+
+5. Tabas et al. 2019:     POR latency: dissonant 36ms slower than consonant
+   (PLoS Comp Biol, MEG)  Mechanistic model: decoder+sustainer in alHG
+
+6. Basinski et al. 2025:  Inharmonicity enhances P3a attentional capture
+   (Commun Biol, N=35)    Contrast est.=-1.37, SE=0.36, p=.0007
 ```
 
 ### 2.2 Information Flow Architecture (EAR → BRAIN → PPC → SDNPS)
@@ -190,10 +219,20 @@ Cousineau et al. 2015:  NPS predicts behavior for synthetic (r=0.34) NOT natural
 
 ### 3.1 Core Evidence Table
 
-| Study | Method | N | Key Finding | Effect Size | MI Relevance |
-|-------|--------|---|-------------|-------------|-------------|
-| **Cousineau et al. 2015** | FFR + behavioral | 14 intervals x 3 timbres | NPS predicts consonance for synthetic only | r=0.34 (synth), r=0.24 (sax, n.s.), r=-0.10 (voice, n.s.) | **Primary**: f02_stimulus_dependency |
-| **Cousineau et al. 2015** | FFR + roughness | 14 intervals x 3 timbres | NPS ↔ roughness robust across timbres | r=-0.57, p<1e-05 | **f03_roughness_correlation** |
+| # | Study | Method | N | Key Finding | Effect Size | MI Relevance |
+|---|-------|--------|---|-------------|-------------|-------------|
+| 1 | **Cousineau et al. 2015** | FFR + behavioral | 14 (14 intervals × 3 timbres) | NPS predicts consonance for synthetic only; fails for natural | r=0.34 (synth), 0.24 (sax n.s.), -0.10 (voice n.s.); roughness r=-0.57 | **Primary**: f01, f02, f03 — stimulus dependency core |
+| 2 | **Penagos et al. 2004** | fMRI (3T) | 6 | Pitch salience encoded in anterolateral HG, NOT IC; resolved > unresolved | Weak < strong salience p<.01 in alHG; IC n.s. | **Anatomical**: pitch salience cortical locus (Talairach coords) |
+| 3 | **Briley et al. 2013** | EEG + BESA | 35 (3 exps) | Pitch chroma representation identical for resolved/unresolved harmonics | Chroma×resolvability F(1,27)=0.026, p=.874 | Cortical convergence: different stimuli → same pitch representation |
+| 4 | **Bidelman & Heinz 2011** | AN modeling | Computational | AN pitch salience best predictor of consonance; SNHL compresses gradient | AN NPS > acoustic periodicity > roughness | Peripheral pitch salience hierarchy — input to SDNPS |
+| 5 | **Bidelman 2013** | Review (FFR) | Multi-study | Subcortical NPS graded for consonance; preserved in passive listening/sleep | r~0.9 NPS ↔ consonance across studies | Processing hierarchy: AN → IC → alHG for pitch salience |
+| 6 | **Fishman et al. 2001** | Intracranial (AEP/MUA/CSD) | 3 monkeys + 2 humans | Phase-locked activity in HG for dissonance; PT shows no phase-locking | Monkey A1 + human HG: dissonance=beating; PT: no effect | Temporal coding of dissonance in primary AC — roughness mechanism |
+| 7 | **Foo et al. 2016** | ECoG (high-γ) | 8 neurosurgical | Dissonant-sensitive sites anterior in R STG; high-γ ↔ roughness | χ²(1)=8.6, p=.003 (y-axis); r=0.43 (roughness) | STG spatial organization for consonance/dissonance |
+| 8 | **Tabas et al. 2019** | MEG + modeling | ~15 | POR latency: dissonant 36ms slower; decoder+sustainer model in alHG | POR latency difference up to 36ms | Mechanistic: pitch template matching speed = salience proxy |
+| 9 | **Basinski et al. 2025** | EEG (oddball) | 35 | Inharmonicity enhances P3a (attentional capture); abolishes MMN when inconsistent | P3a: est=-1.37, p=.0007; ORN present | Low pitch salience → different processing mode (attention capture) |
+| 10 | **de Groote et al. 2025** | Psychophysics (CI) | 8 CI users | CI users cannot extract F0 from multi-channel; pitch plateaus at 200-300pps | d=1.6 for pitch rank, p=.002 | Temporal code insufficient — place code necessary for pitch salience |
+| 11 | **Schon et al. 2005** | ERP | ~20 | Simultaneous > sequential intervals for consonance/dissonance neural effects | N1-P2, N2 expertise effects | Stimulus-dependent: simultaneous (spectral interaction) > sequential |
+| 12 | **Crespo-Bojorque et al. 2018** | ERP (MMN) | ~20 | Asymmetric MMN: consonant→dissonant detected in all; reverse only in trained | Musicians-only reverse MMN | Processing advantage for high pitch salience (consonance) |
 
 ### 3.2 The Stimulus-Dependency Boundary
 
@@ -225,12 +264,42 @@ Cross-cultural note:
 ### 3.3 Effect Size Summary
 
 ```
-Primary Correlation (synthetic):  r = 0.34, p < 0.03 (Cousineau et al. 2015)
-Primary Correlation (sax):        r = 0.24, n.s.
-Primary Correlation (voice):      r = -0.10, n.s.
-Roughness Correlation:            r = -0.57, p < 1e-05
-Quality Assessment:               γ-tier — single study, small N, speculative
-Replication:                      Not yet independently replicated
+MULTI-METHOD CONVERGENCE TABLE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Method         Study                    N     Key Statistic           Region
+───────────────────────────────────────────────────────────────────────────────
+FFR+behav      Cousineau 2015           14    r=0.34(synth),-0.10(voice) IC(brainstem)
+fMRI 3T        Penagos 2004             6     Resolved>unresolved p<.01 Anterolat HG
+EEG (BESA)     Briley 2013              35    Chroma×resolv F=0.026 ns  Anterolat HG
+AN model       Bidelman & Heinz 2011    —     NPS best predictor       Auditory nerve
+FFR review     Bidelman 2013            multi  r~0.9 NPS↔consonance    IC/brainstem
+Intracranial   Fishman 2001             5     Phase-locking↔dissonance HG (human+monkey)
+ECoG(high-γ)   Foo 2016                 8     χ²=8.6, p=.003          R STG
+MEG+model      Tabas 2019               ~15   POR latency Δ=36ms       Anterolat HG
+EEG (oddball)  Basinski 2025            35    P3a: est=-1.37, p=.0007 Scalp
+Psychophys CI  de Groote 2025           8     d=1.6 pitch plateau     CI electrode
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Quality Assessment:   γ-tier (speculative — Cousineau flagship N=14, Penagos N=6)
+Primary Effect:       NPS→pleasantness degrades: r=0.34→0.24→-0.10 with complexity
+Invariant Effect:     NPS→roughness: r=-0.57, p<1e-05 across ALL stimulus types
+Cortical Locus:       Anterolateral HG (Penagos 2004): Talairach R:48,-11,3 / L:-55,-5,3
+Methods:              8 methods (FFR, fMRI, EEG, intracranial, ECoG, MEG, modeling, CI)
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ ⚠ CITATION CORRECTION (v2.1.0): Section 13 reference was WRONG.          │
+│ Doc cited "Cousineau, McDermott & Peretz (2015), PNAS 109(48)" which is   │
+│ actually Cousineau, McDermott & Peretz (2012) about congenital amusia.     │
+│ The correct paper for NPS stimulus dependency is:                          │
+│ Cousineau, Bidelman, Peretz & Lehmann (2015), PLoS ONE 10(12), e0145439  │
+│                                                                            │
+│ QUALIFICATION: Penagos 2004 (N=6) is small-sample but the ONLY fMRI      │
+│ study directly testing pitch salience as a function of harmonic            │
+│ resolvability. Cousineau 2015 (N=14) is the ONLY study testing NPS        │
+│ generalization across stimulus types. Both are unreplicated. However,      │
+│ the convergence of FFR, fMRI, EEG, ECoG, and MEG evidence across          │
+│ multiple labs supports the cortical pitch salience locus in alHG.          │
+└─────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---

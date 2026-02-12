@@ -4,7 +4,7 @@
 **Unit**: SPU (Spectral Processing Unit)
 **Circuit**: Perceptual (Brainstem--Cortical)
 **Tier**: β (Integrative) -- 70--90% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, TPC mechanism)
+**Version**: 2.1.0 (1→12 papers, Kraemer flagship F=48.92, Di Liberto imagery decoding, Halpern/Bellier/Zatorre convergence, SMA added)
 **Date**: 2026-02-12
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
@@ -39,11 +39,18 @@ Evidence: Kraemer 2005, fMRI             Evidence: Familiar > unfamiliar,
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 KEY INSIGHT: Musical imagery activates auditory cortex WITHOUT
-physical sound. This is not a weak effect -- familiar songs produce
-robust BA22 activation comparable to actual listening. Instrumental
-music produces stronger A1 activation than lyrics, because
-instrumental imagery demands detailed acoustic simulation rather
-than abstract semantic processing.
+physical sound. This is not a weak effect — the region×music-type
+interaction is F(1,14)=48.92, p<.0001 (Kraemer 2005). Convergence:
+  • Imagery EEG encodes pitch at rates comparable to perception —
+    no significant condition difference (p=0.19, Di Liberto 2021)
+  • Timbre imagery activates posterior PT overlapping with perception
+    (r=0.84 behavioral, Halpern 2004)
+  • iEEG reconstruction shows 68% of music-encoding electrodes
+    in bilateral STG (Bellier 2023) — the imagery target substrate
+  • SMA activates during imagery even without subvocalization
+    (Halpern 2004; Zatorre & Halpern 2005)
+  • Primary AC only recruited when semantic route unavailable
+    (instrumentals only: F(1,14)=22.55, p<.0005, Kraemer 2005)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -108,10 +115,32 @@ MIAA sits at the intersection of spectral processing and top-down memory retriev
 
 CRITICAL EVIDENCE:
 ─────────────────
-Kraemer et al. 2005:  Familiar > unfamiliar in BA22, p<0.0001, n=15
-Kraemer et al. 2005:  Instrumental > lyrics in A1, p<0.0005, n=15
-                      "Sound of silence activates auditory cortex"
-                      Published in Nature 434(7030), 158
+1. Kraemer et al. 2005:   Region×music-type: F(1,14)=48.92, p<.0001 (fMRI,N=15)
+                          Familiar>unfamiliar BA22: F(1,14)=11.56, p<.005
+                          Instrumental>lyrics A1: F(1,14)=22.55, p<.0005
+                          Nature 434(7030), 158
+
+2. Halpern et al. 2004:   Perception-imagery overlap (fMRI, N=10)
+                          Behavioral similarity: r=0.84, p<.001
+                          Right posterior STG: perception t=6.89
+                          SMA activation without subvocalization
+
+3. Di Liberto et al. 2021: Imagery EEG decoding (N=21 musicians)
+                          Pitch: no imagery-perception difference (p=0.19)
+                          Sub-1 Hz critical: F(1,20)=369.8, p=2.3e-14
+
+4. Bellier et al. 2023:    iEEG music reconstruction (N=29, 2668 electrodes)
+                          347 significant electrodes, 68% in STG
+                          Right STG: r²=.363 (single patient best)
+                          Right > left: χ²(1,1026)=12.34, p<.001
+
+5. Zatorre & Halpern 2005: Review: secondary/belt AC reliable during imagery
+                          Primary AC uncertain — semantic route modulates
+                          Top-down frontal→auditory reactivation mechanism
+
+6. Zatorre et al. 2007:    Auditory-motor framework (Nat Rev Neurosci)
+                          Premotor cortex: integration site for music imagery
+                          Bidirectional: motor↔auditory during silent imagery
 ```
 
 ### 2.2 Information Flow Architecture (EAR → BRAIN → TPC → MIAA)
@@ -197,10 +226,20 @@ Kraemer et al. 2005:  Instrumental > lyrics in A1, p<0.0005, n=15
 
 ### 3.1 Core Evidence Table
 
-| Study | Method | N | Key Finding | Effect Size | MI Relevance |
-|-------|--------|---|-------------|-------------|-------------|
-| **Kraemer et al. 2005** | fMRI | 15 | Familiar > unfamiliar in BA22 | p < 0.0001 | **Primary**: f01, f02 familiarity-driven imagery activation |
-| **Kraemer et al. 2005** | fMRI | 15 | Instrumental > lyrics in A1 | p < 0.0005 | **Primary**: f03 A1 modulation by content type |
+| # | Study | Method | N | Key Finding | Effect Size | MI Relevance |
+|---|-------|--------|---|-------------|-------------|-------------|
+| 1 | **Kraemer et al. 2005** | fMRI | 15 | Familiar silent gaps activate BA22; instrumental gaps activate A1 | Region×type **F(1,14)=48.92, p<.0001**; A1 instrum. F=22.55, p<.0005 | **Primary**: f01 imagery activation, f02 familiarity, f03 A1 modulation |
+| 2 | **Halpern et al. 2004** | fMRI (1.5T) | 10 musicians | Timbre perception-imagery overlap in posterior PT; SMA without subvocalization | Behavioral r=0.84, p<.001; R PT perception t=8.40 | f01 imagery activation — perception/imagery overlap substrate |
+| 3 | **Di Liberto et al. 2021** | EEG (64ch) | 21 musicians | Imagery pitch encoding comparable to perception; sub-1Hz critical for decoding | Pitch condition n.s. (p=0.19); freq band F(1,20)=369.8, p=2.3e-14 | f01 imagery produces decodable spectral representations |
+| 4 | **Zatorre & Halpern 2005** | Review | — | Secondary/belt AC reliable for imagery; A1 uncertain; top-down frontal mechanism | Literature inference (SPU confidence 0.95) | Theoretical framework: top-down template reactivation |
+| 5 | **Bellier et al. 2023** | iEEG/ECoG | 29 (2668 electrodes) | Music reconstructed from STG; 68% significant electrodes in bilateral STG | R>L: χ²(1,1026)=12.34, p<.001; r²=.363 (best patient) | Defines the STG substrate that imagery reactivates |
+| 6 | **Zatorre et al. 2007** | Review | — | Auditory-motor bidirectional coupling; premotor as integration site | Theoretical framework | Motor-auditory bidirectionality supports imagery mechanism |
+| 7 | **Bellmann & Asano 2024** | ALE meta-analysis | k=18, N=338 | 4 timbre processing clusters: bilateral pSTG/HG/SMG + R anterior insula | ALE 0.018-0.023, FWE p<.05 | Anatomical ground truth for timbre imagery templates |
+| 8 | **Pantev et al. 2001** | MEG (N1m) | 17 musicians | Timbre-specific cortical enhancement — template basis for imagery | F(1,15)=28.55, p=.00008 | TSCP→MIAA: trained timbre templates serve as imagery source |
+| 9 | **Alluri et al. 2012** | fMRI (3T) | 11 musicians | Timbral features map to bilateral STG during naturalistic music | Z=7.05-8.13 bilateral STG | Naturalistic timbre→STG mapping that imagery retrieves |
+| 10 | **Liang et al. 2025** | fNIRS | 50 | VR music stimulation enhances PM&SMA connectivity vs motor imagery | VRMS>VRAO PM&SMA: t=3.20, p=.024 (FDR) | SMA/premotor involvement in musical imagery context |
+| 11 | **Criscuolo et al. 2022** | ALE meta-analysis | k=84 | Musician expertise network: auditory + motor + parietal + prefrontal | Meta-analytic ALE clusters | Training shapes the network that imagery relies upon |
+| 12 | **Pinegger et al. 2017** | EEG (P300 BCI) | 17+1 | Music composition via thought alone; 76-98% accuracy | Copy-composing 88.6%, free 76.5-98.1% | Musical imagery decodable for BCI — practical validation |
 
 ### 3.2 The Imagery Activation Hierarchy
 
@@ -230,11 +269,40 @@ Cross-cultural note:
 ### 3.3 Effect Size Summary
 
 ```
-Primary Effect:       Familiar > unfamiliar (BA22): p < 0.0001
-Secondary Effect:     Instrumental > lyrics (A1):   p < 0.0005
-Quality Assessment:   β-tier (fMRI, single study, strong effects)
-Sample Size:          N = 15
-Replication:          Conceptually supported by broader imagery literature
+MULTI-METHOD CONVERGENCE TABLE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Method         Study                    N     Key Statistic           Region
+───────────────────────────────────────────────────────────────────────────────
+fMRI           Kraemer 2005             15    F(1,14)=48.92,p<.0001  L BA22/A1
+fMRI 1.5T      Halpern 2004             10    r=0.84 (behavioral)    Bilat PT, SMA
+EEG (64ch)     Di Liberto 2021          21    Imagery=Perception(p=.19) Scalp (AC)
+iEEG (ECoG)    Bellier 2023             29    r²=.363 (STG decode)   Bilat STG
+ALE meta       Bellmann & Asano 2024    338   4 clusters FWE<.05     pSTG/HG/SMG
+MEG (N1m)      Pantev 2001              17    F(1,15)=28.55,p=.00008 Sec. AC
+fMRI 3T        Alluri 2012              11    Z=8.13 (brightness)    Bilat STG
+fNIRS          Liang 2025               50    t=3.20, p=.024 (FDR)   PM&SMA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Quality Assessment:   β-tier (strong flagship + multi-method convergence)
+Primary Effect:       Region×music-type interaction: F(1,14)=48.92, p<.0001
+Secondary Effect:     Instrumental>lyrics in A1: F(1,14)=22.55, p<.0005
+Key Convergence:      Imagery pitch decoding = perception (p=0.19, n.s.)
+                      Perception-imagery behavioral similarity: r=0.84
+Methods:              7 methods (fMRI, EEG, iEEG, MEG, fNIRS, ALE meta, BCI)
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ QUALIFICATION: Primary vs. secondary auditory cortex debate remains open.  │
+│ Kraemer 2005 shows A1 only for instrumentals (when semantic route is       │
+│ unavailable). Zatorre & Halpern 2005 conclude most studies agree on        │
+│ secondary/belt AC being reliable, with A1 participation uncertain due to   │
+│ intersubject variability and partial volume effects. MIAA's f03 A1         │
+│ modulation dimension models this conditional A1 recruitment correctly.     │
+│                                                                            │
+│ NOTE: No direct within-subject matched perception-imagery fMRI comparison  │
+│ exists — Kraemer used gaps in music, not explicit imagery instructions.    │
+│ Di Liberto's EEG result (imagery=perception for pitch) is the strongest   │
+│ evidence for comparable neural representations during imagery.             │
+└─────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -464,11 +532,34 @@ f03 = σ(0.40 * (1 - R³.inharmonicity[5]) * R³.tonalness[14]
 
 ### 8.1 Pipeline Validated Regions
 
-| Region | MNI Coordinates | Mentions | Evidence Type | MIAA Function |
-|--------|-----------------|----------|---------------|---------------|
-| **BA22 (Auditory Association)** | ±60, -30, 8 | 2 | Direct (fMRI) | Imagery activation, familiarity enhancement |
-| **A1 (Primary Auditory Cortex)** | ±50, -20, 8 | 2 | Direct (fMRI) | Instrumental imagery modulation |
-| **STG (Superior Temporal Gyrus)** | ±60, -20, 8 | 1 | Indirect | General auditory processing hub |
+| # | Region | Coordinates | System | Source | MIAA Function |
+|---|--------|-------------|--------|--------|---------------|
+| 1 | **L auditory association cortex (BA22/STS)** | Not reported (inflated rendering) | — | Kraemer 2005 (F(1,14)=48.92) | **Primary**: imagery activation + familiarity enhancement |
+| 2 | **L primary auditory cortex (PAC)** | Not reported (inflated rendering) | — | Kraemer 2005 (F(1,14)=22.55) | A1 modulation — instrumental imagery only |
+| 3 | **R posterior STG** | ~58, -42, — | Talairach | Halpern 2004 (perception t=6.89) | Timbre perception — imagery target substrate |
+| 4 | **R posterior STG** | ~58, -42, — | Talairach | Halpern 2004 (imagery t=4.66) | Timbre imagery — perception/imagery overlap |
+| 5 | **L PT** | -56, -44, — | Talairach | Halpern 2004 (conjunction t=4.98) | Perception-imagery conjunction |
+| 6 | **R PT** | 58, -26, 20 | Talairach | Halpern 2004 (perception t=8.40) | Timbre perception peak |
+| 7 | **SMA** | -6, -2, 60 | Talairach | Halpern 2004 (subthreshold t=4.08) | Motor imagery component — no subvocalization |
+| 8 | **L SMG/HG (BA 40/41)** | -44, -34, — | MNI | Bellmann & Asano 2024 (ALE peak, 4640mm³) | Timbre template storage substrate |
+| 9 | **R pSTG/PT (BA 22)** | ~54, -24, — | MNI | Bellmann & Asano 2024 (ALE peak, 3128mm³) | Right hemisphere timbre processing |
+| 10 | **R anterior insula/aSTG** | ~40, -2, -6 | MNI | Bellmann & Asano 2024 (ALE, passive only) | Categorical timbre identity — imagery recognition |
+| 11 | **Bilateral STG (68% of sig. electrodes)** | Distributed | ECoG | Bellier 2023 (347 electrodes) | Music encoding substrate reactivated during imagery |
+| 12 | **R STG (BA 22)** | 50, -19, 3 | Talairach | Alluri 2012 (brightness Z=8.13) | Naturalistic timbral processing |
+| 13 | **PM&SMA (bilateral)** | fNIRS channels | fNIRS | Liang 2025 (t=3.20, p=.024 FDR) | Motor-auditory coupling during music stimulation |
+
+```
+NOTE ON COORDINATES: Kraemer 2005 did not report MNI/Talairach coordinates
+(Nature brief communication, inflated hemisphere rendering only). The ALE
+meta-analysis (Bellmann & Asano 2024) provides the best coordinate reference
+for the timbre processing substrate that imagery reactivates.
+
+Code file (miaa.py) currently lists:
+  BA22 (-58,-20,8), A1 (-48,-22,8), SMA (0,-2,62)
+The SMA coordinate in code matches Halpern 2004 well. BA22 and A1
+coordinates are approximate and should be updated to ALE-validated
+coordinates in Phase 5.
+```
 
 ---
 
@@ -687,20 +778,46 @@ class MIAA(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 1 | Kraemer et al. 2005 |
-| **Effect Sizes** | p < 0.0001 (BA22), p < 0.0005 (A1) | Kraemer et al. 2005 |
-| **Evidence Modality** | fMRI | Direct neural |
+| **Papers** | **12** (v2.1.0, was 1 in v2.0.0) | 2 fMRI + 1 EEG + 1 iEEG + 1 MEG + 1 fNIRS + 2 ALE meta + 1 BCI + 3 reviews |
+| **Effect Sizes** | **F(1,14)=48.92, p<.0001** (flagship interaction) | Kraemer 2005 (region × music-type) |
+| **Evidence Modality** | **7 methods**: fMRI, EEG, iEEG, MEG, fNIRS, meta-analysis, BCI | Multi-method convergence |
+| **Key Convergence** | Imagery EEG = perception for pitch (p=0.19 n.s.) | Di Liberto 2021; behavioral r=0.84 Halpern 2004 |
+| **A1 Qualification** | Primary AC only for instrumentals (no semantic route) | Kraemer 2005; Zatorre & Halpern 2005 review |
 | **Falsification Tests** | 2/5 confirmed | Moderate validity |
 | **R³ Features Used** | ~16D of 49D | Selective, imagery-focused |
 | **H³ Demand** | 11 tuples (0.48%) | Sparse, efficient |
 | **TPC Mechanism** | 30D (3 sub-sections) | Full coverage |
 | **Output Dimensions** | **11D** | 4-layer structure |
 
+```
+v2.1.0 CHANGES:
+  • Evidence table expanded: 1 → 12 papers
+  • KEY INSIGHT updated with convergent evidence from 7 methods
+  • CRITICAL EVIDENCE expanded to 6 core findings
+  • Effect size summary: multi-method convergence table added
+  • Qualification box: primary vs secondary AC debate documented
+  • Brain regions: 3 → 13 entries with Talairach/MNI/ALE coordinates
+  • SMA added as brain region (Halpern 2004, Liang 2025)
+  • Code note: miaa.py citations (Kraemer, Zatorre, Halpern) already correct;
+    brain_regions coordinates approximate — update to ALE peaks in Phase 5
+```
+
 ---
 
 ## 13. Scientific References
 
-1. **Kraemer, D. J., Macrae, C. N., Green, A. E., & Kelley, W. M. (2005)**. Musical imagery: Sound of silence activates auditory cortex. *Nature*, 434(7030), 158.
+1. **Kraemer, D. J. M., Macrae, C. N., Green, A. E., & Kelley, W. M. (2005)**. Musical imagery: Sound of silence activates auditory cortex. *Nature*, 434, 158.
+2. **Halpern, A. R., Zatorre, R. J., Bouffard, M., & Johnson, J. A. (2004)**. Behavioral and neural correlates of perceived and imagined musical timbre. *Neuropsychologia*, 42, 1281-1292.
+3. **Di Liberto, G. M., Marion, G., & Shamma, S. A. (2021)**. Accurate decoding of imagined and heard melodies. *Frontiers in Neuroscience*, 15, 673401.
+4. **Zatorre, R. J., & Halpern, A. R. (2005)**. Mental concerts: Musical imagery and auditory cortex. *Neuron*, 47(1), 9-12.
+5. **Bellier, L., Llorens, A., Marciano, D., Gunduz, A., Schalk, G., Brunner, P., & Knight, R. T. (2023)**. Music can be reconstructed from human auditory cortex activity using nonlinear decoding models. *PLoS Biology*, 21(8), e3002176.
+6. **Zatorre, R. J., Chen, J. L., & Penhune, V. B. (2007)**. When the brain plays music: auditory-motor interactions in music perception and production. *Nature Reviews Neuroscience*, 8, 547-558.
+7. **Bellmann, O. T., & Asano, R. (2024)**. Neural correlates of musical timbre: an ALE meta-analysis of neuroimaging data. *Frontiers in Neuroscience*, 18, 1373232.
+8. **Pantev, C., Roberts, L. E., Schulz, M., Engelien, A., & Ross, B. (2001)**. Timbre-specific enhancement of auditory cortical representations in musicians. *NeuroReport*, 12(1), 169-174.
+9. **Alluri, V., Toiviainen, P., Jääskeläinen, I. P., Glerean, E., Sams, M., & Brattico, E. (2012)**. Large-scale brain networks emerge from dynamic processing of musical timbre, key and rhythm. *NeuroImage*, 59, 3677-3689.
+10. **Liang, J., Liang, B., Tang, Z., Huang, X., Ou, S., Chang, C., Wang, Y., & Yuan, Z. (2025)**. The brain mechanisms of music stimulation, motor observation, and motor imagination in VR techniques: A functional near-infrared spectroscopy study. *eNeuro*.
+11. **Criscuolo, A., Pando-Naude, V., Bonetti, L., Vuust, P., & Brattico, E. (2022)**. An ALE meta-analytic review of musical expertise. *Scientific Reports*, 12, 11726.
+12. **Pinegger, A., Hiebel, H., Wriessnegger, S. C., & Müller-Putz, G. R. (2017)**. Composing only by thought: Novel application of the P300 brain-computer interface. *PLoS ONE*, 12(9), e0181584.
 
 ---
 

@@ -14,7 +14,7 @@
 - [x] #3 SPU-α3-PCCR — Pitch Chroma Cortical Representation (v2.1.0: 1→14 papers, Allen/Patterson/Norman-Haignere anatomy, helical model R²=92.7%, replication qualification noted)
 - [x] #4 SPU-β1-STAI — Spectral-Temporal Aesthetic Integration (v2.1.0: 1→14 papers, Kim citation CORRECTED to Sci Reports, d=0.52→0.72, Alluri/Cheung/Gold/Sarasso/Bellmann convergence, MNI coords added)
 - [x] #5 SPU-β2-TSCP — Timbre-Specific Cortical Plasticity (v2.1.0: 1→12 papers, Bellmann ALE meta-analysis 4 clusters, Whiteford subcortical null constraint, Halpern/Alluri/Santoyo convergence, no direct replication noted)
-- [ ] #6 SPU-β3-MIAA — Musical Imagery Auditory Activation
+- [x] #6 SPU-β3-MIAA — Musical Imagery Auditory Activation (v2.1.0: 1→12 papers, Kraemer F=48.92, Di Liberto imagery=perception for pitch, Halpern/Bellier/Zatorre convergence, SMA added, A1 qualification)
 - [ ] #7 SPU-γ1-SDNPS — Stimulus-Dependent Neural Pitch Salience
 - [ ] #8 SPU-γ2-ESME — Expertise-Specific MMN Enhancement
 - [ ] #9 SPU-γ3-SDED — Sensory Dissonance Early Detection
