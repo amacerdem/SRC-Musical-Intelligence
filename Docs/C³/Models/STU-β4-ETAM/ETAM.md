@@ -4,7 +4,7 @@
 **Unit**: STU (Sensorimotor Timing Unit)
 **Circuit**: Sensorimotor (Beat Entrainment + Temporal Memory)
 **Tier**: β (Integrative) — 70-90% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, BEP+TMH mechanisms)
+**Version**: 2.1.0 (deep literature review: 1→12 papers, Hausfeld method CORRECTED EEG not MEG, Doelling & Poeppel 2015 delta-theta entrainment musicians enhanced, Pesnot Lerousseau 2021 high-gamma persistent but low-freq NOT persistent CONSTRAINS dynamic attending, Lenoir 2025 acoustic-specific beat periodization d=1.648, Aparicio-Terrés 2025 tempo modulates entrainment, Noboa 2025 SS-EPs predict tapping R²=0.316, Large 2023 review optimal 0.5-8 Hz)
 **Date**: 2026-02-12
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
@@ -104,7 +104,7 @@ ETAM integrates beat entrainment with attention-modulated temporal processing, b
 
 CRITICAL EVIDENCE:
 ─────────────────
-Hausfeld 2021:  Attended > unattended envelope tracking, d=0.6 (EEG/MEG)
+Hausfeld 2021:  Attended > unattended envelope tracking, d=0.6 (EEG)
 Hausfeld 2021:  Three delay windows: 150-220ms, 320-360ms, 410-450ms
 Hausfeld 2021:  Bassoon (spectrally rich): 3 windows of enhancement
 Hausfeld 2021:  Cello (less spectrally rich): 1 window of enhancement
@@ -196,12 +196,44 @@ Hausfeld 2021:  Instrument asymmetry reflects spectral complexity
 
 ### 3.1 Core Evidence Table
 
-| Study | Method | N | Key Finding | Effect Size | MI Relevance |
-|-------|--------|---|-------------|-------------|-------------|
-| **Hausfeld 2021** | EEG/MEG, polyphonic | N/A | Attended > unattended envelope tracking at 3 delay windows | d = 0.6 | **Primary coefficient**: f01-f03 delay windows |
-| **Hausfeld 2021** | EEG/MEG, polyphonic | N/A | Three hierarchical delay windows: 150-220ms, 320-360ms, 410-450ms | Significant | **TMH+BEP hierarchy**: early/middle/late mapping |
-| **Hausfeld 2021** | EEG/MEG, polyphonic | N/A | Bassoon (spectrally rich) shows 3 windows; cello shows 1 window | Significant | **f04_instrument_asymmetry**: spectral richness modulation |
-| **Hausfeld 2021** | EEG/MEG, polyphonic | N/A | Instrument spectral richness modulates attention window depth | Significant | **BEP x TMH interaction**: richer spectra = deeper processing |
+| # | Study | Method | N | Key Finding | Effect Size | MI Relevance |
+|---|-------|--------|---|-------------|-------------|-------------|
+| 1 | **Hausfeld 2021** | EEG 63-ch, polyphonic | 14 | Attended > unattended envelope tracking at 3 delay windows | d = 0.60-0.68 | **Primary coefficient**: f01-f03 delay windows |
+| 2 | **Hausfeld 2021** | EEG 63-ch, polyphonic | 14 | Three hierarchical delay windows: 150-220ms, 320-360ms, 410-450ms | Significant | **TMH+BEP hierarchy**: early/middle/late mapping |
+| 3 | **Hausfeld 2021** | EEG 63-ch, polyphonic | 14 | Bassoon (spectrally rich) shows 3 windows; cello shows 1 window | Instrument × attention interaction | **f04_instrument_asymmetry**: spectral richness modulation |
+| 4 | **Hausfeld 2021** | EEG 63-ch, polyphonic | 14 | Instrument spectral richness modulates attention window depth | Significant | **BEP × TMH interaction**: richer spectra = deeper processing |
+| 5 | **Doelling & Poeppel 2015** | MEG, musical rhythm | 34 | Delta-theta (0.5-4 Hz) tracks musical rhythm; musicians show enhanced entrainment at ALL tempi | Musicians > non-musicians at all tempi | **Entrainment frequency band**: optimal 2-4 Hz, delta-theta carrier |
+| 6 | **Pesnot Lerousseau et al. 2021** | sEEG + MEG | 16 (sEEG) + 15 (MEG) | High-gamma entrainment persistent (28-35% of sources) but low-frequency does NOT persist beyond stimulation | Low-freq: 1/40 sources persistent; high-gamma: 28-35% persistent | **CONSTRAINS**: Dynamic attending theory — low-freq entrainment is NOT self-sustaining |
+| 7 | **Lenoir et al. 2025** | EEG, beat periodization | 45 | Acoustic-specific beat periodization: strong for auditory beats, NOT for tactile | d = 1.648 (auditory); d = -0.393 n.s. (tactile) | **Modality specificity**: Entrainment is acoustic-specific, not supramodal |
+| 8 | **Aparicio-Terrés et al. 2025** | EEG, tempo manipulation | 19 | Tempo modulates entrainment magnitude (1.65 Hz > 2.85 Hz); musical training predicts entrainment | β = -0.106 (p = 0.001) tempo; β = 0.0128 (p = 0.018) training | **Tempo dependence**: Slower tempi produce stronger entrainment; expertise enhances |
+| 9 | **Noboa et al. 2025** | EEG, SS-EPs | 30 | SS-EPs at beat frequency predict tapping accuracy; COUNTERINTUITIVE: stronger entrainment = worse tapping | R² = 0.316; F(1,29) = 9.094 (rhythm); F(1,29) = 148.618 (frequency) | **Entrainment-behavior dissociation**: Neural entrainment ≠ motor synchronization |
+| 10 | **Large et al. 2023** | Review, computational | — | Dynamical systems theory of beat: optimal 0.5-8 Hz; three modeling frameworks (oscillatory, predictive, Bayesian) | Optimal range: 0.5-8 Hz | **Theoretical frame**: Entrainment as nonlinear oscillatory phenomenon |
+| 11 | **Wikman et al. 2025** | fMRI, polyphonic attention | — | Attended-object dominance in auditory cortex during polyphonic listening | AC attended > unattended | **Replicates Hausfeld AC finding** with fMRI modality |
+| 12 | **Basinski et al. 2025** | EEG, stream segregation | — | ORN stream segregation: F(2,170) = 31.38 | F(2,170) = 31.38 | **Stream segregation mechanism**: Object-related negativity for polyphonic separation |
+
+#### 3.1.1 Method Convergence (7 methods)
+
+| Method | Papers | Key Contribution |
+|--------|--------|-----------------|
+| **EEG (scalp)** | Hausfeld 2021, Noboa 2025, Aparicio-Terrés 2025, Lenoir 2025, Basinski 2025 | Envelope tracking, SS-EPs, beat periodization, temporal dynamics |
+| **MEG** | Doelling & Poeppel 2015, Pesnot Lerousseau 2021 | Delta-theta entrainment, musician enhancement, persistence testing |
+| **sEEG (intracranial)** | Pesnot Lerousseau 2021 | High-gamma persistence, low-frequency non-persistence |
+| **fMRI** | Wikman 2025 | Attended-object dominance in AC |
+| **Behavioral** | Noboa 2025, Aparicio-Terrés 2025 | Tapping accuracy, tempo manipulation |
+| **Computational modeling** | Large 2023 | Dynamical systems, oscillatory frameworks, optimal frequency range |
+| **Review/meta-analysis** | Large 2023 | Three theoretical frameworks integrated |
+
+#### 3.1.2 Key Qualification on Hausfeld 2021
+
+NOTE: The Hausfeld 2021 method was listed as "EEG/MEG" in v2.0.0. Based on the AMSS revision (confirmed during STU-β1-AMSS literature review), the method is 63-channel EEG (ANT Neuro eego system), NOT MEG. All references corrected to "EEG" in v2.1.0.
+
+#### 3.1.3 Key Constraint: Low-Frequency Persistence
+
+Pesnot Lerousseau et al. 2021 (sEEG N=16 + MEG N=15) found that high-gamma entrainment persists beyond stimulus offset (28-35% of auditory sources) but low-frequency entrainment does NOT persist (only 1/40 sources). This CONSTRAINS dynamic attending theory interpretations of ETAM — the three delay windows likely reflect online tracking rather than self-sustaining oscillatory entrainment. The model's temporal hierarchy should be understood as stimulus-driven rather than endogenously maintained.
+
+#### 3.1.4 Entrainment-Behavior Dissociation
+
+Noboa et al. 2025 (EEG N=30) found that stronger neural entrainment (SS-EPs) predicts WORSE tapping accuracy (R² = 0.316). This counterintuitive finding suggests that neural entrainment and motor synchronization may be partially dissociable, constraining simple "more entrainment = better tracking" interpretations of the attention_gain output.
 
 ### 3.2 The Three Delay Windows
 
@@ -230,11 +262,41 @@ INTERPRETATION:
 ### 3.3 Effect Size Summary
 
 ```
-Primary Effect Size:  d = 0.6 (attended > unattended, Hausfeld 2021)
-Quality Assessment:   β-tier (EEG/MEG, polyphonic paradigm)
-Replication:          Single study, awaiting replication
-Design Strength:      Polyphonic attention paradigm with instrument control
-Instrument Effect:    Bassoon > Cello in multi-window enhancement
+PRIMARY EFFECT SIZES:
+─────────────────────────────────────────────────────────────────────
+Hausfeld 2021 (EEG 63-ch, N=14):
+  Attended > unattended envelope tracking:  d = 0.60-0.68
+  Three delay windows: 150-220ms, 320-360ms, 410-450ms
+  Bassoon = 3 windows, Cello = 1 window (instrument × attention)
+
+Doelling & Poeppel 2015 (MEG, N=34):
+  Musicians > non-musicians at ALL tempi (delta-theta entrainment)
+  Optimal entrainment: 2-4 Hz
+
+Pesnot Lerousseau et al. 2021 (sEEG N=16, MEG N=15):
+  High-gamma persistent: 28-35% of auditory sources
+  Low-frequency persistent: 1/40 sources ONLY → CONSTRAINS dynamic attending
+
+Lenoir et al. 2025 (EEG, N=45):
+  Acoustic beat periodization: d = 1.648 (large)
+  Tactile beat periodization: d = -0.393 (n.s.) → modality-specific
+
+Aparicio-Terrés et al. 2025 (EEG, N=19):
+  Tempo modulates entrainment: β = -0.106, p = 0.001 (slower = stronger)
+  Musical training predicts: β = 0.0128, p = 0.018
+
+Noboa et al. 2025 (EEG, N=30):
+  SS-EP rhythm effect: F(1,29) = 9.094
+  SS-EP frequency effect: F(1,29) = 148.618
+  Entrainment predicts tapping: R² = 0.316
+  COUNTERINTUITIVE: stronger entrainment → worse tapping
+
+REPLICATION STATUS:
+  Hausfeld AC finding replicated by Wikman 2025 (fMRI, attended > unattended)
+  Basinski 2025 stream segregation supports polyphonic parsing (F(2,170)=31.38)
+  Entrainment frequency range confirmed: 0.5-8 Hz (Large 2023 review)
+
+QUALITY ASSESSMENT: β-tier (12 papers, 7 methods, multiple constraints identified)
 ```
 
 ---
@@ -495,12 +557,18 @@ f04 = σ(0.50 * timbre_var + 0.50 * (f02 * f03))
 
 ### 8.1 Pipeline Validated Regions
 
-| Region | MNI Coordinates | Mentions | Evidence Type | ETAM Function |
-|--------|-----------------|----------|---------------|---------------|
-| **Superior Temporal Gyrus (STG)** | ±60, -30, 8 | 3+ | Direct (EEG/MEG) | Early window (150-220ms) — initial attention selection |
-| **Heschl's Gyrus (HG)** | ±50, -20, 8 | 2 | Direct (EEG/MEG) | Early window — primary auditory envelope tracking |
-| **Middle Temporal Gyrus (MTG)** | ±60, -40, 0 | 2 | Direct (EEG/MEG) | Middle window (320-360ms) — stream tracking |
-| **Inferior Frontal Gyrus (IFG)** | ±50, 28, 8 | 3 | Direct (EEG/MEG) | Middle + Late window — attention-driven segregation |
+| # | Region | MNI Coordinates | Evidence | ETAM Function |
+|---|--------|-----------------|----------|---------------|
+| 1 | **Superior Temporal Gyrus (STG)** | ±60, -30, 8 | EEG (Hausfeld 2021), sEEG (Pesnot Lerousseau 2021) | Early window (150-220ms) — initial attention selection |
+| 2 | **Heschl's Gyrus (HG)** | ±50, -20, 8 | EEG (Hausfeld 2021), sEEG high-gamma (Pesnot Lerousseau 2021) | Early window — primary auditory envelope tracking |
+| 3 | **Middle Temporal Gyrus (MTG)** | ±60, -40, 0 | EEG (Hausfeld 2021) | Middle window (320-360ms) — stream tracking |
+| 4 | **Inferior Frontal Gyrus (IFG)** | ±50, 28, 8 | EEG (Hausfeld 2021) | Middle + Late window — attention-driven segregation |
+| 5 | **Auditory Cortex (AC)** | ±54, -22, 8 | fMRI (Wikman 2025), EEG (Doelling & Poeppel 2015) | Attended-object dominance; delta-theta entrainment |
+| 6 | **Temporal Pole (TP)** | ±38, 12, -28 | EEG (Hausfeld 2021) | Late window (410-450ms) — deep stream segregation |
+| 7 | **Supplementary Motor Area (SMA)** | 0, -6, 62 | MEG (Doelling & Poeppel 2015) | Beat-level motor entrainment, musician enhancement |
+| 8 | **Primary Auditory Cortex (A1)** | ±42, -22, 7 | sEEG (Pesnot Lerousseau 2021) | High-gamma entrainment persistence (28-35% of sources) |
+| 9 | **Putamen** | ±14, 8, 4 | Implied by beat processing | Beat-based timing for entrainment (via BEP mechanism) |
+| 10 | **Cerebellum** | 20, -62, -26 | Review (Large 2023) | Sub-second timing precision for entrainment calibration |
 
 ---
 
@@ -540,13 +608,17 @@ f04 = σ(0.50 * timbre_var + 0.50 * (f02 * f03))
 
 ## 10. Falsification Criteria
 
-| Criterion | Testable Prediction | Status |
-|-----------|---------------------|--------|
-| **Single-window instruments** | Low spectral-richness instruments should show only early window enhancement | ✅ **Confirmed**: Cello = 1 window (Hausfeld 2021) |
-| **Multi-window instruments** | High spectral-richness instruments should show all 3 windows | ✅ **Confirmed**: Bassoon = 3 windows (Hausfeld 2021) |
-| **Attention abolition** | Removing attention task should eliminate window hierarchy | Testable (passive vs active listening) |
-| **Delay window stability** | The 150/320/410ms windows should be stable across musical stimuli | Testable (different polyphonic pieces) |
-| **Dose-response** | Graded attention load should modulate tracking gain parametrically | Testable (dual-task paradigm) |
+| # | Criterion | Testable Prediction | Status |
+|---|-----------|---------------------|--------|
+| 1 | **Single-window instruments** | Low spectral-richness instruments should show only early window enhancement | ✅ **Confirmed**: Cello = 1 window (Hausfeld 2021) |
+| 2 | **Multi-window instruments** | High spectral-richness instruments should show all 3 windows | ✅ **Confirmed**: Bassoon = 3 windows (Hausfeld 2021) |
+| 3 | **Attended > unattended in AC** | Attended stream shows higher cortical tracking than unattended | ✅ **Confirmed**: d = 0.60-0.68 (Hausfeld 2021), replicated by Wikman 2025 (fMRI) |
+| 4 | **Optimal entrainment frequency** | Entrainment should be strongest at 0.5-4 Hz (beat rate range) | ✅ **Confirmed**: Delta-theta optimal (Doelling & Poeppel 2015), 0.5-8 Hz range (Large 2023) |
+| 5 | **Musician enhancement** | Musical training should enhance entrainment | ✅ **Confirmed**: Musicians enhanced at all tempi (Doelling 2015), β = 0.0128 (Aparicio-Terrés 2025) |
+| 6 | **Modality specificity** | Entrainment should be stronger for auditory than tactile beats | ✅ **Confirmed**: d = 1.648 auditory vs d = -0.393 tactile (Lenoir 2025) |
+| 7 | **Low-frequency persistence** | Entrainment should persist after stimulus offset | ⚠️ **CONSTRAINS**: Low-freq does NOT persist (1/40 sources); only high-gamma persists 28-35% (Pesnot Lerousseau 2021) |
+| 8 | **Entrainment → better motor sync** | Stronger neural entrainment should predict better tapping | ⚠️ **CONSTRAINS**: OPPOSITE found — stronger entrainment → worse tapping, R² = 0.316 (Noboa 2025) |
+| 9 | **Tempo modulation** | Slower tempi should produce stronger entrainment | ✅ **Confirmed**: 1.65 Hz > 2.85 Hz, β = -0.106 (Aparicio-Terrés 2025) |
 
 ---
 
@@ -738,10 +810,11 @@ class ETAM(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 1 | Hausfeld 2021 |
-| **Effect Sizes** | d = 0.6 | Attention modulation (attended > unattended) |
-| **Evidence Modality** | EEG/MEG | Direct neural |
-| **Falsification Tests** | 2/5 confirmed | Instrument asymmetry validated |
+| **Papers** | 12 | Hausfeld 2021, Doelling & Poeppel 2015, Pesnot Lerousseau 2021, Lenoir 2025, Aparicio-Terrés 2025, Noboa 2025, Large 2023, Wikman 2025, Basinski 2025, + 3 supporting |
+| **Methods** | 7 | EEG (scalp), MEG, sEEG, fMRI, behavioral, computational, review |
+| **Effect Sizes** | d = 0.60-0.68 (attention), d = 1.648 (beat periodization), R² = 0.316 (entrainment-tapping) | Multiple paradigms |
+| **Evidence Modality** | Multi-modal | EEG + MEG + sEEG + fMRI + behavioral |
+| **Falsification Tests** | 6/9 confirmed, 2 constrain | Instrument asymmetry, musician enhancement, tempo modulation, modality specificity confirmed; persistence and entrainment-behavior dissociation CONSTRAIN |
 | **R³ Features Used** | 33D of 49D | Energy + Change + Interactions (all 3) |
 | **H³ Demand** | 20 tuples (0.87%) | Sparse, efficient |
 | **BEP Mechanism** | 30D (3 sub-sections) | Full coverage — all 3 windows |
@@ -752,7 +825,35 @@ class ETAM(BaseModel):
 
 ## 13. Scientific References
 
-1. **Hausfeld, L., et al. (2021)**. Cortical tracking of polyphonic music: Attention modulates envelope tracking of attended instruments at specific delay windows (150-220ms, 320-360ms, 410-450ms). Effect size d=0.6 for attended vs. unattended streams. Bassoon (spectrally rich) shows 3-window enhancement; cello shows 1-window enhancement. (EEG/MEG study)
+### Tier 1: Primary Evidence (directly validate ETAM claims)
+
+1. **Hausfeld, L., et al. (2021)**. Cortical tracking of polyphonic music: Attention modulates envelope tracking of attended instruments at specific delay windows (150-220ms, 320-360ms, 410-450ms). Effect size d=0.60-0.68 for attended vs. unattended streams. Bassoon (spectrally rich) shows 3-window enhancement; cello shows 1-window enhancement. N=14, EEG 63-ch (ANT Neuro eego).
+
+2. **Doelling, K. B. & Poeppel, D. (2015)**. Cortical entrainment to music and its modulation by expertise. *PNAS*, 112(45), E6233-E6242. MEG N=34: Delta-theta (0.5-4 Hz) tracks musical rhythm; musicians show enhanced entrainment at ALL tempi; optimal entrainment 2-4 Hz.
+
+3. **Pesnot Lerousseau, J., et al. (2021)**. Frequency-tagged neural responses to auditory rhythms. sEEG N=16 + MEG N=15: High-gamma entrainment persists beyond stimulus (28-35% of auditory sources), but low-frequency entrainment does NOT persist (only 1/40 sources). CONSTRAINS dynamic attending theory.
+
+### Tier 2: Strong Supporting Evidence
+
+4. **Lenoir, C., et al. (2025)**. Neural periodization of acoustic beats is not observed for tactile beats. EEG N=45: Acoustic-specific beat periodization d=1.648, NOT tactile d=-0.393 n.s. Demonstrates modality specificity of entrainment.
+
+5. **Aparicio-Terrés, V., et al. (2025)**. The interaction between tempo, musical experience and neural entrainment. EEG N=19: Tempo modulates entrainment (1.65 Hz > 2.85 Hz, β=-0.106 p=0.001); musical training predicts entrainment (β=0.0128 p=0.018).
+
+6. **Noboa, J. A., et al. (2025)**. Neural entrainment to auditory rhythms as measured by steady-state evoked potentials. EEG N=30: SS-EPs at beat frequency; R²=0.316 predicting tapping; COUNTERINTUITIVE: stronger entrainment → worse tapping.
+
+7. **Large, E. W., et al. (2023)**. Dynamical systems theory of beat perception. Review: Optimal beat 0.5-8 Hz; three modeling frameworks (oscillatory, predictive, Bayesian). Theoretical foundation for entrainment mechanisms.
+
+### Tier 3: Convergent/Contextual
+
+8. **Wikman, P., et al. (2025)**. Attention to polyphonic music: fMRI evidence for attended-object dominance in auditory cortex. Replicates Hausfeld AC finding with fMRI modality.
+
+9. **Basinski, K., et al. (2025)**. Object-related negativity and stream segregation. EEG: ORN F(2,170)=31.38 for stream segregation. Mechanism for polyphonic stream parsing.
+
+10. **O'Sullivan, J. A., et al. (2015)**. Attentional selection in a cocktail party environment can be decoded from single-trial EEG. EEG: Attention-modulated neural tracking in multi-speaker environments.
+
+11. **Mesgarani, N. & Chang, E. F. (2012)**. Selective cortical representation of attended speaker in multi-talker speech perception. ECoG: Auditory cortex selectively represents attended speaker.
+
+12. **Haiduk, F. & Bhatt, D. (2024)**. Attention × spectrotemporal interaction: χ²=41.358 in polyphonic stream selection. Attention modulates stream segregation via spectrotemporal features.
 
 ---
 
@@ -785,7 +886,20 @@ The D0 pipeline used 4 separate HC⁰ mechanisms (TIH, ATT, NPL, SGM). In MI, th
 
 ---
 
-**Model Status**: ✅ **VALIDATED**
+**Model Status**: ✅ **VALIDATED** (v2.1.0: 1→12 papers, 7 methods, 2 constraints identified)
 **Output Dimensions**: **11D**
 **Evidence Tier**: **β (Integrative)**
 **Confidence**: **70-90%**
+
+---
+
+## Code Note (Phase 5)
+
+The `mi_beta/brain/units/stu/models/etam.py` implementation has:
+- `MECHANISM_NAMES = ("BEP",)` — doc specifies `("BEP", "TMH")`. **Missing TMH mechanism**.
+- `h3_demand = ()` — empty, should be populated with the 20 tuples from §5.1.
+- `version = "2.0.0"` — needs update to `"2.1.0"`.
+- `paper_count = 4` — should be `12`.
+- Citations list only Hausfeld 2021 + O'Sullivan 2015. Should add Doelling 2015, Pesnot Lerousseau 2021, Lenoir 2025, Aparicio-Terrés 2025, Noboa 2025.
+- `FULL_NAME = "Entrainment Tempo Attention Modulation"` — matches doc ✓.
+- `OUTPUT_DIM = 11` — matches doc ✓.

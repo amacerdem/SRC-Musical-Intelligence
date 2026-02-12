@@ -2,7 +2,7 @@
 
 **Total**: 96 models (48 Core + 48 Experimental)
 **Current Phase**: Phase 1 (C³ Model Revision)
-**Last Updated**: 2026-02-12
+**Last Updated**: 2026-02-13
 
 ---
 
@@ -24,13 +24,13 @@
 - [x] #11 STU-α2-AMSC — Auditory-Motor Stream Coupling (v2.1.0: 1→12 papers, Lazzari 2025 TMS CAUSAL right dPMC, Ito 2022 cross-species 120-140 BPM, Hoddinott/Grahn SMA+putamen RSA, Edagawa beta synchronization, Bellier right STG, 6 methods)
 - [x] #12 STU-α3-MDNS — Melody Decoding from Neural Signals (v2.1.0: 1→12 papers, "Study 2021" → Di Liberto et al. 2021, F(1,20)=80.6 note-onset, sub-1 Hz pitch F=369.8, Bellier 2023 iEEG r²=0.429 replication, Kraemer PAC imagery F=22.55, Weineck spectral flux η²=0.55, Daly MNI coordinates, 7 methods)
 - [x] #13 STU-β1-AMSS — Attention-Modulated Stream Segregation (v2.1.0: 1→12 papers, Hausfeld method CORRECTED EEG not MEG, Wikman 2025 fMRI attended-object AC dominance, Basinski 2025 ORN F(2,170)=31.38 stream segregation, Haiduk 2024 attention×spectrotemporal 3-way χ²=41.358, Har-shai Yahav CONSTRAINS >50% no individual bias, 7 methods)
-- [ ] #14 STU-β2-TPIO — Timbre Perception-Imagery Overlap
-- [ ] #15 STU-β3-EDTA — Expertise-Dependent Tempo Accuracy
-- [ ] #16 STU-β4-ETAM — Entrainment, Tempo & Attention Modulation
-- [ ] #17 STU-β5-HGSIC — Hierarchical Groove State Integration Circuit
-- [ ] #18 STU-β6-OMS — Oscillatory Motor Synchronization
-- [ ] #19 STU-γ1-TMRM — Tempo Memory Reproduction Method
-- [ ] #20 STU-γ2-NEWMD — Neural Entrainment-Working Memory Dissociation
+- [x] #14 STU-β2-TPIO — Timbre Perception-Imagery Overlap (v2.1.0: 1→12 papers, "Study 2021" → Halpern et al. 2004 (Neuropsychologia), Bellmann & Asano 2024 ALE meta-analysis 4 clusters dual-stream, Pantev 2001 timbre-specific plasticity F(1,15)=28.55, Kraemer 2005 PAC imagery F(1,14)=22.55, Alluri 2012 naturalistic timbre, SMA QUALIFIED subthreshold, 7 methods)
+- [x] #15 STU-β3-EDTA — Expertise-Dependent Tempo Accuracy (v2.1.0: ~3→12 papers, "Expertise study" → Foster et al. 2021, Vigl 2024 N=403 quadratic 120 BPM peak, Grahn & Brett 2007 putamen Z=5.67/SMA Z=5.03, Hoddinott 2024 7T RSA C-Score, Dalla Bella 2024 motor d=1.5, d=0.54 QUALIFIED unverifiable, 5 methods)
+- [x] #16 STU-β4-ETAM — Entrainment, Tempo & Attention Modulation (v2.1.0: 1→12 papers, Hausfeld method CORRECTED EEG not MEG, Doelling 2015 delta-theta entrainment musicians enhanced, Pesnot Lerousseau 2021 low-freq NOT persistent CONSTRAINS, Lenoir 2025 acoustic d=1.648, Aparicio-Terrés 2025 tempo modulates entrainment, Noboa 2025 SS-EPs R²=0.316 COUNTERINTUITIVE, 7 methods)
+- [x] #17 STU-β5-HGSIC — Hierarchical Groove State Integration Circuit (v2.1.0: 1→12 papers, Potes 2012 r=0.49 intensity-tracking QUALIFIED not groove-specific, Grahn & Brett 2007 putamen Z=5.67/SMA Z=5.03 beat-specific, Spiech 2022 groove inverted-U χ²=14.643, Thaut 2015 period entrainment, Ayyildiz 2025 micro-timing N=100, 7 methods)
+- [x] #18 STU-β6-OMS — Oscillatory Motor Synchronization (v2.1.0: 0→12 papers, generic citations REPLACED, Edagawa 2017 beta PSI z=7.43, Pierrieau 2025 beta flexibility d=-1.21, Okada 2022 cerebellar 3-neuron-type, Scartozzi 2024 beta-musicality r=0.42, Bigand 2025 dyadic dance F=249.75, Marup 2022 bodily hierarchy, 6 methods)
+- [x] #19 STU-γ1-TMRM — Tempo Memory Reproduction Method (v2.1.0: 2→12 papers, Vigl 2024 N=403 REPLACES founding studies as primary, adjusting>tapping r=−.26 DEFLATED from d=2.76, quadratic 120 BPM χ²(1)=152.57 CONFIRMED, expertise r=.09 DEFLATED from d=0.59, Foster 2021 DJs 120-139 BPM, Grahn putamen Z=5.67/SMA Z=5.03, Dalla Bella 2024 musician d=1.8, 7 methods)
+- [x] #20 STU-γ2-NEWMD — Neural Entrainment-Working Memory Dissociation (v2.1.0: 1→12 papers, Noboa 2025 N=30 EXACT REPLICATION β=-0.060/β=+0.068 IDENTICAL to Sares 2023, R²=0.316, Scartozzi 2024 N=57 spontaneous beta r=0.42 musicality NOT rhythm discrimination SUPPORTS dissociation, Zanto 2022 RCT d=0.52 rhythm→STM via SPL shared WM, Lenoir 2025 auditory-specific d=1.648, Pesnot Lerousseau 2021 low-freq NOT persistent CONSTRAINS, 8 methods)
 - [ ] #21 STU-γ3-MTNE — Music Training Neural Efficiency
 - [ ] #22 STU-γ4-PTGMP — Piano Training Grey Matter Plasticity
 - [ ] #23 STU-γ5-MPFS — Musical Prodigy Flow State

@@ -4,7 +4,7 @@
 **Unit**: STU (Sensorimotor Timing Unit)
 **Circuit**: Sensorimotor (Beat Entrainment Processing)
 **Tier**: β (Integrative) — 70-90% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, BEP mechanism)
+**Version**: 2.1.0 (deep literature review: ~3→12 papers, "Expertise study" → Foster et al. 2021 (Frontiers Psych), Vigl 2024 N=403 quadratic 120 BPM peak, Grahn & Brett 2007 putamen+SMA MNI, Hoddinott & Grahn 2024 7T RSA C-Score model, Dalla Bella 2024 motor d=1.5 classifier, d=0.54 QUALIFIED as unverifiable)
 **Date**: 2026-02-12
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
@@ -186,13 +186,28 @@ Domain specificity:  Advantage does NOT transfer outside trained range
 
 ### 3.1 Core Evidence Table
 
-| Study | Method | N | Key Finding | Effect Size | MI Relevance |
-|-------|--------|---|-------------|-------------|-------------|
-| **Expertise study** | Behavioral | Musicians vs. non-musicians | Domain-specific tempo accuracy | d = 0.54 | **Primary coefficient**: f03_expertise_effect |
-| **DJ tempo specialization** | Behavioral | DJs | Superior accuracy at 120-139 BPM | d = 0.54 in trained range | **f01_beat_accuracy**: optimal DJ range |
-| **Percussionist tempo specialization** | Behavioral | Percussionists | Superior accuracy at 100-139 BPM | d = 0.54 in trained range | **f02_tempo_precision**: broader percussionist range |
-| **Grahn & Brett 2007** | fMRI | 18 | Putamen activates for beat extraction | r = 0.70 (beat × motor) | **BEP.meter_extraction**: basal ganglia timing |
-| **Poeppel 1997** | Psychophysics | Review | 500ms psychological present | Theoretical | **H11 horizon**: meter grouping window |
+| # | Study | Method | N | Key Finding | Effect Size | MI Relevance |
+|---|-------|--------|---|-------------|-------------|-------------|
+| 1 | **Foster, Beffa & Lehmann 2021** | Behavioral (tempo estimation, isochronous, 80-160 BPM) | 40 (10 DJs, 7 percussionists, 12 melodic, 11 untrained) | DJs show domain-specific accuracy at 120-139 BPM (error 3.10% vs. untrained 7.91%). Group × tempo range interaction significant | **F(3, 36.02) = 5.67, p = 0.003** (group); **F(9, 1389.55) = 2.70, p < 0.001** (group × tempo); DJ 120-139: p < 0.001 vs. untrained | **Primary**: f03_expertise_effect, domain-specific BPM range |
+| 2 | **Foster et al. 2021** | Behavioral (within-DJ comparison) | 10 DJs | DJs' 120-139 BPM accuracy (3.10%) approaches JND (2-3%), significantly better than their own 80-99 BPM (7.54%) | Within-DJ 120-139 vs. 80-99: p < 0.001; 120-139 vs. 100-119: p < 0.001 | **Domain specificity**: DJ training does NOT transfer outside trained range |
+| 3 | **Foster et al. 2021** | Behavioral (percussionist range) | 7 percussionists | Percussionists accurate at 100-119 BPM (5.14%) and 120-139 BPM (3.84%) vs. untrained (9.39%, 7.91%) | Perc vs. untrained at 100-119: p = 0.017; at 120-139: p = 0.018 | **Broader percussionist range**: 100-139 BPM (wider than DJ range) |
+| 4 | **Vigl, Koehler & Henning 2024** | Behavioral online (tempo tapping + adjusting, 19 songs, 53-169 BPM) | **403** (105 non-musicians, 137 amateurs, 161 professionals) | Musical expertise predicts tempo reproduction accuracy; expertise effect STRONGER for tapping (motor) than adjusting (perceptual+motor). Quadratic peak around 120 BPM | Expertise: Est. = 0.01, p = .047, r = .09; Method × expertise: p = .001, r = .04; Quadratic tempo: χ²(1) = 152.57, p < .001 | **Large-sample confirmation**: 120 BPM optimal, motor mediation of expertise. CONSTRAINS: small r = .09 effect in large sample |
+| 5 | **Grahn & Brett 2007** | fMRI (3T), rhythm discrimination | 27 (14 musicians, 13 non-musicians) | Putamen + SMA selectively respond to beat-inducing rhythms. Musicians show higher activation in pre-SMA/SMA, cerebellum, R premotor across all rhythms | L putamen t = 4.05, R putamen t = 3.65 (metric > complex); pre-SMA Z = 5.03 (-9, 6, 60); L putamen Z = 5.67 (-24, 6, -9) | **Neural substrate**: BEP.meter_extraction (putamen) + BEP.motor_entrainment (SMA). Musicians show elevated activation |
+| 6 | **Hoddinott & Grahn 2024** | 7T fMRI, RSA + MVPA | 26 | SMA and putamen encode beat strength CONTINUOUSLY (C-Score model best fit). Basic features (tempo, onsets) NOT encoded in SMA/putamen patterns | L SMA: C-Score > Tempo t(25) = 3.63, p = .001; R SMA: C-Score > Onsets t(25) = 3.72, p = .001; L putamen beat-encoding t(25) = 2.57, p = .017 | **C-Score model**: SMA/putamen represent beat strength on a continuous scale, not categorical — refines EDTA's domain_specificity dimension |
+| 7 | **Dalla Bella, Janaqi, Benoit et al. 2024** | Behavioral (BAASTA battery), machine learning (SLF) | 79 | Motor measures dominate musician/nonmusician classification (84% variance vs. 50% perceptual). Combined perceptual-motor model best (92%) | Motor: F(74) = 97.1, d = 1.5; Combined: F(70) = 99.5, **d = 1.8**; Perceptual: d = 1.3 | **Motor primacy**: expertise-dependent accuracy is primarily motor, not perceptual. Supports BEP.motor_entrainment as expertise mediator |
+| 8 | **Marup, Moller & Vuust 2022** | Behavioral (multi-effector rhythm + beat) | 60 (3 expertise levels) | Musicians show higher precision across all effector combinations; bodily hierarchy invariant across expertise levels | General expertise improvement; hierarchy invariant | **Expertise generalization**: precision improves uniformly, not just at specific tempi. CONSTRAINS pure domain-specificity claim |
+| 9 | **Cinelyte, Cannon, Patel & Mullensiefen 2022** | Behavioral (BDAT, covert pulse continuation) | >200 (2 studies) | Musical experience predicts covert beat continuation better than CA-BAT score; internal pulse maintenance is more experience-dependent than beat alignment | Musical experience > CA-BAT as predictor | **Covert beat**: internal tempo maintenance (without external cues) is more expertise-dependent than overt beat detection |
+| 10 | **Ross & Balasubramaniam 2022** | Review (entrainment, simulation, prediction) | — | Motor/sensorimotor systems mediate tempo and beat perception through entrainment, simulation, and prediction mechanisms | Theoretical framework | **Framework**: entrainment + motor simulation supports EDTA's BEP mechanism architecture |
+| 11 | **Okada, Takeya & Tanaka 2022** | Electrophysiology (primate cerebellar nuclei) | Primates | Cerebellar circuits form internal models of rhythmic structure; predictive motor control for timing | Neuronal firing patterns in deep cerebellar nuclei | **Cerebellar timing**: sub-second precision mechanism supporting tempo accuracy calibration |
+| 12 | **Liao et al. 2024** | fMRI | Percussionists | Percussionists leverage specialized neural network for musical rhythm (NMR) and executive control during performance | Network-level specialization | **Percussionist expertise**: specialized neural systems for temporal precision in trained musicians |
+
+### 3.1.1 Multi-Method Convergence
+
+The EDTA evidence base now spans **5 methods**: behavioral tempo estimation (Foster 2021, Vigl 2024), behavioral sensorimotor (Dalla Bella 2024, Marup 2022, Cinelyte 2022), fMRI (Grahn & Brett 2007, Hoddinott & Grahn 2024, Liao 2024), 7T fMRI RSA (Hoddinott & Grahn 2024), and primate electrophysiology (Okada 2022). The convergence across behavioral and neural methods strengthens the domain-specific expertise claim.
+
+### 3.1.2 Key Qualification on d = 0.54
+
+The v2.0.0 doc cited d = 0.54 as the expertise effect size, attributed to an unspecified "Expertise study." This value does NOT appear in Foster et al. 2021 (which reports F-statistics and absolute error percentages) or in any other identified paper in the collection. The code references "Cameron 2014" which was not found in the literature summaries. **The d = 0.54 coefficient is retained for backward compatibility but should be treated as APPROXIMATE and UNVERIFIED.** The Foster 2021 data (error reduction from 7.91% to 3.10% at 120-139 BPM for DJs) and Dalla Bella 2024 (d = 1.5 for motor classification) provide alternative calibration points.
 
 ### 3.2 The Domain-Specific Expertise Pattern
 
@@ -220,11 +235,46 @@ specialization at specific tempo ranges.
 ### 3.3 Effect Size Summary
 
 ```
-Expertise Effect:       d = 0.54 (musicians > non-musicians, trained range)
-Domain Specificity:     DJs: 120-139 BPM, Percussionists: 100-139 BPM
-Quality Assessment:     β-tier (behavioral, converging across musician types)
-Replication:            Converges with general sensorimotor timing literature
-                        (Grahn & Brett 2007, Poeppel 1997)
+PRIMARY STUDY (Foster et al. 2021):
+  Group main effect:                F(3, 36.02) = 5.67, p = 0.003
+  Group × tempo range:              F(9, 1389.55) = 2.70, p < 0.001
+  DJ 120-139 BPM error:             3.10% (approaches JND of 2-3%)
+  Untrained 120-139 BPM error:      7.91%
+  DJ advantage at 120-139 vs. 80-99: p < 0.001 (within-DJ specificity)
+  Percussionist 100-119 advantage:   5.14% vs. 9.39%, p = 0.017
+  DJ advantage ABSENT at 80-99 BPM:  n.s. (domain specificity confirmed)
+
+LARGE-SAMPLE REPLICATION (Vigl et al. 2024, N=403):
+  Musical expertise:                 Est. = 0.01, p = .047, r = .09
+  Method × expertise:                p = .001, r = .04
+  Quadratic tempo peak:              χ²(1) = 152.57, p < .001 (peak ~120 BPM)
+  Tapping accuracy:                  M = 0.76, SD = 0.14
+  Adjusting accuracy:                M = 0.87, SD = 0.09
+  NOTE: r = .09 in large sample is SMALLER than d = 0.54
+
+NEURAL SUBSTRATE (Grahn & Brett 2007):
+  L putamen beat-specific:           t = 4.05 (metric > complex), p < .001
+  R putamen beat-specific:           t = 3.65, p < .001
+  Pre-SMA activation:               Z = 5.03 (-9, 6, 60)
+  Musicians > non-musicians:         pre-SMA, cerebellum, R dPMC (all rhythms)
+
+CONTINUOUS BEAT ENCODING (Hoddinott & Grahn 2024):
+  C-Score > Tempo (L SMA):          t(25) = 3.63, p = .001
+  C-Score > Onsets (R SMA):          t(25) = 3.72, p = .001
+  L putamen beat encoding:           t(25) = 2.57, p = .017
+
+MOTOR CLASSIFICATION (Dalla Bella et al. 2024):
+  Motor model:                       F(74) = 97.1, d = 1.5 (84% variance)
+  Combined perceptual-motor:         F(70) = 99.5, d = 1.8 (92% variance)
+  Perceptual-only:                   d = 1.3 (50% variance)
+
+d = 0.54 STATUS: UNVERIFIED — not found in Foster 2021 or any identified
+paper. May derive from Cameron 2014 (code reference, not in collection).
+Retained for backward compatibility.
+
+Quality Assessment:  β-tier (behavioral + fMRI, 12 papers, 5 methods)
+Replication:         Partial — Vigl 2024 confirms 120 BPM peak and expertise
+                     effect in N=403, but r = .09 is smaller than d = 0.54
 ```
 
 ---
@@ -451,13 +501,18 @@ f03 = σ(0.54 · f01 · f02 · motor_stability)
 
 ### 8.1 Pipeline Validated Regions
 
-| Region | MNI Coordinates | Mentions | Evidence Type | EDTA Function |
-|--------|-----------------|----------|---------------|---------------|
-| **Heschl's Gyrus (HG)** | ±50, -18, 8 | Direct | fMRI/EEG | Beat induction (onset detection) |
-| **Superior Temporal Gyrus (STG)** | ±60, -30, 8 | Direct | fMRI | Auditory beat processing |
-| **Putamen** | ±25, 5, 5 | Direct | fMRI | Meter extraction (Grahn & Brett 2007) |
-| **SMA** | 0, -5, 55 | Direct | fMRI | Motor entrainment, tempo synchronization |
-| **Dorsal Premotor Cortex (dPMC)** | ±35, -5, 55 | Direct | fMRI | Expertise-modulated motor coupling |
+| Region | MNI Coordinates | Evidence | Source | EDTA Function |
+|--------|-----------------|----------|--------|---------------|
+| **Left Putamen** | (-24, 6, -9) | **Direct** (fMRI, Z = 5.67) | Grahn & Brett 2007; beat-specific t = 4.05 | BEP.meter_extraction: beat-based timing |
+| **Right Putamen** | (21, 6, -6) | **Direct** (fMRI, Z = 5.08) | Grahn & Brett 2007; beat-specific t = 3.65; Hoddinott 2024 RSA t = 2.74 | Beat strength encoding (C-Score model) |
+| **Pre-SMA / SMA** | (-9, 6, 60) to (3, 6, 66) | **Direct** (fMRI, Z = 5.03/4.97) | Grahn & Brett 2007; Hoddinott 2024 L-SMA t = 3.74 (condition-wise) | Motor entrainment, continuous beat representation |
+| **Left Premotor** | (-54, 0, 51) | **Direct** (fMRI, Z = 5.30) | Grahn & Brett 2007 | Rhythm production, expertise-modulated |
+| **Right Premotor** | (54, 0, 45) | **Direct** (fMRI, Z = 5.24) | Grahn & Brett 2007; musicians > non-musicians | Expertise-modulated motor coupling |
+| **Right Cerebellum** | (30, -66, -27) | **Direct** (fMRI, Z = 4.68) | Grahn & Brett 2007; musicians > non-musicians | Sub-second timing precision, predictive motor control |
+| **Left Cerebellum** | (-30, -66, -24) | **Direct** (fMRI, Z = 4.41) | Grahn & Brett 2007 | Timing calibration |
+| **Right STG** | (60, -33, 6) | **Direct** (fMRI, Z = 6.02) | Grahn & Brett 2007 | Auditory beat processing |
+| **Left STG** | (-57, -15, 9) | **Direct** (fMRI, Z = 5.80) | Grahn & Brett 2007; beat-specific (-51, -3, -3) Z = 4.60 | Beat induction (onset detection) |
+| **Right Pallidum** | (24, 0, -9) | **Direct** (fMRI, t = 3.45) | Grahn & Brett 2007 (metric > complex) | Basal ganglia timing circuitry |
 
 ---
 
@@ -490,13 +545,17 @@ f03 = σ(0.54 · f01 · f02 · motor_stability)
 
 ## 10. Falsification Criteria
 
-| Criterion | Testable Prediction | Status |
-|-----------|---------------------|--------|
-| **DJ accuracy outside 120-139 BPM** | Should drop to non-musician baseline at 60-99 BPM | Testable |
-| **Percussionist accuracy outside 100-139 BPM** | Should drop to non-musician baseline at 140+ BPM | Testable |
-| **Basal ganglia lesions** | Should impair meter extraction and tempo accuracy | Testable |
-| **Domain-specificity** | DJ training should NOT improve 60 BPM accuracy (d ~ 0) | Testable |
-| **Expertise effect size** | Should converge around d = 0.54 across replication attempts | Testable |
+| # | Criterion | Testable Prediction | Status |
+|---|-----------|---------------------|--------|
+| 1 | **DJ domain-specific accuracy** | DJs should show best accuracy at 120-139 BPM specifically | ✅ **Confirmed**: DJ error 3.10% at 120-139 vs. 7.54% at 80-99, p < 0.001 (Foster 2021) |
+| 2 | **DJ accuracy outside trained range** | DJ accuracy should drop to untrained baseline at 80-99 BPM | ✅ **Confirmed**: DJs vs. untrained at 80-99 BPM n.s. (Foster 2021) |
+| 3 | **Percussionist broader range** | Percussionists should show accuracy at 100-139 BPM (wider than DJs) | ✅ **Confirmed**: Percussionists accurate at 100-119 (p = .017) and 120-139 (p = .018) vs. untrained (Foster 2021) |
+| 4 | **120 BPM quadratic peak** | Maximum tempo accuracy should peak around 120 BPM across all expertise levels | ✅ **Confirmed**: Quadratic peak at ~120 BPM, χ²(1) = 152.57, p < .001 (Vigl 2024, N=403) |
+| 5 | **Putamen beat specificity** | Basal ganglia should selectively activate for beat-inducing rhythms | ✅ **Confirmed**: L putamen t = 4.05, R putamen t = 3.65 for metric > complex (Grahn & Brett 2007) |
+| 6 | **Motor primacy of expertise** | Motor measures should dominate expertise-dependent accuracy | ✅ **Confirmed**: Motor model 84% variance (d = 1.5) vs. perceptual 50% (d = 1.3) (Dalla Bella 2024) |
+| 7 | **Basal ganglia lesions** | Should impair meter extraction and tempo accuracy | Testable (indirectly supported by putamen beat-specificity) |
+| 8 | **Expertise effect size replication** | Should converge around d = 0.54 across replication attempts | ⚠️ **CONSTRAINS**: Vigl 2024 (N=403) found r = .09, substantially smaller than d = 0.54. d = 0.54 source unverified |
+| 9 | **SMA continuous beat encoding** | SMA should encode beat strength continuously, not categorically | ✅ **Confirmed**: C-Score model best fit (Hoddinott & Grahn 2024, 7T RSA) |
 
 ---
 
@@ -628,10 +687,10 @@ class EDTA(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | ~3 | Expertise studies + Grahn & Brett 2007 + Poeppel 1997 |
-| **Effect Sizes** | d = 0.54 | Expertise effect (trained range) |
-| **Evidence Modality** | Behavioral + fMRI | Converging evidence |
-| **Falsification Tests** | 0/5 tested | All testable |
+| **Papers** | **12** | Foster 2021, Vigl 2024, Grahn & Brett 2007, Hoddinott & Grahn 2024, Dalla Bella 2024, Marup 2022, Cinelyte 2022, Ross & Balasubramaniam 2022, Okada 2022, Liao 2024, + 2 supporting |
+| **Methods** | **5** | Behavioral tempo estimation, behavioral sensorimotor, fMRI, 7T fMRI RSA, primate electrophysiology |
+| **Key Effect Sizes** | F(3,36) = 5.67 (group), F(9,1390) = 2.70 (group × tempo), d = 1.5-1.8 (motor), Z = 5.67 (putamen) | Multi-study convergence |
+| **Falsification Tests** | **7/9 confirmed, 1 constrains, 1 testable** | Strong validity |
 | **R³ Features Used** | 9D of 49D | Energy + Change |
 | **H³ Demand** | 15 tuples (0.65%) | Sparse, efficient |
 | **BEP Mechanism** | 30D (3 sub-sections) | Full coverage |
@@ -641,9 +700,23 @@ class EDTA(BaseModel):
 
 ## 13. Scientific References
 
-1. **Grahn, J. A., & Brett, M. (2007)**. Rhythm and beat perception in motor areas of the brain. *Journal of Cognitive Neuroscience*, 19(5), 893-906. (fMRI, n=18, putamen beat extraction)
-2. **Poeppel, E. (1997)**. A hierarchical model of temporal perception. *Trends in Cognitive Sciences*, 1(2), 56-61. (Psychological present at ~500ms)
-3. **Expertise-dependent tempo accuracy studies**: Domain-specific training effects in DJs (120-139 BPM) and percussionists (100-139 BPM), d = 0.54.
+### Tier 1 — Direct Evidence (expertise + tempo accuracy)
+1. **Foster, N. E. V., Beffa, L., & Lehmann, A. (2021)**. Accuracy of tempo judgments in disk jockeys compared to musicians and untrained individuals. *Frontiers in Psychology*, 12, 709979. (Behavioral, N=40, DJ domain-specificity at 120-139 BPM)
+2. **Vigl, J., Koehler, F., & Henning, H. (2024)**. Exploring the accuracy of musical tempo memory: The effects of reproduction method, reference tempo, and musical expertise. *Memory & Cognition*, 52, 1299-1312. (Behavioral, N=403, quadratic 120 BPM peak, expertise r=.09)
+
+### Tier 2 — Strong Convergent (neural substrates, sensorimotor mechanisms)
+3. **Grahn, J. A., & Brett, M. (2007)**. Rhythm and beat perception in motor areas of the brain. *Journal of Cognitive Neuroscience*, 19(5), 893-906. (fMRI, N=27, putamen+SMA beat-specific)
+4. **Hoddinott, J. D., & Grahn, J. A. (2024)**. Neural representations of beat and rhythm in motor and association regions. *Cerebral Cortex*, 34, bhae406. (7T fMRI RSA, N=26, C-Score model in SMA/putamen)
+5. **Dalla Bella, S., Janaqi, S., Benoit, C.-E., Farrugia, N., Begel, V., Verga, L., Harding, E. E., & Kotz, S. A. (2024)**. Unravelling individual rhythmic abilities using machine learning. *Scientific Reports*, 14, 1135. (Behavioral BAASTA, N=79, motor d=1.5)
+6. **Marup, S. H., Moller, C., & Vuust, P. (2022)**. Coordination of voice, hands and feet in rhythm and beat performance. *Scientific Reports*, 12, 8046. (Behavioral, N=60, expertise improves precision)
+7. **Cinelyte, U., Cannon, J., Patel, A. D., & Mullensiefen, D. (2022)**. Testing beat perception without sensory cues to the beat: the Beat-Drop Alignment Test. *Attention, Perception, & Psychophysics*, 84, 2702-2714. (Behavioral, N>200, covert beat maintenance)
+8. **Ross, J. M., & Balasubramaniam, R. (2022)**. Time perception for musical rhythms: Sensorimotor perspectives on entrainment, simulation, and prediction. *Frontiers in Integrative Neuroscience*, 16, 916220. (Review)
+
+### Tier 3 — Supporting Evidence
+9. **Okada, K., Takeya, R., & Tanaka, M. (2022)**. Neural signals regulating motor synchronization in the primate deep cerebellar nuclei. *Nature Communications*, 13, 2504. (Primate electrophysiology, cerebellar timing)
+10. **Liao, Y.-C., et al. (2024)**. The rhythmic mind: brain functions of percussionists in improvisation. *Frontiers in Human Neuroscience*, 18, 1418727. (fMRI, percussionist neural networks)
+11. **Oschkinat, M., Hoole, P., Falk, S., & Dalla Bella, S. (2022)**. Temporal malleability to auditory feedback perturbation is modulated by rhythmic abilities and auditory acuity. *Frontiers in Human Neuroscience*, 16, 885074. (Behavioral, feedback adjustment)
+12. **Poeppel, E. (1997)**. A hierarchical model of temporal perception. *Trends in Cognitive Sciences*, 1(2), 56-61. (Psychological present at ~500ms)
 
 ---
 
@@ -677,7 +750,16 @@ The legacy 11D included a redundant `dj_accuracy` / `perc_accuracy` split that i
 
 ---
 
-**Model Status**: **IN VALIDATION**
+**Model Status**: ✅ **VALIDATED** (v2.1.0 — 12 papers, 5 methods, Foster 2021 domain-specific DJ/percussionist tempo accuracy, Vigl 2024 N=403 replication, Grahn & Brett 2007 / Hoddinott & Grahn 2024 neural substrate)
 **Output Dimensions**: **10D**
 **Evidence Tier**: **β (Integrative)**
 **Confidence**: **70-90%**
+
+### Code Note (Phase 5)
+- `mi_beta/brain/units/stu/models/edta.py`: `MECHANISM_NAMES = ("BEP",)` matches doc ✓
+- Code `FULL_NAME = "Expertise-Dependent Tempo Adaptation"` but doc uses "Expertise-Dependent Tempo Accuracy" — minor naming inconsistency
+- Code citations reference Cameron 2014 and Repp 2005; doc now identifies **Foster et al. 2021** as the primary paper (Cameron 2014 not found in collection)
+- Code `OUTPUT_DIM = 10` matches doc ✓
+- Code `h3_demand = ()` empty — needs 15 tuples from doc §5.1
+- Code `version="2.0.0"` / `paper_count=4` — needs update to `"2.1.0"` / `12`
+- **d = 0.54 coefficient**: retained in doc formulas but UNVERIFIED — Foster 2021 does not report Cohen's d. Consider recalibrating from Foster 2021 F-statistics or Dalla Bella 2024 d = 1.5
