@@ -1,17 +1,17 @@
-# S³ — Musical Intelligence for Multi-Sensory Experience
+# SRC⁹ — Musical Intelligence
 
-**Version**: 4.0.0
+**Version**: 5.0.0
 **Date**: February 12, 2026
 **Author**: Amac Erdem
 **Status**: ARCHITECTURE DESIGN
 
-> **S³ Spectral Sound Space — Musical Intelligence for Multi-Sensory Experience**
+> **SRC⁹ Musical Intelligence — Bidirectional White-Box Musical Cognition System**
 
 ---
 
 ## Executive Summary
 
-S³ is a **Musical Intelligence (MI)** system — a real-time co-creation platform where human performers and MI shape a living sonic-visual space together. The performer provides intent through motor input and emotion control; MI completes the full musical state and renders it as sound and light.
+SRC⁹ is a **Musical Intelligence (MI)** system — a real-time co-creation platform where human performers and MI shape a living sonic-visual space together. The performer provides intent through motor input and emotion control; MI completes the full musical state and renders it as sound and light.
 
 ### Why MI, Not AI?
 
@@ -28,34 +28,47 @@ MI is domain-grounded intelligence. Every output dimension lives in a scientific
 ```
 Traditional AI:   Audio → [Black-Box] → "Sad"
 Old T1 (D0):      Audio → D0 Pipeline → 8192D → Encoder → z(1024D)  (passive, monolithic)
-New MI:           Motor → MI-Core → 307D MI-space → Audio + Visual   (active, co-creative)
+MI v4 (old):      Motor → MI-Core → 307D MI-space → Audio + Visual   (active, one-directional)
+MI v5 (new):      Bidirectional — Analyze + Compose + Hybrid          (active, co-creative)
 ```
 
-> **Critical**: The MI Teacher Pipeline (deterministic, zero parameters, 75+ scientific papers)
-> generates ground truth during TRAINING ONLY. At runtime, MI-Core directly produces
-> 307D MI-space from motor input + memory. The teacher is not in the inference path.
+> **Critical v5 Insight**: MI is not one-directional. A single model with a shared backbone
+> learns BOTH directions — encoding (analyze: waveform → Mel → R³ → H³ → C³) and decoding
+> (compose: partial C³ → fill → H³ → R³ → Mel → waveform) — in one elegant training.
+> The deterministic MI Teacher supervises EVERY intermediate layer in BOTH directions.
+> If analysis is correct, synthesis is automatically correct — same manifold, two directions.
 
-### The Full Loop
+### The Full Loop (v5 — Bidirectional)
 
 ```
 ┌──────────────────────────────────────────────────────────────────────┐
-│                        S³ SYSTEM (Runtime)                          │
+│                        SRC⁹ SYSTEM (Runtime)                          │
 │                                                                     │
-│   MOTOR INPUT           MI-CORE                     OUTPUT          │
-│   (Physical)            (Neural)                                    │
+│   THREE MODES — one model, one backbone, two directions:           │
 │                                                                     │
-│   Touchpad ──┐                              ┌→ Vocos → Waveform   │
-│   MediaPipe ─┤                              │  MI-space[0:128]     │
-│   MIDI ──────┼──→ MI-Core ──→ 307D ────────┤  = Mel (AUDITORY)    │
-│   iPad ──────┤    │ ↑    MI-space           │                      │
-│   Emotion ───┤    │ │    (White-Box         └→ Shader Mapping      │
-│   Controller─┤    │ │     interpretable)       MI-space[128:307]   │
-│   Voice ─────┘    │ │                          = R³+Brain+L³       │
-│                   │ │                          → GPU Visuals       │
-│           Memory ─┘ └─ Plan                    (VISUAL)            │
-│         (past 307D)   (future trajectory)                          │
+│   🎵 ANALYZE:  Waveform ──→ ENCODER ──→ Mel → R³ → H³ → C³       │
+│                              │ show all dimensions in real-time     │
 │                                                                     │
-│   MI Teacher Pipeline: TRAINING ONLY (not in runtime)              │
+│   🎹 COMPOSE:  User C³ ──→ FILL_NET ──→ C³_complete               │
+│                partial       │                                      │
+│                              DECODER ──→ H³ → R³ → Mel → Waveform │
+│                                          ↓                          │
+│                                     Vocos/HiFi-GAN                 │
+│                                                                     │
+│   🔄 HYBRID:   Live audio ──→ ENCODER ──→ C³_analyzed             │
+│                User override ──→ merge ──→ C³_mixed                │
+│                FILL_NET(C³_mixed) ──→ DECODER ──→ Waveform         │
+│                                                                     │
+│   ┌──────────────────────────────────────────────────────────┐     │
+│   │  SHARED BACKBONE — learns both encode & decode           │     │
+│   │  Multi-head aux losses at EVERY layer (Mel, R³, H³, C³) │     │
+│   │  Deterministic MI Teacher supervises both directions     │     │
+│   └──────────────────────────────────────────────────────────┘     │
+│                                                                     │
+│   + Motor input, Memory, Planning — same as v4                     │
+│   + Visual path: MI-space[128:307] → GPU shaders — same as v4    │
+│                                                                     │
+│   MI Teacher Pipeline: TRAINING ONLY (supervises all layers)       │
 │                                                                     │
 └──────────────────────────────────────────────────────────────────────┘
 ```
@@ -80,25 +93,25 @@ Every dimension has a name, a formula, a scientific citation, and a musical mean
 
 ## 1. Product Identity & Philosophy
 
-### 1.1 What Is S³?
+### 1.1 What Is SRC⁹?
 
-**S³ Spectral Sound Space** is a real-time multi-sensory performance platform powered by Musical Intelligence. It is NOT a DAW — it is an instrument. But beyond any instrument that exists today — it defines what "instrument" means for the future.
+**SRC⁹ Musical Intelligence** is a real-time multi-sensory performance platform powered by Musical Intelligence. It is NOT a DAW — it is an instrument. But beyond any instrument that exists today — it defines what "instrument" means for the future.
 
 ```
 Traditional Instrument:  Press key → One sound → Done
 DAW:                     Arrange notes on timeline → Bounce → Done
-S³:                      Enter a SPACE → Shape it in real-time → Multi-sensory experience
+SRC⁹:                      Enter a SPACE → Shape it in real-time → Multi-sensory experience
 ```
 
 ### 1.2 It's a SPACE, Not a Sequence
 
-S³ does not produce music note-by-note. It creates a **soundscape** — a living, breathing sonic space that the performer inhabits and sculpts in real-time.
+SRC⁹ does not produce music note-by-note. It creates a **soundscape** — a living, breathing sonic space that the performer inhabits and sculpts in real-time.
 
 ```
 ┌──────────────────────────────────────────────────────────────────────┐
 │                         THE SPACE                                   │
 │                                                                     │
-│   You don't "play notes" in S³.                                    │
+│   You don't "play notes" in SRC⁹.                                    │
 │   You enter a sonic universe and SHAPE it.                         │
 │                                                                     │
 │   ├─ Move your hand → the space shifts around you                 │
@@ -116,11 +129,11 @@ S³ does not produce music note-by-note. It creates a **soundscape** — a livin
 
 ### 1.3 The Killer Feature: Brain Emotion-Driven Control
 
-The most powerful aspect of S³ is not motor precision — it's **meaning generation through Brain pathways**.
+The most powerful aspect of SRC⁹ is not motor precision — it's **meaning generation through Brain pathways**.
 
 ```
 Traditional: "I pressed C major" → Sound of C major
-S³:          "I want tension"    → MI sculpts the entire 307D space toward tension
+SRC⁹:          "I want tension"    → MI sculpts the entire 307D space toward tension
                                     ├─ Brain.tension rises (reward pathway)
                                     ├─ Brain.arousal increases (shared state)
                                     ├─ R³.consonance decreases (spectral)
@@ -136,11 +149,94 @@ Brain emotion control methods:
 - **Voice command**: "Make it sadder" → L³ Vocabulary → Brain dimensions
 - **MI inference**: MI-Core infers appropriate emotion from musical context and memory
 
-### 1.4 Beyond Instrument
+### 1.4 Three Operating Modes (v5)
 
-S³ redefines what "instrument" means:
+SRC⁹ v5 introduces three modes — all powered by a single bidirectional model:
 
-| Traditional Instrument | S³ |
+```
+┌──────────────────────────────────────────────────────────────────────┐
+│                                                                     │
+│   🎵 ANALYSIS MODE                                                 │
+│   ─────────────────                                                │
+│   User plays music → MI shows real-time dimensions at EVERY layer  │
+│                                                                     │
+│   Waveform ──→ [Encoder] ──→ Mel (128D) ──→ R³ (49D)             │
+│                                  ↓              ↓                   │
+│                               H³ (sparse)    C³ (1006D)           │
+│                                                                     │
+│   Display: "pleasure=0.82, wanting ramp started, tension rising"   │
+│   Every dimension visible, every layer inspectable, White-Box.     │
+│                                                                     │
+│   Use cases:                                                       │
+│   ├─ Music analysis & education                                    │
+│   ├─ Neuroscience research tool (real-time brain model readout)   │
+│   ├─ Composer's analytical assistant                               │
+│   └─ Live concert visualization (audience sees MI-space)          │
+│                                                                     │
+├──────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│   🎹 COMPOSE MODE                                                  │
+│   ────────────────                                                 │
+│   User specifies partial C³ → MI fills the rest → decodes to sound│
+│                                                                     │
+│   User input:                                                      │
+│     "pleasure=0.9, tension→rising, harmonic_context=minor"        │
+│              ↓                                                      │
+│   Fill_net: complete remaining ~1000 C³ dimensions                 │
+│     (learned correlations: high pleasure → high da_nacc,           │
+│      rising tension → decreasing consonance, etc.)                 │
+│              ↓                                                      │
+│   [Decoder]: C³_complete → H³ → R³ → Mel → Vocos/HiFi-GAN       │
+│              ↓                                                      │
+│   User hears the sound, adjusts knobs, real-time iteration        │
+│                                                                     │
+│   Use cases:                                                       │
+│   ├─ Emotion-driven composition ("I want THIS feeling" → sound)   │
+│   ├─ Sound design by cognitive intent (not by knob-twiddling)     │
+│   ├─ Therapeutic sound generation (target specific brain states)   │
+│   └─ Educational: "what does high tension + low consonance        │
+│      sound like?" → instant auditory answer                        │
+│                                                                     │
+├──────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│   🔄 HYBRID MODE (The Killer Mode)                                 │
+│   ────────────────────────────────                                 │
+│   User plays live + overrides some C³ dimensions                   │
+│                                                                     │
+│   Live audio ──→ [Encoder] ──→ C³_analyzed (what the music IS)    │
+│                                     ↓                               │
+│   User override: "pleasure=0.9" ──→ merge ──→ C³_mixed            │
+│     (keep analyzed dims, replace overridden dims)                  │
+│                                     ↓                               │
+│   Fill_net: reconcile conflicts (user wants high pleasure          │
+│     but analyzed consonance is low → fill_net adjusts)            │
+│                                     ↓                               │
+│   [Decoder] ──→ H³ → R³ → Mel → Waveform                         │
+│                                     ↓                               │
+│   Result: live sound TRANSFORMED by cognitive intent               │
+│                                                                     │
+│   Use cases:                                                       │
+│   ├─ Live performance augmentation (play guitar + MI reshapes)    │
+│   ├─ Real-time audio processing with SEMANTIC controls            │
+│   │   (not EQ/compression, but "make it more nostalgic")          │
+│   ├─ Co-creative jamming (human provides notes, MI provides       │
+│   │   emotion/tension/reward trajectory)                           │
+│   └─ Accessibility: control music through high-level intent       │
+│      rather than fine motor skill                                  │
+│                                                                     │
+└──────────────────────────────────────────────────────────────────────┘
+```
+
+> **Key v5 insight**: These three modes are NOT three separate systems. They are
+> three usage patterns of ONE bidirectional model. The encoder, decoder, and fill_net
+> share the same backbone, trained in a single elegant training procedure.
+> Analysis correctness guarantees synthesis correctness — same manifold, two directions.
+
+### 1.5 Beyond Instrument
+
+SRC⁹ redefines what "instrument" means:
+
+| Traditional Instrument | SRC⁹ |
 |---|---|
 | Fixed timbres | Infinite timbral space (R³: 49D spectral) |
 | Note-by-note | Space sculpting (307D continuous) |
@@ -150,10 +246,11 @@ S³ redefines what "instrument" means:
 | No memory | MI remembers everything (Mamba state) |
 | No planning | MI plans ahead (planning head) |
 | No emotion understanding | Brain emotion is a first-class dimension |
+| Analysis OR synthesis | Both — analyze, compose, and hybrid (v5) |
 
-### 1.5 Control Modalities
+### 1.6 Control Modalities
 
-A performer can control S³ through ANY combination of:
+A performer can control SRC⁹ through ANY combination of:
 
 ```
 1. MOTOR CONTROL (physical)
@@ -499,22 +596,44 @@ The MI Teacher produces the **same musical understanding** as D0 — but distill
 
 ---
 
-## 4. MI-Core Architecture (Neural)
+## 4. MI-Core Architecture (Neural — v5 Bidirectional)
 
 ### 4.1 What Is MI-Core?
 
-MI-Core is a **Conditional Predictive World Model** for music. It takes motor input and produces the full 307D MI-space state:
+MI-Core is a **Bidirectional Musical Intelligence Model** — a single neural architecture that can both analyze (encode) and compose (decode) through every layer of the MI pipeline:
 
-| Function | Input | Output |
-|----------|-------|--------|
-| **Complete** | Motor input (sparse 307D) + Memory | 307D MI-space (now) |
-| **Predict** | Current 307D + Context | 307D trajectory (future plan) |
-| **Render** | 307D[0:128] (mel) | Vocos → Waveform (audio) |
-| **Visualize** | 307D[128:307] (R³+Brain+L³) | Deterministic → GPU shaders |
+| Function | Direction | Input | Output |
+|----------|-----------|-------|--------|
+| **Encode** | Forward | Waveform | Mel → R³ → H³ → C³ (all layers) |
+| **Decode** | Inverse | C³ (partial or complete) | H³ → R³ → Mel → Waveform |
+| **Fill** | Lateral | C³_partial (user intent) | C³_complete (all ~1000D) |
+| **Complete** | Forward+Fill | Motor input (sparse) + Memory | Full MI-space (now) |
+| **Predict** | Forward | Current MI-space + Context | MI-space trajectory (future) |
 
-> **MI Teacher is the teacher, not the runtime pipeline.**
-> Training: Audio → MI Teacher → 307D ground truth (teaches MI-Core).
-> Inference: Motor → MI-Core → 307D → Audio + Visual (teacher not involved).
+```
+v5 BIDIRECTIONAL ARCHITECTURE:
+
+  ENCODE (Analysis):
+  Waveform → [Backbone] → Head_mel → Head_r3 → Head_h3 → Head_c3
+                              ↓          ↓         ↓         ↓
+                           Mel(128D)  R³(49D)   H³(sparse) C³(1006D)
+
+  DECODE (Synthesis):
+  C³_complete → [Backbone] → Dec_h3 → Dec_r3 → Dec_mel → Vocoder
+                                ↓         ↓        ↓         ↓
+                            H³(sparse) R³(49D) Mel(128D)  Waveform
+
+  FILL (Completion):
+  C³_partial → [Fill_net] → C³_complete
+  (user: ~5-50 dims)        (model fills ~950-1000 dims)
+
+  All three share the SAME backbone. Single training. Both directions.
+```
+
+> **v5 Key Principle**: Encode and Decode are the same mathematical relationship
+> viewed from opposite directions. A single model learns both by training with
+> multi-head auxiliary losses at every intermediate layer. The deterministic
+> MI Teacher supervises every layer in both directions.
 
 ### 4.2 Network Backbone: Mamba-2 SSM
 
@@ -897,7 +1016,7 @@ Motor inputs map to specific MI-space dimensions through deterministic, interpre
 
 ### 6.3 Co-Creation: Human Provides Intent, MI Completes
 
-This is the essence of S³. The performer specifies **intent** through a few dimensions. MI-Core completes the full 307D state coherently:
+This is the essence of SRC⁹. The performer specifies **intent** through a few dimensions. MI-Core completes the full 307D state coherently:
 
 ```
 PERFORMER PROVIDES (sparse):          MI-CORE COMPLETES (dense):
@@ -1034,7 +1153,7 @@ No E-Mel step further reduces latency.
 
 ### 8.1 Voice Commands via L³ Vocabulary
 
-S³ resolves voice to MI-space through L³'s vocabulary system:
+SRC⁹ resolves voice to MI-space through L³'s vocabulary system:
 
 ```
 ┌──────────────────────────────────────────────────────────────────────┐
@@ -1097,7 +1216,7 @@ S³ resolves voice to MI-space through L³'s vocabulary system:
 
 ### 8.3 Why L³ Is Central
 
-Everything in S³ can be expressed as language because L³ is the semantic layer:
+Everything in SRC⁹ can be expressed as language because L³ is the semantic layer:
 
 ```
 Motor gesture (hand rising)     → L³: "ascending brightness"
@@ -1275,214 +1394,287 @@ White-Box MI:
 
 ---
 
-## 12. Training Strategy
+## 12. Training Strategy (v5 — Single Elegant Training)
 
-### 12.1 Teacher: MI Pipeline (Not D0)
+### 12.1 The Core Insight: One Training, Both Directions
 
-The MI Teacher Pipeline replaces D0 as the source of truth:
+v5 replaces the old 5-phase curriculum with a **single unified training** that teaches
+encode (analysis) and decode (synthesis) simultaneously. The key insight:
+
+> **If analysis is correct, synthesis is automatically correct.**
+> They are the same mathematical relationship viewed from opposite directions.
+> Training both directions simultaneously creates a powerful mutual constraint.
 
 ```
-TRAINING TIME ONLY:
-Audio files → MI Teacher Pipeline → 307D MI-space + H³ auxiliary
-                                          ↓
-                                    Teacher signal for MI-Core
-                                    (MI-Core learns to produce
-                                     307D from motor input)
-
-RUNTIME:
-Motor → MI-Core → 307D → {Audio, Visual}
-                  (Teacher not involved)
+┌──────────────────────────────────────────────────────────────────────┐
+│                  SINGLE ELEGANT TRAINING (v5)                       │
+├──────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│   ONE training step = FOUR simultaneous objectives:                │
+│                                                                     │
+│   1. ENCODE   Waveform → Mel → R³ → H³ → C³    (analysis)         │
+│   2. DECODE   C³ → H³ → R³ → Mel → Waveform    (synthesis)        │
+│   3. CYCLE    Encode(Decode(C³)) ≈ C³            (consistency)     │
+│               Decode(Encode(Wav)) ≈ Wav                            │
+│   4. FILL     Masked C³ → Complete C³            (user intent)     │
+│                                                                     │
+│   Teacher supervises EVERY layer in BOTH directions.               │
+│   Shared backbone. Multi-head auxiliary losses. One model.         │
+│                                                                     │
+└──────────────────────────────────────────────────────────────────────┘
 ```
-
-| Component | When | Learnable? | Role |
-|-----------|------|-----------|------|
-| MI Teacher | Training only | No (deterministic) | Generates 307D + H³ ground truth |
-| MI-Core | Runtime | Yes (neural) | Motor → 307D intelligence |
-| Vocos | Runtime | No (frozen) | Mel → Waveform vocoder |
-| Visual Mapping | Runtime | No (deterministic) | MI-space → GPU shaders |
 
 ### 12.2 Training Data Generation
 
 ```
 For each audio file in training corpus:
 
-  1. Audio → MI Teacher Pipeline:
-     ├─ Cochlea → mel (128D)
-     ├─ R³ → spectral features (49D)
-     ├─ H³ → temporal features (~37 demanded 4-tuples)
-     ├─ Brain → neural pathways (26D)
-     └─ L³ → semantic interpretation (104D)
+  1. Audio → MI Teacher Pipeline (deterministic, zero-param):
+     ├─ Cochlea → Mel_t (128D)
+     ├─ R³ → R3_t (49D)
+     ├─ H³ → H3_t (~37 demanded sparse 4-tuples)
+     ├─ Brain → C3_brain_t (26D → growing to 1006D with all units)
+     └─ L³ → C3_lang_t (104D)
 
-  2. Ground truth per frame:
-     ├─ MI-space: (B, T, 307)    ← primary target
-     ├─ H³ aux:  (B, T, 37)     ← auxiliary target
-     └─ All deterministic, all traceable
-
-  3. Simulated motor input:
-     ├─ Random subset of MI-space dims (sparse)
-     ├─ Motor = "performer provides these dims"
-     ├─ MI-Core must complete the rest
-     └─ Mask ratio: 10-90% (curriculum)
+  2. Ground truth per frame AT EVERY LAYER:
+     ├─ Mel_t:  (B, T, 128)    ← encode target + decode target
+     ├─ R3_t:   (B, T, 49)     ← encode target + decode target
+     ├─ H3_t:   (B, T, ~37)    ← encode target + decode target
+     ├─ C3_t:   (B, T, ~1006)  ← encode target + fill target
+     └─ All deterministic, all traceable, all bidirectional
 ```
 
-### 12.3 H³ as Privileged Training Signal
-
-H³ temporal features are NOT in the 307D output. But they are critical intermediate computations that the Brain uses in the teacher pipeline.
+### 12.3 The Four Losses (Simultaneous)
 
 ```
-MI Teacher:   R³ → H³ → Brain (H³ is internal, feeds Brain formulas)
-MI-Core:      Motor → Backbone → E-Brain (no H³, must learn temporal implicitly)
+ONE TRAINING STEP:
 
-Problem: How does E-Brain learn temporal patterns without H³?
-Solution: H³ Auxiliary Head on the backbone (training only)
+  ┌─── ENCODE (forward) ───────────────────────────────────────────┐
+  │                                                                 │
+  │  Waveform → [Backbone] → Mel̂ → R̂³ → Ĥ³ → Ĉ³                │
+  │                           ↕      ↕     ↕     ↕                 │
+  │  L_encode = w₁‖Mel̂-Mel_t‖² + w₂‖R̂³-R3_t‖²                  │
+  │           + w₃‖Ĥ³-H3_t‖²  + w₄‖Ĉ³-C3_t‖²                   │
+  │                                                                 │
+  │  Each head provides independent gradient signal to backbone.   │
+  │  Mel head → "learn spectral decomposition"                     │
+  │  R³ head  → "learn psychoacoustic features"                    │
+  │  H³ head  → "learn multi-scale temporal context"               │
+  │  C³ head  → "learn cognitive model outputs"                    │
+  │                                                                 │
+  └─────────────────────────────────────────────────────────────────┘
 
-During training:
-  Backbone → H³ Aux Head → predicted H³ values
-                            ↕ MSE loss vs teacher H³
-  This forces the backbone to represent temporal structure.
-  E-Brain benefits through shared backbone weights.
+  ┌─── DECODE (inverse) ───────────────────────────────────────────┐
+  │                                                                 │
+  │  C3_t → [Backbone] → H3_r → R3_r → Mel_r → [Vocoder]         │
+  │                        ↕       ↕       ↕        ↕              │
+  │  L_decode = w₅‖H3_r-H3_t‖² + w₆‖R3_r-R3_t‖²                 │
+  │           + w₇‖Mel_r-Mel_t‖² + w₈‖Wav_r-Wav‖²                │
+  │                                                                 │
+  │  Teacher provides ground truth at EVERY layer of the decoder.  │
+  │  The backbone must learn invertible representations.           │
+  │                                                                 │
+  └─────────────────────────────────────────────────────────────────┘
 
-After training:
-  H³ Aux Head pruned. Backbone has internalized temporal patterns.
-  Mamba-2 state naturally accumulates temporal information.
+  ┌─── CYCLE (consistency) ────────────────────────────────────────┐
+  │                                                                 │
+  │  L_cycle_fwd = ‖Encode(Decode(C3_t)) - C3_t‖²                 │
+  │  L_cycle_inv = ‖Decode(Encode(Wav)) - Wav‖²                   │
+  │                                                                 │
+  │  Ensures encode and decode are true inverses of each other.    │
+  │                                                                 │
+  └─────────────────────────────────────────────────────────────────┘
+
+  ┌─── FILL (masked autoencoder for C³) ───────────────────────────┐
+  │                                                                 │
+  │  C3_masked = random_mask(C3_t, ratio=uniform(0.1, 0.9))       │
+  │  C3_filled = fill_net(C3_masked)                                │
+  │  L_fill = ‖C3_filled[masked_dims] - C3_t[masked_dims]‖²       │
+  │                                                                 │
+  │  + Decode the filled C³ and supervise downstream:              │
+  │  L_fill_decode = ‖Decode(C3_filled) - {H3_t, R3_t, Mel_t}‖²  │
+  │                                                                 │
+  │  This teaches the model the correlational structure of C³:     │
+  │  "pleasure high → da_nacc high" (Salimpoor 2011)               │
+  │  "tension low → consonance high" (BCH model)                   │
+  │  "wanting high → da_caudate high" (Berridge 2003)              │
+  │                                                                 │
+  └─────────────────────────────────────────────────────────────────┘
+
+  L_total = L_encode + L_decode + λ₁·L_cycle + λ₂·L_fill + λ₃·L_fill_decode
 ```
 
-### 12.4 Training Phases (5-Phase Curriculum)
+### 12.4 Curriculum Weight Schedule
+
+Loss weights shift over training to guide learning order (matching the teacher hierarchy):
 
 ```
-Phase 1: COMPLETION (Learn to fill in missing MI-space)
-├─ Input: Random 10-50% of MI-space dimensions
-├─ Target: Full 307D MI-space (from MI Teacher)
-├─ Loss: Per-subspace MSE (Cochlea, R³, Brain, L³)
-├─ H³ auxiliary loss active (high weight)
-├─ Curriculum: Start with Cochlea → add R³ → add Brain → add L³
-└─ Duration: Until completion quality converges
+Epoch 1-50:     Mel-heavy     (learn spectral decomposition first)
+  w_mel=1.0  w_r3=0.5  w_h3=0.1  w_c3=0.0  decode=0.0  cycle=0.0  fill=0.0
 
-Phase 2: TEMPORAL (Learn to predict future)
-├─ Input: Full 307D MI-space_t (current frame)
-├─ Target: MI-space_{t+1:t+K} (next K frames, from teacher)
-├─ Loss: Trajectory MSE + temporal smoothness
-├─ H³ auxiliary continues
-├─ Curriculum: K=1 → K=8 → K=32 → K=172 → K=344 (2s)
-└─ Duration: Until prediction quality converges
+Epoch 50-150:   R³-heavy      (learn psychoacoustic features)
+  w_mel=0.5  w_r3=1.0  w_h3=0.5  w_c3=0.1  decode=0.1  cycle=0.0  fill=0.0
 
-Phase 3: JOINT (Completion + Prediction together)
-├─ Input: Partial MI-space_t (simulated motor input)
-├─ Target: Full MI-space_t + MI-space_{t+1:t+K}
-├─ Loss: Completion + Prediction + Uncertainty calibration
-├─ H³ auxiliary loss weight decreases
-└─ Duration: Until joint performance converges
+Epoch 150-300:  H³-heavy      (learn temporal context)
+  w_mel=0.2  w_r3=0.5  w_h3=1.0  w_c3=0.5  decode=0.5  cycle=0.1  fill=0.1
 
-Phase 4: AUDIO QUALITY (Waveform through Vocos)
-├─ Input: Full MI-space (from MI-Core completion)
-├─ Target: Original waveform (through Vocos)
-├─ Loss: Multi-resolution spectral loss on Vocos(MI-space[0:128])
-├─ Vocos: frozen, gradient flows through E-Cochlea expert only
-└─ Duration: Until audio quality sufficient
+Epoch 300-500:  C³-heavy      (learn cognitive outputs)
+  w_mel=0.1  w_r3=0.2  w_h3=0.5  w_c3=1.0  decode=1.0  cycle=0.5  fill=0.5
 
-Phase 5: END-TO-END (Full pipeline fine-tuning)
-├─ Input: Simulated motor sequences
-├─ Target: Original audio + MI-space alignment
-├─ Loss: Waveform + Spectral + MI-space + temporal smooth
-├─ H³ auxiliary head can be dropped
-├─ Vocos: frozen
-└─ Duration: Polish phase
+Epoch 500+:     Full balance  (all objectives, fine-tune)
+  w_mel=0.2  w_r3=0.3  w_h3=0.3  w_c3=1.0  decode=1.0  cycle=0.5  fill=1.0
 ```
+
+This mirrors the teacher pipeline's computation order (Mel→R³→H³→C³) and ensures
+the backbone develops the right intermediate representations at each stage.
 
 ### 12.5 Loss Functions
 
 ```python
-MI_LOSS = {
-    # Primary: MI-space fidelity
-    'completion_cochlea':  1.5,   # Mel pred vs Mel teacher
-    'completion_r3':       1.0,   # R³ pred vs R³ teacher
-    'completion_brain':    2.0,   # Brain pred vs Brain teacher (highest weight)
-    'completion_l3':       1.0,   # L³ pred vs L³ teacher
-    'prediction':          1.5,   # Future MI-space trajectory
-    'correlation':         0.5,   # Inter-subspace correlations preserved
+MI_LOSS_V5 = {
+    # ENCODE: multi-head auxiliary at every layer
+    'encode_mel':          1.0,   # Mel predicted vs teacher Mel
+    'encode_r3':           1.0,   # R³ predicted vs teacher R³
+    'encode_h3':           1.0,   # H³ predicted vs teacher H³
+    'encode_c3':           1.0,   # C³ predicted vs teacher C³
 
-    # Secondary: Audio quality
-    'multi_res_stft':      0.5,   # Multi-resolution spectral loss (Phase 4+)
+    # DECODE: inverse at every layer
+    'decode_h3':           1.0,   # H³ reconstructed vs teacher H³
+    'decode_r3':           1.0,   # R³ reconstructed vs teacher R³
+    'decode_mel':          1.0,   # Mel reconstructed vs teacher Mel
+    'decode_wav':          0.5,   # Waveform via vocoder (multi-res STFT)
 
-    # Auxiliary: Temporal awareness
-    'h3_auxiliary':        1.0,   # H³ predicted vs H³ teacher (Phase 1-3)
+    # CYCLE: bidirectional consistency
+    'cycle_forward':       0.5,   # Encode(Decode(C³)) ≈ C³
+    'cycle_inverse':       0.5,   # Decode(Encode(Wav)) ≈ Wav
+
+    # FILL: masked C³ completion
+    'fill_c3':             1.0,   # Filled C³ vs teacher C³
+    'fill_decode':         0.5,   # Decode(filled) vs teacher layers
 
     # Regularization
-    'uncertainty':         0.3,   # Calibrated confidence estimates
-    'temporal_smooth':     0.2,   # No discontinuities in MI-space
+    'temporal_smooth':     0.2,   # No discontinuities
     'expert_balance':      0.1,   # MoE load balancing
 }
 ```
 
+### 12.6 Why "Elegant" and "Single"?
+
+| Old (v4) | New (v5) |
+|----------|----------|
+| 5 sequential phases | 1 unified training with weight schedule |
+| Encode only (analysis) | Encode + Decode + Cycle + Fill |
+| H³ auxiliary → pruned | H³ head → kept (used in both directions) |
+| Separate synthesis model needed | Synthesis emerges from same training |
+| Motor simulation for training | Audio-only training suffices (bidirectional) |
+| ~5 training runs to tune phases | 1 run, weight schedule handles progression |
+
 ---
 
-## 13. Distillation: MI Teacher → MI-Core Student
+## 13. Bidirectional Architecture: Encode ↔ Decode
 
-### 13.1 The Distillation Concept
+### 13.1 The Bidirectional Principle
 
-The MI Teacher is a **zero-parameter deterministic pipeline** that processes AUDIO:
-```
-Audio → Cochlea → R³ → H³ → Brain → L³ → 307D
-```
-
-But the performer provides MOTOR INPUT, not audio. MI-Core bridges this gap:
-```
-Motor → MI-Core (neural) → 307D MI-space → Vocos → Audio
-```
-
-The student learns by training on (audio, MI-teacher-output) pairs:
-1. Audio exists (from training corpus)
-2. MI Teacher processes audio → 307D ground truth + H³ auxiliary
-3. Simulated motor = random subset of 307D dims + noise
-4. Student: motor → MI-Core → 307D (must match teacher)
-5. Vocos renders student's mel → audio (must match original)
-
-### 13.2 What the Student Learns
+v5 replaces one-directional distillation with **symmetric bidirectional learning**.
+The teacher provides ground truth at every intermediate layer in both directions:
 
 ```
-FROM MI TEACHER (307D):
-├─ Cochlea (128D): What mel spectrogram corresponds to this musical state
-├─ R³ (49D): What spectral character the sound has
-├─ Brain (26D): What the music means neurally (reward, affect, autonomic)
-├─ L³ (104D): How to describe it (computation through narrative)
-└─ H³ (~37D auxiliary): Temporal patterns that produce correct Brain outputs
+FORWARD (ENCODE — Analysis):
+  Waveform → Mel_t → R3_t → H3_t → C3_t      (teacher: deterministic)
+  Waveform → Mel̂  → R̂³  → Ĥ³  → Ĉ³          (student: learned)
+                ↕       ↕      ↕      ↕
+              L_mel   L_r3   L_h3   L_c3        (supervised at every layer)
 
-FROM ORIGINAL AUDIO (Mel):
-├─ Ground truth mel spectrogram → Vocos can render it to audio
-└─ Multi-resolution STFT target → perceptual audio quality
+INVERSE (DECODE — Synthesis):
+  C3_t → H3_t → R3_t → Mel_t → Waveform       (teacher: ground truth)
+  C3_t → H3_r → R3_r → Mel_r → Wav_r          (student: learned)
+           ↕       ↕       ↕        ↕
+         L_h3    L_r3    L_mel    L_wav          (supervised at every layer)
 
-COMBINED:
-  Student learns BOTH meaning (from MI Teacher) and sound (from audio)
-  in a single unified 307D space where mel IS the sound.
+BOTH directions share the SAME backbone.
+The intermediate representations are SHARED — Mel in the encoder
+is the SAME Mel the decoder must reconstruct.
+This creates a powerful consistency constraint.
 ```
 
-### 13.3 The Inverse Mapping
+### 13.2 Fill-Net: The Masked Autoencoder for C³
 
-The key insight: MI Teacher performs **analysis** (audio → meaning). MI-Core performs **synthesis** (intent → meaning + sound).
+The performer specifies a few C³ dimensions. Fill-net completes the rest:
 
 ```
-MI Teacher (analysis):    Audio → mel → R³ → Brain → L³    (deterministic)
-MI-Core (synthesis):      Intent → mel + R³ + Brain + L³    (neural, learned)
-
-The student learns the JOINT distribution of {mel, R³, Brain, L³}.
-Given ANY subset of dims, it can complete the rest coherently.
-This IS co-creation: human provides some, MI completes all.
+┌──────────────────────────────────────────────────────────────────────┐
+│                     FILL-NET (Masked C³ Completion)                 │
+├──────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│   Training:                                                        │
+│   1. Take C3_teacher (~1006D complete)                             │
+│   2. Randomly mask 10-90% of dimensions                            │
+│   3. Fill_net predicts masked dimensions                           │
+│   4. Loss: MSE on masked dims only                                │
+│                                                                     │
+│   What Fill-net learns:                                            │
+│   ├─ pleasure ↑ → da_nacc ↑ (r=0.84, Salimpoor 2011)             │
+│   ├─ tension ↓ → consonance ↑ (BCH model)                         │
+│   ├─ wanting ↑ → da_caudate ↑ (r=0.71, Berridge 2003)            │
+│   ├─ arousal ↑ → scr ↑, hr ↑ (de Fleurian 2021)                 │
+│   └─ The FULL correlational structure of 96 C³ models             │
+│                                                                     │
+│   Inference (Compose mode):                                        │
+│   User: "pleasure=0.9, tension=0.2, harmonic_context=minor"       │
+│   Fill_net: completes remaining ~1003 dimensions coherently        │
+│   → Decoder: C³_complete → H³ → R³ → Mel → Waveform              │
+│                                                                     │
+│   Inference (Hybrid mode):                                         │
+│   Encoder: Waveform → C³_analyzed (what the music IS)             │
+│   User override: "pleasure=0.9" (what user WANTS)                 │
+│   Merge: C³_analyzed + override → C³_mixed                        │
+│   Fill_net: reconcile conflicts → C³_complete                      │
+│   → Decoder: C³_complete → H³ → R³ → Mel → Waveform              │
+│                                                                     │
+└──────────────────────────────────────────────────────────────────────┘
 ```
+
+### 13.3 Why Bidirectional Is More Elegant Than Separate Models
+
+```
+OLD APPROACH (v4):                    NEW APPROACH (v5):
+─────────────────                     ─────────────────
+Analysis: separate encoder            One model, shared backbone
+Synthesis: separate decoder            ├─ Encode heads (Mel, R³, H³, C³)
+Fill: not designed                     ├─ Decode heads (C³→H³→R³→Mel)
+                                       └─ Fill-net (masked C³ completion)
+3 models, 3 trainings
+No consistency guarantee               1 model, 1 training
+                                       Cycle consistency guaranteed
+```
+
+| Property | v4 (Old) | v5 (New) |
+|----------|----------|----------|
+| Models | 2-3 separate | 1 unified |
+| Trainings | Multiple | 1 elegant |
+| Intermediate layers | Invisible | All inspectable (both directions) |
+| Consistency | Not guaranteed | Cycle loss enforces |
+| Fill-in | Not designed | Masked autoencoder |
+| White-Box | Partial (encode only) | Full (encode + decode + fill) |
+| Compose mode | Not possible | Native |
+| Hybrid mode | Not possible | Native |
 
 ### 13.4 Modular Growth
 
-As MI Teacher adds new Brain models (3 → 24):
+As MI Teacher adds new C³ models (current 3 → target 96):
 
 ```
 1. Implement new model in MI Teacher (deterministic)
-2. MI Teacher now outputs 307+N dimensions
-3. Update MI-Core config: mi_space_dim = 307+N
-4. Add new neurons to relevant expert output layer
+2. Teacher now produces N additional C³ dimensions
+3. Add N neurons to encode_c3 head AND decode_c3 head
+4. Fill-net: add N dimensions to masked autoencoder
 5. Fine-tune: freeze backbone + old heads, train new outputs
 6. Backbone audio understanding is preserved (no catastrophic forgetting)
+7. ALL THREE MODES automatically support new dimensions
 ```
 
-The backbone (Mamba-2 + Sparse Attention) doesn't change. Only expert output dims grow. This is the power of the modular MoE architecture.
+The backbone (Mamba-2 + Sparse Attention) doesn't change. Only head output dims grow.
+New C³ dimensions automatically participate in fill-net's correlational learning.
 
 ---
 
@@ -1490,7 +1682,7 @@ The backbone (Mamba-2 + Sparse Attention) doesn't change. Only expert output dim
 
 ```
 ┌──────────────────────────────────────────────────────────────────────┐
-│                        S³ COMPLETE SYSTEM                           │
+│                        SRC⁹ COMPLETE SYSTEM                           │
 ├──────────────────────────────────────────────────────────────────────┤
 │                                                                     │
 │   ┌─────────────┐     ┌─────────────────────────┐                  │
@@ -1528,7 +1720,7 @@ The backbone (Mamba-2 + Sparse Attention) doesn't change. Only expert output dim
 ## 15. Monorepo Package Structure
 
 ```
-S³-SpectralSoundSpace/
+SRC9-MusicalIntelligence/
 ├── Musical Intelligence/             # MI Teacher Pipeline (this project)
 │   ├── mi/                           # 44+ Python files, zero-param pipeline
 │   │   ├── core/                     # Constants, config, types, registry
@@ -1802,7 +1994,7 @@ Performer → WebTransport → Server → MI-Core → Audio + 307D
 
 ## 20. Social Platform & Live Performance
 
-S³ is not just an instrument — it's a **live performance platform**:
+SRC⁹ is not just an instrument — it's a **live performance platform**:
 
 ```
 MODES:
@@ -1968,6 +2160,7 @@ PHASE 5 (Weeks 17+): Social & Scale
 
 ---
 
-*S³ Spectral Sound Space — Musical Intelligence for Multi-Sensory Experience*
-*Version 4.0.0 — February 12, 2026*
+*SRC⁹ Musical Intelligence — Musical Intelligence for Multi-Sensory Experience*
+*Version 5.0.0 — February 12, 2026*
 *Every dimension has meaning. Every meaning has science. Every science has music.*
+*v5: Analyze. Compose. Hybrid. One model, both directions, one elegant training.*

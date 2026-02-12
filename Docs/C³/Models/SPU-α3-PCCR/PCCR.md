@@ -4,7 +4,7 @@
 **Unit**: SPU (Spectral Processing Unit)
 **Circuit**: Perceptual (Cortical Chroma Processing)
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, PPC mechanism)
+**Version**: 2.1.0 (Phase 1 revision: deep literature cross-reference, 1→14 papers, Allen/Patterson/Norman-Haignere anatomy, Briley replication qualification, Pankovski computational mechanism)
 **Date**: 2026-02-12
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
@@ -47,6 +47,15 @@ chroma, not just frequency.
               MINIMUM RESPONSE (maximum adaptation)
 
 Pure tones show monotonic increase (no chroma effect, d=0.002).
+
+CONVERGENT SUPPORT: While the direct chroma evidence comes from
+one study (Briley 2013), the anatomical locus (anterolateral HG)
+is confirmed by 5+ independent studies using fMRI, MEG, EEG, ECoG,
+and intracranial depth electrodes (Patterson 2002, Norman-Haignere
+2013, Allen 2022, Tabas 2019, Penagos 2004). Furthermore, orderly
+F0 maps in this region (Allen 2022, 7T fMRI) provide the
+substrate for cyclical chroma organization. The helical pitch
+model (chroma + height) fits the neural data at R²=92.7%.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -115,12 +124,22 @@ Together they form a complete pitch processing pipeline: Physical → Salience �
 ║                                                                              ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
-CRITICAL EVIDENCE:
-─────────────────
-Briley 2013:  Octave adaptation > half-octave (d=0.56, p<0.001)
-              Pure tones: monotonic only (d=0.002)
-              IRN source anterior/lateral to pure tone source
-              Effect in both N1 and P2 components
+CRITICAL EVIDENCE (direct chroma + convergent anatomy):
+─────────────────────────────────────────────────────────
+Briley 2013:           EEG, N=15/12/8. Octave adaptation > half-octave
+                       (F(1,28)=29.865, p<0.001). IRN source anterolateral
+                       to pure-tone source. Helical model R²=92.7%.
+                       NO consonance confound: rho=-0.299, p=0.298.
+Allen 2022:            7T fMRI, N=10. Distinct F0 maps outside HG,
+                       orderly pitch tuning bilateral. Substrate for chroma.
+Norman-Haignere 2013:  fMRI. Pitch regions respond primarily to resolved
+                       harmonics, in anterior nonprimary AC.
+Patterson 2002:        fMRI. Established pitch center in lateral HG.
+                       Melody recruits STG + planum polare hierarchy.
+Tabas 2019:            MEG, N=37. POR in alHG, consonant decoded 36ms
+                       faster. Same region as chroma representation.
+Fishman 2001:          Intracranial. Octave = minimal phase-locked activity
+                       in A1. Consistent with shared chroma representation.
 ```
 
 ### 2.2 Information Flow Architecture (EAR → BRAIN → PPC → PCCR)
@@ -201,12 +220,22 @@ Briley 2013:  Octave adaptation > half-octave (d=0.56, p<0.001)
 
 ### 3.1 Core Evidence Table
 
-| Study | Method | N | Key Finding | Effect Size | MI Relevance |
-|-------|--------|---|-------------|-------------|-------------|
-| **Briley 2013** | EEG adaptation | 15 | Octave adaptation > half-octave (IRN) | d = 0.56, p < 0.001 | **f02_octave_adapt: non-monotonic pattern** |
-| **Briley 2013** | EEG adaptation | 15 | Pure tones: monotonic (no chroma) | d = 0.002 | **f03_chroma_mode: dissociation** |
-| **Briley 2013** | EEG N1-P2 | 15 | Effect in both N1 and P2 components | p < 0.001 | **f04_n1p2: cortical ERP signature** |
-| **Briley 2013** | MEG source | 15 | IRN source anterior/lateral to pure tone | p < 0.05 | **Distinct neural populations** |
+| # | Study | Method | N | Key Finding | Effect Size | MI Relevance |
+|---|-------|--------|---|-------------|-------------|-------------|
+| 1 | **Briley et al. 2013** | EEG adaptation | 15/12/8 | Non-monotonic adaptation at octave separation for IRN; chroma-selective neurons | F(1,28)=29.865, p<0.001 | **f01_chroma + f02_octave_adapt: FLAGSHIP evidence** |
+| 2 | **Briley et al. 2013** | EEG adaptation | 15 | Pure tones: monotonic only (tonotopic). NO chroma effect. | d=0.002; F(1,17)=19.548, p<0.001 | **f03_chroma_mode: two-system dissociation** |
+| 3 | **Briley et al. 2013** | EEG N1-P2 | 15 | Chroma effect in both N1 (p=0.029) and P2 (p<0.001) | N1: F(1,28)=5.273; P2: F(1,28)=20.983 | **f04_n1p2: cortical ERP signature** |
+| 4 | **Briley et al. 2013** | EEG source | 8 | IRN source 7mm anterior/lateral to pure-tone source; distinct populations | Permutation: L p=0.024, R p=0.047 | **Anterolateral HG localization** |
+| 5 | **Briley et al. 2013** | EEG (Exp 2) | 12 | Helical pitch model (chroma + height) fits neural data | R²=92.7% (resolved), 78.5% (unresolved) | **Helical pitch representation confirmed** |
+| 6 | **Briley et al. 2013** | EEG | 12 | Consonance ruled out as confound | rho(14)=-0.299, p=0.298 | **Chroma ≠ consonance** |
+| 7 | **Allen et al. 2022** | 7T fMRI | 10 | Distinct F0 maps in regions surrounding HG; orderly pitch tuning bilateral | Pitch slope=1.13 CI[0.92,1.19]; no hemisphere diff p=0.58 | **Cortical substrate for chroma organization** |
+| 8 | **Norman-Haignere et al. 2013** | fMRI | Multiple | Pitch regions respond primarily to resolved harmonics; anterior nonprimary AC | Parametric with discrimination thresholds | **Resolved harmonics drive chroma region** |
+| 9 | **Patterson et al. 2002** | fMRI | Group | Lateral HG "pitch center"; melody processing recruits STG hierarchy | Significant pitch > no-pitch contrast | **Anatomical framework for PCCR** |
+| 10 | **Tabas et al. 2019** | MEG | 37 | POR in alHG 36ms earlier for consonant; same region as chroma | p<.0001 (latency + amplitude) | **Overlapping locus confirms chroma region** |
+| 11 | **Fishman et al. 2001** | Intracranial | 3+2 | Octave = minimal phase-locked activity in A1; consistent with shared chroma | F>8.5, p<0.00001; Spearman p<0.00001 | **Octave equivalence at neural level** |
+| 12 | **Pankovski & Pankovska 2022** | Computational | — | Hebbian network predicts scale discreteness without explicit octave mapping | Predicts just intonation ratios | **Self-organizing chroma mechanism** |
+| 13 | **Wöhrle et al. 2024** | MEG | 30 | N1m modulated by consonance context; musical aptitude interaction | η²p=.101 (N1m); η²p=.592 (perceptual) | **Chroma relationships shape auditory cortex ERP** |
+| 14 | **Janata 2009** | fMRI | Group | Dorsal MPFC tracks tonal space (built on chroma relationships) | Fast-timescale tracking in BA8/9 | **Downstream: chroma → tonal space in PFC** |
 
 ### 3.2 The Chroma Adaptation Function
 
@@ -250,11 +279,41 @@ Pure tones:
 ### 3.3 Effect Size Summary
 
 ```
-Primary Effect:    d = 0.56 (octave > half-octave adaptation, IRN)
+DIRECT CHROMA EVIDENCE (Briley et al. 2013):
+─────────────────────────────────────────────────────────────────
+Primary Effect:    F(1,28) = 29.865, p < 0.001 (chroma effect, IRN)
+Helical Model:     R² = 92.7% (resolved), 78.5% (unresolved)
 Control:           d = 0.002 (pure tones — no chroma effect)
-F-statistic:       F(1,28) = 29.865, p < 0.001
-Evidence Type:     EEG (N1-P2), MEG (source localization)
-Quality:           α-tier (controlled paradigm, clear dissociation)
+N1 chroma:         F(1,28) = 5.273, p = 0.029
+P2 chroma:         F(1,28) = 20.983, p < 0.001
+Source shift:      7mm anterolateral (IRN vs pure tone); L p=0.024, R p=0.047
+Consonance ruled:  rho(14) = -0.299, p = 0.298 (NOT a confound)
+Resolvability:     F(1,27) = 0.026, p = 0.874 (NOT a confound)
+
+CONVERGENT ANATOMICAL EVIDENCE (4+ independent studies):
+─────────────────────────────────────────────────────────────────
+Method          │ Paper              │ Key Finding
+────────────────┼────────────────────┼────────────────────────────
+fMRI (3T)       │ Patterson 2002     │ Pitch center = lateral HG
+fMRI (3T)       │ Norman-Haignere 13 │ Resolved harmonics → anterior AC
+fMRI (7T)       │ Allen 2022         │ F0 maps outside HG (orderly)
+MEG             │ Tabas 2019         │ POR in alHG (N=37, p<.0001)
+Intracranial    │ Fishman 2001       │ A1 octave = minimal activity
+
+IMPORTANT QUALIFICATION:
+┌─────────────────────────────────────────────────────────────────┐
+│ The DIRECT pitch chroma finding (non-monotonic adaptation)      │
+│ comes from ONE study (Briley et al. 2013). No independent       │
+│ replication of the specific chroma paradigm exists. However:    │
+│ (a) the anatomical locus (anterolateral HG) is confirmed by    │
+│ 5+ studies across methods; (b) orderly F0 maps (Allen 2022)    │
+│ provide the substrate; (c) the helical model R²=92.7% is       │
+│ compelling; (d) consonance and spectral overlap confounds are   │
+│ explicitly ruled out. The model retains α-tier because the      │
+│ finding is well-controlled, internally consistent across 3      │
+│ experiments, and anatomically convergent with the broader pitch  │
+│ center literature. Replication would strengthen confidence.     │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -475,10 +534,22 @@ f04 = σ(0.70 · (1 - R³.roughness[0]) · R³.helmholtz_kang[2]
 
 ### 8.1 Pipeline Validated Regions
 
-| Region | MNI Coordinates | Mentions | Evidence Type | PCCR Function |
-|--------|-----------------|----------|---------------|---------------|
-| **Anterior/Lateral AC (IRN)** | Anterior to PT source | 2+ | Direct (MEG) | Chroma encoding neurons |
-| **Primary AC (Pure Tone)** | Standard tonotopic | 2+ | Control (MEG) | Tonotopic only — no chroma |
+| Region | Coordinates | Space | Source | Evidence Type | PCCR Function |
+|--------|-------------|-------|--------|---------------|---------------|
+| **Anterolateral HG (L, IRN unresolved)** | -49.1, -21.2, 17.2 | Talairach | Briley 2013 (EEG source) | Direct | **Pitch chroma neurons** |
+| **Anterolateral HG (R, IRN unresolved)** | 42.9, -5.5, 17.6 | Talairach | Briley 2013 (EEG source) | Direct | **Pitch chroma neurons** |
+| **Anterolateral HG (L, IRN resolved)** | -47.4, -21.9, 17.4 | Talairach | Briley 2013 (EEG source) | Direct | Intermediate pitch processing |
+| **Anterolateral HG (R, IRN resolved)** | 43.0, -5.3, 17.1 | Talairach | Briley 2013 (EEG source) | Direct | Intermediate pitch processing |
+| **Medial HG (L, pure tone)** | -41.9, -18.8, 15.8 | Talairach | Briley 2013 (EEG source) | Control | Tonotopic only (no chroma) |
+| **Medial HG (R, pure tone)** | 44.2, -13.4, 13.4 | Talairach | Briley 2013 (EEG source) | Control | Tonotopic only (no chroma) |
+| **Lateral HG (bilateral)** | (anatomical) | — | Patterson 2002 (fMRI) | Direct | Pitch center |
+| **Anterior nonprimary AC** | (anatomical) | — | Norman-Haignere 2013 (fMRI) | Direct | Resolved-harmonic pitch |
+| **Regions surrounding HG** | (bilateral, 7T) | — | Allen 2022 (7T fMRI) | Direct | F0-tuned voxels (orderly maps) |
+| **alHG** | (dipole, bilateral) | Talairach | Tabas 2019 (MEG) | Direct | POR generator |
+| **A1/HG** | (depth electrode) | — | Fishman 2001 (intracranial) | Direct | Phase-locking (octave = minimal) |
+| **Dorsal MPFC** | BA 8/9 | — | Janata 2009 (fMRI) | Downstream | Tonal space tracking (uses chroma) |
+
+> **Note**: The IRN source dipoles (Briley 2013) are consistently 7mm more anterior and lateral than the pure-tone source dipoles, confirming distinct neural populations for pitch chroma (non-primary AC) vs. frequency tonotopy (primary AC). The coordinates converge with the broader pitch center literature (Patterson, Norman-Haignere, Allen, Tabas, Penagos).
 
 ---
 
@@ -666,20 +737,46 @@ class PCCR(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 1 | Briley 2013 |
-| **Effect Sizes** | d = 0.56 | Octave adaptation |
-| **Evidence Modality** | EEG (N1-P2), MEG (source) | Direct neural |
+| **Papers** | 14 | 1 direct chroma + 13 convergent (see Section 3.1) |
+| **Direct Chroma Evidence** | F(1,28)=29.865, R²=92.7% | Briley 2013 (only direct study) |
+| **Evidence Modalities** | EEG, fMRI (3T+7T), MEG, intracranial | 5 independent methods |
 | **Falsification Tests** | 2/4 confirmed | High validity |
 | **R³ Features Used** | 21D of 49D | Focused on chroma |
 | **H³ Demand** | 14 tuples (0.61%) | Sparse, efficient |
 | **PPC Mechanism** | 30D (chroma_processing primary) | Targeted |
 | **Output Dimensions** | **11D** | 4-layer structure |
+| **Key Qualification** | Direct chroma evidence from 1 study only; convergent anatomy from 5+ | Replication needed |
+| **Confounds Ruled Out** | Consonance (p=0.298), resolvability (p=0.874) | Briley Exp 1 + 2 |
 
 ---
 
 ## 13. Scientific References
 
+### Primary (Direct Pitch Chroma Evidence)
+
 1. **Briley, P. M., Breakey, C., & Krumbholz, K. (2013)**. Evidence for pitch chroma mapping in human auditory cortex. *Cerebral Cortex*, 23(11), 2601-2610.
+
+### Supporting (Cortical Pitch Regions & Anatomy)
+
+2. **Allen, E. J., Mesik, J., Kay, K. N., & Oxenham, A. J. (2022)**. Distinct representations of tonotopy and pitch in human auditory cortex. *Journal of Neuroscience*, 42(3), 416-434.
+3. **Norman-Haignere, S., Kanwisher, N., & McDermott, J. H. (2013)**. Cortical pitch regions in humans respond primarily to resolved harmonics and are located in specific tonotopic regions of anterior auditory cortex. *Journal of Neuroscience*, 33(50), 19451-19469.
+4. **Patterson, R. D., Uppenkamp, S., Johnsrude, I. S., & Griffiths, T. D. (2002)**. The processing of temporal pitch and melody information in auditory cortex. *Neuron*, 36, 767-776.
+5. **Tabas, A., Andermann, M., Schuberth, V., Riedel, H., Balaguer-Ballester, E., & Rupp, A. (2019)**. Modeling and MEG evidence of early consonance processing in auditory cortex. *PLoS Computational Biology*, 15(2), e1006820.
+
+### Supporting (Consonance/Dissonance Cortical Processing)
+
+6. **Fishman, Y. I., Volkov, I. O., Noh, M. D., Garell, P. C., Bakken, H., Arezzo, J. C., Howard, M. A., & Steinschneider, M. (2001)**. Consonance and dissonance of musical chords: Neural correlates in auditory cortex of monkeys and humans. *Journal of Neurophysiology*, 86, 2761-2788.
+7. **Foo, F., King-Stephens, D., Weber, P., Laxer, K., Parvizi, J., & Knight, R. T. (2016)**. Differential processing of consonance and dissonance within the human superior temporal gyrus. *Frontiers in Human Neuroscience*, 10, 154.
+8. **Wöhrle, S. D., Reuter, C., Rupp, A., & Andermann, M. (2024)**. Neuromagnetic representation of musical roundness in chord progressions. *Frontiers in Neuroscience*, 18, 1383554.
+
+### Contextual (Broader Pitch/Tonal Processing)
+
+9. **Janata, P. (2009)**. The neural architecture of music-evoked autobiographical memories. *Cerebral Cortex*, 19, 2579-2594.
+10. **Pankovski, T., & Pankovska, A. (2022)**. Nonspecific Hebbian neural network model predicts musical scales discreteness and just intonation without using octave-equivalency mapping. *Scientific Reports*, 12, 8795.
+11. **Bidelman, G. M. (2013)**. The role of the auditory brainstem in processing musically relevant pitch. *Frontiers in Psychology*, 4, 264.
+12. **Bidelman, G. M., & Heinz, M. G. (2011)**. Auditory-nerve responses predict pitch attributes related to musical consonance-dissonance for normal and impaired hearing. *Journal of the Acoustical Society of America*, 130(3), 1488-1502.
+13. **Samiee, S., Vuvan, D., Florin, E., Albouy, P., Peretz, I., & Baillet, S. (2022)**. Cross-frequency brain network dynamics support pitch change detection. *Journal of Neuroscience*, 42(18), 3823-3835.
+14. **Maess, B., Koelsch, S., Gunter, T. C., & Friederici, A. D. (2001)**. Musical syntax is processed in Broca's area: An MEG study. *Nature Neuroscience*, 4(5), 540-545.
 
 ---
 

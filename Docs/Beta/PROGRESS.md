@@ -11,7 +11,7 @@
 ### BATCH 1: SPU (Spectral Processing, 9 models)
 - [x] #1 SPU-α1-BCH — Brainstem Consonance Hierarchy (v2.1.0: 4→14 papers, Cousineau qualifier, Fishman/Foo/Tabas cortical evidence)
 - [x] #2 SPU-α2-PSCL — Pitch Salience Cortical Localization (v2.1.0: 1→14 papers, Allen 7T qualification, Briley/Tabas/Schonwiesner/Fishman/Foo/Bravo evidence, multi-method convergence)
-- [ ] #3 SPU-α3-PCCR — Pitch Chroma Cortical Representation
+- [x] #3 SPU-α3-PCCR — Pitch Chroma Cortical Representation (v2.1.0: 1→14 papers, Allen/Patterson/Norman-Haignere anatomy, helical model R²=92.7%, replication qualification noted)
 - [ ] #4 SPU-β1-STAI — Spectral-Temporal Aesthetic Integration
 - [ ] #5 SPU-β2-TSCP — Timbre-Specific Cortical Plasticity
 - [ ] #6 SPU-β3-MIAA — Musical Imagery Auditory Activation
