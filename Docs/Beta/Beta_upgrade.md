@@ -54,12 +54,82 @@ STEP 2: READ MI_BETA CODE
   → Note any doc-code mismatches
   → (For new models CHPI/SSRI: skip this step — code doesn't exist yet)
 
-STEP 3: SEARCH LITERATURE
-  → Search Literature/catalog.json for papers tagged with this unit
-  → Read relevant summaries in Literature/c3/summaries/
-  → Check JSON extractions in Literature/c3/extractions/ (if available)
-  → For R³-heavy models: also check Literature/r3/ (psychoacoustics, computational music theory)
-  → Verify: effect sizes, brain regions (MNI coords), sample sizes, methods
+STEP 3: C³ DEEP LITERATURE RESEARCH (MANDATORY — 500+ papers)
+
+  ╔══════════════════════════════════════════════════════════════════╗
+  ║  THIS IS THE MOST CRITICAL STEP OF THE ENTIRE WORKFLOW.        ║
+  ║  Literature/c3 contains 500+ neuroscience papers.              ║
+  ║  EVERY model must be deeply cross-referenced against ALL       ║
+  ║  relevant papers — not just those already cited in the doc.    ║
+  ║  SKIP NOTHING. Read EVERY relevant summary individually.       ║
+  ╚══════════════════════════════════════════════════════════════════╝
+
+  3a. C³ CATALOG SEARCH (find ALL relevant papers):
+    → Read Literature/catalog.json (504 C³ papers indexed)
+    → Filter by unit tag (e.g., "SPU") to find all papers tagged for this unit
+    → ALSO search by topic keywords relevant to this specific model
+      (e.g., for BCH: "consonance", "brainstem", "FFR", "roughness", "Plomp")
+    → ALSO search by author names cited in the model doc
+    → ALSO search by brain region names (e.g., "inferior colliculus", "Heschl")
+    → Build a COMPLETE list of ALL relevant paper IDs
+    → Expected: 15-80 papers per model depending on topic breadth
+
+  3b. READ EVERY RELEVANT C³ SUMMARY (no shortcuts):
+    → For EACH relevant paper found in 3a:
+      → Read Literature/c3/summaries/{paper_id}.md (492 summary files available)
+      → Extract: effect sizes (r, d, η², β), sample sizes (N),
+        brain regions (MNI coordinates), methods (fMRI, EEG, MEG, TMS, PET),
+        key findings, statistical tests, limitations, population
+    → Cross-reference findings with model's current evidence table
+    → Identify:
+      - Missing citations (papers that support the model but aren't cited)
+      - Incorrect effect sizes (model doc vs paper summary mismatch)
+      - Outdated findings (superseded by newer replication)
+      - New supporting evidence (strengthens model confidence)
+      - Contradictory evidence (weakens model or requires qualification)
+      - New brain regions not in model (expand Section 8)
+      - New R³ features implied (log to R3-GAP-LOG.md)
+
+  3c. CHECK C³ JSON EXTRACTIONS (structured claim-level data):
+    → Search Literature/c3/extractions/ (12 JSON files, v3.0 format)
+    → These contain machine-readable structured data:
+      - claims[] with effect sizes, p-values, confidence intervals
+      - brain_regions[] with MNI coordinates (x, y, z)
+      - r3_axis_mapping (which R³ dimensions the paper informs)
+      - methods, sample_sizes, paradigms
+    → Use these for PRECISE numerical verification of:
+      - Effect sizes quoted in model doc Section 3
+      - MNI coordinates quoted in model doc Section 8
+      - R³ feature mappings in model doc Section 4
+
+  3d. R³ LITERATURE (AFTER C³ — secondary but important):
+    → Search Literature/r3/ (121 markdown files, 59 papers)
+    → Especially relevant for:
+      - ALL SPU models (spectral processing = R³ core)
+      - ASU consonance/timbre models
+      - Any model with strong R³ input dependencies
+    → Check: psychoacoustic basis for R³ feature usage,
+      computational formulas (Plomp-Levelt, spectral centroid, etc.),
+      perceptual thresholds, JND values
+
+  3e. COMPILE EVIDENCE AUDIT REPORT:
+    → For each claim in the model's existing evidence table:
+      ✓ Citation correct? (author, year, journal match paper summary)
+      ✓ Effect size accurate? (r/d/η² match paper)
+      ✓ MNI coordinates correct? (match paper/extraction)
+      ✓ Sample size reported? (N=?)
+      ✓ Method correctly described? (fMRI vs EEG vs behavioral)
+      ✓ Statistical test identified? (t-test, ANOVA, correlation, etc.)
+    → For each NEW paper found but NOT currently cited:
+      ✓ Does it support, extend, or contradict the model?
+      ✓ Should it be added to the evidence table?
+      ✓ Does it provide stronger effect sizes or newer replication?
+      ✓ Does it reveal new brain regions or mechanisms?
+    → Document ALL discrepancies → feed into STEP 4 revision
+    → If a paper contradicts the model, note severity:
+      - Minor: qualifies a claim but doesn't invalidate model
+      - Major: requires model revision (change formulas, add mechanisms)
+      - Critical: model may need reclassification (tier change)
 
 STEP 4: REVISE MODEL DOC
   → Update Section 3 (Scientific Foundation): verify/add citations, effect sizes

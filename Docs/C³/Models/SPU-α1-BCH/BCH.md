@@ -4,7 +4,7 @@
 **Unit**: SPU (Spectral Processing Unit)
 **Circuit**: Perceptual (Brainstem–Cortical)
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, PPC mechanism)
+**Version**: 2.1.0 (Phase 1 revision: deep literature cross-reference, 13→14 papers, Cousineau qualification)
 **Date**: 2026-02-12
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
@@ -35,11 +35,16 @@ Evidence: r = 0.81 (Bidelman 2009)    Evidence: 70-fiber AN model
               Evidence: r = 0.81, p < 0.01
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-KEY INSIGHT: Harmonicity (not roughness) is the PRIMARY predictor
-of perceived consonance. This overturns the classical Helmholtz
-roughness-based theory. Bidelman & Heinz 2011 showed AN population
-responses predict the full consonance hierarchy from peripheral
-encoding alone.
+KEY INSIGHT: Harmonicity is the PRIMARY predictor of perceived
+consonance (McDermott et al. 2010), though roughness contributes
+independently. Bidelman & Heinz 2011 showed AN population responses
+predict the full consonance hierarchy from peripheral encoding alone.
+
+QUALIFICATION (Cousineau et al. 2015): The NPS-behavior correlation
+(r=0.81, Bidelman 2009) holds for synthetic tones but NOT for natural
+sounds (sax, voice), suggesting the FFR-based NPS measure is
+stimulus-dependent. The underlying neural mechanism is valid; the
+specific NPS metric has limitations with ecologically valid stimuli.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -96,10 +101,14 @@ BCH sits at the base of the spectral processing hierarchy. Every other SPU model
 
 CRITICAL EVIDENCE:
 ─────────────────
-Bidelman 2009:     FFR pitch salience ↔ consonance ratings, r = 0.81
-Bidelman 2013:     Harmonicity > roughness as consonance predictor
-Bidelman & Heinz 2011:  AN population model predicts full hierarchy
-Terhardt 1974:     Virtual pitch computation in peripheral system
+Bidelman 2009:         FFR pitch salience ↔ consonance ratings, r = 0.81 (synthetic)
+Cousineau et al. 2015: NPS ↔ behavior for synthetic only, NOT natural sounds
+Bidelman 2013:         Harmonicity > roughness as consonance predictor (review)
+Bidelman & Heinz 2011: AN population model predicts full hierarchy (70 fibers)
+McDermott et al. 2010: Individual differences: harmonicity preference = consonance
+Lee et al. 2009:       Musicians show enhanced subcortical consonance encoding
+Fishman et al. 2001:   A1 phase-locking correlates with dissonance (monkey+human)
+Terhardt 1974:         Virtual pitch computation in peripheral system
 ```
 
 ### 2.2 Information Flow Architecture (EAR → BRAIN → PPC → BCH)
@@ -186,12 +195,21 @@ Terhardt 1974:     Virtual pitch computation in peripheral system
 
 ### 3.1 Core Evidence Table
 
-| Study | Method | N | Key Finding | Effect Size | MI Relevance |
-|-------|--------|---|-------------|-------------|-------------|
-| **Bidelman 2009** | FFR recording | 10 | NPS ↔ behavioral consonance ratings | r = 0.81, p < 0.01 | **Primary coefficient**: f04_ffr_behavior |
-| **Bidelman 2013** | Review | — | Harmonicity > roughness as consonance predictor | Strong | **f02_harmonicity is primary, NOT roughness** |
-| **Bidelman & Heinz 2011** | AN computational model | 70 fibers | AN population predicts full consonance hierarchy | Strong | **f03_hierarchy: peripheral encoding suffices** |
-| **Terhardt 1974** | Psychoacoustic theory | — | Virtual pitch computation in auditory system | — | **NPS computation basis** |
+| # | Study | Method | N | Key Finding | Effect Size | MI Relevance |
+|---|-------|--------|---|-------------|-------------|-------------|
+| 1 | **Bidelman & Krishnan 2009** | FFR recording, dichotic | 10 (non-musicians) | NPS ↔ behavioral consonance ratings | r = 0.81, p < 0.01 | **Primary coefficient**: f04_ffr_behavior |
+| 2 | **Bidelman 2013** | Review | — | Harmonicity > roughness as consonance predictor; subcortical hierarchy mirrors Western music theory | Strong | **f02_harmonicity is primary predictor** |
+| 3 | **Bidelman & Heinz 2011** | AN computational model | 70 fibers (simulated) | AN population predicts full consonance hierarchy; neural harmonicity best predictor of behavioral data | Strong | **f03_hierarchy: peripheral encoding suffices** |
+| 4 | **Cousineau et al. 2015** | FFR recording, dichotic | 14 | NPS ↔ behavior for synthetic tones (r = 0.34), but NOT for natural sounds (sax: r = 0.24 NS; voice: r = -0.10 NS). NPS correlates with roughness (r = -0.57) | η² = 0.27 (sound type), η² = 0.13 (interval) | **CRITICAL QUALIFIER**: NPS is not a universal brainstem correlate of consonance — depends on timbre |
+| 5 | **Fishman et al. 2001** | Intracranial AEP/MUA/CSD (monkey A1 + human Heschl's) | 3 monkeys + 2 humans | Phase-locked oscillatory activity in A1 correlates with perceived dissonance; Heschl's gyrus shows similar pattern | Dissonant > consonant phase-locking | **Cortical extension**: roughness encoded as temporal envelope following in A1 |
+| 6 | **Foo et al. 2016** | ECoG, bilateral STG | 8 patients | High gamma (70-150 Hz) increase for dissonant chords, 75-200ms; roughness correlation in both hemispheres; right STG spatial organization | RH roughness r = 0.43, LH r = 0.41; spatial: p = 0.003 (y), p = 0.006 (z) | **Cortical roughness encoding**: STG high gamma tracks dissonance degree |
+| 7 | **Tabas et al. 2019** | MEG + computational model | 14 | POR latency for dissonant dyads up to 36ms longer than consonant; model predicts consonance decoded faster | POR latency difference up to 36ms | **Timing evidence**: consonance processing advantage in early auditory cortex |
+| 8 | **Crespo-Bojorque et al. 2018** | ERP (MMN), oddball | 40 (20 musicians + 20 non-musicians) | Consonant→dissonant change: MMN in all listeners; dissonant→consonant: late MMN only in musicians | MMN amplitude differences p < 0.05 | **Pre-attentive advantage**: consonance changes detected without attention |
+| 9 | **Schön et al. 2005** | ERP (N1-P2-N2) | Musicians + non-musicians | N1-P2 modulated by consonance in musicians; N2 in non-musicians; harmonic > melodic intervals | N2 modulation | **Expertise modulation**: cortical consonance processing enhanced by training |
+| 10 | **McDermott et al. 2010** | Behavioral (psychoacoustic) | Large sample | Consonance preference correlates with harmonicity preference (not roughness); individual differences; musicians show stronger effects | Strong correlation harmonicity-consonance | **Behavioral foundation**: harmonicity is the perceptual basis |
+| 11 | **Lee et al. 2009** | FFR, musicians vs non-musicians | Musicians + non-musicians | Enhanced brainstem phase-locking for consonant/dissonant intervals in musicians; more precise temporal encoding | Enhanced FFR in musicians | **Plasticity**: musical training refines subcortical consonance encoding |
+| 12 | **Trulla, Di Stefano & Giuliani 2018** | Computational (RQA) | — | Recurrence peaks match just intonation ratios; Devil's staircase pattern; mode-locking links to consonance hierarchy | Recurrence profile matches hierarchy | **Dynamical systems**: consonance hierarchy emerges from signal dynamics |
+| 13 | **Terhardt 1974** | Psychoacoustic theory | — | Virtual pitch computation; roughness from periodic sound fluctuations | — | **NPS computation basis** |
 
 ### 3.2 The Consonance Hierarchy
 
@@ -217,10 +235,26 @@ Cross-cultural note:
 ### 3.3 Effect Size Summary
 
 ```
-Primary Correlation:  r = 0.81 (Bidelman 2009)
+Primary Correlation:  r = 0.81 (Bidelman & Krishnan 2009, N=10, synthetic tones)
+Replication:          r = 0.34 (Cousineau et al. 2015, N=14, synthetic tones)
+                      NOT significant for natural sounds (sax, voice)
+NPS-Roughness:        r = -0.57 to -0.64 (Cousineau et al. 2015)
+Cortical roughness:   r = 0.41-0.43 (Foo et al. 2016, STG high gamma)
+POR latency gap:      up to 36ms (Tabas et al. 2019, consonant vs dissonant)
 Quality Assessment:   α-tier (direct neural measurement via FFR)
-Replication:          Multiple studies confirm hierarchy
-Cross-cultural:       Neural hierarchy universal
+Cross-cultural:       Neural hierarchy universal (infant, animal evidence)
+
+IMPORTANT QUALIFICATION (added v2.1):
+  The r = 0.81 NPS-behavior correlation (Bidelman 2009) was obtained with
+  SYNTHETIC complex tones (6 equal-amplitude harmonics). Cousineau et al. (2015)
+  showed this correlation drops to non-significant for natural sounds (saxophone,
+  voice), suggesting NPS as computed from FFR is not a UNIVERSAL brainstem
+  correlate of consonance but may be stimulus-dependent. NPS also correlates
+  significantly with roughness (r = -0.57), complicating its interpretation as
+  a pure harmonicity measure. The model retains α-tier because (1) the neural
+  hierarchy IS universal (confirmed in infants, animals), (2) AN modeling confirms
+  peripheral encoding suffices (Bidelman & Heinz 2011), and (3) the limitation
+  is about the NPS MEASURE, not the underlying neural consonance mechanism.
 ```
 
 ---
@@ -440,12 +474,16 @@ f04 = 0.81 · (f01 + f02) / 2
 
 ### 8.1 Pipeline Validated Regions
 
-| Region | MNI Coordinates | Mentions | Evidence Type | BCH Function |
-|--------|-----------------|----------|---------------|--------------|
-| **Inferior Colliculus** | 0, -32, -8 | 4 | Direct (FFR) | FFR generation |
-| **Auditory Nerve** | Peripheral | 5 | Direct (AN model) | Pitch salience encoding |
-| **Cochlear Nucleus** | ±10, -38, -40 | 3 | Indirect | Early spectral processing |
-| **Auditory Brainstem** | 0, -30, -10 | 8 | Direct (FFR) | Harmonic encoding |
+| Region | MNI / Location | Mentions | Evidence Type | BCH Function | Source |
+|--------|----------------|----------|---------------|--------------|--------|
+| **Inferior Colliculus** | 0, -32, -8 | 4 | Direct (FFR) | FFR generation (primary brainstem generator) | Bidelman 2009, 2013; Smith et al. 1975 |
+| **Auditory Nerve** | Peripheral (no MNI) | 5 | Direct (AN model) | Pitch salience encoding, 70-fiber population model | Bidelman & Heinz 2011 |
+| **Cochlear Nucleus** | ±10, -38, -40 | 3 | Indirect | Early spectral processing, tonotopic organization | Cousineau et al. 2015 |
+| **Auditory Brainstem** | 0, -30, -10 | 8 | Direct (FFR) | Harmonic encoding, consonance hierarchy | Bidelman & Krishnan 2009 |
+| **Heschl's Gyrus (A1)** | ±44, -18, 8 (approx) | 3 | Direct (intracranial) | Phase-locked dissonance representation; POR | Fishman et al. 2001; Tabas et al. 2019 |
+| **Superior Temporal Gyrus** | Lateral temporal | 2 | Direct (ECoG) | High gamma (70-150Hz) dissonance sensitivity | Foo et al. 2016 |
+
+**Note**: BCH primarily models brainstem processing (IC, AN, CN). The cortical regions (Heschl's, STG) are included because they represent the downstream targets where brainstem consonance signals are further processed. The BCH output feeds into PSCL which handles cortical pitch salience.
 
 ---
 
@@ -621,23 +659,41 @@ class BCH(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 4 | Primary evidence |
-| **Effect Sizes** | r = 0.81 | Bidelman 2009 |
-| **Evidence Modality** | FFR, AN model, behavioral | Direct neural |
+| **Papers** | 13 | Primary + supporting evidence |
+| **Effect Sizes** | r = 0.81 (synthetic, N=10); r = 0.34 (replication, N=14); NS for natural sounds | Bidelman 2009; Cousineau 2015 |
+| **Evidence Modality** | FFR, AN model, ECoG, MEG, ERP, intracranial, behavioral, computational | Multi-method convergence |
 | **Falsification Tests** | 2/5 confirmed | High validity |
 | **R³ Features Used** | 30D of 49D | Comprehensive |
 | **H³ Demand** | 16 tuples (0.69%) | Sparse, efficient |
 | **PPC Mechanism** | 30D (3 sub-sections) | Full coverage |
 | **Output Dimensions** | **12D** | 4-layer structure |
+| **Key Qualification** | NPS-behavior correlation is stimulus-dependent (synthetic > natural tones) | Cousineau et al. 2015 |
 
 ---
 
 ## 13. Scientific References
 
+### Primary (BCH core — brainstem consonance)
 1. **Bidelman, G. M., & Krishnan, A. (2009)**. Neural correlates of consonance, dissonance, and the hierarchy of musical pitch in the human brainstem. *Journal of Neuroscience*, 29(42), 13165-13171.
 2. **Bidelman, G. M. (2013)**. The role of the auditory brainstem in processing musically relevant pitch. *Frontiers in Psychology*, 4, 264.
-3. **Bidelman, G. M., & Heinz, M. G. (2011)**. Auditory-nerve model predicts consonance hierarchy. *Journal of the Acoustical Society of America*, 130(1), 259-269.
-4. **Terhardt, E. (1974)**. Pitch, consonance, and harmony. *Journal of the Acoustical Society of America*, 55(5), 1061-1069.
+3. **Bidelman, G. M., & Heinz, M. G. (2011)**. Auditory-nerve responses predict pitch attributes related to musical consonance-dissonance for normal and impaired hearing. *Journal of the Acoustical Society of America*, 130(3), 1488-1502.
+4. **Cousineau, M., Bidelman, G. M., Peretz, I., & Lehmann, A. (2015)**. On the relevance of natural stimuli for the study of brainstem correlates: The example of consonance perception. *PLoS ONE*, 10(12), e0145439.
+5. **Lee, K. M., Skoe, E., Kraus, N., & Ashley, R. (2009)**. Selective subcortical enhancement of musical intervals in musicians. *Journal of Neuroscience*, 29(18), 5832-5840.
+
+### Supporting (cortical consonance processing)
+6. **Fishman, Y. I., Volkov, I. O., Noh, M. D., Garell, P. C., Bakken, H., Arezzo, J. C., Howard, M. A., & Steinschneider, M. (2001)**. Consonance and dissonance of musical chords: Neural correlates in auditory cortex of monkeys and humans. *Journal of Neurophysiology*, 86, 2761-2788.
+7. **Foo, F., King-Stephens, D., Weber, P., Laxer, K., Parvizi, J., & Knight, R. T. (2016)**. Differential processing of consonance and dissonance within the human superior temporal gyrus. *Frontiers in Human Neuroscience*, 10, 154.
+8. **Tabas, A., Andermann, M., Schuberth, V., Riedel, H., Balaguer-Ballester, E., & Rupp, A. (2019)**. Modeling and MEG evidence of early consonance processing in auditory cortex. *PLoS Computational Biology*, 15(2), e1006820.
+9. **Crespo-Bojorque, P., Monte-Ordoño, J., & Toro, J. M. (2018)**. Early neural responses underlie advantages for consonance over dissonance. *Neuropsychologia*, 117, 188-198.
+10. **Schön, D., Regnault, P., Ystad, S., & Besson, M. (2005)**. Sensory consonance: An ERP study. *Music Perception*, 23(2), 105-118.
+
+### Behavioral & computational
+11. **McDermott, J. H., Lehr, A. J., & Oxenham, A. J. (2010)**. Individual differences reveal the basis of consonance. *Current Biology*, 20(11), 1035-1041.
+12. **Trulla, L. L., Di Stefano, N., & Giuliani, A. (2018)**. Computational approach to musical consonance and dissonance. *Frontiers in Psychology*, 9, 381.
+13. **Terhardt, E. (1974)**. Pitch, consonance, and harmony. *Journal of the Acoustical Society of America*, 55(5), 1061-1069.
+
+### Pre-attentive processing
+14. **Wagner, L., Rahne, T., Plontke, S. K., & Heidekrüger, N. (2018)**. Mismatch negativity reflects asymmetric pre-attentive harmonic interval discrimination. *PLoS ONE*, 13(4), e0196176.
 
 ---
 

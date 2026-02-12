@@ -1,7 +1,7 @@
 # Beta Upgrade Progress Tracker
 
 **Total**: 96 models (48 Core + 48 Experimental)
-**Current Phase**: Phase 0 (Setup)
+**Current Phase**: Phase 1 (C³ Model Revision)
 **Last Updated**: 2026-02-12
 
 ---
@@ -9,7 +9,7 @@
 ## Phase 1: C³ Model Revision
 
 ### BATCH 1: SPU (Spectral Processing, 9 models)
-- [ ] #1 SPU-α1-BCH — Brainstem Consonance Hierarchy
+- [x] #1 SPU-α1-BCH — Brainstem Consonance Hierarchy (v2.1.0: 4→14 papers, Cousineau qualifier, Fishman/Foo/Tabas cortical evidence)
 - [ ] #2 SPU-α2-PSCL — Pitch Salience Cortical Localization
 - [ ] #3 SPU-α3-PCCR — Pitch Chroma Cortical Representation
 - [ ] #4 SPU-β1-STAI — Spectral-Temporal Aesthetic Integration
