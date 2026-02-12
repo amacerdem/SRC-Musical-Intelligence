@@ -4,8 +4,8 @@
 **Unit**: RPU (Reward Processing Unit)
 **Circuit**: Mesolimbic (NAcc, VTA, vmPFC, OFC, Amygdala)
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, AED+CPD+C0P mechanisms)
-**Date**: 2026-02-12
+**Version**: 2.1.0 (deep C³ literature review, +5 papers, corrected effect sizes)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -44,7 +44,7 @@ TEMPORAL DISSOCIATION:
   Caudate: 15-30s BEFORE peak → anticipatory dopamine
   NAcc:    AT peak moment    → consummatory dopamine
 
-EFFECT SIZE: d = 0.71 (Salimpoor 2011, PET)
+EFFECT SIZE: r = 0.71 (Salimpoor 2011, PET — caudate-BP vs chills count)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 KEY INSIGHT: Dopaminergic reward during music is anatomically and
@@ -149,18 +149,28 @@ DAED establishes the foundational dopaminergic dissociation for the Reward Proce
 
 | Study | Method | N | Key Finding | Effect Size | MI Relevance |
 |-------|--------|---|-------------|-------------|-------------|
-| **Salimpoor 2011** | PET | 16 | DA release in striatum at peak emotion | d = 0.71, p < 0.001 | **Primary**: f01, f02 anticipation-consummation |
-| **Salimpoor 2011** | PET | 16 | Caudate (anticipation) vs NAcc (experience) | d = 0.71, p < 0.01 | **f03, f04 wanting/liking dissociation** |
-| **Salimpoor 2011** | PET | 16 | Caudate-BP correlates with chills count | r = 0.71, p < 0.01 | **Anticipation magnitude validation** |
-| **Salimpoor 2011** | PET | 16 | NAcc-BP correlates with pleasure rating | r = 0.80-0.84, p < 0.01 | **Consummation magnitude validation** |
+| **Salimpoor 2011** | PET+fMRI | 8 (PET) | DA release in striatum at peak emotion | r = 0.71 (chills–pleasure), p < 0.001 | **Primary**: f01, f02 anticipation-consummation |
+| **Salimpoor 2011** | PET+fMRI | 8 (PET) | Caudate (anticipation) vs NAcc (experience) | t = 3.2 (caudate), t = 2.8 (NAcc) | **f03, f04 wanting/liking dissociation** |
+| **Salimpoor 2011** | PET | 8 | Caudate-BP correlates with chills count | r = 0.71, p < 0.05 | **Anticipation magnitude validation** |
+| **Salimpoor 2011** | PET | 8 | NAcc-BP correlates with pleasure rating | r = 0.84, p < 0.01 | **Consummation magnitude validation** |
+| **Gold 2023** | fMRI | 24 | VS and R STG reflect pleasure of musical expectancies | interaction IC×entropy in VS | **Replication**: VS involvement in music pleasure |
+| **Gold 2023** | fMRI | 24 | VS activity shows liking × surprise interaction | F-test, p < 0.05 | **Extension**: uncertainty modulates reward |
+| **Cheung 2019** | fMRI | 39 (beh) | Uncertainty × surprise jointly predict pleasure | interaction, p < 0.001 | **Anticipation framework**: nonlinear pleasure function |
+| **Cheung 2019** | fMRI | 39 | NAcc reflects uncertainty; amygdala reflects interaction | β, p < 0.05 | **Refines**: NAcc = anticipatory uncertainty |
+| **Chabin 2020** | HD-EEG | 18 | Theta in PFC tracks pleasure; OFC source-localized | EEG power, p < 0.05 | **Converging EEG**: cortical chills correlates |
+| **Putkinen 2025** | PET+fMRI | 15 (PET) | µ-opioid receptor activation in VS, OFC during pleasure | [11C]carfentanil binding, p < 0.05 | **Neurochemical extension**: opioid + dopamine |
+| **Putkinen 2025** | PET | 15 | NAcc MOR binding correlates with chills count | negative association, p < 0.05 | **Cross-validates** NAcc pleasure role |
+| **Mohebi 2024** | Electrophys (rat) | — | DA transients follow striatal gradient of time horizons | ventral→dorsal acceleration | **Mechanistic support**: caudate/NAcc temporal dissociation |
 
 ### 3.2 Effect Size Summary
 
 ```
-Primary Evidence (k=4):  All findings from single landmark PET study
-Heterogeneity:           N/A (single study, multiple measures)
-Quality Assessment:      α-tier (direct PET dopamine measurement)
-Replication:             Robust — foundational finding in music neuroscience
+Primary Evidence (k=12):  6 independent studies (1 PET-DA, 1 PET-MOR, 3 fMRI, 1 EEG)
+Cross-modal convergence: PET (dopamine + opioid), fMRI (BOLD), HD-EEG (theta/alpha)
+Quality Assessment:      α-tier (direct neurochemical + hemodynamic + electrophysiological)
+Replication:             Strong — Salimpoor 2011 replicated by Gold 2023, Cheung 2019
+                         Opioid extension by Putkinen 2025, cortical by Chabin 2020
+                         Mechanistic basis from Mohebi 2024 (striatal gradient)
 ```
 
 ---
@@ -326,8 +336,8 @@ For EXPERIENCE PHASE (t >= t_peak):
   DA(NAcc)    = α·Actual_Pleasure + β·(Actual - Expected)
 
 Parameters:
-  α = 0.84  (pleasure weight, from Salimpoor 2011 NAcc-BP correlation)
-  β = 0.71  (anticipation weight, from Salimpoor 2011 caudate-BP correlation)
+  α = 0.84  (pleasure weight, r = 0.84 from Salimpoor 2011 NAcc-BP vs pleasure correlation)
+  β = 0.71  (anticipation weight, r = 0.71 from Salimpoor 2011 caudate-BP vs chills count correlation)
   τ_decay = 3.0s (dopamine signal decay)
 ```
 
@@ -377,8 +387,13 @@ temporal_phase = f01 / (f01 + f02 + ε)
 
 | Region | MNI Coordinates | Mentions | Evidence Type | DAED Function |
 |--------|-----------------|----------|---------------|---------------|
-| **Caudate Nucleus** | ±10, 10, 8 | 2 | Direct (PET) | Anticipatory DA release |
-| **Nucleus Accumbens (NAcc)** | ±10, 8, -8 | 2 | Direct (PET) | Consummatory DA release |
+| **Caudate Nucleus** | ±10, 19, 7 (PET); 14, -6, 20 (fMRI) | 5 | Direct (PET, fMRI) | Anticipatory DA release |
+| **Nucleus Accumbens (NAcc)** | ±10, 12, -10 (PET); 8, 10, -8 (fMRI) | 6 | Direct (PET, fMRI) | Consummatory DA release |
+| **Putamen** | ±23, 1, 1 | 2 | Direct (PET) | DA release during pleasure |
+| **Orbitofrontal Cortex (OFC)** | ±28, 34, -12 | 3 | PET (MOR), EEG source | Hedonic evaluation, MOR hotspot |
+| **Right Superior Temporal Gyrus** | 60, -20, 4 | 2 | fMRI | Pleasure-modulated auditory processing |
+| **Amygdala** | ±24, -4, -18 | 2 | fMRI | Uncertainty × surprise interaction |
+| **Hippocampus** | ±28, -16, -12 | 1 | fMRI | Uncertainty × surprise interaction |
 
 ---
 
@@ -567,9 +582,9 @@ class DAED(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 1 (Salimpoor 2011) | Primary evidence |
-| **Effect Sizes** | 2 (d=0.71, r=0.80-0.84) | PET imaging |
-| **Evidence Modality** | PET | Direct dopamine measurement |
+| **Papers** | 6 (Salimpoor 2011, Gold 2023, Cheung 2019, Chabin 2020, Putkinen 2025, Mohebi 2024) | Multi-modal evidence |
+| **Effect Sizes** | 5+ (r=0.71, r=0.84, IC×entropy interaction, MOR binding, t=2.8-3.2) | PET + fMRI + EEG |
+| **Evidence Modality** | PET (DA + MOR), fMRI (3 studies), HD-EEG, electrophysiology | Multi-modal convergence |
 | **Falsification Tests** | 0/5 confirmed (all testable) | High validity |
 | **R³ Features Used** | ~12D of 49D | Consonance + energy + change + interactions |
 | **H³ Demand** | 16 tuples (0.69%) | Sparse, efficient |
@@ -583,6 +598,11 @@ class DAED(BaseModel):
 ## 13. Scientific References
 
 1. **Salimpoor, V. N., Benovoy, M., Larcher, K., Dagher, A., & Zatorre, R. J. (2011)**. Anatomically distinct dopamine release during anticipation and experience of peak emotion to music. *Nature Neuroscience*, 14(2), 257-262.
+2. **Gold, B. P., Pearce, M. T., McIntosh, A. R., Chang, C., Dagher, A., & Zatorre, R. J. (2023)**. Auditory and reward structures reflect the pleasure of musical expectancies during naturalistic listening. *Frontiers in Neuroscience*, 17, 1209398.
+3. **Cheung, V. K. M., Harrison, P. M. C., Meyer, L., Pearce, M. T., Haynes, J.-D., & Koelsch, S. (2019)**. Uncertainty and surprise jointly predict musical pleasure and amygdala, hippocampus, and auditory cortex activity. *Current Biology*, 29(23), 4084-4092.
+4. **Chabin, T., Gabriel, D., Chansophonkul, T., et al. (2020)**. Cortical patterns of pleasurable musical chills revealed by high-density EEG. *Frontiers in Neuroscience*, 14, 565815.
+5. **Putkinen, V., Seppälä, K., Harju, H., Hirvonen, J., Karlsson, H. K., & Nummenmaa, L. (2025)**. Pleasurable music activates cerebral µ-opioid receptors: a combined PET-fMRI study. *European Journal of Nuclear Medicine and Molecular Imaging*, 52, 3540-3549.
+6. **Mohebi, A., Wei, W., Pelattini, L., Kim, K., & Berke, J. D. (2024)**. Dopamine transients follow a striatal gradient of reward time horizons. *Nature Neuroscience*, 27, 737-746.
 
 ---
 

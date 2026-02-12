@@ -4,8 +4,8 @@
 **Unit**: RPU (Reward Processing Unit)
 **Circuit**: Mesolimbic (NAcc, VTA, vmPFC, OFC, Amygdala)
 **Tier**: γ (Integrative) — 50-70% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, AED+CPD+C0P mechanisms)
-**Date**: 2026-02-12
+**Version**: 2.1.0 (Beta upgrade: 5 papers, corrected N/MNI, +4 new citations, expanded brain regions)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -157,15 +157,25 @@ IOTMS provides the individual differences modulation for the Reward Processing U
 
 | Study | Method | N | Key Finding | Effect Size | MI Relevance |
 |-------|--------|---|-------------|-------------|-------------|
-| **Putkinen 2025** | PET + fMRI | — | Baseline MOR ↔ pleasure-BOLD slope | d = 1.16, p < 0.05 | **Primary**: f01 MOR baseline, f02 pleasure-BOLD slope |
+| **Putkinen et al. 2025** | PET ([11C]carfentanil) + fMRI | 15 (PET, all female) + 30 (fMRI) | Music increased MOR BPND in ventral striatum, OFC, amygdala; NAcc BPND negatively correlated with chills; baseline MOR predicted pleasure-BOLD in insula, ACC, SMA, STG, NAcc, thalamus | r = -0.52, p < 0.05 (NAcc BPND vs chills); F(1,32) = 45.14, p < 0.001 (pleasure: music > baseline) | **Primary**: f01 MOR baseline proxy, f02 pleasure-BOLD slope; MOR tone → individual sensitivity |
+| **Salimpoor et al. 2011** | PET ([11C]raclopride) + fMRI | 8 (PET) + 7 (fMRI) | Dopamine release in caudate (anticipation) and NAcc (experience) during music chills; NAcc BP change correlated with chills intensity | r = 0.84, p < 0.01 (NAcc BP vs chills intensity); r = 0.71, p < 0.05 (caudate vs number of chills) | **Supporting**: Striatal neurochemical reward during music; converging PET evidence for NAcc role in music pleasure |
+| **Mas-Herrero et al. 2014** | Behavioral + SCR + HR | 30 (3 groups x 10) | Specific musical anhedonia identified; BMRQ predicted music pleasure; SCR slope = 0 for anhedonics; music reward dissociated from monetary reward | R² = 0.30 (BMRQ vs chills intensity); R² = 0.32 (BMRQ vs SCR slope); p < 0.001 | **Supporting**: f03 reward propensity, f04 music reward index; BMRQ as trait predictor of individual music sensitivity |
+| **Martinez-Molina et al. 2016** | fMRI + SCR | 45 (3 groups x 15) | Reduced NAcc activation for music (not money) in anhedonics; reduced right STG-NAcc functional connectivity in anhedonics; BMRQ predicted pleasure ratings | R² = 0.40 (BMRQ vs pleasure ratings); group x task interaction p < 0.05 (SVC) | **Supporting**: f01 MOR baseline proxy (NAcc activation as trait); STG-NAcc connectivity as individual difference mechanism |
+| **Loui et al. 2017** | DTI | 46 controls + 1 case (BW) | BW scored 5.89 SD below controls on BMRQ; lower tract volume LSTG-LNAcc and LSTG-LAIns in BW; tract volumes LSTG-LAIns, RSTG-RNAcc, RSTG-RMPFC predicted music reward in controls | R² = 0.38 (tracts → music reward); z = -2.16, p = 0.03 (LSTG-LNAcc volume, BW vs controls) | **Supporting**: Structural connectivity basis for individual differences in music reward sensitivity; white matter evidence for auditory-reward coupling |
 
 ### 3.2 Effect Size Summary
 
 ```
-Primary Evidence (k=1):  Single PET+fMRI study
-Heterogeneity:           N/A (single study)
-Quality Assessment:      γ-tier (preliminary PET evidence, strong effect size)
-Replication:             Consistent with Mallik (2017) naltrexone study
+Primary Evidence (k=5):  1 PET-MOR + 1 PET-DA + 1 fMRI + 1 behavioral + 1 DTI
+Cross-method convergence: PET (opioid + dopamine), fMRI, SCR/HR, DTI
+Key effects:
+  NAcc BPND vs chills:        r = -0.52, p < 0.05 (Putkinen 2025, MOR PET)
+  NAcc BP vs chills intensity: r = 0.84, p < 0.01 (Salimpoor 2011, DA PET)
+  BMRQ vs pleasure ratings:   R² = 0.40 (Martinez-Molina 2016, fMRI)
+  BMRQ vs SCR slope:          R² = 0.32 (Mas-Herrero 2014, behavioral)
+  Tracts → music reward:      R² = 0.38 (Loui 2017, DTI)
+Quality Assessment:      γ-tier (converging neurochemical + neural + behavioral + structural evidence)
+Replication:             Consistent with Mallik (2017) naltrexone blockade study
 ```
 
 ---
@@ -347,8 +357,14 @@ f04 = σ(0.40 * f03
 
 | Region | MNI Coordinates | Mentions | Evidence Type | IOTMS Function |
 |--------|-----------------|----------|---------------|---------------|
-| **NAcc** | ±10, 12, -8 | 1 | Indirect (PET + fMRI) | MOR availability → reward propensity |
-| **VTA** | ±4, -16, -8 | 1 | Indirect (PET) | Opioid-dopamine interaction |
+| **NAcc (L)** | -13, 12, -10 | 4 | Direct (PET-MOR, PET-DA, fMRI) | MOR/DA release site; pleasure-dependent activation reduced in anhedonics (Martinez-Molina 2016); BPND correlated with chills (Putkinen 2025) |
+| **NAcc (R)** | 9, 12, -7 | 4 | Direct (PET-MOR, PET-DA, fMRI) | Music-induced opioid release; group x task interaction p < 0.05 SVC (Martinez-Molina 2016); chills-BPND r = -0.52 (Putkinen 2025) |
+| **Caudate (R)** | 14, -6, 20 | 2 | Direct (PET-DA, fMRI) | Dopamine release during anticipation; chills correlation r = 0.71 (Salimpoor 2011) |
+| **VTA** | 0, -16, -8 | 1 | Indirect (PET) | Opioid-dopamine interaction; opioid release in VTA modulates NAcc DA (Putkinen 2025 discussion) |
+| **OFC** | ±28, 32, -12 | 2 | Direct (PET-MOR, fMRI) | Hedonic hotspot; increased BPND during music (Putkinen 2025); pleasure-dependent BOLD (Putkinen 2025 fMRI) |
+| **Insula** | ±38, 14, -4 | 2 | Direct (PET-fMRI fusion, fMRI) | Baseline MOR → pleasure-BOLD association (Putkinen 2025); interoceptive processing during music pleasure |
+| **ACC** | 0, 24, 28 | 2 | Direct (PET-fMRI fusion, fMRI) | Baseline MOR → pleasure-BOLD association (Putkinen 2025); co-localization with BPND changes |
+| **STG (R)** | 62, -25, 12 | 3 | Direct (fMRI, DTI) | Auditory cortex; functional connectivity with NAcc predicts music reward (Martinez-Molina 2016); structural connectivity correlates with BMRQ (Loui 2017) |
 
 ---
 
@@ -386,10 +402,12 @@ f04 = σ(0.40 * f03
 
 | Criterion | Testable Prediction | Status |
 |-----------|---------------------|--------|
-| **MOR-pleasure slope** | Baseline MOR should predict pleasure-BOLD slope | ✅ **Confirmed** (d = 1.16, p < 0.05, Putkinen 2025) |
-| **Naltrexone blockade** | MOR antagonist should reduce music pleasure | Testable (Mallik 2017 supports) |
-| **Individual stability** | MOR-based sensitivity should be stable across sessions | Testable |
-| **Musical specificity** | Effect should be specific to music (vs. other rewards) | Testable |
+| **MOR-pleasure slope** | Baseline MOR should predict pleasure-BOLD slope | ✅ **Confirmed** (MOR BPND → pleasure-BOLD in insula, ACC, SMA, STG, NAcc, thalamus; Putkinen 2025) |
+| **Striatal release** | Music should cause neurochemical release in striatum | ✅ **Confirmed** (DA in caudate/NAcc, Salimpoor 2011; MOR in ventral striatum/OFC, Putkinen 2025) |
+| **Individual differences** | Trait measures should predict music reward sensitivity | ✅ **Confirmed** (BMRQ → pleasure R² = 0.40, Martinez-Molina 2016; BMRQ → SCR slope R² = 0.32, Mas-Herrero 2014; tracts → reward R² = 0.38, Loui 2017) |
+| **Musical specificity** | Effect should be specific to music (vs. other rewards) | ✅ **Confirmed** (NAcc reduced for music but not money in anhedonics, Martinez-Molina 2016; SCR = 0 for music but normal for money, Mas-Herrero 2014) |
+| **Naltrexone blockade** | MOR antagonist should reduce music pleasure | Testable (Mallik 2017 supports with caveats; Laeng 2021 and Mas-Herrero 2023 did not replicate subjective effect) |
+| **Structural connectivity** | Auditory-reward tract integrity should predict individual sensitivity | ✅ **Confirmed** (LSTG-LAIns, RSTG-RNAcc volumes predict BMRQ, Loui 2017; reduced LSTG-LNAcc in anhedonic, Loui 2017) |
 | **Dose-response** | Higher MOR should produce proportionally steeper slopes | Testable |
 
 ---
@@ -515,10 +533,11 @@ class IOTMS(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 1 (Putkinen 2025) | Preliminary evidence |
-| **Effect Sizes** | 1 (d = 1.16) | PET + fMRI |
-| **Evidence Modality** | PET, fMRI | Neurochemical + neural |
-| **Falsification Tests** | 1/5 confirmed | Low validity (preliminary) |
+| **Papers** | 5 (Putkinen 2025, Salimpoor 2011, Mas-Herrero 2014, Martinez-Molina 2016, Loui 2017) | PET-MOR + PET-DA + fMRI + behavioral + DTI |
+| **Effect Sizes** | 8 (r = -0.52, r = 0.84, r = 0.71, R² = 0.30, R² = 0.32, R² = 0.40, R² = 0.38, z = -2.16) | Cross-method convergence |
+| **Evidence Modality** | PET ([11C]carfentanil, [11C]raclopride), fMRI, SCR/HR, DTI | Neurochemical + neural + autonomic + structural |
+| **Brain Regions** | 8 (NAcc bilateral, Caudate, VTA, OFC, Insula, ACC, STG) | Corrected MNI from primary sources |
+| **Falsification Tests** | 5/7 confirmed | Strong convergent validity |
 | **R³ Features Used** | ~12D of 49D | Consonance + energy + timbre + interactions |
 | **H³ Demand** | 12 tuples (0.52%) | Sparse, efficient |
 | **AED Mechanism** | 30D (3 sub-sections) | Valence/emotion evaluation |
@@ -530,7 +549,15 @@ class IOTMS(BaseModel):
 
 ## 13. Scientific References
 
-1. **Putkinen, V., Saarikallio, S., & Tervaniemi, M. (2025)**. Individual differences in opioid receptor availability predict music reward sensitivity. *[Preliminary PET+fMRI findings]*.
+1. **Putkinen, V., Seppala, K., Harju, H., Hirvonen, J., Karlsson, H. K., & Nummenmaa, L. (2025)**. Pleasurable music activates cerebral mu-opioid receptors: a combined PET-fMRI study. *European Journal of Nuclear Medicine and Molecular Imaging*, 52, 3540-3549. https://doi.org/10.1007/s00259-025-07232-z
+
+2. **Salimpoor, V. N., Benovoy, M., Larcher, K., Dagher, A., & Zatorre, R. J. (2011)**. Anatomically distinct dopamine release during anticipation and experience of peak emotion to music. *Nature Neuroscience*, 14(2), 257-262. https://doi.org/10.1038/nn.2726
+
+3. **Mas-Herrero, E., Zatorre, R. J., Rodriguez-Fornells, A., & Marco-Pallares, J. (2014)**. Dissociation between musical and monetary reward responses in specific musical anhedonia. *Current Biology*, 24(6), 699-704. https://doi.org/10.1016/j.cub.2014.01.068
+
+4. **Martinez-Molina, N., Mas-Herrero, E., Rodriguez-Fornells, A., Zatorre, R. J., & Marco-Pallares, J. (2016)**. Neural correlates of specific musical anhedonia. *Proceedings of the National Academy of Sciences*, 113(46), E7337-E7345. https://doi.org/10.1073/pnas.1611211113
+
+5. **Loui, P., Patterson, S., Sachs, M. E., Leung, Y., Zeng, T., & Przysinda, E. (2017)**. White matter correlates of musical anhedonia: implications for evolution of music. *Frontiers in Psychology*, 8, 1664. https://doi.org/10.3389/fpsyg.2017.01664
 
 ---
 
@@ -559,7 +586,7 @@ class IOTMS(BaseModel):
 
 ---
 
-**Model Status**: ⚠️ **PRELIMINARY**
+**Model Status**: **SUPPORTED** (5 converging papers across PET-MOR, PET-DA, fMRI, behavioral, DTI)
 **Output Dimensions**: **5D**
 **Evidence Tier**: **γ (Integrative)**
-**Confidence**: **50-70%**
+**Confidence**: **50-70%** (strong individual differences evidence; MOR-specific evidence still from single PET study)

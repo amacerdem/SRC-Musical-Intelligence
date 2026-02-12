@@ -4,8 +4,8 @@
 **Unit**: ARU (Affective Resonance Unit)
 **Circuit**: Mesolimbic Reward Circuit
 **Tier**: γ (Speculative) — 50-70% confidence
-**Version**: 2.0.0 (MI R³/H³ architecture)
-**Date**: 2026-02-12
+**Version**: 2.1.0 (Beta upgrade — literature expansion)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../Road-map/01-GLOSSARY.md).
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -124,6 +124,7 @@ CMAT is a **context model** — it explains how non-auditory signals modulate mu
 | **Spence 2011** | Review | — | Systematic cross-modal correspondences across modalities | — | **Theoretical foundation** |
 | **Molholm 2002** | ERP | 10 | Early auditory-visual interactions at 46ms | Significant | **Binding temporal window** |
 | **Petrini 2010** | Behavioral | 18 | Audio-visual drumming integration | Significant | **Temporal binding in music** |
+| **Taruffi 2021** | fMRI | 24 | Trait empathy modulates vmPFC/mOFC centrality for sad music; "music-empathy" network (vmPFC, dmPFC, claustrum, putamen, cerebellum) | r (empathy↔vmPFC) | **Empathy-mediated cross-modal affective transfer** |
 
 ### 3.2 Core Equations
 
@@ -591,6 +592,10 @@ Legacy used **ASA** (Auditory Scene Analysis) for multi-sensory integration. MI 
 
 5. **Trehub, S. E. (2003)**. The developmental origins of musicality. *Nature Neuroscience*, 6(7), 669-673.
 
+#### Added in v2.1.0 Beta Upgrade
+
+6. **Taruffi, L., Skouras, S., Pehrs, C., & Koelsch, S. (2021)**. Trait empathy shapes neural responses toward sad music. *Cognitive, Affective, & Behavioral Neuroscience*, 21, 231-246.
+
 ---
 
 ## Version History
@@ -599,6 +604,7 @@ Legacy used **ASA** (Auditory Scene Analysis) for multi-sensory integration. MI 
 |---------|------|---------|
 | 1.0.0 | 2026-02-04 | Legacy D0 model specification (8D) |
 | 2.0.0 | 2026-02-12 | MI R³/H³ architecture: +2D, AED+C0P binding, R³ mapping |
+| 2.1.0 | 2026-02-13 | Beta upgrade: +1 paper (Taruffi 2021 empathy-music cross-modal fMRI) |
 
 ---
 

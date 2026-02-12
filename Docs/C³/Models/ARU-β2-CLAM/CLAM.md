@@ -4,8 +4,8 @@
 **Unit**: ARU (Affective Resonance Unit)
 **Circuit**: Mesolimbic Reward Circuit
 **Tier**: β (Integrative) — 70-90% confidence
-**Version**: 2.0.0 (MI R³/H³ architecture)
-**Date**: 2026-02-12
+**Version**: 2.1.0 (Beta upgrade — literature expansion)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../Road-map/01-GLOSSARY.md).
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -128,6 +128,7 @@ CLAM provides the **closed-loop control complement** to SRP's open-loop reward m
 | **Ehrlich 2019** | EEG-BCI + music gen | 5 | Bidirectional Granger causality | p<0.01 | **Causal evidence for loop** |
 | **Ehrlich 2019** | EEG-BCI + music gen | 5 | Modulation success rate | 3/5 (60%) | **Individual differences** |
 | **Daly 2016** | EEG + music | — | Brain activity + acoustics predict emotion | Significant | **Decoder basis** |
+| **Sayal 2025** | Systematic review | 20+ studies | Music-based NF: reward-system coupling critical for success; music improves NF engagement vs standard feedback | — | **Validates closed-loop music-affect framework** |
 
 ### 3.2 The P-Control Law (Ehrlich 2019)
 
@@ -573,6 +574,10 @@ CLAM ──► SRP (Striatal Reward Pathway)
 
 3. **Sourina, O., & Liu, Y. (2012)**. A fractal-based algorithm of emotion recognition from EEG using arousal-valence model. *Biosignals*.
 
+#### Added in v2.1.0 Beta Upgrade
+
+4. **Sayal, A., Direito, B., Sousa, T., Singer, N., & Castelo-Branco, M. (2025)**. Music in the loop: a systematic review of current neurofeedback methodologies using music. *Frontiers in Neuroscience*, 19, 1515377.
+
 ---
 
 ## Version History
@@ -581,6 +586,7 @@ CLAM ──► SRP (Striatal Reward Pathway)
 |---------|------|---------|
 | 1.0.0 | 2026-02-04 | Legacy D0 model specification (10D) |
 | 2.0.0 | 2026-02-12 | MI R³/H³ architecture: +1D (loop_coherence), AED+CPD binding, R³ mapping |
+| 2.1.0 | 2026-02-13 | Beta upgrade: +1 paper (Sayal 2025 systematic review validates music-NF loop) |
 
 ---
 

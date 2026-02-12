@@ -4,8 +4,8 @@
 **Unit**: ARU (Affective Resonance Unit)
 **Circuit**: Mesolimbic Reward Circuit
 **Tier**: γ (Speculative) — 50-70% confidence
-**Version**: 2.0.0 (MI R³/H³ architecture)
-**Date**: 2026-02-12
+**Version**: 2.1.0 (Beta upgrade — literature expansion)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../Road-map/01-GLOSSARY.md).
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -126,6 +126,8 @@ TAR is the **clinical application model** — it leverages all ARU reward/affect
 | **Koelsch 2014** | Review | — | Music-evoked emotions: brain correlates | — | **Neural pathway mapping** |
 | **Thoma 2013** | RCT | 60 | Music reduces stress response (cortisol) | Significant | **Autonomic pathway** |
 | **Bradt & Dileo 2014** | Meta | 26 trials | Music interventions for anxiety | d ≈ 0.5-0.8 | **Therapeutic effect range** |
+| **Bowling 2023** | Review | — | Biological principles for music & mental health: 4 core elements (tonality, rhythm, reward, sociality); individual differences in responsivity | — | **Unifying biological framework for TAR** |
+| **Fu 2025** | Mouse model | — | Music therapy prevents PPD: ↓ oxidative stress, ↓ inflammation, ↑ neurogenesis, ↑ synaptic plasticity in hippocampus/PFC | Significant | **Neurobiological mechanism for therapeutic music** |
 
 ### 3.2 Core Equations
 
@@ -658,6 +660,12 @@ Legacy output categories (feature/targets/intervention/present/future) are prese
 
 5. **Bradt, J., & Dileo, C. (2014)**. Music interventions for mechanically ventilated patients. *Cochrane Database of Systematic Reviews*.
 
+#### Added in v2.1.0 Beta Upgrade
+
+6. **Bowling, D. L. (2023)**. Biological principles for music and mental health. *Translational Psychiatry*, 13, 374.
+
+7. **Fu, Q., Qiu, R., Yao, T., Liu, L., Li, Y., Li, X., Qi, W., Chen, Y., & Cheng, Y. (2025)**. Music therapy as a preventive intervention for postpartum depression: modulation of synaptic plasticity, oxidative stress, and inflammation in a mouse model. *Translational Psychiatry*, 15, 143.
+
 ---
 
 ## Version History
@@ -666,6 +674,7 @@ Legacy output categories (feature/targets/intervention/present/future) are prese
 |---------|------|---------|
 | 1.0.0 | 2026-02-04 | Legacy D0 model specification (10D) |
 | 2.0.0 | 2026-02-12 | MI R³/H³ architecture: same 10D, reorganized layers, R³ mapping |
+| 2.1.0 | 2026-02-13 | Beta upgrade: +2 papers (Bowling 2023 bio-principles framework, Fu 2025 music therapy mechanisms) |
 
 ---
 

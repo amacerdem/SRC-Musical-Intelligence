@@ -4,8 +4,8 @@
 **Unit**: IMU (Integrative Memory Unit)
 **Circuit**: Mnemonic (Hippocampal-Cortical)
 **Tier**: β (Integrative) — 70-90% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, MEM mechanism)
-**Date**: 2026-02-12
+**Version**: 2.1.0 (deep lit review: 7→14 papers, +Cheung 2019 fMRI N=79, +Borderie 2024 SEEG PAC, +Billig 2022 review, +Liu 2024 EEG-fMRI N=33, +Fernandez-Rubio 2022 MEG N=71, +Sikka 2015 fMRI N=40, +Biau 2025 MEG N=23; 5→7 brain regions; doc-code mismatches logged)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -203,15 +203,22 @@ Hippocampal-cortical replay: Sharp-wave ripples drive transfer (Buzsaki 2015)
 
 ### 3.1 Core Evidence Table
 
-| Study | Method | N | Key Finding | Effect Size | MI Relevance |
-|-------|--------|---|-------------|-------------|-------------|
-| **Squire & Alvarez 1995** | Review/lesion | — | Hippocampal-cortical complementary learning systems theory | — | **MEM.encoding_state: fast binding architecture** |
-| **McClelland et al. 1995** | Computational | — | Complementary learning systems: fast hippocampal + slow cortical | — | **Encoding vs consolidation timescales** |
-| **Hippocampal music encoding (2023)** | fMRI | 84 | Hippocampus, STS multimodal integration during music | d = 0.17, p < 0.0001 | **MEM.encoding_state: hippocampal binding** |
-| **Neonatal music review (2023)** | Scoping review | 1500 | Music affects hippocampus and amygdala | scoping | **MEM.encoding_state: early binding** |
-| **Zacks et al. 2007** | Behavioral + fMRI | — | Event segmentation theory: boundaries trigger encoding | — | **f20_episodic_seg: event boundaries** |
-| **Buzsaki 2015** | Review | — | Sharp-wave ripples drive hippocampal-cortical transfer | — | **MEM.retrieval_dynamics: consolidation mechanism** |
-| **Rolls 2013** | Computational | — | CA3 autoassociative network for fast pattern binding | — | **f19_fast_binding: hippocampal binding** |
+| # | Study | Method | N | Key Finding | Effect Size | MI Relevance |
+|---|-------|--------|---|-------------|-------------|-------------|
+| 1 | **Squire & Alvarez 1995** | Review/lesion | — | Hippocampal-cortical complementary learning systems theory | — | **MEM.encoding_state: fast binding architecture** |
+| 2 | **McClelland et al. 1995** | Computational | — | Complementary learning systems: fast hippocampal + slow cortical | — | **Encoding vs consolidation timescales** |
+| 3 | **Zacks et al. 2007** | Behavioral + fMRI | — | Event segmentation theory: boundaries trigger encoding | — | **f20_episodic_seg: event boundaries** |
+| 4 | **Rolls 2013** | Computational | — | CA3 autoassociative network for fast pattern binding | — | **f19_fast_binding: hippocampal binding** |
+| 5 | **Buzsaki 2015** | Review | — | Sharp-wave ripples drive hippocampal-cortical transfer | — | **MEM.retrieval_dynamics: consolidation mechanism** |
+| 6 | **Cheung et al. 2019** | fMRI | 79 (39 beh + 40 fMRI) | Uncertainty × surprise interaction modulates bilateral amygdala/hippocampus and auditory cortex BOLD during chord listening; hippocampus encodes sequence uncertainty | beta = -0.140 [CI -0.238, -0.041], p = 0.002 (R amygdala/hippo); marginal R² = 0.476 | **f19_fast_binding: hippocampal encoding of musical expectation uncertainty; f20_episodic_seg: surprise-driven boundary detection** |
+| 7 | **Billig et al. 2022** | Review | — | Comprehensive review of hippocampal auditory processing: hippocampus tracks and manipulates auditory information including music; connectivity from EC → DG → CA3 → CA1 trisynaptic pathway processes temporal sequences | — | **Circuit architecture: validates EC → hippocampus → cortex pathway for auditory/musical information** |
+| 8 | **Fernandez-Rubio et al. 2022** | MEG | 71 | Tonal sequence recognition activates hippocampus + cingulate; atonal recognition activates auditory processing network; left hippocampus and parahippocampal gyrus activated at 4th tone of memorized tonal sequences | F(3,280) = 6.87, p = 0.002 (accuracy); MCS p < 0.001 (source clusters) | **f21_cortical_storage: tonal familiarity recruits hippocampal-cingulate memory circuit; f19_fast_binding: tone-by-tone hippocampal activation** |
+| 9 | **Borderie et al. 2024** | SEEG (intracranial) | epilepsy patients | Theta-gamma phase-amplitude coupling in STS, IFG, ITG, and hippocampus supports short-term retention of auditory sequences; PAC strength decodes correct/incorrect memory trials; positively correlated with individual STM performance | ML decoding of correct/incorrect trials; PAC strength ∝ individual performance | **f19_fast_binding: theta-gamma PAC mechanism for hippocampal auditory binding; consolidation_str: cross-frequency coupling as binding mechanism** |
+| 10 | **Liu et al. 2024** | EEG-fMRI | 33 | Memory replay events trigger heightened hippocampal and mPFC activation; replay strengthens hippocampus-DMN functional connectivity; post-learning rest shows stronger hippocampal-entorhinal connectivity | Replay-aligned fMRI beta significant, hippocampus-EC connectivity increase post-learning | **f21_cortical_storage: hippocampal replay drives mPFC consolidation; consolidation_str: replay-triggered hippocampal-cortical transfer** |
+| 11 | **Sikka et al. 2015** | fMRI | 40 (20 young, 20 old) | Familiar melody recognition activates R-STG, bilateral IFG, L-supramarginal; age-related shift from medial temporal lobe (hippocampus) to prefrontal cortex for musical semantic memory | ROI analysis, p < 0.05 FWE-corrected | **f21_cortical_storage: cortical consolidation of musical memories; age-related hippocampal → cortical shift validates consolidation trajectory** |
+| 12 | **Biau et al. 2025** | MEG | 23 | Neocortical and hippocampal theta oscillations track audiovisual integration; theta synchrony determines hippocampal memory encoding via LTP/LTD; theta reinstatement during memory recall disrupted by encoding asynchrony | Theta power difference sync > async, p < 0.05 cluster-corrected | **f19_fast_binding: theta oscillation as hippocampal binding mechanism; MEM.retrieval_dynamics: theta reinstatement during retrieval** |
+| 13 | **Hippocampal music encoding (2023)** | fMRI | 84 | Hippocampus, STS multimodal integration during music | d = 0.17, p < 0.0001 | **MEM.encoding_state: hippocampal binding** |
+| 14 | **Neonatal music review (2023)** | Scoping review | 1500 | Music affects hippocampus and amygdala | scoping | **MEM.encoding_state: early binding** |
 
 ### 3.2 The Temporal Story: Hippocampal-Cortical Dynamics
 
@@ -259,10 +266,16 @@ This is how familiar melodies can be recognized after decades.
 
 ```
 Evidence Base:         β-tier (integrative), 70-90% confidence
-Primary Evidence:      d = 0.17 [p < 0.0001] (hippocampal music encoding)
-Supporting Evidence:   Computational models + review literature
-Heterogeneity:         Moderate (multiple methods, converging findings)
-Quality Assessment:    Mix of direct (fMRI) and theoretical (computational)
+Total Papers:          14 (5 fMRI, 1 SEEG, 2 MEG, 1 EEG-fMRI, 2 review, 2 computational, 1 scoping)
+Primary Evidence:      beta = -0.140 [CI -0.238, -0.041] (Cheung 2019, hippocampal uncertainty×surprise)
+                       d = 0.17 [p < 0.0001] (hippocampal music encoding 2023)
+                       PAC strength ∝ individual STM performance (Borderie 2024, intracranial)
+Supporting Evidence:   Hippocampal replay → mPFC/DMN connectivity (Liu 2024, N=33)
+                       Tonal recognition → hippocampus + cingulate (Fernandez-Rubio 2022, N=71)
+                       Age-related hippocampal → cortical shift for music memory (Sikka 2015, N=40)
+                       Theta reinstatement during memory recall (Biau 2025, N=23)
+Heterogeneity:         Low-moderate (multiple methods converge on hippocampal role)
+Quality Assessment:    Strong — 5 direct imaging studies + intracranial SEEG + 2 reviews
 ```
 
 ---
@@ -494,13 +507,15 @@ f21 = sigma(0.35 * mean(R3.x_l5l7[41:49]) * mean(MEM.retrieval[20:30])
 
 ### 8.1 Pipeline Validated Regions
 
-| Region | MNI Coordinates | Mentions | Evidence Type | HCMC Function |
-|--------|-----------------|----------|---------------|---------------|
-| **Hippocampus** | +/-20, -24, -12 | 88 | Direct (fMRI) | Fast binding, pattern completion |
-| **Entorhinal Cortex** | +/-24, -12, -24 | — | Inferred | Sensory input gateway to hippocampus |
-| **mPFC** | 0, 52, 12 | 14 | Direct (fMRI) | Schema memory, cortical consolidation |
-| **PCC** | 0, -52, 26 | — | Inferred | Episodic recollection, cortical storage |
-| **Auditory Cortex (A1)** | +/-48, -22, 8 | 18 | Direct (fMRI) | Sensory encoding input |
+| Region | MNI Coordinates | Mentions | Evidence Type | HCMC Function | Key Citation |
+|--------|-----------------|----------|---------------|---------------|--------------|
+| **Hippocampus** | +/-20, -24, -12 | 88 | Direct (fMRI, SEEG, MEG) | Fast binding, pattern completion, theta-gamma PAC, sequence uncertainty encoding | Cheung 2019, Borderie 2024, Fernandez-Rubio 2022, Billig 2022 |
+| **Entorhinal Cortex** | +/-24, -12, -24 | — | Direct (EEG-fMRI) | Sensory input gateway to hippocampus; post-learning replay strengthens HC-EC connectivity | Liu 2024, Billig 2022 (trisynaptic pathway) |
+| **mPFC** | 0, 52, 12 | 14 | Direct (fMRI, EEG-fMRI) | Schema memory, cortical consolidation; replay-triggered activation; hippocampus-DMN connectivity hub | Liu 2024, Sikka 2015 |
+| **PCC / Cingulate Gyrus** | 0, -52, 26 | — | Direct (MEG) | Episodic recollection, cortical storage; tonal sequence recognition memory | Fernandez-Rubio 2022 (middle/anterior cingulate for tonal recognition) |
+| **Auditory Cortex (A1/STG)** | +/-48, -22, 8 | 18 | Direct (fMRI) | Sensory encoding input; uncertainty × surprise interaction modulates AC BOLD | Cheung 2019 (beta = -0.182, p = 0.0001 L-AC) |
+| **Amygdala (anterior)** | +/-20, -6, -16 | — | Direct (fMRI) | Emotional modulation of hippocampal encoding; uncertainty × surprise interaction | Cheung 2019 (bilateral amygdala/hippocampus ROI) |
+| **Parahippocampal Gyrus** | -28, -36, -8 | — | Direct (MEG) | Tonal sequence recognition memory; activated during 4th tone of memorized tonal sequences | Fernandez-Rubio 2022 (left parahippocampal, MCS p < 0.001) |
 
 ---
 
@@ -720,11 +735,12 @@ class HCMC(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 7 | Primary + supporting evidence |
-| **Effect Sizes** | 1 direct (d=0.17) + computational models | Mixed evidence types |
+| **Papers** | 14 | 5 fMRI + 1 SEEG + 2 MEG + 1 EEG-fMRI + 2 review + 2 computational + 1 scoping |
+| **Effect Sizes** | beta = -0.140 (Cheung 2019), d = 0.17 (hippocampal encoding 2023), PAC correlation (Borderie 2024) | Multiple direct imaging effect sizes |
 | **Evidence Tier** | β (Integrative) — 70-90% confidence | Multi-factor integrative model |
-| **Evidence Modality** | fMRI, computational, review | Converging evidence |
+| **Evidence Modality** | fMRI, SEEG, MEG, EEG-fMRI, computational, review | Strongly converging multimodal evidence |
 | **Falsification Tests** | 5/5 (4 confirmed, 1 partial) | Good validity |
+| **Brain Regions** | 7 | Hippocampus, EC, mPFC, PCC/Cingulate, AC/STG, Amygdala, Parahippocampal Gyrus |
 | **R³ Features Used** | 38D of 49D | Comprehensive |
 | **H³ Demand** | 22 tuples (0.95%) | Sparse, efficient |
 | **MEM Mechanism** | 30D (3 sub-sections) | Full coverage |
@@ -737,11 +753,18 @@ class HCMC(BaseModel):
 
 1. **Squire & Alvarez (1995)**. Memory consolidation and the medial temporal lobe: A simple network model. *PNAS*.
 2. **McClelland, McNaughton & O'Reilly (1995)**. Why there are complementary learning systems in the hippocampus and neocortex. *Psychological Review*.
-3. **Hippocampal music encoding study (2023)**. Multimodal integration in STS and hippocampus. d = 0.17, n=84, p < 0.0001.
-4. **Neonatal care music review (2023)**. Music affects hippocampus and amygdala in neonatal care. *Scoping review*, n=1500.
-5. **Zacks et al. (2007)**. Event perception: A mind-brain perspective. *Psychological Bulletin*.
-6. **Buzsaki (2015)**. Hippocampal sharp wave-ripple: A cognitive biomarker for episodic memory and planning. *Hippocampus*.
-7. **Rolls (2013)**. A quantitative theory of the functions of the hippocampal CA3 network in memory. *Frontiers in Cellular Neuroscience*.
+3. **Zacks, Speer, Swallow, Braver & Reynolds (2007)**. Event perception: A mind-brain perspective. *Psychological Bulletin*.
+4. **Rolls (2013)**. A quantitative theory of the functions of the hippocampal CA3 network in memory. *Frontiers in Cellular Neuroscience*.
+5. **Buzsaki (2015)**. Hippocampal sharp wave-ripple: A cognitive biomarker for episodic memory and planning. *Hippocampus*.
+6. **Cheung, Harrison, Meyer, Pearce, Haynes & Koelsch (2019)**. Uncertainty and surprise jointly predict musical pleasure and amygdala, hippocampus, and auditory cortex activity. *Current Biology*, 29, 4084-4092. N=79 (39 beh + 40 fMRI). doi:10.1016/j.cub.2019.09.067.
+7. **Billig, Lad, Sedley & Griffiths (2022)**. The hearing hippocampus. *Progress in Neurobiology*, 218, 102326. Review of hippocampal auditory processing across species. doi:10.1016/j.pneurobio.2022.102326.
+8. **Fernandez-Rubio, Brattico, Kotz, Kringelbach, Vuust & Bonetti (2022)**. Magnetoencephalography recordings reveal the spatiotemporal dynamics of recognition memory for complex versus simple auditory sequences. *Communications Biology*, 5, 1272. N=71. doi:10.1038/s42003-022-04217-8.
+9. **Borderie, Caclin, Lachaux, Perrone-Bertollotti, Hoyer, Kahane, Catenoix, Tillmann & Albouy (2024)**. Cross-frequency coupling in cortico-hippocampal networks supports the maintenance of sequential auditory information in short-term memory. *PLoS Biology*, 22(3), e3002512. SEEG intracranial recording. doi:10.1371/journal.pbio.3002512.
+10. **Liu, Huang, Xiao, Yu, Luo, Xu, Qu, Dolan, Behrens (2024)**. Replay-triggered brain-wide activation in humans. *Nature Communications*, 15, 7185. N=33. EEG-fMRI simultaneous recording. doi:10.1038/s41467-024-51582-5.
+11. **Sikka, Cuddy, Johnsrude & Vanstone (2015)**. An fMRI comparison of neural activity associated with recognition of familiar melodies in younger and older adults. *Frontiers in Neuroscience*, 9, 356. N=40. doi:10.3389/fnins.2015.00356.
+12. **Biau, Wang, Park, Jensen & Hanslmayr (2025)**. Neocortical and hippocampal theta oscillations track audiovisual integration and replay of speech memories. *Journal of Neuroscience*, 45(21). N=23. doi:10.1523/JNEUROSCI.1797-24.2025.
+13. **Hippocampal music encoding study (2023)**. Multimodal integration in STS and hippocampus. d = 0.17, n=84, p < 0.0001.
+14. **Neonatal care music review (2023)**. Music affects hippocampus and amygdala in neonatal care. *Scoping review*, n=1500.
 
 ---
 
@@ -776,6 +799,22 @@ The D0 pipeline used 3 separate HC⁰ mechanisms (BND, SGM, HRM). In MI, these a
 | M13 | entropy | Higher-order unpredictability (entropy of entropy) |
 | M19 | stability | Long-term temporal stability (binding, pattern) |
 | M22 | autocorrelation | Repetition detection (harmonic, tonal recurrence) |
+
+---
+
+## 15. Doc-Code Mismatches (v2.1.0)
+
+The following mismatches between this doc and `mi_beta/brain/units/imu/models/hcmc.py` were identified during the Phase 1 review. These are logged here for resolution in Phase 2 (code update).
+
+| Aspect | Doc (v2.1.0) | Code (hcmc.py) | Severity |
+|--------|-------------|----------------|----------|
+| **LAYERS** | E: f19_fast_binding, f20_episodic_seg, f21_cortical_storage; M: consolidation_str, encoding_rate; P: binding_state, segmentation_st, storage_state; F: consolidation_fc, retrieval_fc, pattern_compl_fc | E: f01_encoding_strength, f02_consolidation_state (2D); M: hippocampal_binding, cortical_transfer, consolidation_index (3D); P: encoding_state, replay_activity, storage_phase (3D); F: consolidation_forecast, retrieval_readiness, decay_prediction (3D) | **High** — layer structure differs (doc 3E+2M+3P+3F vs code 2E+3M+3P+3F) |
+| **h3_demand** | 22 tuples (stumpf, harmonicity, onset_strength, spectral_flux, entropy, loudness, amplitude, tonalness) | Empty tuple `()` | **High** — code has no H3 demand |
+| **brain_regions** | 7 regions (Hippocampus, EC, mPFC, PCC, AC, Amygdala, Parahippocampal) | 3 regions (Hippocampus, Auditory Cortex, mPFC) — missing EC, PCC, Amygdala, Parahippocampal | **Medium** — code missing 4 regions |
+| **dimension_names** | f19_fast_binding, f20_episodic_seg, f21_cortical_storage, consolidation_str, encoding_rate, binding_state, segmentation_st, storage_state, consolidation_fc, retrieval_fc, pattern_compl_fc | f01_encoding_strength, f02_consolidation_state, hippocampal_binding, cortical_transfer, consolidation_index, encoding_state, replay_activity, storage_phase, consolidation_forecast, retrieval_readiness, decay_prediction | **Medium** — all 11 names differ |
+| **citations** | Squire 1995, McClelland 1995, Zacks 2007, Rolls 2013, Buzsaki 2015, Cheung 2019, Billig 2022, Fernandez-Rubio 2022, Borderie 2024, Liu 2024, Sikka 2015, Biau 2025 + 2 unverified | Watanabe 2008, Albouy 2017 (neither appears in doc evidence table) | **Medium** — code cites different papers |
+| **FULL_NAME** | "Hippocampal-Cortical Memory Circuit" | "Hippocampal-Cortical Memory Consolidation" | **Low** — minor naming difference |
+| **paper_count** | 14 | 4 | **Low** — code needs update |
 
 ---
 

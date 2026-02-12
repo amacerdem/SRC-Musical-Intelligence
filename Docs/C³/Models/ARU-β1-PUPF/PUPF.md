@@ -4,8 +4,8 @@
 **Unit**: ARU (Affective Resonance Unit)
 **Circuit**: Mesolimbic Reward Circuit
 **Tier**: β (Integrative) — 70-90% confidence
-**Version**: 2.0.0 (MI R³/H³ architecture)
-**Date**: 2026-02-12
+**Version**: 3.0.0 (v2.1.0 Beta upgrade — deep literature audit, +3 papers)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../Road-map/01-GLOSSARY.md).
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -140,6 +140,9 @@ PUPF provides the **information-theoretic complement** to SRP's neurochemical mo
 | **Singer 2023** | Behavioral | 34 | Inverted-U: optimal tempo 80-160 BPM | d=0.69 | **Goldilocks at tempo level** |
 | **Pearce 2005** | Computational | — | IDyOM entropy correlates with expectation rating | Significant | **H computation basis** |
 | **Huron 2006** | Theoretical | — | ITPRA framework: prediction → emotion | — | **Temporal response model** |
+| **Gold 2019** | Behavioral | 43+27 | IC×entropy quadratic effects; intermediate complexity preferred | Significant | **Goldilocks behavioral replication** |
+| **Gold 2023** | fMRI | 24 | VS reflects musical surprise pleasure; STG-VS coupling ↑ with pleasure | Significant | **fMRI validation: VS in prediction-pleasure** |
+| **Harding 2025** | fMRI + RCT | 41 MDD | Psilocybin vs escitalopram: dissociable musical surprise processing | Significant | **Clinical: prediction-pleasure in depression** |
 
 ### 3.2 The Goldilocks Function (Cheung 2019)
 
@@ -575,6 +578,14 @@ PUPF ──► SRP (Striatal Reward Pathway)
 
 6. **Huron, D. (2006)**. *Sweet Anticipation: Music and the Psychology of Expectation*. MIT Press.
 
+### Added in v2.1.0 Beta Upgrade
+
+7. **Gold, B. P., Pearce, M. T., Mas-Herrero, E., Dagher, A., & Zatorre, R. J. (2019)**. Predictability and uncertainty in the pleasure of music: A reward for learning? *The Journal of Neuroscience*, 39(47), 9397-9409.
+
+8. **Gold, B. P., Pearce, M. T., McIntosh, A. R., Chang, C., Dagher, A., & Zatorre, R. J. (2023)**. Auditory and reward structures reflect the pleasure of musical expectancies during naturalistic listening. *Frontiers in Neuroscience*, 17, 1209398.
+
+9. **Harding, R., Singer, N., Wall, M. B., Hendler, T., Erritzoe, D., Nutt, D., Carhart-Harris, R., & Roseman, L. (2025)**. Dissociable effects of psilocybin and escitalopram for depression on processing of musical surprises. *Molecular Psychiatry*, 30, 3188-3196.
+
 ---
 
 ## Version History
@@ -583,6 +594,7 @@ PUPF ──► SRP (Striatal Reward Pathway)
 |---------|------|---------|
 | 1.0.0 | 2026-02-04 | Legacy D0 model specification (12D) |
 | 2.0.0 | 2026-02-12 | MI R³/H³ architecture: R³ mapping, mechanism binding, deep research |
+| 3.0.0 | 2026-02-13 | v2.1.0 Beta upgrade: +3 papers (Gold 2019, Gold 2023, Harding 2025), deep literature audit |
 
 ---
 

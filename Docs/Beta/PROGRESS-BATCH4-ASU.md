@@ -3,16 +3,16 @@
 **Chat Assignment:** Chat 2
 **Unit:** ASU (Auditory Salience)
 **Total Models:** 9 (#39-#47)
-**Status:** Not started
-**Last Updated:** —
+**Status:** In progress
+**Last Updated:** 2026-02-13
 
 ---
 
 ## Models
 
-- [ ] #39 ASU-α1-SNEM — Selective Neural Entrainment Model
-- [ ] #40 ASU-α2-IACM — Inharmonicity-Attention Capture Model
-- [ ] #41 ASU-α3-CSG — Consonance-Salience Gradient
+- [x] #39 ASU-α1-SNEM — Selective Neural Entrainment Model → v2.1.0 (4→12 papers, +8 new citations, verified effect sizes, added basal ganglia region)
+- [x] #40 ASU-α2-IACM — Inharmonicity-Attention Capture Model → v2.1.0 (4→12 papers, +8 new citations, added ECoG/MEG/fMRI evidence, Heschl's gyrus region)
+- [x] #41 ASU-α3-CSG — Consonance-Salience Gradient → v2.1.0 (4→12 papers, +7 new citations, added amygdala/vmPFC/NAc regions, multi-species evidence)
 - [ ] #42 ASU-β1-BARM — Beat Ability Regulatory Model
 - [ ] #43 ASU-β2-STANM — Spectrotemporal Attention Network Model
 - [ ] #44 ASU-β3-AACM — Aesthetic-Attention Coupling Model

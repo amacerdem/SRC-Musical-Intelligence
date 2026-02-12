@@ -4,8 +4,8 @@
 **Unit**: RPU (Reward Processing Unit)
 **Circuit**: Mesolimbic (NAcc, VTA, vmPFC, OFC, Amygdala)
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, AED+CPD+C0P mechanisms)
-**Date**: 2026-02-12
+**Version**: 2.1.0 (deep C³ literature review, +3 papers, multi-study convergence)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -146,13 +146,20 @@ RPEM provides the learning signal for the Reward Processing Unit:
 | **Gold 2023** | fMRI | 24 | VS shows RPE-like IC x liking crossover | d = 1.07, p < 0.008 | **Primary**: f03, f04 RPE crossover |
 | **Gold 2023** | fMRI | 24 | R STG shows different pattern | d = 1.22, p < 0.008 | **f01 surprise signal** |
 
+| **Gold 2023b** | fMRI | 24 | VS and R STG reflect pleasure of expectations | IC×entropy interaction | **Replication**: VS pleasure-expectancy link |
+| **Cheung 2019** | fMRI | 39 | NAcc reflects uncertainty; amygdala/auditory cortex reflect uncertainty×surprise | interaction, p < 0.001 | **Extension**: nonlinear RPE-like signals |
+| **Salimpoor 2011** | PET | 8 | Caudate DA during anticipation (RPE precursor) | r = 0.71, p < 0.05 | **Mechanistic basis**: DA signals for prediction |
+
 ### 3.2 Effect Size Summary
 
 ```
-Primary Evidence (k=2):  Both findings from single fMRI study
-Heterogeneity:           N/A (single study, multiple contrasts)
-Quality Assessment:      α-tier (direct fMRI VS measurement)
-Replication:             First direct demonstration of musical RPE
+Primary Evidence (k=5):  4 independent studies (3 fMRI, 1 PET)
+Cross-modal convergence: fMRI BOLD (3 studies), PET DA (1 study)
+Quality Assessment:      α-tier (direct VS measurement, RPE crossover confirmed)
+Key finding:             d = 1.07 RPE crossover in VS (Gold 2023a PNAS)
+Replication:             Cheung 2019 confirms NAcc prediction signals
+                         Gold 2023b Frontiers confirms VS-pleasure link
+                         Salimpoor 2011 provides DA substrate
 ```
 
 ---
@@ -535,9 +542,9 @@ class RPEM(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 1 (Gold 2023) | Primary evidence |
-| **Effect Sizes** | 2 (d=1.07, d=1.22) | fMRI |
-| **Evidence Modality** | fMRI | Direct neural |
+| **Papers** | 4 (Gold 2023a PNAS, Gold 2023b Frontiers, Cheung 2019, Salimpoor 2011) | Multi-study evidence |
+| **Effect Sizes** | 4+ (d=1.07, d=1.22, IC×entropy interaction, r=0.71) | fMRI + PET |
+| **Evidence Modality** | fMRI (3 studies), PET | Multi-modal convergence |
 | **Falsification Tests** | 2/5 confirmed | High validity |
 | **R³ Features Used** | ~12D of 49D | Consonance + energy + change + interactions |
 | **H³ Demand** | 16 tuples (0.69%) | Sparse, efficient |
@@ -550,7 +557,10 @@ class RPEM(BaseModel):
 
 ## 13. Scientific References
 
-1. **Gold, B. P., Mas-Herrero, E., Zeighami, Y., Benovoy, M., Dagher, A., & Zatorre, R. J. (2023)**. Musical reward prediction errors engage the nucleus accumbens and motivate learning. *PNAS*, 120(23), e2216710120.
+1. **Gold, B. P., Mas-Herrero, E., Zeighami, Y., Benovoy, M., Dagher, A., & Zatorre, R. J. (2023a)**. Musical reward prediction errors engage the nucleus accumbens and motivate learning. *PNAS*, 120(23), e2216710120.
+2. **Gold, B. P., Pearce, M. T., McIntosh, A. R., Chang, C., Dagher, A., & Zatorre, R. J. (2023b)**. Auditory and reward structures reflect the pleasure of musical expectancies during naturalistic listening. *Frontiers in Neuroscience*, 17, 1209398.
+3. **Cheung, V. K. M., Harrison, P. M. C., Meyer, L., Pearce, M. T., Haynes, J.-D., & Koelsch, S. (2019)**. Uncertainty and surprise jointly predict musical pleasure and amygdala, hippocampus, and auditory cortex activity. *Current Biology*, 29(23), 4084-4092.
+4. **Salimpoor, V. N., Benovoy, M., Larcher, K., Dagher, A., & Zatorre, R. J. (2011)**. Anatomically distinct dopamine release during anticipation and experience of peak emotion to music. *Nature Neuroscience*, 14(2), 257-262.
 
 ---
 

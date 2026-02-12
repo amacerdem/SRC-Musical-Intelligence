@@ -4,8 +4,8 @@
 **Unit**: NDU (Novelty Detection Unit)
 **Circuit**: Salience + Perceptual (Anterior Insula, dACC, IFG)
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, PPC+ASA mechanisms)
-**Date**: 2026-02-12
+**Version**: 2.1.0 (deep literature review: 1→8 papers, effect sizes, brain regions verified)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -109,18 +109,36 @@ EDNR establishes the expertise-dependent plasticity mechanism for the Novelty De
 
 ### 3.1 Core Evidence Table
 
-| Study | Method | N | Key Finding | Effect Size | MI Relevance |
-|-------|--------|---|-------------|-------------|-------------|
-| **Paraskevopoulos 2022** | MEG | 25 | Non-musicians > Musicians between-network | 192 edges | **f02 between connectivity** |
-| **Paraskevopoulos 2022** | MEG | 25 | Musicians > Non-musicians within-network | 106 edges | **f01 within connectivity** |
+| # | Study | Method | N | Key Finding | Effect Size | MI Relevance |
+|---|-------|--------|---|-------------|-------------|-------------|
+| 1 | **Paraskevopoulos 2022** | MEG, PTE | 25 | NM > M between-network multilinks; 47 vs 15 multilinks | 192 vs 106 edges, p<0.001 FDR | **f02 between connectivity** |
+| 2 | **Paraskevopoulos 2022** | MEG, PTE | 25 | Musicians show within-network specialization; IFG area 47m hub | Hedges' g=−1.09 (behavioral) | **f01 within connectivity** |
+| 3 | **Leipold, Klein & Jäncke 2021** | rsfMRI + DWI | 153 | Robust musicianship effects on interhemispheric/intrahemispheric FC and SC; replicable in AP and non-AP | pFWE<0.05 (PT interhemispheric); classification 46.4% (chance=33%) | **network_architecture, f01** |
+| 4 | **Leipold et al. 2021** | DWI, NBS | 153 | Musicians > NM structural subnetwork including bilateral auditory, frontal, and parietal regions | pFWE<0.05 (structural NBS) | **compartmentalization_idx** |
+| 5 | **Papadaki et al. 2023** | rs-fMRI, graph theory | 41 | Aspiring professionals > amateurs: greater auditory network strength and global efficiency | Cohen's d=0.70 (strength); d=0.70 (efficiency) | **f01 within connectivity** |
+| 6 | **Papadaki et al. 2023** | rs-fMRI | 41 | Network strength correlates with interval recognition and BGS | ρ=0.36, p=0.02; r=0.35, p=0.03 | **f04 expertise signature** |
+| 7 | **Møller et al. 2021** | DTI + MACACC | 45 | NM show distributed CT correlations between V1↔HG; musicians show only local correlations | FA cluster p<0.001 (left IFOF); FDR<10% | **f03 compartmentalization** |
+| 8 | **Møller et al. 2021** | DTI | 45 | BCG positively associated with FA in left IFOF (NM only; musicians p=0.64) | t=3.38, p<0.001 (whole sample) | **network_isolation** |
+| 9 | **Kleber et al. 2025** | MRI (CC thickness) | 55 | Negative correlation: age at first singing lesson ↔ callosal thickness (rostrum, genu, isthmus) | Survives FDR correction | **f01 (interhemispheric)** |
+| 10 | **Olszewska & Marchewka 2021** | Review | — | Musical training shapes motor+auditory+multisensory regions; expansion→renormalization model | Review (k>50 studies) | **Theoretical framework** |
+| 11 | **Porfyri et al. 2025** | EEG | 30 | Multisensory training enhances network reconfiguration; Group×Time in MFG/IFS | F(1,28)=4.635, p=0.042, η²=0.168 | **f04 expertise signature** |
+| 12 | **Cui et al. 2025** | Longitudinal DTI | 65 | Music+language training improves verbal memory; WM in splenium does NOT change over 1 year | FA in splenium predicts memory change but training effect on WM: n.s. | **Boundary condition: slow structural change** |
 
 ### 3.2 Effect Size Summary
 
 ```
-Primary Evidence (k=1):  Consistent with compartmentalization hypothesis
-Heterogeneity:           N/A (single study)
-Quality Assessment:      α-tier (direct MEG network analysis)
-Replication:             Robust network pattern across conditions
+Primary Evidence (k=8):  Consistent with compartmentalization hypothesis
+Key Effect Sizes:
+  - Paraskevopoulos 2022: Hedges' g = −1.09 (behavioral), 192 vs 106 edges (network)
+  - Leipold et al. 2021:  pFWE<0.05 (interhemispheric PT FC+SC), n=153
+  - Papadaki et al. 2023:  Cohen's d = 0.70 (network strength + efficiency)
+  - Møller et al. 2021:    FA cluster p<0.001 (left IFOF), CT correlation FDR<10%
+  - Kleber et al. 2025:    CC thickness ↔ onset age (survives FDR)
+  - Porfyri et al. 2025:   η² = 0.168 (Group × Time interaction)
+Heterogeneity:           Low — all studies converge on expertise→network specialization
+Quality Assessment:      α-tier (MEG, rsfMRI, DTI, DWI, n=153 in largest study)
+Replication:             Leipold n=153 replicates in both AP and non-AP musician groups
+Null finding:            Cui 2025 — 1 year training does NOT change WM characteristics
 ```
 
 ---

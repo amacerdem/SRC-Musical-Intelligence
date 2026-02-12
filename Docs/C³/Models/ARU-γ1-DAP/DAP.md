@@ -4,8 +4,8 @@
 **Unit**: ARU (Affective Resonance Unit)
 **Circuit**: Mesolimbic Reward Circuit
 **Tier**: γ (Speculative) — 50-70% confidence
-**Version**: 2.0.0 (MI R³/H³ architecture)
-**Date**: 2026-02-12
+**Version**: 2.1.0 (Beta upgrade — literature expansion)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../Road-map/01-GLOSSARY.md).
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -111,6 +111,8 @@ DAP is a **background/trait model** — it explains baseline individual differen
 | **Scholkmann 2024** | fNIRS | 17 | Sex differences in StO₂ response | Qualitative | **Sex-dependent development** |
 | **Trainor 2012** | Review | — | Musical training < age 7 → enhanced processing | — | **Critical period evidence** |
 | **Trehub 2003** | Review | — | Developmental origins of musicality | — | **Theoretical basis** |
+| **Nguyen 2023** | Review | — | Early social communication through music: infant musicality, caregiver-infant interactions, co-regulation via ID singing | — | **Infant musicality + affective bonding** |
+| **Qiu 2025** | Mouse model | — | Musical intervention E13→P1/3/5: ↑ social behavior, ↑ dendritic complexity in mPFC/amygdala, ↑ MAP2, ↓ GFAP | Significant | **Prenatal music → neural plasticity mechanism** |
 
 ### 3.2 Limitation
 
@@ -420,6 +422,12 @@ Note: DAP is a BACKGROUND model affecting ALL other ARU processes.
 
 4. **Peretz, I., & Zatorre, R. J. (2005)**. Brain organization for music processing. *Annual Review of Psychology*, 56, 89-114.
 
+#### Added in v2.1.0 Beta Upgrade
+
+5. **Nguyen, T., Flaten, E., Trainor, L. J., & Novembre, G. (2023)**. Early social communication through music: State of the art and future perspectives. *Developmental Cognitive Neuroscience*, 63, 101279.
+
+6. **Qiu, R., Li, L., Su, Y., Fu, Q., He, Z., Yao, T., Chen, H., Zhang, H., Chen, Y., Qi, W., & Cheng, Y. (2025)**. The impact of musical intervention during fetal and infant stages on social behavior and neurodevelopment in mice. *Translational Psychiatry*, 15, 408.
+
 ---
 
 ## Version History
@@ -428,6 +436,7 @@ Note: DAP is a BACKGROUND model affecting ALL other ARU processes.
 |---------|------|---------|
 | 1.0.0 | 2026-02-04 | Legacy D0 model specification (7D) |
 | 2.0.0 | 2026-02-12 | MI R³/H³ architecture: +3D, AED-only binding, R³ mapping |
+| 2.1.0 | 2026-02-13 | Beta upgrade: +2 papers (Nguyen 2023 infant music review, Qiu 2025 prenatal music plasticity) |
 
 ---
 

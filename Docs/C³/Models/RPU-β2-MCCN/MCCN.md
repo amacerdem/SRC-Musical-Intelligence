@@ -4,8 +4,8 @@
 **Unit**: RPU (Reward Processing Unit)
 **Circuit**: Mesolimbic (NAcc, VTA, vmPFC, OFC, Amygdala)
 **Tier**: β (Bridging) — 70-90% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, AED+CPD+C0P mechanisms)
-**Date**: 2026-02-12
+**Version**: 2.1.0 (literature-reviewed, corrected methods/N, multi-study evidence)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -48,9 +48,9 @@ Musical Features ──────────────────► Audit
 │   Pleasure-gated sensory enhancement                             │
 └──────────────────────────────────────────────────────────────────┘
 
-CHILLS: Right prefrontal theta increase + central theta decrease
-Arousal: Physiological activation (SCR, HR changes)
-Network: OFC + Insula + SMA + STG (all p < 1e-05 fMRI)
+CHILLS: Right prefrontal theta increase + central/temporal theta decrease
+Arousal: Physiological activation (beta/alpha ratio ↑, p=0.014)
+Network: OFC + Insula + SMA + STG (all p < 1e-05, EEG source localization)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 KEY INSIGHT: Musical chills recruit a distributed cortical network
@@ -153,17 +153,28 @@ MCCN provides the cortical network characterization for chills within the Reward
 
 | Study | Method | N | Key Finding | Effect Size | MI Relevance |
 |-------|--------|---|-------------|-------------|-------------|
-| **Chabin 2020** | EEG + fMRI | — | R prefrontal theta ↑ during chills | p < 0.049 | **Primary**: f01 theta prefrontal |
-| **Chabin 2020** | EEG + fMRI | — | Central theta ↓ during chills | p < 0.006 | **f02 theta central (inverse)** |
-| **Chabin 2020** | fMRI | — | OFC/Insula/SMA/STG activation | p < 1e-05 | **Network state, chills magnitude** |
+| **Chabin 2020** | HD-EEG (256ch) | 18 | R prefrontal theta ↑ during chills | RPF: F(2,15)=3.28, p=0.049; post hoc p=0.046 | **Primary**: f01 theta prefrontal |
+| **Chabin 2020** | HD-EEG (256ch) | 18 | R central theta ↓ during chills | RC: F(2,15)=4.09, p=0.025; post hoc p=0.042 | **f02 theta central (inverse)** |
+| **Chabin 2020** | HD-EEG (256ch) | 18 | R temporal theta ↓ during chills | RT: F(2,15)=5.88, p=0.006; post hoc p=0.004 | **STG** theta during chills |
+| **Chabin 2020** | HD-EEG (256ch) | 18 | Beta/alpha ratio ↑ during chills | F(2,15)=4.77, p=0.014 | **f03 arousal index** |
+| **Chabin 2020** | HD-EEG source localization (LAURA) | 18 | OFC activation ↑ with emotion | F(2,15)=17.4, p<1×10⁻⁵ | **Network**: OFC reward |
+| **Chabin 2020** | HD-EEG source localization (LAURA) | 18 | Bilateral insula activation ↑ | F(2,15)=21.63, p<1×10⁻⁶ | **Network**: interoception |
+| **Chabin 2020** | HD-EEG source localization (LAURA) | 18 | SMA activation ↑ | F(2,15)=27.3, p<1×10⁻⁷ | **Network**: motor |
+| **Chabin 2020** | HD-EEG source localization (LAURA) | 18 | Bilateral STG activation ↑ | RSTG: F(2,15)=22.05, p<1×10⁻⁶ | **Network**: auditory |
+| **Putkinen 2025** | PET [¹¹C]carfentanil | 15 | OFC+amygdala MOR during music chills | Chills count correlated with MOR binding | **Supporting**: opioid chills network |
+| **Salimpoor 2011** | PET [¹¹C]raclopride | 8 | Caudate→NAcc DA during anticipation→chills | r=0.71 (caudate BP vs chills) | **Supporting**: DA chills mechanism |
 
 ### 3.2 Effect Size Summary
 
 ```
-Primary Evidence (k=3):  All findings from combined EEG+fMRI study
-Heterogeneity:           N/A (single study, multiple modalities)
-Quality Assessment:      β-tier (EEG + fMRI convergent evidence)
-Replication:             Consistent with Blood & Zatorre (2001) chills network
+Primary Evidence (k=10): HD-EEG surface + source localization + PET convergence
+Heterogeneity:           Low — consistent OFC/insula/SMA/STG network across modalities
+Quality Assessment:      β-tier (EEG surface + source localization + PET)
+Note:                    Chabin 2020 is HD-EEG ONLY (not fMRI). Source localization
+                         used LAURA inverse solution to estimate cortical origins.
+                         Consistent with Blood & Zatorre (2001) fMRI chills network.
+Replication:             Putkinen 2025 PET confirms OFC/amygdala in chills;
+                         Salimpoor 2011 PET confirms DA mechanism during chills.
 ```
 
 ---
@@ -360,12 +371,14 @@ dChills/dt = τ⁻¹ · (Target_Magnitude - Current_Chills)
 
 | Region | MNI Coordinates | Mentions | Evidence Type | MCCN Function |
 |--------|-----------------|----------|---------------|---------------|
-| **OFC** | ±24, 30, -16 | 1 | Direct (fMRI) | Reward value computation |
-| **Bilateral Insula** | ±36, 16, 4 | 1 | Direct (fMRI) | Interoceptive awareness |
-| **SMA** | 0, -6, 58 | 1 | Direct (fMRI) | Motor preparation / rhythmic coupling |
-| **STG** | ±52, -22, 8 | 1 | Direct (fMRI) | Auditory processing |
-| **R Prefrontal** | 40, 40, 20 | 1 | Direct (EEG) | Theta increase during chills |
-| **Central** | 0, -20, 60 | 1 | Direct (EEG) | Theta decrease during chills |
+| **OFC** | ±24, 30, -16 | 2 | EEG source localization (Chabin 2020: p<1×10⁻⁵); PET MOR (Putkinen 2025) | Reward value computation |
+| **Bilateral Insula** | ±36, 16, 4 | 1 | EEG source localization (Chabin 2020: p<1×10⁻⁶) | Interoceptive awareness |
+| **SMA** | 0, -6, 58 | 1 | EEG source localization (Chabin 2020: p<1×10⁻⁷) | Motor preparation / rhythmic coupling |
+| **Bilateral STG** | ±52, -22, 8 | 2 | EEG source localization (Chabin 2020: R STG p<1×10⁻⁶); EEG surface (RT p=0.006) | Auditory processing |
+| **R Prefrontal** | 40, 40, 20 | 1 | EEG surface (Chabin 2020: RPF p=0.049) | Theta increase during chills |
+| **R Central** | 0, -20, 60 | 1 | EEG surface (Chabin 2020: RC p=0.025) | Theta decrease during chills |
+| **Amygdala** | ±24, -4, -18 | 1 | PET MOR (Putkinen 2025: chills correlation) | Opioid-mediated chills |
+| **Caudate/NAcc** | ±10, 12, -10 | 1 | PET DA (Salimpoor 2011: anticipation→chills) | Dopamine chills mechanism |
 
 ---
 
@@ -547,9 +560,9 @@ class MCCN(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 1 (Chabin 2020) | Primary evidence |
-| **Effect Sizes** | 3 (EEG theta + fMRI network) | All significant |
-| **Evidence Modality** | EEG + fMRI | Convergent multimodal |
+| **Papers** | 3 (Chabin 2020, Putkinen 2025, Salimpoor 2011) | Multi-study convergence |
+| **Effect Sizes** | 10 (EEG theta surface + source localization + PET) | All significant |
+| **Evidence Modality** | HD-EEG (N=18) + PET (N=15, N=8) | Convergent multimodal |
 | **Falsification Tests** | 3/5 confirmed | High validity |
 | **R³ Features Used** | ~14D of 49D | Consonance + energy + change + interactions |
 | **H³ Demand** | 16 tuples (0.69%) | Sparse, efficient |
@@ -563,6 +576,10 @@ class MCCN(BaseModel):
 ## 13. Scientific References
 
 1. **Chabin, T., Gabriel, D., Chansophonkul, T., Michelant, L., Joucla, C., Haffen, E., Moulin, T., Comte, A., & Pazart, L. (2020)**. Cortical patterns of pleasurable musical chills revealed by high-density EEG. *Frontiers in Neuroscience*, 14, 565815.
+
+2. **Putkinen, V., Nazari-Farsani, S., Seppälä, K., Karjalainen, T., Sun, L., Karlsson, H. K., Hudson, M., Heikkilä, T. T., Hirvonen, J., & Nummenmaa, L. (2025)**. Pleasurable music activates cerebral µ-opioid receptors: a combined PET-fMRI study. *European Journal of Nuclear Medicine and Molecular Imaging*, 52, 3540-3549.
+
+3. **Salimpoor, V. N., Benovoy, M., Larcher, K., Dagher, A., & Zatorre, R. J. (2011)**. Anatomically distinct dopamine release during anticipation and experience of peak emotion to music. *Nature Neuroscience*, 14(2), 257-262.
 
 ---
 

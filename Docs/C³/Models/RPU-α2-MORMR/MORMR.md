@@ -4,8 +4,8 @@
 **Unit**: RPU (Reward Processing Unit)
 **Circuit**: Mesolimbic (NAcc, VTA, vmPFC, OFC, Amygdala)
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, AED+CPD+C0P mechanisms)
-**Date**: 2026-02-12
+**Version**: 2.1.0 (deep C³ literature review, corrected reference, +2 papers)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -152,19 +152,22 @@ MORMR extends the RPU's reward framework beyond dopamine to the opioid system:
 
 | Study | Method | N | Key Finding | Effect Size | MI Relevance |
 |-------|--------|---|-------------|-------------|-------------|
-| **Putkinen 2025** | PET | 15 | Music ↑ MOR binding in reward regions | d = 4.8, p < 0.05 | **Primary**: f01 opioid release |
-| **Putkinen 2025** | PET | 15 | Chills ↔ NAcc BPND | r = -0.52, p < 0.05 | **f02 chills correlation** |
-| **Putkinen 2025** | fMRI | 30 | Pleasure tracks OFC, striatum, ACC, insula | d = 10.08, p < 0.05 | **f03 NAcc binding** |
-| **Putkinen 2025** | PET | 15 | Baseline MOR ↔ pleasure BOLD | d = 1.16, p < 0.05 | **f04 reward sensitivity** |
+| **Putkinen 2025** | PET | 15 | Music ↑ [11C]carfentanil binding in VS, OFC, amygdala | BPND increase, p < 0.05 | **Primary**: f01 opioid release |
+| **Putkinen 2025** | PET | 15 | Chills ↔ NAcc BPND (negative association) | r = -0.52, p < 0.05 | **f02 chills correlation** |
+| **Putkinen 2025** | fMRI | 30 | Pleasure-dependent BOLD in somatosensory, emotion, reward | cluster-corrected, p < 0.05 | **f03 NAcc binding** |
+| **Putkinen 2025** | PET+fMRI | 15 | Baseline MOR tone modulates pleasure-BOLD coupling | individual differences, p < 0.05 | **f04 reward sensitivity** |
+| **Salimpoor 2011** | PET | 8 | DA release in striatum complements opioid system | r = 0.84 (NAcc-BP vs pleasure) | **Cross-validates**: DA + opioid convergence at NAcc |
+| **Mas-Herrero 2014** | Behavioral | 30 | Musical anhedonia dissociates from monetary reward | BMRQ group differences, p < 0.001 | **Individual differences**: reward sensitivity basis |
 
 ### 3.2 Effect Size Summary
 
 ```
-Primary Evidence (k=4):  All findings from comprehensive PET+fMRI study
-Heterogeneity:           N/A (single study, multiple measures)
+Primary Evidence (k=6):  3 independent studies (1 PET-MOR, 1 PET-DA, 1 behavioral)
+Cross-modal convergence: PET [11C]carfentanil (opioid), PET [11C]raclopride (DA), behavioral
 Quality Assessment:      α-tier (direct PET opioid measurement)
-Largest Effect:          d = 10.08 (BOLD pleasure tracking — very large)
-Replication:             First direct evidence of opioid mediation in music
+Key correlations:        r = -0.52 (chills–NAcc MOR), r = 0.84 (NAcc DA–pleasure)
+Replication:             First direct PET evidence of opioid mediation in music
+                         Individual differences in music reward confirmed by Mas-Herrero 2014
 ```
 
 ---
@@ -560,10 +563,10 @@ class MORMR(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 1 (Putkinen 2025) | Primary evidence |
-| **Effect Sizes** | 4 (all d > 1.0) | PET + fMRI |
-| **Largest Effect** | d = 10.08 | BOLD pleasure tracking |
-| **Evidence Modality** | PET, fMRI | Direct neural |
+| **Papers** | 3 (Putkinen 2025, Salimpoor 2011, Mas-Herrero 2014) | Multi-modal evidence |
+| **Effect Sizes** | 4+ (r=-0.52, r=0.84, BPND, individual diffs) | PET + fMRI + behavioral |
+| **Key Finding** | [11C]carfentanil binding increase in VS, OFC, amygdala | Direct PET opioid measurement |
+| **Evidence Modality** | PET (MOR + DA), fMRI, behavioral | Multi-modal convergence |
 | **Falsification Tests** | 2/5 confirmed | High validity |
 | **R³ Features Used** | ~14D of 49D | Consonance + energy + timbre + interactions |
 | **H³ Demand** | 15 tuples (0.65%) | Sparse, efficient |
@@ -576,7 +579,9 @@ class MORMR(BaseModel):
 
 ## 13. Scientific References
 
-1. **Putkinen, V., Nazari-Farsani, S., Seppala, K., Karjalainen, T., Sun, L., Karlsson, H. K., ... & Nummenmaa, L. (2025)**. Endogenous opioid system mediates music-induced pleasure. *Molecular Psychiatry*.
+1. **Putkinen, V., Seppälä, K., Harju, H., Hirvonen, J., Karlsson, H. K., & Nummenmaa, L. (2025)**. Pleasurable music activates cerebral µ-opioid receptors: a combined PET-fMRI study. *European Journal of Nuclear Medicine and Molecular Imaging*, 52, 3540-3549.
+2. **Salimpoor, V. N., Benovoy, M., Larcher, K., Dagher, A., & Zatorre, R. J. (2011)**. Anatomically distinct dopamine release during anticipation and experience of peak emotion to music. *Nature Neuroscience*, 14(2), 257-262.
+3. **Mas-Herrero, E., Zatorre, R. J., Rodriguez-Fornells, A., & Marco-Pallarés, J. (2014)**. Dissociation between musical and monetary reward responses in specific musical anhedonia. *Current Biology*, 24(6), 699-704.
 
 ---
 

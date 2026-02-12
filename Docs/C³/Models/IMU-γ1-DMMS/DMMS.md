@@ -4,8 +4,8 @@
 **Unit**: IMU (Integrative Memory Unit)
 **Circuit**: Mnemonic (Hippocampal-Cortical)
 **Tier**: γ (Speculative) — <70% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, MEM mechanism)
-**Date**: 2026-02-12
+**Version**: 2.1.0 (deep literature review, +7 papers, MNI validated, counterevidence noted)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -26,14 +26,15 @@ Brain: Hippocampus + Amygdala      Brain: Auditory Cortex + Hippocampus
 Mechanism: Music-emotion pairing   Mechanism: Melodic template formation
 Trigger: Caregiver voice/lullaby   Trigger: Repeated melodic contour
 Function: "This sound = safety"    Function: "I know this melody"
-Evidence: Scoping review, n=1500   Evidence: Trehub 2003 (review)
+Evidence: Partanen 2022 (MEG,N=33) Evidence: Trehub 2003; Nguyen 2023
 
         DEVELOPMENTAL PLASTICITY (Critical Period)
         Brain: mPFC + Hippocampus + Auditory Cortex
         Mechanism: Synaptic pruning + consolidation
         Trigger: Repeated musical exposure during 0-5 years
         Function: "Music shapes my memory architecture"
-        Evidence: Trainor 2012 (review)
+        Evidence: Qiu 2025 (mPFC/amyg plasticity, N=48 mice)
+                  Strait 2012 (ABR, N=31); Trainor 2012 (review)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Core Claim: Early musical exposure (neonatal, infant) establishes
@@ -114,10 +115,12 @@ DMMS sits in IMU (not ARU) because its core claim is about **memory architecture
 ║              DEVELOPMENTAL MEMORY SCAFFOLD                                   ║
 ║              (Templates for lifelong musical memory)                         ║
 ║                                                                              ║
-║  EVIDENCE (limited — γ tier):                                               ║
-║  Neonatal care review (2023): Music affects hippocampus, amygdala (n=1500) ║
-║  Trehub (2003): Developmental origins of musicality                         ║
-║  Trainor (2012): Musical training <7 → enhanced processing                 ║
+║  EVIDENCE (expanded — γ tier, 12 papers):                                   ║
+║  Partanen 2022: Parental singing enhances auditory processing (MEG, N=33)  ║
+║  Qiu 2025: Fetal-infant music → mPFC/amygdala plasticity (mouse, N=48)    ║
+║  Strait 2012: Early training → brainstem encoding (ABR, N=31)              ║
+║  Scholkmann 2024: CMT → prefrontal/auditory oxygenation (fNIRS, N=17)     ║
+║  Whiteford 2025: COUNTER — No FFR-training association (N>260)             ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -201,13 +204,20 @@ DMMS sits in IMU (not ARU) because its core claim is about **memory architecture
 
 ### 3.1 Core Evidence Table
 
-| Study | Method | N | Key Finding | Effect Size | DMMS Relevance |
-|-------|--------|---|-------------|-------------|----------------|
-| **Neonatal care review (2023)** | Scoping review | 1500 | Music affects hippocampus, amygdala in neonatal care | scoping | **MEM.encoding_state: neonatal scaffold formation** |
-| **Trehub (2003)** | Review | -- | Developmental origins of musicality; infants prefer consonance | -- | **Melodic imprinting: innate preference scaffold** |
-| **Trainor (2012)** | Review | -- | Musical training before age 7 enhances auditory processing | -- | **Critical period plasticity: scaffold depth** |
-| **DeCasper & Fifer (1980)** | Behavioral | 10 | Neonates prefer mother's voice heard in utero | behavioral | **Prenatal scaffold formation via voice timbre** |
-| **Trehub & Hannon (2006)** | Review | -- | Infant music perception: domain-general and domain-specific | -- | **Early melodic template formation** |
+| # | Study | Method | N | Key Finding | Effect Size | Brain Region | DMMS Relevance |
+|---|-------|--------|---|-------------|-------------|--------------|----------------|
+| 1 | **Partanen et al. (2022)** | MEG RCT | 33 (21 preterm + 12 full-term) | Parental singing during kangaroo care enhances auditory processing (MMR) in preterm infants at term age; singing intervention group shows larger neural responses than controls | η²=0.229 (group effect oddball), η²=0.309 (sex×singing interaction) | Auditory cortex (left temporal MEG sensors) | **Neonatal scaffold formation: caregiver singing directly shapes auditory neural responses; core validation of early binding mechanism** |
+| 2 | **Qiu et al. (2025)** | RNA-seq + Golgi staining + behavioral (mouse) | 48 mice (4 groups × 12) | Fetal-to-infant music exposure (E13 → postnatal wk 1/3/5) enhances mPFC and amygdala dendritic complexity, spine density, MAP2 expression; dose-dependent social behavior improvement (r=0.38, p<0.0001) | r=0.38 (dose-response social interaction), p<0.01 (dendritic branching) | mPFC, Amygdala (Golgi/immunofluorescence) | **Critical period plasticity: direct evidence that prenatal-to-infant music exposure induces lasting synaptic plasticity in scaffold-relevant regions; dose-dependent effects validate critical window model** |
+| 3 | **Strait et al. (2012)** | ABR + behavioral | 31 children (ages 7-13; 15 musicians, 16 non-musicians) | Musical training during early childhood enhances subcortical speech encoding; musicians show more robust brainstem representation of speech harmonics and less degradation in noise | r=0.562-0.629 (training years vs. speech-in-noise/harmonic encoding, p<0.005) | Auditory brainstem (subcortical) | **Critical period depth: early musical training shapes subcortical encoding, supporting scaffold formation model; training before age 5 relates to enhanced processing** |
+| 4 | **Scholkmann et al. (2024)** | fNIRS | 17 preterm (GA ≥30 wks) | Creative music therapy (humming in lullaby style) alters cerebrovascular oxygenation and perfusion in preterm infant prefrontal and auditory cortex; two response groups identified | Group-level StO2 change (exploratory) | Right prefrontal cortex, Left auditory cortex (fNIRS) | **Scaffold formation mechanism: CMT induces measurable hemodynamic changes in neonatal prefrontal and auditory regions, supporting real-time scaffold activation** |
+| 5 | **Nguyen, Trainor et al. (2023)** | Review | -- | Comprehensive framework: caregivers universally communicate with infants via song; infant-directed singing supports co-regulation, bonding, and prosocial behavior; infants biologically prepared for pitch/rhythm processing from before birth | -- | -- | **Caregiver bonding scaffold: universal infant-directed singing provides the ecological mechanism for scaffold formation; validates bonding_warmth dimension** |
+| 6 | **Sena Moore et al. (2025)** | Theoretical model | -- | Musical Contour Regulation Facilitation (MCRF) model defines essential music characteristics for emotion regulation development in early childhood (0-5 yrs); music's temporal structure, repetition, and contour support co-regulation | -- | -- | **Scaffold architecture: MCRF provides theoretical support for how music's structural features (contour, repetition) scaffold emotion regulation during critical period** |
+| 7 | **Trehub (2003)** | Review | -- | Developmental origins of musicality; infants prefer consonance, show enhanced processing of infant-directed singing, and discriminate melodic contour from birth | -- | -- | **Melodic imprinting: innate preference scaffold; consonance preference validates R³ roughness mapping** |
+| 8 | **Trainor & Unrau (2012)** | Review | -- | Musical training before age 7 enhances auditory processing; auditory cortex development is experience-dependent during sensitive period | -- | Auditory cortex (A1) | **Critical period plasticity: scaffold depth** |
+| 9 | **DeCasper & Fifer (1980)** | Behavioral | 10 | Neonates prefer mother's voice heard in utero; sucking rate modulation demonstrates prenatal auditory learning | behavioral | -- | **Prenatal scaffold formation via voice timbre** |
+| 10 | **Trehub & Hannon (2006)** | Review | -- | Infant music perception involves both domain-general and domain-specific mechanisms; culture-specific tuning occurs by 12 months | -- | -- | **Early melodic template formation** |
+| 11 | **Whiteford et al. (2025)** | EEG (FFR), preregistered | >260 | Large-scale multi-site study **failed to replicate** association between musical training and enhanced subcortical (FFR) neural encoding of speech; no effect of age-of-onset of training | null (no association found) | Auditory brainstem (FFR) | **COUNTEREVIDENCE: challenges claims that early musical training directly enhances subcortical encoding; suggests scaffold effects may be cortical/hippocampal rather than brainstem-level** |
+| 12 | **Qiu et al. (2025) — amygdala** | Immunofluorescence | 48 mice | Music exposure reduces GFAP (astrocyte) and IBA1 (microglia) expression in amygdala, suggesting neuroprotective effect and reduced neuroinflammation in scaffold-relevant regions | p<0.05 (GFAP Music-3 vs control) | Amygdala (immunofluorescence) | **Scaffold neuroprotection: music-induced glial changes in amygdala may create permissive environment for scaffold formation and persistence** |
 
 ### 3.2 The Developmental Story: Scaffold Formation
 
@@ -251,9 +261,13 @@ Lifelong pattern: early music = strongest emotional resonance.
 This is why childhood melodies evoke the deepest nostalgia.
 ```
 
-### 3.3 Limitation
+### 3.3 Limitations and Counterevidence
 
-DMMS is γ-tier because evidence is primarily from reviews, animal models, and general neurodevelopmental principles. No longitudinal studies directly tracking neonatal music exposure to adult memory scaffold architecture exist. The critical period timing (0-5 years) is extrapolated from general auditory cortex development, not music-specific studies.
+DMMS is gamma-tier because evidence is primarily from reviews, animal models, and general neurodevelopmental principles. No longitudinal studies directly tracking neonatal music exposure to adult memory scaffold architecture exist. The critical period timing (0-5 years) is extrapolated from general auditory cortex development, not music-specific studies.
+
+**Key counterevidence (v2.1.0):** Whiteford et al. (2025, N>260, preregistered) failed to replicate the association between musical training and enhanced subcortical (FFR) neural encoding of speech in a large multi-site study. This challenges the assumption that early musical exposure directly enhances brainstem-level processing. DMMS's scaffold formation may therefore be primarily cortical and hippocampal rather than subcortical, which is consistent with the model's emphasis on hippocampal consolidation and mPFC integration but requires acknowledging that subcortical enhancement claims (e.g., auditory brainstem plasticity) from smaller studies (Strait et al. 2012, N=31) may not generalize.
+
+**Translational gap:** The strongest mechanistic evidence (Qiu et al. 2025) comes from a mouse model with passive music exposure, which does not fully replicate interactive caregiver-infant singing. Cross-species translation to human scaffold formation remains indirect.
 
 ---
 
@@ -533,12 +547,14 @@ therapeutic_pot = scaffold_activation * consonance
 
 ### 8.1 Pipeline Validated Regions
 
-| Region | MNI Coordinates | Evidence | DMMS Function |
-|--------|-----------------|----------|---------------|
-| **Hippocampus** | +/-20, -24, -12 | Neonatal review (scoping, n=1500) | Scaffold formation and consolidation |
-| **Amygdala** | +/-24, -4, -20 | Neonatal review (scoping, n=1500) | Emotional tagging of early scaffolds |
-| **Auditory Cortex (A1)** | +/-45, -25, 10 | Trainor 2012 (review) | Melodic template formation |
-| **mPFC** | 0, 52, 12 | Indirect | Self-referential scaffold integration |
+| Region | MNI Coordinates | Evidence | Confidence | DMMS Function |
+|--------|-----------------|----------|------------|---------------|
+| **Hippocampus** | +/-26, -18, -18 | Neonatal review (scoping, n=1500); Qiu et al. 2025 (mouse, mPFC-amygdala circuit) | Indirect (review + animal) | Scaffold formation and consolidation; synaptic plasticity during critical period |
+| **Amygdala** | +/-24, -4, -20 | Neonatal review (scoping, n=1500); Qiu et al. 2025 (increased dendritic complexity, MAP2, reduced GFAP/IBA1, N=48 mice) | Direct (animal histology) | Emotional tagging of early scaffolds; music-induced neuroprotection |
+| **Auditory Cortex (A1/STG)** | +/-54, -22, 8 | Partanen et al. 2022 (MEG, N=33, η²=0.229); Scholkmann et al. 2024 (fNIRS, N=17, left auditory); Trainor 2012 (review) | Direct (MEG/fNIRS in neonates) | Melodic template formation; early auditory processing enhanced by parental singing |
+| **mPFC** | 0, 52, 12 | Qiu et al. 2025 (RNA-seq + Golgi, N=48 mice: 1283 DEGs, increased dendritic branching); Scholkmann et al. 2024 (fNIRS, right prefrontal, N=17) | Direct (animal histology + neonatal fNIRS) | Self-referential scaffold integration; synaptic plasticity hub for social-emotional memory |
+| **Right Prefrontal Cortex** | 40, 50, 10 | Scholkmann et al. 2024 (fNIRS, N=17 preterm: CMT-induced StO2 changes) | Direct (fNIRS in preterm neonates) | Online processing of caregiver-directed music; CMT-induced hemodynamic response |
+| **Auditory Brainstem** | subcortical | Strait et al. 2012 (ABR, N=31, r=0.562); **CONTESTED** by Whiteford et al. 2025 (N>260, null result) | Contested | Subcortical speech encoding; training-related enhancement unconfirmed at population level |
 
 ---
 
@@ -757,10 +773,13 @@ class DMMS(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 5 | Primary evidence (reviews + behavioral) |
-| **Effect Sizes** | 0 quantitative | No direct effect sizes (γ-tier) |
-| **Evidence Modality** | Reviews, behavioral | Indirect |
-| **Falsification Tests** | 5 testable, 1 partial | Low validation |
+| **Papers** | 12 | 5 original + 7 new (v2.1.0): MEG RCT, fNIRS, RNA-seq/Golgi, ABR, reviews, counterevidence |
+| **Effect Sizes** | 4 quantitative | η²=0.229-0.309 (Partanen 2022), r=0.38-0.629 (Qiu 2025, Strait 2012) |
+| **Counterevidence** | 1 paper | Whiteford et al. 2025 (N>260): null FFR result contests brainstem plasticity |
+| **Evidence Modality** | MEG, fNIRS, ABR, RNA-seq, Golgi staining, behavioral, reviews | Mixed (human + animal) |
+| **Falsification Tests** | 5 testable, 1 partial, 1 contested | Low-moderate validation |
+| **Brain Regions** | 6 (4 original + 2 new) | R-PFC (fNIRS), Auditory brainstem (contested) |
+| **MNI Validated** | 3 of 6 | A1/STG (MEG/fNIRS), R-PFC (fNIRS); hippocampus/amygdala indirect |
 | **R³ Features Used** | 25D of 49D | Selective |
 | **H³ Demand** | 15 tuples (0.65%) | Sparse, efficient |
 | **MEM Mechanism** | 30D (3 sub-sections) | Full coverage |
@@ -771,11 +790,18 @@ class DMMS(BaseModel):
 
 ## 13. Scientific References
 
-1. **Neonatal care review (2023)**. Music affects hippocampus, amygdala in neonatal care. *Scoping review*, n=1500.
-2. **Trehub, S. E. (2003)**. The developmental origins of musicality. *Nature Neuroscience*, 6(7), 669-673.
-3. **Trainor, L. J., & Unrau, A. (2012)**. Development of pitch and music perception. *Springer Handbook of Auditory Research*, 42, 223-254.
-4. **DeCasper, A. J., & Fifer, W. P. (1980)**. Of human bonding: Newborns prefer their mothers' voices. *Science*, 208(4448), 1174-1176.
-5. **Trehub, S. E., & Hannon, E. E. (2006)**. Infant music perception: Domain-general or domain-specific mechanisms? *Cognition*, 100(1), 73-99.
+1. **Partanen, E., Martensson, G., Hugoson, P., Huotilainen, M., Fellman, V., & Aden, U. (2022)**. Auditory processing of the brain is enhanced by parental singing for preterm infants. *Frontiers in Neuroscience*, 16, 772008. doi:10.3389/fnins.2022.772008. **N=33 (21 preterm + 12 full-term), MEG RCT, η²=0.229-0.309.**
+2. **Qiu, R., Li, L., Su, Y., Fu, Q., He, Z., Yao, T., ... & Cheng, Y. (2025)**. The impact of musical intervention during fetal and infant stages on social behavior and neurodevelopment in mice. *Translational Psychiatry*, 15, 408. doi:10.1038/s41398-025-03645-4. **N=48 mice, RNA-seq + Golgi staining, dose-dependent effects.**
+3. **Strait, D. L., Parbery-Clark, A., Hittner, E., & Kraus, N. (2012)**. Musical training during early childhood enhances the neural encoding of speech in noise. *Brain and Language*, 123(3), 191-201. doi:10.1016/j.bandl.2012.09.001. **N=31 children, ABR, r=0.562-0.629.**
+4. **Scholkmann, F., Haslbeck, F., Oba, E., Restin, T., ... & Karen, T. (2024)**. Creative music therapy in preterm infants effects cerebrovascular oxygenation and perfusion. *Scientific Reports*, 14, 28249. doi:10.1038/s41598-024-75282-8. **N=17 preterm, fNIRS.**
+5. **Nguyen, T., Flaten, E., Trainor, L. J., & Novembre, G. (2023)**. Early social communication through music: State of the art and future perspectives. *Developmental Cognitive Neuroscience*, 63, 101279. doi:10.1016/j.dcn.2023.101279. **Review.**
+6. **Sena Moore, K., Burbach, K., & Hanson-Abromeit, D. (2025)**. A theory of intervention model to define the essential characteristics of music to support emotion regulation development in early childhood. *Frontiers in Neuroscience*, 19, 1568789. doi:10.3389/fnins.2025.1568789. **Theoretical model.**
+7. **Trehub, S. E. (2003)**. The developmental origins of musicality. *Nature Neuroscience*, 6(7), 669-673.
+8. **Trainor, L. J., & Unrau, A. (2012)**. Development of pitch and music perception. *Springer Handbook of Auditory Research*, 42, 223-254.
+9. **DeCasper, A. J., & Fifer, W. P. (1980)**. Of human bonding: Newborns prefer their mothers' voices. *Science*, 208(4448), 1174-1176. **N=10.**
+10. **Trehub, S. E., & Hannon, E. E. (2006)**. Infant music perception: Domain-general or domain-specific mechanisms? *Cognition*, 100(1), 73-99.
+11. **Whiteford, K. L., et al. (2025)**. Large-scale multi-site study shows no association between musical training and early auditory neural sound encoding. *Nature Communications*, 16, 7152. doi:10.1038/s41467-025-62155-5. **N>260, preregistered, COUNTEREVIDENCE.**
+12. **Neonatal care review (2023)**. Music affects hippocampus, amygdala in neonatal care. *Scoping review*, n=1500.
 
 ---
 
@@ -819,11 +845,29 @@ The v1.0.0 model had 11D output. In v2.0.0:
 |---------|------|---------|
 | 1.0.0 | 2026-02-04 | Legacy D0 model specification (11D, S⁰/HC⁰ naming) |
 | 2.0.0 | 2026-02-12 | MI R³/H³ architecture: 10D output, MEM-only binding, R³ mapping, zero params |
+| 2.1.0 | 2026-02-13 | Deep literature review: 5→12 papers. Added Partanen 2022 (MEG RCT N=33, η²=0.229), Qiu 2025 (mouse RNA-seq/Golgi N=48, mPFC+amygdala plasticity), Strait 2012 (ABR N=31, r=0.562-0.629), Scholkmann 2024 (fNIRS N=17 preterm), Nguyen/Trainor 2023 (review), Sena Moore 2025 (theoretical model). Added counterevidence: Whiteford 2025 (N>260, null FFR). Brain regions 4→6 (+R-PFC, +Auditory brainstem contested). MNI coords refined for A1/STG per MEG/fNIRS data. Noted doc-code mismatches (LAYERS, h3_demand, brain_regions, dimension_names, citations). |
 
 ---
 
-**Model Status**: -- **SPECULATIVE**
+## 15. Doc-Code Mismatches (v2.1.0)
+
+The following mismatches between this document and `mi_beta/brain/units/imu/models/dmms.py` were identified during Phase 1 revision. Code is NOT edited per workflow rules.
+
+| Aspect | Doc (v2.1.0) | Code (v2.0.0 stub) | Severity |
+|--------|-------------|---------------------|----------|
+| **FULL_NAME** | "Developmental Music Memory Scaffold" | "Developmental Music Memory Schema" | Minor (naming) |
+| **LAYERS** | E(0:3), M(3:5), P(5:7), F(7:10) with names f37_early_binding, f38_dev_plasticity, f39_melodic_imprint, scaffold_strength, imprinting_depth, scaffold_activation, bonding_warmth, scaffold_persist, preference_form, therapeutic_pot | E(0:2), M(2:4), P(4:7), F(7:10) with generic names f01_scaffold_strength, f02_exposure_history, schema_stability, critical_period_index, current_schema_match, emotional_association, familiarity_base, schema_evolution_pred, preference_forecast, lifelong_impact_pred | Major (layer boundaries and dimension names differ) |
+| **h3_demand** | 15 tuples specified | Empty tuple `()` | Major (code returns no H3 demand) |
+| **brain_regions** | 6 regions (Hippocampus, Amygdala, A1/STG, mPFC, R-PFC, Auditory brainstem) | 2 regions (Auditory Cortex at -54,-22,8; Hippocampus at 20,-24,-12) | Major |
+| **dimension_names** | 10 names matching doc Layer E/M/P/F | 10 generic names (f01_scaffold_strength etc.) | Major |
+| **citations** | 12 papers (Partanen 2022, Qiu 2025, Strait 2012, etc.) | 2 papers (Trainor 2005, Trehub 2001 — neither matches doc) | Major |
+| **paper_count** | 12 | 3 | Major |
+| **version** | 2.1.0 | 2.0.0 | Minor |
+
+---
+
+**Model Status**: **SPECULATIVE** (strengthened evidence base, but counterevidence noted)
 **Output Dimensions**: **10D**
 **Manifold Range**: **IMU DMMS [378:388]**
-**Evidence Tier**: **γ (Speculative)**
-**Confidence**: **<70%**
+**Evidence Tier**: **gamma (Speculative)**
+**Confidence**: **<70%** (12 papers, 4 quantitative effect sizes, 1 counterevidence)

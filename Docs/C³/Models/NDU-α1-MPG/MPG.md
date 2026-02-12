@@ -4,8 +4,8 @@
 **Unit**: NDU (Novelty Detection Unit)
 **Circuit**: Salience + Perceptual (Anterior Insula, dACC, IFG)
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, PPC+ASA mechanisms)
-**Date**: 2026-02-12
+**Version**: 2.1.0 (deep literature review, 1→8 papers, effect sizes added)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -157,17 +157,27 @@ MPG establishes the foundational spatial processing gradient for the Novelty Det
 
 | Study | Method | N | Key Finding | Effect Size | MI Relevance |
 |-------|--------|---|-------------|-------------|-------------|
-| **Rupp 2022** | MEG | 20 | Posterior→anterior gradient for sequence | Not reported | **Primary**: f01, f02 gradient |
-| **Rupp 2022** | MEG | 20 | Fixed pitch → reduced anterior activity | Not reported | **f02 sequence anterior** |
-| **Rupp 2022** | MEG | 20 | Melodic contour → increased anterior | Not reported | **f03 contour complexity** |
+| **Rupp et al. 2022** | MEG | 20 | Posterior→anterior gradient for melodic contours vs fixed-pitch; source activity projected onto parceled atlas | Spatial pattern (no inferential stats in editorial) | **Primary**: f01, f02 gradient architecture |
+| **Patterson et al. 2002** | fMRI | ~10 | Activity moves anterolaterally from HG (pitch) to STG/PP (melody); pitch > no-pitch only in lateral HG | fMRI contrast maps | **Primary**: foundational fMRI evidence for posterior-to-anterior gradient |
+| **Norman-Haignere et al. 2013** | fMRI + tonotopy | — | Pitch-sensitive regions in anterior nonprimary AC extending from low-freq primary AC | Response tracks psychophysical thresholds parametrically | **Supporting**: anterior localization of pitch processing |
+| **Briley et al. 2013** | EEG adaptation | 15 (Exp1), 8 (Exp3) | Pitch chroma representation anterior/lateral to PAC; IRN sources 7.2mm lateral (L), 7.9mm anterior (R) vs pure-tone sources | F(1,28)=29.865, p<0.001 (octave adaptation) | **Supporting**: quantitative spatial displacement for complex vs simple pitch |
+| **Foo et al. 2016** | ECoG (intracranial) | 8 | Anterior STG = dissonant-sensitive; posterior STG = non-selective; high-gamma 70-150Hz at 75-200ms | y-dim p=0.003, z-dim p=0.006; roughness r=0.43 (RH), r=0.41 (LH) | **Supporting**: intracranial confirmation of anterior-posterior STG gradient |
+| **Samiee et al. 2022** | MEG+EEG | 16 | Delta (2-4Hz) bottom-up from AC→IFG; beta bursts top-down from motor→AC; delta-beta PAC at pitch change | PAC F(1)=11.1, p<0.001; delta coherence F(1)=49.7, p<0.0001; right>left F(1)=17.91, p<0.0001 | **Mechanistic**: oscillatory dynamics implementing the gradient |
+| **Zatorre 2022** | Mini-review | — | Right AC specialization for spectral/pitch; fMRI scales with pitch distance; individual thresholds correlate with right AC activity | Meta-analytic (multiple studies) | **Contextual**: right-hemisphere dominance for melodic gradient |
+| **Cheung et al. 2019** | fMRI + IDyOM | 40 | Auditory cortex shows uncertainty×surprise interaction for harmonic sequences | Left AC: β=−0.182, t(39)=−4.90, p=0.00012; Right AC: β=−0.128, t(39)=−3.93, p=0.0023 | **Supporting**: predictive processing in AC relevant to phrase_boundary_pred |
 
 ### 3.2 Effect Size Summary
 
 ```
-Primary Evidence (k=1):  Consistent with spatial gradient hypothesis
-Heterogeneity:           N/A (single study)
-Quality Assessment:      α-tier (direct MEG measurement)
-Replication:             Robust spatial pattern across conditions
+Primary Evidence (k=8):  Convergent across MEG, fMRI, ECoG, EEG
+Methods:                 MEG (Rupp, Samiee), fMRI (Patterson, Norman-Haignere, Cheung),
+                         ECoG (Foo), EEG (Briley)
+Key Effect Sizes:        Briley pitch chroma F(1,28)=29.865, p<0.001
+                         Foo anterior STG selectivity p=0.003
+                         Samiee delta coherence F(1)=49.7, p<0.0001
+                         Cheung AC interaction β=−0.182, p=0.00012
+Quality Assessment:      α-tier (multi-method convergence, intracranial confirmation)
+Replication:             Cross-method replication (MEG→fMRI→ECoG→EEG)
 ```
 
 ---
@@ -368,11 +378,28 @@ f04 = f01 / (f01 + f02 + ε)
 
 ### 8.1 Pipeline Validated Regions
 
-| Region | MNI Coordinates | Mentions | Evidence Type | MPG Function |
-|--------|-----------------|----------|---------------|--------------|
-| **Auditory Cortex** | ±42, -22, 8 | 3 | Direct (MEG) | Melodic processing |
-| **Posterior Auditory Cortex** | ±50, -30, 12 | 1 | Direct (MEG) | Onset detection |
-| **Anterior Auditory Cortex** | ±50, -10, 2 | 1 | Direct (MEG) | Contour processing |
+| Region | BA | MNI/Talairach Coordinates | Evidence | MPG Function |
+|--------|----|---------------------------|----------|--------------|
+| **Medial Heschl's Gyrus (primary AC)** | BA41 | Tal: L −41.9, −18.8, 15.8 / R 44.2, −13.4, 13.4 | Briley 2013 (EEG); Patterson 2002 (fMRI) | Onset pitch detection (posterior) |
+| **Anterolateral Heschl's Gyrus (nonprimary AC)** | BA22 | Tal: L −49.1, −21.2, 17.2 / R 42.9, −5.5, 17.6 | Briley 2013 (EEG); Norman-Haignere 2013 (fMRI) | Complex pitch/contour processing (anterior) |
+| **Superior Temporal Gyrus (anterior)** | BA22 | ±50, −10, 2 (approx.) | Foo 2016 (ECoG); Rupp 2022 (MEG) | Dissonance-sensitive; melodic contour |
+| **Superior Temporal Gyrus (posterior)** | BA22 | ±50, −30, 12 (approx.) | Foo 2016 (ECoG); Rupp 2022 (MEG) | Non-selective onset processing |
+| **Planum Temporale** | BA42 | Bilateral | Patterson 2002 (fMRI) | Pitch onset processing with HG |
+| **Planum Polare** | — | Anterior to HG | Patterson 2002 (fMRI) | Melody processing (anterolateral extension) |
+
+### 8.2 Spatial Gradient Quantification
+
+```
+Briley et al. 2013 measured spatial displacement of complex pitch (IRN) vs pure-tone sources:
+  Left hemisphere:  7.2 mm MORE LATERAL for complex pitch
+  Right hemisphere: 7.9 mm MORE ANTERIOR for complex pitch
+  → Confirms posterior-to-anterior gradient with millimeter precision
+
+Foo et al. 2016 ECoG (intracranial):
+  Anterior STG: dissonant-sensitive (y-dimension p=0.003, z-dimension p=0.006)
+  Posterior STG: non-selective
+  → Gradient confirmed at single-electrode resolution
+```
 
 ---
 
@@ -568,9 +595,9 @@ class MPG(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 1 (Rupp 2022) | Primary evidence |
-| **Effect Sizes** | Not reported | MEG spatial patterns |
-| **Evidence Modality** | MEG | Direct neural |
+| **Papers** | 8 (Rupp 2022, Patterson 2002, Norman-Haignere 2013, Briley 2013, Foo 2016, Samiee 2022, Zatorre 2022, Cheung 2019) | Multi-method convergence |
+| **Effect Sizes** | Briley F(1,28)=29.865; Foo p=0.003; Samiee F(1)=49.7; Cheung β=−0.182 | Quantified gradient |
+| **Evidence Modalities** | MEG, fMRI, ECoG, EEG | Cross-method replication |
 | **Falsification Tests** | 2/5 confirmed | High validity |
 | **R³ Features Used** | ~14D of 49D | Energy + timbre + change + interactions |
 | **H³ Demand** | 16 tuples (0.69%) | Sparse, efficient |
@@ -582,7 +609,14 @@ class MPG(BaseModel):
 
 ## 13. Scientific References
 
-1. **Rupp, A. et al. (2022)**. Early cortical processing of musical melodies: Posterior-to-anterior gradient in auditory cortex. MEG study, n=20.
+1. **Rupp, A., Englitz, B., Balaguer-Ballester, E. & Andermann, M. (2022)**. Editorial: Early neural processing of musical melodies. *Frontiers in Human Neuroscience*, 16:1109500. DOI: 10.3389/fnhum.2022.1109500. [Covers Taddeo et al. MEG study, n=20: posterior→anterior gradient]
+2. **Patterson, R.D., Uppenkamp, S., Johnsrude, I.S. & Griffiths, T.D. (2002)**. The processing of temporal pitch and melody information in auditory cortex. *Neuron*, 36, 767–776. [fMRI: pitch in lateral HG, melody extends to STG/PP anterolaterally]
+3. **Norman-Haignere, S., Kanwisher, N. & McDermott, J.H. (2013)**. Cortical pitch regions in humans respond primarily to resolved harmonics. *Journal of Neuroscience*, 33(50), 19451–19469. [fMRI+tonotopy: pitch-sensitive regions in anterior nonprimary AC]
+4. **Briley, P.M., Breakey, C. & Krumbholz, K. (2013)**. Evidence for pitch chroma mapping in human auditory cortex. *Cerebral Cortex*, 23(11), 2601–2610. [EEG: IRN sources 7.2mm lateral/7.9mm anterior vs pure tones; F(1,28)=29.865]
+5. **Foo, F. et al. (2016)**. Differential processing of consonance and dissonance within the human superior temporal gyrus. *Journal of Neuroscience*. [ECoG n=8: anterior STG dissonant-sensitive p=0.003; roughness r=0.43]
+6. **Samiee, S., Vuvan, D., Florin, E., Albouy, P., Peretz, I. & Baillet, S. (2022)**. Cross-frequency brain network dynamics support pitch change detection. *Journal of Neuroscience*, 42(18), 3823–3835. [MEG+EEG n=16: delta-beta PAC, delta coherence F(1)=49.7]
+7. **Zatorre, R.J. (2022)**. Hemispheric asymmetries for music and speech: Spectrotemporal modulations and top-down influences. *Frontiers in Neuroscience*, 16:1075511. [Review: right AC spectral/pitch specialization]
+8. **Cheung, V.K.M., Harrison, P.M.C., Meyer, L., Pearce, M.T., Haynes, J.-D. & Koelsch, S. (2019)**. Uncertainty and surprise jointly predict musical pleasure and amygdala, hippocampus, and auditory cortex activity. *Current Biology*, 29, 4084–4092. [fMRI n=40: AC uncertainty×surprise β=−0.182, p=0.00012]
 
 ---
 

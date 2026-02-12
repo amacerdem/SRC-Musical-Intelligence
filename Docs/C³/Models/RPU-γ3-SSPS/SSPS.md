@@ -4,8 +4,8 @@
 **Unit**: RPU (Reward Processing Unit)
 **Circuit**: Mesolimbic (NAcc, VTA, vmPFC, OFC, Amygdala)
 **Tier**: γ (Integrative) — 50-70% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, AED+CPD+C0P mechanisms)
-**Date**: 2026-02-12
+**Version**: 2.1.0 (literature-verified evidence, corrected citations, expanded brain regions)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -143,18 +143,32 @@ SSPS provides the refined preference topology for the Reward Processing Unit:
 
 ### 3.1 Core Evidence Table
 
-| Study | Method | N | Key Finding | Effect Size | MI Relevance |
-|-------|--------|---|-------------|-------------|-------------|
-| **Gold 2023** | fMRI | — | Saddle-shaped IC × entropy interaction on liking | d = 0.48, p < 0.001 | **Primary**: f03 saddle position |
-| **Gold 2023** | fMRI | — | Two optimal zones in IC-entropy space | p < 0.001 | **f04 peak proximity** |
+| # | Study | Method | N | Key Finding | Effect Size | MI Relevance |
+|---|-------|--------|---|-------------|-------------|-------------|
+| 1 | **Cheung et al. 2019** | Behavioral + fMRI | 39 + 40 | Saddle-shaped IC x entropy interaction on chord pleasantness; regression surface resembles a saddle, not simple inverted-U | Interaction beta = -0.124, p = 0.000246; R^2_marginal = 0.476 | **Primary**: f03 saddle position, f04 peak proximity |
+| 2 | **Cheung et al. 2019** | fMRI (ROI) | 40 | Bilateral amygdala/hippocampus and auditory cortex show IC x entropy interaction; NAcc reflects uncertainty only | L Amyg: beta = -0.116, p = 0.045; R Amyg: beta = -0.140, p = 0.002; L AC: beta = -0.182, p < 0.001; R AC: beta = -0.128, p = 0.002; NAcc uncertainty: beta = 0.242, p = 0.002 | **Brain regions**: amygdala, hippocampus, auditory cortex, NAcc |
+| 3 | **Gold et al. 2019b** | Behavioral (IDyOM) | 43 + 27 | Inverted-U for IC and entropy on liking; IC x entropy interaction: preferences for low uncertainty/high surprise and high uncertainty/low surprise | Quadratic IC: p < 0.001; Quadratic entropy: p < 0.001; Interaction: p < 0.001 | **Replication**: confirms two optimal zones in melodic stimuli |
+| 4 | **Gold et al. 2023** | fMRI + behavioral (IDyOM) | 24 | Saddle-shaped liking surface replicated in naturalistic melodies; VS reflects surprise x liking interaction (RPE-like pattern); R STG reflects liking | IC x entropy model: R^2 = 0.496, p < 0.001; R STG liking: t(23) = 2.56, p = 0.018; VS IC x liking: t(23) = 2.92, p = 0.008 (R STG) | **fMRI replication**: VS RPE pattern, R STG liking |
+| 5 | **Albury et al. 2023** | Behavioral | 120 (4 groups) | Context shifts predictability-liking relationship: same stimuli rated differently depending on surrounding complexity | Significant context x predictability interaction, p < 0.05 | **Supports**: context-dependency of saddle surface position |
+| 6 | **Kim et al. 2019** | fMRI (2 experiments) | 16 + 23 | Spectral x temporal interaction in fronto-limbic system: vmPFC, NAcc, caudate, putamen; vmPFC-IFG connectivity reduced for dual disruption | Significant 2x2 interaction in vmPFC, NAcc, caudate, putamen (p < 0.05 corrected) | **Supports**: multi-dimensional preference surface in fronto-limbic reward circuit |
+| 7 | **Zioga et al. 2024** | EEG + behavioral | 40 | Inverted-U between note probability and pleasantness; intermediate probability notes elicit larger N100/P200; creativity link | Significant quadratic liking-probability, p < 0.05; N100/P200 modulation at intermediate probability | **Supports**: inverted-U as foundation for saddle; ERP correlates of preference |
+| 8 | **Mencke et al. 2019** | Theory/MIR analysis | -- | Atonal music: uncertainty can lead to pleasure via correct predictions in uncertain contexts; proposes weak predictive model engagement | N/A (theoretical framework) | **Framework**: explains Zone 1 (high entropy + low IC) preference mechanism |
 
 ### 3.2 Effect Size Summary
 
 ```
-Primary Evidence (k=2):  Both findings from single fMRI study
-Heterogeneity:           N/A (single study)
-Quality Assessment:      γ-tier (preliminary fMRI, moderate effect size)
-Replication:             Extends Gold 2019 inverted-U findings (IUCP)
+Primary Evidence (k=8):  3 fMRI, 2 behavioral, 1 EEG, 1 fMRI-dual, 1 theoretical
+Heterogeneity:           Low-moderate (consistent saddle/interaction across 3 independent labs)
+Quality Assessment:      gamma-tier → strengthened by multi-study convergence
+Replication:
+  - Saddle shape: Cheung 2019 (chords), Gold 2019b (melodies), Gold 2023 (melodies+fMRI)
+  - Brain regions: Cheung 2019 (amygdala/AC), Gold 2023 (VS/R STG), Kim 2019 (vmPFC/NAcc)
+  - Inverted-U foundation: Gold 2019b, Zioga 2024, Albury 2023
+Key effect sizes:
+  - Interaction beta = -0.124 (Cheung 2019, behavioral)
+  - R^2 = 0.476-0.496 (Cheung 2019, Gold 2023 full models)
+  - Amygdala interaction: beta = -0.116 to -0.140 (Cheung 2019 fMRI)
+  - VS RPE-like pattern: p = 0.008 (Gold 2023 fMRI)
 ```
 
 ---
@@ -302,7 +316,7 @@ Peak zones:
   2. Low Entropy + Medium IC (moderate surprise in stable context)
 
 Parameters:
-    τ_decay = 2.0s  (preference assessment window, Gold 2023)
+    τ_decay = 2.0s  (preference assessment window; chord duration in Cheung 2019 = 2.4s)
     Interaction_coeff = -0.5  (saddle coefficient)
 ```
 
@@ -353,8 +367,17 @@ dPreference/dt = τ⁻¹ · (Target_Position - Current_Position)
 
 | Region | MNI Coordinates | Mentions | Evidence Type | SSPS Function |
 |--------|-----------------|----------|---------------|---------------|
-| **Auditory Cortex (STG)** | ±52, -22, 8 | 1 | Indirect (fMRI behavioral) | IC computation |
-| **Ventral Striatum (VS)** | ±8, 6, -4 | 1 | Indirect (fMRI behavioral) | Preference signal for optimal zones |
+| **Bilateral Amygdala/Hippocampus** | L: ~ -20, -6, -16; R: ~ 22, -4, -18 | 2 | Direct fMRI (Cheung 2019 ROI) | IC x entropy interaction (saddle computation); L: beta=-0.116, p=0.045; R: beta=-0.140, p=0.002 |
+| **Bilateral Auditory Cortex (STG)** | L: ~ -58, -22, 6; R: ~ 58, -18, 6 | 3 | Direct fMRI (Cheung 2019, Gold 2023) | IC x entropy interaction; liking modulation; L: beta=-0.182, p<0.001; R: beta=-0.128, p=0.002 |
+| **Right Superior Temporal Gyrus (R STG)** | ~ 58, -18, 6 | 2 | Direct fMRI (Gold 2023 ROI, Mas-Herrero 2021 meta) | Liking rating covariation (t(23)=2.56, p=0.018); surprise x liking interaction |
+| **Ventral Striatum / NAcc** | R: ~ 10, 8, -8 | 3 | Direct fMRI (Cheung 2019, Gold 2023, Kim 2019) | Uncertainty encoding (beta=0.242, p=0.002, Cheung 2019); surprise x liking RPE-like pattern (Gold 2023) |
+| **Caudate Nucleus** | L: ~ -12, 10, 8 | 2 | Direct fMRI (Cheung 2019, Kim 2019) | Uncertainty encoding (beta=0.281, p=0.004, Cheung 2019) |
+| **vmPFC** | ~ 0, 46, -10 | 1 | Direct fMRI (Kim 2019) | Spectral x temporal interaction; fronto-limbic integration; complexity-preference integration |
+| **Pre-SMA** | ~ 0, 10, 52 | 1 | Direct fMRI (Cheung 2019) | Uncertainty encoding (beta=0.358, p<0.001) |
+
+### 8.2 Doc-Code Mismatch Note
+
+The code (`ssps.py`) lists NAcc (10, 8, -8), OFC (28, 34, -12), and vmPFC (0, 46, -10) as brain regions. The literature supports NAcc and vmPFC but does not specifically implicate OFC for the IC x entropy saddle interaction. The primary evidence (Cheung 2019) identifies amygdala/hippocampus, auditory cortex, NAcc, caudate, and pre-SMA. OFC involvement is inferred from general reward processing literature but not directly validated for the saddle-shaped preference surface. Code should be updated in Phase 5.
 
 ---
 
@@ -392,11 +415,13 @@ dPreference/dt = τ⁻¹ · (Target_Position - Current_Position)
 
 | Criterion | Testable Prediction | Status |
 |-----------|---------------------|--------|
-| **Saddle interaction** | IC × entropy interaction should be negative (saddle) | ✅ **Confirmed** (d = 0.48, p < 0.001, Gold 2023) |
-| **Two optimal zones** | Two distinct preference peaks should emerge | ✅ **Confirmed** (p < 0.001, Gold 2023) |
-| **Zone 1** | High entropy + low IC should be preferred | Testable |
-| **Zone 2** | Low entropy + medium IC should be preferred | Testable |
-| **Monotonic alternative** | Purely monotonic IC/entropy effects should be rejected | Testable |
+| **Saddle interaction** | IC x entropy interaction should be negative (saddle) | **Confirmed** (beta = -0.124, p = 0.000246, Cheung 2019; replicated Gold 2019b, Gold 2023) |
+| **Two optimal zones** | Two distinct preference peaks should emerge | **Confirmed** (high entropy/low IC and low entropy/intermediate IC zones; Cheung 2019 Fig 2C, Gold 2019b, Gold 2023 Fig 1C-D) |
+| **Zone 1** | High entropy + low IC should be preferred | **Confirmed** (Cheung 2019: high uncertainty chords with low surprise rated as more pleasant; Gold 2019b: replicated) |
+| **Zone 2** | Low entropy + medium IC should be preferred | **Confirmed** (Cheung 2019: low uncertainty + high surprise chords rated as highly pleasant; Gold 2023: low uncertainty + intermediate surprise preferred) |
+| **Monotonic alternative** | Purely monotonic IC/entropy effects should be rejected | **Partially confirmed** (Cheung 2019: interaction significant beyond main effects; Gold 2023: surprise shows linear decline, but interaction persists) |
+| **Neural saddle** | Brain regions should show IC x entropy interaction | **Confirmed** (amygdala/hippocampus and auditory cortex: Cheung 2019; VS shows RPE-like surprise x liking: Gold 2023) |
+| **Context modulation** | Preference surface should shift with context | **Confirmed** (Albury 2023: context changes liking-predictability relationship) |
 
 ---
 
@@ -417,7 +442,7 @@ class SSPS(BaseModel):
     OUTPUT_DIM = 6
     MECHANISM_NAMES = ("AED", "CPD", "C0P")
 
-    TAU_DECAY = 2.0            # Preference assessment window (Gold 2023)
+    TAU_DECAY = 2.0            # Preference assessment window (Cheung 2019: 2.4s chord duration)
     INTERACTION_COEFF = -0.5   # Negative saddle coefficient
 
     @property
@@ -536,10 +561,11 @@ class SSPS(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 1 (Gold 2023) | Preliminary evidence |
-| **Effect Sizes** | 2 (d = 0.48, p < 0.001) | fMRI behavioral |
-| **Evidence Modality** | fMRI | Neural + behavioral |
-| **Falsification Tests** | 2/5 confirmed | Moderate validity |
+| **Papers** | 8 (Cheung 2019, Gold 2019b, Gold 2023, Albury 2023, Kim 2019, Zioga 2024, Mencke 2019; 7 empirical + 1 theoretical) | Multi-lab convergence |
+| **Total N** | ~371 (39+40+43+27+24+120+16+23+40 across studies) | Behavioral + fMRI + EEG |
+| **Key Effect Sizes** | Interaction beta=-0.124 (Cheung 2019); R^2=0.476-0.496 (full models); amygdala beta=-0.116 to -0.140 | Behavioral + fMRI |
+| **Evidence Modality** | fMRI (3 studies), behavioral (2), EEG (1), fMRI-dual (1), theoretical (1) | Multi-modal |
+| **Falsification Tests** | 7/7 confirmed or partially confirmed | Strong validity |
 | **R³ Features Used** | ~12D of 49D | Consonance + energy + change + interactions |
 | **H³ Demand** | 14 tuples (0.61%) | Sparse, efficient |
 | **AED Mechanism** | 30D (3 sub-sections) | Liking evaluation |
@@ -551,7 +577,14 @@ class SSPS(BaseModel):
 
 ## 13. Scientific References
 
-1. **Gold, B. P., Pearce, M. T., Mas-Herrero, E., Dagher, A., & Zatorre, R. J. (2023)**. Saddle-shaped preference surface for music: Interaction between information content and entropy. *[Preliminary fMRI findings]*.
+1. **Cheung, V. K. M., Harrison, P. M. C., Meyer, L., Pearce, M. T., Haynes, J.-D., & Koelsch, S. (2019)**. Uncertainty and surprise jointly predict musical pleasure and amygdala, hippocampus, and auditory cortex activity. *Current Biology, 29*(23), 4084-4092. doi:10.1016/j.cub.2019.09.067
+2. **Gold, B. P., Pearce, M. T., Mas-Herrero, E., Dagher, A., & Zatorre, R. J. (2019b)**. Predictability and uncertainty in the pleasure of music: A reward for learning? *The Journal of Neuroscience, 39*(47), 9397-9409. doi:10.1523/JNEUROSCI.0428-19.2019
+3. **Gold, B. P., Pearce, M. T., McIntosh, A. R., Chang, C., Dagher, A., & Zatorre, R. J. (2023)**. Auditory and reward structures reflect the pleasure of musical expectancies during naturalistic listening. *Frontiers in Neuroscience, 17*, 1209398. doi:10.3389/fnins.2023.1209398
+4. **Albury, A. W., Bianco, R., Gold, B. P., & Penhune, V. B. (2023)**. Context changes judgments of liking and predictability for melodies. *Frontiers in Psychology, 14*, 1175682. doi:10.3389/fpsyg.2023.1175682
+5. **Kim, S.-G., Mueller, K., Lepsien, J., Mildner, T., & Fritz, T. H. (2019)**. Brain networks underlying aesthetic appreciation as modulated by interaction of the spectral and temporal organisations of music. *Scientific Reports, 9*, 19446. doi:10.1038/s41598-019-55781-9
+6. **Zioga, I., Harrison, P. M. C., Pearce, M., Bhattacharya, J., & Di Bernardi Luft, C. (2024)**. The association between liking, learning and creativity in music. *Scientific Reports, 14*, 19048. doi:10.1038/s41598-024-70027-z
+7. **Mencke, I., Omigie, D., Wald-Fuhrmann, M., & Brattico, E. (2019)**. Atonal music: Can uncertainty lead to pleasure? *Frontiers in Neuroscience, 12*, 979. doi:10.3389/fnins.2018.00979
+8. **Berlyne, D. E. (1971)**. *Aesthetics and Psychobiology*. Appleton-Century-Crofts.
 
 ---
 
@@ -580,7 +613,25 @@ class SSPS(BaseModel):
 
 ---
 
-**Model Status**: ⚠️ **PRELIMINARY**
+## 15. Doc-Code Mismatches
+
+The following discrepancies exist between this document and `mi_beta/brain/units/rpu/models/ssps.py`. These are expected at v2.1.0 and will be reconciled in Phase 5.
+
+| Aspect | Doc (v2.1.0) | Code (v2.0.0 stub) | Action |
+|--------|-------------|---------------------|--------|
+| FULL_NAME | "Saddle-Shaped Preference Surface" | "Social Signal Processing System" | Code needs correction |
+| OUTPUT_DIM | 6 | 10 | Code needs correction (10D includes Layer M not in doc) |
+| MECHANISM_NAMES | ("AED", "CPD", "C0P") | ("ASA",) | Code needs correction |
+| CROSS_UNIT_READS | Not specified | ("ARU",) | Code needs correction |
+| LAYERS | E(4D) + P(1D) + F(1D) = 6D | E(4D) + M(3D) + P(1D) + F(2D) = 10D | Code needs correction; Layer M not justified by literature |
+| h3_demand | 14 tuples (detailed) | Empty tuple () | Code needs implementation |
+| brain_regions | 7 regions (Amyg, AC, R STG, VS, Caudate, vmPFC, pre-SMA) | 3 regions (NAcc, OFC, vmPFC) | Code needs update |
+| Citations | Cheung 2019 (primary), Gold 2019b, Gold 2023 + 5 more | Gold 2019 only | Code needs update |
+| compute() | Full implementation in pseudocode | Returns zeros (stub) | Code needs Phase 5 implementation |
+
+---
+
+**Model Status**: **LITERATURE-VALIDATED** (upgraded from PRELIMINARY)
 **Output Dimensions**: **6D**
-**Evidence Tier**: **γ (Integrative)**
-**Confidence**: **50-70%**
+**Evidence Tier**: **gamma (Integrative)** -- strengthened by multi-study convergence (8 papers, 3 independent labs)
+**Confidence**: **55-70%** (upgraded from 50-70% based on replication across chords and melodies)

@@ -4,8 +4,8 @@
 **Unit**: RPU (Reward Processing Unit)
 **Circuit**: Mesolimbic (NAcc, VTA, vmPFC, OFC, Amygdala)
 **Tier**: β (Bridging) — 70-90% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, AED+CPD+C0P mechanisms)
-**Date**: 2026-02-12
+**Version**: 2.1.0 (literature-reviewed, multi-study evidence)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -138,17 +138,28 @@ IUCP provides the complexity-preference surface for the Reward Processing Unit:
 
 | Study | Method | N | Key Finding | Effect Size | MI Relevance |
 |-------|--------|---|-------------|-------------|-------------|
-| **Gold 2019** | Behavioral + fMRI | 43 | Inverted U for IC | p < 0.001 | **Primary**: f01 IC liking curve |
-| **Gold 2019** | Behavioral + fMRI | 43 | Inverted U for Entropy | p < 0.001 | **f02 entropy liking curve** |
-| **Gold 2019** | Behavioral + fMRI | 43 | IC x Entropy interaction | p < 0.05 | **f03 interaction effect** |
+| **Gold 2019** (Study 1) | Behavioral + IDyOM | 43 | Inverted U for IC | R²=26.3%, β_quad=-0.09 (p<0.001) | **Primary**: f01 IC liking curve |
+| **Gold 2019** (Study 1) | Behavioral + IDyOM | 43 | Inverted U for Entropy | R²=19.1%, β_quad=-0.06 (p=0.003) | **f02 entropy liking curve** |
+| **Gold 2019** (Study 1) | Behavioral + IDyOM | 43 | IC × Entropy interaction | partial η²=0.07, p=0.06 (marginal) | **f03 interaction** (trend-level) |
+| **Gold 2019** (Study 2) | Behavioral + IDyOM | 27 | Replication: IC inverted-U | R²=41.6%, β_quad=-0.18 (p<0.001) | **Replication** of f01 |
+| **Gold 2019** (Study 2) | Behavioral + IDyOM | 27 | Replication: Entropy inverted-U | R²=34.9%, β_quad=-0.25 (p<0.001) | **Replication** of f02 |
+| **Gold 2023b** | fMRI + IDyOM | 24 | VS reflects surprise×uncertainty interaction | Subthreshold cluster overlapping VS ROI | **Neural**: f03 IC×Entropy in VS |
+| **Gold 2023b** | fMRI + IDyOM | 24 | Liking → R STG activity | t(23)=2.56, p=0.018 uncorr | **Neural**: auditory liking signal |
+| **Gold 2023b** | fMRI + IDyOM | 24 | Average liking → VS response | F(1,22)=4.83, p=0.039 uncorr | **Neural**: VS reward signal |
+| **Cheung 2019** | Behavioral + fMRI + IDyOM | 39 (beh), 40 (fMRI) | Saddle-shaped uncertainty×surprise surface | Significant interaction (p<0.05) | **Replication**: f03 saddle surface |
+| **Cheung 2019** | fMRI + IDyOM | 40 | Amygdala+hippocampus+STG reflect interaction | Cluster-corrected fMRI | **Neural**: MTL+STG for interaction |
+| **Cheung 2019** | fMRI + IDyOM | 40 | NAcc reflects uncertainty (not surprise) | VS entropy only | **Neural**: NAcc = uncertainty encoder |
 
 ### 3.2 Effect Size Summary
 
 ```
-Primary Evidence (k=3):  All findings from single behavioral+fMRI study
-Heterogeneity:           N/A (single study, multiple measures)
-Quality Assessment:      β-tier (behavioral + neural convergence)
-Replication:             Consistent with Berlyne's (1971) arousal theory
+Primary Evidence (k=11): Multi-study behavioral + fMRI convergence
+Heterogeneity:           Low — consistent inverted-U across 3 independent samples
+Quality Assessment:      β-tier (behavioral replication + fMRI convergence)
+Replication:             Gold 2019 Study 1 → Study 2 replication; Cheung 2019 independent replication
+                         Gold 2023b provides fMRI evidence for VS+STG
+Note:                    IC×Entropy interaction marginal in Gold 2019 Study 1 (p=0.06)
+                         but significant in Cheung 2019 and Gold 2023b behavioral
 ```
 
 ---
@@ -339,8 +350,10 @@ f04 = σ(0.50 * f03
 
 | Region | MNI Coordinates | Mentions | Evidence Type | IUCP Function |
 |--------|-----------------|----------|---------------|---------------|
-| **Ventral Striatum (VS)** | ±8, 6, -4 | 1 | Indirect (behavioral + fMRI) | Reward for optimal complexity |
-| **Auditory Cortex (STG)** | ±52, -22, 8 | 1 | Indirect (behavioral) | IC computation |
+| **Ventral Striatum (VS/NAcc)** | ±8, 6, -4 | 3 | fMRI (Gold 2023b: liking+interaction; Cheung 2019: entropy) | Reward for optimal complexity; uncertainty encoding |
+| **Right Superior Temporal Gyrus (R STG)** | 60, -20, 4 | 2 | fMRI (Gold 2023b: liking p=0.018; Cheung 2019) | IC computation; liking signal |
+| **Amygdala** | ±24, -4, -18 | 1 | fMRI (Cheung 2019: uncertainty×surprise interaction) | Uncertainty×surprise integration |
+| **Hippocampus** | ±28, -16, -12 | 1 | fMRI (Cheung 2019: uncertainty×surprise interaction) | Contextual prediction memory |
 
 ---
 
@@ -380,7 +393,7 @@ f04 = σ(0.50 * f03
 |-----------|---------------------|--------|
 | **Inverted-U IC** | Medium IC preferred over low/high IC | ✅ **Confirmed** (p < 0.001, Gold 2019) |
 | **Inverted-U entropy** | Medium entropy preferred over low/high entropy | ✅ **Confirmed** (p < 0.001, Gold 2019) |
-| **Interaction** | High entropy → prefer low IC | ✅ **Confirmed** (p < 0.05, Gold 2019) |
+| **Interaction** | High entropy → prefer low IC | ⚠️ **Marginal** (p=0.06, Gold 2019 Study 1); ✅ **Confirmed** (Cheung 2019, Gold 2023b) |
 | **Expertise modulation** | Musicians may have shifted optimal zones | Testable |
 | **Familiarity effect** | Repeated exposure should shift optimal IC | Testable |
 
@@ -518,10 +531,10 @@ class IUCP(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 1 (Gold 2019) | Primary evidence |
-| **Effect Sizes** | 3 (all p < 0.05) | Behavioral + fMRI |
-| **Evidence Modality** | Behavioral, fMRI | Convergent evidence |
-| **Falsification Tests** | 3/5 confirmed | High validity |
+| **Papers** | 3 (Gold 2019, Gold 2023b, Cheung 2019) | Multi-study convergence |
+| **Effect Sizes** | 11 (IC/Entropy inverted-U replicated, VS+STG fMRI) | Behavioral + fMRI |
+| **Evidence Modality** | Behavioral (N=43+27+39), fMRI (N=24+40) | Strong convergent evidence |
+| **Falsification Tests** | 3/5 confirmed (interaction marginal in Gold 2019 S1, confirmed elsewhere) | High validity |
 | **R³ Features Used** | ~10D of 49D | Consonance + energy + change + interactions |
 | **H³ Demand** | 14 tuples (0.61%) | Sparse, efficient |
 | **AED Mechanism** | 30D (3 sub-sections) | Liking evaluation |
@@ -534,6 +547,10 @@ class IUCP(BaseModel):
 ## 13. Scientific References
 
 1. **Gold, B. P., Pearce, M. T., Mas-Herrero, E., Dagher, A., & Zatorre, R. J. (2019)**. Predictability and uncertainty in the pleasure of music: A reward for learning? *Journal of Neuroscience*, 39(47), 9397-9409.
+
+2. **Gold, B. P., Pearce, M. T., McIntosh, A. R., Chang, C., Dagher, A., & Zatorre, R. J. (2023)**. Auditory and reward structures reflect the pleasure of musical expectancies during naturalistic listening. *Frontiers in Neuroscience*, 17, 1209398.
+
+3. **Cheung, V. K. M., Harrison, P. M. C., Meyer, L., Pearce, M. T., Haynes, J.-D., & Koelsch, S. (2019)**. Uncertainty and surprise jointly predict musical pleasure and amygdala, hippocampus, and auditory cortex activity. *Current Biology*, 29(23), 4084-4092.
 
 ---
 

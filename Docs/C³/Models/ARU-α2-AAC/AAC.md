@@ -9,8 +9,8 @@
 **Unit**: ARU (Affective Resonance Unit)
 **Circuit**: Mesolimbic Reward Circuit
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 1.1.0 (MI paradigm — deep research update)
-**Date**: 2026-02-11
+**Version**: 2.1.0 (Beta upgrade — deep literature audit, +3 papers)
+**Date**: 2026-02-12
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -219,6 +219,9 @@ Before AAC:                          After AAC:
 | **Gomez & Danuser 2007** | Multi-ANS | 48 | SCR, HR, RespR, Temp all respond. Factor structure confirms arousal dominance. RespR: r=0.42 arousal, r=0.08 valence | Multi-factor | **5 ANS markers are distinct measurement channels** |
 | **Fancourt 2020** | Meta-analysis | k=26 | Meta-pooled effect sizes: SCR d=0.85, HR d=0.8–1.5, RespR d=0.45 | d=0.45–0.85 | **Corrected effect sizes for all markers** |
 | **Laeng 2016** | Pupillometry | 24 | Pupil dilation +0.2–0.5mm during chills, r=0.56 with intensity, onset 200–500ms pre-report | r=0.56 | **Additional sympathetic marker (future)** |
+| **Chabin et al. 2020** | HD-EEG (256ch) | 18 | Theta ↑ in fronto-prefrontal (OFC) with pleasure. Decreased theta in right SMA + STG during chills. Source-localized chills cortical signature | F(2,15)=17.4–27.3, p<10⁻⁵ | **EEG temporal validation of chills circuit** |
+| **Mori & Zatorre 2024** | fMRI + LASSO | 49 | Pre-listening auditory-reward connectivity predicts chills duration. Right AC→striatum/OFC most predictive | r=0.53 (chills), r=0.61 (NAcc) | **Tonic baseline state modulates AAC responsiveness** |
+| **Sachs et al. 2025** | fMRI + HMM | 39 | Temporal-parietal axis tracks emotion transitions. Context modulates neural event boundary timing | Significant | **Emotion transition dynamics affect ANS response timing** |
 
 † **Note on Egermann effect sizes**: The d=2.5 (SCR) and d=6.0 (HR) values are context-specific
 (live concert, selected stimuli, small N). Meta-analytic pooled estimates are more conservative:
@@ -790,6 +793,12 @@ The DemandAggregator computes shared mechanisms ONCE and both models read:
 28. Bregman, A.S. (1990). *Auditory Scene Analysis*. MIT Press.
 29. Micheyl, C. et al. (2007). Auditory cortex in stream formation. *Hearing Research*, 229(1–2), 116–131. **350ms window validation.**
 30. Giraud, A.L. & Poeppel, D. (2012). Cortical oscillations and speech. *Nature Neuroscience*, 15(4), 511–517.
+
+### Added in v2.1.0 Beta Upgrade
+
+31. Chabin, T., Gabriel, D., Chansophonkul, T. et al. (2020). Cortical patterns of pleasurable musical chills revealed by high-density EEG. *Frontiers in Neuroscience*, 14, 565815. **EEG source-localized chills validation.**
+32. Mori, K. & Zatorre, R.J. (2024). State-dependent connectivity in auditory-reward networks predicts peak pleasure experiences to music. *PLoS Biology*, 22(8), e3002732. **Pre-listening baseline predicts chills.**
+33. Sachs, M.E., Kozak, M.S., Ochsner, K.N. & Baldassano, C. (2025). Emotions in the brain are dynamic and contextually dependent: using music to measure affective transitions. *eNeuro*. **Context-dependent emotion transitions.**
 
 > Full 60+ paper bibliography: [AAC-DEEP-RESEARCH.md](AAC-DEEP-RESEARCH.md)
 

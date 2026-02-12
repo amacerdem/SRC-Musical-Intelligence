@@ -4,8 +4,8 @@
 **Unit**: IMU (Integrative Memory Unit)
 **Circuit**: Mnemonic (Hippocampal-Cortical)
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, SYN mechanism)
-**Date**: 2026-02-12
+**Version**: 2.1.0 (deep literature cross-reference, 4→12 papers, +R-STG region, verified coordinates)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -183,8 +183,16 @@ Though PNH involves consonance processing (SPU territory), its core claim is abo
 
 | Study | Method | N | Key Finding | Effect Size | MI Relevance |
 |-------|--------|---|-------------|-------------|-------------|
-| **Pythagorean fMRI (2020)** | fMRI | 13 | Dissonant > consonant activation in IFG, STG, MTG, MFG, IPL, ACC | p < 0.0001 | **Primary: ratio→activation mapping** |
-| **Pythagorean fMRI (2020)** | fMRI | 13 | Musicians show Pythagorean pattern in 5 ROIs; non-musicians in 1 | p < 0.01 | **Expertise modulation (f06)** |
+| **Bidelman & Krishnan (2009)** *J Neurosci* | Brainstem FFR | 10 | Brainstem responses follow Pythagorean hierarchy; NPS ordering matches music theory | r ≥ 0.81 (brain-behavior) | **Primary: subcortical ratio hierarchy** |
+| **Tabas et al. (2019)** *PLoS Comput Biol* | MEG + model | 37 | Consonant dyads → earlier (up to 36 ms) and larger POR than dissonant in alHG | p < 0.0001 (latency + amplitude) | **Early cortical ratio encoding** |
+| **Foo et al. (2016)** *Front Hum Neurosci* | ECoG | 8 | High-gamma power in STG correlates with roughness; R-STG shows spatial organization | Wilcoxon p < 0.05 FDR | **STG roughness encoding, R-STG** |
+| **Fishman et al. (2001)** *J Neurophysiol* | Intracranial (macaque) | — | Phase-locked A1 activity differentiates consonant/dissonant; Pythagorean tuning stimuli | Spectral peaks sig. diss > cons | **Cross-species Pythagorean hierarchy** |
+| **Crespo-Bojorque et al. (2018)** *Neuropsychologia* | EEG oddball | 32 | Consonance-context violations → MMN in all; dissonance-context → MMN only in musicians | ANOVA interaction | **Expertise modulation (f06)** |
+| **Kim et al. (2021)** *Front Neurosci* | MEG connectivity | 19 | Syntactic irregularity → R-IFG→L-IFG connectivity; perceptual ambiguity → R-STG→L-STG | p = 0.024 FDR (IFG), p < 0.001 FDR (STG) | **IFG conflict monitoring, STG dissociation** |
+| **Di Stefano, Vuust & Brattico (2022)** *Phys Life Rev* | Review | — | Integrates roughness, vocality, cultural hypotheses; sensory vs harmonic consonance | — (review) | **Framework review: multi-level C/D** |
+| **Harrison & Pearce (2020)** *Psychol Rev* | Model + reanalysis | 500+ | Consonance = interference + harmonicity + cultural familiarity (3-factor model) | R² across 4 datasets | **Three-factor model; MEM.familiarity** |
+| **Schon et al. (2005)** *Music Perception* | ERP | 20 | Musicians: N1-P2 (100-200ms); non-musicians: N2 (200-300ms) for consonance | ANOVA main effects | **Expertise timing difference** |
+| **Sarasso et al. (2019)** *Sci Rep* | EEG + behavioral | 22 | Consonance → aesthetic appreciation → motor inhibition; N1/P2 modulated by interval type | η²p = 0.685 (AJ), 0.225 (N1) | **Consonance-preference-attention link** |
 | **Plomp & Levelt (1965)** | Psychoacoustic | — | Critical bandwidth theory of roughness perception | — | **R³.roughness[0] computation** |
 | **Sethares (1999)** | Mathematical | — | Timbre-dependent consonance depends on partial frequencies | — | **R³.sethares_dissonance[1]** |
 
@@ -220,7 +228,22 @@ NEURAL MAPPING:
   BOLD_nonmusician(ratio) = α · Complexity(ratio) + ε   [1 ROI]
 ```
 
-### 3.3 R³ Proxy for Ratio Complexity
+### 3.3 Effect Size Summary
+
+| Measure | Value | Source |
+|---------|-------|--------|
+| Brain-behavior NPS correlation | r ≥ 0.81 | Bidelman & Krishnan 2009 |
+| POR latency/amplitude (cons vs diss) | p < 0.0001 | Tabas et al. 2019 |
+| High-gamma roughness correlation | p < 0.05 FDR | Foo et al. 2016 |
+| IFG connectivity (syntactic irregularity) | p = 0.024 FDR | Kim et al. 2021 |
+| STG connectivity (perceptual ambiguity) | p < 0.001 FDR | Kim et al. 2021 |
+| Consonance MMN asymmetry | p = 0.003 | Wagner et al. 2018 |
+| Aesthetic judgment by consonance | η²p = 0.685 | Sarasso et al. 2019 |
+| N1 modulation by consonance | η²p = 0.225 | Sarasso et al. 2019 |
+| Memorization: preferred vs non-preferred | d = 0.474 | Sarasso et al. 2021 |
+| Recurrence-Frova consonance correlation | ~1.0 | Trulla et al. 2018 |
+
+### 3.4 R³ Proxy for Ratio Complexity
 
 In the MI pipeline, we don't compute frequency ratios directly (the cochlea gives us mel spectrograms, not pitch pairs). Instead, we use R³ features that **correlate with** ratio complexity:
 
@@ -409,14 +432,16 @@ idx │ Name              │ Range  │ Neuroscience Basis
 
 ### 7.1 Pipeline Validated Regions
 
-| Region | MNI Coordinates | Evidence | PNH Function |
-|--------|-----------------|----------|--------------|
-| **L-IFG (BA 44/45)** | -44, 14, 28 | fMRI (p<0.0001) | Conflict monitoring (dissonance) |
-| **L-STG** | -60, -32, 8 | fMRI | Auditory encoding (spectrotemporal) |
-| **L-MFG** | -40, 32, 28 | fMRI | Working memory (template comparison) |
-| **L-IPL** | -48, -48, 44 | fMRI | Multi-feature integration |
-| **ACC** | 0, 20, 32 | fMRI | Salience detection (ratio complexity) |
-| **R-IFG** | 44, 14, 28 | fMRI | Universal conflict monitoring (non-musicians) |
+| Region | MNI Coordinates | Source | Evidence | PNH Function |
+|--------|-----------------|--------|----------|--------------|
+| **L-IFG (BA 44/45)** | -41, 19, 16 | Kim et al. 2021 (Talairach) | MEG connectivity (p=0.024 FDR) | Conflict monitoring (dissonance), ERAN |
+| **R-IFG** | 38, 21, 15 | Kim et al. 2021 (Talairach) | MEG connectivity (p=0.024 FDR) | Universal conflict monitoring; R→L-IFG connectivity |
+| **L-STG** | -45, -9, 2 | Kim et al. 2021 (Talairach) | MEG connectivity (p<0.001 FDR) | Auditory encoding (perceptual ambiguity) |
+| **R-STG** | 43, -3, 2 | Kim et al. 2021 (Talairach) | ECoG high-gamma (Foo 2016) | Roughness-gamma correlation; spatial organization |
+| **alHG (Heschl's gyrus)** | bilateral | Tabas et al. 2019 | MEG POR (p<0.0001) | Early consonance encoding (POR latency) |
+| **L-MFG** | -40, 32, 28 | v2.0.0 estimate | fMRI | Working memory (template comparison) |
+| **L-IPL** | -48, -48, 44 | v2.0.0 estimate | fMRI | Multi-feature integration |
+| **ACC** | 0, 20, 32 | v2.0.0 estimate | fMRI | Salience detection (ratio complexity) |
 
 ### 7.2 Musician vs Non-Musician
 
@@ -608,9 +633,10 @@ class PNH(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 2 | Primary fMRI evidence |
-| **Effect Sizes** | 2 | fMRI studies |
-| **Evidence Modality** | fMRI | Direct neural measurement |
+| **Papers** | 12 | FFR, MEG, ECoG, EEG, fMRI, review, computational |
+| **Effect Sizes** | 10 | See Section 3.3 |
+| **Evidence Modalities** | FFR, MEG, ECoG, EEG, fMRI, computational | Multi-modal convergence |
+| **Brain Regions** | 8 | L/R-IFG, L/R-STG, alHG, L-MFG, L-IPL, ACC |
 | **Falsification Tests** | 3/3 confirmed | High validity |
 | **R³ Features Used** | 27D of 49D | Consonance-focused |
 | **H³ Demand** | 15 tuples (0.65%) | Sparse, efficient |
@@ -621,10 +647,18 @@ class PNH(BaseModel):
 
 ## 12. Scientific References
 
-1. **Pythagorean fMRI study (2020)**. Dissonant > consonant activation in IFG, STG, MTG, MFG, IPL, ACC. n=13, p < 0.0001.
-2. **Pythagorean musician study (2020)**. Musicians show Pythagorean pattern in 5 ROIs; non-musicians in 1 ROI. n=13, p < 0.01.
-3. **Plomp & Levelt (1965)**. Tonal consonance and critical bandwidth. *JASA*.
-4. **Sethares (1999)**. *Tuning, Timbre, Spectrum, Scale*. Springer.
+1. **Bidelman GM, Krishnan A (2009)**. Neural correlates of consonance, dissonance, and the hierarchy of musical pitch in the human brainstem. *J Neurosci* 29(42):13165-13171. N=10 nonmusicians; brainstem FFR; NPS ordering matches Pythagorean hierarchy; r ≥ 0.81 brain-behavior correlation.
+2. **Tabas A, Andermann M, Schuberth V, Riedel H, Balaguer-Ballester E, Rupp A (2019)**. Modeling and MEG evidence of early consonance processing in auditory cortex. *PLoS Comput Biol* 15(2):e1006820. N=37; consonant POR up to 36 ms earlier; p < 0.0001 for latency and amplitude; alHG source.
+3. **Foo F, King-Stephens D, Weber P, Laxer K, Parvizi J, Knight RT (2016)**. Differential processing of consonance and dissonance within the human superior temporal gyrus. *Front Hum Neurosci* 10:154. N=8 ECoG; high-gamma correlates with roughness in STG; R-STG spatial organization.
+4. **Fishman YI, Volkov IO, Noh MD, Garell PC, Bakken H, Arezzo JC, Howard MA, Steinschneider M (2001)**. Consonance and dissonance of musical chords: neural correlates in auditory cortex of monkeys and humans. *J Neurophysiol* 86(6):2761-2788. Cross-species A1 phase-locking; Pythagorean tuning stimuli.
+5. **Crespo-Bojorque P, Monte-Ordono J, Toro JM (2018)**. Early neural responses underlie advantages for consonance over dissonance. *Neuropsychologia* 117:188-198. N=32; MMN asymmetry — consonance violations detected automatically, dissonance violations only by musicians.
+6. **Kim CH, Jin SH, Kim JS, Kim Y, Yi SW, Chung CK (2021)**. Dissociation of connectivity for syntactic irregularity and perceptual ambiguity in musical chord stimuli. *Front Neurosci* 15:693629. N=19 MEG; IFG-LTDMI p=0.024 FDR; STG-LTDMI p<0.001 FDR; Talairach coordinates for L/R-IFG and L/R-STG.
+7. **Di Stefano N, Vuust P, Brattico E (2022)**. Consonance and dissonance perception. A critical review. *Phys Life Rev* 43:273-304. Integrates roughness, vocality, cultural hypotheses.
+8. **Harrison PMC, Pearce MT (2020)**. Simultaneous consonance in music perception and composition. *Psychol Rev* 127(2):216-244. N=500+ reanalysis; 3-factor model (interference + harmonicity + culture).
+9. **Schon D, Regnault P, Ystad S, Besson M (2005)**. Sensory consonance: an ERP study. *Music Perception* 23(2):105-117. N=20; musicians N1-P2 (100-200ms) vs non-musicians N2 (200-300ms).
+10. **Sarasso P, Ronga I, Pistis A et al. (2019)**. Aesthetic appreciation of musical intervals enhances attentional engagement and motor inhibition. *Sci Rep* 9:18550. N=22; η²p = 0.685 for aesthetic judgment; N1/P2 modulated by consonance.
+11. **Plomp R, Levelt WJM (1965)**. Tonal consonance and critical bandwidth. *JASA* 38(4):548-560. Critical bandwidth roughness theory.
+12. **Sethares WA (1999)**. *Tuning, Timbre, Spectrum, Scale*. Springer. Timbre-dependent dissonance model.
 
 ---
 

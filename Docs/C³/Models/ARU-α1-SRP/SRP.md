@@ -9,8 +9,8 @@
 **Unit**: ARU (Affective Resonance Unit)
 **Circuit**: Mesolimbic Reward Circuit
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 4.0.0 (R³/H³ naming, demand matrix correction)
-**Date**: 2026-02-11
+**Version**: 5.0.0 (v2.1.0 Beta upgrade — deep literature audit, +5 papers)
+**Date**: 2026-02-12
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../Road-map/01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -277,6 +277,11 @@ The auditory cortex → NAcc connection is THE critical link for music reward.
 | **Howe 2013** | In vivo rodent | — | DA ramps gradually toward distant goals. Quasi-hyperbolic, scales with distance × magnitude | — | **da_caudate ramp profile** |
 | **Schultz 2016** | Review | — | Two-component phasic DA: (1) unselective detection 40-120ms, (2) value-coding RPE. Baseline ~5 Hz, burst 14-30 Hz | — | **prediction_error temporal profile** |
 | **Loui 2017** | DTI | 20 | White matter NAcc-STG tract integrity ↔ pleasure | r=0.61 | **Structural basis for individual differences** |
+| **Mori & Zatorre 2024** | fMRI + ML (LASSO) | 49 | Pre-listening auditory-reward network connectivity predicts subsequent chills duration and NAcc activation. Right AC-striatum/OFC connections most predictive | r=0.53 (chills), r=0.61 (NAcc BOLD) | **stg_nacc_coupling has tonic baseline component; pre-listening state matters** |
+| **Mohebi et al. 2024** | Fiber photometry (dLight, rodent) | — | DA transients follow striatal gradient of reward time horizons: VS τ=981s, DMS τ=414s, DLS τ=36s. Ventral = long horizons, dorsal = short | Gradient significant | **Mechanistic basis for multi-timescale da_caudate vs da_nacc** |
+| **Chabin et al. 2020** | HD-EEG (256ch) + source localization | 18 | Theta ↑ in fronto-prefrontal (OFC) with pleasure; decreased theta in right central (SMA) + right temporal (STG) during chills. Beta/alpha ratio ↑ with arousal | F(2,15)=17.4-27.3, p<10⁻⁵ | **EEG temporal validation of chills circuit (OFC, SMA, STG)** |
+| **Sachs et al. 2025** | fMRI + HMM | 39 | Spatiotemporal patterns along temporal-parietal axis track emotion transitions. Context modulates neural event boundaries — same music evokes different timing depending on preceding emotion | Significant | **Dynamic emotion context effects on temporal processing** |
+| **Mas-Herrero et al. 2014** | fMRI + behavioral + SCR/HR | 30 | Musical anhedonia is SPECIFIC to music (money/sex unaffected). ANH group: no SCR-pleasure correlation (t(9)=0.88, p=0.4) vs HDN: r significant (t(9)=5.43, p<0.001) | BMRQ F(2,23)=19.14, p<0.001 | **Original anhedonia specificity evidence; extends Martinez-Molina 2016** |
 
 ### 3.2 The Temporal Story: Exact Timing
 
@@ -1131,3 +1136,11 @@ The composer should confirm:
 28. Loui, P. et al. (2017). White matter correlates of musical anhedonia. *Frontiers in Psychology*, 8, 1664.
 29. Meyer, L.B. (1956). *Emotion and Meaning in Music*. University of Chicago Press.
 30. Juslin, P.N. (2013). From everyday emotions to aesthetic emotions (BRECVEMA). *Physics of Life Reviews*, 10(3), 235-266.
+
+### Added in v2.1.0 Beta Upgrade
+
+31. Mori, K. & Zatorre, R.J. (2024). State-dependent connectivity in auditory-reward networks predicts peak pleasure experiences to music. *PLoS Biology*, 22(8), e3002732.
+32. Mohebi, A., Wei, W., Pelattini, L., Kim, K. & Berke, J.D. (2024). Dopamine transients follow a striatal gradient of reward time horizons. *Nature Neuroscience*, 27, 737-746.
+33. Chabin, T., Gabriel, D., Chansophonkul, T. et al. (2020). Cortical patterns of pleasurable musical chills revealed by high-density EEG. *Frontiers in Neuroscience*, 14, 565815.
+34. Sachs, M.E., Kozak, M.S., Ochsner, K.N. & Baldassano, C. (2025). Emotions in the brain are dynamic and contextually dependent: using music to measure affective transitions. *eNeuro*.
+35. Mas-Herrero, E., Zatorre, R.J., Rodriguez-Fornells, A. & Marco-Pallarés, J. (2014). Dissociation between musical and monetary reward responses in specific musical anhedonia. *Current Biology*, 24(6), 699-704.

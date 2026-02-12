@@ -4,8 +4,8 @@
 **Unit**: PCU (Predictive Coding Unit)
 **Circuit**: Imagery (Auditory Cortex, IFG, STS, Hippocampus)
 **Tier**: β (Bridging) — 70-90% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, PPC+TPC+MEM mechanisms)
-**Date**: 2026-02-12
+**Version**: 2.1.0 (deep C³ literature integration, +8 papers, brain region expansion)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -167,25 +167,37 @@ CHPI integrates cross-modal information into the harmonic prediction pipeline:
 |-------|--------|---|-------------|-------------|-------------|
 | **Moller et al. 2021** | DTI + Behavioral | 45 | FA in left IFOF correlates with visual-auditory gain (BCG) in pitch discrimination | p < 0.001 | **f01 crossmodal prediction gain, f03 visual-motor lead** |
 | **Moller et al. 2021** | MACACC (CT) | 45 | Non-musicians show greater CT correlation between V1 and Heschl's gyrus than musicians | FDR < 10% | **f01: auditory specialization reduces cross-modal reliance** |
-| **Cheung et al. 2019** | fMRI + IDyOM | 24 (fMRI) + 39 (behav) | Uncertainty x surprise interaction predicts chord pleasure; amygdala, hippocampus, auditory cortex | significant | **f04 harmonic surprise modulation** |
+| **Cheung et al. 2019** | fMRI + IDyOM | 40 (fMRI) + 39 (behav) | Uncertainty x surprise interaction predicts chord pleasure; amygdala (left beta=-0.116, right beta=-0.140), hippocampus, auditory cortex (left beta=-0.182, right beta=-0.128) | beta=-0.124, p=0.000246 (interaction) | **f04 harmonic surprise modulation** |
 | **Bauer et al. 2020** | Review (EEG/MEG) | -- | Cross-modal phase resetting and neural entrainment mediate cross-modal influences in sensory cortices | review | **f03 visual-motor lead timing mechanism** |
 | **Kim et al. 2021** | MEG | 16 | IFG connectivity for syntactic irregularity; STG connectivity for perceptual ambiguity in chords | p = 0.024 (IFG), p < 0.001 (STG) | **f02 voiceleading parsimony (IFG harmonic syntax)** |
-| **Gold et al. 2023** | fMRI | 24 | Uncertainty x surprise interaction in VS and R STG during naturalistic music listening | significant | **f04 harmonic surprise modulation, reward** |
+| **Gold et al. 2023** | fMRI | 24 | Uncertainty x surprise interaction in VS and R STG during naturalistic music listening; replicates Cheung 2019 | significant (VS x surprise) | **f04 harmonic surprise modulation, reward** |
 | **Egermann & Pearce 2013** | Behavioral + Psychophysiology | 50 | Information-theoretic melodic expectation predicts emotional response in live concert | p < 0.01 | **f04 harmonic surprise links to emotion** |
 | **Tymoczko 2011** | Theoretical (Geometry) | -- | Voice-leading as movement in geometric chord space; parsimony principle | theoretical | **f02 voiceleading parsimony (R³ basis)** |
 | **Gollin & Rehding 2011** | Theoretical (Neo-Riemannian) | -- | PLR transformations model efficient chord transitions via minimal voice-leading | theoretical | **f02 Neo-Riemannian parsimony for chord prediction** |
-| **Takagi et al. 2025** | fMRI + Deep Generative | 30 | Cross-modal features explain dance-evoked brain activity better than unimodal features; expert vs novice differences | significant | **f01 cross-modal superiority over unimodal prediction** [PENDING VERIFICATION] |
-| **Paraskevopoulos et al. 2015** | MEG | 40 | Musicians show enhanced functional connectivity primarily in auditory regions during AV integration | p < 0.05 | **f01 musician-specific AV network refinement** [PENDING VERIFICATION] |
+| **Takagi et al. 2025** | fMRI + Deep Generative (EDGE) | 14 (7 expert, 7 novice) | Cross-modal transformer features explain dance-evoked brain activity better than unimodal motion or audio features; IPS, precuneus, STS show cross-modal dominance; experts show more significant voxels (U=8, P=0.038) but greater individual variability (P<0.001) | significant (cross-modal > unimodal) | **f01 cross-modal superiority over unimodal prediction** |
+| **Paraskevopoulos et al. 2022** | MEG | 25 (12 musicians, 13 non-musicians) | Musicians show increased intra-network but decreased inter-network connectivity during multisensory statistical learning; AV irregularity network: IFG, medial temporal, intraparietal regions; left IFJa shows strongest group difference | p < 0.001 FDR corrected | **f01 musician-specific cross-modal network compartmentalization** |
+| **de Vries & Wurm 2023** | MEG (source-reconstructed) + dynamic RSA | healthy adults | Hierarchical motion prediction: view-invariant body motion predicted ~500ms ahead, view-dependent ~200ms, optical flow ~110ms; predictive representations in action observation network | F(2)=19.9, p=8.3e-7, eta_p^2=0.49 | **f03 hierarchical cross-modal prediction timescales** |
+| **Wagner et al. 2018** | EEG | 15 (non-musicians) | MMN for harmonic intervals: major third deviant evokes clear MMN but fifth does not; asymmetric pre-attentive harmonic discrimination | MMN=-0.34uV at 173ms, p=0.003 (third); p=0.194 (fifth) | **f02 pre-attentive voice-leading sensitivity** |
+| **Yilmaz et al. 2025** | fMRI | 21 | Crossmodal emotional congruency (music+paintings) enhances beauty ratings; congruent: ventral stream, amygdala, STC; incongruent: frontoparietal + caudate | significant (congruency effect) | **f01 cross-modal congruency enhances aesthetic integration** |
+| **Millidge, Seth & Buckley 2022** | Theoretical (review) | -- | Comprehensive theoretical framework: predictive coding as variational inference; hierarchical prediction, precision weighting, active inference | theoretical | **f04 theoretical foundation for hierarchical harmonic prediction** |
+| **Tanaka 2021** | EEG | 21 (opera singers) | Alpha suppression (mu rhythm) during audiovisual opera observation but not auditory-only; mirror neuron system engaged by cross-modal but not unimodal perception | significant (AV > A-only mu suppression) | **f03 motor mirror system engaged by AV musical stimuli** |
+| **Porfyri, Paraskevopoulos et al. 2025** | EEG | 30 | Multisensory training alters effective connectivity across all modalities; unisensory training affects only auditory; left MFG, left IFS, left insula most altered; top-down feedback connections | significant (group x time interaction) | **f01 multisensory training superiority for cross-modal networks** |
+| **Paraskevopoulos et al. 2015** | MEG | 40 | Musicians show enhanced functional connectivity primarily in auditory regions during AV integration | p < 0.05 | **f01 musician-specific AV network refinement** [NOT IN C3 CATALOG -- external citation] |
 
 ### 3.2 Effect Size Summary
 
 ```
 Primary Effects:      p < 0.001 (IFOF-BCG correlation, Moller 2021)
                       p < 0.001 (STG connectivity for ambiguity, Kim 2021)
-                      Significant uncertainty x surprise interaction (Cheung 2019)
-Heterogeneity:        Multi-study convergence (DTI, fMRI, MEG, behavioral)
-Quality Assessment:   β-tier (cross-domain synthesis from multiple modalities)
+                      p = 0.000246 (uncertainty x surprise interaction, Cheung 2019)
+                      p = 0.003 (MMN for harmonic intervals, Wagner 2018)
+                      p = 8.3e-7, eta_p^2 = 0.49 (hierarchical prediction, de Vries & Wurm 2023)
+                      p < 0.001 FDR (musician network compartmentalization, Paraskevopoulos 2022)
+Heterogeneity:        Multi-study convergence (DTI, fMRI, MEG, EEG, behavioral, computational)
+Quality Assessment:   β-tier (cross-domain synthesis from 18 studies across 6+ modalities)
 Replication:          Cheung 2019 replicated by Gold 2023 (uncertainty x surprise)
+                      Paraskevopoulos 2015 supported by Paraskevopoulos 2022 (musician AV networks)
+                      Cross-modal superiority: Takagi 2025, Porfyri et al. 2025 (independent paradigms)
 ```
 
 ---
@@ -419,14 +431,17 @@ dParsimony/dt = -τ⁻¹ · (Parsimony - VoiceLeading_Target)
 
 | Region | MNI Coordinates | Mentions | Evidence Type | CHPI Function |
 |--------|-----------------|----------|---------------|---------------|
-| **Heschl's Gyrus (A1)** | ±42, -22, 10 | 4 | Direct (DTI/MEG/fMRI) | Harmonic pitch extraction |
-| **STG (Superior Temporal Gyrus)** | ±52, -22, 8 | 5 | Direct (fMRI/MEG) | Harmonic syntax, uncertainty x surprise (Cheung 2019) |
-| **STS (Superior Temporal Sulcus)** | ±52, -40, 8 | 3 | Direct (fMRI) | Cross-modal audiovisual convergence |
-| **IFG (Inferior Frontal Gyrus)** | ±44, 18, 8 | 4 | Direct (MEG) | Harmonic syntax processing, ERAN (Kim 2021) |
+| **Heschl's Gyrus (A1)** | ±42, -22, 10 | 6 | Direct (DTI/MEG/fMRI/EEG) | Harmonic pitch extraction; develops cross-modal responses with training (Chang 2025) |
+| **STG (Superior Temporal Gyrus)** | ±52, -22, 8 | 7 | Direct (fMRI/MEG) | Harmonic syntax, uncertainty x surprise (Cheung 2019, Gold 2023), STC cross-modal congruency (Yilmaz 2025) |
+| **STS (Superior Temporal Sulcus)** | ±52, -40, 8 | 5 | Direct (fMRI) | Cross-modal audiovisual convergence; cross-modal feature dominance (Takagi 2025) |
+| **IFG (Inferior Frontal Gyrus)** | ±44, 18, 8 | 6 | Direct (MEG/EEG) | Harmonic syntax processing, ERAN (Kim 2021); AV irregularity network hub (Paraskevopoulos 2022); left IFJa strongest musician group difference |
 | **Left IFOF (Inf. Fronto-Occipital Fasc.)** | -31, -68, 5 | 2 | Direct (DTI) | Visual-auditory white matter pathway (Moller 2021) |
 | **Hippocampus** | ±28, -24, -12 | 3 | Direct (fMRI) | Harmonic template memory, uncertainty (Cheung 2019) |
-| **Amygdala** | ±24, -4, -18 | 2 | Direct (fMRI) | Uncertainty x surprise interaction (Cheung 2019) |
-| **PMC/SMA (Premotor/Supplementary Motor)** | ±6, -6, 58 | 1 | Literature inference | Motor prediction of chord fingering |
+| **Amygdala** | ±24, -4, -18 | 4 | Direct (fMRI) | Uncertainty x surprise interaction (Cheung 2019); cross-modal emotional congruency (Yilmaz 2025) |
+| **PMC/SMA (Premotor/Supplementary Motor)** | ±6, -6, 58 | 3 | Direct (EEG) | Motor prediction of chord fingering; mu suppression during AV opera (Tanaka 2021) |
+| **IPS (Intraparietal Sulcus)** | ±30, -50, 45 | 3 | Direct (fMRI/MEG) | Cross-modal feature integration hub; cross-modal dominance over unimodal (Takagi 2025); AV irregularity network node (Paraskevopoulos 2022) |
+| **Precuneus** | ±6, -60, 40 | 2 | Direct (fMRI) | Cross-modal dynamic/aesthetic processing; cross-modal feature dominance (Takagi 2025) |
+| **Anterior Insula** | ±36, 16, 4 | 3 | Direct (fMRI/EEG/computational) | Multisensory salience and AV competition mediation (Liu 2022); top-down connectivity hub (Porfyri et al. 2025) |
 
 ---
 
@@ -472,7 +487,7 @@ dParsimony/dt = -τ⁻¹ · (Parsimony - VoiceLeading_Target)
 
 | Criterion | Testable Prediction | Status |
 |-----------|---------------------|--------|
-| **Cross-modal enhancement** | Multimodal (AV) harmonic prediction should exceed unimodal (A-only) | **Supported** by Moller 2021 (BCG effect, p < 0.001) and Takagi 2025 [PENDING VERIFICATION] |
+| **Cross-modal enhancement** | Multimodal (AV) harmonic prediction should exceed unimodal (A-only) | **Supported** by Moller 2021 (BCG effect, p < 0.001), Takagi 2025 (cross-modal > unimodal features), and Porfyri et al. 2025 (multisensory training superiority) |
 | **IFOF involvement** | Left IFOF FA should correlate with audiovisual integration benefit | **Confirmed** by Moller 2021 (p < 0.001) |
 | **Musician specialization** | Musicians should show weaker general AV coupling but stronger task-specific integration | **Confirmed** by Moller 2021 (MACACC analysis, FDR < 10%) |
 | **Uncertainty x surprise** | Harmonic pleasure should follow nonlinear uncertainty x surprise interaction | **Confirmed** by Cheung 2019 (fMRI + behavioral) |
@@ -664,9 +679,9 @@ class CHPI(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 7+ (Moller 2021, Cheung 2019, Bauer 2020, Kim 2021, Gold 2023, Egermann 2013, Takagi 2025) | Multi-study convergence |
-| **Effect Sizes** | 5+ significant | p < 0.001 (IFOF), p < 0.001 (STG), significant interactions |
-| **Evidence Modality** | DTI + fMRI + MEG + Behavioral + Psychophysiology | Multi-modal |
+| **Papers** | 18 (Moller 2021, Cheung 2019, Bauer 2020, Kim 2021, Gold 2023, Egermann 2013, Tymoczko 2011, Gollin & Rehding 2011, Takagi 2025, Paraskevopoulos 2022, de Vries & Wurm 2023, Wagner 2018, Yilmaz 2025, Millidge et al. 2022, Tanaka 2021, Porfyri et al. 2025, Paraskevopoulos 2015) | Multi-study convergence |
+| **Effect Sizes** | 8+ significant | p < 0.001 (IFOF), p < 0.001 (STG), p = 0.000246 (interaction), p = 0.003 (MMN), p = 8.3e-7 (hierarchical pred.), p < 0.001 FDR (musician networks) |
+| **Evidence Modality** | DTI + fMRI + MEG + EEG + Behavioral + Psychophysiology + Computational | Multi-modal |
 | **Falsification Tests** | 8/8 testable, 5 confirmed/supported | High validity |
 | **R³ Features Used** | ~22D of 49D | Consonance + energy + timbre + change + interactions |
 | **H³ Demand** | 20 tuples (0.87%) | Sparse, efficient |
@@ -695,13 +710,40 @@ class CHPI(BaseModel):
 
 8. **Gollin, E., & Rehding, A. (Eds.) (2011)**. *The Oxford Handbook of Neo-Riemannian Music Theories*. Oxford University Press.
 
-9. **Paraskevopoulos, E., Kraneburg, A., Herholz, S. C., Bamidis, P. D., & Pantev, C. (2015)**. Musical expertise is related to altered functional connectivity during audiovisual integration. *Proceedings of the National Academy of Sciences*, 112, 12522-12527. [PENDING VERIFICATION]
+9. **Paraskevopoulos, E., Kraneburg, A., Herholz, S. C., Bamidis, P. D., & Pantev, C. (2015)**. Musical expertise is related to altered functional connectivity during audiovisual integration. *Proceedings of the National Academy of Sciences*, 112, 12522-12527. [NOT IN C3 CATALOG -- external citation; supported by Paraskevopoulos et al. 2022]
 
-10. **Takagi, Y., Shimizu, D., Wakabayashi, M., Ohata, R., & Imamizu, H. (2025)**. Cross-modal deep generative models reveal the cortical representation of dancing. *Nature Communications*. https://doi.org/10.1038/s41467-025-65039-w [PENDING VERIFICATION]
+10. **Takagi, Y., Shimizu, D., Wakabayashi, M., Ohata, R., & Imamizu, H. (2025)**. Cross-modal deep generative models reveal the cortical representation of dancing. *Nature Communications*, 16, 9937. https://doi.org/10.1038/s41467-025-65039-w [VERIFIED]
+
+11. **Paraskevopoulos, E., Chalas, N., & Bhattacharya, J. (2022)**. Interaction within and between cortical networks subserving multisensory learning: A brain-network connectivity approach. *Scientific Reports*, 12, 7891. https://doi.org/10.1038/s41598-022-11966-x
+
+12. **de Vries, L., & Wurm, M. F. (2023)**. Predictive neural representations of naturalistic dynamic input. *Nature Communications*, 14, 3858. https://doi.org/10.1038/s41467-023-39355-y
+
+13. **Wagner, M., Rohrmeier, M., Honing, H., & Menninghaus, W. (2018)**. Mismatch negativity reflects asymmetric pre-attentive harmonic interval discrimination. *PLOS ONE*, 13(12), e0208241. https://doi.org/10.1371/journal.pone.0208241
+
+14. **Yilmaz, B., Di Dio, C., Heimann, K., Itkes, O., & Gallese, V. (2025)**. An fMRI study of crossmodal emotional congruency and beauty in art. *Frontiers in Neuroscience*, 19, 1516070. https://doi.org/10.3389/fnins.2025.1516070
+
+15. **Millidge, B., Seth, A., & Buckley, C. L. (2022)**. Predictive coding: A theoretical and experimental review. arXiv:2107.12979.
+
+16. **Tanaka, S. (2021)**. Mirror neuron activity during audiovisual appreciation of opera performance. *Frontiers in Psychology*, 11, 563031. https://doi.org/10.3389/fpsyg.2020.563031
+
+17. **Porfyri, G.-N., Paraskevopoulos, E., Chalas, N., & Bamidis, P. D. (2025)**. Multisensory vs. unisensory learning: changes in effective connectivity within brain networks. *Frontiers in Neuroscience*, 19, 1641862. https://doi.org/10.3389/fnins.2025.1641862
+
+18. **Chang, L., Fang, Q., Zhang, S., Poo, M., & Bhatt, D. K. (2025)**. Auditory cortex learns to discriminate audiovisual in a multisensory discrimination task. *eLife*, 14, RP104925. https://doi.org/10.7554/eLife.104925
 
 ---
 
 ## 14. Version Notes
+
+### v2.1.0 — Deep C³ Literature Integration
+
+| Aspect | Detail |
+|--------|--------|
+| **Status** | Literature expansion (v2.0.0 -> v2.1.0) |
+| **Papers added** | +8 new citations: Takagi 2025 (verified), Paraskevopoulos 2022, de Vries & Wurm 2023, Wagner 2018, Yilmaz 2025, Millidge et al. 2022, Tanaka 2021, Porfyri et al. 2025; Chang 2025 referenced in brain regions |
+| **Brain regions added** | +3 regions: IPS (intraparietal sulcus), Precuneus, Anterior Insula; updated mention counts and evidence for existing regions |
+| **PENDING resolved** | Takagi 2025: VERIFIED (N=14, Nature Communications 16:9937, cross-modal > unimodal confirmed). Paraskevopoulos 2015: NOT IN C3 CATALOG (flagged as external citation; 2022 paper provides supporting evidence) |
+| **Effect sizes enriched** | Cheung 2019 beta values added; de Vries & Wurm 2023 eta_p^2=0.49; Wagner 2018 MMN=-0.34uV |
+| **Evidence tier** | β (cross-domain synthesis from 18 studies across DTI, fMRI, MEG, EEG, behavioral, psychophysiology, computational) |
 
 ### v2.0.0 — Initial Release
 
@@ -715,14 +757,15 @@ class CHPI(BaseModel):
 | **Total demand** | 20/2304 = 0.87% |
 | **Output** | 11D (consistent with PCU β models) |
 | **Evidence tier** | β (cross-domain synthesis from 7+ studies across DTI, fMRI, MEG, behavioral) |
-| **Phase 1 items** | Takagi 2025 and Paraskevopoulos 2015 require Phase 1 cross-referencing verification |
+| **Phase 1 items** | Resolved in v2.1.0: Takagi 2025 verified; Paraskevopoulos 2015 flagged as external |
 
 ### Design Decisions
 
 - **OUTPUT_DIM = 11**: Consistent with other PCU β models (WMED = 11D). The 4E + 3P + 4F structure captures the three essential aspects: explicit cross-modal features, present harmonic state, and future harmonic predictions.
-- **Voice-leading parsimony (f02)**: Grounded in Tymoczko's geometric approach and Neo-Riemannian theory from the R³ literature collection. Operationalized via inverse of spectral_change velocity -- lower velocity means smoother voice-leading.
-- **Uncertainty x surprise interaction (f04)**: Directly implements the Cheung 2019 finding replicated by Gold 2023. The nonlinear interaction is captured through the product of consonance entropy (uncertainty proxy) and harmonic change magnitude (surprise proxy).
-- **Cross-modal coupling via x_l0l5 and x_l4l5**: These R³ interaction features serve as proxies for the audiovisual convergence that would come from visual notation/instrument observation in ecological listening. In audio-only contexts, they capture the implicit multi-scale temporal binding that the brain uses as a substitute for explicit visual/motor information.
+- **Voice-leading parsimony (f02)**: Grounded in Tymoczko's geometric approach and Neo-Riemannian theory from the R³ literature collection. Operationalized via inverse of spectral_change velocity -- lower velocity means smoother voice-leading. Pre-attentive sensitivity to voice-leading intervals confirmed by Wagner 2018 (MMN for harmonic intervals).
+- **Uncertainty x surprise interaction (f04)**: Directly implements the Cheung 2019 finding (beta=-0.124, p=0.000246) replicated by Gold 2023. The nonlinear interaction is captured through the product of consonance entropy (uncertainty proxy) and harmonic change magnitude (surprise proxy). Theoretical grounding strengthened by Millidge et al. 2022 (predictive coding as variational inference).
+- **Cross-modal coupling via x_l0l5 and x_l4l5**: These R³ interaction features serve as proxies for the audiovisual convergence that would come from visual notation/instrument observation in ecological listening. In audio-only contexts, they capture the implicit multi-scale temporal binding that the brain uses as a substitute for explicit visual/motor information. Hierarchical prediction timescales (~110ms, ~200ms, ~500ms) supported by de Vries & Wurm 2023. Mirror neuron engagement for AV but not unimodal stimuli confirmed by Tanaka 2021.
+- **Musician network specialization**: Musicians show compartmentalized (increased intra-network, decreased inter-network) connectivity during multisensory learning (Paraskevopoulos 2022), consistent with the model's prediction that musical training refines rather than broadly strengthens cross-modal integration. Multisensory training superiority over unisensory training (Porfyri et al. 2025) supports f01 cross-modal prediction gain.
 
 ---
 

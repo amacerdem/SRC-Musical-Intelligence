@@ -4,8 +4,8 @@
 **Unit**: ARU (Affective Resonance Unit)
 **Circuit**: Mesolimbic Reward Circuit
 **Tier**: β (Integrative) — 70-90% confidence
-**Version**: 2.0.0 (MI R³/H³ architecture)
-**Date**: 2026-02-12
+**Version**: 2.1.0 (Beta upgrade — literature expansion)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../Road-map/01-GLOSSARY.md).
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -136,6 +136,8 @@ NEMAC provides the **autobiographical complement** to SRP's moment-by-moment rew
 | **Sakakibara 2025** | EEG decoder | 33 | Neural nostalgia decoder (older) | 71.5% acc | **Age-dependent signal** |
 | **Barrett 2010** | Behavioral | — | Nostalgic music → mPFC + hippocampus | Significant | **Neural substrate** |
 | **Janata 2007** | Behavioral | — | Music-evoked autobiographical memories | Significant | **Memory mechanism** |
+| **Sakakibara Y. 2025** | EEG-NF + behavioral | 33 | Nostalgia Brain-Music Interface: personalized song recommendation via EEG → nostalgia, well-being, memory vividness all ↑ | Significant | **Nostalgia-BCI validates N-BMI loop** |
+| **Scarratt 2025** | fMRI | 57 | Familiar music activates auditory, motor, emotion, memory areas; 4 distinct response clusters | Significant | **Familiarity → memory circuit activation** |
 
 ### 3.2 The Nostalgia Function
 
@@ -580,6 +582,12 @@ NEMAC ──► SRP (Striatal Reward Pathway)
 
 4. **Belfi, A. M., Kasdan, A., Rowland, J., Vessel, E. A., Starr, G. G., & Poeppel, D. (2018)**. Neural patterns of music listening: Implications for the aesthetic experience. *NeuroImage*, 179, 443-451.
 
+#### Added in v2.1.0 Beta Upgrade
+
+5. **Sakakibara, Y., Kusutomi, T., Kondoh, S., Etani, T., Shimada, S., Imamura, Y., Naruse, Y., Fujii, S., & Ibaraki, T. (2025)**. A Nostalgia Brain-Music Interface for enhancing nostalgia, well-being, and memory vividness in younger and older individuals. *Scientific Reports*, 15, 32337.
+
+6. **Scarratt, R. J., Dietz, M., Vuust, P., Kleber, B., & Jespersen, K. V. (2025)**. Individual differences in the effects of musical familiarity and musical features on brain activity during relaxation. *Cognitive, Affective, & Behavioral Neuroscience*.
+
 ---
 
 ## Version History
@@ -588,6 +596,7 @@ NEMAC ──► SRP (Striatal Reward Pathway)
 |---------|------|---------|
 | 1.0.0 | 2026-02-04 | Legacy D0 model specification (11D) |
 | 2.0.0 | 2026-02-12 | MI R³/H³ architecture: added CPD for chills, R³ mapping, mechanism binding |
+| 2.1.0 | 2026-02-13 | Beta upgrade: +2 papers (Sakakibara Y. 2025 N-BMI, Scarratt 2025 familiarity fMRI) |
 
 ---
 

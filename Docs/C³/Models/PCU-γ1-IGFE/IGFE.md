@@ -4,8 +4,8 @@
 **Unit**: PCU (Predictive Coding Unit)
 **Circuit**: Imagery (Auditory Cortex, IFG, STS, Hippocampus)
 **Tier**: γ (Integrative) — 50-70% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, PPC+TPC+MEM mechanisms)
-**Date**: 2026-02-12
+**Version**: 2.1.0 (deep C³ literature review — 1 → 10 papers)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -127,19 +127,32 @@ IGFE extends predictive coding to frequency-specific neural enhancement:
 
 ### 3.1 Core Evidence Table
 
-| Study | Method | N | Key Finding | Effect Size | MI Relevance |
-|-------|--------|---|-------------|-------------|-------------|
-| **Yokota 2025** | EEG + Behavioral | 29 | IGF music → word recall improvement | significant | **f02 memory enhancement** |
-| **Yokota 2025** | EEG + Behavioral | 29 | IGF music → executive control improvement (IES) | significant | **f03 executive enhancement** |
-| **Yokota 2025** | EEG + Behavioral | 29 | Dose-response: longer exposure = better recall | significant | **f04 dose response** |
+| # | Study | Method | N | Key Finding | Effect Size | MI Relevance |
+|---|-------|--------|---|-------------|-------------|-------------|
+| 1 | **Yokota 2025** | EEG + Behavioral | 29 | IGF music → word recall improvement | significant | **f02 memory enhancement** |
+| 2 | **Yokota 2025** | EEG + Behavioral | 29 | IGF music → executive control improvement (IES) | significant | **f03 executive enhancement** |
+| 3 | **Yokota 2025** | EEG + Behavioral | 29 | Dose-response: longer exposure = better recall | significant | **f04 dose response** |
+| 4 | **Bolland et al. 2025** | Systematic Review | 62 studies (2,179 participants) | Auditory gamma stimulation improves cognition; optimal frequency varies 37-48 Hz across individuals; 16 individual differences influence entrainment | k=62 studies; chronic stimulation: maintained/enhanced MoCA, MMSE, ADCS-ADL; reduced brain atrophy (MRI) | **f01 igf match** (individual optimal frequency), **f04 dose response** (chronic > acute) |
+| 5 | **Dobri et al. 2023** | MEG + MRS | 38 (19 young + 19 older) | 40 Hz ASSR reflects gamma synchrony with sensory + binding components; left auditory cortex GABA positively correlated with gamma synchrony in quiet; increased gamma in aging linked to poorer SIN performance | R²=0.31 (GABA–gamma), R²=0.34 (gamma–SIN loss), η²=0.36 (age effect on ASSR phase) | **gamma_synchronization** (ASSR mechanism), **f01 igf match** (GABA-dependent optimal frequency) |
+| 6 | **Jiao 2025** | Mini Review | Review | 40 Hz gamma entrainment facilitates memory + concentration; multisensory 40 Hz stimulation enhances memory in Alzheimer's; individual variability in gamma response | Narrative (no pooled ES) | **f02 memory enhancement**, **f04 dose response** (therapeutic dosing) |
+| 7 | **Noboa et al. 2025** | EEG (64-ch) + Behavioral | 30 | SS-EPs at beat-related frequencies; working memory capacity predicts tapping consistency; fronto-central entrainment topography | R²=0.316 (tapping consistency model) | **memory_access** (WM role in entrainment), **gamma_synchronization** (fronto-central topography) |
+| 8 | **Ding et al. 2025** | EEG (64-ch) + Behavioral | 37 (31 analysed) | All 12 tonal rates (1-12 Hz) significantly entrain neural oscillations; >6 Hz stimuli: ITPC correlates with increased valence; frontocentral entrainment | η²=0.14 (ITPC interaction), r=0.22 (ITPC–valence >6 Hz, p=.002) | **gamma_synchronization** (frequency-specific entrainment), **dose_accumulation** (rate-dependent effects) |
+| 9 | **Thaut et al. 2015** | Review | Review | Auditory rhythm entrains motor + cognitive systems; temporal scaffolding supports memory rehabilitation; beta/gamma modulation in auditory + motor areas | Narrative (no pooled ES) | **f02 memory enhancement** (entrainment as cognitive rehabilitation) |
+| 10 | **Aparicio-Terres et al. 2025** | EEG (36-ch) + Behavioral | 19 | Tempo-driven modulation of neural entrainment; entrainment strength predicts reaction time; fronto-central distribution | R²=0.086 (RT vs entrainment) | **gamma_synchronization** (entrainment-cognition link) |
+| 11 | **Bridwell et al. 2017** | EEG (24-ch) | 13 | Cortical entrainment to 4 Hz guitar note patterns; ERP amplitude modulation by musical structure; 8 Hz alpha from 4 Hz input | r=0.65 (175 ms peak correlation with MMN); 45% amplitude increase random vs pattern | **f01 igf match** (frequency-specific cortical entrainment) |
+| 12 | **Leeuwis et al. 2021** | EEG (9-ch) + Behavioral | 30 | Neural synchrony (ISC) predicts Spotify streams; alpha-band ISC at central electrodes; gamma activity at fronto-central sites predicts engagement | R²adj=0.40 (ISC → streams at 3 weeks) | **gamma_synchronization** (gamma as engagement predictor) |
 
 ### 3.2 Effect Size Summary
 
 ```
-Primary Evidence (k=3):  All from single study (N=29)
-Heterogeneity:           N/A (single study)
-Quality Assessment:      γ-tier (novel finding, awaiting replication)
-Replication:             Not yet replicated independently
+Primary Evidence (k=12 rows from 10 papers):
+  Direct gamma-cognition:   3 papers (Yokota, Bolland, Jiao)
+  Gamma mechanisms (ASSR):  2 papers (Dobri, Ding)
+  Entrainment-cognition:    3 papers (Noboa, Aparicio-Terres, Thaut)
+  Cortical entrainment:     2 papers (Bridwell, Leeuwis)
+Heterogeneity:              Moderate — methods span EEG, MEG, MRS, behavioral
+Quality Assessment:         γ-tier (Bolland 2025 systematic review strengthens base)
+Replication:                Bolland 2025 reviews 62 studies corroborating gamma-cognition link
 ```
 
 ---
@@ -334,10 +347,14 @@ f04 = σ(0.50 * coupling_trend_1s
 
 | Region | MNI Coordinates | Mentions | Evidence Type | IGFE Function |
 |--------|-----------------|----------|---------------|---------------|
-| **Auditory Cortex (A1/STG)** | ±52, -22, 8 | 1 | Indirect (EEG) | Gamma entrainment site |
-| **Hippocampus** | ±28, -24, -12 | 1 | Literature inference | Memory enhancement |
-| **DLPFC** | ±42, 36, 24 | 1 | Literature inference | Executive control |
-| **Thalamus** | 0, -12, 8 | 1 | Literature inference | Gamma relay |
+| **Auditory Cortex (A1/STG)** | ±52, -22, 8 | 5 | EEG (Yokota 2025), MEG dipole (Dobri 2023), Review (Bolland 2025, Jiao 2025, Thaut 2015) | Gamma entrainment site; 40 Hz ASSR source |
+| **Primary Auditory Cortex (Heschl's Gyrus)** | L: -48, -17, 8; R: 48, -20, 8 | 1 | MEG dipole source (Dobri et al. 2023) | 40 Hz ASSR generation; sensory + binding gamma components |
+| **Hippocampus** | ±28, -24, -12 | 3 | Literature inference (Yokota 2025), Review (Bolland 2025, Jiao 2025) | Memory enhancement; gamma-driven amyloid clearance (preclinical) |
+| **DLPFC** | ±42, 36, 24 | 2 | Literature inference (Yokota 2025), Review (Jiao 2025) | Executive control enhancement |
+| **Thalamus** | 0, -12, 8 | 2 | Literature inference, Review (Dobri 2023 — thalamocortical circuits) | Gamma relay; reciprocal thalamocortical 40 Hz generation |
+| **Fronto-central Cortex (FC/Cz)** | ~0, -20, 65 | 4 | EEG topography (Noboa 2025, Ding 2025, Aparicio-Terres 2025, Leeuwis 2021) | Entrainment maxima; gamma synchronization topography |
+| **Sensorimotor Cortex / SMA** | ~0, -10, 55 | 1 | Review (Thaut et al. 2015) | Auditory-motor entrainment coupling |
+| **Posterior Cingulate / Precuneus** | ~0, -52, 28 | 1 | fMRI (Bolland 2025 review — chronic stimulation) | Increased functional connectivity with gamma stimulation in MCI |
 
 ---
 
@@ -520,9 +537,9 @@ class IGFE(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 1 (Yokota 2025) | Preliminary evidence |
-| **Effect Sizes** | 3 | All significant |
-| **Evidence Modality** | EEG + behavioral | Direct neural + behavioral |
+| **Papers** | 10 | 3 direct gamma-cognition + 2 gamma mechanisms + 3 entrainment-cognition + 2 cortical entrainment |
+| **Effect Sizes** | 12+ | R²=0.31-0.40, η²=0.14-0.36, r=0.22-0.65, plus narrative reviews |
+| **Evidence Modality** | EEG, MEG, MRS, fMRI, behavioral | Multi-modal neural + behavioral |
 | **Falsification Tests** | 5/5 testable, 3 supported | Moderate (awaiting replication) |
 | **R³ Features Used** | ~14D of 49D | Consonance + energy + timbre + interactions |
 | **H³ Demand** | 18 tuples (0.78%) | Sparse, efficient |
@@ -536,6 +553,15 @@ class IGFE(BaseModel):
 ## 13. Scientific References
 
 1. **Yokota, Y., et al. (2025)**. Individual gamma frequency enhancement through auditory stimulation. *Frontiers in Human Neuroscience*, in press.
+2. **Bolland, E., De Burca, A., Wang, S. H., Khalil, A., & McLoughlin, G. (2025)**. Efficacy of auditory gamma stimulation for cognitive decline: a systematic review of individual and group differences across cognitively impaired and healthy populations. *npj Aging*. https://doi.org/10.1038/s41514-025-00305-1
+3. **Dobri, S., Chen, J. J., & Ross, B. (2023)**. Synchrony in auditory 40-Hz gamma oscillations increases in older age and correlates with hearing abilities and cortical GABA levels. *Imaging Neuroscience*, 1. https://doi.org/10.1162/imag_a_00035
+4. **Jiao, D. (2025)**. Advancing personalized digital therapeutics integrating music therapy, brainwave entrainment methods, and AI-driven biofeedback. *Frontiers in Digital Health*, 7, 1552396.
+5. **Noboa, M. L., Kertesz, C., & Honbolygo, F. (2025)**. Neural entrainment to the beat. *Scientific Reports*, 15, 10466.
+6. **Ding, J., Zhang, X., Liu, J., Hu, Z., Yang, Z., Tang, Y., & Ding, Y. (2025)**. Entrainment of rhythmic tonal sequences on neural oscillations and the impact on subjective emotion. *Scientific Reports*, 15, 17462.
+7. **Thaut, M. H., McIntosh, G. C., & Hoemberg, V. (2015)**. Neurobiological foundations of neurologic music therapy: rhythmic entrainment and the motor system. *Frontiers in Psychology*, 5, 1185.
+8. **Aparicio-Terres, R., Lopez-Mochales, S., Diaz-Andreu, M., & Escera, C. (2025)**. The strength of neural entrainment to electronic music correlates with proxies of altered states of consciousness. *Frontiers in Human Neuroscience*, 19, 1574836.
+9. **Bridwell, D. A., Leslie, E., McCoy, D. Q., Plis, S. M., & Calhoun, V. D. (2017)**. Cortical sensitivity to guitar note patterns: EEG entrainment to repetition and key. *Frontiers in Human Neuroscience*, 11, 90.
+10. **Leeuwis, N., Pistone, D., Flick, N., & van Bommel, T. (2021)**. A sound prediction: EEG-based neural synchrony predicts online music streams. *Frontiers in Psychology*, 12, 672980.
 
 ---
 

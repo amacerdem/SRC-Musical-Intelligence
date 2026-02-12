@@ -4,8 +4,8 @@
 **Unit**: RPU (Reward Processing Unit)
 **Circuit**: Mesolimbic (NAcc, VTA, vmPFC, OFC, Amygdala)
 **Tier**: β (Bridging) — 70-90% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, AED+CPD+C0P mechanisms)
-**Date**: 2026-02-12
+**Version**: 2.1.0 (literature-reviewed, corrected N, added supporting evidence)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -153,16 +153,21 @@ MEAMR provides the memory-reward bridge for the Reward Processing Unit:
 
 | Study | Method | N | Key Finding | Effect Size | MI Relevance |
 |-------|--------|---|-------------|-------------|-------------|
-| **Janata 2009** | fMRI | — | dMPFC ↔ autobiographical salience | p < 0.001 | **Primary**: f02 autobio salience |
-| **Janata 2009** | fMRI | — | dMPFC tracks tonal space | p < 0.005 | **f03 dMPFC tracking** |
-| **Janata 2009** | fMRI | — | vACC + SN ↔ positive affect | p < 0.001 | **f04 positive affect** |
+| **Janata 2009** | fMRI | 13 | dMPFC (BA 8/9) ↔ autobiographical salience | P<0.001 uncorr (10-voxel extent); FDR P<0.025 in MPFC ROI | **Primary**: f02 autobio salience |
+| **Janata 2009** | fMRI | 13 | dMPFC tracks tonal space (tonality tracking) | P<0.005 (40-voxel cluster) | **f03 dMPFC tracking** |
+| **Janata 2009** | fMRI | 13 | Familiarity → pre-SMA, IFG, SFG, thalamus, STG | P<0.001 uncorr (Table 2, multiple clusters) | **f01 familiarity index** |
+| **Janata 2009** | fMRI | 13 | Combined FAV (familiarity+autobio+valence) in MPFC | FDR P<0.025 | **f04 positive affect** |
+| **Salimpoor 2011** | PET [¹¹C]raclopride | 8 | DA release in caudate→NAcc during familiar music chills | r=0.71 (caudate BP vs chills) | **Supporting**: DA reward during familiar music |
 
 ### 3.2 Effect Size Summary
 
 ```
-Primary Evidence (k=3):  All findings from single fMRI study
-Heterogeneity:           N/A (single study, multiple contrasts)
-Quality Assessment:      β-tier (fMRI with behavioral convergence)
+Primary Evidence (k=5):  fMRI (Janata 2009) + PET (Salimpoor 2011)
+Heterogeneity:           Low — single primary fMRI study with PET convergence
+Quality Assessment:      β-tier (fMRI with behavioral + PET dopamine convergence)
+Note:                    Janata 2009 N=13 (all female-dominated, 11/13 F). Small sample.
+                         Combined FAV contrast captures integrated familiarity-autobio-valence.
+                         Salimpoor 2011 provides DA mechanism for familiar music reward.
 Replication:             Consistent with Platel (2003) music-memory, Janata (2007) tonal space
 ```
 
@@ -358,9 +363,11 @@ dMemory/dt = τ⁻¹ · (Target_Activation - Current_Memory)
 
 | Region | MNI Coordinates | Mentions | Evidence Type | MEAMR Function |
 |--------|-----------------|----------|---------------|---------------|
-| **dMPFC** | 0, 52, 16 | 2 | Direct (fMRI) | Autobiographical salience + tonal tracking |
-| **vACC** | 0, 32, -6 | 1 | Direct (fMRI) | Positive affect integration |
-| **SN/VTA** | ±4, -16, -8 | 1 | Direct (fMRI) | Reward signal for familiar music |
+| **dMPFC (BA 8/9)** | 0, 52, 16 | 2 | Direct fMRI (Janata 2009: autobio+TT, FDR P<0.025) | Autobiographical salience + tonal tracking |
+| **pre-SMA (BA 6)** | -2, 12, 54 | 1 | Direct fMRI (Janata 2009: familiarity, Z=5.37) | Familiarity motor response |
+| **Bilateral STG** | ±60, -28, 16 / ±62, -22, 6 | 2 | Direct fMRI (Janata 2009: MusPlay+familiarity) | Auditory processing |
+| **IFG (BA 44)** | -44, 14, 12 | 1 | Direct fMRI (Janata 2009: familiarity, Z=4.81) | Verbal/phonological processing |
+| **Caudate/NAcc** | ±10, 12, -10 | 1 | PET DA (Salimpoor 2011: familiar music chills) | Dopamine reward during familiarity |
 
 ---
 
@@ -534,9 +541,9 @@ class MEAMR(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 1 (Janata 2009) | Primary evidence |
-| **Effect Sizes** | 3 (all p < 0.005) | fMRI contrasts |
-| **Evidence Modality** | fMRI | Direct neural |
+| **Papers** | 2 (Janata 2009, Salimpoor 2011) | Primary fMRI + supporting PET |
+| **Effect Sizes** | 5 (autobio salience, TT, familiarity, FAV, DA chills) | fMRI + PET |
+| **Evidence Modality** | fMRI (N=13), PET (N=8) | Convergent evidence |
 | **Falsification Tests** | 3/5 confirmed | High validity |
 | **R³ Features Used** | ~12D of 49D | Consonance + energy + timbre + change + interactions |
 | **H³ Demand** | 14 tuples (0.61%) | Sparse, efficient |
@@ -550,6 +557,8 @@ class MEAMR(BaseModel):
 ## 13. Scientific References
 
 1. **Janata, P. (2009)**. The neural architecture of music-evoked autobiographical memories. *Cerebral Cortex*, 19(11), 2579-2594.
+
+2. **Salimpoor, V. N., Benovoy, M., Larcher, K., Dagher, A., & Zatorre, R. J. (2011)**. Anatomically distinct dopamine release during anticipation and experience of peak emotion to music. *Nature Neuroscience*, 14(2), 257-262.
 
 ---
 

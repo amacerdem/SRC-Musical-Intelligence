@@ -4,8 +4,8 @@
 **Unit**: ARU (Affective Resonance Unit)
 **Circuit**: Mesolimbic Reward Circuit
 **Tier**: β (Integrative) — 70-90% confidence
-**Version**: 2.0.0 (MI R³/H³ architecture)
-**Date**: 2026-02-12
+**Version**: 2.1.0 (Beta upgrade — literature expansion)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../Road-map/01-GLOSSARY.md).
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -127,6 +127,8 @@ MAD provides the **lesion-model validation** of the entire ARU framework:
 | **Martinez-Molina 2016** | Behavioral | 45 | Sound-specific items anhedonic | 90.9% | **Specificity of deficit** |
 | **Martinez-Molina 2016** | fMRI | 45 | NAcc connectivity in anhedonia | d=3.6-7.0 | **NAcc deactivation** |
 | **Mas-Herrero 2014** | Behavioral | — | Dissociation: music vs money reward | Significant | **Double dissociation** |
+| **Jin 2025** | Behavioral (BMRQ+MMS) | 88 | Congenital amusia: lower music reward (all 5 BMRQ subscales), altered minor-key emotion | Significant | **Amusia-reward deficit link** |
+| **Putkinen 2025** | PET-fMRI ([¹¹C]carfentanil) | — | Pleasurable music activates μ-opioid receptors in NAcc, VS, OFC; chills ↔ striatal opioid release | Significant | **Opioid mechanism for music pleasure** |
 
 ### 3.2 The Disconnection Model
 
@@ -541,6 +543,12 @@ Note: MAD represents ABSENCE of normal ARU function.
 
 4. **Belfi, A. M., & Loui, P. (2020)**. Musical anhedonia and rewards of music listening: Current advances and a proposed model. *Annals of the New York Academy of Sciences*, 1464(1), 99-114.
 
+#### Added in v2.1.0 Beta Upgrade
+
+5. **Jin, Z., Huyang, S., Li, Q., Jiang, L., Yan, Y., Xu, M., Wang, J., Lian, Q., Xia, L., & Wu, D. (2025)**. Altered music emotion experiences of congenital amusia: from the perspective of reward. *BMC Psychology*, 13, 1316.
+
+6. **Putkinen, V., Seppälä, K., Harju, H., Hirvonen, J., Karlsson, H. K., & Nummenmaa, L. (2025)**. Pleasurable music activates cerebral μ-opioid receptors: a combined PET-fMRI study. *European Journal of Nuclear Medicine and Molecular Imaging*, 52, 3540-3549.
+
 ---
 
 ## Version History
@@ -549,6 +557,7 @@ Note: MAD represents ABSENCE of normal ARU function.
 |---------|------|---------|
 | 1.0.0 | 2026-02-04 | Legacy D0 model specification (9D) |
 | 2.0.0 | 2026-02-12 | MI R³/H³ architecture: +2D (dissociation_idx, sound_specificity), AED+C0P binding, R³ mapping |
+| 2.1.0 | 2026-02-13 | Beta upgrade: +2 papers (Jin 2025 amusia-reward, Putkinen 2025 μ-opioid music pleasure) |
 
 ---
 

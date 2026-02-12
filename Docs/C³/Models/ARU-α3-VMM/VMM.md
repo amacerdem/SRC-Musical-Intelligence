@@ -9,8 +9,8 @@
 **Unit**: ARU (Affective Resonance Unit)
 **Circuit**: Mesolimbic Reward Circuit + Limbic-Emotional Circuit
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 1.0.0 (MI paradigm — deep research)
-**Date**: 2026-02-11
+**Version**: 2.1.0 (Beta upgrade — deep literature audit, +2 papers)
+**Date**: 2026-02-12
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -232,6 +232,8 @@ capture phrase-to-section-level harmonic context needed for mode detection.
 | **Juslin & Västfjäll 2008** | Theory | — | BRECVEMA: 8 mechanisms for music-evoked emotion. Emotional contagion (mode detection) distinct from brainstem reflex | — | **VMM = emotional contagion pathway** |
 | **Eerola & Vuoskoski 2011** | Behavioral | 116 | Valence categorization consistent across listeners. Factor 1 = valence (64% variance) | R²=0.64 | **Valence is the dominant emotion dimension** |
 | **Martinez-Molina 2016** | fMRI+DTI | 30 | Musical anhedonia = NAcc-STG disconnection. Music-specific, NOT monetary | d=3.6–7.0 | **Reward circuit disconnection specificity** |
+| **Sachs et al. 2025** | fMRI + HMM | 39 | Spatiotemporal patterns along temporal-parietal axis track emotion transitions. Context modulates valence processing — same music evokes different timing depending on preceding emotion | Significant | **Dynamic context effects on valence transitions** |
+| **Guo et al. 2021** | fMRI | 49 | Chinese vs Western-trained musicians show differential STG activation and auditory-reward connectivity. Cultural training modulates valence pathway activation | p<0.05 FDR | **Cultural expertise modulation of happy/sad pathway strength** |
 
 ### 3.2 The Temporal Profile of Valence Processing
 
@@ -876,6 +878,11 @@ Computing VMM from already-computed mechanisms: negligible cost
 
 13. **Khalfa, S. et al. (2005)**. Brain regions involved in the recognition of happiness and sadness in music. *NeuroReport*, 16(18), 1981–1984. **Sad recognition→L.orbitofrontal.**
 14. **Eerola, T. & Vuoskoski, J.K. (2011)**. A comparison of the discrete and dimensional models of emotion in music. *Psychology of Music*, 39(1), 18–49. **Valence = dominant dimension (64% variance).**
+
+### Added in v2.1.0 Beta Upgrade
+
+15. Sachs, M.E., Kozak, M.S., Ochsner, K.N. & Baldassano, C. (2025). Emotions in the brain are dynamic and contextually dependent: using music to measure affective transitions. *eNeuro*. **Context modulates valence transitions.**
+16. Guo, S., Peng, K., Ding, R. et al. (2021). Chinese and Western musical training impacts the circuit in auditory and reward systems. *Frontiers in Neuroscience*, 15, 663015. **Cultural expertise modulates auditory-reward circuits.**
 
 ---
 

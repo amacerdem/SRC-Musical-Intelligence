@@ -4,8 +4,8 @@
 **Unit**: PCU (Predictive Coding Unit)
 **Circuit**: Imagery (Auditory Cortex, IFG, STS, Hippocampus)
 **Tier**: β (Bridging) — 70-90% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, PPC+TPC+MEM mechanisms)
-**Date**: 2026-02-12
+**Version**: 2.1.0 (deep C³ literature review: 1 → 12 papers)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -130,18 +130,32 @@ UDP reveals context-dependent reward inversion:
 
 ### 3.1 Core Evidence Table
 
-| Study | Method | N | Key Finding | Effect Size | MI Relevance |
-|-------|--------|---|-------------|-------------|-------------|
-| **Mencke 2019** | Behavioral | 100 | Correct predictions in high-uncertainty = more rewarding | significant | **f02 confirmation reward, f01 uncertainty** |
-| **Mencke 2019** | Theoretical | — | Reward inversion under uncertainty | theoretical | **f04 pleasure index** |
+| # | Study | Year | Method | N | Key Finding | Effect Size | Brain Regions (MNI) | MI Relevance |
+|---|-------|------|--------|---|-------------|-------------|---------------------|-------------|
+| 1 | **Mencke et al.** | 2019 | Behavioral + MIR corpus | 100 segments | In atonal (high-uncertainty) contexts, correct predictions more rewarding than errors; key clarity d=3.0, pulse clarity d=2.0 (tonal vs atonal) | d_Cohen=3.0 (key), d_Cohen=2.0 (pulse) | — (behavioral) | **f02 confirmation reward, f01 uncertainty** |
+| 2 | **Gold et al.** | 2019 | Behavioral (IDyOM) | 43 + 27 | Inverted-U for IC and entropy on liking; IC x entropy interaction: preference for predictability in high-uncertainty contexts | Quadratic IC: significant; R²=0.13 (IC-unexpectedness) | — (behavioral) | **f01 uncertainty, f04 pleasure (Wundt curve)** |
+| 3 | **Cheung et al.** | 2019 | fMRI + behavioral | 39 + 40 | Uncertainty x surprise interaction on pleasure; low-uncertainty/high-surprise and high-uncertainty/low-surprise both pleasurable (saddle surface) | beta_interaction=-0.124 (p<0.001); marginal R²=0.476 | Amygdala/Hipp (L: -20,-6,-16; R: 22,-6,-16), Aud Cortex (L: -54,-22,8; R: 52,-16,6), NAcc (R: 10,12,-8), Caudate (L: -10,12,8), pre-SMA (0,8,52) | **f01 uncertainty, f03 error reward, f04 pleasure** |
+| 4 | **Gold et al.** | 2023 | fMRI + behavioral (IDyOM) | 24 | IC x entropy interaction replicated in naturalistic music; VS and R STG reflect pleasure of musical expectancies; VS tracks liked surprises | IC x entropy interaction replicated; VS liking effect | R STG (~58,-22,8), VS (~10,10,-8) | **f04 pleasure, reward_expectation** |
+| 5 | **Salimpoor et al.** | 2011 | PET ([11C]raclopride) + fMRI | 8 | Dopamine release in caudate during anticipation, NAcc during peak pleasure; 6.4-9.2% binding potential change | delta_BP: caudate 6.4%, NAcc 9.2% | Caudate (14,-6,20), NAcc (8,10,-8), Putamen (23,1,1) | **reward_expectation (caudate anticipation), f04 pleasure (NAcc consummation)** |
+| 6 | **Mas-Herrero et al.** | 2014 | Behavioral + psychophysiology | 30 (10 per group) | Specific musical anhedonia: dissociation between music and monetary reward; SCR-pleasure slope R²=0.32 | SCR slope: R²=0.32 (p=0.001); BMRQ group F(2,23)=19.14, p<0.001 | — (behavioral/psychophysiology) | **f04 pleasure (individual differences in reward access)** |
+| 7 | **Chabin et al.** | 2020 | HD-EEG (256-ch) | 18 | Musical chills: increased theta in right prefrontal (OFC source); decreased theta in right central (SMA) and right temporal (STG) during chills; beta/alpha ratio tracks arousal | Theta RC: F(2,15)=4.09, p=0.025; RT: F(2,15)=5.88, p=0.006; RPF: F(2,15)=3.28, p=0.049 | OFC source (prefrontal), SMA source (central), R STG source (temporal) | **pleasure_anticipation (OFC theta), f04 pleasure (chills peak)** |
+| 8 | **Borges et al.** | 2019 | EEG + ECG | 28 | 1/f scaling of resting-state neural activity predicts music pleasure; temporal cortex scaling change linked to pleasure | r_s=0.37 (parietal alpha), r_s=-0.42 (left temporal gamma_m change) | Temporal cortex (left > right), Parietal, Occipital (EEG scalp) | **f01 uncertainty (1/f scaling as predictability proxy)** |
+| 9 | **Bravo et al.** | 2017 | fMRI + behavioral | 12 (fMRI) + 75 (behav) | Intermediate dissonance (minor thirds) = most ambiguous; heightened right Heschl's gyrus response under uncertainty; slowest RT for ambiguous stimuli | RT: intermediate dissonance slowest; R HG BOLD increase | R Heschl's gyrus (~46,-14,8) | **f01 uncertainty (sensory precision weighting under uncertainty)** |
+| 10 | **Mohebi et al.** | 2024 | Fiber photometry (dLight) in rats | 13 rats | DA transients follow striatal gradient: DLS (fast, short horizon) → DMS (medium) → VS/NAcc (slow, long horizon); best-fit tau: DLS=36s, DMS=414s, VS=981s | tau_DLS=36s, tau_DMS=414s, tau_VS=981s; F(2,39)=23.6, p=2.0e-5 | DLS, DMS, VS (rat striatum) | **reward_expectation (multi-timescale DA prediction errors)** |
+| 11 | **Schilling et al.** | 2023 | Theoretical / computational | — | Predictive coding + stochastic resonance as fundamental auditory principles; Bayesian brain: percept = posterior from prior prediction + likelihood; precision weighting of prediction errors | Theoretical framework | Auditory pathway (DCN → cortex) | **f01 uncertainty (Bayesian precision), f02/f03 (PE weighting)** |
+| 12 | **Harding et al.** | 2025 | fMRI + behavioral (RCT) | 41 MDD patients | Psilocybin > escitalopram for anhedonia reduction (F(1,39)=4.17, p=0.048); PT maintains surprise-related valence; escitalopram diminishes surprise differentiation; vmPFC decreases post-PT | Anhedonia interaction: F(1,39)=4.17, p=0.048; vmPFC interaction: F(1,39)=7.07, p=0.011 | vmPFC (-2,46,-8), NAcc (11,9,-1), R STG (task-derived), Angular gyrus (whole-brain) | **f04 pleasure (hedonic processing), f01 uncertainty (predictive priors)** |
 
 ### 3.2 Effect Size Summary
 
 ```
-Primary Effect:       Reward inversion demonstrated
-Heterogeneity:        Single study
-Quality Assessment:   β-tier (behavioral + theoretical framework)
-Replication:          Consistent with Bayesian surprise theory
+Primary Effect:       Reward inversion in high-uncertainty contexts (Mencke 2019)
+                      IC x entropy saddle interaction on pleasure (Cheung 2019, Gold 2019, 2023)
+                      Dopamine release caudate (anticipation) and NAcc (peak): 6-9% BP change
+Heterogeneity:        Low — IC x entropy interaction replicated across 3 independent groups
+Quality Assessment:   β-tier (behavioral + fMRI + PET + EEG convergence)
+Replication:          Cheung 2019 → Gold 2023 (direct replication of IC x entropy)
+                      Salimpoor 2011 → Gold 2023 (VS pleasure correlation)
+Sample Sizes:         Range 8-75; majority 18-43; total across studies ~370+
 ```
 
 ---
@@ -339,12 +353,18 @@ dReward/dt = τ⁻¹ · (Target_Reward - Current_Reward)
 
 ### 8.1 Pipeline Validated Regions
 
-| Region | MNI Coordinates | Mentions | Evidence Type | UDP Function |
-|--------|-----------------|----------|---------------|--------------|
-| **Auditory Cortex (STG)** | ±52, -22, 8 | 1 | Indirect (behavioral) | Prediction generation |
-| **Ventral Striatum (NAcc)** | ±10, 10, -8 | 1 | Literature inference | Reward computation |
-| **IFG (Inferior Frontal Gyrus)** | ±44, 18, 8 | 1 | Literature inference | Uncertainty estimation |
-| **mPFC** | 0, 46, 12 | 1 | Literature inference | Model improvement tracking |
+| Region | MNI Coordinates | Studies | Evidence Type | UDP Function |
+|--------|-----------------|---------|---------------|--------------|
+| **Auditory Cortex (STG)** | L: -54, -22, 8; R: 52, -16, 6 | Cheung 2019, Gold 2023, Chabin 2020, Harding 2025 | fMRI, EEG source | Prediction generation; uncertainty x surprise interaction (beta=-0.182 L, -0.128 R) |
+| **Ventral Striatum (NAcc)** | R: 8, 10, -8 (Salimpoor); R: 10, 12, -8 (Cheung); R: 11, 9, -1 (Harding) | Salimpoor 2011, Cheung 2019, Gold 2023, Harding 2025 | PET, fMRI | Reward computation; dopamine release during peak pleasure (9.2% BP change); uncertainty tracking (beta=0.242) |
+| **Caudate Nucleus** | R: 14, -6, 20 (Salimpoor); L: -10, 12, 8 (Cheung) | Salimpoor 2011, Cheung 2019 | PET, fMRI | Anticipatory reward; dopamine release during anticipation (6.4% BP change); uncertainty tracking |
+| **Amygdala / Anterior Hippocampus** | L: ~-20, -6, -16; R: ~22, -6, -16 | Cheung 2019 | fMRI | Uncertainty x surprise interaction (beta=-0.116 L, -0.140 R); emotional salience of prediction outcomes |
+| **IFG (Inferior Frontal Gyrus)** | ~±44, 18, 8 | Cheung 2019 (discussion) | Literature inference | Expectation generation; top-down prediction to auditory cortex |
+| **vmPFC** | -2, 46, -8 | Harding 2025 | fMRI | Higher-order reward processing; decreases post-psilocybin (F(1,39)=7.07, p=0.011); hedonic prior encoding |
+| **OFC (Orbitofrontal Cortex)** | Prefrontal (EEG source) | Chabin 2020 | HD-EEG source | Increased theta during pleasurable chills; reward evaluation |
+| **pre-SMA** | 0, 8, 52 | Cheung 2019 | fMRI | Uncertainty tracking (beta=0.358); anticipatory motor preparation |
+| **R Heschl's Gyrus** | ~46, -14, 8 | Bravo 2017 | fMRI | Heightened sensory cortical response under uncertainty; precision weighting of auditory evidence |
+| **Putamen** | 23, 1, 1 | Salimpoor 2011 | PET | Dopamine release during pleasurable music (6.5-7.9% BP change) |
 
 ---
 
@@ -383,11 +403,13 @@ dReward/dt = τ⁻¹ · (Target_Reward - Current_Reward)
 
 | Criterion | Testable Prediction | Status |
 |-----------|---------------------|--------|
-| **Reward inversion** | Atonal: confirmation > error reward | **Confirmed** (Mencke 2019) |
-| **Context dependence** | Reward pattern should flip with uncertainty level | Testable via tonal/atonal switch |
+| **Reward inversion** | Atonal: confirmation > error reward | **Confirmed** (Mencke 2019; supported by Cheung 2019 high-uncertainty/low-surprise = pleasurable) |
+| **Context dependence** | Reward pattern should flip with uncertainty level | **Confirmed** (Cheung 2019 saddle surface; Gold 2019 IC x entropy interaction) |
 | **Uncertainty threshold** | Should exist a clear inversion point | Testable via parametric design |
-| **Learning effect** | Familiarity should shift uncertainty downward | Testable via exposure |
-| **Neural correlate** | NAcc should track context-dependent reward | Testable via fMRI |
+| **Learning effect** | Familiarity should shift uncertainty downward | Testable via exposure (Gold 2019 repetition decreased liking but maintained complexity preference) |
+| **Neural correlate** | NAcc should track context-dependent reward | **Partially confirmed** (Cheung 2019: NAcc tracks uncertainty; Salimpoor 2011: NAcc dopamine at peak pleasure; Gold 2023: VS reflects liked surprises) |
+| **Dopamine anticipation** | Caudate should be active during anticipatory phase | **Confirmed** (Salimpoor 2011: caudate anticipation, NAcc consummation) |
+| **Anhedonia dissociation** | Musical pleasure should be selectively impaired in musical anhedonia | **Confirmed** (Mas-Herrero 2014: preserved monetary, absent musical reward) |
 
 ---
 
@@ -526,10 +548,10 @@ class UDP(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 1 (Mencke 2019) | Primary evidence |
-| **Effect Sizes** | 1 | Reward inversion demonstrated |
-| **Evidence Modality** | Behavioral + theoretical | Indirect |
-| **Falsification Tests** | 5/5 testable, 1 confirmed | Moderate validity |
+| **Papers** | 12 (Mencke 2019, Gold 2019, Cheung 2019, Gold 2023, Salimpoor 2011, Mas-Herrero 2014, Chabin 2020, Borges 2019, Bravo 2017, Mohebi 2024, Schilling 2023, Harding 2025) | Primary + convergent evidence |
+| **Effect Sizes** | 15+ | IC x entropy interaction, dopamine BP change, saddle surface, SCR slopes, EEG theta, BOLD betas |
+| **Evidence Modality** | Behavioral + fMRI + PET + EEG + psychophysiology + computational | Multi-modal convergence |
+| **Falsification Tests** | 7/7 testable, 5 confirmed or partially confirmed | Strong validity |
 | **R³ Features Used** | ~17D of 49D | Consonance + energy + timbre + change + interactions |
 | **H³ Demand** | 16 tuples (0.69%) | Sparse, efficient |
 | **PPC Mechanism** | 30D (3 sub-sections) | Pitch prediction accuracy |
@@ -541,7 +563,18 @@ class UDP(BaseModel):
 
 ## 13. Scientific References
 
-1. **Mencke, I., Omigie, D., Wald-Fuhrmann, M., & Brattico, E. (2019)**. Atonal music: Can uncertainty lead to pleasure? *Frontiers in Neuroscience*, 12, 979.
+1. **Mencke, I., Omigie, D., Wald-Fuhrmann, M., & Brattico, E. (2019)**. Atonal music: Can uncertainty lead to pleasure? *Frontiers in Neuroscience*, 12, 979. https://doi.org/10.3389/fnins.2018.00979
+2. **Gold, B. P., Pearce, M. T., Mas-Herrero, E., Dagher, A., & Zatorre, R. J. (2019)**. Predictability and uncertainty in the pleasure of music: A reward for learning? *Journal of Neuroscience*, 39(47), 9397-9409. https://doi.org/10.1523/JNEUROSCI.0428-19.2019
+3. **Cheung, V. K. M., Harrison, P. M. C., Meyer, L., Pearce, M. T., Haynes, J.-D., & Koelsch, S. (2019)**. Uncertainty and surprise jointly predict musical pleasure and amygdala, hippocampus, and auditory cortex activity. *Current Biology*, 29(23), 4084-4092. https://doi.org/10.1016/j.cub.2019.09.067
+4. **Gold, B. P., Pearce, M. T., McIntosh, A. R., Chang, C., Dagher, A., & Zatorre, R. J. (2023)**. Auditory and reward structures reflect the pleasure of musical expectancies during naturalistic listening. *Frontiers in Neuroscience*, 17, 1209398. https://doi.org/10.3389/fnins.2023.1209398
+5. **Salimpoor, V. N., Benovoy, M., Larcher, K., Dagher, A., & Zatorre, R. J. (2011)**. Anatomically distinct dopamine release during anticipation and experience of peak emotion to music. *Nature Neuroscience*, 14(2), 257-262. https://doi.org/10.1038/nn.2726
+6. **Mas-Herrero, E., Zatorre, R. J., Rodriguez-Fornells, A., & Marco-Pallares, J. (2014)**. Dissociation between musical and monetary reward responses in specific musical anhedonia. *Current Biology*, 24(6), 699-704. https://doi.org/10.1016/j.cub.2014.01.068
+7. **Chabin, T., Gabriel, D., Chansophonkul, T., Michelant, L., Joucla, C., Haffen, E., Moulin, T., Comte, A., & Pazart, L. (2020)**. Cortical patterns of pleasurable musical chills revealed by high-density EEG. *Frontiers in Neuroscience*, 14, 565815. https://doi.org/10.3389/fnins.2020.565815
+8. **Borges, A. F. T., Irrmischer, M., Brockmeier, T., Smit, D. J. A., Mansvelder, H. D., & Linkenkaer-Hansen, K. (2019)**. Scaling behaviour in music and cortical dynamics interplay to mediate music listening pleasure. *Scientific Reports*, 9, 17700. https://doi.org/10.1038/s41598-019-54060-x
+9. **Bravo, F., Cross, I., Stamatakis, E. A., & Rohrmeier, M. (2017)**. Sensory cortical response to uncertainty and low salience during recognition of affective cues in musical intervals. *PLoS ONE*, 12(4), e0175991. https://doi.org/10.1371/journal.pone.0175991
+10. **Mohebi, A., Wei, W., Pelattini, L., Kim, K., & Berke, J. D. (2024)**. Dopamine transients follow a striatal gradient of reward time horizons. *Nature Neuroscience*, 27(4), 737-746. https://doi.org/10.1038/s41593-023-01566-3
+11. **Schilling, A., Sedley, W., Gerum, R., Metzner, C., Tziridis, K., Maier, A., Schulze, H., Zeng, F.-G., Friston, K. J., & Krauss, P. (2023)**. Predictive coding and stochastic resonance as fundamental principles of auditory phantom perception. *Brain*, 146(12), 4809-4825. https://doi.org/10.1093/brain/awad255
+12. **Harding, R., Singer, N., Wall, M. B., Hendler, T., Erritzoe, D., Nutt, D., Carhart-Harris, R., & Roseman, L. (2025)**. Dissociable effects of psilocybin and escitalopram for depression on processing of musical surprises. *Molecular Psychiatry*, 30, 3188-3196. https://doi.org/10.1038/s41380-025-03035-8
 
 ---
 
@@ -560,6 +593,16 @@ class UDP(BaseModel):
 | Demand format | HC⁰ index ranges | H³ 4-tuples (sparse) |
 | Total demand | 24/2304 = 1.04% | 16/2304 = 0.69% |
 | Output | 10D | 10D (same) |
+
+### What Changed from v2.0.0 to v2.1.0
+
+| Aspect | v2.0.0 | v2.1.0 |
+|--------|--------|--------|
+| Papers | 1 (Mencke 2019) | 12 papers (deep C³ literature review) |
+| Brain regions | 4 (indirect/inferred) | 10 with MNI coordinates from fMRI/PET/EEG |
+| Evidence modality | Behavioral + theoretical | Behavioral + fMRI + PET + EEG + psychophysiology + computational |
+| Falsification | 5 criteria, 1 confirmed | 7 criteria, 5 confirmed or partially confirmed |
+| Effect sizes | 1 (reward inversion demonstrated) | 15+ quantitative effect sizes |
 
 ### Why PPC + TPC + MEM replaces HC⁰ mechanisms
 
