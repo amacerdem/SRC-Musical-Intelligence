@@ -20,8 +20,8 @@
 - [x] #9 SPU-γ3-SDED — Sensory Dissonance Early Detection (v2.1.0: 1→12 papers, "Tervaniemi, Makkonen & Nie 2022 Neuropsychologia" citation REMOVED (not found in collection), d=-1.09 REMOVED, Crespo-Bojorque 2018 universal early MMN, Fishman 2001 A1 phase-locking, Foo 2016 ECoG STG, 7 methods)
 
 ### BATCH 2: STU (Sensorimotor Timing, 14 models)
-- [ ] #10 STU-α1-HMCE — Hierarchical Musical Context Encoding
-- [ ] #11 STU-α2-AMSC — Auditory-Motor Stream Coupling
+- [x] #10 STU-α1-HMCE — Hierarchical Musical Context Encoding (v2.1.0: 1→15 papers, r=0.99 QUALIFIED to r=0.32 electrode-level, Norman-Haignere 2022 independent replication β=0.064 oct/mm, Sabat 2025 CONSTRAINS integration window flexibility, Bonetti/Bellier/Potes/Golesorkhi/Ye/Wöhrle/Foo/Briley/Fedorenko/Kim convergence, 8 methods)
+- [x] #11 STU-α2-AMSC — Auditory-Motor Stream Coupling (v2.1.0: 1→12 papers, Lazzari 2025 TMS CAUSAL right dPMC, Ito 2022 cross-species 120-140 BPM, Hoddinott/Grahn SMA+putamen RSA, Edagawa beta synchronization, Bellier right STG, 6 methods)
 - [ ] #12 STU-α3-MDNS — Melody Decoding from Neural Signals
 - [ ] #13 STU-β1-AMSS — Attention-Modulated Stream Segregation
 - [ ] #14 STU-β2-TPIO — Timbre Perception-Imagery Overlap

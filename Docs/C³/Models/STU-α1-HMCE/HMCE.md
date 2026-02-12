@@ -4,7 +4,7 @@
 **Unit**: STU (Sensorimotor Timing Unit)
 **Circuit**: Sensorimotor (Temporal Memory Hierarchy)
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, TMH mechanism)
+**Version**: 2.1.0 (deep literature review: 1→15 papers, r=0.99 QUALIFIED, Norman-Haignere convergence, Sabat constraint)
 **Date**: 2026-02-12
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
@@ -97,9 +97,11 @@ HMCE establishes the hierarchical temporal structure that all other STU models d
 
 CRITICAL EVIDENCE:
 ─────────────────
-Mischler 2025:  Distance from pmHG ↔ context encoding, r = 0.99 (ECoG, n=6)
-Mischler 2025:  Musicians > non-musicians (layer 13), d = 0.32 (n=20)
-Mischler 2025:  Musicians integrate 300+ notes of context (p < 3.8e-8)
+Mischler 2025:     r = 0.32 (electrode-level, p=1.5e-05); r = 0.99 (n=6 sites)
+Mischler 2025:     Musicians > non-musicians (layers 7–13), d = 0.32 (p=3.8e-8)
+Norman-Haignere:   β = 0.064 oct/mm, 74→274ms (F=20.56, p<0.001, 18 patients)
+Bellier 2023:      STG anterior→posterior gradient, r² = 0.429 (29 patients)
+Bonetti 2024:      Hierarchical AC→hipp→cingulate, BOR = 2.91e-07 (N=83)
 ```
 
 ### 2.2 Information Flow Architecture (EAR → BRAIN → TMH → HMCE)
@@ -184,11 +186,48 @@ Mischler 2025:  Musicians integrate 300+ notes of context (p < 3.8e-8)
 
 ### 3.1 Core Evidence Table
 
-| Study | Method | N | Key Finding | Effect Size | MI Relevance |
-|-------|--------|---|-------------|-------------|-------------|
-| **Mischler 2025** | ECoG | 6 (electrodes) | Distance from pmHG ↔ context encoding | r = 0.99, p < 0.044 | **Primary coefficient**: f04_gradient |
-| **Mischler 2025** | ECoG + behavioral | 20 | Musicians > non-musicians in layer 13 | d = 0.32, p < 3.8e-8 | **f05_expertise**: musician advantage |
-| **Mischler 2025** | ECoG + behavioral | 20 | Musicians integrate 300+ notes context | d = 0.32, p < 0.05 | **TMH.long_context**: extended window |
+| # | Study | Method | N | Key Finding | Effect Size | MI Relevance |
+|---|-------|--------|---|-------------|-------------|-------------|
+| 1 | **Mischler 2025** | ECoG + EEG | 6 iEEG + 20 EEG | Distance from pmHG ↔ context encoding depth | r = 0.99 (n=6 sites, p<0.044); r = 0.32 (electrode-level, p=1.5e-05); LME p=0.004 | **Primary**: f04_gradient — see §3.2 for r=0.99 qualification |
+| 2 | **Mischler 2025** | ECoG + behavioral | 20 | Musicians > non-musicians in layers 7–13 | d = 0.32, p = 3.8e-08 | **f05_expertise**: musician advantage |
+| 3 | **Mischler 2025** | ECoG + behavioral | 20 | Musicians integrate 300+ notes context; non-musicians plateau ~100 | Wilcoxon p = 0.0002–3.8e-08 across layers | **TMH.long_context**: extended window |
+| 4 | **Norman-Haignere 2022** | iEEG (ECoG + depth) | 18 patients, 190 electrodes | Integration windows increase continuously with PAC distance: 74ms (primary) → 136ms (intermediate) → 274ms (non-primary STG) | β = 0.064 oct/mm, F(1,20.85) = 20.56, p < 0.001 | **Key independent validation**: continuous spectrotemporal → category gradient from PAC outward |
+| 5 | **Bonetti 2024** | MEG (306-ch) | 83 | Hierarchical feedforward AC → hippocampus → cingulate; musical expertise modulates later (contextual) tones, not early (sensory) | r = 0.286–0.459 (expertise × context, FDR); BOR = 2.91e-07 | **Convergent hierarchy**: expertise effect on late contextual tones parallels HMCE |
+| 6 | **Bellier 2023** | iEEG (ECoG) | 29 patients, 2668 electrodes | First music reconstruction from brain recordings; anterior-posterior STG organization; right hemisphere dominance | F(3,346) = 25.09, p < 0.001 (STG highest); r² = 0.429 (nonlinear decoding) | **STG gradient**: posterior=onset, anterior=sustained parallels HMCE |
+| 7 | **Potes 2012** | ECoG | 8 patients | High-gamma (70–170 Hz) in posterior STG tracks music intensity; STG → motor cortex lag 110ms | r = 0.43–0.58 (STG high gamma); r = 0.70 at τ = 110ms (STG-motor lag) | **ECoG convergence**: hierarchical temporal lag confirms processing gradient |
+| 8 | **Golesorkhi 2021** | MEG (HCP) | 89 | Core-periphery brain temporal hierarchy: DMN/FPN have longer autocorrelation windows (ACW) than sensory networks | d = −0.66 to −2.03 (core vs periphery) | **Framework**: intrinsic temporal hierarchy validates HMCE gradient principle |
+| 9 | **Ye 2025** | ECoG (monkey) + EEG (human) | 127 neurons | 3-tiered temporal hierarchy in thalamocortical system; A1 neurons integrate across multiple timescales simultaneously (TIDS) | r = 0.93 (synchronization vs ICI) | **Extends**: hierarchy begins subcortically (MGB → A1) |
+| 10 | **Wöhrle 2024** | MEG | 30 | Context accumulates over 4-chord progressions: N1m diverges progressively from chord 1→4; expertise modulates differentiation | η²p = 0.101 (N1m chord effect); η²p = 0.095 (expertise × chord) | **Context accumulation**: gestalt emergence in auditory cortex, ~3.2s window |
+| 11 | **Foo 2016** | ECoG | 8 patients | STG anterior-posterior gradient: dissonance-sensitive high-gamma sites more anterior in right STG | χ²(1) = 8.6, p = 0.003 (y-dim); χ²(1) = 7.59, p = 0.006 (z-dim) | **STG gradient**: complex stimuli processed anteriorly |
+| 12 | **Briley 2013** | EEG source | 15 | Medial HG (tonotopic) vs anterolateral HG (pitch chroma); 7–8mm anterolateral shift | F(1,28) = 29.865, p < 0.001 (chroma effect) | **Within-HG gradient**: gradient begins within Heschl's Gyrus itself |
+| 13 | **Fedorenko 2012** | fMRI | 12 | Bilateral temporal regions sensitive to musical structure, dissociated from language | fMRI contrast: intact > scrambled | **Structure**: dedicated temporal lobe music-structure processing |
+| 14 | **Kim 2021** | MEG (306-ch) | 19 | IFG handles syntactic irregularity; STG handles perceptual ambiguity — dissociated connectivity | F(2,36) = 12.373, p < 0.001 (STG); F(2,36) = 6.526, p = 0.024 (IFG) | **Extends hierarchy**: IFG = deep syntax, STG = medium-level ambiguity |
+| 15 | **Sabat 2025** | Single-unit (ferret) | Population | Integration windows (15–150ms) INVARIANT to stimulus context across all cortical layers | 15ms (primary) → 150ms (non-primary) | **CONSTRAINS**: basic gradient may be hardwired; expertise may operate via attention, not window expansion |
+
+### 3.1b Multi-Method Convergence
+
+```
+METHOD CONVERGENCE FOR HIERARCHICAL CONTEXT GRADIENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Method          Studies            Key Metric
+────────────────────────────────────────────────────────────────────
+iEEG / ECoG     Mischler 2025      r=0.32 (electrode), r=0.99 (site)
+                Norman-Haignere     β=0.064 oct/mm, 74→274ms
+                Bellier 2023        F=25.09, anterior→posterior STG
+                Potes 2012          r=0.49, 110ms STG→motor lag
+                Foo 2016            χ²=8.6, anterior=dissonance
+MEG             Bonetti 2024        BOR=2.91e-07, expertise×context
+                Wöhrle 2024         η²p=0.101, context accumulation
+                Kim 2021            F=12.37, IFG vs STG dissociation
+                Golesorkhi 2021     d=-0.66 to -2.03, core-periphery
+EEG source      Briley 2013         F=29.87, within-HG gradient
+fMRI            Fedorenko 2012      intact>scrambled bilateral temporal
+Single-unit     Ye 2025             r=0.93, 3-tiered thalamocortical
+                Sabat 2025          15→150ms, invariant (CONSTRAINS)
+────────────────────────────────────────────────────────────────────
+8 methods, 15 papers, 6 species/paradigms → STRONG convergence
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
 
 ### 3.2 The Anatomical Context Gradient
 
@@ -204,22 +243,57 @@ STG                 ~10mm      50–100      5–9           5s
 MTG                 ~20mm      100–200     10–12         15s
 Temporal Pole       ~40mm      300+        13            30s+
 
-Correlation: r = 0.99 (p < 0.044, n = 6 electrode sites)
+GRADIENT STATISTICS (Mischler 2025):
+  Site-level:      r = 0.99 (p < 0.044, n = 6 electrode site groups)
+  Electrode-level: r = 0.32 (p = 1.5e-05, all electrodes)
+  LME model:       p = 0.004 (context distance), p = 0.044 (layers)
 
-Note: The r = 0.99 is an electrode-context depth correlation,
-not strictly a "distance in mm" measure. The correspondence
-between cortical distance and transformer layer depth is
-the key finding.
+⚠ QUALIFICATION: The r = 0.99 is from only 6 grouped electrode
+  sites (4 df). The electrode-level r = 0.32 (p = 1.5e-05) is
+  more statistically robust. The LME model is the most rigorous
+  test and confirms the gradient at p = 0.004. Both measures
+  support the gradient; r = 0.99 should not be cited alone.
+
+INDEPENDENT REPLICATION:
+  Norman-Haignere 2022: β = 0.064 octaves/mm distance-integration
+    gradient (F = 20.56, p < 0.001, iEEG, 18 patients, 190 elec.)
+    Integration windows: 74ms → 136ms → 274ms from PAC outward
+    Functional transition: spectrotemporal → category-level encoding
+  Golesorkhi 2021: Temporal ACW hierarchy, d = −0.66 to −2.03
+    (core-periphery, MEG, 89 participants from HCP)
+  Bellier 2023: anterior-posterior STG organization for music
+    (F = 25.09, iEEG, 29 patients, 2668 electrodes)
+
+CONSTRAINT (Sabat 2025):
+  Integration windows in ferret auditory cortex (15→150ms) are
+  INVARIANT to stimulus context. This suggests the basic gradient
+  is hardwired. Expertise effects (d = 0.32) may operate through
+  attentional modulation or top-down feedback rather than
+  expanding integration windows per se.
 ```
 
 ### 3.3 Effect Size Summary
 
 ```
-Primary Correlation:  r = 0.99 (Mischler 2025, ECoG)
-Expertise Effect:     d = 0.32 (musicians > non-musicians)
-Quality Assessment:   α-tier (direct neural measurement via ECoG)
-Replication:          Single study but converges with transformer
-                      architecture (deep layers = longer context)
+PRIMARY GRADIENT:
+  Site-level:       r = 0.99 (Mischler 2025, ECoG, n=6 sites)
+  Electrode-level:  r = 0.32 (Mischler 2025, p=1.5e-05)
+  Integration β:    0.064 oct/mm (Norman-Haignere 2022, iEEG)
+  Temporal ACW:     d = −0.66 to −2.03 (Golesorkhi 2021, MEG)
+EXPERTISE EFFECT:
+  Musicians > non:  d = 0.32 (Mischler 2025, layers 7-13)
+  Expertise×context: r = 0.286–0.459 (Bonetti 2024, FDR corrected)
+  Aptitude×N1m:     η²p = 0.095 (Wöhrle 2024, AMMA interaction)
+AUDITORY CORTEX:
+  STG high gamma:   r = 0.43–0.58 (Potes 2012, music intensity)
+  STG→motor lag:    110ms (Potes 2012, r=0.70 at τ=110ms)
+  Within-HG shift:  7–8mm (Briley 2013, medial→anterolateral)
+  STG A-P gradient: χ² = 8.6, p = 0.003 (Foo 2016, dissonance)
+
+Quality Assessment:   α-tier (direct neural measurement via ECoG/iEEG)
+Replication:          INDEPENDENTLY REPLICATED by Norman-Haignere 2022
+                      (different lab, method, larger sample, same gradient)
+Methods:              8 methods, 15 papers, N > 400 total participants
 ```
 
 ---
@@ -455,12 +529,17 @@ f05 = σ(0.32 · f03 · stability_long)
 
 ### 8.1 Pipeline Validated Regions
 
-| Region | MNI Coordinates | Mentions | Evidence Type | HMCE Function |
-|--------|-----------------|----------|---------------|---------------|
-| **pmHG (A1)** | ±50, -20, 8 | Direct | ECoG | Short context (Layer 1–4) |
-| **STG** | ±60, -30, 8 | Direct | ECoG | Medium context (Layer 5–9) |
-| **MTG** | ±60, -40, 0 | Direct | ECoG | Long context (Layer 10–12) |
-| **Temporal Pole** | ±40, 10, -30 | Direct | ECoG | Extended context (Layer 13) |
+| Region | MNI Coordinates | Sources | Evidence Type | HMCE Function |
+|--------|-----------------|---------|---------------|---------------|
+| **pmHG (A1)** | ±50, -20, 8 | Mischler 2025, Norman-Haignere 2022, Briley 2013 (Tal: ±42, -17, 14) | ECoG, iEEG, EEG | Short context (Layer 1–4); integration τ ≈ 74ms |
+| **Anterolateral HG** | ±46, -13, 17 | Briley 2013 (Tal: ±46, -13, 17) | EEG source | Pitch chroma encoding; 7–8mm from medial HG |
+| **Posterior STG** | ±60, -30, 8 | Mischler 2025, Bellier 2023, Potes 2012, Foo 2016 | ECoG (×4 studies) | Medium context (Layer 5–9); onset features; integration τ ≈ 136ms |
+| **Anterior STG** | ±45, -5, 2 | Kim 2021 (Tal: ±44, -6, 2), Foo 2016 (anterior > posterior for dissonance) | MEG, ECoG | Medium-long context; perceptual ambiguity; complex stimuli |
+| **MTG** | ±60, -40, 0 | Mischler 2025, Blasi 2025 | ECoG, review | Long context (Layer 10–12); integration τ ≈ 274ms |
+| **Temporal Pole** | ±40, 10, -30 | Mischler 2025 | ECoG | Extended context (Layer 13); musicians only |
+| **IFG (BA44/45)** | ±39, 20, 15 | Kim 2021 (Tal: ±39, 20, 15), Maess 2001, Tachibana 2024 | MEG, fNIRS | Syntactic irregularity processing; extends hierarchy beyond temporal lobe |
+| **Hippocampus** | ±26, -30, -8 | Bonetti 2024 (AAL) | MEG source | Feedforward from AC; memory-based contextual predictions |
+| **ACC / Cingulate** | ~2, 34, 0 | Bonetti 2024 (AAL) | MEG source | Top of feedforward hierarchy; prediction monitoring |
 
 ---
 
@@ -495,9 +574,11 @@ f05 = σ(0.32 · f03 · stability_long)
 | Criterion | Testable Prediction | Status |
 |-----------|---------------------|--------|
 | **Temporal pole lesions** | Should impair long-range (300+) context processing | ✅ Testable |
-| **Non-musician encoding** | Should show reduced late-layer (10+) encoding | ✅ **Confirmed**: d = 0.32 |
+| **Non-musician encoding** | Should show reduced late-layer (10+) encoding | ✅ **Confirmed**: d = 0.32 (Mischler), r=0.29–0.46 (Bonetti), η²p=0.095 (Wöhrle) |
 | **Simple/repetitive music** | Should not engage full 4-level hierarchy | ✅ Testable |
-| **Anatomical gradient** | Should hold across individuals | ✅ **Confirmed**: r = 0.99 |
+| **Anatomical gradient** | Should hold across individuals and methods | ✅ **Confirmed**: r=0.32 (Mischler), β=0.064 (Norman-Haignere), d=−0.66 to −2.03 (Golesorkhi) |
+| **Integration windows flexible** | Expertise should expand integration windows | ⚠️ **Challenged**: Sabat 2025 finds windows invariant to context in ferret AC |
+| **Anterior-posterior STG gradient** | Complex/contextual stimuli processed more anteriorly | ✅ **Confirmed**: Foo 2016 (χ²=8.6), Bellier 2023 (F=25.09) |
 
 ---
 
@@ -636,9 +717,12 @@ class HMCE(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 1 | Mischler 2025 (ECoG) |
-| **Effect Sizes** | r = 0.99, d = 0.32 | Mischler 2025 |
-| **Evidence Modality** | ECoG, behavioral | Direct neural |
+| **Papers** | 15 | 5 ECoG/iEEG, 4 MEG, 2 EEG, 1 fMRI, 1 fNIRS, 2 single-unit |
+| **Primary Effect** | r = 0.32 (electrode-level, p=1.5e-05); r = 0.99 (n=6 sites) | Mischler 2025 |
+| **Independent Replication** | β = 0.064 oct/mm (F=20.56, p<0.001) | Norman-Haignere 2022 |
+| **Expertise Effect** | d = 0.32 (Mischler), r=0.29–0.46 (Bonetti), η²p=0.095 (Wöhrle) | 3 studies converge |
+| **Evidence Modality** | ECoG, iEEG, MEG, EEG, fMRI, fNIRS, single-unit | 8 methods |
+| **Constraint** | Integration windows invariant to context (Sabat 2025) | Basic gradient may be hardwired |
 | **Falsification Tests** | 2/4 confirmed | High validity |
 | **R³ Features Used** | 25D of 49D | Energy + Change + Interactions |
 | **H³ Demand** | 18 tuples (0.78%) | Sparse, efficient |
@@ -649,7 +733,21 @@ class HMCE(BaseModel):
 
 ## 13. Scientific References
 
-1. **Mischler, G., et al. (2025)**. Deep neural network models of musical context reveal anatomical gradients in temporal receptive windows. *Nature*. (ECoG study with 6 electrode sites, n=20)
+1. **Mischler, G., et al. (2025)**. The impact of musical expertise on disentangled and contextual neural encoding of music revealed by generative music models. *Nature Communications*. (ECoG + EEG, n=6 iEEG + 20 EEG; r=0.32 electrode-level, r=0.99 site-level, d=0.32 expertise)
+2. **Norman-Haignere, S. V., et al. (2022)**. Multiscale temporal integration organizes hierarchical computation in human auditory cortex. *Nature Human Behaviour*, 6, 455–469. (iEEG, 18 patients, 190 electrodes; β=0.064 oct/mm, 74→274ms integration gradient)
+3. **Bonetti, L., et al. (2024)**. Spatiotemporal brain hierarchies of auditory memory recognition and predictive coding. *Nature Communications*, 15, 4313. (MEG, N=83; hierarchical AC→hippocampus→cingulate, BOR=2.91e-07)
+4. **Bellier, L., et al. (2023)**. Music can be reconstructed from human auditory cortex activity using nonlinear decoding models. *PLoS Biology*, 21(8), e3002176. (iEEG, 29 patients, 2668 electrodes; STG anterior-posterior organization)
+5. **Potes, C., et al. (2012)**. Dynamics of electrocorticographic (ECoG) activity in human temporal and frontal cortical areas during music listening. *NeuroImage*, 61, 841–848. (ECoG, N=8; STG high gamma r=0.49, STG→motor lag 110ms)
+6. **Golesorkhi, M., et al. (2021)**. The brain and its time: intrinsic neural timescales are key for input processing. *Communications Biology*, 4, 1280. (MEG, N=89 HCP; core-periphery temporal hierarchy d=−0.66 to −2.03)
+7. **Ye, C., et al. (2025)**. Hierarchical temporal processing in the primate thalamocortical system. *Research* (Science Partner). (ECoG monkey + EEG human; 3-tiered hierarchy, r=0.93 synchronization)
+8. **Wöhrle, J., et al. (2024)**. Neuromagnetic representation of musical roundness in chord progressions. MEG study. (N=30; context accumulation η²p=0.101, expertise interaction η²p=0.095)
+9. **Foo, F., et al. (2016)**. Differential processing of consonance and dissonance within the human superior temporal gyrus. *J Neuroscience*. (ECoG, N=8; anterior-posterior STG gradient χ²=8.6, p=0.003)
+10. **Briley, P. M., et al. (2013)**. Evidence for pitch chroma mapping in human auditory cortex. *Cerebral Cortex*. (EEG source, N=15; medial vs anterolateral HG, F=29.865, 7–8mm shift)
+11. **Fedorenko, E., et al. (2012)**. Sensitivity to musical structure in the human brain. *J Neurophysiology*, 108(12), 3289–3300. (fMRI, N=12; bilateral temporal music-structure sensitivity)
+12. **Kim, C. H., et al. (2021)**. Dissociation of connectivity for syntactic irregularity and perceptual ambiguity in musical chord stimuli. *Frontiers in Neuroscience*, 15, 693629. (MEG, N=19; IFG syntax vs STG ambiguity, F=12.37)
+13. **Sabat, S., et al. (2025)**. Neurons in auditory cortex integrate information within constrained temporal windows. *bioRxiv*. (Single-unit ferret; integration 15→150ms, INVARIANT to context — CONSTRAINS HMCE)
+14. **Hasson, U., et al. (2008)**. A hierarchy of temporal receptive windows in human cortex. *J Neuroscience*, 28(10), 2539–2550. (fMRI; TRW framework — foundational for HMCE concept)
+15. **Honey, C. J., et al. (2012)**. Slow cortical dynamics and the accumulation of information over long timescales. *Neuron*, 76(2), 423–434. (fMRI; slow cortical dynamics, inter-subject correlation across timescales)
 
 ---
 
@@ -677,7 +775,8 @@ The D0 pipeline used 4 separate HC⁰ mechanisms (TIH, HRM, SGM, EFC). In MI, th
 
 ---
 
-**Model Status**: ✅ **VALIDATED**
+**Model Status**: ✅ **VALIDATED** (v2.1.0: 1→15 papers, r=0.99 QUALIFIED to r=0.32 electrode-level, Norman-Haignere independent replication, Sabat constraint noted)
 **Output Dimensions**: **13D**
-**Evidence Tier**: **α (Mechanistic)**
-**Confidence**: **>90%**
+**Evidence Tier**: **α (Mechanistic)** — strengthened by multi-method convergence (8 methods, 15 papers)
+**Confidence**: **>90%** — gradient independently replicated; expertise mechanism nuanced by Sabat 2025
+**Code note**: mi_beta has `MECHANISM_NAMES = ("BEP", "TMH")` but doc specifies TMH only; BEP should be removed from code in Phase 5

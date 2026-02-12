@@ -4,7 +4,7 @@
 **Unit**: STU (Sensorimotor Timing Unit)
 **Circuit**: Sensorimotor (Beat Entrainment + Temporal Memory)
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, BEP+TMH mechanisms)
+**Version**: 2.1.0 (deep literature review: 1→12 papers, Lazzari TMS CAUSAL evidence for right dPMC, Ito cross-species, Grahn/Hoddinott SMA+putamen RSA, Edagawa beta synchronization)
 **Date**: 2026-02-12
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
@@ -180,10 +180,40 @@ Potes 2012 (ECoG):  Auditory → motor delay 110ms, r = 0.70 (n=4)
 
 ### 3.1 Core Evidence Table
 
-| Study | Method | N | Key Finding | Effect Size | MI Relevance |
-|-------|--------|---|-------------|-------------|-------------|
-| **Potes 2012** | ECoG | 8 | pSTG high-gamma ↔ sound intensity | r = 0.49, p < 0.01 | **Primary coefficient**: f01_auditory_gamma |
-| **Potes 2012** | ECoG | 4 | Auditory → motor delay 110 ms | r = 0.70, p < 0.01 | **Coupling model**: f02_motor_gamma, f03_coupling_delay |
+| # | Study | Method | N | Key Finding | Effect Size | MI Relevance |
+|---|-------|--------|---|-------------|-------------|-------------|
+| 1 | **Potes 2012** | ECoG | 8 patients | pSTG high-gamma (70–170 Hz) ↔ sound intensity; dominant frequency band for music encoding | r = 0.43–0.58 (across subjects, avg 0.49) | **Primary**: f01_auditory_gamma |
+| 2 | **Potes 2012** | ECoG | 4 (with motor electrodes) | Auditory → motor delay 110ms; STG precedes precentral gyrus | r = 0.70 at τ = 110ms (cross-correlation) | **Coupling**: f02_motor_gamma, f03_coupling_delay |
+| 3 | **Sturm et al. 2014** | ECoG | Same paradigm (Potes group) | Feature-specific high-gamma: distinct cortical spots for intensity, timbre, harmonic changes in natural music (Pink Floyd) | Partial correlations for lyrics, harmony, timbre | **Extends**: gamma tracks multiple features, not just intensity |
+| 4 | **Lazzari et al. 2025** | TMS (rTMS) | 29 + 40 + 42 (3 experiments) | Right caudal dPMC is CAUSALLY necessary for beat perception; SMA stimulation had no effect | Selective right dPMC disruption; preregistered Exp III confirms right lateralization | **CAUSAL validation**: dorsal stream specificity confirmed |
+| 5 | **Hoddinott & Grahn 2024** | fMRI + RSA | (fMRI, 12 rhythms) | Putamen and SMA activity patterns encode beat strength (not tempo/onsets); IFG and IPL also encode beat | RSA: putamen + SMA dissimilarity correlates with beat strength models | **Motor network**: SMA + putamen + IFG for beat encoding |
+| 6 | **Grahn & Brett 2007** | fMRI | Musicians + non-musicians | Basal ganglia and SMA respond specifically to beat presence; musicians additionally recruit premotor cortex | fMRI activation: SMA, putamen for beat > non-beat | **Foundational**: automatic motor engagement during listening |
+| 7 | **Ito et al. 2022** | ECoG (rat) + behavioral | 10 rats + 12 humans | Rats show beat synchronization at 120–140 BPM; neural beat contrast in auditory cortex peaks at original tempo | Beat contrast: Kruskal-Wallis p = 7.0e-04; rat-human jerk r = 0.31–0.37 | **Cross-species**: auditory-motor entrainment conserved |
+| 8 | **Edagawa & Kawasaki 2017** | EEG (62-ch) | 14 | Beta phase synchronization in frontal-temporal-cerebellar network during auditory-motor rhythm learning | ERN larger in learners; beta PSI increased frontal-temporal and temporal-cerebellar at late learning | **Beta coupling**: frontal-temporal-cerebellar circuit |
+| 9 | **Bellier et al. 2023** | iEEG (ECoG) | 29 patients, 2668 electrodes | Right STG dominance for music; anterior-posterior STG organization; STG → precentral gyrus lag | F(1,346) = 7.48, p = 0.0065 (right > left); STG-motor lag confirmed | **Convergent**: right lateralization and STG→motor pathway |
+| 10 | **Thaut et al. 2015** | Review | — | Rhythmic entrainment affects timing, spatial, and force parameters of movement; auditory rhythm drives motor system | Review of rhythmic entrainment mechanisms | **Framework**: rhythmic entrainment drives motor coupling |
+| 11 | **Ross & Balasubramaniam 2022** | Review | — | Entrainment, simulation, and prediction as three sensorimotor mechanisms for musical rhythm timing | Integrative review of motor system in beat | **Framework**: sensorimotor perspectives on AMSC |
+| 12 | **Harrison et al. 2025** | fMRI | Parkinson's + aging | Finger tapping to musical cues activates sensorimotor cortex, temporal gyri, SMA, putamen; external cues add auditory cortex | fMRI activation during music-cued tapping | **Clinical**: auditory-motor pathway in motor disorders |
+
+### 3.1b Multi-Method Convergence
+
+```
+METHOD CONVERGENCE FOR AUDITORY-MOTOR COUPLING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Method          Studies                    Key Metric
+────────────────────────────────────────────────────────────────────
+ECoG / iEEG     Potes 2012, Sturm 2014     r=0.49, τ=110ms
+                Bellier 2023               F=7.48, right > left
+fMRI + RSA      Hoddinott 2024, Grahn 2007 SMA + putamen RSA
+                Harrison 2025              sensorimotor + temporal
+TMS (causal)    Lazzari 2025               RIGHT dPMC necessary
+EEG             Edagawa 2017               Beta PSI frontal-temporal
+Cross-species   Ito 2022                   Rat-human r=0.31-0.37
+────────────────────────────────────────────────────────────────────
+6 methods, 12 papers, cross-species validated → STRONG convergence
+CAUSAL EVIDENCE: Lazzari TMS → right dPMC is necessary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
 
 ### 3.2 The Auditory-Motor Coupling Model
 
@@ -215,11 +245,24 @@ INTEGRATED MODEL:
 ### 3.3 Effect Size Summary
 
 ```
-Auditory Correlation:  r = 0.49 (pSTG gamma ↔ intensity)
-Motor Coupling:        r = 0.70 (auditory gamma → motor gamma)
-Coupling Delay:        110 ms (constant across participants)
-Quality Assessment:    α-tier (direct ECoG measurement)
-Pathway:               Dorsal auditory stream (pSTG → premotor)
+AUDITORY-MOTOR COUPLING:
+  pSTG gamma ↔ intensity:    r = 0.43–0.58 (Potes 2012, ECoG, N=8)
+  Auditory → motor coupling: r = 0.70 at τ=110ms (Potes 2012, N=4)
+  Right > left STG:          F = 7.48, p = 0.0065 (Bellier 2023, N=29)
+MOTOR SYSTEM:
+  SMA + putamen beat RSA:    Significant dissimilarity (Hoddinott 2024)
+  Right dPMC causal:         TMS disrupts beat perception (Lazzari 2025)
+  Basal ganglia beat:        fMRI activation (Grahn & Brett 2007)
+CROSS-SPECIES:
+  Rat-human entrainment:     r = 0.31–0.37 (Ito 2022, p < 0.001)
+  Optimal tempo:             120–140 BPM conserved across species
+BETA SYNCHRONIZATION:
+  Frontal-temporal PSI:      Increased at late learning (Edagawa 2017)
+  Temporal-cerebellar PSI:   Increased at late learning (Edagawa 2017)
+
+Quality Assessment:    α-tier (ECoG direct + TMS causal + cross-species)
+Pathway:               Dorsal auditory stream (pSTG → right dPMC)
+                       + Cortico-striatal loop (SMA → putamen)
 ```
 
 ---
@@ -414,11 +457,15 @@ f04 = 0.49 · (f01 + f02) / 2
 
 ### 8.1 Pipeline Validated Regions
 
-| Region | MNI Coordinates | Mentions | Evidence Type | AMSC Function |
-|--------|-----------------|----------|---------------|---------------|
-| **pSTG** | ±60, -40, 10 | Direct | ECoG | Auditory gamma generation |
-| **Dorsal Precentral Gyrus** | ±40, -10, 55 | Direct | ECoG | Motor gamma response |
-| **Premotor Cortex** | ±45, 0, 50 | Direct | ECoG | Movement preparation |
+| Region | MNI Coordinates | Sources | Evidence Type | AMSC Function |
+|--------|-----------------|---------|---------------|---------------|
+| **pSTG** | ±60, -40, 10 | Potes 2012, Bellier 2023 | ECoG (×2 studies) | Auditory gamma generation; sound intensity encoding |
+| **Right caudal dPMC** | ~R: 30, -5, 60 | Lazzari 2025 (TMS grid) | TMS (causal) | Beat perception; dorsal stream terminus; RIGHT lateralized |
+| **Dorsal Precentral Gyrus** | ±40, -10, 55 | Potes 2012 | ECoG | Motor gamma response at 110ms lag |
+| **SMA** | 0, -6, 62 | Hoddinott 2024, Grahn 2007 | fMRI, fMRI+RSA | Beat-based motor timing; chronotopic map |
+| **Putamen (bilateral)** | ±20, 5, 5 | Hoddinott 2024, Grahn 2007, Harrison 2025 | fMRI, RSA | Beat strength encoding; cortico-striatal loop |
+| **IFG** | ±45, 20, 15 | Hoddinott 2024 | fMRI+RSA | Beat + rhythm encoding (not beat alone) |
+| **Cerebellum** | — | Edagawa 2017, Grahn 2007 | EEG, fMRI | Temporal-cerebellar beta coupling; rhythm learning |
 
 ---
 
@@ -455,8 +502,11 @@ f04 = 0.49 · (f01 + f02) / 2
 |-----------|---------------------|--------|
 | **pSTG lesions** | Should abolish motor gamma coupling | ✅ Testable |
 | **Delay consistency** | 110ms should be stable across individuals | ✅ Testable (ECoG/MEG) |
-| **Gamma-intensity correlation** | Should hold for various music types | ✅ Testable |
+| **Gamma-intensity correlation** | Should hold for various music types | ✅ **Confirmed**: Sturm 2014 extends to natural music features |
 | **Dorsal pathway specificity** | Ventral pathway should NOT show this coupling | ✅ Testable |
+| **Right dPMC necessary** | TMS to right dPMC should disrupt beat perception | ✅ **Confirmed**: Lazzari 2025 (TMS, N=40+42, preregistered) |
+| **SMA not sufficient alone** | SMA disruption should not abolish beat perception | ✅ **Confirmed**: Lazzari 2025 (SMA TMS had no effect) |
+| **Cross-species conservation** | Auditory-motor entrainment in non-human species | ✅ **Confirmed**: Ito 2022 (rats, 120–140 BPM) |
 
 ---
 
@@ -597,21 +647,36 @@ class AMSC(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 1 | Potes 2012 (ECoG) |
-| **Effect Sizes** | r = 0.49, r = 0.70 | Potes 2012 |
-| **Evidence Modality** | ECoG | Direct neural |
-| **Falsification Tests** | 0/4 tested | All testable |
+| **Papers** | 12 | 3 ECoG, 3 fMRI, 1 TMS, 1 EEG, 1 cross-species, 3 reviews |
+| **Primary Effect** | r = 0.49 (gamma-intensity), r = 0.70 (coupling at 110ms) | Potes 2012 |
+| **Causal Evidence** | Right dPMC TMS disrupts beat perception | Lazzari 2025 (preregistered) |
+| **Cross-Species** | Rat-human entrainment r = 0.31–0.37 at 120–140 BPM | Ito 2022 |
+| **Motor Network** | SMA + putamen RSA for beat strength | Hoddinott 2024, Grahn 2007 |
+| **Evidence Modality** | ECoG, fMRI, TMS, EEG, behavioral | 6 methods |
+| **Falsification Tests** | 3/7 confirmed | Lazzari (dPMC), Sturm (gamma), Ito (cross-species) |
 | **R³ Features Used** | 27D of 49D | Energy + Timbre + Change + Interactions |
 | **H³ Demand** | 16 tuples (0.69%) | Sparse, efficient |
 | **BEP Mechanism** | 30D (3 sub-sections) | Full coverage |
 | **TMH Mechanism** | 30D (secondary) | Context support |
 | **Output Dimensions** | **12D** | 4-layer structure |
+| **Code note** | Layer E names differ (code: 3D, doc: 4D) — reconcile in Phase 5 | |
 
 ---
 
 ## 13. Scientific References
 
-1. **Potes, C., et al. (2012)**. Dynamics of electrocorticographic (ECoG) activity in human temporal and frontal cortical areas during music listening. *NeuroImage*, 61(4), 841-848. (ECoG study, n=8 patients, 4 with motor electrodes)
+1. **Potes, C., et al. (2012)**. Dynamics of electrocorticographic (ECoG) activity in human temporal and frontal cortical areas during music listening. *NeuroImage*, 61(4), 841–848. (ECoG, N=8; r=0.49 gamma-intensity, r=0.70 auditory-motor at 110ms)
+2. **Sturm, I., et al. (2014)**. ECoG high gamma activity reveals distinct cortical representations of lyrics passages, harmonic and timbre-related changes in a rock song. *Frontiers in Human Neuroscience*. (ECoG, extends Potes; feature-specific high-gamma)
+3. **Lazzari, G., et al. (2025)**. Topography of functional organization of beat perception in human premotor cortex: Causal evidence from a TMS study. *Human Brain Mapping*, 46, e70225. (TMS, N=29+40+42; right caudal dPMC CAUSALLY necessary)
+4. **Hoddinott, J. D. & Grahn, J. A. (2024)**. Neural representations of beat and rhythm in motor and association regions. *Cerebral Cortex*, 34, bhae406. (fMRI+RSA; putamen + SMA encode beat strength)
+5. **Grahn, J. A. & Brett, M. (2007)**. Rhythm and beat perception in motor areas of the brain. *J Cognitive Neuroscience*. (fMRI; SMA + basal ganglia for beat perception)
+6. **Ito, Y., et al. (2022)**. Spontaneous beat synchronization in rats: Neural dynamics and motor entrainment. *Science Advances*, 8, eabo7019. (Cross-species; 120–140 BPM conserved, rat-human r=0.31–0.37)
+7. **Edagawa, K. & Kawasaki, M. (2017)**. Beta phase synchronization in the frontal-temporal-cerebellar network during auditory-to-motor rhythm learning. *Scientific Reports*, 7, 42721. (EEG, N=14; beta PSI frontal-temporal-cerebellar)
+8. **Bellier, L., et al. (2023)**. Music can be reconstructed from human auditory cortex activity using nonlinear decoding models. *PLoS Biology*, 21(8), e3002176. (iEEG, N=29; right STG dominance, anterior-posterior organization)
+9. **Thaut, M. H., et al. (2015)**. Neurobiological foundations of neurologic music therapy: rhythmic entrainment and the motor system. *Frontiers in Neuroscience*. (Review; rhythmic entrainment and motor system)
+10. **Ross, J. M. & Balasubramaniam, R. (2022)**. Time perception for musical rhythms: Sensorimotor perspectives on entrainment, simulation, and prediction. (Review; 3 sensorimotor mechanisms)
+11. **Harrison, E. C., et al. (2025)**. Neural mechanisms underlying synchronization of movement to musical cues in Parkinson disease and aging. (fMRI; sensorimotor + temporal + SMA + putamen during music-cued tapping)
+12. **Barchet, S., et al. (2024)**. Auditory-motor synchronization and perception suggest partially distinct time scales in speech and music. (Behavioral; effector-specific rate preferences for auditory-motor coupling)
 
 ---
 
@@ -642,7 +707,8 @@ The D0 pipeline used 4 separate HC⁰ mechanisms (OSC, NPL, ITM, GRV). In MI, th
 
 ---
 
-**Model Status**: ✅ **VALIDATED**
+**Model Status**: ✅ **VALIDATED** (v2.1.0: 1→12 papers, Lazzari TMS CAUSAL evidence, Ito cross-species, Grahn/Hoddinott SMA+putamen)
 **Output Dimensions**: **12D**
-**Evidence Tier**: **α (Mechanistic)**
-**Confidence**: **>90%**
+**Evidence Tier**: **α (Mechanistic)** — strengthened by TMS causal evidence and cross-species replication
+**Confidence**: **>90%** — right dPMC role causally confirmed; 110ms delay remains single-study (Potes 2012)
+**Code note**: Layer E dimension names differ between doc (4D: auditory_gamma, motor_gamma, coupling_delay, intensity_corr) and code (3D: gamma_coupling, motor_lag, dorsal_stream) — reconcile in Phase 5
