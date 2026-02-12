@@ -15,9 +15,9 @@
 - [x] #4 SPU-β1-STAI — Spectral-Temporal Aesthetic Integration (v2.1.0: 1→14 papers, Kim citation CORRECTED to Sci Reports, d=0.52→0.72, Alluri/Cheung/Gold/Sarasso/Bellmann convergence, MNI coords added)
 - [x] #5 SPU-β2-TSCP — Timbre-Specific Cortical Plasticity (v2.1.0: 1→12 papers, Bellmann ALE meta-analysis 4 clusters, Whiteford subcortical null constraint, Halpern/Alluri/Santoyo convergence, no direct replication noted)
 - [x] #6 SPU-β3-MIAA — Musical Imagery Auditory Activation (v2.1.0: 1→12 papers, Kraemer F=48.92, Di Liberto imagery=perception for pitch, Halpern/Bellier/Zatorre convergence, SMA added, A1 qualification)
-- [ ] #7 SPU-γ1-SDNPS — Stimulus-Dependent Neural Pitch Salience
-- [ ] #8 SPU-γ2-ESME — Expertise-Specific MMN Enhancement
-- [ ] #9 SPU-γ3-SDED — Sensory Dissonance Early Detection
+- [x] #7 SPU-γ1-SDNPS — Stimulus-Dependent Neural Pitch Salience (v2.1.0: 1→12 papers, Cousineau citation CORRECTED to PLoS ONE, Penagos alHG pitch center added, Bidelman/Fishman/Tabas/Basinski convergence, 8 methods)
+- [x] #8 SPU-γ2-ESME — Expertise-Specific MMN Enhancement (v2.1.0: 1→12 papers, Tervaniemi d=-1.09 REMOVED (unverifiable review), Koelsch 1999 violinist MMN, Vuust 2012 genre-specific, Criscuolo ALE k=84, Martins 2022 no singer/instrumentalist difference CONSTRAINS clean dissociation, 8 methods)
+- [x] #9 SPU-γ3-SDED — Sensory Dissonance Early Detection (v2.1.0: 1→12 papers, "Tervaniemi, Makkonen & Nie 2022 Neuropsychologia" citation REMOVED (not found in collection), d=-1.09 REMOVED, Crespo-Bojorque 2018 universal early MMN, Fishman 2001 A1 phase-locking, Foo 2016 ECoG STG, 7 methods)
 
 ### BATCH 2: STU (Sensorimotor Timing, 14 models)
 - [ ] #10 STU-α1-HMCE — Hierarchical Musical Context Encoding

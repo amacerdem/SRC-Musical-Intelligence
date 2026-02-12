@@ -557,11 +557,36 @@ generalization_limit = σ(0.50 * f02
 
 ### 8.1 Pipeline Validated Regions
 
-| Region | MNI Coordinates | Mentions | Evidence Type | SDNPS Function |
-|--------|-----------------|----------|---------------|----------------|
-| **Inferior Colliculus** | 0, -32, -8 | 2 | Direct (FFR) | FFR generation, NPS computation |
-| **Auditory Nerve** | Peripheral | 2 | Direct (phase-locking) | Phase-locked harmonic response |
-| **Auditory Brainstem** | 0, -30, -10 | 2 | Direct (FFR) | NPS computation, stimulus-dependency origin |
+| # | Region | Coordinates | System | Source | SDNPS Function |
+|---|--------|-------------|--------|--------|----------------|
+| 1 | **Anterolateral HG (R)** | 48, -11, 3 | Talairach | Penagos et al. 2004 (fMRI, p<.01) | **Pitch salience center**: resolved > unresolved harmonics |
+| 2 | **Anterolateral HG (L)** | -55, -5, 3 | Talairach | Penagos et al. 2004 (fMRI, p<.01) | Left hemisphere pitch salience (bilateral) |
+| 3 | **Anterolateral HG (R) — IRN** | 43, -6, 18 | Talairach | Briley et al. 2013 (EEG BESA source) | Pitch chroma for both resolved/unresolved |
+| 4 | **Anterolateral HG (L) — IRN** | -49, -21, 17 | Talairach | Briley et al. 2013 (EEG BESA source) | Pitch chroma source (left) |
+| 5 | **Medial HG (R) — primary** | 44, -13, 13 | Talairach | Briley et al. 2013 (pure-tone source) | Primary AC — tonotopic, not pitch salience |
+| 6 | **Medial HG (L) — primary** | -42, -19, 16 | Talairach | Briley et al. 2013 (pure-tone source) | Primary AC — tonotopic processing |
+| 7 | **Inferior Colliculus** | 0, -32, -8 | MNI (approx) | Cousineau 2015; Bidelman 2013 | FFR generation — NPS computation (temporal code) |
+| 8 | **Auditory Nerve** | Peripheral | — | Bidelman & Heinz 2011 | Phase-locked harmonic response — AN pitch salience |
+| 9 | **Human HG** | Intracranial | — | Fishman et al. 2001 (2 patients) | Phase-locked activity for dissonance (beating) |
+| 10 | **R STG (anterior gradient)** | y-axis significant | ECoG | Foo et al. 2016 (χ²=8.6, p=.003) | Dissonant-sensitive sites anterior in STG |
+| 11 | **Anterolateral HG** | MEG source | — | Tabas et al. 2019 (POR source) | Pitch onset response — consonance/dissonance latency |
+
+```
+KEY ANATOMICAL INSIGHT (Penagos et al. 2004):
+  Anterolateral Heschl's gyrus (nonprimary auditory cortex) encodes
+  PERCEPTUAL pitch salience — not physical temporal regularity.
+  Subcortical stations (CN, IC) show NO sensitivity to pitch salience.
+  This means SDNPS's stimulus-dependency effect operates at the
+  cortical level, not the brainstem level as previously assumed.
+
+  Processing hierarchy:
+    AN → IC → medial HG (tonotopic) → anterolateral HG (pitch salience)
+    ↑ temporal code ↑               ↑ pitch salience emerges here ↑
+
+Code file (sdnps.py) currently lists:
+  IC (0,-32,-8) and AN (0,-38,-40)
+Should add anterolateral HG from Penagos 2004 in Phase 5.
+```
 
 ---
 
@@ -760,20 +785,46 @@ class SDNPS(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 1 | Primary evidence (PNAS) |
-| **Effect Sizes** | r=0.34 (synth), r=-0.57 (roughness) | Cousineau et al. 2015 |
-| **Evidence Modality** | FFR, behavioral ratings | Direct neural + behavioral |
+| **Papers** | **12** (v2.1.0, was 1 in v2.0.0) | 2 FFR + 1 fMRI + 3 EEG + 1 ECoG + 1 MEG + 1 intracranial + 1 psychophysics + 1 AN model + 1 review |
+| **Effect Sizes** | r=0.34→-0.10 degradation; r=-0.57 roughness (invariant) | Cousineau 2015 (PLoS ONE, CORRECTED) |
+| **Cortical Locus** | Anterolateral HG: Talairach R:48,-11,3 / L:-55,-5,3 | Penagos 2004 — pitch salience center |
+| **Evidence Modality** | **8 methods**: FFR, fMRI, EEG, intracranial, ECoG, MEG, modeling, CI | Multi-method convergence on cortical pitch salience |
 | **Falsification Tests** | 3/6 supported | Moderate validity |
 | **R³ Features Used** | ~16D of 49D | Focused |
 | **H³ Demand** | 10 tuples (0.43%) | Sparse, efficient |
 | **PPC Mechanism** | 30D (3 sub-sections) | Pitch salience primary |
 | **Output Dimensions** | **10D** | 4-layer structure |
 
+```
+v2.1.0 CHANGES:
+  • ⚠ CITATION CORRECTED: Cousineau reference was WRONG paper
+    Old: Cousineau, McDermott & Peretz (2015), PNAS 109(48) [actually 2012, amusia]
+    New: Cousineau, Bidelman, Peretz & Lehmann (2015), PLoS ONE 10(12), e0145439
+  • Evidence table expanded: 1 → 12 papers
+  • KEY INSIGHT updated with convergent evidence across 8 methods
+  • CRITICAL EVIDENCE expanded to 6 core findings
+  • Major addition: Penagos 2004 — anterolateral HG pitch salience center
+  • Brain regions: 3 → 11 entries with Talairach coordinates from Penagos/Briley
+  • Qualification: Penagos N=6, Cousineau N=14 — both unreplicated
+  • Code discrepancy: sdnps.py brain regions missing anterolateral HG
+```
+
 ---
 
 ## 13. Scientific References
 
-1. **Cousineau, M., McDermott, J. H., & Peretz, I. (2015)**. The basis of musical consonance as revealed by congenital amusia. *Proceedings of the National Academy of Sciences (PNAS)*, 109(48), 19858-19863.
+1. **Cousineau, M., Bidelman, G. M., Peretz, I., & Lehmann, A. (2015)**. On the relevance of natural stimuli for the study of brainstem correlates: The example of consonance perception. *PLoS ONE*, 10(12), e0145439. ⚠ *CORRECTED in v2.1.0 — previously cited as Cousineau, McDermott & Peretz, PNAS 109(48), which is a different paper about congenital amusia (2012).*
+2. **Penagos, H., Melcher, J. R., & Oxenham, A. J. (2004)**. A neural representation of pitch salience in nonprimary human auditory cortex revealed with functional magnetic resonance imaging. *Journal of Neuroscience*, 24(30), 6810-6815.
+3. **Briley, P. M., Breakey, C., & Krumbholz, K. (2013)**. Evidence for pitch chroma mapping in human auditory cortex. *Cerebral Cortex*, 23(11), 2601-2610.
+4. **Bidelman, G. M., & Heinz, M. G. (2011)**. Auditory-nerve responses predict pitch attributes related to musical consonance-dissonance for normal and impaired hearing. *Journal of the Acoustical Society of America*, 130(3), 1488-1502.
+5. **Bidelman, G. M. (2013)**. The role of the auditory brainstem in processing musically relevant pitch. *Frontiers in Psychology*, 4, 264.
+6. **Fishman, Y. I., Volkov, I. O., Noh, M. D., Garell, P. C., Bakken, H., Arezzo, J. C., Howard, M. A., & Steinschneider, M. (2001)**. Consonance and dissonance of musical chords: Neural correlates in auditory cortex of monkeys and humans. *Journal of Neurophysiology*, 86, 2761-2788.
+7. **Foo, F., King-Stephens, D., Weber, P., Laxer, K., Parvizi, J., & Knight, R. T. (2016)**. Differential processing of consonance and dissonance within the human superior temporal gyrus. *Frontiers in Human Neuroscience*, 10, 154.
+8. **Tabas, A., Andermann, M., Schuberth, V., Riedel, H., Balaguer-Ballester, E., & Rupp, A. (2019)**. Modeling and MEG evidence of early consonance processing in auditory cortex. *PLoS Computational Biology*, 15(2), e1006820.
+9. **Basinski, K., Celma-Miralles, A., Quiroga-Martinez, D. R., & Vuust, P. (2025)**. Inharmonicity enhances brain signals of attentional capture and auditory stream segregation. *Communications Biology*, 8, 1584.
+10. **de Groote, E., Macherey, O., Deeks, J. M., Roman, S., & Carlyon, R. P. (2025)**. Temporal pitch perception of multi-channel stimuli by cochlear-implant users. *Journal of the Association for Research in Otolaryngology*.
+11. **Schon, D., Regnault, P., Ystad, S., & Besson, M. (2005)**. Sensory consonance: An ERP study. *Music Perception*, 23(2), 105-118.
+12. **Crespo-Bojorque, P., Monte-Ordono, J., & Toro, J. M. (2018)**. Early neural responses underlie advantages for consonance over dissonance. *Neuropsychologia*, 117, 188-198.
 
 ---
 

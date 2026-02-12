@@ -4,7 +4,7 @@
 **Unit**: SPU (Spectral Processing Unit)
 **Circuit**: Perceptual (Brainstem-Cortical)
 **Tier**: γ (Speculative) — <70% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, PPC + TPC mechanisms)
+**Version**: 2.1.0 (v2.0.0 → 2.1.0: 1→12 papers, Tervaniemi d=-1.09 REMOVED (unverifiable — review paper), Koelsch 1999 violinist MMN, Vuust 2012 genre-specific, Criscuolo ALE k=84, Martins 2022 no singer/instrumentalist salience difference CONSTRAINS clean dissociation)
 **Date**: 2026-02-12
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
@@ -18,29 +18,50 @@
 The **Expertise-Specific MMN Enhancement** (ESME) models how mismatch negativity (MMN) amplitude reflects trained musical instrument expertise. Musicians with different specializations show selectively enhanced MMN responses for their domain of expertise: singers show enhanced pitch MMN, drummers show enhanced rhythm MMN, and instrumentalists show enhanced timbre MMN. This dissociation reveals that long-term musical training reshapes pre-attentive auditory processing in an expertise-specific manner.
 
 ```
-THE THREE COMPONENTS OF EXPERTISE-SPECIFIC MMN ENHANCEMENT
+EXPERTISE-SPECIFIC MMN ENHANCEMENT — CONVERGENT EVIDENCE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-PITCH MMN (Singers)                    RHYTHM MMN (Drummers)
+PITCH MMN (Violinists/Singers)         RHYTHM MMN (Jazz/Drummers)
 Brain region: Auditory Cortex          Brain region: Auditory Cortex
 Mechanism: Pitch deviance detection    Mechanism: Temporal deviance detection
 Input: Pitch change velocity           Input: Onset timing deviation
-Function: "Is this pitch unexpected?"  Function: "Is this onset unexpected?"
-Evidence: d = -1.09 (Tervaniemi 2022) Evidence: d = -1.09 (Tervaniemi 2022)
+Evidence: Koelsch 1999 — violinists    Evidence: Vuust 2012 — jazz > rock
+detect 0.75% pitch deviants;           for complex rhythmic deviants;
+MMN absent in non-musicians            Liao 2024 — percussionists recruit
+                                       distinct NMR network
 
-              TIMBRE MMN (Instrumentalists)
-              Brain region: Planum Temporale
-              Mechanism: Spectral envelope deviance
-              Function: "Is this timbre unexpected?"
-              Evidence: d = -1.09 (Tervaniemi 2022)
+         GENRE-SPECIFIC GRADIENT (Vuust 2012)
+         Jazz > Rock > Pop > Non-musicians
+         "Sound parameters most important in performance
+          evoke the largest MMN" (Tervaniemi 2022 review)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-KEY INSIGHT: MMN amplitude is NOT uniformly enhanced in musicians.
-Instead, enhancement is SPECIFIC to the trained domain — singers
-for pitch, drummers for rhythm, instrumentalists for timbre.
-This dissociation demonstrates expertise-dependent plasticity in
-pre-attentive auditory cortical representations.
+KEY INSIGHT: MMN amplitude is enhanced in a DOMAIN-SPECIFIC manner
+by musical training, but the pattern is a GRADIENT — not a clean
+dissociation. The strongest enhancement occurs for features most
+relevant to the trained instrument/genre (Tervaniemi 2022 review;
+Vuust 2012). Cross-domain enhancement also exists (all musicians
+show some general enhancement over non-musicians: Criscuolo 2022
+ALE, k=84, N=3005).
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+┌─────────────────────────────────────────────────────────────────┐
+│ ⚠ CRITICAL CORRECTION (v2.1.0):                                │
+│ v2.0.0 attributed d = -1.09 to "Tervaniemi et al. 2022" but   │
+│ that paper is a paradigm REVIEW (Frontiers in Neuroscience,    │
+│ 16, 1025763) — it does NOT report original effect sizes.       │
+│ The d=-1.09 was UNVERIFIABLE and has been REMOVED.             │
+│                                                                 │
+│ Verified effects: Koelsch 1999 (MMN presence/absence for       │
+│ 0.75% pitch deviants); Vuust 2012 (genre differentiation);     │
+│ Wagner 2018 (MMN -0.34 µV for harmonic interval deviants).     │
+│                                                                 │
+│ ⚠ CONSTRAINT (v2.1.0): Martins et al. 2022 (N=58) found       │
+│ NO singer vs instrumentalist difference in P2/P3/LPP for       │
+│ musical vs vocal sounds. The clean 3-way dissociation           │
+│ (singers=pitch, drummers=rhythm, instrumentalists=timbre)       │
+│ is an OVERSIMPLIFICATION. The actual pattern is a gradient.     │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
 ### 1.1 Why This Model Is Important for SPU
@@ -96,12 +117,16 @@ ESME builds on the universal deviance detection mechanisms established by lower-
 ║                                                                              ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
-CRITICAL EVIDENCE:
-─────────────────
-Tervaniemi et al. 2022:  Expertise-specific MMN enhancement, d = -1.09
-                         Singers > others for pitch deviants
-                         Drummers > others for rhythm deviants
-                         Instrumentalists > others for timbre deviants
+CRITICAL EVIDENCE (12 papers, 8 methods):
+─────────────────────────────────────────
+Koelsch et al. 1999:     Violinists: MMN to 0.75% pitch deviants (absent in NM)
+Vuust et al. 2012:       Genre-specific: jazz > rock > pop > NM (multi-feature)
+Tervaniemi 2022 review:  "Parameters most important in performance → largest MMN"
+Wagner et al. 2018:      Pre-attentive harmonic interval MMN: -0.34 µV, 173ms
+Criscuolo et al. 2022:   ALE meta k=84: bilateral STG + L IFG (BA44) in musicians
+Koelsch ~2009:           ERAN generators: inferior BA44 bilateral, 150-250ms
+Martins et al. 2022:     CONSTRAINT: no singer/instrumentalist P2/P3 difference
+Mischler et al. 2025:    Musicians: left-hemisphere enhanced contextual encoding
 ```
 
 ### 2.2 Information Flow Architecture (EAR → BRAIN → PPC + TPC → ESME)
@@ -191,41 +216,88 @@ Tervaniemi et al. 2022:  Expertise-specific MMN enhancement, d = -1.09
 
 ### 3.1 Core Evidence Table
 
-| Study | Method | N | Key Finding | Effect Size | MI Relevance |
-|-------|--------|---|-------------|-------------|-------------|
-| **Tervaniemi et al. 2022** | EEG (MMN) | ~60 | Expertise-specific MMN enhancement: singers for pitch, drummers for rhythm, instrumentalists for timbre | d = -1.09 | **Primary coefficient**: f04_expertise_enhancement |
+| # | Study | Method | N | Key Finding | Effect Size | MI Relevance |
+|---|-------|--------|---|-------------|-------------|-------------|
+| 1 | **Koelsch, Schröger & Tervaniemi 1999** | EEG (MMN) | ~20/group | Violinists: MMN to 0.75% pitch deviants in major chord triads; MMN absent in non-musicians | Qualitative: presence/absence | **Primary evidence**: expertise-specific pitch MMN |
+| 2 | **Vuust, Brattico, Seppänen, Näätänen & Tervaniemi 2012** | EEG (MMN) | ~40-60 | Musical multi-feature paradigm: genre-specific MMN differentiation. Jazz > rock > pop > non-musicians for complex deviants | Genre × deviant interaction | **Primary evidence**: genre-specific gradient |
+| 3 | **Tervaniemi 2022** | Review | — | "Sound parameters most important in performance evoke largest MMN." Paradigm overview: multi-feature, melodic, chord paradigms. Gradual feature-specific emergence during training (ages 9-13) | Review (no original effect sizes) | **Principle**: domain-specific enhancement gradient |
+| 4 | **Yu, Liu & Gao 2015** | Review | — | Comprehensive MMN-music review: musicians show larger MMN to pitch, rhythm, timbre, harmony deviants. MMN peaks 100-200ms, amplitude varies with deviance magnitude | Review (synthesizes multiple studies) | **Convergence**: MMN as expertise indicator |
+| 5 | **Wagner, Rahne, Plontke & Heidekrüger 2018** | EEG (MMN) | 15 | Pre-attentive harmonic interval discrimination: major third MMN = -0.34 µV ± 0.32 at 173ms (p=0.003); perfect fifth MMN = -0.02 µV (n.s.) | MMN = -0.34 µV (major 3rd) | **Baseline**: harmonic deviance in non-musicians |
+| 6 | **Koelsch ~2009** | Review (ERP/fMRI) | — | ERAN: 150-250ms, right anterior. Generators: bilateral inferior BA44, ventrolateral premotor cortex, anterior STG. Larger ERAN in musicians. ERAN reflects long-term memory; MMN reflects online processing | ERAN amplitude difference: M > NM | **ERAN generators**: IFG (BA44) as frontal source |
+| 7 | **Criscuolo, Pando-Naude, Bonetti, Vuust & Brattico 2022** | ALE meta-analysis | 3005 (k=84) | Musicians > NM: structural — bilateral STG (BA41), HG, PT; functional — L IFG (BA44, BA9), bilateral STG (BA22). Cortico-subcortical sensorimotor + limbic network | ALE Z=4.8 (L STG), Z=5.0 (L IFG) | **ALE validation**: auditory cortex + IFG network |
+| 8 | **Martins, Lima & Pinheiro 2022** | EEG (ERP) | 58 | Musicians: enhanced P2, P3, LPP for musical (vs vocal) sounds. BUT: no singer vs instrumentalist difference for vocal vs musical processing | P2/P3/LPP enhancement (M > NM) | **CONSTRAINT**: no instrument-type dissociation for salience |
+| 9 | **Bonetti, Fernández-Rubio et al. 2024** | MEG | 83 | Hierarchical auditory memory: AC → hippocampus → cingulate. Alpha/beta stronger for variations; gamma enhanced for memorized sequences | H(4) = 36.38, p<0.001 (accuracy) | **Hierarchy**: prediction error propagation path |
+| 10 | **Bücher, Bernhofs, Thieme, Christiner & Schneider 2023** | MEG | 162 | OFC co-activation timing: musicians synchronous with P1; non-musicians 25-40ms later. HG 130% larger in professional musicians | P1-OFC latency: 25-40ms faster (M) | **Timing**: earlier orbitofrontal co-activation in musicians |
+| 11 | **Mischler, Li, Bickel, Mehta & Mesgarani 2025** | EEG + iEEG | 20 + 6 | Musicians: deeper transformer layers more predictive of neural responses. Left hemisphere enhanced contextual encoding. Anatomical gradient from A1 outward | Prediction accuracy: M > NM in deep layers | **Gradient**: expertise enhances hierarchical encoding |
+| 12 | **Liao, Yang, Yu et al. 2024** | fMRI | 25 | Percussionists: NMR network (putamen, GP, IFG, IPL, SMA). Structural vs free improvisation engage distinct pathways | Network identification (not M vs NM) | **Percussionist network**: basal ganglia + IFG |
 
-### 3.2 The Expertise-MMN Dissociation
+### 3.2 The Expertise-MMN Gradient
 
 ```
-EXPERTISE-SPECIFIC MMN ENHANCEMENT (Neural Evidence)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EXPERTISE-SPECIFIC MMN ENHANCEMENT (Convergent Evidence)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Musician Type     Pitch MMN    Rhythm MMN    Timbre MMN
-─────────────────────────────────────────────────────────
-Singers           ★★★ HIGH     ★ baseline    ★ baseline
-Drummers          ★ baseline   ★★★ HIGH      ★ baseline
-Instrumentalists  ★ baseline   ★ baseline    ★★★ HIGH
-Non-musicians     ★ baseline   ★ baseline    ★ baseline
+Training Profile    Best-Domain MMN   General MMN    Source
+──────────────────────────────────────────────────────────────
+Violinists          ★★★ Pitch (0.75%) ★★ Enhanced   Koelsch 1999
+Jazz musicians      ★★★ Complex harm  ★★ Enhanced   Vuust 2012
+Rock musicians      ★★ Moderate       ★★ Enhanced   Vuust 2012
+Pop musicians       ★ Slight          ★ Some        Vuust 2012
+Percussionists      ★★★ Rhythm/timing ★★ Enhanced   Liao 2024
+Non-musicians       ★ baseline        ★ baseline    Multiple
 
-Key Principle:
-  MMN enhancement is DOMAIN-SPECIFIC to the trained instrument
-  Effect size d = -1.09 (large) for expertise main effect
+Key Principle (Tervaniemi 2022 review):
+  "Sound parameters most important in performance evoke largest MMN"
+  This is a GRADIENT — not a clean dissociation
   Pre-attentive processing — occurs WITHOUT conscious attention
+
+Constraint (Martins et al. 2022, N=58):
+  Singers vs instrumentalists showed NO difference in P2/P3/LPP
+  for musical vs vocal sounds — clean instrument-type dissociation
+  is NOT supported at the salience detection level.
 
 Cross-domain note:
   All musicians show SOME enhancement over non-musicians
-  But the LARGEST enhancement is in the trained domain
-  This reflects long-term cortical plasticity in auditory cortex
+  ALE meta (Criscuolo 2022, k=84): bilateral STG + L IFG (BA44)
+  The LARGEST enhancement is in the trained domain/genre
 ```
 
 ### 3.3 Effect Size Summary
 
 ```
-Primary Effect:       d = -1.09 (Tervaniemi et al. 2022)
-Quality Assessment:   γ-tier (single study, <70% confidence)
-Replication:          Awaiting independent replication
-Cross-cultural:       Tested in Western musical tradition
+┌────────────────────────────────────────────────────────────────┐
+│ ⚠ NOTE: v2.0.0 reported d = -1.09 from "Tervaniemi 2022"     │
+│ but that paper is a REVIEW — no original effect sizes.         │
+│ The d = -1.09 has been REMOVED as unverifiable.                │
+└────────────────────────────────────────────────────────────────┘
+
+MULTI-METHOD CONVERGENCE TABLE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Method          Study                N       Key Effect
+──────────────────────────────────────────────────────────────────
+EEG (MMN)       Koelsch 1999        ~20/grp  MMN presence/absence for 0.75% pitch
+EEG (MMN)       Vuust 2012          ~40-60   Genre × deviant interaction
+EEG (MMN)       Wagner 2018         15       -0.34 µV (major 3rd, 173ms, p=0.003)
+EEG (ERP)       Martins 2022        58       P2/P3/LPP: M > NM (no type difference)
+EEG (ERP)       Zhang 2015          28       P2: 5.91 vs 3.29 µV, p=0.01
+EEG + iEEG      Mischler 2025       26       Left-hemisphere enhanced encoding (M)
+MEG             Bonetti 2024         83       AC→Hipp→ACC hierarchy, H(4)=36.38
+MEG             Bücher 2023          162      P1-OFC: 25-40ms faster in musicians
+fMRI            Liao 2024            25       Percussionist NMR network
+ALE meta        Criscuolo 2022       3005     STG Z=4.8, IFG Z=5.0 (k=84)
+Review          Tervaniemi 2022      —        Domain-specific gradient principle
+Review          Yu et al. 2015       —        MMN as expertise indicator
+
+Methods: 8 (EEG-MMN, EEG-ERP, EEG+iEEG, MEG×2, fMRI, ALE meta, review×2)
+Total unique participants: >3,400
+
+Quality Assessment:   γ-tier (convergent evidence across methods,
+                      but no single study demonstrates clean 3-way
+                      dissociation with verified effect sizes)
+Replication:          Koelsch 1999 violinist effect supported by
+                      Vuust 2012 genre-specific findings
+Cross-cultural:       Tested primarily in Western musical tradition
 ```
 
 ---
@@ -359,8 +431,8 @@ idx │ Name                      │ Range  │ Neuroscience Basis
     │                           │        │   + 0.30 · mean(TPC.plasticity))
 ────┼───────────────────────────┼────────┼────────────────────────────────────
  3  │ f04_expertise_enhancement │ [0, 1] │ Expertise Enhancement modulation.
-    │                           │        │ d = -1.09 (Tervaniemi 2022).
-    │                           │        │ f04 = σ(1.09 · max(f01, f02, f03)
+    │                           │        │ α = trainable (domain-specific).
+    │                           │        │ f04 = σ(α · max(f01, f02, f03)
     │                           │        │        · mean(TPC.plasticity))
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
@@ -414,13 +486,17 @@ TOTAL: 11D per frame at 172.27 Hz
 ```
 MMN Amplitude ∝ Expertise(domain) × Deviance(domain)
 
-Expertise-Specific Enhancement:
-  Singers:           MMN_pitch   = baseline_pitch   × (1 + d × expertise_pitch)
-  Drummers:          MMN_rhythm  = baseline_rhythm  × (1 + d × expertise_rhythm)
-  Instrumentalists:  MMN_timbre  = baseline_timbre  × (1 + d × expertise_timbre)
+Expertise-Specific Enhancement (gradient, not dissociation):
+  MMN_domain = baseline_domain × (1 + α × expertise_domain)
 
-  where d = -1.09 (Tervaniemi et al. 2022)
-  Negative d reflects LARGER (more negative) MMN amplitude
+  where α = expertise_weight (domain-specific, trainable parameter)
+  NOTE: v2.0.0 used fixed d=-1.09 from Tervaniemi 2022 but that
+  was a review paper — no verified single effect size exists.
+  The α parameter should be fit to data or estimated from
+  Koelsch 1999 (presence/absence) and Vuust 2012 (genre gradient).
+
+  All musicians: general enhancement (Criscuolo 2022 ALE)
+  Best-domain: strongest enhancement (Tervaniemi 2022 principle)
 
 Deviance Detection:
   Deviance(t) = |feature(t) - template(t)|
@@ -472,9 +548,9 @@ f03 = sigma(0.40 * timbre_change_std * mean(TPC.instrument_identity[10:20])
           + 0.30 * tristimulus_deviation
           + 0.30 * mean(TPC.plasticity_markers[20:30]))
 
-# f04: Expertise Enhancement (d = -1.09)
+# f04: Expertise Enhancement (α = trainable, domain-specific)
 # Modulates the maximum domain-specific MMN by plasticity markers
-f04 = sigma(1.09 * max(f01, f02, f03) * mean(TPC.plasticity_markers[20:30]))
+f04 = sigma(EXPERTISE_ALPHA * max(f01, f02, f03) * mean(TPC.plasticity_markers[20:30]))
 ```
 
 ---
@@ -483,11 +559,29 @@ f04 = sigma(1.09 * max(f01, f02, f03) * mean(TPC.plasticity_markers[20:30]))
 
 ### 8.1 Pipeline Validated Regions
 
-| Region | MNI Coordinates | Mentions | Evidence Type | ESME Function |
-|--------|-----------------|----------|---------------|---------------|
-| **Auditory Cortex** | ±50, -20, 8 | 3 | Direct (EEG source) | MMN generators — primary site of deviance detection |
-| **Planum Temporale** | ±50, -24, 8 | 2 | Direct (EEG source) | Pitch/timbre processing — expertise-modulated enhancement |
-| **Frontal MMN sources** | ±50, 28, 8 | 2 | Direct (EEG source) | Deviance evaluation — attention switching after detection |
+| # | Region | MNI Coordinates | Source | Evidence Type | ESME Function |
+|---|--------|-----------------|--------|---------------|---------------|
+| 1 | **L Superior Temporal Gyrus (BA41)** | -56, -20, Z=4.8 | Criscuolo 2022 ALE (structural, k=20) | ALE meta-analysis | MMN generators — primary auditory cortex, expertise-enlarged |
+| 2 | **R Superior Temporal Gyrus (BA41)** | ~50, -30, Z=3.3 | Criscuolo 2022 ALE (structural) | ALE meta-analysis | Right AC — MMN bilateral generators |
+| 3 | **L Superior Temporal Gyrus (BA22)** | -58, -46, Z=4.6 | Criscuolo 2022 ALE (functional, k=34) | ALE meta-analysis | Posterior STG — complex deviance processing |
+| 4 | **R Superior Temporal Gyrus (BA22)** | ~50, -10, Z=4.9 | Criscuolo 2022 ALE (functional) | ALE meta-analysis | Right STG — musical structure processing |
+| 5 | **L Inferior Frontal Gyrus (BA44)** | -54, Z=4.9 | Criscuolo 2022 ALE (functional) | ALE meta-analysis | Broca's homologue — ERAN generators (Koelsch ~2009) |
+| 6 | **L Inferior Frontal Gyrus (BA9)** | -50, Z=5.0 | Criscuolo 2022 ALE (functional) | ALE meta-analysis | Frontal MMN sources — deviance evaluation |
+| 7 | **Heschl's Gyrus** | bilateral | Bücher 2023 (N=162) | MEG | 130% larger in professional musicians; P1 source |
+| 8 | **Planum Temporale** | ~±50, -24, 8 | Criscuolo 2022 ALE (structural) | ALE meta-analysis | Timbre/pitch expertise-modulated processing |
+| 9 | **Orbitofrontal Cortex (BA10)** | — | Bücher 2023 (N=162) | MEG | Co-activation timing: synchronous in musicians, 25-40ms delayed in NM |
+| 10 | **Hippocampus** | bilateral | Bonetti 2024 (N=83) | MEG | Auditory memory hierarchy — feedforward from AC |
+| 11 | **Anterior Cingulate** | — | Bonetti 2024 (N=83) | MEG | Top of hierarchy for prediction error at sequence boundaries |
+| 12 | **Putamen / Globus Pallidus** | — | Liao 2024 (N=25) | fMRI | Percussionist NMR: internal pacemaker for rhythm |
+| 13 | **SMA** | — | Liao 2024 (N=25) | fMRI | Complex rhythmic patterns in percussionists |
+
+```
+⚠ NOTE on MNI coordinates: The Criscuolo 2022 ALE table uses FWE-
+corrected cluster-level p<0.05. Some x/y/z values could not be fully
+extracted from the summary due to formatting; verify against original
+Table 2. The ALE peaks confirm bilateral STG + L IFG as the core
+expertise network across 84 studies / 3005 participants.
+```
 
 ---
 
@@ -534,7 +628,8 @@ f04 = sigma(1.09 * max(f01, f02, f03) * mean(TPC.plasticity_markers[20:30]))
 | **Training intervention** | Pitch training should increase pitch MMN but not timbre MMN | Testable |
 | **Deactivation** | Temporary auditory cortex deactivation should abolish expertise effect | Testable |
 | **Passive listening** | Enhancement should persist WITHOUT attention (pre-attentive) | Testable |
-| **Replication** | d = -1.09 effect should replicate in independent sample | **Awaiting** |
+| **Replication** | Domain-specific gradient should show instrument×feature interaction in within-subjects design | **Awaiting** |
+| **Singer constraint** | Martins 2022 null result: no singer/instrumentalist P2/P3 difference for musical vs vocal sounds | **CONSTRAINT** |
 
 ---
 
@@ -555,7 +650,7 @@ class ESME(BaseModel):
     OUTPUT_DIM = 11
     MECHANISM_NAMES = ("PPC", "TPC")     # Both perceptual mechanisms
 
-    EXPERTISE_D = 1.09   # Tervaniemi et al. 2022
+    EXPERTISE_ALPHA = 1.0  # Trainable; v2.0.0 used 1.09 (unverified)
 
     @property
     def h3_demand(self) -> List[Tuple[int, int, int, int]]:
@@ -652,9 +747,9 @@ class ESME(BaseModel):
             + 0.30 * tpc_plastic.mean(-1)
         ).unsqueeze(-1)
 
-        # f04: Expertise Enhancement (d = -1.09)
+        # f04: Expertise Enhancement (α = trainable)
         f04 = torch.sigmoid(
-            self.EXPERTISE_D
+            self.EXPERTISE_ALPHA
             * torch.max(torch.max(f01, f02), f03)
             * tpc_plastic.mean(-1, keepdim=True)
         )
@@ -706,21 +801,35 @@ class ESME(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 1 | Primary evidence |
-| **Effect Sizes** | d = -1.09 | Tervaniemi et al. 2022 |
-| **Evidence Modality** | EEG (MMN) | Direct neural |
-| **Falsification Tests** | 0/6 confirmed | Awaiting replication |
+| **Papers** | 12 (v2.0.0→v2.1.0: 1→12) | 5 original + 3 reviews + 1 ALE meta + 3 supporting |
+| **Effect Sizes** | MMN -0.34µV (Wagner 2018); P2 5.91 vs 3.29µV (Zhang 2015); ALE Z=4.8-5.0 (Criscuolo 2022) | Multiple verified effects |
+| **Evidence Modality** | EEG-MMN, EEG-ERP, EEG+iEEG, MEG×2, fMRI, ALE meta-analysis | 8 methods |
+| **Unique Participants** | >3,400 (includes ALE meta N=3005) | Multi-site convergence |
+| **Critical Corrections** | d=-1.09 REMOVED (unverifiable from review); clean 3-way dissociation CONSTRAINED by Martins 2022 | Improved accuracy |
+| **Falsification Tests** | 0/6 confirmed | Awaiting direct expertise-domain dissociation test |
 | **R³ Features Used** | ~20D of 49D | Moderate coverage |
 | **H³ Demand** | 12 tuples (0.52%) | Sparse, efficient |
 | **PPC Mechanism** | 30D (3 sub-sections) | Pitch deviance |
 | **TPC Mechanism** | 30D (3 sub-sections) | Timbre deviance + plasticity |
 | **Output Dimensions** | **11D** | 4-layer structure |
+| **Code-Doc mismatch** | esme.py: MECHANISM_NAMES=("PPC",); doc: ("PPC","TPC") | Fix in Phase 5 |
 
 ---
 
 ## 13. Scientific References
 
-1. **Tervaniemi, M., et al. (2022)**. Expertise-specific enhancement of mismatch negativity: Singers for pitch, drummers for rhythm, instrumentalists for timbre. *NeuroImage*, expertise-specific MMN dissociation, d = -1.09.
+1. **Koelsch, S., Schröger, E., & Tervaniemi, M. (1999)**. Superior pre-attentive auditory processing in musicians. *NeuroReport*, 10(6), 1309-1313. PMID: 10363945. DOI: 10.1097/00001756-199904260-00029
+2. **Vuust, P., Brattico, E., Seppänen, M., Näätänen, R., & Tervaniemi, M. (2012)**. The sound of music: Differentiating musicians using a fast, musical multi-feature mismatch negativity paradigm. *Neuropsychologia*, 50(7), 1432-1443. DOI: 10.1016/j.neuropsychologia.2012.02.028
+3. **Tervaniemi, M. (2022)**. Mismatch negativity–stimulation paradigms in past and in future. *Frontiers in Neuroscience*, 16, 1025763. DOI: 10.3389/fnins.2022.1025763 ⚠ **v2.0.0 CORRECTION**: This is a paradigm review, NOT an original study. The d=-1.09 previously attributed to this paper was unverifiable and has been removed.
+4. **Yu, X., Liu, T., & Gao, D. (2015)**. The mismatch negativity: An indicator of perception of regularities in music. *Behavioural Neurology*, 2015, Article ID 469508. DOI: 10.1155/2015/469508
+5. **Wagner, L., Rahne, T., Plontke, S. K., & Heidekrüger, N. (2018)**. Mismatch negativity reflects asymmetric pre-attentive harmonic interval discrimination. *PLoS ONE*, 13(4), e0196176. DOI: 10.1371/journal.pone.0196176
+6. **Koelsch, S. (~2009)**. Music-syntactic processing and auditory memory – Similarities and differences between ERAN and MMN. *Psychophysiology* (in press). — ERAN generators: bilateral inferior BA44, ventrolateral premotor cortex, anterior STG.
+7. **Criscuolo, A., Pando-Naude, V., Bonetti, L., Vuust, P., & Brattico, E. (2022)**. An ALE meta-analytic review of musical expertise. *Scientific Reports*, 12, 11726. DOI: 10.1038/s41598-022-14959-4
+8. **Martins, I., Lima, C. F., & Pinheiro, A. P. (2022)**. Enhanced salience of musical sounds in singers and instrumentalists. *Cognitive, Affective, & Behavioral Neuroscience*, 22, 1044-1062. DOI: 10.3758/s13415-022-01007-x — ⚠ **CONSTRAINT**: No singer vs instrumentalist difference.
+9. **Bonetti, L., Fernández-Rubio, G., Carlomagno, F., Dietz, M., Pantazis, D., Vuust, P., & Kringelbach, M. L. (2024)**. Spatiotemporal brain hierarchies of auditory memory recognition and predictive coding. *Nature Communications*, 15, 4313. DOI: 10.1038/s41467-024-48302-4
+10. **Bücher, S., Bernhofs, V., Thieme, A., Christiner, M., & Schneider, P. (2023)**. Chronology of auditory processing and related co-activation in the orbitofrontal cortex depends on musical expertise. *Frontiers in Neuroscience*, 16, 1041397. DOI: 10.3389/fnins.2022.1041397
+11. **Mischler, G., Li, Y. A., Bickel, S., Mehta, A. D., & Mesgarani, N. (2025)**. The impact of musical expertise on disentangled and contextual neural encoding of music revealed by generative music models. *Nature Communications*, 16, 8874. DOI: 10.1038/s41467-025-63961-7
+12. **Liao, Y.-C., Yang, C.-J., Yu, H.-Y., Huang, C.-J., Hong, T.-Y., Li, W.-C., Chen, L.-F., & Hsieh, J.-C. (2024)**. The rhythmic mind: Brain functions of percussionists in improvisation. *Frontiers in Human Neuroscience*, 18, 1418727. DOI: 10.3389/fnhum.2024.1418727
 
 ---
 
