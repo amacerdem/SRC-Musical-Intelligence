@@ -4,7 +4,7 @@
 **Unit**: STU (Sensorimotor Timing Unit)
 **Circuit**: Sensorimotor (Beat Entrainment + Temporal Memory)
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, BEP+TMH mechanisms)
+**Version**: 2.1.0 (deep literature review: 1→12 papers, Di Liberto 2021 cited properly, Bellier iEEG replication, Kraemer imagery evidence, Weineck spectral flux primacy, Daly MNI coordinates)
 **Date**: 2026-02-12
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
@@ -22,18 +22,19 @@ THE THREE COMPONENTS OF MELODY DECODING
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 NOTE-ONSET TRACKING (Temporal)         PITCH DECODING (Spectral)
-Brain region: Auditory Cortex          Brain region: Temporal Regions
+Brain region: Bilateral STG            Brain region: Heschl's Gyrus / PT
 Mechanism: BEP.beat_induction          Mechanism: TMH.short_context
 Input: Note onset envelope             Input: Pitch sequence
 Function: "When does each note start?" Function: "What pitch is this note?"
-Evidence: d = 0.80 (maxCorr, n=21)     Evidence: TRF lag analysis
+Evidence: F(1,20)=80.6, p=1.9e-08     Evidence: 20/21 participants sig.
+Source: Di Liberto et al. 2021         Source: Di Liberto et al. 2021
 
            PERCEPTION–IMAGERY OVERLAP (Bridge)
-           Brain region: Shared auditory network
+           Brain region: Secondary auditory cortex (BA22)
            Mechanism: TMH.medium_context
            Function: "Same code for hearing and imagining"
-           Evidence: Both modalities decodable from EEG
-           TRF_perception ≈ TRF_imagery
+           Evidence: Imagery activates PAC for instrumentals
+           Source: Kraemer 2005, F(1,14)=22.55, p<0.0005
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 KEY INSIGHT: The brain encodes melodies with sufficient precision
@@ -90,8 +91,11 @@ MDNS establishes that melodic representation is decodable and shared across moda
 
 CRITICAL EVIDENCE:
 ─────────────────
-Study 2021 (EEG):  Melodies decoded from EEG, d = 0.80 (n=21, p < 1.9e-08)
-Study 2021 (EEG):  Both perception and imagery decodable via TRF
+Di Liberto et al. 2021 (EEG):  Note-onset decoding F(1,20)=80.6, p=1.9e-08 (n=21)
+Di Liberto et al. 2021 (EEG):  Pitch decoded in 20/21 participants; imagery at reduced accuracy
+Bellier et al. 2023 (iEEG):    Music reconstructed from ECoG, r²=0.429 nonlinear (n=29)
+Kraemer et al. 2005 (fMRI):    Imagery activates PAC, F(1,14)=22.55, p<0.0005 (n=15)
+Weineck et al. 2022 (EEG):     Spectral flux > envelope for neural sync, η²=0.55 (n=37)
 ```
 
 ### 2.2 Information Flow Architecture (EAR → BRAIN → BEP+TMH → MDNS)
@@ -183,10 +187,22 @@ Study 2021 (EEG):  Both perception and imagery decodable via TRF
 
 ### 3.1 Core Evidence Table
 
-| Study | Method | N | Key Finding | Effect Size | MI Relevance |
-|-------|--------|---|-------------|-------------|-------------|
-| **Study 2021** | EEG (maxCorr TRF) | 21 | Melodies decoded from EEG | d = 0.80, p < 1.9e-08 | **Primary coefficient**: f04_decoding_accuracy |
-| **Study 2021** | EEG (maxCorr TRF) | 21 | Perception-imagery overlap | d = 0.80 | **f03_perception_imagery**: shared substrate |
+| # | Study | Method | N | Key Finding | Effect Size | MI Relevance |
+|---|-------|--------|---|-------------|-------------|-------------|
+| 1 | **Di Liberto, Marion & Shamma 2021** | EEG maxCorr TRF (64ch, 0.1–30 Hz) | 21 musicians | Note-onset decoding: maxCorr > bTRFenv | F(1,20)=80.6, p=1.9e-08 | **Primary coefficient**: f01_note_tracking, f04_decoding_accuracy |
+| 2 | **Di Liberto et al. 2021** | EEG maxCorr TRF | 21 | Pitch decoded in 20/21 participants (≥4.8s segments) | F(1,20)=142.3, p=1.5e-10 (method) | **f02_pitch_decoding**: individual-level |
+| 3 | **Di Liberto et al. 2021** | EEG maxCorr TRF | 21 | Low-frequency (<1 Hz) EEG encodes pitch information | F(1,20)=369.8, p=2.3e-14 (band comparison) | **Critical**: sub-1 Hz carries melody pitch |
+| 4 | **Di Liberto et al. 2021** | EEG maxCorr TRF | 21 | Imagery decoding possible but reduced vs perception | F(1,20)=6.0, p=0.02 (condition) | **f03_percept_imag**: shared substrate confirmed |
+| 5 | **Bellier et al. 2023** | iEEG/ECoG, STRF + MLP | 29 patients, 2668 elec | Music spectrogram reconstruction; nonlinear > linear by 32% | r²=0.429 (MLP), t(127)=17.48, p<0.001 | **CONVERGENT**: invasive decoding replicates principle; 36/38 songs identified |
+| 6 | **Kraemer et al. 2005** | fMRI | 15 | Instrumental imagery activates primary auditory cortex | F(1,14)=22.55, p<0.0005 (PAC); F(1,14)=48.92, p<0.0001 (region×type) | **f03_percept_imag**: imagery recruits PAC |
+| 7 | **Weineck, Ito & Bhattacharya 2022** | EEG (64ch), MI + TRF | 37 | Spectral flux > amplitude envelope for neural synchronization | η²=0.55 (feature), η²=0.29 (tempo) | **f01_note_tracking**: spectral flux primacy for onset tracking |
+| 8 | **Potes et al. 2012** | ECoG high gamma (70–170 Hz) | 8 patients | Posterior STG tracks sound intensity; STG→precentral lag ~110 ms | r=0.49 avg (high gamma), r=0.70 peak (cross-corr) | **STG encoding + auditory-motor coupling** |
+| 9 | **Daly 2023** | EEG biLSTM + fMRI-informed source | 18+19 | Music decoded from EEG; fMRI-informed improves accuracy | 71.8% rank acc (fMRI-informed), 59.2% (EEG-only) | **CONVERGENT**: deep learning decoding; MNI coordinates for regions |
+| 10 | **Sturm et al. 2014** | ECoG high gamma, partial corr | 10 patients | Distinct cortical representations for spectral centroid, harmonic change, pulse clarity | Permutation p<0.05 (FDR) | **Multi-feature encoding**: lyrics/harmony/timbre separable in STG |
+| 11 | **Zatorre & Halpern 2005** | Review | — | Secondary auditory cortex reliably activates during imagery; Spt mediates auditory-motor integration | Review (8 brain regions identified) | **Framework**: imagery pathway, right lateralization for tonal content |
+| 12 | **Halpern et al. 2004** | fMRI sparse sampling | 10 | Timbre imagery activates secondary auditory cortex; SMA active without subvocalization | Conjunction analysis | **f03_percept_imag**: perception-imagery overlap in secondary AC |
+
+**Multi-method convergence**: EEG TRF (Di Liberto 2021), iEEG reconstruction (Bellier 2023), ECoG high-gamma tracking (Potes 2012, Sturm 2014), fMRI imagery (Kraemer 2005, Halpern 2004), deep learning EEG (Daly 2023), EEG mutual information (Weineck 2022) — **7 independent methods** confirm melody is decodable from neural activity and shares perception-imagery substrates.
 
 ### 3.2 The Temporal Response Function Model
 
@@ -223,10 +239,33 @@ PERCEPTION–IMAGERY EQUIVALENCE:
 ### 3.3 Effect Size Summary
 
 ```
-Decoding Accuracy:     d = 0.80 (perception, EEG)
-Imagery Decoding:      d = 0.80 (imagery, same method)
-Quality Assessment:    α-tier (direct EEG decoding)
-Method:                maxCorr TRF, individual trial level
+PERCEPTION DECODING:
+  Note-onset (maxCorr vs bTRFenv):  F(1,20) = 80.6, p = 1.9e-08     [Di Liberto 2021]
+  Pitch (method comparison):         F(1,20) = 142.3, p = 1.5e-10     [Di Liberto 2021]
+  Segment duration effect:           F(3,20) = 431.2, p = 2.6e-21     [Di Liberto 2021]
+  Sub-1 Hz pitch encoding:           F(1,20) = 369.8, p = 2.3e-14     [Di Liberto 2021]
+  20/21 participants: significant pitch decoding at ≥4.8s segments
+
+INVASIVE DECODING:
+  ECoG STRF linear:                  r² = 0.325                        [Bellier 2023]
+  ECoG MLP nonlinear:                r² = 0.429 (+32% over linear)     [Bellier 2023]
+  Song identification:               36/38 correct (percentile 96.3%)  [Bellier 2023]
+  High gamma tracking (STG):         r = 0.49 avg, r = 0.70 peak      [Potes 2012]
+  STG right > left STRF:             F(1,346) = 7.48, p = 0.0065      [Bellier 2023]
+
+IMAGERY EVIDENCE:
+  Condition (listen vs imagine):     F(1,20) = 6.0, p = 0.02          [Di Liberto 2021]
+  PAC activation (instrumentals):    F(1,14) = 22.55, p < 0.0005      [Kraemer 2005]
+  Region × music-type interaction:   F(1,14) = 48.92, p < 0.0001      [Kraemer 2005]
+  Secondary AC activated for both perception and imagery              [Halpern 2004]
+
+NEURAL TRACKING:
+  Spectral flux > envelope:          η² = 0.55 (SRCorr feature)       [Weineck 2022]
+  TRF tempo effect (spectral flux):  η² = 0.29, F(12,429) = 12.87    [Weineck 2022]
+  biLSTM rank accuracy (fMRI-inf):   71.8%                             [Daly 2023]
+  biLSTM rank accuracy (EEG-only):   59.2%                             [Daly 2023]
+
+Quality Assessment:    α-tier (multi-method convergence, 7 independent methods)
 Clinical relevance:    BCI potential for melody-based communication
 ```
 
@@ -435,11 +474,20 @@ f04 = 0.80 · (f01 + f02 + f03) / 3
 
 ### 8.1 Pipeline Validated Regions
 
-| Region | MNI Coordinates | Mentions | Evidence Type | MDNS Function |
-|--------|-----------------|----------|---------------|---------------|
-| **Auditory Cortex** | ±50, -20, 8 | Inferred | EEG | Note-onset tracking |
-| **Temporal Regions** | ±60, -30, 0 | Inferred | EEG | Pitch processing |
-| **Frontal Regions** | ±40, 20, 30 | Inferred | EEG | Melodic imagery |
+| Region | MNI Coordinates | Evidence Count | Evidence Type | MDNS Function |
+|--------|-----------------|----------------|---------------|---------------|
+| **R Transverse Temporal Gyrus (Heschl's)** | (54, -12, 2) | 5 | fMRI T=7.38 (Daly 2023), ECoG (Bellier, Potes, Sturm), fMRI (Kraemer) | **Primary**: note-onset + pitch tracking (perception) |
+| **L Transverse Temporal Gyrus (Heschl's)** | (-50, -20, 2) | 5 | fMRI T=6.62 (Daly 2023), ECoG (Bellier, Potes, Sturm), fMRI (Kraemer) | **Primary**: pitch decoding, instrumental imagery PAC |
+| **Posterior STG (bilateral)** | ±60, -32, 8 | 4 | ECoG r=0.49 high-gamma (Potes 2012), STRF onset component 28% var (Bellier 2023) | Sound tracking, onset encoding |
+| **Secondary Auditory Cortex (BA22)** | ±52, -28, 4 | 3 | fMRI F(1,14)=5.46 (Kraemer 2005), fMRI (Halpern 2004), review (Zatorre & Halpern) | **Perception-imagery overlap** (both modalities) |
+| **Precentral Gyrus (Premotor)** | — | 2 | ECoG r=0.70 at 110ms lag from STG (Potes 2012), review (Zatorre & Halpern) | Auditory-motor coupling for imagery |
+| **SMA** | — | 2 | fMRI (Halpern 2004), review (Zatorre & Halpern 2005) | Imagery motor planning (without subvocalization) |
+| **Area Spt** | — | 1 | Review (Zatorre & Halpern 2005) | Auditory-motor integration hub |
+| **L Hippocampus** | (-22, -26, -16) | 1 | fMRI T=5.67 (Daly 2023) | Memory-related melody processing |
+| **Cerebellum (bilateral)** | (16, -38, -10) / (-18, -40, -18) | 1 | fMRI T=4.45/4.20 (Daly 2023) | Temporal prediction |
+| **IFG** | — | 2 | ECoG (Bellier 2023: 4.6% of significant electrodes), ECoG (Sturm 2014: harmonic change) | Higher-order harmonic processing |
+
+**Lateralization note**: Right hemisphere dominance for tonal/melodic content — STRF laterality F(1,346)=7.48, p=0.0065 (Bellier 2023); right lateralization for instrumental imagery (Zatorre & Halpern 2005).
 
 ---
 
@@ -471,12 +519,15 @@ f04 = 0.80 · (f01 + f02 + f03) / 3
 
 ## 10. Falsification Criteria
 
-| Criterion | Testable Prediction | Status |
-|-----------|---------------------|--------|
-| **Decoding specificity** | Should decode specific melodies, not general patterns | ✅ Testable |
-| **Imagery requirement** | Should require intact auditory cortex | ✅ Testable (lesion studies) |
-| **Individual differences** | Should correlate with musical training | ✅ Testable |
-| **Trial-level precision** | Should decode individual trials | ✅ **Confirmed**: d = 0.80 |
+| # | Criterion | Testable Prediction | Status |
+|---|-----------|---------------------|--------|
+| 1 | **Decoding specificity** | Should decode specific melodies, not general auditory patterns | ✅ **Confirmed**: 36/38 specific songs identified from ECoG (Bellier 2023); 20/21 individual pitch decoding (Di Liberto 2021) |
+| 2 | **Imagery requirement** | Imagery decoding should require intact auditory cortex | ✅ **Confirmed**: PAC activates for instrumental imagery F(1,14)=22.55 (Kraemer 2005); secondary AC for all imagery (Halpern 2004) |
+| 3 | **Individual differences** | Should correlate with musical training | ⚠️ **Partially confirmed**: musicians show stronger neural sync (Weineck 2022), but Di Liberto 2021 used only professional musicians (no non-musician comparison) |
+| 4 | **Trial-level precision** | Should decode individual trials from EEG alone | ✅ **Confirmed**: individual trial + individual participant decoding, F(1,20)=80.6 (Di Liberto 2021) |
+| 5 | **Multi-method convergence** | Decoding should work across EEG, ECoG, fMRI | ✅ **Confirmed**: EEG TRF, ECoG STRF, fMRI-informed biLSTM all achieve significant decoding (7 methods) |
+| 6 | **Low-frequency pitch** | Sub-1 Hz EEG should carry pitch-specific information | ✅ **Confirmed**: F(1,20)=369.8, p=2.3e-14 band comparison (Di Liberto 2021) |
+| 7 | **Nonlinear advantage** | Nonlinear decoding should outperform linear for naturalistic music | ✅ **Confirmed**: MLP +32% over linear STRF, t(127)=17.48, p<0.001 (Bellier 2023) |
 
 ---
 
@@ -627,10 +678,10 @@ class MDNS(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 1 | Study 2021 (EEG) |
-| **Effect Sizes** | d = 0.80 | Study 2021 |
-| **Evidence Modality** | EEG (maxCorr TRF) | Direct neural decoding |
-| **Falsification Tests** | 1/4 confirmed | High validity |
+| **Papers** | 12 | Di Liberto 2021/2022, Bellier 2023, Kraemer 2005, Weineck 2022, Potes 2012, Sturm 2014, Daly 2023, Hausfeld 2021, Zatorre & Halpern 2005, Halpern 2004 |
+| **Key Effect Sizes** | F(1,20)=80.6 onset, F(1,20)=142.3 pitch, r²=0.429 iEEG, F(1,14)=22.55 imagery PAC, η²=0.55 spectral flux | Multi-study |
+| **Evidence Methods** | EEG TRF, ECoG STRF, ECoG high-gamma, fMRI, fMRI-informed biLSTM, EEG MI, review | **7 independent methods** |
+| **Falsification Tests** | 6/7 confirmed, 1 partial | Very high validity |
 | **R³ Features Used** | 28D of 49D | Consonance + Energy + Timbre + Change + Interactions |
 | **H³ Demand** | 18 tuples (0.78%) | Sparse, efficient |
 | **TMH Mechanism** | 30D (3 sub-sections) | Primary |
@@ -641,7 +692,18 @@ class MDNS(BaseModel):
 
 ## 13. Scientific References
 
-1. **Study (2021)**. Accurate decoding of melodies from electroencephalography. *Journal of Neuroscience*. (EEG study, n=21, maxCorr TRF method)
+1. **Di Liberto GM, Marion G & Shamma SA (2021)**. Accurate decoding of imagined and heard melodies. *Frontiers in Neuroscience* 15:673401. (EEG maxCorr TRF, n=21, note-onset F(1,20)=80.6, pitch 20/21 sig, sub-1 Hz F(1,20)=369.8)
+2. **Bellier L, Namber A, Luo S, Bhatt D, Lu C & Knight RT (2023)**. Music can be reconstructed from human auditory cortex activity using nonlinear decoding models. *PLoS Biology* 21(8):e3002176. (iEEG, n=29 patients, r²=0.429, 36/38 songs, right STG dominance)
+3. **Kraemer DJM, Macrae CN, Green AE & Kelley WM (2005)**. Musical imagery: Sound of silence activates auditory cortex. *Nature* 434:158. (fMRI, n=15, PAC F(1,14)=22.55, region×type F(1,14)=48.92)
+4. **Weineck K, Ito O & Bhattacharya J (2022)**. Neural synchronization is strongest to the spectral flux of slow music and with musical training. *eLife* 11:e75515. (EEG, n=37, spectral flux η²=0.55, musicians > non-musicians)
+5. **Potes C, Gunduz A, Brunner P & Schalk G (2012)**. Dynamics of electrocorticographic (ECoG) activity in human temporal and frontal cortical areas during music listening. *NeuroImage* 61:841-848. (ECoG, n=8, high gamma r=0.49 STG, STG→premotor lag 110 ms)
+6. **Sturm I et al. (2014)**. ECoG high gamma activity reveals distinct cortical representations of lyrics passages, harmonic and timbre-related changes in a rock song. *Frontiers in Human Neuroscience* 8:798. (ECoG, n=10, partial correlations, multi-feature separation)
+7. **Daly I (2023)**. Neural decoding of music from the EEG. *Scientific Reports* 13:624. (EEG biLSTM, n=37, 71.8% rank acc fMRI-informed, MNI: R-HG (54,-12,2) T=7.38, L-HG (-50,-20,2) T=6.62)
+8. **Hausfeld L, Riecke L, Valente G & Formisano E (2021)**. Modulating cortical instrument representations during auditory stream segregation and integration with polyphonic music. *Frontiers in Neuroscience* 15:635937. (EEG mTRF, n=15, attention modulates instrument-specific tracking)
+9. **Zatorre RJ & Halpern AR (2005)**. Mental concerts: Musical imagery and auditory cortex. *Neuron* 47:9-12. (Review, 8 brain regions, secondary AC + Spt + right lateralization for imagery)
+10. **Halpern AR, Zatorre RJ, Bouffard M & Johnson JA (2004)**. Behavioral and neural correlates of perceived and imagined musical timbre. *Neuropsychologia* 42:1281-1292. (fMRI, n=10, timbre imagery in secondary AC + SMA)
+11. **Di Liberto GM, Hjortkjaer J & Mesgarani N (2022)**. Editorial: Neural tracking — Closing the gap between neurophysiology and translational medicine. *Frontiers in Neuroscience* 16:872600. (Framework: mTRF methodology, CNSP initiative, clinical translation)
+12. **Crosse MJ, Di Liberto GM, Bednar A & Lalor EC (2016)**. The multivariate temporal response function (mTRF) toolbox: A MATLAB toolbox for relating neural signals to continuous stimuli. *Frontiers in Human Neuroscience* 10:604. (Methodological foundation for TRF-based decoding)
 
 ---
 
@@ -671,7 +733,14 @@ The D0 pipeline used 4 separate HC⁰ mechanisms (TIH, NPL, SGM, EFC). In MI, th
 
 ---
 
-**Model Status**: ✅ **VALIDATED**
+**Model Status**: ✅ **VALIDATED** (v2.1.0: deep literature review, 1→12 papers, 7 methods)
 **Output Dimensions**: **12D**
 **Evidence Tier**: **α (Mechanistic)**
 **Confidence**: **>90%**
+
+> **Code note** (`mi_beta/brain/units/stu/models/mdns.py`):
+> - `MECHANISM_NAMES = ("BEP",)` in code but doc specifies `("BEP", "TMH")` — TMH should be added
+> - Layer E dimension names differ: code has `perception_decode, imagery_decode, perception_imagery_overlap` (3D); doc has `note_tracking, pitch_decoding, percept_imag, decoding_acc` (4D)
+> - `h3_demand = ()` empty — needs population from doc's 18 tuples
+> - `version="2.0.0"`, `paper_count=4` — needs update to `2.1.0`, `12`
+> - `brain_regions` uses generic names — needs update with validated MNI coordinates from Daly 2023

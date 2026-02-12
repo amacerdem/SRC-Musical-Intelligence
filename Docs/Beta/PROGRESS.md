@@ -22,8 +22,8 @@
 ### BATCH 2: STU (Sensorimotor Timing, 14 models)
 - [x] #10 STU-α1-HMCE — Hierarchical Musical Context Encoding (v2.1.0: 1→15 papers, r=0.99 QUALIFIED to r=0.32 electrode-level, Norman-Haignere 2022 independent replication β=0.064 oct/mm, Sabat 2025 CONSTRAINS integration window flexibility, Bonetti/Bellier/Potes/Golesorkhi/Ye/Wöhrle/Foo/Briley/Fedorenko/Kim convergence, 8 methods)
 - [x] #11 STU-α2-AMSC — Auditory-Motor Stream Coupling (v2.1.0: 1→12 papers, Lazzari 2025 TMS CAUSAL right dPMC, Ito 2022 cross-species 120-140 BPM, Hoddinott/Grahn SMA+putamen RSA, Edagawa beta synchronization, Bellier right STG, 6 methods)
-- [ ] #12 STU-α3-MDNS — Melody Decoding from Neural Signals
-- [ ] #13 STU-β1-AMSS — Attention-Modulated Stream Segregation
+- [x] #12 STU-α3-MDNS — Melody Decoding from Neural Signals (v2.1.0: 1→12 papers, "Study 2021" → Di Liberto et al. 2021, F(1,20)=80.6 note-onset, sub-1 Hz pitch F=369.8, Bellier 2023 iEEG r²=0.429 replication, Kraemer PAC imagery F=22.55, Weineck spectral flux η²=0.55, Daly MNI coordinates, 7 methods)
+- [x] #13 STU-β1-AMSS — Attention-Modulated Stream Segregation (v2.1.0: 1→12 papers, Hausfeld method CORRECTED EEG not MEG, Wikman 2025 fMRI attended-object AC dominance, Basinski 2025 ORN F(2,170)=31.38 stream segregation, Haiduk 2024 attention×spectrotemporal 3-way χ²=41.358, Har-shai Yahav CONSTRAINS >50% no individual bias, 7 methods)
 - [ ] #14 STU-β2-TPIO — Timbre Perception-Imagery Overlap
 - [ ] #15 STU-β3-EDTA — Expertise-Dependent Tempo Accuracy
 - [ ] #16 STU-β4-ETAM — Entrainment, Tempo & Attention Modulation
