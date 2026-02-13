@@ -22,7 +22,47 @@ The Temporal Memory Hierarchy encodes musical temporal context at multiple neste
 
 ## H3 Demand
 
-To be populated in Phase 6. Will declare demands for stability, trend, entropy, and periodicity morphs on multiple R3 features at H16/H18/H20/H22 to track context at each hierarchical level.
+### R3 Feature Inputs
+
+| R3 Domain | Indices | Features | Consuming Units |
+|-----------|---------|----------|-----------------|
+| B: Energy | [7]-[11] | onset_strength, loudness, rms_energy, velocity_A | STU (all 4), IMU (PMIM), RPU (RPEM) |
+| D: Change | [21]-[24] | spectral_flux, delta_loudness, onset_density | STU (HMCE, EDTA, TMRM), IMU (PMIM, MSPBA), NDU (CDMR) |
+| A: Consonance | [0]-[6] | harmonicity, periodicity, consonance_dissonance | IMU (MEAMN, PMIM), RPU (RPEM) |
+| E: Interactions | [25]-[48] | Cross-domain coupling terms | IMU (PMIM, MSPBA), RPU (RPEM), NDU (CDMR) |
+
+Domains B (Energy) and D (Change) are the core inputs — temporal memory hierarchy fundamentally tracks how energy and change patterns evolve across hierarchically nested timescales. Domain A provides harmonic structure for tonal memory levels.
+
+### Per-Horizon Morph Profile
+
+| Horizon | Morphs | Rationale |
+|---------|--------|-----------|
+| H16 (1 s, 172 frames) | M0 (value), M1 (mean), M2 (std), M14 (periodicity), M18 (trend), M21 (zero_crossings) | Bar-level memory — repetition and metric regularity detection; periodicity captures metric patterns; zero-crossings reflect energy oscillation within the perceptual present |
+| H18 (2 s, 345 frames) | M0 (value), M1 (mean), M2 (std), M14 (periodicity), M18 (trend), M21 (zero_crossings) | Phrase-level memory — phrase boundaries and cadential expectations; trend captures melodic/harmonic arc trajectory |
+| H20 (5 s, 861 frames) | M0 (value), M1 (mean), M14 (periodicity), M18 (trend) | Theme-level memory — thematic return recognition, large-scale repetition; reduced morph set reflects consolidated structural output |
+| H22 (15 s, 2584 frames) | M0 (value), M1 (mean), M14 (periodicity), M18 (trend) | Section-level memory — formal structure, large-scale key relationships, section boundaries; periodicity and trend sufficient for abstract structural representation |
+
+Periodicity (M14) and trend (M18) are the signature morphs of TMH — they capture the nested periodic structures and directional tendencies at each level of the temporal hierarchy.
+
+### Law Distribution
+
+| Law | Units | Models | Rationale |
+|-----|-------|:------:|-----------|
+| L0 (Memory) | STU, IMU, RPU | 6 | Causal temporal accumulation — hierarchy builds from past to present |
+| L1 (Prediction) | STU, NDU | 3 | Tempo prediction (STU) and structural novelty detection (NDU) |
+| L2 (Integration) | IMU | 2 | Bidirectional binding for cross-modal memory integration (MEAMN, PMIM) |
+
+L0 (Memory) dominates — the temporal hierarchy is fundamentally about accumulating context from past events. L1 (Prediction) appears in STU models (HMCE, TMRM) for tempo anticipation and in NDU (CDMR) for structural novelty.
+
+### Demand Estimate
+
+| Source Unit | Models | Est. Tuples |
+|-------------|:------:|:-----------:|
+| STU (HMCE, AMSC, HGSIC, TMRM) | 4 | ~250 |
+| IMU (MEAMN, PMIM) | 2 | ~80 |
+| RPU (RPEM) | 1 | ~30 |
+| NDU (CDMR) | 1 | ~20 |
+| **Total (deduplicated)** | **8** | **~300** |
 
 ## Models Using This Mechanism
 

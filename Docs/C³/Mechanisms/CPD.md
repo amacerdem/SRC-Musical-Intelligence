@@ -22,7 +22,45 @@ Chills & Peak Detection identifies moments of intense autonomic arousal during m
 
 ## H3 Demand
 
-To be populated in Phase 6. Will declare demands for loudness velocity, harmonic change, and timbral novelty at H9/H16/H18 to detect autonomic trigger features and expectation violation.
+### R3 Feature Inputs
+
+| R3 Domain | Indices | Features | Consuming Units |
+|-----------|---------|----------|-----------------|
+| B: Energy | [7]-[11] | loudness, velocity_A, velocity_D, onset_strength | ARU (SRP, AAC, PUPF, MAD via P5), RPU (MORMR, IUCP) |
+| D: Change | [21]-[24] | spectral_flux, delta_loudness | ARU (all 4 via P5), RPU (IUCP) |
+| C: Timbre | [12]-[20] | spectral_centroid, spectral_spread, brightness_kuttruff | ARU (SRP, AAC, MAD via P1), RPU (MORMR) |
+| A: Consonance | [0]-[6] | harmonicity, roughness, consonance_dissonance | ARU (SRP, AAC, MAD via P1), RPU (MORMR, IUCP) |
+| E: Interactions | [25]-[48] | Cross-domain coupling terms | ARU (SRP, AAC via P3), RPU (MORMR, IUCP) |
+
+CPD's R3 inputs reflect the acoustic triggers of chills: sudden loudness increase (B: velocity_A), harmonic shift (A: consonance_dissonance), and timbral novelty (C: spectral_centroid change). ARU accesses features via pathways (P1, P3, P5); RPU accesses directly.
+
+### Per-Horizon Morph Profile
+
+| Horizon | Morphs | Rationale |
+|---------|--------|-----------|
+| H9 (350 ms, 60 frames) | M0 (value), M1 (mean), M2 (std), M8 (velocity), M9 (acceleration), M11 (peak) | Fast ANS detection — sympathetic onset response; velocity and acceleration capture sudden dynamic changes that trigger chills; peak detects local maxima in autonomic arousal |
+| H16 (1 s, 172 frames) | M0 (value), M1 (mean), M2 (std), M8 (velocity), M11 (peak) | Beat-level integration — conscious awareness of frisson; peak detection at the psychological present timescale |
+| H18 (2 s, 345 frames) | M0 (value), M1 (mean), M2 (std), M8 (velocity) | Phrase-level context — expectation violation requires sufficient temporal window for prediction establishment; reduced morph set reflects contextual role |
+
+The morph profile narrows from H9 to H18, reflecting the shift from rapid autonomic detection (rich dynamics suite) to slower contextual expectation (statistical summary).
+
+### Law Distribution
+
+| Law | Units | Models | Rationale |
+|-----|-------|:------:|-----------|
+| L0 (Memory) | RPU | 1 | Comparing current arousal to stored chills templates |
+| L1 (Prediction) | RPU | 1 | Anticipating peak moments — expectation violation drives chills |
+| L2 (Integration) | ARU, RPU | 5 | Bidirectional processing — chills emerge from integrating sensory surprise with affective appraisal |
+
+L2 (Integration) dominates — all 4 ARU models use L2. Chills detection is inherently bidirectional: the autonomic response depends on both the preceding context (build-up) and following resolution.
+
+### Demand Estimate
+
+| Source Unit | Models | Est. Tuples |
+|-------------|:------:|:-----------:|
+| ARU (SRP, AAC, PUPF, MAD) | 4 | ~80 |
+| RPU (MORMR, IUCP) | 2 | ~40 |
+| **Total (deduplicated)** | **6** | **~120** |
 
 ## Models Using This Mechanism
 

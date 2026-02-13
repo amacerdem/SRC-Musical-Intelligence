@@ -22,7 +22,51 @@ Memory Encoding / Retrieval models the hippocampal-cortical memory system as it 
 
 ## H3 Demand
 
-To be populated in Phase 6. Will declare demands for entropy, stability, periodicity, and trend morphs at H18/H20/H22/H25 to track novelty, repetition, and encoding strength.
+### R3 Feature Inputs
+
+| R3 Domain | Indices | Features | Consuming Units |
+|-----------|---------|----------|-----------------|
+| A: Consonance | [0]-[6] | harmonicity, roughness, consonance_dissonance, periodicity, fundamental_freq | IMU (11), PCU (HTP, ICEM, PSH), NDU (SLEE), RPU (LDAC) |
+| B: Energy | [7]-[11] | onset_strength, loudness, rms_energy, velocity_A | IMU (9), ARU (NEMAC via P5), RPU (LDAC) |
+| C: Timbre | [12]-[20] | spectral_centroid, mfcc_vector, spectral_contrast, brightness_kuttruff | IMU (8), PCU (PSH), RPU (LDAC) |
+| D: Change | [21]-[24] | spectral_flux, onset_density, delta_loudness | IMU (5), NDU (SLEE) |
+| E: Interactions | [25]-[48] | Cross-domain coupling terms | IMU (6), PCU (HTP, ICEM, PSH), NDU (SLEE), RPU (LDAC) |
+
+MEM has the broadest R3 consumption of any mechanism — all five v1 domains are represented. Domain A (Consonance) is the most broadly consumed, reflecting the central role of harmonic structure in musical memory formation and retrieval.
+
+### Per-Horizon Morph Profile
+
+| Horizon | Morphs | Rationale |
+|---------|--------|-----------|
+| H18 (2 s, 345 frames) | M0 (value), M1 (mean), M2 (std), M3 (median), M4 (max), M5 (range), M18 (trend), M20 (entropy) | Phrase-level encoding — full statistical suite for characterising episodic traces; entropy measures information content driving encoding strength (Davachi 2006) |
+| H20 (5 s, 861 frames) | M0 (value), M1 (mean), M2 (std), M3 (median), M5 (range), M18 (trend), M20 (entropy) | Pattern matching — thematic return recognition via cortical pattern completion; entropy and trend capture familiarity signal |
+| H22 (15 s, 2584 frames) | M0 (value), M1 (mean), M2 (std), M18 (trend), M20 (entropy) | Section-level retrieval — context-dependent memory over ~15 s; reduced morph set reflects consolidated structural memory |
+| H25 (60 s, 10336 frames) | M0 (value), M1 (mean), M18 (trend), M20 (entropy) | Long-term consolidation — 60 s window for movement/piece-level memory; minimal morph set for abstract encoding modulated by emotional intensity |
+
+MEM has the richest statistical morph profile of any mechanism (8 distinct morphs including M3 median, M4 max, M5 range). Entropy (M20) is the signature morph — it appears at all four horizons, measuring information content that drives encoding strength and novelty detection.
+
+### Law Distribution
+
+| Law | Units | Models | Rationale |
+|-----|-------|:------:|-----------|
+| L0 (Memory) | IMU, ARU, RPU | 15 | Memory retrieval reconstructs past from stored traces — inherently causal |
+| L1 (Prediction) | PCU, NDU | 4 | Generating predictions from memory to compute prediction error (PCU) and novelty (NDU) |
+| L2 (Integration) | IMU, PCU, RPU | 5 | Bidirectional binding for cross-modal memory integration and memory-based prediction error |
+
+L0 (Memory) is the dominant law — 15 of 19 consuming models use L0, reflecting MEM's core function of causal memory retrieval. L1 appears in PCU and NDU where memory serves prediction. L2 enables bidirectional memory binding in MEAMN and CDEM.
+
+### Demand Estimate
+
+| Source Unit | Models | Est. Tuples |
+|-------------|:------:|:-----------:|
+| IMU | 13 | ~500 |
+| PCU (HTP, ICEM, PSH) | 3 | ~60 |
+| NDU (SLEE) | 1 | ~15 |
+| RPU (LDAC) | 1 | ~15 |
+| ARU (NEMAC) | 1 | ~10 |
+| **Total (deduplicated)** | **19** | **~600** |
+
+MEM is the highest-demand mechanism by tuple count (~600), reflecting the centrality of memory encoding/retrieval in music cognition. IMU contributes 83% of the total demand.
 
 ## Models Using This Mechanism
 

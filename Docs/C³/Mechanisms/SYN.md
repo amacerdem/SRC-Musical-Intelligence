@@ -22,7 +22,43 @@ Syntactic Processing models how the brain parses musical structure according to 
 
 ## H3 Demand
 
-To be populated in Phase 6. Will declare demands for consonance group R3 features (stumpf_fusion, harmonicity, roughness) at H12/H16/H18 to measure harmonic transition surprise and syntactic coherence.
+### R3 Feature Inputs
+
+| R3 Domain | Indices | Features | Consuming Units |
+|-----------|---------|----------|-----------------|
+| A: Consonance | [0]-[6] | stumpf_fusion, harmonicity, roughness, consonance_dissonance | IMU (MSPBA) |
+| D: Change | [21]-[24] | spectral_flux, harmonic_change | IMU (MSPBA) |
+| E: Interactions | [25]-[48] | Consonance-energy cross terms | IMU (MSPBA) |
+
+SYN has the most focused R3 input of any mechanism. Domain A (Consonance) is the primary driver — musical syntax is fundamentally about chord-level harmonic relationships. Stumpf fusion and harmonicity measure consonance quality, while roughness captures dissonance tension. Domain D provides change detection for harmonic transitions (ERAN-triggering events). Domain E captures consonance-energy interactions that modulate syntactic processing strength.
+
+### Per-Horizon Morph Profile
+
+| Horizon | Morphs | Rationale |
+|---------|--------|-----------|
+| H12 (525 ms, 90 frames) | M0 (value), M1 (mean), M2 (std), M18 (trend) | Beat-level harmonic syntax — individual chord transitions (~250-700 ms per chord); trend captures local harmonic trajectory within chords |
+| H16 (1 s, 172 frames) | M0 (value), M1 (mean), M2 (std), M18 (trend) | Phrase-level syntax — cadential progressions and tonal closure; trend measures phrase-level harmonic direction (tension → resolution) |
+| H18 (2 s, 345 frames) | M0 (value), M1 (mean), M2 (std), M18 (trend) | Hierarchical grouping — how phrases group into periods; trend captures higher-order tonal relationships spanning multiple phrases |
+
+All three horizons share the same compact 4-morph profile. Trend (M18) is the signature morph — it captures the directionality of harmonic movement that defines syntactic expectation (tension building vs resolution).
+
+### Law Distribution
+
+| Law | Units | Models | Rationale |
+|-----|-------|:------:|-----------|
+| L0 (Memory) | IMU | 1 | Accumulating harmonic context from past chords to assess syntactic coherence |
+| L2 (Integration) | IMU | 1 | Bidirectional processing for hierarchical grouping — current chord evaluated against both preceding and following harmonic context |
+
+MSPBA uses both L0 and L2. L0 (Memory) serves the causal aspect of syntax processing — each chord is evaluated in the context of what preceded it (harmonic expectation). L2 (Integration) serves the hierarchical grouping rules (GTTM) that require bidirectional evaluation.
+
+### Demand Estimate
+
+| Source Unit | Models | Est. Tuples |
+|-------------|:------:|:-----------:|
+| IMU (MSPBA) | 1 | ~30 |
+| **Total** | **1** | **~30** |
+
+SYN has the smallest demand footprint of any mechanism — a single model (MSPBA) in a single unit (IMU). This reflects the highly specialised nature of musical syntax processing, concentrated in the Broca's area homologue.
 
 ## Models Using This Mechanism
 
