@@ -281,14 +281,177 @@ STEP 5: MARK COMPLETE
 
 **Quality gate after Phase 1:** Every model doc has verified evidence tables, correct R³ mappings, justified H³ demands, and all citations traced to Literature/.
 
-### Phase 2: R³ Architecture (Docs/R³)
+**Phase 1 Status: ✅ COMPLETE (2026-02-13)** — All 96 models revised to v2.1.0. Both new models (CHPI, SSRI) created. 7 R³ gap logs written. All changes committed.
 
-After all 96 models are revised, consolidate R³ findings:
+### Phase 2: C³ Documentation Architecture (Docs/C³)
 
-1. **Review R3-GAP-LOG.md** — compile all gaps found during Phase 1
+**Problem:** 96 model documents are complete but exist as isolated islands. The code has rich structural layers (`mi_beta/brain/` → units, mechanisms, pathways, regions, neurochemicals, circuits) with NO documentation counterparts. The "bridges between islands" are missing.
+
+**Design principle:** Model docs (96 × 14-section) are the **source of truth**. All upper layers **aggregate** from models. Information flows bottom-up.
+
+```
+LAYER 0: C3-ARCHITECTURE.md
+         "How does the entire system work?"
+         ┃
+LAYER 1: Units/ + Circuits/ + Tiers/
+         "What functional units compose the brain?"
+         ┃
+LAYER 2: Mechanisms/ + Pathways/ + Regions/ + Neurochemicals/
+         "What building blocks compose those units?"
+         ┃
+LAYER 3: Models/ (existing 96 docs — source of truth)
+         "What does each computational model do exactly?"
+         ┃
+LAYER T: Contracts/ + Matrices/
+         "What rules do all components obey?" (cross-cutting)
+```
+
+**Complete file tree (~61 new files):**
+
+```
+Docs/C³/
+│
+├── C3-ARCHITECTURE.md            ← BrainOrchestrator counterpart
+│                                    Full system overview: 5-phase execution,
+│                                    data flow, MI-space assembly
+│                                    audio → R³ → H³ → Brain → L³ → MI-space
+│                                    Dependency graph (ASCII-art)
+│
+├── Contracts/                    ← mi_beta/contracts/ counterpart
+│   ├── 00-INDEX.md               ← 9 contract types summary
+│   ├── BaseModel.md              ← Mandatory 14-section structure for every model
+│   ├── BaseCognitiveUnit.md      ← Unit interface specification
+│   ├── BaseMechanism.md          ← 30D mechanism contract
+│   ├── LayerSpec.md              ← E/M/P/F/T/N/C output layer system
+│   ├── H3DemandSpec.md           ← (r3_idx, horizon, morph, law) contract
+│   ├── CrossUnitPathway.md       ← Pathway declaration contract
+│   ├── BrainRegion.md            ← MNI coordinate + evidence contract
+│   └── ModelMetadata.md          ← Evidence provenance contract
+│
+├── Mechanisms/                   ← mi_beta/brain/mechanisms/ counterpart
+│   ├── 00-INDEX.md               ← 10 mechanisms, circuit assignments, 30D convention
+│   │                                Per-mechanism: NAME, CIRCUIT, OUTPUT_DIM=30,
+│   │                                3×10D sub-sections, which models use it
+│   │
+│   │  ── Mesolimbic (Reward) ──
+│   ├── AED.md                    ← Affective Entrainment Dynamics
+│   ├── CPD.md                    ← Chills & Peak Detection
+│   ├── C0P.md                    ← Cognitive Projection
+│   │
+│   │  ── Perceptual ──
+│   ├── PPC.md                    ← Pitch Pattern Classification
+│   ├── TPC.md                    ← Tonal Pattern Classification
+│   │
+│   │  ── Sensorimotor ──
+│   ├── BEP.md                    ← Beat-Entrained Prediction
+│   ├── TMH.md                    ← Temporal-Motor Hierarchy
+│   │
+│   │  ── Mnemonic ──
+│   ├── MEM.md                    ← Memory Encoding
+│   ├── SYN.md                    ← Synaptic Consolidation
+│   │
+│   │  ── Salience ──
+│   └── ASA.md                    ← Auditory Scene Analysis
+│
+├── Pathways/                     ← mi_beta/brain/pathways/ counterpart
+│   ├── 00-INDEX.md               ← 5 pathways, routing rules, two-pass execution
+│   ├── P1-SPU-ARU.md             ← Consonance → Pleasure (r=0.81)
+│   ├── P2-STU-STU.md             ← Beat → Motor Sync (r=0.70)
+│   ├── P3-IMU-ARU.md             ← Memory → Affect (r=0.55)
+│   ├── P4-STU-STU.md             ← Context → Prediction (r=0.99)
+│   └── P5-STU-ARU.md             ← Tempo → Emotion (r=0.60)
+│
+├── Regions/                      ← mi_beta/brain/regions/ counterpart
+│   ├── 00-INDEX.md               ← RegionAtlas: 26 regions, MNI coordinate system
+│   ├── Cortical.md               ← 12 regions (A1/HG, STG, STS, IFG, DLPFC, ...)
+│   ├── Subcortical.md            ← 9 regions (NAcc, Caudate, VTA, Amygdala, ...)
+│   └── Brainstem.md              ← 5 regions (IC, AN, CN, SOC, PAG)
+│
+├── Neurochemicals/               ← mi_beta/brain/neurochemicals/ counterpart
+│   ├── 00-INDEX.md               ← 4 systems, write/read protocol
+│   ├── Dopamine.md               ← DA: anticipation/consummation dissociation
+│   ├── Opioid.md                 ← μ-Opioid: hedonic hotspots
+│   ├── Serotonin.md              ← 5-HT: mood modulation
+│   └── Norepinephrine.md         ← NE: arousal, attention gating
+│
+├── Circuits/                     ← CIRCUIT_NAMES counterpart (implicit in code)
+│   ├── 00-INDEX.md               ← 6 circuit families, mechanism/unit map
+│   ├── Mesolimbic.md             ← Reward & Pleasure (AED+CPD+C0P → ARU+RPU)
+│   ├── Perceptual.md             ← Hearing & Pattern (PPC+TPC → SPU+ASU)
+│   ├── Sensorimotor.md           ← Rhythm & Movement (BEP+TMH → STU+MPU)
+│   ├── Mnemonic.md               ← Memory & Familiarity (MEM+SYN → IMU)
+│   ├── Salience.md               ← Attention & Novelty (ASA → ASU+NDU)
+│   └── Imagery.md                ← Simulation & Prediction (→ PCU)
+│
+├── Units/                        ← mi_beta/brain/units/ counterpart
+│   ├── 00-INDEX.md               ← 9 units, execution order, dependency graph
+│   │                                Per-unit: UNIT_NAME, FULL_NAME, CIRCUIT,
+│   │                                POOLED_EFFECT, model list with OUTPUT_DIMs,
+│   │                                total dimensionality, R³ usage profile,
+│   │                                H³ demand union, mechanisms used, pathways
+│   │
+│   │  ── Core-4 ──
+│   ├── SPU.md                    ← Spectral Processing (9 models, α1-γ3)
+│   ├── STU.md                    ← Sensorimotor Timing (14 models, α1-γ5)
+│   ├── IMU.md                    ← Integrative Memory (15 models, α1-γ3)
+│   ├── ARU.md                    ← Affective Resonance (10 models) ⚠️ DEPENDENT
+│   │
+│   │  ── Experimental-5 ──
+│   ├── ASU.md                    ← Auditory Salience (9 models, α1-γ3)
+│   ├── NDU.md                    ← Novelty Detection (9 models, α1-γ3)
+│   ├── MPU.md                    ← Motor Planning (10 models, α1-γ3)
+│   ├── PCU.md                    ← Predictive Coding (10 models, α1-γ3)
+│   └── RPU.md                    ← Reward Processing (10 models) ⚠️ DEPENDENT
+│
+├── Tiers/                        ← MODEL_TIERS counterpart
+│   ├── Alpha.md                  ← α: >90% confidence, k≥10, foundational
+│   ├── Beta.md                   ← β: 70-90%, k≥5, integrative
+│   └── Gamma.md                  ← γ: <70%, k<5, theoretical
+│
+├── Matrices/                     ← Cross-cutting aggregate views
+│   ├── R3-Usage.md               ← 96 model × 49 R³ feature usage matrix
+│   ├── H3-Demand.md              ← 96 model × H³ tuple total demand matrix
+│   ├── Region-Atlas.md           ← 26 regions × 96 model reference matrix
+│   ├── Mechanism-Map.md          ← 10 mechanisms × 96 model connection matrix
+│   └── Output-Space.md           ← MI-space full dimension map
+│
+└── Models/                       ← EXISTING (untouched, source of truth)
+    ├── 00-INDEX.md               ← 96 model master index
+    └── ... (96 folders, each with 14-section document)
+```
+
+**Implementation order (highest impact, least effort first):**
+
+| Priority | Component | Files | Source |
+|----------|-----------|-------|--------|
+| 1 | `C3-ARCHITECTURE.md` | 1 | Code: `pipeline/brain_runner.py`, `core/constants.py` |
+| 2 | `Units/` | 10 | Code: `units/*/_unit.py` + model docs aggregate |
+| 3 | `Mechanisms/` | 11 | Code: `mechanisms/*.py` + model Section 5 |
+| 4 | `Pathways/` | 6 | Code: `pathways/*.py` + model Section 9 |
+| 5 | `Contracts/` | 9 | Code: `contracts/*.py` (formalize interface specs) |
+| 6 | `Regions/` | 4 | Code: `regions/*.py` + model Section 8 aggregate |
+| 7 | `Neurochemicals/` | 5 | Code: `neurochemicals/*.py` |
+| 8 | `Circuits/` | 7 | Implicit in code, explicit from mechanism/unit mapping |
+| 9 | `Tiers/` | 3 | Model metadata aggregate |
+| 10 | `Matrices/` | 5 | Cross-model aggregate (last, needs all above) |
+| | **Total** | **~61** | |
+
+**Quality gate:** Every code component in `mi_beta/brain/` has a documentation counterpart in `Docs/C³/`. Every doc references the specific code file it mirrors. Every model doc is reachable from at least one Unit doc, one Mechanism doc, and one Circuit doc.
+
+### Phase 3: R³ Architecture (Docs/R³)
+
+After C³ documentation architecture is complete, consolidate R³ findings:
+
+1. **Review R3-GAP-LOG files** — compile all gaps from 7 unit-specific gap logs:
+   - `R3-GAP-LOG-IMU.md` (273 lines), `R3-GAP-LOG-ASU.md` (173 lines),
+   - `R3-GAP-LOG-PCU.md` (150 lines), `R3-GAP-LOG-RPU.md` (174 lines),
+   - `R3-GAP-LOG-MPU.md` (59 lines), `R3-GAP-LOG-NDU.md` (48 lines),
+   - `R3-GAP-LOG-ARU.md` (42 lines)
+   - Note: SPU/STU gap logs were not created (completed before gap log format)
 2. **Create `Docs/R³/R3-SPECTRAL-ARCHITECTURE.md`** — master architecture document:
    - Current 49D space (5 groups: consonance, energy, timbre, change, interactions)
-   - Proposed expansions (new groups/dimensions from gap log)
+   - Known naming discrepancies (doc semantic labels vs code computational names)
+   - Proposed expansions (new groups/dimensions from gap logs)
    - Per-dimension specification: name, computation, range, psychoacoustic basis, unit
 3. **Per-group detailed docs:**
    - `Docs/R³/A-CONSONANCE.md` — 7D consonance group spec
@@ -308,7 +471,7 @@ After all 96 models are revised, consolidate R³ findings:
 
 **Quality gate:** Every R³ dimension has a psychoacoustic basis, computation formula, expected range, and at least one literature citation.
 
-### Phase 3: H³ Architecture (Docs/H³)
+### Phase 4: H³ Architecture (Docs/H³)
 
 1. **Create `Docs/H³/H3-TEMPORAL-ARCHITECTURE.md`** — master temporal architecture:
    - 32 horizons with musical meaning (sub-beat → piece)
@@ -330,7 +493,7 @@ After all 96 models are revised, consolidate R³ findings:
 
 **Quality gate:** Every H³ demand tuple has a purpose, citation, and links to the specific R³ feature it operates on.
 
-### Phase 4: L³ Architecture (Docs/L³)
+### Phase 5: L³ Architecture (Docs/L³)
 
 1. **Create `Docs/L³/L3-SEMANTIC-ARCHITECTURE.md`** — master semantic architecture:
    - 8 semantic groups (alpha through theta)
@@ -345,9 +508,9 @@ After all 96 models are revised, consolidate R³ findings:
 
 **Quality gate:** Every L³ semantic group has defined inputs, computation method, and output meaning linked to C³ models.
 
-### Phase 5: mi_beta Code Update (LAST)
+### Phase 6: mi_beta Code Update (LAST)
 
-Only after Phases 1-4 are complete:
+Only after Phases 1-5 are complete:
 
 1. **Create 9 missing model files** (96 docs - 87 code = 9 gap, including CHPI and SSRI)
 2. **Per-model code updates** (based on revised docs):
@@ -355,7 +518,7 @@ Only after Phases 1-4 are complete:
    - Verify OUTPUT_DIM, LAYERS, dimension_names match revised Section 6
    - Update brain_regions from revised Section 8
    - Update compute() logic if mathematical formulation changed
-3. **R³ expansion** (if Phase 2 identified new dimensions):
+3. **R³ expansion** (if Phase 3 identified new dimensions):
    - Update mi_beta/core/constants.py (R3_DIM, group boundaries)
    - Update mi_beta/core/dimension_map.py (_R3_FEATURE_NAMES)
    - Add new feature extractors in mi_beta/ear/r3/
@@ -370,9 +533,13 @@ Only after Phases 1-4 are complete:
 | File | Role |
 |------|------|
 | `Docs/C³/Models/00-INDEX.md` | Master model index (96 models) |
+| `Docs/C³/C3-ARCHITECTURE.md` | Top-level C³ architecture overview |
+| `Docs/C³/Units/00-INDEX.md` | Unit registry and execution order |
+| `Docs/C³/Mechanisms/00-INDEX.md` | Mechanism registry and circuit assignments |
+| `Docs/C³/Pathways/00-INDEX.md` | Cross-unit pathway registry |
 | `Docs/Beta/PROGRESS.md` | Progress tracker (checkboxes) |
 | `Docs/Beta/Beta_upgrade.md` | This plan (in-project copy) |
-| `Docs/R³/R3-GAP-LOG.md` | Running log of R³ gaps |
+| `Docs/R³/R3-GAP-LOG-*.md` | Per-unit R³ gap logs (7 files) |
 | `Literature/catalog.json` | Paper index (504 C³ + 59 R³) |
 | `Literature/c3/summaries/` | Paper summaries (492 files) |
 | `Literature/c3/extractions/` | Structured extractions (12 JSON) |
@@ -380,6 +547,7 @@ Only after Phases 1-4 are complete:
 | `mi_beta/core/constants.py` | Single source of truth for all constants |
 | `mi_beta/core/dimension_map.py` | R³ feature names and MI-space mapping |
 | `mi_beta/contracts/base_model.py` | Model contract (what every model must implement) |
+| `mi_beta/brain/` | Code architecture that C³ docs mirror |
 
 ## Resume Protocol for AI Agents
 
@@ -387,23 +555,24 @@ When resuming this work:
 
 ```
 1. READ Docs/Beta/PROGRESS.md
-   → Find the last completed model (checked off)
-   → The NEXT unchecked model is where to resume
+   → Check phase status
 
-2. READ Docs/R³/R3-GAP-LOG.md
-   → Understand accumulated R³ gaps so far
+2. READ Docs/Beta/Beta_upgrade.md
+   → Find current phase and next steps
 
 3. CHECK which phase we're in:
-   → If unchecked C³ models remain → Phase 1 (continue model revision)
-   → If all C³ done but R³ docs missing → Phase 2
-   → If R³ done but H³ docs missing → Phase 3
-   → If H³ done but L³ incomplete → Phase 4
-   → If all docs done → Phase 5 (mi_beta code update)
+   → Phase 1: C³ Model Revision        → ✅ COMPLETE (96/96)
+   → Phase 2: C³ Documentation Arch    → Check if Docs/C³/ subdirs exist
+   → Phase 3: R³ Architecture          → Check if Docs/R³/ architecture docs exist
+   → Phase 4: H³ Architecture          → Check if Docs/H³/ architecture docs exist
+   → Phase 5: L³ Architecture          → Check if Docs/L³/ is complete
+   → Phase 6: mi_beta Code Update      → Only after all docs phases done
 
-4. FOLLOW the per-model workflow (5 steps) for the current model
+4. For Phase 2: Read mi_beta/brain/ code + model docs → create aggregate docs
+   For Phase 3+: Follow phase-specific instructions above
 
-5. COMMIT after each unit batch (9-15 models) with message:
-   "Revise {UNIT} models ({n} models) — Phase 1 C³ update"
+5. COMMIT after completing each Phase 2 component (e.g., Units/, Mechanisms/)
+   with message: "Add C³ {component} documentation — Phase 2"
 ```
 
 ## New Model Specifications
@@ -487,13 +656,15 @@ Kurallar:
 ## Verification
 
 After full completion:
-- 96 model docs (48 Core + 48 Experimental) all with verified evidence
-- Every model doc Section 3 has verified effect sizes matching Literature
-- Every model doc Section 4 maps to valid R³ indices (current or expanded)
-- Every model doc Section 5 has H³ demands with citations
-- Every model doc Section 8 has MNI coordinates verified against papers
-- Docs/R³/ has complete spectral architecture with per-group specs
-- Docs/H³/ has complete temporal architecture with per-unit demands
-- Docs/L³/ has complete semantic architecture with per-unit mappings
-- `pytest tests/ -v` passes
-- `python -m mi_beta` runs without errors
+- [x] 96 model docs (48 Core + 48 Experimental) all with verified evidence ✅ Phase 1
+- [x] Every model doc Section 3 has verified effect sizes matching Literature ✅ Phase 1
+- [x] Every model doc Section 4 maps to valid R³ indices (current or expanded) ✅ Phase 1
+- [x] Every model doc Section 5 has H³ demands with citations ✅ Phase 1
+- [x] Every model doc Section 8 has MNI coordinates verified against papers ✅ Phase 1
+- [ ] Docs/C³/ has complete documentation architecture mirroring mi_beta/brain/ (Phase 2)
+- [ ] Every code component in mi_beta/brain/ has a documentation counterpart (Phase 2)
+- [ ] Docs/R³/ has complete spectral architecture with per-group specs (Phase 3)
+- [ ] Docs/H³/ has complete temporal architecture with per-unit demands (Phase 4)
+- [ ] Docs/L³/ has complete semantic architecture with per-unit mappings (Phase 5)
+- [ ] `pytest tests/ -v` passes (Phase 6)
+- [ ] `python -m mi_beta` runs without errors (Phase 6)
