@@ -14,11 +14,11 @@
 | [ASU](ASU.md) | Auditory Salience Unit | salience | 0.60 | 9 | 94D | Independent |
 | [NDU](NDU.md) | Novelty Detection Unit | salience | 0.55 | 9 | 94D | Independent |
 | [MPU](MPU.md) | Motor Planning Unit | sensorimotor | 0.62 | 10 | 104D | Independent |
-| [PCU](PCU.md) | Predictive Coding Unit | mnemonic | 0.58 | 9 | 94D | Independent |
+| [PCU](PCU.md) | Predictive Coding Unit | mnemonic | 0.58 | 10 | 104D | Independent |
 | [ARU](ARU.md) | Affective Resonance Unit | mesolimbic | 0.83 | 10 | 120D | Dependent |
-| [RPU](RPU.md) | Reward Processing Unit | mesolimbic | 0.70 | 9 | 94D | Dependent |
+| [RPU](RPU.md) | Reward Processing Unit | mesolimbic | 0.70 | 10 | 104D | Dependent |
 
-**Total: 94 models, 1006D brain output**
+**Total: 96 models, 1026D brain output**
 
 ---
 
@@ -58,10 +58,10 @@ Units with k < 10 studies:
 
 | Rank | Unit | Pooled *d* | Circuit | Models | Dim |
 |------|------|-----------|---------|--------|-----|
-| 1 | RPU | 0.70 | mesolimbic | 9 | 94D |
+| 1 | RPU | 0.70 | mesolimbic | 10 | 104D |
 | 2 | MPU | 0.62 | sensorimotor | 10 | 104D |
 | 3 | ASU | 0.60 | salience | 9 | 94D |
-| 4 | PCU | 0.58 | mnemonic | 9 | 94D |
+| 4 | PCU | 0.58 | mnemonic | 10 | 104D |
 | 5 | NDU | 0.55 | salience | 9 | 94D |
 
 ---

@@ -8,8 +8,8 @@
 | POOLED_EFFECT | d = 0.70 |
 | Evidence | Experimental-5 (k < 10 studies) |
 | Dependency | **Dependent** (Phase 4) |
-| Total Output | 94D per frame |
-| Model Count | 9 |
+| Total Output | 104D per frame |
+| Model Count | 10 |
 
 ---
 
@@ -36,16 +36,17 @@ The RPU models how the brain computes reward signals from musical stimuli -- dop
 | 4 | IUCP | Information-Uncertainty Coupling Process | 10D | C0P |
 | 5 | MCCN | Musical Context Coupling Network | 10D | TMH, AED |
 | 6 | MEAMR | Memory-Affect Modulated Reward | 10D | MEM, AED |
+| 7 | SSRI | Social Synchrony Reward Integration | 10D | AED, CPD, C0P |
 
 ### Gamma (k < 5, <70% confidence)
 
 | # | Model ID | Full Name | OUTPUT_DIM | Mechanisms |
 |---|----------|-----------|-----------|------------|
-| 7 | LDAC | Listener-Dependent Aesthetic Computation | 10D | AED |
-| 8 | IOTMS | Individual Optimal Tempo Matching System | 10D | BEP |
-| 9 | SSPS | Social Signal Processing System | 10D | ASA |
+| 8 | LDAC | Listener-Dependent Aesthetic Computation | 10D | AED |
+| 9 | IOTMS | Individual Optimal Tempo Matching System | 10D | BEP |
+| 10 | SSPS | Social Signal Processing System | 10D | ASA |
 
-**Total unit dimensionality: 12 + 11 + 11 + 10 + 10 + 10 + 10 + 10 + 10 = 94D**
+**Total unit dimensionality: 12 + 11 + 11 + 10 + 10 + 10 + 10 + 10 + 10 + 10 = 104D**
 
 ---
 
@@ -85,6 +86,7 @@ RPU is a target of cross-unit signals routed from ARU and SPU. The specific path
 - [RPU-beta1-IUCP](../Models/RPU-β1-IUCP/)
 - [RPU-beta2-MCCN](../Models/RPU-β2-MCCN/)
 - [RPU-beta3-MEAMR](../Models/RPU-β3-MEAMR/)
+- [RPU-beta4-SSRI](../Models/RPU-β4-SSRI/)
 - [RPU-gamma1-LDAC](../Models/RPU-γ1-LDAC/)
 - [RPU-gamma2-IOTMS](../Models/RPU-γ2-IOTMS/)
 - [RPU-gamma3-SSPS](../Models/RPU-γ3-SSPS/)

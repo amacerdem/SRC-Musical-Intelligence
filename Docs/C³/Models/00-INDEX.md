@@ -160,7 +160,7 @@
 | [MPU-γ2-CTBB](MPU-γ2-CTBB/CTBB.md) | CTBB | Cerebellar Theta-Burst Balance | γ | — |
 | [MPU-γ3-STC](MPU-γ3-STC/STC.md) | STC | Singing Training Connectivity | γ | — |
 
-### PCU — Predictive Coding Unit (9 models)
+### PCU — Predictive Coding Unit (10 models)
 
 **Circuit**: Imagery (Auditory Cortex, IFG, STS, Hippocampus)
 **Mechanisms**: PPC (Pitch Processing Chain, 30D) + TPC (Timbre Processing Chain, 30D) + MEM (Memory Integration, 30D)
@@ -178,7 +178,7 @@
 | [PCU-γ2-MAA](PCU-γ2-MAA/MAA.md) | MAA | Multifactorial Atonal Appreciation | γ | — |
 | [PCU-γ3-PSH](PCU-γ3-PSH/PSH.md) | PSH | Prediction Silencing Hypothesis | γ | — |
 
-### RPU — Reward Processing Unit (9 models)
+### RPU — Reward Processing Unit (10 models)
 
 **Circuit**: Mesolimbic (NAcc, VTA, vmPFC, OFC, Amygdala)
 **Mechanisms**: AED (Affective Entrainment Dynamics, 30D) + CPD (Consummatory Phase Dynamics, 30D) + C0P (Cognitive Polarity, 30D)

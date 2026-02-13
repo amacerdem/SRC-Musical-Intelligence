@@ -1768,6 +1768,8 @@ Create `Docs/Beta/DISCREPANCY-REGISTRY.md` with three sections:
 
 **Phase 6 completes when:** DISCREPANCY-REGISTRY.md is finalized and all DOC-BUG items are resolved. The registry becomes the exact specification for Phase 7 code changes.
 
+**Phase 6 Status: ✅ COMPLETE (2026-02-13)** — 391 docs validated across 8 sub-phases (6A-6H). 7 DOC-BUGs found and fixed. 12 EXPECTED + 1 CODE-BUG cataloged in DISCREPANCY-REGISTRY.md. 3 missing 00-INDEX files created (C³ root, Tiers, Matrices). Zero remaining doc errors.
+
 ---
 
 ### Phase 7: mi_beta Implementation (Code Update)
@@ -2074,17 +2076,25 @@ When resuming this work:
 
 3. CHECK which phase we're in:
    → Phase 1: C³ Model Revision        → ✅ COMPLETE (96/96)
-   → Phase 2: C³ Documentation Arch    → Check if Docs/C³/ subdirs exist
-   → Phase 3: R³ Architecture          → Check if Docs/R³/ architecture docs exist
-   → Phase 4: H³ Architecture          → Check if Docs/H³/ architecture docs exist
-   → Phase 5: L³ Architecture          → Check if Docs/L³/ is complete
-   → Phase 6: mi_beta Code Update      → Only after all docs phases done
+   → Phase 2: C³ Documentation Arch    → ✅ COMPLETE (159 files)
+   → Phase 3: R³ Architecture          → ✅ COMPLETE (71 files)
+   → Phase 4: H³ Architecture          → ✅ COMPLETE (73 files)
+   → Phase 5: L³ Architecture          → ✅ COMPLETE (69 files)
+   → Phase 6: Doc & Code Validation    → Read sub-phase 6A-6I instructions, check deliverables
+   → Phase 7: mi_beta Implementation   → Only after Phase 6 validation is 100% complete
 
-4. For Phase 2: Read mi_beta/brain/ code + model docs → create aggregate docs
-   For Phase 3+: Follow phase-specific instructions above
+4. For Phase 6: Run sub-phases 6A→6I in dependency order (see §6.3 graph)
+   - 6A first (structural inventory), then 6B-6F in parallel, then 6G→6H→6I
+   - Create deliverables: VALIDATION-C3-MODELS.md, VALIDATION-ARCHITECTURE.md,
+     VALIDATION-INDEXES.md, DISCREPANCY-REGISTRY.md
+   - Fix any DOC-BUG found; do NOT change code (code changes are Phase 7)
+   For Phase 7: Follow DISCREPANCY-REGISTRY.md from Phase 6 as the exact change list
+   - Sub-phases 7A→7H in dependency order (see §7.3 graph)
+   - 7A first (foundation), then 7B∥7C in parallel, then 7D→7E→7F→7G→7H
 
-5. COMMIT after completing each Phase 2 component (e.g., Units/, Mechanisms/)
-   with message: "Add C³ {component} documentation — Phase 2"
+5. COMMIT after completing each sub-phase
+   Phase 6: "Add {sub-phase} validation — Phase 6"
+   Phase 7: "Implement {sub-phase} — Phase 7"
 ```
 
 ## New Model Specifications
@@ -2173,11 +2183,24 @@ After full completion:
 - [x] Every model doc Section 4 maps to valid R³ indices (current or expanded) ✅ Phase 1
 - [x] Every model doc Section 5 has H³ demands with citations ✅ Phase 1
 - [x] Every model doc Section 8 has MNI coordinates verified against papers ✅ Phase 1
-- [ ] Docs/C³/ has complete documentation architecture mirroring mi_beta/brain/ (Phase 2)
-- [ ] Every code component in mi_beta/brain/ has a documentation counterpart (Phase 2)
-- [ ] Docs/R³/ has complete spectral architecture: demand matrix + DSP survey + v2 design + per-group specs + per-unit mappings (Phase 3A-3C)
-- [ ] All 96 model docs Section 4 updated for R³ v2 expanded space, bumped to v2.2.0 (Phase 3E)
-- [ ] Docs/H³/ has complete temporal architecture with per-unit demands (Phase 4)
+- [x] Docs/C³/ has complete documentation architecture mirroring mi_beta/brain/ (Phase 2) ✅ 159 files
+- [x] Every code component in mi_beta/brain/ has a documentation counterpart (Phase 2) ✅
+- [x] Docs/R³/ has complete spectral architecture: demand matrix + DSP survey + v2 design + per-group specs + per-unit mappings (Phase 3A-3C) ✅ 71 files
+- [x] All 96 model docs Section 4 updated for R³ v2 expanded space, bumped to v2.2.0 (Phase 3E) ✅
+- [x] Docs/H³/ has complete temporal architecture with per-unit demands (Phase 4) ✅ 73 files
 - [x] Docs/L³/ has complete semantic architecture with per-unit mappings (Phase 5) ✅ 69 files across 13 subdirectories
-- [ ] `pytest tests/ -v` passes (Phase 6)
-- [ ] `python -m mi_beta` runs without errors (Phase 6)
+- [x] Structural inventory: all 391 docs + all components verified (Phase 6A) ✅
+- [x] C³ cross-reference validation: units, mechanisms, circuits, pathways (Phase 6C) ✅ 7 DOC-BUGs found+fixed
+- [x] R³ consistency: 128D, 11 groups, dimension sums, mappings (Phase 6D) ✅
+- [x] H³ consistency: 32 horizons, 24 morphs, 3 laws (Phase 6E) ✅
+- [x] L³ consistency: 104D, 8 groups, 96 terms, adapters (Phase 6F) ✅
+- [x] Cross-layer pipeline: R³→H³→C³→L³ chain validated end-to-end (Phase 6G) ✅
+- [x] Index & link integrity: 58 00-INDEX files verified (55 existing + 3 created) (Phase 6H) ✅
+- [x] DISCREPANCY-REGISTRY.md created: 12 EXPECTED + 7 DOC-BUG + 1 CODE-BUG (Phase 6I) ✅
+- [x] All DOC-BUG items fixed, no code changes made (Phase 6I) ✅
+- [ ] 96 model files exist (94 updated + CHPI + SSRI) (Phase 7A-7B)
+- [ ] All 94 h3_demand properties populated from doc Section 5 (Phase 7B)
+- [ ] R³ expanded to 128D with backward-compatible indices 0-48 (Phase 7C)
+- [ ] L³ 9 adapters produce meaningful semantic mappings (Phase 7E)
+- [ ] `pytest tests/ -v` passes (Phase 7G)
+- [ ] `python -m mi_beta` runs without errors (Phase 7H)

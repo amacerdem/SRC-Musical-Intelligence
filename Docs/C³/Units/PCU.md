@@ -8,8 +8,8 @@
 | POOLED_EFFECT | d = 0.58 |
 | Evidence | Experimental-5 (k < 10 studies) |
 | Dependency | Independent (Phase 2) |
-| Total Output | 94D per frame |
-| Model Count | 9 |
+| Total Output | 104D per frame |
+| Model Count | 10 |
 
 ---
 
@@ -36,16 +36,17 @@ The PCU models how the brain generates predictions about upcoming musical events
 | 4 | PWUP | Pitch-Weight Uncertainty Processing | 10D | PPC |
 | 5 | WMED | Working Memory Emotion Dynamics | 10D | MEM, AED |
 | 6 | UDP | Uncertainty-Driven Prediction | 10D | C0P |
+| 7 | CHPI | Cross-Modal Harmonic Predictive Integration | 10D | PPC, TPC, MEM |
 
 ### Gamma (k < 5, <70% confidence)
 
 | # | Model ID | Full Name | OUTPUT_DIM | Mechanisms |
 |---|----------|-----------|-----------|------------|
-| 7 | IGFE | Imagery-Guided Feature Enhancement | 10D | TPC |
-| 8 | MAA | Musical Agentic Attention | 10D | ASA |
-| 9 | PSH | Perceptual Salience Hierarchy | 10D | PPC, TPC, MEM |
+| 8 | IGFE | Imagery-Guided Feature Enhancement | 10D | TPC |
+| 9 | MAA | Musical Agentic Attention | 10D | ASA |
+| 10 | PSH | Perceptual Salience Hierarchy | 10D | PPC, TPC, MEM |
 
-**Total unit dimensionality: 12 + 11 + 11 + 10 + 10 + 10 + 10 + 10 + 10 = 94D**
+**Total unit dimensionality: 12 + 11 + 11 + 10 + 10 + 10 + 10 + 10 + 10 + 10 = 104D**
 
 ---
 
@@ -84,6 +85,7 @@ PCU does not currently participate in any declared cross-unit pathways. It is ne
 - [PCU-beta1-PWUP](../Models/PCU-β1-PWUP/)
 - [PCU-beta2-WMED](../Models/PCU-β2-WMED/)
 - [PCU-beta3-UDP](../Models/PCU-β3-UDP/)
+- [PCU-beta4-CHPI](../Models/PCU-β4-CHPI/)
 - [PCU-gamma1-IGFE](../Models/PCU-γ1-IGFE/)
 - [PCU-gamma2-MAA](../Models/PCU-γ2-MAA/)
 - [PCU-gamma3-PSH](../Models/PCU-γ3-PSH/)
