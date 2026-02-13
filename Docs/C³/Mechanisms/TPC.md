@@ -22,7 +22,44 @@ The Timbre Processing Chain decomposes incoming audio into perceptual timbre dim
 
 ## H3 Demand
 
-To be populated in Phase 6. Will declare demands for timbre group R3 features (spectral_centroid, spectral_irregularity, spectral_flux, harmonic_ratio) at H6, H12, and H16.
+### R3 Feature Inputs
+
+| R3 Domain | Indices | Features | Consuming Units |
+|-----------|---------|----------|-----------------|
+| C: Timbre | [12]-[20] | spectral_centroid, spectral_spread, spectral_rolloff, spectral_flatness, spectral_crest, brightness_kuttruff, mfcc_vector | SPU (all 3), PCU (HTP, MAA) |
+| A: Consonance | [0]-[6] | harmonicity, roughness, consonance_dissonance, periodicity | SPU (STAI, MIAA), PCU (HTP, UDP, MAA) |
+| B: Energy | [7]-[11] | onset_strength, loudness, velocity_A | STU (TPIO), PCU (HTP, MAA) |
+| D: Change | [21]-[24] | spectral_flux, delta_loudness | STU (TPIO), PCU (UDP) |
+| E: Interactions | [25]-[48] | Spectral interaction terms | SPU (STAI), PCU (HTP, UDP, MAA) |
+
+Domain C (Timbre) is the primary input — all TPC-consuming models require spectral shape features. Domain A provides harmonic context for timbral analysis. Domains B, D, E serve supplementary roles for temporal gating and cross-domain coupling.
+
+### Per-Horizon Morph Profile
+
+| Horizon | Morphs | Rationale |
+|---------|--------|-----------|
+| H6 (200 ms, 34 frames) | M0 (value), M1 (mean), M2 (std), M8 (velocity) | Attack/onset timbre — fast spectral features during onset; velocity captures timbral change rate |
+| H12 (525 ms, 90 frames) | M0 (value), M1 (mean), M2 (std), M8 (velocity), M14 (periodicity), M18 (trend) | Sustain timbre — steady-state spectral shape; periodicity detects vibrato; trend tracks spectral drift |
+| H16 (1 s, 172 frames) | M0 (value), M1 (mean), M2 (std), M8 (velocity), M14 (periodicity), M18 (trend) | Timbral trajectory — full note/beat evolution; trend and periodicity capture timbral expressiveness |
+
+### Law Distribution
+
+| Law | Units | Models | Rationale |
+|-----|-------|:------:|-----------|
+| L0 (Memory) | STU, PCU | 2 | Causal beat tracking (STU) and maintaining timbral priors (PCU) |
+| L1 (Prediction) | PCU | 2 | Forward timbral prediction for predictive coding hierarchy |
+| L2 (Integration) | SPU, PCU | 5 | Bidirectional spectral template matching — bottom-up extraction meets top-down pattern completion |
+
+L2 (Integration) dominates, reflecting the bidirectional nature of timbre processing — spectral templates constrain bottom-up analysis while new input updates templates.
+
+### Demand Estimate
+
+| Source Unit | Models | Est. Tuples |
+|-------------|:------:|:-----------:|
+| SPU | 3 | ~135 |
+| PCU | 3 | ~80 |
+| STU (TPIO) | 1 | ~50 |
+| **Total (deduplicated)** | **7** | **~180** |
 
 ## Models Using This Mechanism
 

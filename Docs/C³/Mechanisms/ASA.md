@@ -22,7 +22,49 @@ Auditory Scene Analysis models the brain's ability to decompose complex acoustic
 
 ## H3 Demand
 
-To be populated in Phase 6. Will declare demands for timbre group R3 features (spectral_centroid, spectral_flux, harmonic_ratio) and energy features at H3/H6/H9 to compute grouping cues and stream segregation signals.
+### R3 Feature Inputs
+
+| R3 Domain | Indices | Features | Consuming Units |
+|-----------|---------|----------|-----------------|
+| B: Energy | [7]-[11] | onset_strength, loudness, rms_energy, velocity_A, velocity_D | ASU (all 9), NDU (EDNR, ONI), ARU (CMAT), RPU (SSPS) |
+| C: Timbre | [12]-[20] | spectral_centroid, spectral_spread, spectral_flatness, mfcc_vector, brightness_kuttruff | ASU (7), NDU (SDD, SDDP), ARU (CMAT), RPU (SSPS), PCU (IGFE) |
+| D: Change | [21]-[24] | spectral_flux, delta_loudness, onset_density | ASU (4), NDU (all 9) |
+| E: Interactions | [25]-[48] | Cross-domain coupling terms | NDU (7), ARU (CMAT), RPU (SSPS) |
+| A: Consonance | [0]-[6] | harmonicity, consonance_dissonance | ASU (IACM, CSG), NDU (SDD, SLEE), RPU (SSPS) |
+
+Domains B (Energy) and D (Change) are the most broadly consumed — salience and novelty detection both require energy transients and spectral change. Domain C (Timbre) serves stream segregation via timbral similarity. Domain E provides cross-domain coupling for novelty contextualisation.
+
+### Per-Horizon Morph Profile
+
+| Horizon | Morphs | Rationale |
+|---------|--------|-----------|
+| H3 (23.2 ms, 4 frames) | M0 (value), M1 (mean), M2 (std), M8 (velocity), M9 (acceleration), M11 (peak), M12 (trough), M15 (contrast) | Gamma-rate micro-segregation — onset synchrony and spectral co-modulation; acceleration and peak/trough detect transient onsets |
+| H6 (200 ms, 34 frames) | M0 (value), M1 (mean), M2 (std), M8 (velocity), M9 (acceleration), M11 (peak), M12 (trough), M15 (contrast) | Event-level stream formation — sequential grouping via pitch proximity, timbral similarity; contrast measures peak-to-trough salience ratio |
+| H9 (350 ms, 60 frames) | M0 (value), M1 (mean), M2 (std), M8 (velocity), M11 (peak), M15 (contrast) | Stream stabilisation — streams >300 ms become perceptually stable; reduced morph set reflects consolidated segregation output |
+
+ASU alpha models use the full 8-morph suite at all horizons. Beta models reduce to 6 morphs (drop M9, M12). Gamma models use 5 morphs (M0, M1, M2, M8, M11), reflecting progressive salience abstraction.
+
+### Law Distribution
+
+| Law | Units | Models | Rationale |
+|-----|-------|:------:|-----------|
+| L1 (Prediction) | NDU, RPU | 10 | Novelty detection requires forward prediction — stimulus is novel only relative to expectation |
+| L2 (Integration) | ASU, ARU, PCU | 11 | Salience is time-symmetric — prominence is measured against both past and future context |
+
+L2 (Integration) and L1 (Prediction) split ASA demand roughly evenly. ASU uses L2 exclusively — salience integrates bidirectional context. NDU uses L1 exclusively — novelty is defined as prediction error. ARU and PCU use L2 for bidirectional processing.
+
+### Demand Estimate
+
+| Source Unit | Models | Est. Tuples |
+|-------------|:------:|:-----------:|
+| ASU | 9 | ~360 |
+| NDU | 9 | ~120 |
+| ARU (CMAT) | 1 | ~15 |
+| RPU (SSPS) | 1 | ~15 |
+| PCU (IGFE) | 1 | ~10 |
+| **Total (deduplicated)** | **21** | **~450** |
+
+ASA is the second-highest mechanism by model count (21 models), with ASU contributing 80% of the tuple demand.
 
 ## Models Using This Mechanism
 

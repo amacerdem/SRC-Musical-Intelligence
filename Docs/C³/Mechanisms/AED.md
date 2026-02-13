@@ -22,7 +22,47 @@ Affective Entrainment Dynamics captures the phenomenon whereby musical beat stru
 
 ## H3 Demand
 
-To be populated in Phase 6. Will declare demands for energy, onset strength, and periodicity features at H6 and H16 across memory, prediction, and integration laws.
+### R3 Feature Inputs
+
+| R3 Domain | Indices | Features | Consuming Units |
+|-----------|---------|----------|-----------------|
+| B: Energy | [7]-[11] | onset_strength, loudness, velocity_A, velocity_D, rms_energy | ARU (all 10 via P5), RPU (all 6), PCU (WMED, CHPI) |
+| A: Consonance | [0]-[6] | harmonicity, consonance_dissonance, periodicity | ARU (6 via P1), RPU (8), PCU (CHPI) |
+| D: Change | [21]-[24] | spectral_flux, delta_loudness | ARU (4 via P5), RPU (DAED, RPEM, IUCP, IOTMS), PCU (WMED) |
+| E: Interactions | [25]-[48] | Cross-domain coupling terms | ARU (6 via P3), RPU (9), PCU (WMED, CHPI) |
+| C: Timbre | [12]-[20] | spectral_centroid, brightness_kuttruff | ARU (7 via P1), RPU (MORMR, MCCN, MEAMR, SSRI, LDAC, SSPS), PCU (CHPI) |
+
+Domain B (Energy) is the universal input — affective entrainment fundamentally couples emotional response to acoustic energy fluctuations. ARU accesses R3 features indirectly via pathways (P1 from SPU, P3 from IMU, P5 from STU). RPU and PCU access R3 directly.
+
+### Per-Horizon Morph Profile
+
+| Horizon | Morphs | Rationale |
+|---------|--------|-----------|
+| H6 (200 ms, 34 frames) | M0 (value), M1 (mean), M2 (std), M8 (velocity), M19 (stability) | Beat-level entrainment — instantaneous coupling between energy fluctuations and expected beat grid; stability measures phase-locking quality |
+| H16 (1 s, 172 frames) | M0 (value), M1 (mean), M2 (std), M8 (velocity), M18 (trend), M19 (stability) | Bar-level dynamics — entrainment stability and groove quality over the bar; trend captures emotional arc trajectory |
+
+The bimodal horizon profile (H6 + H16) captures AED's distinctive dual-timescale architecture: immediate affective response (Micro) and structural emotional arc (Macro).
+
+### Law Distribution
+
+| Law | Units | Models | Rationale |
+|-----|-------|:------:|-----------|
+| L0 (Memory) | RPU, PCU | 4 | Comparing current affective state to stored reward templates |
+| L1 (Prediction) | RPU, PCU | 4 | Anticipatory dopaminergic responses — predicting affective outcomes |
+| L2 (Integration) | ARU, RPU, PCU | 14 | Bidirectional affective processing — emotion integrates sensory evidence with appraisal and expectation |
+
+L2 (Integration) dominates — all 10 ARU models use L2, reflecting the bidirectional nature of affective resonance. RPU distributes across all three laws (wanting vs liking). PCU uses all three for predictive coding of affect.
+
+### Demand Estimate
+
+| Source Unit | Models | Est. Tuples |
+|-------------|:------:|:-----------:|
+| ARU | 10 | ~200 |
+| RPU | 6 | ~90 |
+| PCU (WMED, CHPI) | 2 | ~40 |
+| **Total (deduplicated)** | **18** | **~350** |
+
+AED is the highest-demand mechanism by model count in any single unit (10/10 ARU models), with the characteristic bimodal H6+H16 footprint appearing universally across all 18 consuming models.
 
 ## Models Using This Mechanism
 

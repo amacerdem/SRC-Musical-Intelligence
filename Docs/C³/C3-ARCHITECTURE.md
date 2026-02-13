@@ -5,7 +5,9 @@
 The MI-Beta pipeline transforms raw audio into a high-dimensional Musical Intelligence space (MI-space) through a layered architecture:
 
 ```
-audio -> Cochlea(128D) -> R3(49D) -> H3(sparse 2304D) -> Brain(1006D) -> L3(variable) -> MI-space
+audio -> Cochlea(128D) -> R3(49D*) -> H3(sparse†) -> Brain(1006D) -> L3(variable) -> MI-space
+  * R3 v2 expands to 128D (see Docs/R³/)
+  † H3 theoretical: 112,896D (v1) / 294,912D (v2); actual ~5,200 / ~8,600 tuples (see Docs/H³/)
 ```
 
 MI-space is the concatenation of all pipeline stages:
@@ -27,7 +29,7 @@ The total MI-space dimensionality is dynamic, depending on which cognitive units
 |-------|------|--------|-------------|
 | Cochlea | `mi_beta.ear.cochlea` | (B, T, 128) | 128-band mel spectrogram at 172.27 Hz frame rate |
 | R3 | `mi_beta.ear.r3` | (B, T, 49) | 49 spectral features: consonance(7), energy(5), timbre(9), change(4), interactions(24) |
-| H3 | `mi_beta.ear.h3` | sparse dict | Temporal morphological analysis: 32 horizons x 24 morphs x 3 laws = 2304D (sparse) |
+| H3 | `mi_beta.ear.h3` | sparse dict | Temporal morphological analysis: 32 horizons x 24 morphs x 3 laws per R3 feature (v1: 112,896D; v2: 294,912D; sparse) |
 | Brain | `mi_beta.brain` | (B, T, 1006) | 9 cognitive units, 94 models, 10 mechanisms, 5 pathways |
 | L3 | (planned) | (B, T, variable) | Semantic interpretation layer |
 
@@ -108,8 +110,8 @@ BrainOutput(
 
 ```
                     +-----------+
-                    |   H3/R3   |
-                    |  inputs   |
+                    |   H3/R3    |
+                    |   inputs   |
                     +-----+-----+
                           |
           +---------------+---------------+
@@ -195,7 +197,7 @@ UNIT_EXECUTION_ORDER = (
 |-----------|-----------|--------|
 | Cochlea (mel) | 128 | `N_MELS = 128` |
 | R3 spectral | 49 | `R3_DIM = 49` (consonance 7 + energy 5 + timbre 9 + change 4 + interactions 24) |
-| H3 temporal | 2304 (sparse) | 32 horizons x 24 morphs x 3 laws |
+| H3 temporal | 112,896 sparse (v2: 294,912) | 49 R3 x 32 horizons x 24 morphs x 3 laws (v2: 128 R3) |
 | Brain total | 1006 | Sum of all unit OUTPUT_DIMs |
 | -- SPU | 99 | 9 models (3 alpha + 3 beta + 3 gamma) |
 | -- STU | 148 | 14 models (3 alpha + 6 beta + 5 gamma) |
@@ -249,6 +251,8 @@ Each model within a unit is assigned an evidence tier (`mi_beta.core.constants.M
   |   Audio   | --> | Cochlea | --> |   R3    | --> |    H3    | --> | Brain  |
   | waveform  |     | 128 mel |     | 49 spec |     | sparse   |     | 1006D  |
   +-----------+     +----+----+     +----+----+     | 2304D    |     +---+----+
+                         |               |          | v1:112,896|         |
+                         |               |          | v2:294,912|         |
                          |               |          +----+-----+         |
                          |               |               |               |
                          v               v               v               v
@@ -310,6 +314,8 @@ All pipeline outputs are defined in `mi_beta.core.types`:
 
 ## Cross-References
 
+- **R³ Spectral:** [Docs/R³/00-INDEX.md](../R³/00-INDEX.md) — 128D spectral feature architecture
+- **H³ Temporal:** [Docs/H³/00-INDEX.md](../H³/00-INDEX.md) — temporal morphology architecture (294,912D sparse)
 - **Units:** [Units/00-INDEX.md](Units/00-INDEX.md)
 - **Models:** [Models/00-INDEX.md](Models/00-INDEX.md)
 - **Mechanisms:** [Mechanisms/](Mechanisms/)

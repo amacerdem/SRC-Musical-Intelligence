@@ -18,7 +18,7 @@ The 4-tuple `(r3_idx, horizon, morph, law)` is the canonical address in H3 space
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `r3_idx` | `int` | Index into the 49-D R3 feature vector (0-48) |
+| `r3_idx` | `int` | Index into the R3 feature vector: v1 (0-48, 49D); v2 (0-127, 128D) |
 | `r3_name` | `str` | Human-readable name of the R3 feature (e.g. `"stumpf_fusion"`) |
 | `horizon` | `int` | Horizon index (0-31); maps to `HORIZON_MS[horizon]` |
 | `horizon_label` | `str` | Human-readable horizon label (e.g. `"2s phrase"`) |
@@ -54,10 +54,19 @@ Returns the canonical `(r3_idx, horizon, morph, law)` 4-tuple. This is the key u
 
 ---
 
+## R³ v2 Expansion Note
+
+With R³ v2 (128D), the valid `r3_idx` range extends from `[0:48]` to `[0:127]`. The 79 new features in groups F--K ([49:127]) create new H³ demand targets. The 4-tuple address space grows from 112,896 to 294,912. See [Docs/H³/Expansion/R3v2-H3-Impact.md](../../H³/Expansion/R3v2-H3-Impact.md) and [Docs/H³/Migration/DemandSpec-Update.md](../../H³/Migration/DemandSpec-Update.md) for migration details.
+
+---
+
 ## Cross-References
 
 - `mi.core.constants` -- `MORPH_NAMES`, `LAW_NAMES`, `HORIZON_MS`
 - `mi.ear.h3` -- `DemandTree`, `HorizonEngine`, `MorphEngine`
+- [Docs/H³/00-INDEX.md](../../H³/00-INDEX.md) -- H³ modular architecture (definitive reference)
+- [Docs/H³/Contracts/](../../H³/Contracts/) -- H3Extractor, DemandTree, MorphComputer specifications
+- [Docs/H³/Registry/DemandAddressSpace.md](../../H³/Registry/DemandAddressSpace.md) -- 4-tuple address system
 
 ---
 

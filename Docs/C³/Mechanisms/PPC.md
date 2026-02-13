@@ -22,7 +22,45 @@ The Pitch Processing Chain models the ascending auditory pathway for pitch extra
 
 ## H3 Demand
 
-To be populated in Phase 6. Will declare demands for consonance group R3 features (harmonic_ratio, stumpf_fusion, f0_salience) at H0, H3, and H6 across memory and integration laws.
+### R3 Feature Inputs
+
+| R3 Domain | Indices | Features | Consuming Units |
+|-----------|---------|----------|-----------------|
+| A: Consonance | [0]-[6] | harmonicity, roughness, roughness_total, consonance_dissonance, inharmonicity, periodicity, fundamental_freq | SPU, PCU, IMU, NDU |
+| C: Timbre | [12]-[20] | spectral_centroid, spectral_spread, spectral_rolloff, brightness_kuttruff | PCU, IMU, NDU |
+| B: Energy | [7]-[11] | onset_strength, loudness, rms_energy | IMU (CDEM) |
+| D: Change | [21]-[24] | spectral_flux, delta_loudness | NDU (SDD) |
+| E: Interactions | [25]-[48] | Cross-domain coupling terms | PCU (HTP, ICEM, PWUP), IMU (CDEM) |
+
+Domain A (Consonance) is the universal input — all 12 PPC-consuming models require consonance features as the basis for pitch extraction. Domains C, B, D, E are supplementary, consumed by specific models in PCU, IMU, and NDU.
+
+### Per-Horizon Morph Profile
+
+| Horizon | Morphs | Rationale |
+|---------|--------|-----------|
+| H0 (5.8 ms, 1 frame) | M0 (value), M1 (mean) | Brainstem FFR — instantaneous phase-locked response; only point-estimate morphs are meaningful at single-frame resolution |
+| H3 (23.2 ms, 4 frames) | M0 (value), M1 (mean), M2 (std), M8 (velocity) | Subcortical pitch encoding — 1-2 pitch periods for typical frequencies; variability and rate-of-change capture periodicity stability |
+| H6 (200 ms, 34 frames) | M0 (value), M1 (mean), M2 (std), M8 (velocity) | Cortical pitch processing — 200 ms integration window in Heschl's gyrus; full first-order statistical suite for stable pitch percept |
+
+### Law Distribution
+
+| Law | Units | Models | Rationale |
+|-----|-------|:------:|-----------|
+| L0 (Memory) | PCU | 4 | Maintaining predictive priors for pitch from recent past |
+| L1 (Prediction) | PCU, NDU | 5 | Generating forward pitch predictions; deviance detection requires predicted vs actual comparison |
+| L2 (Integration) | SPU, PCU, IMU | 9 | Bidirectional spectral integration — bottom-up feature extraction meets top-down harmonic template matching |
+
+L2 (Integration) is the dominant law (9 of 12 models), reflecting the bidirectional nature of pitch processing. SPU uses L2 exclusively. PCU distributes across all three laws for hierarchical predictive coding. NDU uses L1 for prediction error computation.
+
+### Demand Estimate
+
+| Source Unit | Models | Est. Tuples |
+|-------------|:------:|:-----------:|
+| SPU | 6 | ~180 |
+| PCU | 4 | ~100 |
+| NDU (SDD) | 1 | ~30 |
+| IMU (CDEM) | 1 | ~20 |
+| **Total (deduplicated)** | **12** | **~250** |
 
 ## Models Using This Mechanism
 

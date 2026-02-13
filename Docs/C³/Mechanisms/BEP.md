@@ -22,7 +22,49 @@ Beat Entrainment Processing models the sensorimotor coupling between auditory be
 
 ## H3 Demand
 
-To be populated in Phase 6. Will declare demands for energy, onset strength, and periodicity R3 features at H6, H9, and H11 to measure beat-level entrainment precision and motor coupling.
+### R3 Feature Inputs
+
+| R3 Domain | Indices | Features | Consuming Units |
+|-----------|---------|----------|-----------------|
+| B: Energy | [7]-[11] | onset_strength, loudness, rms_energy, velocity_A, velocity_D | STU (all 13), MPU (all 10), IMU (2), RPU (1) |
+| D: Change | [21]-[24] | spectral_flux, onset_density, delta_loudness, delta_rms | STU (10), MPU (9), IMU (2), RPU (1) |
+| A: Consonance | [0]-[6] | periodicity, fundamental_freq | STU (MDNS), RPU (SSRI) |
+| C: Timbre | [12]-[20] | spectral_centroid, spectral_flatness | STU (AMSS), RPU (SSRI) |
+| E: Interactions | [25]-[48] | Energy-timbre cross terms | STU (HGSIC), MPU (GSSM, NSCP), RPU (SSRI) |
+
+Domain B (Energy) is the universal input — all 26 BEP-consuming models require energy envelope features for beat extraction. Domain D (Change) provides temporal derivatives critical for anticipatory motor timing. BEP has the narrowest primary R3 footprint of any mechanism, reflecting its specialised role in energy-temporal processing.
+
+### Per-Horizon Morph Profile
+
+| Horizon | Morphs | Rationale |
+|---------|--------|-----------|
+| H6 (200 ms, 34 frames) | M0 (value), M1 (mean), M2 (std), M8 (velocity), M9 (acceleration), M10 (jerk), M11 (peak), M12 (trough), M13 (flux), M14 (periodicity) | Sub-beat pulse — full dynamics suite for onset detection, IOI periodicity, and metrical grid extraction at beat subdivision level |
+| H9 (350 ms, 60 frames) | M0 (value), M1 (mean), M2 (std), M8 (velocity), M9 (acceleration), M11 (peak), M12 (trough), M14 (periodicity), M18 (trend) | Beat period — beat stability, phase consistency, motor cortex entrainment; trend captures tempo drift within beat window |
+| H11 (450 ms, 78 frames) | M0 (value), M1 (mean), M2 (std), M8 (velocity), M11 (peak), M14 (periodicity), M18 (trend), M21 (zero_crossings) | Beat-to-bar — metric hierarchy; periodicity at bar-level, trend for tempo trajectory, zero-crossings for energy oscillation pattern |
+
+BEP has the richest morph demand of any mechanism (12 distinct morphs), reflecting the complexity of temporal statistics needed for beat tracking.
+
+### Law Distribution
+
+| Law | Units | Models | Rationale |
+|-----|-------|:------:|-----------|
+| L0 (Memory) | STU, IMU | 15 | Beat tracking accumulates past onset evidence — causal pulse inference |
+| L1 (Prediction) | MPU, STU, RPU | 12 | Motor planning is inherently predictive — anticipating upcoming beats |
+| L2 (Integration) | RPU | 1 | Bidirectional sensorimotor integration for reward-coupled entrainment |
+
+L0 (Memory) dominates in STU/IMU — beat perception reconstructs pulse from past events. L1 (Prediction) dominates in MPU — motor planning requires forward temporal models. Two STU models (HMCE, TMRM) use both L0 and L1.
+
+### Demand Estimate
+
+| Source Unit | Models | Est. Tuples |
+|-------------|:------:|:-----------:|
+| STU | 13 | ~600 |
+| MPU | 10 | ~500 |
+| IMU (RASN, CMAPCC) | 2 | ~40 |
+| RPU (SSRI) | 1 | ~15 |
+| **Total (deduplicated)** | **26** | **~800** |
+
+BEP is the highest-demand mechanism by model count (26 models) and second-highest by tuple count.
 
 ## Models Using This Mechanism
 

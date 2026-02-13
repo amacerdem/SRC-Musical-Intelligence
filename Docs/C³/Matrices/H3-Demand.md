@@ -1,16 +1,17 @@
 # H3-Demand -- Temporal Demand Patterns Across All Models
 
-> **Scope**: 94 models across 9 units
-> **H3 Space**: 2304 theoretical dimensions (32 horizons x 24 morphs x 3 laws)
-> **Actual Usage**: Sparse -- each model declares a small set of H3 demand tuples
+> **Scope**: 96 models across 9 units
+> **H3 Space**: v1: 112,896 theoretical (49 R3 x 32 horizons x 24 morphs x 3 laws); v2: 294,912 (128 R3)
+> **Actual Usage**: Sparse — v1: ~5,200 tuples (~4.6%); v2 projected: ~8,600 tuples (~2.9%)
 > **Data Source**: Model `h3_demand` properties, mechanism `HORIZONS` declarations, `mi_beta.core.constants`
+> **Definitive H³ reference**: [Docs/H³/00-INDEX.md](../../H³/00-INDEX.md)
 > **Last Updated**: 2026-02-13
 
 ---
 
 ## H3 Architecture Overview
 
-The H3 temporal analysis system transforms each of the 49 R3 spectral features into temporal morphological descriptors at multiple time horizons. Each H3 demand tuple is a 4-tuple:
+The H3 temporal analysis system transforms each R3 spectral feature into temporal morphological descriptors at multiple time horizons. With R3 v1 (49D), this covers features [0:48]; with R3 v2 (128D), this extends to [0:127]. Each H3 demand tuple is a 4-tuple:
 
 ```
 (r3_idx, horizon, morph, law)
@@ -18,13 +19,13 @@ The H3 temporal analysis system transforms each of the 49 R3 spectral features i
 
 | Field | Range | Description |
 |-------|-------|-------------|
-| `r3_idx` | 0--48 | Which R3 spectral feature to analyze temporally |
+| `r3_idx` | 0--48 (v1) / 0--127 (v2) | Which R3 spectral feature to analyze temporally |
 | `horizon` | 0--31 | Temporal window index (maps to specific duration in ms) |
 | `morph` | 0--23 | Which morphological statistic to compute |
 | `law` | 0--2 | Temporal perspective (0=memory, 1=prediction, 2=integration) |
 
-**Theoretical space**: 49 x 32 x 24 x 3 = 112,896 possible tuples.
-**Actual usage**: Each model typically requests 10--150 tuples. The full system uses approximately 2,000--3,000 unique tuples.
+**Theoretical space**: v1: 49 x 32 x 24 x 3 = 112,896 possible tuples; v2: 128 x 32 x 24 x 3 = 294,912.
+**Actual usage**: Each model typically requests 10--150 tuples. v1 total: ~5,200 tuples (~4.6%); v2 projected: ~8,600 tuples (~2.9%).
 
 ---
 
@@ -213,7 +214,8 @@ Models do not declare H3 demands in isolation -- most H3 access is mediated thro
 | ARU | 10 | AED (10), CPD (4), C0P (2), ASA (1), MEM (1) | H6, H9, H16, H18, H19, H20 | Micro--Macro | ~500 |
 | RPU | 9 | AED (6), CPD (2), C0P (2), TMH (1), MEM (1), BEP (1), ASA (1) | H6, H9, H16, H18, H19, H20 | All bands | ~400 |
 
-**Grand total estimated H3 demand**: ~5,200 tuples across all 94 models (from 112,896 theoretical space = ~4.6% occupancy).
+**Grand total estimated H3 demand (v1)**: ~5,200 tuples across all 96 models (from 112,896 theoretical space = ~4.6% occupancy).
+**v2 projected total**: ~8,600 tuples (from 294,912 theoretical space = ~2.9% occupancy). See [Docs/H³/Expansion/R3v2-H3-Impact.md](../../H³/Expansion/R3v2-H3-Impact.md).
 
 ---
 
@@ -275,13 +277,36 @@ This demonstrates the hierarchical temporal prediction pattern: low-level featur
 
 4. **Laws follow functional logic**: Memory-encoding models (IMU) prefer L0 (causal/memory), prediction models (PCU, NDU) prefer L1 (predictive), and integration models (ARU, RPU) use all three.
 
-5. **H3 sparsity is by design**: The 2304D theoretical space is intentionally sparse. Each model requests only the tuples it needs, and the H3 engine lazily computes only demanded tuples. This keeps computation tractable.
+5. **H3 sparsity is by design**: The theoretical space (112,896 v1; 294,912 v2) is intentionally sparse. Each model requests only the tuples it needs, and the H3 engine lazily computes only demanded tuples. This keeps computation tractable.
+
+---
+
+## R³ v2 Expansion Impact
+
+R³ v2 adds 79 new features [49:127] organized in 6 groups. Each creates new temporal demand targets:
+
+| R³ Group | Features | Temporal Priority | Key H³ Horizons | Est. New Tuples |
+|----------|:--------:|:-----------------:|:---------------:|:---------------:|
+| F: Pitch/Chroma [49:65] | 16D | HIGH | H3-H16 (meso-macro) | ~800-1,200 |
+| G: Rhythm/Groove [65:75] | 10D | HIGH | H12-H22 (meso-macro) | ~400-600 |
+| H: Harmony/Tonality [75:87] | 12D | HIGH | H12-H22 (meso-macro) | ~500-800 |
+| I: Information/Surprise [87:94] | 7D | MEDIUM-HIGH | H6-H22 (meso-macro) | ~300-500 |
+| J: Timbre Extended [94:114] | 20D | MEDIUM | H6-H18 (meso) | ~400-700 |
+| K: Modulation/Psychoacoustic [114:128] | 14D | MEDIUM | H16-H25 (macro) | ~200-400 |
+| **Total new** | **79D** | | | **~2,600-4,200** |
+
+For detailed per-group temporal analysis, see [Docs/H³/Expansion/](../../H³/Expansion/).
+For per-model v2 projected expansion, see each model's Section 5.1 "R³ v2 Projected Expansion".
 
 ---
 
 ## Cross-References
 
+- **H³ Definitive Reference**: [Docs/H³/00-INDEX.md](../../H³/00-INDEX.md) -- modular temporal architecture (73 files)
+- **H³ Demand per Unit**: [Docs/H³/Demand/](../../H³/Demand/) -- per-unit H³ demand analysis
+- **H³ R³ v2 Impact**: [Docs/H³/Expansion/R3v2-H3-Impact.md](../../H³/Expansion/R3v2-H3-Impact.md) -- expansion impact analysis
 - **H3 Constants**: `mi_beta.core.constants` -- HORIZON_MS, MORPH_NAMES, LAW_NAMES, MORPH_SCALE
 - **R3 Feature Map**: [R3-Usage.md](R3-Usage.md) -- which R3 indices are analyzed temporally
+- **R³ Feature Catalog**: [Docs/R³/Registry/FeatureCatalog.md](../../R³/Registry/FeatureCatalog.md) -- all 128 features
 - **Mechanism H3 Demands**: [Mechanisms/00-INDEX.md](../Mechanisms/00-INDEX.md) -- per-mechanism horizon declarations
 - **Unit Docs**: [Units/](../Units/) -- model rosters with mechanism assignments
