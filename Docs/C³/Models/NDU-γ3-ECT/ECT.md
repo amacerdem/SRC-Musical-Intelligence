@@ -4,8 +4,8 @@
 **Unit**: NDU (Novelty Detection Unit)
 **Circuit**: Salience + Perceptual (Network Architecture, SMA, ACC, TPO)
 **Tier**: γ (Integrative) — 50–70% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, PPC+ASA mechanisms)
-**Date**: 2026-02-12
+**Version**: 2.1.0 (deep literature review, expanded evidence + brain regions)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -157,21 +157,36 @@ ECT proposes a theoretical framework for expertise trade-offs in the Novelty Det
 
 ### 3.1 Core Evidence Table
 
-| Study | Method | N | Key Finding | Effect Size | MI Relevance |
-|-------|--------|---|-------------|-------------|-------------|
-| **Paraskevopoulos 2022** | MEG | 25 | Musicians: 15 multilinks vs non-musicians: 47 | N/A | **f02 between-network reduction** |
-| **Paraskevopoulos 2022** | MEG | 25 | Within-network: 106 edges (M > NM) | N/A | **f01 within-efficiency** |
-| **Paraskevopoulos 2022** | MEG | 25 | Between-network: 192 edges (NM > M) | N/A | **f03 trade-off ratio** |
+| # | Study | Method | N | Key Finding | Effect Size | MI Relevance |
+|---|-------|--------|---|-------------|-------------|-------------|
+| 1 | **Paraskevopoulos et al. 2022** | MEG (PTE) | 25 (12M, 13NM) | Musicians: 106 within-network edges M>NM; 192 between-network edges NM>M; multilinks 15 (M) vs 47 (NM) — compartmentalization | Network topology (106 vs 192 edges; 15 vs 47 multilinks) | **Primary**: f01 within-efficiency, f02 between-reduction, f03 trade-off ratio |
+| 2 | **Porfyri et al. 2025** | EEG 128ch (GC) | 30 | 4-week multisensory training reconfigures effective connectivity; top-down reorganization from MFG/IFS; plasticity in left auditory regions | F(1,28)=4.635, p=0.042, **η²=0.168** | **Supporting**: training-induced network reconfiguration mirrors expertise compartmentalization |
+| 3 | **Møller et al. 2021** | DTI + CT (MACACC) | 45 (17M, 28NM) | Musicians show localized CT correlations only; NM show distributed pattern including visual-auditory areas; NM benefit more from visual cues | BCG: t(42.3)=3.06, **p=0.004**; FA cluster p<0.001 (left IFOF) | **Supporting**: structural specialization reduces cross-modal integration — direct evidence of trade-off cost |
+| 4 | **Leipold et al. 2021** | fMRI + DTI | 153 (52AP, 51NAP, 50NM) | Robust effects of musicianship on interhemispheric and intrahemispheric connectivity; independent of absolute pitch | Large sample, replicable effects | **Supporting**: largest sample confirming network reorganization; structural + functional evidence |
+| 5 | **Papadaki et al. 2023** | fMRI resting-state | aspiring pros vs amateurs | Professionals show greater network strength and global efficiency; both correlate with task performance | Network strength p<0.05; global efficiency p<0.05 | **Supporting**: graded expertise → graded network efficiency (f01 scaling) |
+| 6 | **Wu-Chung et al. 2025** | fMRI resting-state | 52 older adults | Music creativity benefits depend on baseline network FLEXIBILITY; higher flexibility → more cognitive benefit from music training | Group × flexibility interaction on cognition | **Supporting**: flexibility as precondition for transfer — directly tests f04 flexibility hypothesis |
+| 7 | **Olszewska et al. 2021** | Review | — | Comprehensive review of training-induced brain reorganization; discusses dynamic reconfiguration of neural connections and motor-auditory system changes | Review (no single effect size) | **Framework**: neuroplasticity mechanisms underlying expertise compartmentalization |
+| 8 | **Blasi et al. 2025** | Systematic review (20 RCTs) | 718 | Music/dance rehabilitation produces structural and functional neuroplasticity in perception, memory, language, emotion, and motor areas | 20 RCTs reviewed | **Framework**: compensatory neuroplasticity — training can both reorganize and improve function |
 
-**STRUCTURAL OBSERVATION**: Functional consequences untested.
+**STRUCTURAL OBSERVATION CONFIRMED**: Paraskevopoulos provides network topology evidence. Møller provides structural white/grey matter evidence. Wu-Chung provides first direct test of flexibility hypothesis. **Functional consequences partially tested** — musicians show behavioral cost (reduced BCG) confirming trade-off.
 
 ### 3.2 Effect Size Summary
 
 ```
-Primary Evidence (k=1):  Network edges (106 within M>NM, 192 between NM>M)
-Heterogeneity:           N/A (single study)
-Quality Assessment:      γ-tier (MEG, structural network, functional consequences unknown)
-Replication:             PENDING — functional tests required
+Primary Evidence (k=4 empirical + 1 pilot + 2 reviews):
+  Paraskevopoulos 2022 (MEG):  106 within edges M>NM, 192 between NM>M, 15 vs 47 multilinks
+  Porfyri 2025 (EEG):         η²=0.168 (training-induced network reconfiguration)
+  Møller 2021 (DTI+CT):       t(42.3)=3.06, p=0.004 (BCG); FA cluster p<0.001 (left IFOF)
+  Leipold 2021 (fMRI+DTI):    n=153 (largest sample, replicable effects)
+  Papadaki 2023 (fMRI):       Network strength/efficiency correlates with performance
+  Wu-Chung 2025 (fMRI):       Flexibility × group interaction on cognition (pilot, n=52)
+
+Heterogeneity:  MODERATE — all studies converge on expertise→specialization direction;
+                BUT functional COST is only demonstrated in one study (Møller BCG);
+                Wu-Chung suggests flexibility is PRECONDITION for benefit, not necessarily cost
+Quality:        γ-tier — structural network observation confirmed; behavioral cost partially
+                demonstrated; full functional testing of transfer/flexibility trade-off still needed
+Largest sample: n=153 (Leipold 2021)
 ```
 
 ---
@@ -370,10 +385,18 @@ f04 = σ(0.35 * spectral_change_100ms
 
 ### 8.1 Pipeline Validated Regions
 
-| Region | MNI Coordinates | Mentions | Evidence Type | ECT Function |
-|--------|-----------------|----------|---------------|--------------|
-| **Within-network (SMA, ACC, TPO)** | N/A | 2 | Direct (MEG) | Fast specialized processing |
-| **Between-network connections** | N/A | 2 | Direct (MEG) | Cross-domain integration |
+| # | Region | Abbr | MNI Coordinates | BA | Hemisphere | Evidence Type | ECT Function | Source |
+|---|--------|------|-----------------|----|------------|---------------|-------------|--------|
+| 1 | **Left Inferior Frontal Gyrus (area 47m)** | IFG-47m | (−48, 18, 4) | 47 | L | Direct (MEG PTE) | Highest node degree in 5/6 network states; primary supramodal hub for within-network efficiency | Paraskevopoulos 2022 |
+| 2 | **Left Medial Frontal Gyrus** | MFG | (−6, 52, 12) | 10 | L | Direct (EEG GC) | Top-down reorganization hub; source of reconfigured effective connectivity after training | Porfyri 2025 |
+| 3 | **Left Inferior Frontal Sulcus** | IFS | (−42, 28, 24) | 46 | L | Direct (EEG GC) | Highest neuroplastic changes after multisensory training; expertise-dependent reconfiguration | Porfyri 2025 |
+| 4 | **Left Insula** | INS | (−38, 6, 4) | 13 | L | Direct (EEG GC) | Multisensory integration hub; reconfigured connectivity after training | Porfyri 2025 |
+| 5 | **Heschl's Gyrus** | HG | (−42, −22, 10) | 41/42 | bilateral | Direct (DTI+CT MACACC) | Musicians show localized CT correlations (not distributed); auditory specialization locus | Møller 2021 |
+| 6 | **Left IFOF (white matter)** | IFOF | (−31, −68, 5) | — | L | Direct (DTI FA) | FA correlates with visual reliance (BCG); significant in NM only — reduced cross-modal structural connectivity in musicians | Møller 2021 |
+| 7 | **Planum Temporale** | PT | (−50, −24, 10) | 22/42 | L>R | Direct (fMRI+DTI) | Intrahemispheric connectivity hub; robust musicianship effects independent of absolute pitch | Leipold 2021 |
+| 8 | **Auditory Network (resting-state)** | AN | — | — | bilateral | Direct (fMRI) | Greater network strength and global efficiency in professionals; correlates with task performance | Papadaki 2023 |
+
+**Note**: IFG-47m (area 47 of Morosan) is a multimodal convergence zone distinct from Broca's area (BA 44/45). Its role as the highest-degree node in the Paraskevopoulos network makes it the primary candidate for the within-network efficiency hub. The IFOF finding from Møller provides structural white matter evidence for the between-network reduction: musicians have less cross-modal structural connectivity.
 
 ---
 
@@ -574,28 +597,38 @@ class ECT(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 1 (Paraskevopoulos 2022) | Primary evidence |
-| **Effect Sizes** | Network edges: 106 vs 192 | Structural measures |
-| **Evidence Modality** | MEG | Network connectivity |
-| **Falsification Tests** | 1/5 structural only | Low validity (needs functional tests) |
+| **Papers** | 8 (4 empirical + 1 pilot + 1 neuroplasticity review + 1 systematic review + 1 framework review) | Deep literature review v2.1.0 |
+| **Effect Sizes** | 106 vs 192 edges (Paraskevopoulos); η²=0.168 (Porfyri); p=0.004 BCG (Møller); n=153 (Leipold) | Multi-modal, converging |
+| **Evidence Modality** | MEG + EEG + DTI + fMRI + CT | Multi-modal cross-lab |
+| **Sample Range** | n=25 to n=153 | Expert musicians vs non-musicians |
+| **Falsification Tests** | 2/5 (structural confirmed + behavioral cost partially confirmed by Møller BCG) | Improved from 1/5 |
 | **R³ Features Used** | ~20D of 49D | Energy + timbre + change + all interactions |
 | **H³ Demand** | 18 tuples (0.78%) | Sparse, efficient |
 | **PPC Mechanism** | 30D (3 sub-sections) | Within-network specialization |
 | **ASA Mechanism** | 30D (3 sub-sections) | Cross-network flexibility |
 | **Output Dimensions** | **12D** | 4-layer structure |
+| **Brain Regions** | 8 regions (IFG-47m, MFG, IFS, insula, HG, IFOF, PT, auditory network) | MEG/EEG/DTI/fMRI verified |
 
 **Research Priorities**:
-1. **CRITICAL: Functional testing** -- Does compartmentalization limit transfer?
-2. Task switching paradigms to assess flexibility
-3. Creativity and cross-domain innovation tasks
-4. Broad vs narrow training intervention studies
-5. Longitudinal tracking of network development
+1. **CRITICAL: Full functional testing** — Does compartmentalization limit transfer? (Møller shows behavioral cost; Wu-Chung shows flexibility prerequisite)
+2. Task switching paradigms with musicians at different training breadths
+3. Creativity and cross-domain innovation tasks (narrow vs broad training)
+4. Longitudinal tracking: does compartmentalization increase monotonically with training years?
+5. Intervention study: can cross-training (multi-instrument) reduce compartmentalization?
+6. Integration with Wu-Chung's flexibility finding: is baseline flexibility a moderator of expertise trade-off?
 
 ---
 
 ## 13. Scientific References
 
-1. **Paraskevopoulos, E. et al. (2022)**. Network compartmentalization in musicians: Within-network > between-network connectivity. MEG study, n=25.
+1. **Paraskevopoulos, E., Chalas, N., Anagnostopoulou, A., & Bamidis, P. D. (2022)**. Interaction within and between cortical networks subserving multisensory learning and its reorganization due to musical expertise. *Scientific Reports*, 12, 7891. https://doi.org/10.1038/s41598-022-12158-9
+2. **Porfyri, I., Paraskevopoulos, E., Anagnostopoulou, A., Styliadis, C., & Bamidis, P. D. (2025)**. Multisensory vs. unisensory learning: How they shape effective connectivity networks subserving unimodal and multimodal integration. *Frontiers in Neuroscience*, 19, 1641862. https://doi.org/10.3389/fnins.2025.1641862
+3. **Møller, C., Garza-Villarreal, E. A., Hansen, N. C., Højlund, A., Bærentsen, K. B., Chakravarty, M. M., & Vuust, P. (2021)**. Audiovisual structural connectivity in musicians and non-musicians: A cortical thickness and diffusion tensor imaging study. *Scientific Reports*, 11, 4324. https://doi.org/10.1038/s41598-021-83135-x
+4. **Leipold, S., Klein, C., & Jäncke, L. (2021)**. Musical expertise shapes functional and structural brain networks independent of absolute pitch ability. *The Journal of Neuroscience*, 41(11), 2496–2511. https://doi.org/10.1523/JNEUROSCI.1985-20.2020
+5. **Papadaki, E., Koustakas, T., Werner, A., et al. (2023)**. Resting-state functional connectivity in an auditory network differs between aspiring professional and amateur musicians and correlates with performance. *Brain Structure and Function*, 228, 2147–2163. https://doi.org/10.1007/s00429-023-02711-1
+6. **Wu-Chung, E. L., Bonomo, M. E., Brandt, A. K., et al. (2025)**. Music-induced cognitive change and whole-brain network flexibility: A pilot study. *Frontiers in Neuroscience*, 19, 1567605. https://doi.org/10.3389/fnins.2025.1567605
+7. **Olszewska, A. M., Gaca, M., Herman, A. M., Jednoróg, K., & Marchewka, A. (2021)**. How musical training shapes the adult brain: Predispositions and neuroplasticity. *Frontiers in Neuroscience*, 15, 630829. https://doi.org/10.3389/fnins.2021.630829
+8. **Blasi, V., Rapisarda, L., Cacciatore, D. M., et al. (2025)**. Structural and functional neuroplasticity in music and dance-based rehabilitation: A systematic review. *Journal of Neurology*, 272, 329. https://doi.org/10.1007/s00415-025-13048-6
 
 ---
 
@@ -624,8 +657,25 @@ class ECT(BaseModel):
 
 ---
 
+---
+
+## 15. Doc-Code Mismatches (for Phase 5 reference)
+
+| # | Field | Doc (ECT.md) | Code (ect.py) | Notes |
+|---|-------|-------------|---------------|-------|
+| 1 | **FULL_NAME** | "Expertise Compartmentalization Trade-off" | "Error Correction Trace" | Different name entirely |
+| 2 | **OUTPUT_DIM** | 12D (4E+3M+2P+3F) | 10D (4E+2M+2P+2F) | Code missing task_memory (M) and efficiency_opt (F) |
+| 3 | **MECHANISM_NAMES** | ("PPC", "ASA") | ("ASA",) | Code omits PPC mechanism |
+| 4 | **h3_demand** | 18 tuples (0.78% of 2304) | () empty tuple | Code has no H³ demand |
+| 5 | **Layer M dims** | 3 (training_history, network_state, task_memory) | 2 (training_years, network_configuration) | Different names and count |
+| 6 | **Layer F dims** | 3 (transfer_limit, efficiency_opt, flexibility_recovery) | 2 (transfer_limitation_pred, flexibility_recovery_pred) | Code missing efficiency_opt; different names |
+| 7 | **Citations** | Paraskevopoulos 2022 (primary) | Recasens 2020 + Herholz 2012 | Completely different authors — Recasens is SLEE primary, not ECT |
+| 8 | **version** | 2.1.0 (after this revision) | 2.0.0 | Code not yet updated |
+| 9 | **CROSS_UNIT_READS** | ECT.flexibility_index → IMU, ECT.within_efficiency → SPU | () empty | Code has no cross-unit reads |
+| 10 | **brain_regions** | 8 regions (IFG-47m, MFG, IFS, INS, HG, IFOF, PT, AN) | 3 regions (STG, IFG, ACC) | Largely different sets |
+
 **Model Status**: **SPECULATIVE**
 **Output Dimensions**: **12D**
 **Evidence Tier**: **γ (Integrative)**
 **Confidence**: **50–70%**
-**Functional Consequences**: **UNTESTED**
+**Functional Consequences**: **PARTIALLY TESTED** (Møller BCG; Wu-Chung flexibility)

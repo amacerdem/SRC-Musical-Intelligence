@@ -4,8 +4,8 @@
 **Unit**: NDU (Novelty Detection Unit)
 **Circuit**: Salience + Perceptual (Developing Auditory Cortex, Attention Networks)
 **Tier**: γ (Integrative) — 50–70% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, PPC+ASA mechanisms)
-**Date**: 2026-02-12
+**Version**: 2.1.0 (deep literature review, expanded evidence + brain regions)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -154,19 +154,39 @@ ONI documents an unexpected finding from the developmental plasticity data:
 
 ### 3.1 Core Evidence Table
 
-| Study | Method | N | Key Finding | Effect Size | MI Relevance |
-|-------|--------|---|-------------|-------------|-------------|
-| **Partanen 2022** | EEG | 33 | Singing > Full-term in oddball MMR | η² = 0.23 | **Primary**: f01 over-normalization index |
+| # | Study | Method | N | Key Finding | Effect Size | MI Relevance |
+|---|-------|--------|---|-------------|-------------|-------------|
+| 1 | **Partanen et al. 2022** | MEG | 21 preterm + 12 full-term | Singing intervention > full-term in oddball MMR; singing group exceeds full-term norms | F(2,27)=4.019, p=0.030, **η²=0.229**; sex×singing η²=0.309 | **Primary**: f01 over-normalization index; f03 sex-modulated enhancement |
+| 2 | **Scholkmann et al. 2024** | fNIRS | 17 preterm | Creative Music Therapy produces two response subgroups: positive (mostly female, StO₂ +3.2%) and negative (mostly male, StO₂ −1.2%) | **r_rb=1.000** (auditory cortex, p=0.002); sex diff p=0.034 | **Supporting**: heterogeneous intervention responses; physiological individual differences drive over-normalization variability |
+| 3 | **Edalati et al. 2023** | EEG | 19 preterm (32±2.6 wGA) | Premature neonates show beat frequency responses above noise floor; duple meter enhancement during sleep | p=0.0013 (beat); **Cohen's d=0.75** (duple > beat) | **Supporting**: biological substrate for differential intervention responses in preterm auditory cortex |
+| 4 | **Saadatmehr et al. 2024** | EEG | 46 preterm (27–35 wGA) | Developmental timeline: <33wGA beat only; ≥33wGA beat+meter; phase coupling improves with age | beat ρ=0.37, duple ρ=0.31, triple ρ=0.30 (all p<0.04); phase-age Rc=0.47, p=0.007 | **Supporting**: intervention timing matters — neural coding capacity for hierarchical rhythms emerges after 33 wGA |
+| 5 | **Kaminska et al. 2025** | EEG 32ch | 30 preterm (30–38 PMW) | Delta brushes show stimulus-specific cortical networks; voice vs click evoke different topographies; gamma oscillations increase with age | Stimulus-specific DB topography; age-dependent lateralization shift | **Supporting**: auditory cortex shows stimulus-specific processing even in preterm; age-dependent maturation of auditory networks |
+| 6 | **Tervaniemi 2022** | Review | — | Historical overview of MMN paradigms from oddball to multi-feature to naturalistic; discusses optimal stimulus design for developmental populations | Review (no effect size) | **Methodological**: MMR measurement framework for ONI; multi-feature paradigm validation |
+| 7 | **Nayak et al. 2025** | Epidemiological + genetic | 39,358 (behavioral); 7,180 (genetic) | Rhythm impairment is risk factor for speech-language disorders; genetic pleiotropy between rhythm and reading | **OR=1.33** [1.18–1.49], p<0.0001; beat sync OR=1.72 | **Distal**: long-term developmental significance of enhanced MMR — rhythm processing links to language outcomes |
+| 8 | **Blasi et al. 2025** | Systematic review (20 RCTs) | 718 | Music/dance rehabilitation produces structural and functional neuroplasticity in perception, memory, language, emotion, and motor areas | Review of 20 RCTs | **Supporting**: neuroplasticity framework — music interventions can produce compensatory neural changes that exceed baseline |
 
-**UNEXPECTED FINDING**: Requires mechanistic explanation and replication.
+**UNEXPECTED FINDING**: The primary Partanen 2022 result — intervention group exceeding full-term norms — remains mechanistically unexplained. Authors themselves question whether larger MMRs are truly beneficial, noting Kushnerenko et al. (2013) argue that MMR amplitude reduction with age reflects improved inhibitory processes. The over-normalization could reflect (a) enhanced attentional orienting, (b) compensatory adaptation, (c) delayed inhibitory maturation, or (d) measurement artifact from MEG vs EEG differences.
+
+**NOTE**: Scholkmann 2024 fNIRS data reveals OPPOSITE sex direction to Partanen MEG data — females show positive StO₂ response while males show negative. This suggests the over-normalization effect may be modality- and measure-specific rather than a unitary phenomenon.
 
 ### 3.2 Effect Size Summary
 
 ```
-Primary Evidence (k=1):  η²=0.23 (medium, intervention > full-term)
-Heterogeneity:           N/A (single study)
-Quality Assessment:      γ-tier (EEG, preterm infant, unexpected finding)
-Replication:             PENDING — mechanism unclear
+Primary Evidence (k=2 empirical + 2 developmental + 1 preterm physiology):
+  Partanen 2022 (MEG):     η²=0.229 (oddball group effect), η²=0.309 (sex×singing)
+  Scholkmann 2024 (fNIRS): r_rb=1.000 (auditory cortex, subgroup 1), sex p=0.034
+  Edalati 2023 (EEG):      Cohen's d=0.75 (duple > beat), p=0.0013 (beat tracking)
+  Saadatmehr 2024 (EEG):   ρ=0.31-0.37 (age-rhythm correlations), Rc=0.47 (phase-age)
+  Kaminska 2025 (EEG):     Stimulus-specific topography (qualitative)
+
+Heterogeneity:  HIGH — over-normalization demonstrated in MEG only (Partanen);
+                fNIRS shows opposite sex pattern (Scholkmann); developmental
+                studies show progressive maturation rather than over-normalization per se
+Quality:        γ-tier — single RCT with small N, no independent replication
+                of over-normalization effect; mechanism unclear
+Largest sample: N=39,358 (Nayak epidemiological — distal relevance only)
+Replication:    PENDING — Finnish cohort (Kostilainen et al. 2021 EEG) shows
+                some consistency but used different imaging modality
 ```
 
 ---
@@ -358,10 +378,15 @@ f04 = 1 - exp(-dosage / 4.0)
 
 ### 8.1 Pipeline Validated Regions
 
-| Region | MNI Coordinates | Mentions | Evidence Type | ONI Function |
-|--------|-----------------|----------|---------------|--------------|
-| **Auditory Cortex (preterm)** | N/A | 1 | Direct (EEG) | Compensatory enhancement |
-| **Attention Networks** | N/A | 1 | Inferred | Heightened orienting |
+| # | Region | Abbr | MNI Coordinates | BA | Hemisphere | Evidence Type | ONI Function | Source |
+|---|--------|------|-----------------|----|------------|---------------|-------------|--------|
+| 1 | **Superior Temporal Gyrus** | STG | (−58, −20, 8) | 22 | bilateral | Direct (MEG) | MMR generation — over-normalization locus; intervention group shows enhanced MMR originating from auditory cortex | Partanen 2022 (left hemisphere MEG source) |
+| 2 | **Primary Auditory Cortex** | A1 | (−42, −22, 10) | 41/42 | bilateral | Direct (fNIRS) | Cerebrovascular oxygenation response to music therapy; +3.2% StO₂ in positive responders (p=0.002) | Scholkmann 2024 (fNIRS channels over temporal cortex) |
+| 3 | **Prefrontal Cortex** | PFC | (−38, 46, 12) | 10/46 | bilateral | Direct (fNIRS) | Attentional/executive processing during music therapy; +2.4% StO₂ (p=0.008) | Scholkmann 2024 (prefrontal fNIRS channels) |
+| 4 | **Temporal Cortex (preterm)** | TC | N/A (preterm EEG) | — | right>bilateral | Direct (EEG) | Delta brush generation — stimulus-specific auditory processing; gamma oscillations increase with age; lateralization shift from R→L for voice stimuli | Kaminska 2025 (32ch EEG, 30–38 PMW) |
+| 5 | **Auditory Cortex (developing)** | AC-dev | N/A (preterm EEG) | — | bilateral | Direct (EEG) | Beat and meter frequency tracking; neural synchronization to rhythmic periodicities improves with gestational age (ρ=0.37) | Edalati 2023; Saadatmehr 2024 (high-density EEG) |
+
+**Note**: MNI coordinates for regions 1–3 are adult approximations. Preterm infant brain anatomy differs substantially from adult templates; fNIRS and EEG source localization in neonates provides cortical area identification rather than precise MNI coordinates. Regions 4–5 are identified by electrode topography rather than source localization.
 
 ---
 
@@ -553,28 +578,38 @@ class ONI(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 1 (Partanen 2022) | Primary evidence |
-| **Effect Sizes** | η² = 0.23 | Medium effect |
-| **Evidence Modality** | EEG | Infant MMR |
-| **Falsification Tests** | 1/5 preliminary | Low validity (needs explanation) |
+| **Papers** | 8 (2 empirical preterm + 2 developmental + 1 fNIRS + 1 epidemiological + 2 reviews) | Deep literature review v2.1.0 |
+| **Effect Sizes** | η²=0.229 (oddball group), η²=0.309 (sex×singing), r_rb=1.000 (fNIRS), d=0.75 (duple>beat) | Multi-modal, medium-large |
+| **Evidence Modality** | MEG + fNIRS + EEG + epidemiological + genetic | Multi-modal cross-method |
+| **Sample Range** | n=17 to N=39,358 | Preterm-specific n=17–46; epidemiological N=39,358 |
+| **Falsification Tests** | 1/5 preliminary | Low validity (mechanism unclear) |
 | **R³ Features Used** | ~14D of 49D | Energy + timbre + change + interactions |
 | **H³ Demand** | 16 tuples (0.69%) | Sparse, efficient |
 | **PPC Mechanism** | 30D (3 sub-sections) | Enhanced deviance detection |
 | **ASA Mechanism** | 30D (3 sub-sections) | Heightened attention/salience |
 | **Output Dimensions** | **11D** | 4-layer structure |
+| **Brain Regions** | 5 regions (STG, A1, PFC, TC-preterm, AC-developing) | MEG/fNIRS/EEG localization |
 
 **Research Priorities**:
-1. **CRITICAL: Mechanistic investigation** -- What causes over-normalization?
-2. Independent replication with attention measures
-3. Dosage titration study to identify ceiling
-4. Longitudinal follow-up: Does enhancement persist or fade?
-5. Full-term control group matching (age, SES, prenatal factors)
+1. **CRITICAL: Mechanistic investigation** — What causes over-normalization? Enhanced attention vs compensatory adaptation vs delayed inhibitory maturation
+2. Independent replication with MEG using larger sample (Partanen n=21 is underpowered)
+3. Resolution of sex-direction discrepancy: Partanen (males benefit more in MMR) vs Scholkmann (females show positive StO₂)
+4. Dosage titration study to identify ceiling; music therapist quality vs singing quantity
+5. Longitudinal follow-up: Does enhancement persist at 2-year cognitive assessment?
+6. Developmental timing window: Saadatmehr shows ≥33wGA as critical threshold for meter coding
 
 ---
 
 ## 13. Scientific References
 
-1. **Partanen, E. et al. (2022)**. Over-normalization in singing intervention: Intervention > full-term in oddball MMR. EEG study, n=33.
+1. **Partanen, E., Mårtensson, G., Hugoson, P., Huotilainen, M., Fellman, V., & Ådén, U. (2022)**. Auditory processing of the brain is enhanced by parental singing for preterm infants. *Frontiers in Neuroscience*, 16, 772008. https://doi.org/10.3389/fnins.2022.772008
+2. **Scholkmann, F., Haslbeck, F., Oba, E., et al. (2024)**. Creative music therapy in preterm infants: Effects on cerebrovascular oxygenation and perfusion. *Scientific Reports*, 14, 28249.
+3. **Edalati, M., Wallois, F., Trainor, L. J., & Moghimi, S. (2023)**. Rhythm in the premature neonate brain: Very early processing of auditory beat and meter. *The Journal of Neuroscience*, 43(15), 2794–2802. https://doi.org/10.1523/JNEUROSCI.2217-22.2023
+4. **Saadatmehr, B., Edalati, M., Wallois, F., Trainor, L. J., & Moghimi, S. (2024)**. Auditory rhythm encoding during the last trimester of human gestation: From tracking the basic beat to tracking hierarchical nested temporal structures. *Journal of Neuroscience* (accepted). https://doi.org/10.1523/JNEUROSCI.0398-24.2024
+5. **Kaminska, A., Arzounian, D., Delattre, V., et al. (2025)**. Auditory evoked delta brushes involve stimulus-specific cortical networks in preterm infants. *iScience*, 28, 112313. https://doi.org/10.1016/j.isci.2025.112313
+6. **Tervaniemi, M. (2022)**. Mismatch negativity–stimulation paradigms in past and in future. *Frontiers in Neuroscience*, 16, 1025763. https://doi.org/10.3389/fnins.2022.1025763
+7. **Nayak, S., Ladányi, E., Fisher, S. E., Gordon, R. L., et al. (2025)**. Musical rhythm abilities and risk for developmental speech-language problems and disorders: Epidemiological and polygenic associations. *Nature Communications*, 16, 8355. https://doi.org/10.1038/s41467-025-60867-2
+8. **Blasi, V., Rapisarda, L., Cacciatore, D. M., et al. (2025)**. Structural and functional neuroplasticity in music and dance-based rehabilitation: A systematic review. *Journal of Neurology*, 272, 329. https://doi.org/10.1007/s00415-025-13048-6
 
 ---
 
@@ -602,6 +637,23 @@ class ONI(BaseModel):
 - **HRM → PPC.contour_tracking** [20:30]: Over-developed pattern encoding maps to PPC's compensatory prediction.
 
 ---
+
+---
+
+## 15. Doc-Code Mismatches (for Phase 5 reference)
+
+| # | Field | Doc (ONI.md) | Code (oni.py) | Notes |
+|---|-------|-------------|---------------|-------|
+| 1 | **FULL_NAME** | "Over-Normalization in Intervention" | "Oddball Novelty Index" | Different name entirely |
+| 2 | **OUTPUT_DIM** | 11D (4E+3M+2P+2F) | 10D (4E+2M+2P+2F) | Code missing fullterm_reference in Layer M |
+| 3 | **MECHANISM_NAMES** | ("PPC", "ASA") | ("ASA",) | Code omits PPC mechanism |
+| 4 | **h3_demand** | 16 tuples (0.69% of 2304) | () empty tuple | Code has no H³ demand |
+| 5 | **Layer M dims** | 3 (dosage_accumulation, preterm_baseline, fullterm_reference) | 2 (intervention_dosage, full_term_comparison) | Different names and count |
+| 6 | **Layer E dim names** | f01_over_normalization, f02_compensatory_resp, f03_attention_enhance, f04_intervention_ceiling | f01_over_normalization_idx, f02_compensatory_response, f03_attention_enhancement, f04_intervention_ceiling | Minor naming differences |
+| 7 | **Citations** | Partanen 2022, η²=0.229 | Virtala 2023, eta^2=0.23 | Different author/year; Virtala is review co-author, not primary study author |
+| 8 | **version** | 2.1.0 (after this revision) | 2.0.0 | Code not yet updated |
+| 9 | **CROSS_UNIT_READS** | ONI.enhanced_mmr → ARU (doc Section 9) | () empty | Code has no cross-unit reads |
+| 10 | **brain_regions** | 5 regions (STG, A1, PFC, TC, AC-developing) | 2 regions (STG, IFG) | Code has IFG which doc doesn't emphasize; doc has fNIRS/EEG developmental regions |
 
 **Model Status**: **SPECULATIVE**
 **Output Dimensions**: **11D**

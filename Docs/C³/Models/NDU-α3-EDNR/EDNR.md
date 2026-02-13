@@ -324,11 +324,22 @@ f04 = σ(0.35 * tonalness_mean_1s
 
 ### 8.1 Pipeline Validated Regions
 
-| Region | MNI Coordinates | Mentions | Evidence Type | EDNR Function |
-|--------|-----------------|----------|---------------|---------------|
-| **SMA (SCEF)** | ±4, 12, 48 | 1 | Direct (MEG) | Motor-related network |
-| **ACC** | ±4, 32, 24 | 2 | Direct (MEG) | Conflict monitoring |
-| **TPO Junction** | ±50, -40, 12 | 2 | Direct (MEG) | Multisensory integration |
+| Region | MNI Coordinates | Mentions | Evidence Type | EDNR Function | Key Source |
+|--------|-----------------|----------|---------------|---------------|------------|
+| **STG (bilateral)** | L: (−67, −16, 4); R: (60, −40, 12) | 5 | MEG, fMRI | Within-network hub; auditory processing | Papadaki 2023 (peak fMRI) |
+| **Planum Temporale (bilateral)** | L: (−54, −27, 9); R: (54, −18, 9) | 3 | rsfMRI, DWI | Interhemispheric FC in musicians; PT-PT connectivity | Leipold et al. 2021 (pFWE<0.05) |
+| **Heschl's Gyrus (bilateral)** | L: (−42, −22, 8); R: (42, −18, 8) | 4 | MACACC, fMRI | CT correlation seed; auditory specialization | Møller et al. 2021 (FDR<10%) |
+| **IFG (bilateral)** | L: (−48, 18, 4); R: (48, 18, 4) | 3 | MEG, rsfMRI | Network gating; expertise-dependent hub (area 47m) | Paraskevopoulos 2022 (PTE hub) |
+| **Putamen (left)** | (−22, 12, 4) | 2 | fMRI | Auditory-motor network node | Papadaki 2023 (fMRI task) |
+| **SMG (left)** | (−43, −42, 36) | 2 | fMRI | Interval processing; auditory-parietal integration | Papadaki 2023 (peak fMRI) |
+| **vmPFC** | (−1, 48, −10) | 2 | fMRI | Reward/default mode node in auditory network | Papadaki 2023 (GLM cluster) |
+| **ACC** | (0, 24, 32) | 2 | MEG | Network reorganization monitoring | Paraskevopoulos 2022 |
+| **SMA (SCEF)** | (±4, 12, 48) | 1 | MEG | Motor-related network component | Paraskevopoulos 2022 |
+| **TPO Junction** | (±50, −40, 12) | 2 | MEG | Multisensory integration | Paraskevopoulos 2022 |
+| **V1 (bilateral)** | L: (−8, −90, 0); R: (8, −90, 0) | 1 | MACACC | CT correlation with HG; audiovisual specialization | Møller et al. 2021 |
+| **Corpus Callosum** | midline | 3 | MRI, DTI | Interhemispheric transfer; CC thickness ↔ training onset | Kleber 2025, Leipold 2021 |
+| **Left IFOF** | (−31, −68, 5) | 1 | DTI | White matter connecting V1↔auditory; audiovisual specialization | Møller et al. 2021 (FA p<0.001) |
+| **MFG / IFS (left)** | (−42, 6, 30) | 1 | EEG | Multisensory learning-related reconfiguration | Porfyri et al. 2025 |
 
 ---
 
@@ -473,10 +484,12 @@ class EDNR(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 1 (Paraskevopoulos 2022) | Primary evidence |
-| **Effect Sizes** | 192 vs 106 edges | MEG network analysis |
-| **Evidence Modality** | MEG | Direct neural |
+| **Papers** | 8 (Paraskevopoulos 2022, Leipold 2021, Papadaki 2023, Møller 2021, Kleber 2025, Olszewska 2021, Porfyri 2025, Cui 2025) | Primary + converging evidence |
+| **Effect Sizes** | Hedges' g=−1.09, Cohen's d=0.70, η²=0.168, FA p<0.001 | MEG, rsfMRI, DTI, EEG |
+| **Evidence Modality** | MEG, rsfMRI, DWI, DTI, MRI, EEG | Multi-modal converging |
+| **Largest Sample** | n=153 (Leipold et al. 2021) | Replicated in 2 musician subgroups |
 | **Falsification Tests** | 0/4 confirmed | Requires testing |
+| **Null Finding** | 1-year training does not change WM (Cui 2025) | Slow structural plasticity constraint |
 | **R³ Features Used** | ~16D of 49D | Consonance + timbre + interactions |
 | **H³ Demand** | 16 tuples (0.69%) | Sparse, efficient |
 | **PPC Mechanism** | 30D (3 sub-sections) | Within-network efficiency |
@@ -487,7 +500,14 @@ class EDNR(BaseModel):
 
 ## 13. Scientific References
 
-1. **Paraskevopoulos, E. et al. (2022)**. Expertise-dependent network reorganization in music: MEG connectivity analysis. n=25.
+1. **Paraskevopoulos, E., Chalas, N., Kartsidis, P., Wollbrink, A., & Pantev, C. (2022)**. Interaction within and between cortical networks subserving multisensory learning and its reorganization due to musical expertise. *Proceedings of the National Academy of Sciences*. n=25 (12 musicians, 13 non-musicians). MEG, Phase Transfer Entropy, multilink analysis. DOI: 10.1073/pnas.
+2. **Leipold, S., Klein, C., & Jäncke, L. (2021)**. Musical expertise shapes functional and structural brain networks independent of absolute pitch ability. *The Journal of Neuroscience*, 41(11), 2496–2511. n=153 (52 AP, 51 non-AP, 50 non-musicians). rsfMRI + DWI. DOI: 10.1523/JNEUROSCI.1985-20.2020.
+3. **Papadaki, E., Koustakas, T., Werner, A., Lindenberger, U., Kühn, S., & Wenger, E. (2023)**. Resting-state functional connectivity in an auditory network differs between aspiring professional and amateur musicians and correlates with performance. *Brain Structure and Function*, 228, 2147–2163. n=41. rs-fMRI, graph theory. DOI: 10.1007/s00429-023-02711-1.
+4. **Møller, C., Garza-Villarreal, E. A., Hansen, N. C., Højlund, A., Bærentsen, K. B., Chakravarty, M. M., & Vuust, P. (2021)**. Audiovisual structural connectivity in musicians and non-musicians: a cortical thickness and diffusion tensor imaging study. *Scientific Reports*, 11, 4324. n=45. DTI + MACACC. DOI: 10.1038/s41598-021-83135-x.
+5. **Kleber, B., Dale, C., Zamorano, A. M., Lotze, M., Luders, E., & Kurth, F. (2025)**. Increased callosal thickness in early trained opera singers. *Brain Topography*, 38, 56. n=55. MRI. DOI: 10.1007/s10548-025-01134-x.
+6. **Olszewska, A. M., Gaca, M., Herman, A. M., Jednoróg, K., & Marchewka, A. (2021)**. How musical training shapes the adult brain: predispositions and neuroplasticity. *Frontiers in Neuroscience*, 15, 630829. Review. DOI: 10.3389/fnins.2021.630829.
+7. **Porfyri, G.-N., Paraskevopoulos, E., Bamidis, P. D., & Pantev, C. (2025)**. Multisensory vs. unisensory learning: EEG network analysis. n=30. EEG, Group×Time F(1,28)=4.635, η²=0.168.
+8. **Cui, A.-X., Choi, Y., Motamed Yeganeh, N., Hermiston, N., Werker, J. F., & Boyd, L. A. (2025)**. Music training and language learning improve verbal memory performance but do not change white matter characteristics of the splenium: a longitudinal DTI study. *Frontiers in Psychology*, 16, 1659705. n=65. DOI: 10.3389/fpsyg.2025.1659705.
 
 ---
 
@@ -512,6 +532,23 @@ class EDNR(BaseModel):
 - **SGM → ASA.scene_analysis** [0:10]: Boundary maintenance maps to ASA's scene analysis for network isolation.
 - **EFC → ASA.attention_gating** [10:20]: Expertise predictions map to ASA's attention for expertise signature.
 - **TIH → PPC.contour_tracking** [20:30]: Multi-scale integration maps to PPC's contour tracking for specialization.
+
+---
+
+---
+
+## 15. Doc-Code Mismatches (Phase 5 Reference)
+
+| Field | Doc (EDNR.md) | Code (ednr.py) | Action Required |
+|-------|---------------|-----------------|-----------------|
+| **FULL_NAME** | "Expertise-Dependent Network Reorganization" | "Expectation-Dependent Novelty Response" | Code needs rename to match doc |
+| **OUTPUT_DIM** | 10D (4+2+2+2) | 11D (4+2+2+3) | Code has 3 Layer-F dims, doc has 2; reconcile in Phase 5 |
+| **MECHANISM_NAMES** | ("PPC", "ASA") | ("ASA",) | Code missing PPC mechanism |
+| **h3_demand** | 16 tuples (see §5) | () empty | Code needs 16 tuples populated |
+| **brain_regions** | 14 regions (see §8) | 3 regions (STG, IFG, ACC) | Code needs expansion (Phase 5) |
+| **citations** | 8 papers (see §13) | 3 (Herholz 2012, Pantev 2015, Munte 2002) | Code needs update (Phase 5) |
+| **Layer F dims** | 2 (optimal_config_pred, processing_efficiency) | 3 (optimal_config_pred, processing_efficiency_pred, expertise_transfer_pred) | Resolve: drop expertise_transfer_pred or add to doc |
+| **version** | 2.1.0 | 2.0.0 | Code needs version bump (Phase 5) |
 
 ---
 

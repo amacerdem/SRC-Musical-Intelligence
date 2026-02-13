@@ -13,8 +13,8 @@
 - [x] #57 MPU-α1-PEOM — Period Entrainment Optimization Model → v2.1.0 (1→12 papers, MNI verified from Grahn & Brett 2007, Yamashita 2025 CV d=−1.10)
 - [x] #58 MPU-α2-MSR — Musician Sensorimotor Reorganization → v2.1.0 (1→8 papers, WRONG citation fixed: Zhang J.D.→Zhang L., Cohen's d≈0.97-1.28)
 - [x] #59 MPU-α3-GSSM — Gait-Synchronized Stimulation Model → v2.1.0 (1→7 papers, Yamashita K. initial corrected, CV d=−1.10, η²p=0.309, 8 MNI regions verified)
-- [ ] #60 MPU-β1-ASAP — Action Simulation for Auditory Prediction
-- [ ] #61 MPU-β2-DDSMI — Dyadic Dance Social Motor Integration
+- [x] #60 MPU-β1-ASAP — Action Simulation for Auditory Prediction → v2.1.0 (1→8 papers, WRONG citation fixed: Bhattacharya→Balasubramaniam, MNI from Grahn 2007, TMS causal double dissociation, 7 brain regions, Noboa SS-EP caveat)
+- [x] #61 MPU-β2-DDSMI — Dyadic Dance Social Motor Integration → v2.1.0 (1→8 papers, Bigand 2025 F-values verified replacing d-values, 4-process mTRF decomposition, Kohler 2025 M1/PMC MVPA, Wohltjen 2023 d=1.37 beat→social, 6 brain regions, 12 doc-code mismatches)
 - [ ] #62 MPU-β3-VRMSME — VR Music Stimulation Motor Enhancement
 - [ ] #63 MPU-β4-SPMC — SMA-Premotor-M1 Motor Circuit
 - [ ] #64 MPU-γ1-NSCP — Neural Synchrony Commercial Prediction

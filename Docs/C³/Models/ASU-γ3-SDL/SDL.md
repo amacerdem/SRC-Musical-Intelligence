@@ -4,8 +4,8 @@
 **Unit**: ASU (Auditory Salience Unit)
 **Circuit**: Salience (Anterior Insula, dACC, TPJ)
 **Tier**: γ (Integrative) — 50-70% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, ASA+BEP mechanisms)
-**Date**: 2026-02-12
+**Version**: 2.1.0 (deep literature review, 12 papers, 8 brain regions)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -150,19 +150,31 @@ SDL extends salience processing to hemispheric network dynamics:
 
 | Study | Method | N | Key Finding | Effect Size | MI Relevance |
 |-------|--------|---|-------------|-------------|-------------|
-| **Haiduk 2024** | fMRI | — | Lateralization depends on attention × acoustic cues | p < 0.01 | **f25 dynamic lateralization** |
-| **Haiduk 2024** | fMRI | — | Degradation → local clustering ↑ | p < 0.01 | **f26 local clustering** |
-| **Zatorre 2002** | Review | — | Structure/function of auditory cortex | — | **Neural substrate** |
-| **Poeppel 2003** | Theory | — | Asymmetric sampling in time | — | **Theoretical basis** |
+| **Haiduk et al. 2024** | fMRI | 15 | Attention × acoustic cues → lateralization; right AC for melody+degradation | χ²=41.4, p=0.002 | **f25 dynamic lateralization, f26 clustering** |
+| **Zatorre 2022** | Review | — | Spectrotemporal modulation framework: R-AC=spectral, L-AC=temporal; top-down modulation | — (framework) | **Core theoretical basis for SDL** |
+| **Albouy et al. 2020** | fMRI | — | Double dissociation: melody→R-AC (spectral), speech→L-AC (temporal) | sig. decoding | **f25 lateralization validation** |
+| **Bravo et al. 2017** | fMRI | 12 (fMRI) | Ambiguous intervals → ↑ right HG (precision weighting) | cluster FWE p<0.05 | **Salience-dependent R-hemisphere activation** |
+| **Kim et al. 2019** | fMRI | 16+23 | Spectral × temporal interaction in vmPFC/striatum (not AC) | T(15)=6.85, p<10⁻⁵ | **Higher-order spectral-temporal integration** |
+| **Jin et al. 2024** | fMRI | 70 | Musical training preserves lateralization; aging → bilateralization | η²p=0.526 | **Experience-dependent lateralization** |
+| **Alluri et al. 2012** | fMRI | 11 | Naturalistic music: spectral→right AC; rhythm→motor; key→PFC | correlation-based | **Ecological validation of lateralization** |
+| **Leipold et al. 2021** | fMRI+DWI | 153 | Musicianship reshapes interhemispheric connectivity (not AP) | replicated groups | **Training shapes lateralization patterns** |
+| **Martins et al. 2022** | ERP | 58 | Musicians: enhanced salience P2/P3/LPP for musical sounds | enhanced P2, P3, LPP | **Salience-dependent processing modulation** |
+| **Zatorre et al. 2002** | Review | — | Structure/function of auditory cortex: music/speech | — (review) | **Neural substrate framework** |
+| **Poeppel 2003** | Theory | — | Asymmetric Sampling in Time: L=gamma (25-50ms), R=theta (150-300ms) | — (theory) | **Temporal window basis for lateralization** |
+| **Hickok & Poeppel 2007** | Review | — | Cortical organization of speech processing: dual-stream model | — (review) | **Dual-stream architecture context** |
 
 ### 3.2 Effect Size Summary
 
 ```
-Primary Evidence (k=1):
-  - Lateralization interaction: Qualitative observation
-  - Local clustering effect: p < 0.01 (from STANM shared evidence)
-Quality Assessment:      γ-tier (single study, qualitative)
-Theoretical Basis:       Moderate (challenges traditional view)
+Primary Evidence (k=12, multi-modal):
+  - Attention × degradation interaction: χ²=41.4, p=0.002 (Haiduk 2024, N=15)
+  - Right HG for melody+spectral degradation: R²=0.136-0.197 (Haiduk 2024)
+  - Right HG for ambiguous intervals: cluster FWE p<0.05 (Bravo 2017, N=12)
+  - Spectral × temporal in vmPFC: T(15)=6.85, p<10⁻⁵ (Kim 2019)
+  - Musical training lateralization: η²p=0.526 (Jin 2024, N=70)
+  - Musicianship interhemispheric: replicated N=153 (Leipold 2021)
+Quality Assessment:      γ-tier (converging evidence, 2 HIGH-priority papers)
+Theoretical Basis:       Strong (spectrotemporal modulation + AST framework)
 ```
 
 ---
@@ -362,9 +374,14 @@ f27 = σ(0.35 * mean(BEP.beat_entrainment[0:10])
 
 | Region | MNI Coordinates | Mentions | Evidence Type | SDL Function |
 |--------|-----------------|----------|---------------|---------------|
-| **Bilateral Auditory Cortex** | ±52, -22, 8 | 1 | Direct (fMRI) | Flexible lateralization |
-| **Frontal Areas** | Various | 1 | Direct (fMRI) | Attention control |
-| **Auditory Network ROIs** | Various | 1 | Direct (fMRI) | Local clustering |
+| **Right A5 / Auditory Association** | 52, -22, 8 | 3 | fMRI | Spectral/melodic processing, local clustering |
+| **Left Auditory Cortex** | -52, -22, 8 | 4 | fMRI, review | Temporal/speech processing |
+| **Right Heschl's Gyrus** | 46, -14, 8 | 2 | fMRI | Precision weighting for spectral features |
+| **Bilateral STG / PT** | ±58, -28, 8 | 3 | fMRI | Spectrotemporal processing |
+| **vmPFC** | 0, 44, -8 | 2 | fMRI | Spectral-temporal integration (higher-order) |
+| **IFG** | ±44, 18, 8 | 3 | fMRI | Attention × lateralization interaction |
+| **Nucleus Accumbens / Striatum** | ±10, 8, -4 | 2 | fMRI | Spectral-temporal interaction |
+| **Right STSvp** | 52, -36, 2 | 1 | fMRI | Melody attention + degradation response |
 
 ---
 
@@ -560,10 +577,10 @@ class SDL(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 1 (Haiduk 2024) | Indirect evidence |
-| **Findings** | 1 qualitative + p < 0.01 | Limited |
-| **Theoretical Basis** | Moderate | Challenges traditional model |
-| **Evidence Modality** | fMRI | Direct neural |
+| **Papers** | 12 (2 HIGH, 10 MEDIUM) | Multi-modal converging evidence |
+| **Key Effect Sizes** | χ²=41.4, T=6.85, η²p=0.526, FWE p<0.05 | fMRI, ERP, DWI |
+| **Theoretical Basis** | Strong | Spectrotemporal modulation + AST framework |
+| **Evidence Modality** | fMRI, ERP, DWI, theory | Multi-modal |
 | **Falsification Tests** | 2/5 confirmed | Limited validation |
 | **R³ Features Used** | ~18D of 49D | Energy + timbre + change + interactions |
 | **H³ Demand** | 18 tuples (0.78%) | Sparse, efficient |
@@ -575,13 +592,29 @@ class SDL(BaseModel):
 
 ## 13. Scientific References
 
-1. **Haiduk, F., et al. (2024)**. Goal-directed attention modulates spectrotemporal network topology during speech and music processing. *NeuroImage*, 285, 120482.
+1. **Haiduk, F., Zatorre, R. J., Benjamin, L., Morillon, B., & Albouy, P. (2024)**. Spectrotemporal cues and attention jointly modulate fMRI network topology for sentence and melody perception. *Scientific Reports*, 14, 5501. `Literature/c3/summaries/Spectrotemporal cues and attention jointly modulate`
 
-2. **Zatorre, R. J., Belin, P., & Penhune, V. B. (2002)**. Structure and function of auditory cortex: Music and speech. *Trends in Cognitive Sciences*, 6(1), 37-46.
+2. **Zatorre, R. J. (2022)**. Hemispheric asymmetries for music and speech: Spectrotemporal modulations and top-down influences. *Frontiers in Neuroscience*, Mini Review. `Literature/c3/summaries/Hemispheric asymmetries for music and speech`
 
-3. **Poeppel, D. (2003)**. The analysis of speech in different temporal integration windows: Cerebral lateralization as 'asymmetric sampling in time'. *Speech Communication*, 41(1), 245-255.
+3. **Albouy, P., Benjamin, L., Morillon, B., & Zatorre, R. J. (2020)**. Distinct sensitivity to spectrotemporal modulation supports brain asymmetry for speech and melody. *Science*, 367, 1043-1047.
 
-4. **Hickok, G., & Poeppel, D. (2007)**. The cortical organization of speech processing. *Nature Reviews Neuroscience*, 8(5), 393-402.
+4. **Bravo, F., Cross, I., Stamatakis, E. A., & Rohrmeier, M. (2017)**. Sensory cortical response to uncertainty and low salience during recognition of affective cues in musical intervals. *PLOS ONE*, 12(4), e0175991. `Literature/c3/summaries/Sensory cortical response to uncertainty and low salience`
+
+5. **Kim, S.-G., Mueller, K., Lepsien, J., Mildner, T., & Fritz, T. H. (2019)**. Brain networks underlying aesthetic appreciation as modulated by interaction of spectral and temporal organisations of music. *Scientific Reports*, 9, 19446. `Literature/c3/summaries/Brain networks underlying aesthetic appreciation`
+
+6. **Jin, X., Zhang, L., Wu, G., Wang, X., & Du, Y. (2024)**. Compensation or preservation? Different roles of functional lateralization in speech perception of older non-musicians and musicians. *Neuroscience Bulletin*, 40(12), 1843-1857. `Literature/c3/summaries/Compensation or Preservation`
+
+7. **Alluri, V., Toiviainen, P., Jääskeläinen, I. P., Glerean, E., Sams, M., & Brattico, E. (2012)**. Large-scale brain networks emerge from dynamic processing of musical timbre, key and rhythm. *NeuroImage*, 59, 3677-3689. `Literature/c3/summaries/Large-scale brain networks emerge from dynamic processing`
+
+8. **Leipold, S., Klein, C., & Jäncke, L. (2021)**. Musical expertise shapes functional and structural brain networks independent of absolute pitch ability. *Journal of Neuroscience*, 41(11), 2496-2511. `Literature/c3/summaries/Musical Expertise Shapes Functional and Structural Brain Networks`
+
+9. **Martins, I., Lima, C. F., & Pinheiro, A. P. (2022)**. Enhanced salience of musical sounds in singers and instrumentalists. *Cognitive, Affective, & Behavioral Neuroscience*, 22, 1044-1062. `Literature/c3/summaries/Enhanced salience of musical sounds`
+
+10. **Zatorre, R. J., Belin, P., & Penhune, V. B. (2002)**. Structure and function of auditory cortex: Music and speech. *Trends in Cognitive Sciences*, 6(1), 37-46.
+
+11. **Poeppel, D. (2003)**. The analysis of speech in different temporal integration windows: Cerebral lateralization as 'asymmetric sampling in time'. *Speech Communication*, 41(1), 245-255.
+
+12. **Hickok, G., & Poeppel, D. (2007)**. The cortical organization of speech processing. *Nature Reviews Neuroscience*, 8(5), 393-402.
 
 ---
 
@@ -589,17 +622,16 @@ class SDL(BaseModel):
 
 ### What Changed from v1.0.0
 
-| Aspect | D0 (v1.0.0) | MI (v2.0.0) |
-|--------|-------------|-------------|
-| Input space | S⁰ (256D) | R³ (49D) |
-| Temporal | HC⁰ mechanisms (OSC, TIH, ATT) | BEP (30D) + ASA (30D) mechanisms |
-| Lateralization | S⁰.X_L1L5[152:160] + HC⁰.ATT | R³.spectral_centroid[15] + R³.spectral_flux[10] + ASA.attention_gating |
-| Clustering | S⁰.X_L1L5[152:160] + HC⁰.TIH | R³.x_l4l5[37:45] + ASA.salience_weighting |
-| Oscillation | S⁰.X_L5L9[224:232] + HC⁰.OSC | R³.x_l0l5[25:33] + BEP.beat_entrainment |
-| Connectivity | S⁰.X_L1L5[136:144] | R³.x_l0l5[25:33] + R³.x_l4l5[37:45] |
-| Demand format | HC⁰ index ranges | H³ 4-tuples (sparse) |
-| Total demand | 37/2304 = 1.61% | 18/2304 = 0.78% |
-| Output | 9D | 9D (same) |
+| Aspect | D0 (v1.0.0) | MI (v2.0.0) | MI (v2.1.0) |
+|--------|-------------|-------------|-------------|
+| Input space | S⁰ (256D) | R³ (49D) | R³ (49D) — no change |
+| Temporal | HC⁰ mechanisms (OSC, TIH, ATT) | BEP (30D) + ASA (30D) mechanisms | Same — 18 H³ tuples |
+| Lateralization | S⁰.X_L1L5[152:160] + HC⁰.ATT | R³.spectral_centroid[15] + R³.spectral_flux[10] + ASA.attention_gating | Same |
+| Clustering | S⁰.X_L1L5[152:160] + HC⁰.TIH | R³.x_l4l5[37:45] + ASA.salience_weighting | Same |
+| Oscillation | S⁰.X_L5L9[224:232] + HC⁰.OSC | R³.x_l0l5[25:33] + BEP.beat_entrainment | Same |
+| Papers | 0 | 1 (Haiduk 2024) | **12** (2 HIGH, 10 MEDIUM) |
+| Brain regions | 0 | 3 (direct fMRI) | **8** (fMRI, ERP, DWI) |
+| Output | 9D | 9D (same) | 9D — no change |
 
 ### Why BEP + ASA replaces HC⁰ mechanisms
 

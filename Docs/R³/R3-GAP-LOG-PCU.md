@@ -87,19 +87,49 @@
 
 ### CHPI (PCU-β4) — Cross-Modal Harmonic Predictive Integration [NEW]
 
-_Pending agent results..._
+**Status:** Same project-wide R³ naming convention issues. Document comprehensive (18 papers, 11D, 20 H³ tuples).
+- R³ mapping uses ~22D of 49D — Consonance + Energy + Timbre + Change + Interactions
+- H³ demand: 20 tuples (0.87%) — correctly specified
+- Doc v2.1.0 with 18 papers — extensive cross-domain synthesis (DTI, fMRI, MEG, EEG, behavioral, psychophysiology, computational)
+- NEW model — no code file exists yet (Phase 5 will create)
+- Section 12 parenthetical fixed (was missing Chang 2025 from the 18-paper list)
+- 1 external citation: Paraskevopoulos 2015 (NOT in C³ catalog, flagged in doc, supported by Paraskevopoulos 2022 which IS in catalog)
+
+#### R³ Index Issues (project-wide naming convention — same as all other PCU models):
+- R³[0] doc "roughness" → actual: perfect_fifth_ratio
+- R³[5] doc "periodicity" → actual: roughness_total
+- R³[6] doc "harmonic_change" → actual: consonance_mean
+- R³[9] doc "spectral_centroid" → actual: loudness
+- R³[10] doc "spectral_flux" → actual: onset_strength
+- R³[14] doc "tonalness" → actual: brightness_kuttruff (real tonalness at R³[24])
+- R³[21] doc "spectral_change" → actual: spectral_flux
+- R³[22] doc "energy_change" → actual: spectral_flatness
+- R³[23] doc "roughness_change" → actual: zero_crossing_rate
+
+All indices use the same semantic labels as other PCU models. Phase 5 reconciliation will align names across all docs.
 
 ### IGFE (PCU-γ1) — Individual Gamma Frequency Enhancement
 
-_Pending agent results..._
+**Status:** Same project-wide R³ naming convention issues. No critical gaps.
+- R³ mapping uses ~14D of 49D — Consonance + Energy + Timbre + Interactions
+- H³ demand: 18 tuples (0.78%) — correctly specified
+- Doc v2.1.0 with 10 papers — γ-tier (3 direct gamma-cognition + 2 gamma mechanisms + 3 entrainment-cognition + 2 cortical entrainment)
+- Code at v2.0.0 (OUTPUT_DIM=10, doc says 9D; MECHANISM_NAMES=("TPC",), doc says ("PPC","TPC","MEM"); FULL_NAME="Imagery-Guided Feature Enhancement" vs doc "Individual Gamma Frequency Enhancement") → needs Phase 5 update
 
 ### MAA (PCU-γ2) — Multifactorial Atonal Appreciation
 
-_Pending agent results..._
+**Status:** Same project-wide R³ naming convention issues. No critical gaps.
+- Doc v2.1.0 with 12 papers — γ-tier (behavioral, fMRI, PET, EEG, psychophysiology)
+- 10D output, paper count verified (12 in Section 13, 12 in Section 12)
+- Code at v2.0.0 (OUTPUT_DIM=10 ✓; MECHANISM_NAMES=("ASA",), doc says ("PPC","TPC","MEM"); FULL_NAME="Musical Agentic Attention" vs doc "Multifactorial Atonal Appreciation") → needs Phase 5 update
 
 ### PSH (PCU-γ3) — Prediction Silencing Hypothesis
 
-_Pending agent results..._
+**Status:** Same project-wide R³ naming convention issues. Code already at v2.1.0.
+- Doc v2.1.0 with 12 papers — γ-tier (MEG, EEG, computational, reviews)
+- 10D output, paper count verified (12 in Section 13, 12 in Section 12)
+- Code at v2.1.0 ✓ (OUTPUT_DIM=10 ✓; MECHANISM_NAMES=("PPC","TPC","MEM") ✓; FULL_NAME matches ✓; h3_demand populated with 18 tuples; paper_count=12; 4 brain regions)
+- ONLY PCU model where code matches doc at v2.1.0
 
 ---
 
@@ -113,8 +143,8 @@ _Pending agent results..._
 | PWUP | 2 index mismatches | R³[14] tonalness→brightness_kuttruff, R³[5] periodicity→roughness_total |
 | WMED | 0 R³ gaps, 1 minor count fix | Paper count corrected 12→11 |
 | UDP | 4 index mismatches + 2 minor | 4 index/name corrections + FULL_NAME mismatch |
-| CHPI | — | — |
-| IGFE | — | — |
-| MAA | — | — |
-| PSH | — | — |
-| **Total** | **—** | **—** |
+| CHPI | 9 naming issues (project-wide) | Same R³ naming convention; 1 external citation; Sec 12 fixed |
+| IGFE | 0 critical, project-wide naming | Code OUTPUT_DIM mismatch (10 vs doc 9), FULL_NAME wrong |
+| MAA | 0 critical, project-wide naming | FULL_NAME mismatch in code |
+| PSH | 0 critical, project-wide naming | Code already at v2.1.0 (only PCU model fully synced) |
+| **Total** | **5 models with index issues, all project-wide** | **Phase 5 reconciliation needed for naming + code sync** |

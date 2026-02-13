@@ -4,8 +4,8 @@
 **Unit**: ASU (Auditory Salience Unit)
 **Circuit**: Salience (Anterior Insula, dACC, TPJ)
 **Tier**: γ (Integrative) — 50-70% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, ASA+BEP mechanisms)
-**Date**: 2026-02-12
+**Version**: 2.1.0 (deep literature review, 12 papers, 8 brain regions)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -153,19 +153,32 @@ PWSM adds predictive coding precision to salience processing:
 
 | Study | Method | N | Key Finding | Effect Size | MI Relevance |
 |-------|--------|---|-------------|-------------|-------------|
-| **Basinski 2025** | EEG | — | Changing jitter → MMN abolished | d = 0.01 (n.s.) | **f20 error suppression** |
-| **Basinski 2025** | EEG | — | Fixed jitter → inharmonicity MMN | d = -1.37 | **f19 precision weighting (contrast)** |
-| **Friston 2005** | Theory | — | Precision-weighted prediction error | — | **Theoretical basis** |
-| **Garrido 2009** | Review | — | MMN underlying mechanisms | — | **Neural mechanism** |
+| **Basinski et al. 2025** | EEG | — | Changing jitter → MMN abolished; fixed jitter → inharmonicity MMN | d = 0.01 (n.s.) vs d = -1.37 | **f19 precision weighting, f20 error suppression** |
+| **Millidge, Seth & Buckley 2022** | Review/Theory | — | Mathematical framework: F = Σ Σ⁻¹ε²; precision as attention | — (framework) | **Core theoretical basis for precision-weighted PE** |
+| **Fong et al. 2020** | Review | — | MMN reflects precision-weighted PE; AC-MGB-IC hierarchy | Largest schizo biomarker ES | **Hierarchical PE generation, f19 precision** |
+| **Carbajal & Malmierca 2018** | Review | — | SSA/MMN decomposition: repetition suppression + prediction error | PE ↑ from IC→MGB→AC | **Hierarchical PE across auditory pathway** |
+| **Cacciato-Salcedo et al. 2025** | Single-unit | 903 neurons, 83 rats | Non-lemniscal IC: enhanced PE for low-intensity sounds | iMM p<0.001 | **Subcortical PE generation** |
+| **Schilling et al. 2023** | Computational | — | Precision of likelihood determines signal vs phantom percept | — (model) | **Precision gates salience detection** |
+| **Bravo et al. 2017** | fMRI | 12 (fMRI), 75 (behav.) | Ambiguous intervals → ↑ right HG response (precision weighting) | cluster FWE p<0.05 | **f19 precision under uncertainty** |
+| **Cheung et al. 2019** | fMRI | 40 | Uncertainty × surprise → pleasure; amygdala/AC reflect interaction | sig. interaction (LMM) | **Precision × PE = salience** |
+| **Bonetti et al. 2024** | MEG | 83 | Hierarchical PE propagation: AC → hippocampus → cingulate | α/β ↑ for PE, γ ↑ expected | **Hierarchical precision-weighted PE network** |
+| **Gold et al. 2019** | Behavioral | 43 + 27 | Inverted-U preference for intermediate predictive complexity | sig. quadratic IC × liking | **Behavioral precision-prediction outcome** |
+| **Wagner et al. 2018** | EEG | 15 | Asymmetric MMN: dissonant deviants in consonant contexts | -0.34 μV at 173ms | **Precision-dependent PE asymmetry** |
+| **Martins et al. 2022** | ERP | 58 | Musicians show enhanced salience P2/P3/LPP for musical sounds | enhanced P2, P3, LPP | **Experience-dependent precision tuning** |
 
 ### 3.2 Effect Size Summary
 
 ```
-Primary Evidence (k=1):
-  - MMN abolition in low-precision context: d = 0.01 (n.s.)
-  - Compared to d = -1.37 for inharmonicity in high-precision context
-Quality Assessment:      γ-tier (indirect evidence for precision theory)
-Theoretical Basis:       Strong (predictive coding framework)
+Primary Evidence (k=12, multi-modal):
+  - MMN abolition in low-precision context: d = 0.01 (n.s.) (Basinski 2025)
+  - MMN in high-precision context: d = -1.37 (Basinski 2025)
+  - Right HG activation for ambiguous intervals: cluster FWE p<0.05 (Bravo 2017)
+  - Hierarchical PE propagation: α/β ↑ for violations (Bonetti 2024, N=83)
+  - Asymmetric MMN: -0.34 μV for dissonant deviants (Wagner 2018)
+  - PE from IC→MGB→AC: p<0.001 across divisions (Cacciato-Salcedo 2025)
+  - Quadratic IC × liking: p<0.05, replicated N=43+27 (Gold 2019)
+Quality Assessment:      γ-tier (converging evidence, 9 HIGH-priority papers)
+Theoretical Basis:       Strong (variational free energy + predictive coding)
 ```
 
 ---
@@ -362,8 +375,14 @@ f21 = σ(0.35 * onset_periodicity_1s
 
 | Region | MNI Coordinates | Mentions | Evidence Type | PWSM Function |
 |--------|-----------------|----------|---------------|---------------|
-| **Auditory Cortex** | ±52, -22, 8 | 1 | Inferred (EEG) | MMN generation |
-| **Frontal Cortex** | ±30, 30, 30 | 1 | Inferred | Precision estimation |
+| **STG / Auditory Cortex** | ±52, -22, 8 | 8 | EEG, fMRI, MEG, single-unit | MMN generation, PE signal source |
+| **Right Heschl's Gyrus** | 46, -14, 8 | 2 | fMRI | Precision weighting under uncertainty |
+| **Inferior Frontal Gyrus** | ±44, 18, 8 | 4 | EEG (ERAN), fMRI | Top-down precision estimation |
+| **Inferior Colliculus** | ±4, -34, -8 | 3 | Single-unit recording | Subcortical PE generation (SSA) |
+| **Medial Geniculate Body** | ±14, -24, -6 | 2 | Single-unit, review | Hierarchical PE relay (IC→MGB→AC) |
+| **Hippocampus** | ±28, -16, -14 | 2 | MEG, fMRI | Auditory memory recognition PE |
+| **ACC / Medial Cingulate** | 0, 24, 32 | 2 | MEG | Prediction error propagation target |
+| **Amygdala** | ±22, -4, -18 | 1 | fMRI | Uncertainty × surprise interaction |
 
 ---
 
@@ -551,10 +570,10 @@ class PWSM(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 1 (Basinski 2025) | Indirect evidence |
-| **Effect Size** | d = 0.01 (null for MMN abolition) | Low-precision context |
-| **Theoretical Basis** | Strong | Predictive coding (Friston) |
-| **Evidence Modality** | EEG | Direct neural |
+| **Papers** | 12 (9 HIGH, 3 MEDIUM) | Multi-modal converging evidence |
+| **Key Effect Sizes** | d=-1.37 (MMN), d=0.01 (abolition), -0.34μV (asymmetric MMN) | EEG, fMRI, MEG, single-unit |
+| **Theoretical Basis** | Strong | Variational free energy / predictive coding |
+| **Evidence Modality** | EEG, fMRI, MEG, single-unit, computational | Multi-modal |
 | **Falsification Tests** | 1/5 confirmed | Limited validation |
 | **R³ Features Used** | ~10D of 49D | Change + energy + interactions |
 | **H³ Demand** | 16 tuples (0.69%) | Sparse, efficient |
@@ -566,13 +585,29 @@ class PWSM(BaseModel):
 
 ## 13. Scientific References
 
-1. **Basinski, K., et al. (2025)**. Inharmonicity captures attention: P3a and object-related negativity in auditory deviance detection. *Journal of Cognitive Neuroscience*, (in press).
+1. **Basinski, K., et al. (2025)**. Inharmonicity captures attention: P3a and object-related negativity in auditory deviance detection. *Journal of Cognitive Neuroscience*, (in press). `Literature/c3/summaries/basinski_et_al_2025`
 
-2. **Friston, K. (2005)**. A theory of cortical responses. *Philosophical Transactions of the Royal Society B*, 360(1456), 815-836.
+2. **Millidge, B., Seth, A. K., & Buckley, C. L. (2022)**. Predictive coding: A theoretical and experimental review. *arXiv preprint*. `Literature/c3/summaries/predictive-coding-arxiv`
 
-3. **Feldman, H., & Friston, K. J. (2010)**. Attention, uncertainty, and free-energy. *Frontiers in Human Neuroscience*, 4, 215.
+3. **Fong, C. Y., Law, W. H. C., Uka, T., & Koike, S. (2020)**. Auditory mismatch negativity under predictive coding framework and its role in psychotic disorders. *Frontiers in Psychiatry*, 11, 557932. `Literature/c3/summaries/auditory-mismatch-negativity-under-predictive-codi`
 
-4. **Garrido, M. I., Kilner, J. M., Stephan, K. E., & Friston, K. J. (2009)**. The mismatch negativity: A review of underlying mechanisms. *Clinical Neurophysiology*, 120(3), 453-463.
+4. **Carbajal, G. V., & Malmierca, M. S. (2018)**. The neuronal basis of predictive coding along the auditory pathway. *Trends in Hearing*, 22, 1-33. `Literature/c3/summaries/the-neuronal-basis-of-predictive-coding-along-the`
+
+5. **Cacciato-Salcedo, S., Lao-Rodriguez, A. B., & Malmierca, M. S. (2025)**. Contextual auditory processing in the inferior colliculus. *PLOS Biology*, 23(8), e3003309. `Literature/c3/summaries/contextual-auditory-processing-in-the-inferior-col`
+
+6. **Schilling, A., Sedley, W., Gerum, R., et al. (2023)**. Predictive coding and stochastic resonance as fundamental principles of auditory perception. *Brain*, 146, 4809-4825. `Literature/c3/summaries/predictive-coding-and-stochastic-resonance-as-fund`
+
+7. **Bravo, F., Cross, I., Stamatakis, E. A., & Rohrmeier, M. (2017)**. Sensory cortical response to uncertainty and low salience during recognition of affective cues in musical intervals. *PLOS ONE*, 12(4), e0175991. `Literature/c3/summaries/Sensory cortical response to uncertainty and low salience`
+
+8. **Cheung, V. K. M., Harrison, P. M. C., Meyer, L., Pearce, M. T., Haynes, J.-D., & Koelsch, S. (2019)**. Uncertainty and surprise jointly predict musical pleasure and amygdala, hippocampus, and auditory cortex activity. *Current Biology*, 29, 4084-4092. `Literature/c3/summaries/Uncertainty and Surprise Jointly Predict Musical Pleasure`
+
+9. **Bonetti, L., Fernandez-Rubio, G., Carlomagno, F., et al. (2024)**. Spatiotemporal brain hierarchies of auditory memory recognition and predictive coding. *Nature Communications*, 15, 4313. `Literature/c3/summaries/Spatiotemporal brain hierarchies of auditory memory recognition`
+
+10. **Gold, B. P., Pearce, M. T., Mas-Herrero, E., Dagher, A., & Zatorre, R. J. (2019)**. Predictability and uncertainty in the pleasure of music: A reward for learning. *Journal of Neuroscience*, 39(47), 9397-9409. `Literature/c3/summaries/Predictability and Uncertainty in the Pleasure of Music`
+
+11. **Wagner, L., Rahne, T., Plontke, S. K., & Heidekrüger, N. (2018)**. Mismatch negativity reflects asymmetric pre-attentive harmonic interval discrimination. *PLOS ONE*, 13(4), e0196176. `Literature/c3/summaries/Mismatch negativity reflects asymmetric pre-attentive`
+
+12. **Martins, I., Lima, C. F., & Pinheiro, A. P. (2022)**. Enhanced salience of musical sounds in singers and instrumentalists. *Cognitive, Affective, & Behavioral Neuroscience*, 22, 1044-1062. `Literature/c3/summaries/Enhanced salience of musical sounds`
 
 ---
 
@@ -580,17 +615,17 @@ class PWSM(BaseModel):
 
 ### What Changed from v1.0.0
 
-| Aspect | D0 (v1.0.0) | MI (v2.0.0) |
-|--------|-------------|-------------|
-| Input space | S⁰ (256D) | R³ (49D) |
-| Temporal | HC⁰ mechanisms (OSC, ATT, NPL) | BEP (30D) + ASA (30D) mechanisms |
-| PE signal | S⁰.L4.velocity_T[15] + HC⁰.OSC | R³.spectral_change[21] + R³.energy_change[22] |
-| Precision | S⁰.L9.std_T[108] + HC⁰.NPL | R³.x_l4l5[37:45] + BEP.beat_entrainment |
-| Error gating | S⁰.L9.entropy_T[116] + HC⁰.ATT | H³ entropy tuples + ASA.attention_gating |
-| Stability | S⁰.X_L4L9[192:200] + HC⁰.OSC | R³.onset_strength[11] + BEP.groove |
-| Demand format | HC⁰ index ranges | H³ 4-tuples (sparse) |
-| Total demand | 22/2304 = 0.95% | 16/2304 = 0.69% |
-| Output | 9D | 9D (same) |
+| Aspect | D0 (v1.0.0) | MI (v2.0.0) | MI (v2.1.0) |
+|--------|-------------|-------------|-------------|
+| Input space | S⁰ (256D) | R³ (49D) | R³ (49D) — no change |
+| Temporal | HC⁰ mechanisms (OSC, ATT, NPL) | BEP (30D) + ASA (30D) mechanisms | Same — 16 H³ tuples |
+| PE signal | S⁰.L4.velocity_T[15] + HC⁰.OSC | R³.spectral_change[21] + R³.energy_change[22] | Same |
+| Precision | S⁰.L9.std_T[108] + HC⁰.NPL | R³.x_l4l5[37:45] + BEP.beat_entrainment | Same |
+| Error gating | S⁰.L9.entropy_T[116] + HC⁰.ATT | H³ entropy tuples + ASA.attention_gating | Same |
+| Stability | S⁰.X_L4L9[192:200] + HC⁰.OSC | R³.onset_strength[11] + BEP.groove | Same |
+| Papers | 0 | 1 (Basinski 2025) | **12** (9 HIGH, 3 MEDIUM) |
+| Brain regions | 0 | 2 (inferred) | **8** (EEG/fMRI/MEG/single-unit) |
+| Output | 9D | 9D (same) | 9D — no change |
 
 ### Why BEP + ASA replaces HC⁰ mechanisms
 

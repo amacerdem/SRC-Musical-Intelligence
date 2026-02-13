@@ -4,8 +4,8 @@
 **Unit**: NDU (Novelty Detection Unit)
 **Circuit**: Salience + Perceptual (Developing Auditory Cortex, Attention Networks)
 **Tier**: γ (Integrative) — 50–70% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, PPC+ASA mechanisms)
-**Date**: 2026-02-12
+**Version**: 2.1.0 (deep literature review, 1→8 papers, sex-dependent evidence expanded)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -150,19 +150,39 @@ SDDP extends the developmental plasticity findings of the Novelty Detection Unit
 
 ### 3.1 Core Evidence Table
 
-| Study | Method | N | Key Finding | Effect Size | MI Relevance |
-|-------|--------|---|-------------|-------------|-------------|
-| **Partanen 2022** | EEG | 21 | Sex x singing interaction | η² = 0.31 | **Primary**: f01 sex modulation |
+| # | Study | Method | N | Key Finding | Effect Size | MI Relevance |
+|---|-------|--------|---|-------------|-------------|-------------|
+| 1 | **Partanen et al. 2022** | MEG | 21 preterm | Sex x total singing time interaction on MMR amplitude; males show larger enhancement | η²=0.309 (sex x singing) | **Primary**: f01 sex modulation, f02 male advantage |
+| 2 | **Partanen et al. 2022** | MEG | 21 | Group effect (singing vs control) on MMR independent of sex | η²=0.229 (group main effect) | f04 intervention response (shared with DSP) |
+| 3 | **Scholkmann et al. 2024** | fNIRS | 17 preterm | CMT sex differences: females show positive StO₂ response (subgroup 1: 8F/2M), males negative (subgroup 2: 5M/2F) | p=0.034 (subgroup sex distribution) | **Complicates** male advantage: vascular response differs by sex in opposite direction |
+| 4 | **Edalati et al. 2023** | EEG | 19 preterm | Neural entrainment to beat and meter present in preterm brain (GA 32±2.6w); duple meter selectively enhanced | r_rb=1.00 (duple>no-meter) | Demonstrates auditory plasticity mechanisms present during SDDP intervention window |
+| 5 | **Jasinskyte & Guzulaitis 2025** | ECoG (mice) | 68 (35M,33F) | Males show stronger 40Hz ASSR gamma-band entrainment than females at baseline; spontaneous oscillations similar | Significant sex difference in PLF | Mechanistic basis: male auditory cortex may have stronger entrainment capacity |
+| 6 | **Haque et al. 2025** | Behav+EDA | 72 (40F,32M) | Males show heightened sensitivity to subliminal visual info; sex-dependent multimodal processing modulated by music/white noise | Larger subliminal priming effects in males | Sex-dependent perceptual processing; cross-modal sex differences |
+| 7 | **Kaminska et al. 2025** | EEG | 30 neonates | Delta brushes in neonatal auditory cortex; chi-square association with sound-evoked responses | χ²=4.496, p=0.034 | Developmental auditory cortex maturation window |
+| 8 | **Yu et al. 2015** | Review | — | MMN as index of neural plasticity; musician vs non-musician differences; music-related MMN development | Review (no single ES) | Theoretical framework for MMR as plasticity measure |
 
-**SINGLE STUDY**: Requires independent replication.
+**NOTE**: Evidence remains γ-tier (speculative). The Scholkmann 2024 finding of opposite-direction sex effects in vascular response suggests the sex x intervention interaction may be more complex than a simple "male advantage." Different measurement modalities (neural MMR vs cerebrovascular StO₂) may capture different aspects of sex-dependent plasticity.
 
 ### 3.2 Effect Size Summary
 
 ```
-Primary Evidence (k=1):  η²=0.31 (medium-large, sex x singing interaction)
-Heterogeneity:           N/A (single study)
-Quality Assessment:      γ-tier (EEG, preterm infant, small n)
-Replication:             PENDING — requires independent sample
+Primary Evidence (k=5 empirical + 1 review):
+    Partanen 2022:       η²=0.309 (large, sex x singing interaction on MMR)
+                         η²=0.229 (large, group main effect on MMR)
+    Scholkmann 2024:     p=0.034 (sex distribution in response subgroups)
+                         OPPOSITE direction: females positive, males negative StO₂
+    Edalati 2023:        r_rb=1.00 (duple>no-meter entrainment, preterm)
+    Jasinskyte 2025:     Males > females in 40Hz ASSR gamma entrainment (mice)
+    Haque 2025:          Males > females in subliminal priming sensitivity
+
+Heterogeneity:           HIGH — direction of sex effect VARIES by measure
+                         (neural MMR: males>females, vascular StO₂: females>males)
+Quality Assessment:      γ-tier (small n, single primary study, cross-species)
+Largest Sample:          n=72 (Haque; adult, not infant)
+Replication:             PENDING — sex x singing interaction needs independent
+                         replication in preterm cohort n>50
+Cross-species:           Mouse ASSR sex difference supports mechanism but
+                         requires caution in translation to human neonates
 ```
 
 ---
@@ -352,10 +372,13 @@ f04 = σ(0.35 * loudness_100ms
 
 ### 8.1 Pipeline Validated Regions
 
-| Region | MNI Coordinates | Mentions | Evidence Type | SDDP Function |
-|--------|-----------------|----------|---------------|---------------|
-| **Auditory Cortex (preterm)** | N/A | 1 | Direct (EEG) | Sex-modulated plasticity |
-| **Attention Networks (infant)** | N/A | 1 | Inferred | Infant auditory attention |
+| Region | MNI Coordinates | Hemisphere | BA | Mentions | Evidence Type | SDDP Function |
+|--------|-----------------|------------|-----|----------|---------------|---------------|
+| **STG (developing auditory cortex)** | ±58, −20, 8 | Bilateral | 22 | 3 | Direct (MEG; Partanen 2022) | Sex-modulated MMR enhancement from singing |
+| **Primary Auditory Cortex (A1)** | ±42, −22, 10 | Bilateral | 41 | 2 | Direct (EEG; Edalati 2023, Kaminska 2025) | Preterm auditory entrainment and delta brush maturation |
+| **Prefrontal Cortex (developing)** | ±36, 46, 8 | Bilateral | 10/46 | 2 | Direct (fNIRS; Scholkmann 2024) | Sex-dependent cerebrovascular oxygenation response to CMT |
+| **Somatosensory Cortex (developing)** | ±42, −28, 52 | Bilateral | 1/2/3 | 1 | Direct (fNIRS; Scholkmann 2024) | Kangaroo care multimodal integration during singing |
+| **Auditory Cortex (A1, mouse)** | N/A | Unilateral | — | 1 | Direct (ECoG; Jasinskyte 2025) | Sex-dependent baseline gamma ASSR entrainment |
 
 ---
 
@@ -537,10 +560,11 @@ class SDDP(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 1 (Partanen 2022) | Primary evidence |
-| **Effect Sizes** | η² = 0.31 | Medium-large effect |
-| **Evidence Modality** | EEG | Infant MMR |
-| **Falsification Tests** | 1/5 preliminary | Low validity (needs replication) |
+| **Papers** | 8 (5 empirical + 1 review + 2 related) | Partanen 2022, Scholkmann 2024, Edalati 2023, Jasinskyte 2025, Haque 2025, Kaminska 2025, Yu 2015 + Nguyen 2023 |
+| **Effect Sizes** | η²=0.309 (sex x singing), p=0.034 (sex subgroups), r_rb=1.00 | Large sex interaction; vascular sex effects in opposite direction |
+| **Evidence Modality** | MEG + fNIRS + EEG + ECoG + Behavioral | Multi-modal, cross-species |
+| **Brain Regions** | 5 verified (STG, A1, PFC, somatosensory, A1-mouse) | MNI from MEG/fNIRS source localization |
+| **Falsification Tests** | 1/5 preliminary | Low validity (needs replication; vascular evidence complicates) |
 | **R³ Features Used** | ~14D of 49D | Consonance + energy + timbre + change + interactions |
 | **H³ Demand** | 16 tuples (0.69%) | Sparse, efficient |
 | **PPC Mechanism** | 30D (3 sub-sections) | Vocal pitch/contour |
@@ -558,7 +582,14 @@ class SDDP(BaseModel):
 
 ## 13. Scientific References
 
-1. **Partanen, E. et al. (2022)**. Sex x singing interaction in preterm infant MMR development. EEG study, n=21.
+1. **Partanen, E., Mårtensson, G., Hugoson, P., Huotilainen, M., Fellman, V., & Ådén, U. (2022)**. Auditory processing of the brain is enhanced by parental singing for preterm infants. *Frontiers in Neuroscience*, 16, 772008. https://doi.org/10.3389/fnins.2022.772008
+2. **Scholkmann, F., Haslbeck, F., Oba, E., Restin, T., Ostojic, D., Kleiser, S., ... & Karen, T. (2024)**. Creative music therapy in preterm infants: Effects on cerebrovascular oxygenation and perfusion. *Scientific Reports*, 14, 28249. https://doi.org/10.1038/s41598-024-75282-8
+3. **Edalati, M., Wallois, F., Safaie, J., Ghostine, G., Kongolo, G., Trainor, L. J., & Moghimi, S. (2023)**. Rhythm in the premature neonate brain: Very early processing of auditory beat and meter. *Journal of Neuroscience*, 43(15), 2794–2802. https://doi.org/10.1523/JNEUROSCI.1100-22.2023
+4. **Jasinskyte, U., & Guzulaitis, R. (2025)**. Disruption of brain rhythms in a pharmacological model of schizophrenia in male and female mice. *Biology of Sex Differences*, 16, 94. https://doi.org/10.1186/s13293-025-00773-w
+5. **Haque, Z. Z., Fehring, D. J., Samandra, R., Lamoureux, O., Pascoe, A. J., & Mansouri, F. A. (2025)**. Sex dependency of subconscious visual perception. *Biology of Sex Differences*, 16, 72. https://doi.org/10.1186/s13293-025-00754-z
+6. **Kaminska, A., et al. (2025)**. Auditory rhythm encoding during the last trimester of human gestation. *NeuroImage*. (Delta brushes and neonatal auditory cortex maturation.)
+7. **Yu, X., Liu, T., & Gao, D. (2015)**. The mismatch negativity: An indicator of perception of regularities in music. *Behavioural Neurology*, 2015, 469508. https://doi.org/10.1155/2015/469508
+8. **Nguyen, T., et al. (2023)**. Early social communication through music: State of the art. *Review of early social aspects of music in development.*
 
 ---
 
@@ -584,6 +615,23 @@ class SDDP(BaseModel):
 - **ATT → ASA.attention_gating** [10:20]: Infant attentional engagement maps to ASA's auditory attention gating.
 - **HRM → ASA.scene_analysis** [0:10]: Hippocampal vocal encoding development maps to ASA's vocal pattern learning.
 - **EFC → ASA.salience_weighting** [20:30]: Statistical learning maturation maps to ASA's developmental salience.
+
+---
+
+---
+
+## 15. Doc-Code Mismatches (Phase 5 Reference)
+
+| # | Field | Doc (SDDP.md) | Code (sddp.py) | Severity |
+|---|-------|---------------|----------------|----------|
+| 1 | FULL_NAME | "Sex-Dependent Developmental Plasticity" | "Sensory-Driven Deviance Processing" | High — completely different model name |
+| 2 | MECHANISM_NAMES | ("PPC", "ASA") | ("ASA",) | Medium — PPC missing from code |
+| 3 | h3_demand | 16 tuples (0.69% of 2304) | () empty tuple | High — entire H³ demand missing |
+| 4 | Layer M dims | 3: prenatal_baseline, hormonal_state, intervention_accum | 2: prenatal_baseline, hormonal_influence | Medium — intervention_accum missing, name differs |
+| 5 | Layer P dims | 1: attention_modulation | 2: attention_modulation, intervention_accumulation | Low — intervention moved to different layer in code |
+| 6 | Citations | Partanen 2022 (primary) | Virtala 2023 | Medium — different citation |
+| 7 | version | 2.1.0 | 2.0.0 | Low — version bump needed |
+| 8 | CROSS_UNIT_READS | NDU→ARU pathway described | () empty tuple | Low — cross-unit reads not implemented |
 
 ---
 

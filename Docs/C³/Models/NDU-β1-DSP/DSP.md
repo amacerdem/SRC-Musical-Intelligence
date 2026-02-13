@@ -4,8 +4,8 @@
 **Unit**: NDU (Novelty Detection Unit)
 **Circuit**: Salience + Developmental (Auditory Cortex, Attention Networks)
 **Tier**: β (Integrative) — 70–90% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, PPC+ASA mechanisms)
-**Date**: 2026-02-12
+**Version**: 2.1.0 (deep lit review — 1→7 papers, fNIRS+EEG+MEG multi-modal, sex-specific cerebrovascular patterns)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -155,17 +155,35 @@ DSP establishes the developmental plasticity component of the Novelty Detection 
 
 | Study | Method | N | Key Finding | Effect Size | MI Relevance |
 |-------|--------|---|-------------|-------------|-------------|
-| **Partanen 2022** | EEG | 21 | Singing → larger MMR (controlling for time) | d = 0.26 | **Primary**: f03 plasticity index |
-| **Partanen 2022** | EEG | 21 | Males benefit more than females | η² = 0.31 | **f04 sex modulation** |
-| **Partanen 2022** | EEG | 33 | Singing intervention > full-term in oddball | η² = 0.23 | **Over-normalization link** |
+| **Partanen 2022** | MEG | 21 | Singing intervention group > full-term in oddball paradigm | F(2,27)=4.019, p=0.030, η²=0.229 | **Primary**: f03 plasticity index, over-normalization |
+| **Partanen 2022** | MEG | 21 | Sex × Singing time interaction in tata paradigm | η²=0.309, p=0.017 | **f04 sex modulation** |
+| **Partanen 2022** | MEG | 21 | Group × Singing time interaction: quality > quantity | η²=0.262, p=0.030 | **Quality-dependent plasticity** |
+| **Partanen 2022** | MEG | 21 | Males in singing group > females for vowel duration | p=0.001 | **Sex-dependent MMR enhancement** |
+| **Scholkmann 2024** | fNIRS | 17 | CMT → StO₂ increase 3.2±2.0% in auditory cortex (subgroup 1) | r_rb=1.00, p=0.002 | **f01 singing quality → cerebrovascular** |
+| **Scholkmann 2024** | fNIRS | 17 | StO₂ increase 2.4±1.1% in prefrontal cortex (subgroup 1) | r_rb=1.00, p=0.008 | **f02 attention engagement** |
+| **Scholkmann 2024** | fNIRS | 17 | Two response subgroups: sex-dependent (females > positive response) | χ²=4.496, p=0.034, τ_b=−0.514 | **f04 sex modulation (cerebrovascular)** |
+| **Scholkmann 2024** | fNIRS | 17 | Hematocrit correlates with StO₂ change magnitude | r_s=0.394, p=0.034 | **Individual difference factor** |
+| **Edalati 2023** | EEG | 19 | Premature neonates (32±2.59 wGA) show selective beat+meter enhancement | Selective duple meter enhancement | **Rhythmic processing at prematurity** |
+| **Edalati 2023** | EEG | 19 | Phase alignment of neural oscillations to auditory rhythm envelope | Phase-coupling at beat/meter frequencies | **PPC periodicity input relevance** |
+| **Kaminska 2025** | EEG | 30 | Voice-evoked DBs: stimulus-specific topography (mid-temporal + pre-central) | Click DBs 83% vs voice 50%, p<0.01 | **Voice vs noise discrimination** |
+| **Kaminska 2025** | EEG | 30 | Gamma oscillations increase with age; voice lateralization shifts L with age | Age-dependent lateralization | **AC maturation trajectory** |
 
 ### 3.2 Effect Size Summary
 
 ```
-Primary Evidence (k=1):  d=0.26 (singing > control), η²=0.31 (sex), η²=0.23 (over-norm)
-Heterogeneity:           N/A (single study)
-Quality Assessment:      β-tier (EEG, infant cohort)
-Replication:             Quality > quantity pattern robust across measures
+Primary Evidence (k=4 empirical + 3 reviews):
+  Partanen 2022:    η²=0.229 (group), η²=0.309 (sex×singing), η²=0.262 (group×singing)
+  Scholkmann 2024:  r_rb=1.00 (AC StO₂), r_rb=1.00 (PFC StO₂), τ_b=−0.514 (sex)
+  Edalati 2023:     Selective duple meter enhancement in premature neonates
+  Kaminska 2025:    Stimulus-specific DB topography, age-dependent gamma increase
+Heterogeneity:      Moderate — MEG (Partanen) vs fNIRS (Scholkmann) vs EEG (Edalati, Kaminska)
+                    Sex effect direction: males > females in MMR (Partanen) vs females > positive
+                    cerebrovascular response (Scholkmann) — may reflect different processing levels
+Quality Assessment: β-tier (multi-modal infant cohorts, converging evidence)
+Replication:        Quality > quantity pattern confirmed across MEG and fNIRS
+                    Sex differences replicated but with nuanced modality-dependent patterns
+Reviews:            Nguyen 2023 (ID singing universality), Papatzikis 2024 (56 NICU studies),
+                    Yu 2015 (MMN plasticity mechanisms)
 ```
 
 ---
@@ -369,10 +387,14 @@ f04 = clamp(f03 * (1 + 0.309 * sex_indicator), 0, 1)
 
 ### 8.1 Pipeline Validated Regions
 
-| Region | MNI Coordinates | Mentions | Evidence Type | DSP Function |
-|--------|-----------------|----------|---------------|--------------|
-| **Auditory Cortex** | ±42, -22, 8 | 3 | Direct (EEG) | Preterm infant auditory processing |
-| **Attention Networks** | N/A | 1 | Inferred | Infant auditory attention |
+| Region | MNI Coordinates | Mentions | Evidence Type | DSP Function | Source |
+|--------|-----------------|----------|---------------|--------------|--------|
+| **Auditory Cortex (bilateral)** | ±42, −22, 8 | 5 | Direct (MEG, fNIRS) | Preterm infant auditory processing, MMR generation | Partanen 2022 (MEG); Scholkmann 2024 (fNIRS left AC) |
+| **Right Prefrontal Cortex** | ~46, 45, 0 | 2 | Direct (fNIRS) | CMT-induced StO₂ increase 2.4±1.1% | Scholkmann 2024 (fNIRS optode placement) |
+| **Mid-Temporal (T7-T8)** | ±65, −25, 5 | 3 | Direct (EEG) | Voice-evoked delta brush topography | Kaminska 2025 (32-electrode EEG) |
+| **Pre-Central Inferior (FC5-FC6)** | ±55, 0, 20 | 2 | Direct (EEG) | Voice-specific DB response (higher amplitude than click) | Kaminska 2025 |
+| **Temporal Posterior (CP5-CP6)** | ±55, −40, 10 | 2 | Direct (EEG) | Click-evoked DB topography (higher amplitude than voice) | Kaminska 2025 |
+| **Attention Networks** | N/A | 1 | Inferred | Infant auditory attention | Partanen 2022 (behavioral) |
 
 ---
 
@@ -578,9 +600,10 @@ class DSP(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 1 (Partanen 2022) | Primary evidence |
-| **Effect Sizes** | d=0.26, η²=0.31, η²=0.23 | EEG infant MMR |
-| **Evidence Modality** | EEG | Direct neural |
+| **Papers** | 7 (4 empirical + 3 reviews) | Partanen 2022, Scholkmann 2024, Edalati 2023, Kaminska 2025, Nguyen 2023, Papatzikis 2024, Yu 2015 |
+| **Effect Sizes** | η²=0.229–0.309, r_rb=1.00, τ_b=−0.514 | MEG + fNIRS + EEG |
+| **Evidence Modality** | Multi-modal (MEG, fNIRS, EEG) | Direct neural + cerebrovascular |
+| **Largest Sample** | n=30 (Kaminska 2025) | EEG, 30–38 PMW |
 | **Falsification Tests** | 3/5 confirmed | Moderate validity |
 | **R³ Features Used** | ~12D of 49D | Consonance + energy + timbre + change + interactions |
 | **H³ Demand** | 18 tuples (0.78%) | Sparse, efficient |
@@ -592,7 +615,13 @@ class DSP(BaseModel):
 
 ## 13. Scientific References
 
-1. **Partanen, E. et al. (2022)**. Music therapist-guided parental singing enhances auditory processing in preterm infants. EEG study, n=21 singing intervention, n=33 full-term controls.
+1. **Partanen, E., Mårtensson, G., Hugoson, P., Huotilainen, M., Fellman, V., & Ådén, U. (2022)**. Auditory Processing of the Brain Is Enhanced by Parental Singing for Preterm Infants. *Frontiers in Neuroscience*, 16, 772008. doi:10.3389/fnins.2022.772008. MEG, n=21 preterm (13 singing, 8 control) + 12 full-term.
+2. **Scholkmann, F., Haslbeck, F., Oba, E., Restin, T., Ostojic, D., Kleiser, S., ... & Karen, T. (2024)**. Creative music therapy in preterm infants effects cerebrovascular oxygenation and perfusion. *Scientific Reports*, 14, 28249. doi:10.1038/s41598-024-75282-8. fNIRS, n=17 usable preterm.
+3. **Edalati, M., Wallois, F., Safaie, J., Ghostine, G., Kongolo, G., Trainor, L. J., & Moghimi, S. (2023)**. Rhythm in the Premature Neonate Brain: Very Early Processing of Auditory Beat and Meter. *Journal of Neuroscience*, 43(15), 2794–2802. doi:10.1523/JNEUROSCI.1100-22.2023. EEG, n=19 premature (32±2.59 wGA).
+4. **Kaminska, A., Arzounian, D., Delattre, V., Laschet, J., Magny, J.-F., ... & Khazipov, R. (2025)**. Auditory evoked delta brushes involve stimulus-specific cortical networks in preterm infants. *iScience*, 28, 112313. doi:10.1016/j.isci.2025.112313. EEG, n=30, 30–38 PMW.
+5. **Nguyen, T., Flaten, E., Trainor, L. J., & Novembre, G. (2023)**. Early social communication through music: State of the art and future perspectives. *Developmental Cognitive Neuroscience*, 63, 101279. doi:10.1016/j.dcn.2023.101279. Review.
+6. **Papatzikis, E. et al. (2024)**. Passive music listening in neonatal intensive care units: A scoping review. *BMC Pediatrics*, 24, 829. Scoping review, 56 studies.
+7. **Yu, X., Liu, T., & Gao, D. (2015)**. The Mismatch Negativity: An Indicator of Perception of Regularities in Music. *Behavioural Neurology*, 2015, 469508. Review of MMN plasticity.
 
 ---
 
@@ -618,6 +647,24 @@ class DSP(BaseModel):
 - **ATT → ASA.attention_gating** [10:20]: Infant attentional entrainment maps to ASA's auditory attention gating.
 - **HRM → ASA.scene_analysis** [0:10]: Hippocampal voice replay maps to ASA's vocal pattern learning.
 - **EFC → ASA.salience_weighting** [20:30]: Statistical learning prediction maps to ASA's salience for developmental transfer.
+
+---
+
+---
+
+## 15. Doc-Code Mismatches (Phase 5 Reference)
+
+| Aspect | Doc (DSP.md) | Code (dsp_.py) | Severity |
+|--------|-------------|----------------|----------|
+| **FULL_NAME** | "Developmental Singing Plasticity" | "Deviance Salience Processing" | HIGH — identity mismatch |
+| **OUTPUT_DIM** | 12D (4E+3M+2P+3F) | 10D (4E+2M+2P+2F) | HIGH — Layer M missing voice_recognition, Layer F missing speech_transfer |
+| **MECHANISM_NAMES** | ("PPC", "ASA") | ("ASA",) | HIGH — PPC mechanism missing |
+| **h3_demand** | 18 tuples specified | () empty tuple | HIGH — no temporal demand in code |
+| **Layer M dims** | cumulative_plasticity, session_memory, voice_recognition (3D) | cumulative_exposure, voice_familiarity (2D) | MEDIUM — name + count mismatch |
+| **Layer F dims** | ac_maturation, speech_transfer, mmr_enhancement (3D) | auditory_development_pred, mmr_enhancement_pred (2D) | MEDIUM — name + count mismatch |
+| **Brain regions** | 6 regions (with MNI from Partanen, Scholkmann, Kaminska) | 3 regions (STG, IFG, ACC with generic MNI) | MEDIUM |
+| **Citations** | Partanen 2022 + 6 others | Virtala 2023, McMahon 2012 | MEDIUM — wrong primary citation |
+| **Version** | 2.1.0 | 2.0.0 | LOW |
 
 ---
 

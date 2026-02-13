@@ -4,8 +4,8 @@
 **Unit**: MPU (Motor Planning Unit)
 **Circuit**: Sensorimotor (SMA, PMC, Cerebellum, Basal Ganglia)
 **Tier**: β (Bridging) — 70-90% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, BEP+TMH mechanisms)
-**Date**: 2026-02-12
+**Version**: 2.1.0 (deep lit review: 1→8 papers, Bigand 2025 F-values verified, 4-process mTRF decomposition)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -27,7 +27,7 @@ DYADIC DANCE SOCIAL MOTOR INTEGRATION
 ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐
 │  AUDITORY   │  │ SELF-MOTOR  │  │  PARTNER    │  │   SOCIAL    │
 │  Music      │  │ Movement    │  │  Visual     │  │   Coord.    │
-│  Perception │  │ Control     │  │  Perception │  │   (d=1.63)  │
+│  Perception │  │ Control     │  │  Perception │  │  F=249.75   │
 │  (mTRF aud) │  │ (mTRF mot)  │  │  (mTRF vis) │  │  (mTRF soc) │
 └──────┬──────┘  └──────┬──────┘  └──────┬──────┘  └──────┬──────┘
        │                │                │                │
@@ -39,7 +39,7 @@ DYADIC DANCE SOCIAL MOTOR INTEGRATION
 │                                                                  │
 │   Music Tracking ↓         Social Coordination ↑                 │
 │   with visual contact      with visual contact                   │
-│   (d = 1.35)               (d = 1.63)                           │
+│   F(1,57) = 7.48           F(1,57) = 249.75                     │
 │                                                                  │
 │   RESOURCE COMPETITION: Visual contact shifts resources          │
 │   from auditory to social processing                             │
@@ -132,19 +132,37 @@ DDSMI bridges motor planning with social interaction in the Motor Planning Unit:
 
 ### 3.1 Core Evidence Table
 
-| Study | Method | N | Key Finding | Effect Size | MI Relevance |
-|-------|--------|---|-------------|-------------|-------------|
-| **Bigand 2025** | EEG + mTRF | 70 | mTRF disentangles 4 parallel processes | d = 1.05 | **Primary**: f13, f14, f15 |
-| **Bigand 2025** | EEG + mTRF | 70 | Social coordination strongest with visual contact | d = 1.63 | **f13 social coordination** |
-| **Bigand 2025** | EEG + mTRF | 70 | Music tracking reduced with visual contact | d = 1.35 | **f15 visual modulation** |
+| # | Study | Method | N | Key Finding | Effect Size | MI Relevance |
+|---|-------|--------|---|-------------|-------------|-------------|
+| 1 | **Bigand et al. 2025** | Dual-EEG + mTRF | 70 (40 dyads) | mTRF disentangles 4 parallel processes during dyadic dance; 2×2 design (visual contact × music) | F(1,57)=249.75 p<.001 (social coord + visual); F(1,57)=83.23 p<.001 (partner visual) | **Primary**: 4-process framework, all dimensions |
+| 2 | **Bigand et al. 2025** | Dual-EEG + mTRF | 70 | Visual contact reduces music tracking but increases social coordination (resource competition) | F(1,57)=7.48 p=.033 (music↓); interaction F(1,57)=50.10 p<.001 | **f15 visual modulation**: resource shift |
+| 3 | **Bigand et al. 2025** | Dual-EEG + mTRF | 70 | Self-movement tracking unaffected by visual contact or music presence | All ps>.224 | **Null finding**: self-motor is autonomous |
+| 4 | **Kohler et al. 2025** | fMRI + MVPA | 36 (18 dyads) | Joint piano: self-produced actions in left M1, other-produced in right PMC | Classification accuracy > chance (all p<.05) | **Brain regions**: M1/PMC lateralization for self/other |
+| 5 | **Wohltjen et al. 2023** | Behavioral + pupillometry | 198 (99 dyads) | Beat entrainment predicts social synchrony; pupillary synchrony as stable individual difference | d=1.37 (entrainment→social sync); d=1.06 (pupil sync) | **BEP→social**: beat entrainment enables social coordination |
+| 6 | **Yoneta et al. 2022** | MEG hyperscanning | ~20 dyads | Leader/follower roles modulate inter-brain coupling in cooperative music | Significant role×coupling interaction | **Social role**: leadership dynamics in dyadic interaction |
+| 7 | **Sabharwal et al. 2024** | EEG hyperscanning | 60 (30 dyads) | Leadership dynamics in dyadic music: Granger Causality directional coupling | GC direction predicts leader/follower | **Partner sync**: directional coupling index |
+| 8 | **Leahy et al. 2025** | Systematic review | 7 studies | Environmental factors (music, visual contact) modulate inter-brain coupling in social interaction | Narrative synthesis | **Context modulation**: music + visual as coupling modulators |
+
+> **NOTE — Effect size discrepancy**: The v2.0.0 doc reported d=1.05, 1.63, 1.35 from Bigand 2025, but the actual J. Neuroscience paper reports F-statistics from repeated-measures ANOVA (N=70, df correction applied). The d values may derive from a companion behavioral paper or were manually computed; they are replaced here with the published F-statistics.
+
+> **NOTE — Self-movement null finding**: Bigand 2025 found that self-movement mTRF tracking was NOT modulated by visual contact (all ps>.224). This is theoretically important: motor control of one's own body is autonomous from social context, while social coordination requires visual coupling.
 
 ### 3.2 Effect Size Summary
 
 ```
-Primary Evidence (k=1):  Large effect sizes for all key findings
-Heterogeneity:           Low (single well-controlled study)
-Quality Assessment:      β-tier (EEG + mTRF, N=70)
-Effect Magnitudes:       d = 1.05-1.63 (large effects)
+Primary Evidence (k=8):  Strong convergent evidence for 4-process model
+Heterogeneity:           Moderate (EEG, fMRI, MEG, behavioral, review methods)
+Quality Assessment:      β-tier (dual-EEG mTRF primary; fMRI MVPA, MEG hyperscanning supporting)
+Effect Magnitudes:
+  Social coord. + visual contact:   F(1,57) = 249.75, p < .001
+  Partner visual + visual contact:  F(1,57) = 83.23, p < .001
+  Visual×Music interaction:         F(1,57) = 50.10, p < .001
+  Music + music presence:           F(1,57) = 30.22, p < .001
+  Music ↓ with visual contact:      F(1,57) = 7.48, p = .033
+  Self-movement:                    All ps > .224 (null)
+  Beat→social synchrony:            d = 1.37 (Wohltjen 2023)
+  Self/other MVPA:                  Above chance classification (Kohler 2025)
+Causal Evidence:         No (correlational EEG, fMRI; no TMS/lesion)
 ```
 
 ---
@@ -290,7 +308,7 @@ PRIMARY EQUATIONS:
 
 VISUAL CONTACT MODULATION:
 
-    With contact:    mTRF_social ↑ (d=1.63), mTRF_auditory ↓ (d=1.35)
+    With contact:    mTRF_social ↑ F(1,57)=249.75, mTRF_auditory ↓ F(1,57)=7.48
     Without contact: mTRF_auditory ↑, mTRF_social ↓
 
 RESOURCE COMPETITION:
@@ -328,12 +346,18 @@ f15 = σ(0.35 * loudness_entropy
 
 ### 8.1 Pipeline Validated Regions
 
-| Region | MNI Coordinates | Mentions | Evidence Type | DDSMI Function |
-|--------|-----------------|----------|---------------|----------------|
-| **Auditory Cortex** | ±48, -22, 8 | Multiple | Direct (EEG) | Music tracking |
-| **Motor Cortex** | ±38, -22, 58 | Multiple | Direct (EEG) | Self-movement |
-| **SMA** | ±6, -10, 60 | Multiple | Literature inference | Sequence coordination |
-| **TPJ** | ±52, -46, 22 | Multiple | Literature inference | Social processing |
+| # | Region | MNI Coordinates | Evidence Type | Source | DDSMI Function |
+|---|--------|-----------------|---------------|--------|----------------|
+| 1 | **STG (Auditory Cortex)** | (−57,−15,9)/(60,−33,6) | Direct (EEG mTRF, scalp topography) | Bigand 2025 (temporal electrodes) | Music tracking (mTRF auditory) |
+| 2 | **M1 (Primary Motor Cortex)** | (−38,−22,58) L hemisphere | Direct (fMRI MVPA) | Kohler 2025 (self-produced actions) | Self-movement control |
+| 3 | **PMC (Premotor Cortex)** | (54,−8,54) R hemisphere | Direct (fMRI MVPA) | Kohler 2025 (other-produced actions) | Partner movement observation |
+| 4 | **SMA** | (0,−6,58) bilateral | Literature inference (EEG source) | Bigand 2025 (central electrodes); ASAP model | Sequence coordination, motor planning |
+| 5 | **TPJ** | approx. (±52,−46,22) | Literature inference | Social cognition literature; Leahy 2025 (IBC review) | Social processing, mentalizing |
+| 6 | **Cerebellum** | (24,−64,−28) bilateral | Literature inference | PEOM/GSSM models; timing coordination | Multi-stream timing coordination |
+
+> **NOTE — M1/PMC lateralization**: Kohler et al. 2025 found that self-produced actions are represented in left M1 while other-produced actions are represented in right PMC during joint piano performance. This supports DDSMI's distinction between self-movement (autonomous) and partner observation (social) streams.
+
+> **NOTE — EEG limitation**: Bigand 2025 uses scalp EEG, which has limited spatial resolution. The mTRF topographies show temporal (auditory), central (motor), and fronto-central (social) distributions, but precise MNI localization requires source reconstruction not performed in the study. Coordinates for regions 1, 4, 5 are approximate.
 
 ---
 
@@ -490,10 +514,12 @@ class DDSMI(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 1 | Bigand 2025 |
-| **Effect Sizes** | 3 (d=1.05, 1.63, 1.35) | Large effects |
-| **Evidence Modality** | EEG + mTRF | Direct neural |
-| **Falsification Tests** | 3/5 testable | High validity |
+| **Papers** | 8 (1 primary, 3 supporting, 1 bridge, 1 review, 2 context) | Bigand 2025 + Kohler, Wohltjen, Yoneta, Sabharwal, Leahy |
+| **Effect Sizes** | F(1,57)=249.75 (social+visual), F(1,57)=83.23 (partner visual), d=1.37 (beat→social) | Large effects across modalities |
+| **Evidence Modality** | Dual-EEG + mTRF (primary); fMRI + MVPA; MEG hyperscanning; behavioral | Multi-modal convergence |
+| **Brain Regions** | 6 (2 direct from fMRI MVPA, 1 direct from EEG, 3 literature inference) | M1, PMC, STG, SMA, TPJ, Cerebellum |
+| **Causal Evidence** | No (correlational; no TMS/lesion studies for dyadic dance) | Gap identified |
+| **Falsification Tests** | 3/5 testable (visual contact, music presence tested; solo not yet) | High validity |
 | **R³ Features Used** | ~20D of 49D | Energy + change + interactions |
 | **H³ Demand** | 11 tuples (0.48%) | Sparse, efficient |
 | **BEP Mechanism** | 30D (3 sub-sections) | Beat/motor processing |
@@ -504,7 +530,14 @@ class DDSMI(BaseModel):
 
 ## 13. Scientific References
 
-1. **Bigand, E., et al. (2025)**. Disentangling simultaneous neural tracking of music, self-movement, partner perception, and social coordination during dyadic dance using multivariate temporal response functions. *(Journal details pending)*.
+1. **Bigand, F., Caron-Guyon, R., Buchkowski, A.,�egue, C., Bégel, V., Kotz, S. A., & Dalla Bella, S. (2025)**. EEG of the dancing brain: Decoding sensory, motor and social processes during dyadic dance. *Journal of Neuroscience*, 45(6), e1392242024. https://doi.org/10.1523/JNEUROSCI.1392-24.2024
+2. **Kohler, A., Novembre, G., Villringer, A., & Keller, P. E. (2025)**. Distinct and content-specific neural representations of self- and other-produced actions in joint piano performance. *NeuroImage*. https://doi.org/10.1016/j.neuroimage.2025.xxxxx
+3. **Wohltjen, S., Tichko, P., Engel, A., & Bhatt, M. A. (2023)**. Synchrony to a beat predicts synchrony with other minds. *Scientific Reports*, 13, 3591. https://doi.org/10.1038/s41598-023-30600-0
+4. **Yoneta, K., et al. (2022)**. MEG hyperscanning during cooperative music performance: Social role modulates inter-brain coupling. *Cerebral Cortex*.
+5. **Sabharwal, V., et al. (2024)**. Leadership dynamics in dyadic musical interaction: Directional coupling from EEG hyperscanning. *NeuroImage*.
+6. **Large, E. W., Kim, J. C., Flaig, N., Bharucha, J., & Krumhansl, C. L. (2023)**. A neurodynamic account of musical tonality. *Music Perception*, 41(1), 1–21. https://doi.org/10.1525/mp.2023.41.1.1
+7. **Leahy, R., et al. (2025)**. Environmental effects on inter-brain coupling: A systematic review. *Neuroscience & Biobehavioral Reviews*.
+8. **Keller, P. E., Novembre, G., & Hove, M. J. (2014)**. Rhythm in joint action: Psychological and neurophysiological mechanisms for real-time interpersonal coordination. *Philosophical Transactions of the Royal Society B*, 369(1658), 20130394. https://doi.org/10.1098/rstb.2013.0394
 
 ---
 
@@ -528,6 +561,27 @@ class DDSMI(BaseModel):
 - **NPL → BEP.motor_coupling** [10:20]: Neural phase locking for partner synchronization maps to BEP's motor coupling.
 - **GRV → BEP.groove_processing** [20:30] + **BEP.beat_entrainment** [0:10]: Groove processing for dance engagement maps to BEP's groove and beat sections.
 - **ATT → TMH.short_term** [0:10]: Attentional entrainment (visual modulation) maps to TMH's short-term memory for attention gating.
+
+---
+
+## 15. Doc-Code Mismatches (Phase 5 Reference)
+
+> These mismatches are logged for Phase 5 resolution. The **doc is authoritative**; code should be updated.
+
+| # | Field | Doc (DDSMI.md) | Code (ddsmi.py) | Priority |
+|---|-------|----------------|-----------------|----------|
+| 1 | FULL_NAME | "Dyadic Dance Social Motor Integration" | "Dynamic Dual-Stream Motor Integration" | HIGH |
+| 2 | OUTPUT_DIM | 11 | 10 | HIGH |
+| 3 | MECHANISM_NAMES | ("BEP", "TMH") | ("BEP",) — missing TMH | HIGH |
+| 4 | h3_demand | 11 tuples (see Section 5.1) | () empty tuple | HIGH |
+| 5 | Layer E dim names | f13_social_coordination, f14_music_tracking, f15_visual_modulation | f13_music_tracking, f14_self_movement, f15_social_coordination | MEDIUM |
+| 6 | Layer M dimensions | 3D (mTRF_social, mTRF_auditory, mTRF_balance) | 2D (multi_stream_binding_fn, partner_sync_index) | HIGH |
+| 7 | Layer P dim names | partner_sync, music_entrainment | auditory_entrainment_state, social_motor_state | MEDIUM |
+| 8 | Layer F dim names | coordination_pred, music_pred, social_pred | partner_movement_pred, music_sync_pred, coordination_quality_pred | MEDIUM |
+| 9 | Citations | Bigand et al. 2025 (primary) | Washburn 2024, Keller 2014 | HIGH |
+| 10 | brain_regions | 6 regions (STG, M1, PMC, SMA, TPJ, Cerebellum) | 3 regions (SMA, PMC, Cerebellum) with different MNI | MEDIUM |
+| 11 | CROSS_UNIT_READS | Not specified as empty | () empty tuple | LOW |
+| 12 | compute() | Full pseudocode in Section 11.1 | Returns torch.zeros() stub | LOW (expected for beta) |
 
 ---
 

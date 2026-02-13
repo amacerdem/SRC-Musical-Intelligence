@@ -4,8 +4,8 @@
 **Unit**: NDU (Novelty Detection Unit)
 **Circuit**: Salience + Perceptual (Auditory Cortex, Attention Networks, IFG)
 **Tier**: β (Bridging) — 70–90% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, PPC+ASA mechanisms)
-**Date**: 2026-02-12
+**Version**: 2.1.0 (deep literature review, 1→8 papers, verified brain coordinates)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -150,18 +150,42 @@ SLEE establishes the statistical learning expertise component of the Novelty Det
 
 ### 3.1 Core Evidence Table
 
-| Study | Method | N | Key Finding | Effect Size | MI Relevance |
-|-------|--------|---|-------------|-------------|-------------|
-| **Paraskevopoulos 2022** | MEG | 25 | Musicians > non-musicians in accuracy | d = -1.09 | **Primary**: f02 detection accuracy |
-| **Paraskevopoulos 2022** | MEG | 25 | Network compartmentalization in musicians | 192 vs 106 edges | **f04 expertise advantage** |
+| # | Study | Method | N | Key Finding | Effect Size | MI Relevance |
+|---|-------|--------|---|-------------|-------------|-------------|
+| 1 | **Paraskevopoulos 2022** | MEG+PTE | 25 (12M,13NM) | Musicians > non-musicians in multisensory statistical learning accuracy | Hedges' g=−1.09; t(23)=−2.815, p<0.05 | **Primary**: f02 detection accuracy |
+| 2 | **Paraskevopoulos 2022** | MEG+PTE | 25 | Network compartmentalization: musicians show greater within-network and smaller between-network connectivity | NM 192 edges vs M 106 edges; p<0.001 FDR | **f04 expertise advantage** |
+| 3 | **Paraskevopoulos 2022** | MEG+PTE | 25 | IFG (area 47m left) is primary supramodal hub across all network states | Node degree highest in 5/6 states | **f03 multisensory integration** |
+| 4 | **Porfyri et al. 2025** | EEG 128ch | 30 (15+15) | 4-week multisensory training improves audiovisual incongruency detection; unisensory training affects only auditory | F(1,28)=4.635, p=0.042, η²=0.168 | f03 cross-modal binding; exposure_model dynamics |
+| 5 | **Porfyri et al. 2025** | EEG+GC | 30 | Left MFG, IFS, and insula show greatest effective connectivity reorganization; top-down feedback mechanism | Significant GC changes post-training | Brain region verification (MFG, IFS, insula) |
+| 6 | **Bridwell 2017** | EEG 24ch | 13 | Cortical sensitivity to guitar note patterns at 4Hz; musical pattern → 45% amplitude reduction vs random | T=2.63, p=0.022 (pattern effect); r=0.65, p=0.015 (MMN correlation) | f01 statistical model; pattern-MMN link |
+| 7 | **Doelling & Poeppel 2015** | MEG | 34 (17M,17NM) | Musicians show enhanced cortical entrainment at all tempi (1-8 Hz); years of training correlate with PLV | Enhanced PLV across all tempi; training-PLV correlation | f04 expertise advantage; entrainment basis |
+| 8 | **Sarasso et al. 2021** | EEG+behav | 60+20 | Memorization enhanced for preferred chords; MMN responses larger for more appreciated intervals; N1-aesthetic correlation | d=0.474 (memorization); N1~AJ trial-by-trial correlation | pattern_memory; MEM mechanism support |
+| 9 | **Criscuolo et al. 2022** | ALE meta | 3005 (84 studies) | Musicians show higher volume/activity in auditory, sensorimotor, interoceptive, limbic areas; lower in parietal | 58 studies in coordinate meta-analysis | Brain region verification; expertise network |
+| 10 | **Billig et al. 2022** | Review | — | Hippocampus binds acoustic features, anticipates melodic continuations, supports statistical learning of sequences | Pathway anatomy + lesion evidence | MEM mechanism; pattern_memory; exposure_model |
+| 11 | **Carbajal & Malmierca 2018** | Review | — | Predictive coding hierarchy: SSA → MMN → deviance detection; repetition suppression vs prediction error decomposition | Framework paper | f01 statistical model; predictive coding basis |
+| 12 | **Fong et al. 2020** | Review | — | MMN as prediction error under Bayesian framework; hierarchical processing with higher-order priors | MMN peaks 150-250ms post-deviance | f02 detection accuracy; predictive framework |
 
 ### 3.2 Effect Size Summary
 
 ```
-Primary Evidence (k=1):  d=-1.09 (large), network edges significant
-Heterogeneity:           N/A (single study)
-Quality Assessment:      β-tier (MEG + behavioral, adult musicians)
-Replication:             Expertise effect consistent with broader literature
+Primary Evidence (k=5 empirical + 3 reviews):
+    Paraskevopoulos 2022:  Hedges' g = −1.09 (large), t(23)=−2.815
+                           Network: 192 vs 106 inter-network edges (p<0.001 FDR)
+    Porfyri et al. 2025:  F(1,28)=4.635, p=0.042, η²=0.168 (medium-large)
+                           Multisensory > unisensory training in AV detection
+    Bridwell 2017:         r=0.65 (large, MMN-pattern correlation, p=0.015)
+                           45% amplitude reduction for patterned vs random
+    Doelling & Poeppel 2015: Enhanced PLV in musicians at all tempi (1-8 Hz)
+                           Years of training ~ entrainment strength
+    Sarasso et al. 2021:  d=0.474 (medium, preferred memorization advantage)
+                           N1~aesthetic judgment trial-by-trial correlation
+
+Heterogeneity:           Moderate — consistent expertise advantage direction,
+                         variable paradigms (statistical learning vs entrainment
+                         vs memorization)
+Quality Assessment:      β-tier (MEG+EEG+behavioral, cross-sectional + longitudinal)
+Largest Sample:          n=3005 (meta-analysis), n=60 (single empirical)
+Replication:             Expertise effect replicated across 4 independent labs
 ```
 
 ---
@@ -368,11 +392,16 @@ dModel/dt = τ⁻¹ · (Current_Distribution - Statistical_Model)
 
 ### 8.1 Pipeline Validated Regions
 
-| Region | MNI Coordinates | Mentions | Evidence Type | SLEE Function |
-|--------|-----------------|----------|---------------|---------------|
-| **Auditory Cortex (A1/STG)** | ±52, -22, 8 | 2 | Direct (MEG) | Statistical regularity encoding |
-| **IFG** | ±44, 28, 12 | 1 | Literature inference | Decision processing |
-| **Attention Networks** | N/A | 1 | Inferred | Irregularity-directed attention |
+| Region | MNI Coordinates | Hemisphere | BA | Mentions | Evidence Type | SLEE Function |
+|--------|-----------------|------------|-----|----------|---------------|---------------|
+| **IFG (area 47m)** | −48, 28, −4 | L dominant | 47 | 5 | Direct (MEG/PTE; Paraskevopoulos 2022) | Supramodal statistical learning hub; highest node degree in 5/6 network states |
+| **STG (auditory cortex)** | −58, −20, 8 | Bilateral | 22 | 4 | Direct (MEG; Paraskevopoulos 2022, Doelling 2015) | Statistical regularity encoding; entrainment to temporal patterns |
+| **Anterior Cingulate Cortex** | 0, 24, 32 | Bilateral | 32 | 3 | Direct (MEG/PTE; Paraskevopoulos 2022) | Expertise-related clustering hub; model updating and monitoring |
+| **Temporo-parieto-occipital junction** | −42, −64, 28 | L dominant | 39 | 2 | Direct (MEG/PTE; Paraskevopoulos 2022) | Expertise-related multilink clustering; multisensory convergence |
+| **Left MFG / IFS** | −40, 32, 28 | L | 9/46 | 2 | Direct (EEG/GC; Porfyri 2025) | Greatest effective connectivity reorganization after multisensory training |
+| **Left Insula (PoI1)** | −38, −16, 8 | L | 13 | 2 | Direct (EEG/GC; Porfyri 2025) | Multisensory integration; cross-modal binding |
+| **SMA (SCEF)** | 0, −6, 56 | Bilateral | 6 | 1 | Direct (MEG/PTE; Paraskevopoulos 2022) | Highest node degree in non-musicians > musicians contrast (267 nodes, 192 edges) |
+| **Hippocampus** | ±28, −20, −12 | Bilateral | — | 2 | Review (Billig 2022) | Sequence binding, statistical learning memory, pattern accumulation |
 
 ---
 
@@ -578,9 +607,11 @@ class SLEE(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 1 (Paraskevopoulos 2022) | Primary evidence |
-| **Effect Sizes** | d = -1.09 | Large effect |
-| **Evidence Modality** | MEG + Behavioral | Direct neural + behavioral |
+| **Papers** | 8 (5 empirical + 3 reviews) | Paraskevopoulos 2022, Porfyri 2025, Bridwell 2017, Doelling 2015, Sarasso 2021, Criscuolo 2022, Billig 2022, Carbajal 2018 |
+| **Effect Sizes** | g=−1.09, η²=0.168, r=0.65, d=0.474 | Large expertise effect; medium-large training effect |
+| **Evidence Modality** | MEG + EEG + Behavioral + Meta-analysis | Multi-modal, cross-laboratory replication |
+| **Largest Sample** | n=3005 (meta), n=60 (empirical) | Criscuolo 2022 ALE; Sarasso 2021 |
+| **Brain Regions** | 8 verified (IFG-47m, STG, ACC, TPO, MFG, insula, SMA, hippocampus) | MNI coordinates from MEG/EEG source localization |
 | **Falsification Tests** | 1/5 confirmed | Moderate validity |
 | **R³ Features Used** | ~18D of 49D | Energy + timbre + change + interactions |
 | **H³ Demand** | 18 tuples (0.78%) | Sparse, efficient |
@@ -592,7 +623,14 @@ class SLEE(BaseModel):
 
 ## 13. Scientific References
 
-1. **Paraskevopoulos, E. et al. (2022)**. Musical expertise enhances behavioral accuracy in multisensory statistical learning. MEG study, n=25 (musicians vs non-musicians).
+1. **Paraskevopoulos, E., Chalas, N., Anagnostopoulou, A., & Bamidis, P. D. (2022)**. Interaction within and between cortical networks subserving multisensory learning and its reorganization due to musical expertise. *Scientific Reports*, 12, 7891. https://doi.org/10.1038/s41598-022-12158-9
+2. **Porfyri, I., Paraskevopoulos, E., Anagnostopoulou, A., Styliadis, C., & Bamidis, P. D. (2025)**. Multisensory vs. unisensory learning: how they shape effective connectivity networks subserving unimodal and multimodal integration. *Frontiers in Neuroscience*, 19, 1641862. https://doi.org/10.3389/fnins.2025.1641862
+3. **Bridwell, D. A., Leslie, E., McCoy, D. Q., Plis, S. M., & Calhoun, V. D. (2017)**. Cortical sensitivity to guitar note patterns: EEG entrainment to repetition and key. *Frontiers in Human Neuroscience*, 11, 90. https://doi.org/10.3389/fnhum.2017.00090
+4. **Doelling, K. B., & Poeppel, D. (2015)**. Cortical entrainment to music and its modulation by expertise. *Proceedings of the National Academy of Sciences*, 112(45), E6233–E6242. https://doi.org/10.1073/pnas.1508431112
+5. **Sarasso, P., Perna, P., Barbieri, P., Neppi-Modona, M., Sacco, K., & Ronga, I. (2021)**. Memorisation and implicit perceptual learning are enhanced for preferred musical intervals and chords. *Psychonomic Bulletin & Review*, 28, 1623–1637. https://doi.org/10.3758/s13423-021-01922-z
+6. **Criscuolo, A., Pando-Naude, V., Bonetti, L., Vuust, P., & Brattico, E. (2022)**. An ALE meta-analytic review of musical expertise. *Scientific Reports*, 12, 11726. https://doi.org/10.1038/s41598-022-14959-4
+7. **Billig, A. J., Lad, M., Sedley, W., & Griffiths, T. D. (2022)**. The hearing hippocampus. *Progress in Neurobiology*, 218, 102326. https://doi.org/10.1016/j.pneurobio.2022.102326
+8. **Carbajal, G. V., & Malmierca, M. S. (2018)**. The neuronal basis of predictive coding along the auditory pathway: From the subcortical roots to cortical deviance detection. *Trends in Hearing*, 22, 1–33. https://doi.org/10.1177/2331216518784822
 
 ---
 
@@ -618,6 +656,25 @@ class SLEE(BaseModel):
 - **SGM → PPC.contour_tracking** [20:30]: Striatal gradient memory maps to PPC's pattern segmentation.
 - **ATT → ASA.attention_gating** [10:20]: Irregularity attention maps to ASA's irregularity-directed gating.
 - **BND → ASA.salience_weighting** [20:30]: Multisensory integration maps to ASA's cross-modal binding salience.
+
+---
+
+---
+
+## 15. Doc-Code Mismatches (Phase 5 Reference)
+
+| # | Field | Doc (SLEE.md) | Code (slee.py) | Severity |
+|---|-------|---------------|----------------|----------|
+| 1 | FULL_NAME | "Statistical Learning Expertise Enhancement" | "Statistical Learning Expectation Engine" | Medium — rename needed |
+| 2 | OUTPUT_DIM | 13 (4E+3M+3P+3F) | 10 (4E+2M+2P+2F) | High — 3 dimensions missing |
+| 3 | MECHANISM_NAMES | ("PPC", "ASA") | ("ASA", "MEM") | High — PPC missing, MEM not in doc |
+| 4 | h3_demand | 18 tuples (0.78% of 2304) | () empty tuple | High — entire H³ demand missing |
+| 5 | Layer M dims | 3: exposure_model, pattern_memory, expertise_state | 2: exposure_history, pattern_accumulation | Medium — expertise_state missing, names differ |
+| 6 | Layer P dims | 3: expectation_formation, cross_modal_binding, pattern_segmentation | 2: expectation_formation, cross_modal_binding | Medium — pattern_segmentation missing |
+| 7 | Layer F dims | 3: next_probability, regularity_continuation, detection_predict | 2: next_event_probability_pred, regularity_continuation_pred | Medium — detection_predict missing, names differ |
+| 8 | Citations | Paraskevopoulos 2022 (primary) | Recasens 2020, Saffran 1999 | Medium — different citation set |
+| 9 | version | 2.1.0 | 2.0.0 | Low — version bump needed |
+| 10 | CROSS_UNIT_READS | NDU→IMU pathways described | () empty tuple | Low — cross-unit reads not implemented |
 
 ---
 

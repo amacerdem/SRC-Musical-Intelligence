@@ -4,8 +4,8 @@
 **Unit**: ASU (Auditory Salience Unit)
 **Circuit**: Salience (Anterior Insula, dACC, TPJ)
 **Tier**: γ (Integrative) — 50-70% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, ASA+BEP mechanisms)
-**Date**: 2026-02-12
+**Version**: 2.1.0 (deep literature review, 12 papers, 8 brain regions)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -153,19 +153,31 @@ DGTP extends salience processing to domain-general temporal cognition:
 
 | Study | Method | N | Key Finding | Effect Size | MI Relevance |
 |-------|--------|---|-------------|-------------|-------------|
-| **Rathcke 2024** | Behavioral | 87 | BAT predicts perception patterns | ER > 19 | **f22 music timing (BAT)** |
-| **Rathcke 2024** | Behavioral | 87 | BAT ability predicts speech temporal perception | Qualitative | **f23 speech timing** |
-| **Patel 2011** | Theory | — | OPERA hypothesis: music training benefits speech | — | **f24 shared mechanism** |
-| **Grahn & Brett 2007** | fMRI | — | Rhythm/beat in motor areas | r = 0.70 | **Neural substrate** |
+| **Rathcke et al. 2024** | Behavioral | 87 | BAT predicts perception patterns; cross-domain | ER > 19 | **f22 music timing, f23 speech timing** |
+| **Grahn & Brett 2007** | fMRI | 27 (14 mus.) | BG + SMA respond selectively to beat; consistent across training | ~90% beat detection | **BG-SMA beat perception circuit** |
+| **Hoddinott & Grahn 2024** | 7T fMRI, RSA | 26 | Putamen/SMA encode beat strength (not basic rhythm features) | sig. RSA dissimilarity | **Beat-specific encoding in motor regions** |
+| **Large et al. 2023** | Review/Theory | — | Three model classes: dynamical, neuro-mechanistic, Bayesian | optimal ~2 Hz | **Computational framework for beat perception** |
+| **Dalla Bella et al. 2024** | ML, Behavioral | 79 | Multidimensional rhythmic profiles; beat-based vs memory-based | ML classification | **Individual differences in domain-general timing** |
+| **Di Stefano & Spence 2025** | Review | — | Amodal temporal processor only partially supported; audition dominant | — (review) | **f24 shared mechanism cross-modal scope** |
+| **Noboa et al. 2025** | EEG (SS-EP) | 34 | SS-EPs at beat frequency; working memory predicts sync accuracy | 1.25 Hz SS-EP | **Beat entrainment + memory interaction** |
+| **Gnanateja et al. 2022** | Review | — | δ=beat/prosody, θ=syllable, β=motor coupling, γ=rapid features | — (review) | **Oscillatory band framework for timing** |
+| **Ross & Balasubramaniam 2022** | Review | — | Beat timing (predictive) vs interval timing (absolute); covert motor | — (review) | **Dual timing systems framework** |
+| **Okada et al. 2022** | Single-unit | 2 monkeys, 95 neurons | Cerebellar dentate encodes rhythmic structure + temporal error | 35% bilateral neurons | **Cerebellar timing mechanisms** |
+| **Lazzari et al. 2025** | TMS | 29+40+42 | Right caudal dPMC causally modulates beat perception (ASAP) | sig. vs all other regions | **Causal evidence for right dPMC in beat** |
+| **Liu et al. 2025** | Single-unit | 2 macaques, >3000 neurons | D2-MSNs in striatum mediate timing (prospective + retrospective) | cell-type specific | **Striatal timing mechanisms** |
 
 ### 3.2 Effect Size Summary
 
 ```
-Primary Evidence (k=2):
-  - BAT → speech timing: Qualitative support
-  - Shared neural substrates: Literature inference
-Quality Assessment:      γ-tier (indirect evidence)
-Theoretical Basis:       Moderate (overlapping neural systems)
+Primary Evidence (k=12, multi-modal):
+  - BAT → cross-domain timing: ER > 19 (Rathcke 2024, N=87)
+  - BG/SMA beat selectivity: ~90% detection, consistent across training (Grahn 2007)
+  - Beat-specific RSA: sig. in putamen/SMA at 7T (Hoddinott 2024, N=26)
+  - Right caudal dPMC causal: sig. vs all control regions (Lazzari 2025, N=111 total)
+  - Cerebellar temporal error: 35% bilateral neurons, ~-11ms convergence (Okada 2022)
+  - D2-MSN timing: >3000 neurons, cell-type-specific (Liu 2025)
+Quality Assessment:      γ-tier (converging evidence, 5 HIGH-priority papers)
+Theoretical Basis:       Strong (basal ganglia-SMA circuit, dual timing systems)
 ```
 
 ---
@@ -347,10 +359,14 @@ f24 = sqrt(f22 * f23)
 
 | Region | MNI Coordinates | Mentions | Evidence Type | DGTP Function |
 |--------|-----------------|----------|---------------|---------------|
-| **SMA** | 0, -6, 58 | 2 | Literature inference | Temporal regularization |
-| **PMC** | ±40, -8, 54 | 2 | Literature inference | Motor timing |
+| **SMA / Pre-SMA** | 0, -6, 58 | 6 | fMRI, 7T RSA | Beat-selective temporal regularization |
+| **Putamen (Basal Ganglia)** | ±22, 4, 4 | 5 | fMRI, 7T RSA, single-unit | Beat strength encoding (D2-MSNs) |
+| **Right caudal dPMC** | 40, -8, 54 | 3 | TMS (causal), fMRI | Beat perception (ASAP hypothesis) |
+| **IFG** | ±44, 18, 8 | 2 | 7T fMRI RSA | Dual rhythm/beat encoding |
+| **IPL** | ±44, -40, 48 | 2 | 7T fMRI RSA | Dual rhythm/beat encoding |
+| **Cerebellum (Dentate)** | 0, -60, -24 | 3 | Single-unit, fMRI | Temporal error detection, sync |
+| **Auditory Cortex (STG)** | ±52, -22, 8 | 4 | fMRI, EEG | Beat/prosody encoding |
 | **ACC** | 0, 24, 32 | 1 | Literature inference | Timing monitoring |
-| **Basal Ganglia** | ±12, 8, -4 | 1 | Literature inference | Beat perception |
 
 ---
 
@@ -524,9 +540,10 @@ class DGTP(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 1+ (Rathcke + literature) | Indirect evidence |
-| **Theoretical Basis** | Moderate | Shared neural substrates |
-| **Evidence Modality** | Behavioral + neuroimaging | Mixed |
+| **Papers** | 12 (5 HIGH, 7 MEDIUM) | Multi-modal converging evidence |
+| **Key Effect Sizes** | ER>19 (BAT), 90% beat detection, RSA sig., TMS causal | Behavioral, fMRI, TMS, single-unit |
+| **Theoretical Basis** | Strong | BG-SMA circuit, dual timing, neural resonance |
+| **Evidence Modality** | Behavioral, fMRI, 7T fMRI, TMS, single-unit, EEG | Multi-modal |
 | **Falsification Tests** | 1/5 partially supported | Limited validation |
 | **R³ Features Used** | ~12D of 49D | Energy + change + interactions |
 | **H³ Demand** | 9 tuples (0.39%) | Sparse, efficient |
@@ -540,11 +557,27 @@ class DGTP(BaseModel):
 
 1. **Rathcke, T., et al. (2024)**. Beat alignment ability modulates perceptual regularization and sensorimotor synchronization benefits. *Journal of Experimental Psychology: Human Perception and Performance*, (in press).
 
-2. **Patel, A. D. (2011)**. Why would musical training benefit the neural encoding of speech? The OPERA hypothesis. *Frontiers in Psychology*, 2, 142.
+2. **Grahn, J. A., & Brett, M. (2007)**. Rhythm and beat perception in motor areas of the brain. *Journal of Cognitive Neuroscience*, 19(5), 893-906. `Literature/c3/summaries/Rhythm and Beat Perception in Motor Areas of the Brain`
 
-3. **Grahn, J. A., & Brett, M. (2007)**. Rhythm and beat perception in motor areas of the brain. *Journal of Cognitive Neuroscience*, 19(5), 893-906.
+3. **Hoddinott, J. D., & Grahn, J. A. (2024)**. Neural representations of beat and rhythm in motor and association regions. *Cerebral Cortex*, 34, bhae406. `Literature/c3/summaries/neural-representations-of-beat-and-rhythm-in-motor`
 
-4. **Zatorre, R. J., & Baum, S. R. (2012)**. Musical melody and speech intonation: Singing a different tune. *PLoS Biology*, 10(7), e1001372.
+4. **Large, E. W., Roman, I., Kim, J. C., et al. (2023)**. Dynamic models for musical rhythm perception and coordination. *Frontiers in Computational Neuroscience*, 17, 1151895. `Literature/c3/summaries/Dynamic models for musical rhythm perception and coordination`
+
+5. **Dalla Bella, S., Janaqi, S., Benoit, C. E., et al. (2024)**. Unravelling individual rhythmic abilities using machine learning. *Scientific Reports*, 14, 1135. `Literature/c3/summaries/Unravelling individual rhythmic abilities using machine learning`
+
+6. **Di Stefano, N., & Spence, C. (2025)**. Perceiving temporal structure within and between the senses: A multisensory/crossmodal perspective. *Attention, Perception, & Psychophysics*, 87, 1811-1838. `Literature/c3/summaries/Perceiving temporal structure within and between the senses`
+
+7. **Noboa, M. L., Kertesz, C., & Honbolygó, F. (2025)**. Neural entrainment to the beat and working memory predict sensorimotor synchronization skills. *Scientific Reports*, 15, 10466. `Literature/c3/summaries/Neural entrainment to the beat`
+
+8. **Gnanateja, G. N., Devaraju, D. S., Heyne, M., et al. (2022)**. On the role of neural oscillations across timescales in speech and music processing. *Frontiers in Computational Neuroscience*, 16, 872093. `Literature/c3/summaries/on-the-role-of-neural-oscillations-across-timescal`
+
+9. **Ross, J. M., & Balasubramaniam, R. (2022)**. Time perception for musical rhythms: Sensorimotor perspectives. *Frontiers in Integrative Neuroscience*, 16, 916220. `Literature/c3/summaries/Time Perception for Musical Rhythms`
+
+10. **Okada, K., Takeya, R., & Tanaka, M. (2022)**. Neural signals regulating motor synchronization in the primate deep cerebellar nuclei. *Nature Communications*, 13, 2504. `Literature/c3/summaries/ohmae-2022-cerebellar-rhythm`
+
+11. **Lazzari, G., Costantini, G., La Rocca, S., et al. (2025)**. Topography of functional organization of beat perception in human premotor cortex. *Human Brain Mapping*, 46, e70225. `Literature/c3/summaries/topography-of-functional-organization-of-beat-perc`
+
+12. **Liu, X., Zhang, Z., Gan, L., Yu, P., & Dai, J. (2025)**. Medium spiny neurons mediate timing perception in coordination with prefrontal neurons in primates. *Advanced Science*, 12, 2412963. `Literature/c3/summaries/medium-spiny-neurons-mediate-timing-perception-in`
 
 ---
 
@@ -552,16 +585,16 @@ class DGTP(BaseModel):
 
 ### What Changed from v1.0.0
 
-| Aspect | D0 (v1.0.0) | MI (v2.0.0) |
-|--------|-------------|-------------|
-| Input space | S⁰ (256D) | R³ (49D) |
-| Temporal | HC⁰ mechanisms (NPL, PTM, ITM) | BEP (30D) + ASA (30D) mechanisms |
-| Music timing | S⁰.L6.tempo[72] + HC⁰.NPL | R³.spectral_flux[10] + BEP.beat_entrainment |
-| Speech timing | S⁰.L4.onset_rate[27] + HC⁰.PTM | R³.onset_strength[11] + BEP.motor_coupling |
-| Shared mechanism | S⁰.L6.tempo × HC⁰.ITM | R³.x_l0l5[25:33] + H³ stability tuples |
-| Demand format | HC⁰ index ranges | H³ 4-tuples (sparse) |
-| Total demand | 9/2304 = 0.39% | 9/2304 = 0.39% |
-| Output | 9D | 9D (same) |
+| Aspect | D0 (v1.0.0) | MI (v2.0.0) | MI (v2.1.0) |
+|--------|-------------|-------------|-------------|
+| Input space | S⁰ (256D) | R³ (49D) | R³ (49D) — no change |
+| Temporal | HC⁰ mechanisms (NPL, PTM, ITM) | BEP (30D) + ASA (30D) mechanisms | Same — 9 H³ tuples |
+| Music timing | S⁰.L6.tempo[72] + HC⁰.NPL | R³.spectral_flux[10] + BEP.beat_entrainment | Same |
+| Speech timing | S⁰.L4.onset_rate[27] + HC⁰.PTM | R³.onset_strength[11] + BEP.motor_coupling | Same |
+| Shared mechanism | S⁰.L6.tempo × HC⁰.ITM | R³.x_l0l5[25:33] + H³ stability tuples | Same |
+| Papers | 0 | 2 (Rathcke + Patel) | **12** (5 HIGH, 7 MEDIUM) |
+| Brain regions | 0 | 4 (literature inference) | **8** (fMRI/7T/TMS/single-unit) |
+| Output | 9D | 9D (same) | 9D — no change |
 
 ### Why BEP + ASA replaces HC⁰ mechanisms
 

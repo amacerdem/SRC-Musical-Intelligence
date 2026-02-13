@@ -679,7 +679,7 @@ class CHPI(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 18 (Moller 2021, Cheung 2019, Bauer 2020, Kim 2021, Gold 2023, Egermann 2013, Tymoczko 2011, Gollin & Rehding 2011, Takagi 2025, Paraskevopoulos 2022, de Vries & Wurm 2023, Wagner 2018, Yilmaz 2025, Millidge et al. 2022, Tanaka 2021, Porfyri et al. 2025, Paraskevopoulos 2015) | Multi-study convergence |
+| **Papers** | 18 (Moller 2021, Cheung 2019, Bauer 2020, Kim 2021, Gold 2023, Egermann 2013, Tymoczko 2011, Gollin & Rehding 2011, Paraskevopoulos 2015, Takagi 2025, Paraskevopoulos 2022, de Vries & Wurm 2023, Wagner 2018, Yilmaz 2025, Millidge et al. 2022, Tanaka 2021, Porfyri et al. 2025, Chang 2025) | Multi-study convergence |
 | **Effect Sizes** | 8+ significant | p < 0.001 (IFOF), p < 0.001 (STG), p = 0.000246 (interaction), p = 0.003 (MMN), p = 8.3e-7 (hierarchical pred.), p < 0.001 FDR (musician networks) |
 | **Evidence Modality** | DTI + fMRI + MEG + EEG + Behavioral + Psychophysiology + Computational | Multi-modal |
 | **Falsification Tests** | 8/8 testable, 5 confirmed/supported | High validity |
