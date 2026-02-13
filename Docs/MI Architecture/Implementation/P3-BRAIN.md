@@ -2,330 +2,113 @@
 
 **Phase**: P3
 **Depends on**: P1 (Contracts), P2 (Ear -- R3 + H3)
-**Output**: 156 Python files in `Musical_Intelligence/brain/`
+**Output**: ~145 Python files in `Musical_Intelligence/brain/`
 **Gate**: G3 -- all 96 models instantiate, `validate_constants()` passes for each
 
 ---
 
 ## Overview
 
-Phase 3 implements the entire C3 cognitive brain layer: 10 shared mechanisms, 9 cognitive units containing 96 models, 5 cross-unit pathways, 6 circuit definitions, brain region registries, neurochemical systems, and the BrainOrchestrator that sequences the 5-phase execution.
+Phase 3 implements the C3 cognitive brain layer: 10 mechanisms, 9 units (96 models), 5 pathways, 6 circuits, brain regions, neurochemicals, and the BrainOrchestrator.
 
-Implementation follows the sub-phase order from MASTER-PLAN.md section 3:
-
-| Sub-phase | Contents | File Count |
-|-----------|----------|:----------:|
+| Sub-phase | Contents | Files |
+|-----------|----------|:-----:|
 | P3.1 | 10 Mechanisms | 10 |
 | P3.2 | MechanismRunner | 2 |
-| P3.3 | Supporting infrastructure (circuits, regions, neurochemicals) | 10 |
+| P3.3 | Infrastructure (circuits, regions, neurochemicals) | 10 |
 | P3.4 | 9 Unit shells | 18 |
 | P3.5 | 96 Models (3 batches) | 96 |
 | P3.6 | 5 Pathways + PathwayRunner | 7 |
 | P3.7 | BrainOrchestrator | 2 |
-| | **Total** | **~145** |
 
 ---
 
 ## P3.1 -- Mechanisms (10 files)
 
-Each mechanism is a `BaseMechanism` subclass producing `(B, T, 30)` output. Mechanisms are computed once and cached by the MechanismRunner.
+Each mechanism is a `BaseMechanism` subclass producing `(B, T, 30)`. Computed once, cached by MechanismRunner.
 
 ### `brain/mechanisms/__init__.py`
 
-**Purpose**: Re-export all 10 mechanism classes and MechanismRunner.
+**Purpose**: Re-export all 10 mechanisms and MechanismRunner.
 **Exports**: `PPC, TPC, BEP, ASA, TMH, MEM, SYN, AED, CPD, C0P, MechanismRunner`
 
 ---
 
+**Common structure for all 10 mechanism files below:**
+
+- **Depends On**: `contracts/bases/base_mechanism.py`
+- **Related Docs**: `Docs/C³/Contracts/BaseMechanism.md`, circuit doc for that mechanism
+- **Verification**: NAME/FULL_NAME/OUTPUT_DIM/HORIZONS match doc; h3_demand correct; output (B,T,30)
+
 ### `brain/mechanisms/ppc.py`
 
-**Purpose**: Pitch Processing Chain -- spectral pitch extraction across 3 horizons.
-
-**Primary Docs**:
-- `Docs/C³/Mechanisms/PPC.md` -- all fields, h3_demand, compute() formula, horizons
-
-**Related Docs**:
-- `Docs/C³/Contracts/BaseMechanism.md` -- ABC interface
-- `Docs/C³/Circuits/Perceptual.md` -- circuit context
-- `Docs/C³/Matrices/Mechanism-Map.md` -- which models use PPC
-
-**Depends On**:
-- `contracts/bases/base_mechanism.py`
-
+**Purpose**: Pitch Processing Chain -- spectral pitch extraction.
+**Primary Docs**: `Docs/C³/Mechanisms/PPC.md`
 **Exports**: `PPC`
-
-**Key Constraints**:
-- NAME = "PPC", FULL_NAME = "Pitch Processing Chain"
-- OUTPUT_DIM = 30, HORIZONS = (0, 3, 6) -- H0 (5.8ms), H3 (23ms), H6 (200ms)
-- 3 x 10D sub-sections: pitch extraction, interval analysis, contour tracking
-- Used by: BCH, PSCL, PCCR, SDNPS, ESME, SDED, SPH, HTP, PSH, PWUP, TPRD, SDD
-
-**Verification Checklist**:
-- [ ] NAME, FULL_NAME, OUTPUT_DIM, HORIZONS match PPC.md
-- [ ] h3_demand property returns correct set of 4-tuples
-- [ ] compute() signature matches BaseMechanism
-- [ ] Output shape is (B, T, 30)
-
----
+**Key Constraints**: NAME="PPC", HORIZONS=(0,3,6), 3x10D: pitch extraction / interval analysis / contour tracking. Used by 12 models (BCH, PSCL, PCCR, SDNPS, ESME, SDED, SPH, HTP, PSH, PWUP, TPRD, SDD).
 
 ### `brain/mechanisms/tpc.py`
 
-**Purpose**: Timbre Processing Chain -- spectral shape and temporal envelope analysis.
-
-**Primary Docs**:
-- `Docs/C³/Mechanisms/TPC.md` -- all fields, h3_demand, compute() formula
-
-**Related Docs**:
-- `Docs/C³/Contracts/BaseMechanism.md` -- ABC interface
-- `Docs/C³/Circuits/Perceptual.md` -- circuit context
-
-**Depends On**:
-- `contracts/bases/base_mechanism.py`
-
+**Purpose**: Timbre Processing Chain -- spectral shape and temporal envelope.
+**Primary Docs**: `Docs/C³/Mechanisms/TPC.md`
 **Exports**: `TPC`
-
-**Key Constraints**:
-- NAME = "TPC", FULL_NAME = "Timbre Processing Chain"
-- OUTPUT_DIM = 30, HORIZONS = (6, 12, 16) -- H6 (200ms), H12 (525ms), H16 (1s)
-- 3 x 10D: spectral shape, temporal envelope, source identity
-- Used by: STAI, TSCP, MIAA, TPIO, IGFE, HTP, PSH
-
-**Verification Checklist**:
-- [ ] Constants match TPC.md
-- [ ] h3_demand covers all 3 horizons
-- [ ] Output shape (B, T, 30)
-
----
+**Key Constraints**: NAME="TPC", HORIZONS=(6,12,16), 3x10D: spectral shape / temporal envelope / source identity. Used by 7 models (STAI, TSCP, MIAA, TPIO, IGFE, HTP, PSH).
 
 ### `brain/mechanisms/bep.py`
 
-**Purpose**: Beat Entrainment Processing -- rhythmic synchronization and motor coupling.
-
-**Primary Docs**:
-- `Docs/C³/Mechanisms/BEP.md` -- all fields, h3_demand, compute() formula
-
-**Related Docs**:
-- `Docs/C³/Contracts/BaseMechanism.md` -- ABC interface
-- `Docs/C³/Circuits/Sensorimotor.md` -- circuit context
-
-**Depends On**:
-- `contracts/bases/base_mechanism.py`
-
+**Purpose**: Beat Entrainment Processing -- rhythmic synchronization.
+**Primary Docs**: `Docs/C³/Mechanisms/BEP.md`
 **Exports**: `BEP`
-
-**Key Constraints**:
-- NAME = "BEP", FULL_NAME = "Beat Entrainment Processing"
-- OUTPUT_DIM = 30, HORIZONS = (6, 9, 11) -- H6 (200ms), H9 (350ms), H11 (525ms)
-- 3 x 10D: beat entrainment, motor coupling, groove
-- Most-used mechanism (26+ models across STU, ASU, MPU)
-
-**Verification Checklist**:
-- [ ] Constants match BEP.md
-- [ ] h3_demand covers all 3 horizons
-- [ ] Output shape (B, T, 30)
-
----
+**Key Constraints**: NAME="BEP", HORIZONS=(6,9,11), 3x10D: beat entrainment / motor coupling / groove. Most-used mechanism (26+ models across STU, ASU, MPU).
 
 ### `brain/mechanisms/asa.py`
 
-**Purpose**: Auditory Scene Analysis -- attention gating and salience weighting.
-
-**Primary Docs**:
-- `Docs/C³/Mechanisms/ASA.md` -- all fields, h3_demand, compute() formula
-
-**Related Docs**:
-- `Docs/C³/Contracts/BaseMechanism.md` -- ABC interface
-- `Docs/C³/Circuits/Salience.md` -- circuit context
-
-**Depends On**:
-- `contracts/bases/base_mechanism.py`
-
+**Purpose**: Auditory Scene Analysis -- attention gating and salience.
+**Primary Docs**: `Docs/C³/Mechanisms/ASA.md`
 **Exports**: `ASA`
-
-**Key Constraints**:
-- NAME = "ASA", FULL_NAME = "Auditory Scene Analysis"
-- OUTPUT_DIM = 30, HORIZONS = (3, 6, 9) -- H3 (23ms), H6 (200ms), H9 (350ms)
-- 3 x 10D: scene analysis, attention gating, salience weighting
-- Used by 21+ models across ASU, NDU, and others
-
-**Verification Checklist**:
-- [ ] Constants match ASA.md
-- [ ] h3_demand covers all 3 horizons
-- [ ] Output shape (B, T, 30)
-
----
+**Key Constraints**: NAME="ASA", HORIZONS=(3,6,9), 3x10D: scene analysis / attention gating / salience weighting. Used by 21+ models.
 
 ### `brain/mechanisms/tmh.py`
 
-**Purpose**: Temporal Memory Hierarchy -- sequence integration across multiple timescales.
-
-**Primary Docs**:
-- `Docs/C³/Mechanisms/TMH.md` -- all fields, h3_demand, compute() formula
-
-**Related Docs**:
-- `Docs/C³/Contracts/BaseMechanism.md` -- ABC interface
-- `Docs/C³/Circuits/Sensorimotor.md` -- circuit context
-
-**Depends On**:
-- `contracts/bases/base_mechanism.py`
-
+**Purpose**: Temporal Memory Hierarchy -- multi-timescale sequence integration.
+**Primary Docs**: `Docs/C³/Mechanisms/TMH.md`
 **Exports**: `TMH`
-
-**Key Constraints**:
-- NAME = "TMH", FULL_NAME = "Temporal Memory Hierarchy"
-- OUTPUT_DIM = 30, HORIZONS = (16, 18, 20, 22) -- H16 (1s), H18 (2s), H20 (5s), H22 (15s)
-- 4 horizons (exception to 3-horizon convention); 30D still holds
-- Used by: HMCE, AMSC, HGSIC, TMRM, MEAMN, PMIM, MCCN, CDMR
-
-**Verification Checklist**:
-- [ ] Constants match TMH.md
-- [ ] 4 horizons correctly declared
-- [ ] Output shape (B, T, 30)
-
----
+**Key Constraints**: NAME="TMH", HORIZONS=(16,18,20,22), 4 horizons (exception); 30D. Used by 8 models.
 
 ### `brain/mechanisms/mem.py`
 
-**Purpose**: Memory Encoding/Retrieval -- working memory, long-term memory, prediction buffer.
-
-**Primary Docs**:
-- `Docs/C³/Mechanisms/MEM.md` -- all fields, h3_demand, compute() formula
-
-**Related Docs**:
-- `Docs/C³/Contracts/BaseMechanism.md` -- ABC interface
-- `Docs/C³/Circuits/Mnemonic.md` -- circuit context
-
-**Depends On**:
-- `contracts/bases/base_mechanism.py`
-
+**Purpose**: Memory Encoding/Retrieval -- working memory and long-term memory.
+**Primary Docs**: `Docs/C³/Mechanisms/MEM.md`
 **Exports**: `MEM`
-
-**Key Constraints**:
-- NAME = "MEM", FULL_NAME = "Memory Encoding / Retrieval"
-- OUTPUT_DIM = 30, HORIZONS = (18, 20, 22, 25) -- H18 (2s), H20 (5s), H22 (15s), H25 (60s)
-- 4 horizons; longest timescale mechanism (up to 60s)
-- Used by: MEAMN, PNH, MMP, HCMC, OII, CDEM, CSSL, DMMS, RIRI, VRIAP, CMAPCC, RASN, PMIM, and others
-
-**Verification Checklist**:
-- [ ] Constants match MEM.md
-- [ ] 4 horizons including H25
-- [ ] Output shape (B, T, 30)
-
----
+**Key Constraints**: NAME="MEM", HORIZONS=(18,20,22,25), 4 horizons; longest timescale (60s). Used by 20+ models.
 
 ### `brain/mechanisms/syn.py`
 
-**Purpose**: Syntactic Processing -- musical syntax in Broca's area analog.
-
-**Primary Docs**:
-- `Docs/C³/Mechanisms/SYN.md` -- all fields, h3_demand, compute() formula
-
-**Related Docs**:
-- `Docs/C³/Contracts/BaseMechanism.md` -- ABC interface
-- `Docs/C³/Circuits/Mnemonic.md` -- circuit context
-
-**Depends On**:
-- `contracts/bases/base_mechanism.py`
-
+**Purpose**: Syntactic Processing -- musical syntax (Broca's area analog).
+**Primary Docs**: `Docs/C³/Mechanisms/SYN.md`
 **Exports**: `SYN`
-
-**Key Constraints**:
-- NAME = "SYN", FULL_NAME = "Syntactic Processing"
-- OUTPUT_DIM = 30, HORIZONS = (12, 16, 18) -- H12 (525ms), H16 (1s), H18 (2s)
-- Least-used mechanism (only MSPBA); still cached for consistency
-- 3 x 10D sub-sections
-
-**Verification Checklist**:
-- [ ] Constants match SYN.md
-- [ ] h3_demand covers all 3 horizons
-- [ ] Output shape (B, T, 30)
-
----
+**Key Constraints**: NAME="SYN", HORIZONS=(12,16,18), 3x10D. Least-used (only MSPBA).
 
 ### `brain/mechanisms/aed.py`
 
-**Purpose**: Affective Entrainment Dynamics -- valence tracking and arousal dynamics.
-
-**Primary Docs**:
-- `Docs/C³/Mechanisms/AED.md` -- all fields, h3_demand, compute() formula
-
-**Related Docs**:
-- `Docs/C³/Contracts/BaseMechanism.md` -- ABC interface
-- `Docs/C³/Circuits/Mesolimbic.md` -- circuit context
-
-**Depends On**:
-- `contracts/bases/base_mechanism.py`
-
+**Purpose**: Affective Entrainment Dynamics -- valence and arousal tracking.
+**Primary Docs**: `Docs/C³/Mechanisms/AED.md`
 **Exports**: `AED`
-
-**Key Constraints**:
-- NAME = "AED", FULL_NAME = "Affective Entrainment Dynamics"
-- OUTPUT_DIM = 30, HORIZONS = (6, 16) -- H6 (200ms), H16 (1s)
-- 2 horizons (fewest of any mechanism); 30D convention still holds
-- Used by 18+ models in ARU and RPU
-
-**Verification Checklist**:
-- [ ] Constants match AED.md
-- [ ] 2 horizons correctly declared
-- [ ] Output shape (B, T, 30)
-
----
+**Key Constraints**: NAME="AED", HORIZONS=(6,16), 2 horizons (fewest); 30D. Used by 18+ models (ARU/RPU).
 
 ### `brain/mechanisms/cpd.py`
 
-**Purpose**: Chills and Peak Detection -- anticipation, peak experience, resolution phases.
-
-**Primary Docs**:
-- `Docs/C³/Mechanisms/CPD.md` -- all fields, h3_demand, compute() formula
-
-**Related Docs**:
-- `Docs/C³/Contracts/BaseMechanism.md` -- ABC interface
-- `Docs/C³/Circuits/Mesolimbic.md` -- circuit context
-
-**Depends On**:
-- `contracts/bases/base_mechanism.py`
-
+**Purpose**: Chills and Peak Detection -- anticipation/peak/resolution.
+**Primary Docs**: `Docs/C³/Mechanisms/CPD.md`
 **Exports**: `CPD`
-
-**Key Constraints**:
-- NAME = "CPD", FULL_NAME = "Chills & Peak Detection"
-- OUTPUT_DIM = 30, HORIZONS = (9, 16, 18) -- H9 (350ms), H16 (1s), H18 (2s)
-- 3 x 10D: anticipation, peak experience, resolution
-- Used by: SRP, AAC, PUPF, MAD, DAED, RPEM
-
-**Verification Checklist**:
-- [ ] Constants match CPD.md
-- [ ] h3_demand covers all 3 horizons
-- [ ] Output shape (B, T, 30)
-
----
+**Key Constraints**: NAME="CPD", HORIZONS=(9,16,18), 3x10D: anticipation / peak / resolution. Used by 6 models.
 
 ### `brain/mechanisms/c0p.py`
 
-**Purpose**: Cognitive Projection -- tension-expectation-approach dynamics.
-
-**Primary Docs**:
-- `Docs/C³/Mechanisms/C0P.md` -- all fields, h3_demand, compute() formula
-
-**Related Docs**:
-- `Docs/C³/Contracts/BaseMechanism.md` -- ABC interface
-- `Docs/C³/Circuits/Mesolimbic.md` -- circuit context
-
-**Depends On**:
-- `contracts/bases/base_mechanism.py`
-
+**Purpose**: Cognitive Projection -- tension-expectation-approach.
+**Primary Docs**: `Docs/C³/Mechanisms/C0P.md`
 **Exports**: `C0P`
-
-**Key Constraints**:
-- NAME = "C0P", FULL_NAME = "Cognitive Projection"
-- OUTPUT_DIM = 30, HORIZONS = (18, 19, 20) -- H18 (2s), H19 (3s), H20 (5s)
-- 3 x 10D sub-sections
-- Used by: SRP, VMM, MORMR, IUCP, ICEM, UDP
-
-**Verification Checklist**:
-- [ ] Constants match C0P.md (note: zero not letter O in name)
-- [ ] h3_demand covers all 3 horizons
-- [ ] Output shape (B, T, 30)
+**Key Constraints**: NAME="C0P" (zero, not O), HORIZONS=(18,19,20), 3x10D. Used by 6 models.
 
 ---
 
@@ -333,350 +116,155 @@ Each mechanism is a `BaseMechanism` subclass producing `(B, T, 30)` output. Mech
 
 ### `brain/mechanisms/runner.py`
 
-**Purpose**: Compute all required mechanisms once, cache outputs for model reuse.
+**Purpose**: Compute all required mechanisms once, cache for model reuse.
 
 **Primary Docs**:
 - `Docs/C³/Mechanisms/00-INDEX.md` -- MechanismRunner architecture
-- `Docs/C³/Contracts/BaseMechanism.md` -- interface consumed
+- `Docs/C³/Contracts/BaseMechanism.md` -- interface
 
-**Related Docs**:
-- `Docs/C³/C3-ARCHITECTURE.md` -- Phase 1 execution context
-
-**Depends On**:
-- `contracts/bases/base_mechanism.py`
-- All 10 mechanism files (P3.1)
+**Depends On**: `contracts/bases/base_mechanism.py`, all 10 mechanism files
 
 **Exports**: `MechanismRunner`
 
 **Key Constraints**:
-- Scans model registry for unique MECHANISM_NAMES across all active models
-- Instantiates each needed mechanism exactly once
-- `run(h3_features, r3_features)` computes all, stores in cache dict
-- `get(name)` returns cached `(B, T, 30)` tensor; raises if not yet computed
-- Thread-safe cache (deterministic, but guard against misuse)
-- No re-computation: if already cached, return immediately
+- Scans model registry for unique MECHANISM_NAMES across active models
+- `run(h3_features, r3_features)` computes all, stores in cache
+- `get(name)` returns cached `(B, T, 30)` tensor; raises if not cached
+- Each mechanism computed exactly once per run() call
 
 **Verification Checklist**:
-- [ ] Each mechanism computed exactly once per run() call
-- [ ] get() returns correct shape (B, T, 30) for all 10 mechanisms
-- [ ] get() raises KeyError or ValueError if mechanism not cached
-- [ ] Cache cleared between frames/batches as appropriate
+- [ ] Each mechanism computed exactly once
+- [ ] get() returns (B, T, 30) for all 10
+- [ ] get() raises if not cached
+- [ ] Cache cleared between batches
 
 ---
 
 ## P3.3 -- Supporting Infrastructure
 
-### `brain/circuits/__init__.py`
+### Circuits
+
+#### `brain/circuits/__init__.py`
 
 **Purpose**: Re-export circuit definitions and registry.
 **Exports**: `CircuitDef, CircuitRegistry, CIRCUITS, CIRCUIT_NAMES`
 
----
+#### `brain/circuits/definitions.py`
 
-### `brain/circuits/definitions.py`
+**Purpose**: 6 CircuitDef instances for neural circuit groupings.
 
-**Purpose**: 6 CircuitDef instances defining neural circuit groupings.
+**Primary Docs**: `Docs/C³/Circuits/00-INDEX.md`, plus `Docs/C³/Circuits/{Mesolimbic,Perceptual,Sensorimotor,Mnemonic,Salience,Imagery}.md`
 
-**Primary Docs**:
-- `Docs/C³/Circuits/00-INDEX.md` -- 6 circuit definitions with units and mechanisms
-- `Docs/C³/Circuits/Mesolimbic.md` -- mesolimbic circuit detail
-- `Docs/C³/Circuits/Perceptual.md` -- perceptual circuit detail
-- `Docs/C³/Circuits/Sensorimotor.md` -- sensorimotor circuit detail
-- `Docs/C³/Circuits/Mnemonic.md` -- mnemonic circuit detail
-- `Docs/C³/Circuits/Salience.md` -- salience circuit detail
-- `Docs/C³/Circuits/Imagery.md` -- imagery circuit detail
-
-**Related Docs**:
-- `Docs/C³/Contracts/BaseCognitiveUnit.md` -- CIRCUIT field used in units
-
-**Depends On**: Nothing (pure data).
-
-**Exports**: `CIRCUITS` (dict), `CIRCUIT_NAMES` (tuple of 6)
+**Exports**: `CIRCUITS` (5 operational), `CIRCUIT_NAMES` (6 total, includes imagery)
 
 **Key Constraints**:
-- 6 circuits: mesolimbic, perceptual, sensorimotor, mnemonic, salience, imagery
-- CIRCUITS (operational set) = 5 circuits (excludes imagery)
-- CIRCUIT_NAMES = all 6
-- Each CircuitDef: name, description, mechanisms (tuple of str), units (tuple of str), key_regions
+- 6 circuits: mesolimbic (AED,CPD,C0P / ARU,RPU), perceptual (PPC,TPC / SPU), sensorimotor (BEP,TMH / STU,MPU), mnemonic (MEM,SYN / IMU,PCU), salience (ASA / ASU,NDU), imagery (PPC,TPC,MEM / PCU)
+- CIRCUITS excludes imagery (emergent, not structural)
 
-**Verification Checklist**:
-- [ ] 6 CircuitDef instances match Circuits/00-INDEX.md
-- [ ] CIRCUITS has 5 entries, CIRCUIT_NAMES has 6
-- [ ] Mechanism and unit assignments match docs exactly
+#### `brain/circuits/registry.py`
 
----
-
-### `brain/circuits/registry.py`
-
-**Purpose**: CircuitRegistry for lookup by name, mechanism, or unit.
-
-**Primary Docs**:
-- `Docs/C³/Circuits/00-INDEX.md` -- cross-circuit mechanism sharing table
-
-**Depends On**:
-- `brain/circuits/definitions.py`
-
+**Purpose**: CircuitRegistry with lookup by name, mechanism, or unit.
+**Primary Docs**: `Docs/C³/Circuits/00-INDEX.md`
+**Depends On**: `brain/circuits/definitions.py`
 **Exports**: `CircuitRegistry`
 
-**Key Constraints**:
-- `get_by_name(name)` -> CircuitDef
-- `get_by_mechanism(mech_name)` -> CircuitDef
-- `get_by_unit(unit_name)` -> CircuitDef
-- Immutable after initialization
-
-**Verification Checklist**:
-- [ ] All lookup methods return correct results
-- [ ] Unknown name raises KeyError
-
 ---
 
-### `brain/regions/__init__.py`
+### Regions
 
-**Purpose**: Re-export region registries.
+#### `brain/regions/__init__.py`
+
 **Exports**: `BrainRegionRegistry, CORTICAL_REGIONS, SUBCORTICAL_REGIONS, BRAINSTEM_REGIONS`
 
----
+#### `brain/regions/cortical.py`
 
-### `brain/regions/cortical.py`
-
-**Purpose**: Cortical brain regions with Brodmann areas and MNI152 coordinates.
-
-**Primary Docs**:
-- `Docs/C³/Regions/Cortical.md` -- all cortical regions, Brodmann areas, MNI coords, functions
-
-**Related Docs**:
-- `Docs/C³/Contracts/BrainRegion.md` -- BrainRegion dataclass definition
-
-**Depends On**:
-- `contracts/dataclasses/brain_region.py`
-
+**Purpose**: Cortical regions with Brodmann areas and MNI152 coordinates.
+**Primary Docs**: `Docs/C³/Regions/Cortical.md`
+**Depends On**: `contracts/dataclasses/brain_region.py`
 **Exports**: `CORTICAL_REGIONS` (tuple of BrainRegion)
+**Key Constraints**: All have brodmann_area (is_cortical==True). MNI: x(L-/R+), y(P-/A+), z(I-/S+).
 
-**Key Constraints**:
-- Each entry: name, abbreviation, hemisphere, mni_coords, brodmann_area, function
-- Includes: Heschl's Gyrus, Planum Temporale, SMA, PMC, IFG, STG, etc.
-- All cortical regions MUST have brodmann_area set (non-None)
-- MNI convention: x (L-/R+), y (P-/A+), z (I-/S+)
+#### `brain/regions/subcortical.py`
 
-**Verification Checklist**:
-- [ ] All regions from Cortical.md present
-- [ ] All have brodmann_area (is_cortical == True)
-- [ ] MNI coordinates match doc values exactly
+**Purpose**: Subcortical nuclei (NAcc, VTA, Amygdala, Hippocampus, etc.).
+**Primary Docs**: `Docs/C³/Regions/Subcortical.md`
+**Exports**: `SUBCORTICAL_REGIONS` -- brodmann_area=None for all.
 
----
+#### `brain/regions/brainstem.py`
 
-### `brain/regions/subcortical.py`
+**Purpose**: Brainstem structures (Inferior Colliculus, Cochlear Nucleus, etc.).
+**Primary Docs**: `Docs/C³/Regions/Brainstem.md`
+**Exports**: `BRAINSTEM_REGIONS` -- brodmann_area=None for all.
 
-**Purpose**: Subcortical nuclei without Brodmann areas.
+#### `brain/regions/registry.py`
 
-**Primary Docs**:
-- `Docs/C³/Regions/Subcortical.md` -- all subcortical regions, MNI coords, functions
-
-**Depends On**:
-- `contracts/dataclasses/brain_region.py`
-
-**Exports**: `SUBCORTICAL_REGIONS` (tuple of BrainRegion)
-
-**Key Constraints**:
-- Includes: NAcc, VTA, Amygdala, Hippocampus, Caudate, Putamen, Thalamus, etc.
-- brodmann_area = None for all (is_subcortical == True)
-
-**Verification Checklist**:
-- [ ] All regions from Subcortical.md present
-- [ ] All have brodmann_area = None
-- [ ] MNI coordinates match doc values
+**Purpose**: Unified BrainRegionRegistry with MNI lookup.
+**Primary Docs**: `Docs/C³/Regions/00-INDEX.md`
+**Exports**: `BrainRegionRegistry` -- get_by_name(), get_by_abbreviation(), get_nearest_mni()
 
 ---
 
-### `brain/regions/brainstem.py`
+### Neurochemicals
 
-**Purpose**: Brainstem structures.
+#### `brain/neurochemicals/__init__.py`
 
-**Primary Docs**:
-- `Docs/C³/Regions/Brainstem.md` -- brainstem regions, MNI coords, functions
-
-**Depends On**:
-- `contracts/dataclasses/brain_region.py`
-
-**Exports**: `BRAINSTEM_REGIONS` (tuple of BrainRegion)
-
-**Key Constraints**:
-- Includes: Inferior Colliculus, Cochlear Nucleus, etc.
-- brodmann_area = None for all
-
-**Verification Checklist**:
-- [ ] All regions from Brainstem.md present
-- [ ] MNI coordinates match doc values
-
----
-
-### `brain/regions/registry.py`
-
-**Purpose**: BrainRegionRegistry combining all region categories with MNI lookup.
-
-**Primary Docs**:
-- `Docs/C³/Regions/00-INDEX.md` -- registry overview and lookup interface
-
-**Depends On**:
-- `brain/regions/cortical.py`, `subcortical.py`, `brainstem.py`
-
-**Exports**: `BrainRegionRegistry`
-
-**Key Constraints**:
-- Aggregates CORTICAL + SUBCORTICAL + BRAINSTEM into unified registry
-- `get_by_name(name)` -> BrainRegion
-- `get_by_abbreviation(abbrev)` -> BrainRegion
-- `get_nearest_mni(x, y, z)` -> BrainRegion (Euclidean nearest)
-
-**Verification Checklist**:
-- [ ] All 3 category sets merged correctly
-- [ ] Lookup by name and abbreviation both work
-- [ ] MNI nearest neighbor lookup returns correct region
-
----
-
-### `brain/neurochemicals/__init__.py`
-
-**Purpose**: Re-export neurochemical systems.
 **Exports**: `Dopamine, Opioid, Serotonin, Norepinephrine, NeurochemicalRegistry`
 
----
+**4 neurochemical files** (each exports one class):
 
-### `brain/neurochemicals/dopamine.py`
+| File | Primary Doc | Exports |
+|------|-------------|---------|
+| `brain/neurochemicals/dopamine.py` | `Docs/C³/Neurochemicals/Dopamine.md` | `Dopamine` |
+| `brain/neurochemicals/opioid.py` | `Docs/C³/Neurochemicals/Opioid.md` | `Opioid` |
+| `brain/neurochemicals/serotonin.py` | `Docs/C³/Neurochemicals/Serotonin.md` | `Serotonin` |
+| `brain/neurochemicals/norepinephrine.py` | `Docs/C³/Neurochemicals/Norepinephrine.md` | `Norepinephrine` |
 
-**Purpose**: Dopamine system metadata and state model.
-
-**Primary Docs**:
-- `Docs/C³/Neurochemicals/Dopamine.md` -- receptor types, pathways, musical functions
-
-**Depends On**: Nothing (pure data + simple state).
-
-**Exports**: `Dopamine`
-
-**Verification Checklist**:
-- [ ] All fields match Dopamine.md
-
----
-
-### `brain/neurochemicals/opioid.py`
-
-**Purpose**: Endogenous opioid system metadata.
-
-**Primary Docs**:
-- `Docs/C³/Neurochemicals/Opioid.md` -- mu-opioid receptor role in musical pleasure
-
-**Exports**: `Opioid`
-
----
-
-### `brain/neurochemicals/serotonin.py`
-
-**Purpose**: Serotonin system metadata.
-
-**Primary Docs**:
-- `Docs/C³/Neurochemicals/Serotonin.md` -- serotonergic modulation of musical mood
-
-**Exports**: `Serotonin`
-
----
-
-### `brain/neurochemicals/norepinephrine.py`
-
-**Purpose**: Norepinephrine system metadata.
-
-**Primary Docs**:
-- `Docs/C³/Neurochemicals/Norepinephrine.md` -- arousal and attention modulation
-
-**Exports**: `Norepinephrine`
-
----
-
-### `brain/neurochemicals/registry.py`
+#### `brain/neurochemicals/registry.py`
 
 **Purpose**: NeurochemicalRegistry for lookup by name.
-
-**Primary Docs**:
-- `Docs/C³/Neurochemicals/00-INDEX.md` -- registry overview
-
-**Depends On**:
-- `brain/neurochemicals/dopamine.py`, `opioid.py`, `serotonin.py`, `norepinephrine.py`
-
+**Primary Docs**: `Docs/C³/Neurochemicals/00-INDEX.md`
 **Exports**: `NeurochemicalRegistry`
-
-**Verification Checklist**:
-- [ ] All 4 neurochemical systems registered
-- [ ] Lookup by name returns correct system
 
 ---
 
 ## P3.4 -- Unit Shells (9 units)
 
-Each unit is a `BaseCognitiveUnit` subclass in `brain/units/{code}/unit.py` with a models sub-package. All 9 units follow the same template.
+Each unit is a `BaseCognitiveUnit` subclass in `brain/units/{code}/unit.py` with a `models/` sub-package.
 
 ### Unit Template
 
 Every `unit.py` must:
+1. Override: `UNIT_NAME`, `FULL_NAME`, `CIRCUIT`, `POOLED_EFFECT`
+2. Import and instantiate all models from `models/`
+3. Implement `models` property (List[BaseModel]), `compute()` method
+4. compute() calls each model in tier order (alpha->beta->gamma), concatenates outputs
+5. Pass `validate_constants()`
 
-1. Override class constants: `UNIT_NAME`, `FULL_NAME`, `CIRCUIT`, `POOLED_EFFECT`
-2. Import and instantiate all models from `models/` sub-package
-3. Implement `models` property returning List[BaseModel]
-4. Implement `compute(mechanism_outputs, h3_features, r3_features, cross_unit_inputs)` that:
-   - Calls each model's compute() in tier order (alpha, beta, gamma)
-   - Concatenates outputs along last dimension
-   - Returns `(B, T, unit_dim)` tensor
-5. Pass `validate_constants()` from BaseCognitiveUnit
+**Primary Doc pattern**: `Docs/C³/Units/{UNIT}.md`
+**Related Docs**: `Docs/C³/Contracts/BaseCognitiveUnit.md`, `Docs/C³/C3-ARCHITECTURE.md`
 
-Each `models/__init__.py` re-exports all model classes for that unit.
+### `brain/units/spu/unit.py` (example)
 
-### `brain/units/spu/unit.py` (example -- all 9 follow this pattern)
+**Purpose**: SPU shell -- 9 models, 99D.
+**Key Constraints**: UNIT_NAME="SPU", CIRCUIT="perceptual", POOLED_EFFECT=0.84, Independent.
 
-**Purpose**: Spectral Processing Unit shell -- 9 models, 99D output.
+### Unit Roster
 
-**Primary Docs**:
-- `Docs/C³/Units/SPU.md` -- UNIT_NAME, FULL_NAME, CIRCUIT, POOLED_EFFECT, model roster
+| Unit File | Unit | Circuit | d | Models | Dim | Dep. | Doc |
+|-----------|------|---------|-----|:------:|:---:|------|-----|
+| `brain/units/spu/unit.py` | SPU | perceptual | 0.84 | 9 | 99 | Indep. | `Docs/C³/Units/SPU.md` |
+| `brain/units/stu/unit.py` | STU | sensorimotor | 0.67 | 14 | 148 | Indep. | `Docs/C³/Units/STU.md` |
+| `brain/units/imu/unit.py` | IMU | mnemonic | 0.53 | 15 | 159 | Indep. | `Docs/C³/Units/IMU.md` |
+| `brain/units/asu/unit.py` | ASU | salience | 0.60 | 9 | 94 | Indep. | `Docs/C³/Units/ASU.md` |
+| `brain/units/ndu/unit.py` | NDU | salience | 0.55 | 9 | 94 | Indep. | `Docs/C³/Units/NDU.md` |
+| `brain/units/mpu/unit.py` | MPU | sensorimotor | 0.62 | 10 | 104 | Indep. | `Docs/C³/Units/MPU.md` |
+| `brain/units/pcu/unit.py` | PCU | mnemonic | 0.58 | 10 | 94 | Indep. | `Docs/C³/Units/PCU.md` |
+| `brain/units/aru/unit.py` | ARU | mesolimbic | 0.83 | 10 | 120 | Dep. | `Docs/C³/Units/ARU.md` |
+| `brain/units/rpu/unit.py` | RPU | mesolimbic | 0.70 | 10 | 94 | Dep. | `Docs/C³/Units/RPU.md` |
 
-**Related Docs**:
-- `Docs/C³/Contracts/BaseCognitiveUnit.md` -- ABC interface
-- `Docs/C³/C3-ARCHITECTURE.md` -- Phase 2 independent execution
+Each unit also has `__init__.py` and `models/__init__.py`.
 
-**Depends On**:
-- `contracts/bases/base_unit.py`
-- All SPU model files in `brain/units/spu/models/`
-
-**Exports**: `SPUUnit`
-
-**Key Constraints**:
-- UNIT_NAME = "SPU", FULL_NAME = "Spectral Processing Unit"
-- CIRCUIT = "perceptual", POOLED_EFFECT = 0.84
-- 9 models: BCH(12D), PSCL(12D), PCCR(11D), STAI(12D), TSCP(10D), MIAA(11D), SDNPS(10D), ESME(11D), SDED(10D)
-- Total: 99D
-- Dependency: Independent (no cross_unit_inputs needed)
-- Pathway source: P1_SPU_ARU
-
-**Verification Checklist**:
-- [ ] 4 constants match SPU.md
-- [ ] models property returns 9 models in tier order
-- [ ] total_dim == 99
-- [ ] validate_constants() passes
-- [ ] compute() returns (B, T, 99)
-
----
-
-### Unit Roster (all 9 units)
-
-| Code File | Unit | Full Name | Circuit | d | Models | Dim | Dependency | Primary Doc |
-|-----------|------|-----------|---------|-----|:------:|:---:|------------|-------------|
-| `brain/units/spu/unit.py` | SPU | Spectral Processing | perceptual | 0.84 | 9 | 99 | Independent | `Docs/C³/Units/SPU.md` |
-| `brain/units/stu/unit.py` | STU | Sensorimotor Timing | sensorimotor | 0.67 | 14 | 148 | Independent | `Docs/C³/Units/STU.md` |
-| `brain/units/imu/unit.py` | IMU | Integrative Memory | mnemonic | 0.53 | 15 | 159 | Independent | `Docs/C³/Units/IMU.md` |
-| `brain/units/asu/unit.py` | ASU | Auditory Salience | salience | 0.60 | 9 | 94 | Independent | `Docs/C³/Units/ASU.md` |
-| `brain/units/ndu/unit.py` | NDU | Novelty Detection | salience | 0.55 | 9 | 94 | Independent | `Docs/C³/Units/NDU.md` |
-| `brain/units/mpu/unit.py` | MPU | Motor Planning | sensorimotor | 0.62 | 10 | 104 | Independent | `Docs/C³/Units/MPU.md` |
-| `brain/units/pcu/unit.py` | PCU | Predictive Coding | mnemonic | 0.58 | 10 | 94 | Independent | `Docs/C³/Units/PCU.md` |
-| `brain/units/aru/unit.py` | ARU | Affective Resonance | mesolimbic | 0.83 | 10 | 120 | Dependent | `Docs/C³/Units/ARU.md` |
-| `brain/units/rpu/unit.py` | RPU | Reward Processing | mesolimbic | 0.70 | 10 | 94 | Dependent | `Docs/C³/Units/RPU.md` |
-
-Each unit also has `brain/units/{code}/__init__.py` and `brain/units/{code}/models/__init__.py`.
+**Verification** (per unit): 4 constants match doc; models returns correct count in tier order; total_dim matches; validate_constants() passes.
 
 ---
 
@@ -684,229 +272,198 @@ Each unit also has `brain/units/{code}/__init__.py` and `brain/units/{code}/mode
 
 ### Model Template
 
-Every model file `brain/units/{unit}/models/{acronym}.py` follows the same pattern:
+Every model file `brain/units/{unit}/models/{acronym}.py`:
 
-**Primary Docs** (MUST read fully):
-- `Docs/C³/Models/{UNIT}-{tier}{n}-{ACRONYM}/{ACRONYM}.md` -- the 14-section model document
+**Primary Docs**: `Docs/C³/Models/{UNIT}-{tier}{n}-{ACRONYM}/{ACRONYM}.md` (14-section doc)
 
-**Related Docs** (read for context):
-- `Docs/C³/Contracts/BaseModel.md` -- ABC interface
-- `Docs/C³/Units/{UNIT}.md` -- unit context
-- `Docs/C³/Mechanisms/{MECH}.md` -- for each mechanism the model uses
-- `Docs/C³/Matrices/R3-Usage.md` -- R3 index mapping
-- `Docs/C³/Matrices/H3-Demand.md` -- H3 demand mapping
-- `Docs/Beta/DISCREPANCY-REGISTRY.md` -- known doc vs code gaps (use doc values)
+**Related Docs**: `Docs/C³/Contracts/BaseModel.md`, `Docs/C³/Units/{UNIT}.md`, mechanism docs, `Docs/C³/Matrices/R3-Usage.md`, `Docs/C³/Matrices/H3-Demand.md`, `Docs/Beta/DISCREPANCY-REGISTRY.md`
 
-**Depends On**:
-- `contracts/bases/base_model.py`
-- `contracts/dataclasses/layer_spec.py`
-- `contracts/dataclasses/demand_spec.py`
-- `contracts/dataclasses/brain_region.py`
-- `contracts/dataclasses/model_metadata.py`
-- `contracts/dataclasses/citation.py`
+**Depends On**: `contracts/bases/base_model.py`, `contracts/dataclasses/{layer_spec,demand_spec,brain_region,model_metadata,citation}.py`
 
-**Doc-to-code mapping** (14 model doc sections):
+**Doc-to-code mapping**:
 
 | Doc Section | Code Element |
 |-------------|-------------|
 | 1. Overview | Class docstring |
-| 2. Context | Class docstring (continued) |
-| 3. Scientific Foundation | `metadata` property -- citations, evidence_tier |
-| 4. R3 Input Mapping | `R3_INDICES` class constant (tuple of ints) |
-| 5. H3 Temporal Demand | `h3_demand` property returning tuple of H3DemandSpec |
-| 6. Output Space | `LAYERS` class constant (tuple of LayerSpec) |
-| 7. Mathematical Formulation | `compute()` method body |
-| 8. Brain Regions | `brain_regions` property returning tuple of BrainRegion |
-| 9. Integration Context | Class docstring or comments |
+| 3. Scientific Foundation | `metadata` property (citations, evidence_tier) |
+| 4. R3 Input Mapping | `R3_INDICES` constant |
+| 5. H3 Temporal Demand | `h3_demand` property |
+| 6. Output Space | `LAYERS` constant (LayerSpec tuples) |
+| 7. Mathematical Formulation | `compute()` method |
+| 8. Brain Regions | `brain_regions` property |
 | 10. Falsification Criteria | `metadata.falsification_criteria` |
-| 11. Implementation Pseudocode | `compute()` method reference |
-| 12. Version History | Version constant or metadata |
 | 13. References | `metadata.citations` |
-| 14. Extension Points | Comments (future work) |
 
-**Key Constraints** (apply to ALL 96 models):
-- Class constants: NAME, FULL_NAME, UNIT, TIER, OUTPUT_DIM, MECHANISM_NAMES, CROSS_UNIT_READS, LAYERS
-- Abstract properties: h3_demand, dimension_names, brain_regions, metadata
-- Abstract method: compute(mechanism_outputs, h3_features, r3_features, cross_unit_inputs)
-- `validate_constants()` MUST pass
-- LAYERS must cover [0, OUTPUT_DIM) with no gaps or overlaps
-- Use doc values (v2), NOT old code values (v1), per DISCREPANCY-REGISTRY.md
-- All h3_demand populated (not empty tuples)
-- MECHANISM_NAMES from doc (may differ from old code)
-- FULL_NAME from doc Section 1 header
+**Key Constraints** (ALL 96 models):
+- Constants: NAME, FULL_NAME, UNIT, TIER, OUTPUT_DIM, MECHANISM_NAMES, CROSS_UNIT_READS, LAYERS
+- Properties: h3_demand, dimension_names, brain_regions, metadata
+- Method: compute(mechanism_outputs, h3_features, r3_features, cross_unit_inputs)
+- LAYERS must cover [0, OUTPUT_DIM) contiguously
+- Use doc values (v2), not old code values (v1)
+- All h3_demand populated, MECHANISM_NAMES from doc, FULL_NAME from doc Section 1
 
-**Verification Checklist** (apply to each model):
-- [ ] NAME, FULL_NAME match model doc Section 1
-- [ ] UNIT, TIER match model ID pattern
-- [ ] OUTPUT_DIM == sum of all LayerSpec dims
-- [ ] LAYERS cover [0, OUTPUT_DIM) contiguously
-- [ ] R3_INDICES match doc Section 4
-- [ ] h3_demand tuples match doc Section 5
-- [ ] compute() implements doc Section 7 formulas
-- [ ] brain_regions match doc Section 8 with MNI coords
-- [ ] metadata.citations match doc Section 13
-- [ ] metadata.falsification_criteria match doc Section 10
-- [ ] validate_constants() passes
-- [ ] File under 1000 lines
+**Verification** (per model): NAME/FULL_NAME match doc; OUTPUT_DIM == sum(layer dims); LAYERS contiguous; R3_INDICES match Section 4; h3_demand match Section 5; compute() implements Section 7; brain_regions match Section 8; citations match Section 13; falsification match Section 10; validate_constants() passes; file under 1000 lines.
 
 ---
 
-### Batch 1: SPU (9), STU (14), IMU (15) -- Independent, Parallelizable
+### Batch 1: SPU (9) + STU (14) + IMU (15) -- Independent, Parallelizable
 
-Within each unit, implement in tier order: alpha -> beta -> gamma.
+Implement within each unit in tier order: alpha -> beta -> gamma.
 
-#### SPU Models (9 models, 99D total)
+#### SPU Models (9 models, 99D)
 
-| # | Model ID | Acronym | Tier | Dim | Mechanisms | Code Path | Doc Path |
-|---|----------|---------|------|:---:|------------|-----------|----------|
-| 1 | SPU-a1-BCH | BCH | alpha | 12 | PPC | `brain/units/spu/models/bch.py` | `Docs/C³/Models/SPU-α1-BCH/BCH.md` |
-| 2 | SPU-a2-PSCL | PSCL | alpha | 12 | PPC | `brain/units/spu/models/pscl.py` | `Docs/C³/Models/SPU-α2-PSCL/PSCL.md` |
-| 3 | SPU-a3-PCCR | PCCR | alpha | 11 | PPC | `brain/units/spu/models/pccr.py` | `Docs/C³/Models/SPU-α3-PCCR/PCCR.md` |
-| 4 | SPU-b1-STAI | STAI | beta | 12 | TPC | `brain/units/spu/models/stai.py` | `Docs/C³/Models/SPU-β1-STAI/STAI.md` |
-| 5 | SPU-b2-TSCP | TSCP | beta | 10 | TPC | `brain/units/spu/models/tscp.py` | `Docs/C³/Models/SPU-β2-TSCP/TSCP.md` |
-| 6 | SPU-b3-MIAA | MIAA | beta | 11 | TPC | `brain/units/spu/models/miaa.py` | `Docs/C³/Models/SPU-β3-MIAA/MIAA.md` |
-| 7 | SPU-g1-SDNPS | SDNPS | gamma | 10 | PPC | `brain/units/spu/models/sdnps.py` | `Docs/C³/Models/SPU-γ1-SDNPS/SDNPS.md` |
-| 8 | SPU-g2-ESME | ESME | gamma | 11 | PPC | `brain/units/spu/models/esme.py` | `Docs/C³/Models/SPU-γ2-ESME/ESME.md` |
-| 9 | SPU-g3-SDED | SDED | gamma | 10 | PPC | `brain/units/spu/models/sded.py` | `Docs/C³/Models/SPU-γ3-SDED/SDED.md` |
+| # | Acronym | Tier | Dim | Mechs | Code | Doc |
+|---|---------|------|:---:|-------|------|-----|
+| 1 | BCH | a | 12 | PPC | `spu/models/bch.py` | `SPU-α1-BCH/BCH.md` |
+| 2 | PSCL | a | 12 | PPC | `spu/models/pscl.py` | `SPU-α2-PSCL/PSCL.md` |
+| 3 | PCCR | a | 11 | PPC | `spu/models/pccr.py` | `SPU-α3-PCCR/PCCR.md` |
+| 4 | STAI | b | 12 | TPC | `spu/models/stai.py` | `SPU-β1-STAI/STAI.md` |
+| 5 | TSCP | b | 10 | TPC | `spu/models/tscp.py` | `SPU-β2-TSCP/TSCP.md` |
+| 6 | MIAA | b | 11 | TPC | `spu/models/miaa.py` | `SPU-β3-MIAA/MIAA.md` |
+| 7 | SDNPS | g | 10 | PPC | `spu/models/sdnps.py` | `SPU-γ1-SDNPS/SDNPS.md` |
+| 8 | ESME | g | 11 | PPC | `spu/models/esme.py` | `SPU-γ2-ESME/ESME.md` |
+| 9 | SDED | g | 10 | PPC | `spu/models/sded.py` | `SPU-γ3-SDED/SDED.md` |
 
-#### STU Models (14 models, 148D total)
+#### STU Models (14 models, 148D)
 
-| # | Model ID | Acronym | Tier | Dim | Mechanisms | Code Path | Doc Path |
-|---|----------|---------|------|:---:|------------|-----------|----------|
-| 10 | STU-a1-HMCE | HMCE | alpha | 14 | BEP, TMH | `brain/units/stu/models/hmce.py` | `Docs/C³/Models/STU-α1-HMCE/HMCE.md` |
-| 11 | STU-a2-AMSC | AMSC | alpha | 12 | BEP, TMH | `brain/units/stu/models/amsc.py` | `Docs/C³/Models/STU-α2-AMSC/AMSC.md` |
-| 12 | STU-a3-MDNS | MDNS | alpha | 11 | BEP | `brain/units/stu/models/mdns.py` | `Docs/C³/Models/STU-α3-MDNS/MDNS.md` |
-| 13 | STU-b1-AMSS | AMSS | beta | 10 | BEP | `brain/units/stu/models/amss.py` | `Docs/C³/Models/STU-β1-AMSS/AMSS.md` |
-| 14 | STU-b2-TPIO | TPIO | beta | 10 | TPC | `brain/units/stu/models/tpio.py` | `Docs/C³/Models/STU-β2-TPIO/TPIO.md` |
-| 15 | STU-b3-EDTA | EDTA | beta | 11 | BEP | `brain/units/stu/models/edta.py` | `Docs/C³/Models/STU-β3-EDTA/EDTA.md` |
-| 16 | STU-b4-ETAM | ETAM | beta | 10 | BEP | `brain/units/stu/models/etam.py` | `Docs/C³/Models/STU-β4-ETAM/ETAM.md` |
-| 17 | STU-b5-HGSIC | HGSIC | beta | 12 | BEP, TMH | `brain/units/stu/models/hgsic.py` | `Docs/C³/Models/STU-β5-HGSIC/HGSIC.md` |
-| 18 | STU-b6-OMS | OMS | beta | 10 | BEP | `brain/units/stu/models/oms.py` | `Docs/C³/Models/STU-β6-OMS/OMS.md` |
-| 19 | STU-g1-TMRM | TMRM | gamma | 10 | BEP, TMH | `brain/units/stu/models/tmrm.py` | `Docs/C³/Models/STU-γ1-TMRM/TMRM.md` |
-| 20 | STU-g2-NEWMD | NEWMD | gamma | 10 | BEP | `brain/units/stu/models/newmd.py` | `Docs/C³/Models/STU-γ2-NEWMD/NEWMD.md` |
-| 21 | STU-g3-MTNE | MTNE | gamma | 10 | BEP | `brain/units/stu/models/mtne.py` | `Docs/C³/Models/STU-γ3-MTNE/MTNE.md` |
-| 22 | STU-g4-PTGMP | PTGMP | gamma | 9 | BEP | `brain/units/stu/models/ptgmp.py` | `Docs/C³/Models/STU-γ4-PTGMP/PTGMP.md` |
-| 23 | STU-g5-MPFS | MPFS | gamma | 9 | BEP | `brain/units/stu/models/mpfs.py` | `Docs/C³/Models/STU-γ5-MPFS/MPFS.md` |
+| # | Acronym | Tier | Dim | Mechs | Code | Doc |
+|---|---------|------|:---:|-------|------|-----|
+| 10 | HMCE | a | 14 | BEP,TMH | `stu/models/hmce.py` | `STU-α1-HMCE/HMCE.md` |
+| 11 | AMSC | a | 12 | BEP,TMH | `stu/models/amsc.py` | `STU-α2-AMSC/AMSC.md` |
+| 12 | MDNS | a | 11 | BEP | `stu/models/mdns.py` | `STU-α3-MDNS/MDNS.md` |
+| 13 | AMSS | b | 10 | BEP | `stu/models/amss.py` | `STU-β1-AMSS/AMSS.md` |
+| 14 | TPIO | b | 10 | TPC | `stu/models/tpio.py` | `STU-β2-TPIO/TPIO.md` |
+| 15 | EDTA | b | 11 | BEP | `stu/models/edta.py` | `STU-β3-EDTA/EDTA.md` |
+| 16 | ETAM | b | 10 | BEP | `stu/models/etam.py` | `STU-β4-ETAM/ETAM.md` |
+| 17 | HGSIC | b | 12 | BEP,TMH | `stu/models/hgsic.py` | `STU-β5-HGSIC/HGSIC.md` |
+| 18 | OMS | b | 10 | BEP | `stu/models/oms.py` | `STU-β6-OMS/OMS.md` |
+| 19 | TMRM | g | 10 | BEP,TMH | `stu/models/tmrm.py` | `STU-γ1-TMRM/TMRM.md` |
+| 20 | NEWMD | g | 10 | BEP | `stu/models/newmd.py` | `STU-γ2-NEWMD/NEWMD.md` |
+| 21 | MTNE | g | 10 | BEP | `stu/models/mtne.py` | `STU-γ3-MTNE/MTNE.md` |
+| 22 | PTGMP | g | 9 | BEP | `stu/models/ptgmp.py` | `STU-γ4-PTGMP/PTGMP.md` |
+| 23 | MPFS | g | 9 | BEP | `stu/models/mpfs.py` | `STU-γ5-MPFS/MPFS.md` |
 
-#### IMU Models (15 models, 159D total)
+#### IMU Models (15 models, 159D)
 
-| # | Model ID | Acronym | Tier | Dim | Mechanisms | Code Path | Doc Path |
-|---|----------|---------|------|:---:|------------|-----------|----------|
-| 24 | IMU-a1-MEAMN | MEAMN | alpha | 14 | MEM, TMH | `brain/units/imu/models/meamn.py` | `Docs/C³/Models/IMU-α1-MEAMN/MEAMN.md` |
-| 25 | IMU-a2-PNH | PNH | alpha | 12 | MEM | `brain/units/imu/models/pnh.py` | `Docs/C³/Models/IMU-α2-PNH/PNH.md` |
-| 26 | IMU-a3-MMP | MMP | alpha | 11 | MEM | `brain/units/imu/models/mmp.py` | `Docs/C³/Models/IMU-α3-MMP/MMP.md` |
-| 27 | IMU-b1-RASN | RASN | beta | 10 | BEP, MEM | `brain/units/imu/models/rasn.py` | `Docs/C³/Models/IMU-β1-RASN/RASN.md` |
-| 28 | IMU-b2-PMIM | PMIM | beta | 11 | MEM, TMH | `brain/units/imu/models/pmim.py` | `Docs/C³/Models/IMU-β2-PMIM/PMIM.md` |
-| 29 | IMU-b3-OII | OII | beta | 10 | MEM | `brain/units/imu/models/oii.py` | `Docs/C³/Models/IMU-β3-OII/OII.md` |
-| 30 | IMU-b4-HCMC | HCMC | beta | 10 | MEM | `brain/units/imu/models/hcmc.py` | `Docs/C³/Models/IMU-β4-HCMC/HCMC.md` |
-| 31 | IMU-b5-RIRI | RIRI | beta | 10 | MEM | `brain/units/imu/models/riri.py` | `Docs/C³/Models/IMU-β5-RIRI/RIRI.md` |
-| 32 | IMU-b6-MSPBA | MSPBA | beta | 11 | SYN, MEM | `brain/units/imu/models/mspba.py` | `Docs/C³/Models/IMU-β6-MSPBA/MSPBA.md` |
-| 33 | IMU-b7-VRIAP | VRIAP | beta | 10 | MEM | `brain/units/imu/models/vriap.py` | `Docs/C³/Models/IMU-β7-VRIAP/VRIAP.md` |
-| 34 | IMU-b8-TPRD | TPRD | beta | 11 | PPC | `brain/units/imu/models/tprd.py` | `Docs/C³/Models/IMU-β8-TPRD/TPRD.md` |
-| 35 | IMU-b9-CMAPCC | CMAPCC | beta | 10 | BEP, MEM | `brain/units/imu/models/cmapcc.py` | `Docs/C³/Models/IMU-β9-CMAPCC/CMAPCC.md` |
-| 36 | IMU-g1-DMMS | DMMS | gamma | 10 | MEM | `brain/units/imu/models/dmms.py` | `Docs/C³/Models/IMU-γ1-DMMS/DMMS.md` |
-| 37 | IMU-g2-CSSL | CSSL | gamma | 10 | MEM | `brain/units/imu/models/cssl.py` | `Docs/C³/Models/IMU-γ2-CSSL/CSSL.md` |
-| 38 | IMU-g3-CDEM | CDEM | gamma | 9 | MEM | `brain/units/imu/models/cdem.py` | `Docs/C³/Models/IMU-γ3-CDEM/CDEM.md` |
-
----
-
-### Batch 2: ASU (9), NDU (9), MPU (10), PCU (10) -- Independent, Parallelizable
-
-#### ASU Models (9 models, 94D total)
-
-| # | Model ID | Acronym | Tier | Dim | Mechanisms | Code Path | Doc Path |
-|---|----------|---------|------|:---:|------------|-----------|----------|
-| 39 | ASU-a1-SNEM | SNEM | alpha | 12 | BEP, ASA | `brain/units/asu/models/snem.py` | `Docs/C³/Models/ASU-α1-SNEM/SNEM.md` |
-| 40 | ASU-a2-IACM | IACM | alpha | 11 | ASA | `brain/units/asu/models/iacm.py` | `Docs/C³/Models/ASU-α2-IACM/IACM.md` |
-| 41 | ASU-a3-CSG | CSG | alpha | 12 | ASA | `brain/units/asu/models/csg.py` | `Docs/C³/Models/ASU-α3-CSG/CSG.md` |
-| 42 | ASU-b1-BARM | BARM | beta | 10 | BEP, ASA | `brain/units/asu/models/barm.py` | `Docs/C³/Models/ASU-β1-BARM/BARM.md` |
-| 43 | ASU-b2-STANM | STANM | beta | 10 | ASA | `brain/units/asu/models/stanm.py` | `Docs/C³/Models/ASU-β2-STANM/STANM.md` |
-| 44 | ASU-b3-AACM | AACM | beta | 10 | ASA | `brain/units/asu/models/aacm.py` | `Docs/C³/Models/ASU-β3-AACM/AACM.md` |
-| 45 | ASU-g1-PWSM | PWSM | gamma | 10 | ASA | `brain/units/asu/models/pwsm.py` | `Docs/C³/Models/ASU-γ1-PWSM/PWSM.md` |
-| 46 | ASU-g2-DGTP | DGTP | gamma | 10 | ASA | `brain/units/asu/models/dgtp.py` | `Docs/C³/Models/ASU-γ2-DGTP/DGTP.md` |
-| 47 | ASU-g3-SDL | SDL | gamma | 9 | ASA | `brain/units/asu/models/sdl.py` | `Docs/C³/Models/ASU-γ3-SDL/SDL.md` |
-
-#### NDU Models (9 models, 94D total)
-
-| # | Model ID | Acronym | Tier | Dim | Mechanisms | Code Path | Doc Path |
-|---|----------|---------|------|:---:|------------|-----------|----------|
-| 48 | NDU-a1-MPG | MPG | alpha | 12 | PPC, ASA | `brain/units/ndu/models/mpg.py` | `Docs/C³/Models/NDU-α1-MPG/MPG.md` |
-| 49 | NDU-a2-SDD | SDD | alpha | 11 | PPC, ASA | `brain/units/ndu/models/sdd.py` | `Docs/C³/Models/NDU-α2-SDD/SDD.md` |
-| 50 | NDU-a3-EDNR | EDNR | alpha | 12 | ASA | `brain/units/ndu/models/ednr.py` | `Docs/C³/Models/NDU-α3-EDNR/EDNR.md` |
-| 51 | NDU-b1-DSP | DSP | beta | 10 | ASA | `brain/units/ndu/models/dsp.py` | `Docs/C³/Models/NDU-β1-DSP/DSP.md` |
-| 52 | NDU-b2-CDMR | CDMR | beta | 10 | TMH, ASA | `brain/units/ndu/models/cdmr.py` | `Docs/C³/Models/NDU-β2-CDMR/CDMR.md` |
-| 53 | NDU-b3-SLEE | SLEE | beta | 10 | MEM, ASA | `brain/units/ndu/models/slee.py` | `Docs/C³/Models/NDU-β3-SLEE/SLEE.md` |
-| 54 | NDU-g1-SDDP | SDDP | gamma | 10 | ASA | `brain/units/ndu/models/sddp.py` | `Docs/C³/Models/NDU-γ1-SDDP/SDDP.md` |
-| 55 | NDU-g2-ONI | ONI | gamma | 10 | ASA | `brain/units/ndu/models/oni.py` | `Docs/C³/Models/NDU-γ2-ONI/ONI.md` |
-| 56 | NDU-g3-ECT | ECT | gamma | 9 | ASA | `brain/units/ndu/models/ect.py` | `Docs/C³/Models/NDU-γ3-ECT/ECT.md` |
-
-#### MPU Models (10 models, 104D total)
-
-| # | Model ID | Acronym | Tier | Dim | Mechanisms | Code Path | Doc Path |
-|---|----------|---------|------|:---:|------------|-----------|----------|
-| 57 | MPU-a1-PEOM | PEOM | alpha | 12 | BEP | `brain/units/mpu/models/peom.py` | `Docs/C³/Models/MPU-α1-PEOM/PEOM.md` |
-| 58 | MPU-a2-MSR | MSR | alpha | 12 | BEP | `brain/units/mpu/models/msr.py` | `Docs/C³/Models/MPU-α2-MSR/MSR.md` |
-| 59 | MPU-a3-GSSM | GSSM | alpha | 11 | BEP | `brain/units/mpu/models/gssm.py` | `Docs/C³/Models/MPU-α3-GSSM/GSSM.md` |
-| 60 | MPU-b1-ASAP | ASAP | beta | 10 | BEP | `brain/units/mpu/models/asap.py` | `Docs/C³/Models/MPU-β1-ASAP/ASAP.md` |
-| 61 | MPU-b2-DDSMI | DDSMI | beta | 10 | BEP | `brain/units/mpu/models/ddsmi.py` | `Docs/C³/Models/MPU-β2-DDSMI/DDSMI.md` |
-| 62 | MPU-b3-VRMSME | VRMSME | beta | 10 | BEP | `brain/units/mpu/models/vrmsme.py` | `Docs/C³/Models/MPU-β3-VRMSME/VRMSME.md` |
-| 63 | MPU-b4-SPMC | SPMC | beta | 11 | BEP | `brain/units/mpu/models/spmc.py` | `Docs/C³/Models/MPU-β4-SPMC/SPMC.md` |
-| 64 | MPU-g1-NSCP | NSCP | gamma | 10 | BEP | `brain/units/mpu/models/nscp.py` | `Docs/C³/Models/MPU-γ1-NSCP/NSCP.md` |
-| 65 | MPU-g2-CTBB | CTBB | gamma | 9 | BEP | `brain/units/mpu/models/ctbb.py` | `Docs/C³/Models/MPU-γ2-CTBB/CTBB.md` |
-| 66 | MPU-g3-STC | STC | gamma | 9 | BEP | `brain/units/mpu/models/stc.py` | `Docs/C³/Models/MPU-γ3-STC/STC.md` |
-
-#### PCU Models (10 models, 94D total)
-
-| # | Model ID | Acronym | Tier | Dim | Mechanisms | Code Path | Doc Path |
-|---|----------|---------|------|:---:|------------|-----------|----------|
-| 67 | PCU-a1-HTP | HTP | alpha | 12 | PPC, TPC, MEM | `brain/units/pcu/models/htp.py` | `Docs/C³/Models/PCU-α1-HTP/HTP.md` |
-| 68 | PCU-a2-SPH | SPH | alpha | 11 | PPC | `brain/units/pcu/models/sph.py` | `Docs/C³/Models/PCU-α2-SPH/SPH.md` |
-| 69 | PCU-a3-ICEM | ICEM | alpha | 11 | AED, C0P | `brain/units/pcu/models/icem.py` | `Docs/C³/Models/PCU-α3-ICEM/ICEM.md` |
-| 70 | PCU-b1-PWUP | PWUP | beta | 10 | PPC | `brain/units/pcu/models/pwup.py` | `Docs/C³/Models/PCU-β1-PWUP/PWUP.md` |
-| 71 | PCU-b2-WMED | WMED | beta | 10 | AED, MEM | `brain/units/pcu/models/wmed.py` | `Docs/C³/Models/PCU-β2-WMED/WMED.md` |
-| 72 | PCU-b3-UDP | UDP | beta | 10 | C0P | `brain/units/pcu/models/udp.py` | `Docs/C³/Models/PCU-β3-UDP/UDP.md` |
-| 73 | PCU-b4-CHPI | CHPI | beta | 11 | PPC, TPC | `brain/units/pcu/models/chpi.py` | `Docs/C³/Models/PCU-β4-CHPI/CHPI.md` |
-| 74 | PCU-g1-IGFE | IGFE | gamma | 9 | TPC | `brain/units/pcu/models/igfe.py` | `Docs/C³/Models/PCU-γ1-IGFE/IGFE.md` |
-| 75 | PCU-g2-MAA | MAA | gamma | 5 | ASA | `brain/units/pcu/models/maa.py` | `Docs/C³/Models/PCU-γ2-MAA/MAA.md` |
-| 76 | PCU-g3-PSH | PSH | gamma | 5 | PPC, TPC, MEM | `brain/units/pcu/models/psh.py` | `Docs/C³/Models/PCU-γ3-PSH/PSH.md` |
+| # | Acronym | Tier | Dim | Mechs | Code | Doc |
+|---|---------|------|:---:|-------|------|-----|
+| 24 | MEAMN | a | 14 | MEM,TMH | `imu/models/meamn.py` | `IMU-α1-MEAMN/MEAMN.md` |
+| 25 | PNH | a | 12 | MEM | `imu/models/pnh.py` | `IMU-α2-PNH/PNH.md` |
+| 26 | MMP | a | 11 | MEM | `imu/models/mmp.py` | `IMU-α3-MMP/MMP.md` |
+| 27 | RASN | b | 10 | BEP,MEM | `imu/models/rasn.py` | `IMU-β1-RASN/RASN.md` |
+| 28 | PMIM | b | 11 | MEM,TMH | `imu/models/pmim.py` | `IMU-β2-PMIM/PMIM.md` |
+| 29 | OII | b | 10 | MEM | `imu/models/oii.py` | `IMU-β3-OII/OII.md` |
+| 30 | HCMC | b | 10 | MEM | `imu/models/hcmc.py` | `IMU-β4-HCMC/HCMC.md` |
+| 31 | RIRI | b | 10 | MEM | `imu/models/riri.py` | `IMU-β5-RIRI/RIRI.md` |
+| 32 | MSPBA | b | 11 | SYN,MEM | `imu/models/mspba.py` | `IMU-β6-MSPBA/MSPBA.md` |
+| 33 | VRIAP | b | 10 | MEM | `imu/models/vriap.py` | `IMU-β7-VRIAP/VRIAP.md` |
+| 34 | TPRD | b | 11 | PPC | `imu/models/tprd.py` | `IMU-β8-TPRD/TPRD.md` |
+| 35 | CMAPCC | b | 10 | BEP,MEM | `imu/models/cmapcc.py` | `IMU-β9-CMAPCC/CMAPCC.md` |
+| 36 | DMMS | g | 10 | MEM | `imu/models/dmms.py` | `IMU-γ1-DMMS/DMMS.md` |
+| 37 | CSSL | g | 10 | MEM | `imu/models/cssl.py` | `IMU-γ2-CSSL/CSSL.md` |
+| 38 | CDEM | g | 9 | MEM | `imu/models/cdem.py` | `IMU-γ3-CDEM/CDEM.md` |
 
 ---
 
-### Batch 3: ARU (10), RPU (10) -- Dependent, AFTER Batch 1+2 and Pathways
+### Batch 2: ASU (9) + NDU (9) + MPU (10) + PCU (10) -- Independent, Parallelizable
 
-#### ARU Models (10 models, 120D total)
+#### ASU Models (9 models, 94D)
 
-| # | Model ID | Acronym | Tier | Dim | Mechanisms | Code Path | Doc Path |
-|---|----------|---------|------|:---:|------------|-----------|----------|
-| 77 | ARU-a1-SRP | SRP | alpha | 19 | AED, CPD, C0P | `brain/units/aru/models/srp.py` | `Docs/C³/Models/ARU-α1-SRP/SRP.md` |
-| 78 | ARU-a2-AAC | AAC | alpha | 14 | AED, CPD, ASA | `brain/units/aru/models/aac.py` | `Docs/C³/Models/ARU-α2-AAC/AAC.md` |
-| 79 | ARU-a3-VMM | VMM | alpha | 14 | AED, C0P | `brain/units/aru/models/vmm.py` | `Docs/C³/Models/ARU-α3-VMM/VMM.md` |
-| 80 | ARU-b1-PUPF | PUPF | beta | 12 | AED, CPD | `brain/units/aru/models/pupf.py` | `Docs/C³/Models/ARU-β1-PUPF/PUPF.md` |
-| 81 | ARU-b2-CLAM | CLAM | beta | 12 | AED | `brain/units/aru/models/clam.py` | `Docs/C³/Models/ARU-β2-CLAM/CLAM.md` |
-| 82 | ARU-b3-MAD | MAD | beta | 10 | AED, CPD | `brain/units/aru/models/mad.py` | `Docs/C³/Models/ARU-β3-MAD/MAD.md` |
-| 83 | ARU-b4-NEMAC | NEMAC | beta | 11 | AED, MEM | `brain/units/aru/models/nemac.py` | `Docs/C³/Models/ARU-β4-NEMAC/NEMAC.md` |
-| 84 | ARU-g1-DAP | DAP | gamma | 10 | AED | `brain/units/aru/models/dap.py` | `Docs/C³/Models/ARU-γ1-DAP/DAP.md` |
-| 85 | ARU-g2-CMAT | CMAT | gamma | 9 | AED | `brain/units/aru/models/cmat.py` | `Docs/C³/Models/ARU-γ2-CMAT/CMAT.md` |
-| 86 | ARU-g3-TAR | TAR | gamma | 9 | AED | `brain/units/aru/models/tar.py` | `Docs/C³/Models/ARU-γ3-TAR/TAR.md` |
+| # | Acronym | Tier | Dim | Mechs | Code | Doc |
+|---|---------|------|:---:|-------|------|-----|
+| 39 | SNEM | a | 12 | BEP,ASA | `asu/models/snem.py` | `ASU-α1-SNEM/SNEM.md` |
+| 40 | IACM | a | 11 | ASA | `asu/models/iacm.py` | `ASU-α2-IACM/IACM.md` |
+| 41 | CSG | a | 12 | ASA | `asu/models/csg.py` | `ASU-α3-CSG/CSG.md` |
+| 42 | BARM | b | 10 | BEP,ASA | `asu/models/barm.py` | `ASU-β1-BARM/BARM.md` |
+| 43 | STANM | b | 10 | ASA | `asu/models/stanm.py` | `ASU-β2-STANM/STANM.md` |
+| 44 | AACM | b | 10 | ASA | `asu/models/aacm.py` | `ASU-β3-AACM/AACM.md` |
+| 45 | PWSM | g | 10 | ASA | `asu/models/pwsm.py` | `ASU-γ1-PWSM/PWSM.md` |
+| 46 | DGTP | g | 10 | ASA | `asu/models/dgtp.py` | `ASU-γ2-DGTP/DGTP.md` |
+| 47 | SDL | g | 9 | ASA | `asu/models/sdl.py` | `ASU-γ3-SDL/SDL.md` |
+
+#### NDU Models (9 models, 94D)
+
+| # | Acronym | Tier | Dim | Mechs | Code | Doc |
+|---|---------|------|:---:|-------|------|-----|
+| 48 | MPG | a | 12 | PPC,ASA | `ndu/models/mpg.py` | `NDU-α1-MPG/MPG.md` |
+| 49 | SDD | a | 11 | PPC,ASA | `ndu/models/sdd.py` | `NDU-α2-SDD/SDD.md` |
+| 50 | EDNR | a | 12 | ASA | `ndu/models/ednr.py` | `NDU-α3-EDNR/EDNR.md` |
+| 51 | DSP | b | 10 | ASA | `ndu/models/dsp.py` | `NDU-β1-DSP/DSP.md` |
+| 52 | CDMR | b | 10 | TMH,ASA | `ndu/models/cdmr.py` | `NDU-β2-CDMR/CDMR.md` |
+| 53 | SLEE | b | 10 | MEM,ASA | `ndu/models/slee.py` | `NDU-β3-SLEE/SLEE.md` |
+| 54 | SDDP | g | 10 | ASA | `ndu/models/sddp.py` | `NDU-γ1-SDDP/SDDP.md` |
+| 55 | ONI | g | 10 | ASA | `ndu/models/oni.py` | `NDU-γ2-ONI/ONI.md` |
+| 56 | ECT | g | 9 | ASA | `ndu/models/ect.py` | `NDU-γ3-ECT/ECT.md` |
+
+#### MPU Models (10 models, 104D)
+
+| # | Acronym | Tier | Dim | Mechs | Code | Doc |
+|---|---------|------|:---:|-------|------|-----|
+| 57 | PEOM | a | 12 | BEP | `mpu/models/peom.py` | `MPU-α1-PEOM/PEOM.md` |
+| 58 | MSR | a | 12 | BEP | `mpu/models/msr.py` | `MPU-α2-MSR/MSR.md` |
+| 59 | GSSM | a | 11 | BEP | `mpu/models/gssm.py` | `MPU-α3-GSSM/GSSM.md` |
+| 60 | ASAP | b | 10 | BEP | `mpu/models/asap.py` | `MPU-β1-ASAP/ASAP.md` |
+| 61 | DDSMI | b | 10 | BEP | `mpu/models/ddsmi.py` | `MPU-β2-DDSMI/DDSMI.md` |
+| 62 | VRMSME | b | 10 | BEP | `mpu/models/vrmsme.py` | `MPU-β3-VRMSME/VRMSME.md` |
+| 63 | SPMC | b | 11 | BEP | `mpu/models/spmc.py` | `MPU-β4-SPMC/SPMC.md` |
+| 64 | NSCP | g | 10 | BEP | `mpu/models/nscp.py` | `MPU-γ1-NSCP/NSCP.md` |
+| 65 | CTBB | g | 9 | BEP | `mpu/models/ctbb.py` | `MPU-γ2-CTBB/CTBB.md` |
+| 66 | STC | g | 9 | BEP | `mpu/models/stc.py` | `MPU-γ3-STC/STC.md` |
+
+#### PCU Models (10 models, 94D)
+
+| # | Acronym | Tier | Dim | Mechs | Code | Doc |
+|---|---------|------|:---:|-------|------|-----|
+| 67 | HTP | a | 12 | PPC,TPC,MEM | `pcu/models/htp.py` | `PCU-α1-HTP/HTP.md` |
+| 68 | SPH | a | 11 | PPC | `pcu/models/sph.py` | `PCU-α2-SPH/SPH.md` |
+| 69 | ICEM | a | 11 | AED,C0P | `pcu/models/icem.py` | `PCU-α3-ICEM/ICEM.md` |
+| 70 | PWUP | b | 10 | PPC | `pcu/models/pwup.py` | `PCU-β1-PWUP/PWUP.md` |
+| 71 | WMED | b | 10 | AED,MEM | `pcu/models/wmed.py` | `PCU-β2-WMED/WMED.md` |
+| 72 | UDP | b | 10 | C0P | `pcu/models/udp.py` | `PCU-β3-UDP/UDP.md` |
+| 73 | CHPI | b | 11 | PPC,TPC | `pcu/models/chpi.py` | `PCU-β4-CHPI/CHPI.md` |
+| 74 | IGFE | g | 9 | TPC | `pcu/models/igfe.py` | `PCU-γ1-IGFE/IGFE.md` |
+| 75 | MAA | g | 5 | ASA | `pcu/models/maa.py` | `PCU-γ2-MAA/MAA.md` |
+| 76 | PSH | g | 5 | PPC,TPC,MEM | `pcu/models/psh.py` | `PCU-γ3-PSH/PSH.md` |
+
+---
+
+### Batch 3: ARU (10) + RPU (10) -- Dependent, AFTER Batch 1+2 and Pathways
+
+#### ARU Models (10 models, 120D)
 
 ARU receives cross-unit inputs from pathways P1 (SPU), P3 (IMU), P5 (STU).
 
-#### RPU Models (10 models, 94D total)
+| # | Acronym | Tier | Dim | Mechs | Code | Doc |
+|---|---------|------|:---:|-------|------|-----|
+| 77 | SRP | a | 19 | AED,CPD,C0P | `aru/models/srp.py` | `ARU-α1-SRP/SRP.md` |
+| 78 | AAC | a | 14 | AED,CPD,ASA | `aru/models/aac.py` | `ARU-α2-AAC/AAC.md` |
+| 79 | VMM | a | 14 | AED,C0P | `aru/models/vmm.py` | `ARU-α3-VMM/VMM.md` |
+| 80 | PUPF | b | 12 | AED,CPD | `aru/models/pupf.py` | `ARU-β1-PUPF/PUPF.md` |
+| 81 | CLAM | b | 12 | AED | `aru/models/clam.py` | `ARU-β2-CLAM/CLAM.md` |
+| 82 | MAD | b | 10 | AED,CPD | `aru/models/mad.py` | `ARU-β3-MAD/MAD.md` |
+| 83 | NEMAC | b | 11 | AED,MEM | `aru/models/nemac.py` | `ARU-β4-NEMAC/NEMAC.md` |
+| 84 | DAP | g | 10 | AED | `aru/models/dap.py` | `ARU-γ1-DAP/DAP.md` |
+| 85 | CMAT | g | 9 | AED | `aru/models/cmat.py` | `ARU-γ2-CMAT/CMAT.md` |
+| 86 | TAR | g | 9 | AED | `aru/models/tar.py` | `ARU-γ3-TAR/TAR.md` |
 
-| # | Model ID | Acronym | Tier | Dim | Mechanisms | Code Path | Doc Path |
-|---|----------|---------|------|:---:|------------|-----------|----------|
-| 87 | RPU-a1-DAED | DAED | alpha | 12 | AED, CPD | `brain/units/rpu/models/daed.py` | `Docs/C³/Models/RPU-α1-DAED/DAED.md` |
-| 88 | RPU-a2-MORMR | MORMR | alpha | 11 | AED, C0P | `brain/units/rpu/models/mormr.py` | `Docs/C³/Models/RPU-α2-MORMR/MORMR.md` |
-| 89 | RPU-a3-RPEM | RPEM | alpha | 11 | AED, CPD | `brain/units/rpu/models/rpem.py` | `Docs/C³/Models/RPU-α3-RPEM/RPEM.md` |
-| 90 | RPU-b1-IUCP | IUCP | beta | 10 | C0P | `brain/units/rpu/models/iucp.py` | `Docs/C³/Models/RPU-β1-IUCP/IUCP.md` |
-| 91 | RPU-b2-MCCN | MCCN | beta | 10 | AED, TMH | `brain/units/rpu/models/mccn.py` | `Docs/C³/Models/RPU-β2-MCCN/MCCN.md` |
-| 92 | RPU-b3-MEAMR | MEAMR | beta | 10 | AED, MEM | `brain/units/rpu/models/meamr.py` | `Docs/C³/Models/RPU-β3-MEAMR/MEAMR.md` |
-| 93 | RPU-b4-SSRI | SSRI | beta | 11 | AED | `brain/units/rpu/models/ssri.py` | `Docs/C³/Models/RPU-β4-SSRI/SSRI.md` |
-| 94 | RPU-g1-LDAC | LDAC | gamma | 9 | AED | `brain/units/rpu/models/ldac.py` | `Docs/C³/Models/RPU-γ1-LDAC/LDAC.md` |
-| 95 | RPU-g2-IOTMS | IOTMS | gamma | 5 | BEP, MEM | `brain/units/rpu/models/iotms.py` | `Docs/C³/Models/RPU-γ2-IOTMS/IOTMS.md` |
-| 96 | RPU-g3-SSPS | SSPS | gamma | 5 | ASA | `brain/units/rpu/models/ssps.py` | `Docs/C³/Models/RPU-γ3-SSPS/SSPS.md` |
+#### RPU Models (10 models, 94D)
 
 RPU receives routed signals from ARU via CROSS_UNIT_READS = ("ARU",).
+
+| # | Acronym | Tier | Dim | Mechs | Code | Doc |
+|---|---------|------|:---:|-------|------|-----|
+| 87 | DAED | a | 12 | AED,CPD | `rpu/models/daed.py` | `RPU-α1-DAED/DAED.md` |
+| 88 | MORMR | a | 11 | AED,C0P | `rpu/models/mormr.py` | `RPU-α2-MORMR/MORMR.md` |
+| 89 | RPEM | a | 11 | AED,CPD | `rpu/models/rpem.py` | `RPU-α3-RPEM/RPEM.md` |
+| 90 | IUCP | b | 10 | C0P | `rpu/models/iucp.py` | `RPU-β1-IUCP/IUCP.md` |
+| 91 | MCCN | b | 10 | AED,TMH | `rpu/models/mccn.py` | `RPU-β2-MCCN/MCCN.md` |
+| 92 | MEAMR | b | 10 | AED,MEM | `rpu/models/meamr.py` | `RPU-β3-MEAMR/MEAMR.md` |
+| 93 | SSRI | b | 11 | AED | `rpu/models/ssri.py` | `RPU-β4-SSRI/SSRI.md` |
+| 94 | LDAC | g | 9 | AED | `rpu/models/ldac.py` | `RPU-γ1-LDAC/LDAC.md` |
+| 95 | IOTMS | g | 5 | BEP,MEM | `rpu/models/iotms.py` | `RPU-γ2-IOTMS/IOTMS.md` |
+| 96 | SSPS | g | 5 | ASA | `rpu/models/ssps.py` | `RPU-γ3-SSPS/SSPS.md` |
+
+**Note**: All Code paths are relative to `brain/units/`; all Doc paths are relative to `Docs/C³/Models/`.
 
 ---
 
@@ -919,156 +476,39 @@ RPU receives routed signals from ARU via CROSS_UNIT_READS = ("ARU",).
 
 ---
 
-### `brain/pathways/p1_spu_aru.py`
+**Common for all 5 pathway files**: Each exports one `CrossUnitPathway` instance.
+**Depends On**: `contracts/dataclasses/pathway_spec.py`
 
-**Purpose**: Consonance-to-pleasure pathway (SPU -> ARU, r=0.81).
+### Pathway Files
 
-**Primary Docs**:
-- `Docs/C³/Pathways/P1-SPU-ARU.md` -- source model, source dims, target model, correlation, citation
+| File | Exports | ID | Route | r | Type | Primary Doc |
+|------|---------|----|-------|---|------|-------------|
+| `brain/pathways/p1_spu_aru.py` | `P1_SPU_ARU` | P1_SPU_ARU | SPU->ARU | 0.81 | Inter | `Docs/C³/Pathways/P1-SPU-ARU.md` |
+| `brain/pathways/p2_stu_internal.py` | `P2_STU_INTERNAL` | P2_STU_INTERNAL | STU->STU | 0.70 | Intra | `Docs/C³/Pathways/P2-STU-INTERNAL.md` |
+| `brain/pathways/p3_imu_aru.py` | `P3_IMU_ARU` | P3_IMU_ARU | IMU->ARU | 0.55 | Inter | `Docs/C³/Pathways/P3-IMU-ARU.md` |
+| `brain/pathways/p4_stu_internal.py` | `P4_STU_INTERNAL` | P4_STU_INTERNAL | STU->STU | 0.99 | Intra | `Docs/C³/Pathways/P4-STU-INTERNAL.md` |
+| `brain/pathways/p5_stu_aru.py` | `P5_STU_ARU` | P5_STU_ARU | STU->ARU | 0.60 | Inter | `Docs/C³/Pathways/P5-STU-ARU.md` |
 
-**Related Docs**:
-- `Docs/C³/Contracts/CrossUnitPathway.md` -- dataclass interface
-
-**Depends On**:
-- `contracts/dataclasses/pathway_spec.py`
-
-**Exports**: `P1_SPU_ARU` (CrossUnitPathway instance)
-
-**Key Constraints**:
-- pathway_id = "P1_SPU_ARU"
-- source_unit = "SPU", target_unit = "ARU"
-- correlation = "r=0.81", citation = "Bidelman 2009"
-- Inter-unit pathway: creates Phase 2 -> Phase 4 dependency
-
-**Verification Checklist**:
-- [ ] All fields match P1-SPU-ARU.md
-- [ ] is_inter_unit == True
-- [ ] edge == ("SPU", "ARU")
-
----
-
-### `brain/pathways/p2_stu_internal.py`
-
-**Purpose**: Beat-to-motor-sync internal pathway (STU -> STU, r=0.70).
-
-**Primary Docs**:
-- `Docs/C³/Pathways/P2-STU-INTERNAL.md` -- pathway specification
-
-**Depends On**:
-- `contracts/dataclasses/pathway_spec.py`
-
-**Exports**: `P2_STU_INTERNAL` (CrossUnitPathway instance)
-
-**Key Constraints**:
-- pathway_id = "P2_STU_INTERNAL"
-- source_unit = "STU", target_unit = "STU"
-- Intra-unit: is_intra_unit == True; does NOT affect unit execution order
-
-**Verification Checklist**:
-- [ ] Fields match P2-STU-INTERNAL.md
-- [ ] is_intra_unit == True
-
----
-
-### `brain/pathways/p3_imu_aru.py`
-
-**Purpose**: Memory-to-affect pathway (IMU -> ARU, r=0.55).
-
-**Primary Docs**:
-- `Docs/C³/Pathways/P3-IMU-ARU.md` -- pathway specification
-
-**Depends On**:
-- `contracts/dataclasses/pathway_spec.py`
-
-**Exports**: `P3_IMU_ARU` (CrossUnitPathway instance)
-
-**Key Constraints**:
-- pathway_id = "P3_IMU_ARU"
-- source_unit = "IMU", target_unit = "ARU"
-- Inter-unit pathway
-
-**Verification Checklist**:
-- [ ] Fields match P3-IMU-ARU.md
-- [ ] is_inter_unit == True
-- [ ] edge == ("IMU", "ARU")
-
----
-
-### `brain/pathways/p4_stu_internal.py`
-
-**Purpose**: Context-to-prediction internal pathway (STU -> STU, r=0.99).
-
-**Primary Docs**:
-- `Docs/C³/Pathways/P4-STU-INTERNAL.md` -- pathway specification
-
-**Depends On**:
-- `contracts/dataclasses/pathway_spec.py`
-
-**Exports**: `P4_STU_INTERNAL` (CrossUnitPathway instance)
-
-**Key Constraints**:
-- pathway_id = "P4_STU_INTERNAL"
-- source_unit = "STU", target_unit = "STU"
-- Intra-unit; highest correlation (r=0.99)
-
-**Verification Checklist**:
-- [ ] Fields match P4-STU-INTERNAL.md
-- [ ] is_intra_unit == True
-
----
-
-### `brain/pathways/p5_stu_aru.py`
-
-**Purpose**: Tempo-to-emotion pathway (STU -> ARU, r=0.60).
-
-**Primary Docs**:
-- `Docs/C³/Pathways/P5-STU-ARU.md` -- pathway specification
-
-**Depends On**:
-- `contracts/dataclasses/pathway_spec.py`
-
-**Exports**: `P5_STU_ARU` (CrossUnitPathway instance)
-
-**Key Constraints**:
-- pathway_id = "P5_STU_ARU"
-- source_unit = "STU", target_unit = "ARU"
-- Inter-unit pathway
-
-**Verification Checklist**:
-- [ ] Fields match P5-STU-ARU.md
-- [ ] is_inter_unit == True
-- [ ] edge == ("STU", "ARU")
-
----
+**Verification** (per pathway): All fields match doc; is_inter_unit/is_intra_unit correct; edge tuple correct.
 
 ### `brain/pathways/runner.py`
 
-**Purpose**: PathwayRunner routes signals from independent unit outputs to dependent units.
+**Purpose**: Route signals from independent unit outputs to dependent units.
 
-**Primary Docs**:
-- `Docs/C³/Pathways/00-INDEX.md` -- routing flow, inter vs intra semantics
-
-**Related Docs**:
-- `Docs/C³/C3-ARCHITECTURE.md` -- Phase 3 pathway execution
-
-**Depends On**:
-- All 5 pathway files
-- `contracts/dataclasses/pathway_spec.py`
-
+**Primary Docs**: `Docs/C³/Pathways/00-INDEX.md`
+**Related Docs**: `Docs/C³/C3-ARCHITECTURE.md` -- Phase 3 execution
+**Depends On**: All 5 pathway files, `contracts/dataclasses/pathway_spec.py`
 **Exports**: `PathwayRunner`
 
 **Key Constraints**:
 - `route(unit_outputs: Dict[str, Tensor])` -> `Dict[str, Tensor]`
-- Extracts source_dims from source unit output
-- Returns dict keyed by pathway_id with extracted signal tensors
-- Only inter-unit pathways produce cross_unit_inputs for dependent units
-- Intra-unit pathways handled within the unit's own compute()
+- Extracts source_dims from source unit output for inter-unit pathways only
+- Intra-unit pathways (P2, P4) handled within the unit's compute()
 
 **Verification Checklist**:
-- [ ] route() correctly extracts signals from 3 inter-unit pathways (P1, P3, P5)
-- [ ] Returns dict with pathway_id keys
-- [ ] Does not route intra-unit pathways (P2, P4) externally
-- [ ] Unknown pathway_id raises error
+- [ ] route() extracts signals from P1, P3, P5
+- [ ] Returns dict keyed by pathway_id
+- [ ] Does not externally route P2, P4
 
 ---
 
@@ -1078,63 +518,33 @@ RPU receives routed signals from ARU via CROSS_UNIT_READS = ("ARU",).
 
 **Purpose**: Orchestrate the 5-phase brain execution pipeline.
 
-**Primary Docs**:
-- `Docs/C³/C3-ARCHITECTURE.md` -- 5-phase execution model, dependency graph, assembly
-
-**Related Docs**:
-- `Docs/C³/Units/00-INDEX.md` -- UNIT_EXECUTION_ORDER
-- `Docs/C³/Pathways/00-INDEX.md` -- pathway routing between phases
-- `Docs/C³/Mechanisms/00-INDEX.md` -- mechanism caching
-
-**Depends On**:
-- `brain/mechanisms/runner.py` (MechanismRunner)
-- All 9 unit files (P3.4)
-- `brain/pathways/runner.py` (PathwayRunner)
-
+**Primary Docs**: `Docs/C³/C3-ARCHITECTURE.md` -- 5-phase execution, dependency graph, assembly
+**Related Docs**: `Docs/C³/Units/00-INDEX.md`, `Docs/C³/Pathways/00-INDEX.md`, `Docs/C³/Mechanisms/00-INDEX.md`
+**Depends On**: `brain/mechanisms/runner.py`, all 9 units, `brain/pathways/runner.py`
 **Exports**: `BrainOrchestrator`
 
-**Key Constraints**:
-- 5-phase execution sequence:
+**5-phase execution**:
 
-```
-Phase 1: Mechanisms
-  - MechanismRunner.run(h3_features, r3_features)
-  - All 10 mechanisms compute, outputs cached
+| Phase | Action | Details |
+|:-----:|--------|---------|
+| 1 | Mechanisms | MechanismRunner.run() -- all 10 compute, outputs cached |
+| 2 | Independent units | SPU,STU,IMU,ASU,NDU,MPU,PCU compute (cross_unit_inputs={}) |
+| 3 | Pathway routing | PathwayRunner.route() -- extracts P1,P3,P5 signals |
+| 4 | Dependent units | ARU (receives P1,P3,P5), then RPU (receives ARU outputs) |
+| 5 | Assembly | Concatenate all 9 units -> BrainOutput(B,T,1006) |
 
-Phase 2: Independent Units
-  - SPU, STU, IMU, ASU, NDU, MPU, PCU compute
-  - Each receives: mechanism_outputs, h3_features, r3_features
-  - cross_unit_inputs = {} (empty for independent units)
-  - Parallelizable (no inter-dependencies)
-
-Phase 3: Pathway Routing
-  - PathwayRunner.route(unit_outputs)
-  - Extracts cross-unit signals for P1, P3, P5
-
-Phase 4: Dependent Units
-  - ARU computes with cross_unit_inputs from P1, P3, P5
-  - RPU computes with cross_unit_inputs from ARU
-  - Sequential: ARU must complete before RPU
-
-Phase 5: Assembly
-  - Concatenate all 9 unit outputs in UNIT_EXECUTION_ORDER
-  - Output: BrainOutput(tensor=(B,T,1006), unit_ranges={...}, dimension_names=(...))
-```
-
-- UNIT_EXECUTION_ORDER = ("SPU", "STU", "IMU", "ASU", "NDU", "MPU", "PCU", "ARU", "RPU")
-- Total brain output: 99 + 148 + 159 + 94 + 94 + 104 + 94 + 120 + 94 = 1,006D
-- All computations are deterministic (zero-parameter models)
+- UNIT_EXECUTION_ORDER = ("SPU","STU","IMU","ASU","NDU","MPU","PCU","ARU","RPU")
+- Total: 99+148+159+94+94+104+94+120+94 = 1,006D
+- All computations deterministic (zero-parameter)
 
 **Verification Checklist**:
-- [ ] 5 phases execute in correct order
-- [ ] Phase 2 units receive empty cross_unit_inputs
+- [ ] 5 phases in correct order
+- [ ] Phase 2 units get empty cross_unit_inputs
 - [ ] Phase 4 ARU receives P1, P3, P5 routed signals
-- [ ] Phase 4 RPU receives ARU outputs
-- [ ] Assembly concatenation produces (B, T, 1006)
-- [ ] unit_ranges dict correctly maps each unit to its index range
-- [ ] dimension_names has exactly 1006 entries
-
----
+- [ ] Phase 4 RPU receives ARU outputs (sequential after ARU)
+- [ ] Assembly produces (B, T, 1006)
+- [ ] unit_ranges maps each unit to correct index range
+- [ ] dimension_names has 1006 entries
 
 ### `brain/__init__.py`
 
@@ -1143,76 +553,61 @@ Phase 5: Assembly
 
 ---
 
-## Dependency Graph Summary
+## Dependency Graph
 
 ```
-P1 Contracts ──────────────────────────────────────────────────────┐
-                                                                   │
-P2 Ear (R3 + H3) ─────────────────────────────────────────────────┤
-                                                                   │
-P3.1 Mechanisms (10 files) ──────┐                                 │
-                                 │                                 │
-P3.2 MechanismRunner ────────────┤                                 │
-                                 │                                 │
-P3.3 Circuits, Regions, Neuroch. │ (independent of P3.1-2)         │
-                                 │                                 │
-P3.4 Unit Shells (9 units) ──────┤                                 │
-                                 │                                 │
-P3.5 Models Batch 1 ─────────────┤ SPU(9), STU(14), IMU(15)       │
-                                 │                                 │
-P3.5 Models Batch 2 ─────────────┤ ASU(9), NDU(9), MPU(10), PCU(10)
-                                 │                                 │
-P3.6 Pathways (5) + Runner ──────┤                                 │
-                                 │                                 │
-P3.5 Models Batch 3 ─────────────┤ ARU(10), RPU(10)               │
-                                 │                                 │
-P3.7 BrainOrchestrator ──────────┘                                 │
-                                                                   │
-P4 Semantics ◄─────────────────────────────────────────────────────┘
+P1 Contracts ──────────────────────────────────────────────────┐
+P2 Ear (R3 + H3) ─────────────────────────────────────────────┤
+                                                               │
+P3.1 Mechanisms (10) ────────┐                                 │
+P3.2 MechanismRunner ────────┤                                 │
+P3.3 Circuits/Regions/Neuro  │ (independent of P3.1-2)         │
+P3.4 Unit Shells (9) ────────┤                                 │
+P3.5 Batch 1 ────────────────┤ SPU(9), STU(14), IMU(15)       │
+P3.5 Batch 2 ────────────────┤ ASU(9), NDU(9), MPU(10), PCU(10)
+P3.6 Pathways + Runner ──────┤                                 │
+P3.5 Batch 3 ────────────────┤ ARU(10), RPU(10)               │
+P3.7 BrainOrchestrator ──────┘                                 │
+                                                               │
+P4 Semantics ◄─────────────────────────────────────────────────┘
 ```
 
 ---
 
 ## Known Discrepancies
 
-Agents MUST consult `Docs/Beta/DISCREPANCY-REGISTRY.md` before implementing. Key rules for P3:
+Agents MUST consult `Docs/Beta/DISCREPANCY-REGISTRY.md` before implementing.
 
-| Issue | Old (v1) | New (v2) | Action |
+| Issue | v1 (old) | v2 (doc) | Action |
 |-------|----------|----------|--------|
-| MECHANISM_NAMES | Some models list ("ASA",) only | Use doc value (e.g., ("BEP","ASA")) | Use v2 |
-| h3_demand | Empty tuple () in old code | Populated tuples from doc Section 5 | Use v2 |
-| Gamma OUTPUT_DIM | 10 in old code | 9 in some docs | Use doc value |
+| MECHANISM_NAMES | ("ASA",) only | ("BEP","ASA") | Use v2 |
+| h3_demand | () empty | Populated from Section 5 | Use v2 |
+| Gamma OUTPUT_DIM | 10 | 9 in some docs | Use doc |
 | FULL_NAME | Old code names | Doc Section 1 header | Use v2 |
-| R3_DIM | 49 (v1) | 128 (v2) | Use 128 for r3_features shape |
-| H3 theoretical | 112,896 (v1) | 294,912 (v2) | Use v2 |
+| R3_DIM | 49 | 128 | Use 128 |
+| H3 theoretical | 112,896 | 294,912 | Use v2 |
 
 ---
 
 ## Verification Gate G3
 
-After completing all P3 files:
-
 ```python
 # G3 verification script
 from Musical_Intelligence.brain import BrainOrchestrator
-from Musical_Intelligence.brain.mechanisms import MechanismRunner
 from Musical_Intelligence.brain.mechanisms import (
     PPC, TPC, BEP, ASA, TMH, MEM, SYN, AED, CPD, C0P
 )
 
-# 1. Verify all 10 mechanisms instantiate and have correct OUTPUT_DIM
+# 1. All 10 mechanisms instantiate with OUTPUT_DIM=30
 for Mech in [PPC, TPC, BEP, ASA, TMH, MEM, SYN, AED, CPD, C0P]:
     m = Mech()
     assert m.OUTPUT_DIM == 30, f"{m.NAME} OUTPUT_DIM != 30"
-    assert len(m.NAME) > 0
 
-# 2. Verify all 96 models instantiate and pass validate_constants()
+# 2. All 96 models pass validate_constants()
 from Musical_Intelligence.brain.units import (
     spu, stu, imu, asu, ndu, mpu, pcu, aru, rpu
 )
-
-total_dim = 0
-model_count = 0
+total_dim, model_count = 0, 0
 for unit_mod in [spu, stu, imu, asu, ndu, mpu, pcu, aru, rpu]:
     unit = unit_mod.Unit()
     for model in unit.models:
@@ -1220,18 +615,16 @@ for unit_mod in [spu, stu, imu, asu, ndu, mpu, pcu, aru, rpu]:
         model_count += 1
     total_dim += unit.total_dim
 
-assert model_count == 96, f"Expected 96 models, got {model_count}"
+assert model_count == 96, f"Expected 96, got {model_count}"
 assert total_dim == 1006, f"Expected 1006D, got {total_dim}"
 
-# 3. Verify BrainOrchestrator produces correct output shape
+# 3. BrainOrchestrator output shape
 import torch
 orchestrator = BrainOrchestrator()
-h3_features = {}   # populated in real usage
-r3_features = torch.zeros(1, 10, 128)  # (B=1, T=10, R3_DIM=128)
-output = orchestrator.run(h3_features, r3_features)
+output = orchestrator.run({}, torch.zeros(1, 10, 128))
 assert output.tensor.shape == (1, 10, 1006)
 assert len(output.dimension_names) == 1006
 assert len(output.unit_ranges) == 9
 
-print("G3 PASSED: All 96 models valid, BrainOrchestrator produces (B,T,1006)")
+print("G3 PASSED: 96 models valid, BrainOrchestrator -> (B,T,1006)")
 ```
