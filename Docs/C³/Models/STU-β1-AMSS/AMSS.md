@@ -349,7 +349,19 @@ These correspond to early attention → middle tracking → late integration tim
 | 14 | sharpness | 14 | M0 (value) | L0 (fwd) | Instrument attack character |
 | 24 | timbre_change | 8 | M1 (mean) | L0 (fwd) | Timbral continuity |
 
-**Total AMSS H³ demand**: 16 tuples of 2304 theoretical = 0.69%
+**v1 demand**: 16 tuples
+
+#### R³ v2 Projected Expansion
+
+Minor v2 expansion. AMSS projected v2 feature from G:Rhythm, aligned with TMH horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 73 | tempo_stability | G | 8 | M0 (value) | L0 | Current tempo regularity at short context |
+| 73 | tempo_stability | G | 14 | M18 (trend) | L0 | Stability trend at phrase scale |
+
+**v2 projected**: 2 tuples
+**Total projected**: 18 tuples of 294,912 theoretical = 0.0061%
 
 ### 5.2 TMH Mechanism Binding
 

@@ -352,7 +352,23 @@ These correspond to beat → motor preparation → bar-level timescales.
 | 7 | amplitude | 16 | M15 (smoothness) | L0 (fwd) | Groove quality |
 | 14 | tonalness | 6 | M0 (value) | L2 (bidi) | Gamma band proxy |
 
-**Total AMSC H³ demand**: 16 tuples of 2304 theoretical = 0.69%
+**v1 demand**: 16 tuples
+
+#### R³ v2 Projected Expansion
+
+AMSC projected v2 features from G:Rhythm, aligned with BEP horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 66 | beat_strength | G | 6 | M0 (value) | L0 | Instantaneous beat salience |
+| 66 | beat_strength | G | 16 | M0 (value) | L0 | Bar-level beat salience |
+| 68 | syncopation | G | 6 | M0 (value) | L0 | Current syncopation level |
+| 68 | syncopation | G | 11 | M14 (periodicity) | L0 | Syncopation periodicity at meter scale |
+| 69 | metricality | G | 11 | M0 (value) | L0 | Metric regularity at meter scale |
+| 69 | metricality | G | 16 | M1 (mean) | L0 | Mean metricality over bar |
+
+**v2 projected**: 6 tuples
+**Total projected**: 22 tuples of 294,912 theoretical = 0.0075%
 
 ### 5.2 Mechanism Bindings
 

@@ -396,7 +396,25 @@ PMIM requires H³ features at three SYN horizons: H10 (400ms), H14 (700ms), H18 
 | 14 | tonalness | 14 | M18 (trend) | L0 (forward) | Tonal trend over progression |
 | 11 | onset_strength | 10 | M0 (value) | L2 (bidirectional) | Onset salience for MMN |
 
-**Total PMIM H³ demand**: 18 tuples of 2304 theoretical = 0.78%
+**v1 demand**: 18 tuples
+
+#### R³ v2 Projected Expansion
+
+PMIM projected v2 from I (Information) and H (Harmony) groups, aligned with SYN horizons (H10, H14, H18).
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 92 | predictive_entropy | I | 10 | M0 (value) | L2 | Current prediction error magnitude at chord level |
+| 92 | predictive_entropy | I | 14 | M0 (value) | L0 | Prediction error state over progression |
+| 92 | predictive_entropy | I | 18 | M18 (trend) | L0 | Prediction error trajectory over phrase |
+| 87 | melodic_entropy | I | 10 | M0 (value) | L2 | Current melodic information content |
+| 87 | melodic_entropy | I | 14 | M1 (mean) | L0 | Average melodic complexity over progression |
+| 87 | melodic_entropy | I | 18 | M1 (mean) | L0 | Sustained melodic entropy over phrase |
+| 86 | syntactic_irregularity | H | 10 | M0 (value) | L2 | Current harmonic violation strength |
+| 86 | syntactic_irregularity | H | 14 | M4 (max) | L0 | Peak violation over progression window |
+
+**v2 projected**: 8 tuples
+**Total projected**: 26 tuples of 294,912 theoretical = 0.0088%
 
 ### 5.2 SYN Mechanism Binding
 

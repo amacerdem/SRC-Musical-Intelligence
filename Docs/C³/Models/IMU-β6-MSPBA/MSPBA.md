@@ -413,7 +413,26 @@ MSPBA requires H³ features at three SYN horizons: H10 (400ms), H14 (700ms), H18
 | 23 | spectral_flux | 14 | M1 (mean) | L0 (forward) | Average spectral change rate |
 | 4 | sensory_pleasantness | 18 | M19 (stability) | L0 (forward) | Consonance stability over phrase |
 
-**Total MSPBA H³ demand**: 16 tuples of 2304 theoretical = 0.69%
+**v1 demand**: 16 tuples
+
+#### R³ v2 Projected Expansion
+
+MSPBA projected v2 from H (Harmony) and I (Information) groups, aligned with SYN horizons (H10, H14, H18).
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 86 | syntactic_irregularity | H | 10 | M0 (value) | L2 | Current harmonic violation at chord level |
+| 86 | syntactic_irregularity | H | 14 | M0 (value) | L0 | Violation strength over progression |
+| 86 | syntactic_irregularity | H | 14 | M4 (max) | L0 | Peak violation in progression window |
+| 86 | syntactic_irregularity | H | 18 | M0 (value) | L0 | Violation state over phrase |
+| 76 | tonnetz_fifth_x | H | 10 | M0 (value) | L2 | Current tonal-space position for syntax |
+| 76 | tonnetz_fifth_x | H | 14 | M8 (velocity) | L0 | Tonal trajectory rate over progression |
+| 76 | tonnetz_fifth_x | H | 18 | M0 (value) | L0 | Tonal position at phrase level |
+| 87 | melodic_entropy | I | 10 | M0 (value) | L2 | Current melodic information content |
+| 87 | melodic_entropy | I | 14 | M1 (mean) | L0 | Average melodic complexity over progression |
+
+**v2 projected**: 9 tuples
+**Total projected**: 25 tuples of 294,912 theoretical = 0.0085%
 
 ### 5.2 SYN Mechanism Binding
 

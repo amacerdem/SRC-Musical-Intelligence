@@ -246,7 +246,25 @@ SSPS requires H³ features at mid-to-long timescales for entropy assessment (nee
 | 25 | x_l0l5[0] | 8 | M2 (std) | L2 (bidi) | Context variability 500ms |
 | 25 | x_l0l5[0] | 16 | M1 (mean) | L2 (bidi) | Mean context 1s |
 
-**Total SSPS H³ demand**: 14 tuples of 2304 theoretical = 0.61%
+**v1 demand**: 14 tuples
+
+#### R³ v2 Projected Expansion
+
+SSPS projected v2 from H:Harmony + I:Information, aligned with AED+CPD+C0P horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 86 | syntactic_irregularity | H | 2 | M0 (value) | L0 | Syntactic irregularity at 75ms |
+| 86 | syntactic_irregularity | H | 8 | M0 (value) | L2 | Syntactic irregularity at 500ms |
+| 86 | syntactic_irregularity | H | 16 | M4 (max) | L2 | Peak irregularity over 1s |
+| 87 | melodic_entropy | I | 8 | M0 (value) | L2 | Melodic entropy at 500ms |
+| 87 | melodic_entropy | I | 16 | M1 (mean) | L2 | Mean melodic entropy 1s |
+| 88 | harmonic_entropy | I | 2 | M0 (value) | L0 | Harmonic entropy at 75ms |
+| 88 | harmonic_entropy | I | 8 | M0 (value) | L2 | Harmonic entropy at 500ms |
+| 88 | harmonic_entropy | I | 16 | M1 (mean) | L2 | Mean harmonic entropy 1s |
+
+**v2 projected**: 8 tuples
+**Total projected**: 22 tuples of 294,912 theoretical = 0.0075%
 
 ### 5.2 AED + CPD + C0P Mechanism Binding
 

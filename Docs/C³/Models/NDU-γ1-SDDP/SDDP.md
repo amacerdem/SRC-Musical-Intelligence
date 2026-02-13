@@ -259,7 +259,14 @@ SDDP requires H³ features at PPC horizons for vocal pitch encoding and ASA hori
 | 25 | x_l0l5[0] | 3 | M14 (periodicity) | L2 (bidi) | Vocal periodicity 100ms |
 | 25 | x_l0l5[0] | 16 | M1 (mean) | L0 (fwd) | Mean vocal coupling 1s |
 
-**Total SDDP H³ demand**: 16 tuples of 2304 theoretical = 0.69%
+**v1 demand**: 16 tuples
+
+#### R³ v2 Projected Expansion
+
+No significant v2 expansion projected.
+
+**v2 projected**: 0 tuples
+**Total projected**: 16 tuples of 294,912 theoretical = 0.0054%
 
 ### 5.2 PPC + ASA Mechanism Binding
 

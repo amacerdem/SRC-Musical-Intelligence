@@ -402,7 +402,25 @@ ETAM requires H³ features at both BEP horizons (H6, H11, H16) for beat entrainm
 | 8 | loudness | 14 | M1 (mean) | L0 (fwd) | Mean loudness over beat window |
 | 8 | loudness | 20 | M18 (trend) | L0 (fwd) | Long-range loudness trend |
 
-**Total ETAM H³ demand**: 20 tuples of 2304 theoretical = 0.87%
+**v1 demand**: 20 tuples
+
+#### R³ v2 Projected Expansion
+
+ETAM projected v2 features from G:Rhythm, I:Interaction, and K:Modulation, aligned with BEP+TMH horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 68 | syncopation | G | 6 | M0 (value) | L0 | Instantaneous syncopation at beat scale |
+| 68 | syncopation | G | 11 | M14 (periodicity) | L0 | Syncopation periodicity at meter scale |
+| 71 | groove | G | 6 | M0 (value) | L0 | Current groove level at beat scale |
+| 71 | groove | G | 11 | M1 (mean) | L0 | Mean groove at meter scale |
+| 89 | rhythmic_IC | I | 8 | M0 (value) | L0 | Rhythmic information content at short context |
+| 89 | rhythmic_IC | I | 14 | M0 (value) | L0 | Rhythmic IC at phrase scale |
+| 116 | mod_2Hz | K | 14 | M0 (value) | L0 | 2Hz modulation strength at phrase scale |
+| 116 | mod_2Hz | K | 20 | M0 (value) | L0 | 2Hz modulation at long context |
+
+**v2 projected**: 8 tuples
+**Total projected**: 28 tuples of 294,912 theoretical = 0.0095%
 
 ### 5.2 BEP + TMH Mechanism Binding
 

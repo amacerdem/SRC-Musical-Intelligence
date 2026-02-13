@@ -260,7 +260,24 @@ PEOM requires H³ features at BEP horizons for period/beat tracking and TMH hori
 | 25 | x_l0l5[0] | 16 | M14 (periodicity) | L2 (bidi) | Coupling periodicity 1s |
 | 25 | x_l0l5[0] | 16 | M21 (zero_crossings) | L2 (bidi) | Coupling phase resets 1s |
 
-**Total PEOM H³ demand**: 15 tuples of 2304 theoretical = 0.65%
+**v1 demand**: 15 tuples
+
+#### R³ v2 Projected Expansion
+
+PEOM projected v2 from G:Rhythm, aligned with BEP+TMH horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 68 | syncopation_index | G | 3 | M0 (value) | L2 | Syncopation level at 100ms alpha |
+| 68 | syncopation_index | G | 16 | M14 (periodicity) | L2 | Syncopation periodicity at 1s beat |
+| 69 | metricality_index | G | 3 | M0 (value) | L2 | Metrical regularity at 100ms |
+| 69 | metricality_index | G | 16 | M1 (mean) | L2 | Mean metricality over 1s |
+| 66 | beat_strength | G | 3 | M0 (value) | L2 | Beat salience at 100ms |
+| 71 | groove | G | 3 | M0 (value) | L2 | Groove level at 100ms |
+| 71 | groove | G | 16 | M1 (mean) | L2 | Mean groove over 1s |
+
+**v2 projected**: 7 tuples
+**Total projected**: 22 tuples of 294,912 theoretical = 0.0075%
 
 ### 5.2 BEP + TMH Mechanism Binding
 

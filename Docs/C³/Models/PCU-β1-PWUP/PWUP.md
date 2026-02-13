@@ -214,7 +214,20 @@ PWUP requires H³ features for precision estimation (slow contextual assessment)
 | 5 | periodicity | 8 | M1 (mean) | L0 (fwd) | Mean periodicity 500ms |
 | 5 | periodicity | 16 | M14 (periodicity) | L2 (bidi) | Periodicity over 1s |
 
-**Total PWUP H³ demand**: 14 tuples of 2304 theoretical = 0.61%
+**v1 demand**: 14 tuples
+
+#### R³ v2 Projected Expansion
+
+PWUP projected v2 from F:Pitch and I:Information, aligned with MEM horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 63 | pitch_salience | F | 8 | M0 (value) | L0 | Pitch certainty at 500ms |
+| 92 | predictive_entropy | I | 8 | M0 (value) | L0 | Predictive uncertainty 500ms |
+| 92 | predictive_entropy | I | 16 | M18 (trend) | L0 | Uncertainty trend over 1s |
+
+**v2 projected**: 3 tuples
+**Total projected**: 17 tuples of 294,912 theoretical = 0.0058%
 
 ### 5.2 PPC + TPC + MEM Mechanism Binding
 

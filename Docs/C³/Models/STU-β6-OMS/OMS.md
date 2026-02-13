@@ -394,7 +394,25 @@ These correspond to beat-level predictive timing → motor preparation sensorimo
 | 25 | x_l0l5[0] | 16 | M19 (stability) | L0 (fwd) | Predictive timing stability |
 | 7 | amplitude | 16 | M15 (smoothness) | L0 (fwd) | Ensemble smoothness |
 
-**Total OMS H³ demand**: 15 tuples of 2304 theoretical = 0.65%
+**v1 demand**: 15 tuples
+
+#### R³ v2 Projected Expansion
+
+OMS projected v2 features from G:Rhythm and K:Modulation, aligned with BEP horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 66 | beat_strength | G | 6 | M0 (value) | L0 | Instantaneous beat salience |
+| 66 | beat_strength | G | 16 | M0 (value) | L0 | Bar-level beat salience |
+| 68 | syncopation | G | 6 | M0 (value) | L0 | Current syncopation level |
+| 68 | syncopation | G | 11 | M14 (periodicity) | L0 | Syncopation periodicity at meter scale |
+| 69 | metricality | G | 11 | M0 (value) | L0 | Metric regularity at meter scale |
+| 69 | metricality | G | 16 | M1 (mean) | L0 | Mean metricality over bar |
+| 116 | mod_2Hz | K | 6 | M0 (value) | L0 | 2Hz modulation at beat scale |
+| 116 | mod_2Hz | K | 16 | M0 (value) | L0 | 2Hz modulation over bar |
+
+**v2 projected**: 8 tuples
+**Total projected**: 23 tuples of 294,912 theoretical = 0.0078%
 
 ### 5.2 BEP Mechanism Binding
 

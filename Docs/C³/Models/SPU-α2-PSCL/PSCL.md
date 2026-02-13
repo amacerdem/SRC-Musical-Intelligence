@@ -383,7 +383,26 @@ These correspond to cortical auditory processing timescales.
 | 25 | x_l0l5[0] | 6 | M14 (periodicity) | L2 (bidi) | Salience periodicity |
 | 41 | x_l5l7[0] | 3 | M0 (value) | L2 (bidi) | Consonance-timbre |
 
-**Total PSCL H³ demand**: 14 tuples of 2304 theoretical = 0.61%
+**v1 demand**: 14 tuples
+
+#### R³ v2 Projected Expansion
+
+PSCL is projected to consume R³ v2 features from F[49:65], aligned with PPC/TPC horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 49 | chroma | F | 3 | M0 (value) | L2 | Chroma vector at 100ms for pitch class |
+| 49 | chroma | F | 3 | M1 (mean) | L2 | Mean chroma over 100ms |
+| 49 | chroma | F | 6 | M0 (value) | L2 | Chroma at 200ms for salience context |
+| 49 | chroma | F | 6 | M1 (mean) | L2 | Sustained chroma over 200ms |
+| 61 | pitch_height | F | 3 | M0 (value) | L2 | Absolute pitch height at 100ms |
+| 61 | pitch_height | F | 6 | M0 (value) | L2 | Pitch height at 200ms |
+| 61 | pitch_height | F | 6 | M8 (velocity) | L2 | Pitch height velocity over 200ms |
+| 63 | pitch_salience | F | 3 | M0 (value) | L2 | Cortical pitch salience at 100ms |
+| 63 | pitch_salience | F | 6 | M0 (value) | L2 | Pitch salience at 200ms |
+
+**v2 projected**: 9 tuples
+**Total projected**: 23 tuples of 294,912 theoretical = 0.0078%
 
 ### 5.2 Mechanism Binding
 

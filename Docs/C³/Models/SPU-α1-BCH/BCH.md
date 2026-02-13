@@ -349,7 +349,27 @@ These correspond to brainstem processing timescales (gamma → alpha-beta → sy
 | 41 | x_l5l7[0] | 3 | M0 (value) | L2 (bidi) | Consonance×timbre coupling |
 | 41 | x_l5l7[0] | 6 | M14 (periodicity) | L2 (bidi) | Harmonic periodicity |
 
-**Total BCH H³ demand**: 16 tuples of 2304 theoretical = 0.69%
+**v1 demand**: 16 tuples
+
+#### R³ v2 Projected Expansion
+
+BCH is projected to consume R³ v2 features from F[49:65] and H[75:87], aligned with PPC horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 49 | chroma | F | 3 | M0 (value) | L2 | Chroma vector at 100ms for interval detection |
+| 49 | chroma | F | 3 | M1 (mean) | L2 | Mean chroma over 100ms window |
+| 49 | chroma | F | 6 | M0 (value) | L2 | Chroma at 200ms for adaptation |
+| 49 | chroma | F | 6 | M1 (mean) | L2 | Sustained chroma over 200ms |
+| 63 | pitch_salience | F | 0 | M0 (value) | L2 | Instantaneous pitch salience |
+| 63 | pitch_salience | F | 3 | M0 (value) | L2 | Pitch salience at 100ms |
+| 63 | pitch_salience | F | 6 | M0 (value) | L2 | Pitch salience at 200ms |
+| 75 | key_clarity | H | 3 | M0 (value) | L2 | Key clarity at 100ms |
+| 75 | key_clarity | H | 3 | M1 (mean) | L2 | Mean key clarity over 100ms |
+| 75 | key_clarity | H | 6 | M0 (value) | L2 | Key clarity at 200ms |
+
+**v2 projected**: 10 tuples
+**Total projected**: 26 tuples of 294,912 theoretical = 0.0088%
 
 ### 5.2 PPC Mechanism Binding
 

@@ -255,7 +255,25 @@ GSSM requires H³ features at BEP horizons for gait phase-locked tracking and TM
 | 25 | x_l0l5[0] | 16 | M21 (zero_crossings) | L2 (bidi) | Coupling phase resets 1s |
 | 22 | energy_change | 8 | M8 (velocity) | L0 (fwd) | Energy dynamics 500ms |
 
-**Total GSSM H³ demand**: 12 tuples of 2304 theoretical = 0.52%
+**v1 demand**: 12 tuples
+
+#### R³ v2 Projected Expansion
+
+GSSM projected v2 from G:Rhythm and K:Modulation, aligned with BEP+TMH horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 71 | groove | G | 3 | M0 (value) | L2 | Groove level at 100ms |
+| 71 | groove | G | 16 | M1 (mean) | L2 | Mean groove over 1s |
+| 68 | syncopation_index | G | 3 | M0 (value) | L2 | Syncopation at 100ms |
+| 68 | syncopation_index | G | 16 | M14 (periodicity) | L2 | Syncopation periodicity 1s |
+| 69 | metricality_index | G | 3 | M0 (value) | L2 | Metrical regularity 100ms |
+| 69 | metricality_index | G | 16 | M1 (mean) | L2 | Mean metricality 1s |
+| 114 | mod_0_5Hz | K | 3 | M0 (value) | L2 | Gait-rate modulation 100ms |
+| 116 | mod_2Hz | K | 3 | M0 (value) | L2 | Step-rate modulation 100ms |
+
+**v2 projected**: 8 tuples
+**Total projected**: 20 tuples of 294,912 theoretical = 0.0068%
 
 ### 5.2 BEP + TMH Mechanism Binding
 

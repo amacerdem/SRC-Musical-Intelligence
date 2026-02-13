@@ -366,7 +366,22 @@ RIRI requires H³ features at three horizons: H6 (200ms), H11 (500ms), H16 (1000
 | 25 | x_l0l5[0] | 16 | M19 (stability) | L0 (fwd) | Entrainment stability over 1s |
 | 4 | sensory_pleasantness | 16 | M1 (mean) | L0 (fwd) | Sustained pleasantness |
 
-**Total RIRI H³ demand**: 16 tuples of 2304 theoretical = 0.69%
+**v1 demand**: 16 tuples
+
+#### R³ v2 Projected Expansion
+
+RIRI projected v2 from G (Rhythm) group, aligned with BEP* horizons (H6, H11, H16) and MEM horizons (H16).
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 71 | groove | G | 6 | M0 (value) | L2 | Current groove quality at beat level |
+| 71 | groove | G | 11 | M0 (value) | L0 | Groove state at motor planning window |
+| 71 | groove | G | 16 | M1 (mean) | L0 | Average groove over bar for rehabilitation |
+| 70 | isochrony_nPVI | G | 6 | M0 (value) | L2 | Current temporal regularity at beat level |
+| 70 | isochrony_nPVI | G | 11 | M1 (mean) | L0 | Average isochrony over motor window |
+
+**v2 projected**: 5 tuples
+**Total projected**: 21 tuples of 294,912 theoretical = 0.0071%
 
 ### 5.2 Mechanism Bindings
 

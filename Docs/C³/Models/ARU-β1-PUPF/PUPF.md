@@ -376,6 +376,18 @@ TRAJECTORY:
   → Rising uncertainty → approaching Goldilocks zone
 ```
 
+### 6.4 R³ v2 Projected Expansion
+
+PUPF is projected to directly consume I:predictive_entropy [92], the one I-group feature with genuine direct demand from ARU.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 92 | predictive_entropy | I | H7 | M0 (value) | L2 | Prediction uncertainty |
+| 92 | predictive_entropy | I | H12 | M18 (trend) | L2 | Uncertainty trajectory |
+| 92 | predictive_entropy | I | H15 | M2 (std) | L2 | Uncertainty variability |
+
+**v2 projected**: 3 additional tuples
+
 ---
 
 ## 7. Mechanism Computation

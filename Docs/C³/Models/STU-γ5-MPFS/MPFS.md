@@ -431,7 +431,21 @@ MPFS requires H³ features at six horizons across two mechanisms:
 | 41 | x_l5l7[0] | 20 | M1 (mean) | L0 (fwd) | Cross-modal integration |
 | 41 | x_l5l7[0] | 20 | M19 (stability) | L0 (fwd) | Integration stability |
 
-**Total MPFS H³ demand**: 20 tuples of 2304 theoretical = 0.87%
+**v1 demand**: 20 tuples
+
+#### R³ v2 Projected Expansion
+
+MPFS projected v2 features from G:Rhythm, aligned with BEP+TMH horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 71 | groove | G | 6 | M0 (value) | L0 | Current groove level at beat scale |
+| 71 | groove | G | 11 | M1 (mean) | L0 | Mean groove at meter scale |
+| 72 | event_density | G | 6 | M0 (value) | L0 | Current event density at beat scale |
+| 72 | event_density | G | 16 | M0 (value) | L0 | Event density over bar |
+
+**v2 projected**: 4 tuples
+**Total projected**: 24 tuples of 294,912 theoretical = 0.0081%
 
 ### 5.2 BEP + TMH Mechanism Binding
 

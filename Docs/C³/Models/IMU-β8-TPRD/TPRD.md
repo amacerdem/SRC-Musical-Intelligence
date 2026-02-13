@@ -389,7 +389,22 @@ TPRD requires H³ features at two sets of horizons:
 | 4 | sensory_pleasantness | 18 | M19 (stability) | L0 (forward) | Consonance stability over phrase |
 | 7 | amplitude | 6 | M8 (velocity) | L0 (forward) | Energy change rate at beat level |
 
-**Total TPRD H³ demand**: 18 tuples of 2304 theoretical = 0.78%
+**v1 demand**: 18 tuples
+
+#### R³ v2 Projected Expansion
+
+TPRD projected v2 from F (Pitch) group, aligned with SYN horizons (H10, H14, H18) and PPC* horizons (H0, H3, H6).
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 49 | chroma | F | 3 | M0 (value) | L2 | Brainstem-level pitch-class identity |
+| 49 | chroma | F | 6 | M0 (value) | L0 | Beat-level chroma for pitch pathway |
+| 49 | chroma | F | 10 | M1 (mean) | L0 | Average chroma profile at chord level |
+| 63 | pitch_salience | F | 3 | M0 (value) | L2 | Brainstem pitch extraction clarity |
+| 63 | pitch_salience | F | 6 | M0 (value) | L0 | Beat-level pitch salience |
+
+**v2 projected**: 5 tuples
+**Total projected**: 23 tuples of 294,912 theoretical = 0.0078%
 
 ### 5.2 SYN Mechanism Binding
 

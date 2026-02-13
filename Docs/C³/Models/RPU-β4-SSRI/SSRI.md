@@ -303,7 +303,27 @@ SSRI requires H³ features at multiple time scales: fast scales (100-125ms) for 
 | 25 | x_l0l5[0] | 20 | M1 (mean) | L0 (fwd) | Coupling mean 5s LTI |
 | 0 | roughness | 8 | M1 (mean) | L2 (bidi) | Mean roughness 500ms |
 
-**Total SSRI H³ demand**: 18 tuples of 2304 theoretical = 0.78%
+**v1 demand**: 18 tuples
+
+#### R³ v2 Projected Expansion
+
+SSRI projected v2 from G:Rhythm + I:Information, aligned with AED+CPD+C0P horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 71 | groove | G | 3 | M0 (value) | L2 | Groove level at 100ms |
+| 71 | groove | G | 16 | M1 (mean) | L2 | Mean groove over 1s |
+| 68 | syncopation_index | G | 4 | M0 (value) | L2 | Syncopation at 125ms |
+| 68 | syncopation_index | G | 16 | M14 (periodicity) | L2 | Syncopation periodicity 1s |
+| 68 | syncopation_index | G | 20 | M14 (periodicity) | L0 | Syncopation periodicity 5s LTI |
+| 89 | rhythmic_IC | I | 4 | M0 (value) | L2 | Rhythmic IC at 125ms |
+| 89 | rhythmic_IC | I | 8 | M0 (value) | L2 | Rhythmic IC at 500ms |
+| 87 | melodic_entropy | I | 3 | M0 (value) | L2 | Melodic entropy at 100ms |
+| 87 | melodic_entropy | I | 8 | M1 (mean) | L2 | Mean melodic entropy 500ms |
+| 87 | melodic_entropy | I | 16 | M1 (mean) | L2 | Mean melodic entropy 1s |
+
+**v2 projected**: 10 tuples
+**Total projected**: 28 tuples of 294,912 theoretical = 0.0095%
 
 ### 5.2 AED + CPD + C0P Mechanism Binding
 

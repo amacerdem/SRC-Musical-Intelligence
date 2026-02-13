@@ -367,7 +367,21 @@ These correspond to single-beat → tempo reference → bar-level timescales.
 | 22 | energy_change | 16 | M15 (smoothness) | L0 (fwd) | Energy smoothness at bar level |
 | 11 | onset_strength | 16 | M17 (peaks) | L0 (fwd) | Beat count per bar |
 
-**Total TMRM H³ demand**: 15 tuples of 2304 theoretical = 0.65%
+**v1 demand**: 15 tuples
+
+#### R³ v2 Projected Expansion
+
+TMRM projected v2 features from G:Rhythm, aligned with BEP horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 65 | tempo | G | 6 | M0 (value) | L0 | Instantaneous tempo at beat scale |
+| 65 | tempo | G | 16 | M18 (trend) | L0 | Tempo trajectory over bar |
+| 73 | tempo_stability | G | 11 | M0 (value) | L0 | Tempo stability at meter scale |
+| 73 | tempo_stability | G | 16 | M18 (trend) | L0 | Stability trend over bar |
+
+**v2 projected**: 4 tuples
+**Total projected**: 19 tuples of 294,912 theoretical = 0.0064%
 
 ### 5.2 BEP Mechanism Binding
 

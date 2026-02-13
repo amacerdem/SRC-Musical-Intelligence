@@ -813,6 +813,12 @@ TOTAL     │ 7 horizons          │ ~57 unique pairs   │ 124 H³ scalars
           │ (of 32 possible)    │ (22 of 24 morphs)  │ (5.4% of 2304)
 ```
 
+### 6.5 R³ v2 Projected Expansion
+
+No significant direct v2 expansion projected for SRP. As a pathway-dependent ARU model, SRP receives R³ features indirectly through cross-unit pathways (P1/SPU, P3/IMU, P5/STU). New v2 features flow automatically through these pathways.
+
+**v2 projected**: 0 additional tuples (pathway-mediated)
+
 ---
 
 ## 7. Mechanism Computation: Exact Formulas

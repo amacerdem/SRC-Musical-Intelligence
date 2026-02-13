@@ -360,7 +360,20 @@ CSSL requires H³ features at three MEM horizons: H16 (1s), H20 (5s), H24 (36s).
 | 12 | warmth | 20 | M1 (mean) | L0 (forward) | Sustained voice warmth |
 | 7 | amplitude | 20 | M3 (std) | L0 (forward) | Energy variability = dynamic range |
 
-**Total CSSL H³ demand**: 15 tuples of 2304 theoretical = 0.65%
+**v1 demand**: 15 tuples
+
+#### R³ v2 Projected Expansion
+
+CSSL projected v2 from G (Rhythm) group, aligned with MEM horizons (H16, H20, H24).
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 70 | isochrony_nPVI | G | 16 | M0 (value) | L0 | Current temporal regularity for rhythm copying |
+| 70 | isochrony_nPVI | G | 20 | M0 (value) | L0 | Isochrony over phrase for motor template |
+| 70 | isochrony_nPVI | G | 20 | M1 (mean) | L0 | Average isochrony over consolidation window |
+
+**v2 projected**: 3 tuples
+**Total projected**: 18 tuples of 294,912 theoretical = 0.0061%
 
 ### 5.2 MEM Mechanism Binding
 

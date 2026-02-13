@@ -247,7 +247,19 @@ MORMR requires H³ features at multiple horizons for pleasure evaluation (AED), 
 | 41 | x_l5l7[0] | 8 | M0 (value) | L2 (bidi) | Beauty coupling 500ms |
 | 41 | x_l5l7[0] | 16 | M20 (entropy) | L2 (bidi) | Beauty entropy 1s |
 
-**Total MORMR H³ demand**: 15 tuples of 2304 theoretical = 0.65%
+**v1 demand**: 15 tuples
+
+#### R³ v2 Projected Expansion
+
+Minor v2 expansion. MORMR projected v2 feature from H:Harmony, aligned with AED+CPD+C0P horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 83 | harmonic_change | H | 8 | M0 (value) | L2 | Harmonic change at 500ms |
+| 83 | harmonic_change | H | 16 | M14 (periodicity) | L2 | Harmonic change periodicity 1s |
+
+**v2 projected**: 2 tuples
+**Total projected**: 17 tuples of 294,912 theoretical = 0.0058%
 
 ### 5.2 AED + CPD + C0P Mechanism Binding
 

@@ -231,7 +231,20 @@ DDSMI requires H³ features at BEP horizons for music-motor tracking and TMH hor
 | 33 | x_l4l5[0] | 16 | M14 (periodicity) | L2 (bidi) | Social period 1s |
 | 8 | loudness | 3 | M20 (entropy) | L2 (bidi) | Loudness entropy 100ms |
 
-**Total DDSMI H³ demand**: 11 tuples of 2304 theoretical = 0.48%
+**v1 demand**: 11 tuples
+
+#### R³ v2 Projected Expansion
+
+DDSMI projected v2 from G:Rhythm, aligned with BEP+TMH horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 68 | syncopation_index | G | 3 | M0 (value) | L2 | Syncopation at 100ms |
+| 68 | syncopation_index | G | 16 | M14 (periodicity) | L2 | Syncopation periodicity 1s |
+| 66 | beat_strength | G | 3 | M0 (value) | L2 | Beat salience for social sync |
+
+**v2 projected**: 3 tuples
+**Total projected**: 14 tuples of 294,912 theoretical = 0.0047%
 
 ### 5.2 BEP + TMH Mechanism Binding
 

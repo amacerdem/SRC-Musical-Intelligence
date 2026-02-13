@@ -258,7 +258,22 @@ SPH requires H³ features for oscillatory tracking (gamma vs alpha-beta), memory
 | 41 | x_l5l7[0] | 16 | M20 (entropy) | L0 (fwd) | Coupling entropy over 1s |
 | 22 | energy_change | 4 | M8 (velocity) | L0 (fwd) | Energy change velocity |
 
-**Total SPH H³ demand**: 16 tuples of 2304 theoretical = 0.69%
+**v1 demand**: 16 tuples
+
+#### R³ v2 Projected Expansion
+
+SPH projected v2 from F:Pitch, aligned with PPC+TPC+MEM horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 49 | chroma | F | 3 | M0 (value) | L2 | Chroma at 100ms (feedforward) |
+| 49 | chroma | F | 16 | M1 (mean) | L0 | Mean chroma over 1s (memory) |
+| 61 | pitch_height | F | 3 | M0 (value) | L2 | Pitch height at 100ms |
+| 61 | pitch_height | F | 8 | M8 (velocity) | L0 | Pitch velocity at 500ms |
+| 63 | pitch_salience | F | 3 | M0 (value) | L2 | Pitch salience at 100ms |
+
+**v2 projected**: 5 tuples
+**Total projected**: 21 tuples of 294,912 theoretical = 0.0071%
 
 ### 5.2 PPC + TPC + MEM Mechanism Binding
 

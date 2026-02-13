@@ -246,7 +246,14 @@ PSH requires H³ features at both fast (gamma-alpha, for sensory persistence) an
 | 4 | sensory_pleasantness | 16 | M1 (mean) | L0 (fwd) | Mean consonance 1s |
 | 5 | periodicity | 16 | M1 (mean) | L0 (fwd) | Mean periodicity 1s |
 
-**Total PSH H³ demand**: 18 tuples of 2304 theoretical = 0.78%
+**v1 demand**: 18 tuples
+
+#### R³ v2 Projected Expansion
+
+No significant v2 expansion projected. PSH's post-stimulus hierarchy model operates on the silencing/persistence dichotomy using existing R³ v1 features. The prediction-outcome comparison at its core does not require additional v2 spectral dimensions beyond those already covered by HTP's upstream hierarchy.
+
+**v2 projected**: 0 tuples
+**Total projected**: 18 tuples of 294,912 theoretical = 0.0061%
 
 ### 5.2 PPC + TPC + MEM Mechanism Binding
 

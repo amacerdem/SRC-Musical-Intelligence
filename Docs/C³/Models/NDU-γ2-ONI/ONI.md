@@ -262,7 +262,14 @@ ONI requires H³ features at PPC horizons for deviance detection at enhanced lev
 | 33 | x_l4l5[0] | 16 | M1 (mean) | L2 (bidi) | Mean coupling over 1s |
 | 33 | x_l4l5[0] | 16 | M18 (trend) | L0 (fwd) | Coupling trend over 1s |
 
-**Total ONI H³ demand**: 16 tuples of 2304 theoretical = 0.69%
+**v1 demand**: 16 tuples
+
+#### R³ v2 Projected Expansion
+
+No significant v2 expansion projected.
+
+**v2 projected**: 0 tuples
+**Total projected**: 16 tuples of 294,912 theoretical = 0.0054%
 
 ### 5.2 PPC + ASA Mechanism Binding
 

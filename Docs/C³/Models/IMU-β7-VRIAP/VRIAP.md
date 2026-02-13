@@ -365,7 +365,19 @@ VRIAP requires H³ features at three MEM horizons: H16 (1s), H20 (5s), H24 (36s)
 | 21 | spectral_flux | 16 | M0 (value) | L2 (bidirectional) | Current event salience |
 | 21 | spectral_flux | 20 | M1 (mean) | L0 (forward) | Sustained change rate |
 
-**Total VRIAP H³ demand**: 18 tuples of 2304 theoretical = 0.78%
+**v1 demand**: 18 tuples
+
+#### R³ v2 Projected Expansion
+
+Minor v2 expansion. VRIAP projected v2 from K (Psychoacoustic-ext) group, aligned with MEM horizons (H16, H20, H24).
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 123 | fluctuation_strength | K | 16 | M0 (value) | L0 | Current temporal modulation for motor cueing |
+| 123 | fluctuation_strength | K | 20 | M0 (value) | L0 | Sustained fluctuation over rehabilitation window |
+
+**v2 projected**: 2 tuples
+**Total projected**: 20 tuples of 294,912 theoretical = 0.0068%
 
 ### 5.2 MEM Mechanism Binding
 

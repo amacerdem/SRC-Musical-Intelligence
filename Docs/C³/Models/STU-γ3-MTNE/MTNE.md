@@ -372,7 +372,19 @@ These correspond to rapid inhibition → sustained executive engagement → long
 | 0 | pleasant | 20 | M1 (mean) | L0 (fwd) | Long-term hedonic level |
 | 0 | pleasant | 20 | M18 (trend) | L0 (fwd) | Hedonic trajectory |
 
-**Total MTNE H³ demand**: 16 tuples of 2304 theoretical = 0.69%
+**v1 demand**: 16 tuples
+
+#### R³ v2 Projected Expansion
+
+Minor v2 expansion. MTNE projected v2 feature from G:Rhythm, aligned with TMH horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 73 | tempo_stability | G | 8 | M0 (value) | L0 | Current tempo regularity at short context |
+| 73 | tempo_stability | G | 14 | M18 (trend) | L0 | Stability trend at phrase scale |
+
+**v2 projected**: 2 tuples
+**Total projected**: 18 tuples of 294,912 theoretical = 0.0061%
 
 ### 5.2 TMH Mechanism Binding
 

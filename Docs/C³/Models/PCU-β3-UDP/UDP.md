@@ -234,7 +234,25 @@ UDP requires H³ features for context assessment (slow uncertainty estimation ov
 | 5 | periodicity | 8 | M1 (mean) | L0 (fwd) | Mean periodicity 500ms |
 | 5 | periodicity | 16 | M18 (trend) | L0 (fwd) | Periodicity trend 1s |
 
-**Total UDP H³ demand**: 16 tuples of 2304 theoretical = 0.69%
+**v1 demand**: 16 tuples
+
+#### R³ v2 Projected Expansion
+
+UDP projected v2 from H:Harmony, I:Information, and K:Modulation, aligned with PPC+TPC+MEM horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 75 | key_clarity | H | 8 | M0 (value) | L0 | Tonal context at 500ms |
+| 75 | key_clarity | H | 16 | M1 (mean) | L0 | Mean key clarity over 1s |
+| 84 | tonal_stability | H | 8 | M0 (value) | L0 | Tonal stability at 500ms |
+| 84 | tonal_stability | H | 16 | M18 (trend) | L0 | Stability trend over 1s |
+| 88 | harmonic_entropy | I | 3 | M0 (value) | L2 | Harmonic uncertainty 100ms |
+| 88 | harmonic_entropy | I | 8 | M1 (mean) | L0 | Mean harmonic entropy 500ms |
+| 127 | spectral_slope | K | 8 | M0 (value) | L0 | Spectral slope at 500ms |
+| 127 | spectral_slope | K | 16 | M18 (trend) | L0 | Slope trend over 1s |
+
+**v2 projected**: 8 tuples
+**Total projected**: 24 tuples of 294,912 theoretical = 0.0081%
 
 ### 5.2 PPC + TPC + MEM Mechanism Binding
 

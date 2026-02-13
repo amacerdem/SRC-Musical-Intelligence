@@ -258,7 +258,25 @@ IACM requires H³ features at BEP horizons for oscillatory spectral encoding and
 | 25 | x_l0l5[0] | 3 | M14 (periodicity) | L2 (bidi) | Coupling periodicity 100ms |
 | 25 | x_l0l5[0] | 16 | M21 (zero_crossings) | L2 (bidi) | Coupling phase resets 1s |
 
-**Total IACM H³ demand**: 16 tuples of 2304 theoretical = 0.69%
+**v1 demand**: 16 tuples
+
+#### R³ v2 Projected Expansion
+
+IACM is projected to consume R³ v2 features from F[49:65], aligned with BEP+ASA horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 64 | inharmonicity | F | 0 | M0 (value) | L2 | Instantaneous v2 inharmonicity at 25ms |
+| 64 | inharmonicity | F | 3 | M0 (value) | L2 | v2 inharmonicity at 100ms |
+| 64 | inharmonicity | F | 4 | M0 (value) | L2 | Inharmonicity at 125ms theta |
+| 64 | inharmonicity | F | 16 | M0 (value) | L2 | Inharmonicity at 1s for long-range |
+| 63 | pitch_salience | F | 0 | M0 (value) | L2 | Instantaneous pitch salience at 25ms |
+| 63 | pitch_salience | F | 3 | M0 (value) | L2 | Pitch salience at 100ms |
+| 63 | pitch_salience | F | 4 | M0 (value) | L2 | Pitch salience at 125ms theta |
+| 63 | pitch_salience | F | 16 | M0 (value) | L2 | Pitch salience at 1s for scene context |
+
+**v2 projected**: 8 tuples
+**Total projected**: 24 tuples of 294,912 theoretical = 0.0081%
 
 ### 5.2 BEP + ASA Mechanism Binding
 

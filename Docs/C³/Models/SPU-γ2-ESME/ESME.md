@@ -384,7 +384,19 @@ These correspond to timbre instantaneous processing (gamma), deviance template b
 | 21 | spectral_change | 3 | M8 (velocity) | L0 (fwd) | Spectral deviance velocity |
 | 33 | x_l4l5[0] | 8 | M0 (value) | L2 (bidi) | Temporal deviance |
 
-**Total ESME H³ demand**: 12 tuples of 2304 theoretical = 0.52%
+**v1 demand**: 12 tuples
+
+#### R³ v2 Projected Expansion
+
+Minor v2 expansion for ESME from F[49:65] and J[94:114].
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 49 | chroma | F | 3 | M0 (value) | L2 | Chroma deviance baseline at 100ms |
+| 107 | spectral_contrast_1 | J | 5 | M0 (value) | L2 | Spectral contrast for timbre deviance at 46ms |
+
+**v2 projected**: 2 tuples
+**Total projected**: 14 tuples of 294,912 theoretical = 0.0047%
 
 ### 5.2 PPC + TPC Mechanism Binding
 

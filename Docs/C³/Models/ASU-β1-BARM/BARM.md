@@ -232,7 +232,19 @@ BARM requires H³ features at BEP horizons for beat/timing tracking and ASA hori
 | 25 | x_l0l5[0] | 16 | M14 (periodicity) | L2 (bidi) | Coupling periodicity 1s |
 | 25 | x_l0l5[0] | 16 | M21 (zero_crossings) | L2 (bidi) | Coupling phase resets 1s |
 
-**Total BARM H³ demand**: 14 tuples of 2304 theoretical = 0.61%
+**v1 demand**: 14 tuples
+
+#### R³ v2 Projected Expansion
+
+Minor v2 expansion for BARM from G[65:75] and J[94:114].
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 66 | beat_strength | G | 3 | M0 (value) | L2 | Perceptual beat strength for BAT at 100ms |
+| 107 | spectral_contrast_1 | J | 8 | M0 (value) | L2 | Spectral contrast for tempo dynamics at 500ms |
+
+**v2 projected**: 2 tuples
+**Total projected**: 16 tuples of 294,912 theoretical = 0.0054%
 
 ### 5.2 BEP + ASA Mechanism Binding
 

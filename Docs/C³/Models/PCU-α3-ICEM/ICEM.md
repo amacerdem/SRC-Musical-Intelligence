@@ -249,7 +249,23 @@ ICEM requires H³ features for surprise computation (rapid change detection) and
 | 41 | x_l5l7[0] | 16 | M1 (mean) | L0 (fwd) | Valence mean 1s |
 | 41 | x_l5l7[0] | 16 | M20 (entropy) | L0 (fwd) | Valence entropy 1s |
 
-**Total ICEM H³ demand**: 15 tuples of 2304 theoretical = 0.65%
+**v1 demand**: 15 tuples
+
+#### R³ v2 Projected Expansion
+
+ICEM projected v2 from I:Information, aligned with PPC+TPC+MEM horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 87 | melodic_entropy | I | 3 | M0 (value) | L2 | Melodic IC at 100ms (surprise) |
+| 87 | melodic_entropy | I | 8 | M1 (mean) | L0 | Mean melodic IC over 500ms |
+| 88 | harmonic_entropy | I | 3 | M0 (value) | L2 | Harmonic IC at 100ms |
+| 88 | harmonic_entropy | I | 8 | M1 (mean) | L0 | Mean harmonic IC over 500ms |
+| 90 | spectral_surprise | I | 3 | M0 (value) | L2 | Spectral surprise at 100ms |
+| 90 | spectral_surprise | I | 3 | M2 (std) | L2 | Surprise variability 100ms |
+
+**v2 projected**: 6 tuples
+**Total projected**: 21 tuples of 294,912 theoretical = 0.0071%
 
 ### 5.2 PPC + TPC + MEM Mechanism Binding
 

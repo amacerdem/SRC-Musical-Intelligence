@@ -370,7 +370,25 @@ These correspond to beat → meter → groove (bar-level) timescales.
 | 23 | pitch_change | 16 | M14 (periodicity) | L2 (bidi) | Melodic periodicity at bar level |
 | 24 | timbre_change | 16 | M1 (mean) | L0 (fwd) | Timbral dynamics over bar |
 
-**Total HGSIC H³ demand**: 15 tuples of 2304 theoretical = 0.65%
+**v1 demand**: 15 tuples
+
+#### R³ v2 Projected Expansion
+
+HGSIC projected v2 features from G:Rhythm, I:Interaction, and K:Modulation, aligned with BEP horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 68 | syncopation | G | 6 | M0 (value) | L0 | Instantaneous syncopation at beat scale |
+| 68 | syncopation | G | 11 | M14 (periodicity) | L0 | Syncopation periodicity at meter scale |
+| 71 | groove | G | 6 | M0 (value) | L0 | Current groove level at beat scale |
+| 71 | groove | G | 16 | M1 (mean) | L0 | Mean groove over bar |
+| 89 | rhythmic_IC | I | 11 | M0 (value) | L0 | Rhythmic IC at meter scale |
+| 89 | rhythmic_IC | I | 16 | M0 (value) | L0 | Rhythmic IC over bar |
+| 117 | mod_4Hz | K | 6 | M0 (value) | L0 | 4Hz modulation at beat scale |
+| 117 | mod_4Hz | K | 16 | M0 (value) | L0 | 4Hz modulation over bar |
+
+**v2 projected**: 8 tuples
+**Total projected**: 23 tuples of 294,912 theoretical = 0.0078%
 
 ### 5.2 Mechanism Binding
 

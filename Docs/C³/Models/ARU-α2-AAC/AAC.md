@@ -481,6 +481,12 @@ asa_salience    = mean(ASA[10:20])     # Salience/attention (10D mean)
 asa_integration = mean(ASA[20:30])     # Scene integration (10D mean)
 ```
 
+### 6.1 R³ v2 Projected Expansion
+
+No significant direct v2 expansion projected for AAC. As a pathway-dependent ARU model, AAC receives R³ features indirectly through cross-unit pathways (P1/SPU, P3/IMU, P5/STU). New v2 features flow automatically through these pathways.
+
+**v2 projected**: 0 additional tuples (pathway-mediated)
+
 ---
 
 ## 7. Complete Formulas: Mechanisms → 14D

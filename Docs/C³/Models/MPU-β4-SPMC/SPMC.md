@@ -244,7 +244,21 @@ SPMC requires H³ features at BEP horizons for motor timing and TMH horizons for
 | 33 | x_l4l5[0] | 16 | M19 (stability) | L0 (fwd) | Sequence stability 1s |
 | 7 | amplitude | 16 | M1 (mean) | L2 (bidi) | Mean motor output level 1s |
 
-**Total SPMC H³ demand**: 15 tuples of 2304 theoretical = 0.65%
+**v1 demand**: 15 tuples
+
+#### R³ v2 Projected Expansion
+
+SPMC projected v2 from G:Rhythm, aligned with BEP+TMH horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 68 | syncopation_index | G | 3 | M0 (value) | L2 | Syncopation at 100ms |
+| 68 | syncopation_index | G | 16 | M14 (periodicity) | L2 | Syncopation periodicity 1s |
+| 69 | metricality_index | G | 3 | M0 (value) | L2 | Metrical regularity 100ms |
+| 66 | beat_strength | G | 3 | M0 (value) | L2 | Beat salience for motor sequence |
+
+**v2 projected**: 4 tuples
+**Total projected**: 19 tuples of 294,912 theoretical = 0.0064%
 
 ### 5.2 BEP + TMH Mechanism Binding
 

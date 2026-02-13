@@ -261,7 +261,27 @@ HTP requires H³ features at PPC horizons for low-level prediction, TPC horizons
 | 25 | x_l0l5[0] | 3 | M2 (std) | L2 (bidi) | Coupling variability 100ms |
 | 33 | x_l4l5[0] | 4 | M8 (velocity) | L0 (fwd) | Mid-level coupling velocity |
 
-**Total HTP H³ demand**: 18 tuples of 2304 theoretical = 0.78%
+**v1 demand**: 18 tuples
+
+#### R³ v2 Projected Expansion
+
+HTP projected v2 from H:Harmony and I:Information, aligned with PPC+TPC+MEM horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 76 | tonnetz | H | 3 | M0 (value) | L2 | Tonal space at 100ms (low-level) |
+| 76 | tonnetz | H | 8 | M8 (velocity) | L0 | Tonal velocity at 500ms (mid-level) |
+| 83 | harmonic_change | H | 3 | M0 (value) | L2 | Harmonic boundary at 100ms |
+| 83 | harmonic_change | H | 8 | M14 (periodicity) | L0 | Harmonic periodicity 500ms |
+| 75 | key_clarity | H | 8 | M0 (value) | L0 | Key context at 500ms |
+| 75 | key_clarity | H | 16 | M1 (mean) | L0 | Mean key clarity over 1s |
+| 87 | melodic_entropy | I | 3 | M0 (value) | L2 | Melodic uncertainty 100ms |
+| 87 | melodic_entropy | I | 8 | M1 (mean) | L0 | Mean melodic entropy 500ms |
+| 92 | predictive_entropy | I | 8 | M0 (value) | L0 | Predictive uncertainty 500ms |
+| 92 | predictive_entropy | I | 16 | M18 (trend) | L0 | Prediction trend over 1s |
+
+**v2 projected**: 10 tuples
+**Total projected**: 28 tuples of 294,912 theoretical = 0.0095%
 
 ### 5.2 PPC + TPC + MEM Mechanism Binding
 

@@ -363,7 +363,21 @@ These cover note onset → pitch sequence → motor coupling → phrase context.
 | 23 | pitch_change | 14 | M1 (mean) | L0 (fwd) | Phrase-level pitch dynamics |
 | 9 | spectral_centroid | 8 | M0 (value) | L2 (bidi) | Brightness/pitch proxy |
 
-**Total MDNS H³ demand**: 18 tuples of 2304 theoretical = 0.78%
+**v1 demand**: 18 tuples
+
+#### R³ v2 Projected Expansion
+
+MDNS projected v2 features from F:Pitch and G:Rhythm, aligned with BEP+TMH horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 61 | pitch_height | F | 8 | M0 (value) | L0 | Current pitch height at short context |
+| 61 | pitch_height | F | 14 | M8 (velocity) | L0 | Pitch height change rate at phrase scale |
+| 65 | tempo | G | 6 | M0 (value) | L0 | Current tempo at beat scale |
+| 65 | tempo | G | 11 | M18 (trend) | L0 | Tempo trend at meter scale |
+
+**v2 projected**: 4 tuples
+**Total projected**: 22 tuples of 294,912 theoretical = 0.0075%
 
 ### 5.2 Mechanism Bindings
 

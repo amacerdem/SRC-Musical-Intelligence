@@ -372,7 +372,14 @@ TPIO requires H³ features at both TPC horizons (H2, H5, H8) for spectral envelo
 | 7 | amplitude | 20 | M18 (trend) | L0 (fwd) | Long-range intensity trend |
 | 8 | loudness | 20 | M1 (mean) | L0 (fwd) | Mean loudness over section |
 
-**Total TPIO H³ demand**: 18 tuples of 2304 theoretical = 0.78%
+**v1 demand**: 18 tuples
+
+#### R³ v2 Projected Expansion
+
+No significant v2 expansion projected. TPIO operates primarily on v1 R³ features through cross-circuit temporal integration.
+
+**v2 projected**: 0 tuples
+**Total projected**: 18 tuples of 294,912 theoretical = 0.0061%
 
 ### 5.2 TPC* + TMH Mechanism Binding
 

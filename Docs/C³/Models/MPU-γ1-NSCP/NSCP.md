@@ -238,7 +238,19 @@ NSCP requires H³ features at multi-scale BEP horizons for oscillatory tracking 
 | 8 | loudness | 3 | M20 (entropy) | L2 (bidi) | Loudness entropy 100ms |
 | 3 | stumpf | 3 | M0 (value) | L2 (bidi) | Consonance at 100ms |
 
-**Total NSCP H³ demand**: 14 tuples of 2304 theoretical = 0.61%
+**v1 demand**: 14 tuples
+
+#### R³ v2 Projected Expansion
+
+Minor v2 expansion. NSCP's primary ISC mechanism relies on energy and consonance features; pulse_clarity provides the single most relevant v2 addition.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 67 | pulse_clarity | G | 3 | M0 (value) | L2 | Population pulse tracking 100ms |
+| 67 | pulse_clarity | G | 16 | M1 (mean) | L2 | Mean pulse clarity over 1s |
+
+**v2 projected**: 2 tuples
+**Total projected**: 16 tuples of 294,912 theoretical = 0.0054%
 
 ### 5.2 BEP + TMH Mechanism Binding
 

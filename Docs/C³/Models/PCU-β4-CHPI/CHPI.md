@@ -293,7 +293,26 @@ CHPI requires H³ features for harmonic event detection (fast chord boundaries),
 | 14 | tonalness | 16 | M1 (mean) | L0 (fwd) | Mean tonalness over 1s |
 | 5 | periodicity | 16 | M18 (trend) | L0 (fwd) | Periodicity trend 1s |
 
-**Total CHPI H³ demand**: 20 tuples of 2304 theoretical = 0.87%
+**v1 demand**: 20 tuples
+
+#### R³ v2 Projected Expansion
+
+CHPI projected v2 from F:Pitch, H:Harmony, and I:Information, aligned with PPC+TPC+MEM horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 49 | chroma | F | 3 | M0 (value) | L2 | Chord identity at 100ms |
+| 49 | chroma | F | 8 | M1 (mean) | L0 | Mean chroma over 500ms |
+| 64 | inharmonicity | F | 3 | M0 (value) | L2 | Inharmonicity at 100ms |
+| 86 | syntactic_irregularity | H | 3 | M0 (value) | L2 | Harmonic syntax violation 100ms |
+| 86 | syntactic_irregularity | H | 3 | M4 (max) | L2 | Peak irregularity 100ms |
+| 76 | tonnetz | H | 3 | M0 (value) | L2 | Tonal space at 100ms |
+| 76 | tonnetz | H | 8 | M8 (velocity) | L0 | Tonal motion at 500ms |
+| 92 | predictive_entropy | I | 8 | M0 (value) | L0 | Cross-modal prediction 500ms |
+| 92 | predictive_entropy | I | 16 | M18 (trend) | L0 | Prediction trend over 1s |
+
+**v2 projected**: 9 tuples
+**Total projected**: 29 tuples of 294,912 theoretical = 0.0098%
 
 ### 5.2 PPC + TPC + MEM Mechanism Binding
 

@@ -231,7 +231,25 @@ SDD requires H³ features for deviance tracking at fast timescales and cross-mod
 | 8 | loudness | 3 | M20 (entropy) | L2 (bidi) | Loudness entropy 100ms |
 | 10 | spectral_flux | 16 | M14 (periodicity) | L2 (bidi) | Flux periodicity at 1s |
 
-**Total SDD H³ demand**: 18 tuples of 2304 theoretical = 0.78%
+**v1 demand**: 18 tuples
+
+#### R³ v2 Projected Expansion
+
+SDD projected v2 from H:Harmony and I:Information, aligned with PPC/ASA horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 86 | syntactic_irregularity | H | 3 | M0 (value) | L2 | Tonal syntax violation at 100ms |
+| 86 | syntactic_irregularity | H | 4 | M4 (min) | L2 | Minimum irregularity at 125ms |
+| 76 | tonnetz_fifth_x | H | 3 | M0 (value) | L2 | Tonnetz position at 100ms |
+| 76 | tonnetz_fifth_x | H | 3 | M8 (velocity) | L2 | Tonnetz velocity at 100ms |
+| 87 | melodic_entropy | I | 3 | M0 (value) | L2 | Melodic uncertainty at 100ms |
+| 87 | melodic_entropy | I | 3 | M1 (mean) | L2 | Mean melodic entropy at 100ms |
+| 93 | tonal_ambiguity | I | 3 | M0 (value) | L2 | Key uncertainty at 100ms |
+| 93 | tonal_ambiguity | I | 16 | M0 (value) | L2 | Key uncertainty at 1s |
+
+**v2 projected**: 8 tuples
+**Total projected**: 26 tuples of 294,912 theoretical = 0.0088%
 
 ### 5.2 PPC + ASA Mechanism Binding
 

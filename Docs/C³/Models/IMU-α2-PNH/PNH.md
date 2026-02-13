@@ -349,7 +349,22 @@ PNH requires H³ features at three SYN horizons: H10 (400ms), H14 (700ms), H18 (
 | 6 | harmonic_deviation | 14 | M0 (value) | L0 (forward) | Template mismatch |
 | 2 | helmholtz_kang | 18 | M1 (mean) | L0 (forward) | Harmonic template over phrase |
 
-**Total PNH H³ demand**: 15 tuples of 2304 theoretical = 0.65%
+**v1 demand**: 15 tuples
+
+#### R³ v2 Projected Expansion
+
+PNH projected v2 from F (Pitch) and H (Harmony) groups, aligned with SYN horizons (H10, H14, H18).
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 49 | chroma | F | 10 | M0 (value) | L2 | Current pitch-class for ratio encoding |
+| 49 | chroma | F | 14 | M1 (mean) | L0 | Average chroma profile over progression |
+| 64 | inharmonicity | F | 10 | M0 (value) | L2 | Current partial deviation from harmonic series |
+| 64 | inharmonicity | F | 14 | M0 (value) | L0 | Inharmonicity state over progression |
+| 75 | key_clarity | H | 10 | M0 (value) | L2 | Tonal context strength at chord level |
+
+**v2 projected**: 5 tuples
+**Total projected**: 20 tuples of 294,912 theoretical = 0.0068%
 
 ### 5.2 SYN Mechanism Binding
 

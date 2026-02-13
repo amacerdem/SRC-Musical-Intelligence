@@ -381,7 +381,19 @@ These correspond to brainstem processing timescales (gamma → alpha-beta → sy
 | 17 | spectral_autocorrelation | 3 | M14 (periodicity) | L2 (bidi) | Harmonic periodicity 100ms |
 | 18 | tristimulus1 | 0 | M0 (value) | L2 (bidi) | F0 energy (spectral simplicity) |
 
-**Total SDNPS H³ demand**: 10 tuples of 2304 theoretical = 0.43%
+**v1 demand**: 10 tuples
+
+#### R³ v2 Projected Expansion
+
+Minor v2 expansion for SDNPS from F[49:65].
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 63 | pitch_salience | F | 3 | M0 (value) | L2 | Explicit pitch salience for NPS at 100ms |
+| 64 | inharmonicity | F | 0 | M0 (value) | L2 | v2 inharmonicity for spectral complexity |
+
+**v2 projected**: 2 tuples
+**Total projected**: 12 tuples of 294,912 theoretical = 0.0041%
 
 ### 5.2 PPC Mechanism Binding
 

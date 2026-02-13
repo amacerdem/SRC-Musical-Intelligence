@@ -264,7 +264,18 @@ ECT requires H³ features at PPC horizons for within-network efficiency measurem
 | 13 | brightness | 3 | M0 (value) | L2 (bidi) | Tonal adaptation 100ms |
 | 8 | loudness | 3 | M0 (value) | L2 (bidi) | Attention allocation 100ms |
 
-**Total ECT H³ demand**: 18 tuples of 2304 theoretical = 0.78%
+**v1 demand**: 18 tuples
+
+#### R³ v2 Projected Expansion
+
+Minor v2 expansion for ECT from I:Information.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 90 | spectral_surprise | I | 3 | M0 (value) | L2 | Prediction error for flexibility measurement |
+
+**v2 projected**: 1 tuple
+**Total projected**: 19 tuples of 294,912 theoretical = 0.0064%
 
 ### 5.2 PPC + ASA Mechanism Binding
 

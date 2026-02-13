@@ -382,7 +382,14 @@ CDEM requires H³ features at three MEM horizons: H16 (1s), H20 (5s), H24 (36s),
 | 11 | onset_strength | 16 | M0 (value) | L2 (bidirectional) | Event boundary detection |
 | 11 | onset_strength | 20 | M4 (max) | L0 (forward) | Peak onset over 5s |
 
-**Total CDEM H³ demand**: 18 tuples of 2304 theoretical = 0.78%
+**v1 demand**: 18 tuples
+
+#### R³ v2 Projected Expansion
+
+No significant v2 expansion projected. CDEM's context-dependent emotional memory operates through v1 spectral features (entropy, flux, warmth, interactions) that fully capture the mood-congruent encoding mechanism. The v2 groups do not add distinct context-dependency inputs.
+
+**v2 projected**: 0 tuples
+**Total projected**: 18 tuples of 294,912 theoretical = 0.0061%
 
 ### 5.2 MEM Mechanism Binding
 

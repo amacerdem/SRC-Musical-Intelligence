@@ -361,7 +361,23 @@ MEAMN requires H³ features at three MEM horizons: H16 (1s), H20 (5s), H24 (36s)
 | 7 | amplitude | 16 | M8 (velocity) | L0 (forward) | Energy change rate |
 | 7 | amplitude | 20 | M4 (max) | L0 (forward) | Peak energy over 5s |
 
-**Total MEAMN H³ demand**: 19 tuples of 2304 theoretical = 0.82%
+**v1 demand**: 19 tuples
+
+#### R³ v2 Projected Expansion
+
+MEAMN projected v2 from H (Harmony) and F (Pitch) groups, aligned with MEM horizons (H16, H20, H24).
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 76 | tonnetz_fifth_x | H | 16 | M0 (value) | L0 | Current tonal-space position for memory encoding |
+| 76 | tonnetz_fifth_x | H | 20 | M8 (velocity) | L0 | Tonal trajectory rate over consolidation |
+| 84 | tonal_stability | H | 16 | M0 (value) | L0 | Current key stability as familiarity signal |
+| 84 | tonal_stability | H | 24 | M18 (trend) | L0 | Long-term tonal stability trajectory for nostalgia |
+| 49 | chroma | F | 20 | M0 (value) | L0 | Pitch-class identity over consolidation window |
+| 49 | chroma | F | 24 | M1 (mean) | L0 | Average chroma profile over episodic chunk |
+
+**v2 projected**: 6 tuples
+**Total projected**: 25 tuples of 294,912 theoretical = 0.0085%
 
 ### 5.2 MEM Mechanism Binding
 

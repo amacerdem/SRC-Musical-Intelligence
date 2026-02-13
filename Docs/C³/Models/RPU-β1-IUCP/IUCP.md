@@ -234,7 +234,25 @@ IUCP requires H³ features at longer horizons for complexity assessment (entropy
 | 4 | sensory_pleasantness | 16 | M1 (mean) | L2 (bidi) | Mean pleasantness 1s |
 | 4 | sensory_pleasantness | 16 | M2 (std) | L2 (bidi) | Pleasantness variability 1s |
 
-**Total IUCP H³ demand**: 14 tuples of 2304 theoretical = 0.61%
+**v1 demand**: 14 tuples
+
+#### R³ v2 Projected Expansion
+
+IUCP projected v2 from G:Rhythm + I:Information, aligned with AED+CPD+C0P horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 68 | syncopation_index | G | 4 | M0 (value) | L2 | Syncopation at 125ms theta |
+| 68 | syncopation_index | G | 16 | M14 (periodicity) | L2 | Syncopation periodicity 1s |
+| 89 | rhythmic_IC | I | 4 | M0 (value) | L2 | Rhythmic IC at 125ms |
+| 89 | rhythmic_IC | I | 8 | M0 (value) | L2 | Rhythmic IC at 500ms |
+| 87 | melodic_entropy | I | 8 | M0 (value) | L2 | Melodic entropy at 500ms |
+| 87 | melodic_entropy | I | 16 | M1 (mean) | L2 | Mean melodic entropy 1s |
+| 88 | harmonic_entropy | I | 8 | M0 (value) | L2 | Harmonic entropy at 500ms |
+| 88 | harmonic_entropy | I | 16 | M1 (mean) | L2 | Mean harmonic entropy 1s |
+
+**v2 projected**: 8 tuples
+**Total projected**: 22 tuples of 294,912 theoretical = 0.0075%
 
 ### 5.2 AED + CPD + C0P Mechanism Binding
 

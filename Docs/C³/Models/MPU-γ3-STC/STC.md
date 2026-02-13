@@ -238,7 +238,23 @@ STC requires H³ features at TMH horizons for interoceptive memory and BEP horiz
 | 15 | tristimulus1 | 3 | M0 (value) | L2 (bidi) | Voice harmonic 100ms |
 | 7 | amplitude | 8 | M1 (mean) | L2 (bidi) | Mean vocal intensity 500ms |
 
-**Total STC H³ demand**: 12 tuples of 2304 theoretical = 0.52%
+**v1 demand**: 12 tuples
+
+#### R³ v2 Projected Expansion
+
+STC projected v2 from G:Rhythm, aligned with BEP+TMH horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 68 | syncopation_index | G | 3 | M0 (value) | L2 | Syncopation at 100ms |
+| 68 | syncopation_index | G | 16 | M14 (periodicity) | L2 | Syncopation periodicity 1s |
+| 69 | metricality_index | G | 3 | M0 (value) | L2 | Metrical regularity 100ms |
+| 69 | metricality_index | G | 16 | M1 (mean) | L2 | Mean metricality 1s |
+| 73 | tempo_stability | G | 3 | M0 (value) | L2 | Tempo stability 100ms |
+| 73 | tempo_stability | G | 16 | M18 (trend) | L2 | Stability trend 1s |
+
+**v2 projected**: 6 tuples
+**Total projected**: 18 tuples of 294,912 theoretical = 0.0061%
 
 ### 5.2 BEP + TMH Mechanism Binding
 

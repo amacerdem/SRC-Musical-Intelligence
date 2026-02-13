@@ -227,7 +227,18 @@ STANM requires H³ features at multiple horizons for attention-dependent network
 | 8 | loudness | 3 | M20 (entropy) | L2 (bidi) | Loudness entropy 100ms |
 | 8 | loudness | 16 | M1 (mean) | L2 (bidi) | Mean loudness over 1s |
 
-**Total STANM H³ demand**: 16 tuples of 2304 theoretical = 0.69%
+**v1 demand**: 16 tuples
+
+#### R³ v2 Projected Expansion
+
+Minor v2 expansion for STANM from J[94:114].
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 107 | spectral_contrast_1 | J | 3 | M0 (value) | L2 | Spectral contrast for attention allocation at 100ms |
+
+**v2 projected**: 1 tuples
+**Total projected**: 17 tuples of 294,912 theoretical = 0.0058%
 
 ### 5.2 BEP + ASA Mechanism Binding
 

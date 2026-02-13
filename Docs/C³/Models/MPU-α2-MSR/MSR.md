@@ -265,7 +265,23 @@ MSR requires H³ features at multiple gamma/alpha horizons for PLV computation a
 | 7 | amplitude | 16 | M1 (mean) | L2 (bidi) | Mean amplitude 1s |
 | 21 | spectral_change | 4 | M8 (velocity) | L2 (bidi) | Tempo velocity at 125ms |
 
-**Total MSR H³ demand**: 22 tuples of 2304 theoretical = 0.95%
+**v1 demand**: 22 tuples
+
+#### R³ v2 Projected Expansion
+
+MSR projected v2 from G:Rhythm, aligned with BEP+TMH horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 68 | syncopation_index | G | 3 | M0 (value) | L2 | Syncopation at 100ms alpha |
+| 68 | syncopation_index | G | 16 | M14 (periodicity) | L2 | Syncopation periodicity 1s |
+| 65 | tempo_estimate | G | 3 | M0 (value) | L2 | Tempo at 100ms |
+| 65 | tempo_estimate | G | 16 | M18 (trend) | L2 | Tempo trend over 1s |
+| 73 | tempo_stability | G | 3 | M0 (value) | L2 | Tempo stability at 100ms |
+| 73 | tempo_stability | G | 16 | M18 (trend) | L2 | Stability trend over 1s |
+
+**v2 projected**: 6 tuples
+**Total projected**: 28 tuples of 294,912 theoretical = 0.0095%
 
 ### 5.2 BEP + TMH Mechanism Binding
 

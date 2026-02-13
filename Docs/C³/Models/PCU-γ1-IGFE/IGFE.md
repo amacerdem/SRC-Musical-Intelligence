@@ -230,7 +230,21 @@ IGFE requires H³ features at gamma-scale horizons for frequency matching and lo
 | 10 | spectral_flux | 1 | M14 (periodicity) | L2 (bidi) | Modulation periodicity 50ms |
 | 10 | spectral_flux | 3 | M1 (mean) | L2 (bidi) | Mean modulation 100ms |
 
-**Total IGFE H³ demand**: 18 tuples of 2304 theoretical = 0.78%
+**v1 demand**: 18 tuples
+
+#### R³ v2 Projected Expansion
+
+Minor v2 expansion. IGFE's gamma entrainment relies on periodicity and modulation rate rather than high-level features. J:MFCC and spectral_contrast provide the minimal timbral descriptors for frequency-specific entrainment.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 94 | mfcc_1 | J | 3 | M0 (value) | L2 | Timbral energy at 100ms |
+| 94 | mfcc_1 | J | 16 | M1 (mean) | L2 | Mean timbral energy over 1s |
+| 107 | spectral_contrast_1 | J | 3 | M0 (value) | L2 | Spectral contrast at 100ms |
+| 107 | spectral_contrast_1 | J | 16 | M1 (mean) | L2 | Mean contrast over 1s |
+
+**v2 projected**: 4 tuples
+**Total projected**: 22 tuples of 294,912 theoretical = 0.0075%
 
 ### 5.2 PPC + TPC + MEM Mechanism Binding
 

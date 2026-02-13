@@ -412,7 +412,25 @@ RASN requires H³ features at two mechanism horizon sets:
 | 7 | amplitude | 20 | M4 (max) | L0 (forward) | Peak energy over 5s |
 | 7 | amplitude | 24 | M3 (std) | L0 (forward) | Energy variability over 36s |
 
-**Total RASN H³ demand**: 28 tuples of 2304 theoretical = 1.22%
+**v1 demand**: 28 tuples
+
+#### R³ v2 Projected Expansion
+
+RASN projected v2 from G (Rhythm) group, aligned with MEM horizons (H16, H20, H24) and BEP* horizons (H6, H11, H16).
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 69 | metricality | G | 6 | M0 (value) | L2 | Current metric regularity at beat level |
+| 69 | metricality | G | 11 | M0 (value) | L0 | Metric state at psychological present |
+| 69 | metricality | G | 16 | M1 (mean) | L0 | Average metricality over bar for MEM encoding |
+| 69 | metricality | G | 20 | M1 (mean) | L0 | Sustained metricality over consolidation |
+| 70 | isochrony_nPVI | G | 6 | M0 (value) | L2 | Current temporal regularity at beat level |
+| 70 | isochrony_nPVI | G | 11 | M0 (value) | L0 | Isochrony at motor planning window |
+| 70 | isochrony_nPVI | G | 16 | M1 (mean) | L0 | Average isochrony over bar for entrainment |
+| 70 | isochrony_nPVI | G | 24 | M1 (mean) | L0 | Long-term rhythmic regularity for plasticity |
+
+**v2 projected**: 8 tuples
+**Total projected**: 36 tuples of 294,912 theoretical = 0.0122%
 
 ### 5.2 Mechanism Binding
 

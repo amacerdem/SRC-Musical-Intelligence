@@ -356,7 +356,21 @@ DMMS requires H³ features at three MEM horizons: H16 (1s), H20 (5s), H24 (36s).
 | 0 | roughness | 20 | M1 (mean) | L0 (forward) | Consonance scaffold stability |
 | 7 | amplitude | 20 | M4 (max) | L0 (forward) | Peak energy over 5s |
 
-**Total DMMS H³ demand**: 15 tuples of 2304 theoretical = 0.65%
+**v1 demand**: 15 tuples
+
+#### R³ v2 Projected Expansion
+
+DMMS projected v2 from F (Pitch) group, aligned with MEM horizons (H16, H20, H24).
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 49 | chroma | F | 16 | M0 (value) | L0 | Current pitch-class for early melodic imprinting |
+| 49 | chroma | F | 20 | M1 (mean) | L0 | Average chroma over consolidation for template formation |
+| 61 | pitch_height | F | 16 | M0 (value) | L0 | Current pitch register for voice/lullaby recognition |
+| 61 | pitch_height | F | 24 | M8 (velocity) | L0 | Long-term pitch contour dynamics for scaffold stability |
+
+**v2 projected**: 4 tuples
+**Total projected**: 19 tuples of 294,912 theoretical = 0.0064%
 
 ### 5.2 MEM Mechanism Binding
 

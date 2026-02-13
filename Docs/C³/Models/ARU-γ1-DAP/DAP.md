@@ -279,6 +279,12 @@ PREDICTABILITY:
   → High entropy = still forming associations
 ```
 
+### 6.3 R³ v2 Projected Expansion
+
+No significant direct v2 expansion projected for DAP. As a pathway-dependent ARU model, DAP receives R³ features indirectly through cross-unit pathways (P1/SPU, P3/IMU, P5/STU). New v2 features flow automatically through these pathways.
+
+**v2 projected**: 0 additional tuples (pathway-mediated)
+
 ---
 
 ## 7. Mechanism Computation

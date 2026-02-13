@@ -379,7 +379,24 @@ HCMC requires H³ features at three MEM horizons: H16 (1s), H20 (5s), H24 (36s).
 | 14 | tonalness | 16 | M1 (mean) | L2 (bidirectional) | Melodic content at 1s |
 | 14 | tonalness | 20 | M22 (autocorrelation) | L0 (forward) | Tonal repetition over 5s |
 
-**Total HCMC H³ demand**: 22 tuples of 2304 theoretical = 0.95%
+**v1 demand**: 22 tuples
+
+#### R³ v2 Projected Expansion
+
+HCMC projected v2 from I (Information) group, aligned with MEM horizons (H16, H20, H24).
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 88 | harmonic_entropy | I | 16 | M0 (value) | L2 | Current harmonic uncertainty for encoding difficulty |
+| 88 | harmonic_entropy | I | 20 | M0 (value) | L0 | Harmonic entropy state over consolidation |
+| 88 | harmonic_entropy | I | 20 | M1 (mean) | L0 | Average harmonic complexity over 5s |
+| 88 | harmonic_entropy | I | 24 | M1 (mean) | L0 | Long-term harmonic predictability |
+| 92 | predictive_entropy | I | 16 | M0 (value) | L2 | Current prediction error for fast binding |
+| 92 | predictive_entropy | I | 20 | M0 (value) | L0 | Prediction error over consolidation window |
+| 92 | predictive_entropy | I | 24 | M18 (trend) | L0 | Long-term prediction error trajectory |
+
+**v2 projected**: 7 tuples
+**Total projected**: 29 tuples of 294,912 theoretical = 0.0098%
 
 ### 5.2 MEM Mechanism Binding
 

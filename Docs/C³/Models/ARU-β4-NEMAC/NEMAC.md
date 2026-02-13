@@ -367,6 +367,12 @@ MEMORY-REWARD LINK:
   → Rate of memory-reward coupling
 ```
 
+### 6.4 R³ v2 Projected Expansion
+
+No significant direct v2 expansion projected for NEMAC. As a pathway-dependent ARU model, NEMAC receives R³ features indirectly through cross-unit pathways (P1/SPU, P3/IMU, P5/STU). New v2 features flow automatically through these pathways.
+
+**v2 projected**: 0 additional tuples (pathway-mediated)
+
 ---
 
 ## 7. Mechanism Computation

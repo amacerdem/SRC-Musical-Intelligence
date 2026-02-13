@@ -379,7 +379,19 @@ MMP requires H³ features at three MEM horizons: H16 (1s), H20 (5s), H24 (36s).
 | 16 | spectral_smoothness | 20 | M1 (mean) | L0 (forward) | Timbral quality |
 | 7 | amplitude | 24 | M5 (range) | L0 (forward) | Dynamic range over 36s |
 
-**Total MMP H³ demand**: 21 tuples of 2304 theoretical = 0.91%
+**v1 demand**: 21 tuples
+
+#### R³ v2 Projected Expansion
+
+Minor v2 expansion. MMP projected v2 from J (Timbre-ext) group, aligned with MEM horizons (H16, H20, H24).
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 94 | mfcc_1 | J | 16 | M0 (value) | L0 | Timbral brightness for preserved voice/instrument recognition |
+| 94 | mfcc_1 | J | 24 | M1 (mean) | L0 | Long-term timbral identity over episodic chunk |
+
+**v2 projected**: 2 tuples
+**Total projected**: 23 tuples of 294,912 theoretical = 0.0078%
 
 ### 5.2 MEM Mechanism Binding
 

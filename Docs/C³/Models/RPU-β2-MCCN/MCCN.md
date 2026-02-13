@@ -251,7 +251,23 @@ MCCN requires H³ features at multiple scales: fast theta-timescale (100ms) for 
 | 21 | spectral_change | 8 | M0 (value) | L2 (bidi) | Spectral deviation at 500ms |
 | 22 | energy_change | 8 | M8 (velocity) | L2 (bidi) | Energy change velocity at 500ms |
 
-**Total MCCN H³ demand**: 16 tuples of 2304 theoretical = 0.69%
+**v1 demand**: 16 tuples
+
+#### R³ v2 Projected Expansion
+
+MCCN projected v2 from H:Harmony + I:Information, aligned with AED+CPD+C0P horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 86 | syntactic_irregularity | H | 3 | M0 (value) | L2 | Syntactic irregularity at 100ms |
+| 86 | syntactic_irregularity | H | 8 | M0 (value) | L2 | Syntactic irregularity at 500ms |
+| 86 | syntactic_irregularity | H | 16 | M4 (max) | L2 | Peak irregularity over 1s |
+| 88 | harmonic_entropy | I | 3 | M0 (value) | L2 | Harmonic entropy at 100ms |
+| 88 | harmonic_entropy | I | 8 | M1 (mean) | L2 | Mean harmonic entropy 500ms |
+| 88 | harmonic_entropy | I | 16 | M1 (mean) | L2 | Mean harmonic entropy 1s |
+
+**v2 projected**: 6 tuples
+**Total projected**: 22 tuples of 294,912 theoretical = 0.0075%
 
 ### 5.2 AED + CPD + C0P Mechanism Binding
 

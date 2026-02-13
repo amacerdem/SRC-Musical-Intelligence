@@ -380,7 +380,18 @@ These correspond to brainstem detection timescales (gamma instant detection and 
 | 18 | tristimulus1 | 0 | M0 (value) | L2 (bidi) | F0 energy for roughness quality |
 | 41 | x_l5l7[0] | 3 | M0 (value) | L2 (bidi) | Cross-band roughness coupling |
 
-**Total SDED H³ demand**: 9 tuples of 2304 theoretical = 0.39%
+**v1 demand**: 9 tuples
+
+#### R³ v2 Projected Expansion
+
+Minor v2 expansion for SDED from F[49:65].
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 64 | inharmonicity | F | 0 | M0 (value) | L2 | v2 inharmonicity for spectral clarity index |
+
+**v2 projected**: 1 tuples
+**Total projected**: 10 tuples of 294,912 theoretical = 0.0034%
 
 ### 5.2 PPC Mechanism Binding
 

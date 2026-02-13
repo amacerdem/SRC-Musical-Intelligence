@@ -388,7 +388,23 @@ These correspond to motif → phrase → section timescales.
 | 25 | x_l0l5[0] | 20 | M22 (autocorr) | L0 (fwd) | Section-level repetition |
 | 8 | loudness | 20 | M18 (trend) | L0 (fwd) | Long-range loudness trend |
 
-**Total HMCE H³ demand**: 18 tuples of 2304 theoretical = 0.78%
+**v1 demand**: 18 tuples
+
+#### R³ v2 Projected Expansion
+
+HMCE projected v2 features from G:Rhythm, aligned with TMH horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 65 | tempo | G | 8 | M0 (value) | L0 | Current tempo estimate at short context |
+| 65 | tempo | G | 20 | M18 (trend) | L0 | Long-range tempo trajectory |
+| 68 | syncopation | G | 8 | M0 (value) | L0 | Instantaneous syncopation level |
+| 68 | syncopation | G | 14 | M14 (periodicity) | L0 | Syncopation periodicity at phrase scale |
+| 69 | metricality | G | 14 | M0 (value) | L0 | Metric regularity at phrase scale |
+| 69 | metricality | G | 20 | M1 (mean) | L0 | Long-range mean metricality |
+
+**v2 projected**: 6 tuples
+**Total projected**: 24 tuples of 294,912 theoretical = 0.0081%
 
 ### 5.2 TMH Mechanism Binding
 

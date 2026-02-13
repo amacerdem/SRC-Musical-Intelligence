@@ -257,7 +257,25 @@ CDMR requires H³ features at PPC horizons for pitch/contour deviance detection 
 | 41 | x_l5l6[0] | 16 | M16 (curvature) | L2 (bidi) | Binding curvature over 1s |
 | 33 | x_l4l5[0] | 3 | M0 (value) | L2 (bidi) | Pattern coupling at 100ms |
 
-**Total CDMR H³ demand**: 16 tuples of 2304 theoretical = 0.69%
+**v1 demand**: 16 tuples
+
+#### R³ v2 Projected Expansion
+
+CDMR projected v2 from H:Harmony and I:Information, aligned with PPC/ASA horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 86 | syntactic_irregularity | H | 3 | M0 (value) | L2 | Tonal syntax violation for mismatch context |
+| 86 | syntactic_irregularity | H | 4 | M4 (min) | L2 | Minimum irregularity at 125ms |
+| 76 | tonnetz_fifth_x | H | 3 | M0 (value) | L2 | Tonnetz position for harmonic context |
+| 76 | tonnetz_fifth_x | H | 3 | M8 (velocity) | L2 | Tonnetz velocity at 100ms |
+| 85 | diatonicity | H | 3 | M0 (value) | L2 | Diatonic conformity at 100ms |
+| 85 | diatonicity | H | 16 | M0 (value) | L2 | Diatonic conformity at 1s |
+| 88 | harmonic_entropy | I | 3 | M0 (value) | L2 | Chord uncertainty at 100ms |
+| 88 | harmonic_entropy | I | 3 | M1 (mean) | L2 | Mean harmonic entropy at 100ms |
+
+**v2 projected**: 8 tuples
+**Total projected**: 24 tuples of 294,912 theoretical = 0.0081%
 
 ### 5.2 PPC + ASA Mechanism Binding
 

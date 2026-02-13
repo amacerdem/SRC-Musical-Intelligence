@@ -246,7 +246,21 @@ IOTMS primarily represents a stable trait, but uses H³ features at longer times
 | 14 | tristimulus1 | 16 | M1 (mean) | L2 (bidi) | Mean tristimulus 1s |
 | 14 | tristimulus1 | 16 | M2 (std) | L2 (bidi) | Tristimulus variability 1s |
 
-**Total IOTMS H³ demand**: 12 tuples of 2304 theoretical = 0.52%
+**v1 demand**: 12 tuples
+
+#### R³ v2 Projected Expansion
+
+IOTMS projected v2 from G:Rhythm, aligned with AED+C0P horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 65 | tempo | G | 8 | M0 (value) | L2 | Current tempo at 500ms |
+| 65 | tempo | G | 16 | M18 (trend) | L2 | Tempo trend over 1s |
+| 73 | tempo_stability | G | 8 | M0 (value) | L2 | Tempo regularity at 500ms |
+| 73 | tempo_stability | G | 16 | M18 (trend) | L2 | Stability trend over 1s |
+
+**v2 projected**: 4 tuples
+**Total projected**: 16 tuples of 294,912 theoretical = 0.0054%
 
 ### 5.2 AED + CPD + C0P Mechanism Binding
 

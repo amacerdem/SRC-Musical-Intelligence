@@ -212,7 +212,21 @@ EDNR requires H³ features at longer timescales to capture network reorganizatio
 | 4 | sensory_pleasantness | 3 | M0 (value) | L2 (bidi) | Pleasantness at 100ms |
 | 4 | sensory_pleasantness | 16 | M1 (mean) | L2 (bidi) | Mean pleasantness 1s |
 
-**Total EDNR H³ demand**: 16 tuples of 2304 theoretical = 0.69%
+**v1 demand**: 16 tuples
+
+#### R³ v2 Projected Expansion
+
+EDNR projected v2 from H:Harmony, aligned with ASA horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 84 | tonal_stability | H | 16 | M0 (value) | L2 | Stability level at 1s |
+| 84 | tonal_stability | H | 16 | M18 (trend) | L2 | Stability trajectory over 1s |
+| 75 | key_clarity | H | 16 | M0 (value) | L2 | Key clarity at 1s |
+| 75 | key_clarity | H | 16 | M1 (mean) | L2 | Mean key clarity over 1s |
+
+**v2 projected**: 4 tuples
+**Total projected**: 20 tuples of 294,912 theoretical = 0.0068%
 
 ### 5.2 PPC + ASA Mechanism Binding
 

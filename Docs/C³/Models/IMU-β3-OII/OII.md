@@ -412,7 +412,14 @@ OII requires H³ features at both SYN horizons (H10, H14, H18) and MEM horizons 
 | 15 | spectral_centroid | 10 | M0 (value) | L2 (bidirectional) | Frequency balance |
 | 15 | spectral_centroid | 18 | M3 (std) | L0 (forward) | Balance variability over phrase |
 
-**Total OII H³ demand**: 24 tuples of 2304 theoretical = 1.04%
+**v1 demand**: 24 tuples
+
+#### R³ v2 Projected Expansion
+
+No significant v2 expansion projected. OII's oscillatory integration-segregation dynamics are fully captured by v1 spectral features (roughness, entropy, onset, flux, interactions). The v2 rhythm and harmony groups do not directly map to the cross-frequency coupling mechanism.
+
+**v2 projected**: 0 tuples
+**Total projected**: 24 tuples of 294,912 theoretical = 0.0081%
 
 ### 5.2 Mechanism Binding
 

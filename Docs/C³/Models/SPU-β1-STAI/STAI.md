@@ -393,7 +393,23 @@ STAI requires H³ features at both PPC horizons (H0, H3, H6) for consonance trac
 | 33 | x_l4l5[0] | 8 | M0 (value) | L2 (bidi) | Aesthetic binding 300ms |
 | 33 | x_l4l5[0] | 8 | M14 (periodicity) | L2 (bidi) | Binding periodicity 300ms |
 
-**Total STAI H³ demand**: 14 tuples of 2304 theoretical = 0.61%
+**v1 demand**: 14 tuples
+
+#### R³ v2 Projected Expansion
+
+STAI is projected to consume R³ v2 features from F[49:65] and H[75:87], aligned with PPC+TPC horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 64 | inharmonicity | F | 3 | M0 (value) | L2 | Inharmonicity for spectral integrity at 100ms |
+| 64 | inharmonicity | F | 6 | M0 (value) | L2 | Inharmonicity at 200ms |
+| 76 | tonnetz_fifth_x | H | 3 | M0 (value) | L2 | Tonal interval quality at 100ms |
+| 76 | tonnetz_fifth_x | H | 6 | M8 (velocity) | L2 | Tonal interval change rate at 200ms |
+| 84 | tonal_stability | H | 8 | M0 (value) | L2 | Tonal stability at 300ms |
+| 84 | tonal_stability | H | 8 | M18 (trend) | L2 | Tonal stability trend at 300ms |
+
+**v2 projected**: 6 tuples
+**Total projected**: 20 tuples of 294,912 theoretical = 0.0068%
 
 ### 5.2 PPC + TPC Mechanism Binding
 

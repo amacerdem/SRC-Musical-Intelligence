@@ -240,7 +240,25 @@ RPEM requires H³ features at C0P horizons for prediction/surprise computation, 
 | 25 | x_l0l5[0] | 8 | M1 (mean) | L2 (bidi) | Prediction mean 500ms |
 | 25 | x_l0l5[0] | 16 | M20 (entropy) | L2 (bidi) | Prediction entropy 1s |
 
-**Total RPEM H³ demand**: 16 tuples of 2304 theoretical = 0.69%
+**v1 demand**: 16 tuples
+
+#### R³ v2 Projected Expansion
+
+RPEM projected v2 from I:Information, aligned with AED+CPD+C0P horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 87 | melodic_entropy | I | 3 | M0 (value) | L2 | Melodic uncertainty at 100ms |
+| 87 | melodic_entropy | I | 8 | M1 (mean) | L2 | Mean melodic entropy 500ms |
+| 88 | harmonic_entropy | I | 3 | M0 (value) | L2 | Harmonic uncertainty at 100ms |
+| 88 | harmonic_entropy | I | 8 | M1 (mean) | L2 | Mean harmonic entropy 500ms |
+| 88 | harmonic_entropy | I | 16 | M1 (mean) | L2 | Mean harmonic entropy 1s |
+| 92 | predictive_entropy | I | 4 | M0 (value) | L2 | Predictive uncertainty at 125ms |
+| 92 | predictive_entropy | I | 8 | M0 (value) | L2 | Predictive uncertainty at 500ms |
+| 92 | predictive_entropy | I | 16 | M18 (trend) | L2 | Predictive entropy trend 1s |
+
+**v2 projected**: 8 tuples
+**Total projected**: 24 tuples of 294,912 theoretical = 0.0081%
 
 ### 5.2 AED + CPD + C0P Mechanism Binding
 

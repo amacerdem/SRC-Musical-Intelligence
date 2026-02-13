@@ -266,7 +266,23 @@ SLEE requires H³ features at PPC horizons for statistical pattern extraction an
 | 33 | x_l4l5[0] | 3 | M0 (value) | L2 (bidi) | Pattern coupling 100ms |
 | 33 | x_l4l5[0] | 16 | M18 (trend) | L0 (fwd) | Pattern trend over 1s |
 
-**Total SLEE H³ demand**: 18 tuples of 2304 theoretical = 0.78%
+**v1 demand**: 18 tuples
+
+#### R³ v2 Projected Expansion
+
+SLEE projected v2 from H:Harmony and I:Information, aligned with PPC/ASA horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 86 | syntactic_irregularity | H | 3 | M0 (value) | L2 | Tonal syntax irregularity for statistical learning |
+| 86 | syntactic_irregularity | H | 16 | M4 (min) | L2 | Minimum irregularity over 1s |
+| 84 | tonal_stability | H | 16 | M0 (value) | L2 | Tonal stability baseline at 1s |
+| 84 | tonal_stability | H | 16 | M18 (trend) | L2 | Stability trajectory over 1s |
+| 87 | melodic_entropy | I | 3 | M0 (value) | L2 | Melodic uncertainty at 100ms |
+| 87 | melodic_entropy | I | 3 | M1 (mean) | L2 | Mean melodic entropy at 100ms |
+
+**v2 projected**: 6 tuples
+**Total projected**: 24 tuples of 294,912 theoretical = 0.0081%
 
 ### 5.2 PPC + ASA Mechanism Binding
 

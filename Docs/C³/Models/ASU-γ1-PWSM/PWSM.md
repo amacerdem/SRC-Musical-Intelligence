@@ -253,7 +253,18 @@ PWSM requires H³ features across multiple BEP horizons for stability tracking a
 | 37 | x_l4l5[0] | 16 | M17 (periodicity) | L2 (bidi) | PE periodicity at 1s |
 | 37 | x_l4l5[0] | 16 | M21 (zero_crossings) | L2 (bidi) | PE phase resets over 1s |
 
-**Total PWSM H³ demand**: 16 tuples of 2304 theoretical = 0.69%
+**v1 demand**: 16 tuples
+
+#### R³ v2 Projected Expansion
+
+Minor v2 expansion for PWSM from J[94:114].
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 107 | spectral_contrast_1 | J | 3 | M0 (value) | L2 | Spectral contrast for precision weighting at 100ms |
+
+**v2 projected**: 1 tuples
+**Total projected**: 17 tuples of 294,912 theoretical = 0.0058%
 
 ### 5.2 BEP + ASA Mechanism Binding
 

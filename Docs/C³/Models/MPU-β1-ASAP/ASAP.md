@@ -249,7 +249,23 @@ ASAP requires H³ features at BEP horizons for beat prediction and TMH horizons 
 | 33 | x_l4l5[0] | 3 | M8 (velocity) | L0 (fwd) | Dorsal stream velocity 100ms |
 | 33 | x_l4l5[0] | 16 | M14 (periodicity) | L0 (fwd) | Dorsal periodicity 1s |
 
-**Total ASAP H³ demand**: 9 tuples of 2304 theoretical = 0.39%
+**v1 demand**: 9 tuples
+
+#### R³ v2 Projected Expansion
+
+ASAP projected v2 from G:Rhythm, aligned with BEP+TMH horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 68 | syncopation_index | G | 3 | M0 (value) | L0 | Syncopation at 100ms (causal) |
+| 68 | syncopation_index | G | 16 | M14 (periodicity) | L0 | Syncopation periodicity 1s |
+| 69 | metricality_index | G | 3 | M0 (value) | L0 | Metrical regularity 100ms |
+| 69 | metricality_index | G | 16 | M1 (mean) | L0 | Mean metricality 1s |
+| 67 | pulse_clarity | G | 3 | M0 (value) | L0 | Pulse clarity 100ms |
+| 67 | pulse_clarity | G | 16 | M1 (mean) | L0 | Mean pulse clarity 1s |
+
+**v2 projected**: 6 tuples
+**Total projected**: 15 tuples of 294,912 theoretical = 0.0051%
 
 ### 5.2 BEP + TMH Mechanism Binding
 

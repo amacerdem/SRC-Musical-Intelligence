@@ -394,7 +394,21 @@ These correspond to timbre processing timescales: fast spectral envelope (gamma)
 | 24 | timbre_change | 8 | M3 (std) | L0 (fwd) | Timbre flux variability 300ms |
 | 41 | x_l5l7[0] | 8 | M0 (value) | L2 (bidi) | Consonance x Timbre coupling 300ms |
 
-**Total TSCP H³ demand**: 12 tuples of 2304 theoretical = 0.52%
+**v1 demand**: 12 tuples
+
+#### R³ v2 Projected Expansion
+
+TSCP is projected to consume R³ v2 features from J[94:114], aligned with TPC horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 94 | mfcc_1 | J | 2 | M0 (value) | L2 | MFCC timbre shape at 17ms |
+| 94 | mfcc_1 | J | 5 | M1 (mean) | L2 | Mean MFCC over 46ms |
+| 107 | spectral_contrast_1 | J | 5 | M0 (value) | L2 | Spectral contrast at 46ms |
+| 107 | spectral_contrast_1 | J | 8 | M1 (mean) | L2 | Mean spectral contrast over 300ms |
+
+**v2 projected**: 4 tuples
+**Total projected**: 16 tuples of 294,912 theoretical = 0.0054%
 
 ### 5.2 TPC Mechanism Binding
 

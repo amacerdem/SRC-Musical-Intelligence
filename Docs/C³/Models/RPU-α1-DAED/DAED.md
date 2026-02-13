@@ -250,7 +250,19 @@ DAED requires H³ features at AED horizons for affective dynamics, CPD horizons 
 | 25 | x_l0l5[0] | 16 | M20 (entropy) | L2 (bidi) | Coupling entropy 1s |
 | 21 | spectral_change | 4 | M20 (entropy) | L0 (fwd) | Spectral uncertainty 125ms |
 
-**Total DAED H³ demand**: 16 tuples of 2304 theoretical = 0.69%
+**v1 demand**: 16 tuples
+
+#### R³ v2 Projected Expansion
+
+Minor v2 expansion. DAED projected v2 feature from I:Information, aligned with AED+CPD+C0P horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 90 | spectral_surprise | I | 8 | M0 (value) | L2 | Surprise magnitude at 500ms |
+| 90 | spectral_surprise | I | 16 | M2 (std) | L2 | Surprise variability over 1s |
+
+**v2 projected**: 2 tuples
+**Total projected**: 18 tuples of 294,912 theoretical = 0.0061%
 
 ### 5.2 AED + CPD + C0P Mechanism Binding
 

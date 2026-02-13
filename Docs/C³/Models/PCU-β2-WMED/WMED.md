@@ -242,7 +242,22 @@ WMED requires H³ features for entrainment tracking (beat-scale periodicity) and
 | 21 | spectral_change | 16 | M2 (std) | L0 (fwd) | Timing std over 1s |
 | 21 | spectral_change | 16 | M19 (stability) | L0 (fwd) | Timing stability 1s |
 
-**Total WMED H³ demand**: 16 tuples of 2304 theoretical = 0.69%
+**v1 demand**: 16 tuples
+
+#### R³ v2 Projected Expansion
+
+WMED projected v2 from I:Information, aligned with PPC+MEM horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 87 | melodic_entropy | I | 3 | M0 (value) | L2 | Melodic uncertainty at 100ms |
+| 87 | melodic_entropy | I | 16 | M1 (mean) | L2 | Mean melodic entropy over 1s |
+| 90 | spectral_surprise | I | 3 | M0 (value) | L2 | Spectral surprise at 100ms |
+| 90 | spectral_surprise | I | 3 | M2 (std) | L2 | Surprise variability 100ms |
+| 91 | information_rate | I | 3 | M0 (value) | L2 | Information rate at 100ms |
+
+**v2 projected**: 5 tuples
+**Total projected**: 21 tuples of 294,912 theoretical = 0.0071%
 
 ### 5.2 PPC + TPC + MEM Mechanism Binding
 

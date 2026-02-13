@@ -371,7 +371,14 @@ CMAPCC requires H³ features at MEM horizons (H16, H20, H24) and BEP* horizons (
 | 1 | sethares_dissonance | 16 | M1 (mean) | L2 (bidirectional) | Interval quality at 1s |
 | 1 | sethares_dissonance | 24 | M19 (stability) | L0 (forward) | Long-term interval stability |
 
-**Total CMAPCC H³ demand**: 20 tuples of 2304 theoretical = 0.87%
+**v1 demand**: 20 tuples
+
+#### R³ v2 Projected Expansion
+
+No significant v2 expansion projected. CMAPCC's cross-modal action-perception coupling operates on v1 spectral features (interactions, consonance, energy, timbre) that already capture the perception-action common code. The v2 groups do not add distinct inputs for the right PMC convergence mechanism.
+
+**v2 projected**: 0 tuples
+**Total projected**: 20 tuples of 294,912 theoretical = 0.0068%
 
 ### 5.2 MEM + BEP* Mechanism Binding
 

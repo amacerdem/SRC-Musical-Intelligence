@@ -239,7 +239,21 @@ CTBB requires H³ features at TMH horizons for cerebellar timing precision and B
 | 33 | x_l4l5[0] | 16 | M2 (std) | L0 (fwd) | Balance variability 1s |
 | 7 | amplitude | 16 | M1 (mean) | L2 (bidi) | Mean motor output 1s |
 
-**Total CTBB H³ demand**: 9 tuples of 2304 theoretical = 0.39%
+**v1 demand**: 9 tuples
+
+#### R³ v2 Projected Expansion
+
+CTBB projected v2 from G:Rhythm, aligned with TMH horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 65 | tempo_estimate | G | 8 | M0 (value) | L0 | Tempo reference at 500ms |
+| 65 | tempo_estimate | G | 16 | M18 (trend) | L0 | Tempo trend over 1s |
+| 69 | metricality_index | G | 8 | M0 (value) | L0 | Metrical regularity 500ms |
+| 69 | metricality_index | G | 16 | M1 (mean) | L0 | Mean metricality 1s |
+
+**v2 projected**: 4 tuples
+**Total projected**: 13 tuples of 294,912 theoretical = 0.0044%
 
 ### 5.2 BEP + TMH Mechanism Binding
 

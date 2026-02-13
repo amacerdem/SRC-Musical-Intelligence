@@ -255,7 +255,18 @@ SDL requires H³ features across many BEP horizons for multi-scale oscillation t
 | 8 | loudness | 3 | M0 (value) | L2 (bidi) | Loudness for salience at 100ms |
 | 8 | loudness | 16 | M20 (entropy) | L2 (bidi) | Loudness entropy 1s |
 
-**Total SDL H³ demand**: 18 tuples of 2304 theoretical = 0.78%
+**v1 demand**: 18 tuples
+
+#### R³ v2 Projected Expansion
+
+Minor v2 expansion for SDL from J[94:114].
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 107 | spectral_contrast_1 | J | 3 | M0 (value) | L2 | Spectral contrast for lateralization at 100ms |
+
+**v2 projected**: 1 tuples
+**Total projected**: 19 tuples of 294,912 theoretical = 0.0064%
 
 ### 5.2 BEP + ASA Mechanism Binding
 

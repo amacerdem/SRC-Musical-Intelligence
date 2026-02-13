@@ -256,7 +256,18 @@ AACM requires H³ features at ASA horizons for attentional gating and aesthetic 
 | 25 | x_l0l5[0] | 16 | M1 (mean) | L0 (fwd) | Integration mean over 1s |
 | 25 | x_l0l5[0] | 16 | M8 (velocity) | L0 (fwd) | Integration velocity over 1s |
 
-**Total AACM H³ demand**: 12 tuples of 2304 theoretical = 0.52%
+**v1 demand**: 12 tuples
+
+#### R³ v2 Projected Expansion
+
+Minor v2 expansion for AACM from J[94:114].
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 107 | spectral_contrast_1 | J | 3 | M0 (value) | L2 | Spectral contrast for aesthetic evaluation at 100ms |
+
+**v2 projected**: 1 tuples
+**Total projected**: 13 tuples of 294,912 theoretical = 0.0044%
 
 ### 5.2 BEP + ASA Mechanism Binding
 

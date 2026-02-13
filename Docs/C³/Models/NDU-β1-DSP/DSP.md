@@ -266,7 +266,18 @@ DSP requires H³ features at PPC horizons for vocal pitch extraction and contour
 | 25 | x_l0l5[0] | 8 | M1 (mean) | L0 (fwd) | Mean vocal coupling 500ms |
 | 21 | spectral_change | 3 | M2 (std) | L2 (bidi) | Spectral variation 100ms |
 
-**Total DSP H³ demand**: 18 tuples of 2304 theoretical = 0.78%
+**v1 demand**: 18 tuples
+
+#### R³ v2 Projected Expansion
+
+Minor v2 expansion for DSP from I:Information.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 90 | spectral_surprise | I | 3 | M0 (value) | L2 | Acoustic surprise at singing transitions |
+
+**v2 projected**: 1 tuple
+**Total projected**: 19 tuples of 294,912 theoretical = 0.0064%
 
 ### 5.2 PPC + ASA Mechanism Binding
 

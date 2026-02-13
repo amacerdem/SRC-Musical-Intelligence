@@ -235,7 +235,14 @@ VRMSME requires H³ features at BEP horizons for multi-modal entrainment and TMH
 | 33 | x_l4l5[0] | 16 | M14 (periodicity) | L2 (bidi) | Sensorimotor period 1s |
 | 8 | loudness | 3 | M20 (entropy) | L2 (bidi) | Loudness entropy 100ms |
 
-**Total VRMSME H³ demand**: 12 tuples of 2304 theoretical = 0.52%
+**v1 demand**: 12 tuples
+
+#### R³ v2 Projected Expansion
+
+No significant v2 expansion projected. VRMSME's primary inputs remain energy-based; the single event_density feature in Section 4.2 does not generate additional H³ tuples.
+
+**v2 projected**: 0 tuples
+**Total projected**: 12 tuples of 294,912 theoretical = 0.0041%
 
 ### 5.2 BEP + TMH Mechanism Binding
 

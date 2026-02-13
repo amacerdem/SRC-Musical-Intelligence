@@ -395,7 +395,23 @@ PCCR requires H³ features at PPC horizons: H3 (100ms) for chroma detection, H6 
 | 2 | helmholtz_kang | 3 | M19 (stability) | L2 (bidi) | Consonance stability |
 | 2 | helmholtz_kang | 6 | M0 (value) | L0 (fwd) | Forward consonance |
 
-**Total PCCR H³ demand**: 14 tuples of 2304 theoretical = 0.61%
+**v1 demand**: 14 tuples
+
+#### R³ v2 Projected Expansion
+
+PCCR is projected to consume R³ v2 features from F[49:65], aligned with PPC horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 49 | chroma | F | 3 | M0 (value) | L2 | Explicit chroma vector at 100ms |
+| 49 | chroma | F | 3 | M1 (mean) | L2 | Mean chroma over 100ms window |
+| 49 | chroma | F | 6 | M0 (value) | L2 | Chroma at 200ms for octave adaptation |
+| 49 | chroma | F | 6 | M1 (mean) | L2 | Sustained chroma for stability |
+| 63 | pitch_salience | F | 3 | M0 (value) | L2 | Pitch salience for chroma weighting |
+| 63 | pitch_salience | F | 6 | M0 (value) | L2 | Sustained salience at 200ms |
+
+**v2 projected**: 6 tuples
+**Total projected**: 20 tuples of 294,912 theoretical = 0.0068%
 
 ### 5.2 PPC Mechanism Binding
 

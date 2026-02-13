@@ -244,7 +244,14 @@ MEAMR requires H³ features at long time scales: familiarity assessment needs 1-
 | 41 | x_l5l6[0] | 16 | M5 (range) | L0 (fwd) | Memory-structure range 1s |
 | 22 | energy_change | 16 | M18 (trend) | L0 (fwd) | Energy change trend 1s |
 
-**Total MEAMR H³ demand**: 14 tuples of 2304 theoretical = 0.61%
+**v1 demand**: 14 tuples
+
+#### R³ v2 Projected Expansion
+
+No significant v2 expansion projected.
+
+**v2 projected**: 0 tuples
+**Total projected**: 14 tuples of 294,912 theoretical = 0.0047%
 
 ### 5.2 AED + CPD + C0P Mechanism Binding
 

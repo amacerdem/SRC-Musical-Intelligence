@@ -235,7 +235,14 @@ MAA requires H³ features for complexity assessment (medium-term context) and fa
 | 41 | x_l5l7[0] | 16 | M18 (trend) | L0 (fwd) | Coupling trend 1s |
 | 5 | periodicity | 16 | M1 (mean) | L0 (fwd) | Mean periodicity 1s |
 
-**Total MAA H³ demand**: 14 tuples of 2304 theoretical = 0.61%
+**v1 demand**: 14 tuples
+
+#### R³ v2 Projected Expansion
+
+No significant v2 expansion projected. MAA's multifactorial appreciation model operates on personality, framing, and exposure moderators rather than additional spectral features. The H:Harmony and I:Information features in Section 4.2 feed the R³ pathway but do not generate distinct H³ temporal tuples beyond existing complexity/entropy demands.
+
+**v2 projected**: 0 tuples
+**Total projected**: 14 tuples of 294,912 theoretical = 0.0047%
 
 ### 5.2 PPC + TPC + MEM Mechanism Binding
 

@@ -244,7 +244,25 @@ LDAC requires H³ features at short-to-mid timescales for continuous liking trac
 | 25 | x_l0l5[0] | 3 | M0 (value) | L2 (bidi) | Auditory gating at 100ms |
 | 25 | x_l0l5[0] | 16 | M20 (entropy) | L2 (bidi) | Gating entropy over 1s |
 
-**Total LDAC H³ demand**: 12 tuples of 2304 theoretical = 0.52%
+**v1 demand**: 12 tuples
+
+#### R³ v2 Projected Expansion
+
+LDAC projected v2 from H:Harmony + I:Information, aligned with AED+C0P horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 84 | tonal_stability | H | 2 | M0 (value) | L0 | Tonal stability at 75ms |
+| 84 | tonal_stability | H | 8 | M0 (value) | L2 | Tonal stability at 500ms |
+| 84 | tonal_stability | H | 16 | M18 (trend) | L2 | Stability trend over 1s |
+| 87 | melodic_entropy | I | 3 | M0 (value) | L2 | Melodic entropy at 100ms |
+| 87 | melodic_entropy | I | 8 | M1 (mean) | L2 | Mean melodic entropy 500ms |
+| 87 | melodic_entropy | I | 16 | M1 (mean) | L2 | Mean melodic entropy 1s |
+| 88 | harmonic_entropy | I | 3 | M0 (value) | L2 | Harmonic entropy at 100ms |
+| 88 | harmonic_entropy | I | 16 | M1 (mean) | L2 | Mean harmonic entropy 1s |
+
+**v2 projected**: 8 tuples
+**Total projected**: 20 tuples of 294,912 theoretical = 0.0068%
 
 ### 5.2 AED + CPD + C0P Mechanism Binding
 

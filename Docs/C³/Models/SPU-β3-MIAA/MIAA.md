@@ -386,7 +386,23 @@ These correspond to perceptual processing timescales (gamma-rate melodic recogni
 | 21 | spectral_change | 8 | M13 (entropy) | L0 (fwd) | Vividness proxy — change entropy over 300ms |
 | 41 | x_l5l7[0] | 8 | M1 (mean) | L0 (fwd) | Timbre-structure binding for imagery coherence |
 
-**Total MIAA H³ demand**: 11 tuples of 2304 theoretical = 0.48%
+**v1 demand**: 11 tuples
+
+#### R³ v2 Projected Expansion
+
+MIAA is projected to consume R³ v2 features from F[49:65] and J[94:114], aligned with TPC horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 49 | chroma | F | 2 | M0 (value) | L0 | Chroma vector at 17ms for imagery template |
+| 49 | chroma | F | 5 | M1 (mean) | L0 | Mean chroma over 46ms for familiarity |
+| 61 | pitch_height | F | 5 | M0 (value) | L0 | Pitch height for melody imagery at 46ms |
+| 61 | pitch_height | F | 8 | M0 (value) | L0 | Pitch height context over 300ms |
+| 94 | mfcc_1 | J | 2 | M0 (value) | L0 | MFCC timbre shape for imagery at 17ms |
+| 94 | mfcc_1 | J | 5 | M1 (mean) | L0 | Mean MFCC for imagery template at 46ms |
+
+**v2 projected**: 6 tuples
+**Total projected**: 17 tuples of 294,912 theoretical = 0.0058%
 
 ### 5.2 TPC Mechanism Binding
 

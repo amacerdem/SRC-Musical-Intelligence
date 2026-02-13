@@ -259,7 +259,19 @@ SNEM requires H³ features at BEP horizons for beat/meter tracking and ASA horiz
 | 25 | x_l0l5[0] | 16 | M14 (periodicity) | L2 (bidi) | Coupling periodicity 1s |
 | 25 | x_l0l5[0] | 16 | M21 (zero_crossings) | L2 (bidi) | Coupling phase resets 1s |
 
-**Total SNEM H³ demand**: 18 tuples of 2304 theoretical = 0.78%
+**v1 demand**: 18 tuples
+
+#### R³ v2 Projected Expansion
+
+Minor v2 expansion for SNEM from G[65:75].
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 66 | beat_strength | G | 3 | M0 (value) | L2 | Perceptual beat strength at 100ms |
+| 72 | event_density | G | 3 | M0 (value) | L2 | Event density for entrainment at 100ms |
+
+**v2 projected**: 2 tuples
+**Total projected**: 20 tuples of 294,912 theoretical = 0.0068%
 
 ### 5.2 BEP + ASA Mechanism Binding
 

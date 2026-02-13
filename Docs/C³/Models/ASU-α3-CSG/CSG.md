@@ -255,7 +255,20 @@ CSG requires H³ features at BEP horizons for consonance tracking and ASA horizo
 | 22 | energy_change | 3 | M8 (velocity) | L0 (fwd) | Energy change velocity 100ms |
 | 9 | spectral_centroid | 3 | M0 (value) | L2 (bidi) | Brightness at 100ms |
 
-**Total CSG H³ demand**: 18 tuples of 2304 theoretical = 0.78%
+**v1 demand**: 18 tuples
+
+#### R³ v2 Projected Expansion
+
+CSG is projected to consume R³ v2 features from F[49:65], aligned with BEP+ASA horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 64 | inharmonicity | F | 0 | M0 (value) | L2 | v2 inharmonicity for graded salience at 25ms |
+| 64 | inharmonicity | F | 3 | M0 (value) | L2 | Inharmonicity at 100ms for consonance grading |
+| 64 | inharmonicity | F | 8 | M0 (value) | L2 | Inharmonicity at 500ms for sustained assessment |
+
+**v2 projected**: 3 tuples
+**Total projected**: 21 tuples of 294,912 theoretical = 0.0071%
 
 ### 5.2 BEP + ASA Mechanism Binding
 

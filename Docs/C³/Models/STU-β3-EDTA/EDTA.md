@@ -367,7 +367,23 @@ These correspond to beat → psychological present → bar-level timescales.
 | 24 | timbre_change | 16 | M19 (stability) | L0 (fwd) | Timbral timing stability |
 | 22 | energy_change | 16 | M14 (periodicity) | L2 (bidi) | Bar-level tempo periodicity |
 
-**Total EDTA H³ demand**: 15 tuples of 2304 theoretical = 0.65%
+**v1 demand**: 15 tuples
+
+#### R³ v2 Projected Expansion
+
+EDTA projected v2 features from G:Rhythm, aligned with BEP horizons.
+
+| R³ Idx | Feature | Group | H | Morph | Law | Purpose |
+|:------:|---------|:-----:|:-:|-------|:---:|---------|
+| 65 | tempo | G | 6 | M0 (value) | L0 | Instantaneous tempo at beat scale |
+| 65 | tempo | G | 16 | M18 (trend) | L0 | Tempo trajectory over bar |
+| 69 | metricality | G | 6 | M0 (value) | L0 | Current metric regularity |
+| 69 | metricality | G | 16 | M1 (mean) | L0 | Mean metricality over bar |
+| 73 | tempo_stability | G | 11 | M0 (value) | L0 | Tempo stability at meter scale |
+| 73 | tempo_stability | G | 16 | M18 (trend) | L0 | Stability trend over bar |
+
+**v2 projected**: 6 tuples
+**Total projected**: 21 tuples of 294,912 theoretical = 0.0071%
 
 ### 5.2 BEP Mechanism Binding
 
