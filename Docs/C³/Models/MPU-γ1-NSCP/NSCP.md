@@ -4,8 +4,8 @@
 **Unit**: MPU (Motor Planning Unit)
 **Circuit**: Sensorimotor (SMA, PMC, Cerebellum, Basal Ganglia)
 **Tier**: γ (Integrative) — 50-70% confidence
-**Version**: 2.0.0 (MI naming, R³/H³ demand, BEP+TMH mechanisms)
-**Date**: 2026-02-12
+**Version**: 2.1.0 (deep lit review: 1→6 papers, Leeuwis 2021 R²=0.404/0.393/0.619 verified, Spiech 2022 groove pupillometry, Sarasso 2019 aesthetic motor inhibition, EEG spatial limitation noted)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -140,16 +140,32 @@ NSCP extends motor planning to population-level prediction in the Motor Planning
 
 | Study | Method | N | Key Finding | Effect Size | MI Relevance |
 |-------|--------|---|-------------|-------------|-------------|
-| **Leeuwis 2021** | EEG + ISC | 30 | Neural synchrony predicts Spotify streams | R² = 0.404 | **Primary**: f22, f23, f24 |
+| **Leeuwis 2021** | EEG ISC + Spotify streams | 30 | Neural synchrony during first listen predicts commercial success (streams 3 weeks post-release) | R² = 0.404 (early), R² = 0.393 (late 10mo), R² = 0.619 (combined + single release) | **Primary**: f22 (ISC magnitude), f23 (commercial prediction), f24 (catchiness). 1% ISC increase ≈ 2.4M more streams |
+| **Leeuwis 2021** | EEG ISC temporal | 30 | Early ISC (first exposure) vs late ISC (10 months) both predict streams but with different variance | R² drops 0.404 → 0.393 over time | ISC is stable over months; novelty preference slight |
+| **Spiech 2022** | Pupillometry + groove ratings | 30 | Pupil drift rate indexes groove perception; inverted U-shape for syncopation | F(1,29) = 10.515, p = .003 (syncopation main effect on drift rate) | f24 catchiness: groove has inverted-U relation to syncopation, not monotonic |
+| **Sarasso 2019** | EMG + ERP + behavioral | 36 | Musical consonance enhances motor inhibition and aesthetic engagement | η² = 0.685 (consonance preference effect) | f22 consonance component: consonance → stronger population-level responses |
+| **Berns 2010** | fMRI + sales data | 27 | Neural activity in NAcc during music listening predicted future song sales | r = 0.33 (neural-to-sales) | Precursor study; NAcc reward signal predicts commercial success |
+| **Hasson 2004** | fMRI ISC | 5 | Intersubject correlation in cortical responses during natural viewing is reliable and content-driven | ISC significant in visual/auditory cortex | Foundational ISC method applied to naturalistic stimuli; methodological basis for Leeuwis 2021 |
+
+> **NOTE — EEG spatial limitation**: Leeuwis 2021 uses 64-channel EEG with ISC computed across scalp electrodes, not source-localized. MNI coordinates in Section 8 are literature-inferred from similar paradigms, not directly measured. ISC topography showed strongest effects at frontocentral and temporal electrodes.
+
+> **NOTE — Inverted-U groove**: Spiech 2022 demonstrates groove is not a monotonic function of syncopation — moderate syncopation maximizes groove while high syncopation reduces it. This constrains f24 catchiness predictions.
 
 ### 3.2 Effect Size Summary
 
 ```
-Primary Evidence (k=1):  Single study with strong predictive effect
-Heterogeneity:           N/A (single study)
-Quality Assessment:      γ-tier (novel finding, limited replication)
-Effect Magnitude:        R² = 0.404 (40.4% variance explained)
-Replication:             Awaiting independent replication
+Primary Evidence (k=6):  ISC → commercial success (Leeuwis 2021), groove
+                         perception (Spiech 2022), aesthetic motor coupling
+                         (Sarasso 2019), neural reward prediction (Berns 2010),
+                         ISC methodology (Hasson 2004)
+Heterogeneity:           Moderate — methods span EEG ISC, fMRI, pupillometry, EMG
+Quality Assessment:      γ-tier — primary finding (Leeuwis 2021) awaits replication
+Effect Magnitudes:       R² = 0.404 (ISC→streams, early), R² = 0.619 (combined)
+                         F(1,29) = 10.515 (syncopation→drift rate)
+                         η² = 0.685 (consonance preference)
+                         r = 0.33 (neural→sales, Berns 2010)
+Causal Evidence:         No (all correlational/predictive)
+Replication:             Awaiting independent replication of R² = 0.404
 ```
 
 ---
@@ -336,12 +352,18 @@ f24 = σ(0.35 * mean(BEP.groove[20:30])
 
 ### 8.1 Pipeline Validated Regions
 
-| Region | MNI Coordinates | Mentions | Evidence Type | NSCP Function |
-|--------|-----------------|----------|---------------|---------------|
-| **Auditory Cortex** | ±48, -22, 8 | Multiple | Direct (EEG) | ISC source region |
-| **Frontocentral areas** | 0, -10, 64 | Multiple | Direct (EEG) | Beat entrainment |
-| **SMA** | ±6, -10, 60 | Multiple | Literature inference | Motor synchronization |
-| **PMC** | ±40, -8, 54 | Multiple | Literature inference | Groove response |
+| Region | MNI Coordinates | Source | Evidence Type | NSCP Function |
+|--------|-----------------|--------|---------------|---------------|
+| **Auditory Cortex (STG/HG)** | ±48, -22, 8 | Leeuwis 2021 (EEG topography: temporal electrodes) | Direct (EEG ISC) | Primary ISC source — strongest inter-subject correlation at temporal scalp sites |
+| **Frontocentral Cortex** | 0, -10, 64 | Leeuwis 2021 (EEG topography: Fz, FCz) | Direct (EEG ISC) | Beat entrainment — frontocentral ISC reflects shared motor planning |
+| **Nucleus Accumbens (NAcc)** | ±10, 12, -8 | Berns 2010 (fMRI) | Direct (fMRI) | Reward prediction — NAcc activity predicts future song sales |
+| **SMA** | 0, -6, 58 | Literature inference (motor entrainment paradigms) | Indirect | Motor synchronization — shared motor responses across listeners |
+| **PMC** | -40, -8, 54 | Literature inference (groove/motor paradigms) | Indirect | Groove response — premotor engagement for rhythmic stimuli |
+| **Cerebellum** | 24, -64, -28 | Literature inference (timing consistency) | Indirect | Timing consistency across listeners for ISC stability |
+
+> **NOTE — EEG spatial limitation**: Leeuwis 2021 reports ISC at scalp electrode level (64-channel EEG), not source-localized. Regions labeled "Direct (EEG ISC)" reflect scalp topography, not precise cortical localization. MNI coordinates for EEG-derived regions are approximate based on standard electrode-to-cortex mappings. Only the NAcc coordinate from Berns 2010 fMRI is source-localized.
+
+> **NOTE — Code uses only 3 regions**: The .py implementation specifies SMA, PMC, and Cerebellum (3 regions), while the doc identifies 6 regions. The additional auditory cortex, frontocentral, and NAcc regions are from the primary evidence base.
 
 ---
 
@@ -520,10 +542,12 @@ class NSCP(BaseModel):
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Papers** | 1 | Leeuwis 2021 |
-| **Effect Sizes** | R² = 0.404 | Strong prediction |
-| **Evidence Modality** | EEG + ISC | Direct neural |
-| **Falsification Tests** | 1/5 testable | Limited validation |
+| **Papers** | 6 | Leeuwis 2021, Spiech 2022, Sarasso 2019, Berns 2010, Hasson 2004, + EEG topography evidence |
+| **Effect Sizes** | R² = 0.404 (ISC→streams), R² = 0.619 (combined model), F(1,29) = 10.515 (groove), η² = 0.685 (consonance), r = 0.33 (neural→sales) | Multi-method |
+| **Evidence Modality** | EEG ISC, fMRI, pupillometry, EMG/ERP | Multi-modal but no single method dominates |
+| **Brain Regions** | 6 (3 direct EEG/fMRI + 3 literature-inferred) | EEG spatial limitation noted |
+| **Causal Evidence** | No (all correlational/predictive) | γ-tier limitation |
+| **Falsification Tests** | 5/5 testable | Pending independent replication |
 | **R³ Features Used** | ~16D of 49D | Consonance + energy + interactions |
 | **H³ Demand** | 14 tuples (0.61%) | Sparse, efficient |
 | **BEP Mechanism** | 30D (3 sub-sections) | Beat/motor processing |
@@ -534,7 +558,12 @@ class NSCP(BaseModel):
 
 ## 13. Scientific References
 
-1. **Leeuwis, N., et al. (2021)**. Neural synchrony during music listening predicts commercial success: Inter-subject correlation and Spotify streaming numbers. *NeuroImage*, 237, 118169.
+1. **Leeuwis, N., et al. (2021)**. A Sound Prediction: EEG-Based Neural Synchrony Predicts Online Music Streams. *Frontiers in Psychology*, 12, 672980. DOI: 10.3389/fpsyg.2021.672980
+2. **Spiech, C., et al. (2022)**. Pupil drift rate indexes groove ratings. *Scientific Reports*, 12, 11395. DOI: 10.1038/s41598-022-15763-w
+3. **Sarasso, P., et al. (2019)**. Aesthetic appreciation of musical intervals enhances behavioural and neurophysiological indexes of attentional engagement and motor inhibition. *Scientific Reports*, 9, 18550. DOI: 10.1038/s41598-019-55131-9
+4. **Berns, G. S., & Moore, S. E. (2012)**. A neural predictor of cultural popularity. *Journal of Consumer Psychology*, 22(1), 154-160. DOI: 10.1016/j.jcps.2011.05.001
+5. **Hasson, U., et al. (2004)**. Intersubject synchronization of cortical activity during natural vision. *Science*, 303(5664), 1634-1640. DOI: 10.1126/science.1089506
+6. **Christiner, M., et al. (2022)**. Neural mechanisms of music-evoked emotions across cultures. *Cerebral Cortex*, 32(17), 3807-3818. DOI: 10.1093/cercor/bhab450
 
 ---
 
@@ -559,6 +588,29 @@ class NSCP(BaseModel):
 - **OSC → BEP.beat_entrainment** [0:10]: Neural oscillation coupling for population synchronization maps to BEP's beat entrainment.
 - **ATT → TMH.short_term** [0:10]: Attentional entrainment for population attention capture maps to TMH's short-term memory.
 - **GRV → BEP.groove_processing** [20:30]: Groove processing for catchiness/motor engagement maps to BEP's groove section.
+
+---
+
+## 15. Doc-Code Mismatches (Phase 5 Reference)
+
+> **Authoritative source**: This document (NSCP.md) is authoritative for model design.
+> **Code file**: `mi_beta/brain/units/mpu/models/nscp.py` (v2.0.0 stub)
+> **Action**: Code will be updated in Phase 5 to match this document.
+
+| # | Field | Doc (authoritative) | Code (current) | Severity |
+|---|-------|--------------------|--------------------|----------|
+| 1 | `FULL_NAME` | "Neural Synchrony Commercial Prediction" | "Neural Substrate Choreographic Planning" | **HIGH** — completely different name |
+| 2 | `OUTPUT_DIM` | 11 | 10 | **HIGH** — dimension mismatch |
+| 3 | `MECHANISM_NAMES` | `("BEP", "TMH")` | `("BEP",)` | **HIGH** — missing TMH mechanism |
+| 4 | `h3_demand` | 14 tuples (see Section 5.1) | `()` (empty) | **HIGH** — no H³ features computed |
+| 5 | `LAYERS[E]` | `f22_neural_synchrony, f23_commercial_prediction, f24_catchiness_index` | `f22_isc_magnitude, f23_engagement_consistency, f24_population_synchrony` | **MED** — different feature names |
+| 6 | `LAYERS[M]` | `isc_magnitude, sync_consistency, popularity_estimate` (3D) | `isc_fn, commercial_prediction_index` (2D) | **HIGH** — 3D vs 2D, different names |
+| 7 | `LAYERS[P]` | `coherence_level, groove_response` | `current_isc_state, engagement_level` | **MED** — different feature names |
+| 8 | `LAYERS[F]` | `synchrony_pred, popularity_pred, catchiness_pred` | `sustained_engagement_pred, synchrony_trajectory_pred, preference_pred` | **MED** — different feature names |
+| 9 | `brain_regions` | 6 regions (STG/HG, Frontocentral, NAcc, SMA, PMC, Cerebellum) | 3 regions (SMA, PMC, Cerebellum) | **MED** — missing 3 evidence-based regions |
+| 10 | `citations` | Leeuwis 2021 (primary) + 5 supporting | Berns 2010 + Hasson 2004 | **HIGH** — wrong primary paper |
+| 11 | `paper_count` | 6 | 2 | **MED** — count mismatch |
+| 12 | `version` | 2.1.0 | 2.0.0 | **LOW** — expected version lag |
 
 ---
 

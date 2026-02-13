@@ -584,6 +584,27 @@ class VRMSME(BaseModel):
 
 ---
 
+## 15. Doc-Code Mismatches (Phase 5 Reference)
+
+> These mismatches are logged for Phase 5 resolution. The **doc is authoritative**; code should be updated.
+
+| # | Field | Doc (VRMSME.md) | Code (vrmsme.py) | Priority |
+|---|-------|-----------------|-------------------|----------|
+| 1 | FULL_NAME | "VR Music Stimulation Motor Enhancement" | "VR Motor Skill Music Enhancement" | HIGH |
+| 2 | OUTPUT_DIM | 11 | 10 | HIGH |
+| 3 | MECHANISM_NAMES | ("BEP", "TMH") | ("BEP",) — missing TMH | HIGH |
+| 4 | h3_demand | 12 tuples (see Section 5.1) | () empty tuple | HIGH |
+| 5 | Layer E dim names | f16_music_enhancement, f17_bilateral_activation, f18_network_connectivity | f16_vr_music_enhancement, f17_sensorimotor_connectivity, f18_multimodal_integration | MEDIUM |
+| 6 | Layer M dimensions | 3D (vrms_advantage, bilateral_index, connectivity_strength) | 2D (connectivity_gain_fn, vr_ao_mi_comparison) | HIGH |
+| 7 | Layer P dim names | motor_drive, sensorimotor_sync | sensorimotor_network_state, vr_engagement_level | MEDIUM |
+| 8 | Layer F dim names | enhancement_pred, connectivity_pred, bilateral_pred | motor_recovery_pred, connectivity_change_pred, vr_dosage_optimization_pred | MEDIUM |
+| 9 | Citations | Liang et al. 2025 (primary) | Li 2024, Sihvonen 2022 | HIGH |
+| 10 | brain_regions | 6 regions (S1, PM&SMA, M1, DLPFC, FPA, BG) | 3 regions (SMA, PMC, Putamen) with different MNI | MEDIUM |
+| 11 | CROSS_UNIT_READS | Not specified as empty | () empty tuple | LOW |
+| 12 | compute() | Full pseudocode in Section 11.1 | Returns torch.zeros() stub | LOW (expected for beta) |
+
+---
+
 **Model Status**: ✅ **VALIDATED**
 **Output Dimensions**: **11D**
 **Evidence Tier**: **β (Bridging)**
