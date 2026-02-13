@@ -4,7 +4,7 @@
 **Unit**: MPU (Motor Planning Unit)
 **Circuit**: Sensorimotor (SMA, PMC, Cerebellum, Basal Ganglia)
 **Tier**: β (Bridging) — 70-90% confidence
-**Version**: 2.1.0 (deep lit review: 1→8 papers, Bigand 2025 F-values verified, 4-process mTRF decomposition)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added G:Rhythm feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -169,7 +169,7 @@ Causal Evidence:         No (correlational EEG, fMRI; no TMS/lesion)
 
 ## 4. R³ Input Mapping: What DDSMI Reads
 
-### 4.1 R³ Feature Dependencies (~20D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | DDSMI Role | Scientific Basis |
 |----------|-------|---------|------------|------------------|
@@ -180,7 +180,18 @@ Causal Evidence:         No (correlational EEG, fMRI; no TMS/lesion)
 | **E: Interactions** | [25:33] | x_l0l5 (8D) | Music tracking (mTRF aud) | Auditory motor coupling |
 | **E: Interactions** | [33:41] | x_l4l5 (8D) | Social coordination | Partner entrainment |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ v2 Group | Index | Feature | DDSMI Role | Citation |
+|-------------|-------|---------|------------|----------|
+| **G: Rhythm** | [65] | tempo_estimate | Dance tempo for partner synchronization | Scheirer 1998; Grosche & Muller 2011 |
+| **G: Rhythm** | [68] | syncopation_index | Rhythmic complexity for social entrainment challenge | Longuet-Higgins & Lee 1984; Witek 2014 |
+
+**Rationale**: DDSMI models dyadic dance social motor integration where two partners synchronize to music and each other. tempo_estimate provides the explicit tempo reference for partner coordination (replacing indirect spectral_flux-based tempo inference). syncopation_index captures rhythmic complexity that modulates synchronization difficulty -- higher syncopation requires greater interpersonal motor coupling, consistent with Witek 2014's groove-syncopation relationship.
+
+**Code impact** (future): `r3[..., 65]` and `r3[..., 68]` will feed DDSMI's music-tracking mTRF pathway alongside existing energy features.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

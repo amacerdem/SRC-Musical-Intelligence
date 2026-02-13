@@ -4,8 +4,8 @@
 **Unit**: STU (Sensorimotor Timing Unit)
 **Circuit**: Sensorimotor (Beat Entrainment Processing)
 **Tier**: β (Integrative) — 70-90% confidence
-**Version**: 2.1.0 (deep literature review: 0→12 papers, generic citations REPLACED with specific evidence, Edagawa 2017 beta PSI z=7.43 frontal-temporal-cerebellar, Pierrieau 2025 beta motor flexibility d=-1.21, Okada 2022 cerebellar 3-neuron-type PI t=3.36, Scartozzi 2024 beta-musicality r=0.42, Bigand 2025 dyadic dance coordination F=249.75, Marup 2022 bodily hierarchy χ²=76.15, 6 methods)
-**Date**: 2026-02-12
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added G:Rhythm, K:Modulation feature dependencies)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -308,7 +308,7 @@ model is integrative synthesis across multiple evidence streams.
 
 ## 4. R³ Input Mapping: What OMS Reads
 
-### 4.1 R³ Feature Dependencies (33D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | OMS Role | Scientific Basis |
 |----------|-------|---------|----------|------------------|
@@ -325,7 +325,20 @@ model is integrative synthesis across multiple evidence streams.
 | **E: Interactions** | [33:41] | x_l4l5 (8D) | Dynamics x Perceptual binding | Sensorimotor coupling basis |
 | **E: Interactions** | [41:49] | x_l5l7 (8D) | Perceptual x Crossband coupling | Orchestral balance, section coordination |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | OMS Role | Scientific Basis |
+|----------|-------|---------|----------|------------------|
+| **G: Rhythm** | [69] | metricality_index | Metrical hierarchy depth for oscillatory meter tracking | Grahn & Brett 2007 |
+| **G: Rhythm** | [66] | beat_strength | Beat salience driving oscillator synchronization | Large & Palmer 2002 |
+| **G: Rhythm** | [68] | syncopation_index | Phase perturbation from off-beat accents | Longuet-Higgins & Lee 1984 |
+| **K: Modulation** | [116] | modulation_2Hz | Beat-rate modulation energy for oscillatory meter support | Honing 2012 |
+
+**Rationale**: OMS models oscillatory meter synchronization. The G:Rhythm features provide direct metrical structure: metricality [69] quantifies hierarchical subdivision depth for multi-level oscillators, beat_strength [66] drives oscillator synchronization, and syncopation [68] introduces phase perturbation. K[116] modulation_2Hz provides amplitude modulation energy at the primary beat rate.
+
+**Code impact** (Phase 6): `r3_indices` must be extended to include [66, 68, 69, 116]. These features are read-only inputs — no formula changes required.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output
@@ -347,6 +360,11 @@ R³[24] timbre_change ──────────┘   BEP.motor_entrainment 
 
 R³[9] centroid_energy ─────────── Orchestral Section Balance
 R³[23] pitch_change ──────────── Melodic Coordination Signal
+
+R³[69] metricality_index ──────┐
+R³[66] beat_strength ──────────┼──► Oscillatory Meter Structure (v2)
+R³[68] syncopation_index ──────┤   Direct metrical hierarchy + phase
+R³[116] modulation_2Hz ────────┘   Beat-rate modulation energy
 ```
 
 ---

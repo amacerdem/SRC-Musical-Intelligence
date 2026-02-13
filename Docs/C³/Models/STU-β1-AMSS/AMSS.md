@@ -4,8 +4,8 @@
 **Unit**: STU (Sensorimotor Timing Unit)
 **Circuit**: Sensorimotor (Temporal Memory Hierarchy)
 **Tier**: β (Integrative) — 70-90% confidence
-**Version**: 2.1.0 (deep literature review: 1→12 papers, Hausfeld method CORRECTED to EEG, Wikman fMRI scene-level attention, Basinski ORN stream segregation, Haiduk attention×spectrotemporal, Har-shai Yahav CONSTRAINS individual variability, Mischler expertise lateralization)
-**Date**: 2026-02-12
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added G:Rhythm feature dependencies)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -257,7 +257,7 @@ Replication:        7 independent methods across EEG, fMRI, iEEG
 
 ## 4. R³ Input Mapping: What AMSS Reads
 
-### 4.1 R³ Feature Dependencies (28D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | AMSS Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -277,7 +277,17 @@ Replication:        7 independent methods across EEG, fMRI, iEEG
 | **E: Interactions** | [25:33] | x_l0l5 (8D) | Foundation×Perceptual coupling | Multi-stream binding |
 | **E: Interactions** | [33:41] | x_l4l5 (8D) | Dynamics×Perceptual coupling | Attended stream enhancement |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | AMSS Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **G: Rhythm** | [73] | tempo_stability | Temporal prediction reliability — stable tempo enables more precise stream segregation | Bregman 1990 |
+
+**Rationale**: AMSS models attention-modulated stream segregation. G[73] tempo_stability provides a direct measure of temporal prediction reliability that modulates how effectively auditory streams can be segregated — stable temporal patterns enable more precise stream tracking.
+
+**Code impact** (Phase 6): `r3_indices` must be extended to include [73]. These features are read-only inputs — no formula changes required.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output
@@ -305,6 +315,10 @@ Instrument Separation ─────────── Timbre-dependent modulat
                                    Bassoon (d=0.68) > Cello (d=0.60)
                                    Math: sep = σ(δ · brightness_diff ·
                                                   sharpness_diff)
+
+R³[73] tempo_stability ────────── Temporal Prediction (v2)
+                                   Stable tempo enables precise
+                                   stream segregation and tracking
 ```
 
 ---

@@ -4,8 +4,8 @@
 **Unit**: STU (Sensorimotor Timing Unit)
 **Circuit**: Sensorimotor (with cross-circuit read from Perceptual)
 **Tier**: β (Integrative) — 70-90% confidence
-**Version**: 2.1.0 (deep literature review: 1→12 papers, "Halpern et al. 2004" → Halpern et al. 2004, Bellmann & Asano 2024 ALE meta-analysis 4 clusters added, Pantev 2001 timbre-specific plasticity, Kraemer 2005 PAC imagery for instrumentals, Alluri 2012 naturalistic timbre networks, dual-stream model framing)
-**Date**: 2026-02-12
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — no new feature dependencies)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -290,7 +290,7 @@ Replication:         Partial — Bellmann 2024 ALE includes Halpern 2004
 
 ## 4. R³ Input Mapping: What TPIO Reads
 
-### 4.1 R³ Feature Dependencies (13D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | TPIO Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -308,7 +308,13 @@ Replication:         Partial — Bellmann 2024 ALE includes Halpern 2004
 | **B: Energy** | [7] | amplitude | Intensity level — imagery engagement proxy | Sound energy baseline |
 | **B: Energy** | [8] | loudness | Perceptual loudness — activation level | Stevens 1957: power law |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+No new R³ v2 features required. TPIO's timbre processing operates exclusively on spectral features already captured in [0:49].
+
+**Code impact** (Phase 6): No changes to `r3_indices` required.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

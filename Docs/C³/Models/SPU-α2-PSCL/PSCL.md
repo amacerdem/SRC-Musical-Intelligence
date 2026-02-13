@@ -4,8 +4,8 @@
 **Unit**: SPU (Spectral Processing Unit)
 **Circuit**: Perceptual (Cortical Auditory)
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 2.1.0 (Phase 1 revision: deep literature cross-reference, 1→14 papers, Allen/Briley/Tabas/Schonwiesner cortical evidence, distributed vs focal qualification)
-**Date**: 2026-02-12
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added F:Pitch feature dependencies)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -304,7 +304,7 @@ Specificity:       Anterolateral HG (non-primary AC), not subcortical
 
 ## 4. R³ Input Mapping: What PSCL Reads
 
-### 4.1 R³ Feature Dependencies (27D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | PSCL Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -323,7 +323,19 @@ Specificity:       Anterolateral HG (non-primary AC), not subcortical
 | **E: Interactions** | [25:33] | x_l0l5 (8D) | Energy × Consonance coupling | Pitch-loudness |
 | **E: Interactions** | [41:49] | x_l5l7 (8D) | Consonance × Timbre coupling | Salience-structure |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | PSCL Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **F: Pitch & Chroma** | [49:60] | chroma_vector (12D) | Octave-equivalent pitch class distribution — provides the tonal basis over which salience is computed; salient pitches produce sharply peaked chroma profiles | Shepard 1964 octave equivalence; Krumhansl 1990 tonal hierarchy |
+| **F: Pitch & Chroma** | [61] | pitch_height | Log-frequency pitch height — encodes the frequency dimension of helical pitch representation; salience varies systematically with register (Pressnitzer et al. 2001) | ANSI pitch height; Oxenham 2012 pitch perception review |
+| **F: Pitch & Chroma** | [63] | pitch_salience | Direct harmonicity measure — explicit pitch prominence above noise floor; replaces the indirect proxy via C[14] tonalness currently used in f01 | Parncutt 1989 virtual pitch salience |
+
+**Rationale**: PSCL models cortical pitch salience — the neural representation of pitch prominence in anterolateral HG and surrounding auditory cortex. The v1 features approximate pitch salience indirectly through spectral proxies (tonalness, spectral_autocorrelation, spectral_concentration). The F:Pitch group provides the underlying pitch representations that drive salience perception directly: chroma_vector [49:60] gives the pitch class distribution whose peakedness indicates salience strength; pitch_height [61] captures register-dependent salience variation consistent with Penagos et al. (2004) finding that alHG responds preferentially to resolved harmonics in mid-frequency ranges; pitch_salience [63] is the direct harmonicity measure that replaces the tonalness proxy used in f01.
+
+**Code impact** (Phase 6): `r3_indices` must be extended to include [49:60], [61], [63]. These features are read-only inputs — no formula changes required.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

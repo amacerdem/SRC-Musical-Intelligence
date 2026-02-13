@@ -4,7 +4,7 @@
 **Unit**: IMU (Integrative Memory Unit)
 **Circuit**: Mnemonic (Hippocampal-Cortical)
 **Tier**: β (Integrative) — 70-90% confidence
-**Version**: 2.1.0 (deep lit review: 2→12 papers, +Bruzzone 2022 N=66 DTI/MEG, +Borderie 2024 iEEG theta-gamma PAC, +Samiee 2022 cross-freq pitch, +Dobri 2023 40-Hz ASSR, +Ding 2025 entrainment N=31, verified brain regions, updated MNI)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added G feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
@@ -315,7 +315,7 @@ Key limitation:       No single study combines music + Gf + oscillatory connecti
 
 ## 4. R³ Input Mapping: What OII Reads
 
-### 4.1 R³ Feature Dependencies (38D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | OII Role | Scientific Basis |
 |----------|-------|---------|----------|------------------|
@@ -339,7 +339,18 @@ Key limitation:       No single study combines music + Gf + oscillatory connecti
 | **E: Interactions** | [33:41] | x_l4l5 (Derivatives x Consonance) | Mode switching dynamics | Change rate x consonance = switch cost |
 | **E: Interactions** | [41:49] | x_l5l7 (Consonance x Timbre) | Slow integration binding | Consonance-timbre = theta integration quality |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | OII Role | Scientific Basis |
+|----------|-------|---------|----------|------------------|
+| **G: Rhythm** | [72] | event_density | Oscillatory load — event rate drives gamma burst frequency | Giraud & Poeppel 2012: event rate ↔ cortical oscillation band |
+| **G: Rhythm** | [74] | rhythmic_regularity | Entrainment quality — regular rhythms stabilize theta phase | Large & Palmer 2002 |
+
+**Rationale**: OII models oscillatory integration/segregation dynamics. Event density directly determines the frequency band of cortical oscillatory engagement (high event density maps to gamma, low to theta). Rhythmic regularity quantifies how well temporal structure supports stable phase-locking, the mechanism by which theta oscillations bind distributed representations into integrated percepts.
+
+> **Code impact**: These features are doc-only until Phase 5 wiring. No changes to `oii.py`.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

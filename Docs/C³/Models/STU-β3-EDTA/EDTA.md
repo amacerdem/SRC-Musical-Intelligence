@@ -4,8 +4,8 @@
 **Unit**: STU (Sensorimotor Timing Unit)
 **Circuit**: Sensorimotor (Beat Entrainment Processing)
 **Tier**: β (Integrative) — 70-90% confidence
-**Version**: 2.1.0 (deep literature review: ~3→12 papers, "Expertise study" → Foster et al. 2021 (Frontiers Psych), Vigl 2024 N=403 quadratic 120 BPM peak, Grahn & Brett 2007 putamen+SMA MNI, Hoddinott & Grahn 2024 7T RSA C-Score model, Dalla Bella 2024 motor d=1.5 classifier, d=0.54 QUALIFIED as unverifiable)
-**Date**: 2026-02-12
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added G:Rhythm feature dependencies)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -281,7 +281,7 @@ Replication:         Partial — Vigl 2024 confirms 120 BPM peak and expertise
 
 ## 4. R³ Input Mapping: What EDTA Reads
 
-### 4.1 R³ Feature Dependencies (9D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | EDTA Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -295,7 +295,19 @@ Replication:         Partial — Vigl 2024 confirms 120 BPM peak and expertise
 | **D: Change** | [24] | timbre_change | Instrument-specific timing | Timbral onset sharpness per instrument |
 | **B: Energy** | [9] | spectral_centroid | Brightness-tempo coupling | Spectral centroid modulates beat perception |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ v2 Group | Index | Feature | EDTA Role | Scientific Basis |
+|-------------|-------|---------|-----------|------------------|
+| **G: Rhythm** | [65] | tempo_estimate | Entrainment target frequency — tempo defines the oscillator's natural frequency | Large & Jones 1999 |
+| **G: Rhythm** | [73] | tempo_stability | Temporal prediction reliability — stable tempo strengthens entrainment | Jones & Boltz 1989 |
+| **G: Rhythm** | [69] | metricality_index | Metrical hierarchy depth for multi-level entrainment | Grahn & Brett 2007 |
+
+**Rationale**: EDTA models entrainment and dynamic temporal attending. The G:Rhythm features provide direct rhythmic structure that EDTA's oscillatory models require. Tempo [65] defines the entrainment target frequency, tempo_stability [73] modulates entrainment strength, and metricality [69] enables multi-level hierarchical entrainment.
+
+**Code impact** (Phase 6): Append `[65, 69, 73]` to `r3_indices` in `edta.py`.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output
@@ -314,6 +326,12 @@ R³[21] spectral_change ───────┐
 R³[23] pitch_change ───────────┼──► Motor Entrainment (tempo locking)
 R³[24] timbre_change ──────────┘   BEP.motor_entrainment at H16 (1000ms)
                                    Math: lock = σ(0.54·beat·meter·expertise)
+
+── R³ v2 (Phase 3E) ──────────────────────────────────────────────────
+R³[65] tempo_estimate ────────┐
+R³[73] tempo_stability ───────┼──► Entrainment target + reliability
+R³[69] metricality_index ─────┘   Multi-level hierarchical entrainment
+                                   Math: entrain = σ(tempo·stability·metric)
 
 Expertise Factor ───────────────── Domain-Specific Accuracy
                                    DJs: boost at 120-139 BPM

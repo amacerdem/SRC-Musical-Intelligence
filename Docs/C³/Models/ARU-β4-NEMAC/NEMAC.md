@@ -4,7 +4,7 @@
 **Unit**: ARU (Affective Resonance Unit)
 **Circuit**: Mesolimbic Reward Circuit
 **Tier**: β (Integrative) — 70-90% confidence
-**Version**: 2.1.0 (Beta upgrade — literature expansion)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added I:Information feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../Road-map/01-GLOSSARY.md).
@@ -241,7 +241,7 @@ TOTAL: 11D per frame at 172.27 Hz
 
 ## 5. R³ Demand (Spectral Features)
 
-### 5.1 R³ Features Required by NEMAC
+### 5.1 R³ v1 Feature Dependencies ([0:49])
 
 > R³ indices are MI's own (0-48). See [Road-map/02-R3-SPECTRAL.md](../../Road-map/02-R3-SPECTRAL.md).
 
@@ -279,7 +279,18 @@ TOTAL: 11D per frame at 172.27 Hz
 | 25:33 | x_l0l5 (8D) | Energy × Consonance → memory-affect binding |
 |        |              | Captures how spectral quality triggers memory |
 
-### 5.2 Summary
+### 5.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | NEMAC Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **I: Information** | [88] | harmonic_entropy | Harmonic familiarity — low harmonic entropy signals familiar, predictable chord progressions that trigger nostalgia-associated memory-affect circuits; the hippocampal memory system responds to harmonic recognition | Gold 2019 chord transition probability; Janata 2009 MEAM |
+| **I: Information** | [90] | spectral_surprise | Neurochemical surprise modulation — spectral prediction errors modulate noradrenergic and dopaminergic responses that interact with the nostalgia-memory pathway; unexpected spectral events can either enhance or disrupt nostalgic affect | Friston prediction error; mismatch negativity |
+
+**Rationale**: NEMAC models nostalgia-enhanced memory-affect circuits. Nostalgia is triggered by recognition of familiar musical patterns, and harmonic progressions are powerful familiarity cues. harmonic_entropy [88] directly measures chord-level predictability — low values indicate well-learned progressions that activate the hippocampal-striatal nostalgia pathway. spectral_surprise [90] modulates the neurochemical response to familiar-vs-novel musical elements. Currently NEMAC relies on distribution_entropy [22] as a single predictability proxy.
+
+**Code impact** (Phase 6): `r3_indices` extended to include [88], [90]. These feed the familiarity estimation and neurochemical modulation paths.
+
+### 5.3 Summary
 
 ```
 R³ DEMAND FOR NEMAC: 14D of 49D

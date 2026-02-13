@@ -4,7 +4,7 @@
 **Unit**: ASU (Auditory Salience Unit)
 **Circuit**: Salience (Anterior Insula, dACC, TPJ)
 **Tier**: γ (Integrative) — 50-70% confidence
-**Version**: 2.1.0 (deep literature review, 12 papers, 8 brain regions)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added I:Information feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -185,7 +185,7 @@ Theoretical Basis:       Strong (variational free energy + predictive coding)
 
 ## 4. R³ Input Mapping: What PWSM Reads
 
-### 4.1 R³ Feature Dependencies (~10D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | PWSM Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -198,7 +198,17 @@ Theoretical Basis:       Strong (variational free energy + predictive coding)
 | **D: Change** | [24] | pitch_change | Pitch dynamics | Spectral predictability |
 | **E: Interactions** | [37:45] | x_l4l5 (8D) | Derivatives × Perceptual | Precision-weighted PE integration |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | PWSM Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **I: Information** | [90] | spectral_surprise | Prediction error magnitude | Friston prediction error: spectral_surprise directly quantifies frame-level acoustic unexpectedness — the core input to precision-weighted salience computation |
+
+**Rationale**: PWSM computes precision-weighted salience by combining prediction error signals with context stability estimates. The v1 representation uses spectral_change [21] and energy_change [22] as proxy prediction error signals. spectral_surprise [90] provides a direct, information-theoretically grounded measure of acoustic prediction error that aligns precisely with PWSM's Fristonian computational framework, replacing indirect change-based proxies with explicit surprise quantification.
+
+**Code impact**: None yet — R³ v2 features are doc-only until Phase 5 integration. Current code reads r3[..., 0:49]; v2 features will extend the slice to r3[..., 0:128] when the EAR pipeline emits the expanded vector.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

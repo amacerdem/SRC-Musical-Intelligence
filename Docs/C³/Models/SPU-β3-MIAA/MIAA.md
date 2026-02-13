@@ -4,8 +4,8 @@
 **Unit**: SPU (Spectral Processing Unit)
 **Circuit**: Perceptual (Brainstem--Cortical)
 **Tier**: β (Integrative) -- 70--90% confidence
-**Version**: 2.1.0 (1→12 papers, Kraemer flagship F=48.92, Di Liberto imagery decoding, Halpern/Bellier/Zatorre convergence, SMA added)
-**Date**: 2026-02-12
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added F:Pitch, J:Timbre Extended feature dependencies)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** -- no shared code, no shared indices. All formulas implemented from scratch.
@@ -309,7 +309,7 @@ Methods:              7 methods (fMRI, EEG, iEEG, MEG, fNIRS, ALE meta, BCI)
 
 ## 4. R³ Input Mapping: What MIAA Reads
 
-### 4.1 R³ Feature Dependencies (~16D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | MIAA Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -327,7 +327,19 @@ Methods:              7 methods (fMRI, EEG, iEEG, MEG, fNIRS, ALE meta, BCI)
 | **E: Interactions** | [25:33] | x_l0l5 (partial 3D) | Consonance-Timbre binding for imagery templates | Emergent |
 | **E: Interactions** | [41:49] | x_l5l7 (partial 3D) | Timbre-Structure coupling for imagery binding | Emergent |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | MIAA Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **F: Pitch & Chroma** | [49:60] | chroma_vector (12D) | Octave-equivalent pitch class distribution — imagery retrieval uses pitch class templates; musicians imagining a melody reconstruct its chroma sequence in auditory cortex | Shepard 1964 octave equivalence; Krumhansl 1990 tonal hierarchy |
+| **F: Pitch & Chroma** | [61] | pitch_height | Log-frequency pitch height — imagery preserves absolute register; Halpern (1989) showed imagined tempo/pitch maintain veridical relationships | ANSI pitch height; Halpern 1989 imagery fidelity |
+| **J: Timbre Extended** | [94:106] | mfcc (13D) | Mel-frequency cepstral coefficients — compact spectral envelope capturing instrument identity; imagery activation in A1/BA22 correlates with timbre-specific spectral templates (Kraemer et al. 2005 F=48.92) | Davis & Mermelstein 1980; Logan 2000 music similarity |
+
+**Rationale**: MIAA models the auditory cortex activation during musical imagery — the internal "hearing" of music without external sound. The v1 features capture basic timbre and spectral properties via tristimulus ratios, tonalness, and warmth. The F:Pitch group adds chroma_vector [49:60] and pitch_height [61], providing the explicit melodic content that imagery retrieves — Di Liberto et al. (2020) demonstrated that imagined melody can be decoded from EEG using pitch-class features. The J:Timbre Extended group adds mfcc [94:106], encoding the detailed spectral envelope that defines instrument identity during imagery; Kraemer et al. (2005) showed that auditory cortex activation during imagery is instrument-specific, consistent with the spectral template hypothesis that MFCCs capture.
+
+**Code impact** (Phase 6): `r3_indices` must be extended to include [49:60], [61], [94:106]. These features are read-only inputs — no formula changes required.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

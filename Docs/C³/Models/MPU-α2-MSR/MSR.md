@@ -4,7 +4,7 @@
 **Unit**: MPU (Motor Planning Unit)
 **Circuit**: Sensorimotor (SMA, PMC, Cerebellum, Basal Ganglia)
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 2.1.0 (deep literature cross-reference, 8 papers, citation corrected, Cohen's d calculated)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added G:Rhythm feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -191,7 +191,7 @@ Limitation:          Primary empirical data from single lab (k=1 for PLV/P2); ne
 
 ## 4. R³ Input Mapping: What MSR Reads
 
-### 4.1 R³ Feature Dependencies (~22D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | MSR Role | Scientific Basis |
 |----------|-------|---------|----------|------------------|
@@ -202,7 +202,19 @@ Limitation:          Primary empirical data from single lab (k=1 for PLV/P2); ne
 | **E: Interactions** | [25:33] | x_l0l5 (8D) | Neural synchrony proxy | Motor-auditory PLV |
 | **E: Interactions** | [33:41] | x_l4l5 (8D) | Sensorimotor coupling | Training-enhanced binding |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ v2 Group | Index | Feature | MSR Role | Citation |
+|-------------|-------|---------|----------|----------|
+| **G: Rhythm** | [65] | tempo_estimate | Tempo tracking precision baseline | Scheirer 1998; Grosche & Muller 2011 |
+| **G: Rhythm** | [67] | pulse_clarity | Beat clarity for sensorimotor coupling | Lartillot & Toiviainen 2007 |
+| **G: Rhythm** | [68] | syncopation_index | Syncopation complexity for training-enhanced tracking | Longuet-Higgins & Lee 1984; Witek 2014 |
+
+**Rationale**: MSR models musician vs non-musician sensorimotor reorganization. G:Rhythm provides explicit rhythmic structure features that capture the very capacities musicians develop: superior tempo tracking (tempo_estimate), enhanced beat perception (pulse_clarity), and syncopation processing (syncopation_index). These replace the indirect proxies currently derived from spectral_flux [10] and onset_strength energy features.
+
+**Code impact** (future): `r3[..., 65:75]` slice will feed MSR's sensorimotor precision pathway, with musician-enhanced weights on pulse_clarity and syncopation_index.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

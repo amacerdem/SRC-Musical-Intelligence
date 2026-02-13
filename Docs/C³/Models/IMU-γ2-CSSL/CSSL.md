@@ -4,7 +4,7 @@
 **Unit**: IMU (Integrative Memory Unit)
 **Circuit**: Mnemonic (Hippocampal-Cortical)
 **Tier**: γ (Speculative) — <70% confidence
-**Version**: 2.1.0 (deep literature cross-reference, 4→12 papers, verified effect sizes from Burchardt et al. 2025)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added G, F feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/General/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -279,7 +279,7 @@ Quality Assessment:                   γ-tier (speculative — cross-species ext
 
 ## 4. R³ Input Mapping: What CSSL Reads
 
-### 4.1 R³ Feature Dependencies (31D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | CSSL Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -300,7 +300,19 @@ Quality Assessment:                   γ-tier (speculative — cross-species ext
 | **E: Interactions** | [25:33] | x_l0l5 (Energy x Consonance) | Motor-auditory coupling | Rhythm entrainment binding |
 | **E: Interactions** | [41:49] | x_l5l7 (Consonance x Timbre) | Melody-timbre binding | Song template formation |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | CSSL Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **G: Rhythm** | [70] | isochrony_nPVI | Temporal regularity — isochronous rhythms are species-general | Burchardt et al. 2025: nPVI across species |
+| **G: Rhythm** | [68] | syncopation_index | Rhythmic complexity — syncopation marks human-specific elaboration | Witek et al. 2014 |
+| **F: Pitch** | [49:60] | chroma (12D) | Pitch-class template for cross-species melodic comparison | Doolittle & Brumm 2012 |
+
+**Rationale**: CSSL models cross-species song learning mechanisms. Isochrony (nPVI) is directly from Burchardt et al. 2025, quantifying the species-general tendency toward isochronous rhythms in vocal learning. Syncopation index marks the rhythmic complexity dimension where human music diverges from other species. Chroma vectors provide pitch-class templates enabling cross-species comparison of melodic structure (e.g., birdsong intervals vs. human scales).
+
+> **Code impact**: These features are doc-only until Phase 5 wiring. No changes to `cssl.py`.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

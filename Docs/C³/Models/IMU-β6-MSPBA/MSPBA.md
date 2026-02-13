@@ -4,7 +4,7 @@
 **Unit**: IMU (Integrative Memory Unit)
 **Circuit**: Mnemonic (Hippocampal-Cortical)
 **Tier**: β (Integrative) — 70-90% confidence
-**Version**: 2.1.0 (Phase 1 Beta upgrade: 6→12 papers, +Kim 2021 MEG IFG connectivity, +Koelsch ERAN review, +Tachibana 2024 fNIRS, +Wohrle 2024 MEG roundness, +Egermann 2013 expectation-emotion, +Yang 2022 music-language transfer, 5→7 brain regions, doc-code mismatches logged)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added H, I feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
@@ -315,7 +315,7 @@ Tier justification: β (integrative) — converging multi-method evidence across
 
 ## 4. R³ Input Mapping: What MSPBA Reads
 
-### 4.1 R³ Feature Dependencies (28D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | MSPBA Role | Scientific Basis |
 |----------|-------|---------|------------|------------------|
@@ -334,7 +334,19 @@ Tier justification: β (integrative) — converging multi-method evidence across
 | **E: Interactions** | [33:41] | x_l4l5 (Derivatives x Consonance) | Temporal violation detection | Change x consonance = surprise |
 | **E: Interactions** | [41:49] | x_l5l7 (Consonance x Timbre) | Harmonic structure analysis | Chord voicing signature |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | MSPBA Role | Scientific Basis |
+|----------|-------|---------|------------|------------------|
+| **H: Harmony** | [86] | syntactic_irregularity | Direct ERAN trigger — quantifies harmonic syntax violation | Koelsch 2011: ERAN ∝ syntactic irregularity |
+| **H: Harmony** | [75] | key_clarity | Tonal context strength — clear key = stronger violation signal | Krumhansl 1990: key profiles |
+| **I: Information** | [92] | predictive_entropy | Prediction error for syntax processing — PE drives IFG activation | Pearce 2005: IDyOM information content |
+
+**Rationale**: MSPBA models musical syntax processing in Broca's area (IFG). Syntactic irregularity is the most direct input — it quantifies exactly the harmonic violation that generates the ERAN component. Key clarity provides the tonal context against which violations are computed (violations are only meaningful relative to an established key). Predictive entropy provides the information-theoretic prediction error that drives IFG activation for syntactic reanalysis.
+
+> **Code impact**: These features are doc-only until Phase 5 wiring. No changes to `mspba.py`.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

@@ -4,8 +4,8 @@
 **Unit**: SPU (Spectral Processing Unit)
 **Circuit**: Perceptual (Brainstem-Cortical)
 **Tier**: γ (Speculative) — <70% confidence
-**Version**: 2.1.0 (v2.0.0 → 2.1.0: 1→12 papers, Tervaniemi d=-1.09 REMOVED (unverifiable — review paper), Koelsch 1999 violinist MMN, Vuust 2012 genre-specific, Criscuolo ALE k=84, Martins 2022 no singer/instrumentalist salience difference CONSTRAINS clean dissociation)
-**Date**: 2026-02-12
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added F:Pitch, J:Timbre Extended feature dependencies)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -304,7 +304,7 @@ Cross-cultural:       Tested primarily in Western musical tradition
 
 ## 4. R³ Input Mapping: What ESME Reads
 
-### 4.1 R³ Feature Dependencies (~20D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | ESME Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -324,7 +324,18 @@ Cross-cultural:       Tested primarily in Western musical tradition
 | **E: Interactions** | [33:41] | x_l4l5 (4D) | Temporal-spectral coupling | Emergent deviance |
 | **E: Interactions** | [41:49] | x_l5l7 (3D) | Consonance-timbre coupling | Emergent deviance |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | ESME Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **F: Pitch & Chroma** | [49:60] | chroma_vector (12D) | Octave-equivalent pitch class distribution — MMN for pitch deviants requires a pitch class template against which deviations are detected; chroma encodes the expected pitch classes in the regularity representation | Shepard 1964 octave equivalence; Krumhansl 1990 tonal hierarchy |
+| **J: Timbre Extended** | [107:113] | spectral_contrast (7D) | Peak-valley ratio per frequency band — timbre MMN requires a spectral template; spectral_contrast encodes the formant structure that defines instrument identity, enabling detection of timbre deviants (e.g., violin replaced by trumpet) | Jiang et al. 2002 spectral contrast features |
+
+**Rationale**: ESME models expertise-specific MMN enhancement — the larger mismatch negativity responses that musicians show to deviants in their trained domain. The v1 features capture deviance through change signals (spectral_change, energy_change, pitch_change) and consonance baselines. The F:Pitch group adds chroma_vector [49:60], providing the explicit pitch class template against which pitch deviants are detected — Koelsch et al. (1999) demonstrated that violinists show enhanced MMN to mistuned notes, requiring a pitch class reference that chroma encodes directly. The J:Timbre Extended group adds spectral_contrast [107:113], encoding the formant structure that defines instrument-specific timbre templates; Vuust et al. (2012) showed that genre-specific expertise enhances MMN for instrument-relevant timbral deviants, consistent with spectral contrast capturing the per-band structure that distinguishes familiar vs novel instrument timbres.
+
+**Code impact** (Phase 6): `r3_indices` must be extended to include [49:60], [107:113]. These features are read-only inputs — no formula changes required.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

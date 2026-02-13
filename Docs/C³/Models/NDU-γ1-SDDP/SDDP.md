@@ -4,7 +4,7 @@
 **Unit**: NDU (Novelty Detection Unit)
 **Circuit**: Salience + Perceptual (Developing Auditory Cortex, Attention Networks)
 **Tier**: γ (Integrative) — 50–70% confidence
-**Version**: 2.1.0 (deep literature review, 1→8 papers, sex-dependent evidence expanded)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added I:Information feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -189,7 +189,7 @@ Cross-species:           Mouse ASSR sex difference supports mechanism but
 
 ## 4. R³ Input Mapping: What SDDP Reads
 
-### 4.1 R³ Feature Dependencies (~14D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | SDDP Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -204,7 +204,17 @@ Cross-species:           Mouse ASSR sex difference supports mechanism but
 | **D: Change** | [23] | pitch_change | Pitch contour tracking | Melodic singing |
 | **E: Interactions** | [25:33] | x_l0l5 (8D) | Vocal quality integration | Multi-feature binding |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | SDDP Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **I: Information** | [90] | spectral_surprise | Prediction error magnitude | Friston prediction error: quantifies acoustic unexpectedness; sex-dependent developmental differences in surprise processing may underlie differential plasticity rates |
+
+**Rationale**: SDDP extends DSP's sex-dependent findings speculatively. The v1 representation uses spectral_change [21] and pitch_change [23] as proxies for developmental deviance processing. spectral_surprise [90] provides a direct measure of acoustic prediction error that may show sex-dependent developmental trajectories — males and females may differ in how quickly surprise responses mature, consistent with the sex-dependent MMR patterns observed in Partanen 2022.
+
+**Code impact**: None yet — R³ v2 features are doc-only until Phase 5 integration. Current code reads r3[..., 0:49]; v2 features will extend the slice to r3[..., 0:128] when the EAR pipeline emits the expanded vector.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

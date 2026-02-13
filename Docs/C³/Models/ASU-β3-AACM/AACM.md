@@ -4,7 +4,7 @@
 **Unit**: ASU (Auditory Salience Unit)
 **Circuit**: Salience (Anterior Insula, dACC, TPJ)
 **Tier**: β (Bridging) — 70-90% confidence
-**Version**: 2.1.0 (deep literature cross-ref, 12 papers, verified effect sizes)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added J:Timbre Extended feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -187,7 +187,7 @@ Sample Range:            n = 8-87 (median ~24)
 
 ## 4. R³ Input Mapping: What AACM Reads
 
-### 4.1 R³ Feature Dependencies (~14D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | AACM Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -201,7 +201,17 @@ Sample Range:            n = 8-87 (median ~24)
 | **D: Change** | [21] | spectral_change | Spectral dynamics | Processing demand |
 | **E: Interactions** | [25:33] | x_l0l5 (8D) | Perceptual integration | Holistic aesthetic quality |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | AACM Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **J: Timbre Extended** | [94:106] | mfcc (13D) | Cepstral timbral fingerprint | Standard MIR cepstral analysis: MFCCs capture timbral identity and texture beyond spectral moments; enables AACM to model aesthetic preferences for specific timbral qualities |
+
+**Rationale**: AACM couples aesthetic judgments with attention through consonance (A-group) and broadband timbre features warmth [12] and tristimulus_1 [13]. mfcc [94:106] adds a 13-dimensional cepstral timbral fingerprint that captures detailed spectral envelope shape — the primary acoustic correlate of instrument identity and vocal quality that drives aesthetic preferences. This enriches the aesthetic dimension without conflating with consonance.
+
+**Code impact**: None yet — R³ v2 features are doc-only until Phase 5 integration. Current code reads r3[..., 0:49]; v2 features will extend the slice to r3[..., 0:128] when the EAR pipeline emits the expanded vector.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

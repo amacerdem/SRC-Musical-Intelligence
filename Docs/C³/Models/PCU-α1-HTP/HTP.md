@@ -4,7 +4,7 @@
 **Unit**: PCU (Predictive Coding Unit)
 **Circuit**: Imagery (Auditory Cortex, IFG, STS, Hippocampus)
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 2.1.0
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added H:Harmony, I:Information feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -183,7 +183,7 @@ Replication:          Consistent across 6+ independent labs, human + animal
 
 ## 4. R³ Input Mapping: What HTP Reads
 
-### 4.1 R³ Feature Dependencies (~20D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | HTP Role | Scientific Basis |
 |----------|-------|---------|----------|------------------|
@@ -200,7 +200,21 @@ Replication:          Consistent across 6+ independent labs, human + animal
 | **E: Interactions** | [33:41] | x_l4l5 (8D) | Mid-level binding | 200ms window basis |
 | **E: Interactions** | [41:49] | x_l5l7 (8D) | High-level abstraction | 500ms window basis |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ v2 Group | Index | Feature | HTP Role | Citation |
+|-------------|-------|---------|----------|----------|
+| **H: Harmony** | [75] | key_clarity | Tonal context strength for hierarchical prediction | Krumhansl & Kessler 1982 |
+| **H: Harmony** | [83] | harmonic_change | Harmonic transition detection for prediction updating | Harte 2006 |
+| **I: Information** | [87] | melodic_entropy | Melodic uncertainty for prediction error computation | Pearce 2005 (IDyOM) |
+| **I: Information** | [88] | harmonic_entropy | Harmonic uncertainty for tonal prediction error | Pearce 2005 (IDyOM) |
+| **I: Information** | [92] | predictive_entropy | Overall predictive uncertainty across hierarchy levels | Friston 2005 (predictive coding) |
+
+**Rationale**: HTP performs hierarchical temporal prediction across multiple timescales (110ms, 200ms, 500ms). I:Information features directly encode the uncertainty and surprise signals HTP's prediction error computation operates on -- melodic_entropy and harmonic_entropy from IDyOM (Pearce 2005) quantify the statistical learning that generates predictions, while predictive_entropy captures the overall uncertainty across hierarchy levels (Friston predictive coding). H:key_clarity provides the tonal context that constrains harmonic predictions, and harmonic_change marks the boundaries where predictions must be updated.
+
+**Code impact** (future): `r3[..., 75]`, `r3[..., 83]`, and `r3[..., 87:93]` will feed HTP's multi-level prediction hierarchy alongside existing energy, timbre, and interaction features.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

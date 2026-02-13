@@ -4,7 +4,7 @@
 **Unit**: RPU (Reward Processing Unit)
 **Circuit**: Mesolimbic (NAcc, VTA, vmPFC, OFC, Amygdala)
 **Tier**: β (Bridging) — 70-90% confidence
-**Version**: 2.1.0 (literature-reviewed, corrected methods/N, multi-study evidence)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added I:Information feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -181,7 +181,7 @@ Replication:             Putkinen 2025 PET confirms OFC/amygdala in chills;
 
 ## 4. R³ Input Mapping: What MCCN Reads
 
-### 4.1 R³ Feature Dependencies (~14D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | MCCN Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -193,7 +193,18 @@ Replication:             Putkinen 2025 PET confirms OFC/amygdala in chills;
 | **D: Change** | [22] | energy_change | Dynamic shift | Crescendo/decrescendo |
 | **E: Interactions** | [25:33] | x_l0l5 (8D) | Theta oscillation proxy | Low-band correlations |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | MCCN Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **I: Information** | [88] | harmonic_entropy | Entropy resolution — chills are triggered by the resolution of harmonic uncertainty; a drop in harmonic_entropy at cadential moments signals the consummatory phase | Cheung 2019 uncertainty × surprise; Gold 2019 |
+| **I: Information** | [87] | melodic_entropy | Melodic surprise context — high melodic entropy preceding a chill moment amplifies the prediction error magnitude at resolution | Pearce 2005 IDyOM; de Fleurian & Pearce 2021 |
+
+**Rationale**: MCCN models the cortical network underlying musical chills/frisson. Chills occur at moments of high prediction error following high uncertainty (Cheung 2019). harmonic_entropy [88] directly measures the harmonic uncertainty that precedes chill events — its temporal derivative (drop) at resolution moments is a primary chill trigger. melodic_entropy [87] provides the melodic uncertainty context. Currently these are proxied by spectral_change [21] and energy_change [22], which lack the music-specific information content.
+
+**Code impact** (Phase 6): `r3_indices` extended to include [87], [88]. These feed the theta oscillation proxy and chill trigger detection paths.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

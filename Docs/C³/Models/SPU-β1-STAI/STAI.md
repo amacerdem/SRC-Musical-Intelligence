@@ -4,8 +4,8 @@
 **Unit**: SPU (Spectral Processing Unit)
 **Circuit**: Perceptual (Brainstem-Cortical)
 **Tier**: β (Integrative) — 70-90% confidence
-**Version**: 2.1.0 (Phase 1 revision: deep literature cross-reference, 1→14 papers, Kim citation CORRECTED to Sci Reports, Alluri parallel streams, Cheung/Gold reward, Sarasso/Bellmann spectral aesthetics)
-**Date**: 2026-02-12
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added F:Pitch, H:Harmony feature dependencies)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -311,7 +311,7 @@ Design Strength:      2x2 factorial (gold standard for interaction effects)
 
 ## 4. R³ Input Mapping: What STAI Reads
 
-### 4.1 R³ Feature Dependencies (~20D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | STAI Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -332,7 +332,19 @@ Design Strength:      2x2 factorial (gold standard for interaction effects)
 | **D: Change** | [22] | energy_change | Energy dynamics | Forward/reversed indicator |
 | **E: Interactions** | [33:41] | x_l4l5 (8D) | Derivatives x Perceptual coupling | Aesthetic binding |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | STAI Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **F: Pitch & Chroma** | [64] | inharmonicity_index | Spectral deviation from harmonic template — inharmonic spectra reduce aesthetic pleasantness; provides direct measure complementing A[5] inharmonicity for aesthetic evaluation | Fletcher 1934; Giordano & McAdams 2010 instrument identification |
+| **H: Harmony & Tonality** | [76:81] | tonnetz (6D) | Tonal geometry in neo-Riemannian space — encodes harmonic motion on the Tonnetz grid; aesthetic preference tracks smooth voice-leading paths through tonal space | Cohn 1998 neo-Riemannian operations; Tymoczko 2011 geometry of music |
+| **H: Harmony & Tonality** | [84] | tonal_stability | Harmonic tension/resolution measure — tonal stability indexes the aesthetic reward of resolution; high stability = low tension, consistent with Cheung et al. (2019) finding that reward peaks at moderate expectation violation within tonal context | Lerdahl & Jackendoff 1983 GTTM; Bigand & Parncutt 1999 |
+
+**Rationale**: STAI integrates spectral and temporal features into an aesthetic judgment — evaluating whether a sound is musically "good" or "interesting." The v1 features capture consonance, energy dynamics, and timbre. The F:Pitch group adds inharmonicity_index [64], which directly quantifies spectral deviation from the harmonic template; inharmonicity reduces spectral pleasantness but can increase interestingness, consistent with Sarasso et al. (2021) finding that moderate spectral complexity drives aesthetic engagement. The H:Harmony group adds tonnetz [76:81] and tonal_stability [84], providing the harmonic context within which aesthetic judgments operate — Cheung et al. (2019) demonstrated that musical reward depends on the interaction between expectation (tonal context) and surprise, exactly the tension-resolution dynamic that tonal_stability indexes.
+
+**Code impact** (Phase 6): `r3_indices` must be extended to include [64], [76:81], [84]. These features are read-only inputs — no formula changes required.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

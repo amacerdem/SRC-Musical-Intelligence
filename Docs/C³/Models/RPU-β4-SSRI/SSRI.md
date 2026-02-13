@@ -4,7 +4,7 @@
 **Unit**: RPU (Reward Processing Unit)
 **Circuit**: Mesolimbic (NAcc, VTA, vmPFC, OFC, Amygdala)
 **Tier**: β (Bridging) — 70-90% confidence
-**Version**: 2.1.0 (literature-reviewed, cross-referenced against 500+ paper corpus)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added G:Rhythm, I:Information feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -218,7 +218,7 @@ Total N across studies:   ~1200+ participants (largest: Ni et al. 2024, N=528)
 
 ## 4. R³ Input Mapping: What SSRI Reads
 
-### 4.1 R³ Feature Dependencies (~15D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | SSRI Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -235,7 +235,20 @@ Total N across studies:   ~1200+ participants (largest: Ni et al. 2024, N=528)
 | **D: Change** | [23] | timbre_change | Timbral coordination | Joint timbral evolution |
 | **E: Interactions** | [25:33] | x_l0l5 (8D) | Foundation-perceptual coupling | Consonance × energy interaction for group processing |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | SSRI Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **G: Rhythm** | [71] | groove_index | Groove quality — composite measure of rhythmic feel that drives social synchrony reward; high groove promotes interpersonal coordination and shared pleasure | Madison 2006; Janata 2012 groove perception |
+| **G: Rhythm** | [68] | syncopation_index | Syncopation level — moderate syncopation enhances groove and social entrainment reward; extreme syncopation impairs coordination | Witek 2014 syncopation-pleasure inverted U |
+| **G: Rhythm** | [70] | isochrony_nPVI | Rhythmic regularity — isochronous rhythms facilitate interpersonal synchronization; high nPVI indicates irregular timing that challenges group coordination | Ravignani 2021 |
+| **I: Information** | [89] | rhythmic_information_content | Rhythmic surprise — information-theoretic measure of temporal event predictability; moderate rhythmic IC optimizes the engagement-coordination trade-off in social music making | Spiech 2022 rhythmic IC |
+
+**Rationale**: SSRI models social synchrony reward from musical interaction. Rhythmic features are the primary driver of interpersonal coordination and its associated oxytocin/endorphin reward. The G:Rhythm group provides direct measures of groove [71], syncopation [68], and isochrony [70] that currently must be inferred from onset_strength [11] and spectral_flux [10]. groove_index directly quantifies the movement-inducing quality of rhythm. rhythmic_information_content [89] from I:Information captures the information-theoretic complexity of temporal patterns relevant to synchrony challenge.
+
+**Code impact** (Phase 6): `r3_indices` extended to include [68], [70], [71], [89]. These feed onset synchrony and entrainment quality computation.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

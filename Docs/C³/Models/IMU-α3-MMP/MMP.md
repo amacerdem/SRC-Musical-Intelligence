@@ -4,7 +4,7 @@
 **Unit**: IMU (Integrative Memory Unit)
 **Circuit**: Mnemonic (Hippocampal-Cortical)
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 2.1.0 (deep literature cross-reference, 5→12 papers, corrected brain regions SMA/ACC per Jacobsen 2015, +semantic/episodic distinction, +Derks-Dijkman 2024 N=37, +Stramba-Badiale 2025 N=83, +Sikka 2015 N=40 fMRI, +Espinosa 2025 VBM N=61, +Scarratt 2025 fMRI N=57, +Luxton 2025 SMD=0.25)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added F, G, I feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
@@ -287,7 +287,7 @@ AD-RESISTANT R³ FEATURES (Angular/Lingual Gyrus Processing):
 
 ## 4. R³ Input Mapping: What MMP Reads
 
-### 4.1 R³ Feature Dependencies (31D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | MMP Role | Preservation Level |
 |----------|-------|---------|----------|-------------------|
@@ -307,7 +307,22 @@ AD-RESISTANT R³ FEATURES (Angular/Lingual Gyrus Processing):
 | **E: Interactions** | [25:33] | x_l0l5 (Energy×Consonance) | Episodic binding | Vulnerable |
 | **E: Interactions** | [41:49] | x_l5l7 (Consonance×Timbre) | Timbre warmth | **Preserved** |
 
-### 4.2 The Preservation Factor
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | MMP Role | Preservation Level |
+|----------|-------|---------|----------|-------------------|
+| **F: Pitch** | [49:60] | chroma (12D) | Melodic identity — pitch-class memory for familiar songs | **Highly preserved** |
+| **F: Pitch** | [61] | pitch_height | Contour-based recognition (global pitch level) | Preserved |
+| **G: Rhythm** | [65] | tempo_estimate | Motor-rhythmic entrainment — tempo memory | **Highly preserved** |
+| **G: Rhythm** | [66] | beat_strength | Beat-based procedural memory | **Highly preserved** |
+| **I: Information** | [87] | melodic_entropy | Encoding difficulty — high-entropy melodies harder to preserve | Vulnerable |
+| **I: Information** | [88] | harmonic_entropy | Harmonic predictability — low entropy = preserved tonal schema | Partially preserved |
+
+**Rationale**: MMP's arousal/valence model benefits from explicit pitch (chroma for melodic identity, pitch_height for contour), rhythmic features (tempo and beat for motor-procedural memory, the most preserved memory subsystem in neurodegeneration), and information-theoretic measures (entropy quantifies encoding difficulty, directly relevant to which musical memories survive hippocampal atrophy).
+
+> **Code impact**: These features are doc-only until Phase 5 wiring. No changes to `mmp.py`.
+
+### 4.3 The Preservation Factor
 
 MMP computes a **preservation_factor** that attenuates hippocampal-dependent features while preserving cortical features. In the deterministic MI pipeline, this operates as a feature-weighting scheme:
 

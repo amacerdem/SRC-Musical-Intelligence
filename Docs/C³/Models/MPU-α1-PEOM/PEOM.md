@@ -4,7 +4,7 @@
 **Unit**: MPU (Motor Planning Unit)
 **Circuit**: Sensorimotor (SMA, PMC, Cerebellum, Basal Ganglia)
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 2.1.0 (deep literature cross-reference, 12 papers, verified MNI)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added G:Rhythm feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -191,7 +191,7 @@ Replication:         Clinical validation across stroke, PD, TBI, CP, healthy agi
 
 ## 4. R³ Input Mapping: What PEOM Reads
 
-### 4.1 R³ Feature Dependencies (~14D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | PEOM Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -203,7 +203,20 @@ Replication:         Clinical validation across stroke, PD, TBI, CP, healthy agi
 | **D: Change** | [22] | energy_change | Energy dynamics | Movement drive |
 | **E: Interactions** | [25:33] | x_l0l5 (8D) | Motor-auditory coupling | Continuous time reference |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ v2 Group | Index | Feature | PEOM Role | Citation |
+|-------------|-------|---------|-----------|----------|
+| **G: Rhythm** | [65] | tempo_estimate | Entrainment period target | Scheirer 1998; Grosche & Muller 2011 |
+| **G: Rhythm** | [66] | beat_strength | Beat salience for phase lock | Bock & Schedl 2011 |
+| **G: Rhythm** | [68] | syncopation_index | Off-beat complexity for entrainment flexibility | Longuet-Higgins & Lee 1984; Witek 2014 |
+| **G: Rhythm** | [69] | metricality_index | Metrical regularity for period stability | Grahn & Brett 2007 |
+
+**Rationale**: PEOM's period entrainment optimization currently relies on onset_strength [11] and spectral_flux [10] as beat proxies. G:Rhythm provides explicit tempo, beat strength, and metrical structure that directly replace these indirect proxies. syncopation_index enables PEOM to model entrainment to syncopated rhythms (Witek 2014 groove-syncopation inverted-U), while metricality_index provides the regularity signal that determines period locking stability.
+
+**Code impact** (future): `r3[..., 65:75]` slice will feed PEOM's beat prediction pathway alongside existing `r3[..., 7:12]` energy features.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

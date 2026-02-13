@@ -4,7 +4,7 @@
 **Unit**: NDU (Novelty Detection Unit)
 **Circuit**: Salience + Perceptual (Anterior Insula, dACC, IFG)
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 2.1.0 (deep literature review: 1→8 papers, effect sizes, brain regions verified)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added I:Information feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -145,7 +145,7 @@ Null finding:            Cui 2025 — 1 year training does NOT change WM charact
 
 ## 4. R³ Input Mapping: What EDNR Reads
 
-### 4.1 R³ Feature Dependencies (~16D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | EDNR Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -156,7 +156,18 @@ Null finding:            Cui 2025 — 1 year training does NOT change WM charact
 | **E: Interactions** | [25:33] | x_l0l5 (8D) | Within-network coupling | Intra-network binding |
 | **E: Interactions** | [33:41] | x_l4l5 (8D) | Cross-network coupling | Inter-network binding |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | EDNR Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **I: Information** | [90] | spectral_surprise | Prediction error magnitude | Friston prediction error: quantifies acoustic unexpectedness; expertise reduces surprise through refined internal models |
+| **I: Information** | [92] | predictive_entropy | Prediction uncertainty | Friston predictive coding: high entropy signals uncertain predictions; expertise narrows predictive distributions, reducing entropy |
+
+**Rationale**: EDNR models expertise-dependent network reorganization — how musical training reshapes auditory processing efficiency. The v1 representation uses tonalness [14] and spectral_flatness [16] as complexity proxies. spectral_surprise [90] provides a direct measure of prediction error that decreases with expertise (experts generate better predictions). predictive_entropy [92] quantifies the uncertainty of ongoing predictions, capturing the precision gains from musical training. These features make EDNR's expertise effects computationally explicit in predictive coding terms.
+
+**Code impact**: None yet — R³ v2 features are doc-only until Phase 5 integration. Current code reads r3[..., 0:49]; v2 features will extend the slice to r3[..., 0:128] when the EAR pipeline emits the expanded vector.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

@@ -4,7 +4,7 @@
 **Unit**: STU (Sensorimotor Timing Unit)
 **Circuit**: Sensorimotor (Temporal Memory Hierarchy)
 **Tier**: γ (Speculative) — <70% confidence
-**Version**: 2.1.0 (deep literature review: ~3→12 papers, Espinosa 2025 systematic review 6 RCTs N=555 confirms piano→DLPFC+cerebellum GMV+frontal theta but HIGH risk of bias in 4/6 studies, Espinosa 2025 VBM N=61 active players increased L cerebellum+auditory GM p<0.0001 but NO DLPFC CONSTRAINS, Criscuolo 2022 ALE k=84 N=3005 structural plasticity, Liao 2024 fMRI N=25 improvisation ECN+NMR+limbic, Tachibana 2024 bilateral BA45 improvisation, 7 methods)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added G:Rhythm feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/General/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -271,7 +271,7 @@ Quality Assessment: γ-tier (speculative)
 
 ## 4. R³ Input Mapping: What PTGMP Reads
 
-### 4.1 R³ Feature Dependencies (33D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | PTGMP Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -288,7 +288,17 @@ Quality Assessment: γ-tier (speculative)
 | **E: Interactions** | [33:41] | x_l4l5 (8D) | Dynamics x Perceptual coupling | Audio-motor integration (DLPFC) |
 | **E: Interactions** | [41:49] | x_l5l7 (8D) | Perceptual x Relations coupling | Structural coordination |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ v2 Group | Index | Feature | PTGMP Role | Scientific Basis |
+|-------------|-------|---------|-----------|------------------|
+| **G: Rhythm** | [73] | tempo_stability | Temporal prediction reliability for motor planning | Jones & Boltz 1989 |
+
+**Rationale**: PTGMP models predictive timing and goal-directed motor planning. G[73] tempo_stability provides a direct measure of temporal prediction reliability, which is critical for the cerebellar timing coordination pathway -- stable tempo enables more precise motor planning and reduces the cognitive demand on DLPFC executive sequence planning.
+
+**Code impact** (Phase 6): `r3_indices` will be extended to include `[73]`.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output
@@ -311,6 +321,9 @@ R³[41:49] x_l5l7 (8D) ────────┘   TMH.long_context at H20 (50
 Plasticity Factor ─────────────── Age-Resilient Plasticity
                                     d = 0.34 DLPFC, d = 0.34 cerebellum
                                     Older adults maintain capacity
+
+── R³ v2 (Phase 6) ──────────────────────────────────────────────
+R³[73] tempo_stability ────────── Temporal prediction → motor planning
 ```
 
 ---

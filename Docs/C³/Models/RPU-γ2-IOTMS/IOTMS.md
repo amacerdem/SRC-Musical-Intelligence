@@ -4,7 +4,7 @@
 **Unit**: RPU (Reward Processing Unit)
 **Circuit**: Mesolimbic (NAcc, VTA, vmPFC, OFC, Amygdala)
 **Tier**: γ (Integrative) — 50-70% confidence
-**Version**: 2.1.0 (Beta upgrade: 5 papers, corrected N/MNI, +4 new citations, expanded brain regions)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added G:Rhythm feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -182,7 +182,7 @@ Replication:             Consistent with Mallik (2017) naltrexone blockade study
 
 ## 4. R³ Input Mapping: What IOTMS Reads
 
-### 4.1 R³ Feature Dependencies (~12D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | IOTMS Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -192,7 +192,18 @@ Replication:             Consistent with Mallik (2017) naltrexone blockade study
 | **C: Timbre** | [14:17] | tristimulus (3D) | Musical quality | Harmonic structure |
 | **E: Interactions** | [33:41] | x_l4l5 (8D) | Sustained pleasure | Prolonged opioid release |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | IOTMS Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **G: Rhythm** | [65] | tempo_estimate | Tempo rate — direct BPM estimate enables mapping to the optimal interoceptive tempo range (60-120 BPM maps to cardiac rhythm); currently approximated from onset_strength periodicity | Fraisse 1982 preferred tempo; Trost 2014 interoceptive rhythm |
+| **G: Rhythm** | [73] | tempo_stability | Tempo consistency — stable tempo facilitates interoceptive entrainment; tempo variability disrupts cardiac-musical coupling and reduces opioid reward | Fraisse 1982; Large & Palmer 2002 |
+
+**Rationale**: IOTMS models how individual differences in opioid tone modulate music sensitivity through interoceptive tempo-reward mapping. The optimal tempo for cardiac entrainment is approximately 60-120 BPM (matching resting heart rate range). tempo_estimate [65] provides a direct BPM measure that can be compared against the individual's cardiac rhythm, replacing indirect inference from onset patterns. tempo_stability [73] indicates how consistently the music maintains its tempo — stable tempi facilitate the interoceptive entrainment that drives opioid reward.
+
+**Code impact** (Phase 6): `r3_indices` extended to include [65], [73]. These feed the pleasure-BOLD slope computation and optimal tempo matching.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

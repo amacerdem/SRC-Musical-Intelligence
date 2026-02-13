@@ -4,7 +4,7 @@
 **Unit**: STU (Sensorimotor Timing Unit)
 **Circuit**: Sensorimotor (Temporal Memory Hierarchy)
 **Tier**: γ (Speculative) — <70% confidence
-**Version**: 2.1.0 (deep literature review: 1→12 papers, Kosokabe 2025 RCT N=57 fNIRS EXACT REPLICATION of Moreno 2011 with IDENTICAL d=0.605 inhibitory control + r=-0.57 DCCS-VLPFC efficiency correlation, Zhang 2015 N=28 musicians SMALLER P2 vertex potentials 3.29 vs 5.91μV p=0.01 = enhanced top-down inhibition, Criscuolo 2022 ALE k=84 N=3005 musicians LOWER parietal = efficiency, Bücher 2023 MEG N=162 musicians OFC 25-40ms faster = temporal efficiency, Sarasso 2019 N2/P3 motor inhibition η²=0.685, 8 methods)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added G:Rhythm feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
@@ -281,7 +281,7 @@ Quality Assessment:   γ-tier (speculative → approaching β)
 
 ## 4. R³ Input Mapping: What MTNE Reads
 
-### 4.1 R³ Feature Dependencies (30D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | MTNE Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -301,7 +301,17 @@ Quality Assessment:   γ-tier (speculative → approaching β)
 | **E: Interactions** | [25:33] | x_l0l5 (8D) | Foundation x Perceptual coupling | Cross-domain exec. binding |
 | **E: Interactions** | [33:41] | x_l4l5 (8D) | Dynamics x Perceptual coupling | Motor-perceptual exec. function |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ v2 Group | Index | Feature | MTNE Role | Scientific Basis |
+|-------------|-------|---------|-----------|------------------|
+| **G: Rhythm** | [73] | tempo_stability | Temporal regularity for tonal encoding efficiency | Jones & Boltz 1989 |
+
+**Rationale**: MTNE models how temporal stability affects tonal encoding. G[73] tempo_stability provides a direct measure of temporal regularity, which determines how efficiently the executive system can allocate resources -- stable tempo reduces executive load, enabling the neural efficiency signature (lower activation for equivalent performance).
+
+**Code impact** (Phase 6): `r3_indices` will be extended to include `[73]`.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output
@@ -329,6 +339,9 @@ DCCS-VLPFC link ──────────────────── Eff
                                       Better performance → lower activation
                                       Math: ratio = behavioral / neural_cost
                                       r = -0.57 (Moreno et al. 2011)
+
+── R³ v2 (Phase 6) ──────────────────────────────────────────────
+R³[73] tempo_stability ────────── Temporal regularity → encoding efficiency
 ```
 
 ---

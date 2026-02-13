@@ -4,7 +4,7 @@
 **Unit**: IMU (Integrative Memory Unit)
 **Circuit**: Mnemonic (with cross-circuit read from Sensorimotor)
 **Tier**: β (Integrative) — 70-85% confidence
-**Version**: 2.1.0 (deep literature review: 2→12 papers, named citations, updated brain regions + MNI)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added G feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
@@ -285,7 +285,7 @@ Quality Assessment:   fMRI+FC (N=29), EEG mu suppression (N=21), EEG decoding
 
 ## 4. R³ Input Mapping: What CMAPCC Reads
 
-### 4.1 R³ Feature Dependencies (36D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | CMAPCC Role | Scientific Basis |
 |----------|-------|---------|-------------|------------------|
@@ -302,7 +302,18 @@ Quality Assessment:   fMRI+FC (N=29), EEG mu suppression (N=21), EEG decoding
 | **E: Interactions** | [33:41] | x_l4l5 (Derivatives x Consonance) | Common code basis | Temporal dynamics x pitch = action-perception coupling |
 | **E: Interactions** | [41:49] | x_l5l7 (Consonance x Timbre) | Cross-modal binding | Timbre-harmonic identity across modalities |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | CMAPCC Role | Scientific Basis |
+|----------|-------|---------|-------------|------------------|
+| **G: Rhythm** | [73] | tempo_stability | Temporal predictability for action-perception coupling | Repp & Su 2013: sensorimotor synchronization stability |
+| **G: Rhythm** | [74] | rhythmic_regularity | Sequence regularity — stable rhythms enable common coding | Large & Palmer 2002 |
+
+**Rationale**: CMAPCC models the common coding framework where perception and action share representational format. Tempo stability quantifies how predictable the temporal structure is, which directly determines how well motor plans can be coupled to auditory sequences. Rhythmic regularity measures the consistency of temporal patterns, enabling the formation of stable action-perception common codes that link heard sequences to motor programs.
+
+> **Code impact**: These features are doc-only until Phase 5 wiring. No changes to `cmapcc.py`.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

@@ -4,7 +4,7 @@
 **Unit**: RPU (Reward Processing Unit)
 **Circuit**: Mesolimbic (NAcc, VTA, vmPFC, OFC, Amygdala)
 **Tier**: γ (Integrative) — 50-70% confidence
-**Version**: 2.1.0 (literature-verified evidence, corrected citations, expanded brain regions)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added I:Information feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -175,7 +175,7 @@ Key effect sizes:
 
 ## 4. R³ Input Mapping: What SSPS Reads
 
-### 4.1 R³ Feature Dependencies (~12D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | SSPS Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -187,7 +187,19 @@ Key effect sizes:
 | **E: Interactions** | [33:41] | x_l4l5 (8D) | IC × Entropy surface | Saddle position |
 | **E: Interactions** | [25] | x_l0l5[0] | Context integration | Preference prediction |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | SSPS Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **I: Information** | [87] | melodic_entropy | Melodic IC axis — one dimension of the saddle-shaped preference surface; melodic entropy provides the melodic information content that interacts with harmonic entropy to form the saddle geometry | Pearce 2005 IDyOM; Cheung 2019 |
+| **I: Information** | [88] | harmonic_entropy | Harmonic IC axis — chord-level entropy forms the second dimension of the saddle surface; the IC x entropy interaction produces the characteristic saddle shape | Gold 2019; Cheung 2019 uncertainty × surprise |
+| **I: Information** | [92] | predictive_entropy | Global prediction uncertainty — determines the listener's position on the uncertainty axis of the saddle; high predictive entropy shifts the pleasure peak toward lower IC events | Friston predictive coding |
+
+**Rationale**: SSPS models the saddle-shaped preference surface where pleasure peaks at two sweet spots: (1) low uncertainty + high surprise, (2) high uncertainty + low surprise (Cheung 2019). The I:Information group provides the direct axes of this surface. Currently SSPS approximates IC from spectral_change [21] and entropy from concentration_change [24]. melodic_entropy [87] and harmonic_entropy [88] provide domain-specific IC measures, while predictive_entropy [92] captures the global uncertainty context that shapes the saddle geometry.
+
+**Code impact** (Phase 6): `r3_indices` extended to include [87], [88], [92]. These replace spectral proxy features as the primary axes of the saddle surface computation.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

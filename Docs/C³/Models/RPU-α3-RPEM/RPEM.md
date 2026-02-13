@@ -4,7 +4,7 @@
 **Unit**: RPU (Reward Processing Unit)
 **Circuit**: Mesolimbic (NAcc, VTA, vmPFC, OFC, Amygdala)
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 2.1.0 (deep C³ literature review, +3 papers, multi-study convergence)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added I:Information feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -166,7 +166,7 @@ Replication:             Cheung 2019 confirms NAcc prediction signals
 
 ## 4. R³ Input Mapping: What RPEM Reads
 
-### 4.1 R³ Feature Dependencies (~12D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | RPEM Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -179,7 +179,19 @@ Replication:             Cheung 2019 confirms NAcc prediction signals
 | **E: Interactions** | [25:33] | x_l0l5 (8D) | Prediction generation | Expected reward |
 | **E: Interactions** | [33:41] | x_l4l5 (8D) | Surprise x context | RPE computation |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | RPEM Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **I: Information** | [87] | melodic_entropy | Melodic prediction error — direct measure of pitch-level surprise that drives RPE computation; replaces proxy via spectral_change [21] | Pearce 2005 IDyOM; Gold 2019 RPE in NAcc |
+| **I: Information** | [88] | harmonic_entropy | Harmonic prediction error — chord-level surprise signal; harmonic violations produce the largest RPE responses in VS | Gold 2019 chord transition probability; Cheung 2019 |
+| **I: Information** | [89] | rhythmic_information_content | Rhythmic surprise — information content of temporal events; unexpected rhythmic deviations generate RPE independent of pitch | Spiech 2022 rhythmic IC |
+
+**Rationale**: RPEM is the core reward prediction error model. RPE computation fundamentally requires quantifying "surprise" (actual - expected). The I:Information group provides direct, domain-specific surprise measures: melodic_entropy [87] for pitch RPE, harmonic_entropy [88] for chord RPE, and rhythmic_information_content [89] for temporal RPE. These replace the indirect proxies (spectral_change [21], concentration_change [24]) with information-theoretic measures grounded in predictive coding (Friston). RPEM has the highest I-group demand rationale of any RPU model.
+
+**Code impact** (Phase 6): `r3_indices` extended to include [87], [88], [89]. These directly feed RPE computation — spectral_change proxy replaced by domain-specific IC measures.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

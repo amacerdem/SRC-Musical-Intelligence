@@ -4,8 +4,8 @@
 **Unit**: SPU (Spectral Processing Unit)
 **Circuit**: Perceptual (Brainstem-Cortical)
 **Tier**: β (Integrative) — 70-90% confidence
-**Version**: 2.1.0 (1→12 papers, Bellmann ALE meta-analysis, Whiteford subcortical null constraint, Halpern/Alluri/Santoyo convergence)
-**Date**: 2026-02-12
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added J:Timbre Extended feature dependencies)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -315,7 +315,7 @@ Convergence:          6 methods (MEG, fMRI, EEG, ECoG, DWI, meta-analysis)
 
 ## 4. R³ Input Mapping: What TSCP Reads
 
-### 4.1 R³ Feature Dependencies (~18D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | TSCP Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -333,7 +333,18 @@ Convergence:          6 methods (MEG, fMRI, EEG, ECoG, DWI, meta-analysis)
 | **D: Change** | [24] | timbre_change | Temporal timbre flux — plasticity trigger | — |
 | **E: Interactions** | [41:49] | x_l5l7 (partial, ~6D used) | Consonance x Timbre coupling | Emergent timbre binding |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | TSCP Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **J: Timbre Extended** | [94:106] | mfcc (13D) | Mel-frequency cepstral coefficients — compact spectral envelope representation that captures the instrument-specific formant structure driving timbre-specific cortical plasticity | Davis & Mermelstein 1980; Logan 2000 music similarity |
+| **J: Timbre Extended** | [107:113] | spectral_contrast (7D) | Peak-valley ratio per frequency band — encodes spectral texture; high contrast = clear formants (e.g., clarinet), low contrast = broadband noise (e.g., cymbal); directly indexes the spectral structure that drives instrument-family cortical specialization | Jiang et al. 2002 spectral contrast features |
+
+**Rationale**: TSCP models timbre-specific cortical plasticity — the experience-dependent sharpening of spectral representations in auditory cortex for trained instrument timbres. The v1 features capture timbre through basic spectral descriptors (tristimulus, warmth, sharpness, tonalness). The J:Timbre Extended group provides the detailed spectral characterization that drives instrument-specific cortical representations: mfcc [94:106] encodes the full spectral envelope shape that distinguishes instrument families (Alluri et al. 2012 showed MFCCs predict instrument-specific fMRI activation in bilateral STG); spectral_contrast [107:113] captures the peak-valley structure per band that distinguishes tonal instruments (clear formants, high contrast) from noise-like sources, consistent with Halpern et al. (2004) finding that timbre imagery activates the same cortical regions as perception with instrument-specific patterns.
+
+**Code impact** (Phase 6): `r3_indices` must be extended to include [94:106], [107:113]. These features are read-only inputs — no formula changes required.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

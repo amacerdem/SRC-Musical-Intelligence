@@ -4,8 +4,8 @@
 **Unit**: SPU (Spectral Processing Unit)
 **Circuit**: Perceptual (Cortical Chroma Processing)
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 2.1.0 (Phase 1 revision: deep literature cross-reference, 1→14 papers, Allen/Patterson/Norman-Haignere anatomy, Briley replication qualification, Pankovski computational mechanism)
-**Date**: 2026-02-12
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added F:Pitch feature dependencies)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -320,7 +320,7 @@ IMPORTANT QUALIFICATION:
 
 ## 4. R³ Input Mapping: What PCCR Reads
 
-### 4.1 R³ Feature Dependencies (21D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | PCCR Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -334,7 +334,18 @@ IMPORTANT QUALIFICATION:
 | **D: Change** | [23] | spectral_flatness | Tonality indicator (IRN vs noise) | Wiener 1930 |
 | **E: Interactions** | [41:49] | x_l5l7 (8D) | Consonance × Timbre coupling (octave coherence) | Briley 2013 |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | PCCR Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **F: Pitch & Chroma** | [49:60] | chroma_vector (12D) | Direct pitch class distribution — the explicit 12-class chroma representation that PCCR models cortically; replaces indirect derivation from tristimulus/inharmonicity proxies | Shepard 1964 octave equivalence; Krumhansl 1990 tonal hierarchy |
+| **F: Pitch & Chroma** | [63] | pitch_salience | Harmonic peak prominence — determines which pitch classes in the chroma vector are reliable vs noise-driven; high salience indicates clear chroma | Parncutt 1989 virtual pitch salience |
+
+**Rationale**: PCCR models the cortical representation of pitch chroma — the octave-equivalent pitch class encoding in anterolateral HG. The v1 features derive chroma indirectly from spectral proxies (tristimulus ratios, inharmonicity, spectral_autocorrelation). The F:Pitch group provides the explicit chroma representation: chroma_vector [49:60] is the direct 12-class pitch distribution that PCCR's f01 formula models cortically, making explicit what was previously inferred from harmonic structure. F[63] pitch_salience gates chroma reliability — only pitch classes with sufficient harmonic prominence produce stable cortical chroma representations, consistent with Patterson et al. (2002) finding that pitch chroma encoding requires resolved harmonics.
+
+**Code impact** (Phase 6): `r3_indices` must be extended to include [49:60], [63]. These features are read-only inputs — no formula changes required.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

@@ -4,7 +4,7 @@
 **Unit**: IMU (Integrative Memory Unit)
 **Circuit**: Mnemonic (Hippocampal-Cortical) + Sensorimotor cross-circuit read
 **Tier**: β (Integrative) — 70-90% confidence
-**Version**: 2.1.0 (deep literature review, 4→12 papers, MNI coords from Grahn & Brett 2007, +Harrison 2025 fMRI N=55, +Blasi 2025 systematic review N=718, +basal ganglia region)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added G feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
@@ -307,7 +307,7 @@ Quality Assessment: β-tier (clinical/integrative evidence, not single-neuron)
 
 ## 4. R³ Input Mapping: What RASN Reads
 
-### 4.1 R³ Feature Dependencies (36D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | RASN Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -330,7 +330,19 @@ Quality Assessment: β-tier (clinical/integrative evidence, not single-neuron)
 | **E: Interactions** | [33:41] | x_l4l5 (Derivatives x Consonance) | Sensorimotor integration | Change x regularity = entrainment quality |
 | **E: Interactions** | [41:49] | x_l5l7 (Consonance x Timbre) | Long-term familiarity signal | Timbre-consonance = recognition |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | RASN Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **G: Rhythm** | [69] | metricality_index | Metric regularity — core RAS quality metric | Grahn & Brett 2007 |
+| **G: Rhythm** | [65] | tempo_estimate | Tempo for entrainment — optimal RAS range 80-120 BPM | Thaut 2005 |
+| **G: Rhythm** | [66] | beat_strength | Beat salience — stronger beats = better motor coupling | Large & Palmer 2002 |
+
+**Rationale**: RASN's rhythmic auditory stimulation function directly requires explicit rhythmic features. Metricality index quantifies the regularity of metric structure, the primary driver of sensorimotor entrainment quality. Tempo estimate provides the BPM value critical for matching RAS to motor rehabilitation targets. Beat strength measures accent salience, determining how effectively rhythmic patterns drive neural entrainment in basal ganglia-SMA circuits.
+
+> **Code impact**: These features are doc-only until Phase 5 wiring. No changes to `rasn.py`.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

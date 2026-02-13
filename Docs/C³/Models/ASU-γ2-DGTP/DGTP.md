@@ -4,7 +4,7 @@
 **Unit**: ASU (Auditory Salience Unit)
 **Circuit**: Salience (Anterior Insula, dACC, TPJ)
 **Tier**: γ (Integrative) — 50-70% confidence
-**Version**: 2.1.0 (deep literature review, 12 papers, 8 brain regions)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added G:Rhythm feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -184,7 +184,7 @@ Theoretical Basis:       Strong (basal ganglia-SMA circuit, dual timing systems)
 
 ## 4. R³ Input Mapping: What DGTP Reads
 
-### 4.1 R³ Feature Dependencies (~12D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | DGTP Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -196,7 +196,18 @@ Theoretical Basis:       Strong (basal ganglia-SMA circuit, dual timing systems)
 | **D: Change** | [24] | pitch_change | Pitch dynamics | Prosodic contour |
 | **E: Interactions** | [25:33] | x_l0l5 (8D) | Motor-auditory coupling | Domain-general entrainment |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | DGTP Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **G: Rhythm** | [65] | tempo_estimate | Estimated tempo in BPM | Provides direct tempo representation for domain-general temporal processing across music and speech |
+| **G: Rhythm** | [66] | beat_strength | Pulse perception strength | Quantifies beat prominence; complements onset_strength [11] with perceptually grounded pulse measure |
+
+**Rationale**: DGTP models domain-general temporal processing shared between music and speech. The v1 representation infers temporal structure from onset_strength [11] and spectral_flux [10]. tempo_estimate [65] and beat_strength [66] provide direct rhythmic representations — tempo_estimate gives the global rate for cross-domain temporal alignment, while beat_strength quantifies pulse prominence at the perceptual level, enabling more precise modeling of the music-speech temporal processing overlap.
+
+**Code impact**: None yet — R³ v2 features are doc-only until Phase 5 integration. Current code reads r3[..., 0:49]; v2 features will extend the slice to r3[..., 0:128] when the EAR pipeline emits the expanded vector.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

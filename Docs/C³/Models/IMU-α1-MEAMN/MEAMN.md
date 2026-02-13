@@ -4,7 +4,7 @@
 **Unit**: IMU (Integrative Memory Unit)
 **Circuit**: Mnemonic (Hippocampal-Cortical)
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 2.1.0 (deep literature cross-reference, 12→12 papers, verified MNI coordinates)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added H, I feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
@@ -273,7 +273,7 @@ Quality Assessment:      12 primary studies; α-tier evidence from fMRI + EEG + 
 
 ## 4. R³ Input Mapping: What MEAMN Reads
 
-### 4.1 R³ Feature Dependencies (35D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | MEAMN Role | Scientific Basis |
 |----------|-------|---------|------------|------------------|
@@ -294,7 +294,19 @@ Quality Assessment:      12 primary studies; α-tier evidence from fMRI + EEG + 
 | **E: Interactions** | [33:41] | x_l4l5 (Derivatives×Consonance) | Recall probability | Change × consonance = surprise memory |
 | **E: Interactions** | [41:49] | x_l5l7 (Consonance×Timbre) | Nostalgia warmth | Timbre-consonance = familiarity |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | MEAMN Role | Scientific Basis |
+|----------|-------|---------|------------|------------------|
+| **H: Harmony** | [76:81] | tonnetz (6D) | Tonal-space trajectory for memory encoding | Janata 2009: tonal space maps to medial PFC |
+| **H: Harmony** | [84] | tonal_stability | Familiarity signal — stable keys trigger nostalgia | Pearce & Wiggins 2012 |
+| **I: Information** | [87] | melodic_entropy | Memory encoding difficulty — high entropy = harder recall | Pearce 2005: IDyOM melodic information content |
+
+**Rationale**: MEAMN's memory-encoding function benefits from tonal-space position (tonnetz) to track harmonic trajectory during autobiographical recall. Tonal stability provides a familiarity signal that modulates nostalgia strength. Melodic entropy quantifies the information load during encoding, linking to hippocampal pattern completion difficulty.
+
+> **Code impact**: These features are doc-only until Phase 5 wiring. No changes to `meamn.py`.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

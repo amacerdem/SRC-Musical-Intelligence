@@ -4,7 +4,7 @@
 **Unit**: NDU (Novelty Detection Unit)
 **Circuit**: Salience + Perceptual (Network Architecture, SMA, ACC, TPO)
 **Tier**: γ (Integrative) — 50–70% confidence
-**Version**: 2.1.0 (deep literature review, expanded evidence + brain regions)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added I:Information feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -193,7 +193,7 @@ Largest sample: n=153 (Leipold 2021)
 
 ## 4. R³ Input Mapping: What ECT Reads
 
-### 4.1 R³ Feature Dependencies (~20D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | ECT Role | Scientific Basis |
 |----------|-------|---------|----------|------------------|
@@ -207,7 +207,17 @@ Largest sample: n=153 (Leipold 2021)
 | **E: Interactions** | [33:41] | x_l4l5 (8D) | Within-network binding | Pattern-feature coupling |
 | **E: Interactions** | [41:49] | x_l5l6 (8D) | Cross-network connectivity | Between-network flexibility |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | ECT Role | Scientific Basis |
+|----------|-------|---------|----------|------------------|
+| **I: Information** | [92] | predictive_entropy | Prediction uncertainty | Friston predictive coding: predictive entropy quantifies network prediction uncertainty; expertise compartmentalization trade-off manifests as reduced entropy within specialized domains but increased entropy across domain boundaries |
+
+**Rationale**: ECT models the expertise compartmentalization trade-off — how musical expertise creates specialized but less flexible processing networks. The v1 representation uses cross-network interaction features (x_l0l5, x_l4l5, x_l5l6) to proxy network flexibility. predictive_entropy [92] provides a direct measure of prediction uncertainty that captures the compartmentalization signature: within-domain predictions become precise (low entropy) while cross-domain predictions remain uncertain (high entropy), implementing the efficiency-flexibility trade-off computationally.
+
+**Code impact**: None yet — R³ v2 features are doc-only until Phase 5 integration. Current code reads r3[..., 0:49]; v2 features will extend the slice to r3[..., 0:128] when the EAR pipeline emits the expanded vector.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

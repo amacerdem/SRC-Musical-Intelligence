@@ -9,8 +9,8 @@
 **Unit**: ARU (Affective Resonance Unit)
 **Circuit**: Mesolimbic Reward Circuit
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 5.0.0 (v2.1.0 Beta upgrade — deep literature audit, +5 papers)
-**Date**: 2026-02-12
+**Version**: 5.2.0 (Phase 3E: R³ v2 expansion — added I:Information feature dependencies)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../Road-map/01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -554,7 +554,7 @@ TOTAL: 19D per frame at 172.27 Hz
 
 ## 5. Complete EAR Demand (R³ Features)
 
-### 5.1 R³ Features Required by SRP (49D)
+### 5.1 R³ v1 Feature Dependencies ([0:49])
 
 > **Note**: R³ indices are MI's own (0-48), NOT D0 S⁰ indices.
 > See [Road-map/02-R3-SPECTRAL.md](../../Road-map/02-R3-SPECTRAL.md) for full specification.
@@ -612,7 +612,18 @@ TOTAL: 19D per frame at 172.27 Hz
 | 33:41 | x_l4l5 (8D) | Derivatives × Consonance | Dynamics → pleasure (**critical for tension**) |
 | 41:49 | x_l5l7 (8D) | Consonance × Timbre | Pleasure → spectral coherence |
 
-### 5.2 Summary
+### 5.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | SRP Role | Scientific Basis |
+|----------|-------|---------|----------|------------------|
+| **I: Information** | [87] | melodic_entropy | Prediction error magnitude — melodic surprise is a primary driver of striatal RPE; high melodic entropy signals uncertain predictions, amplifying both anticipatory caudate DA and phasic NAcc burst at resolution | Pearce 2005 IDyOM; Gold 2019 RPE in NAcc |
+| **I: Information** | [88] | harmonic_entropy | Harmonic prediction error — chord-level surprise drives the uncertainty × surprise interaction (Cheung 2019) that determines peak pleasure; directly feeds prediction_error computation | Gold 2019 chord transition probability; Cheung 2019 |
+
+**Rationale**: SRP is the foundational reward model computing wanting, liking, and prediction error from striatal dopamine dynamics. The I:Information group provides direct measures of the musical information content that drives prediction error — the core computational variable of the reward pathway. Currently SRP infers surprise from spectral_flux [21] and distribution_entropy [22], which are acoustic-level proxies. melodic_entropy [87] and harmonic_entropy [88] provide music-theoretic surprise measures grounded in probabilistic prediction (IDyOM), directly mapping to the Schultz RPE signal that SRP models. These features flow through pathway-mediated access (P1/P3/P5) to all dependent ARU models.
+
+**Code impact** (Phase 6): `r3_indices` extended to include [87], [88]. These feed prediction_error, harmonic_tension, and the Cheung uncertainty × surprise interaction.
+
+### 5.3 Summary
 
 ```
 TOTAL EAR DIMENSIONS FOR SRP: 49D

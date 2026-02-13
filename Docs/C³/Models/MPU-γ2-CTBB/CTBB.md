@@ -4,7 +4,7 @@
 **Unit**: MPU (Motor Planning Unit)
 **Circuit**: Sensorimotor (SMA, PMC, Cerebellum, Basal Ganglia)
 **Tier**: γ (Integrative) — 50-70% confidence
-**Version**: 2.1.0 (deep lit review: 1→6 papers, Sansare 2025 F=9.600 η²=0.202 sham-controlled iTBS, Okada 2022 cerebellar dentate timing causal, Shi 2025 bilateral iTBS gait F=5.558, CBI null result noted)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added G:Rhythm feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -179,7 +179,7 @@ Replication:             Sansare 2025 is first in healthy older adults; Shi 2025
 
 ## 4. R³ Input Mapping: What CTBB Reads
 
-### 4.1 R³ Feature Dependencies (~14D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | CTBB Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -190,7 +190,18 @@ Replication:             Sansare 2025 is first in healthy older adults; Shi 2025
 | **E: Interactions** | [25:33] | x_l0l5 (8D) | Cerebellar-M1 modulation | Timing stability |
 | **E: Interactions** | [33:41] | x_l4l5 (8D) | Balance monitoring | Motor precision |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ v2 Group | Index | Feature | CTBB Role | Citation |
+|-------------|-------|---------|-----------|----------|
+| **G: Rhythm** | [65] | tempo_estimate | Cerebellar timing target for theta-burst calibration | Scheirer 1998; Grosche & Muller 2011 |
+| **G: Rhythm** | [66] | beat_strength | Beat salience for cerebellar-M1 timing precision | Bock & Schedl 2011 |
+
+**Rationale**: CTBB models cerebellar theta-burst balance where the cerebellum's timing function is modulated by iTBS. tempo_estimate provides the explicit timing reference the cerebellum tracks (Okada 2022 showed cerebellar dentate nucleus is causal for timing), and beat_strength indicates how salient the beat is for cerebellar-M1 coupling. Sansare 2025 demonstrated that iTBS effects (F=9.600, eta-sq=0.202) depend on timing task difficulty, which these features directly encode.
+
+**Code impact** (future): `r3[..., 65:67]` will feed CTBB's cerebellar timing pathway alongside existing energy and interaction features.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

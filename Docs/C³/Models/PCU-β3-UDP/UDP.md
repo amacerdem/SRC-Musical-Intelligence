@@ -4,7 +4,7 @@
 **Unit**: PCU (Predictive Coding Unit)
 **Circuit**: Imagery (Auditory Cortex, IFG, STS, Hippocampus)
 **Tier**: β (Bridging) — 70-90% confidence
-**Version**: 2.1.0 (deep C³ literature review: 1 → 12 papers)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added H:Harmony, I:Information, K:Modulation feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -162,7 +162,7 @@ Sample Sizes:         Range 8-75; majority 18-43; total across studies ~370+
 
 ## 4. R³ Input Mapping: What UDP Reads
 
-### 4.1 R³ Feature Dependencies (~17D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | UDP Role | Scientific Basis |
 |----------|-------|---------|----------|------------------|
@@ -174,7 +174,20 @@ Sample Sizes:         Range 8-75; majority 18-43; total across studies ~370+
 | **D: Change** | [21] | spectral_change | Prediction accuracy | Correct vs incorrect |
 | **E: Interactions** | [41:49] | x_l5l7 (8D) | Reward computation | Pleasure signal |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ v2 Group | Index | Feature | UDP Role | Citation |
+|-------------|-------|---------|----------|----------|
+| **H: Harmony** | [75] | key_clarity | Tonal clarity for uncertainty baseline (resolves PCU-UDP-2 gap) | Krumhansl & Kessler 1982 |
+| **H: Harmony** | [84] | tonal_stability | Tonal stability for prediction confidence (resolves PCU-UDP-2 gap) | Krumhansl & Kessler 1982 |
+| **I: Information** | [92] | predictive_entropy | Predictive uncertainty for dopaminergic reward computation | Friston 2005 (predictive coding) |
+| **K: Modulation** | [127] | spectral_slope_0_500 | 1/f spectral slope for uncertainty depth estimation (resolves PCU-UDP-1 gap) | He 2010 (1/f neural noise) |
+
+**Rationale**: UDP models uncertainty-to-dopamine prediction where uncertainty modulates reward signals. H:key_clarity and H:tonal_stability directly resolve the PCU-UDP-2 gap by providing explicit tonal context measures (Krumhansl & Kessler 1982 key profiles). K:spectral_slope_0_500 resolves the PCU-UDP-1 gap (1/f_spectral_slope) by quantifying the spectral slope in the 0-500 Hz band, which He 2010 showed reflects neural noise characteristics relevant to uncertainty estimation. I:predictive_entropy provides the overall prediction uncertainty that drives UDP's dopaminergic reward computation.
+
+**Code impact** (future): `r3[..., 75]`, `r3[..., 84]`, `r3[..., 92]`, and `r3[..., 127]` will feed UDP's uncertainty-to-reward pathway, resolving two documented R³ gaps.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

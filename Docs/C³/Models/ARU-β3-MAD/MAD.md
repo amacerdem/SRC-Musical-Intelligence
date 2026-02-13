@@ -4,7 +4,7 @@
 **Unit**: ARU (Affective Resonance Unit)
 **Circuit**: Mesolimbic Reward Circuit
 **Tier**: β (Integrative) — 70-90% confidence
-**Version**: 2.1.0 (Beta upgrade — literature expansion)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added I:Information feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../Road-map/01-GLOSSARY.md).
@@ -230,7 +230,7 @@ TOTAL: 11D per frame at 172.27 Hz
 
 ## 5. R³ Demand (Spectral Features)
 
-### 5.1 R³ Features Required by MAD
+### 5.1 R³ v1 Feature Dependencies ([0:49])
 
 > R³ indices are MI's own (0-48). See [Road-map/02-R3-SPECTRAL.md](../../Road-map/02-R3-SPECTRAL.md).
 
@@ -271,7 +271,17 @@ TOTAL: 11D per frame at 172.27 Hz
 |        |              | This interaction represents auditory→reward coupling |
 |        |              | In anhedonia: x_l4l5 features present but reward ABSENT |
 
-### 5.2 Summary
+### 5.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | MAD Role | Scientific Basis |
+|----------|-------|---------|----------|------------------|
+| **I: Information** | [87] | melodic_entropy | Musical anticipation dynamics — melodic entropy drives the anticipation-reward coupling that is DISRUPTED in musical anhedonia; the STG→NAcc pathway processes melodic predictions but fails to translate them to reward | Pearce 2005 IDyOM; Martinez-Molina 2016 anhedonia |
+
+**Rationale**: MAD models musical anhedonia as a disconnection between preserved auditory processing and impaired reward coupling. The critical deficit is in the STG→NAcc pathway that translates musical predictions into reward signals. melodic_entropy [87] provides a direct measure of the melodic prediction signal that anhedonic listeners process normally at the auditory cortex level but fail to route to reward circuitry. Currently MAD uses distribution_entropy [22] as a proxy, which measures spectral complexity rather than music-specific prediction uncertainty.
+
+**Code impact** (Phase 6): `r3_indices` extended to include [87]. This feeds the disconnection detection path — melodic_entropy present but reward coupling absent in anhedonia.
+
+### 5.3 Summary
 
 ```
 R³ DEMAND FOR MAD: 17D of 49D

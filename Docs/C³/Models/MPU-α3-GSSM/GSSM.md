@@ -4,7 +4,7 @@
 **Unit**: MPU (Motor Planning Unit)
 **Circuit**: Sensorimotor (SMA, PMC, Cerebellum, Basal Ganglia)
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 2.1.0 (deep literature cross-reference, 8 papers, verified effect sizes and MNI)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added G:Rhythm, K:Modulation feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -186,7 +186,7 @@ Limitation:          Pilot study (N=8/group); definitive RCT warranted
 
 ## 4. R³ Input Mapping: What GSSM Reads
 
-### 4.1 R³ Feature Dependencies (~18D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | GSSM Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -199,7 +199,22 @@ Limitation:          Pilot study (N=8/group); definitive RCT warranted
 | **E: Interactions** | [25:33] | x_l0l5 (8D) | SMA-M1 coupling | Dual-site synchronization |
 | **E: Interactions** | [33:41] | x_l4l5 (8D) | Gait pattern stability | Variability reduction |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ v2 Group | Index | Feature | GSSM Role | Citation |
+|-------------|-------|---------|-----------|----------|
+| **G: Rhythm** | [65] | tempo_estimate | Gait tempo target for stride synchronization | Scheirer 1998; Grosche & Muller 2011 |
+| **G: Rhythm** | [71] | groove_index | Groove level driving spontaneous movement | Madison 2006; Janata 2012 |
+| **G: Rhythm** | [73] | tempo_stability | Tempo consistency for stable gait entrainment | Moens & Leman 2014 |
+| **K: Modulation** | [114] | modulation_0_5Hz | 0.5 Hz locomotion band for slow gait | Arnal & Giraud 2012 |
+| **K: Modulation** | [115] | modulation_1Hz | 1 Hz locomotion band for normal gait | Arnal & Giraud 2012 |
+| **K: Modulation** | [116] | modulation_2Hz | 2 Hz locomotion band for fast gait/running | Arnal & Giraud 2012 |
+
+**Rationale**: GSSM is a gait-synchronized stimulation model that critically needs locomotion-rate features. G:groove_index captures the spontaneous movement drive (Madison 2006), G:tempo_estimate provides the explicit tempo for stride matching, and G:tempo_stability ensures consistent entrainment. K:modulation features at 0.5-2 Hz directly cover the human locomotion frequency band, resolving the MPU-6 locomotion_periodicity gap.
+
+**Code impact** (future): `r3[..., 65:75]` for rhythm features and `r3[..., 114:117]` for locomotion-band modulation will feed GSSM's gait-phase coupling pathway.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

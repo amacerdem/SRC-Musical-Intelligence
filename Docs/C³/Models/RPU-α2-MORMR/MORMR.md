@@ -4,7 +4,7 @@
 **Unit**: RPU (Reward Processing Unit)
 **Circuit**: Mesolimbic (NAcc, VTA, vmPFC, OFC, Amygdala)
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 2.1.0 (deep C³ literature review, corrected reference, +2 papers)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added I:Information feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -174,7 +174,7 @@ Replication:             First direct PET evidence of opioid mediation in music
 
 ## 4. R³ Input Mapping: What MORMR Reads
 
-### 4.1 R³ Feature Dependencies (~14D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | MORMR Role | Scientific Basis |
 |----------|-------|---------|------------|------------------|
@@ -188,7 +188,18 @@ Replication:             First direct PET evidence of opioid mediation in music
 | **E: Interactions** | [33:41] | x_l4l5 (8D) | Sustained pleasure | Prolonged opioid response |
 | **E: Interactions** | [41:49] | x_l5l7 (8D) | Pleasure-structure | Musical beauty |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | MORMR Role | Scientific Basis |
+|----------|-------|---------|------------|------------------|
+| **I: Information** | [88] | harmonic_entropy | Harmonic resolution surprise — high harmonic entropy followed by low harmonic entropy signals consonance resolution, the primary trigger for mu-opioid release in NAcc hedonic hotspots | Gold 2019 chord transition probability; Nummenmaa 2025 MOR binding |
+| **I: Information** | [87] | melodic_entropy | Melodic contour predictability — predictable melodic resolution enhances opioid-mediated "liking" response; familiar melodic patterns elicit stronger MOR activation | Pearce 2005 IDyOM; Mallik 2017 opioid modulation |
+
+**Rationale**: MORMR models mu-opioid receptor activation during musical pleasure consummation. The I:Information group provides direct measures of harmonic and melodic entropy that drive the resolution-pleasure coupling. Currently MORMR infers harmonic surprise from proxy features (roughness change, energy_change [22]). harmonic_entropy [88] directly quantifies chord-level prediction uncertainty — its drop at resolution moments maps to the opioid release event. melodic_entropy [87] captures the predictability of melodic contour that modulates familiarity-dependent MOR activation.
+
+**Code impact** (Phase 6): `r3_indices` extended to include [87], [88]. These feed the consonance/resolution signal path — mean_pleasantness proxy augmented with direct entropy measures.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

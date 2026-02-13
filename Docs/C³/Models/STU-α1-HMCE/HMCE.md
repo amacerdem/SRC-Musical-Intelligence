@@ -4,8 +4,8 @@
 **Unit**: STU (Sensorimotor Timing Unit)
 **Circuit**: Sensorimotor (Temporal Memory Hierarchy)
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 2.1.0 (deep literature review: 1→15 papers, r=0.99 QUALIFIED, Norman-Haignere convergence, Sabat constraint)
-**Date**: 2026-02-12
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added G:Rhythm feature dependencies)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -300,7 +300,7 @@ Methods:              8 methods, 15 papers, N > 400 total participants
 
 ## 4. R³ Input Mapping: What HMCE Reads
 
-### 4.1 R³ Feature Dependencies (25D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | HMCE Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -315,7 +315,19 @@ Methods:              8 methods, 15 papers, N > 400 total participants
 | **E: Interactions** | [25:33] | x_l0l5 (8D) | Foundation×Perceptual coupling | Temporal-perceptual binding |
 | **E: Interactions** | [33:41] | x_l4l5 (8D) | Dynamics×Perceptual coupling | Derivative-feature binding |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | HMCE Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **G: Rhythm** | [68] | syncopation_index | Temporal context disruption — syncopated events create expectation violations that hierarchical encoding must accommodate | Longuet-Higgins & Lee 1984 |
+| **G: Rhythm** | [69] | metricality_index | Metrical hierarchy depth — maps directly to HMCE's multi-level context hierarchy (short/medium/long) | Grahn & Brett 2007 |
+| **G: Rhythm** | [65] | tempo_estimate | Temporal grid for context window calibration — context encoding timescales depend on tempo | Fraisse 1982 |
+
+**Rationale**: HMCE models hierarchical temporal context encoding. The G:Rhythm features provide explicit metrical structure information that directly maps to HMCE's multi-level context hierarchy. Syncopation [68] signals expectation violations across temporal levels, metricality [69] quantifies the depth of nested subdivisions that HMCE's layers encode, and tempo [65] calibrates the temporal grid against which context windows are measured.
+
+**Code impact** (Phase 6): `r3_indices` must be extended to include [65, 68, 69]. These features are read-only inputs — no formula changes required.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output
@@ -339,6 +351,11 @@ Expertise Factor ───────────────── Extended Co
                                     Expertise modulates long-context
                                     Math: C_ext = C_long · (1 + d·expert)
                                     d = 0.32 (Mischler 2025)
+
+R³[65] tempo_estimate ─────────┐
+R³[68] syncopation_index ──────┼──► Metrical Context (v2)
+R³[69] metricality_index ──────┘   Hierarchical rhythm encoding
+                                    maps to TMH context levels
 ```
 
 ---

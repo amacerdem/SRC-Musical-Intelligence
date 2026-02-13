@@ -4,7 +4,7 @@
 **Unit**: ARU (Affective Resonance Unit)
 **Circuit**: Mesolimbic Reward Circuit
 **Tier**: β (Integrative) — 70-90% confidence
-**Version**: 2.1.0 (Beta upgrade — literature expansion)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added G:Rhythm feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../Road-map/01-GLOSSARY.md).
@@ -233,7 +233,7 @@ TOTAL: 11D per frame at 172.27 Hz
 
 ## 5. R³ Demand (Spectral Features)
 
-### 5.1 R³ Features Required by CLAM
+### 5.1 R³ v1 Feature Dependencies ([0:49])
 
 > R³ indices are MI's own (0-48). See [Road-map/02-R3-SPECTRAL.md](../../Road-map/02-R3-SPECTRAL.md).
 
@@ -270,7 +270,18 @@ TOTAL: 11D per frame at 172.27 Hz
 |--------|------|-----------|
 | 25:33 | x_l0l5 (8D) | Energy × Consonance → BCI affect mapping space |
 
-### 5.2 Summary
+### 5.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | CLAM Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **G: Rhythm** | [65] | tempo_estimate | Tempo rate — direct BPM estimate for closed-loop arousal modulation; the control loop adjusts toward target arousal based on tempo-arousal coupling (fast tempo = high arousal) | Fraisse 1982 preferred tempo |
+| **G: Rhythm** | [71] | groove_index | Groove quality — composite rhythmic engagement measure; high groove increases motor-affective coupling that CLAM's feedback loop targets for affect regulation | Madison 2006; Janata 2012 groove perception |
+
+**Rationale**: CLAM models closed-loop affective modulation using BCI-style feedback. The control loop requires real-time estimates of arousal and valence to compute error signals. Rhythmic features are the most direct drivers of arousal in music. tempo_estimate [65] provides a direct BPM measure (currently approximated from onset_strength [11] periodicity), enabling precise arousal-tempo mapping. groove_index [71] captures the movement-inducing quality that CLAM's motor-affective coupling pathway depends on.
+
+**Code impact** (Phase 6): `r3_indices` extended to include [65], [71]. These feed the arousal estimation and motor-affective coupling paths of the control loop.
+
+### 5.3 Summary
 
 ```
 R³ DEMAND FOR CLAM: 15D of 49D

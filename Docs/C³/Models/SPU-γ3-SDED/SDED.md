@@ -4,8 +4,8 @@
 **Unit**: SPU (Spectral Processing Unit)
 **Circuit**: Perceptual (Brainstem-Cortical)
 **Tier**: γ (Speculative) — <70% confidence
-**Version**: 2.1.0 (v2.0.0 → 2.1.0: 1→12 papers, Tervaniemi 2022 Neuropsychologia citation REMOVED (unverifiable — not in literature collection), d=-1.09 REMOVED, Crespo-Bojorque 2018 universal early MMN, Fishman 2001 A1 phase-locked oscillatory activity, Foo 2016 ECoG right STG dissonance, Bidelman 2013 brainstem innate hierarchy, Tabas 2019 POR latency)
-**Date**: 2026-02-12
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added F:Pitch feature dependencies)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -308,7 +308,7 @@ Confidence:           <70% — individual studies limited N
 
 ## 4. R³ Input Mapping: What SDED Reads
 
-### 4.1 R³ Feature Dependencies (~14D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | SDED Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -323,7 +323,17 @@ Confidence:           <70% — individual studies limited N
 | **C: Timbre** | [20] | tristimulus3 | 5th+ harmonic energy (high) | Pollard & Jansson 1982 |
 | **E: Interactions** | [41:46] | x_l5l7 (5D partial) | Consonance x Timbre coupling | Emergent roughness |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | SDED Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **F: Pitch & Chroma** | [64] | inharmonicity_index | Spectral deviation from harmonic template — normalized measure of partial stretching; inharmonic stimuli produce faster dissonance detection because stretched partials create additional beating patterns that the brainstem detects within ~10ms | Fletcher 1934; Giordano & McAdams 2010 instrument identification |
+
+**Rationale**: SDED models early sensory dissonance detection — the rapid brainstem-to-cortex pathway that detects spectral roughness within the first 10-50ms of stimulus onset. The v1 features capture dissonance through roughness, sethares_dissonance, and helmholtz_kang, with inharmonicity [5] as a complexity indicator. The F:Pitch group adds inharmonicity_index [64], a normalized measure that quantifies how far each partial deviates from the harmonic series. This complements A[5] inharmonicity by providing a per-partial deviation index rather than a global measure — Fishman et al. (2001) showed that A1 phase-locked oscillatory activity (the neural substrate of early dissonance detection) degrades systematically with partial inharmonicity, and Bidelman (2013) demonstrated that brainstem responses encode an innate consonance hierarchy that is disrupted by inharmonic spectra. The normalized index enables SDED to predict detection speed as a function of harmonic deviation magnitude.
+
+**Code impact** (Phase 6): `r3_indices` must be extended to include [64]. These features are read-only inputs — no formula changes required.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

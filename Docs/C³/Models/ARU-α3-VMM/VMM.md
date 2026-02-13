@@ -9,8 +9,8 @@
 **Unit**: ARU (Affective Resonance Unit)
 **Circuit**: Mesolimbic Reward Circuit + Limbic-Emotional Circuit
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 2.1.0 (Beta upgrade — deep literature audit, +2 papers)
-**Date**: 2026-02-12
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added H:Harmony feature dependencies)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -495,6 +495,16 @@ New H³ demand from VMM:
   Direct:     ~7 new tuples (H19+H20+H22 reads at slower timescales)
   Total new:  ~7 tuples added to the global demand
 ```
+
+### 5.4 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | VMM Role | Scientific Basis |
+|----------|-------|---------|----------|------------------|
+| **H: Harmony** | [76:81] | tonnetz (6D) | Tonal geometry for mood mapping — the tonnetz representation encodes harmonic relationships in a 6D toroidal space (fifths, minor thirds, major thirds), providing the geometric substrate for valence-mode mapping; major/minor mode distinction emerges from tonnetz position | Harte 2006 tonnetz features; Krumhansl & Kessler 1982 tonal hierarchy |
+
+**Rationale**: VMM models valence-mode mapping — how musical mode (major/minor) maps to emotional valence (happy/sad). The current approach uses consonance group features (roughness, pleasantness) as proxies for mode detection. The H:Harmony tonnetz [76:81] provides a direct 6D representation of harmonic space where major and minor modes occupy distinct geometric regions. This is superior to the indirect consonance-based approach because tonnetz captures the tonal relationships (perfect fifth, major/minor third cycles) that define musical mode. The happy/sad pathway dissociation in VMM maps directly to regions of tonnetz space.
+
+**Code impact** (Phase 6): `r3_indices` extended to include [76:81]. These feed the mode detection and valence-mode mapping computation — tonnetz position determines major/minor classification.
 
 ---
 

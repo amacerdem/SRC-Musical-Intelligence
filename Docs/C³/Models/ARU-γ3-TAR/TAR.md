@@ -4,7 +4,7 @@
 **Unit**: ARU (Affective Resonance Unit)
 **Circuit**: Mesolimbic Reward Circuit
 **Tier**: γ (Speculative) — 50-70% confidence
-**Version**: 2.1.0 (Beta upgrade — literature expansion)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added K:Modulation feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../Road-map/01-GLOSSARY.md).
@@ -249,7 +249,7 @@ TOTAL: 10D per frame at 172.27 Hz
 
 ## 5. R³ Demand (Spectral Features)
 
-### 5.1 R³ Features Required by TAR
+### 5.1 R³ v1 Feature Dependencies ([0:49])
 
 > R³ indices are MI's own (0-48). See [Road-map/02-R3-SPECTRAL.md](../../Road-map/02-R3-SPECTRAL.md).
 
@@ -288,7 +288,17 @@ TOTAL: 10D per frame at 172.27 Hz
 |--------|------|----------|
 | 33:41 | x_l4l5 (8D) | Derivatives × Consonance → therapeutic engagement coupling |
 
-### 5.2 Summary
+### 5.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | TAR Role | Scientific Basis |
+|----------|-------|---------|----------|------------------|
+| **K: Modulation** | [123] | fluctuation_strength | Amplitude modulation at ~4 Hz — fluctuation strength in the 3-5 Hz range corresponds to the frequency of tremolo/vibrato and speech prosody, which has therapeutic significance for emotional regulation and anxiety reduction | Zwicker & Fastl 1999 psychoacoustics; Thaut 2005 music therapy |
+
+**Rationale**: TAR models therapeutic affective resonance — how music can be prescribed for emotional regulation. Fluctuation strength at ~4 Hz (the speech/vocal modulation range) is associated with perceived emotional warmth and safety. This frequency range overlaps with theta oscillations linked to emotional processing. Currently TAR uses warmth [16] and onset_strength [11] as comfort/rhythmic engagement proxies. fluctuation_strength [123] provides a direct psychoacoustic measure of amplitude modulation that is specifically relevant to therapeutic music selection.
+
+**Code impact** (Phase 6): `r3_indices` extended to include [123]. This feeds the comfort/safety signal pathway in therapeutic music prescription.
+
+### 5.3 Summary
 
 ```
 R³ DEMAND FOR TAR: 17D of 49D

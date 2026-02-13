@@ -4,8 +4,8 @@
 **Unit**: SPU (Spectral Processing Unit)
 **Circuit**: Perceptual (Brainstem–Cortical)
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 2.1.0 (Phase 1 revision: deep literature cross-reference, 13→14 papers, Cousineau qualification)
-**Date**: 2026-02-12
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added F:Pitch, H:Harmony feature dependencies)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -261,7 +261,7 @@ IMPORTANT QUALIFICATION (added v2.1):
 
 ## 4. R³ Input Mapping: What BCH Reads
 
-### 4.1 R³ Feature Dependencies (30D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | BCH Role | Scientific Basis |
 |----------|-------|---------|----------|------------------|
@@ -279,7 +279,19 @@ IMPORTANT QUALIFICATION (added v2.1):
 | **C: Timbre** | [20] | tristimulus3 | 5th+ harmonic energy (high) | Pollard & Jansson 1982 |
 | **E: Interactions** | [41:49] | x_l5l7 (8D) | Consonance × Timbre coupling | Emergent harmonicity |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | BCH Role | Scientific Basis |
+|----------|-------|---------|----------|------------------|
+| **F: Pitch & Chroma** | [49:60] | chroma_vector (12D) | Octave-equivalent pitch class representation — directly encodes which pitch classes are present, enabling explicit consonance computation between intervals | Shepard 1964 octave equivalence; Krumhansl 1990 tonal hierarchy |
+| **F: Pitch & Chroma** | [63] | pitch_salience | Harmonic peak prominence — direct measure of how clearly a pitched tone stands above noise floor; replaces indirect proxy via A[14] tonalness | Parncutt 1989 virtual pitch salience |
+| **H: Harmony & Tonality** | [75] | key_clarity | Tonal center strength — Krumhansl-Schmuckler key profile correlation; provides tonal context for evaluating consonance within a musical key | Krumhansl & Kessler 1982 tonal hierarchy |
+
+**Rationale**: BCH currently computes consonance from spectral proxy features (roughness, sethares, helmholtz). The F:Pitch group provides the underlying pitch class distribution that drives consonance perception — consonant intervals (P5, P4, M3) produce specific chroma patterns. F[63] pitch_salience provides a direct harmonicity measure superior to the A[14] tonalness proxy. H[75] key_clarity contextualizes consonance within a tonal hierarchy, consistent with Bidelman & Krishnan (2009) finding that FFR responses are modulated by tonal context.
+
+**Code impact** (Phase 6): `r3_indices` must be extended to include [49:60], [63], [75]. These features are read-only inputs — no formula changes required.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output
@@ -302,6 +314,11 @@ R³[4] sensory_pleasantness ──────┘   FFR magnitude at fundamental
 R³[41:49] x_l5l7 ───────────────── Inter-Band Coherence
                                      Consonant intervals show higher
                                      cross-frequency coupling
+
+R³[49:60] chroma_vector (12D) ──┐
+R³[63] pitch_salience ──────────┼──► Explicit Pitch Consonance (v2)
+R³[75] key_clarity ─────────────┘   Chroma-based interval detection
+                                     + salience + tonal context
 ```
 
 ---

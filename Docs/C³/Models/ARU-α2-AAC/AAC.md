@@ -9,8 +9,8 @@
 **Unit**: ARU (Affective Resonance Unit)
 **Circuit**: Mesolimbic Reward Circuit
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 2.1.0 (Beta upgrade — deep literature audit, +3 papers)
-**Date**: 2026-02-12
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added H:Harmony feature dependencies)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -447,6 +447,17 @@ New H³ demand from AAC:
   Direct:  ~4 new tuples (H9+H19 direct reads not in SRP)
   Total new: ~15 tuples added to the global demand
 ```
+
+### 5.4 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | AAC Role | Scientific Basis |
+|----------|-------|---------|----------|------------------|
+| **H: Harmony** | [75] | key_clarity | Tonal context for arousal/valence — clear tonal center provides a stable context for autonomic arousal responses; tonal ambiguity increases ANS uncertainty and SCR variability | Krumhansl & Kessler 1982 tonal hierarchy |
+| **H: Harmony** | [84] | tonal_stability | Tonal grounding — stable tonality modulates the autonomic response magnitude; tonal resolution moments trigger ANS changes (heart rate deceleration, SCR peaks) | Krumhansl tonal hierarchy; Steinbeis 2006 ANS-harmonic coupling |
+
+**Rationale**: AAC models autonomic-affective coupling — how the autonomic nervous system responds to musical events. ANS responses (SCR, heart rate, respiration) are modulated by harmonic context. key_clarity [75] and tonal_stability [84] from the H:Harmony group provide direct measures of the tonal framework that shapes autonomic responses. Resolution moments (high tonal_stability following low) trigger the ANS peaks that AAC tracks. Currently AAC receives tonal information indirectly through SRP's consonance features; these H-group features provide explicit tonal context.
+
+**Code impact** (Phase 6): `r3_indices` extended to include [75], [84]. These feed the arousal modulation and ANS response paths.
 
 ---
 

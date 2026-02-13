@@ -4,7 +4,7 @@
 **Unit**: ARU (Affective Resonance Unit)
 **Circuit**: Mesolimbic Reward Circuit
 **Tier**: β (Integrative) — 70-90% confidence
-**Version**: 3.0.0 (v2.1.0 Beta upgrade — deep literature audit, +3 papers)
+**Version**: 3.2.0 (Phase 3E: R³ v2 expansion — added I:Information feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../Road-map/01-GLOSSARY.md).
@@ -249,7 +249,7 @@ TOTAL: 12D per frame at 172.27 Hz
 
 ## 5. R³ Demand (Spectral Features)
 
-### 5.1 R³ Features Required by PUPF
+### 5.1 R³ v1 Feature Dependencies ([0:49])
 
 > R³ indices are MI's own (0-48). See [Road-map/02-R3-SPECTRAL.md](../../Road-map/02-R3-SPECTRAL.md).
 
@@ -291,7 +291,18 @@ TOTAL: 12D per frame at 172.27 Hz
 | 25:33 | x_l0l5 (8D) | Energy × Consonance → surprise-pleasure coupling |
 | 33:41 | x_l4l5 (8D) | Derivatives × Consonance → dynamics-surprise interaction |
 
-### 5.2 Summary
+### 5.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | PUPF Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **I: Information** | [92] | predictive_entropy | Prediction uncertainty — direct measure of the listener's internal model uncertainty; this IS the "U" (uncertainty) axis of PUPF's Goldilocks function P = f(U, S) | Friston predictive coding; Cheung 2019 uncertainty × surprise |
+| **I: Information** | [90] | spectral_surprise | Spectral prediction error — frame-level surprise signal from the mismatch negativity pathway; provides the "S" (surprise) axis complement to predictive_entropy | Friston prediction error; mismatch negativity literature |
+
+**Rationale**: PUPF models the Goldilocks function: pleasure = f(uncertainty, surprise) where peak pleasure occurs at moderate levels of both. Currently PUPF approximates uncertainty from distribution_entropy [22] and surprise from spectral_flux [21]. predictive_entropy [92] provides a direct, model-based uncertainty measure grounded in predictive coding theory (Friston), while spectral_surprise [90] measures the prediction error signal. These replace acoustic proxies with information-theoretic measures that map directly to the PUPF computation. PUPF is the ARU model with the strongest direct I-group demand.
+
+**Code impact** (Phase 6): `r3_indices` extended to include [90], [92]. H and S computation can use direct information-theoretic measures instead of spectral proxies.
+
+### 5.3 Summary
 
 ```
 R³ DEMAND FOR PUPF: 27D of 49D

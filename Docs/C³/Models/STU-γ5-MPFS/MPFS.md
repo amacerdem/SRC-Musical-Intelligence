@@ -4,7 +4,7 @@
 **Unit**: STU (Sensorimotor Timing Unit)
 **Circuit**: Sensorimotor (Beat Entrainment + Temporal Memory Hierarchy)
 **Tier**: γ (Speculative) — <70% confidence
-**Version**: 2.1.0 (deep literature review: ~3→12 papers, Marion-St-Onge 2020 N=70 DIRECT prodigy test flow F(2,43)=3.62 p=.035 prodigies M=3.8 vs early-trained M=3.3 BUT continuum not category CONSTRAINS, NO IQ/personality/WM difference, Salimpoor 2011 PET N=8 caudate anticipation r=0.71 / NAcc experience r=0.84 dopaminergic reward, Chabin 2020 HD-EEG N=18 OFC F=17.4/SMA F=27.3 during chills, Dai 2025 fMRI LEiDA musicians PL-state-11 frontal-reward p=.001, Liao 2024 improvisation DMN↓ supports hypofrontality, 8 methods)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added G:Rhythm feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/General/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -326,7 +326,7 @@ Quality Assessment: γ-tier (speculative)
 
 ## 4. R³ Input Mapping: What MPFS Reads
 
-### 4.1 R³ Feature Dependencies (33D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 **Group B: Energy (5D)** — Motor-relevant intensity features
 
@@ -355,7 +355,18 @@ Quality Assessment: γ-tier (speculative)
 | **E: Interactions** | [33:41] | x_l4l5 (8D) | Dynamics×Perceptual coupling | Motor-perceptual binding |
 | **E: Interactions** | [41:49] | x_l5l7 (8D) | Perceptual×Relational coupling | Cross-modal integration |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ v2 Group | Index | Feature | MPFS Role | Scientific Basis |
+|-------------|-------|---------|-----------|------------------|
+| **G: Rhythm** | [71] | groove_index | Composite groove signal for motor-perceptual feedback integration | Madison 2006; Janata 2012 |
+| **G: Rhythm** | [72] | event_density | Temporal event rate driving motor response complexity | Temporal density |
+
+**Rationale**: MPFS models motor-perceptual feedback systems. G[71] groove_index provides a composite groove signal that directly feeds the motor automaticity pathway -- higher groove facilitates effortless entrainment, a prerequisite for flow. G[72] event_density captures the temporal event rate, which modulates challenge-skill balance by determining motor response complexity.
+
+**Code impact** (Phase 6): `r3_indices` will be extended to include `[71, 72]`.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output
@@ -381,6 +392,10 @@ R³[25:49] Interactions (24D) ─┐
 Motor Automaticity ─────┐
 Context Mastery ────────┼───────► FLOW STATE
 Cross-Feature Binding ──┘         f03 = σ(0.47 · automaticity · mastery · binding)
+
+── R³ v2 (Phase 6) ──────────────────────────────────────────────
+R³[71] groove_index ───────────── Groove signal → motor automaticity
+R³[72] event_density ──────────── Event rate → challenge-skill balance
 ```
 
 ---

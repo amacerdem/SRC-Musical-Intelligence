@@ -4,7 +4,7 @@
 **Unit**: PCU (Predictive Coding Unit)
 **Circuit**: Imagery (Auditory Cortex, IFG, STS, Hippocampus)
 **Tier**: β (Bridging) — 70-90% confidence
-**Version**: 2.1.0 (deep C³ literature integration, +8 papers, brain region expansion)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added F:Pitch, H:Harmony, I:Information feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -204,7 +204,7 @@ Replication:          Cheung 2019 replicated by Gold 2023 (uncertainty x surpris
 
 ## 4. R³ Input Mapping: What CHPI Reads
 
-### 4.1 R³ Feature Dependencies (~22D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | CHPI Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -222,7 +222,21 @@ Replication:          Cheung 2019 replicated by Gold 2023 (uncertainty x surpris
 | **E: Interactions** | [25:33] | x_l0l5 (8D) | Low-level cross-modal binding | Visual-auditory onset coupling |
 | **E: Interactions** | [33:41] | x_l4l5 (8D) | Mid-level harmonic integration | Voice-leading trajectory coupling |
 
-### 4.2 Physical -> Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ v2 Group | Index | Feature | CHPI Role | Citation |
+|-------------|-------|---------|-----------|----------|
+| **F: Pitch** | [49:60] | chroma | 12D chroma vector for harmonic prediction basis | Fujishima 1999; Ellis 2007 |
+| **H: Harmony** | [75] | key_clarity | Tonal context strength for harmonic prediction | Krumhansl & Kessler 1982 |
+| **H: Harmony** | [76:82] | tonnetz | 6D tonal space coordinates for voice-leading geometry | Harte 2006; Balzano 1980 |
+| **I: Information** | [88] | harmonic_entropy | Harmonic surprise for cross-modal prediction error | Pearce 2005 (IDyOM) |
+| **I: Information** | [92] | predictive_entropy | Overall predictive uncertainty for harmonic integration | Friston 2005 (predictive coding) |
+
+**Rationale**: CHPI models cross-modal harmonic prediction integration. F:chroma provides the 12-dimensional pitch-class representation that is the fundamental basis for harmonic analysis -- CHPI's chord-level predictions operate directly in chroma space. H:tonnetz provides the 6D tonal geometry (Harte 2006, Balzano 1980) that captures voice-leading distances and tonal relationships more compactly than raw chroma. H:key_clarity anchors predictions in a tonal center. I:harmonic_entropy and predictive_entropy capture the surprise and uncertainty in harmonic sequences that drive CHPI's cross-modal prediction errors.
+
+**Code impact** (future): `r3[..., 49:60]` for chroma, `r3[..., 75:82]` for harmony, and `r3[..., 88]`+`r3[..., 92]` for information will feed CHPI's harmonic prediction pathway.
+
+### 4.3 Physical -> Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

@@ -4,7 +4,7 @@
 **Unit**: NDU (Novelty Detection Unit)
 **Circuit**: Salience + Developmental (Auditory Cortex, Attention Networks)
 **Tier**: β (Integrative) — 70–90% confidence
-**Version**: 2.1.0 (deep lit review — 1→7 papers, fNIRS+EEG+MEG multi-modal, sex-specific cerebrovascular patterns)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added I:Information feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -190,7 +190,7 @@ Reviews:            Nguyen 2023 (ID singing universality), Papatzikis 2024 (56 N
 
 ## 4. R³ Input Mapping: What DSP Reads
 
-### 4.1 R³ Feature Dependencies (~12D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | DSP Role | Scientific Basis |
 |----------|-------|---------|----------|------------------|
@@ -205,7 +205,17 @@ Reviews:            Nguyen 2023 (ID singing universality), Papatzikis 2024 (56 N
 | **D: Change** | [23] | pitch_change | Pitch contour tracking | Melodic singing quality |
 | **E: Interactions** | [25:33] | x_l0l5 (8D) | Vocal quality integration | Multi-feature voice binding |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | DSP Role | Scientific Basis |
+|----------|-------|---------|----------|------------------|
+| **I: Information** | [91] | information_rate | Information flow rate | Weineck 2022: information rate quantifies the temporal density of novel auditory content; modulates plasticity accumulation rate — richer information flow during singing sessions accelerates neural maturation |
+
+**Rationale**: DSP models how parental singing drives developmental auditory plasticity in preterm infants. The v1 representation uses pitch_change [23] and spectral_change [21] as proxies for vocal variation richness. information_rate [91] provides a direct, information-theoretically grounded measure of how much novel auditory content the infant receives per unit time — the core driver of quality-dependent (not quantity-dependent) plasticity. This aligns with Partanen 2022's finding that singing quality predicts outcomes better than quantity.
+
+**Code impact**: None yet — R³ v2 features are doc-only until Phase 5 integration. Current code reads r3[..., 0:49]; v2 features will extend the slice to r3[..., 0:128] when the EAR pipeline emits the expanded vector.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

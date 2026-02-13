@@ -4,7 +4,7 @@
 **Unit**: ASU (Auditory Salience Unit)
 **Circuit**: Salience (Anterior Insula, dACC, TPJ)
 **Tier**: β (Bridging) — 70-90% confidence
-**Version**: 2.1.0 (deep literature cross-ref, 12 papers, verified effect sizes)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added G:Rhythm feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -163,7 +163,7 @@ Sample Range:            n = 7-606,825 (median ~57)
 
 ## 4. R³ Input Mapping: What BARM Reads
 
-### 4.1 R³ Feature Dependencies (~12D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | BARM Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -175,7 +175,17 @@ Sample Range:            n = 7-606,825 (median ~57)
 | **D: Change** | [22] | energy_change | Energy dynamics | Regularization detection |
 | **E: Interactions** | [25:33] | x_l0l5 (8D) | Automatic entrainment | Motor-auditory coupling |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | BARM Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **G: Rhythm** | [72] | event_density | Temporal event density | Quantifies rhythmic event rate; high density increases beat-ability regulatory demand |
+
+**Rationale**: BARM regulates beat ability through onset_strength [11] and spectral_flux [10] as v1 proxies for rhythmic structure. event_density [72] provides a direct measure of temporal event rate that determines the regulatory load on beat tracking mechanisms — dense event streams require stronger regulatory control to maintain stable beat entrainment. This addresses the gap between onset detection (v1) and aggregate rhythmic density (v2).
+
+**Code impact**: None yet — R³ v2 features are doc-only until Phase 5 integration. Current code reads r3[..., 0:49]; v2 features will extend the slice to r3[..., 0:128] when the EAR pipeline emits the expanded vector.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

@@ -4,7 +4,7 @@
 **Unit**: IMU (Integrative Memory Unit)
 **Circuit**: Mnemonic (Hippocampal-Cortical)
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 2.1.0 (deep literature cross-reference, 4→12 papers, +R-STG region, verified coordinates)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added F feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
@@ -272,7 +272,7 @@ This proxy tracks the Pythagorean hierarchy because:
 
 ## 4. R³ Input Mapping: What PNH Reads
 
-### 4.1 R³ Feature Dependencies (27D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | PNH Role | Scientific Basis |
 |----------|-------|---------|----------|------------------|
@@ -289,7 +289,19 @@ This proxy tracks the Pythagorean hierarchy because:
 | **C: Timbre** | [18:21] | tristimulus1-3 | Harmonic balance | F0/mid/high distribution |
 | **E: Interactions** | [25:33] | x_l0l5 (Energy×Consonance) | Pitch-roughness coupling | Interval→dissonance mapping |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | PNH Role | Scientific Basis |
+|----------|-------|---------|----------|------------------|
+| **F: Pitch** | [49:60] | chroma (12D) | Cyclical pitch-class representation for ratio hierarchy | Shepard 1964: pitch circularity |
+| **F: Pitch** | [63] | pitch_salience | Harmonic resolvability proxy — purer harmonics = clearer ratios | Terhardt 1974 |
+| **F: Pitch** | [64] | inharmonicity_index | Non-integer ratio detection — directly maps to Pythagorean complexity | Rasch & Plomp 1999 |
+
+**Rationale**: PNH models the Pythagorean hierarchy of interval ratios. Chroma vectors provide the cyclical pitch-class representation essential for computing interval ratios across octaves. Pitch salience quantifies how cleanly harmonics resolve, serving as a proxy for harmonic purity. Inharmonicity directly measures deviation from integer frequency ratios, the core input for Pythagorean ratio complexity.
+
+> **Code impact**: These features are doc-only until Phase 5 wiring. No changes to `pnh.py`.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

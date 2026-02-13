@@ -4,7 +4,7 @@
 **Unit**: MPU (Motor Planning Unit)
 **Circuit**: Sensorimotor (SMA, PMC, Cerebellum, Basal Ganglia)
 **Tier**: γ (Integrative) — 50-70% confidence
-**Version**: 2.1.0 (deep lit review: 1→6 papers, Leeuwis 2021 R²=0.404/0.393/0.619 verified, Spiech 2022 groove pupillometry, Sarasso 2019 aesthetic motor inhibition, EEG spatial limitation noted)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added G:Rhythm, K:Modulation feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -172,7 +172,7 @@ Replication:             Awaiting independent replication of R² = 0.404
 
 ## 4. R³ Input Mapping: What NSCP Reads
 
-### 4.1 R³ Feature Dependencies (~16D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | NSCP Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -184,7 +184,18 @@ Replication:             Awaiting independent replication of R² = 0.404
 | **E: Interactions** | [25:33] | x_l0l5 (8D) | Cross-layer coherence | Neural sync proxy |
 | **E: Interactions** | [33:41] | x_l4l5 (8D) | Multi-feature binding | ISC prediction |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ v2 Group | Index | Feature | NSCP Role | Citation |
+|-------------|-------|---------|-----------|----------|
+| **G: Rhythm** | [67] | pulse_clarity | Beat clarity for neural synchrony prediction | Lartillot & Toiviainen 2007 |
+| **K: Modulation** | [120] | modulation_centroid | Spectral modulation center for ISC arousal proxy | Arnal & Giraud 2012 |
+
+**Rationale**: NSCP predicts commercial success from neural synchrony (ISC). pulse_clarity captures how clearly the beat is perceived, which Leeuwis 2021 showed correlates with inter-subject EEG synchrony (R²=0.404-0.619). modulation_centroid provides a compact summary of the modulation spectrum's center of mass, serving as an arousal proxy relevant to Spiech 2022's groove-pupillometry findings linking rhythmic engagement to autonomic arousal.
+
+**Code impact** (future): `r3[..., 67]` and `r3[..., 120]` will feed NSCP's ISC prediction pathway alongside existing consonance and interaction features.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

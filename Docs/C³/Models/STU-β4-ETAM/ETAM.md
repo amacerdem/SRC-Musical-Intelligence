@@ -4,8 +4,8 @@
 **Unit**: STU (Sensorimotor Timing Unit)
 **Circuit**: Sensorimotor (Beat Entrainment + Temporal Memory)
 **Tier**: β (Integrative) — 70-90% confidence
-**Version**: 2.1.0 (deep literature review: 1→12 papers, Hausfeld method CORRECTED EEG not MEG, Doelling & Poeppel 2015 delta-theta entrainment musicians enhanced, Pesnot Lerousseau 2021 high-gamma persistent but low-freq NOT persistent CONSTRAINS dynamic attending, Lenoir 2025 acoustic-specific beat periodization d=1.648, Aparicio-Terrés 2025 tempo modulates entrainment, Noboa 2025 SS-EPs predict tapping R²=0.316, Large 2023 review optimal 0.5-8 Hz)
-**Date**: 2026-02-12
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added G:Rhythm, I:Information, K:Modulation feature dependencies)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -303,7 +303,7 @@ QUALITY ASSESSMENT: β-tier (12 papers, 7 methods, multiple constraints identifi
 
 ## 4. R³ Input Mapping: What ETAM Reads
 
-### 4.1 R³ Feature Dependencies (33D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | ETAM Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -320,7 +320,20 @@ QUALITY ASSESSMENT: β-tier (12 papers, 7 methods, multiple constraints identifi
 | **E: Interactions** | [33:41] | x_l4l5 (8D) | Dynamics x Perceptual binding | Attention-stream coupling |
 | **E: Interactions** | [41:49] | x_l5l7 (8D) | Perceptual x Cross-band coupling | Polyphonic energy separation |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ v2 Group | Index | Feature | ETAM Role | Scientific Basis |
+|-------------|-------|---------|-----------|------------------|
+| **G: Rhythm** | [68] | syncopation_index | Groove-driving syncopation for entrainment timing adjustments | Witek 2014 |
+| **G: Rhythm** | [71] | groove_index | Composite groove measure integrating syncopation, bass, pulse | Madison 2006; Janata 2012 |
+| **I: Information** | [89] | rhythmic_information_content | Rhythmic surprise quantifying expectation violation at beat level | Spiech 2022 |
+| **K: Modulation** | [116] | modulation_2Hz | Beat-rate amplitude modulation — 2 Hz corresponds to typical musical beat rate | Honing 2012 beat perception |
+
+**Rationale**: ETAM models entrainment and temporal attention mechanisms. The G:Rhythm features provide syncopation [68] and groove [71] which modulate how entrainment adapts to rhythmic complexity. I[89] rhythmic_IC quantifies beat-level surprise for predictive timing adjustment. K[116] modulation_2Hz captures beat-rate amplitude modulation energy, directly relevant to neural entrainment at musical tempi.
+
+**Code impact** (Phase 6): Append `[68, 71, 89, 116]` to `r3_indices` in `etam.py`.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output
@@ -349,6 +362,13 @@ R³[24] timbre_change ──────────┐
 R³[21:25] Change (4D) ─────────┼──► Instrument Asymmetry
                                     Spectral richness modulation
                                     Bassoon: 3 windows, Cello: 1 window
+
+── R³ v2 (Phase 3E) ──────────────────────────────────────────────────
+R³[68] syncopation_index ─────┐
+R³[71] groove_index ───────────┼──► Entrainment adaptation to groove
+R³[89] rhythmic_info_content ──┤   Rhythmic complexity + surprise
+R³[116] modulation_2Hz ────────┘   Beat-rate modulation energy
+                                    Math: groove_mod = σ(sync·groove·ric·mod2)
 ```
 
 ---

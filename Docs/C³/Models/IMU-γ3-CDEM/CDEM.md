@@ -4,7 +4,7 @@
 **Unit**: IMU (Integrative Memory Unit)
 **Circuit**: Mnemonic (Hippocampal-Cortical)
 **Tier**: γ (Speculative) — <70% confidence
-**Version**: 2.1.0 (Beta Phase 1 — deep lit review, 2→12 papers, 4→7 brain regions, doc-code mismatches logged)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added I, H feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
@@ -295,7 +295,7 @@ Confidence Level:     <70% (Speculative) — direct context-dependent MUSIC
 
 ## 4. R³ Input Mapping: What CDEM Reads
 
-### 4.1 R³ Feature Dependencies (31D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | CDEM Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -313,7 +313,19 @@ Confidence Level:     <70% (Speculative) — direct context-dependent MUSIC
 | **E: Interactions** | [25:33] | x_l0l5 (Energy x Consonance) | Context-memory binding | Pattern-emotion coupling |
 | **E: Interactions** | [41:49] | x_l5l7 (Consonance x Timbre) | Mood congruency signal | Timbre-consonance = familiar context |
 
-### 4.2 Physical -> Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | CDEM Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **I: Information** | [87] | melodic_entropy | Emotional surprise — high melodic information = stronger emotional encoding | Pearce 2005: IDyOM information content |
+| **I: Information** | [88] | harmonic_entropy | Harmonic unpredictability — chord surprise modulates emotional context | Harrison & Pearce 2020; Cheung 2019 |
+| **H: Harmony** | [84] | tonal_stability | Tonal context strength — stable key = congruent emotional context | Krumhansl 1990: tonal hierarchy |
+
+**Rationale**: CDEM models context-dependent emotional memory, where emotional context during encoding determines retrieval. Melodic and harmonic entropy quantify the surprise/information content that modulates emotional encoding strength (per Cheung et al. 2019, prediction error from uncertainty drives stronger hippocampal-amygdala engagement). Tonal stability provides the harmonic context against which emotional congruency is computed — stable tonal contexts create coherent emotional memories, while tonal ambiguity creates context-dependent variability in emotional retrieval.
+
+> **Code impact**: These features are doc-only until Phase 5 wiring. No changes to `cdem.py`.
+
+### 4.3 Physical -> Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

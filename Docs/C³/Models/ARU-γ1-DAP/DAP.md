@@ -4,7 +4,7 @@
 **Unit**: ARU (Affective Resonance Unit)
 **Circuit**: Mesolimbic Reward Circuit
 **Tier**: γ (Speculative) — 50-70% confidence
-**Version**: 2.1.0 (Beta upgrade — literature expansion)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added G:Rhythm feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../Road-map/01-GLOSSARY.md).
@@ -181,7 +181,7 @@ TOTAL: 10D per frame at 172.27 Hz
 
 ## 5. R³ Demand (Spectral Features)
 
-### 5.1 R³ Features Required by DAP
+### 5.1 R³ v1 Feature Dependencies ([0:49])
 
 **Group A: Consonance (2 of 7D)** — Valence development
 
@@ -214,7 +214,17 @@ TOTAL: 10D per frame at 172.27 Hz
 |--------|------|----------|
 | 25:33 | x_l0l5 (8D) | Energy × Consonance → learned affective associations |
 
-### 5.2 Summary
+### 5.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | DAP Role | Scientific Basis |
+|----------|-------|---------|----------|------------------|
+| **G: Rhythm** | [65] | tempo_estimate | Developmental tempo preference — preferred tempo changes with age (infants prefer faster tempi ~150-180 BPM, adults converge on ~120 BPM); tempo_estimate enables tracking of this developmental trajectory | Fraisse 1982 preferred tempo; Zentner & Eerola 2010 infant music |
+
+**Rationale**: DAP models developmental affective plasticity — how musical preference and emotional response develop over the lifespan. Tempo preference is one of the most robust developmental markers in music cognition. tempo_estimate [65] provides a direct BPM measure that can be correlated with age-dependent arousal response curves. Currently DAP lacks a direct tempo feature, relying on loudness [10] as an arousal proxy.
+
+**Code impact** (Phase 6): `r3_indices` extended to include [65]. This feeds the arousal development pathway with a direct tempo measure.
+
+### 5.3 Summary
 
 ```
 R³ DEMAND FOR DAP: 13D of 49D

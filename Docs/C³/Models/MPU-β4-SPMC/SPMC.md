@@ -4,7 +4,7 @@
 **Unit**: MPU (Motor Planning Unit)
 **Circuit**: Sensorimotor (SMA, PMC, Cerebellum, Basal Ganglia)
 **Tier**: β (Bridging) — 70-90% confidence
-**Version**: 2.1.0 (deep lit review: generic→8 papers, Hoddinott 2024 MVPA SMA/putamen beat encoding, Harrison 2025 CTC/SPT pathways, Grahn 2007 MNI verified)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added G:Rhythm feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -176,7 +176,7 @@ Causal Evidence:         Partial (single-unit recording; PD lesion model; no TMS
 
 ## 4. R³ Input Mapping: What SPMC Reads
 
-### 4.1 R³ Feature Dependencies (~18D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | SPMC Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -188,7 +188,19 @@ Causal Evidence:         Partial (single-unit recording; PD lesion model; no TMS
 | **E: Interactions** | [25:33] | x_l0l5 (8D) | Hierarchical circuit | SMA-PMC-M1 coupling |
 | **E: Interactions** | [33:41] | x_l4l5 (8D) | Sequence regularity | Motor pattern stability |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ v2 Group | Index | Feature | SPMC Role | Citation |
+|-------------|-------|---------|-----------|----------|
+| **G: Rhythm** | [68] | syncopation_index | Rhythmic complexity for SMA sequence encoding | Longuet-Higgins & Lee 1984; Witek 2014 |
+| **G: Rhythm** | [69] | metricality_index | Metrical regularity for putamen beat encoding | Grahn & Brett 2007 |
+| **G: Rhythm** | [73] | tempo_stability | Tempo consistency for motor sequence planning | Moens & Leman 2014 |
+
+**Rationale**: SPMC models the SMA-Premotor-M1 motor circuit hierarchy. Hoddinott 2024 showed SMA and putamen encode beat structure via MVPA -- metricality_index directly provides this signal. syncopation_index modulates the complexity of motor sequences the circuit must plan, and tempo_stability determines the reliability of motor timing signals flowing through the CTC (cerebello-thalamo-cortical) pathway (Harrison 2025).
+
+**Code impact** (future): `r3[..., 68:70]` and `r3[..., 73]` will feed SPMC's hierarchical motor planning pathway alongside existing energy and interaction features.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

@@ -4,7 +4,7 @@
 **Unit**: ASU (Auditory Salience Unit)
 **Circuit**: Salience (Anterior Insula, dACC, TPJ)
 **Tier**: β (Bridging) — 70-90% confidence
-**Version**: 2.1.0 (deep literature cross-ref, 12 papers, verified effect sizes)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added J:Timbre Extended feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -160,7 +160,7 @@ Sample Range:            n = 11-153 (median ~20)
 
 ## 4. R³ Input Mapping: What STANM Reads
 
-### 4.1 R³ Feature Dependencies (~14D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | STANM Role | Scientific Basis |
 |----------|-------|---------|------------|------------------|
@@ -172,7 +172,17 @@ Sample Range:            n = 11-153 (median ~20)
 | **D: Change** | [22] | energy_change | Energy dynamics | Network load assessment |
 | **E: Interactions** | [25:33] | x_l0l5 (8D) | Spectral connectivity | Network integration binding |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | STANM Role | Scientific Basis |
+|----------|-------|---------|------------|------------------|
+| **J: Timbre Extended** | [107:113] | spectral_contrast (7D) | Octave-band harmonic/noise ratio | Jiang 2002: spectral contrast captures harmonic vs noise energy per octave band; provides fine-grained timbral attention targets beyond warmth [12] and tonalness [14] |
+
+**Rationale**: STANM models spectrotemporal attention network dynamics using v1 timbre features warmth [12] and tonalness [14] as broadband timbral attention targets. spectral_contrast [107:113] decomposes timbral structure into 7 octave bands, enabling the model to direct attention to specific frequency regions where spectral energy contrasts are most salient. This aligns with STANM's network-level attention allocation across spectrotemporal dimensions.
+
+**Code impact**: None yet — R³ v2 features are doc-only until Phase 5 integration. Current code reads r3[..., 0:49]; v2 features will extend the slice to r3[..., 0:128] when the EAR pipeline emits the expanded vector.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

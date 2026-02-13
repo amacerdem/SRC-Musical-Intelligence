@@ -4,7 +4,7 @@
 **Unit**: IMU (Integrative Memory Unit)
 **Circuit**: Mnemonic (Hippocampal-Cortical)
 **Tier**: β (Integrative) — 70-90% confidence
-**Version**: 2.1.0 (deep literature review, 5→12 papers, verified MNI from Briley 2013 / Foo 2016 / Norman-Haignere 2013, +Fishman 2001 cross-species, +Tabas 2019 MEG N=37, +Basinski 2025 EEG inharmonicity, 4→6 brain regions)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added F feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
@@ -299,7 +299,7 @@ Evidence Summary (v2.1.0):
 
 ## 4. R³ Input Mapping: What TPRD Reads
 
-### 4.1 R³ Feature Dependencies (30D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | TPRD Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -319,7 +319,19 @@ Evidence Summary (v2.1.0):
 | **E: Interactions** | [25:33] | x_l0l5 (Energy x Consonance) | Frequency-pitch coupling | Tonotopy → pitch |
 | **E: Interactions** | [41:49] | x_l5l7 (Consonance x Timbre) | Spectral-perceptual binding | Timbre-pitch link |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | TPRD Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **F: Pitch** | [49:60] | chroma (12D) | Cyclical pitch-class representation — dissociates from tonotopic frequency | Shepard 1964: pitch circularity |
+| **F: Pitch** | [62] | pitch_class_entropy | Pitch-class diversity — measures chromatic complexity of pitch content | Temperley 2007 |
+| **F: Pitch** | [63] | pitch_salience | F0 clarity — harmonic resolvability for pitch extraction | Terhardt 1974 |
+
+**Rationale**: TPRD models the dissociation between tonotopic (frequency-based) and pitch (perceptual) representations. Chroma vectors provide the explicit cyclical pitch-class representation that is the hallmark of the pitch pathway, dissociated from the linear tonotopic map. Pitch class entropy quantifies the chromatic complexity of pitch content, reflecting the computational load on pitch-processing regions. Pitch salience measures how clearly the fundamental frequency can be extracted, directly relevant to the tonotopy-pitch dissociation boundary.
+
+> **Code impact**: These features are doc-only until Phase 5 wiring. No changes to `tprd.py`.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

@@ -4,7 +4,7 @@
 **Unit**: PCU (Predictive Coding Unit)
 **Circuit**: Imagery (Auditory Cortex, IFG, STS, Hippocampus)
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 2.1.0 (deep C³ literature review: 1→11 papers)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added H:Harmony, I:Information feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -178,7 +178,7 @@ Key convergence:         IC/surprise → emotional response mediated by auditory
 
 ## 4. R³ Input Mapping: What ICEM Reads
 
-### 4.1 R³ Feature Dependencies (~18D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | ICEM Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -192,7 +192,20 @@ Key convergence:         IC/surprise → emotional response mediated by auditory
 | **E: Interactions** | [33:41] | x_l4l5 (8D) | Arousal pathway | Arousal = α·IC + β |
 | **E: Interactions** | [41:49] | x_l5l7 (8D) | Valence pathway | Valence = -γ·IC + δ |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ v2 Group | Index | Feature | ICEM Role | Citation |
+|-------------|-------|---------|-----------|----------|
+| **H: Harmony** | [75] | key_clarity | Tonal context for harmonic IC computation | Krumhansl & Kessler 1982 |
+| **I: Information** | [87] | melodic_entropy | Melodic information content — core IC signal | Pearce 2005 (IDyOM) |
+| **I: Information** | [88] | harmonic_entropy | Harmonic information content for chord surprise | Pearce 2005 (IDyOM) |
+| **I: Information** | [92] | predictive_entropy | Overall predictive uncertainty for arousal/valence mapping | Friston 2005 (predictive coding) |
+
+**Rationale**: ICEM models information content and emotional mapping (IC = -log2(P(event|context))). I:Information features are the direct computational outputs that ICEM's arousal/valence pathways operate on -- melodic_entropy and harmonic_entropy from IDyOM (Pearce 2005) are the very quantities ICEM computes, now available as precomputed features. predictive_entropy captures the overall uncertainty that drives ICEM's arousal mapping (arousal = alpha*IC + beta). H:key_clarity provides the tonal context that determines whether harmonic events are expected or surprising.
+
+**Code impact** (future): `r3[..., 75]` and `r3[..., 87:93]` will feed ICEM's IC computation pathway, potentially replacing the indirect computation from spectral_change and energy_change.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

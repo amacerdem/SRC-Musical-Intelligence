@@ -4,7 +4,7 @@
 **Unit**: PCU (Predictive Coding Unit)
 **Circuit**: Imagery (Auditory Cortex, IFG, STS, Hippocampus)
 **Tier**: β (Bridging) — 70-90% confidence
-**Version**: 2.1.0 (deep C³ literature expansion, 1→11 papers)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added I:Information feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -168,7 +168,7 @@ Replication:    Entrainment effect replicated across 5 independent studies
 
 ## 4. R³ Input Mapping: What WMED Reads
 
-### 4.1 R³ Feature Dependencies (~15D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | WMED Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -181,7 +181,19 @@ Replication:    Entrainment effect replicated across 5 independent studies
 | **E: Interactions** | [25:33] | x_l0l5 (8D) | Automatic entrainment pathway | SS-EP basis (paradox route) |
 | **E: Interactions** | [41:49] | x_l5l7 (8D) | WM pathway | Counting span basis |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ v2 Group | Index | Feature | WMED Role | Citation |
+|-------------|-------|---------|-----------|----------|
+| **I: Information** | [87] | melodic_entropy | Melodic uncertainty for WM-entrainment dissociation | Pearce 2005 (IDyOM) |
+| **I: Information** | [91] | information_rate | Information flow rate for WM load estimation | Shannon 1948; Dubnov 2006 |
+| **I: Information** | [92] | predictive_entropy | Predictive uncertainty for paradox resolution (high entropy + strong SS-EP) | Friston 2005 (predictive coding) |
+
+**Rationale**: WMED models the working memory-entrainment dissociation paradox where strong SS-EP (entrainment) coexists with poor tapping (WM). I:Information features directly capture the information-theoretic quantities underlying this paradox -- melodic_entropy measures the melodic complexity that taxes WM, information_rate quantifies the overall information flow rate, and predictive_entropy captures the prediction uncertainty. The paradox emerges when predictive_entropy is high (uncertain predictions) yet the entrainment pathway (SS-EP via x_l0l5) remains strong.
+
+**Code impact** (future): `r3[..., 87]`, `r3[..., 91]`, and `r3[..., 92]` will feed WMED's WM pathway alongside existing energy and interaction features.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

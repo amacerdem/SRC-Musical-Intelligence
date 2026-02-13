@@ -4,7 +4,7 @@
 **Unit**: MPU (Motor Planning Unit)
 **Circuit**: Sensorimotor (SMA, PMC, Cerebellum, Basal Ganglia)
 **Tier**: β (Bridging) — 70-90% confidence
-**Version**: 2.1.0 (deep lit review: 1→7 papers, Liang 2025 fNIRS contrasts verified, Li 2025 groove-motor mechanism, Blasi 2025 systematic review)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added G:Rhythm feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -171,7 +171,7 @@ Replication:             Consistent across HBO and HBT signals, multiple ROIs
 
 ## 4. R³ Input Mapping: What VRMSME Reads
 
-### 4.1 R³ Feature Dependencies (~20D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | VRMSME Role | Scientific Basis |
 |----------|-------|---------|-------------|------------------|
@@ -184,7 +184,17 @@ Replication:             Consistent across HBO and HBT signals, multiple ROIs
 | **E: Interactions** | [25:33] | x_l0l5 (8D) | Multi-modal entrainment | VR-audio-motor coupling |
 | **E: Interactions** | [33:41] | x_l4l5 (8D) | Sensorimotor binding | Action-perception link |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ v2 Group | Index | Feature | VRMSME Role | Citation |
+|-------------|-------|---------|-------------|----------|
+| **G: Rhythm** | [72] | event_density | Rhythmic event rate for VR motor stimulation intensity | Lartillot & Toiviainen 2007 |
+
+**Rationale**: VRMSME models VR-enhanced music-motor stimulation. event_density captures the rate of musical events per unit time, directly modulating the intensity of motor stimulation in VR environments. Higher event density increases motor engagement demands, consistent with Li 2025's groove-motor mechanism where denser rhythmic textures drive stronger motor facilitation. This is the minimal rhythmic feature VRMSME needs, as its primary inputs remain energy-based (amplitude, onset_strength).
+
+**Code impact** (future): `r3[..., 72]` will feed VRMSME's VR stimulation intensity pathway alongside existing energy features.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

@@ -4,8 +4,8 @@
 **Unit**: STU (Sensorimotor Timing Unit)
 **Circuit**: Sensorimotor (Beat Entrainment + Temporal Memory)
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 2.1.0 (deep literature review: 1→12 papers, Di Liberto 2021 cited properly, Bellier iEEG replication, Kraemer imagery evidence, Weineck spectral flux primacy, Daly MNI coordinates)
-**Date**: 2026-02-12
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added F:Pitch, G:Rhythm feature dependencies)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -273,7 +273,7 @@ Clinical relevance:    BCI potential for melody-based communication
 
 ## 4. R³ Input Mapping: What MDNS Reads
 
-### 4.1 R³ Feature Dependencies (28D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | MDNS Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -292,7 +292,18 @@ Clinical relevance:    BCI potential for melody-based communication
 | **E: Interactions** | [25:33] | x_l0l5 (8D) | Foundation×Perceptual (TRF basis) | Time-pitch binding |
 | **E: Interactions** | [33:41] | x_l4l5 (8D) | Dynamics×Perceptual (note tracking) | Onset-feature binding |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | MDNS Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **F: Pitch & Chroma** | [61] | pitch_height | Melodic pitch register — direct input for melody decoding via TRF | Oxenham 2013 pitch perception |
+| **G: Rhythm** | [65] | tempo_estimate | Temporal pacing for melody segmentation | Fraisse 1982 |
+
+**Rationale**: MDNS models melody decoding from neural signals. F[61] pitch_height provides direct pitch register information for TRF-based melody reconstruction, superior to indirect spectral proxies. G[65] tempo provides temporal pacing context that influences melody segmentation boundaries.
+
+**Code impact** (Phase 6): `r3_indices` must be extended to include [61, 65]. These features are read-only inputs — no formula changes required.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output
@@ -315,6 +326,11 @@ R³[25:33] x_l0l5 ─────────────┐
 R³[33:41] x_l4l5 ─────────────┼── EEG TRF Basis (perception & imagery)
                                     TMH.medium_context: shared code
                                     Math: EEG(t) = Σ TRF(τ)·R³(t−τ)
+
+R³[61] pitch_height ───────────┐
+R³[65] tempo_estimate ─────────┼──► Melody Decoding Context (v2)
+                                    Direct pitch register + temporal
+                                    pacing for TRF reconstruction
 ```
 
 ---

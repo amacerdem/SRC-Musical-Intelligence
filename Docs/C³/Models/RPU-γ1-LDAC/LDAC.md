@@ -4,7 +4,7 @@
 **Unit**: RPU (Reward Processing Unit)
 **Circuit**: Mesolimbic (NAcc, VTA, vmPFC, OFC, Amygdala)
 **Tier**: γ (Integrative) — 50-70% confidence
-**Version**: 2.1.0 (deep C³ literature review, +5 papers, corrected effect sizes/N/journal, expanded brain regions)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added I:Information feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -177,7 +177,7 @@ Replication:             IC x liking/pleasure interaction in auditory cortex rep
 
 ## 4. R³ Input Mapping: What LDAC Reads
 
-### 4.1 R³ Feature Dependencies (~13D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | LDAC Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -190,7 +190,18 @@ Replication:             IC x liking/pleasure interaction in auditory cortex rep
 | **D: Change** | [22] | energy_change | Dynamic shift | Unexpected events |
 | **E: Interactions** | [25:33] | x_l0l5 (8D) | Auditory gating proxy | STG modulation |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | LDAC Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **I: Information** | [87] | melodic_entropy | Melodic information content — lateralized processing of melodic surprise; right hemisphere preferentially processes unexpected melodic events (Zatorre 2002) | Pearce 2005 IDyOM; Zatorre & Belin 2001 lateralization |
+| **I: Information** | [88] | harmonic_entropy | Harmonic information content — chord-level surprise drives lateralized DA release; right STG-NAcc connectivity during harmonic processing | Gold 2019 chord transition probability |
+
+**Rationale**: LDAC models lateralized dopamine asymmetry in auditory cortex during music listening. The left/right hemisphere asymmetry in music processing is driven by spectral vs. temporal information content (Zatorre 2002). melodic_entropy [87] and harmonic_entropy [88] provide the music-specific information measures that determine lateralization patterns — right hemisphere processes spectral/pitch surprises while left hemisphere processes temporal/rhythmic patterns. Currently LDAC uses spectral_change [21] and energy_change [22] as proxies, which conflate spectral and temporal domains.
+
+**Code impact** (Phase 6): `r3_indices` extended to include [87], [88]. These feed the STG liking coupling and lateralization computation.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

@@ -4,7 +4,7 @@
 **Unit**: ASU (Auditory Salience Unit)
 **Circuit**: Salience (Anterior Insula, dACC, TPJ)
 **Tier**: γ (Integrative) — 50-70% confidence
-**Version**: 2.1.0 (deep literature review, 12 papers, 8 brain regions)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added J:Timbre Extended feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -181,7 +181,7 @@ Theoretical Basis:       Strong (spectrotemporal modulation + AST framework)
 
 ## 4. R³ Input Mapping: What SDL Reads
 
-### 4.1 R³ Feature Dependencies (~18D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | SDL Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -194,7 +194,17 @@ Theoretical Basis:       Strong (spectrotemporal modulation + AST framework)
 | **E: Interactions** | [25:33] | x_l0l5 (8D) | Network connectivity | Inter-region binding |
 | **E: Interactions** | [37:45] | x_l4l5 (8D) | Temporal-spectral integration | Lateralization driver |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | SDL Role | Scientific Basis |
+|----------|-------|---------|----------|------------------|
+| **J: Timbre Extended** | [107:113] | spectral_contrast (7D) | Octave-band harmonic/noise ratio | Jiang 2002: spectral contrast captures harmonic vs noise energy per octave band; provides frequency-specific lateralization targets for SDL's hemispheric specialization model |
+
+**Rationale**: SDL models salience-dependent hemispheric lateralization where right hemisphere specializes in spectral/timbral processing and left hemisphere in temporal processing. The v1 representation uses spectral_centroid [15] and pitch_salience [18] as broadband spectral targets. spectral_contrast [107:113] decomposes the spectral structure into 7 octave bands, enabling SDL to model frequency-band-specific lateralization patterns that align with the right hemisphere's spectral specialization.
+
+**Code impact**: None yet — R³ v2 features are doc-only until Phase 5 integration. Current code reads r3[..., 0:49]; v2 features will extend the slice to r3[..., 0:128] when the EAR pipeline emits the expanded vector.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

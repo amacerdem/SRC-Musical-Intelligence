@@ -4,7 +4,7 @@
 **Unit**: IMU (Integrative Memory Unit)
 **Circuit**: Mnemonic (Hippocampal-Cortical)
 **Tier**: β (Integrative) — 70-90% confidence
-**Version**: 2.1.0 (deep lit review: 7→14 papers, +Cheung 2019 fMRI N=79, +Borderie 2024 SEEG PAC, +Billig 2022 review, +Liu 2024 EEG-fMRI N=33, +Fernandez-Rubio 2022 MEG N=71, +Sikka 2015 fMRI N=40, +Biau 2025 MEG N=23; 5→7 brain regions; doc-code mismatches logged)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added I feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
@@ -282,7 +282,7 @@ Quality Assessment:    Strong — 5 direct imaging studies + intracranial SEEG +
 
 ## 4. R³ Input Mapping: What HCMC Reads
 
-### 4.1 R³ Feature Dependencies (38D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | HCMC Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -304,7 +304,19 @@ Quality Assessment:    Strong — 5 direct imaging studies + intracranial SEEG +
 | **E: Interactions** | [33:41] | x_l4l5 (Derivatives×Consonance) | Temporal encoding | Change × consonance = encoding signal |
 | **E: Interactions** | [41:49] | x_l5l7 (Consonance×Timbre) | Cortical storage pattern | Consonance-timbre = long-term template |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | HCMC Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **I: Information** | [92] | predictive_entropy | Encoding strength modulator — high PE = stronger hippocampal trace | Cheung et al. 2019: prediction error drives hippocampal encoding |
+| **I: Information** | [88] | harmonic_entropy | Chord-level encoding complexity — harmonic surprise triggers binding | Harrison & Pearce 2020 |
+| **I: Information** | [87] | melodic_entropy | Note-level encoding difficulty — information content per event | Pearce 2005: IDyOM information content |
+
+**Rationale**: HCMC models hippocampal-cortical memory encoding and consolidation. The Information group provides direct measures of encoding difficulty: predictive entropy quantifies how surprising each moment is (high PE = stronger hippocampal trace formation per Cheung et al. 2019), harmonic entropy measures chord-level unpredictability driving binding operations, and melodic entropy provides note-level information content that modulates encoding strength.
+
+> **Code impact**: These features are doc-only until Phase 5 wiring. No changes to `hcmc.py`.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

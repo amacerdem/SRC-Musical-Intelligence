@@ -4,8 +4,8 @@
 **Unit**: SPU (Spectral Processing Unit)
 **Circuit**: Perceptual (Brainstem-Cortical)
 **Tier**: γ (Speculative) — <70% confidence
-**Version**: 2.1.0 (1→12 papers, Cousineau citation CORRECTED to PLoS ONE, Penagos alHG pitch center added, Bidelman/Fishman/Tabas/Basinski convergence)
-**Date**: 2026-02-12
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added F:Pitch feature dependencies)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -306,7 +306,7 @@ Methods:              8 methods (FFR, fMRI, EEG, intracranial, ECoG, MEG, modeli
 
 ## 4. R³ Input Mapping: What SDNPS Reads
 
-### 4.1 R³ Feature Dependencies (~16D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | SDNPS Role | Scientific Basis |
 |----------|-------|---------|------------|------------------|
@@ -323,7 +323,18 @@ Methods:              8 methods (FFR, fMRI, EEG, intracranial, ECoG, MEG, modeli
 | **C: Timbre** | [20] | tristimulus3 | 5th+ harmonic energy (high) | Pollard & Jansson 1982 |
 | **E: Interactions** | [41:49] | x_l5l7 (partial ~5D) | Consonance x Timbre coupling — complexity measure | Emergent |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | SDNPS Role | Scientific Basis |
+|----------|-------|---------|------------|------------------|
+| **F: Pitch & Chroma** | [63] | pitch_salience | Direct harmonicity measure — explicit pitch prominence above noise floor; SDNPS's core NPS output is conceptually identical to pitch_salience computed from the stimulus; provides ground-truth validation anchor for f01 | Parncutt 1989 virtual pitch salience |
+| **F: Pitch & Chroma** | [64] | inharmonicity_index | Spectral deviation from harmonic template — quantifies how far partials deviate from integer ratios; complements A[5] inharmonicity with a normalized index that predicts NPS degradation for piano-like stimuli (stretched partials) | Fletcher 1934; Giordano & McAdams 2010 |
+
+**Rationale**: SDNPS models stimulus-dependent neural pitch salience — the brainstem-to-cortex transformation from spectral input to pitch strength. The v1 features approximate pitch salience indirectly through consonance measures (roughness, helmholtz_kang) and spectral proxies (tonalness, spectral_autocorrelation). The F:Pitch group provides direct pitch measures: pitch_salience [63] is the explicit harmonicity measure that SDNPS models neurally — Bidelman & Krishnan (2009) showed that brainstem FFR magnitude (the neural substrate SDNPS captures) correlates directly with stimulus pitch salience. Inharmonicity_index [64] quantifies partial stretching that degrades NPS, consistent with Fishman et al. (2001) finding that A1 phase-locked activity decreases as stimuli become more inharmonic.
+
+**Code impact** (Phase 6): `r3_indices` must be extended to include [63], [64]. These features are read-only inputs — no formula changes required.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

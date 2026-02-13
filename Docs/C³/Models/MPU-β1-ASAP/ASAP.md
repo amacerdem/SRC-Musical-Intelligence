@@ -4,7 +4,7 @@
 **Unit**: MPU (Motor Planning Unit)
 **Circuit**: Sensorimotor (SMA, PMC, Cerebellum, Basal Ganglia)
 **Tier**: β (Bridging) — 70-90% confidence
-**Version**: 2.1.0 (deep lit review: 1→8 papers, MNI verified from Grahn & Brett 2007, causal TMS evidence)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added G:Rhythm feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -188,7 +188,7 @@ Causal Evidence:         YES — TMS double dissociation (Ross 2018, Grube 2010b
 
 ## 4. R³ Input Mapping: What ASAP Reads
 
-### 4.1 R³ Feature Dependencies (~18D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | ASAP Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -200,7 +200,18 @@ Causal Evidence:         YES — TMS double dissociation (Ross 2018, Grube 2010b
 | **E: Interactions** | [25:33] | x_l0l5 (8D) | Motor-auditory coupling | Action simulation |
 | **E: Interactions** | [33:41] | x_l4l5 (8D) | Dorsal stream | Beat prediction path |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ v2 Group | Index | Feature | ASAP Role | Citation |
+|-------------|-------|---------|-----------|----------|
+| **G: Rhythm** | [68] | syncopation_index | Rhythmic complexity for action simulation flexibility | Longuet-Higgins & Lee 1984; Witek 2014 |
+| **G: Rhythm** | [69] | metricality_index | Metrical regularity for beat prediction accuracy | Grahn & Brett 2007 |
+
+**Rationale**: ASAP models action simulation for auditory prediction, where the motor system simulates upcoming beats to generate temporal predictions. syncopation_index captures the degree to which rhythmic events deviate from metric positions, directly modulating prediction difficulty. metricality_index provides the regularity signal that ASAP's SMA-driven simulation relies on (Grahn & Brett 2007 showed SMA activation scales with metric simplicity).
+
+**Code impact** (future): `r3[..., 68:70]` slice will feed ASAP's temporal prediction pathway, providing explicit metrical structure to complement existing onset-based features.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

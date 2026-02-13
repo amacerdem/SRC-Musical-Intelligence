@@ -4,7 +4,7 @@
 **Unit**: NDU (Novelty Detection Unit)
 **Circuit**: Salience + Perceptual (Auditory Cortex, IFG)
 **Tier**: β (Bridging) — 70–90% confidence
-**Version**: 2.1.0 (deep lit review — 1→7 papers, context-dependent expertise MMN, predictive coding framework)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added H:Harmony, I:Information feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -187,7 +187,7 @@ Reviews:                 Tervaniemi 2022 (paradigm development), Koelsch (ERAN v
 
 ## 4. R³ Input Mapping: What CDMR Reads
 
-### 4.1 R³ Feature Dependencies (~16D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | CDMR Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -200,7 +200,19 @@ Reviews:                 Tervaniemi 2022 (paradigm development), Koelsch (ERAN v
 | **E: Interactions** | [33:41] | x_l4l5 (8D) | Pattern-feature binding | Cross-feature integration |
 | **E: Interactions** | [41:49] | x_l5l6 (8D) | Perceptual-shape coupling | Subadditivity computation |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | CDMR Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **H: Harmony** | [86] | syntactic_irregularity | Tonal syntax violation level | Lerdahl 2001: quantifies harmonic distance from tonal prototype; provides direct context for mismatch response modulation |
+| **H: Harmony** | [75] | key_clarity | Key stability strength | Krumhansl & Kessler 1982: clear key context strengthens mismatch response; ambiguous key weakens it |
+| **I: Information** | [93] | tonal_ambiguity | Key uncertainty level | Quantifies tonal center ambiguity; directly modulates context-dependent mismatch response threshold |
+
+**Rationale**: CDMR models context-dependent mismatch responses where the harmonic context modulates deviance detection. The v1 representation uses pitch_change [23] and spectral_change [21] as indirect context complexity measures. syntactic_irregularity [86] provides the direct harmonic syntax violation signal that modulates mismatch response amplitude. key_clarity [75] establishes tonal context strength — clear keys produce stronger mismatch responses. tonal_ambiguity [93] quantifies the uncertainty that weakens context-dependent predictions, directly implementing CDMR's predictive coding framework.
+
+**Code impact**: None yet — R³ v2 features are doc-only until Phase 5 integration. Current code reads r3[..., 0:49]; v2 features will extend the slice to r3[..., 0:128] when the EAR pipeline emits the expanded vector.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

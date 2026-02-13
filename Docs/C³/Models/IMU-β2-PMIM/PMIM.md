@@ -4,7 +4,7 @@
 **Unit**: IMU (Integrative Memory Unit)
 **Circuit**: Mnemonic (Hippocampal-Cortical)
 **Tier**: β (Integrative) — 70-90% confidence
-**Version**: 2.1.0 (deep literature review, 5→15 papers, 4→6 brain regions, verified MNI)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added I feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
@@ -298,7 +298,7 @@ Key quantitative findings:
 
 ## 4. R³ Input Mapping: What PMIM Reads
 
-### 4.1 R³ Feature Dependencies (33D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | PMIM Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -318,7 +318,19 @@ Key quantitative findings:
 | **E: Interactions** | [33:41] | x_l4l5 (Derivatives x Consonance) | Change-dissonance interaction | Mid-level PE |
 | **E: Interactions** | [41:49] | x_l5l7 (Consonance x Timbre) | High-level syntax prediction | ERAN basis |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | PMIM Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **I: Information** | [92] | predictive_entropy | Direct prediction error measure — core PMIM input | Pearce 2005: IDyOM information content |
+| **I: Information** | [87] | melodic_entropy | Melodic surprise — MMN/ERAN triggering | Pearce & Wiggins 2012 |
+| **I: Information** | [88] | harmonic_entropy | Harmonic unpredictability — chord-level syntax violation | Harrison & Pearce 2020 |
+
+**Rationale**: PMIM is the primary prediction-error model in IMU. The Information group provides the exact quantities PMIM needs: predictive entropy directly quantifies prediction error magnitude, melodic entropy provides note-level surprise for MMN generation, and harmonic entropy provides chord-level unpredictability for ERAN generation. These replace the proxy-based approach of using spectral flux and entropy from the Change group.
+
+> **Code impact**: These features are doc-only until Phase 5 wiring. No changes to `pmim.py`.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

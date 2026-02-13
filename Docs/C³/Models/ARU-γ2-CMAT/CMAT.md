@@ -4,7 +4,7 @@
 **Unit**: ARU (Affective Resonance Unit)
 **Circuit**: Mesolimbic Reward Circuit
 **Tier**: γ (Speculative) — 50-70% confidence
-**Version**: 2.1.0 (Beta upgrade — literature expansion)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added H:Harmony feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../Road-map/01-GLOSSARY.md).
@@ -234,7 +234,7 @@ TOTAL: 10D per frame at 172.27 Hz
 
 ## 5. R³ Demand (Spectral Features)
 
-### 5.1 R³ Features Required by CMAT
+### 5.1 R³ v1 Feature Dependencies ([0:49])
 
 > R³ indices are MI's own (0-48). See [Road-map/02-R3-SPECTRAL.md](../../Road-map/02-R3-SPECTRAL.md).
 
@@ -270,7 +270,18 @@ TOTAL: 10D per frame at 172.27 Hz
 |--------|------|-----------|
 | 25:33 | x_l0l5 (8D) | Energy × Consonance → supramodal binding substrate |
 
-### 5.2 Summary
+### 5.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | CMAT Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **H: Harmony** | [84] | tonal_stability | Tonal grounding — stable tonality provides a cross-modal anchor for affective transfer; tonal stability determines the reliability of auditory-to-visual affect mapping | Krumhansl tonal hierarchy; Collier 2007 cross-modal correspondence |
+| **H: Harmony** | [75] | key_clarity | Key strength — clear tonal center enhances the cross-modal correspondence between musical and visual/spatial affect; ambiguous tonality weakens cross-modal binding | Krumhansl & Kessler 1982 tonal hierarchy |
+
+**Rationale**: CMAT models cross-modal affective transfer between auditory and other sensory modalities. The strength and reliability of cross-modal correspondences depends on the clarity of the auditory signal. tonal_stability [84] and key_clarity [75] from the H:Harmony group provide direct measures of harmonic grounding that determine how reliably auditory affect transfers to other modalities. Currently CMAT uses loudness [10] and warmth [16] as cross-modal features, but tonal context is a primary driver of musical affect that needs explicit representation.
+
+**Code impact** (Phase 6): `r3_indices` extended to include [75], [84]. These feed the supramodal binding substrate and affective transfer reliability computation.
+
+### 5.3 Summary
 
 ```
 R³ DEMAND FOR CMAT: 14D of 49D

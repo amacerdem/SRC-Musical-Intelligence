@@ -4,7 +4,7 @@
 **Unit**: ASU (Auditory Salience Unit)
 **Circuit**: Salience (Anterior Insula, dACC, TPJ)
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 2.1.0 (deep literature cross-ref, 12 papers, verified effect sizes)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added F:Pitch feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -179,7 +179,7 @@ Replication:             Multi-species (monkey+human), multi-method convergence
 
 ## 4. R³ Input Mapping: What CSG Reads
 
-### 4.1 R³ Feature Dependencies (~16D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | CSG Role | Scientific Basis |
 |----------|-------|---------|----------|------------------|
@@ -194,7 +194,17 @@ Replication:             Multi-species (monkey+human), multi-method convergence
 | **D: Change** | [22] | energy_change | Energy dynamics | Arousal change |
 | **E: Interactions** | [25:33] | x_l0l5 (8D) | Salience integration | Multi-feature binding |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | CSG Role | Scientific Basis |
+|----------|-------|---------|----------|------------------|
+| **F: Pitch** | [62] | pitch_class_entropy | Tonal diversity measure | Information theory: entropy over pitch-class distribution quantifies consonance ambiguity — high entropy signals complex harmonic contexts that modulate CSG's salience gradient |
+
+**Rationale**: CSG links consonance to salience via roughness [0], sethares [1], and sensory_pleasantness [4]. These v1 features capture sensory consonance but not distributional tonal complexity. pitch_class_entropy [62] adds an information-theoretic dimension: when pitch classes are uniformly distributed (high entropy), consonance judgments become ambiguous, increasing the salience gradient slope. This complements existing A-group features without redundancy.
+
+**Code impact**: None yet — R³ v2 features are doc-only until Phase 5 integration. Current code reads r3[..., 0:49]; v2 features will extend the slice to r3[..., 0:128] when the EAR pipeline emits the expanded vector.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

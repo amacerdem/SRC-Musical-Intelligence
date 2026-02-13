@@ -4,7 +4,7 @@
 **Unit**: PCU (Predictive Coding Unit)
 **Circuit**: Imagery (Auditory Cortex, IFG, STS, Hippocampus)
 **Tier**: γ (Integrative) — 50-70% confidence
-**Version**: 2.1.0 (deep C³ literature review, +11 papers)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added H:Harmony, I:Information feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -167,7 +167,7 @@ Replication:          IC x entropy interaction replicated 3x (Gold 2019, Cheung 
 
 ## 4. R³ Input Mapping: What MAA Reads
 
-### 4.1 R³ Feature Dependencies (~16D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | MAA Role | Scientific Basis |
 |----------|-------|---------|----------|------------------|
@@ -179,7 +179,19 @@ Replication:          IC x entropy interaction replicated 3x (Gold 2019, Cheung 
 | **D: Change** | [21] | spectral_change | Structural complexity | Pattern detection basis |
 | **E: Interactions** | [41:49] | x_l5l7 (8D) | Complexity tolerance pathway | Appreciation pathway |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ v2 Group | Index | Feature | MAA Role | Citation |
+|-------------|-------|---------|----------|----------|
+| **H: Harmony** | [75] | key_clarity | Tonal clarity for atonality index computation | Krumhansl & Kessler 1982 |
+| **H: Harmony** | [76:82] | tonnetz | 6D tonal space for harmonic complexity measurement | Harte 2006; Balzano 1980 |
+| **I: Information** | [87] | melodic_entropy | Melodic complexity for appreciation threshold | Pearce 2005 (IDyOM) |
+
+**Rationale**: MAA models musical appreciation of atonality where trained listeners develop tolerance for complex harmonic structures. H:key_clarity directly replaces the indirect tonalness [14] proxy for atonality indexing -- low key_clarity signals atonal contexts that require greater appreciation capacity. H:tonnetz provides the 6D tonal geometry that captures the harmonic complexity MAA's appreciation pathway must tolerate. I:melodic_entropy captures the melodic information content that determines whether a passage falls within or beyond a listener's appreciation threshold.
+
+**Code impact** (future): `r3[..., 75:82]` for harmony and `r3[..., 87]` for information will feed MAA's complexity tolerance pathway alongside existing consonance and interaction features.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

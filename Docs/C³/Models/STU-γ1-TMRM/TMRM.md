@@ -4,7 +4,7 @@
 **Unit**: STU (Sensorimotor Timing Unit)
 **Circuit**: Sensorimotor (Beat Entrainment Processing)
 **Tier**: γ (Speculative) — <70% confidence
-**Version**: 2.1.0 (deep literature review: 2→12 papers, Vigl 2024 N=403 REPLACES small-sample founding studies as primary evidence, adjusting>tapping r=−.26 WEAKER than claimed d=2.76, 120 BPM quadratic confirmed χ²(1)=152.57, expertise r=.09 SMALLER than claimed d=0.59, Foster 2021 DJs 120-139 BPM error 3.10% expertise-specific, Grahn & Brett 2007 putamen Z=5.67/SMA Z=5.03, Dalla Bella 2024 musician classification d=1.8, 7 methods)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added G:Rhythm feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
@@ -280,7 +280,7 @@ Replication:           STRONG for 120 BPM; MODERATE for method effect; WEAK for 
 
 ## 4. R³ Input Mapping: What TMRM Reads
 
-### 4.1 R³ Feature Dependencies (9D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | TMRM Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -294,7 +294,18 @@ Replication:           STRONG for 120 BPM; MODERATE for method effect; WEAK for 
 | **D: Change** | [23] | pitch_change | Melodic contour supporting tempo | Pitch rate of change |
 | **D: Change** | [24] | timbre_change | Instrument identity dynamics | Timbral change rate |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | TMRM Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **G: Rhythm** | [65] | tempo_estimate | Current tempo for temporal memory retrieval calibration | Fraisse 1982 |
+| **G: Rhythm** | [73] | tempo_stability | Temporal prediction reliability for memory consolidation | Jones & Boltz 1989 |
+
+**Rationale**: TMRM models temporal memory retrieval mechanisms. G[65] tempo_estimate provides the temporal grid that calibrates memory retrieval timing, and G[73] tempo_stability indicates how reliable temporal predictions are for memory consolidation.
+
+**Code impact** (Phase 6): `r3_indices` must be extended to include [65, 73]. These features are read-only inputs — no formula changes required.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output
@@ -323,6 +334,10 @@ R³[23] pitch_change ────────────┐
 R³[24] timbre_change ───────────┼──► Expertise Modulation
                                     Finer feature discrimination
                                     d = 0.59 expertise effect
+
+R³[65] tempo_estimate ──────────┐
+R³[73] tempo_stability ─────────┼──► Tempo Memory Calibration (v2)
+                                    Direct tempo grid + stability signal
 ```
 
 ---

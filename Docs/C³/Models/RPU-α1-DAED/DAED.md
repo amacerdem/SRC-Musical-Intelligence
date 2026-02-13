@@ -4,7 +4,7 @@
 **Unit**: RPU (Reward Processing Unit)
 **Circuit**: Mesolimbic (NAcc, VTA, vmPFC, OFC, Amygdala)
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 2.1.0 (deep C³ literature review, +5 papers, corrected effect sizes)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added I:Information feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -177,7 +177,7 @@ Replication:             Strong — Salimpoor 2011 replicated by Gold 2023, Cheu
 
 ## 4. R³ Input Mapping: What DAED Reads
 
-### 4.1 R³ Feature Dependencies (~12D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | DAED Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -190,7 +190,18 @@ Replication:             Strong — Salimpoor 2011 replicated by Gold 2023, Cheu
 | **D: Change** | [22] | energy_change | Energy dynamics | Crescendo/decrescendo |
 | **E: Interactions** | [25:33] | x_l0l5 (8D) | Peak timing prediction | Foundation × Perceptual coupling |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | DAED Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **I: Information** | [87] | melodic_entropy | Anticipatory uncertainty — melodic unpredictability drives caudate DA ramp (anticipation scales with prediction uncertainty) | Pearce 2005 IDyOM; Cheung 2019 uncertainty × surprise |
+| **I: Information** | [92] | predictive_entropy | Prediction confidence — quantifies how uncertain the listener's internal model is about upcoming events, directly modulating anticipatory DA magnitude | Friston predictive coding; Koelsch et al. 2019 |
+
+**Rationale**: DAED models the temporal dissociation of dopaminergic reward between anticipation (caudate) and consummation (NAcc). The I:Information group provides direct measures of predictive uncertainty that currently must be inferred from proxy features (distribution_entropy [22], spectral_change [21]). melodic_entropy [87] provides a music-specific uncertainty signal grounded in IDyOM-style pitch prediction, while predictive_entropy [92] captures the listener's global model uncertainty. Both directly modulate the anticipatory DA ramp in caudate (f01_anticipatory_da).
+
+**Code impact** (Phase 6): `r3_indices` extended to include [87], [92]. These feed f01 anticipatory DA computation — spectral_uncertainty_125ms proxy can be augmented with direct predictive_entropy.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

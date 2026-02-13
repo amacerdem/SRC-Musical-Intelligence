@@ -4,7 +4,7 @@
 **Unit**: ASU (Auditory Salience Unit)
 **Circuit**: Salience (Anterior Insula, dACC, TPJ)
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 2.1.0 (deep literature cross-ref, 12 papers, verified effect sizes)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added G:Rhythm feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -189,7 +189,7 @@ Optimal Frequency:       ~1.65-2.0 Hz confirmed by multiple studies
 
 ## 4. R³ Input Mapping: What SNEM Reads
 
-### 4.1 R³ Feature Dependencies (~15D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | SNEM Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -201,7 +201,18 @@ Optimal Frequency:       ~1.65-2.0 Hz confirmed by multiple studies
 | **D: Change** | [22] | energy_change | Energy dynamics | Crescendo/decrescendo |
 | **E: Interactions** | [25:33] | x_l0l5 (8D) | Automatic entrainment | Motor-auditory coupling |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | SNEM Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **G: Rhythm** | [66] | beat_strength | Pulse perception strength | Quantifies beat prominence for SS-EP tracking |
+| **G: Rhythm** | [67] | pulse_clarity | Beat ambiguity level | Witek 2014: beat clarity modulates entrainment gain |
+
+**Rationale**: SNEM's core function is selective neural entrainment to beat/meter frequencies. The v1 representation relies on indirect proxies (onset_strength [11], spectral_flux [10]) to infer beat structure. G-group features beat_strength [66] and pulse_clarity [67] provide direct, perceptually grounded measures of pulse prominence and beat ambiguity, improving the precision of SS-EP enhancement estimation without changing the model's computational architecture.
+
+**Code impact**: None yet — R³ v2 features are doc-only until Phase 5 integration. Current code reads r3[..., 0:49]; v2 features will extend the slice to r3[..., 0:128] when the EAR pipeline emits the expanded vector.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

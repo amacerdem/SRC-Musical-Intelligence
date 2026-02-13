@@ -4,7 +4,7 @@
 **Unit**: IMU (Integrative Memory Unit)
 **Circuit**: Mnemonic (Hippocampal-Cortical)
 **Tier**: γ (Speculative) — <70% confidence
-**Version**: 2.1.0 (deep literature review, +7 papers, MNI validated, counterevidence noted)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added F, I feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
@@ -273,7 +273,7 @@ DMMS is gamma-tier because evidence is primarily from reviews, animal models, an
 
 ## 4. R³ Input Mapping: What DMMS Reads
 
-### 4.1 R³ Feature Dependencies (25D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | DMMS Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -289,7 +289,19 @@ DMMS is gamma-tier because evidence is primarily from reviews, animal models, an
 | **E: Interactions** | [25:33] | x_l0l5 (Energy x Consonance) | Salience-binding scaffold | What is loud + pleasant = important |
 | **E: Interactions** | [41:49] | x_l5l7 (Consonance x Timbre) | Familiarity template | Timbre-consonance = "known" pattern |
 
-### 4.2 Physical -> Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | DMMS Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **F: Pitch** | [61] | pitch_height | Melodic contour direction — pitch height delta = contour scaffold | Trehub 2001: infant contour sensitivity |
+| **F: Pitch** | [49:60] | chroma (12D) | Pitch-class template for early melodic learning | Trainor & Trehub 1992 |
+| **I: Information** | [87] | melodic_entropy | Encoding complexity — low-entropy melodies scaffold earliest | Pearce 2005: IDyOM information content |
+
+**Rationale**: DMMS models developmental music memory scaffolding. Pitch height provides the melodic contour direction critical for infant music perception (infants encode contour before absolute pitch). Chroma vectors provide pitch-class templates for early tonal learning. Melodic entropy quantifies encoding complexity, directly relevant to the developmental progression where simple, low-entropy melodies form the earliest memory scaffolds before complex patterns can be encoded.
+
+> **Code impact**: These features are doc-only until Phase 5 wiring. No changes to `dmms.py`.
+
+### 4.3 Physical -> Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

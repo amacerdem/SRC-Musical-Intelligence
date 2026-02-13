@@ -4,7 +4,7 @@
 **Unit**: PCU (Predictive Coding Unit)
 **Circuit**: Imagery (Auditory Cortex, IFG, STS, Hippocampus)
 **Tier**: γ (Integrative) — 50-70% confidence
-**Version**: 2.1.0 (deep C³ literature review, 1→12 papers)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added I:Information feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -171,7 +171,7 @@ Replication:          Silencing/explaining away: strongly supported by predictiv
 
 ## 4. R³ Input Mapping: What PSH Reads
 
-### 4.1 R³ Feature Dependencies (~18D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | PSH Role | Scientific Basis |
 |----------|-------|---------|----------|------------------|
@@ -184,7 +184,18 @@ Replication:          Silencing/explaining away: strongly supported by predictiv
 | **E: Interactions** | [25:33] | x_l0l5 (8D) | Low-level persistence pathway | Post-stim error signal |
 | **E: Interactions** | [41:49] | x_l5l7 (8D) | High-level silencing pathway | Explaining away |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ v2 Group | Index | Feature | PSH Role | Citation |
+|-------------|-------|---------|----------|----------|
+| **I: Information** | [90] | spectral_surprise | Spectral novelty for prediction error magnitude | Dubnov 2006 |
+| **I: Information** | [92] | predictive_entropy | Predictive uncertainty for prediction suppression hierarchy | Friston 2005 (predictive coding) |
+
+**Rationale**: PSH models predictive suppression hierarchy where predicted stimuli are suppressed (silenced) and unpredicted stimuli generate persistent prediction errors. spectral_surprise directly quantifies the spectral novelty that determines whether a stimulus was predicted or not -- high spectral_surprise triggers persistent low-level responses (V1/A1 analogue), while low surprise triggers high-level silencing. predictive_entropy captures the overall prediction uncertainty across the hierarchy, modulating the depth of suppression (high entropy = less suppression, more prediction error propagation).
+
+**Code impact** (future): `r3[..., 90]` and `r3[..., 92]` will feed PSH's suppression hierarchy alongside existing consonance, energy, and interaction features.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

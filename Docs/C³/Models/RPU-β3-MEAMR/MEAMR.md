@@ -4,7 +4,7 @@
 **Unit**: RPU (Reward Processing Unit)
 **Circuit**: Mesolimbic (NAcc, VTA, vmPFC, OFC, Amygdala)
 **Tier**: β (Bridging) — 70-90% confidence
-**Version**: 2.1.0 (literature-reviewed, corrected N, added supporting evidence)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added I:Information feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -175,7 +175,7 @@ Replication:             Consistent with Platel (2003) music-memory, Janata (200
 
 ## 4. R³ Input Mapping: What MEAMR Reads
 
-### 4.1 R³ Feature Dependencies (~12D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | MEAMR Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -187,7 +187,17 @@ Replication:             Consistent with Platel (2003) music-memory, Janata (200
 | **D: Change** | [22] | energy_change | Temporal patterns | Time signature cues |
 | **E: Interactions** | [41:49] | x_l5l6 (8D) | Memory-structure binding | Autobiographical salience |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | MEAMR Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **I: Information** | [87] | melodic_entropy | Melodic familiarity index — low melodic entropy signals familiar, predictable melodic patterns that trigger autobiographical memory retrieval and nostalgia-associated reward | Pearce 2005 IDyOM; Janata 2009 MEAM |
+
+**Rationale**: MEAMR models music-evoked autobiographical memory reward. Memory retrieval is triggered by recognition of familiar musical patterns — melodic contour is the strongest cue for autobiographical memory (Janata 2009). melodic_entropy [87] provides a direct measure of melodic predictability: low values indicate familiar, well-learned melodic patterns that activate the hippocampal-striatal memory-reward circuit. Currently MEAMR infers familiarity from spectral_change [21] and timbre features, which are weaker proxies for melodic recognition.
+
+**Code impact** (Phase 6): `r3_indices` extended to include [87]. Familiarity index computation augmented with melodic predictability measure.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

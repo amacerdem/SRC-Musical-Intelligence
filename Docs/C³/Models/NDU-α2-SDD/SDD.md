@@ -4,7 +4,7 @@
 **Unit**: NDU (Novelty Detection Unit)
 **Circuit**: Salience + Perceptual (Anterior Insula, dACC, IFG)
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 2.1.0 (deep literature review: 1→8 papers, effect sizes added, brain regions verified)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added H:Harmony, I:Information feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -160,7 +160,7 @@ Replication:             Paraskevopoulos 2022 → Porfyri et al. 2025 (same grou
 
 ## 4. R³ Input Mapping: What SDD Reads
 
-### 4.1 R³ Feature Dependencies (~16D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | SDD Role | Scientific Basis |
 |----------|-------|---------|----------|------------------|
@@ -173,7 +173,18 @@ Replication:             Paraskevopoulos 2022 → Porfyri et al. 2025 (same grou
 | **E: Interactions** | [25:33] | x_l0l5 (8D) | Cross-band coupling | Inter-feature correlation |
 | **E: Interactions** | [41:49] | x_l5l7 (8D) | Cross-level integration | Supramodal binding |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | SDD Role | Scientific Basis |
+|----------|-------|---------|----------|------------------|
+| **H: Harmony** | [86] | syntactic_irregularity | Tonal syntax violation level | Lerdahl 2001: quantifies distance from tonal prototype; primary new feature for NDU — enables direct harmonic deviance detection beyond spectral change proxies |
+| **I: Information** | [93] | tonal_ambiguity | Key uncertainty level | Quantifies tonal center ambiguity; high values signal perceptual contexts where deviance detection thresholds shift |
+
+**Rationale**: SDD models supramodal deviance detection using v1 features spectral_flux [10] and spectral_change [21] as proxies for acoustic irregularity. syntactic_irregularity [86] provides a direct measure of tonal syntax violation — the most important new feature for NDU, resolving the NDU-001 gap. tonal_ambiguity [93] addresses the NDU-002 gap (perceptual_ambiguity) by quantifying key uncertainty, which modulates deviance detection thresholds. Together these features ground SDD's deviance computation in music-theoretic and information-theoretic frameworks.
+
+**Code impact**: None yet — R³ v2 features are doc-only until Phase 5 integration. Current code reads r3[..., 0:49]; v2 features will extend the slice to r3[..., 0:128] when the EAR pipeline emits the expanded vector.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

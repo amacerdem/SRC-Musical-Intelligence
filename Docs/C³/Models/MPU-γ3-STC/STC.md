@@ -4,7 +4,7 @@
 **Unit**: MPU (Motor Planning Unit)
 **Circuit**: Sensorimotor (SMA, PMC, Cerebellum, Basal Ganglia)
 **Tier**: γ (Integrative) — 50-70% confidence
-**Version**: 2.1.0 (deep lit review: 1→6 papers, Zamorano 2023 insula-sensorimotor rs-fMRI verified, Kleber 2013 right AIC F=22.08 causal anesthesia, Zarate 2008 pitch-shift network, Eliades 2024 vocal suppression dual process, Criscuolo 2022 ALE meta 84 studies, 6 brain regions with MNI from Kleber 2013)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added G:Rhythm feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -171,7 +171,7 @@ Replication:             Partially replicated across Zarate 2008, 2010, Kleber 2
 
 ## 4. R³ Input Mapping: What STC Reads
 
-### 4.1 R³ Feature Dependencies (~16D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | STC Role | Scientific Basis |
 |----------|-------|---------|----------|------------------|
@@ -185,7 +185,19 @@ Replication:             Partially replicated across Zarate 2008, 2010, Kleber 2
 | **E: Interactions** | [25:33] | x_l0l5 (8D) | Respiratory timing | Breath-phrase coupling |
 | **E: Interactions** | [33:41] | x_l4l5 (8D) | Interoceptive-motor | Voice-body connection |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ v2 Group | Index | Feature | STC Role | Citation |
+|-------------|-------|---------|----------|----------|
+| **G: Rhythm** | [68] | syncopation_index | Vocal rhythmic complexity for singing timing | Longuet-Higgins & Lee 1984; Witek 2014 |
+| **G: Rhythm** | [69] | metricality_index | Metrical regularity for phrase-level vocal timing | Grahn & Brett 2007 |
+| **G: Rhythm** | [74] | rhythmic_regularity | Rhythmic regularity for vocal-motor coordination stability | Lartillot & Toiviainen 2007 |
+
+**Rationale**: STC models singing training connectivity between insula and sensorimotor cortex. Singing requires precise rhythmic control of vocal production: metricality_index and rhythmic_regularity capture the temporal regularity that vocalists must track for phrase timing, while syncopation_index modulates the rhythmic complexity of vocal passages. Criscuolo 2022's meta-analysis (84 studies) showed that singing training enhances temporal coordination, which these features directly quantify.
+
+**Code impact** (future): `r3[..., 68:70]` and `r3[..., 74]` will feed STC's vocal timing pathway alongside existing timbre and interaction features.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

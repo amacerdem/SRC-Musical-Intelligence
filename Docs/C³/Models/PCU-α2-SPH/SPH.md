@@ -4,7 +4,7 @@
 **Unit**: PCU (Predictive Coding Unit)
 **Circuit**: Imagery (Auditory Cortex, IFG, STS, Hippocampus)
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 2.1.0 (deep C³ literature review: 1 → 11 papers)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added F:Pitch feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -188,7 +188,7 @@ Replication:              Feedforward-feedback hierarchy confirmed across Bonett
 
 ## 4. R³ Input Mapping: What SPH Reads
 
-### 4.1 R³ Feature Dependencies (~22D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | SPH Role | Scientific Basis |
 |----------|-------|---------|----------|------------------|
@@ -202,7 +202,18 @@ Replication:              Feedforward-feedback hierarchy confirmed across Bonett
 | **E: Interactions** | [25:33] | x_l0l5 (8D) | Feedforward pathway | Heschl's → Hippocampus |
 | **E: Interactions** | [41:49] | x_l5l7 (8D) | Match/mismatch oscillation | Gamma vs alpha-beta |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ v2 Group | Index | Feature | SPH Role | Citation |
+|-------------|-------|---------|----------|----------|
+| **F: Pitch** | [61] | pitch_height | Pitch register for sequence pattern matching | Krumhansl 1990 |
+| **F: Pitch** | [63] | pitch_salience | Pitch clarity for sequence element detection | De Cheveigne & Kawahara 2002 |
+
+**Rationale**: SPH models serial-position-in-hippocampus pitch sequence memory. pitch_height provides the explicit pitch register that SPH's sequence matching operates on (replacing the indirect spectral_centroid [9] proxy), while pitch_salience indicates how clearly each pitch element is perceived, directly modulating the strength of sequence encoding. These features align with SPH's core function of matching incoming tones to memorized pitch sequences.
+
+**Code impact** (future): `r3[..., 61]` and `r3[..., 63]` will feed SPH's sequence matching pathway alongside existing consonance and interaction features.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

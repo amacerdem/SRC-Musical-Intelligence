@@ -4,7 +4,7 @@
 **Unit**: RPU (Reward Processing Unit)
 **Circuit**: Mesolimbic (NAcc, VTA, vmPFC, OFC, Amygdala)
 **Tier**: β (Bridging) — 70-90% confidence
-**Version**: 2.1.0 (literature-reviewed, multi-study evidence)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added G:Rhythm, I:Information feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -166,7 +166,7 @@ Note:                    IC×Entropy interaction marginal in Gold 2019 Study 1 (
 
 ## 4. R³ Input Mapping: What IUCP Reads
 
-### 4.1 R³ Feature Dependencies (~10D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | IUCP Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -176,7 +176,20 @@ Note:                    IC×Entropy interaction marginal in Gold 2019 Study 1 (
 | **D: Change** | [24] | concentration_change | Spectral uncertainty | Timbral complexity |
 | **E: Interactions** | [33:41] | x_l4l5 (8D) | IC x Entropy surface | Preference computation |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | IUCP Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **I: Information** | [87] | melodic_entropy | Melodic complexity axis — one dimension of the inverted-U complexity surface; high melodic entropy = high complexity | Pearce 2005 IDyOM |
+| **I: Information** | [88] | harmonic_entropy | Harmonic complexity axis — chord-level entropy contributes to overall musical complexity perception | Gold 2019 chord transition probability |
+| **I: Information** | [89] | rhythmic_information_content | Rhythmic complexity — temporal information content adds a third complexity dimension to the preference surface | Spiech 2022 rhythmic IC |
+| **I: Information** | [92] | predictive_entropy | Global model uncertainty — the listener's overall prediction confidence determines where on the inverted-U curve the current moment falls | Friston predictive coding |
+
+**Rationale**: IUCP models the inverted-U relationship between musical complexity and pleasure (Berlyne 1971). The complexity axis is currently approximated from spectral_change [21] and concentration_change [24]. The I:Information group provides direct, multi-domain complexity measures: melodic [87], harmonic [88], rhythmic [89] entropy, plus the listener's global predictive uncertainty [92]. These enable a proper multi-dimensional complexity surface instead of a 1D proxy. The inverted-U peak shifts with predictive_entropy — high model uncertainty lowers the optimal complexity level.
+
+**Code impact** (Phase 6): `r3_indices` extended to include [87], [88], [89], [92]. IC computation can be decomposed into melodic/harmonic/rhythmic components for richer inverted-U modeling.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

@@ -4,7 +4,7 @@
 **Unit**: IMU (Integrative Memory Unit)
 **Circuit**: Mnemonic (Hippocampal-Cortical)
 **Tier**: β (Integrative) — 70-90% confidence
-**Version**: 2.1.0 (deep literature cross-reference, 1→8 papers, +Liang 2025 fNIRS N=50, +Putkinen 2025 PET-fMRI N=15, +Arican & Soyman 2025 N=123, verified MNI from Liang 2025, 6→9 brain regions)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added K feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
@@ -275,7 +275,7 @@ Evidence tier:                   β (Integrative) — multiple studies, convergi
 
 ## 4. R³ Input Mapping: What VRIAP Reads
 
-### 4.1 R³ Feature Dependencies (36D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | VRIAP Role | Scientific Basis |
 |----------|-------|---------|------------|------------------|
@@ -295,7 +295,18 @@ Evidence tier:                   β (Integrative) — multiple studies, convergi
 | **E: Interactions** | [33:41] | x_l4l5 (Derivatives x Consonance) | Sensorimotor dynamics | Change-consonance = active engagement |
 | **E: Interactions** | [41:49] | x_l5l7 (Consonance x Timbre) | Comfort-familiarity binding | Timbre warmth + consonance = safety signal |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | VRIAP Role | Scientific Basis |
+|----------|-------|---------|------------|------------------|
+| **K: Modulation** | [123] | fluctuation_strength | Relaxation modulator — 4 Hz fluctuation peak drives calming response | Fastl & Zwicker 2007: fluctuation strength perception |
+| **K: Modulation** | [117] | modulation_4Hz | Amplitude modulation at 4 Hz — optimal for relaxation induction | Leman 2000: 4 Hz modulation ↔ bodily resonance |
+
+**Rationale**: VRIAP's analgesia paradigm benefits from psychoacoustic modulation features. Fluctuation strength captures the perceptual salience of amplitude modulation, with the peak at ~4 Hz corresponding to breathing rate and bodily resonance — directly relevant to relaxation induction for pain management. The 4 Hz modulation band specifically targets the frequency range most associated with calm, rhythmic breathing patterns that facilitate analgesic states.
+
+> **Code impact**: These features are doc-only until Phase 5 wiring. No changes to `vriap.py`.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

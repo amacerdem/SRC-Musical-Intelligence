@@ -4,8 +4,8 @@
 **Unit**: STU (Sensorimotor Timing Unit)
 **Circuit**: Sensorimotor (Beat Entrainment Processing)
 **Tier**: β (Integrative) — 70-90% confidence
-**Version**: 2.1.0 (deep literature review: 1→12 papers, Potes 2012 N=8 per-subject r=0.43-0.58 not groove-specific QUALIFIED, Grahn & Brett 2007 putamen Z=5.67/SMA Z=5.03 beat-specific, Spiech 2022 groove inverted-U χ²=14.643, Thaut 2015 period entrainment theory, Ayyildiz 2025 micro-timing N=100, Large 2023 review, 7 methods)
-**Date**: 2026-02-12
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added G:Rhythm, I:Information, K:Modulation feature dependencies)
+**Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -290,7 +290,7 @@ QUALITY ASSESSMENT: β-tier (12 papers, 7 methods, primary Potes QUALIFIED)
 
 ## 4. R³ Input Mapping: What HGSIC Reads
 
-### 4.1 R³ Feature Dependencies (9D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | HGSIC Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -304,7 +304,20 @@ QUALITY ASSESSMENT: β-tier (12 papers, 7 methods, primary Potes QUALIFIED)
 | **D: Change** | [24] | timbre_change | Timbral rhythm | Instrument-level periodicity |
 | **B: Energy** | [9] | spectral_centroid_energy | Energy distribution | Frequency-weighted intensity |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | HGSIC Role | Scientific Basis |
+|----------|-------|---------|------------|------------------|
+| **G: Rhythm** | [71] | groove_index | Composite groove signal integrating syncopation, bass, and pulse clarity | Madison 2006; Janata 2012 |
+| **G: Rhythm** | [68] | syncopation_index | Off-beat accent pattern driving groove perception and sensorimotor coupling | Witek 2014 |
+| **I: Information** | [89] | rhythmic_information_content | Rhythmic surprise for groove-information integration | Spiech 2022 |
+| **K: Modulation** | [117] | modulation_4Hz | Sub-beat modulation energy — 4 Hz captures 16th-note pulsation relevant to groove | Honing 2012 |
+
+**Rationale**: HGSIC models hierarchical groove and sensorimotor integration. G[71] groove and G[68] syncopation provide explicit groove metrics that HGSIC currently approximates from Energy features. I[89] rhythmic_IC adds information-theoretic groove prediction. K[117] modulation_4Hz captures sub-beat amplitude modulation energy at groove-relevant rates.
+
+**Code impact** (Phase 6): `r3_indices` must be extended to include [68, 71, 89, 117]. These features are read-only inputs — no formula changes required.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output
@@ -323,6 +336,11 @@ R³[9] spectral_centroid_energy ─┐
 R³[23] pitch_change ────────────┼──► Motor Groove (hierarchical state)
 R³[24] timbre_change ───────────┘   Groove = Beat × Meter × Motor coupling
                                     BEP.motor_entrainment at H16 (1000ms)
+
+R³[71] groove_index ───────────┐
+R³[68] syncopation_index ──────┼──► Groove Feature Integration (v2)
+R³[89] rhythmic_info_content ──┤   Direct groove metrics + information
+R³[117] modulation_4Hz ────────┘   Sub-beat modulation energy
 ```
 
 ---

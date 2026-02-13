@@ -4,7 +4,7 @@
 **Unit**: IMU (Integrative Memory Unit)
 **Circuit**: Mnemonic (Hippocampal-Cortical) + Sensorimotor (cross-circuit read)
 **Tier**: β (Integrative) — 70-90% confidence
-**Version**: 2.1.0 (Phase 1 upgrade: 4→15 papers, verified MNI, deep literature review)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added G feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
@@ -288,7 +288,7 @@ Key Limitation:       No single RCT with full 3-modality + neuroimaging design;
 
 ## 4. R³ Input Mapping: What RIRI Reads
 
-### 4.1 R³ Feature Dependencies (29D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | RIRI Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -306,7 +306,19 @@ Key Limitation:       No single RCT with full 3-modality + neuroimaging design;
 | **E: Interactions** | [33:41] | x_l4l5 (8D) | Sensorimotor integration | Cross-modal prediction coupling |
 | **E: Interactions** | [41:49] | x_l5l7 (8D) | Connectivity coupling | Network restoration signal |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | RIRI Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **G: Rhythm** | [71] | groove_index | Motor engagement quality — groove drives spontaneous movement | Janata et al. 2012: groove ↔ motor system activation |
+| **G: Rhythm** | [70] | isochrony_nPVI | Temporal regularity — low nPVI = isochronous = optimal RAS | Grahn & Brett 2007 |
+| **G: Rhythm** | [65] | tempo_estimate | Rehabilitation tempo target — BPM for motor entrainment | Thaut 2005: RAS optimal tempo range |
+
+**Rationale**: RIRI integrates rhythmic auditory stimulation with rehabilitation protocols. Groove index directly quantifies how much a musical stimulus drives motor engagement, the core therapeutic mechanism. Isochrony (nPVI) measures temporal regularity critical for stable entrainment in rehabilitation contexts. Tempo estimate provides the BPM value for matching auditory stimulation to motor rehabilitation targets across gait, upper limb, and speech domains.
+
+> **Code impact**: These features are doc-only until Phase 5 wiring. No changes to `riri.py`.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

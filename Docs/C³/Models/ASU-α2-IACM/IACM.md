@@ -4,7 +4,7 @@
 **Unit**: ASU (Auditory Salience Unit)
 **Circuit**: Salience (Anterior Insula, dACC, TPJ)
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 2.1.0 (deep literature cross-ref, 12 papers, verified effect sizes)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added F:Pitch feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -183,7 +183,7 @@ Replication:             Converging evidence across 12 studies (EEG, ECoG, MEG, 
 
 ## 4. R³ Input Mapping: What IACM Reads
 
-### 4.1 R³ Feature Dependencies (~14D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | IACM Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -198,7 +198,18 @@ Replication:             Converging evidence across 12 studies (EEG, ECoG, MEG, 
 | **D: Change** | [21] | spectral_change | Spectral dynamics | Deviation detection |
 | **E: Interactions** | [25:33] | x_l0l5 (8D) | Auditory scene coupling | Object segregation |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | IACM Role | Scientific Basis |
+|----------|-------|---------|-----------|------------------|
+| **F: Pitch** | [64] | inharmonicity_index | Direct harmonic series deviation | Quantifies partial frequency jitter; primary new feature for IACM — replaces indirect tonalness [14] proxy |
+| **F: Pitch** | [63] | pitch_salience | Virtual pitch strength | Parncutt 1989: pitch salience mediates attention capture threshold for inharmonic sounds |
+
+**Rationale**: IACM models inharmonicity-driven attention capture (P3a). The v1 representation uses tonalness [14] and spectral_flatness [16] as indirect inharmonicity proxies. F-group inharmonicity_index [64] provides a direct measure of harmonic series deviation — the core acoustic property that drives IACM's attention capture mechanism. pitch_salience [63] complements this by quantifying virtual pitch strength, which modulates the threshold at which inharmonicity triggers involuntary attention.
+
+**Code impact**: None yet — R³ v2 features are doc-only until Phase 5 integration. Current code reads r3[..., 0:49]; v2 features will extend the slice to r3[..., 0:128] when the EAR pipeline emits the expanded vector.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

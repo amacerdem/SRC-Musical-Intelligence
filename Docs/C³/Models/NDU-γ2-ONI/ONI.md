@@ -4,7 +4,7 @@
 **Unit**: NDU (Novelty Detection Unit)
 **Circuit**: Salience + Perceptual (Developing Auditory Cortex, Attention Networks)
 **Tier**: γ (Integrative) — 50–70% confidence
-**Version**: 2.1.0 (deep literature review, expanded evidence + brain regions)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added I:Information feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../General/01-GLOSSARY.md) for terminology.
@@ -193,7 +193,7 @@ Replication:    PENDING — Finnish cohort (Kostilainen et al. 2021 EEG) shows
 
 ## 4. R³ Input Mapping: What ONI Reads
 
-### 4.1 R³ Feature Dependencies (~14D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | ONI Role | Scientific Basis |
 |----------|-------|---------|----------|------------------|
@@ -206,7 +206,18 @@ Replication:    PENDING — Finnish cohort (Kostilainen et al. 2021 EEG) shows
 | **D: Change** | [23] | pitch_change | Pitch dynamics | Over-normalization proxy |
 | **E: Interactions** | [33:41] | x_l4l5 (8D) | Dynamic-percept binding | Enhanced predictive coding |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ Group | Index | Feature | ONI Role | Scientific Basis |
+|----------|-------|---------|----------|------------------|
+| **I: Information** | [91] | information_rate | Information flow rate | Weineck 2022: information rate quantifies temporal density of novel content; over-normalization occurs when intervention drives information processing beyond full-term baseline |
+| **I: Information** | [90] | spectral_surprise | Prediction error magnitude | Friston prediction error: surprise levels that exceed full-term norms indicate over-normalization — the intervention group's enhanced predictive processing |
+
+**Rationale**: ONI models over-normalization in intervention — the finding that singing intervention groups can exceed full-term baselines. The v1 representation uses pitch_change [23] and spectral_change [21] as proxies for enhanced processing. information_rate [91] provides a direct measure of how rapidly novel content is processed, enabling detection of over-normalization when this rate exceeds typical full-term values. spectral_surprise [90] quantifies prediction error magnitude, which in over-normalized infants may show atypically low values (indicating overly precise internal models).
+
+**Code impact**: None yet — R³ v2 features are doc-only until Phase 5 integration. Current code reads r3[..., 0:49]; v2 features will extend the slice to r3[..., 0:128] when the EAR pipeline emits the expanded vector.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output

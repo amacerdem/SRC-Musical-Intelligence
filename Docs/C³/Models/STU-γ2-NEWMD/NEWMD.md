@@ -4,7 +4,7 @@
 **Unit**: STU (Sensorimotor Timing Unit)
 **Circuit**: Sensorimotor (Beat Entrainment + Temporal Memory Hierarchy)
 **Tier**: γ (Speculative) — <70% confidence
-**Version**: 2.1.0 (deep literature review: 1→12 papers, Noboa 2025 N=30 EXACT REPLICATION of Sares 2023 with IDENTICAL regression β=-0.060 SS-EP / β=+0.068 WM, R²=0.316, Scartozzi 2024 N=57 spontaneous beta r=0.42 with musicality NOT rhythm discrimination SUPPORTS dissociation, Zanto 2022 RCT N=37 rhythm training→STM d=0.52 via SPL shared WM resources, Lenoir 2025 auditory-specific beat periodization d=1.648, Pesnot Lerousseau 2021 low-freq entrainment NOT persistent CONSTRAINS, Grahn putamen Z=5.67/SMA Z=5.03, 8 methods)
+**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added G:Rhythm feature dependencies)
 **Date**: 2026-02-13
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
@@ -307,7 +307,7 @@ Replication:         EXACT REPLICATION by Noboa 2025 (identical β values)
 
 ## 4. R³ Input Mapping: What NEWMD Reads
 
-### 4.1 R³ Feature Dependencies (33D of 49D)
+### 4.1 R³ v1 Feature Dependencies ([0:49])
 
 | R³ Group | Index | Feature | NEWMD Role | Scientific Basis |
 |----------|-------|---------|-----------|------------------|
@@ -324,7 +324,18 @@ Replication:         EXACT REPLICATION by Noboa 2025 (identical β values)
 | **C: Timbre** | [12:21] | all timbre (9D) | Spectral complexity for WM | Richer timbre → more WM demand |
 | **E: Interactions** | [25:33] | x_l0l5 (8D) | Foundation×Perceptual coupling | Cross-domain integration for WM |
 
-### 4.2 Physical → Cognitive Transformation
+### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
+
+| R³ v2 Group | Index | Feature | NEWMD Role | Scientific Basis |
+|-------------|-------|---------|-----------|------------------|
+| **G: Rhythm** | [66] | beat_strength | Beat salience for temporal expectation generation | Large & Palmer 2002 |
+| **G: Rhythm** | [67] | pulse_clarity | Pulse ambiguity level modulating prediction confidence | Witek 2014 |
+
+**Rationale**: NEWMD models neural expectation and working memory dynamics. G[66] beat_strength provides beat salience that drives temporal expectation formation, and G[67] pulse_clarity indicates how clearly the pulse is perceived, modulating prediction confidence.
+
+**Code impact** (Phase 6): `r3_indices` will be extended to include `[66, 67]`.
+
+### 4.3 Physical → Cognitive Transformation
 
 ```
 R³ Physical Input                    Cognitive Output
@@ -355,6 +366,10 @@ R³[25:33] x_l0l5 (8D) ────────── Flexibility / Adaptation
                                    TMH.long_context at H20 (5000ms)
                                    Math: F = σ(γ₁ · coupling_var ·
                                                 TMH.long[entropy])
+
+── R³ v2 (Phase 6) ──────────────────────────────────────────────
+R³[66] beat_strength ──────────── Beat salience → temporal expectation
+R³[67] pulse_clarity ──────────── Pulse ambiguity → prediction confidence
 ```
 
 ---
