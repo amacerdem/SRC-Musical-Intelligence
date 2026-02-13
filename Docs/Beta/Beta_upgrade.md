@@ -1143,20 +1143,363 @@ Dependency Graph:
 6. R³ v2 expansion docs specify new temporal demands for all 6 new groups (F-K)
 7. H3DemandSpec r3_idx range updated from [0:48] to [0:127]
 
-### Phase 5: L³ Architecture (Docs/L³)
+### Phase 5: L³ Architecture (Docs/L³) ✅ COMPLETE
 
-1. **Create `Docs/L³/L3-SEMANTIC-ARCHITECTURE.md`** — master semantic architecture:
-   - 8 semantic groups (alpha through theta)
-   - Dynamic dimensionality explanation
-   - Per-group specification (inputs, computation, output meaning)
-2. **Update existing L³ files** (AAC, BRAIN, SRP, VMM semantic spaces)
-3. **Per-unit L³ mapping docs:**
-   - `Docs/L³/mappings/SPU-L3-MAP.md` — how SPU outputs map to semantic meaning
-   - etc for each unit
-4. **Cross-unit semantic integration doc:**
-   - `Docs/L³/L3-CROSS-UNIT-INTEGRATION.md` — how units combine in semantic space
+L³ (Lexical LOGOS Lattice) is MI's **semantic interpretation layer** — the final stage in the Audio → R³ → H³ → C³ → **L³** → MI-space pipeline. It transforms unified Brain output (26D in mi_beta, variable depending on active units/models) into **104 dimensions of meaning** across 8 epistemological groups (α→θ), organized in 2 computation phases. Zero learned parameters — every dimension has a citation.
 
-**Quality gate:** Every L³ semantic group has defined inputs, computation method, and output meaning linked to C³ models.
+**Problem:** R³, H³, and C³ all had complete modular documentation architectures (71, 73, 160+ files respectively). L³ had only **4 flat files** — 3 deprecated per-model semantic spaces (SRP, AAC, VMM) + 1 active unified doc (BRAIN-SEMANTIC-SPACE, 999 lines). This made L³ the only undocumented layer in the pipeline.
+
+**Delivered:** 69 files, ~10,350 lines, 13 subdirectories + 2 sub-directories under Groups/, mirroring H³/C³/R³ patterns.
+
+#### 5.0 L³ Core Architecture
+
+```
+Input: MusicalBrain (26D variable)
+  Shared(4D) Reward(9D) Affect(6D) Autonomic(5D) Integration(2D)
+                          ↓
+  Phase 1 — Independent (read only BrainOutput):
+    α Computation     HOW computed?              6D (variable)
+    β Neuroscience    WHERE in brain?            14D (variable)
+    γ Psychology      WHAT subjectively?         13D
+    δ Validation      HOW to test?               12D
+  Phase 1b — Stateful:
+    ε Learning        HOW does listener learn?   19D (EMA, Markov, Welford, ring buffer)
+                          ↓
+  Phase 2 — Dependent (ε→ζ→η, ε+ζ→θ):
+    ζ Polarity        WHICH direction? [-1,+1]   12D
+    η Vocabulary      WHAT word? (64 gradation)  12D
+    θ Narrative       HOW to describe?           16D
+                          ↓
+  Output: L3Output (B, T, 104D variable)
+  Total: 6+14+13+12+19+12+12+16 = 104D per frame
+```
+
+**Key architectural features:**
+- **8-level Epistemological Ladder:** Each group answers one progressively deeper question (computation → language)
+- **2-Phase Dependency:** Phase 1 groups read only Brain output; Phase 2 chain through ε→ζ→η→θ
+- **Variable Dimensionality:** α (per-unit attribution) and β (per-region activation) auto-configure based on active units/models
+- **Stateful Computation:** Only ε maintains state (EMA accumulators ×3 timescales, Markov 8×8 transition matrix, Welford online variance, ring buffer size 50)
+- **64-Gradation Vocabulary:** η quantizes 12 polarity axes into 64 levels with 96 descriptive terms (JND-aligned, Weber/Stevens)
+- **Narrative Sentence Structure:** θ produces 4-slot sentences (subject + predicate + modifier + connector, each 4D, softmax temp=3.0)
+- **9 Per-Unit Adapters:** Each Brain unit has a semantic adapter mapping model outputs to group inputs (all currently stubs in mi_beta)
+
+#### 5.1 Directory Architecture
+
+```
+Docs/L³/
+├── 00-INDEX.md                              Master index
+├── L3-SEMANTIC-ARCHITECTURE.md              Definitive architecture doc (~800 lines)
+├── CHANGELOG.md                             Version history (v1.0→v2.0→v2.1)
+├── EXTENSION-GUIDE.md                       Developer guide (add groups/dims/adapters)
+│
+├── Registry/                                Canonical reference tables
+│   ├── 00-INDEX.md
+│   ├── DimensionCatalog.md                  All 104 dimensions: index, group, name, range, formula
+│   ├── GroupMap.md                           8 groups: index range, dim, phase, dependencies
+│   └── NamingConventions.md                 Greek letters, snake_case, range conventions
+│
+├── Epistemology/                            L³-UNIQUE: 8-level framework theory
+│   ├── 00-INDEX.md                          Framework overview
+│   ├── Computation.md                       Level 1 (α): HOW computed?
+│   ├── Neuroscience.md                      Level 2 (β): WHERE in brain?
+│   ├── Psychology.md                        Level 3 (γ): WHAT does it mean?
+│   ├── Validation.md                        Level 4 (δ): HOW to test?
+│   ├── Learning.md                          Level 5 (ε): HOW does listener learn?
+│   ├── Polarity.md                          Level 6 (ζ): WHICH direction?
+│   ├── Vocabulary.md                        Level 7 (η): WHAT word?
+│   └── Narrative.md                         Level 8 (θ): HOW to describe?
+│
+├── Groups/                                  Per-group detailed specifications
+│   ├── 00-INDEX.md                          Cross-group comparison table
+│   ├── Independent/                         Phase 1 groups
+│   │   ├── 00-INDEX.md
+│   │   ├── Alpha.md                         α: per-unit attribution + certainty (variable D)
+│   │   ├── Beta.md                          β: 8 regions + 3 NTs + 3 circuits (variable D)
+│   │   ├── Gamma.md                         γ: reward(3) + ITPRA(2) + aesthetics(3) + emotion(2) + chills(3)
+│   │   ├── Delta.md                         δ: physiological(4) + neural(3) + behavioral(2) + temporal(3)
+│   │   └── Epsilon.md                       ε: STATEFUL; EMA×3, Markov 8×8, Welford, ring buffer
+│   └── Dependent/                           Phase 2 groups
+│       ├── 00-INDEX.md
+│       ├── Zeta.md                          ζ: 12 bipolar axes [-1,+1], reward/learning/aesthetic
+│       ├── Eta.md                           η: 64-gradation quantization, 96 terms, get_terms()
+│       └── Theta.md                         θ: subject(4) + predicate(4) + modifier(4) + connector(4)
+│
+├── Vocabulary/                              L³-UNIQUE: 64-gradation system
+│   ├── 00-INDEX.md
+│   ├── TermCatalog.md                       96 terms (12 axes × 8 bands) — matches eta.py
+│   ├── GradationSystem.md                   64-level design + JND rationale (Weber/Stevens)
+│   └── AxisDefinitions.md                   12 polarity axes: neg↔pos, source, formula, citation
+│
+├── Contracts/                               Interface specifications
+│   ├── 00-INDEX.md                          5 contracts overview
+│   ├── BaseSemanticGroup.md                 ABC: LEVEL, GROUP_NAME, OUTPUT_DIM, compute()
+│   ├── SemanticGroupOutput.md               Dataclass: group_name, level, tensor(B,T,D)
+│   ├── BaseModelSemanticAdapter.md          Per-unit adapter ABC: UNIT_NAME, adapt()
+│   ├── L3Orchestrator.md                    Orchestrator: group ordering, phases, reset()
+│   └── EpsilonStateContract.md              State: 6 EMA, 2 Welford, Markov 8×8, ring 50
+│
+├── Pipeline/                                Execution architecture
+│   ├── 00-INDEX.md
+│   ├── DependencyDAG.md                     brain→α,β,γ,δ,ε→ζ→η→θ
+│   ├── ExecutionModel.md                    Phase 1 → 1b → 2a → 2b → 2c sequence
+│   ├── StateManagement.md                   Epsilon lifecycle: init → accumulate → reset
+│   └── Performance.md                       Per-group cost, memory (ε state: ~B×230 floats)
+│
+├── Adapters/                                L³-UNIQUE: Per-unit semantic mapping
+│   ├── 00-INDEX.md                          Cross-unit adapter comparison (all "stub")
+│   ├── SPU-L3-ADAPTER.md                    Spectral → semantic
+│   ├── STU-L3-ADAPTER.md                    Timing → semantic
+│   ├── IMU-L3-ADAPTER.md                    Memory → semantic
+│   ├── ASU-L3-ADAPTER.md                    Salience → semantic
+│   ├── NDU-L3-ADAPTER.md                    Novelty → semantic
+│   ├── MPU-L3-ADAPTER.md                    Motor → semantic
+│   ├── PCU-L3-ADAPTER.md                    Prediction → semantic
+│   ├── ARU-L3-ADAPTER.md                    Affect → semantic
+│   └── RPU-L3-ADAPTER.md                    Reward → semantic
+│
+├── Standards/                               Quality & compliance
+│   ├── 00-INDEX.md
+│   ├── CitationQuality.md                   Per-dimension audit: citation, N, method, status
+│   └── PsychometricAlignment.md             GEMS, SDT, Russell circumplex, Osgood, ITPRA
+│
+├── Validation/                              Testing & benchmarks
+│   ├── 00-INDEX.md
+│   ├── AcceptanceCriteria.md                Per-group: shape, range [0,1]/[-1,+1], NaN check
+│   └── BenchmarkPlan.md                     δ vs SCR/HR, γ vs ratings, η vs GEMS
+│
+├── Literature/                              Academic references
+│   ├── 00-INDEX.md
+│   └── L3-LITERATURE.md                     Per-dimension cross-ref (104D, 40+ papers)
+│
+├── Migration/                               Version migration
+│   ├── 00-INDEX.md
+│   ├── V1-to-V2.md                          Per-model → unified Brain migration
+│   └── DeprecatedFiles.md                   Archive inventory + replacement mapping
+│
+└── Archive/                                 Deprecated files
+    ├── 00-INDEX.md
+    ├── L3-SRP-SEMANTIC-SPACE.md             v1.x SRP-only (DEPRECATED)
+    ├── L3-AAC-SEMANTIC-SPACE.md             v1.x AAC-only (DEPRECATED)
+    ├── L3-VMM-SEMANTIC-SPACE.md             v1.x VMM-only (DEPRECATED)
+    └── L3-BRAIN-SEMANTIC-SPACE.md           v2.0 unified (archived, decomposed into modular)
+```
+
+#### 5.2 Code-to-Documentation Mapping
+
+| Documentation File | Code File | Role |
+|-------------------|-----------|------|
+| `00-INDEX.md` | `mi_beta/language/__init__.py` | Package entry point |
+| `Groups/Independent/Alpha.md` | `mi_beta/language/groups/alpha.py` | α group: per-unit attribution |
+| `Groups/Independent/Beta.md` | `mi_beta/language/groups/beta.py` | β group: brain region mapping |
+| `Groups/Independent/Gamma.md` | `mi_beta/language/groups/gamma.py` | γ group: psychological meaning |
+| `Groups/Independent/Delta.md` | `mi_beta/language/groups/delta.py` | δ group: validation predictions |
+| `Groups/Independent/Epsilon.md` | `mi_beta/language/groups/epsilon.py` (336 lines) | ε group: STATEFUL learning |
+| `Groups/Dependent/Zeta.md` | `mi_beta/language/groups/zeta.py` (145 lines) | ζ group: polarity mapping |
+| `Groups/Dependent/Eta.md` | `mi_beta/language/groups/eta.py` (176 lines) | η group: vocabulary (96 terms) |
+| `Groups/Dependent/Theta.md` | `mi_beta/language/groups/theta.py` | θ group: narrative structure |
+| `Contracts/BaseSemanticGroup.md` | `mi_beta/contracts/base_semantic_group.py` (169 lines) | Group ABC contract |
+| `Contracts/BaseModelSemanticAdapter.md` | `mi_beta/language/adapters/_base_adapter.py` (15 lines) | Adapter ABC |
+| `Contracts/L3Orchestrator.md` | `mi_beta/language/groups/__init__.py` (141 lines) | Orchestrator |
+| `Adapters/{UNIT}-L3-ADAPTER.md` (×9) | `mi_beta/language/adapters/{unit}_adapter.py` | Per-unit adapters (all stubs) |
+| `Registry/DimensionCatalog.md` | `mi_beta/core/types.py` (L3Output, SemanticGroupOutput) | Output type definitions |
+
+#### 5.3 Sub-Phase Execution Order
+
+| Sub-Phase | Description | Files | Est. Lines | Depends On |
+|:---------:|-------------|:-----:|:----------:|:----------:|
+| **5A** | Foundation: INDEX, ARCHITECTURE, CHANGELOG, EXTENSION-GUIDE, Registry (4) | 8 | ~1,810 | None |
+| **5B** | Epistemology (9) + Groups (11): per-level theory + per-group specs | 20 | ~3,140 | 5A |
+| **5C** | Vocabulary (4) + Contracts (6): 96 terms, 5 interface specs | 10 | ~1,250 | 5A, 5B |
+| **5D** | Pipeline (5) + Adapters (10): DAG, execution, 9 per-unit adapters | 15 | ~1,590 | 5A, 5B, 5C |
+| **5E** | Standards (3) + Validation (3) + Literature (2): audit, benchmarks, refs | 8 | ~1,150 | 5A, 5B |
+| **5F** | Migration (3) + Archive (5): v1→v2 guide, 4 deprecated file copies | 8 | ~1,410 | All prior |
+| **5G** | Cross-references: update Beta_upgrade.md, verify internal links | ~3 edits | ~200 | All prior |
+| | **Total** | **69** | **~10,350** | |
+
+```
+Dependency Graph:
+5A → 5B → 5C → 5D ─┐
+               └─ 5E ┤→ 5F → 5G
+```
+
+5D and 5E run in parallel after 5C completes.
+
+#### 5.4 Sub-Phase Details
+
+**Sub-phase 5A — Foundation (Root + Registry): 8 files, ~1,810 lines**
+
+| # | File | Lines | Description |
+|---|------|:-----:|-------------|
+| 1 | `Docs/L³/00-INDEX.md` | ~140 | Master index: overview, 104D summary, directory tree, code mapping |
+| 2 | `Docs/L³/L3-SEMANTIC-ARCHITECTURE.md` | ~800 | Definitive architecture: 8 groups, phases, all formulas, full dimension inventory |
+| 3 | `Docs/L³/CHANGELOG.md` | ~80 | Version history: v1.0 (per-model) → v2.0 (unified Brain) → v2.1 (modular docs) |
+| 4 | `Docs/L³/EXTENSION-GUIDE.md` | ~300 | Developer guide: how to add groups, axes, vocabulary terms, adapters |
+| 5 | `Docs/L³/Registry/00-INDEX.md` | ~40 | Registry overview with quick reference table |
+| 6 | `Docs/L³/Registry/DimensionCatalog.md` | ~250 | All 104 dimensions: global index, group, name, range, formula, citation |
+| 7 | `Docs/L³/Registry/GroupMap.md` | ~120 | 8 groups: index range [α0:6, β6:20, ...104], phase, deps, code file |
+| 8 | `Docs/L³/Registry/NamingConventions.md` | ~80 | Greek letters, snake_case dims, range conventions |
+
+Source: `L³-BRAIN-SEMANTIC-SPACE.md` (sections 1-3, 7) + `mi_beta/language/groups/__init__.py`
+Quality gate: DimensionCatalog lists all 104D with correct index ranges summing to 104. GroupMap maps to code files.
+
+**Sub-phase 5B — Epistemology (9) + Groups (11) = 20 files, ~3,140 lines**
+
+*Epistemology/ — 8-level interpretive framework theory:*
+
+| # | File | Lines | Description |
+|---|------|:-----:|-------------|
+| 9 | `Epistemology/00-INDEX.md` | ~120 | 8-level ladder: level, question, audience, citations |
+| 10 | `Epistemology/Computation.md` | ~100 | Level 1 (α): white-box attribution, Bayesian precision |
+| 11 | `Epistemology/Neuroscience.md` | ~150 | Level 2 (β): brain region mapping, neurotransmitter dynamics |
+| 12 | `Epistemology/Psychology.md` | ~130 | Level 3 (γ): ITPRA, circumplex, wanting/liking, aesthetics |
+| 13 | `Epistemology/Validation.md` | ~120 | Level 4 (δ): physiological predictions, neural correlates |
+| 14 | `Epistemology/Learning.md` | ~200 | Level 5 (ε): predictive coding, Schmidhuber, Markov, IDyOM, Wundt |
+| 15 | `Epistemology/Polarity.md` | ~120 | Level 6 (ζ): semantic differential (Osgood), circumplex (Russell) |
+| 16 | `Epistemology/Vocabulary.md` | ~150 | Level 7 (η): prototype theory (Rosch), semantic fields (Trier) |
+| 17 | `Epistemology/Narrative.md` | ~150 | Level 8 (θ): sentence structure, cohesion (Halliday), narrative (Almén) |
+
+*Groups/ — Per-group computation specifications:*
+
+| # | File | Lines | Description |
+|---|------|:-----:|-------------|
+| 18 | `Groups/00-INDEX.md` | ~100 | Cross-group table: dim, phase, stateful?, deps |
+| 19 | `Groups/Independent/00-INDEX.md` | ~60 | Phase 1 overview |
+| 20 | `Groups/Independent/Alpha.md` | ~150 | α: per-unit attribution + certainty + bipolar (variable D) |
+| 21 | `Groups/Independent/Beta.md` | ~200 | β: 8 regions + 3 neurotransmitters + 3 circuits (variable D) |
+| 22 | `Groups/Independent/Gamma.md` | ~180 | γ: reward(3D) + ITPRA(2D) + aesthetics(3D) + emotion(2D) + chills(3D) = 13D |
+| 23 | `Groups/Independent/Delta.md` | ~160 | δ: physiological(4D) + neural(3D) + behavioral(2D) + temporal(3D) = 12D |
+| 24 | `Groups/Independent/Epsilon.md` | ~350 | ε: STATEFUL 19D; EMA×3 timescales, Markov 8×8, Welford, ring buffer 50, ITPRA-5D |
+| 25 | `Groups/Dependent/00-INDEX.md` | ~60 | Phase 2 overview: ε→ζ→η, ε+ζ→θ dependency chain |
+| 26 | `Groups/Dependent/Zeta.md` | ~180 | ζ: 12 bipolar axes [-1,+1], reward/learning/aesthetic categories |
+| 27 | `Groups/Dependent/Eta.md` | ~200 | η: 64-gradation quantization, 96 terms (12×8), get_terms() |
+| 28 | `Groups/Dependent/Theta.md` | ~200 | θ: subject(4D) + predicate(4D) + modifier(4D) + connector(4D) = 16D |
+
+Source: `L³-BRAIN-SEMANTIC-SPACE.md` (sections 2, 4, 5, 6) + code files `alpha.py` through `theta.py`
+Quality gate: Every group doc has complete dimension table + all formulas + code mapping. Epsilon covers all 5 state components. Alpha/Beta document variable-D behavior.
+
+**Sub-phase 5C — Vocabulary (4) + Contracts (6) = 10 files, ~1,250 lines**
+
+*Vocabulary/ — 64-gradation descriptor system:*
+
+| # | File | Lines | Description |
+|---|------|:-----:|-------------|
+| 29 | `Vocabulary/00-INDEX.md` | ~60 | System overview: 12 axes × 8 bands × 8 gradations |
+| 30 | `Vocabulary/TermCatalog.md` | ~200 | Complete 12×8 term table (96 terms) — MUST match `eta.py` AXIS_TERMS |
+| 31 | `Vocabulary/GradationSystem.md` | ~150 | 64-level quantization: JND (Weber/Stevens), bit budget (72 bits) |
+| 32 | `Vocabulary/AxisDefinitions.md` | ~180 | 12 axes: neg pole ↔ pos pole, source dimension, formula, citation |
+
+*Contracts/ — Interface specifications:*
+
+| # | File | Lines | Description |
+|---|------|:-----:|-------------|
+| 33 | `Contracts/00-INDEX.md` | ~60 | 5 contracts overview |
+| 34 | `Contracts/BaseSemanticGroup.md` | ~150 | ABC: LEVEL, GROUP_NAME, OUTPUT_DIM, compute(), dimension_names, validate() |
+| 35 | `Contracts/SemanticGroupOutput.md` | ~80 | Dataclass: group_name, level, tensor(B,T,D), dimension_names |
+| 36 | `Contracts/BaseModelSemanticAdapter.md` | ~100 | Adapter ABC: UNIT_NAME, adapt(UnitOutput) → Dict[str, Tensor] |
+| 37 | `Contracts/L3Orchestrator.md` | ~150 | Orchestrator: OrderedDict, phase execution, reset(), total_dim property |
+| 38 | `Contracts/EpsilonStateContract.md` | ~120 | State layout: 6 EMA tensors, 6 variance tensors, Welford(3), Markov(2), ring(3), prev_pleasure(1) |
+
+Source: `eta.py` AXIS_TERMS, `base_semantic_group.py`, `epsilon.py` state components
+Quality gate: TermCatalog matches `eta.py` AXIS_TERMS exactly (96 terms, zero drift). Every contract maps to a code file.
+
+**Sub-phase 5D — Pipeline (5) + Adapters (10) = 15 files, ~1,590 lines**
+
+*Pipeline/ — Execution architecture:*
+
+| # | File | Lines | Description |
+|---|------|:-----:|-------------|
+| 39 | `Pipeline/00-INDEX.md` | ~50 | Pipeline overview |
+| 40 | `Pipeline/DependencyDAG.md` | ~120 | ASCII dependency graph: brain→α,β,γ,δ,ε→ζ→η→θ |
+| 41 | `Pipeline/ExecutionModel.md` | ~150 | Phase 1 (parallel) → Phase 1b (stateful ε) → Phase 2a (ζ) → 2b (η) → 2c (θ) |
+| 42 | `Pipeline/StateManagement.md` | ~150 | Epsilon lifecycle: lazy init → accumulate per frame → reset between audio files |
+| 43 | `Pipeline/Performance.md` | ~100 | Per-group compute cost, memory (ε state: ~B×230 floats), total latency |
+
+*Adapters/ — Per-unit semantic mapping (L³-UNIQUE):*
+
+| # | File | Lines | Description |
+|---|------|:-----:|-------------|
+| 44 | `Adapters/00-INDEX.md` | ~120 | Cross-unit comparison table, status column (all "stub" currently) |
+| 45 | `Adapters/SPU-L3-ADAPTER.md` | ~100 | SPU: consonance→beauty, timbre→complexity, pitch→novelty |
+| 46 | `Adapters/STU-L3-ADAPTER.md` | ~100 | STU: beat→groove, tempo→arousal, sync→engagement |
+| 47 | `Adapters/IMU-L3-ADAPTER.md` | ~100 | IMU: familiarity→stability, recall→imagination |
+| 48 | `Adapters/ASU-L3-ADAPTER.md` | ~100 | ASU: novelty→surprise, attention→engagement |
+| 49 | `Adapters/NDU-L3-ADAPTER.md` | ~100 | NDU: deviation→surprise, PE→tension, entropy→complexity |
+| 50 | `Adapters/MPU-L3-ADAPTER.md` | ~100 | MPU: groove→groove, movement→motion |
+| 51 | `Adapters/PCU-L3-ADAPTER.md` | ~100 | PCU: prediction_error→surprise, certainty→stability |
+| 52 | `Adapters/ARU-L3-ADAPTER.md` | ~100 | ARU: pleasure→valence, tension→tension, chills→beauty |
+| 53 | `Adapters/RPU-L3-ADAPTER.md` | ~100 | RPU: DA→wanting, opioid→liking, reward_PE→reward_pe |
+
+Source: `mi_beta/language/groups/__init__.py` + `mi_beta/language/adapters/*.py` + `Docs/C³/Units/*.md`
+Quality gate: DAG matches `L3Orchestrator.compute()` execution order. All 9 adapters status = "stub" (matching code). Each adapter maps unit dims to semantic inputs.
+
+**Sub-phase 5E — Standards (3) + Validation (3) + Literature (2) = 8 files, ~1,150 lines**
+
+| # | File | Lines | Description |
+|---|------|:-----:|-------------|
+| 54 | `Standards/00-INDEX.md` | ~40 | Standards overview |
+| 55 | `Standards/CitationQuality.md` | ~200 | Per-dimension audit: citation, effect size, N, method, status |
+| 56 | `Standards/PsychometricAlignment.md` | ~150 | Alignment with GEMS, SDT, Russell circumplex, Osgood, ITPRA, Berridge |
+| 57 | `Validation/00-INDEX.md` | ~50 | Validation strategy |
+| 58 | `Validation/AcceptanceCriteria.md` | ~150 | Per-group: shape, range [0,1]/[-1,+1], NaN/Inf checks |
+| 59 | `Validation/BenchmarkPlan.md` | ~200 | δ vs real SCR/HR, γ vs emotion ratings, η vs GEMS |
+| 60 | `Literature/00-INDEX.md` | ~60 | Literature organization |
+| 61 | `Literature/L3-LITERATURE.md` | ~300 | Per-dimension cross-ref: all 104 dims, 40+ papers |
+
+Source: `L³-BRAIN-SEMANTIC-SPACE.md` section 8 (references) + published psychometric instruments
+Quality gate: CitationQuality audits all 40+ papers from BRAIN doc. L3-LITERATURE covers all 104 dimensions.
+
+**Sub-phase 5F — Migration (3) + Archive (5) = 8 files, ~1,410 lines**
+
+| # | Action | File | Lines | Description |
+|---|--------|------|:-----:|-------------|
+| 62 | CREATE | `Migration/00-INDEX.md` | ~40 | Migration overview |
+| 63 | CREATE | `Migration/V1-to-V2.md` | ~150 | Per-model → unified Brain migration guide |
+| 64 | CREATE | `Migration/DeprecatedFiles.md` | ~80 | Archive inventory + replacement mapping table |
+| 65 | CREATE | `Archive/00-INDEX.md` | ~40 | Archive overview with deprecation dates |
+| 66 | COPY | `Archive/L3-SRP-SEMANTIC-SPACE.md` | ~600 | v1.x SRP-only (DEPRECATED, source preserved) |
+| 67 | COPY | `Archive/L3-AAC-SEMANTIC-SPACE.md` | ~800 | v1.x AAC-only (DEPRECATED, source preserved) |
+| 68 | COPY | `Archive/L3-VMM-SEMANTIC-SPACE.md` | ~200 | v1.x VMM-only (DEPRECATED, source preserved) |
+| 69 | COPY | `Archive/L3-BRAIN-SEMANTIC-SPACE.md` | ~999 | v2.0 unified (archived, decomposed into modular docs) |
+
+Source: Existing deprecated files + modular docs as target mapping
+Quality gate: All 4 deprecated/source files archived with no content loss. V1-to-V2 documents every change.
+
+**Sub-phase 5G — Cross-References and Integration: ~3 edits, ~200 lines**
+
+| File Updated | Change |
+|-------------|--------|
+| `Docs/Beta/Beta_upgrade.md` | Replace Phase 5 stub with complete architecture (this section) |
+| `Docs/Beta/Beta_upgrade.md` | Add 9 L³ entries to Critical File Paths table |
+| `Docs/Beta/Beta_upgrade.md` | Mark Phase 5 complete in verification checklist |
+
+Quality gate: Zero broken links. R³→H³→C³→L³ chain documented in all architecture docs.
+
+#### 5.5 Data Sources
+
+| Source | Location | Content |
+|--------|----------|---------|
+| L³ BRAIN doc | `Docs/L³/L³-BRAIN-SEMANTIC-SPACE.md` (999 lines) | Primary source: 8 groups, 104D, formulas, references |
+| L³ deprecated docs (3) | `Docs/L³/L³-{SRP,AAC,VMM}-SEMANTIC-SPACE.md` | v1.x per-model semantic spaces |
+| L³ orchestrator code | `mi_beta/language/groups/__init__.py` (141 lines) | L3Orchestrator: phase execution, dependency ordering |
+| L³ group code (8) | `mi_beta/language/groups/{alpha..theta}.py` | Per-group computation: formulas, state, dims |
+| L³ adapter code (9) | `mi_beta/language/adapters/{unit}_adapter.py` | Per-unit semantic adapters (all stubs) |
+| L³ contracts | `mi_beta/contracts/base_semantic_group.py` (169 lines) | BaseSemanticGroup ABC + SemanticGroupOutput |
+| Adapter base | `mi_beta/language/adapters/_base_adapter.py` (15 lines) | BaseModelSemanticAdapter ABC |
+| H³/C³/R³ docs | `Docs/{H³,C³,R³}/` | Pattern reference for modular documentation architecture |
+
+#### 5.6 Quality Gates
+
+1. Every L³ semantic group has a specification doc with inputs, computation, and output meaning
+2. All 104 dimensions documented with name, range, formula, and primary citation
+3. 96 vocabulary terms match `eta.py:AXIS_TERMS` exactly (zero drift)
+4. All 9 adapter docs map unit outputs to semantic group inputs
+5. Epsilon state contract specifies all 5 component types with shapes and lifecycle
+6. Pipeline dependency DAG matches `L3Orchestrator.compute()` execution order
+7. Psychometric alignment covers Russell/Osgood/GEMS/ITPRA/Berridge/Berlyne
+8. Literature bibliography includes 40+ papers with per-dimension citation map
+9. Migration guide documents v1.x→v2.x dimension mapping and code migration
+
+**Phase 5 Status: ✅ COMPLETE (2026-02-13)** — 69 files written across 13 subdirectories (~10,350 lines). All quality gates passed.
 
 ### Phase 6: mi_beta Code Update (LAST)
 
@@ -1203,6 +1546,15 @@ Only after Phases 1-5 are complete:
 | `mi_beta/core/dimension_map.py` | R³ feature names and MI-space mapping |
 | `mi_beta/contracts/base_model.py` | Model contract (what every model must implement) |
 | `mi_beta/brain/` | Code architecture that C³ docs mirror |
+| `Docs/L³/00-INDEX.md` | L³ master index (68 files, 13 subdirectories) |
+| `Docs/L³/L3-SEMANTIC-ARCHITECTURE.md` | L³ definitive architecture document |
+| `Docs/L³/Registry/DimensionCatalog.md` | All 104 L³ dimensions with formulas |
+| `Docs/L³/Contracts/L3Orchestrator.md` | L³ execution pipeline contract |
+| `Docs/L³/Vocabulary/TermCatalog.md` | 96 vocabulary terms (12 axes × 8 bands) |
+| `Docs/L³/Adapters/00-INDEX.md` | Per-unit semantic adapter registry |
+| `mi_beta/contracts/base_semantic_group.py` | L³ group ABC contract |
+| `mi_beta/language/groups/__init__.py` | L3Orchestrator implementation |
+| `mi_beta/language/adapters/` | Per-unit semantic adapters (9 stubs) |
 
 ## Resume Protocol for AI Agents
 
@@ -1321,6 +1673,6 @@ After full completion:
 - [ ] Docs/R³/ has complete spectral architecture: demand matrix + DSP survey + v2 design + per-group specs + per-unit mappings (Phase 3A-3C)
 - [ ] All 96 model docs Section 4 updated for R³ v2 expanded space, bumped to v2.2.0 (Phase 3E)
 - [ ] Docs/H³/ has complete temporal architecture with per-unit demands (Phase 4)
-- [ ] Docs/L³/ has complete semantic architecture with per-unit mappings (Phase 5)
+- [x] Docs/L³/ has complete semantic architecture with per-unit mappings (Phase 5) ✅ 69 files across 13 subdirectories
 - [ ] `pytest tests/ -v` passes (Phase 6)
 - [ ] `python -m mi_beta` runs without errors (Phase 6)

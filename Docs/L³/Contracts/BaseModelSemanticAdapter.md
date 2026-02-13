@@ -1,147 +1,50 @@
 # BaseModelSemanticAdapter — Per-Unit Adapter ABC
 
-**Scope**: Abstract base class for per-unit semantic adapters. Each adapter maps a C³ unit's output dimensions to named inputs that L³ semantic groups can consume. This decouples the unit-specific output layout from the group computation logic.
+Maps unit-specific output dimensions to semantic group input names.
 
-**Code file**: `mi_beta/language/adapters/_base_adapter.py`
+**Code**: `mi_beta/language/adapters/_base_adapter.py`
 
----
+## Class Constant
 
-## 1. Class Definition
+| Constant | Type | Description |
+|----------|------|-------------|
+| `UNIT_NAME` | `str` | Unit identifier (e.g., `"SPU"`, `"ARU"`) |
 
-```python
-class BaseModelSemanticAdapter(ABC):
-    UNIT_NAME: str
+## Abstract Method
 
-    @abstractmethod
-    def adapt(self, unit_output: UnitOutput) -> Dict[str, Tensor]:
-        """Map unit output dimensions to semantic group inputs."""
-```
+### `adapt(unit_output: UnitOutput) → Dict[str, Tensor]`
 
----
+Maps a unit's raw model outputs to named tensors consumable by semantic groups.
 
-## 2. Class Constant
+- **unit_output**: `UnitOutput` containing the unit's concatenated model tensors
+- **Returns**: Dictionary mapping semantic dimension names to tensors
 
-| Constant | Type | Description | Example |
-|----------|:----:|-------------|---------|
-| `UNIT_NAME` | `str` | Uppercase unit identifier matching the C³ unit name | `"SPU"`, `"IMU"`, `"ARU"` |
+## Current Implementations
 
----
+All 9 adapters are currently **stubs** that pass the raw tensor through:
 
-## 3. Abstract Method
+| Adapter Class | Unit | Code File | Status |
+|---------------|------|-----------|--------|
+| `SPUAdapter` | SPU | `spu_adapter.py` | Stub |
+| `STUAdapter` | STU | `stu_adapter.py` | Stub |
+| `IMUAdapter` | IMU | `imu_adapter.py` | Stub |
+| `ASUAdapter` | ASU | `asu_adapter.py` | Stub |
+| `NDUAdapter` | NDU | `ndu_adapter.py` | Stub |
+| `MPUAdapter` | MPU | `mpu_adapter.py` | Stub |
+| `PCUAdapter` | PCU | `pcu_adapter.py` | Stub |
+| `ARUAdapter` | ARU | `aru_adapter.py` | Stub |
+| `RPUAdapter` | RPU | `rpu_adapter.py` | Stub |
 
-### `adapt(unit_output: UnitOutput) -> Dict[str, Tensor]`
+All stubs return: `{"tensor": unit_output.tensor}`
 
-Maps a unit's output tensor to a dictionary of named semantic inputs.
+## Planned Behavior
 
-**Parameters**:
-- `unit_output` -- The `UnitOutput` from a C³ unit, containing the unit's tensor and metadata
+When fully implemented, each adapter will:
+1. Read specific dimensions from `UnitOutput` by name
+2. Apply any necessary scaling or transformation
+3. Return a dict mapping semantic labels to tensors (e.g., `{"pleasure": tensor[..., 3], "arousal": tensor[..., 7]}`)
 
-**Returns**: `Dict[str, Tensor]` where:
-- Keys are semantic dimension names (e.g., `"pleasure"`, `"arousal"`, `"tension"`)
-- Values are tensors extracted or derived from the unit output
-
-**Contract**:
-- Must return a dictionary (may be empty if no mappings are defined)
-- Keys should use `snake_case` names matching the semantic vocabulary used by L³ groups
-- Values should be tensors with shape compatible for group consumption
-- The adapter must not modify the input `unit_output`
-
----
-
-## 4. Purpose and Design Rationale
-
-L³ semantic groups compute formulas using named Brain dimensions (e.g., `pleasure`, `arousal`, `tension`). However, C³ units produce output tensors with unit-specific layouts (e.g., SPU's 10 models each with E/M/P/F layers). Adapters bridge this gap:
-
-```
-C³ Unit Output                    Adapter                     L³ Group Input
-(unit-specific layout)    -->     adapt()     -->     (named semantic dimensions)
-
-SPU output (B,T,40)       -->   SPU Adapter   -->     {"pleasure": ..., "arousal": ...}
-IMU output (B,T,60)       -->   IMU Adapter   -->     {"tension": ..., "prediction_error": ...}
-```
-
-This separation means:
-- Groups never need to know unit-specific dimension layouts
-- Adding a new unit requires only a new adapter, no group changes
-- Adapter logic can evolve independently from group formulas
-
----
-
-## 5. Implementations
-
-Currently 9 stub adapters exist, one per C³ unit:
-
-| Adapter Class | UNIT_NAME | Code File | Status |
-|--------------|-----------|-----------|:------:|
-| `SPUAdapter` | `"SPU"` | `mi_beta/language/adapters/spu_adapter.py` | Stub |
-| `STUAdapter` | `"STU"` | `mi_beta/language/adapters/stu_adapter.py` | Stub |
-| `IMUAdapter` | `"IMU"` | `mi_beta/language/adapters/imu_adapter.py` | Stub |
-| `ASUAdapter` | `"ASU"` | `mi_beta/language/adapters/asu_adapter.py` | Stub |
-| `NDUAdapter` | `"NDU"` | `mi_beta/language/adapters/ndu_adapter.py` | Stub |
-| `MPUAdapter` | `"MPU"` | `mi_beta/language/adapters/mpu_adapter.py` | Stub |
-| `PCUAdapter` | `"PCU"` | `mi_beta/language/adapters/pcu_adapter.py` | Stub |
-| `ARUAdapter` | `"ARU"` | `mi_beta/language/adapters/aru_adapter.py` | Stub |
-| `RPUAdapter` | `"RPU"` | `mi_beta/language/adapters/rpu_adapter.py` | Stub |
-
-All 9 adapters are currently stubs that return minimal or pass-through mappings. Full adapter implementations are planned for a future phase.
-
----
-
-## 6. Adapter Registry
-
-The adapter registry (`mi_beta/language/adapters/__init__.py`) collects all adapters and provides lookup by unit name:
-
-```python
-# Conceptual usage
-adapter = adapter_registry.get("SPU")
-semantic_inputs = adapter.adapt(spu_unit_output)
-```
-
----
-
-## 7. Usage Pattern
-
-### Creating a new adapter
-
-```python
-from mi_beta.language.adapters._base_adapter import BaseModelSemanticAdapter
-
-class NewUnitAdapter(BaseModelSemanticAdapter):
-    UNIT_NAME = "XYZ"
-
-    def adapt(self, unit_output):
-        return {
-            "pleasure": unit_output.tensor[..., 0:1],
-            "arousal": unit_output.tensor[..., 1:2],
-        }
-```
-
-### Documentation requirement
-
-Each adapter should have a corresponding documentation file at `Docs/L³/Adapters/{UNIT}-L3-ADAPTER.md` describing:
-- Which unit output dimensions map to which semantic names
-- The scientific rationale for each mapping
-- Current implementation status (stub / partial / full)
-
----
-
-## 8. Relationship to Other Contracts
-
-| Contract | Relationship |
-|----------|-------------|
-| [BaseSemanticGroup](BaseSemanticGroup.md) | Groups consume the named tensors that adapters produce |
-| [L3Orchestrator](L3Orchestrator.md) | Orchestrator may use adapters to prepare group inputs |
-| [SemanticGroupOutput](SemanticGroupOutput.md) | Adapters operate upstream of group output |
-
----
-
-## 9. Cross-References
-
-| Related Document | Path |
-|-----------------|------|
-| Per-unit adapter docs | [../Adapters/00-INDEX.md](../Adapters/00-INDEX.md) |
-| C³ unit architecture | [../../C³/C3-ARCHITECTURE.md](../../C³/C3-ARCHITECTURE.md) |
-| C³ output space | [../../C³/Matrices/Output-Space.md](../../C³/Matrices/Output-Space.md) |
+See [../Adapters/00-INDEX.md](../Adapters/00-INDEX.md) for per-unit semantic mapping plans.
 
 ---
 
