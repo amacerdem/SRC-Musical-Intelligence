@@ -438,38 +438,549 @@ Docs/C³/
 
 **Quality gate:** Every code component in `mi_beta/brain/` has a documentation counterpart in `Docs/C³/`. Every doc references the specific code file it mirrors. Every model doc is reachable from at least one Unit doc, one Mechanism doc, and one Circuit doc.
 
-### Phase 3: R³ Architecture (Docs/R³)
+### Phase 3: R³ Architecture — Bidirectional Spectral Expansion (Docs/R³)
 
-After C³ documentation architecture is complete, consolidate R³ findings:
+R³ is currently 49D but the architecture supports dynamic expansion via `R3FeatureRegistry` + `extensions/`.
+Phase 3 is a **research-driven expansion** that works in two directions simultaneously:
 
-1. **Review R3-GAP-LOG files** — compile all gaps from 7 unit-specific gap logs:
-   - `R3-GAP-LOG-IMU.md` (273 lines), `R3-GAP-LOG-ASU.md` (173 lines),
-   - `R3-GAP-LOG-PCU.md` (150 lines), `R3-GAP-LOG-RPU.md` (174 lines),
-   - `R3-GAP-LOG-MPU.md` (59 lines), `R3-GAP-LOG-NDU.md` (48 lines),
-   - `R3-GAP-LOG-ARU.md` (42 lines)
-   - Note: SPU/STU gap logs were not created (completed before gap log format)
-2. **Create `Docs/R³/R3-SPECTRAL-ARCHITECTURE.md`** — master architecture document:
-   - Current 49D space (5 groups: consonance, energy, timbre, change, interactions)
-   - Known naming discrepancies (doc semantic labels vs code computational names)
-   - Proposed expansions (new groups/dimensions from gap logs)
-   - Per-dimension specification: name, computation, range, psychoacoustic basis, unit
-3. **Per-group detailed docs:**
-   - `Docs/R³/A-CONSONANCE.md` — 7D consonance group spec
-   - `Docs/R³/B-ENERGY.md` — 5D energy group spec
-   - `Docs/R³/C-TIMBRE.md` — 9D timbre group spec
-   - `Docs/R³/D-CHANGE.md` — 4D change group spec
-   - `Docs/R³/E-INTERACTIONS.md` — 24D interactions group spec
-   - `Docs/R³/F-{NEW_GROUP}.md` — any new groups from gap analysis
-4. **Per-unit R³ mapping docs:**
-   - `Docs/R³/mappings/SPU-R3-MAP.md` — which R³ dims SPU models use & why
-   - `Docs/R³/mappings/STU-R3-MAP.md` — etc for each unit
-   - Each mapping doc shows: model → R³ indices → mathematical relationship → citation
-5. **Cross-reference with Literature/r3/**:
-   - Link psychoacoustics papers to consonance/timbre dimensions
-   - Link computational music theory to interaction dimensions
-   - Link DSP papers to energy/change dimensions
+- **Bottom-up (model demand):** What do the 96 C³ models need that R³ doesn't provide?
+- **Top-down (DSP capability):** What can physically be measured from audio that R³ doesn't yet capture?
 
-**Quality gate:** Every R³ dimension has a psychoacoustic basis, computation formula, expected range, and at least one literature citation.
+Target: expand R³ from 49D to **128–256D** based on evidence from both directions.
+
+#### Aşama 3A: Keşif & Envanter (Research)
+
+**3A-1: Model Talep Haritası (Bottom-up)**
+- Compile all 57 gaps from 7 unit-specific R³ gap logs:
+  - `R3-GAP-LOG-IMU.md` (13 gaps), `R3-GAP-LOG-ASU.md` (8 gaps),
+  - `R3-GAP-LOG-PCU.md` (9 gaps), `R3-GAP-LOG-RPU.md` (5 gaps),
+  - `R3-GAP-LOG-MPU.md` (7 gaps), `R3-GAP-LOG-NDU.md` (5 gaps),
+  - `R3-GAP-LOG-ARU.md` (0 gaps — fully covered)
+  - Note: SPU/STU gap logs not created (completed before gap log format)
+- Categorize each gap: **real acoustic gap** vs **naming mismatch** vs **neural-level** (not R³)
+- Create demand matrix: 96 models × desired features → priority ranking
+- Output: `Docs/R³/R3-DEMAND-MATRIX.md`
+
+**3A-2: DSP Yetenek Araştırması (Top-down)**
+- **Local literature scan** — `Literature/r3/` (121 markdown files, 58 PDFs):
+  - `psychoacoustics/` (11 files): consonance/dissonance, just intonation, Pressnitzer
+  - `dsp-and-ml/` (4 files): CNN spectral features, genre classification, microtonal
+  - `computational-music-theory/` (65 files): Tymoczko geometry, Neo-Riemannian, group theory
+  - `spectral-music/` (7 files): spectral composition analysis
+- **Web deep research** — state-of-art DSP feature extraction:
+  - librosa feature set (40+ features: chroma, MFCC, spectral contrast, tonnetz)
+  - essentia feature set (600+ features: psychoacoustic, tonal, rhythm, dynamics)
+  - openSMILE/eGeMAPS (88 features: acoustic emotion, paralinguistics)
+  - Madmom (beat/tempo/onset detection, key estimation)
+  - CREPE/pYIN/SPICE (neural pitch estimation)
+  - ISO 532B / Zwicker loudness model
+  - AES standards for audio quality measurement
+- For each candidate feature: name, computation from mel, cost, psychoacoustic basis, citations
+- Output: `Docs/R³/R3-DSP-SURVEY.md`
+
+**3A-3: Gap ↔ Feature Eşleştirme**
+- Cross-reference model demands with DSP capabilities
+- Identify: (a) gaps solvable by known DSP, (b) gaps needing novel methods, (c) DSP features no model yet uses but should
+- Output: `Docs/R³/R3-CROSSREF.md`
+
+#### Aşama 3B: R³ v2 Tasarımı (Architecture Design)
+
+**3B-1: Yeni Grup Tasarımı**
+- Revise or preserve existing groups A–E:
+  - A: Consonance (7D → ?D) — add explicit inharmonicity model, roughness (Plomp-Levelt proper)?
+  - B: Energy (5D → ?D) — add Bark-band specific loudness, dynamic range?
+  - C: Timbre (9D → ?D) — add MFCC-derived, spectral contrast, spectral rolloff?
+  - D: Change (4D → ?D) — critically thin, add novelty function, modulation spectrum?
+  - E: Interactions (?D) — redesign cross-products for new groups
+- Define new groups:
+  - **F: Pitch** — F0, pitch salience, pitch class profile (chroma 12D), pitch height, vibrato
+  - **G: Rhythm** — beat strength, tempo, syncopation index, metrical hierarchy, groove
+  - **H: Harmony** — chord template match, key clarity, harmonic tension, tonal stability
+  - **I: Information** — melodic entropy, harmonic surprisal, IC (information content), statistical surprise
+  - **J+: TBD** — modulation, polyphony, spatial, ...
+- Decide target dimensionality: 128D / 192D / 256D
+- Output: `Docs/R³/R3-V2-DESIGN.md`
+
+**3B-2: Interaction Redesign**
+- Current E group (24D) only covers 3 product types — too mechanical
+- Design principled interaction scheme for expanded space
+- Options: (a) exhaustive pairwise, (b) learned interactions, (c) curated domain-expert products
+- Decide: fixed vs dynamic interactions
+- Output: Section in R3-V2-DESIGN.md
+
+**3B-3: Code Dekilitleme Tasarımı**
+- `R3_DIM` → computed from registry at init time (remove hardcoded 49)
+- `R3FeatureSpec` → validate against `registry.total_dim` (not literal 49)
+- `_R3_FEATURE_NAMES` → auto-generated from `R3FeatureRegistry.freeze()`
+- Group boundaries → read from `R3FeatureMap.groups` (not hardcoded tuples)
+- Backward compatibility: existing model code references `r3[idx]` — migration strategy
+- Output: Section in R3-V2-DESIGN.md
+
+#### Aşama 3C: Dokümantasyon (Architecture Docs)
+
+**3C-1: Master Architecture Doc**
+- `Docs/R³/R3-SPECTRAL-ARCHITECTURE.md` — full R³ v2 specification:
+  - Design rationale (why expand, what evidence)
+  - Complete dimension inventory (old 49 + new)
+  - Per-dimension: name, group, index, computation, range, psychoacoustic basis, citations
+  - Extension protocol (how to add more groups in future)
+
+**3C-2: Per-group Detailed Specs**
+- `Docs/R³/A-CONSONANCE.md` — revised consonance group
+- `Docs/R³/B-ENERGY.md` — revised energy group
+- `Docs/R³/C-TIMBRE.md` — revised timbre group
+- `Docs/R³/D-CHANGE.md` — expanded change group
+- `Docs/R³/E-INTERACTIONS.md` — redesigned interactions
+- `Docs/R³/F-PITCH.md` — new pitch group
+- `Docs/R³/G-RHYTHM.md` — new rhythm group
+- `Docs/R³/H-HARMONY.md` — new harmony group
+- `Docs/R³/I-INFORMATION.md` — new information-theoretic group
+- Additional groups as determined by 3B-1
+
+**3C-3: Per-unit R³ Mapping Docs**
+- `Docs/R³/mappings/{UNIT}-R3-MAP.md` (9 files, one per unit)
+- Each mapping: model → R³ indices → mathematical relationship → citation
+- Updated for expanded R³ space
+
+**3C-4: Literature Cross-Reference**
+- `Docs/R³/R3-LITERATURE.md` — links every R³ dimension to:
+  - Primary psychoacoustic paper (basis)
+  - DSP implementation reference (computation)
+  - Literature/r3/ local file (if available)
+
+#### Aşama 3D: Uygulama (Code — deferred to Phase 6)
+
+Code changes are documented in Phase 3 but **implemented in Phase 6**:
+- Remove R3_DIM=49 hardcoding → dynamic from registry
+- New `BaseSpectralGroup` subclasses for groups F, G, H, I...
+- Update `R3FeatureSpec`, `_R3_FEATURE_NAMES`, group boundaries
+- Integration tests with expanded R³
+- Benchmark: computation cost per frame at new dimensionality
+
+#### Veri Kaynakları
+
+| Source | Location | Content |
+|--------|----------|---------|
+| R³ Gap Logs (7 files) | `Docs/R³/R3-GAP-LOG-{UNIT}.md` | 57 gaps from Phase 1 model revision |
+| Literature/r3 PDFs | `Literature/r3/` (5 subdirs, 121 md) | Psychoacoustics, DSP, spectral music, computational theory |
+| Existing R³ code | `mi_beta/ear/r3/` (5 groups) | Current 49D implementation |
+| C³ model docs (96) | `Docs/C³/Models/` | R³ usage per model (Section 4) |
+| Web research | librosa, essentia, openSMILE, Madmom, CREPE docs | State-of-art feature extraction |
+
+#### Çıktılar (~20+ dosya)
+
+```
+Docs/R³/
+├── R3-SPECTRAL-ARCHITECTURE.md    ← Master doc (R³ v2 full spec)
+├── R3-DEMAND-MATRIX.md            ← Bottom-up: 96 models × desired features
+├── R3-DSP-SURVEY.md               ← Top-down: all feasible DSP features
+├── R3-CROSSREF.md                 ← Gap ↔ Feature matching
+├── R3-V2-DESIGN.md                ← Architecture decisions + rationale
+├── R3-LITERATURE.md               ← Per-dimension literature links
+├── A-CONSONANCE.md                ← Group A spec (revised)
+├── B-ENERGY.md                    ← Group B spec (revised)
+├── C-TIMBRE.md                    ← Group C spec (revised)
+├── D-CHANGE.md                    ← Group D spec (expanded)
+├── E-INTERACTIONS.md              ← Group E spec (redesigned)
+├── F-PITCH.md                     ← Group F spec (NEW)
+├── G-RHYTHM.md                    ← Group G spec (NEW)
+├── H-HARMONY.md                   ← Group H spec (NEW)
+├── I-INFORMATION.md               ← Group I spec (NEW)
+├── R3-GAP-LOG.md                  ← Template (existing)
+├── R3-GAP-LOG-{UNIT}.md (7)       ← Unit gap logs (existing from Phase 1)
+└── mappings/
+    ├── SPU-R3-MAP.md              ← SPU model → R³ mapping
+    ├── STU-R3-MAP.md
+    ├── IMU-R3-MAP.md
+    ├── ASU-R3-MAP.md
+    ├── NDU-R3-MAP.md
+    ├── MPU-R3-MAP.md
+    ├── PCU-R3-MAP.md
+    ├── ARU-R3-MAP.md
+    └── RPU-R3-MAP.md
+```
+
+#### Aşama 3E: Model Doc Güncelleme (96 Model Section 4 Revision)
+
+After R³ v2 design is finalized (3B) and architecture docs are written (3C), **all 96 model documents must be updated** to reference the expanded R³ space:
+
+**Per-model update workflow:**
+```
+For each of the 96 models in Docs/C³/Models/:
+
+1. READ current Section 4 (R³ Input Mapping)
+   → Note which R³ indices the model currently reads
+   → Check against R3-GAP-LOG for this unit's gaps
+
+2. CONSULT R³ v2 design (R3-V2-DESIGN.md)
+   → Are there new dimensions this model should read?
+   → Have existing dimensions been renumbered/renamed?
+   → Does the model's gap from Phase 1 now have an R³ solution?
+
+3. CONSULT unit mapping (mappings/{UNIT}-R3-MAP.md)
+   → What does the unit-level mapping recommend?
+
+4. UPDATE Section 4:
+   → Add new R³ dimension references (e.g., F:Pitch features for pitch-dependent models)
+   → Update indices if existing dimensions renumbered
+   → Fix naming discrepancies (semantic ↔ computational names resolved)
+   → Add mathematical relationships for new dimensions
+   → Add citations for new R³ feature dependencies
+
+5. UPDATE Section 12.1 (Doc-Code Mismatches) if applicable:
+   → Note new R³ dimensions not yet in code (deferred to Phase 6)
+
+6. BUMP version: v2.1.0 → v2.2.0 (R³ expansion update)
+```
+
+**Parallel execution:** Can be split across multiple chats by unit (same pattern as Phase 1):
+
+| Chat | Unit(s) | Models | Estimated Scope |
+|------|---------|--------|-----------------|
+| 1 | SPU + STU | 9 + 14 = 23 | Many new R³ refs (spectral/timing core) |
+| 2 | IMU + ASU + NDU | 15 + 9 + 9 = 33 | Moderate new R³ refs |
+| 3 | MPU + PCU | 10 + 10 = 20 | Moderate new R³ refs (motor + prediction) |
+| 4 | ARU + RPU | 10 + 10 = 20 | Fewest changes (dependent units, pathway-driven) |
+
+**Key decisions per unit:**
+- **SPU models**: Should directly read new Pitch (F) and possibly Harmony (H) groups
+- **STU models**: Should read new Rhythm (G) group, possibly Information (I)
+- **IMU models**: Broad — may read Pitch, Rhythm, Harmony, Information
+- **ASU models**: Should read new features that provide salience signals
+- **NDU models**: Should read Information (I) for surprisal/entropy features
+- **MPU models**: Should read Rhythm (G) for motor-relevant features
+- **PCU models**: Should read Information (I) for prediction-relevant features
+- **ARU/RPU models**: Primarily receive via pathways, but may add direct R³ reads
+
+**Quality gate:** Every model's Section 4 references only valid R³ v2 indices. Every model that had a Phase 1 R³ gap now either (a) references a new R³ dimension that fills the gap, or (b) documents why the gap remains (neural-level, architectural, etc.). All 96 models at v2.2.0.
+
+#### Phase 3 Parallel Chat Assignment
+
+Phase 3A (Research) runs across **3 parallel chats**. Each chat produces one deliverable independently. After all 3 complete, a single session merges results into 3A-3 (Crossref) → 3B (Design) → 3C (Docs) → 3E (Model Updates).
+
+| Chat | Assignment | Input Sources | Output |
+|------|-----------|---------------|--------|
+| Chat R1 | **Bottom-up: Model Demand Analysis** | 96 model docs (Section 4), 7 R³ gap logs, C³ Matrices/R3-Usage.md | `Docs/R³/R3-DEMAND-MATRIX.md` |
+| Chat R2 | **Top-down: Local Literature + Psychoacoustic DSP** | Literature/r3/ (121 files), existing R³ code (5 groups), psychoacoustic theory | `Docs/R³/R3-DSP-SURVEY-THEORY.md` |
+| Chat R3 | **Top-down: Web Research + Computational DSP** | Web (librosa, essentia, openSMILE, Madmom, CREPE, ISO), AES/ASA standards | `Docs/R³/R3-DSP-SURVEY-TOOLS.md` |
+
+```
+         ┌──────────┐  ┌──────────┐  ┌──────────┐
+         │ Chat R1  │  │ Chat R2  │  │ Chat R3  │
+         │ Bottom-up│  │ Lit+Psych│  │ Web+DSP  │
+         │ 96 model │  │ 121 files│  │ toolkits │
+         └────┬─────┘  └────┬─────┘  └────┬─────┘
+              │              │              │
+              │     PARALLEL (3A)           │
+              └──────────┬──┴──────────────┘
+                         ▼
+                   ┌───────────┐
+                   │  MERGE    │  ← Single session
+                   │ 3A-3→3B  │
+                   │ →3C→3E   │
+                   └───────────┘
+```
+
+#### Chat R1 Prompt: Bottom-up Model Demand Analysis
+
+```
+Sen Phase 3A-1 Chat R1'sin: R³ Model Talep Analizi.
+
+## Proje
+/Volumes/SRC-9/SRC Musical Intelligence
+
+## Görev
+96 C³ modelin R³ ihtiyaçlarını analiz et ve talep matrisi oluştur.
+
+## Adımlar
+
+### 1. Gap Log'ları Oku ve Konsolide Et
+7 gap log dosyasını oku:
+- Docs/R³/R3-GAP-LOG-IMU.md (13 gap)
+- Docs/R³/R3-GAP-LOG-ASU.md (8 gap)
+- Docs/R³/R3-GAP-LOG-PCU.md (9 gap)
+- Docs/R³/R3-GAP-LOG-RPU.md (5 gap)
+- Docs/R³/R3-GAP-LOG-MPU.md (7 gap)
+- Docs/R³/R3-GAP-LOG-NDU.md (5 gap)
+- Docs/R³/R3-GAP-LOG-ARU.md (0 gap)
+
+Her gap için: GAP-ID, model, eksik feature, önerilen R³ grubu, öncelik.
+Gap'leri 3 kategoriye ayır:
+- ACOUSTIC: Gerçek akustik özellik eksikliği (R³'e eklenebilir)
+- NAMING: İsimlendirme uyumsuzluğu (mevcut feature var ama adı farklı)
+- NEURAL: Neural-seviye metrik (R³ olamaz, model/mekanizma seviyesinde çözülmeli)
+
+### 2. 96 Model Doc Section 4 Tara
+Her modelin Section 4 (R³ Input Mapping) kısmını oku.
+Docs/C³/Models/ altında 96 model klasörü var.
+Her model için kaydet:
+- Hangi R³ indekslerini okuyor (0-48)
+- R³ bağımlılığının gücü (critical / important / minor)
+- Eksik ama ihtiyaç duyulan feature kategorisi (pitch? rhythm? harmony? information?)
+
+### 3. C³ Matrices R3-Usage Oku
+Docs/C³/Matrices/R3-Usage.md dosyasını oku — mevcut kullanım haritası.
+
+### 4. Mevcut R³ Kodunu Oku (referans)
+mi_beta/ear/r3/ altındaki 5 grubun feature_names listesini oku:
+- psychoacoustic/consonance.py → 7 feature
+- dsp/energy.py → 5 feature
+- dsp/timbre.py → 9 feature
+- dsp/change.py → 4 feature
+- cross_domain/interactions.py → 24 feature
+(Bu 49 feature'ın tam listesini al.)
+
+### 5. Talep Matrisi Oluştur
+Docs/R³/R3-DEMAND-MATRIX.md dosyasını yaz. İçeriği:
+
+1. **Konsolide Gap Tablosu**: Tüm 57 gap, kategorize edilmiş
+2. **Birim Bazlı Talep Özeti**: Her unit için hangi yeni R³ gruplarına ihtiyaç var
+3. **Feature Talep Sıralaması**: En çok talep edilen eksik feature'lar (kaç model istiyor)
+4. **96 Model × Mevcut 49D Kullanım Matrisi**: Hangi model hangi feature'ı okuyor
+5. **96 Model × İstenen Yeni Feature Matrisi**: Her model için önerilen yeni R³ bağlantıları
+6. **Öncelik Sıralaması**: Hangi yeni grup/feature en çok modele fayda sağlar
+
+Format: Her tablo markdown table. Veriye dayalı, yorum minimal.
+
+## Kurallar
+- Sadece OKUMA ve YAZMA yap — mevcut dosyaları DEĞİŞTİRME
+- Tek çıktı dosyası: Docs/R³/R3-DEMAND-MATRIX.md
+- Literature/ ve mi_beta/ READ-ONLY
+- İşin bitince progress dosyasını güncelle
+```
+
+#### Chat R2 Prompt: Local Literature + Psychoacoustic DSP Survey
+
+```
+Sen Phase 3A-2 Chat R2'sin: Yerel Literatür ve Psikoakustik DSP Araştırması.
+
+## Proje
+/Volumes/SRC-9/SRC Musical Intelligence
+
+## Görev
+Literature/r3/ klasöründeki 121 markdown dosyasını ve mevcut R³ kodunu inceleyerek,
+psikoakustik temelli ses ölçüm yöntemlerinin kapsamlı bir envanterini oluştur.
+
+## Adımlar
+
+### 1. Mevcut R³ Kodunu Anla (referans çerçeve)
+mi_beta/ear/r3/ altındaki 5 grubu oku:
+- psychoacoustic/consonance.py → 7D, hangi DSP yöntemleri kullanılıyor?
+- dsp/energy.py → 5D
+- dsp/timbre.py → 9D
+- dsp/change.py → 4D
+- cross_domain/interactions.py → 24D
+Bu mevcut 49D'nin hem güçlü hem zayıf yanlarını not et.
+
+### 2. Literature/r3/ Taraması
+5 alt klasördeki 121 dosyayı tara:
+
+**psychoacoustics/** (11 dosya):
+- Consonance & Dissonance (Plomp-Levelt, Sethares, Helmholtz)
+- Just Intonation (JI primer, Fundamental Principles)
+- Pressnitzer 2000 (continuous perception)
+- Neural correlates (elife-neural)
+Her dosyadan: hangi ölçülebilir akustik özellik tanımlanıyor? Hesaplama yöntemi?
+
+**dsp-and-ml/** (4 dosya):
+- CNN spectral features survey
+- Genre classification spectral features
+- Modulation-based classification
+- Microtonal transcription (Benetos 2015)
+Her dosyadan: hangi feature set kullanılıyor? Mel'den hesaplanabilir mi?
+
+**spectral-music/** (7 dosya):
+- Spectral composition theory (Anderson, Chung, Fineberg, Stanford)
+- Microtonal pitch organization
+Her dosyadan: spectral müziğin hangi boyutları R³'e katkı sağlar?
+
+**computational-music-theory/** (65 dosya):
+- Tymoczko Geometry of Music (24 part) → tonal geometry, voice leading
+- Neo-Riemannian theory (32 part) → transformational theory
+- Balzano group theory → pitch class structure
+- Julian Hook, Steven Rings, Lewin → transformational music theory
+Her dosyadan: hangi hesaplanabilir müzikal boyut tanımlanıyor?
+
+### 3. Feature Envanteri Oluştur
+Her aday feature için:
+
+| Alan | İçerik |
+|------|--------|
+| Feature Adı | snake_case isim |
+| Kategori | Consonance/Energy/Timbre/Change/Pitch/Rhythm/Harmony/Information |
+| Önerilen R³ Grubu | A-I (mevcut veya yeni) |
+| Tanım | 1 cümle: ne ölçer? |
+| Psikoakustik Temeli | Hangi algısal fenomene karşılık gelir? |
+| Hesaplama Yöntemi | Mel spectrogram'dan nasıl hesaplanır? (formül veya algoritma) |
+| Beklenen Aralık | [min, max] ve birim |
+| Kaynak | Literature/r3/ dosya adı ve sayfa/bölüm referansı |
+| Mevcut R³'te Var mı? | Evet (hangi index) / Hayır / Kısmen (proxy olarak) |
+| Mel'den Hesaplanabilirlik | Doğrudan / Dolaylı (ara adım gerekli) / Mümkün değil |
+
+### 4. Teorik Gruplar İçin Derinlik Analizi
+Özellikle şu alanlarda derin analiz yap:
+- **Consonance genişlemesi**: Plomp-Levelt modeli tam uygulanabilir mi? Sethares timbre-dependent dissonance? Roughness (Vassilakis 2005)?
+- **Pitch boyutu**: Chroma (12D pitch class profile) mel'den nasıl? Tonnetz koordinatları?
+- **Harmony boyutu**: Tymoczko'nun voice-leading geometry'si mel'den hesaplanabilir mi?
+- **Information boyutu**: Shannon entropy zaten var (change grubunda) ama IDyOM-tarzı melodic/harmonic surprisal?
+
+### 5. Çıktı Dosyası
+Docs/R³/R3-DSP-SURVEY-THEORY.md dosyasını yaz. İçeriği:
+
+1. **Executive Summary**: Kaç aday feature bulundu, kategoriler
+2. **Mevcut R³ Güçlü/Zayıf Yanları**: Mevcut 49D'nin eleştirisi (literature temelli)
+3. **Aday Feature Tablosu**: Yukarıdaki formatta tüm aday features
+4. **Grup Bazlı Derinlik Analizi**: Her potansiyel yeni grup (F-I) için detaylı analiz
+5. **Hesaplanabilirlik Matrisi**: Her feature için mel→feature hesaplanabilirlik değerlendirmesi
+6. **Kaynak Referans Tablosu**: Literature/r3/ dosya → feature bağlantıları
+
+## Kurallar
+- Sadece OKUMA ve YAZMA — mevcut dosyaları DEĞİŞTİRME
+- Tek çıktı dosyası: Docs/R³/R3-DSP-SURVEY-THEORY.md
+- Literature/ ve mi_beta/ READ-ONLY
+- Özellikle 121 markdown dosyasının İÇERİĞİNİ oku, sadece adlarını listele değil
+- Her iddia için kaynak belirt (dosya adı + bölüm)
+```
+
+#### Chat R3 Prompt: Web Research + Computational DSP Survey
+
+```
+Sen Phase 3A-2 Chat R3'sin: Web Araştırması ve Hesaplamalı DSP Araştırması.
+
+## Proje
+/Volumes/SRC-9/SRC Musical Intelligence
+
+## Görev
+Web'den derin araştırma yaparak, modern ses analizi toolkit'lerinin ve
+standartların sunduğu tüm hesaplanabilir özelliklerin kapsamlı envanterini oluştur.
+Odak: mel spectrogram'dan hesaplanabilir, gerçek zamanlı (frame-level) özellikler.
+
+## Adımlar
+
+### 1. Mevcut R³ Kodunu Anla (referans çerçeve)
+mi_beta/ear/r3/ altındaki 5 grubu oku:
+- psychoacoustic/consonance.py → 7D
+- dsp/energy.py → 5D
+- dsp/timbre.py → 9D
+- dsp/change.py → 4D
+- cross_domain/interactions.py → 24D
+Bu mevcut 49D'nin teknik uygulamasını anla.
+Özellikle: input format (mel spectrogram B,128,T), output format (B,T,dim), [0,1] aralığı.
+
+### 2. Web Araştırması: DSP Toolkit'ler
+Her toolkit için web'den araştır ve feature set'ini çıkar:
+
+**librosa** (Python audio analysis):
+- Spectral features: centroid, bandwidth, contrast, rolloff, flatness, tonnetz
+- Rhythm features: tempo, beat_frames, onset_strength, tempogram
+- Pitch: piptrack, pyin (probabilistic YIN)
+- Tonal: chroma_stft, chroma_cqt, chroma_cens
+- MFCC: 13-40 coefficients
+- Özellikle `librosa.feature` modülünün TAMAMI
+
+**essentia** (C++/Python comprehensive):
+- 600+ audio descriptor (tüm kategoriler)
+- Tonal: key, chord, HPCP, tuning
+- Rhythm: BPM, beats, onset rate, beat loudness
+- Spectral: 30+ descriptor
+- SFX: pitch salience, inharmonicity, dissonance (Essentia modeli)
+- Lowlevel: spectral complexity, silence rate, dynamic complexity
+
+**openSMILE / eGeMAPS** (emotion/paralinguistic):
+- 88 eGeMAPS features: F0, jitter, shimmer, formants, HNR, spectral slopes
+- ComParE feature set: 6373 features (büyük ama functional subset relevant)
+- Özellikle: F0 statistics, loudness, spectral features, voice quality
+
+**Madmom** (beat/onset specialist):
+- Beat tracking (DBN, multi-model)
+- Onset detection (spectral flux variants, CNN-based)
+- Tempo estimation (autocorrelation, comb filter)
+- Key estimation
+- Note/pitch tracking
+
+**CREPE / SPICE / pYIN** (neural pitch):
+- CREPE: CNN-based monophonic pitch estimation, confidence score
+- SPICE: CREPE successor, polyphonic capable
+- pYIN: probabilistic YIN with HMM smoothing
+
+**ISO / AES Standards**:
+- ISO 532B: Zwicker loudness model (specific loudness per Bark band)
+- ISO 226: Equal-loudness contours
+- AES17: Audio measurement standards
+- ITU-R BS.1770: Loudness measurement (LUFS)
+
+### 3. Feature Sınıflandırma
+Her feature için değerlendir:
+
+| Alan | İçerik |
+|------|--------|
+| Feature Adı | Toolkit'teki orijinal isim |
+| Toolkit | librosa / essentia / openSMILE / Madmom / CREPE / ISO |
+| Kategori | Pitch / Rhythm / Harmony / Timbre / Energy / Change / Quality / Modulation |
+| Boyut | Skaler (1D) / Vektör (nD) / Matris |
+| Çerçeve | Frame-level (per-hop) / Segment-level / Global |
+| Input | Mel spectrogram / Raw audio / CQT / STFT / diğer |
+| Mel'den Türetilebilir mi? | Doğrudan / STFT geri dönüşüm ile / Hayır (raw audio gerekli) |
+| Hesaplama Maliyeti | Düşük (<1ms/frame) / Orta (1-10ms) / Yüksek (>10ms) / GPU gerekli |
+| R³ Uygunluğu | Yüksek / Orta / Düşük (neden?) |
+| Önerilen R³ Grubu | A-I veya yeni |
+
+### 4. Özellikle Araştırılacak Konular
+Web'den derin araştır:
+- **Chroma features**: 12D pitch class profile hesaplama yöntemleri (STFT vs CQT vs mel-based)
+- **Pitch salience**: Mel spectrogram'dan F0 ve pitch confidence çıkarma
+- **Syncopation index**: Witek et al. 2014 syncopation measure, hesaplama algoritması
+- **Groove features**: Madison 2006, Janata 2012 groove operationalization
+- **Harmonic tension**: Lerdahl 2001 tonal tension model, Herremans 2017 computational implementation
+- **Information content**: IDyOM (Pearce 2005/2018) — mel'den yaklaşık IC hesaplanabilir mi?
+- **Modulation spectrum**: Temporal modulation features (4-16 Hz AM for speech/music)
+- **Spectral contrast**: Octave-band contrast (Jiang 2002)
+
+### 5. Çıktı Dosyası
+Docs/R³/R3-DSP-SURVEY-TOOLS.md dosyasını yaz. İçeriği:
+
+1. **Executive Summary**: Toolkit sayısı, toplam feature sayısı, R³'e uygun olanlar
+2. **Toolkit Bazlı Feature Tabloları**: Her toolkit için tam feature listesi + değerlendirme
+3. **Mel-Uyumlu Feature Kataloğu**: Sadece mel spectrogram'dan (veya mel'den türetilebilir input'tan) hesaplanabilir olanlar
+4. **Hesaplama Maliyeti Analizi**: Frame-level real-time uygunluk değerlendirmesi
+5. **Önerilen Yeni R³ Grupları**: Her grup (F-I) için toolkit-temelli feature önerileri
+6. **Karşılaştırma Matrisi**: Toolkit × Feature kategorisi matrisi (hangi toolkit ne sağlıyor)
+7. **Implementation Referansları**: Her önerilen feature için kaynak kodu / API referansı
+
+## Kurallar
+- Web araştırması için WebSearch ve WebFetch kullan
+- Mevcut dosyaları DEĞİŞTİRME
+- Tek çıktı dosyası: Docs/R³/R3-DSP-SURVEY-TOOLS.md
+- mi_beta/ READ-ONLY
+- Tüm web kaynaklarını URL ile referans ver
+- Özellikle "mel spectrogram'dan hesaplanabilir mi?" sorusuna her feature için net cevap ver
+- Gerçek zamanlı (172 Hz frame rate, ~5.8ms/frame) çalışabilirlik değerlendir
+```
+
+#### Phase 3 Execution Order
+
+```
+Week 1: Parallel Research (3 chats)
+├── Chat R1: Model Demand Analysis → R3-DEMAND-MATRIX.md
+├── Chat R2: Literature DSP Survey → R3-DSP-SURVEY-THEORY.md
+└── Chat R3: Web DSP Survey → R3-DSP-SURVEY-TOOLS.md
+
+Week 2: Merge & Design (single session)
+├── 3A-3: Merge 3 outputs → R3-CROSSREF.md
+├── 3B-1: Design new groups → R3-V2-DESIGN.md
+├── 3B-2: Design interactions
+└── 3B-3: Design code changes
+
+Week 3: Documentation (single or parallel)
+├── 3C: Architecture docs (~20 files)
+└── 3C: Per-unit mappings (9 files)
+
+Week 4: Model Updates (4 parallel chats)
+├── Chat M1: SPU + STU (23 models) → Section 4 update
+├── Chat M2: IMU + ASU + NDU (33 models) → Section 4 update
+├── Chat M3: MPU + PCU (20 models) → Section 4 update
+└── Chat M4: ARU + RPU (20 models) → Section 4 update
+```
 
 ### Phase 4: H³ Architecture (Docs/H³)
 
@@ -518,10 +1029,15 @@ Only after Phases 1-5 are complete:
    - Verify OUTPUT_DIM, LAYERS, dimension_names match revised Section 6
    - Update brain_regions from revised Section 8
    - Update compute() logic if mathematical formulation changed
-3. **R³ expansion** (if Phase 3 identified new dimensions):
-   - Update mi_beta/core/constants.py (R3_DIM, group boundaries)
-   - Update mi_beta/core/dimension_map.py (_R3_FEATURE_NAMES)
-   - Add new feature extractors in mi_beta/ear/r3/
+3. **R³ expansion** (from Phase 3 design — 49D → 128–256D):
+   - Remove hardcoded `R3_DIM=49` → dynamic from `R3FeatureRegistry.freeze().total_dim`
+   - Remove `R3FeatureSpec` index validation `< 49` → `< registry.total_dim`
+   - Remove hardcoded `_R3_FEATURE_NAMES` → auto-generate from registry
+   - Remove hardcoded group boundaries → read from `R3FeatureMap.groups`
+   - Implement new `BaseSpectralGroup` subclasses (F:Pitch, G:Rhythm, H:Harmony, I:Information, ...)
+   - Expand interaction group E for new cross-group products
+   - Update all model `r3_indices` references for expanded space
+   - Benchmark computation cost at target dimensionality
 4. **H³ updates** (if demand patterns changed)
 5. **L³ updates** (if semantic groups changed)
 6. **Update 00-INDEX.md** with final totals
@@ -663,7 +1179,8 @@ After full completion:
 - [x] Every model doc Section 8 has MNI coordinates verified against papers ✅ Phase 1
 - [ ] Docs/C³/ has complete documentation architecture mirroring mi_beta/brain/ (Phase 2)
 - [ ] Every code component in mi_beta/brain/ has a documentation counterpart (Phase 2)
-- [ ] Docs/R³/ has complete spectral architecture with per-group specs (Phase 3)
+- [ ] Docs/R³/ has complete spectral architecture: demand matrix + DSP survey + v2 design + per-group specs + per-unit mappings (Phase 3A-3C)
+- [ ] All 96 model docs Section 4 updated for R³ v2 expanded space, bumped to v2.2.0 (Phase 3E)
 - [ ] Docs/H³/ has complete temporal architecture with per-unit demands (Phase 4)
 - [ ] Docs/L³/ has complete semantic architecture with per-unit mappings (Phase 5)
 - [ ] `pytest tests/ -v` passes (Phase 6)
