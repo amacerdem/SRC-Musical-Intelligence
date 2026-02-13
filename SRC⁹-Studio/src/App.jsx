@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import PavelFluidSimulation from './engine/PavelFluidSimulation.js';
 import AudioAnalyzer from './audio/AudioAnalyzer.js';
@@ -17,161 +17,319 @@ function Glass({ children, className = '', style = {} }) {
   );
 }
 
-// ─── Arc Gauge ───
-function ArcGauge({ value = 0, size = 48, color = '#fff', label = '' }) {
-  const sw = 2.5, r = (size - sw * 2) / 2, circ = 2 * Math.PI * r;
-  return (
-    <div className="flex flex-col items-center gap-1">
-      <svg width={size} height={size} className="-rotate-90">
-        <circle cx={size/2} cy={size/2} r={r} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth={sw} />
-        <circle cx={size/2} cy={size/2} r={r} fill="none" stroke={color} strokeWidth={sw}
-          strokeDasharray={circ} strokeDashoffset={circ * (1 - Math.min(1, Math.max(0, value)))}
-          strokeLinecap="round" style={{ transition: 'stroke-dashoffset 0.12s ease-out' }} />
-      </svg>
-      <span className="text-[9px] text-white/40 tracking-wider uppercase">{label}</span>
-    </div>
-  );
-}
+// ─── Sparkline with past-present-future ───
+// Shows a sliding time window: past = solid colored, future = dimmed
+// `column` = full Float32Array for this dimension
+// `frameIdx` = current playback frame
+// `windowFrames` = how many frames to show on each side of "now"
+// `min`/`max` = dimension value range for normalization
+function Sparkline({
+  column, frameIdx, windowFrames = 1700,
+  min = 0, max = 1, color = 'rgba(255,255,255,0.5)',
+  label = '', bipolar = false, height = 26, width = 180,
+}) {
+  if (!column || column.length === 0) return null;
 
-// ─── Horizontal Bar ───
-function HBar({ value = 0, color = '#fff', label = '' }) {
-  return (
-    <div className="flex items-center gap-3 w-full">
-      <span className="text-[10px] text-white/35 w-20 text-right tracking-wide uppercase shrink-0">{label}</span>
-      <div className="flex-1 h-[3px] rounded-full bg-white/[0.06] overflow-hidden">
-        <div className="h-full rounded-full" style={{ width: `${Math.min(100, value * 100)}%`, background: color, transition: 'width 0.12s ease-out' }} />
-      </div>
-      <span className="text-[9px] text-white/20 w-7 shrink-0">{(value * 100).toFixed(0)}</span>
-    </div>
-  );
-}
+  const totalFrames = column.length;
+  const startFrame = Math.max(0, frameIdx - windowFrames);
+  const endFrame = Math.min(totalFrames - 1, frameIdx + windowFrames);
+  const windowSize = endFrame - startFrame;
+  if (windowSize <= 0) return null;
 
-// ─── Dot Indicator ───
-function Dot({ value = 0, color = '#fff', label = '' }) {
-  return (
-    <div className="flex items-center gap-2">
-      <div className="w-2 h-2 rounded-full" style={{ background: color, opacity: 0.15 + value * 0.85, boxShadow: value > 0.5 ? `0 0 ${value*12}px ${color}` : 'none', transition: 'all 0.12s' }} />
-      <span className="text-[10px] text-white/30">{label}</span>
-      <span className="text-[10px] text-white/15 ml-auto">{(value * 100).toFixed(0)}</span>
-    </div>
-  );
-}
+  // Downsample to ~90 points for SVG performance
+  const points = 90;
+  const step = Math.max(1, Math.floor(windowSize / points));
+  const range = max - min || 1;
 
-// ─── Polarity Axis ───
-function Polarity({ value = 0.5, left = '', right = '', color = 'rgba(255,255,255,0.3)' }) {
+  // Build SVG path data
+  const pathPoints = [];
+  for (let i = startFrame; i <= endFrame; i += step) {
+    const x = ((i - startFrame) / windowSize) * width;
+    const normalized = (column[i] - min) / range;
+    const y = height - Math.min(1, Math.max(0, normalized)) * height;
+    pathPoints.push({ x, y, frame: i });
+  }
+
+  // Split into past and future at the "now" position
+  const nowX = ((frameIdx - startFrame) / windowSize) * width;
+  const nowNorm = (column[frameIdx] - min) / range;
+  const nowY = height - Math.min(1, Math.max(0, nowNorm)) * height;
+  const currentVal = column[frameIdx];
+
+  // Build past path (up to and including now)
+  const pastPts = pathPoints.filter(p => p.frame <= frameIdx);
+  pastPts.push({ x: nowX, y: nowY, frame: frameIdx });
+  const pastD = pastPts.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ');
+
+  // Build future path (from now onward)
+  const futurePts = [{ x: nowX, y: nowY, frame: frameIdx }];
+  futurePts.push(...pathPoints.filter(p => p.frame > frameIdx));
+  const futureD = futurePts.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ');
+
+  // Format display value
+  let displayVal;
+  if (bipolar) {
+    displayVal = (currentVal >= 0 ? '+' : '') + currentVal.toFixed(2);
+  } else {
+    displayVal = currentVal.toFixed(2);
+  }
+
   return (
     <div className="flex items-center gap-2 w-full">
-      <span className="text-[9px] text-white/25 w-14 text-right shrink-0">{left}</span>
-      <div className="flex-1 h-[2px] bg-white/[0.06] rounded-full relative">
-        <div className="absolute top-1/2 w-2 h-2 rounded-full" style={{ left: `${value*100}%`, transform: 'translate(-50%,-50%)', background: color, boxShadow: `0 0 8px ${color}`, transition: 'left 0.2s' }} />
-      </div>
-      <span className="text-[9px] text-white/25 w-14 shrink-0">{right}</span>
+      <span className="text-[9px] text-white/30 w-[70px] text-right shrink-0 tracking-wide uppercase">{label}</span>
+      <svg width={width} height={height} className="shrink-0" style={{ overflow: 'visible' }}>
+        {/* Baseline for bipolar dimensions */}
+        {bipolar && (
+          <line x1={0} y1={height / 2} x2={width} y2={height / 2}
+            stroke="rgba(255,255,255,0.06)" strokeWidth={0.5} />
+        )}
+        {/* Past — solid */}
+        <path d={pastD} fill="none" stroke={color} strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" />
+        {/* Future — dimmed */}
+        <path d={futureD} fill="none" stroke={color} strokeWidth={1} strokeLinecap="round" strokeLinejoin="round"
+          opacity={0.2} strokeDasharray="3,2" />
+        {/* Now dot */}
+        <circle cx={nowX} cy={nowY} r={3} fill={color} opacity={0.9}>
+          <animate attributeName="r" values="3;4;3" dur="1.5s" repeatCount="indefinite" />
+        </circle>
+        {/* Now vertical line */}
+        <line x1={nowX} y1={0} x2={nowX} y2={height}
+          stroke="rgba(255,255,255,0.08)" strokeWidth={0.5} />
+      </svg>
+      <span className="text-[9px] text-white/20 w-10 shrink-0 text-right tabular-nums">{displayVal}</span>
     </div>
   );
 }
 
-// ─── C³ Brain HUD (right side) ───
-function BrainHUD({ frame, dims }) {
-  if (!frame || !dims) return null;
-  const v = {};
-  dims.forEach((name, i) => { v[name] = frame[i] || 0; });
-
+// ─── Section Header ───
+function SectionHeader({ label }) {
   return (
-    <Glass className="p-5 w-64">
-      <div className="flex items-center gap-2 mb-4">
-        <span className="text-[11px] font-semibold tracking-[0.2em] text-white/50 uppercase">C³</span>
-        <span className="text-[9px] text-white/20">Brain</span>
-      </div>
-
-      <div className="text-[8px] text-white/20 uppercase tracking-widest mb-2">Reward</div>
-      <div className="flex justify-between mb-4">
-        <ArcGauge value={v.pleasure || 0} size={48} color="rgba(253,224,71,0.7)" label="Plsr" />
-        <ArcGauge value={v.wanting || 0} size={48} color="rgba(252,211,77,0.7)" label="Want" />
-        <ArcGauge value={v.liking || 0} size={48} color="rgba(253,186,116,0.7)" label="Like" />
-      </div>
-      <div className="space-y-1.5 mb-3">
-        <Dot value={v.da_nacc || 0} color="rgba(253,224,71,0.7)" label="DA NAcc" />
-        <Dot value={v.da_caudate || 0} color="rgba(252,211,77,0.6)" label="DA Caudate" />
-        <Dot value={v.opioid_proxy || 0} color="rgba(196,181,253,0.7)" label="Opioid" />
-      </div>
-
-      <div className="text-[8px] text-white/20 uppercase tracking-widest mb-2 mt-3">Affect</div>
-      <div className="space-y-2">
-        <HBar value={v.f03_valence || 0} color="rgba(147,197,253,0.5)" label="Valence" />
-        <HBar value={v.happy_pathway || 0} color="rgba(253,186,116,0.5)" label="Happy" />
-        <HBar value={v.sad_pathway || 0} color="rgba(147,197,253,0.5)" label="Sad" />
-        <HBar value={v.tension || 0} color="rgba(252,165,165,0.5)" label="Tension" />
-      </div>
-
-      <div className="mt-3 pt-3 border-t border-white/[0.04] flex items-center justify-between">
-        <div className="flex items-center gap-1.5">
-          <span className="text-[10px]" style={{ opacity: 0.3 + (v.hr || 0) * 0.7 }}>&#9825;</span>
-          <span className="text-[10px] text-white/25">HR {((v.hr || 0) * 100).toFixed(0)}</span>
-        </div>
-        {(v.chills_intensity || 0) > 0.1 && (
-          <div className="flex items-center gap-1">
-            <span className="text-[10px] text-amber-300" style={{ opacity: 0.4 + v.chills_intensity * 0.6 }}>&#9889;</span>
-            <span className="text-[9px] text-white/30">chills</span>
-          </div>
-        )}
-      </div>
-    </Glass>
+    <div className="text-[8px] text-white/15 uppercase tracking-[0.2em] mt-3 mb-1.5 first:mt-0">{label}</div>
   );
 }
 
-// ─── R³ Spectral HUD (left side) ───
-function SpectralHUD({ summary }) {
-  if (!summary) return null;
+// ─── R³ HUD (left) — perceptual / spectral brain dimensions ───
+function R3HUD({ columns, dimMap, frameIdx, windowFrames }) {
+  if (!columns || !dimMap) return null;
+
+  // Value ranges from data analysis (for proper normalization)
+  const dims = [
+    { key: 'arousal',           label: 'Arousal',    color: 'rgba(252,165,165,0.7)', min: 0,    max: 1,    group: 'state' },
+    { key: 'tension',           label: 'Tension',    color: 'rgba(253,186,116,0.7)', min: 0,    max: 1,    group: 'state' },
+    { key: 'prediction_error',  label: 'Pred Error', color: 'rgba(252,165,165,0.6)', min: -0.8, max: 1,    group: 'prediction', bipolar: true },
+    { key: 'prediction_match',  label: 'Pred Match', color: 'rgba(147,197,253,0.6)', min: -1,   max: 1,    group: 'prediction', bipolar: true },
+    { key: 'harmonic_context',  label: 'Harmony',    color: 'rgba(167,243,208,0.6)', min: 0.75, max: 0.95, group: 'harmony' },
+    { key: 'consonance_valence',label: 'Consonance', color: 'rgba(167,243,208,0.5)', min: 0.15, max: 0.8,  group: 'harmony' },
+    { key: 'mode_signal',       label: 'Mode',       color: 'rgba(253,224,71,0.5)',  min: 0.15, max: 0.7,  group: 'harmony' },
+    { key: 'emotional_momentum',label: 'Momentum',   color: 'rgba(196,181,253,0.6)', min: -0.8, max: 1,    group: 'dynamics', bipolar: true },
+  ];
+
+  let lastGroup = '';
+
   return (
-    <Glass className="p-5 w-64">
-      <div className="flex items-center gap-2 mb-4">
+    <Glass className="p-4 w-[340px]">
+      <div className="flex items-center gap-2 mb-3">
         <span className="text-[11px] font-semibold tracking-[0.2em] text-white/50 uppercase">R³</span>
         <span className="text-[9px] text-white/20">Spectral</span>
       </div>
-      <div className="flex justify-between mb-5">
-        <ArcGauge value={summary.rms} size={52} color="rgba(252,211,77,0.7)" label="RMS" />
-        <ArcGauge value={summary.brightness} size={52} color="rgba(253,186,116,0.7)" label="Bri" />
-        <ArcGauge value={summary.peakAmplitude} size={52} color="rgba(252,165,165,0.7)" label="Peak" />
-      </div>
-      <div className="space-y-2.5">
-        <HBar value={summary.lowEnergy} color="rgba(252,165,165,0.5)" label="Low 20-250" />
-        <HBar value={summary.midEnergy} color="rgba(253,224,71,0.5)" label="Mid 250-2k" />
-        <HBar value={summary.highEnergy} color="rgba(147,197,253,0.5)" label="High 2k-4k" />
-      </div>
-      <div className="mt-3 text-[9px] text-white/15">
-        Centroid {summary.centroid.toFixed(0)} Hz
+      <div className="space-y-1">
+        {dims.map((dim) => {
+          const colIdx = dimMap[dim.key];
+          if (colIdx === undefined) return null;
+          const showHeader = dim.group !== lastGroup;
+          lastGroup = dim.group;
+          return (
+            <React.Fragment key={dim.key}>
+              {showHeader && <SectionHeader label={dim.group} />}
+              <Sparkline
+                column={columns[colIdx]}
+                frameIdx={frameIdx}
+                windowFrames={windowFrames}
+                min={dim.min}
+                max={dim.max}
+                color={dim.color}
+                label={dim.label}
+                bipolar={dim.bipolar}
+              />
+            </React.Fragment>
+          );
+        })}
       </div>
     </Glass>
   );
 }
 
-// ─── L³ Integration HUD (bottom) ───
-function IntegrationHUD({ frame, dims }) {
-  if (!frame || !dims) return null;
-  const v = {};
-  dims.forEach((name, i) => { v[name] = frame[i] || 0; });
+// ─── C³ HUD (right) — cognitive / reward brain dimensions ───
+function C3HUD({ columns, dimMap, frameIdx, windowFrames }) {
+  if (!columns || !dimMap) return null;
+
+  const dims = [
+    { key: 'pleasure',         label: 'Pleasure',   color: 'rgba(253,224,71,0.7)',  min: 0,    max: 0.8,  group: 'reward' },
+    { key: 'wanting',          label: 'Wanting',    color: 'rgba(252,211,77,0.6)',  min: 0,    max: 0.65, group: 'reward' },
+    { key: 'liking',           label: 'Liking',     color: 'rgba(253,186,116,0.6)', min: 0.15, max: 0.75, group: 'reward' },
+    { key: 'da_nacc',          label: 'DA NAcc',    color: 'rgba(253,224,71,0.5)',  min: 0.18, max: 0.87, group: 'neuro' },
+    { key: 'da_caudate',       label: 'DA Caudate', color: 'rgba(252,211,77,0.5)',  min: 0,    max: 0.9,  group: 'neuro' },
+    { key: 'opioid_proxy',     label: 'Opioid',     color: 'rgba(196,181,253,0.5)', min: 0.74, max: 0.94, group: 'neuro' },
+    { key: 'happy_pathway',    label: 'Happy',      color: 'rgba(253,186,116,0.5)', min: 0.35, max: 0.77, group: 'affect' },
+    { key: 'sad_pathway',      label: 'Sad',        color: 'rgba(147,197,253,0.5)', min: 0.27, max: 0.73, group: 'affect' },
+    { key: 'beauty',           label: 'Beauty',     color: 'rgba(167,243,208,0.6)', min: 0.13, max: 0.68, group: 'aesthetic' },
+    { key: 'chills_intensity', label: 'Chills',     color: 'rgba(253,224,71,0.7)',  min: 0,    max: 0.75, group: 'aesthetic' },
+    { key: 'emotional_arc',    label: 'Emo Arc',    color: 'rgba(196,181,253,0.5)', min: 0.2,  max: 0.8,  group: 'aesthetic' },
+  ];
+
+  let lastGroup = '';
 
   return (
-    <Glass className="px-6 py-4" style={{ maxWidth: 520 }}>
+    <Glass className="p-4 w-[340px]">
       <div className="flex items-center gap-2 mb-3">
+        <span className="text-[11px] font-semibold tracking-[0.2em] text-white/50 uppercase">C³</span>
+        <span className="text-[9px] text-white/20">Brain</span>
+      </div>
+      <div className="space-y-1">
+        {dims.map((dim) => {
+          const colIdx = dimMap[dim.key];
+          if (colIdx === undefined) return null;
+          const showHeader = dim.group !== lastGroup;
+          lastGroup = dim.group;
+          return (
+            <React.Fragment key={dim.key}>
+              {showHeader && <SectionHeader label={dim.group} />}
+              <Sparkline
+                column={columns[colIdx]}
+                frameIdx={frameIdx}
+                windowFrames={windowFrames}
+                min={dim.min}
+                max={dim.max}
+                color={dim.color}
+                label={dim.label}
+                bipolar={dim.bipolar}
+              />
+            </React.Fragment>
+          );
+        })}
+      </div>
+    </Glass>
+  );
+}
+
+// ─── L³ Narration — real-time text from brain data ───
+function generateNarration(columns, dimMap, frameIdx) {
+  if (!columns || !dimMap || frameIdx == null) return [];
+
+  const v = (key) => {
+    const idx = dimMap[key];
+    return idx !== undefined ? columns[idx][frameIdx] : 0;
+  };
+
+  // Rate of change (compare to 1 second ago ~172 frames)
+  const delta = (key, lookback = 172) => {
+    const idx = dimMap[key];
+    if (idx === undefined) return 0;
+    const prev = Math.max(0, frameIdx - lookback);
+    return columns[idx][frameIdx] - columns[idx][prev];
+  };
+
+  const lines = [];
+
+  // Arousal state
+  const arousal = v('arousal');
+  if (arousal > 0.85) lines.push({ text: 'High arousal — intense passage', color: 'rgba(252,165,165,0.6)' });
+  else if (arousal < 0.15) lines.push({ text: 'Low arousal — calm, restful', color: 'rgba(147,197,253,0.4)' });
+  else if (delta('arousal') > 0.15) lines.push({ text: 'Arousal rising rapidly', color: 'rgba(252,165,165,0.5)' });
+  else if (delta('arousal') < -0.15) lines.push({ text: 'Arousal subsiding', color: 'rgba(147,197,253,0.4)' });
+
+  // Tension
+  const tension = v('tension');
+  if (tension > 0.7) lines.push({ text: 'Strong harmonic tension', color: 'rgba(253,186,116,0.6)' });
+  else if (tension < 0.15) lines.push({ text: 'Tension resolved', color: 'rgba(167,243,208,0.5)' });
+  if (delta('tension') > 0.1) lines.push({ text: 'Tension building...', color: 'rgba(253,186,116,0.5)' });
+
+  // Prediction
+  const predErr = v('prediction_error');
+  const predMatch = v('prediction_match');
+  if (predErr > 0.6) lines.push({ text: 'Musical surprise — unexpected turn', color: 'rgba(252,165,165,0.6)' });
+  else if (predErr < -0.4) lines.push({ text: 'Below expectation — anticlimax', color: 'rgba(147,197,253,0.4)' });
+  if (predMatch > 0.8) lines.push({ text: 'Expectation confirmed — familiar pattern', color: 'rgba(167,243,208,0.5)' });
+  else if (predMatch < -0.5) lines.push({ text: 'Strong deviation from expected', color: 'rgba(253,186,116,0.5)' });
+
+  // Reward / Pleasure
+  const pleasure = v('pleasure');
+  const wanting = v('wanting');
+  if (pleasure > 0.55) lines.push({ text: 'Peak pleasure response', color: 'rgba(253,224,71,0.7)' });
+  if (wanting > 0.4 && pleasure < 0.2) lines.push({ text: 'Anticipation without resolution', color: 'rgba(252,211,77,0.5)' });
+  if (delta('pleasure') > 0.12) lines.push({ text: 'Pleasure surge detected', color: 'rgba(253,224,71,0.6)' });
+
+  // Dopamine
+  const daNacc = v('da_nacc');
+  const daCaudate = v('da_caudate');
+  if (daCaudate > 0.6 && daNacc > 0.7) lines.push({ text: 'Dopamine surge — reward circuitry active', color: 'rgba(253,224,71,0.5)' });
+
+  // Chills
+  const chills = v('chills_intensity');
+  if (chills > 0.4) lines.push({ text: 'Chills moment', color: 'rgba(253,224,71,0.8)' });
+  else if (chills > 0.2) lines.push({ text: 'Mild frisson sensation', color: 'rgba(253,224,71,0.4)' });
+
+  // Happy / Sad pathway balance
+  const happy = v('happy_pathway');
+  const sad = v('sad_pathway');
+  if (happy > 0.65 && sad < 0.4) lines.push({ text: 'Joyful character — major mode dominance', color: 'rgba(253,186,116,0.5)' });
+  else if (sad > 0.65 && happy < 0.4) lines.push({ text: 'Melancholic passage — minor tonality', color: 'rgba(147,197,253,0.5)' });
+  else if (Math.abs(happy - sad) < 0.05) lines.push({ text: 'Mixed emotional quality — ambiguity', color: 'rgba(196,181,253,0.5)' });
+
+  // Beauty
+  const beauty = v('beauty');
+  if (beauty > 0.55) lines.push({ text: 'Aesthetically beautiful moment', color: 'rgba(167,243,208,0.6)' });
+
+  // Emotional momentum
+  const momentum = v('emotional_momentum');
+  if (momentum > 0.4) lines.push({ text: 'Building toward climax', color: 'rgba(196,181,253,0.6)' });
+  else if (momentum < -0.4) lines.push({ text: 'Gradual emotional descent', color: 'rgba(196,181,253,0.4)' });
+
+  // Harmony
+  const consonance = v('consonance_valence');
+  if (consonance > 0.65) lines.push({ text: 'Rich consonance — harmonic clarity', color: 'rgba(167,243,208,0.5)' });
+  else if (consonance < 0.3) lines.push({ text: 'Dissonant harmony — chromatic tension', color: 'rgba(253,186,116,0.4)' });
+
+  // Emotional arc
+  const arc = v('emotional_arc');
+  if (arc > 0.7) lines.push({ text: 'Narrative peak — emotional climax zone', color: 'rgba(196,181,253,0.6)' });
+  else if (arc < 0.3) lines.push({ text: 'Opening / resolution — arc baseline', color: 'rgba(196,181,253,0.4)' });
+
+  // Limit to 4 most relevant lines
+  return lines.slice(0, 4);
+}
+
+function L3HUD({ columns, dimMap, frameIdx }) {
+  // Throttle narration to every ~0.5s (every ~86 frames at 172Hz)
+  const lastNarrationFrame = useRef(0);
+  const [lines, setLines] = useState([]);
+
+  if (frameIdx - lastNarrationFrame.current > 86 || lines.length === 0) {
+    const newLines = generateNarration(columns, dimMap, frameIdx);
+    if (newLines.length > 0) {
+      lastNarrationFrame.current = frameIdx;
+      // Only update state if lines actually changed (avoid unnecessary re-renders)
+      const changed = newLines.length !== lines.length ||
+        newLines.some((l, i) => !lines[i] || l.text !== lines[i].text);
+      if (changed) setLines(newLines);
+    }
+  }
+
+  if (lines.length === 0) return null;
+
+  return (
+    <Glass className="px-5 py-3" style={{ maxWidth: 500 }}>
+      <div className="flex items-center gap-2 mb-2">
         <span className="text-[11px] font-semibold tracking-[0.2em] text-white/50 uppercase">L³</span>
-        <span className="text-[9px] text-white/20">Integration</span>
+        <span className="text-[9px] text-white/20">Narration</span>
       </div>
-      <div className="space-y-2.5">
-        <Polarity value={v.arousal || 0} left="calm" right="aroused" color="rgba(252,165,165,0.5)" />
-        <Polarity value={v.f03_valence || 0} left="negative" right="positive" color="rgba(253,224,71,0.5)" />
-        <Polarity value={v.tension || 0} left="relaxed" right="tense" color="rgba(253,186,116,0.5)" />
-        <Polarity value={v.beauty || 0} left="ordinary" right="beautiful" color="rgba(167,243,208,0.5)" />
-      </div>
-      <div className="mt-3 pt-3 border-t border-white/[0.04]">
-        <div className="flex items-center justify-between mb-1">
-          <span className="text-[8px] text-white/20 uppercase tracking-wider">Emotional Arc</span>
-          <span className="text-[9px] text-white/15">{((v.emotional_arc || 0) * 100).toFixed(0)}%</span>
-        </div>
-        <div className="h-[2px] rounded-full bg-white/[0.04] relative">
-          <div className="absolute top-1/2 w-6 h-[2px] rounded-full bg-white/20"
-            style={{ left: `${(v.emotional_arc || 0) * 100}%`, transform: 'translate(-50%,-50%)', transition: 'left 0.2s' }} />
-        </div>
+      <div className="space-y-1">
+        {lines.map((line, i) => (
+          <div key={i} className="flex items-center gap-2">
+            <div className="w-1 h-1 rounded-full shrink-0" style={{ background: line.color }} />
+            <span className="text-[10px] tracking-wide" style={{ color: line.color }}>{line.text}</span>
+          </div>
+        ))}
       </div>
     </Glass>
   );
@@ -183,7 +341,7 @@ function PlaybackBar({ progress, duration, playing, onToggle }) {
   return (
     <Glass className="px-4 py-2 flex items-center gap-4" style={{ minWidth: 320 }}>
       <button onClick={onToggle} className="text-white/40 hover:text-white/70 transition-colors text-sm w-6 text-center">
-        {playing ? '⏸' : '▶'}
+        {playing ? '\u23F8' : '\u25B6'}
       </button>
       <div className="flex-1 h-[2px] bg-white/[0.06] rounded-full relative">
         <div className="h-full rounded-full bg-white/20" style={{ width: `${progress * 100}%`, transition: 'width 0.1s' }} />
@@ -198,28 +356,36 @@ export default function App() {
   const canvasRef = useRef(null);
   const fluidRef = useRef(null);
   const analyzerRef = useRef(null);
-  const brainDataRef = useRef(null);
+  const brainRef = useRef(null);      // raw brain JSON
+  const columnsRef = useRef(null);    // per-dimension columns [Float64Array x 26]
   const hudRafRef = useRef(null);
-  const startTimeRef = useRef(0);
 
   const [appState, setAppState] = useState('landing');
-  const [brainFrame, setBrainFrame] = useState(null);
-  const [brainDims, setBrainDims] = useState(null);
-  const [spectralSummary, setSpectralSummary] = useState(null);
+  const [dimMap, setDimMap] = useState(null);     // { name: index }
+  const [columns, setColumns] = useState(null);   // array of Float64Arrays
+  const [frameIdx, setFrameIdx] = useState(0);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const [playing, setPlaying] = useState(false);
 
+  // ~10 seconds of context at 172.27 Hz
+  const windowFrames = 1723;
+
   const startHudLoop = useCallback(() => {
     const tick = () => {
-      const elapsed = (performance.now() - startTimeRef.current) / 1000;
-      const brain = brainDataRef.current;
-      if (brain) {
-        const idx = Math.min(brain.brain.shape[0] - 1, Math.floor(elapsed * brain.meta.frame_rate));
-        setBrainFrame(brain.brain.values[idx]);
+      const analyzer = analyzerRef.current;
+      const brain = brainRef.current;
+
+      if (analyzer && brain) {
+        const elapsed = analyzer.elapsed;
+        const idx = Math.min(
+          brain.brain.shape[0] - 1,
+          Math.floor(elapsed * brain.meta.frame_rate)
+        );
+        setFrameIdx(idx);
         setProgress(Math.min(1, elapsed / brain.meta.duration_s));
       }
-      if (analyzerRef.current) setSpectralSummary(analyzerRef.current.getSummary());
+
       hudRafRef.current = requestAnimationFrame(tick);
     };
     hudRafRef.current = requestAnimationFrame(tick);
@@ -228,7 +394,7 @@ export default function App() {
   const start = useCallback(async () => {
     setAppState('loading');
 
-    // Fluid
+    // Fluid simulation
     if (!fluidRef.current && canvasRef.current) {
       fluidRef.current = new PavelFluidSimulation(canvasRef.current, {
         SIM_RESOLUTION: 256, DYE_RESOLUTION: 1024,
@@ -243,39 +409,61 @@ export default function App() {
       });
     }
 
-    // Brain data
-    const res = await fetch('/audio/swan-lake-brain.json');
-    const brain = await res.json();
-    brainDataRef.current = brain;
-    setBrainDims(brain.brain.dimensions);
+    // Brain data → extract per-dimension columns for sparklines
+    const brainRes = await fetch('/audio/swan-lake-brain.json');
+    const brain = await brainRes.json();
+    brainRef.current = brain;
     setDuration(brain.meta.duration_s);
 
-    // Audio
+    const dims = brain.brain.dimensions;
+    const map = {};
+    dims.forEach((name, i) => { map[name] = i; });
+    setDimMap(map);
+
+    // Extract columns: dims × frames → frames[dim] as Float64Array
+    const numFrames = brain.brain.shape[0];
+    const numDims = brain.brain.shape[1];
+    const cols = [];
+    for (let d = 0; d < numDims; d++) {
+      const col = new Float64Array(numFrames);
+      for (let f = 0; f < numFrames; f++) {
+        col[f] = brain.brain.values[f][d];
+      }
+      cols.push(col);
+    }
+    columnsRef.current = cols;
+    setColumns(cols);
+
+    // Audio analyzer (precomputed FFT + playback)
     const analyzer = new AudioAnalyzer(fluidRef.current, {
-      fftSize: 4096, minFreq: 20, maxFreq: 4000, splatsPerFrame: 24,
+      splatsPerFrame: 20,
+      brightness: 0.05,
     });
-    await analyzer.load('/audio/swan-lake.wav');
+    await Promise.all([
+      analyzer.loadFFT('/audio/swan-lake-fft.json'),
+      analyzer.loadAudio('/audio/swan-lake.wav'),
+    ]);
     analyzerRef.current = analyzer;
 
     setAppState('playing');
     setPlaying(true);
     analyzer.play();
-    startTimeRef.current = performance.now();
     startHudLoop();
   }, [startHudLoop]);
 
   const togglePlay = useCallback(() => {
-    if (!analyzerRef.current) return;
+    const analyzer = analyzerRef.current;
+    if (!analyzer) return;
+
     if (playing) {
-      analyzerRef.current.pause();
+      analyzer.pause();
       if (hudRafRef.current) cancelAnimationFrame(hudRafRef.current);
     } else {
-      analyzerRef.current.play();
-      startTimeRef.current = performance.now() - progress * duration * 1000;
+      analyzer.play();
       startHudLoop();
     }
     setPlaying(!playing);
-  }, [playing, progress, duration, startHudLoop]);
+  }, [playing, startHudLoop]);
 
   useEffect(() => {
     return () => {
@@ -336,22 +524,22 @@ export default function App() {
               </Glass>
             </motion.div>
 
-            {/* R³ left */}
-            <motion.div className="fixed left-5 top-1/2 -translate-y-1/2 z-50"
+            {/* R³ — left */}
+            <motion.div className="fixed left-4 top-1/2 -translate-y-1/2 z-50"
               initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.15 }}>
-              <SpectralHUD summary={spectralSummary} />
+              <R3HUD columns={columns} dimMap={dimMap} frameIdx={frameIdx} windowFrames={windowFrames} />
             </motion.div>
 
-            {/* C³ right */}
-            <motion.div className="fixed right-5 top-1/2 -translate-y-1/2 z-50"
+            {/* C³ — right */}
+            <motion.div className="fixed right-4 top-1/2 -translate-y-1/2 z-50"
               initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.2 }}>
-              <BrainHUD frame={brainFrame} dims={brainDims} />
+              <C3HUD columns={columns} dimMap={dimMap} frameIdx={frameIdx} windowFrames={windowFrames} />
             </motion.div>
 
-            {/* L³ bottom */}
+            {/* L³ — bottom narration */}
             <motion.div className="fixed bottom-16 left-1/2 -translate-x-1/2 z-50"
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.25 }}>
-              <IntegrationHUD frame={brainFrame} dims={brainDims} />
+              <L3HUD columns={columns} dimMap={dimMap} frameIdx={frameIdx} />
             </motion.div>
 
             {/* Playback bar */}

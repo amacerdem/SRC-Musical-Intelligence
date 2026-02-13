@@ -1,201 +1,206 @@
 /**
- * AudioAnalyzer — Loads a WAV/MP3, plays it, and provides real-time FFT data.
- * Feeds spectral data into PavelFluidSimulation as splats.
+ * AudioAnalyzer — Plays WAV audio and feeds precomputed FFT data into
+ * PavelFluidSimulation as splats.
+ *
+ * Color mapping: S³-VI 7-anchor diatonic pitch-class system
+ *   C=#FF0000 D=#FF7F00 E=#FFFF00 F=#00FF00 G=#00FFFF A=#0000FF B=#8B00FF
+ *
+ * Frequency range: 20 Hz – 4000 Hz, log2 Y-axis mapping.
  */
+
+// ─── S³-VI Diatonic Note Color System ───
+// 7-anchor colors: MIDI pitch-class → RGB
+const PITCH_CLASS_COLORS = [
+  // C=0   D=2   E=4   F=5   G=7   A=9   B=11
+  { pc: 0,  rgb: [255,   0,   0] },  // C  - Red
+  { pc: 2,  rgb: [255, 127,   0] },  // D  - Orange
+  { pc: 4,  rgb: [255, 255,   0] },  // E  - Yellow
+  { pc: 5,  rgb: [  0, 255,   0] },  // F  - Green
+  { pc: 7,  rgb: [  0, 255, 255] },  // G  - Cyan
+  { pc: 9,  rgb: [  0,   0, 255] },  // A  - Blue
+  { pc: 11, rgb: [139,   0, 255] },  // B  - Purple
+];
+
+/**
+ * Frequency → diatonic interpolated RGB color.
+ * Works for ANY frequency (not limited to a single octave).
+ * Returns { r, g, b } in 0-1 range (for fluid sim splat).
+ */
+function freqToNoteColor(freq, brightness = 0.15) {
+  // Freq → continuous MIDI → pitch class (0-12)
+  const midi = 69 + 12 * Math.log2(freq / 440);
+  const pc = ((midi % 12) + 12) % 12;
+
+  // Find which diatonic segment this pitch class falls in
+  const anchors = PITCH_CLASS_COLORS;
+  let segIdx = anchors.length - 1; // default: B→C wrap
+  for (let i = 0; i < anchors.length - 1; i++) {
+    if (pc >= anchors[i].pc && pc < anchors[i + 1].pc) {
+      segIdx = i;
+      break;
+    }
+  }
+
+  const cur = anchors[segIdx];
+  const nxt = anchors[(segIdx + 1) % anchors.length];
+
+  // Interpolation factor within segment
+  let span = nxt.pc - cur.pc;
+  if (span <= 0) span += 12; // B→C wraparound
+  let t = (pc - cur.pc);
+  if (t < 0) t += 12;
+  t /= span;
+
+  // Linear RGB interpolation, scaled to 0-1 with brightness
+  const r = (cur.rgb[0] + t * (nxt.rgb[0] - cur.rgb[0])) / 255 * brightness;
+  const g = (cur.rgb[1] + t * (nxt.rgb[1] - cur.rgb[1])) / 255 * brightness;
+  const b = (cur.rgb[2] + t * (nxt.rgb[2] - cur.rgb[2])) / 255 * brightness;
+
+  return { r, g, b };
+}
+
+/**
+ * Frequency → Y position on canvas (log2 scale, 20Hz–4kHz).
+ * Low freq = bottom (Y=1), high freq = top (Y=0).
+ */
+function freqToY(freq, minFreq = 20, maxFreq = 4000) {
+  const t = Math.log2(freq / minFreq) / Math.log2(maxFreq / minFreq);
+  return 1 - Math.min(1, Math.max(0, t));
+}
+
+
 export default class AudioAnalyzer {
   constructor(fluidSim, options = {}) {
     this.fluidSim = fluidSim;
     this.ctx = null;
-    this.analyser = null;
     this.source = null;
-    this.freqData = null;
-    this.rafId = null;
+    this.gainNode = null;
     this.playing = false;
+    this.rafId = null;
+
+    // Precomputed FFT data
+    this.fftData = null;     // { meta, frames }
+    this.fftLoaded = false;
+
+    // Audio buffer (for playback only)
+    this.audioBuffer = null;
+
+    // Timing
+    this.startTime = 0;      // AudioContext.currentTime at play()
+    this.pauseOffset = 0;    // seconds elapsed before last pause
 
     // Config
-    this.fftSize = options.fftSize || 2048;
-    this.minFreq = options.minFreq || 20;
-    this.maxFreq = options.maxFreq || 4000;
-    this.splatsPerFrame = options.splatsPerFrame || 32;  // How many frequency bands to splat
     this.gain = options.gain || 1.0;
+    this.splatsPerFrame = options.splatsPerFrame || 32;
+    this.brightness = options.brightness || 0.15;
   }
 
-  async load(url) {
+  /**
+   * Load precomputed FFT JSON.
+   */
+  async loadFFT(url) {
+    const res = await fetch(url);
+    this.fftData = await res.json();
+    this.fftLoaded = true;
+    console.log(`FFT loaded: ${this.fftData.meta.num_frames} frames @ ${this.fftData.meta.frame_rate}fps`);
+  }
+
+  /**
+   * Load WAV for audio playback (no real-time analysis).
+   */
+  async loadAudio(url) {
     this.ctx = new AudioContext();
-    const response = await fetch(url);
-    const arrayBuffer = await response.arrayBuffer();
-    this.audioBuffer = await this.ctx.decodeAudioData(arrayBuffer);
+    const res = await fetch(url);
+    const buf = await res.arrayBuffer();
+    this.audioBuffer = await this.ctx.decodeAudioData(buf);
 
-    // Analyzer
-    this.analyser = this.ctx.createAnalyser();
-    this.analyser.fftSize = this.fftSize;
-    this.analyser.smoothingTimeConstant = 0.8;
-    this.freqData = new Uint8Array(this.analyser.frequencyBinCount);
-
-    // Gain node
     this.gainNode = this.ctx.createGain();
     this.gainNode.gain.value = this.gain;
     this.gainNode.connect(this.ctx.destination);
   }
 
+  get duration() {
+    return this.audioBuffer ? this.audioBuffer.duration : 0;
+  }
+
+  get elapsed() {
+    if (!this.playing) return this.pauseOffset;
+    return this.pauseOffset + (this.ctx.currentTime - this.startTime);
+  }
+
   play() {
     if (!this.audioBuffer || this.playing) return;
 
-    // Create new source each play
     this.source = this.ctx.createBufferSource();
     this.source.buffer = this.audioBuffer;
-    this.source.connect(this.analyser);
-    this.analyser.connect(this.gainNode);
-    this.source.start(0);
+    this.source.connect(this.gainNode);
+    this.source.start(0, this.pauseOffset);
+    this.startTime = this.ctx.currentTime;
     this.playing = true;
 
-    this.source.onended = () => { this.playing = false; };
+    this.source.onended = () => {
+      this.playing = false;
+    };
 
-    // Start analysis loop
     this._tick();
   }
 
   pause() {
-    if (this.source && this.playing) {
-      this.source.stop();
-      this.playing = false;
-    }
+    if (!this.playing) return;
+    this.pauseOffset += this.ctx.currentTime - this.startTime;
+    this.source.stop();
+    this.playing = false;
     if (this.rafId) cancelAnimationFrame(this.rafId);
   }
 
   /**
-   * Returns current FFT as array of { freq, amplitude01 } objects
-   * Filtered to minFreq-maxFreq range
-   */
-  getSpectralData() {
-    if (!this.analyser || !this.freqData) return [];
-
-    this.analyser.getByteFrequencyData(this.freqData);
-    const binCount = this.analyser.frequencyBinCount;
-    const sampleRate = this.ctx.sampleRate;
-    const binWidth = sampleRate / this.fftSize;
-
-    const minBin = Math.max(1, Math.floor(this.minFreq / binWidth));
-    const maxBin = Math.min(binCount - 1, Math.ceil(this.maxFreq / binWidth));
-
-    const result = [];
-    for (let i = minBin; i <= maxBin; i++) {
-      const freq = i * binWidth;
-      const amplitude01 = this.freqData[i] / 255;
-      if (amplitude01 > 0.02) {  // Noise gate
-        result.push({ freq, amplitude01, bin: i });
-      }
-    }
-    return result;
-  }
-
-  /**
-   * Convert frequency to hue (log scale, 20Hz-4kHz → 0-1)
-   */
-  freqToHue(freq) {
-    return Math.log2(freq / this.minFreq) / Math.log2(this.maxFreq / this.minFreq);
-  }
-
-  /**
-   * Convert frequency to Y position on canvas (log scale)
-   * Low freq = bottom, high freq = top
-   */
-  freqToY(freq) {
-    const t = Math.log2(freq / this.minFreq) / Math.log2(this.maxFreq / this.minFreq);
-    return 1 - Math.min(1, Math.max(0, t));  // Invert: low freq at bottom
-  }
-
-  /**
-   * HSV to RGB
-   */
-  _hsvToRgb(h, s, v) {
-    let r, g, b, i = Math.floor(h * 6), f = h * 6 - i;
-    const p = v * (1 - s), q = v * (1 - f * s), t = v * (1 - (1 - f) * s);
-    switch (i % 6) {
-      case 0: r = v; g = t; b = p; break;
-      case 1: r = q; g = v; b = p; break;
-      case 2: r = p; g = v; b = t; break;
-      case 3: r = p; g = q; b = v; break;
-      case 4: r = t; g = p; b = v; break;
-      case 5: r = v; g = p; b = q; break;
-    }
-    return { r, g, b };
-  }
-
-  /**
-   * Main analysis tick — sends splats to fluid simulation
+   * Main tick — reads precomputed FFT frame, creates splats on fluid sim.
    */
   _tick() {
     if (!this.playing) return;
 
-    const spectral = this.getSpectralData();
+    if (this.fftLoaded && this.fluidSim) {
+      const elapsed = this.elapsed;
+      const frameIdx = Math.min(
+        this.fftData.meta.num_frames - 1,
+        Math.floor(elapsed * this.fftData.meta.frame_rate)
+      );
 
-    if (spectral.length > 0 && this.fluidSim) {
-      // Select top N bands by amplitude
-      const sorted = spectral.sort((a, b) => b.amplitude01 - a.amplitude01);
-      const topBands = sorted.slice(0, this.splatsPerFrame);
+      const peaks = this.fftData.frames[frameIdx];
+      if (peaks && peaks.length > 0) {
+        // -60 dB gate: only visualize peaks within 60 dB of the frame's loudest
+        const peakAmp = peaks[0][1]; // peaks are sorted by amplitude desc
+        const dbFloor = peakAmp * 0.1; // 10^(-20/20)
+        const count = Math.min(peaks.length, this.splatsPerFrame);
 
-      for (const band of topBands) {
-        const y = this.freqToY(band.freq);
-        const x = 0.3 + Math.random() * 0.4;  // Center-ish horizontal spread
+        for (let i = 0; i < count; i++) {
+          const [freq, amp] = peaks[i];
+          if (amp < dbFloor) continue; // below -60 dB relative to frame peak
 
-        // Color from frequency
-        const hue = this.freqToHue(band.freq);
-        const color = this._hsvToRgb(hue, 0.85, band.amplitude01 * 0.2);
+          // Y from log2 frequency
+          const y = freqToY(freq, this.fftData.meta.min_freq, this.fftData.meta.max_freq);
 
-        // Velocity — slight upward drift for high freq, downward for low
-        const drift = (y - 0.5) * 200;
-        const dx = (Math.random() - 0.5) * 300 * band.amplitude01;
-        const dy = drift + (Math.random() - 0.5) * 200 * band.amplitude01;
+          // X: spread across canvas center
+          const x = 0.25 + Math.random() * 0.5;
 
-        // Radius scales with amplitude
-        const savedRadius = this.fluidSim.config.SPLAT_RADIUS;
-        this.fluidSim.config.SPLAT_RADIUS = 0.1 + band.amplitude01 * 0.4;
+          // Color from S³-VI diatonic note system
+          const color = freqToNoteColor(freq, this.brightness * amp);
 
-        this.fluidSim.splat(x, y, dx, dy, color);
+          // Velocity: gentle upward drift for high, downward for low
+          const drift = (0.5 - y) * 150;
+          const dx = (Math.random() - 0.5) * 250 * amp;
+          const dy = drift + (Math.random() - 0.5) * 150 * amp;
 
-        this.fluidSim.config.SPLAT_RADIUS = savedRadius;
+          // Radius scales with amplitude
+          const savedRadius = this.fluidSim.config.SPLAT_RADIUS;
+          this.fluidSim.config.SPLAT_RADIUS = 0.08 + amp * 0.35;
+          this.fluidSim.splat(x, y, dx, dy, color);
+          this.fluidSim.config.SPLAT_RADIUS = savedRadius;
+        }
       }
     }
 
     this.rafId = requestAnimationFrame(() => this._tick());
-  }
-
-  /**
-   * Get summary data for HUD panels
-   */
-  getSummary() {
-    const spectral = this.getSpectralData();
-    if (spectral.length === 0) return null;
-
-    let totalEnergy = 0;
-    let weightedFreq = 0;
-    let maxAmp = 0;
-    let lowEnergy = 0, midEnergy = 0, highEnergy = 0;
-
-    for (const band of spectral) {
-      totalEnergy += band.amplitude01;
-      weightedFreq += band.freq * band.amplitude01;
-      if (band.amplitude01 > maxAmp) maxAmp = band.amplitude01;
-
-      if (band.freq < 250) lowEnergy += band.amplitude01;
-      else if (band.freq < 2000) midEnergy += band.amplitude01;
-      else highEnergy += band.amplitude01;
-    }
-
-    const centroid = totalEnergy > 0 ? weightedFreq / totalEnergy : 0;
-    const rms = totalEnergy / Math.max(1, spectral.length);
-
-    return {
-      centroid,
-      rms,
-      peakAmplitude: maxAmp,
-      bandCount: spectral.length,
-      lowEnergy: lowEnergy / Math.max(1, spectral.length),
-      midEnergy: midEnergy / Math.max(1, spectral.length),
-      highEnergy: highEnergy / Math.max(1, spectral.length),
-      brightness: centroid / this.maxFreq,
-    };
   }
 
   destroy() {
