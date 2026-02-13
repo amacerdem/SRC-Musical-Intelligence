@@ -984,25 +984,164 @@ Week 4: Model Updates (4 parallel chats)
 
 ### Phase 4: H³ Architecture (Docs/H³)
 
-1. **Create `Docs/H³/H3-TEMPORAL-ARCHITECTURE.md`** — master temporal architecture:
-   - 32 horizons with musical meaning (sub-beat → piece)
-   - 24 morphs with statistical definitions
-   - 3 laws (memory, prediction, integration)
-   - Demand aggregation explanation
-   - Sparsity analysis (what % of 2304D is actually used)
-2. **Per-horizon-band docs:**
-   - `Docs/H³/H0-H5-SUB-BEAT.md` — 5.8ms to 46.4ms
-   - `Docs/H³/H6-H11-BEAT.md` — 200ms to 450ms
-   - `Docs/H³/H12-H17-PHRASE.md` — 525ms to 1500ms
-   - `Docs/H³/H18-H23-SECTION.md` — 2s to 25s
-   - `Docs/H³/H24-H31-FORM.md` — 36s to 981s
-3. **Per-unit H³ demand docs:**
-   - `Docs/H³/demands/SPU-H3-DEMAND.md` — all H³ tuples SPU models need
-   - etc for each unit
-   - Each demand doc: model → (r3_idx, horizon, morph, law) → purpose → citation
-4. **Global demand matrix visualization**
+H³ transforms R³ spectral features into temporal morphological descriptors via 4-tuples `(r3_idx, horizon, morph, law)`. With R³ v2 expansion (49D→128D), H³ theoretical space grows from 112,896 to 294,912 dimensions. Actual usage remains sparse (~2.9% occupancy, ~8,600 tuples across 96 models).
 
-**Quality gate:** Every H³ demand tuple has a purpose, citation, and links to the specific R³ feature it operates on.
+**Scope**: 64 new files, ~11,500 lines, 12 directories — modular architecture matching R³ pattern.
+
+#### 4.0 Directory Architecture
+
+```
+Docs/H³/
+├── 00-INDEX.md                              Master index
+├── H3-TEMPORAL-ARCHITECTURE.md              Definitive architecture doc
+├── CHANGELOG.md                             Version history
+├── EXTENSION-GUIDE.md                       Developer extension guide
+│
+├── Registry/                                Canonical reference tables
+│   ├── 00-INDEX.md
+│   ├── HorizonCatalog.md                    32 horizons: ms, frames, band, musical meaning
+│   ├── MorphCatalog.md                      24 morphs: formula, category, MORPH_SCALE
+│   ├── LawCatalog.md                        3 laws: kernel formula, direction, usage
+│   └── DemandAddressSpace.md                4-tuple space, flat index, sparsity
+│
+├── Bands/                                   Primary axis (= R³ Domains/)
+│   ├── 00-INDEX.md                          Cross-band comparison
+│   ├── Micro/                               H0-H7 (~6ms-250ms): Sensory processing
+│   │   ├── 00-INDEX.md
+│   │   ├── H0-H5-SubBeat.md                Onset, attack, spectral transient
+│   │   └── H6-H7-BeatSubdivision.md        Short note, beat subdivision
+│   ├── Meso/                                H8-H15 (~300ms-800ms): Beat/phrase
+│   │   ├── 00-INDEX.md
+│   │   ├── H8-H11-BeatPeriod.md            Quarter note tempo range, BEP core
+│   │   └── H12-H15-Phrase.md               Motif, measure, SYN entry
+│   ├── Macro/                               H16-H23 (~1s-25s): Section
+│   │   ├── 00-INDEX.md
+│   │   ├── H16-H17-Measure.md              TMH entry, bridge phrase-section
+│   │   └── H18-H23-Section.md              MEM, C0P primary, long-term encoding
+│   └── Ultra/                               H24-H31 (~36s-981s): Movement/piece
+│       ├── 00-INDEX.md
+│       ├── H24-H28-Movement.md              Exposition to standard movement
+│       └── H29-H31-Piece.md                 Full work, maximum context
+│
+├── Morphology/                              Cross-cutting morph documentation
+│   ├── 00-INDEX.md
+│   ├── Distribution.md                      M0-M7 (value, mean, std, median, max, range, skew, kurt)
+│   ├── Dynamics.md                          M8-M13, M15, M18, M21 (velocity, accel, trend)
+│   ├── Rhythm.md                            M14, M17, M22 (periodicity, shape_period, peaks)
+│   ├── Information.md                       M20 (Shannon entropy)
+│   ├── Symmetry.md                          M16, M19, M23 (curvature, stability, symmetry)
+│   └── MorphScaling.md                      MORPH_SCALE calibration (gain/bias per morph)
+│
+├── Laws/                                    Cross-cutting law documentation
+│   ├── 00-INDEX.md
+│   ├── L0-Memory.md                         Past->present (causal, exp decay)
+│   ├── L1-Prediction.md                     Present->future (anticipatory)
+│   └── L2-Integration.md                    Past<->future (bidirectional)
+│
+├── Contracts/                               Interface specifications
+│   ├── 00-INDEX.md
+│   ├── H3Extractor.md                       Orchestrator: demand->extraction->output
+│   ├── DemandTree.md                        Sparse routing: horizon-keyed demands
+│   ├── EventHorizon.md                      Horizon wrapper: frames, ms, seconds
+│   ├── MorphComputer.md                     24-morph dispatch
+│   └── AttentionKernel.md                   A(dt) = exp(-3|dt|/H)
+│
+├── Pipeline/                                Execution architecture
+│   ├── 00-INDEX.md
+│   ├── ExecutionModel.md                    Demand aggregation -> horizon loop -> morph
+│   ├── SparsityStrategy.md                  Sparse computation rationale + analysis
+│   ├── Performance.md                       Per-horizon cost, GPU strategy
+│   └── WarmUp.md                            Horizon-dependent warm-up requirements
+│
+├── Demand/                                  Per-unit H³ demand (= R³ Mappings/)
+│   ├── 00-INDEX.md                          Cross-unit comparison, grand total
+│   ├── SPU-H3-DEMAND.md                     9 models, PPC/TPC, micro-macro (~450 tuples)
+│   ├── STU-H3-DEMAND.md                     14 models, BEP/TMH, all bands (~900 tuples)
+│   ├── IMU-H3-DEMAND.md                     15 models, MEM/TMH, macro-ultra (~1,200 tuples)
+│   ├── ASU-H3-DEMAND.md                     9 models, ASA, micro-meso (~360 tuples)
+│   ├── NDU-H3-DEMAND.md                     9 models, ASA/PPC/TMH, all bands (~400 tuples)
+│   ├── MPU-H3-DEMAND.md                     10 models, BEP, micro-meso (~500 tuples)
+│   ├── PCU-H3-DEMAND.md                     10 models, all mechanisms, all bands (~500 tuples)
+│   ├── ARU-H3-DEMAND.md                     10 models, AED/CPD/C0P, macro (~500 tuples)
+│   └── RPU-H3-DEMAND.md                     10 models, AED/CPD/C0P/TMH/BEP (~400 tuples)
+│
+├── Expansion/                               R³ v2 impact on H³
+│   ├── 00-INDEX.md
+│   ├── R3v2-H3-Impact.md                    49D->128D: space expansion, demand, code changes
+│   ├── F-PitchChroma-Temporal.md            [49:65] chroma evolution, pitch trajectory
+│   ├── G-RhythmGroove-Temporal.md           [65:75] tempo stability, groove evolution
+│   ├── H-HarmonyTonality-Temporal.md        [75:87] harmonic rhythm, key trajectory
+│   ├── I-InformationSurprise-Temporal.md    [87:94] entropy rate, surprise dynamics
+│   ├── J-TimbreExtended-Temporal.md         [94:114] MFCC evolution, contrast dynamics
+│   └── K-ModulationPsychoacoustic-Temporal.md [114:128] modulation evolution
+│
+├── Standards/                               Quality & compliance
+│   ├── 00-INDEX.md
+│   ├── MorphQualityTiers.md                 Per-morph quality assessment
+│   └── TemporalResolutionStandards.md       Min window sizes, numerical stability
+│
+├── Validation/                              Testing & benchmarks
+│   ├── 00-INDEX.md
+│   ├── AcceptanceCriteria.md                Per-morph/horizon output validation
+│   └── BenchmarkPlan.md                     Morph accuracy, scaling tests
+│
+├── Literature/                              Academic references
+│   ├── 00-INDEX.md
+│   └── H3-LITERATURE.md                     Temporal processing references
+│
+└── Migration/                               Version migration
+    ├── 00-INDEX.md
+    ├── V1-to-V2.md                          49D->128D H3 migration guide
+    └── DemandSpec-Update.md                 r3_idx 0-48 -> 0-127
+```
+
+#### 4.1 R³ v2 Expansion Impact on H³
+
+R³ v2 adds 79 new features [49:128] that serve as H³ temporal demand targets. New estimated demand:
+
+| R³ Group | Features | Temporal Priority | Key H³ Horizons | Est. New Tuples |
+|----------|:--------:|:-----------------:|:---------------:|:---------------:|
+| F: Pitch [49:65] | 16D | HIGH | H3-H16 (meso-macro) | ~800-1200 |
+| G: Rhythm [65:75] | 10D | HIGH | H12-H22 (meso-macro) | ~400-600 |
+| H: Harmony [75:87] | 12D | HIGH | H12-H22 (meso-macro) | ~500-800 |
+| I: Information [87:94] | 7D | MEDIUM-HIGH | H6-H22 (meso-macro) | ~300-500 |
+| J: Timbre Ext [94:114] | 20D | MEDIUM | H6-H18 (meso) | ~400-700 |
+| K: Modulation [114:128] | 14D | MEDIUM | H16-H25 (macro) | ~200-400 |
+| **Total new** | **79D** | | | **~2,600-4,200** |
+
+**Updated H³ system totals**:
+- Theoretical space: 128 x 32 x 24 x 3 = **294,912** (was 112,896)
+- Estimated actual: ~5,200 (existing) + ~3,400 (R³ v2) = **~8,600 tuples**
+- Occupancy: **~2.9%** (was ~4.6% — denominator grows faster)
+
+#### 4.2 Sub-Phase Execution Order
+
+| Sub-Phase | Description | Files | Lines | Depends On |
+|:---------:|-------------|:-----:|:-----:|:----------:|
+| **4A** | Foundation: ARCHITECTURE, INDEX, CHANGELOG | 4 | ~770 | None |
+| **4B** | Registry: HorizonCatalog, MorphCatalog, LawCatalog, DemandAddress | 4 | ~770 | 4A |
+| **4C** | Bands: 4 bands x (index + 2 horizon docs) | 11 | ~1,970 | 4B |
+| **4D** | Morphology + Laws: 7 morph docs + 4 law docs | 11 | ~1,470 | 4B (parallel with 4C) |
+| **4E** | Contracts + Pipeline: 6 interface + 5 execution docs | 11 | ~1,430 | 4C, 4D |
+| **4F** | Demand: 9 per-unit demand + index | 10 | ~2,050 | 4E |
+| **4G** | Expansion: R³ v2 impact + 6 per-group temporal docs | 8 | ~1,410 | 4F |
+| **4H** | Standards + Validation + Literature + Migration | 11 | ~1,440 | All prior |
+| **4I** | Cross-references: update C³ docs to link H³ | ~6 | ~200 | All prior |
+
+```
+Dependency Graph:
+4A -> 4B -> 4C ─┐
+          └─ 4D ┤-> 4E -> 4F -> 4G -> 4H -> 4I
+```
+
+**Quality gates:**
+1. Every H³ demand tuple has a purpose, citation, and link to its R³ feature
+2. All 32 horizons documented with ms, frames, musical meaning, mechanism mapping
+3. All 24 morphs documented with formula, category, MORPH_SCALE calibration
+4. All 3 laws documented with kernel formula and usage pattern
+5. Per-unit demand docs cover all 96 models
+6. R³ v2 expansion docs specify new temporal demands for all 6 new groups (F-K)
+7. H3DemandSpec r3_idx range updated from [0:48] to [0:127]
 
 ### Phase 5: L³ Architecture (Docs/L³)
 
