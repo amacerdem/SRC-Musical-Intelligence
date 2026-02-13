@@ -1926,4 +1926,759 @@ class R3FeatureRegistry:
 
 ---
 
-<!-- DEVAM: Bölüm 6 -->
+## Bölüm 6: BaseSpectralGroup Şablonları (F-K)
+
+### 6.1 Group F: PitchChromaGroup
+
+```python
+import math
+import torch
+from torch import Tensor
+from mi_beta.contracts.base_spectral_group import BaseSpectralGroup
+
+
+class PitchChromaGroup(BaseSpectralGroup):
+    """Group F: Pitch & Chroma [49:65] — 16D
+
+    Mel spectrogram'dan pitch class profili, pitch height,
+    pitch class entropy, pitch salience ve inharmonicity hesaplar.
+    Chroma çıktısı H ve I grupları tarafından kullanılır.
+    """
+
+    GROUP_NAME = "pitch_chroma"
+    DOMAIN = "pitch"
+    OUTPUT_DIM = 16
+    INDEX_RANGE = (0, 0)  # Auto-assigned by registry.freeze()
+
+    def __init__(self):
+        super().__init__()
+        # Pre-compute mel-to-chroma mapping matrix (128 × 12)
+        M = self._build_chroma_matrix(n_mels=128, sr=44100)
+        self.register_buffer("mel_to_chroma", M)
+
+        # Pre-compute log2 center frequencies for pitch_height
+        freqs = self._mel_center_frequencies(n_mels=128, sr=44100)
+        log2_freqs = torch.log2(freqs.clamp(min=20.0))
+        self.register_buffer("log2_freqs", log2_freqs)
+
+        # Normalization constants
+        self.log2_fmin = math.log2(20.0)
+        self.log2_fmax = math.log2(22050.0)
+
+    def _build_chroma_matrix(self, n_mels: int, sr: int) -> Tensor:
+        """128×12 Gaussian soft-assignment chroma mapping matrix."""
+        freqs = self._mel_center_frequencies(n_mels, sr)
+        midi = 69 + 12 * torch.log2(freqs.clamp(min=20.0) / 440.0)
+        M = torch.zeros(n_mels, 12)
+        sigma = 0.5  # semitone Gaussian width
+        for c in range(12):
+            dist = (midi % 12 - c + 6) % 12 - 6  # circular distance
+            M[:, c] = torch.exp(-0.5 * dist ** 2 / sigma ** 2)
+        # Zero out bins below 20 Hz (unreliable)
+        M[freqs < 20.0] = 0.0
+        return M
+
+    def _mel_center_frequencies(self, n_mels: int, sr: int) -> Tensor:
+        """Compute center frequencies for each mel bin."""
+        fmin, fmax = 0.0, sr / 2.0
+        mel_min = 2595 * math.log10(1 + fmin / 700)
+        mel_max = 2595 * math.log10(1 + fmax / 700)
+        mels = torch.linspace(mel_min, mel_max, n_mels)
+        return 700 * (10 ** (mels / 2595) - 1)
+
+    @property
+    def feature_names(self) -> list[str]:
+        return [
+            "chroma_C", "chroma_Db", "chroma_D", "chroma_Eb",
+            "chroma_E", "chroma_F", "chroma_Gb", "chroma_G",
+            "chroma_Ab", "chroma_A", "chroma_Bb", "chroma_B",
+            "pitch_height", "pitch_class_entropy",
+            "pitch_salience", "inharmonicity_index",
+        ]
+
+    def compute(self, mel: Tensor) -> Tensor:
+        """mel: (B, 128, T) → (B, T, 16)"""
+        B, N, T = mel.shape
+
+        # Chroma (12D)
+        mel_linear = mel.exp()  # log-mel → linear power
+        chroma = torch.matmul(
+            self.mel_to_chroma.T, mel_linear
+        )  # (B, 12, T)
+        chroma = chroma / chroma.sum(dim=1, keepdim=True).clamp(min=1e-8)
+        chroma = chroma.permute(0, 2, 1)  # (B, T, 12)
+
+        # Pitch height (1D)
+        weights = mel_linear.permute(0, 2, 1)  # (B, T, 128)
+        ph = (self.log2_freqs * weights).sum(dim=-1) / weights.sum(dim=-1).clamp(min=1e-8)
+        ph = (ph - self.log2_fmin) / (self.log2_fmax - self.log2_fmin)
+        ph = ph.clamp(0, 1).unsqueeze(-1)  # (B, T, 1)
+
+        # Pitch class entropy (1D)
+        pce = -(chroma * chroma.clamp(min=1e-8).log()).sum(dim=-1) / math.log(12)
+        pce = pce.clamp(0, 1).unsqueeze(-1)  # (B, T, 1)
+
+        # Pitch salience (1D)
+        peak_e = mel.max(dim=1).values  # (B, T)
+        noise_f = mel.median(dim=1).values  # (B, T)
+        ps = (peak_e - noise_f) / (peak_e + noise_f + 1e-8)
+        ps = ps.clamp(0, 1).unsqueeze(-1)  # (B, T, 1)
+
+        # Inharmonicity index (1D)
+        inh = self._compute_inharmonicity(mel_linear)  # (B, T, 1)
+
+        return torch.cat([chroma, ph, pce, ps, inh], dim=-1)  # (B, T, 16)
+
+    def _compute_inharmonicity(self, mel_linear: Tensor) -> Tensor:
+        """Harmonic template matching based inharmonicity."""
+        B, N, T = mel_linear.shape
+        f0_bin = mel_linear.argmax(dim=1)  # (B, T)
+        # Simplified: use peak dominance ratio as proxy
+        peak_val = mel_linear.max(dim=1).values
+        total_val = mel_linear.sum(dim=1)
+        # High peak ratio → harmonic → low inharmonicity
+        inh = 1.0 - (peak_val / total_val.clamp(min=1e-8))
+        return inh.clamp(0, 1).unsqueeze(-1)  # (B, T, 1)
+```
+
+### 6.2 Group G: RhythmGrooveGroup
+
+```python
+class RhythmGrooveGroup(BaseSpectralGroup):
+    """Group G: Rhythm & Groove [65:75] — 10D
+
+    Onset autocorrelation'dan tempo, beat, syncopation,
+    groove ve ritmik istatistikler hesaplar.
+    B[11] onset_strength'e bağlıdır.
+    """
+
+    GROUP_NAME = "rhythm_groove"
+    DOMAIN = "rhythm"
+    OUTPUT_DIM = 10
+    INDEX_RANGE = (0, 0)
+
+    FRAME_RATE = 172.27
+    LAG_MIN = 34    # 300 BPM
+    LAG_MAX = 344   # 30 BPM
+    PEAK_THRESHOLD = 0.3
+
+    @property
+    def feature_names(self) -> list[str]:
+        return [
+            "tempo_estimate", "beat_strength", "pulse_clarity",
+            "syncopation_index", "metricality_index", "isochrony_nPVI",
+            "groove_index", "event_density", "tempo_stability",
+            "rhythmic_regularity",
+        ]
+
+    def compute_with_deps(self, mel: Tensor, group_outputs: dict) -> Tensor:
+        """mel: (B, 128, T), group_outputs: {'energy': (B, T, 5)} → (B, T, 10)"""
+        B, N, T = mel.shape
+        onset = group_outputs['energy'][:, :, 4]  # B[11] = energy index 4
+
+        # Autocorrelation
+        R = self._autocorrelation(onset)           # (B, T_autocorr)
+
+        # Tempo, beat, pulse
+        tempo_norm, tempo_lag, beat_str, pulse_clar = self._tempo_features(R)
+
+        # Syncopation (simplified LHL)
+        sync = self._syncopation(onset, tempo_lag)
+
+        # Metricality
+        metric = self._metricality(R, tempo_lag)
+
+        # IOI-based features
+        nPVI = self._isochrony(onset, tempo_lag)
+        regularity = self._rhythmic_regularity(onset)
+
+        # Groove composite
+        bass_energy = mel[:, :16, :].mean(dim=1)
+        bass_norm = bass_energy / bass_energy.max(dim=-1, keepdim=True).values.clamp(min=1e-8)
+        groove = sync * bass_norm * pulse_clar
+
+        # Event density
+        peaks = (onset > self.PEAK_THRESHOLD).float()
+        density = torch.nn.functional.avg_pool1d(
+            peaks.unsqueeze(1), kernel_size=172, stride=1, padding=86
+        ).squeeze(1)
+        density = (density * self.FRAME_RATE / 20.0).clamp(0, 1)
+
+        # Tempo stability
+        stability = self._tempo_stability(onset)
+
+        features = torch.stack([
+            tempo_norm, beat_str, pulse_clar, sync, metric,
+            nPVI, groove, density, stability, regularity
+        ], dim=-1)  # (B, T, 10)
+
+        return features.clamp(0, 1)
+
+    # [Private methods: _autocorrelation, _tempo_features, _syncopation,
+    #  _metricality, _isochrony, _rhythmic_regularity, _tempo_stability]
+    # (detailed implementations per Bölüm 2 formülleri)
+```
+
+### 6.3 Group H: HarmonyTonalityGroup
+
+```python
+class HarmonyTonalityGroup(BaseSpectralGroup):
+    """Group H: Harmony & Tonality [75:87] — 12D
+
+    Chroma'dan key clarity, tonnetz, voice-leading distance,
+    harmonic change, tonal stability, diatonicity, syntactic irregularity.
+    F grubunun chroma çıktısına bağlıdır.
+    """
+
+    GROUP_NAME = "harmony_tonality"
+    DOMAIN = "harmony"
+    OUTPUT_DIM = 12
+    INDEX_RANGE = (0, 0)
+
+    def __init__(self):
+        super().__init__()
+        # Krumhansl-Kessler key profiles (24 × 12)
+        self.register_buffer("key_profiles", self._build_key_profiles())
+        # Tonnetz projection matrix (12 × 6)
+        self.register_buffer("tonnetz_matrix", self._build_tonnetz_matrix())
+
+    def _build_key_profiles(self) -> Tensor:
+        major = [6.35, 2.23, 3.48, 2.33, 4.38, 4.09,
+                 2.52, 5.19, 2.39, 3.66, 2.29, 2.88]
+        minor = [6.33, 2.68, 3.52, 5.38, 2.60, 3.53,
+                 2.54, 4.75, 3.98, 2.69, 3.34, 3.17]
+        profiles = []
+        for shift in range(12):
+            profiles.append(torch.roll(torch.tensor(major), shift))
+            profiles.append(torch.roll(torch.tensor(minor), shift))
+        return torch.stack(profiles)  # (24, 12)
+
+    def _build_tonnetz_matrix(self) -> Tensor:
+        """Harte 2006 tonnetz projection matrix."""
+        k = torch.arange(12).float()
+        M = torch.zeros(12, 6)
+        M[:, 0] = torch.sin(k * 7 * math.pi / 6)  # fifth_x
+        M[:, 1] = torch.cos(k * 7 * math.pi / 6)  # fifth_y
+        M[:, 2] = torch.sin(k * 3 * math.pi / 6)  # minor_x
+        M[:, 3] = torch.cos(k * 3 * math.pi / 6)  # minor_y
+        M[:, 4] = torch.sin(k * 4 * math.pi / 6)  # major_x
+        M[:, 5] = torch.cos(k * 4 * math.pi / 6)  # major_y
+        return M
+
+    @property
+    def feature_names(self) -> list[str]:
+        return [
+            "key_clarity",
+            "tonnetz_fifth_x", "tonnetz_fifth_y",
+            "tonnetz_minor_x", "tonnetz_minor_y",
+            "tonnetz_major_x", "tonnetz_major_y",
+            "voice_leading_distance", "harmonic_change",
+            "tonal_stability", "diatonicity", "syntactic_irregularity",
+        ]
+
+    def compute_with_deps(self, mel: Tensor, group_outputs: dict) -> Tensor:
+        """Requires F group chroma output."""
+        chroma = group_outputs['pitch_chroma'][:, :, :12]  # (B, T, 12)
+        B, T, _ = chroma.shape
+
+        # Key clarity
+        corrs = torch.matmul(chroma, self.key_profiles.T)  # (B, T, 24)
+        key_clarity = corrs.max(dim=-1).values
+        key_clarity = ((key_clarity - 0.3) / 0.65).clamp(0, 1).unsqueeze(-1)
+
+        # Tonnetz (6D) → normalize to [0,1]
+        tonnetz = torch.matmul(chroma, self.tonnetz_matrix)  # (B, T, 6)
+        tonnetz = (tonnetz + 1) / 2  # [-1,1] → [0,1]
+
+        # Voice-leading distance
+        vl = (chroma[:, 1:] - chroma[:, :-1]).abs().sum(dim=-1) / 2.0
+        vl = torch.cat([vl[:, :1], vl], dim=1).clamp(0, 1).unsqueeze(-1)
+
+        # Harmonic change
+        sim = torch.nn.functional.cosine_similarity(
+            chroma[:, 1:], chroma[:, :-1], dim=-1
+        )
+        hc = 1 - sim
+        hc = torch.cat([hc[:, :1], hc], dim=1).clamp(0, 1).unsqueeze(-1)
+
+        # Tonal stability
+        hc_smooth = torch.nn.functional.avg_pool1d(
+            hc.squeeze(-1).unsqueeze(1), kernel_size=172, stride=1, padding=86
+        ).squeeze(1)
+        ts = (key_clarity.squeeze(-1) * (1 - hc_smooth)).clamp(0, 1).unsqueeze(-1)
+
+        # Diatonicity
+        active_pcs = (chroma > 0.05).float().sum(dim=-1)
+        diat = (1 - (active_pcs - 7) / 5).clamp(0, 1).unsqueeze(-1)
+
+        # Syntactic irregularity
+        best_key = corrs.argmax(dim=-1)  # (B, T)
+        # Gather best template for each frame
+        best_template = self.key_profiles[best_key]  # (B, T, 12)
+        tp = best_template / best_template.sum(dim=-1, keepdim=True).clamp(min=1e-8)
+        cp = chroma.clamp(min=1e-8)
+        kl = (cp * (cp.log() - tp.clamp(min=1e-8).log())).sum(dim=-1)
+        irreg = (1 - (-kl).exp()).clamp(0, 1).unsqueeze(-1)
+
+        return torch.cat([key_clarity, tonnetz, vl, hc, ts, diat, irreg], dim=-1)
+```
+
+### 6.4 Group I: InformationSurpriseGroup
+
+```python
+class InformationSurpriseGroup(BaseSpectralGroup):
+    """Group I: Information & Surprise [87:94] — 7D
+
+    Running statistics ile entropy, KL divergence, information content.
+    F chroma, G onset ve mel'e bağlıdır.
+    """
+
+    GROUP_NAME = "information_surprise"
+    DOMAIN = "information"
+    OUTPUT_DIM = 7
+    INDEX_RANGE = (0, 0)
+
+    TAU = 2.0  # seconds
+    FRAME_RATE = 172.27
+
+    def __init__(self):
+        super().__init__()
+        self.alpha = 1 - math.exp(-1 / (self.TAU * self.FRAME_RATE))
+        # Running state buffers (initialized on first call)
+        self._mel_avg = None
+        self._mel_var = None
+        self._chroma_avg = None
+        self._transition_counts = None
+        self._frame_count = 0
+
+    @property
+    def feature_names(self) -> list[str]:
+        return [
+            "melodic_entropy", "harmonic_entropy",
+            "rhythmic_information_content", "spectral_surprise",
+            "information_rate", "predictive_entropy", "tonal_ambiguity",
+        ]
+
+    def compute_with_deps(self, mel: Tensor, group_outputs: dict) -> Tensor:
+        """Requires F chroma, G onset, H key correlations."""
+        chroma = group_outputs['pitch_chroma'][:, :, :12]
+        # Process frame-by-frame with running statistics
+        # (Actual implementation uses vectorized EMA for efficiency)
+        # ... (7 features computed per Bölüm 2 specs)
+        # Returns (B, T, 7) with warm-up confidence applied
+        pass  # Full implementation per Bölüm 2 formülleri
+```
+
+### 6.5 Group J: TimbreExtendedGroup
+
+```python
+class TimbreExtendedGroup(BaseSpectralGroup):
+    """Group J: Timbre Extended [94:114] — 20D
+
+    MFCC (13D) ve spectral contrast (7D).
+    Doğrudan mel'den, bağımlılık yok.
+    """
+
+    GROUP_NAME = "timbre_extended"
+    DOMAIN = "timbre"
+    OUTPUT_DIM = 20
+    INDEX_RANGE = (0, 0)
+
+    def __init__(self):
+        super().__init__()
+        # Pre-computed DCT-II matrix (128 × 13) for MFCC
+        self.register_buffer("dct_matrix", self._build_dct_matrix(128, 13))
+        # MFCC scaling factors (empirical per-coefficient max)
+        self.register_buffer("mfcc_scale", torch.tensor(
+            [40, 80, 60, 50, 40, 35, 30, 25, 22, 20, 18, 16, 15],
+            dtype=torch.float32
+        ))
+        # Spectral contrast band boundaries (mel bin indices)
+        self.contrast_bands = [(0,4), (4,8), (8,16), (16,32),
+                               (32,64), (64,96), (96,128)]
+
+    def _build_dct_matrix(self, n_mels: int, n_mfcc: int) -> Tensor:
+        """Type-II DCT matrix, excluding DC component."""
+        n = torch.arange(n_mels).float()
+        k = torch.arange(1, n_mfcc + 1).float()  # skip k=0 (DC)
+        D = torch.cos(math.pi * k.unsqueeze(1) * (2 * n + 1) / (2 * n_mels))
+        D *= math.sqrt(2.0 / n_mels)
+        return D.T  # (128, 13)
+
+    @property
+    def feature_names(self) -> list[str]:
+        mfcc = [f"mfcc_{i}" for i in range(1, 14)]
+        contrast = [f"spectral_contrast_{i}" for i in range(1, 8)]
+        return mfcc + contrast
+
+    def compute(self, mel: Tensor) -> Tensor:
+        """mel: (B, 128, T) → (B, T, 20)"""
+        B, N, T = mel.shape
+
+        # MFCC (13D)
+        mfcc = torch.matmul(self.dct_matrix.T, mel)  # (B, 13, T)
+        mfcc = mfcc.permute(0, 2, 1)  # (B, T, 13)
+        mfcc = (mfcc / self.mfcc_scale + 1) / 2  # normalize to [0,1]
+        mfcc = mfcc.clamp(0, 1)
+
+        # Spectral contrast (7D)
+        contrasts = []
+        for start, end in self.contrast_bands:
+            band = mel[:, start:end, :]  # (B, band_width, T)
+            sorted_band, _ = band.sort(dim=1)
+            n = end - start
+            alpha = max(1, round(0.2 * n))
+            peak = sorted_band[:, -alpha:, :].mean(dim=1)
+            valley = sorted_band[:, :alpha, :].mean(dim=1)
+            contrasts.append((peak - valley) / 10.0)  # normalize
+        contrast = torch.stack(contrasts, dim=-1)  # (B, T, 7)
+        contrast = contrast.clamp(0, 1)
+
+        return torch.cat([mfcc, contrast], dim=-1)  # (B, T, 20)
+```
+
+### 6.6 Group K: ModulationPsychoacousticGroup
+
+```python
+class ModulationPsychoacousticGroup(BaseSpectralGroup):
+    """Group K: Modulation & Psychoacoustic [114:128] — 14D
+
+    Modulation spectrum (6D), modulation stats (2D),
+    psychoacoustic features (6D).
+    Doğrudan mel'den, bağımlılık yok.
+    """
+
+    GROUP_NAME = "modulation_psychoacoustic"
+    DOMAIN = "modulation"
+    OUTPUT_DIM = 14
+    INDEX_RANGE = (0, 0)
+
+    WINDOW_SIZE = 344   # ~2.0s
+    HOP_SIZE = 86       # ~0.5s
+    FFT_SIZE = 512
+    FRAME_RATE = 172.27
+    TARGET_RATES = [0.5, 1.0, 2.0, 4.0, 8.0, 16.0]
+
+    def __init__(self):
+        super().__init__()
+        self.register_buffer("hann_window", torch.hann_window(self.WINDOW_SIZE))
+
+        # A-weighting curve (128 mel bins)
+        freqs = self._mel_center_frequencies(128, 44100)
+        self.register_buffer("a_weights", self._a_weighting(freqs))
+
+        # Bark rebinning matrix (128 × 24)
+        self.register_buffer("bark_matrix", self._build_bark_matrix(128, 44100))
+
+        # Zwicker sharpness weighting
+        z = torch.arange(1, 25).float()
+        g = torch.where(z <= 15, torch.ones_like(z),
+                       0.066 * torch.exp(0.171 * z))
+        self.register_buffer("zwicker_g", g)
+        self.register_buffer("bark_z", z)
+
+        # Target FFT bins
+        freq_res = self.FRAME_RATE / self.FFT_SIZE
+        self.target_bins = [round(r / freq_res) for r in self.TARGET_RATES]
+
+    @property
+    def feature_names(self) -> list[str]:
+        return [
+            "modulation_0_5Hz", "modulation_1Hz", "modulation_2Hz",
+            "modulation_4Hz", "modulation_8Hz", "modulation_16Hz",
+            "modulation_centroid", "modulation_bandwidth",
+            "sharpness_zwicker", "fluctuation_strength",
+            "loudness_a_weighted", "alpha_ratio",
+            "hammarberg_index", "spectral_slope_0_500",
+        ]
+
+    def compute(self, mel: Tensor) -> Tensor:
+        """mel: (B, 128, T) → (B, T, 14)"""
+        B, N, T = mel.shape
+        mel_linear = mel.exp()
+
+        # Modulation spectrum (6D + 2D stats)
+        mod_features = self._modulation_spectrum(mel_linear)  # (B, T, 8)
+
+        # Sharpness Zwicker (1D)
+        sharpness = self._sharpness_zwicker(mel_linear)
+
+        # Fluctuation strength (1D) — from 4Hz modulation
+        fluctuation = mod_features[:, :, 3:4]  # modulation_4Hz
+
+        # Loudness A-weighted (1D)
+        loudness_a = (mel_linear * self.a_weights.unsqueeze(-1)).sum(dim=1)
+        loudness_a = loudness_a / loudness_a.max(dim=-1, keepdim=True).values.clamp(min=1e-8)
+        loudness_a = loudness_a.unsqueeze(-1)
+
+        # Alpha ratio (1D)
+        low = mel_linear[:, :40, :].sum(dim=1)
+        high = mel_linear[:, 40:100, :].sum(dim=1)
+        alpha = low / (low + high).clamp(min=1e-8)
+        alpha = alpha.unsqueeze(-1)
+
+        # Hammarberg index (1D)
+        peak_low = mel[:, :55, :].max(dim=1).values
+        peak_high = mel[:, 55:100, :].max(dim=1).values
+        hammarberg = torch.sigmoid((peak_low - peak_high) / 5.0).unsqueeze(-1)
+
+        # Spectral slope 0-500Hz (1D)
+        slope = self._spectral_slope(mel[:, :18, :])
+
+        return torch.cat([
+            mod_features, sharpness, fluctuation,
+            loudness_a, alpha, hammarberg, slope
+        ], dim=-1).clamp(0, 1)  # (B, T, 14)
+
+    # [Private methods: _modulation_spectrum, _sharpness_zwicker,
+    #  _spectral_slope, _mel_center_frequencies, _a_weighting,
+    #  _build_bark_matrix]
+```
+
+### 6.7 Dependency-Aware Compute Mekanizması
+
+R3Extractor'da `compute_with_deps` desteği:
+
+```python
+# BaseSpectralGroup'a opsiyonel metod:
+class BaseSpectralGroup(ABC):
+    # ... existing ...
+
+    def compute_with_deps(self, mel: Tensor, group_outputs: dict) -> Tensor:
+        """Override this for groups that depend on other group outputs.
+
+        Default: falls back to compute(mel).
+        """
+        return self.compute(mel)
+
+# R3Extractor stage-ordered execution:
+# Stage 1: A,B,C,D,F,J,K → compute(mel)
+# Stage 2: E,G,H → compute_with_deps(mel, {stage1_outputs})
+# Stage 3: I → compute_with_deps(mel, {stage1+stage2_outputs})
+```
+
+---
+
+## Bölüm 7: Deneysel Doğrulama Planı
+
+### 7.1 Doğrulama Gerektiren Feature'lar
+
+Crossref §7.2'deki 6 feature için benchmark planı:
+
+#### Test 1: Mel-Based Chroma [49:60] — Key Detection Accuracy
+
+| Parametre | Değer |
+|-----------|-------|
+| **Feature** | chroma_C..chroma_B [49:60] |
+| **Benchmark** | librosa.chroma_cqt (CQT-based chroma) ile karşılaştırma |
+| **Veri seti** | GTZAN (1000 track × 30s), Hainsworth key dataset (100 tracks) |
+| **Metrik** | Key detection accuracy (correct key / total) |
+| **Başarı kriteri** | ≥85% accuracy (CQT-based ~90%) |
+| **Test prosedürü** | 1. Mel-based chroma hesapla → Krumhansl-Schmuckler key detection |
+|  | 2. CQT-based chroma hesapla → aynı key detection |
+|  | 3. Ground truth key ile karşılaştır |
+|  | 4. Hata analizi: hangi key'lerde fark var? |
+| **Fallback planı** | Accuracy <85% ise: σ parametresini tune et (0.3-1.0 arası grid search); |
+|  | hâlâ yetersizse: CQT yaklaşımı Option B'ye geçiş (maliyet +2ms) |
+
+#### Test 2: Melodic Entropy [87] — IDyOM IC Korelasyonu
+
+| Parametre | Değer |
+|-----------|-------|
+| **Feature** | melodic_entropy [87] |
+| **Benchmark** | IDyOM melodic Information Content (gold standard) |
+| **Veri seti** | Essen Folksong Collection (6000+ melodi, MIDI) |
+| **Metrik** | Pearson korelasyonu (r) — frame-level IC değerleri |
+| **Başarı kriteri** | r ≥ 0.7 |
+| **Test prosedürü** | 1. MIDI → audio synthesize (piano, 44.1kHz) |
+|  | 2. Mel spectrogram → chroma transition entropy hesapla |
+|  | 3. IDyOM'dan note-level IC al |
+|  | 4. Note boundary'lerde frame-level → note-level average |
+|  | 5. Pearson correlation hesapla |
+| **Fallback planı** | r < 0.7 ise: transition matrix boyutunu artır (12×12 → 24×24 bigram); |
+|  | warm-up süresini uzat (2s → 4s); |
+|  | hâlâ yetersizse: [87] "melodic_change_rate" olarak yeniden tanımla |
+
+#### Test 3: Harmonic Entropy [88] — Chord Analysis Korelasyonu
+
+| Parametre | Değer |
+|-----------|-------|
+| **Feature** | harmonic_entropy [88] |
+| **Benchmark** | Uzman harmonik analiz — chord change sürpriz ratings |
+| **Veri seti** | Billboard dataset (740 tracks, chord annotations) |
+| **Metrik** | Pearson korelasyonu (r) — chord boundary'lerde |
+| **Başarı kriteri** | r ≥ 0.6 |
+| **Test prosedürü** | 1. Audio → mel → chroma → KL divergence hesapla |
+|  | 2. Chord boundary annotation'lardan ground truth surprise hesapla |
+|  | 3. Frame-level surprise → chord boundary'lerde average |
+|  | 4. Correlation hesapla |
+| **Fallback planı** | r < 0.6 ise: running average τ parametresini tune et; |
+|  | chord template matching ekle; |
+|  | hâlâ yetersizse: [88] "chroma_novelty" olarak yeniden tanımla |
+
+#### Test 4: Syncopation Index [68] — Behavioral Rating Korelasyonu
+
+| Parametre | Değer |
+|-----------|-------|
+| **Feature** | syncopation_index [68] |
+| **Benchmark** | Witek 2014 syncopation degree ratings |
+| **Veri seti** | Witek corpus (50 drum patterns, rated by participants) |
+| **Metrik** | Spearman korelasyonu (ρ) — pattern-level |
+| **Başarı kriteri** | ρ ≥ 0.7 |
+| **Test prosedürü** | 1. Drum pattern audio → mel → onset detection |
+|  | 2. Onset peaks + tempo → metrical grid → LHL syncopation |
+|  | 3. Mean syncopation per pattern |
+|  | 4. Spearman correlation ile behavioral ratings karşılaştır |
+| **Fallback planı** | ρ < 0.7 ise: metrical grid resolution artır (4→8 levels); |
+|  | onset threshold tune et; beat tracking iyileştir; |
+|  | hâlâ yetersizse: simplified metric (off-beat energy ratio) kullan |
+
+#### Test 5: Groove Index [71] — Behavioral Groove Ratings
+
+| Parametre | Değer |
+|-----------|-------|
+| **Feature** | groove_index [71] |
+| **Benchmark** | Madison 2006 / Janata 2012 groove ratings |
+| **Veri seti** | Groove MIDI Dataset (1150 MIDI patterns) + Madison groove clips |
+| **Metrik** | Pearson korelasyonu (r) — clip-level |
+| **Başarı kriteri** | r ≥ 0.5 |
+| **Test prosedürü** | 1. MIDI → audio synthesize → mel → groove_index hesapla |
+|  | 2. Mean groove per clip |
+|  | 3. Correlation ile behavioral ratings karşılaştır |
+| **Fallback planı** | r < 0.5 ise: composite ağırlıkları optimize et (syncopation, bass, clarity); |
+|  | random forest ile en iyi feature combination bul; |
+|  | hâlâ yetersizse: [71] "rhythmic_complexity" olarak yeniden tanımla |
+
+#### Test 6: Inharmonicity Index [64] — essentia Karşılaştırması
+
+| Parametre | Değer |
+|-----------|-------|
+| **Feature** | inharmonicity_index [64] |
+| **Benchmark** | essentia Inharmonicity (raw audio spectral peaks) |
+| **Veri seti** | NSynth dataset (300k notes, diverse instruments) |
+| **Metrik** | Pearson korelasyonu (r) — note-level |
+| **Başarı kriteri** | r ≥ 0.8 |
+| **Test prosedürü** | 1. NSynth audio → mel → mel-based inharmonicity |
+|  | 2. NSynth audio → essentia Inharmonicity (ground truth) |
+|  | 3. Per-note average → correlation |
+| **Fallback planı** | r < 0.8 ise: harmonic template matching iyileştir (K=8→16 harmonics); |
+|  | mel peak detection yerine parabolic interpolation ekle; |
+|  | hâlâ yetersizse: [64] "spectral_peakiness" olarak yeniden tanımla |
+
+### 7.2 Doğrulama Zaman Çizelgesi
+
+| Test | Öncelik | Bağımlılık | Tahmini Süre |
+|------|---------|------------|-------------|
+| Test 1 (Chroma) | **Kritik** — H, I grupları buna bağlı | F grubu implementasyonu | 1 gün |
+| Test 4 (Syncopation) | Yüksek — groove, metricality'ye temel | G grubu implementasyonu | 1 gün |
+| Test 6 (Inharmonicity) | Orta — bağımsız feature | F grubu implementasyonu | 0.5 gün |
+| Test 2 (Melodic entropy) | Orta — IDyOM data hazırlığı gerekli | I grubu + Essen dataset | 2 gün |
+| Test 3 (Harmonic entropy) | Orta — Billboard data gerekli | I grubu + Billboard dataset | 1 gün |
+| Test 5 (Groove) | Düşük — behavioral data sınırlı | G grubu + Groove dataset | 1 gün |
+
+---
+
+## Bölüm 8: Geçiş Yol Haritası
+
+### 8.1 Phase Zaman Çizelgesi
+
+```
+Phase 3B (TAMAMLANDI) ─── Bu doküman: R3-V2-DESIGN.md
+    │
+    ▼
+Phase 3C (SIRADA) ──────── Dokümantasyon güncellemesi
+    │                       - 20+ C³ model doc Section 4 güncelleme
+    │                       - Yeni R³ [49:128] referansları ekleme
+    │                       - Her model için "Potansiyel R³ v2 kullanımı" notu
+    │
+    ▼
+Phase 3E (SIRADA) ──────── Model doc v2.2.0 güncelleme
+    │                       - 96 model × Section 4 R³ referans güncelleme
+    │                       - Yeni H³ demand 4-tuples (r3_idx 49-127)
+    │                       - R³ gap resolution notları
+    │
+    ▼
+Phase 6 (İLERİDE) ──────── Kod implementasyonu
+    │
+    ├── 6.1: constants.py + dimension_map.py + feature_spec.py güncelle
+    │        - R3_DIM = 128
+    │        - Dynamic feature names
+    │        - Index validation güncelleme
+    │
+    ├── 6.2: 6 yeni BaseSpectralGroup alt sınıfı yaz (F-K)
+    │        - PitchChromaGroup (16D)
+    │        - RhythmGrooveGroup (10D)
+    │        - HarmonyTonalityGroup (12D)
+    │        - InformationSurpriseGroup (7D)
+    │        - TimbreExtendedGroup (20D)
+    │        - ModulationPsychoacousticGroup (14D)
+    │
+    ├── 6.3: R3Extractor dependency-aware compute
+    │        - STAGE_ORDER dict
+    │        - compute_with_deps() mekanizması
+    │        - Stage-ordered extract()
+    │
+    ├── 6.4: Mevcut A-E formül düzeltmeleri
+    │        - [24] concentration normalizasyon bug fix
+    │        - [10] loudness çift sıkıştırma düzeltme
+    │        - [3]/[12], [16]/[1], [17]/[2] duplikasyon çözme
+    │
+    ├── 6.5: E grubu interaction redesign (Aşama 1)
+    │        - Proxy'leri kaldır → gerçek A-D referansları
+    │        - compute_with_deps() ekleme
+    │
+    ├── 6.6: Deneysel doğrulama (Bölüm 7)
+    │        - 6 benchmark test
+    │        - Parameter tuning
+    │        - Fallback uygulamaları (gerekirse)
+    │
+    └── 6.7: Integration test + 96 model code güncelleme
+             - R³ output dim 128 doğrulama
+             - C³ model r3[idx] referansları güncelleme
+             - End-to-end pipeline testi
+```
+
+### 8.2 Phase Bazlı Dosya Üretimi
+
+| Phase | Üretilen/Güncellenen Dosyalar | Sayı |
+|-------|------------------------------|:----:|
+| 3B | `Docs/R³/R3-V2-DESIGN.md` (bu dosya) | 1 |
+| 3C | `Docs/C³/Models/*/Section4_update.md` (yeni R³ referansları) | ~20 |
+| 3E | `Docs/C³/Models/*/*.md` (Section 4 v2.2.0) | 96 |
+| 6.1 | `mi_beta/core/constants.py`, `dimension_map.py`, `feature_spec.py` | 3 |
+| 6.2 | `mi_beta/ear/r3/extensions/{pitch_chroma,rhythm_groove,...}.py` | 6 |
+| 6.3 | `mi_beta/ear/r3/__init__.py`, `_registry.py` | 2 |
+| 6.4 | `mi_beta/ear/r3/{psychoacoustic,dsp,cross_domain}/*.py` | 5 |
+| 6.5 | `mi_beta/ear/r3/cross_domain/interactions.py` | 1 |
+| 6.6 | `tests/ear/r3/test_benchmark_*.py` | 6 |
+| 6.7 | `mi_beta/brain/units/*/models/*.py` (96 model) | 96 |
+
+### 8.3 Bağımlılıklar ve Parallelization
+
+```
+Phase 3C ve 3E paralel çalışabilir (farklı doc kapsamı)
+
+Phase 6 sıralı alt-adımlar:
+6.1 ─┐
+     ├── 6.2 ─── 6.3 ─── 6.6 (benchmark)
+6.4 ─┘                    │
+                          ├── 6.5 (E redesign — benchmark sonrasında)
+                          │
+                          └── 6.7 (integration — tüm 6.x tamamlandıktan sonra)
+```
+
+### 8.4 Risk Analizi
+
+| Risk | Olasılık | Etki | Mitigasyon |
+|------|----------|------|------------|
+| Mel-based chroma kalitesi yetersiz | Orta | Yüksek (H, I grupları etkilenir) | Test 1 erken çalıştır; CQT fallback hazır |
+| Modulation spectrum latency bütçeyi aşar | Düşük | Orta | Amortized computing; hop artırma |
+| IDyOM approx. korelasyonu düşük | Yüksek | Orta | [87] yeniden tanımla (melodic_change_rate) |
+| 128D model eğitim hızını düşürür | Düşük | Düşük | C³ modelleri sadece ihtiyaç duydukları boyutları seçer |
+| Backward compat sorunları | Orta | Yüksek | R3_DIM_V1, _FEATURE_NAMES_V1 legacy constants |
+
+---
+
+*Generated by Phase 3B Architecture Design Chat | 2026-02-13*
+*Input: R3-CROSSREF.md, R3-DEMAND-MATRIX.md, R3-DSP-SURVEY-THEORY.md, R3-DSP-SURVEY-TOOLS.md*
+*Code reference: mi_beta/ear/r3/ (READ-ONLY), mi_beta/core/, mi_beta/contracts/*
