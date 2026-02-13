@@ -1,9 +1,4 @@
-"""
-DemandTree — Sparse computation routing for H3.
-
-Organizes (r3_idx, horizon, morph, law) demands into a tree structure
-so H3 only computes what the MusicalBrain actually needs.
-"""
+"""DemandTree: sparse routing of H3 demands by horizon."""
 
 from __future__ import annotations
 
@@ -11,20 +6,13 @@ from typing import Dict, Set, Tuple
 
 
 class DemandTree:
-    """Organizes H3 demands by horizon for efficient computation."""
+    """Groups H3 demands by horizon for efficient batch computation."""
 
     @staticmethod
     def build(
-        demand: Set[Tuple[int, int, int, int]],
+        demand: Set[Tuple[int, int, int, int]]
     ) -> Dict[int, Set[Tuple[int, int, int]]]:
-        """Build a demand tree: horizon -> {(r3_idx, morph, law), ...}.
-
-        Args:
-            demand: set of (r3_idx, horizon, morph, law) 4-tuples
-
-        Returns:
-            Dict mapping horizon index to set of (r3_idx, morph, law) triples
-        """
+        """Group 4-tuples by horizon: {h: {(r3_idx, m, l), ...}}."""
         tree: Dict[int, Set[Tuple[int, int, int]]] = {}
         for r3_idx, h, m, l in demand:
             if h not in tree:
@@ -34,10 +22,11 @@ class DemandTree:
 
     @staticmethod
     def summary(demand: Set[Tuple[int, int, int, int]]) -> str:
-        """Human-readable summary of demand."""
+        """Human-readable summary of H3 demand."""
+        if not demand:
+            return "Empty demand (0 tuples)"
         tree = DemandTree.build(demand)
         lines = [f"H3 Demand: {len(demand)} tuples across {len(tree)} horizons"]
         for h in sorted(tree.keys()):
-            triples = tree[h]
-            lines.append(f"  H{h}: {len(triples)} (r3, morph, law) triples")
+            lines.append(f"  H{h}: {len(tree[h])} triples")
         return "\n".join(lines)

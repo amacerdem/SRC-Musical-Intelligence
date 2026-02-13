@@ -1,11 +1,4 @@
-"""
-R3 Group C: Timbre/Quality (9D) [12:21]
-
-"Does this sound good?"
-
-Timbral features that characterize the spectral quality and
-contribute to hedonic evaluation (opioid_proxy, liking).
-"""
+"""Group C: Timbre — 9D [12:21] spectral timbre features."""
 
 from __future__ import annotations
 
@@ -14,80 +7,66 @@ from typing import List
 import torch
 from torch import Tensor
 
-from ....contracts import BaseSpectralGroup
+from ....contracts.base_spectral_group import BaseSpectralGroup
 
 
 class TimbreGroup(BaseSpectralGroup):
     GROUP_NAME = "timbre"
+    DOMAIN = "dsp"
     OUTPUT_DIM = 9
-    INDEX_RANGE = (12, 21)
 
     @property
     def feature_names(self) -> List[str]:
         return [
-            "warmth",                 # Low-frequency balance
-            "sharpness",              # High-frequency weighting
-            "tonalness",              # Harmonic-to-noise ratio
-            "clarity",                # Signal-to-noise definition
-            "spectral_smoothness",    # Spectral envelope regularity
-            "spectral_autocorrelation",  # Harmonic periodicity
-            "tristimulus1",           # Fundamental strength
-            "tristimulus2",           # 2nd-4th harmonic energy
-            "tristimulus3",           # 5th+ harmonic energy
+            "warmth", "sharpness", "tonalness", "clarity",
+            "spectral_smoothness", "spectral_autocorrelation",
+            "tristimulus1", "tristimulus2", "tristimulus3",
         ]
 
     def compute(self, mel: Tensor) -> Tensor:
-        """Compute timbre features from mel spectrogram.
-
-        Args:
-            mel: (B, N_MELS, T) log-mel spectrogram
-
-        Returns:
-            (B, T, 9) timbre features in [0, 1]
-        """
+        """(B, 128, T) → (B, T, 9)."""
         B, N, T = mel.shape
-        mel_t = mel.transpose(1, 2)  # (B, T, N)
-        total_energy = mel_t.sum(dim=-1, keepdim=True).clamp(min=1e-8)
-
-        # Warmth: energy in low-frequency bins (bottom quarter)
-        low_cutoff = N // 4
-        warmth = mel_t[..., :low_cutoff].sum(dim=-1, keepdim=True) / total_energy
-
-        # Sharpness: energy in high-frequency bins (top quarter)
-        high_cutoff = 3 * N // 4
-        sharpness = mel_t[..., high_cutoff:].sum(dim=-1, keepdim=True) / total_energy
-
-        # Tonalness: ratio of peak energy to total (harmonic-to-noise proxy)
-        peak_energy = mel_t.max(dim=-1, keepdim=True).values
-        tonalness = peak_energy / total_energy
-
-        # Clarity: spectral centroid normalized
-        bin_indices = torch.arange(N, device=mel.device, dtype=mel.dtype)
-        centroid = (mel_t * bin_indices).sum(dim=-1, keepdim=True) / total_energy
-        clarity = centroid / N
-
-        # Spectral smoothness: 1 - normalized spectral irregularity
-        diff = torch.diff(mel_t, dim=-1).abs()
-        irregularity = diff.mean(dim=-1, keepdim=True)
-        irr_max = irregularity.amax(dim=1, keepdim=True).clamp(min=1e-8)
-        smoothness = 1.0 - (irregularity / irr_max)
-
-        # Spectral autocorrelation: periodicity in spectrum
-        centered = mel_t - mel_t.mean(dim=-1, keepdim=True)
-        norm = centered.norm(dim=-1, keepdim=True).clamp(min=1e-8)
-        normalized = centered / norm
-        autocorr = (normalized[..., :-1] * normalized[..., 1:]).sum(dim=-1, keepdim=True)
-        autocorr = autocorr.clamp(0, 1)
-
-        # Tristimulus: energy distribution across spectral thirds
+        total = mel.sum(dim=1).clamp(min=1e-8)  # (B, T)
+        quarter = N // 4
         third = N // 3
-        t1 = mel_t[..., :third].sum(dim=-1, keepdim=True) / total_energy
-        t2 = mel_t[..., third:2*third].sum(dim=-1, keepdim=True) / total_energy
-        t3 = mel_t[..., 2*third:].sum(dim=-1, keepdim=True) / total_energy
 
-        features = torch.cat([
+        # [0] warmth: sum(mel[:N/4]) / total
+        warmth = mel[:, :quarter, :].sum(dim=1) / total
+
+        # [1] sharpness: sum(mel[3N/4:]) / total
+        sharpness = mel[:, 3 * quarter:, :].sum(dim=1) / total
+
+        # [2] tonalness: max(mel) / total
+        tonalness = mel.max(dim=1).values / total
+
+        # [3] clarity: (mel * bin_idx).sum() / total / N (spectral centroid)
+        bin_idx = torch.arange(N, device=mel.device, dtype=mel.dtype).view(1, N, 1)
+        clarity = (mel * bin_idx).sum(dim=1) / total / N
+
+        # [4] spectral_smoothness: 1 - (mean_diff / max_diff)
+        mel_diff = (mel[:, 1:, :] - mel[:, :-1, :]).abs()
+        mean_diff = mel_diff.mean(dim=1)
+        max_diff = mel_diff.max(dim=1).values.clamp(min=1e-8)
+        spectral_smoothness = 1.0 - (mean_diff / max_diff)
+
+        # [5] spectral_autocorrelation: lag-1 centered autocorrelation [0,1]
+        mean_mel = mel.mean(dim=1, keepdim=True)
+        centered = mel - mean_mel
+        auto = (centered[:, :-1, :] * centered[:, 1:, :]).mean(dim=1)
+        var = (centered ** 2).mean(dim=1).clamp(min=1e-8)
+        spectral_autocorr = (auto / var).clamp(0.0, 1.0)
+
+        # [6] tristimulus1: energy in [0, N/3)
+        trist1 = mel[:, :third, :].sum(dim=1) / total
+
+        # [7] tristimulus2: energy in [N/3, 2N/3)
+        trist2 = mel[:, third:2 * third, :].sum(dim=1) / total
+
+        # [8] tristimulus3: energy in [2N/3, N)
+        trist3 = mel[:, 2 * third:, :].sum(dim=1) / total
+
+        return torch.stack([
             warmth, sharpness, tonalness, clarity,
-            smoothness, autocorr, t1, t2, t3,
-        ], dim=-1)  # (B, T, 9)
-
-        return features.clamp(0, 1)
+            spectral_smoothness, spectral_autocorr,
+            trist1, trist2, trist3,
+        ], dim=-1).clamp(0.0, 1.0)

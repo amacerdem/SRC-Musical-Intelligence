@@ -1,11 +1,4 @@
-"""
-R3 Group B: Energy/Dynamics (5D) [7:12]
-
-"Is the music building or releasing?"
-
-Energy-related features that track loudness, dynamics, and
-temporal energy patterns.
-"""
+"""Group B: Energy — 5D [7:12] spectral energy features."""
 
 from __future__ import annotations
 
@@ -14,68 +7,49 @@ from typing import List
 import torch
 from torch import Tensor
 
-from ....contracts import BaseSpectralGroup
+from ....contracts.base_spectral_group import BaseSpectralGroup
 
 
 class EnergyGroup(BaseSpectralGroup):
     GROUP_NAME = "energy"
+    DOMAIN = "dsp"
     OUTPUT_DIM = 5
-    INDEX_RANGE = (7, 12)
 
     @property
     def feature_names(self) -> List[str]:
-        return [
-            "amplitude",          # RMS energy per frame
-            "velocity_A",         # dA/dt — rate of energy change
-            "acceleration_A",     # d²A/dt² — energy buildup curvature
-            "loudness",           # Stevens' law (sone approximation)
-            "onset_strength",     # Transient energy
-        ]
+        return ["amplitude", "velocity_A", "acceleration_A", "loudness", "onset_strength"]
 
     def compute(self, mel: Tensor) -> Tensor:
-        """Compute energy features from mel spectrogram.
-
-        Args:
-            mel: (B, N_MELS, T) log-mel spectrogram
-
-        Returns:
-            (B, T, 5) energy features in [0, 1]
-        """
+        """(B, 128, T) → (B, T, 5)."""
         B, N, T = mel.shape
 
-        # Amplitude: RMS energy per frame
-        amplitude = mel.pow(2).mean(dim=1).sqrt()  # (B, T)
-        amp_max = amplitude.amax(dim=-1, keepdim=True).clamp(min=1e-8)
-        amplitude_norm = amplitude / amp_max
+        # [0] amplitude: sqrt(mean(mel^2)) normalized by max across time
+        amp = torch.sqrt((mel ** 2).mean(dim=1))  # (B, T)
+        amp_max = amp.max(dim=-1, keepdim=True).values.clamp(min=1e-8)
+        amplitude = amp / amp_max
 
-        # Velocity: first temporal derivative of amplitude
-        velocity = torch.zeros_like(amplitude)
-        if T > 1:
-            velocity[:, 1:] = amplitude_norm[:, 1:] - amplitude_norm[:, :-1]
-        velocity_norm = torch.sigmoid(velocity * 5.0)  # scale to [0,1]
+        # [1] velocity_A: sigmoid(5.0 * diff(amplitude))
+        amp_diff = torch.zeros_like(amplitude)
+        amp_diff[:, 1:] = amplitude[:, 1:] - amplitude[:, :-1]
+        velocity_A = torch.sigmoid(5.0 * amp_diff)
 
-        # Acceleration: second temporal derivative
-        acceleration = torch.zeros_like(amplitude)
-        if T > 2:
-            acceleration[:, 1:-1] = velocity[:, 2:] - velocity[:, :-2]
-        acceleration_norm = torch.sigmoid(acceleration * 5.0)
+        # [2] acceleration_A: sigmoid(5.0 * diff(velocity, lag=2))
+        vel_diff = torch.zeros_like(velocity_A)
+        vel_diff[:, 2:] = velocity_A[:, 2:] - velocity_A[:, :-2]
+        acceleration_A = torch.sigmoid(5.0 * vel_diff)
 
-        # Loudness: Stevens' law approximation (sone ~ intensity^0.3)
+        # [3] loudness: amplitude^0.3 (Stevens' power law), normalized
         loudness = amplitude.pow(0.3)
-        loud_max = loudness.amax(dim=-1, keepdim=True).clamp(min=1e-8)
-        loudness_norm = loudness / loud_max
+        loud_max = loudness.max(dim=-1, keepdim=True).values.clamp(min=1e-8)
+        loudness = loudness / loud_max
 
-        # Onset strength: spectral flux (positive only)
-        onset = torch.zeros_like(amplitude)
-        if T > 1:
-            flux = mel[:, :, 1:] - mel[:, :, :-1]
-            onset[:, 1:] = flux.clamp(min=0).sum(dim=1)
-        onset_max = onset.amax(dim=-1, keepdim=True).clamp(min=1e-8)
-        onset_norm = onset / onset_max
+        # [4] onset_strength: sum(max(0, diff(mel))) normalized
+        mel_diff = torch.zeros_like(mel)
+        mel_diff[:, :, 1:] = mel[:, :, 1:] - mel[:, :, :-1]
+        onset = torch.relu(mel_diff).sum(dim=1)  # (B, T)
+        onset_max = onset.max(dim=-1, keepdim=True).values.clamp(min=1e-8)
+        onset_strength = onset / onset_max
 
-        features = torch.stack([
-            amplitude_norm, velocity_norm, acceleration_norm,
-            loudness_norm, onset_norm,
-        ], dim=-1)  # (B, T, 5)
-
-        return features.clamp(0, 1)
+        return torch.stack([
+            amplitude, velocity_A, acceleration_A, loudness, onset_strength,
+        ], dim=-1).clamp(0.0, 1.0)

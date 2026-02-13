@@ -1,14 +1,4 @@
-"""
-R3 Group E: Cross-Layer Interactions (24D) [25:49]
-
-"How do features relate?"
-
-Pairwise interactions between spectral groups that capture
-cross-feature coupling effects.
-  x_l0l5 (8D) [25:33]: Energy x Consonance
-  x_l4l5 (8D) [33:41]: Derivatives x Consonance
-  x_l5l7 (8D) [41:49]: Consonance x Timbre
-"""
+"""Group E: Interactions — 24D [25:49] cross-domain product features."""
 
 from __future__ import annotations
 
@@ -17,28 +7,24 @@ from typing import List
 import torch
 from torch import Tensor
 
-from ....contracts import BaseSpectralGroup
+from ....contracts.base_spectral_group import BaseSpectralGroup
 
 
 class InteractionsGroup(BaseSpectralGroup):
     GROUP_NAME = "interactions"
+    DOMAIN = "cross_domain"
     OUTPUT_DIM = 24
-    INDEX_RANGE = (25, 49)
 
     @property
     def feature_names(self) -> List[str]:
         return [
-            # x_l0l5: Energy x Consonance (8D)
-            "x_amp_roughness", "x_amp_sethares",
-            "x_amp_helmholtz", "x_amp_stumpf",
-            "x_vel_roughness", "x_vel_sethares",
-            "x_vel_helmholtz", "x_vel_stumpf",
-            # x_l4l5: Derivatives x Consonance (8D)
-            "x_flux_roughness", "x_flux_sethares",
-            "x_flux_helmholtz", "x_flux_stumpf",
-            "x_entropy_roughness", "x_entropy_sethares",
-            "x_entropy_helmholtz", "x_entropy_stumpf",
-            # x_l5l7: Consonance x Timbre (8D)
+            # Block 1: Energy × Consonance (8D)
+            "x_amp_roughness", "x_amp_sethares", "x_amp_helmholtz", "x_amp_stumpf",
+            "x_vel_roughness", "x_vel_sethares", "x_vel_helmholtz", "x_vel_stumpf",
+            # Block 2: Change × Consonance (8D)
+            "x_flux_roughness", "x_flux_sethares", "x_flux_helmholtz", "x_flux_stumpf",
+            "x_entropy_roughness", "x_entropy_sethares", "x_entropy_helmholtz", "x_entropy_stumpf",
+            # Block 3: Consonance × Timbre (8D)
             "x_roughness_warmth", "x_roughness_sharpness",
             "x_sethares_warmth", "x_sethares_sharpness",
             "x_helmholtz_tonalness", "x_helmholtz_clarity",
@@ -46,101 +32,81 @@ class InteractionsGroup(BaseSpectralGroup):
         ]
 
     def compute(self, mel: Tensor) -> Tensor:
-        """Compute cross-layer interaction features.
+        """(B, 128, T) → (B, T, 24).
 
-        This method expects the other R3 groups to have already been computed
-        and concatenated. Since we compute in order and concatenate after,
-        we compute interactions directly from mel spectrogram statistics.
-
-        Args:
-            mel: (B, N_MELS, T) log-mel spectrogram
-
-        Returns:
-            (B, T, 24) interaction features in [0, 1]
+        Requires prior groups to have been computed and cached.
+        This implementation computes proxy features directly from mel.
         """
         B, N, T = mel.shape
-        mel_t = mel.transpose(1, 2)  # (B, T, N)
-        total_energy = mel_t.sum(dim=-1, keepdim=True).clamp(min=1e-8)
+        half = N // 2
+        quarter = N // 4
+        third = N // 3
+        total = mel.sum(dim=1).clamp(min=1e-8)
 
-        # Quick proxies for the base features we need
-        # Energy proxies
-        amp = mel_t.pow(2).mean(dim=-1, keepdim=True).sqrt()
-        amp = amp / amp.amax(dim=1, keepdim=True).clamp(min=1e-8)
+        # ── Consonance proxies ──
+        high = mel[:, half:, :]
+        roughness = torch.sigmoid(high.var(dim=1) / high.mean(dim=1).clamp(min=1e-8) - 0.5)
+        diff_adj = (mel[:, 1:, :] - mel[:, :-1, :]).abs().mean(dim=1)
+        sethares = (diff_adj / mel.max(dim=1).values.clamp(min=1e-8)).clamp(0, 1)
+        mean_mel = mel.mean(dim=1, keepdim=True)
+        centered = mel - mean_mel
+        auto = (centered[:, :-1, :] * centered[:, 1:, :]).mean(dim=1)
+        var = (centered ** 2).mean(dim=1).clamp(min=1e-8)
+        helmholtz = (auto / var).clamp(0, 1)
+        stumpf = (mel[:, :half, :].sum(dim=1) / total).clamp(0, 1)
 
-        vel = torch.zeros_like(amp)
+        # ── Energy proxies ──
+        amp = torch.sqrt((mel ** 2).mean(dim=1))
+        amp_max = amp.max(dim=-1, keepdim=True).values.clamp(min=1e-8)
+        amplitude = amp / amp_max
+        vel = torch.zeros_like(amplitude)
+        vel[:, 1:] = amplitude[:, 1:] - amplitude[:, :-1]
+        velocity = torch.sigmoid(5.0 * vel)
+
+        # ── Change proxies ──
+        flux = torch.zeros(B, T, device=mel.device, dtype=mel.dtype)
         if T > 1:
-            vel[:, 1:] = amp[:, 1:] - amp[:, :-1]
-        vel = torch.sigmoid(vel * 5.0)
+            d = mel[:, :, 1:] - mel[:, :, :-1]
+            flux[:, 1:] = d.norm(dim=1)
+            fm = flux.max(dim=-1, keepdim=True).values.clamp(min=1e-8)
+            flux = flux / fm
+        prob = mel / mel.sum(dim=1, keepdim=True).clamp(min=1e-8)
+        log_prob = torch.log(prob.clamp(min=1e-10))
+        entropy = -(prob * log_prob).sum(dim=1) / torch.log(torch.tensor(float(N), device=mel.device))
+        entropy = entropy.clamp(0, 1)
 
-        # Consonance proxies
-        low_q = N // 4
-        high_q = 3 * N // 4
-        roughness_proxy = mel_t[..., high_q:].var(dim=-1, keepdim=True)
-        roughness_proxy = torch.sigmoid(roughness_proxy - 0.5)
+        # ── Timbre proxies ──
+        warmth = mel[:, :quarter, :].sum(dim=1) / total
+        sharpness = mel[:, 3 * quarter:, :].sum(dim=1) / total
+        tonalness = mel.max(dim=1).values / total
+        bin_idx = torch.arange(N, device=mel.device, dtype=mel.dtype).view(1, N, 1)
+        clarity = (mel * bin_idx).sum(dim=1) / total / N
+        mel_d = (mel[:, 1:, :] - mel[:, :-1, :]).abs()
+        smoothness = 1.0 - mel_d.mean(dim=1) / mel_d.max(dim=1).values.clamp(min=1e-8)
+        autocorr = helmholtz  # same computation
 
-        diff = torch.diff(mel_t, dim=-1)
-        sethares_proxy = diff.abs().mean(dim=-1, keepdim=True)
-        sethares_proxy = sethares_proxy / sethares_proxy.amax(dim=1, keepdim=True).clamp(min=1e-8)
-
-        peak_e = mel_t.max(dim=-1, keepdim=True).values
-        helmholtz_proxy = peak_e / total_energy
-
-        low_ratio = mel_t[..., :low_q].sum(dim=-1, keepdim=True) / total_energy
-        stumpf_proxy = low_ratio
-
-        # Change proxies
-        flux = torch.zeros(B, T, 1, device=mel.device, dtype=mel.dtype)
-        if T > 1:
-            flux[:, 1:] = (mel_t[:, 1:] - mel_t[:, :-1]).norm(dim=-1, keepdim=True)
-        flux = flux / flux.amax(dim=1, keepdim=True).clamp(min=1e-8)
-
-        prob = mel_t / total_energy
-        prob = prob.clamp(min=1e-10)
-        entropy = -(prob * prob.log()).sum(dim=-1, keepdim=True)
-        entropy = entropy / torch.log(torch.tensor(N, dtype=mel.dtype, device=mel.device))
-
-        # Timbre proxies
-        warmth_proxy = mel_t[..., :low_q].sum(dim=-1, keepdim=True) / total_energy
-        sharpness_proxy = mel_t[..., high_q:].sum(dim=-1, keepdim=True) / total_energy
-        tonalness_proxy = helmholtz_proxy
-
-        bin_idx = torch.arange(N, device=mel.device, dtype=mel.dtype)
-        clarity_proxy = (mel_t * bin_idx).sum(dim=-1, keepdim=True) / total_energy / N
-
-        irr = torch.diff(mel_t, dim=-1).abs().mean(dim=-1, keepdim=True)
-        irr_max = irr.amax(dim=1, keepdim=True).clamp(min=1e-8)
-        smoothness_proxy = 1.0 - (irr / irr_max)
-
-        centered = mel_t - mel_t.mean(dim=-1, keepdim=True)
-        norm = centered.norm(dim=-1, keepdim=True).clamp(min=1e-8)
-        normalized = centered / norm
-        autocorr_proxy = (normalized[..., :-1] * normalized[..., 1:]).sum(dim=-1, keepdim=True).clamp(0, 1)
-
-        # === Cross-layer products ===
-
-        # x_l0l5: Energy x Consonance (8D)
-        x_l0l5 = torch.cat([
-            amp * roughness_proxy, amp * sethares_proxy,
-            amp * helmholtz_proxy, amp * stumpf_proxy,
-            vel * roughness_proxy, vel * sethares_proxy,
-            vel * helmholtz_proxy, vel * stumpf_proxy,
+        # ── Block 1: Energy × Consonance (8D) ──
+        b1 = torch.stack([
+            amplitude * roughness, amplitude * sethares,
+            amplitude * helmholtz, amplitude * stumpf,
+            velocity * roughness, velocity * sethares,
+            velocity * helmholtz, velocity * stumpf,
         ], dim=-1)
 
-        # x_l4l5: Derivatives x Consonance (8D)
-        x_l4l5 = torch.cat([
-            flux * roughness_proxy, flux * sethares_proxy,
-            flux * helmholtz_proxy, flux * stumpf_proxy,
-            entropy * roughness_proxy, entropy * sethares_proxy,
-            entropy * helmholtz_proxy, entropy * stumpf_proxy,
+        # ── Block 2: Change × Consonance (8D) ──
+        b2 = torch.stack([
+            flux * roughness, flux * sethares,
+            flux * helmholtz, flux * stumpf,
+            entropy * roughness, entropy * sethares,
+            entropy * helmholtz, entropy * stumpf,
         ], dim=-1)
 
-        # x_l5l7: Consonance x Timbre (8D)
-        x_l5l7 = torch.cat([
-            roughness_proxy * warmth_proxy, roughness_proxy * sharpness_proxy,
-            sethares_proxy * warmth_proxy, sethares_proxy * sharpness_proxy,
-            helmholtz_proxy * tonalness_proxy, helmholtz_proxy * clarity_proxy,
-            stumpf_proxy * smoothness_proxy, stumpf_proxy * autocorr_proxy,
+        # ── Block 3: Consonance × Timbre (8D) ──
+        b3 = torch.stack([
+            roughness * warmth, roughness * sharpness,
+            sethares * warmth, sethares * sharpness,
+            helmholtz * tonalness, helmholtz * clarity,
+            stumpf * smoothness, stumpf * autocorr,
         ], dim=-1)
 
-        features = torch.cat([x_l0l5, x_l4l5, x_l5l7], dim=-1)  # (B, T, 24)
-        return features.clamp(0, 1)
+        return torch.cat([b1, b2, b3], dim=-1).clamp(0.0, 1.0)

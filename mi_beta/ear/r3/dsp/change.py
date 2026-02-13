@@ -1,11 +1,4 @@
-"""
-R3 Group D: Change/Surprise (4D) [21:25]
-
-"Did something unexpected happen?"
-
-Features that detect spectral changes and novelty — the raw
-material for prediction error computation.
-"""
+"""Group D: Change — 4D [21:25] temporal change features."""
 
 from __future__ import annotations
 
@@ -14,66 +7,51 @@ from typing import List
 import torch
 from torch import Tensor
 
-from ....contracts import BaseSpectralGroup
+from ....contracts.base_spectral_group import BaseSpectralGroup
 
 
 class ChangeGroup(BaseSpectralGroup):
     GROUP_NAME = "change"
+    DOMAIN = "dsp"
     OUTPUT_DIM = 4
-    INDEX_RANGE = (21, 25)
 
     @property
     def feature_names(self) -> List[str]:
         return [
-            "spectral_flux",              # Frame-to-frame spectral change
-            "distribution_entropy",       # Shannon entropy of spectrum
-            "distribution_flatness",      # Wiener entropy
-            "distribution_concentration", # Herfindahl index
+            "spectral_flux", "distribution_entropy",
+            "distribution_flatness", "distribution_concentration",
         ]
 
     def compute(self, mel: Tensor) -> Tensor:
-        """Compute change/surprise features from mel spectrogram.
-
-        Args:
-            mel: (B, N_MELS, T) log-mel spectrogram
-
-        Returns:
-            (B, T, 4) change features in [0, 1]
-        """
+        """(B, 128, T) → (B, T, 4)."""
         B, N, T = mel.shape
-        mel_t = mel.transpose(1, 2)  # (B, T, N)
 
-        # Spectral flux: L2 norm of frame-to-frame difference
+        # [0] spectral_flux: norm(mel[t] - mel[t-1]) normalized by max
         flux = torch.zeros(B, T, device=mel.device, dtype=mel.dtype)
         if T > 1:
-            diff = mel_t[:, 1:] - mel_t[:, :-1]
-            flux[:, 1:] = diff.norm(dim=-1)
-        flux_max = flux.amax(dim=-1, keepdim=True).clamp(min=1e-8)
-        flux_norm = (flux / flux_max).unsqueeze(-1)
+            diff = mel[:, :, 1:] - mel[:, :, :-1]
+            flux[:, 1:] = diff.norm(dim=1)
+            flux_max = flux.max(dim=-1, keepdim=True).values.clamp(min=1e-8)
+            flux = flux / flux_max
 
-        # Distribution: normalize spectrum to probability distribution
-        prob = mel_t / mel_t.sum(dim=-1, keepdim=True).clamp(min=1e-8)
-        prob = prob.clamp(min=1e-10)
+        # Probability distribution per frame
+        prob = mel / mel.sum(dim=1, keepdim=True).clamp(min=1e-8)  # (B, N, T)
 
-        # Shannon entropy
-        entropy = -(prob * prob.log()).sum(dim=-1, keepdim=True)
-        max_entropy = torch.log(torch.tensor(N, dtype=mel.dtype, device=mel.device))
-        entropy_norm = entropy / max_entropy
+        # [1] distribution_entropy: -(prob * log(prob)).sum() / log(N)
+        log_prob = torch.log(prob.clamp(min=1e-10))
+        entropy = -(prob * log_prob).sum(dim=1) / torch.log(
+            torch.tensor(float(N), device=mel.device)
+        )
+        entropy = entropy.clamp(0.0, 1.0)
 
-        # Spectral flatness (Wiener entropy): geometric mean / arithmetic mean
-        log_mean = prob.log().mean(dim=-1, keepdim=True)
-        arith_mean = prob.mean(dim=-1, keepdim=True)
-        flatness = log_mean.exp() / arith_mean.clamp(min=1e-10)
-        flatness = flatness.clamp(0, 1)
+        # [2] distribution_flatness: exp(mean(log(prob))) / mean(prob) (Wiener)
+        geo_mean = torch.exp(log_prob.mean(dim=1))
+        arith_mean = prob.mean(dim=1).clamp(min=1e-10)
+        flatness = (geo_mean / arith_mean).clamp(0.0, 1.0)
 
-        # Spectral concentration (Herfindahl): sum of squared probabilities
-        concentration = prob.pow(2).sum(dim=-1, keepdim=True)
-        # Invert so high concentration -> high value
-        concentration = concentration * N  # scale to ~[0,1]
-        concentration = concentration.clamp(0, 1)
+        # [3] distribution_concentration: sum(prob^2) * N (Herfindahl)
+        concentration = ((prob ** 2).sum(dim=1) * N).clamp(0.0, 1.0)
 
-        features = torch.cat([
-            flux_norm, entropy_norm, flatness, concentration,
-        ], dim=-1)  # (B, T, 4)
-
-        return features.clamp(0, 1)
+        return torch.stack([
+            flux, entropy, flatness, concentration,
+        ], dim=-1).clamp(0.0, 1.0)

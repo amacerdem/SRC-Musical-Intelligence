@@ -1,16 +1,4 @@
-"""
-H3 Temporal Context — Multi-scale windowed morphological features.
-
-Computes temporal context at multiple horizons using:
-  1. EventHorizon: defines window sizes
-  2. Attention: exponential weighting A(dt) = exp(-3|dt|/H)
-  3. MorphComputer: 24 morphological features per window
-  4. DemandTree: sparse computation (only demanded tuples)
-
-Demand format:
-  4-tuple (r3_idx, h, m, l): per-R3 feature tracking
-  Each tuple specifies WHICH R3 feature (0-48) to track through time.
-"""
+"""H3 Temporal Context: sparse demand-driven temporal feature extraction."""
 
 from __future__ import annotations
 
@@ -20,99 +8,78 @@ import torch
 from torch import Tensor
 
 from ...core.config import MIBetaConfig, MI_BETA_CONFIG
-from ...core.constants import HORIZON_FRAMES, ATTENTION_DECAY
 from ...core.types import H3Output
-from .horizon import EventHorizon
 from .morph import MorphComputer
+from .horizon import EventHorizon
 from .attention import compute_attention_weights
 from .demand import DemandTree
 
 
 class H3Extractor:
-    """Orchestrates H3 temporal context extraction.
-
-    Computes per-R3-feature morphological statistics at demanded
-    (r3_idx, horizon, morph, law) 4-tuples. Only computes what
-    the MusicalBrain needs — sparse, not dense.
-    """
+    """Computes H3 temporal features on-demand for requested 4-tuples."""
 
     def __init__(self, config: MIBetaConfig = MI_BETA_CONFIG) -> None:
-        self.config = config
-        self.morph_computer = MorphComputer()
+        self._config = config
+        self._morph = MorphComputer()
 
     def extract(
         self,
-        r3: Tensor,
-        demand: Set[Tuple[int, int, int, int]],
+        r3: Tensor,                                     # (B, T, 49)
+        demand: Set[Tuple[int, int, int, int]],          # {(r3_idx, h, m, l), ...}
     ) -> H3Output:
-        """Extract demanded H3 temporal features.
+        """Compute H3 features for demanded 4-tuples.
 
         Args:
-            r3: (B, T, 49) R3 spectral features
-            demand: set of (r3_idx, horizon, morph, law) 4-tuples
+            r3: R3 feature tensor (B, T, 49)
+            demand: Set of (r3_idx, horizon, morph, law) tuples
 
         Returns:
-            H3Output with features dict {(r3_idx, h, m, l): (B, T)}
+            H3Output with sparse {4-tuple: (B, T)} dict
         """
-        B, T, D = r3.shape
+        if not demand:
+            return H3Output(features={})
+
+        B, T, _ = r3.shape
         device = r3.device
+        dtype = r3.dtype
+        result: Dict[Tuple[int, int, int, int], Tensor] = {}
 
+        # Group demands by horizon for efficiency
         tree = DemandTree.build(demand)
-        features: Dict[Tuple[int, int, int, int], Tensor] = {}
 
-        for h_idx, rml_set in tree.items():
+        for h_idx, triples in tree.items():
             horizon = EventHorizon(h_idx)
-            n_frames = min(horizon.frames, T)
+            n_frames = horizon.frames
             weights = compute_attention_weights(n_frames, device=device)
 
-            for r3_idx, m_idx, l_idx in rml_set:
+            for r3_idx, m_idx, l_idx in triples:
+                key = (r3_idx, h_idx, m_idx, l_idx)
                 r3_scalar = r3[..., r3_idx]  # (B, T)
-
-                result = self._compute_morph_series(
-                    r3_scalar, B, T, n_frames, m_idx, l_idx, weights, device, r3.dtype
+                val = self._compute_morph_series(
+                    r3_scalar, B, T, n_frames, m_idx, l_idx, weights, device, dtype
                 )
-                features[(r3_idx, h_idx, m_idx, l_idx)] = result
+                result[key] = val
 
-        return H3Output(features=features)
+        return H3Output(features=result)
 
     def _compute_morph_series(
-        self,
-        r3_scalar: Tensor,
-        B: int,
-        T: int,
-        n_frames: int,
-        m_idx: int,
-        l_idx: int,
-        weights: Tensor,
-        device,
-        dtype,
+        self, r3_scalar: Tensor, B: int, T: int,
+        n_frames: int, m_idx: int, l_idx: int,
+        weights: Tensor, device: torch.device, dtype: torch.dtype,
     ) -> Tensor:
-        """Compute a single morph across all time frames.
-
-        Args:
-            r3_scalar: (B, T) — the scalar time series to analyze
-            B, T: batch and time dimensions
-            n_frames: window size in frames
-            m_idx: morph index (0-23)
-            l_idx: law index (0=memory, 1=prediction, 2=integration)
-            weights: (n_frames,) attention weights
-            device, dtype: tensor properties
-
-        Returns:
-            (B, T) morph values
-        """
-        result = torch.zeros(B, T, device=device, dtype=dtype)
+        """Compute windowed morph for each frame. Returns (B, T)."""
+        out = torch.zeros(B, T, device=device, dtype=dtype)
+        half = n_frames // 2
 
         for t in range(T):
-            # Get window based on law
-            if l_idx == 0:  # L0: Memory (past -> now)
+            # Window selection by law
+            if l_idx == 0:  # Memory: Past → Now
                 start = max(0, t - n_frames + 1)
                 end = t + 1
-            elif l_idx == 1:  # L1: Prediction (now -> future)
+            elif l_idx == 1:  # Prediction: Now → Future
                 start = t
                 end = min(T, t + n_frames)
-            else:  # L2: Integration (bidirectional)
-                half = n_frames // 2
+            else:  # Integration: Bidirectional
                 start = max(0, t - half)
                 end = min(T, t + n_frames - half)
 
@@ -122,13 +89,10 @@ class H3Extractor:
             if win_len == 0:
                 continue
 
-            # Apply attention weights (truncated to window length)
+            # Truncate and normalize weights
             w = weights[:win_len]
             w = w / w.sum().clamp(min=1e-8)
 
-            # Compute morph
-            result[:, t] = self.morph_computer.compute(
-                window, w, m_idx
-            )
+            out[:, t] = self._morph.compute(window, w, m_idx)
 
-        return result
+        return out

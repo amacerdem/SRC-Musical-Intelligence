@@ -1,38 +1,29 @@
-"""
-EventHorizon — Defines temporal window sizes.
-
-Each horizon represents a time scale at which musical events are analyzed.
-32 horizons span from 5.8ms (sub-note) to 981s (full piece).
-"""
+"""EventHorizon: 32 temporal time scales."""
 
 from __future__ import annotations
 
-from ...core.constants import HORIZON_FRAMES, HORIZON_MS, N_HORIZONS
+from ...core.constants import HORIZON_MS, HORIZON_FRAMES, N_HORIZONS
 
 
 class EventHorizon:
-    """A single temporal horizon."""
+    """Represents a single temporal horizon (time scale)."""
 
     def __init__(self, index: int) -> None:
         assert 0 <= index < N_HORIZONS, f"Horizon index {index} out of range [0, {N_HORIZONS})"
-        self.index = index
+        self._index = index
+
+    @property
+    def index(self) -> int:
+        return self._index
 
     @property
     def frames(self) -> int:
-        """Window size in frames."""
-        return HORIZON_FRAMES[self.index]
+        return HORIZON_FRAMES[self._index]
 
     @property
     def ms(self) -> float:
-        """Window size in milliseconds."""
-        return HORIZON_MS[self.index]
+        return HORIZON_MS[self._index]
 
     @property
     def seconds(self) -> float:
-        """Window size in seconds."""
         return self.ms / 1000.0
-
-    def __repr__(self) -> str:
-        if self.ms < 1000:
-            return f"H{self.index}({self.ms:.0f}ms, {self.frames} frames)"
-        return f"H{self.index}({self.seconds:.1f}s, {self.frames} frames)"

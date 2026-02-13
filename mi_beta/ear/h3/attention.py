@@ -1,11 +1,4 @@
-"""
-Attention Weighting — Exponential decay for temporal windows.
-
-A(dt) = exp(-3|dt|/H)
-
-Recent frames matter more than distant ones. The decay constant 3.0
-means the weight drops to ~5% at the window boundary.
-"""
+"""Attention weighting for H3 temporal windows."""
 
 from __future__ import annotations
 
@@ -20,23 +13,19 @@ def compute_attention_weights(
     device: torch.device = torch.device("cpu"),
     decay: float = ATTENTION_DECAY,
 ) -> Tensor:
-    """Compute exponential attention weights for a window.
+    """Exponential attention weights: recent frames weighted more.
 
     Args:
-        window_size: number of frames in the window
-        device: torch device
-        decay: decay constant (default 3.0)
+        window_size: Number of frames in the window
+        device: Torch device
+        decay: Exponential decay constant (default 3.0)
 
     Returns:
-        (window_size,) tensor of weights, highest at center
+        (window_size,) tensor with weights [low, ..., high]
     """
     if window_size <= 1:
         return torch.ones(window_size, device=device)
 
-    # Normalized positions from 0 to 1
-    positions = torch.linspace(0, 1, window_size, device=device)
-
-    # Exponential decay from the end (most recent frame)
+    positions = torch.linspace(0.0, 1.0, window_size, device=device)
     weights = torch.exp(-decay * (1.0 - positions))
-
     return weights

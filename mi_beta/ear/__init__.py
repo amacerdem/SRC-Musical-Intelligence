@@ -1,1 +1,1 @@
-"""MI-Beta EAR — Ascending Auditory Pathway (Cochlea -> R3 -> H3)."""
+"""MI-Beta ear module: cochlea, R3 spectral analysis, H3 temporal context."""

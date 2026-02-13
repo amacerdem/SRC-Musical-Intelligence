@@ -1,17 +1,10 @@
-"""
-Cochlea — Audio waveform to mel spectrogram.
-
-Mimics the basilar membrane: frequency decomposition into
-128 mel-frequency bins at 172.27 Hz frame rate.
-
-Input:  waveform (B, samples) or (samples,) at any sample rate
-Output: CochleaOutput with mel (B, 128, T)
-"""
+"""Cochlea: audio waveform → mel spectrogram preprocessing."""
 
 from __future__ import annotations
 
 import torch
 from torch import Tensor
+import torchaudio.transforms as T
 
 from ..core.config import MIBetaConfig, MI_BETA_CONFIG
 from ..core.types import CochleaOutput
@@ -21,28 +14,26 @@ def audio_to_mel(
     waveform: Tensor,
     config: MIBetaConfig = MI_BETA_CONFIG,
 ) -> CochleaOutput:
-    """Convert audio waveform to log-mel spectrogram.
+    """Convert audio waveform to log-normalized mel spectrogram.
 
     Args:
-        waveform: (B, samples) or (samples,) audio tensor
-        config: MI configuration
+        waveform: (B, samples) or (samples,) mono/stereo audio
+        config: MI-Beta configuration
 
     Returns:
-        CochleaOutput with mel spectrogram (B, N_MELS, T)
+        CochleaOutput with mel=(B, 128, T), normalized to [0, 1]
     """
-    import torchaudio.transforms as T
-
     # Ensure batch dimension
     if waveform.dim() == 1:
         waveform = waveform.unsqueeze(0)
 
-    # Ensure mono
+    # Enforce mono by averaging channels if stereo
     if waveform.dim() == 3:
         waveform = waveform.mean(dim=1)
 
     B = waveform.shape[0]
 
-    # Mel spectrogram transform
+    # MelSpectrogram transform
     mel_transform = T.MelSpectrogram(
         sample_rate=config.sample_rate,
         n_fft=config.n_fft,
@@ -51,15 +42,16 @@ def audio_to_mel(
         power=2.0,
     ).to(waveform.device)
 
-    # Compute mel spectrogram: (B, n_mels, T)
-    mel = mel_transform(waveform)
+    mel = mel_transform(waveform)  # (B, n_mels, T)
 
-    # Log1p normalization (matches D0 pipeline convention)
+    # Log normalization
     mel = torch.log1p(mel)
 
-    # Normalize per-batch to [0, 1] range
-    mel_max = mel.amax(dim=(-2, -1), keepdim=True).clamp(min=1e-8)
-    mel = mel / mel_max
+    # Per-batch normalization to [0, 1]
+    for b in range(B):
+        max_val = mel[b].max()
+        if max_val > 0:
+            mel[b] = mel[b] / max_val
 
     return CochleaOutput(
         mel=mel,

@@ -1,120 +1,69 @@
-"""
-R3 Spectral Analysis — 49D per frame (default groups).
-
-Five groups extract spectral features from mel spectrogram:
-  A: Consonance (7D)  [0:7]   — harmonic quality       (psychoacoustic/)
-  B: Energy (5D)      [7:12]  — loudness and dynamics   (dsp/)
-  C: Timbre (9D)      [12:21] — tonal quality           (dsp/)
-  D: Change (4D)      [21:25] — spectral surprise       (dsp/)
-  E: Interactions (24D)[25:49] — cross-layer coupling   (cross_domain/)
-
-Groups are auto-discovered from subdirectory __init__.py exports.
-New groups can be added in extensions/ without modifying this file.
-"""
+"""R3 Spectral Analysis: 49D feature extraction from mel spectrograms."""
 
 from __future__ import annotations
 
 import importlib
-import pkgutil
 from typing import List, Tuple
 
-import torch
 from torch import Tensor
+import torch
 
 from ...core.config import MIBetaConfig, MI_BETA_CONFIG
 from ...core.types import R3Output
+from ...contracts.base_spectral_group import BaseSpectralGroup
 from ._registry import R3FeatureRegistry, R3FeatureMap
-from ...contracts import BaseSpectralGroup
 
-# ═══════════════════════════════════════════════════════════════════════
-# AUTO-DISCOVERY
-# ═══════════════════════════════════════════════════════════════════════
+# Subdirectories to scan in order
+_SUBDIR_ORDER = ("psychoacoustic", "dsp", "cross_domain", "extensions")
 
-# Subdirectories to scan for BaseSpectralGroup exports.
-# Order matters: groups are concatenated in this order.
-_SUBDIRECTORY_NAMES = ("psychoacoustic", "dsp", "cross_domain", "extensions")
-
-
-def _discover_groups() -> List[BaseSpectralGroup]:
-    """Import subdirectory __init__.py modules and collect exported groups.
-
-    Each subdirectory's __init__.py is expected to define an __all__ list
-    of BaseSpectralGroup subclasses. They are instantiated and returned
-    in the order: psychoacoustic -> dsp -> cross_domain -> extensions.
-    """
-    groups: List[BaseSpectralGroup] = []
-
-    for subdir in _SUBDIRECTORY_NAMES:
-        try:
-            mod = importlib.import_module(f".{subdir}", package=__name__)
-        except ImportError:
-            continue
-
-        # Collect all BaseSpectralGroup subclasses exported by the module
-        for attr_name in getattr(mod, "__all__", []):
-            cls = getattr(mod, attr_name, None)
-            if cls is None:
-                continue
-            if isinstance(cls, type) and issubclass(cls, BaseSpectralGroup) and cls is not BaseSpectralGroup:
-                groups.append(cls())
-
-    return groups
-
-
-# ═══════════════════════════════════════════════════════════════════════
-# R3 EXTRACTOR
-# ═══════════════════════════════════════════════════════════════════════
 
 class R3Extractor:
-    """Orchestrates all R3 spectral groups.
-
-    Groups are discovered from psychoacoustic/, dsp/, cross_domain/,
-    and extensions/ subdirectories using the _registry.
-    """
+    """Orchestrates 5 spectral groups to produce 49D R3 features."""
 
     def __init__(self, config: MIBetaConfig = MI_BETA_CONFIG) -> None:
-        self.config = config
-
-        # Discover and register groups
+        self._config = config
         self._registry = R3FeatureRegistry()
-        for group in _discover_groups():
-            self._registry.register(group)
+        self._feature_map: R3FeatureMap | None = None
 
-        # Freeze to assign index ranges
+        # Auto-discover groups
+        for subdir in _SUBDIR_ORDER:
+            try:
+                mod = importlib.import_module(f"mi_beta.ear.r3.{subdir}")
+                for name in getattr(mod, "__all__", []):
+                    cls = getattr(mod, name)
+                    if isinstance(cls, type) and issubclass(cls, BaseSpectralGroup) and cls is not BaseSpectralGroup:
+                        self._registry.register(cls())
+            except ImportError:
+                pass
+
+        # Freeze registry and assign index ranges
         self._feature_map = self._registry.freeze()
-        self.groups = self._registry.groups
+
+    def extract(self, mel: Tensor) -> R3Output:
+        """(B, 128, T) → R3Output with features (B, T, 49)."""
+        outputs = []
+        for group in self._registry.groups:
+            out = group.compute(mel)  # (B, T, group.OUTPUT_DIM)
+            outputs.append(out)
+
+        features = torch.cat(outputs, dim=-1)  # (B, T, total_dim)
+        return R3Output(
+            features=features,
+            feature_names=self.feature_names,
+        )
 
     @property
     def feature_map(self) -> R3FeatureMap:
-        """Frozen feature map with index ranges."""
+        assert self._feature_map is not None
         return self._feature_map
 
-    def extract(self, mel: Tensor) -> R3Output:
-        """Extract R3 features from mel spectrogram.
-
-        Args:
-            mel: (B, N_MELS, T) log-mel spectrogram
-
-        Returns:
-            R3Output with features (B, T, total_dim)
-        """
-        parts = []
-        names: List[str] = []
-        for group in self.groups:
-            feat = group.compute(mel)  # (B, T, group_dim)
-            parts.append(feat)
-            names.extend(group.feature_names)
-
-        features = torch.cat(parts, dim=-1)  # (B, T, total_dim)
-        return R3Output(features=features, feature_names=tuple(names))
-
     @property
-    def feature_names(self) -> List[str]:
+    def feature_names(self) -> Tuple[str, ...]:
         names: List[str] = []
-        for group in self.groups:
+        for group in self._registry.groups:
             names.extend(group.feature_names)
-        return names
+        return tuple(names)
 
     @property
     def total_dim(self) -> int:
-        return self._feature_map.total_dim
+        return self._feature_map.total_dim if self._feature_map else 0
