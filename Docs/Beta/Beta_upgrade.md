@@ -1501,30 +1501,520 @@ Quality gate: Zero broken links. R³→H³→C³→L³ chain documented in all a
 
 **Phase 5 Status: ✅ COMPLETE (2026-02-13)** — 69 files written across 13 subdirectories (~10,350 lines). All quality gates passed.
 
-### Phase 6: mi_beta Code Update (LAST)
+### Phase 6: Documentation & Code Validation (Pre-Implementation Audit)
 
-Only after Phases 1-5 are complete:
+**391 documentation files + 94 code implementations must be 100% cross-validated before any code changes.** This is the firewall between documentation design (Phases 1-5) and code implementation (Phase 7). No code is written or modified in Phase 6 — only docs are read, compared, and corrected where necessary.
 
-1. **Create 9 missing model files** (96 docs - 87 code = 9 gap, including CHPI and SSRI)
-2. **Per-model code updates** (based on revised docs):
-   - Populate h3_demand tuples from revised Section 5
-   - Verify OUTPUT_DIM, LAYERS, dimension_names match revised Section 6
-   - Update brain_regions from revised Section 8
-   - Update compute() logic if mathematical formulation changed
-3. **R³ expansion** (from Phase 3 design — 49D → 128–256D):
-   - Remove hardcoded `R3_DIM=49` → dynamic from `R3FeatureRegistry.freeze().total_dim`
-   - Remove `R3FeatureSpec` index validation `< 49` → `< registry.total_dim`
-   - Remove hardcoded `_R3_FEATURE_NAMES` → auto-generate from registry
-   - Remove hardcoded group boundaries → read from `R3FeatureMap.groups`
-   - Implement new `BaseSpectralGroup` subclasses (F:Pitch, G:Rhythm, H:Harmony, I:Information, ...)
-   - Expand interaction group E for new cross-group products
-   - Update all model `r3_indices` references for expanded space
-   - Benchmark computation cost at target dimensionality
-4. **H³ updates** (if demand patterns changed)
-5. **L³ updates** (if semantic groups changed)
-6. **Update 00-INDEX.md** with final totals
-7. **Run tests:** `pytest tests/ -v`
-8. **Validation run:** `python -m mi_beta`
+**Problem:** Phases 1-5 produced 391 documentation files across 4 architectural layers (C³, R³, H³, L³). Some docs describe v2 features not yet in code (R³ 128D, H³ v2 demand space). Some code attributes were intentionally deferred. Before implementing Phase 7, we must know the **exact delta** between docs and code — categorized as EXPECTED (fix in Phase 7) vs DOC-BUG (fix now).
+
+**Scope:** 391 .md files (C³:159, R³:71, H³:73, L³:69, Beta:14, other:5) + 94 model implementations in `mi_beta/` + all infrastructure code (constants, contracts, registries).
+
+#### 6.0 Discrepancy Categories
+
+All findings from sub-phases 6A-6H are categorized into three types:
+
+| Category | Meaning | Action |
+|----------|---------|--------|
+| **EXPECTED** | Code intentionally behind docs (designed in Phases 2-5, deferred to Phase 7) | Catalog in registry, fix in Phase 7 |
+| **DOC-BUG** | Documentation error (wrong count, broken link, stale reference) | Fix immediately in Phase 6 |
+| **CODE-BUG** | Code inconsistency unrelated to doc phases (e.g., duplicate constants) | Catalog in registry, fix in Phase 7 |
+
+#### 6.1 Sub-Phase Execution Order
+
+| Sub-Phase | Description | Scope | Depends On |
+|:---------:|-------------|-------|:----------:|
+| **6A** | Structural Inventory: every code file has a doc, vice versa | 94 models + all components | None |
+| **6B** | C³ Model Attribute Validation: 94 models × 10 attributes | 940 individual checks | 6A |
+| **6C** | C³ Cross-Reference Validation: models↔units↔mechanisms↔circuits↔pathways | ~50 aggregate checks | 6A |
+| **6D** | R³ Architecture Consistency: features, groups, naming, dimension sums | `constants.py` vs `Docs/R³/` | 6A |
+| **6E** | H³ Architecture Consistency: horizons, morphs, laws, MORPH_SCALE | `constants.py` vs `Docs/H³/` | 6A |
+| **6F** | L³ Architecture Consistency: groups, vocabulary, adapters, orchestrator | `language/` vs `Docs/L³/` | 6A |
+| **6G** | Cross-Layer Pipeline Validation: R³→H³→C³→L³ chain, version refs | all layers | 6B-6F |
+| **6H** | Index & Link Integrity: 00-INDEX completeness, internal link resolution | all 391 files | 6A |
+| **6I** | Discrepancy Registry Creation + Doc Fixes | synthesis of 6A-6H | All prior |
+
+#### 6.2 Sub-Phase Details
+
+**Sub-phase 6A — Structural Inventory (code ↔ doc existence)**
+
+For every code component, verify a documentation counterpart exists (and vice versa):
+
+| Code Component | Code Count | Doc Location | Doc Count | Expected Gap |
+|---|:---:|---|:---:|---|
+| `mi_beta/brain/units/*/models/*.py` | 94 | `Docs/C³/Models/{ID}/` | 96 dirs | 2 doc-only (CHPI, SSRI) |
+| `mi_beta/brain/mechanisms/*.py` | 10 | `Docs/C³/Mechanisms/*.md` | 10 | None |
+| `mi_beta/brain/pathways/p*.py` | 5 | `Docs/C³/Pathways/P*.md` | 5 | None |
+| `mi_beta/brain/regions/*.py` | 3 | `Docs/C³/Regions/*.md` | 3 | None |
+| `mi_beta/brain/neurochemicals/*.py` | 4 | `Docs/C³/Neurochemicals/*.md` | 4 | None |
+| `mi_beta/ear/r3/*/` | 5 groups | `Docs/R³/Domains/*.md` | 9+ | 6 doc-only (v2 groups F-K) |
+| `mi_beta/language/groups/*.py` | 8 | `Docs/L³/Groups/*/*.md` | 8 | None |
+| `mi_beta/language/adapters/*_adapter.py` | 9 | `Docs/L³/Adapters/*-L3-ADAPTER.md` | 9 | None |
+| `mi_beta/contracts/*.py` | 12 | `Docs/C³/Contracts/` + `Docs/L³/Contracts/` | 14 | overlap check |
+
+Output: Inventory table in `Docs/Beta/VALIDATION-ARCHITECTURE.md`.
+
+**Sub-phase 6B — C³ Model Attribute Validation (94 models × 10 attributes = 940 checks)**
+
+For each of the 94 implemented models, extract class attributes from Python code and compare with the corresponding model document:
+
+| # | Attribute | Code Source | Doc Source (Section) | Known Pattern |
+|---|-----------|-------------|---------------------|---------------|
+| 1 | `OUTPUT_DIM` | class constant | Sec 6: Output Space | gamma: code=10, doc=9 (EXPECTED) |
+| 2 | `MECHANISM_NAMES` | class constant | Sec 5: H³ Temporal Demand | ASU all: code=("ASA",), doc=("BEP","ASA") (EXPECTED) |
+| 3 | `FULL_NAME` | class constant | Sec 1: header subtitle | many mismatches (EXPECTED) |
+| 4 | `NAME` | class constant | Model ID acronym | should match exactly |
+| 5 | `UNIT` | class constant | directory prefix (e.g., "ASU") | must match exactly |
+| 6 | `TIER` | class constant | tier in model ID (alpha/beta/gamma) | must match exactly |
+| 7 | `h3_demand` | property `return ()` | Sec 5: demand tuple table | ALL empty in code (EXPECTED) |
+| 8 | `dimension_names` | property tuple | Sec 6: dimension list | should match names+count |
+| 9 | `brain_regions` | property tuple | Sec 8: MNI table | coords, abbreviations, BA |
+| 10 | `LAYERS` | class LayerSpec tuple | Sec 6: E/M/P/F layer table | structure, dim ranges |
+
+**Per-model validation procedure:**
+```
+For each of 94 models in mi_beta/brain/units/*/models/*.py:
+
+1. IMPORT model class, extract: NAME, FULL_NAME, UNIT, TIER,
+   OUTPUT_DIM, MECHANISM_NAMES, LAYERS, h3_demand, dimension_names, brain_regions
+
+2. READ corresponding doc: Docs/C³/Models/{UNIT}-{tier}{n}-{ACRONYM}/{ACRONYM}.md
+   Extract: Section 1 name, Section 5 mechanisms, Section 5 h3_demand,
+   Section 6 OUTPUT_DIM + dims, Section 8 regions
+
+3. COMPARE each of 10 attributes:
+   → PASS: exact match
+   → EXPECTED: known discrepancy (h3_demand empty, gamma OUTPUT_DIM, ASU mechanisms)
+   → DOC-BUG: doc error (wrong count, broken reference)
+   → CODE-BUG: unexpected code error
+
+4. RECORD result in VALIDATION-C3-MODELS.md row
+```
+
+Output: `Docs/Beta/VALIDATION-C3-MODELS.md` — 94-row × 10-column validation matrix.
+
+**Sub-phase 6C — C³ Cross-Reference Validation (~50 aggregate checks)**
+
+Verify that aggregate documentation correctly references its member components:
+
+| Check Category | Source A | Source B | Specific Checks |
+|---|---|---|---|
+| Unit model counts | `Docs/C³/Units/00-INDEX.md` | `Docs/C³/Models/` directory scan | Count per unit: SPU=9, STU=14, IMU=15, ASU=9, NDU=9, MPU=10, PCU=10, ARU=10, RPU=10 = 96 |
+| Unit member lists | `Docs/C³/Units/{UNIT}.md` model table | `Docs/C³/Models/{UNIT}-*/` dirs | Each unit doc lists correct models |
+| Mechanism users | `Docs/C³/Mechanisms/{MECH}.md` user table | Model `MECHANISM_NAMES` code | Models listed as users actually use that mechanism |
+| Circuit membership | `Docs/C³/Circuits/{CIRCUIT}.md` | `constants.py` CIRCUIT_NAMES | Circuits doc references valid mechanisms and units |
+| Pathway routing | `Docs/C³/Pathways/P{N}*.md` | `mi_beta/brain/pathways/p{n}*.py` | Source/target units, correlation values match |
+| Matrices data | `Docs/C³/Matrices/R3-Usage.md` etc. | Individual model Section 4 data | Aggregate matrices sum correctly |
+| Tier membership | `Docs/C³/Tiers/{TIER}.md` | Model TIER attributes | Models listed under correct tier |
+
+**Critical known issue:** Code has TWO circuit constant tuples:
+- `CIRCUIT_NAMES` (line 112 of constants.py): 6 entries including "imagery"
+- `CIRCUITS` (line 210 of constants.py): 5 entries WITHOUT "imagery"
+→ Flag as **CODE-BUG**: reconcile in Phase 7A.
+
+**Known unit count discrepancy:** `Units/00-INDEX.md` may list PCU=9, RPU=9 (code counts), while `Models/` has PCU=10, RPU=10 (including doc-only CHPI, SSRI).
+→ Flag as **DOC-BUG** if index doesn't acknowledge doc-only models; or **EXPECTED** if it correctly notes "9 code + 1 doc-only".
+
+**Sub-phase 6D — R³ Architecture Consistency**
+
+| # | Check | Source A (Code) | Source B (Docs) | Expected Result |
+|---|-------|----------------|-----------------|-----------------|
+| 1 | R3_DIM | `constants.py` = 49 | `R3-SPECTRAL-ARCHITECTURE.md` = 128 | EXPECTED: v1=49 code, v2=128 docs |
+| 2 | Group A bounds | `R3_CONSONANCE = (0, 7)` | `Registry/DimensionCatalog.md` [0:7] | PASS |
+| 3 | Group B bounds | `R3_ENERGY = (7, 12)` | `Registry/DimensionCatalog.md` [7:12] | PASS |
+| 4 | Group C bounds | `R3_TIMBRE = (12, 21)` | `Registry/DimensionCatalog.md` [12:21] | PASS |
+| 5 | Group D bounds | `R3_CHANGE = (21, 25)` | `Registry/DimensionCatalog.md` [21:25] | PASS |
+| 6 | Group E bounds | `R3_INTERACTIONS = (25, 49)` | `Registry/DimensionCatalog.md` [25:49] | PASS |
+| 7 | Feature names [0:49] | `dimension_map.py` 49 names | `Registry/DimensionCatalog.md` | Must match exactly |
+| 8 | Groups F-K | Not in code | `Docs/R³/Domains/` | EXPECTED: v2-only, Phase 7C |
+| 9 | Dimension sum v1 | 7+5+9+4+24 = 49 ✓ | Doc A+B+C+D+E sums | PASS |
+| 10 | Dimension sum v2 | N/A | 7+5+9+4+24+16+10+12+7+20+14 = 128 | Verify doc-internal |
+| 11 | Per-unit mappings | Model Section 4 r3 indices | `Mappings/{UNIT}-R3-MAP.md` | Cross-check |
+| 12 | Known naming discrepancies | `dimension_map.py` names | Doc semantic labels | 6 known (see MEMORY.md) |
+
+**Known R³ naming mismatches** (identified in Phase 1, deferred to Phase 7):
+- [5] periodicity → roughness_total
+- [7] amplitude → velocity_A
+- [8] loudness → velocity_D
+- [10] spectral_flux → onset_strength
+- [14] tonalness → brightness_kuttruff
+- [21] spectral_change → spectral_flux
+
+**Sub-phase 6E — H³ Architecture Consistency**
+
+| # | Check | Source A (Code) | Source B (Docs) | Expected Result |
+|---|-------|----------------|-----------------|-----------------|
+| 1 | N_HORIZONS | `constants.py` = 32 | `Registry/HorizonCatalog.md` rows | 32 entries |
+| 2 | HORIZON_MS | `constants.py` 32-tuple | `HorizonCatalog.md` ms column | EXACT value match |
+| 3 | N_MORPHS | `constants.py` = 24 | `Registry/MorphCatalog.md` rows | 24 entries |
+| 4 | MORPH_NAMES | `constants.py` 24-tuple | `MorphCatalog.md` name column | EXACT name match |
+| 5 | N_LAWS | `constants.py` = 3 | `Registry/LawCatalog.md` rows | 3 entries |
+| 6 | LAW_NAMES | `constants.py` 3-tuple | `LawCatalog.md` name column | EXACT name match |
+| 7 | H3_TOTAL_DIM | `constants.py` = 2304 | `H3-TEMPORAL-ARCHITECTURE.md` | code=2304, doc v2=294,912 (EXPECTED) |
+| 8 | MORPH_SCALE | `constants.py` 24-tuple (gain,bias) | `Morphology/MorphScaling.md` | 24 pairs match |
+| 9 | ATTENTION_DECAY | `constants.py` = 3.0 | `Contracts/AttentionKernel.md` | PASS |
+| 10 | HORIZON_FRAMES | computed from MS | `HorizonCatalog.md` frame column | computed match |
+| 11 | h3_flat_index | `constants.py` h*72+m*3+l | `Pipeline/ExecutionModel.md` | formula match |
+| 12 | Per-unit demands | Model h3_demand (ALL empty) | `Demand/{UNIT}-H3-DEMAND.md` | EXPECTED: empty code |
+
+**Sub-phase 6F — L³ Architecture Consistency**
+
+| # | Check | Source A (Code) | Source B (Docs) | Expected Result |
+|---|-------|----------------|-----------------|-----------------|
+| 1 | Group count | `L3Orchestrator` 8 groups | `Registry/GroupMap.md` 8 rows | PASS |
+| 2 | Group order | OrderedDict keys: α,β,γ,δ,ε,ζ,η,θ | `Pipeline/ExecutionModel.md` | PASS |
+| 3 | Per-group OUTPUT_DIM | Each group class constant | `GroupMap.md` dim column | Must match |
+| 4 | Total dims | sum(OUTPUT_DIM) = 104 | Docs: 6+14+13+12+19+12+12+16=104 | PASS |
+| 5 | AXIS_NAMES | `eta.py` 12-tuple | `Vocabulary/AxisDefinitions.md` 12 axes | EXACT match |
+| 6 | AXIS_TERMS | `eta.py` 12×8 dict = 96 terms | `Vocabulary/TermCatalog.md` 96 entries | ZERO drift |
+| 7 | N_GRADATIONS | `eta.py` = 64 | `Vocabulary/GradationSystem.md` | PASS |
+| 8 | N_BANDS | `eta.py` = 8 | `Vocabulary/GradationSystem.md` | PASS |
+| 9 | POLARITY_AXES | `zeta.py` 12 dicts (name/neg/pos) | `Vocabulary/AxisDefinitions.md` | EXACT match |
+| 10 | Epsilon state | `epsilon.py` all state tensors | `Contracts/EpsilonStateContract.md` | 5 components match |
+| 11 | Epsilon hyperparams | ALPHA_SHORT/MEDIUM/LONG, N_STATES, BUFFER_SIZE | `Groups/Independent/Epsilon.md` | values match |
+| 12 | Adapters (9) | All return `{"tensor": unit_output.tensor}` | `Adapters/` docs status="stub" | PASS (all stubs) |
+| 13 | BaseSemanticGroup | ABC attrs: LEVEL, GROUP_NAME, DISPLAY_NAME, OUTPUT_DIM | `Contracts/BaseSemanticGroup.md` | attr list match |
+| 14 | Orchestrator compute() | Phase 1→1b→2a→2b→2c | `Pipeline/DependencyDAG.md` | order match |
+| 15 | Orchestrator reset() | resets epsilon only | `Pipeline/StateManagement.md` | PASS |
+
+**Sub-phase 6G — Cross-Layer Pipeline Validation**
+
+End-to-end pipeline consistency across all 4 layers:
+
+| # | Check | Layers | Description |
+|---|-------|--------|-------------|
+| 1 | R³→C³ indices | R³, C³ | Model Section 4 r3 indices within [0, R3_DIM-1] per version |
+| 2 | H³ demand validity | H³, C³ | Model Section 5 tuples: r3_idx<R3_DIM, horizon<32, morph<24, law<3 |
+| 3 | C³→L³ dims | C³, L³ | L³ adapter docs reference correct unit output dimensionality |
+| 4 | Pipeline chain | All | Audio→Cochlea→R³(49/128D)→H³(2304D)→Brain(variable)→L³(104D)→MI-space |
+| 5 | Version alignment | All | R³ v2.0.0, H³ v2.0.0, L³ v2.1.0 — referenced consistently |
+| 6 | UNIT_EXECUTION_ORDER | C³ code | `constants.py` matches `Docs/C³/Units/00-INDEX.md` order |
+| 7 | MODEL_TIERS | C³ code | `constants.py` ("alpha","beta","gamma") matches `Docs/C³/Tiers/` |
+| 8 | Pathway routing | C³ code | 5 pathways match `Docs/C³/Pathways/` source→target |
+
+**Sub-phase 6H — Index & Link Integrity**
+
+| # | Check | Scope | Description |
+|---|-------|-------|-------------|
+| 1 | 00-INDEX completeness | 56 index files | Every 00-INDEX.md lists ALL files in its directory (no missing, no extra) |
+| 2 | C³ root index gap | `Docs/C³/` | Has `C3-ARCHITECTURE.md` but no `00-INDEX.md` — decide: add or document as intentional |
+| 3 | Internal links | All .md files | All relative `[text](path)` links resolve to existing files |
+| 4 | Orphaned files | All dirs | No files unreachable from any 00-INDEX or architecture doc |
+| 5 | File naming consistency | All | Model dirs follow `{UNIT}-{tier}{n}-{ACRONYM}` pattern |
+| 6 | upgrade_beta/ index | `Docs/R³/upgrade_beta/` | Working docs — intentionally no 00-INDEX (verify) |
+| 7 | Beta/Prompts/ index | `Docs/Beta/Prompts/` | Execution metadata — intentionally no 00-INDEX (verify) |
+
+**Sub-phase 6I — Discrepancy Registry Creation + Doc Fixes**
+
+Create `Docs/Beta/DISCREPANCY-REGISTRY.md` with three sections:
+
+**EXPECTED Discrepancies** (~15 categories, fix in Phase 7):
+
+| ID | Category | Scope | Description | Fix Phase |
+|---|---|---|---|---|
+| E01 | h3_demand empty | 94 models | All models return `()` in code, docs have populated tuples | 7B |
+| E02 | gamma OUTPUT_DIM | ~26 models | Code=10, doc=9 for all gamma-tier models | 7B |
+| E03 | ASU MECHANISM_NAMES | 9 models | Code=("ASA",), doc=("BEP","ASA") | 7B |
+| E04 | FULL_NAME mismatches | ~30+ models | Code FULL_NAME ≠ doc Section 1 header | 7B |
+| E05 | R3_DIM 49→128 | constants.py | Code=49, docs=128 (v2 expansion) | 7C |
+| E06 | R³ groups F-K | 6 groups | Exist in docs, not in code | 7C |
+| E07 | H3_TOTAL_DIM | constants.py | Code=2304, doc v2=294,912 | 7D |
+| E08 | Model files missing | 2 models | CHPI.py, SSRI.py doc-only | 7A |
+| E09 | L³ adapter stubs | 9 adapters | All return raw tensor, docs describe real mapping | 7E |
+| E10 | R³ naming mismatches | 6 features | Code names ≠ doc semantic labels (see Phase 1) | 7C |
+| E11 | CIRCUITS vs CIRCUIT_NAMES | constants.py | 5 vs 6 entries (missing "imagery") | 7A |
+| E12 | dimension_names drift | ~20 models | Minor code↔doc name differences | 7B |
+
+**DOC-BUG Items** (fix immediately in Phase 6):
+- Found during 6A-6H execution — listed per sub-phase with fix description.
+
+**CODE-BUG Items** (fix in Phase 7):
+- CIRCUITS/CIRCUIT_NAMES inconsistency (E11)
+- Any unexpected code errors found during validation
+
+#### 6.3 Dependency Graph
+
+```
+6A (Structural Inventory)
+ ├──→ 6B (C³ Model Attributes) ──→ 6C (C³ Cross-Refs) ─┐
+ ├──→ 6D (R³ Consistency) ──────────────────────────────┤
+ ├──→ 6E (H³ Consistency) ──────────────────────────────┤→ 6G (Pipeline) → 6H (Links) → 6I (Registry+Fixes)
+ └──→ 6F (L³ Consistency) ──────────────────────────────┘
+```
+
+6B, 6D, 6E, 6F can run in parallel after 6A. Then 6C and 6G after their inputs. Then 6H and 6I.
+
+#### 6.4 Deliverables
+
+| # | File | Purpose | Est. Lines |
+|---|------|---------|:----------:|
+| 1 | `Docs/Beta/VALIDATION-C3-MODELS.md` | 94-model × 10 attribute comparison matrix | ~400 |
+| 2 | `Docs/Beta/VALIDATION-ARCHITECTURE.md` | R³/H³/L³/cross-layer validation results | ~300 |
+| 3 | `Docs/Beta/VALIDATION-INDEXES.md` | 00-INDEX completeness audit (56 indexes) | ~150 |
+| 4 | `Docs/Beta/DISCREPANCY-REGISTRY.md` | All discrepancies: EXPECTED + DOC-BUG + CODE-BUG | ~200 |
+| 5 | Various doc fixes | DOC-BUG corrections found during 6A-6H | variable |
+
+#### 6.5 Quality Gates
+
+1. Structural inventory covers all 94 code models + 96 doc models + all mechanisms/pathways/regions/neurochemicals
+2. Every C³ model attribute checked: 94 × 10 = 940 checks, each classified as PASS / EXPECTED / DOC-BUG / CODE-BUG
+3. All C³ aggregate cross-references verified (Units, Mechanisms, Circuits, Pathways, Tiers, Matrices)
+4. R³ feature names [0:49] and group boundaries [A-E] verified EXACT against `constants.py` and `dimension_map.py`
+5. H³ HORIZON_MS (32 values), MORPH_NAMES (24), LAW_NAMES (3), MORPH_SCALE (24×2) verified EXACT against `constants.py`
+6. L³ vocabulary: 96 terms verified against `eta.py` AXIS_TERMS — **zero drift** (character-for-character match)
+7. Cross-layer pipeline chain validated end-to-end (R³→H³→C³→L³ index ranges and version references)
+8. All 56 `00-INDEX.md` files verified for directory completeness (no missing files, no phantom entries)
+9. `DISCREPANCY-REGISTRY.md` created with every discrepancy categorized — no uncategorized items
+10. All DOC-BUG items fixed in-place — **zero remaining doc errors** before Phase 7 begins
+
+**Phase 6 completes when:** DISCREPANCY-REGISTRY.md is finalized and all DOC-BUG items are resolved. The registry becomes the exact specification for Phase 7 code changes.
+
+---
+
+### Phase 7: mi_beta Implementation (Code Update)
+
+Only after Phase 6 validation confirms 100% documentation consistency. The `DISCREPANCY-REGISTRY.md` from Phase 6 defines the **exact delta** between docs and code. Phase 7 systematically closes every EXPECTED discrepancy and CODE-BUG.
+
+**Scope:** 94 model files updated, 2 new model files created, R³ expanded 49D→128D, H³ demand range updated, 9 L³ adapter stubs replaced, constants reconciled, full test suite created.
+
+#### 7.0 Architecture Overview
+
+```
+Phase 7 transforms mi_beta code to match v2 documentation:
+
+  R³:  49D → 128D (6 new spectral groups F-K)
+  H³:  r3_idx range 0-48 → 0-127 (demand tuples for expanded features)
+  C³:  94 models → 96 models (CHPI + SSRI), all attributes synced
+  L³:  9 stub adapters → 9 real semantic mappers
+
+  Constants: R3_DIM=49→128, CIRCUITS 5→6, group boundaries expanded
+  Tests: ~10 new test files covering all layers
+```
+
+#### 7.1 Sub-Phase Execution Order
+
+| Sub-Phase | Description | Files Changed | Est. Scope | Depends On |
+|:---------:|-------------|:------------:|:----------:|:----------:|
+| **7A** | Foundation: CHPI.py + SSRI.py + CIRCUITS fix + registries | ~6 | ~800 lines | None |
+| **7B** | C³ Model Sync: 94 models × h3_demand + attribute fixes | 94 | ~4,700 lines | 7A |
+| **7C** | R³ v2 Expansion: 49D→128D, new groups F-K, registry | ~15 | ~3,000 lines | 7A |
+| **7D** | H³ Code Updates: demand aggregation for R³ v2 | ~5 | ~500 lines | 7C |
+| **7E** | L³ Adapter Implementation: 9 stubs → real semantic mapping | 9 | ~900 lines | 7B |
+| **7F** | Cross-Unit Updates: pathways, regions, neurochemicals | ~10 | ~500 lines | 7B |
+| **7G** | Test Suite: unit + integration + benchmark tests | ~10 | ~2,000 lines | 7A-7F |
+| **7H** | Validation Run: pytest + full pipeline + output verification | — | — | 7G |
+
+#### 7.2 Sub-Phase Details
+
+**Sub-phase 7A — Foundation (6 files, ~800 lines)**
+
+| # | Action | File | Description |
+|---|--------|------|-------------|
+| 1 | CREATE | `mi_beta/brain/units/pcu/models/chpi.py` | PCU-β4-CHPI from `Docs/C³/Models/PCU-β4-CHPI/CHPI.md` spec |
+| 2 | CREATE | `mi_beta/brain/units/rpu/models/ssri.py` | RPU-β4-SSRI from `Docs/C³/Models/RPU-β4-SSRI/SSRI.md` spec |
+| 3 | UPDATE | `mi_beta/brain/units/pcu/__init__.py` | Register CHPI model in unit |
+| 4 | UPDATE | `mi_beta/brain/units/rpu/__init__.py` | Register SSRI model in unit |
+| 5 | FIX | `mi_beta/core/constants.py` | Reconcile `CIRCUITS` (5) with `CIRCUIT_NAMES` (6) — add "imagery" to `CIRCUITS` |
+| 6 | UPDATE | `mi_beta/core/constants.py` | Update model count comments if any |
+
+Each new model file follows the exact `BaseModel` pattern:
+```python
+class CHPI(BaseModel):
+    NAME = "CHPI"
+    FULL_NAME = "Cross-Modal Harmonic Predictive Integration"
+    UNIT = "PCU"
+    TIER = "beta"
+    OUTPUT_DIM = ...  # from doc Section 6
+    MECHANISM_NAMES = ("PPC", "TPC", "MEM")  # from doc Section 5
+    LAYERS = (LayerSpec("E",...), LayerSpec("M",...), LayerSpec("P",...), LayerSpec("F",...))
+    # h3_demand, dimension_names, brain_regions from doc Sections 5, 6, 8
+```
+
+Quality gate: Both models instantiate, produce correct OUTPUT_DIM, pass BaseModel contract validation.
+
+**Sub-phase 7B — C³ Model Attribute Sync (94 models, 9 batches)**
+
+For each model, apply fixes specified in DISCREPANCY-REGISTRY.md:
+
+| Priority | Attribute | Scope | Change | Registry ID |
+|:--------:|-----------|:-----:|--------|:-----------:|
+| 1 | `h3_demand` | 94 models | Populate from doc Section 5 (all currently empty) | E01 |
+| 2 | `OUTPUT_DIM` | ~26 gamma | Fix 10→9 where doc says 9 | E02 |
+| 3 | `MECHANISM_NAMES` | 9 ASU | Fix ("ASA",)→("BEP","ASA") | E03 |
+| 4 | `FULL_NAME` | ~30+ | Sync with doc Section 1 header | E04 |
+| 5 | `dimension_names` | ~20 | Sync with doc Section 6 | E12 |
+| 6 | `brain_regions` | verify | Verify MNI coords match doc Section 8 | — |
+| 7 | `LAYERS` | verify | Verify layer spec matches doc Section 6 | — |
+
+**Processing order (same batches as Phase 1):**
+
+| Batch | Unit | Models | Key Changes |
+|:-----:|------|:------:|-------------|
+| 1 | SPU | 9 | h3_demand population, minor FULL_NAME sync |
+| 2 | STU | 14 | h3_demand population, minor FULL_NAME sync |
+| 3 | IMU | 15 | h3_demand population, minor FULL_NAME sync |
+| 4 | ASU | 9 | h3_demand + **MECHANISM_NAMES fix** ("ASA"→"BEP","ASA") + **gamma OUTPUT_DIM fix** (10→9) |
+| 5 | NDU | 9 | h3_demand population, minor attribute sync |
+| 6 | MPU | 10 | h3_demand population, minor attribute sync |
+| 7 | PCU | 9+1 | h3_demand + **new CHPI model integration** (from 7A) |
+| 8 | ARU | 10 | h3_demand population, minor attribute sync |
+| 9 | RPU | 9+1 | h3_demand + **new SSRI model integration** (from 7A) |
+
+**Per-batch workflow:**
+```
+For each model in batch:
+  1. READ model doc Section 5 → extract h3_demand tuples
+  2. READ model doc Section 6 → verify OUTPUT_DIM, dimension_names
+  3. READ model doc Section 1 → verify FULL_NAME
+  4. EDIT model .py file → populate h3_demand property
+  5. EDIT model .py file → fix any EXPECTED discrepancies from registry
+  6. VERIFY: model instantiates, OUTPUT_DIM matches, h3_demand is non-empty
+```
+
+Quality gate: All 94+2 models have non-empty h3_demand. All EXPECTED discrepancies E01-E04, E12 resolved. `DISCREPANCY-REGISTRY.md` E-column items checked off.
+
+**Sub-phase 7C — R³ v2 Expansion (49D → 128D, ~15 files, ~3,000 lines)**
+
+Step-by-step implementation of the R³ v2 architecture designed in Phase 3:
+
+| Step | Action | File(s) | Description |
+|:----:|--------|---------|-------------|
+| 1 | CREATE | `mi_beta/ear/r3/tonal/__init__.py` | New tonal subdirectory |
+| 2 | CREATE | `mi_beta/ear/r3/tonal/pitch.py` | **Group F: Pitch & Chroma (16D)** [49:65] |
+| 3 | CREATE | `mi_beta/ear/r3/tonal/harmony.py` | **Group H: Harmony & Tonality (12D)** [75:87] |
+| 4 | CREATE | `mi_beta/ear/r3/temporal/__init__.py` | New temporal subdirectory |
+| 5 | CREATE | `mi_beta/ear/r3/temporal/rhythm.py` | **Group G: Rhythm & Groove (10D)** [65:75] |
+| 6 | CREATE | `mi_beta/ear/r3/information/__init__.py` | New information subdirectory |
+| 7 | CREATE | `mi_beta/ear/r3/information/surprise.py` | **Group I: Information & Surprise (7D)** [87:94] |
+| 8 | CREATE | `mi_beta/ear/r3/dsp/timbre_extended.py` | **Group J: Timbre Extended (20D)** [94:114] |
+| 9 | CREATE | `mi_beta/ear/r3/psychoacoustic/modulation.py` | **Group K: Modulation & Psychoacoustic (14D)** [114:128] |
+| 10 | UPDATE | `mi_beta/core/constants.py` | R3_DIM: 49→128; add R3_PITCH=(49,65), R3_RHYTHM=(65,75), R3_HARMONY=(75,87), R3_INFORMATION=(87,94), R3_TIMBRE_EXT=(94,114), R3_MODULATION=(114,128) |
+| 11 | UPDATE | `mi_beta/core/dimension_map.py` | Extend `_R3_FEATURE_NAMES` from 49→128 entries |
+| 12 | UPDATE | `mi_beta/ear/r3/__init__.py` | R3FeatureRegistry: discover new subdirectories |
+| 13 | VERIFY | All existing code | Indices 0-48 UNCHANGED (backward compatible) |
+| 14 | UPDATE | Model r3_indices | Update 96 model docs Section 4 → code r3 references |
+| 15 | BENCH | Performance | Per-frame cost at 128D vs 49D (target: <2× increase) |
+
+Each new group follows `BaseSpectralGroup` contract:
+```python
+class PitchGroup(BaseSpectralGroup):
+    GROUP_NAME = "pitch"
+    DISPLAY_NAME = "F: Pitch & Chroma"
+    OUTPUT_DIM = 16
+    INDEX_RANGE = (49, 65)
+
+    def compute(self, mel_spectrogram: Tensor) -> Tensor:
+        # 16D pitch features from mel: F0, salience, chroma[12], vibrato, inharmonicity
+        ...
+```
+
+Quality gate: R3_DIM=128. All group boundaries contiguous [0:7:12:21:25:49:65:75:87:94:114:128]. Existing tests still pass with indices 0-48.
+
+**Sub-phase 7D — H³ Code Updates (~5 files, ~500 lines)**
+
+| Step | Action | File | Description |
+|:----:|--------|------|-------------|
+| 1 | UPDATE | `mi_beta/core/constants.py` | H3_TOTAL_DIM stays 2304 (structure unchanged: 32×24×3) |
+| 2 | UPDATE | `mi_beta/core/demand_aggregator.py` | Accept r3_idx in [0, 127] (was [0, 48]) |
+| 3 | UPDATE | `mi_beta/contracts/demand_spec.py` | Validate r3_idx < R3_DIM (now 128) |
+| 4 | VERIFY | `mi_beta/ear/h3/` | H³ extraction handles expanded R³ features |
+| 5 | TEST | Demand aggregation | New R³ v2 demands (r3_idx ≥ 49) aggregate correctly |
+
+Quality gate: H³ processes demands for all 128 R³ features. Existing demands (r3_idx 0-48) unchanged.
+
+**Sub-phase 7E — L³ Adapter Implementation (9 files, ~900 lines)**
+
+Replace each stub adapter with real semantic mapping logic:
+
+| Adapter | Current (stub) | Target Implementation | Key Mappings |
+|---------|---------------|----------------------|-------------|
+| `spu_adapter.py` | `{"tensor": tensor}` | Feature extraction + semantic projection | consonance→beauty, timbre→complexity, pitch→novelty |
+| `stu_adapter.py` | `{"tensor": tensor}` | Rhythm/timing semantic extraction | beat→groove, tempo→arousal, sync→engagement |
+| `imu_adapter.py` | `{"tensor": tensor}` | Memory semantic extraction | familiarity→stability, recall→imagination |
+| `asu_adapter.py` | `{"tensor": tensor}` | Salience semantic extraction | novelty→surprise, attention→engagement |
+| `ndu_adapter.py` | `{"tensor": tensor}` | Novelty semantic extraction | deviation→surprise, PE→tension, entropy→complexity |
+| `mpu_adapter.py` | `{"tensor": tensor}` | Motor semantic extraction | groove→groove, movement→motion |
+| `pcu_adapter.py` | `{"tensor": tensor}` | Prediction semantic extraction | prediction_error→surprise, certainty→stability |
+| `aru_adapter.py` | `{"tensor": tensor}` | Affect semantic extraction | pleasure→valence, tension→tension, chills→beauty |
+| `rpu_adapter.py` | `{"tensor": tensor}` | Reward semantic extraction | DA→wanting, opioid→liking, reward_PE→reward_pe |
+
+Each adapter follows the mapping spec from `Docs/L³/Adapters/{UNIT}-L3-ADAPTER.md`.
+
+Quality gate: All 9 adapters produce non-trivial output (not raw tensor passthrough). L³ orchestrator produces meaningful 104D output.
+
+**Sub-phase 7F — Cross-Unit Updates (~10 files, ~500 lines)**
+
+| Component | Files | Changes |
+|-----------|:-----:|---------|
+| Pathways | 5 | Weight refinement from revised Phase 1 evidence |
+| Regions | 3 | MNI coordinate updates from verified Section 8 data |
+| Neurochemicals | 4 | Coefficient refinement (BETA_NACC, BETA_CAUDATE, etc.) |
+
+Quality gate: All pathways route correctly with updated weights. Region registry matches doc Section 8 data.
+
+**Sub-phase 7G — Test Suite (~10 files, ~2,000 lines)**
+
+| # | Test File | Scope | Key Assertions |
+|---|-----------|-------|----------------|
+| 1 | `tests/test_model_instantiation.py` | 96 models | Each loads, OUTPUT_DIM matches, h3_demand non-empty |
+| 2 | `tests/test_model_attributes.py` | 96 models | NAME, UNIT, TIER, FULL_NAME, MECHANISM_NAMES match docs |
+| 3 | `tests/test_r3_output.py` | R³ | 128D output, group boundaries contiguous, feature names |
+| 4 | `tests/test_r3_backward_compat.py` | R³ | Indices 0-48 produce same results as pre-expansion |
+| 5 | `tests/test_h3_extraction.py` | H³ | Demand aggregation, r3_idx 0-127, horizon/morph/law validity |
+| 6 | `tests/test_l3_output.py` | L³ | 104D output, group ordering, 96 vocabulary terms match |
+| 7 | `tests/test_l3_adapters.py` | L³ | 9 adapters produce non-trivial semantic mappings |
+| 8 | `tests/test_pathways.py` | C³ | 5 pathways route source→target with correct dims |
+| 9 | `tests/test_pipeline.py` | E2E | Audio→R³→H³→Brain→L³→MI-space full pipeline |
+| 10 | `tests/test_benchmark.py` | Perf | Frame processing time < 2× baseline at 128D |
+
+Quality gate: All tests pass. No regressions from pre-Phase-7 baseline.
+
+**Sub-phase 7H — Validation Run (final verification)**
+
+| Step | Command | Expected |
+|:----:|---------|----------|
+| 1 | `pytest tests/ -v` | 100% pass, 0 failures |
+| 2 | `python -m mi_beta` | Runs without errors |
+| 3 | Output dimension check | R³=128D, H³=sparse, Brain=variable, L³=104D |
+| 4 | Performance check | Frame rate ≥ 86 Hz (half of 172 Hz real-time) |
+| 5 | DISCREPANCY-REGISTRY check | All EXPECTED + CODE-BUG items marked RESOLVED |
+
+Quality gate: Full pipeline runs end-to-end. All tests pass. All discrepancies resolved.
+
+#### 7.3 Dependency Graph
+
+```
+7A (Foundation) ──→ 7B (Model Sync) ──→ 7E (L³ Adapters) ──┐
+                │                   └──→ 7F (Cross-Unit) ───┤
+                └──→ 7C (R³ v2) ──→ 7D (H³ Update) ────────┤→ 7G (Tests) → 7H (Validation)
+```
+
+7B and 7C can run in parallel after 7A. 7E+7F depend on 7B. 7D depends on 7C. 7G depends on all.
+
+#### 7.4 Risk Assessment
+
+| Risk | Impact | Mitigation |
+|------|--------|------------|
+| R³ 128D breaks existing model r3 references | HIGH | Backward compatibility: indices 0-48 unchanged |
+| gamma OUTPUT_DIM change (10→9) breaks downstream | MEDIUM | Update all consumers (L³ groups, mechanisms) simultaneously |
+| h3_demand population causes import errors | LOW | Validate each model individually in batch order |
+| L³ adapter implementation changes semantic output | MEDIUM | Snapshot pre-change L³ output, compare post-change |
+| Performance regression at 128D | MEDIUM | Benchmark per step, target <2× increase |
+
+**Rollback strategy:** Git branch per sub-phase. If 7C (R³ expansion) fails, revert to 7B state. Each sub-phase is independently testable.
+
+#### 7.5 Quality Gates (9)
+
+1. 96 model files exist (94 updated + CHPI + SSRI), all instantiate correctly
+2. All 94+2 `h3_demand` properties populated from doc Section 5 (non-empty)
+3. All `OUTPUT_DIM` / `MECHANISM_NAMES` / `FULL_NAME` match docs exactly
+4. `R3_DIM=128` with indices 0-48 backward-compatible (existing tests pass)
+5. All 6 new R³ groups (F-K) produce correct-dimension output from mel spectrogram
+6. L³ 9 adapters produce meaningful semantic mappings (not raw tensor passthrough)
+7. `CIRCUITS` constant reconciled with `CIRCUIT_NAMES` (both 6 entries with "imagery")
+8. `pytest tests/ -v` — 100% pass, 0 failures, 0 errors
+9. `python -m mi_beta` — end-to-end pipeline runs without errors
+
+**Phase 7 completes when:** All tests pass, full pipeline runs, and every item in DISCREPANCY-REGISTRY.md is marked RESOLVED.
 
 ## Critical File Paths
 
@@ -1555,6 +2045,21 @@ Only after Phases 1-5 are complete:
 | `mi_beta/contracts/base_semantic_group.py` | L³ group ABC contract |
 | `mi_beta/language/groups/__init__.py` | L3Orchestrator implementation |
 | `mi_beta/language/adapters/` | Per-unit semantic adapters (9 stubs) |
+| **Phase 6 Validation Deliverables** | |
+| `Docs/Beta/VALIDATION-C3-MODELS.md` | 94-model × 10 attribute comparison matrix |
+| `Docs/Beta/VALIDATION-ARCHITECTURE.md` | R³/H³/L³/cross-layer validation results |
+| `Docs/Beta/VALIDATION-INDEXES.md` | 00-INDEX completeness audit (56 indexes) |
+| `Docs/Beta/DISCREPANCY-REGISTRY.md` | All discrepancies: EXPECTED / DOC-BUG / CODE-BUG |
+| **Phase 7 Implementation Targets** | |
+| `mi_beta/brain/units/pcu/models/chpi.py` | New model: PCU-β4-CHPI (Phase 7A) |
+| `mi_beta/brain/units/rpu/models/ssri.py` | New model: RPU-β4-SSRI (Phase 7A) |
+| `mi_beta/ear/r3/tonal/pitch.py` | R³ v2 Group F: Pitch & Chroma (Phase 7C) |
+| `mi_beta/ear/r3/temporal/rhythm.py` | R³ v2 Group G: Rhythm & Groove (Phase 7C) |
+| `mi_beta/ear/r3/tonal/harmony.py` | R³ v2 Group H: Harmony & Tonality (Phase 7C) |
+| `mi_beta/ear/r3/information/surprise.py` | R³ v2 Group I: Info & Surprise (Phase 7C) |
+| `mi_beta/ear/r3/dsp/timbre_extended.py` | R³ v2 Group J: Timbre Extended (Phase 7C) |
+| `mi_beta/ear/r3/psychoacoustic/modulation.py` | R³ v2 Group K: Modulation (Phase 7C) |
+| `tests/` | Phase 7G test suite (unit + integration + benchmark) |
 
 ## Resume Protocol for AI Agents
 
