@@ -394,21 +394,6 @@ export default function App() {
   const start = useCallback(async () => {
     setAppState('loading');
 
-    // Fluid simulation
-    if (!fluidRef.current && canvasRef.current) {
-      fluidRef.current = new PavelFluidSimulation(canvasRef.current, {
-        SIM_RESOLUTION: 256, DYE_RESOLUTION: 1024,
-        DENSITY_DISSIPATION: 0.97, VELOCITY_DISSIPATION: 0.98,
-        CURL: 25, SPLAT_RADIUS: 0.15, SPLAT_FORCE: 4000,
-        BLOOM: true, BLOOM_INTENSITY: 0.012, BLOOM_THRESHOLD: 2.5,
-        SUNRAYS: true, SUNRAYS_WEIGHT: 0.6,
-        PRESSURE: 0.8, PRESSURE_ITERATIONS: 20,
-        PARTICLES_ENABLED: true, PARTICLE_BRIGHTNESS: 1.0,
-        GRID_ENABLED: true, GRID_INTENSITY: 8.0, GRID_ALPHA: 0.4,
-        CAMERA_AUTO_ROTATE: true, CAMERA_ROTATION_PERIOD: 60,
-      });
-    }
-
     // Brain data → extract per-dimension columns for sparklines
     const brainRes = await fetch('/audio/swan-lake-brain.json');
     const brain = await brainRes.json();
@@ -434,15 +419,9 @@ export default function App() {
     columnsRef.current = cols;
     setColumns(cols);
 
-    // Audio analyzer (precomputed FFT + playback)
-    const analyzer = new AudioAnalyzer(fluidRef.current, {
-      splatsPerFrame: 20,
-      brightness: 0.05,
-    });
-    await Promise.all([
-      analyzer.loadFFT('/audio/swan-lake-fft.json'),
-      analyzer.loadAudio('/audio/swan-lake.wav'),
-    ]);
+    // Audio analyzer (playback only, no fluid sim)
+    const analyzer = new AudioAnalyzer(null, {});
+    await analyzer.loadAudio('/audio/swan-lake.wav');
     analyzerRef.current = analyzer;
 
     setAppState('playing');

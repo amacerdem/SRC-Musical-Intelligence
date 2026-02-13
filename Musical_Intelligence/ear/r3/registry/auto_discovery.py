@@ -134,6 +134,6 @@ def auto_discover_groups() -> List[BaseSpectralGroup]:
                     exc,
                 )
 
-    # Sort by GROUP_NAME alphabetically (which also matches A-K index order)
-    instances.sort(key=lambda g: g.GROUP_NAME)
+    # Sort by canonical INDEX_RANGE start to preserve A-K order
+    instances.sort(key=lambda g: g.INDEX_RANGE[0])
     return instances
