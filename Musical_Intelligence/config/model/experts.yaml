@@ -1,0 +1,22 @@
+# MoE Expert Routing Configuration
+#
+# 4 MI-aligned experts with Top-3 routing.
+# Causal DAG mask: Cochlea → R3 → C3 → L3
+
+n_experts: 4
+top_k: 3
+capacity_factor: 1.25
+balance_loss_weight: 0.01      # Switch Transformer load balancing
+
+# Expert output dimensions (must match MI-Space layout)
+expert_dims:
+  cochlea: 128
+  r3: 128
+  c3: 1006
+  l3: 104
+
+# Cross-expert refinement
+cross_expert:
+  shared_dim: 512
+  n_heads: 8
+  causal_dag: true             # Enforce Cochlea→R3→C3→L3 ordering

@@ -1,0 +1,36 @@
+# Evaluation Configuration
+#
+# Metrics and thresholds for MI-Core evaluation.
+
+# Alignment metrics (MI-Core vs MI Teacher)
+alignment:
+  layers: [mel, r3, h3, c3]
+  metrics: [mse, mae, r2, pearson]
+
+# Audio quality (decode direction)
+audio_quality:
+  stft_sizes: [512, 1024, 2048]
+  compute_pesq: false          # Requires pesq package
+  compute_stoi: false          # Requires pystoi package
+
+# Layer metrics
+layer_metrics:
+  per_unit_c3: true            # Break down C3 by cognitive unit
+  directions: [encode, decode]
+
+# Fill-Net evaluation
+fill_eval:
+  mask_ratios: [0.1, 0.3, 0.5, 0.7, 0.9]
+  n_trials: 5
+
+# White-box traceability
+white_box:
+  verify_all_dims: true        # Trace all 1006 C3 dimensions
+  export_trace_map: true       # Save trace map to JSON
+
+# Convergence thresholds (target metrics)
+thresholds:
+  encode_mel_mse: 0.01
+  encode_r3_mse: 0.02
+  encode_c3_r2: 0.90
+  fill_50pct_r2: 0.85

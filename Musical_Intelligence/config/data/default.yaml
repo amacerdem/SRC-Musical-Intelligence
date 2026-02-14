@@ -1,0 +1,45 @@
+# Data Pipeline Configuration
+#
+# Pre-computed labels via MI Teacher stored as HDF5.
+# H3 pre-computation is mandatory (~146s for 30s audio).
+
+# Audio preprocessing
+audio:
+  sample_rate: 44100
+  n_fft: 2048
+  hop_length: 256
+  n_mels: 128
+  frame_rate_hz: 172.265625   # sr / hop_length
+
+# Dataset
+dataset:
+  data_dir: data/precomputed   # Directory containing HDF5 files
+  segment_length: 2048         # Frames per segment (~12s)
+  min_length: 512              # Minimum segment length (frames)
+
+# Augmentation
+augmentation:
+  enabled: true
+  spec_augment:
+    freq_mask_param: 8         # Max frequency bands to mask
+    time_mask_param: 20        # Max time steps to mask
+    n_freq_masks: 2
+    n_time_masks: 2
+  gaussian_noise:
+    enabled: true
+    std: 0.01
+  random_gain:
+    enabled: true
+    min_db: -3.0
+    max_db: 3.0
+
+# Collation
+collator:
+  pad_value: 0.0
+  create_attention_mask: true
+
+# Precomputation
+precompute:
+  compression: gzip           # HDF5 compression
+  compression_opts: 4          # Compression level (1-9)
+  chunk_size: 256              # HDF5 chunk size (frames)

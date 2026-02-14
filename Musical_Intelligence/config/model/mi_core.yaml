@@ -1,0 +1,56 @@
+# MI-Core Model Architecture Configuration
+#
+# ~250M parameters:
+#   Backbone (24 layers, 2048D):  ~180M
+#   Experts (4 × FFN):            ~40M
+#   Heads (state, planning, etc): ~20M
+#   Fill-Net (4-layer transformer): ~10M
+#
+# Reference: MI-VISION Section 4
+
+# Backbone: Mamba-2 + Sparse Attention (3:1 ratio)
+backbone:
+  d_model: 2048
+  n_layers: 24
+  d_state: 64                 # Mamba SSM state dimension
+  d_conv: 4                   # Mamba conv kernel size
+  expand: 2                   # Mamba expansion factor
+  attn_every: 4               # Sparse attention every N layers
+  attn_window: 256            # Local attention window (~1.5s)
+  attn_global_tokens: 16      # Learnable global attention tokens
+  n_heads: 16                 # Attention heads
+  dropout: 0.0
+
+# Experts: 4 MI-aligned MoE
+experts:
+  n_experts: 4
+  top_k: 3                    # Top-3 routing
+  capacity_factor: 1.25
+  expert_dims:
+    cochlea: 128               # E-Cochlea: mel features
+    r3: 128                    # E-R3: spectral features
+    c3: 1006                   # E-C3: cognitive models
+    l3: 104                    # E-L3: semantic (placeholder)
+
+# Heads
+heads:
+  mi_space_dim: 1366
+  planning_horizon: 8          # K future trajectory steps
+  h3_aux_dim: 5210             # Training-only, pruned after
+
+# Encoder
+encoder:
+  mel_dim: 128
+  motor_embed_dim: 256
+
+# Decoder
+decoder:
+  c3_dim: 1006
+  use_vocoder: false           # Vocos wrapper (optional)
+
+# Fill-Net
+fill_net:
+  hidden_dim: 512
+  n_layers: 4
+  n_heads: 8
+  dropout: 0.1

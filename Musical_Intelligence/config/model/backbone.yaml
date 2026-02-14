@@ -1,0 +1,26 @@
+# Backbone-only Configuration (for ablation studies)
+#
+# Standalone config for the Mamba-2 + Sparse Attention backbone.
+# 24 layers: 18 Mamba-2 + 6 Sparse Attention (3:1 ratio)
+
+d_model: 2048
+n_layers: 24
+
+# Mamba-2 SSM parameters
+d_state: 64
+d_conv: 4
+expand: 2
+
+# Sparse Attention parameters
+attn_every: 4
+attn_window: 256
+attn_global_tokens: 16
+n_heads: 16
+
+# Regularization
+dropout: 0.0
+
+# Ablation variants
+# small:  d_model=512,  n_layers=12
+# medium: d_model=1024, n_layers=18
+# large:  d_model=2048, n_layers=24 (default)
