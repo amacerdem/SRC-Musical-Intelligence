@@ -1,0 +1,596 @@
+%% H³ Tables — Horizon, Morph, Law
+%% \input{} into main document; no preamble.
+
+\section{H\textsuperscript{3} Temporal Demand Space}
+
+% ─────────────────────────────────────────────────────────
+\subsection{R\textsuperscript{3} $\to$ H\textsuperscript{3} Dimensional Expansion}
+\label{subsec:r3-h3-expansion}
+
+R\textsuperscript{3} produces 128 features per analysis frame at 172.27\,Hz.
+Each feature $r_i[t]$ is a \emph{time series}: a sequence of scalar values
+across $T$~frames. H\textsuperscript{3} takes these time series and applies
+\textbf{temporal morphology}---computing how each spectral property
+\emph{behaves over time} at multiple temporal scales.
+
+\paragraph{The four-dimensional demand.}
+Every H\textsuperscript{3} output is defined by a 4-tuple:
+
+\begin{center}
+\begin{tabular}{@{}rll@{}}
+\toprule
+\textbf{Component} & \textbf{What it selects} & \textbf{Size} \\
+\midrule
+\texttt{r3\_idx}  & Which R\textsuperscript{3} feature to observe  & 128 \\
+\texttt{horizon}  & How wide a temporal window to use               & 32  \\
+\texttt{morph}    & Which statistical descriptor to compute          & 24  \\
+\texttt{law}      & Which temporal perspective (causal direction)     & 3   \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{Theoretical vs.\ active space.}
+The full Cartesian product yields $128 \times 32 \times 24 \times 3
+= \mathbf{294{,}912}$ possible temporal demands.
+In practice, each C\textsuperscript{3} model declares only the demands it needs,
+yielding $\sim$\textbf{8{,}600 active demands} across all 96 models.
+
+\paragraph{Computation.}
+For a given demand $(i, h, m, \ell)$ at frame $t$:
+
+\begin{enumerate}\itemsep2pt
+  \item \textbf{Select} the R\textsuperscript{3} feature series: $r_i[t]$.
+  \item \textbf{Window} using horizon $h$: extract $n_h$ frames
+        according to law $\ell$:
+        \begin{itemize}\itemsep1pt
+          \item $\ell = \text{L0 (memory)}$: $[t - n_h + 1,\; t]$ \hfill past $\to$ present
+          \item $\ell = \text{L1 (prediction)}$: $[t,\; t + n_h - 1]$ \hfill present $\to$ future
+          \item $\ell = \text{L2 (integration)}$: $[t - n_h/2,\; t + n_h/2]$ \hfill symmetric
+        \end{itemize}
+  \item \textbf{Weight} the window with exponential kernel:
+        $A(\Delta t) = \exp(-3|\Delta t|/H)$.
+  \item \textbf{Apply morph} $m$ to the weighted window
+        $\to$ single scalar output.
+\end{enumerate}
+
+\paragraph{Output shape.}
+Each active demand produces one scalar per frame: the
+``temporal morphology'' of that spectral feature at that time scale.
+The complete H\textsuperscript{3} output for a given frame is the vector
+of all active demand values.
+
+\medskip
+
+% --- TikZ: R³ → H³ expansion diagram ---
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[
+  box/.style={draw, rounded corners=3pt, minimum height=0.9cm,
+    font=\small\sffamily, align=center, thick},
+  arr/.style={-{Stealth[length=7pt]}, thick, color=NavyBlue!80},
+  brace/.style={decorate, decoration={brace, amplitude=6pt, raise=2pt},
+    thick, NavyBlue!70},
+  note/.style={font=\scriptsize\sffamily, color=gray!70!black}
+]
+  % R³ block
+  \node[box, fill=grpA!40, minimum width=3.2cm] (r3) at (0, 0)
+    {\textbf{R\textsuperscript{3}}\\128D per frame};
+
+  % Arrow
+  \draw[arr] (r3.east) -- ++(1.2, 0)
+    node[midway, above, note] {time series};
+
+  % Feature series
+  \node[box, fill=grpD!40, minimum width=3.0cm] (series) at (5.0, 0)
+    {$r_i[1], r_i[2], \ldots, r_i[T]$};
+
+  % Horizon window
+  \draw[arr] (series.east) -- ++(1.2, 0)
+    node[midway, above, note] {window $n_h$ frames};
+
+  % H³ processing
+  \node[box, fill=bandMeso!60, minimum width=3.0cm] (h3) at (10.2, 0)
+    {\textbf{H\textsuperscript{3}}\\morph $\times$ law};
+
+  % Output
+  \draw[arr] (h3.east) -- ++(1.2, 0);
+  \node[box, fill=grpE!40, minimum width=1.6cm] (out) at (13.0, 0)
+    {scalar};
+
+  % Bottom: dimensional math
+  \node[font=\small\sffamily, text=NavyBlue!80] at (6.5, -1.5)
+    {$\underbrace{128}_{\text{features}}
+     \times \underbrace{32}_{\text{horizons}}
+     \times \underbrace{24}_{\text{morphs}}
+     \times \underbrace{3}_{\text{laws}}
+     = 294{,}912$ \text{theoretical}
+     $\;\xrightarrow{\text{demand-driven}}\;$
+     $\sim$8{,}600 \text{active}};
+\end{tikzpicture}
+\caption{R\textsuperscript{3} $\to$ H\textsuperscript{3} dimensional expansion.
+Each R\textsuperscript{3} feature becomes a time series; H\textsuperscript{3}
+applies temporal morphology (horizon $\times$ morph $\times$ law) to produce
+scalar temporal descriptors. C\textsuperscript{3} models select only the
+demands they need from the 294{,}912 theoretical space.}
+\label{fig:r3-h3-expansion}
+\end{figure}
+
+\paragraph{Concrete example.}
+Consider C\textsuperscript{3} model EDNR (Expectancy-Driven Neural Response,
+PCU) requesting the demand \addr{83.H12.M9.L0}:
+
+\begin{center}
+\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Component} & \textbf{Value} & \textbf{Meaning} \\
+\midrule
+\texttt{r3\_idx = 83}  & \texttt{chroma\_frame\_distance} & Cosine distance between successive chroma vectors \\
+\texttt{horizon = H12} & \texttt{beat} (525\,ms, 90 frames) & Standard beat-level temporal scale \\
+\texttt{morph = M9}    & \texttt{velocity\_mean}           & Mean rate of change over the window \\
+\texttt{law = L0}      & \texttt{memory} (causal)           & Past $\to$ present: how fast \emph{was} chroma changing \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+Result: a single scalar per frame telling EDNR ``the average speed at which
+spectral pitch-class distribution changed over the last beat.''
+
+\bigskip
+
+% ─────────────────────────────────────────────────────────
+\subsection{H\textsuperscript{3} Output Classification: Named Temporal Properties}
+\label{subsec:h3-output-classes}
+
+R\textsuperscript{3} features are raw spectral measurements.
+After H\textsuperscript{3} processing, each of the $\sim$8{,}600 active
+measurements acquires a \textbf{named temporal identity} at three levels:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}rlrl@{}}
+\toprule
+\textbf{Level} & \textbf{What it names} & \textbf{Count} & \textbf{Example} \\
+\midrule
+1. Class  & R\textsuperscript{3} Group $\times$ Morph Category & 55
+  & \emph{Consonance Motion} \\
+2. Type   & Class + specific feature + specific morph & 3{,}072\textsuperscript{*}
+  & \emph{roughness velocity} \\
+3. Instance & Type + horizon + law & $\sim$8{,}600\textsuperscript{$\dagger$}
+  & \texttt{roughness.velocity.beat.memory} \\
+\bottomrule
+\multicolumn{4}{l}{\scriptsize \textsuperscript{*}128 features $\times$ 24 morphs = 3{,}072 theoretical types.
+\textsuperscript{$\dagger$}Demand-driven subset of 294{,}912.}
+\end{tabular}
+\end{center}
+
+\noindent
+The 55 \textbf{classes} (Table~\ref{tab:h3-named-properties}) are the
+top-level semantic taxonomy. Each class contains many individual measurements.
+For example, the class ``Consonance Level'' spans 7~features $\times$
+8~distribution morphs $\times$ up to 32~horizons $\times$ 3~laws.
+
+\medskip
+
+% --- 11×5 Named Temporal Property Matrix ---
+{\small
+\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{@{}
+  >{\raggedright}p{1.8cm}
+  >{\raggedright}p{2.5cm}
+  >{\raggedright}p{2.5cm}
+  >{\raggedright}p{2.3cm}
+  >{\raggedright}p{2.0cm}
+  >{\raggedright\arraybackslash}p{2.3cm}
+@{}}
+\caption{Level-1 taxonomy: 55 named temporal property classes
+(11 R\textsuperscript{3} groups $\times$ 5 morph categories).
+Each cell is a \emph{class name} containing many individual measurements.
+Horizon and law refine each class into specific Level-3 instances
+(e.g.\ ``Consonance Motion'' $\to$ \texttt{roughness.velocity.beat.memory}).}
+\label{tab:h3-named-properties} \\
+\toprule
+\textbf{R\textsuperscript{3} Group}
+  & \textbf{Distribution} \newline {\scriptsize M0--M7}
+  & \textbf{Dynamics} \newline {\scriptsize M8--M13,15,18,21}
+  & \textbf{Periodicity} \newline {\scriptsize M14,17,22}
+  & \textbf{Information} \newline {\scriptsize M20}
+  & \textbf{Geometry} \newline {\scriptsize M16,19,23} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{R\textsuperscript{3} Group}
+  & \textbf{Distribution}
+  & \textbf{Dynamics}
+  & \textbf{Periodicity}
+  & \textbf{Information}
+  & \textbf{Geometry} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{6}{r}{\footnotesize\itshape continued on next page} \\
+\endfoot
+\bottomrule
+\endlastfoot
+
+\rowcolor{grpA}
+\textbf{A} Consonance \newline {\scriptsize [0:6]}
+  & Consonance Level
+  & Consonance Motion
+  & Consonance Periodicity
+  & Consonance Predictability
+  & Consonance Contour \\[2pt]
+
+\rowcolor{grpB}
+\textbf{B} Energy \newline {\scriptsize [7:11]}
+  & Energy Level
+  & Energy Momentum
+  & Energy Pulse
+  & Energy Predictability
+  & Energy Contour \\[2pt]
+
+\rowcolor{grpC}
+\textbf{C} Timbre \newline {\scriptsize [12:20]}
+  & Timbre Profile
+  & Timbre Drift
+  & Timbre Periodicity
+  & Timbre Predictability
+  & Timbre Contour \\[2pt]
+
+\rowcolor{grpD}
+\textbf{D} Change \newline {\scriptsize [21:24]}
+  & Change Level
+  & Change Acceleration
+  & Change Periodicity
+  & Change Predictability
+  & Change Contour \\[2pt]
+
+\rowcolor{grpE}
+\textbf{E} Interactions \newline {\scriptsize [25:48]}
+  & Interaction Level
+  & Interaction Dynamics
+  & Interaction Periodicity
+  & Interaction Predictability
+  & Interaction Contour \\[2pt]
+
+\rowcolor{grpF}
+\textbf{F} Pitch-Class \newline {\scriptsize [49:64]}
+  & Pitch-Class Profile
+  & Pitch-Class Motion
+  & Pitch-Class Periodicity
+  & Pitch-Class Predictability
+  & Pitch-Class Contour \\[2pt]
+
+\rowcolor{grpG}
+\textbf{G} Onset Period \newline {\scriptsize [65:74]}
+  & Onset Stability
+  & Onset Momentum
+  & Onset Regularity
+  & Onset Predictability
+  & Onset Contour \\[2pt]
+
+\rowcolor{grpH}
+\textbf{H} Harmony \newline {\scriptsize [75:86]}
+  & Harmonic Stability
+  & Harmonic Motion
+  & Harmonic Periodicity
+  & Harmonic Predictability
+  & Harmonic Contour \\[2pt]
+
+\rowcolor{grpI}
+\textbf{I} Information \newline {\scriptsize [87:93]}
+  & Info Level
+  & Info Dynamics
+  & Info Periodicity
+  & Info Meta-Predictability
+  & Info Contour \\[2pt]
+
+\rowcolor{grpJ}
+\textbf{J} Timbre Ext. \newline {\scriptsize [94:113]}
+  & Texture Profile
+  & Texture Drift
+  & Texture Periodicity
+  & Texture Predictability
+  & Texture Contour \\[2pt]
+
+\rowcolor{grpK}
+\textbf{K} Modulation \newline {\scriptsize [114:127]}
+  & Modulation Level
+  & Modulation Dynamics
+  & Modulation Periodicity
+  & Modulation Predictability
+  & Modulation Contour \\
+
+\end{longtable}
+}% end \small
+
+\paragraph{Reading the matrix.}
+Each cell is a \textbf{named temporal property class}.
+Adding a horizon and law makes it fully specific.
+Examples:
+
+\begin{center}
+\small
+\begin{tabular}{@{}llp{7cm}@{}}
+\toprule
+\textbf{Property Class} & \textbf{Full Address} & \textbf{C\textsuperscript{3} reads as} \\
+\midrule
+\rowcolor{grpA}
+Consonance Level
+  & \addr{0.H12.M1.L0}
+  & Mean roughness over the last beat (memory) \\[2pt]
+\rowcolor{grpA}
+Consonance Motion
+  & \addr{0.H12.M8.L0}
+  & How fast roughness is changing at beat scale \\[2pt]
+\rowcolor{grpH}
+Harmonic Stability
+  & \addr{75.H16.M2.L2}
+  & Std.\ dev.\ of key clarity over one measure (integrated) \\[2pt]
+\rowcolor{grpH}
+Harmonic Periodicity
+  & \addr{83.H20.M14.L2}
+  & Is chroma distance periodic at phrase scale? \\[2pt]
+\rowcolor{grpB}
+Energy Momentum
+  & \addr{10.H12.M9.L0}
+  & Mean velocity of loudness at beat scale (memory) \\[2pt]
+\rowcolor{grpG}
+Onset Regularity
+  & \addr{70.H18.M14.L2}
+  & Is onset interval regularity periodic over two measures? \\[2pt]
+\rowcolor{grpI}
+Info Meta-Predictability
+  & \addr{92.H22.M20.L0}
+  & Entropy of predictive entropy over a section \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{The naming rule.}
+Every H\textsuperscript{3} output name follows:
+
+\begin{center}
+\fcolorbox{NavyBlue}{NavyBlue!5}{%
+\begin{minipage}{0.88\textwidth}
+\centering\sffamily\small
+\textbf{H\textsuperscript{3} Temporal Property} =
+\textbf{R\textsuperscript{3} Group Name} +
+\textbf{Morph Category Name} +
+\textbf{Horizon} +
+\textbf{Law}\\[4pt]
+\normalsize
+\texttt{Consonance.Motion.beat.memory} \quad=\quad \addr{0.H12.M8.L0}
+\end{minipage}}
+\end{center}
+
+\noindent
+R\textsuperscript{3} decomposes $\to$ H\textsuperscript{3} names $\to$ C\textsuperscript{3} interprets.
+
+\bigskip
+
+% ─────────────────────────────────────────────────────────
+\subsection{H\textsuperscript{3} Horizon Table (32 Temporal Scales)}
+\label{tab:h3-horizon}
+
+\begin{longtable}{
+  r
+  l
+  r
+  r
+  l
+  l
+}
+\toprule
+\textbf{Index} & \textbf{USL Label} & \textbf{Duration} & \textbf{Frames} & \textbf{Band} & \textbf{Spectral Scale} \\
+\midrule
+\endfirsthead
+
+\toprule
+\textbf{Index} & \textbf{USL Label} & \textbf{Duration} & \textbf{Frames} & \textbf{Band} & \textbf{Spectral Scale} \\
+\midrule
+\endhead
+
+\midrule
+\multicolumn{6}{r}{\footnotesize\itshape continued on next page} \\
+\endfoot
+
+\bottomrule
+\endlastfoot
+
+%% Micro band (H0–H7) — cyan!8
+\rowcolor{cyan!8}
+H0  & \texttt{micro\_0}    & 5.8\,ms    & 1      & Micro & Sub-neural integration     \\
+\rowcolor{cyan!8}
+H1  & \texttt{micro\_1}    & 11.6\,ms   & 2      & Micro & Neural integration         \\
+\rowcolor{cyan!8}
+H2  & \texttt{micro\_2}    & 17.4\,ms   & 3      & Micro & Onset detection boundary   \\
+\rowcolor{cyan!8}
+H3  & \texttt{micro\_3}    & 23.2\,ms   & 4      & Micro & Phoneme boundary           \\
+\rowcolor{cyan!8}
+H4  & \texttt{micro\_4}    & 34.8\,ms   & 6      & Micro & Pitch period scale         \\
+\rowcolor{cyan!8}
+H5  & \texttt{micro\_5}    & 46.4\,ms   & 8      & Micro & Pitch integration scale    \\
+\rowcolor{cyan!8}
+H6  & \texttt{sub\_beat}   & 200\,ms    & 34     & Micro & Sub-beat / note onset      \\
+\rowcolor{cyan!8}
+H7  & \texttt{short\_note} & 250\,ms    & 43     & Micro & Short note duration        \\
+
+%% Meso band (H8–H15) — orange!8
+\rowcolor{orange!8}
+H8  & \texttt{eighth}      & 300\,ms    & 52     & Meso  & Eighth-note scale          \\
+\rowcolor{orange!8}
+H9  & \texttt{fast\_beat}  & 350\,ms    & 60     & Meso  & Fast beat (170\,BPM)       \\
+\rowcolor{orange!8}
+H10 & \texttt{mod\_beat}   & 400\,ms    & 69     & Meso  & Moderate beat (150\,BPM)   \\
+\rowcolor{orange!8}
+H11 & \texttt{beat\_low}   & 450\,ms    & 78     & Meso  & Lower beat (130\,BPM)      \\
+\rowcolor{orange!8}
+H12 & \texttt{beat}        & 525\,ms    & 90     & Meso  & Standard beat (115\,BPM)   \\
+\rowcolor{orange!8}
+H13 & \texttt{beat\_slow}  & 600\,ms    & 103    & Meso  & Slow beat (100\,BPM)       \\
+\rowcolor{orange!8}
+H14 & \texttt{dotted}      & 700\,ms    & 121    & Meso  & Dotted quarter scale       \\
+\rowcolor{orange!8}
+H15 & \texttt{two\_beats}  & 800\,ms    & 138    & Meso  & Two-beat grouping          \\
+
+%% Macro band (H16–H23) — green!8
+\rowcolor{green!8}
+H16 & \texttt{measure}     & 1{,}000\,ms  & 172    & Macro & Single measure scale       \\
+\rowcolor{green!8}
+H17 & \texttt{measure\_1h} & 1{,}500\,ms  & 259    & Macro & 1.5 measure scale          \\
+\rowcolor{green!8}
+H18 & \texttt{two\_meas}   & 2{,}000\,ms  & 345    & Macro & Two-measure scale          \\
+\rowcolor{green!8}
+H19 & \texttt{three\_meas} & 3{,}000\,ms  & 517    & Macro & Three-measure scale        \\
+\rowcolor{green!8}
+H20 & \texttt{phrase\_s}   & 5{,}000\,ms  & 861    & Macro & Short phrase (5\,s)        \\
+\rowcolor{green!8}
+H21 & \texttt{phrase\_l}   & 8{,}000\,ms  & 1{,}378  & Macro & Long phrase (8\,s)         \\
+\rowcolor{green!8}
+H22 & \texttt{section}     & 15{,}000\,ms & 2{,}584  & Macro & Section (15\,s)            \\
+\rowcolor{green!8}
+H23 & \texttt{section\_l}  & 25{,}000\,ms & 4{,}307  & Macro & Extended section (25\,s)   \\
+
+%% Ultra band (H24–H31) — purple!8
+\rowcolor{purple!8}
+H24 & \texttt{movement\_s} & 36\,s      & 6{,}202    & Ultra & Short movement             \\
+\rowcolor{purple!8}
+H25 & \texttt{one\_min}    & 60\,s      & 10{,}336   & Ultra & One minute                 \\
+\rowcolor{purple!8}
+H26 & \texttt{two\_min}    & 120\,s     & 20{,}672   & Ultra & Two minutes                \\
+\rowcolor{purple!8}
+H27 & \texttt{movement\_m} & 200\,s     & 34{,}453   & Ultra & Medium movement            \\
+\rowcolor{purple!8}
+H28 & \texttt{movement\_l} & 414\,s     & 71{,}319   & Ultra & Standard movement          \\
+\rowcolor{purple!8}
+H29 & \texttt{movement\_x} & 600\,s     & 103{,}359  & Ultra & Long movement              \\
+\rowcolor{purple!8}
+H30 & \texttt{form}        & 800\,s     & 137{,}812  & Ultra & Extended form              \\
+\rowcolor{purple!8}
+H31 & \texttt{full\_work}  & 981\,s     & 168{,}999  & Ultra & Complete work              \\
+
+\end{longtable}
+
+
+% ─────────────────────────────────────────────────────────
+\subsection{H\textsuperscript{3} Morph Table (24 Temporal Descriptors)}
+\label{tab:h3-morph}
+
+\begin{longtable}{
+  r
+  l
+  l
+  l
+  r
+  l
+}
+\toprule
+\textbf{Index} & \textbf{USL Name} & \textbf{Formula} & \textbf{Category} & \textbf{Min Frames} & \textbf{Output Range} \\
+\midrule
+\endfirsthead
+
+\toprule
+\textbf{Index} & \textbf{USL Name} & \textbf{Formula} & \textbf{Category} & \textbf{Min Frames} & \textbf{Output Range} \\
+\midrule
+\endhead
+
+\midrule
+\multicolumn{6}{r}{\footnotesize\itshape continued on next page} \\
+\endfoot
+
+\bottomrule
+\endlastfoot
+
+%% Distribution — cyan!8
+\rowcolor{cyan!8}
+M0  & \texttt{attn\_mean}    & $\sum(A \cdot x)/\sum(A)$                 & Distribution & 1 & $[0,1]$      \\
+\rowcolor{cyan!8}
+M1  & \texttt{mean}          & $\sum(x)/N$                               & Distribution & 1 & $[0,1]$      \\
+\rowcolor{cyan!8}
+M2  & \texttt{std}           & $\sqrt{\mathrm{var}(x)}$                  & Distribution & 2 & $[0,\infty)$ \\
+\rowcolor{cyan!8}
+M3  & \texttt{median}        & middle value                              & Distribution & 1 & $[0,1]$      \\
+\rowcolor{cyan!8}
+M4  & \texttt{max}           & $\max(x)$                                 & Distribution & 1 & $[0,1]$      \\
+\rowcolor{cyan!8}
+M5  & \texttt{range}         & $\max(x) - \min(x)$                       & Distribution & 2 & $[0,1]$      \\
+\rowcolor{cyan!8}
+M6  & \texttt{skewness}      & $\mu_3 / \sigma^3$                        & Distribution & 3 & $(-\infty,\infty)$ \\
+\rowcolor{cyan!8}
+M7  & \texttt{kurtosis}      & $\mu_4 / \sigma^4$                        & Distribution & 4 & $[1,\infty)$ \\
+
+%% Dynamics — orange!8
+\rowcolor{orange!8}
+M8  & \texttt{velocity}      & $dx/dt$                                   & Dynamics     & 2 & $(-\infty,\infty)$ \\
+\rowcolor{orange!8}
+M9  & \texttt{velocity\_mean} & $\mathrm{mean}(dx/dt)$                   & Dynamics     & 2 & $(-\infty,\infty)$ \\
+\rowcolor{orange!8}
+M10 & \texttt{velocity\_std}  & $\mathrm{std}(dx/dt)$                    & Dynamics     & 2 & $[0,\infty)$ \\
+\rowcolor{orange!8}
+M11 & \texttt{acceleration}   & $d^2x/dt^2$                              & Dynamics     & 3 & $(-\infty,\infty)$ \\
+\rowcolor{orange!8}
+M12 & \texttt{accel\_mean}    & $\mathrm{mean}(d^2x/dt^2)$              & Dynamics     & 3 & $(-\infty,\infty)$ \\
+\rowcolor{orange!8}
+M13 & \texttt{accel\_std}     & $\mathrm{std}(d^2x/dt^2)$               & Dynamics     & 3 & $[0,\infty)$ \\
+
+%% Rhythm — green!8
+\rowcolor{green!8}
+M14 & \texttt{periodicity}    & $\max(\mathrm{autocorr}[\mathrm{lag}>0])$ & Rhythm       & 4 & $[0,1]$      \\
+
+%% Dynamics (continued) — orange!8
+\rowcolor{orange!8}
+M15 & \texttt{smoothness}     & $1/(1+|\mathrm{jerk}|/\sigma)$           & Dynamics     & 3 & $(0,1]$      \\
+
+%% Symmetry — blue!8
+\rowcolor{blue!8}
+M16 & \texttt{curvature}      & $\mathrm{mean}(|d^2x/dt^2|)$            & Symmetry     & 3 & $[0,\infty)$ \\
+
+%% Rhythm — green!8
+\rowcolor{green!8}
+M17 & \texttt{shape\_period}  & velocity zero-crossing $\Delta$           & Rhythm       & 4 & $[0,\infty)$ \\
+
+%% Dynamics (continued) — orange!8
+\rowcolor{orange!8}
+M18 & \texttt{trend}          & OLS regression slope                      & Dynamics     & 2 & $(-\infty,\infty)$ \\
+
+%% Symmetry — blue!8
+\rowcolor{blue!8}
+M19 & \texttt{stability}      & $1/(1+\mathrm{var}/\sigma^2)$            & Symmetry     & 2 & $(0,1]$      \\
+
+%% Information — magenta!8
+\rowcolor{magenta!8}
+M20 & \texttt{entropy}        & $-\Sigma\, p \cdot \log(p)\;/\;\log(16)$ & Information  & 4 & $[0,1]$      \\
+
+%% Dynamics (continued) — orange!8
+\rowcolor{orange!8}
+M21 & \texttt{zero\_cross}    & sign-change count                         & Dynamics     & 2 & $[0, N{-}1]$ \\
+
+%% Rhythm — green!8
+\rowcolor{green!8}
+M22 & \texttt{peaks}          & local maxima count                        & Rhythm       & 3 & $[0, N{-}2]$ \\
+
+%% Symmetry — blue!8
+\rowcolor{blue!8}
+M23 & \texttt{symmetry}       & $\mathrm{corr}(x, \mathrm{reverse}(x))$  & Symmetry     & 2 & $[-1,1]$     \\
+
+\end{longtable}
+
+
+% ─────────────────────────────────────────────────────────
+\subsection{H\textsuperscript{3} Law Table (3 Temporal Perspectives)}
+\label{tab:h3-law}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{r l l l l}
+\toprule
+\textbf{Index} & \textbf{USL Name} & \textbf{Direction} & \textbf{Kernel} & \textbf{Window} \\
+\midrule
+L0 & \texttt{memory}      & Past $\to$ Present   & $A(dt) = \exp(-3|dt|/H)$, causal       & $[t{-}n{+}1,\; t]$     \\
+L1 & \texttt{prediction}  & Present $\to$ Future  & $A(dt) = \exp(-3|dt|/H)$, anti-causal  & $[t,\; t{+}n{-}1]$     \\
+L2 & \texttt{integration} & Past $\leftrightarrow$ Future & $A(dt) = \exp(-3|dt|/H)$, symmetric    & $[t{-}n/2,\; t{+}n/2]$ \\
+\bottomrule
+\end{tabular}
+\end{table}
