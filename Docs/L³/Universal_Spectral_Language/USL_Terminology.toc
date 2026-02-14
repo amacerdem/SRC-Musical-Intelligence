@@ -18,3 +18,15 @@
 \contentsline {section}{\numberline {4}C\textsuperscript {3} Unit Interface Table}{9}{section.4}%
 \contentsline {section}{\numberline {5}Provenance Chain}{10}{section.5}%
 \contentsline {section}{\numberline {6}Naming Convention Rules}{10}{section.6}%
+\contentsline {section}{\numberline {7}Complete H\textsuperscript {3} Routing Map}{12}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Global Statistics}{12}{subsection.7.1}%
+\contentsline {paragraph}{Notable findings.}{12}{table.8}%
+\contentsline {subsection}{\numberline {7.2}Per-Unit Demand Summary}{13}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}Horizon Usage Distribution}{13}{subsection.7.3}%
+\contentsline {subsection}{\numberline {7.4}Morph Usage Distribution}{14}{subsection.7.4}%
+\contentsline {subsection}{\numberline {7.5}Law Usage}{14}{subsection.7.5}%
+\contentsline {subsection}{\numberline {7.6}R\textsuperscript {3} Feature Routing Table (v1, [0:48])}{14}{subsection.7.6}%
+\contentsline {subsection}{\numberline {7.7}Unit--Feature Affinity Matrix}{15}{subsection.7.7}%
+\contentsline {subsection}{\numberline {7.8}Per-Unit Detailed Routing}{16}{subsection.7.8}%
+\contentsline {subsection}{\numberline {7.9}Per-Model Demand Counts}{19}{subsection.7.9}%
+\contentsline {subsection}{\numberline {7.10}Universal vs.\ Specialized Features}{19}{subsection.7.10}%
