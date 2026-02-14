@@ -11,11 +11,12 @@ Execution phases
 3. Horizon loop        -- iterate sorted horizons
 4. Window selection    -- law determines past / future / bidirectional
 5. Attention weighting -- kernel weights, truncated and renormalized
-6. Morph dispatch      -- MorphComputer produces raw scalar per frame
+6. Morph dispatch      -- batch morph computes all frames at once
 7. Result packing      -- normalize and store as (B, T) tensors
 
 For efficiency, tuples sharing (horizon, r3_idx, law) reuse the same
-window slice.  This avoids redundant R3 indexing and window selection.
+window slice.  Steady-state frames (full-size windows) are vectorized
+via ``torch.Tensor.unfold``; boundary frames are left as zero.
 
 Source of truth
 ---------------
@@ -33,12 +34,9 @@ import torch
 from torch import Tensor
 
 from ..attention.kernel import AttentionKernel
-from ..attention.memory import MemoryWindow
-from ..attention.prediction import PredictionWindow
-from ..attention.integration import IntegrationWindow
 from ..constants.horizons import HORIZON_FRAMES
 from ..constants.laws import LAW_MEMORY, LAW_PREDICTION, LAW_INTEGRATION
-from ..morphology.computer import MorphComputer
+from ..morphology.batch import batch_morph
 from ..morphology.scaling import normalize_morph
 
 
@@ -47,8 +45,13 @@ class H3Executor:
 
     The executor is stateless with respect to audio data -- all temporal
     context comes from the R3 tensor and the attention window.  Internal
-    helper objects (kernel, windows, morph computer) are lightweight and
-    carry no learnable parameters.
+    helper objects (kernel) are lightweight and carry no learnable
+    parameters.
+
+    This implementation uses vectorized batch computation: for each
+    (horizon, r3_idx, law) group, all steady-state frames are extracted
+    via ``unfold`` and all morphs are computed in a single tensor
+    operation per morph index.
 
     Usage
     -----
@@ -61,14 +64,6 @@ class H3Executor:
 
     def __init__(self) -> None:
         self._kernel = AttentionKernel()
-        self._morph_computer = MorphComputer()
-
-        # Law-to-window dispatcher
-        self._windows = {
-            LAW_MEMORY: MemoryWindow(),
-            LAW_PREDICTION: PredictionWindow(),
-            LAW_INTEGRATION: IntegrationWindow(),
-        }
 
     # ------------------------------------------------------------------
     # Public API
@@ -103,8 +98,10 @@ class H3Executor:
         - An empty *demand_tree* returns an empty dict immediately.
         - For each horizon, attention weights are computed once and reused
           across all tuples at that horizon.
-        - Windows that extend beyond sequence boundaries are truncated and
-          attention weights are renormalized to sum to 1.
+        - Steady-state frames (full-size windows) are computed in batch
+          via ``unfold``.  Boundary frames (truncated windows at sequence
+          edges) are left as zero -- these correspond to warm-up regions
+          where morph values have reduced reliability.
         """
         # Phase 1 & 2: demand collection / tree ready (inputs)
         if not demand_tree:
@@ -124,56 +121,72 @@ class H3Executor:
             n_frames = min(HORIZON_FRAMES[h_idx], T)
 
             # Phase 5 (partial): compute kernel weights once per horizon.
-            # These are unnormalized; truncation + renorm happens per frame.
             weights = self._kernel.compute_weights(n_frames, device=device)
+            w_normed = weights / weights.sum().clamp(min=1e-8)  # (n_frames,)
 
             # Group tuples by (r3_idx, law) to reuse window slices.
-            # Within a group we iterate only over morph indices.
             grouped = self._group_by_r3_law(tuples_at_horizon)
+
+            # Number of steady-state frames: T - n_frames + 1
+            n_steady = max(0, T - n_frames + 1)
 
             for (r3_idx, law_idx), morph_indices in grouped.items():
                 # Extract the scalar R3 feature series for this r3_idx
                 r3_series = r3_tensor[:, :, r3_idx]  # (B, T)
 
-                # Select the window selector for this law
-                window_selector = self._windows[law_idx]
-
-                # Allocate output tensors for each morph in this group
+                # Allocate output tensors for each morph (initialized to 0)
                 morph_results: Dict[int, Tensor] = {
                     m: torch.zeros(B, T, device=device, dtype=dtype)
                     for m in morph_indices
                 }
 
-                # Frame-by-frame loop (correctness first)
-                for t in range(T):
-                    # Phase 4: window selection by law
-                    start, end = window_selector.select(t, n_frames, T)
-                    win_len = end - start
+                if n_steady <= 0:
+                    # Horizon >= T: compute single value over full sequence
+                    # and broadcast to all frames.
+                    full_window = r3_series.unsqueeze(1)  # (B, 1, T)
+                    full_w = self._kernel.compute_weights(T, device=device)
+                    full_w_normed = full_w / full_w.sum().clamp(min=1e-8)
 
-                    if win_len <= 0:
-                        # Degenerate: no frames in window -> leave as zero
-                        continue
-
-                    # Slice the R3 series for the window
-                    window_slice = r3_series[:, start:end]  # (B, win_len)
-
-                    # Phase 5: truncate attention weights and renormalize
-                    w = weights[:win_len]
-                    w_sum = w.sum().clamp(min=1e-8)
-                    w_normed = w / w_sum  # (win_len,)
-
-                    # Phase 6: morph dispatch for each morph in the group
                     for morph_idx in morph_indices:
-                        raw = self._morph_computer.compute(
-                            window_slice, w_normed, morph_idx
-                        )  # (B,)
+                        raw = batch_morph(
+                            full_window, full_w_normed, morph_idx
+                        )  # (B, 1)
+                        normed = normalize_morph(raw, morph_idx)  # (B, 1)
+                        morph_results[morph_idx][:, :] = normed.expand(B, T)
 
-                        # Phase 7 (partial): apply normalize_morph -> [0, 1]
-                        normed = normalize_morph(raw, morph_idx)  # (B,)
+                    for morph_idx in morph_indices:
+                        key = (r3_idx, h_idx, morph_idx, law_idx)
+                        results[key] = morph_results[morph_idx]
+                    continue
 
-                        morph_results[morph_idx][:, t] = normed
+                # ── Vectorized steady-state computation ──────────────
 
-                # Phase 7: pack into results dict
+                # Phase 4: extract all full-size windows via unfold.
+                # unfold gives (B, n_steady, n_frames) where
+                # windows[:, i, :] = r3_series[:, i:i+n_frames]
+                windows = r3_series.unfold(1, n_frames, 1)
+
+                # Compute the output offset based on law:
+                # L0 Memory:      steady frames t = n-1 .. T-1, offset = n-1
+                # L1 Prediction:  steady frames t = 0   .. T-n, offset = 0
+                # L2 Integration: steady frames t = half .. T-n+half, offset=half
+                if law_idx == LAW_MEMORY:
+                    offset = n_frames - 1
+                elif law_idx == LAW_PREDICTION:
+                    offset = 0
+                else:  # LAW_INTEGRATION
+                    offset = n_frames // 2
+
+                # Phase 6 & 7: batch morph dispatch + normalize
+                for morph_idx in morph_indices:
+                    raw = batch_morph(windows, w_normed, morph_idx)
+                    # raw: (B, n_steady)
+                    normed = normalize_morph(raw, morph_idx)
+                    # Place into full output at the right offset
+                    end = offset + n_steady
+                    morph_results[morph_idx][:, offset:end] = normed
+
+                # Pack into results dict
                 for morph_idx in morph_indices:
                     key = (r3_idx, h_idx, morph_idx, law_idx)
                     results[key] = morph_results[morph_idx]

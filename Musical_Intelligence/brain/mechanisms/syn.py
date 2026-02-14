@@ -95,9 +95,7 @@ class SYN(BaseMechanism):
         if K == 10:
             return stacked
         elif K > 10:
-            return torch.nn.functional.adaptive_avg_pool1d(
-                stacked.transpose(1, 2), 10,
-            ).transpose(1, 2)
+            return torch.nn.functional.adaptive_avg_pool1d(stacked, 10)
         else:
             pad = torch.zeros(B, T, 10 - K, device=device)
             return torch.cat([stacked, pad], dim=-1)

@@ -93,17 +93,19 @@ class VMM(BaseModel):
             parts.append(
                 mechanism_outputs.get(name, torch.zeros(B, T, 30, device=device))
             )
-        mech = torch.cat(parts, dim=-1)
+        mech = torch.cat(parts, dim=-1)  # (B, T, total_mech)
         total_m = mech.shape[-1]
 
-        # Project mechanism + R3 to output dims
-        out = torch.zeros(B, T, self.OUTPUT_DIM, device=device)
-        for i in range(self.OUTPUT_DIM):
-            ms = (i * total_m) // self.OUTPUT_DIM
-            me = ((i + 1) * total_m) // self.OUTPUT_DIM
-            m_val = mech[..., ms:me].mean(dim=-1)
-            r3_val = r3_features[..., i % r3_features.shape[-1]]
-            out[..., i] = torch.sigmoid(0.7 * m_val + 0.3 * r3_val)
+        # Vectorized projection: sample mechanism dims evenly
+        m_idx = torch.linspace(0, total_m - 1, self.OUTPUT_DIM).long().to(device)
+        m_proj = mech[..., m_idx]  # (B, T, OUTPUT_DIM)
+
+        # Vectorized R3 cycling
+        r3_dim = r3_features.shape[-1]
+        r3_idx = (torch.arange(self.OUTPUT_DIM) % r3_dim).to(device)
+        r3_proj = r3_features[..., r3_idx]  # (B, T, OUTPUT_DIM)
+
+        out = torch.sigmoid(0.7 * m_proj + 0.3 * r3_proj)
 
         # H3 temporal modulation
         h3_mod = torch.ones(B, T, device=device)
