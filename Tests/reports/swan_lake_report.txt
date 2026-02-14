@@ -1,0 +1,219 @@
+
+================================================================================
+  SWAN LAKE COGNITIVE ANALYSIS EXPERIMENT
+================================================================================
+  Audio: Swan Lake Suite, Op. 20a_ I. Scene _Swan Theme_. Moderato - Pyotr Ilyich Tchaikovsky.wav
+  Frame rate: 172.27 Hz
+  Brain output dim: 1006
+  Report: /Volumes/SRC-9/SRC Musical Intelligence/Tests/reports/swan_lake_report.txt
+
+
+================================================================================
+  STAGE 1: Audio Loading
+================================================================================
+  Mel spectrogram: (1, 128, 1723)
+  Duration: 10.0s (1723 frames)
+  Time: 1.768s
+
+================================================================================
+  STAGE 2: R3 Spectral Feature Extraction
+================================================================================
+  R3 output: (1, 1723, 128)
+  Value range: [0.0000, 1.0000]
+  Mean: 0.3684
+  Time: 0.535s
+
+================================================================================
+  STAGE 3: H3 Temporal Morphology Extraction
+================================================================================
+  Demanded tuples: 7782
+  Computed tuples: 7782
+  Time: 10.776s
+
+================================================================================
+  STAGE 4: Brain Forward Pass
+================================================================================
+  Brain output: (1, 1723, 1006)
+  Value range: [0.0312, 0.6804]
+  Mean: 0.2269
+  Unit slices:
+    SPU: [   0:  99] ( 99D)  mean=0.1761  std=0.1127
+    STU: [  99: 247] (148D)  mean=0.2502  std=0.0937
+    IMU: [ 247: 406] (159D)  mean=0.2166  std=0.1311
+    ASU: [ 406: 500] ( 94D)  mean=0.2724  std=0.1326
+    NDU: [ 500: 594] ( 94D)  mean=0.2715  std=0.1311
+    MPU: [ 594: 698] (104D)  mean=0.2560  std=0.0987
+    PCU: [ 698: 792] ( 94D)  mean=0.2385  std=0.0843
+    ARU: [ 792: 912] (120D)  mean=0.1858  std=0.0814
+    RPU: [ 912:1006] ( 94D)  mean=0.1796  std=0.0828
+  Time: 0.087s
+
+================================================================================
+  ANALYSIS 1: R3 Temporal Dynamics (1-second intervals)
+================================================================================
+    Time       A       B       C       D       E       F       G       H       I       J       K
+  ----------------------------------------------------------------------------------------------
+    0.0s  0.4468  0.5292  0.3447  0.6806  0.2910  0.2361  0.6930  0.4284  0.0715  0.3369  0.1872
+    1.0s  0.4544  0.6387  0.3483  0.7310  0.3535  0.2405  0.6930  0.4209  0.1628  0.3352  0.2154
+    2.0s  0.4590  0.6007  0.3543  0.6844  0.3424  0.2439  0.6930  0.4212  0.2040  0.3363  0.2044
+    3.0s  0.4637  0.5778  0.3597  0.6462  0.3369  0.2481  0.6930  0.4214  0.2015  0.3431  0.1958
+    4.0s  0.4790  0.5892  0.3434  0.6344  0.3503  0.2481  0.6930  0.4202  0.2096  0.3532  0.1970
+    5.0s  0.4744  0.6042  0.3379  0.6642  0.3523  0.2451  0.6930  0.4205  0.2158  0.3424  0.2028
+    6.0s  0.4723  0.6174  0.3338  0.6646  0.3561  0.2452  0.6930  0.4210  0.2234  0.3386  0.2086
+    7.0s  0.4707  0.5978  0.3431  0.6397  0.3474  0.2466  0.6930  0.4208  0.2263  0.3465  0.2027
+    8.0s  0.4791  0.6005  0.3311  0.6493  0.3534  0.2452  0.6930  0.4195  0.2271  0.3411  0.2046
+    9.0s  0.4767  0.5938  0.3370  0.6358  0.3465  0.2464  0.6930  0.4195  0.2261  0.3406  0.2008
+   10.0s  0.4657  0.6249  0.3495  0.6371  0.3453  0.2433  0.6930  0.4204  0.2263  0.3381  0.2008
+
+================================================================================
+  ANALYSIS 2: H3 Features at Key Musical Moments
+================================================================================
+
+  t = 0.0s (frame 0):
+    (  0, H 0, M 0, L0)  val=0.3775  r3=roughness             morph=value           law=memory
+    (  0, H 0, M 0, L1)  val=0.3775  r3=roughness             morph=value           law=prediction
+    (  0, H 0, M 0, L2)  val=0.3775  r3=roughness             morph=value           law=integration
+    (  0, H 0, M 1, L0)  val=0.3775  r3=roughness             morph=mean            law=memory
+    (  0, H 0, M 1, L1)  val=0.3775  r3=roughness             morph=mean            law=prediction
+    (  0, H 0, M 1, L2)  val=0.3775  r3=roughness             morph=mean            law=integration
+    (  0, H 3, M 0, L0)  val=0.0000  r3=roughness             morph=value           law=memory
+    (  0, H 3, M 0, L1)  val=0.3775  r3=roughness             morph=value           law=prediction
+    (  0, H 3, M 0, L2)  val=0.0000  r3=roughness             morph=value           law=integration
+    (  0, H 3, M 1, L0)  val=0.0000  r3=roughness             morph=mean            law=memory
+    ... and 7772 more features
+
+  t = 5.0s (frame 861):
+    (  0, H 0, M 0, L0)  val=0.3787  r3=roughness             morph=value           law=memory
+    (  0, H 0, M 0, L1)  val=0.3787  r3=roughness             morph=value           law=prediction
+    (  0, H 0, M 0, L2)  val=0.3787  r3=roughness             morph=value           law=integration
+    (  0, H 0, M 1, L0)  val=0.3787  r3=roughness             morph=mean            law=memory
+    (  0, H 0, M 1, L1)  val=0.3787  r3=roughness             morph=mean            law=prediction
+    (  0, H 0, M 1, L2)  val=0.3787  r3=roughness             morph=mean            law=integration
+    (  0, H 3, M 0, L0)  val=0.3788  r3=roughness             morph=value           law=memory
+    (  0, H 3, M 0, L1)  val=0.3790  r3=roughness             morph=value           law=prediction
+    (  0, H 3, M 0, L2)  val=0.3788  r3=roughness             morph=value           law=integration
+    (  0, H 3, M 1, L0)  val=0.3790  r3=roughness             morph=mean            law=memory
+    ... and 7772 more features
+
+  t = 10.0s (frame 1723):
+    (  0, H 0, M 0, L0)  val=0.3786  r3=roughness             morph=value           law=memory
+    (  0, H 0, M 0, L1)  val=0.3786  r3=roughness             morph=value           law=prediction
+    (  0, H 0, M 0, L2)  val=0.3786  r3=roughness             morph=value           law=integration
+    (  0, H 0, M 1, L0)  val=0.3786  r3=roughness             morph=mean            law=memory
+    (  0, H 0, M 1, L1)  val=0.3786  r3=roughness             morph=mean            law=prediction
+    (  0, H 0, M 1, L2)  val=0.3786  r3=roughness             morph=mean            law=integration
+    (  0, H 3, M 0, L0)  val=0.3787  r3=roughness             morph=value           law=memory
+    (  0, H 3, M 0, L1)  val=0.0000  r3=roughness             morph=value           law=prediction
+    (  0, H 3, M 0, L2)  val=0.0000  r3=roughness             morph=value           law=integration
+    (  0, H 3, M 1, L0)  val=0.3788  r3=roughness             morph=mean            law=memory
+    ... and 7772 more features
+
+================================================================================
+  ANALYSIS 3: Brain Cognitive Profile (5-second intervals)
+================================================================================
+        Time     SPU     STU     IMU     ASU     NDU     MPU     PCU     ARU     RPU  Overall
+  -------------------------------------------------------------------------------------------
+     0-   5s  0.1761  0.2519  0.2161  0.2709  0.2694  0.2581  0.2418  0.1786  0.1729   0.2258
+     5-  10s  0.1762  0.2488  0.2172  0.2743  0.2739  0.2542  0.2354  0.1932  0.1865   0.2282
+    10-  10s  0.0746  0.0362  0.0358  0.0363  0.0991  0.0361  0.0935  0.0363  0.0361   0.0512
+
+================================================================================
+  ANALYSIS 4: Peak & Trough Detection
+================================================================================
+  Top 5 peak frames (highest cognitive activity):
+    #1: frame=  181, t=  1.05s, mean=0.2636
+         MPU: 0.3243
+         STU: 0.3080
+         ASU: 0.3024
+    #2: frame=  180, t=  1.04s, mean=0.2635
+         MPU: 0.3230
+         STU: 0.3058
+         ASU: 0.3022
+    #3: frame=  177, t=  1.03s, mean=0.2633
+         MPU: 0.3257
+         STU: 0.3085
+         ASU: 0.3018
+    #4: frame=  173, t=  1.00s, mean=0.2627
+         MPU: 0.3258
+         STU: 0.3088
+         ASU: 0.3024
+    #5: frame=  179, t=  1.04s, mean=0.2627
+         MPU: 0.3227
+         STU: 0.3059
+         ASU: 0.3010
+
+  Bottom 5 trough frames (lowest cognitive activity):
+    #1: frame=    1, t=  0.01s, mean=0.0419
+    #2: frame=    0, t=  0.00s, mean=0.0421
+    #3: frame= 1722, t= 10.00s, mean=0.0512
+    #4: frame=    2, t=  0.01s, mean=0.0659
+    #5: frame=    8, t=  0.05s, mean=0.0660
+
+================================================================================
+  ANALYSIS 5: Inter-Unit Correlation Matrix
+================================================================================
+            SPU     STU     IMU     ASU     NDU     MPU     PCU     ARU     RPU
+  -----------------------------------------------------------------------------
+    SPU   1.000   0.303   0.307   0.461   0.453   0.281   0.398   0.305   0.308
+    STU   0.303   1.000   0.498   0.910   0.767   0.998   0.592   0.918   0.922
+    IMU   0.307   0.498   1.000   0.473   0.453   0.482   0.383   0.569   0.572
+    ASU   0.461   0.910   0.473   1.000   0.817   0.902   0.621   0.874   0.877
+    NDU   0.453   0.767   0.453   0.817   1.000   0.777   0.803   0.749   0.754
+    MPU   0.281   0.998   0.482   0.902   0.777   1.000   0.613   0.911   0.916
+    PCU   0.398   0.592   0.383   0.621   0.803   0.613   1.000   0.456   0.465
+    ARU   0.305   0.918   0.569   0.874   0.749   0.911   0.456   1.000   0.999
+    RPU   0.308   0.922   0.572   0.877   0.754   0.916   0.465   0.999   1.000
+
+  Strongest inter-unit correlations:
+    ARU-RPU: r=0.9992
+    STU-MPU: r=0.9978
+    STU-RPU: r=0.9220
+    STU-ARU: r=0.9181
+    MPU-RPU: r=0.9156
+
+================================================================================
+  ANALYSIS 6: Musical Event Detection
+================================================================================
+  Tempo estimate (R3 index 65, after 4s warmup):
+    mean=0.7396, std=0.0000, range=[0.7396, 0.7396]
+
+  Spectral change profile:
+    mean=0.6630, std=0.0485
+    max at frame 1395 (t=8.10s), value=0.8832
+
+  Energy peaks (10 detected):
+    #1: t=  0.84s, value=0.6595
+    #2: t=  0.86s, value=0.6602
+    #3: t=  0.89s, value=0.6590
+    #4: t=  0.91s, value=0.6598
+    #5: t=  0.94s, value=0.6604
+
+  Timbral change events (10 detected):
+    #1: t=  0.07s, magnitude=0.3466
+    #2: t=  9.76s, magnitude=0.0248
+    #3: t=  3.73s, magnitude=0.0212
+    #4: t=  0.21s, magnitude=0.0212
+    #5: t= 10.00s, magnitude=0.0209
+
+================================================================================
+  TIMING SUMMARY
+================================================================================
+  Audio loading:          1.768s
+  R3 extraction:          0.535s
+  H3 extraction:         10.776s
+  Brain forward:          0.087s
+  Pipeline total:        13.166s
+  Analysis overhead:      0.076s
+  Experiment total:      13.242s
+
+================================================================================
+  EXPERIMENT SUMMARY
+================================================================================
+  Audio: Swan Lake Suite, Op. 20a, Scene I
+  Duration: 10.0s (1723 frames)
+  R3 features: (1, 1723, 128) in [0.0000, 1.0000]
+  H3 tuples: 7782 computed
+  Brain output: (1, 1723, 1006) in [0.0312, 0.6804]
+  Total time: 13.242s
+  Report saved: /Volumes/SRC-9/SRC Musical Intelligence/Tests/reports/swan_lake_report.txt
+================================================================================

@@ -87,9 +87,9 @@ def _section(title: str) -> str:
     return f"\n{'=' * 80}\n  {title}\n{'=' * 80}"
 
 
-def _load_mel(path: str) -> Tensor:
-    """Load audio and compute normalised mel spectrogram (1, 128, T)."""
-    y, sr = librosa.load(path, sr=SR, mono=True)
+def _load_mel(path: str, duration: float = 10.0) -> Tensor:
+    """Load audio (first *duration* seconds) and compute normalised mel (1, 128, T)."""
+    y, sr = librosa.load(path, sr=SR, mono=True, duration=duration)
     mel = librosa.feature.melspectrogram(
         y=y, sr=sr, n_mels=N_MELS, hop_length=HOP, n_fft=1024,
     )
@@ -355,8 +355,9 @@ class ReportWriter:
         self._file = open(filepath, "w", encoding="utf-8")
 
     def print(self, text: str = "") -> None:
-        print(text)
+        print(text, flush=True)
         self._file.write(text + "\n")
+        self._file.flush()
 
     def close(self) -> None:
         self._file.close()
