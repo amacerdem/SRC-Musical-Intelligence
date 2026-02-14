@@ -1,21 +1,19 @@
 """
-CLI for HYBRID emotion transform.
+CLI for HYBRID v0.2 emotion + structure transform.
 
 Usage:
-    # Single transform with sliders
-    python -m Musical_Intelligence.hybrid.cli input.wav -o output.wav \
-        --valence 0.5 --arousal 0.3 --tension -0.2 --strength 0.6
+    # Timbral transform (v0.1)
+    python -m Musical_Intelligence.hybrid.cli input.wav -o out.wav --preset joyful
 
-    # Use a named preset
-    python -m Musical_Intelligence.hybrid.cli input.wav -o output.wav --preset joyful
+    # Structural transforms (v0.2)
+    python -m Musical_Intelligence.hybrid.cli input.wav -o out.wav --tempo-shift 0.08 --swing 0.6
+    python -m Musical_Intelligence.hybrid.cli input.wav -o out.wav --harmonic-mode-bias -0.7 --tension 0.6
+    python -m Musical_Intelligence.hybrid.cli input.wav -o out.wav --preset rubato_minor
 
-    # Batch: apply all presets for comparison
+    # Batch: all presets
     python -m Musical_Intelligence.hybrid.cli input.wav --batch --output-dir results/
 
-    # No calibration (faster, less consistent)
-    python -m Musical_Intelligence.hybrid.cli input.wav -o output.wav --preset intense --no-calibrate
-
-    # STFT roundtrip test (verify phase preservation)
+    # STFT roundtrip test
     python -m Musical_Intelligence.hybrid.cli input.wav --roundtrip-test
 """
 
@@ -28,12 +26,15 @@ from pathlib import Path
 
 def main():
     parser = argparse.ArgumentParser(
-        description="HYBRID v0.1 — Emotion Override Transform",
+        description="HYBRID v0.2 — Emotion + Structure Transform",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
   %(prog)s input.wav -o joyful.wav --preset joyful
-  %(prog)s input.wav -o custom.wav --valence 0.5 --arousal 0.3
+  %(prog)s input.wav -o out.wav --valence 0.5 --arousal 0.3
+  %(prog)s input.wav -o out.wav --tempo-shift 0.08 --swing 0.6
+  %(prog)s input.wav -o out.wav --harmonic-mode-bias -0.7 --tension 0.6
+  %(prog)s input.wav -o out.wav --preset rubato_minor
   %(prog)s input.wav --batch --output-dir results/
   %(prog)s input.wav --roundtrip-test
         """,
@@ -43,32 +44,40 @@ Examples:
     parser.add_argument("-o", "--output", help="Output audio file path")
     parser.add_argument("--output-dir", help="Output directory for batch mode")
 
-    # Emotion sliders
-    parser.add_argument("--valence", type=float, default=0.0,
-                        help="Valence: -1 (negative) to +1 (positive)")
-    parser.add_argument("--arousal", type=float, default=0.0,
-                        help="Arousal: -1 (calm) to +1 (energetic)")
-    parser.add_argument("--tension", type=float, default=0.0,
-                        help="Tension: -1 (relaxed) to +1 (tense)")
-    parser.add_argument("--warmth", type=float, default=0.0,
-                        help="Warmth: -1 (cool) to +1 (warm)")
-    parser.add_argument("--brightness", type=float, default=0.0,
-                        help="Brightness: -1 (dark) to +1 (bright)")
-    parser.add_argument("--strength", type=float, default=0.6,
-                        help="Global effect strength: 0 (none) to 1 (full)")
+    # v0.1: Emotion sliders
+    g1 = parser.add_argument_group("Emotion sliders (v0.1)")
+    g1.add_argument("--valence", type=float, default=0.0)
+    g1.add_argument("--arousal", type=float, default=0.0)
+    g1.add_argument("--tension", type=float, default=0.0)
+    g1.add_argument("--warmth", type=float, default=0.0)
+    g1.add_argument("--brightness", type=float, default=0.0)
 
-    # Preset
+    # v0.2: Structural sliders
+    g2 = parser.add_argument_group("Structure sliders (v0.2)")
+    g2.add_argument("--tempo-shift", type=float, default=0.0,
+                     help="Relative BPM change (-0.2 to +0.2)")
+    g2.add_argument("--rubato", type=float, default=0.0,
+                     help="Tempo variation (0 to 1)")
+    g2.add_argument("--swing", type=float, default=0.0,
+                     help="Off-beat shift (-1 to +1; +1 = jazz swing)")
+    g2.add_argument("--push-pull", type=float, default=0.0,
+                     help="Micro-timing offset (-1 to +1)")
+    g2.add_argument("--rhythm-density", type=float, default=0.0,
+                     help="Event density (-1 to +1)")
+    g2.add_argument("--harmonic-mode-bias", type=float, default=0.0,
+                     help="Major/minor tilt (-1 to +1)")
+    g2.add_argument("--harmonic-rhythm", type=float, default=0.0,
+                     help="Chord-change rate feel (-1 to +1)")
+
+    # Global
+    parser.add_argument("--strength", type=float, default=0.6)
     parser.add_argument("--preset", choices=[
         "joyful", "melancholic", "intense", "calm", "tense", "bright_warm",
-    ], help="Use a named emotion preset")
-
-    # Modes
-    parser.add_argument("--batch", action="store_true",
-                        help="Apply all presets for A/B comparison")
-    parser.add_argument("--no-calibrate", action="store_true",
-                        help="Skip R³ calibration (faster but less consistent)")
-    parser.add_argument("--roundtrip-test", action="store_true",
-                        help="Run STFT roundtrip test (verify phase preservation)")
+        "rubato_minor", "swing_bright", "driving", "spacious",
+    ])
+    parser.add_argument("--batch", action="store_true")
+    parser.add_argument("--no-calibrate", action="store_true")
+    parser.add_argument("--roundtrip-test", action="store_true")
 
     args = parser.parse_args()
 
@@ -84,7 +93,6 @@ Examples:
         print(f"  PASS:        {result['pass']}")
         sys.exit(0 if result["pass"] else 1)
 
-    # ── Import transformer ──
     from Musical_Intelligence.hybrid.hybrid_transformer import (
         HybridTransformer, EMOTION_PRESETS,
     )
@@ -92,29 +100,28 @@ Examples:
 
     transformer = HybridTransformer(calibrate=not args.no_calibrate)
 
-    # ── Batch mode ──
+    # ── Batch ──
     if args.batch:
         output_dir = args.output_dir or "hybrid_output"
-        print(f"Batch mode: applying {len(EMOTION_PRESETS)} presets")
-        print(f"  Input:  {args.input}")
-        print(f"  Output: {output_dir}/")
-        results = transformer.transform_batch(
-            args.input, EMOTION_PRESETS, output_dir,
-        )
-        print(f"\nDone! {len(results)} transforms saved.")
+        print(f"Batch mode: {len(EMOTION_PRESETS)} presets → {output_dir}/")
+        transformer.transform_batch(args.input, EMOTION_PRESETS, output_dir)
+        print("Done!")
         sys.exit(0)
 
-    # ── Single transform ──
+    # ── Single ──
     if args.preset:
         controls = EMOTION_PRESETS[args.preset]
         print(f"Preset: {args.preset}")
     else:
         controls = EmotionControls(
-            valence=args.valence,
-            arousal=args.arousal,
-            tension=args.tension,
-            warmth=args.warmth,
+            valence=args.valence, arousal=args.arousal,
+            tension=args.tension, warmth=args.warmth,
             brightness=args.brightness,
+            tempo_shift=args.tempo_shift, rubato=args.rubato,
+            swing=args.swing, push_pull=args.push_pull,
+            rhythm_density=args.rhythm_density,
+            harmonic_mode_bias=args.harmonic_mode_bias,
+            harmonic_rhythm=args.harmonic_rhythm,
             strength=args.strength,
         )
 
@@ -124,37 +131,42 @@ Examples:
         tag = args.preset or "hybrid"
         output_path = f"{stem}_{tag}.wav"
 
-    print(f"HYBRID Transform:")
-    print(f"  Input:      {args.input}")
-    print(f"  Output:     {output_path}")
-    print(f"  Valence:    {controls.valence:+.2f}")
-    print(f"  Arousal:    {controls.arousal:+.2f}")
-    print(f"  Tension:    {controls.tension:+.2f}")
-    print(f"  Warmth:     {controls.warmth:+.2f}")
-    print(f"  Brightness: {controls.brightness:+.2f}")
-    print(f"  Strength:   {controls.strength:.2f}")
-    print(f"  Calibrate:  {not args.no_calibrate}")
+    print(f"HYBRID v0.2 Transform:")
+    print(f"  Input:           {args.input}")
+    print(f"  Output:          {output_path}")
+    print(f"  -- Emotion --")
+    print(f"  Valence:         {controls.valence:+.2f}")
+    print(f"  Arousal:         {controls.arousal:+.2f}")
+    print(f"  Tension:         {controls.tension:+.2f}")
+    print(f"  Warmth:          {controls.warmth:+.2f}")
+    print(f"  Brightness:      {controls.brightness:+.2f}")
+    print(f"  -- Structure --")
+    print(f"  Tempo shift:     {controls.tempo_shift:+.3f}")
+    print(f"  Rubato:          {controls.rubato:.2f}")
+    print(f"  Swing:           {controls.swing:+.2f}")
+    print(f"  Push/pull:       {controls.push_pull:+.2f}")
+    print(f"  Rhythm density:  {controls.rhythm_density:+.2f}")
+    print(f"  Mode bias:       {controls.harmonic_mode_bias:+.2f}")
+    print(f"  Harmonic rhythm: {controls.harmonic_rhythm:+.2f}")
+    print(f"  -- Global --")
+    print(f"  Strength:        {controls.strength:.2f}")
+    print(f"  Calibrate:       {not args.no_calibrate}")
     print()
 
     result = transformer.transform(args.input, controls)
     result.save(output_path)
-
     print(f"Done! Saved to {output_path}")
+
+    if result.score_proxy:
+        s = result.score_proxy
+        print(f"\nScore proxy:")
+        print(f"  Tempo:  {s.tempo:.1f} BPM")
+        print(f"  Beats:  {len(s.beat_times)}")
+        print(f"  Key:    {['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'][s.key_idx]} {s.mode} (conf={s.key_confidence:.2f})")
 
     if result.calibration_result is not None:
         cal = result.calibration_result
-        print(f"\nCalibration:")
-        print(f"  Iterations:     {cal.iterations}")
-        print(f"  Final strength: {cal.final_strength:.3f}")
-        if cal.error_history:
-            print(f"  Error history:  {[f'{e:.4f}' for e in cal.error_history]}")
-        if cal.r3_deltas_target:
-            print(f"\n  R³ Delta Targets vs Achieved:")
-            for idx in sorted(cal.r3_deltas_target.keys()):
-                target = cal.r3_deltas_target[idx]
-                achieved = cal.r3_deltas_achieved.get(idx, 0.0)
-                hit = "OK" if abs(target - achieved) < abs(target) * 0.5 else "MISS"
-                print(f"    [{idx:3d}] target={target:+.4f}  actual={achieved:+.4f}  {hit}")
+        print(f"\nCalibration: {cal.iterations} iterations, final strength={cal.final_strength:.3f}")
 
 
 if __name__ == "__main__":
