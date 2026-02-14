@@ -1,0 +1,12 @@
+ABX ANSWER KEY — Don't peek before listening!
+==================================================
+
+Question for each trial:
+  'Which sounds more [preset_name]? A or B?'
+
+Trial 01 (joyful): A=joyful, B=original
+Trial 02 (melancholic): A=original, B=melancholic
+Trial 03 (intense): A=intense, B=original
+Trial 04 (calm): A=calm, B=original
+Trial 05 (tense): A=tense, B=original
+Trial 06 (bright_warm): A=bright_warm, B=original
