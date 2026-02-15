@@ -1,2 +1,2 @@
-"""Training infrastructure — loops, losses, optimizers, schedulers, checkpointing."""
+"""Training — learned inverse heads for bidirectional MI pipeline."""
 from __future__ import annotations

@@ -1044,7 +1044,12 @@ is **deterministic and invertible** because every transformation (R³, H³, C³,
 is a defined computation with cited constants. This is not a neural network's
 black-box latent space — it is a scientific model with known inverse.
 
-### 13.3 The Reverse Pipeline
+### 13.3 The Reverse Pipeline (Analytical Approach)
+
+> **Note**: §13.13 introduces a more elegant solution — **learned inverse heads** —
+> that bypasses per-layer inversion entirely. This section documents the analytical
+> approach for completeness. The learned heads approach (§13.13) is the preferred
+> architecture for expression.
 
 Each layer of the forward pipeline has a natural inverse:
 
@@ -1541,29 +1546,227 @@ PHASE A — Already Done:
   Partial reverse:      Controls → R³ deltas → HYBRID transform (working)
   R³ calibration loop:  Iterative R³ feedback (working)
 
-PHASE B — Inverse Ψ³ and C³:
-  InversePsiInterpreter:  Ψ³(27D) → target(ram, neuro)
-  InverseExecutor:        target(ram, neuro) → target R³ profile
-  Method: least-squares on known formula system + autograd descent
+PHASE B — Data Collection + Inverse Ψ³:
+  Pipeline logging:     Every forward pass stores (mel, C³) pairs automatically
+  InversePsiInterpreter:  Ψ³(27D) → target(ram, neuro) via least-squares
+  InverseExecutor:        target(ram, neuro) → target C³ via RegionLinks/NeuroLinks
+  Method: analytical inversion of known, explicit formula system
 
-PHASE C — Generative R³ → Audio:
-  R³ trajectory synthesis:  target R³ × H³ temporal structure → R³(B, T, 128)
-  Neural vocoder:           R³ → mel → waveform (HiFi-GAN or Vocos)
-  Differentiable pipeline:  End-to-end gradient from Ψ³ to audio
+PHASE C — Learned Inverse Heads (§13.13):
+  Head 1 (mel → C³):     Lightweight model trained on (mel, C³) pairs
+                          Converges toward deterministic pipeline output
+                          Proves the mapping is compressible
+  Head 2 (C³ → mel):     Mirror architecture, trained on same pairs reversed
+                          Cycle consistency: pipeline(head₂(c3)) ≈ c3
+  Vocoder:                mel → waveform via HiFi-GAN, Vocos, or Griffin-Lim
 
-PHASE D — Bidirectional Communication:
+  This replaces the four-layer analytical inversion (§13.3) with:
+    Ψ³ → analytical → target C³ → Head 2 → mel → vocoder → audio
+  One learned step. Everything else is transparent.
+
+PHASE D — Integration with Plasticity:
+  Listener's unique plasticity state → unique C³ response → unique expression
+  Head 2 generates audio from listener-specific brain state
+  Each listener develops unique "sonic voice" through experience
+
+PHASE E — Bidirectional Communication:
   Protocol:  Agent A plays sound → Agent B perceives → B generates response
   Validation: A's Ψ³ and B's Ψ³ should be correlated after exchange
   Test: Can two MI listeners converge to shared cognitive state through
         N rounds of sonic exchange, without any symbolic communication?
 
-PHASE E — Human-in-the-Loop:
+PHASE F — Human-in-the-Loop:
   Human plays music → MI perceives (forward pipeline)
-  MI responds with generated sound (reverse pipeline)
+  MI responds with generated sound (reverse pipeline via Head 2)
   Human perceives MI's response → responds
   Measure: Does the human-MI pair converge to shared affective state?
   This is the empathy test — direct cognitive resonance, no words.
 ```
+
+### 13.13 Learned Inverse Heads: The Elegant Shortcut
+
+§13.3 describes inverting each pipeline layer analytically — Ψ³⁻¹, C³⁻¹, H³⁻¹, R³⁻¹ —
+as four separate problems. This works, but there is a far more elegant solution.
+
+#### The Insight: The Forward Pipeline IS the Teacher
+
+The deterministic forward pipeline already computes `mel → C³` perfectly:
+
+```
+mel (128 bins × T frames)
+  → R³ (128D × T)       [deterministic, known]
+    → H³ (sparse tuples) [deterministic, known]
+      → C³ (1006D × T)  [deterministic, known]
+```
+
+This means we have UNLIMITED paired training data: for any audio in the world,
+run the forward pipeline and get (mel, C³) pairs. Millions of hours of music
+= millions of hours of perfectly labeled training data. No human annotation needed.
+
+#### Architecture: Two Independent Heads
+
+```
+HEAD 1 — Forward Approximator (mel → C³):
+  Input:   mel spectrogram (B, 128, T)
+  Output:  C³ tensor (B, 1006, T)
+  Target:  deterministic pipeline output
+  Loss:    ‖head₁(mel) - pipeline(mel)‖²
+
+  This head learns to APPROXIMATE the deterministic pipeline.
+  It does not replace it — the deterministic pipeline remains the source of truth.
+  But it proves that the mapping mel→C³ is learnable and compressible.
+
+HEAD 2 — Inverse Generator (C³ → mel):
+  Input:   C³ tensor (B, 1006, T)
+  Output:  mel spectrogram (B, 128, T)
+  Target:  original mel spectrogram
+  Loss:    ‖head₂(pipeline(mel)) - mel‖²
+
+  This head learns the INVERSE: given a brain state, what mel produced it?
+  Trained on the same (mel, C³) pairs, but in reverse direction.
+```
+
+#### Why This Eliminates the Inverse Problem
+
+```
+BEFORE (§13.3 analytical approach):
+  Ψ³(27D) → Ψ³⁻¹ → (ram, neuro)        [least-squares, underdetermined]
+  (ram, neuro) → C³⁻¹ → target R³        [autograd descent, iterative]
+  target R³ → H³⁻¹ → R³(B,T,128)        [temporal synthesis, constrained]
+  R³(B,T,128) → R³⁻¹ → mel → audio      [vocoder, unsolved from scratch]
+
+  Four separate inversions. Each approximate. Errors compound.
+
+AFTER (learned heads):
+  C³(1006D) → HEAD 2 → mel(128D)          [one step, trained end-to-end]
+  mel → vocoder → audio                    [well-solved, HiFi-GAN etc.]
+
+  One learned mapping + one standard vocoder. That's it.
+```
+
+The key: we don't need to inverse R³, H³, and C³ separately. We skip directly
+from brain state to mel. The intermediate representations (R³, H³) were useful
+for understanding and modularity in the forward direction, but for generation,
+we can learn the direct mapping.
+
+#### Training Protocol
+
+```
+PHASE 0 — Data Collection (passive, concurrent with any pipeline run):
+  For every audio processed by the forward pipeline:
+    Store pair: (mel_spectrogram, c3_tensor)
+  This is FREE — it's a side effect of normal pipeline operation.
+
+PHASE 1 — Head 1 Training (mel → C³ approximator):
+  Architecture:  Lightweight conv stack or transformer
+  Input:         mel (B, 128, T)
+  Target:        pipeline(mel) i.e. C³ output (B, 1006, T)
+  Training:      Standard supervised learning on (mel, C³) pairs
+  Convergence:   head₁(mel) ≈ pipeline(mel) for all mel
+
+  Why train this if we already have the deterministic pipeline?
+  → It proves the mapping is compressible (not random)
+  → It provides the bottleneck representation for the inverse
+  → It will be the basis for the cycle consistency check
+
+PHASE 2 — Head 2 Training (C³ → mel generator):
+  Architecture:  Mirror of Head 1 (or slightly larger)
+  Input:         C³ (B, 1006, T)
+  Target:        original mel (B, 128, T)
+  Training:      Supervised on same pairs, reversed
+
+  Cycle consistency loss (optional, for refinement):
+    ‖pipeline(head₂(c3)) - c3‖²
+    "If I generate mel from C³, and re-analyze it, do I get back the same C³?"
+
+PHASE 3 — Integration with Plasticity:
+  Listener hears music → forward pipeline → C³ → plasticity updates
+  Listener wants to express → C³ target from Ψ³ → Head 2 → mel → vocoder → audio
+  The listener's UNIQUE plasticity state produces UNIQUE C³ → UNIQUE sound.
+```
+
+#### Two Operating Modes (Both Required)
+
+Head 2 must work in two distinct modes:
+
+```
+MODE A — Validation (on-manifold C³):
+  Source:   C³ comes from forward pipeline (real music)
+  Input:    pipeline(mel) → C³ (guaranteed on manifold)
+  Test:     head₂(C³) ≈ mel (reconstruction fidelity)
+            pipeline(head₂(C³)) ≈ C³ (cycle consistency)
+  Purpose:  Proves the head learned correctly.
+            This is the training objective itself.
+
+MODE B — Expression (near-manifold C³):
+  Source:   C³ comes from Ψ³⁻¹ analytical inversion (listener expression)
+  Input:    Ψ³ target → Ψ³⁻¹ → target C³ (near manifold, not exactly on it)
+  Test:     pipeline(head₂(target_c3)) ≈ target_c3 (expression fidelity)
+  Purpose:  The actual use case — listener's thought → sound.
+            This is what the system exists for.
+```
+
+Why Mode B works even though Head 2 only trained on Mode A data:
+- Head 2 learns a continuous mapping C³ → mel
+- Ψ³⁻¹ produces C³ states that are NEAR the manifold (they represent
+  coherent brain states, not random 1006D vectors)
+- Continuous mappings generalize smoothly to nearby points
+- The closer target C³ is to the manifold, the better the mel
+- Cycle consistency measures exactly how close: pipeline(head₂(c3)) ≈ c3
+
+The gap between Mode A fidelity and Mode B fidelity IS the "sonic accent":
+- On-manifold: perfect reconstruction (no accent — robotic/neutral)
+- Near-manifold: slight deviation (accent — personal, expressive)
+- Far from manifold: increasing distortion (incoherent — limit of expression)
+
+#### What Converges Toward What
+
+Critical principle: the heads converge toward the deterministic pipeline,
+not the other way around. The substrate (96 nuclei, cited constants, published
+science) is NEVER modified by the learned heads. The heads are tools that
+learn to mimic and invert the substrate's behavior.
+
+```
+Deterministic pipeline:  IMMUTABLE. Source of truth. Changed only by scientist.
+Head 1 (mel → C³):      Converges toward pipeline. Approximation quality
+                         measurable by ‖head₁(mel) - pipeline(mel)‖².
+Head 2 (C³ → mel):      Converges toward inverse. Quality measurable by
+                         cycle consistency: pipeline(head₂(c3)) ≈ c3.
+```
+
+This preserves the glass-box guarantee: the deterministic pipeline remains
+fully transparent and inspectable. The learned heads are the "muscles" that
+enable expression, but the "brain" (substrate) retains full scientific rigor.
+
+#### Why This Is Still Not Machine Learning (in the ML sense)
+
+| Aspect | Conventional ML | MI Learned Heads |
+|---|---|---|
+| What generates targets? | Human annotations | Deterministic pipeline (scientific artifact) |
+| What is learned? | Unknown function | Known function's compression + inverse |
+| Is the learned model the system? | Yes (IS the model) | No (SERVES the substrate) |
+| Can you remove it? | System ceases to exist | System works fine (deterministic pipeline intact) |
+| Purpose | Replace human judgment | Enable expression for a transparent system |
+| Interpretability | Post-hoc | Irrelevant — the real computation is in the substrate |
+
+The heads are **prosthetics**: they give the system the ability to speak (generate
+audio), but they don't change what it thinks. The thinking is in the substrate.
+If you remove the heads, the system still perceives, analyzes, and experiences.
+It just can't express.
+
+#### Ψ³ → C³ Remains Analytical
+
+Note: the Ψ³⁻¹ inversion (§13.3) is still analytical, not learned:
+
+```
+Ψ³ (27D) → least-squares on known formulas → target (ram, neuro)
+target (ram, neuro) → known RegionLinks/NeuroLinks → target C³
+
+Then: target C³ → Head 2 → mel → vocoder → audio
+```
+
+Only the C³→mel step requires learning. Everything else is analytically invertible
+because the formulas are explicit and transparent.
 
 ---
 
@@ -1576,12 +1779,15 @@ PHASE E — Human-in-the-Loop:
 │        PERCEPTION (forward)              EXPRESSION (inverse)             │
 │        ──────────────────               ────────────────────              │
 │                                                                           │
-│  Audio ──────► R³ ◄────── R³⁻¹ (vocoder / STFT inversion) ◄── Audio     │
-│                │                          ▲                               │
-│                ▼                          │                               │
-│               H³ ◄────── H³⁻¹ (temporal trajectory synthesis)            │
-│                │                          ▲                               │
-│                ▼                          │                               │
+│  Audio ──────► mel ◄───────────── vocoder (HiFi-GAN) ◄──── mel          │
+│                │                                              ▲           │
+│                ▼                                              │           │
+│               R³ ─── (deterministic) ───►┐    ┌── HEAD 2 (C³→mel) ──┘   │
+│                │                          │    │    (learned inverse)     │
+│                ▼                          │    │                          │
+│               H³ ─── (deterministic) ───►│    │                          │
+│                │                          │    ▲                          │
+│                ▼                          ▼    │                          │
 │  ┌─────── C³ BRAIN ──────────────────────────────────────────────────┐   │
 │  │                                                                    │   │
 │  │  ┌─ SUBSTRATE ───────────────────────────────────────────────────┐│   │
@@ -1593,8 +1799,8 @@ PHASE E — Human-in-the-Loop:
 │  │  │  4 neurochemicals — cited production/modulation               ││   │
 │  │  │  Changed ONLY by human scientist through evolution             ││   │
 │  │  │                                                                ││   │
-│  │  │  INVERSE: RegionLinks + NeuroLinks are explicit ── invertible ││   │
-│  │  │  compute() is differentiable ── autograd to R³ targets        ││   │
+│  │  │  INVERSE: Ψ³⁻¹ analytical, C³→mel via learned Head 2          ││   │
+│  │  │  Head 2 trained on (mel,C³) pairs from this pipeline          ││   │
 │  │  └───────────────────────────────────────────────────────────────┘│   │
 │  │       ▲ always recoverable via reset_to_substrate()               │   │
 │  │  ┌─ PLASTICITY (per listener) ───────────────────────────────────┐│   │
@@ -1628,7 +1834,8 @@ PHASE E — Human-in-the-Loop:
 │  │  └───────────────────────────────────────────────────────────────┘│   │
 │  │                                                                    │   │
 │  │  OUTPUT:  BrainOutput(tensor, ram, neuro, psi)     ──► forward    │   │
-│  │  INPUT:   TargetState(target_ram, target_neuro)    ◄── inverse    │   │
+│  │  INPUT:   TargetState(target_c3)                   ◄── inverse    │   │
+│  │  HEADS:   Head1(mel→C³) + Head2(C³→mel) trained on pipeline data  │   │
 │  └────────────────────────────────────────────────────────────────────┘   │
 │             │                              ▲                              │
 │             ▼                              │                              │
@@ -1680,7 +1887,9 @@ PHASE E — Human-in-the-Loop:
 | **Autonomy** | Emergent behaviors from Substrate + Plasticity. Not programmed — arises from deterministic rules + unique history |
 | **Bidirectional cognition** | The principle that the MI pipeline is invertible: Audio → Ψ³ (perception) AND Ψ³ → Audio (expression). Sound and cognitive state are two views of the same mathematical object |
 | **Sonic language** | Communication medium created by bidirectional MI: 128D continuous × 172 Hz × 12 temporal scales. Pre-linguistic, affect-native, neurally grounded. ~22,000 bits/sec vs ~150 bits/sec for speech |
-| **Expression pipeline** | The inverse of perception: Ψ³ → C³⁻¹ → H³⁻¹ → R³⁻¹ → Audio. Generates sound from cognitive state |
+| **Expression pipeline** | The inverse of perception: Ψ³ → analytical Ψ³⁻¹ → target C³ → Head 2 → mel → vocoder → Audio. Generates sound from cognitive state |
+| **Learned inverse head** | A lightweight neural network trained on (mel, C³) pairs produced by the deterministic forward pipeline. Head 1 approximates mel→C³, Head 2 generates C³→mel. The heads serve the substrate — they don't replace it |
+| **Cycle consistency** | Verification that pipeline(head₂(c3)) ≈ c3. If generating mel from a brain state and re-analyzing it yields the same brain state, the inverse is faithful |
 | **Isomorphic experience** | When two agents process the same sound through the same cognitive pipeline, they arrive at the same internal state. The basis of MI empathy |
 | **Cognitive resonance** | Bidirectional sonic exchange between agents converging toward shared cognitive state without symbolic language |
 | **Sonic voice / accent** | Each listener's unique expression pattern, emergent from plasticity state. Same Ψ³ target → different sound because personal gains, posteriors, baselines differ |
@@ -1713,6 +1922,7 @@ PHASE E — Human-in-the-Loop:
 | Implementation code | To be built during implementation phase |
 | Training curriculum design (which music, in what order) | Separate document (to be created) |
 | Population experiment protocols | Separate document (to be created) |
-| Inverse pipeline implementation (R³⁻¹, H³⁻¹, C³⁻¹, Ψ³⁻¹) | §13.12 roadmap → separate implementation docs |
+| Learned inverse head architecture (layer count, hidden dim, etc.) | §13.13 concept → separate implementation doc |
+| Training data pipeline (mel, C³ pair collection infrastructure) | To be built during Phase B (§13.12) |
 | Neural vocoder selection (HiFi-GAN, Vocos, etc.) | To be evaluated during Phase C |
-| Sonic communication protocol specification | To be designed after Phase D |
+| Sonic communication protocol specification | To be designed after Phase E |
