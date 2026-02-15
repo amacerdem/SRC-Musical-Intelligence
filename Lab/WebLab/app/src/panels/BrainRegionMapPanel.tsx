@@ -90,7 +90,7 @@ export default function BrainRegionMapPanel(): React.ReactElement {
             preserveAspectRatio="xMidYMid meet"
           >
             <rect x={0} y={0} width={SVG_W} height={SVG_H} fill={BG} />
-            {projected.map(({ region, svgX, svgY }, idx) => {
+            {projected.map(({ region, svgX, svgY }) => {
               const activation = frameValues
                 ? Math.max(0, Math.min(1, frameValues[region.index] ?? 0))
                 : 0;

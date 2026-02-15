@@ -1,34 +1,9 @@
 import { useStore } from "../store";
 import { colors, fonts, sizes } from "../theme/tokens";
-
-/** Placeholder for a detail sub-panel. */
-function DetailSlot({ label }: { label: string }) {
-  return (
-    <div
-      className="panel"
-      style={{
-        flex: 1,
-        minWidth: 0,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "100%",
-      }}
-    >
-      <span
-        style={{
-          fontSize: 10,
-          fontWeight: 600,
-          textTransform: "uppercase",
-          letterSpacing: "0.05em",
-          color: colors.text.muted,
-        }}
-      >
-        {label}
-      </span>
-    </div>
-  );
-}
+import RegionLinkFlowPanel from "../panels/RegionLinkFlowPanel";
+import NeuroLinkEffectsPanel from "../panels/NeuroLinkEffectsPanel";
+import CitationPanel from "../panels/CitationPanel";
+import LayerInspectorPanel from "../panels/LayerInspectorPanel";
 
 export function DetailDrawer() {
   const drawerOpen = useStore((s) => s.detailDrawerOpen);
@@ -74,7 +49,6 @@ export function DetailDrawer() {
             colors.bg.surface;
         }}
       >
-        {/* Chevron indicator */}
         <span
           style={{
             fontSize: 12,
@@ -109,12 +83,21 @@ export function DetailDrawer() {
             gap: sizes.panelGap,
             padding: sizes.panelGap,
             minHeight: 0,
+            overflow: "auto",
           }}
         >
-          <DetailSlot label="Region Link Flow" />
-          <DetailSlot label="NeuroLink Effects" />
-          <DetailSlot label="Citations" />
-          <DetailSlot label="Layer Inspector" />
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <RegionLinkFlowPanel />
+          </div>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <NeuroLinkEffectsPanel />
+          </div>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <CitationPanel />
+          </div>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <LayerInspectorPanel />
+          </div>
         </div>
       )}
     </div>

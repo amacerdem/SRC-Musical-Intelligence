@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Unison (P1)",
+    "semitones": 0,
+    "start_s": 0.0,
+    "end_s": 8.0,
+    "freq1": 261.63,
+    "freq2": 261.63
+  },
+  {
+    "name": "Perfect Fifth (P5)",
+    "semitones": 7,
+    "start_s": 8.5,
+    "end_s": 16.5,
+    "freq1": 261.63,
+    "freq2": 392.0
+  },
+  {
+    "name": "Perfect Fourth (P4)",
+    "semitones": 5,
+    "start_s": 17.0,
+    "end_s": 25.0,
+    "freq1": 261.63,
+    "freq2": 349.23
+  },
+  {
+    "name": "Major Third (M3)",
+    "semitones": 4,
+    "start_s": 25.5,
+    "end_s": 33.5,
+    "freq1": 261.63,
+    "freq2": 329.63
+  },
+  {
+    "name": "Minor Sixth (m6)",
+    "semitones": 8,
+    "start_s": 34.0,
+    "end_s": 42.0,
+    "freq1": 261.63,
+    "freq2": 415.3
+  },
+  {
+    "name": "Tritone (TT)",
+    "semitones": 6,
+    "start_s": 42.5,
+    "end_s": 50.5,
+    "freq1": 261.63,
+    "freq2": 369.99
+  }
+]

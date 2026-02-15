@@ -37,7 +37,7 @@ export default function H3HorizonGridPanel(): React.ReactElement {
   // Build unique rows (r3 features) and columns (horizons)
   const { rows, cols, cellMap } = useMemo(() => {
     if (demands.length === 0) {
-      return { rows: [] as string[], cols: [] as string[], cellMap: new Map<string, typeof demands[0]>() };
+      return { rows: [] as { idx: number; name: string }[], cols: [] as { horizon: number; label: string }[], cellMap: new Map<string, typeof demands[0]>() };
     }
     const rowSet = new Map<number, string>();
     const colSet = new Map<number, string>();

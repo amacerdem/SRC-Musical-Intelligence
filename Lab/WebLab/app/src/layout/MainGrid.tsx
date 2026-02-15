@@ -1,33 +1,10 @@
-import { colors, sizes } from "../theme/tokens";
-
-// Panel placeholders — each will be replaced by a real visualization component.
-// Importing from ../panels/ when those files are implemented.
-
-function PanelSlot({ label }: { label: string }) {
-  return (
-    <div
-      className="panel"
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        minHeight: 120,
-      }}
-    >
-      <span
-        style={{
-          fontSize: 11,
-          fontWeight: 600,
-          textTransform: "uppercase",
-          letterSpacing: "0.05em",
-          color: colors.text.muted,
-        }}
-      >
-        {label}
-      </span>
-    </div>
-  );
-}
+import { sizes } from "../theme/tokens";
+import R3HeatmapPanel from "../panels/R3HeatmapPanel";
+import NucleusOutputPanel from "../panels/NucleusOutputPanel";
+import BrainRegionMapPanel from "../panels/BrainRegionMapPanel";
+import NeurochemicalTimelinePanel from "../panels/NeurochemicalTimelinePanel";
+import PsiStatePanel from "../panels/PsiStatePanel";
+import H3HorizonGridPanel from "../panels/H3HorizonGridPanel";
 
 export function MainGrid() {
   return (
@@ -38,35 +15,35 @@ export function MainGrid() {
         padding: sizes.panelGap,
         display: "grid",
         gridTemplateColumns: "1fr 1fr",
-        gridTemplateRows: "auto auto 1fr 1fr",
+        gridTemplateRows: "minmax(200px, 2fr) minmax(180px, 2fr) minmax(280px, 3fr) minmax(280px, 3fr)",
         gap: sizes.panelGap,
         overflow: "auto",
       }}
     >
       {/* Row 1: R3 Heatmap — full width */}
-      <div style={{ gridColumn: "1 / -1" }}>
-        <PanelSlot label="R3 Heatmap" />
+      <div style={{ gridColumn: "1 / -1", minHeight: 0, height: "100%" }}>
+        <R3HeatmapPanel />
       </div>
 
       {/* Row 2: Nucleus Output — full width */}
-      <div style={{ gridColumn: "1 / -1" }}>
-        <PanelSlot label="Nucleus Output" />
+      <div style={{ gridColumn: "1 / -1", minHeight: 0, height: "100%" }}>
+        <NucleusOutputPanel />
       </div>
 
       {/* Row 3: Brain Region Map (left) + Neurochemical Timeline (right) */}
-      <div>
-        <PanelSlot label="Brain Region Map" />
+      <div style={{ minHeight: 0, height: "100%" }}>
+        <BrainRegionMapPanel />
       </div>
-      <div>
-        <PanelSlot label="Neurochemical Timeline" />
+      <div style={{ minHeight: 0, height: "100%" }}>
+        <NeurochemicalTimelinePanel />
       </div>
 
       {/* Row 4: Psi State (left) + H3 Horizon Grid (right) */}
-      <div>
-        <PanelSlot label="Psi State" />
+      <div style={{ minHeight: 0, height: "100%" }}>
+        <PsiStatePanel />
       </div>
-      <div>
-        <PanelSlot label="H3 Horizon Grid" />
+      <div style={{ minHeight: 0, height: "100%" }}>
+        <H3HorizonGridPanel />
       </div>
     </div>
   );

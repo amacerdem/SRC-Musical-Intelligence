@@ -30,26 +30,26 @@ export const colors = {
     information: "#8b5cf6",
     timbreExt: "#a855f7",
     modulation: "#ec4899",
-  } as Record<string, string>,
+  },
 
   scope: {
     internal: "#3b82f6",
     external: "#22c55e",
     hybrid: "#f59e0b",
-  } as Record<string, string>,
+  },
 
   neuro: {
     DA: "#f97316",
     NE: "#06b6d4",
     OPI: "#fbbf24",
     "5HT": "#10b981",
-  } as Record<string, string>,
+  },
 
   regions: {
     cortical: "#3b82f6",
     subcortical: "#a855f7",
     brainstem: "#ef4444",
-  } as Record<string, string>,
+  },
 
   psi: {
     affect: "#f43f5e",
@@ -58,13 +58,13 @@ export const colors = {
     bodily: "#06b6d4",
     cognitive: "#3b82f6",
     temporal: "#22c55e",
-  } as Record<string, string>,
+  },
 
   tiers: {
     alpha: "#22c55e",
     beta: "#f59e0b",
     gamma: "#ef4444",
-  } as Record<string, string>,
+  },
 
   roles: {
     relay: "#64748b",
@@ -72,7 +72,7 @@ export const colors = {
     associator: "#8b5cf6",
     integrator: "#f59e0b",
     hub: "#ef4444",
-  } as Record<string, string>,
+  },
 } as const;
 
 export const fonts = {
@@ -90,17 +90,17 @@ export const sizes = {
   panelRadius: 6,
 } as const;
 
-/** Map R³ group letter (A-K) to color key. */
+/** Map R³ group letter (A-K) to color. */
 export const R3_GROUP_COLOR_MAP: Record<string, string> = {
-  A: colors.r3Groups.consonance,
-  B: colors.r3Groups.energy,
-  C: colors.r3Groups.timbre,
-  D: colors.r3Groups.change,
-  E: colors.r3Groups.interactions,
-  F: colors.r3Groups.pitchChroma,
-  G: colors.r3Groups.rhythmGroove,
-  H: colors.r3Groups.harmony,
-  I: colors.r3Groups.information,
-  J: colors.r3Groups.timbreExt,
-  K: colors.r3Groups.modulation,
+  A: "#ef4444",
+  B: "#f97316",
+  C: "#eab308",
+  D: "#84cc16",
+  E: "#22c55e",
+  F: "#14b8a6",
+  G: "#06b6d4",
+  H: "#3b82f6",
+  I: "#8b5cf6",
+  J: "#a855f7",
+  K: "#ec4899",
 };

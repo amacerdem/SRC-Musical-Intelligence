@@ -42,16 +42,19 @@ def run_pipeline(audio_path: str, slug: str, output_dir: Path) -> None:
     print(f"[WebLab] Output:     {exp_dir}")
 
     # ── 1. Load audio ─────────────────────────────────────────
-    import torchaudio
+    import soundfile as sf
+    import librosa
 
     t0 = time.time()
-    waveform, sr = torchaudio.load(audio_path)
-    if sr != 44100:
-        waveform = torchaudio.functional.resample(waveform, sr, 44100)
-        sr = 44100
+    audio_np, sr = sf.read(audio_path)
     # Mono
-    if waveform.shape[0] > 1:
-        waveform = waveform.mean(dim=0, keepdim=True)
+    if audio_np.ndim == 2:
+        audio_np = audio_np.mean(axis=1)
+    # Resample to 44100 if needed
+    if sr != 44100:
+        audio_np = librosa.resample(audio_np, orig_sr=sr, target_sr=44100)
+        sr = 44100
+    waveform = torch.from_numpy(audio_np).float().unsqueeze(0)  # (1, N)
     duration_s = waveform.shape[-1] / sr
     print(f"  Audio loaded: {duration_s:.1f}s @ {sr}Hz ({time.time()-t0:.1f}s)")
 
@@ -60,18 +63,16 @@ def run_pipeline(audio_path: str, slug: str, output_dir: Path) -> None:
 
     # ── 2. Cochlea (mel spectrogram) ──────────────────────────
     t0 = time.time()
-    mel_transform = torchaudio.transforms.MelSpectrogram(
-        sample_rate=sr, n_fft=2048, hop_length=256, n_mels=128
+    mel_np = librosa.feature.melspectrogram(
+        y=audio_np, sr=sr, n_fft=2048, hop_length=256, n_mels=128
     )
-    mel = mel_transform(waveform)  # (1, 128, T)
-    mel = torch.log1p(mel)
+    mel_np = np.log1p(mel_np)
     # Normalize to [0, 1]
-    mel_min = mel.min()
-    mel_range = mel.max() - mel_min
+    mel_min = mel_np.min()
+    mel_range = mel_np.max() - mel_min
     if mel_range > 0:
-        mel = (mel - mel_min) / mel_range
-    mel = mel.unsqueeze(0)  # (1, 1, 128, T) → need (B, 128, T) for R3
-    mel = mel.squeeze(0)    # (1, 128, T)
+        mel_np = (mel_np - mel_min) / mel_range
+    mel = torch.from_numpy(mel_np).float().unsqueeze(0)  # (1, 128, T)
     T = mel.shape[-1]
     FRAME_RATE = sr / 256
     print(f"  Mel spectrogram: T={T}, frame_rate={FRAME_RATE:.2f}Hz ({time.time()-t0:.1f}s)")
