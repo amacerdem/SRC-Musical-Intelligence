@@ -57,7 +57,7 @@ class BrainOrchestrator:
         """Run the full C³ pipeline.
 
         Args:
-            r3_features: ``(B, T, 49)`` R³ spectral features.
+            r3_features: ``(B, T, 128)`` R³ spectral features.
             h3_features: Per-demand H³ time series.
             cross_unit_inputs: Optional cross-unit pathway tensors.
 

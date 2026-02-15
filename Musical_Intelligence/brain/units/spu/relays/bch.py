@@ -31,18 +31,27 @@ Critical Qualifier:
     This stimulus-dependence is captured by SDNPS (SPU-γ1), which directly
     challenges BCH's universality assumption.
 
+Temporal Architecture:
+    BCH uses H³ demands across three temporal laws:
+    - L0 (Memory):      Past — what consonance patterns have prevailed
+    - L2 (Integration): Present — current consonance in bidirectional context
+    - L1 (Prediction):  Future — predicted consonance trajectory
+
+    Horizons span 5 scales: H0 (5.8ms), H3 (23ms), H6 (200ms),
+    H12 (525ms), H16 (1s), H18 (2s).
+
 Cross-Unit Dependencies:
     BCH is the FOUNDATION of SPU. Its outputs feed:
-    - PSCL (Encoder): BCH.f01_nps → cortical pitch salience processing
-    - PCCR (Associator): BCH.f02_harmonicity → chroma tuning
+    - PSCL (Encoder): BCH.nps → cortical pitch salience processing
+    - PCCR (Associator): BCH.harmonicity → chroma tuning
     - STAI (Encoder): BCH.consonance_signal → aesthetic evaluation input
-    - SDED (Integrator): BCH.f01_nps → roughness signal baseline
+    - SDED (Integrator): BCH.nps → roughness signal baseline
     - ARU.SRP (Pathway P1): BCH.consonance_signal → opioid_proxy
     - IMU.MEAMN (Pathway P2): BCH.consonance_signal → memory binding
 """
 from __future__ import annotations
 
-from typing import Dict, Set, Tuple
+from typing import Dict, Tuple
 
 import torch
 from torch import Tensor
@@ -92,7 +101,7 @@ POR_LATENCY_GAP_MS: float = 36.0
 
 
 class BCH(Relay):
-    """Brainstem Consonance Hierarchy — SPU Relay (Depth 0, 12D).
+    """Brainstem Consonance Hierarchy — SPU Relay (Depth 0, 16D).
 
     Transforms raw R³ spectral features and H³ temporal demands into the
     foundational consonance representation for the Spectral Processing Unit.
@@ -101,11 +110,17 @@ class BCH(Relay):
     encoding (AN, 70-fiber population) through subcortical processing
     (IC, FFR generation) to the initial cortical representation (A1/HG).
 
-    Output Structure (12D):
-        E-layer (4D): f01_nps, f02_harmonicity, f03_hierarchy, f04_ffr_behavior
-        M-layer (2D): nps_t, harm_interval
-        P-layer (3D): consonance_signal, template_match, neural_pitch
-        F-layer (3D): consonance_pred, pitch_propagation, interval_expect
+    Temporal Architecture:
+        Each H³ demand uses a specific law to define its temporal domain:
+        - L0 (Memory):      looks backward — encodes the past
+        - L2 (Integration): looks both ways — encodes the present
+        - L1 (Prediction):  looks forward — encodes the future
+
+    Output Structure (16D):
+        E-layer  (4D) [0:4]:   Instantaneous features from R³ (no temporal)
+        M-layer  (4D) [4:8]:   Memory — past consonance state (L0 demands)
+        P-layer  (4D) [8:12]:  Present — context-aware now (L2 demands)
+        F-layer  (4D) [12:16]: Future — predicted trajectory (L1 demands)
     """
 
     # ------------------------------------------------------------------
@@ -118,55 +133,59 @@ class BCH(Relay):
     # ROLE and PROCESSING_DEPTH inherited from Relay (relay, 0)
 
     # ------------------------------------------------------------------
-    # Output structure — 12D with scope labels
+    # Output structure — 16D: E(4) + Memory(4) + Present(4) + Future(4)
     # ------------------------------------------------------------------
 
-    OUTPUT_DIM = 12
+    OUTPUT_DIM = 16
 
     LAYERS = (
         LayerSpec(
             code="E", name="Extraction", start=0, end=4,
             dim_names=(
-                "f01_nps",           # Neural Pitch Salience (FFR at fundamental)
-                "f02_harmonicity",   # Harmonicity Index (harmonic coincidence ratio)
-                "f03_hierarchy",     # Consonance Hierarchy ranking (P1>P5>P4>M3>m6>TT)
-                "f04_ffr_behavior",  # FFR-Behavior Correlation proxy (r=0.81)
+                "nps",           # Neural Pitch Salience (FFR at fundamental)
+                "harmonicity",   # Harmonicity Index (harmonic coincidence ratio)
+                "hierarchy",     # Consonance Hierarchy ranking (P1>P5>P4>M3>m6>TT)
+                "ffr_behavior",  # FFR-Behavior Correlation proxy (r=0.81)
             ),
             scope="internal",  # Extraction feeds downstream nuclei
         ),
         LayerSpec(
-            code="M", name="Mechanism", start=4, end=6,
+            code="M", name="Memory", start=4, end=8,
             dim_names=(
-                "nps_t",          # NPS at time t (FFR magnitude at fundamental)
-                "harm_interval",  # Harmonicity of current interval
+                "consonance_memory",  # Past consonance level (H6–H18 memory)
+                "pitch_memory",       # Past pitch state (H3–H18 memory)
+                "tonal_memory",       # Past tonal context (H6–H18 memory)
+                "spectral_memory",    # Overall spectral history (multi-scale)
             ),
-            scope="internal",  # Mechanism layer = processing artifacts
+            scope="internal",  # Memory feeds Present + Future layers
         ),
         LayerSpec(
-            code="P", name="Cognitive", start=6, end=9,
+            code="P", name="Present", start=8, end=12,
             dim_names=(
-                "consonance_signal",  # Phase-locked consonance signal
-                "template_match",     # Harmonic template match strength
-                "neural_pitch",       # Neural pitch strength
+                "consonance_signal",  # Current consonance in context
+                "template_match",     # Current harmonic template match
+                "neural_pitch",       # Current pitch clarity in context
+                "tonal_context",      # Current tonal environment
             ),
-            scope="external",  # Cognitive layer = semantic meaning
+            scope="external",  # Present layer = semantic meaning
         ),
         LayerSpec(
-            code="F", name="Forecast", start=9, end=12,
+            code="F", name="Future", start=12, end=16,
             dim_names=(
-                "consonance_pred",     # Behavioral consonance prediction
-                "pitch_propagation",   # FFR → cortical pitch processing
-                "interval_expect",     # Next interval prediction (H³ trend)
+                "consonance_forecast",  # Predicted consonance trajectory
+                "pitch_forecast",       # Predicted pitch trajectory
+                "tonal_forecast",       # Predicted tonal changes
+                "interval_forecast",    # Predicted interval changes
             ),
             scope="hybrid",  # Predictions feed downstream + carry external meaning
         ),
     )
 
     # ------------------------------------------------------------------
-    # R³ feature indices consumed
+    # R³ feature indices consumed (16 scalar + 1 via H³ = 17 unique)
     # ------------------------------------------------------------------
 
-    # Consonance group [0:7]
+    # Consonance group A [0:7]
     _R3_ROUGHNESS = 0
     _R3_SETHARES = 1
     _R3_HELMHOLTZ = 2
@@ -175,7 +194,7 @@ class BCH(Relay):
     _R3_INHARMONICITY = 5
     _R3_HARMONIC_DEV = 6
 
-    # Timbre features
+    # Timbre group C [12:21]
     _R3_TONALNESS = 14        # Harmonic-to-noise ratio (pitch clarity)
     _R3_SPECTRAL_AUTOCORR = 17  # Harmonic periodicity
 
@@ -184,25 +203,44 @@ class BCH(Relay):
     _R3_TRIST2 = 19  # 2nd-4th harmonic energy
     _R3_TRIST3 = 20  # 5th+ harmonic energy
 
-    # Interaction features
+    # Interaction features E [25:49]
     _R3_X_L5L7_START = 41  # Consonance × Timbre coupling (8D: [41:49])
     _R3_X_L5L7_END = 49
 
+    # Pitch & Chroma group F [49:65]
+    _R3_PITCH_CLASS_ENTROPY = 62  # Chroma distribution entropy (low = tonal clarity)
+    _R3_PITCH_SALIENCE = 63       # Harmonic peak prominence (direct NPS measure)
+
+    # Harmony group H [75:87]
+    _R3_KEY_CLARITY = 75          # Krumhansl-Kessler tonal center strength
+    _R3_TONAL_STABILITY = 84      # Stability of tonal center over time
+
     # ------------------------------------------------------------------
-    # H³ temporal demands — 16 tuples
+    # H³ temporal demands — 50 tuples organized by temporal law
+    #
+    # L2 (Integration) = Present: 21 demands at H0/H3/H6
+    # L0 (Memory)      = Past:    17 demands at H3/H6/H12/H16/H18
+    # L1 (Prediction)  = Future:  12 demands at H6/H12/H16
     # ------------------------------------------------------------------
 
     @property
     def h3_demand(self) -> Tuple[H3DemandSpec, ...]:
-        """16 temporal demands spanning consonance, fusion, and spectral dynamics.
+        """50 temporal demands across three laws and six horizon scales.
 
-        Horizons: H0=25ms (frame-level), H3=100ms (note-level), H6=200ms (phrase-onset)
+        Present (L2): H0 (5.8ms), H3 (23ms), H6 (200ms) — bidirectional
+        Past    (L0): H3 (23ms), H6 (200ms), H12 (525ms), H16 (1s), H18 (2s)
+        Future  (L1): H6 (200ms), H12 (525ms), H16 (1s) — forward-looking
         """
         return (
-            # --- Roughness dynamics (R³[0]) ---
+            # ═══════════════════════════════════════════════════════════
+            # PRESENT demands (L2 = Integration) — 21 tuples
+            # Bidirectional context around current frame
+            # ═══════════════════════════════════════════════════════════
+
+            # --- Roughness (R³[0]) — 2 present scales ---
             H3DemandSpec(
                 r3_idx=0, r3_name="roughness",
-                horizon=0, horizon_label="25ms frame",
+                horizon=0, horizon_label="5.8ms frame",
                 morph=0, morph_name="value",
                 law=2, law_name="integration",
                 purpose="Current dissonance level",
@@ -210,25 +248,17 @@ class BCH(Relay):
             ),
             H3DemandSpec(
                 r3_idx=0, r3_name="roughness",
-                horizon=3, horizon_label="100ms note",
+                horizon=3, horizon_label="23ms note",
                 morph=1, morph_name="mean",
                 law=2, law_name="integration",
-                purpose="Mean dissonance over note-level window",
+                purpose="Mean dissonance over note-level context",
                 citation="Bidelman & Krishnan 2009",
             ),
-            H3DemandSpec(
-                r3_idx=0, r3_name="roughness",
-                horizon=6, horizon_label="200ms phrase",
-                morph=18, morph_name="trend",
-                law=0, law_name="memory",
-                purpose="Dissonance trajectory for prediction",
-                citation="Bidelman 2013",
-            ),
 
-            # --- Helmholtz-Kang consonance (R³[2]) ---
+            # --- Helmholtz consonance (R³[2]) — 2 present scales ---
             H3DemandSpec(
                 r3_idx=2, r3_name="helmholtz_kang",
-                horizon=0, horizon_label="25ms frame",
+                horizon=0, horizon_label="5.8ms frame",
                 morph=0, morph_name="value",
                 law=2, law_name="integration",
                 purpose="Current consonance measure",
@@ -236,71 +266,47 @@ class BCH(Relay):
             ),
             H3DemandSpec(
                 r3_idx=2, r3_name="helmholtz_kang",
-                horizon=3, horizon_label="100ms note",
+                horizon=3, horizon_label="23ms note",
                 morph=1, morph_name="mean",
                 law=2, law_name="integration",
-                purpose="Mean consonance over note-level window",
+                purpose="Mean consonance over note-level context",
                 citation="Bidelman & Krishnan 2009",
             ),
 
-            # --- Stumpf tonal fusion (R³[3]) ---
+            # --- Stumpf fusion (R³[3]) — 1 present scale ---
             H3DemandSpec(
                 r3_idx=3, r3_name="stumpf_fusion",
-                horizon=0, horizon_label="25ms frame",
+                horizon=0, horizon_label="5.8ms frame",
                 morph=0, morph_name="value",
                 law=2, law_name="integration",
                 purpose="Current tonal fusion strength",
                 citation="Stumpf 1898; McDermott 2010",
             ),
-            H3DemandSpec(
-                r3_idx=3, r3_name="stumpf_fusion",
-                horizon=6, horizon_label="200ms phrase",
-                morph=1, morph_name="mean",
-                law=0, law_name="memory",
-                purpose="Fusion stability over phrase-onset window",
-                citation="McDermott et al. 2010",
-            ),
 
-            # --- Inharmonicity (R³[5]) ---
+            # --- Inharmonicity (R³[5]) — 1 present scale ---
             H3DemandSpec(
                 r3_idx=5, r3_name="inharmonicity",
-                horizon=0, horizon_label="25ms frame",
+                horizon=0, horizon_label="5.8ms frame",
                 morph=0, morph_name="value",
                 law=2, law_name="integration",
                 purpose="Current deviation from harmonic series",
                 citation="Bidelman & Heinz 2011",
             ),
-            H3DemandSpec(
-                r3_idx=5, r3_name="inharmonicity",
-                horizon=3, horizon_label="100ms note",
-                morph=18, morph_name="trend",
-                law=0, law_name="memory",
-                purpose="Inharmonicity trajectory for spectral change",
-                citation="Bidelman 2013",
-            ),
 
-            # --- Harmonic deviation (R³[6]) ---
+            # --- Harmonic deviation (R³[6]) — 1 present scale ---
             H3DemandSpec(
                 r3_idx=6, r3_name="harmonic_deviation",
-                horizon=0, horizon_label="25ms frame",
+                horizon=0, horizon_label="5.8ms frame",
                 morph=0, morph_name="value",
                 law=2, law_name="integration",
                 purpose="Current energy variance in partials",
                 citation="Bidelman & Heinz 2011",
             ),
-            H3DemandSpec(
-                r3_idx=6, r3_name="harmonic_deviation",
-                horizon=3, horizon_label="100ms note",
-                morph=1, morph_name="mean",
-                law=0, law_name="memory",
-                purpose="Mean partial deviation over note window",
-                citation="Bidelman 2013",
-            ),
 
-            # --- Tristimulus (spectral energy balance: R³[18-20]) ---
+            # --- Tristimulus (R³[18-20]) — 3 present scales ---
             H3DemandSpec(
                 r3_idx=18, r3_name="tristimulus1",
-                horizon=0, horizon_label="25ms frame",
+                horizon=0, horizon_label="5.8ms frame",
                 morph=0, morph_name="value",
                 law=2, law_name="integration",
                 purpose="Fundamental (F0) energy for NPS weighting",
@@ -308,7 +314,7 @@ class BCH(Relay):
             ),
             H3DemandSpec(
                 r3_idx=19, r3_name="tristimulus2",
-                horizon=0, horizon_label="25ms frame",
+                horizon=0, horizon_label="5.8ms frame",
                 morph=0, morph_name="value",
                 law=2, law_name="integration",
                 purpose="Mid-harmonic energy (2nd-4th) for timbre context",
@@ -316,17 +322,17 @@ class BCH(Relay):
             ),
             H3DemandSpec(
                 r3_idx=20, r3_name="tristimulus3",
-                horizon=0, horizon_label="25ms frame",
+                horizon=0, horizon_label="5.8ms frame",
                 morph=0, morph_name="value",
                 law=2, law_name="integration",
                 purpose="High-harmonic energy (5th+) for brightness context",
                 citation="Pollack 1952",
             ),
 
-            # --- Consonance × Timbre interaction (R³[41]) ---
+            # --- Coupling (R³[41]) — 2 present scales ---
             H3DemandSpec(
                 r3_idx=41, r3_name="x_l5l7_0",
-                horizon=3, horizon_label="100ms note",
+                horizon=3, horizon_label="23ms note",
                 morph=0, morph_name="value",
                 law=2, law_name="integration",
                 purpose="Consonance-timbre coupling strength",
@@ -340,6 +346,358 @@ class BCH(Relay):
                 purpose="Harmonic periodicity in coupling signal",
                 citation="Trulla et al. 2018",
             ),
+
+            # --- Pitch class entropy (R³[62]) — 2 present scales ---
+            H3DemandSpec(
+                r3_idx=62, r3_name="pitch_class_entropy",
+                horizon=0, horizon_label="5.8ms frame",
+                morph=0, morph_name="value",
+                law=2, law_name="integration",
+                purpose="Current chroma concentration (low = tonal clarity)",
+                citation="Krumhansl 1990",
+            ),
+            H3DemandSpec(
+                r3_idx=62, r3_name="pitch_class_entropy",
+                horizon=3, horizon_label="23ms note",
+                morph=1, morph_name="mean",
+                law=2, law_name="integration",
+                purpose="Mean tonal clarity over note-level context",
+                citation="Krumhansl 1990",
+            ),
+
+            # --- Pitch salience (R³[63]) — 3 present scales ---
+            H3DemandSpec(
+                r3_idx=63, r3_name="pitch_salience",
+                horizon=0, horizon_label="5.8ms frame",
+                morph=0, morph_name="value",
+                law=2, law_name="integration",
+                purpose="Current pitch salience (direct NPS)",
+                citation="Parncutt 1989",
+            ),
+            H3DemandSpec(
+                r3_idx=63, r3_name="pitch_salience",
+                horizon=3, horizon_label="23ms note",
+                morph=0, morph_name="value",
+                law=2, law_name="integration",
+                purpose="Pitch salience at note-level",
+                citation="Bidelman & Krishnan 2009",
+            ),
+            H3DemandSpec(
+                r3_idx=63, r3_name="pitch_salience",
+                horizon=6, horizon_label="200ms phrase",
+                morph=0, morph_name="value",
+                law=2, law_name="integration",
+                purpose="Pitch salience at phrase-onset level",
+                citation="Bidelman 2013",
+            ),
+
+            # --- Key clarity (R³[75]) — 3 present scales ---
+            H3DemandSpec(
+                r3_idx=75, r3_name="key_clarity",
+                horizon=3, horizon_label="23ms note",
+                morph=0, morph_name="value",
+                law=2, law_name="integration",
+                purpose="Key clarity at note-level for tonal context",
+                citation="Krumhansl & Kessler 1982",
+            ),
+            H3DemandSpec(
+                r3_idx=75, r3_name="key_clarity",
+                horizon=3, horizon_label="23ms note",
+                morph=1, morph_name="mean",
+                law=2, law_name="integration",
+                purpose="Sustained key clarity over note-level context",
+                citation="Krumhansl & Kessler 1982",
+            ),
+            H3DemandSpec(
+                r3_idx=75, r3_name="key_clarity",
+                horizon=6, horizon_label="200ms phrase",
+                morph=0, morph_name="value",
+                law=2, law_name="integration",
+                purpose="Key clarity at phrase-onset level",
+                citation="Krumhansl 1990",
+            ),
+
+            # --- Tonal stability (R³[84]) — 1 present scale ---
+            H3DemandSpec(
+                r3_idx=84, r3_name="tonal_stability",
+                horizon=3, horizon_label="23ms note",
+                morph=0, morph_name="value",
+                law=2, law_name="integration",
+                purpose="Current tonal center stability",
+                citation="Krumhansl 1990",
+            ),
+
+            # ═══════════════════════════════════════════════════════════
+            # PAST demands (L0 = Memory) — 17 tuples
+            # Causal lookback: what has happened
+            # ═══════════════════════════════════════════════════════════
+
+            # --- Roughness memory (R³[0]) — 3 past scales ---
+            H3DemandSpec(
+                r3_idx=0, r3_name="roughness",
+                horizon=6, horizon_label="200ms phrase",
+                morph=18, morph_name="trend",
+                law=0, law_name="memory",
+                purpose="Short-term roughness direction (200ms lookback)",
+                citation="Bidelman 2013",
+            ),
+            H3DemandSpec(
+                r3_idx=0, r3_name="roughness",
+                horizon=12, horizon_label="525ms beat",
+                morph=1, morph_name="mean",
+                law=0, law_name="memory",
+                purpose="Beat-level roughness history",
+                citation="Plomp & Levelt 1965",
+            ),
+            H3DemandSpec(
+                r3_idx=0, r3_name="roughness",
+                horizon=16, horizon_label="1s measure",
+                morph=1, morph_name="mean",
+                law=0, law_name="memory",
+                purpose="Measure-level roughness history",
+                citation="Plomp & Levelt 1965",
+            ),
+
+            # --- Helmholtz memory (R³[2]) — 2 past scales ---
+            H3DemandSpec(
+                r3_idx=2, r3_name="helmholtz_kang",
+                horizon=12, horizon_label="525ms beat",
+                morph=1, morph_name="mean",
+                law=0, law_name="memory",
+                purpose="Beat-level consonance history",
+                citation="Helmholtz 1863; Kang 2010",
+            ),
+            H3DemandSpec(
+                r3_idx=2, r3_name="helmholtz_kang",
+                horizon=18, horizon_label="2s phrase",
+                morph=1, morph_name="mean",
+                law=0, law_name="memory",
+                purpose="Phrase-level consonance history",
+                citation="Helmholtz 1863",
+            ),
+
+            # --- Stumpf memory (R³[3]) — 2 past scales ---
+            H3DemandSpec(
+                r3_idx=3, r3_name="stumpf_fusion",
+                horizon=6, horizon_label="200ms phrase",
+                morph=1, morph_name="mean",
+                law=0, law_name="memory",
+                purpose="Short-term fusion history",
+                citation="McDermott et al. 2010",
+            ),
+            H3DemandSpec(
+                r3_idx=3, r3_name="stumpf_fusion",
+                horizon=16, horizon_label="1s measure",
+                morph=1, morph_name="mean",
+                law=0, law_name="memory",
+                purpose="Measure-level fusion history",
+                citation="Stumpf 1898",
+            ),
+
+            # --- Inharmonicity memory (R³[5]) — 2 past scales ---
+            H3DemandSpec(
+                r3_idx=5, r3_name="inharmonicity",
+                horizon=3, horizon_label="23ms note",
+                morph=18, morph_name="trend",
+                law=0, law_name="memory",
+                purpose="Short-term inharmonicity trend",
+                citation="Bidelman 2013",
+            ),
+            H3DemandSpec(
+                r3_idx=5, r3_name="inharmonicity",
+                horizon=12, horizon_label="525ms beat",
+                morph=1, morph_name="mean",
+                law=0, law_name="memory",
+                purpose="Beat-level inharmonicity history",
+                citation="Bidelman & Heinz 2011",
+            ),
+
+            # --- Harmonic deviation memory (R³[6]) — 2 past scales ---
+            H3DemandSpec(
+                r3_idx=6, r3_name="harmonic_deviation",
+                horizon=3, horizon_label="23ms note",
+                morph=1, morph_name="mean",
+                law=0, law_name="memory",
+                purpose="Short-term harmonic deviation",
+                citation="Bidelman 2013",
+            ),
+            H3DemandSpec(
+                r3_idx=6, r3_name="harmonic_deviation",
+                horizon=12, horizon_label="525ms beat",
+                morph=1, morph_name="mean",
+                law=0, law_name="memory",
+                purpose="Beat-level harmonic deviation history",
+                citation="Bidelman & Heinz 2011",
+            ),
+
+            # --- Pitch salience memory (R³[63]) — 2 past scales ---
+            H3DemandSpec(
+                r3_idx=63, r3_name="pitch_salience",
+                horizon=12, horizon_label="525ms beat",
+                morph=1, morph_name="mean",
+                law=0, law_name="memory",
+                purpose="Beat-level pitch salience history",
+                citation="Parncutt 1989",
+            ),
+            H3DemandSpec(
+                r3_idx=63, r3_name="pitch_salience",
+                horizon=18, horizon_label="2s phrase",
+                morph=1, morph_name="mean",
+                law=0, law_name="memory",
+                purpose="Phrase-level pitch salience history",
+                citation="Bidelman & Krishnan 2009",
+            ),
+
+            # --- Key clarity memory (R³[75]) — 2 past scales ---
+            H3DemandSpec(
+                r3_idx=75, r3_name="key_clarity",
+                horizon=12, horizon_label="525ms beat",
+                morph=1, morph_name="mean",
+                law=0, law_name="memory",
+                purpose="Beat-level key clarity history",
+                citation="Krumhansl & Kessler 1982",
+            ),
+            H3DemandSpec(
+                r3_idx=75, r3_name="key_clarity",
+                horizon=18, horizon_label="2s phrase",
+                morph=1, morph_name="mean",
+                law=0, law_name="memory",
+                purpose="Phrase-level key establishment",
+                citation="Krumhansl 1990",
+            ),
+
+            # --- Tonal stability memory (R³[84]) — 1 past scale ---
+            H3DemandSpec(
+                r3_idx=84, r3_name="tonal_stability",
+                horizon=6, horizon_label="200ms phrase",
+                morph=1, morph_name="mean",
+                law=0, law_name="memory",
+                purpose="Short-term tonal stability history",
+                citation="Krumhansl & Kessler 1982",
+            ),
+            H3DemandSpec(
+                r3_idx=84, r3_name="tonal_stability",
+                horizon=18, horizon_label="2s phrase",
+                morph=1, morph_name="mean",
+                law=0, law_name="memory",
+                purpose="Phrase-level tonal stability history",
+                citation="Krumhansl 1990",
+            ),
+
+            # ═══════════════════════════════════════════════════════════
+            # FUTURE demands (L1 = Prediction) — 12 tuples
+            # Forward-looking: what will happen
+            # ═══════════════════════════════════════════════════════════
+
+            # --- Roughness prediction (R³[0]) — 2 future scales ---
+            H3DemandSpec(
+                r3_idx=0, r3_name="roughness",
+                horizon=6, horizon_label="200ms phrase",
+                morph=1, morph_name="mean",
+                law=1, law_name="prediction",
+                purpose="Near-future roughness prediction (200ms ahead)",
+                citation="Plomp & Levelt 1965",
+            ),
+            H3DemandSpec(
+                r3_idx=0, r3_name="roughness",
+                horizon=12, horizon_label="525ms beat",
+                morph=18, morph_name="trend",
+                law=1, law_name="prediction",
+                purpose="Beat-level roughness trend prediction",
+                citation="Bidelman 2013",
+            ),
+
+            # --- Helmholtz prediction (R³[2]) — 2 future scales ---
+            H3DemandSpec(
+                r3_idx=2, r3_name="helmholtz_kang",
+                horizon=6, horizon_label="200ms phrase",
+                morph=1, morph_name="mean",
+                law=1, law_name="prediction",
+                purpose="Near-future consonance prediction",
+                citation="Helmholtz 1863; Kang 2010",
+            ),
+            H3DemandSpec(
+                r3_idx=2, r3_name="helmholtz_kang",
+                horizon=12, horizon_label="525ms beat",
+                morph=1, morph_name="mean",
+                law=1, law_name="prediction",
+                purpose="Beat-level consonance prediction",
+                citation="Helmholtz 1863",
+            ),
+
+            # --- Stumpf prediction (R³[3]) — 1 future scale ---
+            H3DemandSpec(
+                r3_idx=3, r3_name="stumpf_fusion",
+                horizon=6, horizon_label="200ms phrase",
+                morph=1, morph_name="mean",
+                law=1, law_name="prediction",
+                purpose="Near-future fusion prediction",
+                citation="Stumpf 1898",
+            ),
+
+            # --- Inharmonicity prediction (R³[5]) — 1 future scale ---
+            H3DemandSpec(
+                r3_idx=5, r3_name="inharmonicity",
+                horizon=6, horizon_label="200ms phrase",
+                morph=18, morph_name="trend",
+                law=1, law_name="prediction",
+                purpose="Near-future inharmonicity trajectory",
+                citation="Bidelman 2013",
+            ),
+
+            # --- Pitch salience prediction (R³[63]) — 2 future scales ---
+            H3DemandSpec(
+                r3_idx=63, r3_name="pitch_salience",
+                horizon=6, horizon_label="200ms phrase",
+                morph=1, morph_name="mean",
+                law=1, law_name="prediction",
+                purpose="Near-future pitch salience prediction",
+                citation="Parncutt 1989",
+            ),
+            H3DemandSpec(
+                r3_idx=63, r3_name="pitch_salience",
+                horizon=12, horizon_label="525ms beat",
+                morph=1, morph_name="mean",
+                law=1, law_name="prediction",
+                purpose="Beat-level pitch salience prediction",
+                citation="Bidelman & Krishnan 2009",
+            ),
+
+            # --- Key clarity prediction (R³[75]) — 2 future scales ---
+            H3DemandSpec(
+                r3_idx=75, r3_name="key_clarity",
+                horizon=6, horizon_label="200ms phrase",
+                morph=1, morph_name="mean",
+                law=1, law_name="prediction",
+                purpose="Near-future key clarity prediction",
+                citation="Krumhansl & Kessler 1982",
+            ),
+            H3DemandSpec(
+                r3_idx=75, r3_name="key_clarity",
+                horizon=16, horizon_label="1s measure",
+                morph=1, morph_name="mean",
+                law=1, law_name="prediction",
+                purpose="Measure-level key clarity prediction",
+                citation="Krumhansl 1990",
+            ),
+
+            # --- Tonal stability prediction (R³[84]) — 2 future scales ---
+            H3DemandSpec(
+                r3_idx=84, r3_name="tonal_stability",
+                horizon=6, horizon_label="200ms phrase",
+                morph=1, morph_name="mean",
+                law=1, law_name="prediction",
+                purpose="Near-future tonal stability prediction",
+                citation="Krumhansl 1990",
+            ),
+            H3DemandSpec(
+                r3_idx=84, r3_name="tonal_stability",
+                horizon=12, horizon_label="525ms beat",
+                morph=1, morph_name="mean",
+                law=1, law_name="prediction",
+                purpose="Beat-level tonal stability prediction",
+                citation="Krumhansl 1990",
+            ),
         )
 
     # ------------------------------------------------------------------
@@ -349,14 +707,14 @@ class BCH(Relay):
     @property
     def dimension_names(self) -> Tuple[str, ...]:
         return (
-            # E-layer (4D)
-            "f01_nps", "f02_harmonicity", "f03_hierarchy", "f04_ffr_behavior",
-            # M-layer (2D)
-            "nps_t", "harm_interval",
-            # P-layer (3D)
-            "consonance_signal", "template_match", "neural_pitch",
-            # F-layer (3D)
-            "consonance_pred", "pitch_propagation", "interval_expect",
+            # E-layer (4D): Extraction — instantaneous
+            "nps", "harmonicity", "hierarchy", "ffr_behavior",
+            # M-layer (4D): Memory — past
+            "consonance_memory", "pitch_memory", "tonal_memory", "spectral_memory",
+            # P-layer (4D): Present — context-aware now
+            "consonance_signal", "template_match", "neural_pitch", "tonal_context",
+            # F-layer (4D): Future — predictions
+            "consonance_forecast", "pitch_forecast", "tonal_forecast", "interval_forecast",
         )
 
     # ------------------------------------------------------------------
@@ -370,29 +728,29 @@ class BCH(Relay):
         Primary site: IC (Inferior Colliculus) — FFR generator.
         """
         return (
-            # AN: Peripheral encoding — f01_nps reflects AN population coding
+            # AN: Peripheral encoding — NPS reflects AN population coding
             RegionLink(
-                dim_name="f01_nps",
+                dim_name="nps",
                 region="AN",
                 weight=0.7,
                 citation="Bidelman & Heinz 2011",
             ),
             # CN: Early spectral processing — harmonicity detection begins here
             RegionLink(
-                dim_name="f02_harmonicity",
+                dim_name="harmonicity",
                 region="CN",
                 weight=0.5,
                 citation="Young & Oertel 2004",
             ),
             # IC: PRIMARY — FFR generation, consonance hierarchy encoding
             RegionLink(
-                dim_name="f01_nps",
+                dim_name="nps",
                 region="IC",
                 weight=0.9,
                 citation="Bidelman & Krishnan 2009",
             ),
             RegionLink(
-                dim_name="f03_hierarchy",
+                dim_name="hierarchy",
                 region="IC",
                 weight=0.85,
                 citation="Bidelman & Heinz 2011",
@@ -404,9 +762,9 @@ class BCH(Relay):
                 weight=0.6,
                 citation="Suga 2008",
             ),
-            # A1/HG: Cortical representation — pitch propagation target
+            # A1/HG: Cortical representation — pitch forecast target
             RegionLink(
-                dim_name="pitch_propagation",
+                dim_name="pitch_forecast",
                 region="A1_HG",
                 weight=0.7,
                 citation="Fishman et al. 2001",
@@ -441,9 +799,9 @@ class BCH(Relay):
                 weight=0.3,
                 citation="Blood & Zatorre 2001",
             ),
-            # Neural pitch clarity → 5HT (temporal regularity → serotonin)
+            # Pitch forecast → 5HT (temporal regularity → serotonin)
             NeuroLink(
-                dim_name="neural_pitch",
+                dim_name="pitch_forecast",
                 channel=3,  # 5HT
                 effect="amplify",
                 weight=0.2,
@@ -552,7 +910,7 @@ class BCH(Relay):
                 "Brainstem lesions affecting IC should abolish FFR consonance "
                 "effects while leaving cortical processing partially intact",
             ),
-            version="2.0.0",
+            version="3.0.0",
             paper_count=13,
         )
 
@@ -567,134 +925,360 @@ class BCH(Relay):
     ) -> Tensor:
         """Brainstem consonance computation: AN → IC → A1 pathway.
 
-        Models the ascending auditory pathway for consonance encoding:
-        1. Extract R³ consonance, timbre, and interaction features
-        2. Compute internal pitch/harmonicity representations (E-layer)
-        3. Derive mechanism outputs (M-layer)
-        4. Produce cognitive consonance signals (P-layer)
-        5. Generate predictions for downstream processing (F-layer)
+        Models the ascending auditory pathway with temporally separated
+        layers: Memory (past, L0), Present (now, L2), Future (ahead, L1).
+
+        All 16 R³ features and 50 H³ demands are consumed — no dead
+        variables.  Each temporal layer uses a specific H³ law:
+        - Memory  (Past):    L0 demands at H3–H18 (23ms–2s lookback)
+        - Present (Now):     L2 demands at H0–H6 (5.8ms–200ms context)
+        - Future  (Ahead):   L1 demands at H6–H16 (200ms–1s lookahead)
 
         Args:
             h3_features: Dict mapping (r3_idx, horizon, morph, law) 4-tuples
                          to (B, T) temporal feature scalars.
-            r3_features: (B, T, 49) R³ spectral feature tensor.
+            r3_features: (B, T, 128) R³ spectral feature tensor.
 
         Returns:
-            (B, T, 12) output tensor structured as E(4) + M(2) + P(3) + F(3).
+            (B, T, 16) output: E(4) + Memory(4) + Present(4) + Future(4).
         """
         B, T = r3_features.shape[:2]
+        device = r3_features.device
 
-        # === Stage 1: Extract R³ features ===
+        # === Stage 1: Extract R³ features (16 scalar indices) ===
 
-        # Consonance group [0:7] — the sensory basis
-        roughness = r3_features[:, :, self._R3_ROUGHNESS]           # (B, T)
-        sethares = r3_features[:, :, self._R3_SETHARES]             # (B, T)
-        helmholtz = r3_features[:, :, self._R3_HELMHOLTZ]           # (B, T)
-        stumpf = r3_features[:, :, self._R3_STUMPF]                 # (B, T)
-        inharmonicity = r3_features[:, :, self._R3_INHARMONICITY]   # (B, T)
-        harmonic_dev = r3_features[:, :, self._R3_HARMONIC_DEV]     # (B, T)
+        # Consonance group A [0:7] — all 7 used
+        roughness     = r3_features[:, :, self._R3_ROUGHNESS]          # (B, T)
+        sethares      = r3_features[:, :, self._R3_SETHARES]           # (B, T)
+        helmholtz     = r3_features[:, :, self._R3_HELMHOLTZ]          # (B, T)
+        stumpf        = r3_features[:, :, self._R3_STUMPF]             # (B, T)
+        sens_pleasant = r3_features[:, :, self._R3_SENSORY_PLEASANT]   # (B, T)
+        inharmonicity = r3_features[:, :, self._R3_INHARMONICITY]      # (B, T)
+        harmonic_dev  = r3_features[:, :, self._R3_HARMONIC_DEV]       # (B, T)
 
-        # Timbre features — pitch clarity context
-        tonalness = r3_features[:, :, self._R3_TONALNESS]           # (B, T)
-        autocorr = r3_features[:, :, self._R3_SPECTRAL_AUTOCORR]    # (B, T)
+        # Timbre group C [12:21] — pitch clarity context
+        tonalness = r3_features[:, :, self._R3_TONALNESS]              # (B, T)
+        autocorr  = r3_features[:, :, self._R3_SPECTRAL_AUTOCORR]      # (B, T)
 
         # Tristimulus — spectral energy distribution
-        trist1 = r3_features[:, :, self._R3_TRIST1]                 # (B, T)
-        trist2 = r3_features[:, :, self._R3_TRIST2]                 # (B, T)
-        trist3 = r3_features[:, :, self._R3_TRIST3]                 # (B, T)
+        trist1 = r3_features[:, :, self._R3_TRIST1]                    # (B, T)
+        trist2 = r3_features[:, :, self._R3_TRIST2]                    # (B, T)
+        trist3 = r3_features[:, :, self._R3_TRIST3]                    # (B, T)
 
-        # === Stage 2: Compute tristimulus balance ===
-        # Balanced spectral energy → higher harmonicity confidence
-        # std across tristimulus channels: low std = balanced = harmonic
-        trist_stack = torch.stack([trist1, trist2, trist3], dim=-1)  # (B, T, 3)
-        trist_balance = 1.0 - trist_stack.std(dim=-1)                # (B, T)
+        # Pitch & Chroma group F [49:65] — direct pitch measures
+        pitch_class_entropy = r3_features[:, :, self._R3_PITCH_CLASS_ENTROPY]
+        pitch_salience      = r3_features[:, :, self._R3_PITCH_SALIENCE]
 
-        # === Stage 3: E-LAYER — Explicit features (4D) ===
+        # Harmony group H [75:87] — tonal context
+        key_clarity     = r3_features[:, :, self._R3_KEY_CLARITY]
+        tonal_stability = r3_features[:, :, self._R3_TONAL_STABILITY]
 
-        # f01: Neural Pitch Salience — IC FFR at fundamental
-        # NPS ∝ tonalness × autocorrelation (pitch clarity × periodicity)
-        # Bidelman & Krishnan 2009: FFR pitch salience encodes consonance hierarchy
-        f01_nps = torch.sigmoid(ALPHA * tonalness * autocorr)        # (B, T)
+        # === Stage 2: Extract H³ temporal features (50 demands) ===
+        #
+        # Organized by law: L2 (Present), L0 (Past), L1 (Future).
+        # Signed morphs (trend = M18) are centered at 0.5:
+        #   > 0.5 = increasing,  < 0.5 = decreasing,  0.5 = stable
 
-        # f02: Harmonicity Index — harmonic coincidence ratio
-        # Harmonicity > roughness as predictor (Bidelman 2013)
-        # (1 - inharmonicity) = harmonic regularity
-        # trist_balance = spectral energy distribution quality
-        f02_harmonicity = torch.sigmoid(
-            BETA * (1.0 - inharmonicity) * trist_balance
-        )  # (B, T)
+        _neutral = torch.full((B, T), 0.5, device=device)
 
-        # f03: Consonance Hierarchy — P1 > P5 > P4 > M3 > m6 > TT
-        # Combines Helmholtz integer-ratio detection with Stumpf fusion
-        # and pitch salience (Bidelman & Heinz 2011: AN population model)
-        f03_hierarchy = torch.sigmoid(
-            GAMMA * helmholtz * stumpf
-        )  # (B, T)
+        def _h3(key, fallback=None):
+            v = h3_features.get(key)
+            if v is not None:
+                return v
+            return fallback if fallback is not None else torch.zeros(
+                B, T, device=device,
+            )
 
-        # f04: FFR-Behavior Correlation — the primary effect size
-        # Bidelman & Krishnan 2009: r = 0.81 between FFR pitch salience
-        # and behavioral consonance ratings (synthetic, N=10)
-        f04_ffr_behavior = FFR_CORR * (f01_nps + f02_harmonicity) / 2.0  # (B, T)
+        # ── PRESENT demands (L2 = Integration, 21 tuples) ──
 
-        # === Stage 4: M-LAYER — Mechanism outputs (2D) ===
+        # Roughness (R³[0])
+        h3_rough_inst    = _h3((0, 0, 0, 2),  roughness)       # H0 present
+        h3_rough_mean    = _h3((0, 3, 1, 2),  roughness)       # H3 present mean
 
-        # nps_t: NPS at current time step (FFR magnitude)
-        nps_t = f01_nps  # (B, T)
+        # Helmholtz (R³[2])
+        h3_helm_inst     = _h3((2, 0, 0, 2),  helmholtz)       # H0 present
+        h3_helm_mean     = _h3((2, 3, 1, 2),  helmholtz)       # H3 present mean
 
-        # harm_interval: Harmonicity of current interval
-        harm_interval = f02_harmonicity  # (B, T)
+        # Stumpf (R³[3])
+        h3_stumpf_inst   = _h3((3, 0, 0, 2),  stumpf)          # H0 present
 
-        # === Stage 5: P-LAYER — Cognitive consonance signals (3D) ===
+        # Inharmonicity (R³[5])
+        h3_inharm_inst   = _h3((5, 0, 0, 2),  inharmonicity)   # H0 present
 
-        # consonance_signal: Inverse of combined roughness and Sethares dissonance
-        # 1 - (roughness + sethares)/2 = perceptual consonance
-        # Plomp & Levelt 1965, Sethares 1993
-        consonance_signal = 1.0 - (roughness + sethares) / 2.0  # (B, T)
+        # Harmonic deviation (R³[6])
+        h3_hdev_inst     = _h3((6, 0, 0, 2),  harmonic_dev)    # H0 present
 
-        # template_match: How well the current spectrum matches a harmonic template
-        # Combines Helmholtz consonance with Stumpf fusion
-        template_match = (helmholtz + stumpf) / 2.0  # (B, T)
+        # Tristimulus (R³[18-20])
+        h3_trist1        = _h3((18, 0, 0, 2), trist1)
+        h3_trist2        = _h3((19, 0, 0, 2), trist2)
+        h3_trist3        = _h3((20, 0, 0, 2), trist3)
 
-        # neural_pitch: Overall neural pitch strength
-        # Aggregates NPS with tonal clarity
-        neural_pitch = (f01_nps + tonalness) / 2.0  # (B, T)
+        # Coupling (R³[41])
+        h3_coupling      = _h3((41, 3, 0, 2))                  # H3 present
+        h3_coupling_per  = _h3((41, 6, 14, 2))                 # H6 present
 
-        # === Stage 6: F-LAYER — Predictions (3D) ===
+        # Pitch class entropy (R³[62])
+        h3_pce_inst      = _h3((62, 0, 0, 2), pitch_class_entropy)
+        h3_pce_mean      = _h3((62, 3, 1, 2), pitch_class_entropy)
 
-        # consonance_pred: Predicted behavioral consonance rating
-        # Weighted combination of harmonicity and FFR correlation
-        consonance_pred = torch.sigmoid(
-            0.6 * f02_harmonicity + 0.4 * f04_ffr_behavior
-        )  # (B, T)
+        # Pitch salience (R³[63])
+        h3_pitchsal_inst = _h3((63, 0, 0, 2), pitch_salience)  # H0 present
+        h3_pitchsal_h3   = _h3((63, 3, 0, 2), pitch_salience)  # H3 present
+        h3_pitchsal_h6   = _h3((63, 6, 0, 2), pitch_salience)  # H6 present
 
-        # pitch_propagation: Brainstem → A1 pitch processing strength
-        # How strongly the brainstem FFR signal propagates to cortex
-        # Fishman et al. 2001, Tabas et al. 2019
-        pitch_propagation = torch.sigmoid(
-            0.7 * f01_nps + 0.3 * neural_pitch
-        )  # (B, T)
+        # Key clarity (R³[75])
+        h3_keyclarity_h3   = _h3((75, 3, 0, 2), key_clarity)   # H3 present
+        h3_keyclarity_mean = _h3((75, 3, 1, 2), key_clarity)   # H3 present mean
+        h3_keyclarity_h6   = _h3((75, 6, 0, 2), key_clarity)   # H6 present
 
-        # interval_expect: Next interval expectation from H³ trends
-        # Uses roughness trend and Helmholtz mean to predict upcoming consonance
-        roughness_trend = h3_features.get((0, 6, 18, 0))    # (B, T) or None
-        helmholtz_mean = h3_features.get((2, 3, 1, 2))      # (B, T) or None
+        # Tonal stability (R³[84])
+        h3_tonalstab_h3  = _h3((84, 3, 0, 2), tonal_stability) # H3 present
 
-        if roughness_trend is not None and helmholtz_mean is not None:
-            interval_expect = torch.sigmoid(
-                0.5 * helmholtz_mean + 0.5 * (1.0 - roughness_trend)
-            )  # (B, T) — high consonance expected when roughness trending down
-        else:
-            # Fallback: neutral expectation
-            interval_expect = torch.full((B, T), 0.5, device=r3_features.device)
+        # ── PAST demands (L0 = Memory, 16 tuples) ──
 
-        # === Assemble 12D output ===
+        # Roughness memory
+        h3_rough_trend_mem   = _h3((0, 6, 18, 0), _neutral)    # H6 200ms trend
+        h3_rough_H12_mem     = _h3((0, 12, 1, 0))              # H12 525ms mean
+        h3_rough_H16_mem     = _h3((0, 16, 1, 0))              # H16 1s mean
+
+        # Helmholtz memory
+        h3_helm_H12_mem      = _h3((2, 12, 1, 0))              # H12 525ms mean
+        h3_helm_H18_mem      = _h3((2, 18, 1, 0))              # H18 2s mean
+
+        # Stumpf memory
+        h3_stumpf_H6_mem     = _h3((3, 6, 1, 0),  stumpf)      # H6 200ms mean
+        h3_stumpf_H16_mem    = _h3((3, 16, 1, 0))              # H16 1s mean
+
+        # Inharmonicity memory
+        h3_inharm_trend_mem  = _h3((5, 3, 18, 0), _neutral)    # H3 trend
+        h3_inharm_H12_mem    = _h3((5, 12, 1, 0))              # H12 525ms mean
+
+        # Harmonic deviation memory
+        h3_hdev_H3_mem       = _h3((6, 3, 1, 0),  harmonic_dev) # H3 mean
+        h3_hdev_H12_mem      = _h3((6, 12, 1, 0))              # H12 525ms mean
+
+        # Pitch salience memory
+        h3_pitchsal_H12_mem  = _h3((63, 12, 1, 0))             # H12 525ms mean
+        h3_pitchsal_H18_mem  = _h3((63, 18, 1, 0))             # H18 2s mean
+
+        # Key clarity memory
+        h3_keyclarity_H12_mem = _h3((75, 12, 1, 0))            # H12 525ms mean
+        h3_keyclarity_H18_mem = _h3((75, 18, 1, 0))            # H18 2s mean
+
+        # Tonal stability memory
+        h3_tonalstab_H6_mem  = _h3((84, 6, 1, 0), tonal_stability)  # H6 200ms
+        h3_tonalstab_H18_mem = _h3((84, 18, 1, 0))             # H18 2s mean
+
+        # ── FUTURE demands (L1 = Prediction, 12 tuples) ──
+
+        # Roughness prediction
+        h3_rough_H6_pred     = _h3((0, 6, 1, 1))               # H6 200ms mean
+        h3_rough_H12_pred    = _h3((0, 12, 18, 1), _neutral)   # H12 525ms trend
+
+        # Helmholtz prediction
+        h3_helm_H6_pred      = _h3((2, 6, 1, 1))               # H6 200ms mean
+        h3_helm_H12_pred     = _h3((2, 12, 1, 1))              # H12 525ms mean
+
+        # Stumpf prediction
+        h3_stumpf_H6_pred    = _h3((3, 6, 1, 1))               # H6 200ms mean
+
+        # Inharmonicity prediction
+        h3_inharm_H6_pred    = _h3((5, 6, 18, 1), _neutral)    # H6 200ms trend
+
+        # Pitch salience prediction
+        h3_pitchsal_H6_pred  = _h3((63, 6, 1, 1))              # H6 200ms mean
+        h3_pitchsal_H12_pred = _h3((63, 12, 1, 1))             # H12 525ms mean
+
+        # Key clarity prediction
+        h3_keyclarity_H6_pred  = _h3((75, 6, 1, 1))            # H6 200ms mean
+        h3_keyclarity_H16_pred = _h3((75, 16, 1, 1))           # H16 1s mean
+
+        # Tonal stability prediction
+        h3_tonalstab_H6_pred   = _h3((84, 6, 1, 1))            # H6 200ms mean
+        h3_tonalstab_H12_pred  = _h3((84, 12, 1, 1))           # H12 525ms mean
+
+        # === Stage 3: Tristimulus balance (using present H³ values) ===
+        trist_stack = torch.stack(
+            [h3_trist1, h3_trist2, h3_trist3], dim=-1,
+        )  # (B, T, 3)
+        trist_balance = 1.0 - trist_stack.std(dim=-1)           # (B, T)
+
+        # ═══════════════════════════════════════════════════════════════
+        # E-LAYER (4D): Extraction — instantaneous R³ features
+        # No H³ temporal processing. Direct products, no sigmoid.
+        # ═══════════════════════════════════════════════════════════════
+
+        # nps: Neural Pitch Salience — IC FFR at fundamental
+        # Blends proxy (tonalness × autocorr) with direct pitch_salience
+        nps = ALPHA * (
+            0.5 * tonalness * autocorr                         # proxy via C[14]×C[17]
+            + 0.5 * pitch_salience                             # direct via F[63]
+        )                                                       # [0, 0.90]
+
+        # harmonicity: Harmonicity Index — harmonic coincidence ratio
+        harmonicity = BETA * (1.0 - inharmonicity) * (
+            0.5 * trist_balance                                # spectral energy balance
+            + 0.5 * (1.0 - pitch_class_entropy)                # tonal clarity
+        )                                                       # [0, 0.85]
+
+        # hierarchy: Consonance Hierarchy — P1 > P5 > P4 > M3 > m6 > TT
+        hierarchy = GAMMA * helmholtz * stumpf                  # [0, 0.80]
+
+        # ffr_behavior: FFR-Behavior Correlation — r = 0.81
+        ffr_behavior = FFR_CORR * (nps + harmonicity) / 2.0    # [0, ~0.71]
+
+        # ═══════════════════════════════════════════════════════════════
+        # M-LAYER (4D): Memory — past consonance state
+        # All inputs from L0 (memory) demands. Weights sum to 1.0.
+        # ═══════════════════════════════════════════════════════════════
+
+        # consonance_memory: Was the recent past consonant?
+        # Short-term (H6) + beat-level (H12) + measure-level (H16/H18) memory
+        consonance_memory = (
+            0.15 * (1.0 - h3_rough_trend_mem)          # roughness not increasing (H6)
+            + 0.10 * (1.0 - h3_rough_H16_mem)          # low roughness over measure (H16)
+            + 0.15 * h3_helm_H12_mem                   # consonance at beat level (H12)
+            + 0.15 * h3_helm_H18_mem                   # consonance at phrase level (H18)
+            + 0.15 * h3_stumpf_H6_mem                  # fusion at short-term (H6)
+            + 0.10 * h3_stumpf_H16_mem                 # fusion at measure level (H16)
+            + 0.10 * (1.0 - h3_hdev_H3_mem)            # low harmonic deviation (H3)
+            + 0.10 * (1.0 - h3_hdev_H12_mem)           # low deviation at beat (H12)
+        )                                               # [0, 1]
+
+        # pitch_memory: Was pitch clear and stable in the past?
+        pitch_memory = (
+            0.15 * (1.0 - h3_inharm_trend_mem)         # inharmonicity stable (H3)
+            + 0.15 * (1.0 - h3_inharm_H12_mem)         # low inharmonicity at beat (H12)
+            + 0.20 * h3_pitchsal_H12_mem               # pitch salience at beat (H12)
+            + 0.20 * h3_pitchsal_H18_mem               # pitch salience at phrase (H18)
+            + 0.15 * h3_tonalstab_H6_mem               # tonal stability short (H6)
+            + 0.15 * h3_tonalstab_H18_mem              # tonal stability phrase (H18)
+        )                                               # [0, 1]
+
+        # tonal_memory: What tonal context was established?
+        tonal_memory = (
+            0.25 * h3_keyclarity_H12_mem               # key clarity at beat (H12)
+            + 0.25 * h3_keyclarity_H18_mem             # key clarity at phrase (H18)
+            + 0.25 * h3_tonalstab_H6_mem               # tonal stability short (H6)
+            + 0.25 * h3_tonalstab_H18_mem              # tonal stability phrase (H18)
+        )                                               # [0, 1]
+
+        # spectral_memory: Overall spectral history summary
+        spectral_memory = (
+            0.15 * (1.0 - h3_rough_trend_mem)          # roughness direction (H6)
+            + 0.10 * (1.0 - h3_rough_H12_mem)          # roughness level at beat (H12)
+            + 0.15 * h3_stumpf_H6_mem                  # fusion history (H6)
+            + 0.10 * h3_stumpf_H16_mem                 # fusion history at measure (H16)
+            + 0.15 * h3_pitchsal_H12_mem               # pitch salience at beat (H12)
+            + 0.10 * h3_pitchsal_H18_mem               # pitch salience at phrase (H18)
+            + 0.15 * h3_keyclarity_H12_mem             # key clarity at beat (H12)
+            + 0.10 * h3_tonalstab_H18_mem              # tonal stability at phrase (H18)
+        )                                               # [0, 1]
+
+        # ═══════════════════════════════════════════════════════════════
+        # P-LAYER (4D): Present — context-aware current state
+        # All temporal inputs from L2 (integration) demands + R³ direct.
+        # ═══════════════════════════════════════════════════════════════
+
+        # consonance_signal: Current consonance in bidirectional context
+        consonance_signal = (
+            0.15 * (1.0 - h3_rough_inst)               # low roughness (H0)
+            + 0.15 * (1.0 - h3_rough_mean)             # sustained low roughness (H3)
+            + 0.10 * (1.0 - sethares)                  # low Sethares dissonance
+            + 0.10 * sens_pleasant                      # sensory pleasantness
+            + 0.10 * (1.0 - harmonic_dev)              # harmonic regularity
+            + 0.10 * h3_keyclarity_h6                  # tonal context (H6)
+            + 0.10 * (1.0 - h3_pce_mean)               # tonal clarity (H3)
+            + 0.10 * h3_coupling                       # cons-timbre coupling (H3)
+            + 0.10 * h3_coupling_per                   # coupling periodicity (H6)
+        )                                               # [0, 1]
+
+        # template_match: Harmonic template matching in context
+        template_match = (
+            0.15 * h3_helm_inst                        # consonance (H0)
+            + 0.15 * h3_helm_mean                      # sustained consonance (H3)
+            + 0.15 * h3_stumpf_inst                    # fusion (H0)
+            + 0.15 * (1.0 - h3_hdev_inst)              # low harmonic deviation (H0)
+            + 0.10 * (1.0 - harmonic_dev)              # harmonic regularity
+            + 0.10 * h3_keyclarity_h3                  # tonal context (H3)
+            + 0.10 * h3_keyclarity_mean                # sustained key clarity (H3)
+            + 0.10 * tonal_stability                   # R³ tonal stability
+        )                                               # [0, 1]
+
+        # neural_pitch: Pitch clarity in current context
+        neural_pitch = (
+            0.15 * h3_pitchsal_inst                    # pitch salience (H0)
+            + 0.15 * h3_pitchsal_h3                    # pitch salience (H3)
+            + 0.15 * h3_pitchsal_h6                    # pitch salience (H6)
+            + 0.15 * (1.0 - h3_inharm_inst)            # low inharmonicity (H0)
+            + 0.10 * tonalness                         # pitch clarity
+            + 0.10 * autocorr                          # harmonic periodicity
+            + 0.10 * (1.0 - pitch_class_entropy)       # tonal clarity
+            + 0.10 * (1.0 - h3_pce_inst)               # H0 tonal clarity
+        )                                               # [0, 1]
+
+        # tonal_context: Current tonal environment (key + stability)
+        tonal_context = (
+            0.20 * h3_keyclarity_h3                    # key clarity (H3)
+            + 0.15 * h3_keyclarity_mean                # sustained key clarity (H3)
+            + 0.15 * h3_keyclarity_h6                  # key clarity (H6)
+            + 0.15 * h3_tonalstab_h3                   # tonal stability (H3)
+            + 0.10 * tonal_stability                   # R³ tonal stability
+            + 0.15 * (1.0 - h3_pce_mean)               # sustained tonal clarity
+            + 0.10 * (1.0 - h3_pce_inst)               # instantaneous clarity
+        )                                               # [0, 1]
+
+        # ═══════════════════════════════════════════════════════════════
+        # F-LAYER (4D): Future — predicted trajectory
+        # All temporal inputs from L1 (prediction) demands.
+        # ═══════════════════════════════════════════════════════════════
+
+        # consonance_forecast: Where is consonance heading?
+        consonance_forecast = (
+            0.20 * (1.0 - h3_rough_H6_pred)            # near-future roughness (H6)
+            + 0.15 * (1.0 - h3_rough_H12_pred)         # roughness trend (H12)
+            + 0.20 * h3_helm_H6_pred                   # consonance prediction (H6)
+            + 0.15 * h3_helm_H12_pred                  # consonance prediction (H12)
+            + 0.15 * h3_stumpf_H6_pred                 # fusion prediction (H6)
+            + 0.15 * (1.0 - h3_inharm_H6_pred)         # inharmonicity prediction (H6)
+        )                                               # [0, 1]
+
+        # pitch_forecast: Where is pitch heading?
+        pitch_forecast = (
+            0.25 * h3_pitchsal_H6_pred                 # pitch salience prediction (H6)
+            + 0.25 * h3_pitchsal_H12_pred              # pitch salience prediction (H12)
+            + 0.25 * (1.0 - h3_inharm_H6_pred)         # inharmonicity prediction (H6)
+            + 0.25 * h3_tonalstab_H6_pred              # tonal stability prediction (H6)
+        )                                               # [0, 1]
+
+        # tonal_forecast: Where is tonal context heading?
+        tonal_forecast = (
+            0.20 * h3_keyclarity_H6_pred               # key clarity prediction (H6)
+            + 0.25 * h3_keyclarity_H16_pred            # key clarity prediction (H16)
+            + 0.20 * h3_tonalstab_H6_pred              # stability prediction (H6)
+            + 0.20 * h3_tonalstab_H12_pred             # stability prediction (H12)
+            + 0.15 * h3_helm_H12_pred                  # consonance context (H12)
+        )                                               # [0, 1]
+
+        # interval_forecast: What interval changes are expected?
+        interval_forecast = (
+            0.20 * h3_helm_H6_pred                     # consonance prediction (H6)
+            + 0.15 * h3_helm_H12_pred                  # consonance prediction (H12)
+            + 0.15 * h3_stumpf_H6_pred                 # fusion prediction (H6)
+            + 0.15 * (1.0 - h3_rough_H6_pred)          # roughness prediction (H6)
+            + 0.15 * h3_keyclarity_H6_pred             # tonal context prediction (H6)
+            + 0.10 * h3_pitchsal_H6_pred               # pitch context (H6)
+            + 0.10 * h3_tonalstab_H12_pred             # stability context (H12)
+        )                                               # [0, 1]
+
+        # === Assemble 16D output ===
         return torch.stack([
-            # E-layer (4D)
-            f01_nps, f02_harmonicity, f03_hierarchy, f04_ffr_behavior,
-            # M-layer (2D)
-            nps_t, harm_interval,
-            # P-layer (3D)
-            consonance_signal, template_match, neural_pitch,
-            # F-layer (3D)
-            consonance_pred, pitch_propagation, interval_expect,
-        ], dim=-1)  # (B, T, 12)
+            # E-layer (4D): Extraction
+            nps, harmonicity, hierarchy, ffr_behavior,
+            # M-layer (4D): Memory (Past)
+            consonance_memory, pitch_memory, tonal_memory, spectral_memory,
+            # P-layer (4D): Present
+            consonance_signal, template_match, neural_pitch, tonal_context,
+            # F-layer (4D): Future
+            consonance_forecast, pitch_forecast, tonal_forecast, interval_forecast,
+        ], dim=-1)  # (B, T, 16)

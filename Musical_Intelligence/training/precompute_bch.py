@@ -1,8 +1,10 @@
 """Pre-compute BCH manifold training pairs from the deterministic forward pipeline.
 
-Runs mel → R³ → H³ → BCH for each audio file and stores (mel, manifold)
-pairs as HDF5 files. The manifold is the full computational state of BCH:
-R³ active dims (12D) + H³ active dims (16D) + BCH output (12D) = 40D.
+Runs mel → R³ → H³ → BCH → RAM/Neuro for each audio file and stores
+(mel, manifold) pairs as HDF5 files. The manifold is the full computational
+state of BCH plus its downstream effects:
+    R³ active dims (16D) + H³ active dims (50D) + BCH output (16D)
+    + RAM (26D) + Neuro (4D) = 112D.
 
 These are the teacher labels for Head1 and Head2.
 
@@ -31,7 +33,6 @@ from Musical_Intelligence.training.model.mi_space_layout import (
     BCH_H3_DEMAND_COUNT,
     BCH_MANIFOLD_DIM,
     BCH_R3_ACTIVE_INDICES,
-    R3_BRAIN_DIM,
 )
 
 
@@ -56,11 +57,15 @@ def precompute_single(
 ) -> dict:
     """Run forward pipeline on one audio file → save (mel, manifold) HDF5.
 
-    The manifold is: R³_active(12D) || H³_active(16D) || BCH(12D) = 40D.
+    The manifold is:
+        R³_active(16D) || H³_active(50D) || BCH(16D)
+        || RAM(26D) || Neuro(4D) = 112D.
 
     Returns metadata dict for the manifest.
     """
     import h5py
+
+    from Musical_Intelligence.brain.executor import execute
 
     track_id = audio_path.stem
 
@@ -79,29 +84,35 @@ def precompute_single(
     h3_out = h3_extractor.extract(r3_tensor, bch_demands)
     h3_features = h3_out.features  # Dict[(r3_idx, horizon, morph, law)] -> (1, T)
 
-    # 5. BCH computation
-    bch_output = bch_nucleus.compute(
-        h3_features, r3_tensor[:, :, :R3_BRAIN_DIM]
-    )  # (1, T, 12)
+    # 5. Execute BCH through the brain executor → BCH output + RAM + Neuro
+    outputs, ram, neuro = execute(
+        [bch_nucleus], h3_features, r3_tensor,
+    )
+    bch_output = outputs["BCH"]  # (1, T, 16)
 
-    # 6. Build 40D manifold: R³_active(12) || H³_active(16) || BCH(12)
+    # 6. Build 112D manifold:
+    #    R³_active(16) || H³_active(50) || BCH(16) || RAM(26) || Neuro(4)
     r3_active_indices = list(BCH_R3_ACTIVE_INDICES)
-    r3_active = r3_tensor[0, :, r3_active_indices]  # (T, 12)
+    r3_active = r3_tensor[0, :, r3_active_indices]  # (T, 16)
 
     h3_active = torch.stack(
         [h3_features[k][0] for k in bch_demand_keys_sorted], dim=-1
-    )  # (T, 16)
+    )  # (T, 50)
 
-    bch_out = bch_output.squeeze(0)  # (T, 12)
+    bch_out = bch_output.squeeze(0)     # (T, 16)
+    ram_out = ram.squeeze(0)            # (T, 26)
+    neuro_out = neuro.squeeze(0)        # (T, 4)
 
-    manifold = torch.cat([r3_active, h3_active, bch_out], dim=-1)  # (T, 40)
+    manifold = torch.cat(
+        [r3_active, h3_active, bch_out, ram_out, neuro_out], dim=-1,
+    )  # (T, 112)
     assert manifold.shape[-1] == BCH_MANIFOLD_DIM, (
         f"Manifold dim mismatch: {manifold.shape[-1]} != {BCH_MANIFOLD_DIM}"
     )
 
-    # 7. Save as HDF5 — shapes: mel (T, 128), manifold (T, 40)
+    # 7. Save as HDF5 — shapes: mel (T, 128), manifold (T, 112)
     mel_save = mel.squeeze(0).transpose(0, 1).cpu()  # (T, 128)
-    manifold_save = manifold.cpu()                     # (T, 40)
+    manifold_save = manifold.cpu()                     # (T, 112)
 
     out_path = output_dir / f"{track_id}.h5"
     with h5py.File(out_path, "w") as f:
@@ -163,7 +174,7 @@ def main() -> None:
     bch_demands = {spec.as_tuple() for spec in bch.h3_demand}
     bch_demand_keys_sorted = sorted(bch_demands)
     print(f"BCH demands: {len(bch_demands)} H³ tuples")
-    print(f"Manifold: R³({len(BCH_R3_ACTIVE_INDICES)}) + H³({BCH_H3_DEMAND_COUNT}) + BCH(12) = {BCH_MANIFOLD_DIM}D")
+    print(f"Manifold: R³({len(BCH_R3_ACTIVE_INDICES)}) + H³({BCH_H3_DEMAND_COUNT}) + BCH({BCH_MANIFOLD_DIM - len(BCH_R3_ACTIVE_INDICES) - BCH_H3_DEMAND_COUNT}) = {BCH_MANIFOLD_DIM}D")
     print()
 
     # Save H³ key ordering for reproducibility

@@ -1,10 +1,12 @@
 """Train BCH learned inverse heads — proof of concept.
 
-Trains Head1 (mel → 40D manifold) and Head2 (40D manifold → mel) using
+Trains Head1 (mel → 112D manifold) and Head2 (112D manifold → mel) using
 (mel, manifold) pairs pre-computed by the deterministic forward pipeline.
 
-The 40D manifold = R³ active (12D) + H³ active (16D) + BCH output (12D).
-This captures the full computational state of the BCH nucleus.
+The 112D manifold = R³ active (16D) + H³ active (50D) + BCH output (16D)
++ RAM (26D) + Neuro (4D).
+This captures the full computational state of the BCH nucleus plus its
+downstream effects on brain regions and neurochemistry.
 
 Usage::
 
@@ -41,30 +43,41 @@ from Musical_Intelligence.training.config import BCHTrainingConfig
 from Musical_Intelligence.training.model.head import InverseHeadPair
 from Musical_Intelligence.training.model.mi_space_layout import (
     BCH_H3_DEMAND_NAMES,
+    BCH_NEURO_NAMES,
     BCH_OUTPUT_NAMES,
     BCH_R3_ACTIVE_NAMES,
+    BCH_RAM_NAMES,
     COCHLEA_DIM,
     MANIFOLD_BCH_END,
     MANIFOLD_BCH_START,
     MANIFOLD_H3_END,
     MANIFOLD_H3_START,
+    MANIFOLD_NEURO_END,
+    MANIFOLD_NEURO_START,
     MANIFOLD_R3_END,
     MANIFOLD_R3_START,
+    MANIFOLD_RAM_END,
+    MANIFOLD_RAM_START,
 )
 
 
 # ======================================================================
-# Manifold dimension names (40D = R³ 12 + H³ 16 + BCH 12)
+# Manifold dimension names (112D = R³ 16 + H³ 50 + BCH 16 + RAM 26 + Neuro 4)
 # ======================================================================
 
-# Full 40D manifold names
-MANIFOLD_DIM_NAMES: tuple = BCH_R3_ACTIVE_NAMES + BCH_H3_DEMAND_NAMES + BCH_OUTPUT_NAMES
+# Full 112D manifold names
+MANIFOLD_DIM_NAMES: tuple = (
+    BCH_R3_ACTIVE_NAMES + BCH_H3_DEMAND_NAMES + BCH_OUTPUT_NAMES
+    + BCH_RAM_NAMES + BCH_NEURO_NAMES
+)
 
 # Layer boundaries for grouped reporting
 MANIFOLD_LAYERS = {
-    "r3_active": {"start": MANIFOLD_R3_START, "end": MANIFOLD_R3_END, "label": "R³ Active (12D)"},
-    "h3_active": {"start": MANIFOLD_H3_START, "end": MANIFOLD_H3_END, "label": "H³ Active (16D)"},
-    "bch_output": {"start": MANIFOLD_BCH_START, "end": MANIFOLD_BCH_END, "label": "BCH Output (12D)"},
+    "r3_active": {"start": MANIFOLD_R3_START, "end": MANIFOLD_R3_END, "label": "R³ Active (16D)"},
+    "h3_active": {"start": MANIFOLD_H3_START, "end": MANIFOLD_H3_END, "label": "H³ Active (50D)"},
+    "bch_output": {"start": MANIFOLD_BCH_START, "end": MANIFOLD_BCH_END, "label": "BCH Output (16D)"},
+    "ram": {"start": MANIFOLD_RAM_START, "end": MANIFOLD_RAM_END, "label": "RAM (26D)"},
+    "neuro": {"start": MANIFOLD_NEURO_START, "end": MANIFOLD_NEURO_END, "label": "Neuro (4D)"},
 }
 
 
@@ -80,7 +93,7 @@ class TrainingReport:
     - Full configuration snapshot
     - Model architecture (layers, params per head)
     - Per-epoch aggregate losses + learning rate + timing
-    - Per-dimension MSE for Head1 (48D manifold breakdown by layer)
+    - Per-dimension MSE for Head1 (112D manifold breakdown by layer)
     - Per-step fine-grained loss trace
     - Gradient norm statistics per epoch
     - Final evaluation metrics
@@ -109,9 +122,11 @@ class TrainingReport:
             "mixed_precision": config.mixed_precision,
             "compile_model": config.compile_model,
             "manifold_layout": {
-                "r3_active": f"[{MANIFOLD_R3_START}:{MANIFOLD_R3_END}] (12D)",
-                "h3_active": f"[{MANIFOLD_H3_START}:{MANIFOLD_H3_END}] (16D)",
-                "bch_output": f"[{MANIFOLD_BCH_START}:{MANIFOLD_BCH_END}] (12D)",
+                "r3_active": f"[{MANIFOLD_R3_START}:{MANIFOLD_R3_END}] (16D)",
+                "h3_active": f"[{MANIFOLD_H3_START}:{MANIFOLD_H3_END}] (50D)",
+                "bch_output": f"[{MANIFOLD_BCH_START}:{MANIFOLD_BCH_END}] (16D)",
+                "ram": f"[{MANIFOLD_RAM_START}:{MANIFOLD_RAM_END}] (26D)",
+                "neuro": f"[{MANIFOLD_NEURO_START}:{MANIFOLD_NEURO_END}] (4D)",
             },
         }
 
@@ -242,9 +257,9 @@ class TrainingReport:
         total_time = time.time() - self._start_time
         return {
             "meta": {
-                "task": "BCH Learned Inverse Heads — Training POC (40D Manifold)",
+                "task": "BCH Learned Inverse Heads — Training POC (112D Manifold)",
                 "reference": "MI-PLASTICITY.md §13.13",
-                "manifold": "R³ active (12D) + H³ active (16D) + BCH output (12D) = 40D",
+                "manifold": "R³ active (16D) + H³ active (50D) + BCH output (16D) + RAM (26D) + Neuro (4D) = 112D",
                 "started_at": self._start_datetime,
                 "finished_at": datetime.now(timezone.utc).isoformat(),
                 "total_time_s": round(total_time, 2),
@@ -344,7 +359,7 @@ class BCHDataset(Dataset):
 
     Each HDF5 file contains:
         - ``mel``: ``(T, 128)`` float32
-        - ``manifold``: ``(T, 40)`` float32
+        - ``manifold``: ``(T, 82)`` float32
 
     Returns fixed-length segments with random temporal offset.
     """
@@ -387,7 +402,7 @@ class BCHDataset(Dataset):
             end = min(offset + self._segment_frames, total_frames)
 
             mel = torch.from_numpy(f["mel"][offset:end])           # (T, 128)
-            manifold = torch.from_numpy(f["manifold"][offset:end]) # (T, 40)
+            manifold = torch.from_numpy(f["manifold"][offset:end]) # (T, 112)
 
         return {"mel": mel, "manifold": manifold}
 
@@ -412,7 +427,7 @@ class BCHCollator:
 
         return {
             "mel": mel_padded,           # (B, T, 128)
-            "manifold": manifold_padded, # (B, T, 40)
+            "manifold": manifold_padded, # (B, T, 112)
             "mask": mask,                # (B, T)
         }
 
@@ -482,7 +497,7 @@ def train(config: BCHTrainingConfig) -> None:
         "manifold_dim": config.target_dim,
     }
     print(f"Dataset: {len(dataset)} tracks, segment={config.segment_frames} frames")
-    print(f"Manifold: {config.target_dim}D = R³(12) + H³(16) + BCH(12)")
+    print(f"Manifold: {config.target_dim}D = R³(16) + H³(50) + BCH(16) + RAM(26) + Neuro(4)")
     print(f"Loader: batch_size={config.batch_size}, steps/epoch={len(loader)}")
 
     # ── Model ─────────────────────────────────────────────────
@@ -552,14 +567,14 @@ def train(config: BCHTrainingConfig) -> None:
         for batch in loader:
             # Move to device — Conv1D expects (B, C, T) so transpose
             mel = batch["mel"].to(device).transpose(1, 2)        # (B, 128, T)
-            manifold = batch["manifold"].to(device).transpose(1, 2)  # (B, 40, T)
+            manifold = batch["manifold"].to(device).transpose(1, 2)  # (B, 112, T)
             mask = batch["mask"].to(device)                       # (B, T)
 
             optimizer.zero_grad()
 
             with torch.autocast(device.type, dtype=amp_dtype, enabled=use_amp):
                 # Head1: mel → manifold_hat
-                manifold_hat = model.forward_head1(mel)  # (B, 40, T)
+                manifold_hat = model.forward_head1(mel)  # (B, 112, T)
                 head1_loss = masked_mse(manifold_hat, manifold, mask)
 
                 # Head2: manifold → mel_hat
@@ -719,7 +734,7 @@ def _evaluate(
     for idx in range(len(dataset)):
         sample = dataset[idx]
         mel = sample["mel"].unsqueeze(0).to(device).transpose(1, 2)        # (1, 128, T)
-        manifold = sample["manifold"].unsqueeze(0).to(device).transpose(1, 2)  # (1, 40, T)
+        manifold = sample["manifold"].unsqueeze(0).to(device).transpose(1, 2)  # (1, 112, T)
         mask = torch.ones(1, mel.shape[2], dtype=torch.bool, device=device)
 
         with torch.autocast(device.type, dtype=amp_dtype, enabled=use_amp):
@@ -757,8 +772,8 @@ def _evaluate(
             track_report[f"per_dim_mse_{layer_name}"] = layer_mse
 
         # Per-dimension correlation (how well head1 tracks pipeline)
-        gt_np = manifold.squeeze(0).cpu()      # (40, T)
-        hat_np = manifold_hat.squeeze(0).cpu()  # (40, T)
+        gt_np = manifold.squeeze(0).cpu()      # (112, T)
+        hat_np = manifold_hat.squeeze(0).cpu()  # (112, T)
         correlations = {}
         for layer_name, info in MANIFOLD_LAYERS.items():
             layer_corrs = {}
@@ -850,8 +865,8 @@ def _save_checkpoint(
 
 def main() -> None:
     config = BCHTrainingConfig.from_cli()
-    print("BCH Learned Inverse Heads — Training POC (40D Manifold)")
-    print(f"  target_dim: {config.target_dim} = R³(12) + H³(16) + BCH(12)")
+    print("BCH Learned Inverse Heads — Training POC (112D Manifold)")
+    print(f"  target_dim: {config.target_dim} = R³(16) + H³(50) + BCH(16) + RAM(26) + Neuro(4)")
     print(f"  hidden_dim: {config.hidden_dim}")
     print(f"  kernel_sizes: {config.kernel_sizes}")
     print(f"  device: {config.device}")

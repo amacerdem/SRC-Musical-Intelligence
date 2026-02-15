@@ -32,7 +32,7 @@ from Musical_Intelligence.brain.regions import REGION_REGISTRY
 # ---------------------------------------------------------------------------
 B = 2
 T = 200
-R3_DIM = 49
+R3_DIM = 128
 FRAME_RATE = 172.27
 
 
@@ -53,7 +53,7 @@ def random_r3() -> Tensor:
 
 @pytest.fixture
 def h3_for_bch(bch: BCH) -> Dict[Tuple[int, int, int, int], Tensor]:
-    """Random H³ features for all 16 BCH demands."""
+    """Random H³ features for all 49 BCH demands."""
     torch.manual_seed(42)
     return {spec.as_tuple(): torch.rand(B, T) for spec in bch.h3_demand}
 
@@ -69,7 +69,7 @@ def bch_output(bch: BCH, h3_for_bch, random_r3) -> Tensor:
 
 class TestOutputShape:
     def test_shape(self, bch_output: Tensor):
-        assert bch_output.shape == (B, T, 12)
+        assert bch_output.shape == (B, T, 16)
 
     def test_no_nan(self, bch_output: Tensor):
         assert not torch.isnan(bch_output).any()
@@ -107,10 +107,10 @@ class TestContract:
         assert bch.PROCESSING_DEPTH == 0
 
     def test_output_dim(self, bch: BCH):
-        assert bch.OUTPUT_DIM == 12
+        assert bch.OUTPUT_DIM == 16
 
     def test_dim_names_count(self, bch: BCH):
-        assert len(bch.dimension_names) == 12
+        assert len(bch.dimension_names) == 16
 
     def test_dim_names_unique(self, bch: BCH):
         names = bch.dimension_names
@@ -121,7 +121,7 @@ class TestContract:
         for layer in bch.LAYERS:
             for i in range(layer.start, layer.end):
                 covered.add(i)
-        assert covered == set(range(12))
+        assert covered == set(range(16))
 
     def test_layer_dim_names_match(self, bch: BCH):
         assert bch.layer_dim_names == bch.dimension_names
@@ -161,8 +161,8 @@ class TestConsonanceSensitivity:
         consonant_out = bch.compute(h3, consonant_r3)
         dissonant_out = bch.compute(h3, dissonant_r3)
 
-        # consonance_signal is dim 6
-        assert consonant_out[0, 0, 6] > dissonant_out[0, 0, 6]
+        # consonance_signal is dim 8 (Present layer)
+        assert consonant_out[0, 0, 8] > dissonant_out[0, 0, 8]
 
     def test_nps_higher_for_tonal(self, bch: BCH):
         h3 = self._make_h3(bch)
@@ -202,7 +202,7 @@ class TestConsonanceSensitivity:
 
 class TestH3Demand:
     def test_count(self, bch: BCH):
-        assert len(bch.h3_demand) == 16
+        assert len(bch.h3_demand) == 50
 
     def test_all_tuples_are_4_element(self, bch: BCH):
         for spec in bch.h3_demand:
@@ -276,24 +276,24 @@ class TestNeuroLinks:
 
 class TestScope:
     def test_internal_count(self, bch: BCH):
-        """E + M layers are internal = 6 dims."""
-        assert len(bch.internal_dims) == 6
+        """E + M layers are internal = 8 dims."""
+        assert len(bch.internal_dims) == 8
 
     def test_external_count(self, bch: BCH):
-        """P layer is external = 3 dims."""
-        assert len(bch.external_dims) == 3
+        """P layer is external = 4 dims."""
+        assert len(bch.external_dims) == 4
 
     def test_hybrid_count(self, bch: BCH):
-        """F layer is hybrid = 3 dims."""
-        assert len(bch.hybrid_dims) == 3
+        """F layer is hybrid = 4 dims."""
+        assert len(bch.hybrid_dims) == 4
 
     def test_routable_count(self, bch: BCH):
-        """Internal + hybrid = 9 dims."""
-        assert len(bch.routable_dims) == 9
+        """Internal + hybrid = 12 dims."""
+        assert len(bch.routable_dims) == 12
 
     def test_exportable_count(self, bch: BCH):
-        """External + hybrid = 6 dims."""
-        assert len(bch.exportable_dims) == 6
+        """External + hybrid = 8 dims."""
+        assert len(bch.exportable_dims) == 8
 
     def test_no_overlap_internal_external(self, bch: BCH):
         assert not set(bch.internal_dims) & set(bch.external_dims)

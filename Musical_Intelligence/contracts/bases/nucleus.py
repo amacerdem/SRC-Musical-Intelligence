@@ -281,7 +281,7 @@ class Relay(Nucleus):
 
         Args:
             h3_features: Per-demand H³ time series, keyed by 4-tuples.
-            r3_features: ``(B, T, 49)`` R³ spectral features.
+            r3_features: ``(B, T, 128)`` R³ spectral features.
 
         Returns:
             ``(B, T, OUTPUT_DIM)`` output tensor.
@@ -305,7 +305,7 @@ class Encoder(Nucleus):
 
         Args:
             h3_features: Per-demand H³ time series.
-            r3_features: ``(B, T, 49)`` R³ spectral features.
+            r3_features: ``(B, T, 128)`` R³ spectral features.
             relay_outputs: Dict mapping Relay NAME → ``(B, T, relay_dim)``
                            (routable dims only).
 
@@ -331,7 +331,7 @@ class Associator(Nucleus):
 
         Args:
             h3_features: Per-demand H³ time series.
-            r3_features: ``(B, T, 49)`` R³ spectral features.
+            r3_features: ``(B, T, 128)`` R³ spectral features.
             upstream_outputs: Dict mapping nucleus NAME → routable output
                               tensor for all Relays and Encoders in this unit.
 
@@ -358,7 +358,7 @@ class Integrator(Nucleus):
 
         Args:
             h3_features: Per-demand H³ time series.
-            r3_features: ``(B, T, 49)`` R³ spectral features.
+            r3_features: ``(B, T, 128)`` R³ spectral features.
             upstream_outputs: All upstream (R+E+A) routable outputs.
             cross_unit_inputs: Optional cross-unit pathway data.
 
@@ -385,7 +385,7 @@ class Hub(Nucleus):
 
         Args:
             h3_features: Per-demand H³ time series.
-            r3_features: ``(B, T, 49)`` R³ spectral features.
+            r3_features: ``(B, T, 128)`` R³ spectral features.
             upstream_outputs: All upstream routable outputs.
             cross_unit_inputs: Optional cross-unit pathway data.
 

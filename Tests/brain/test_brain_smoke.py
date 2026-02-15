@@ -24,7 +24,7 @@ from Musical_Intelligence.contracts.dataclasses.brain_output import BrainOutput
 
 B = 2
 T = 100
-R3_DIM = 49
+R3_DIM = 128
 
 
 @pytest.fixture(scope="module")
@@ -51,8 +51,8 @@ def brain_output(orchestrator, bch) -> BrainOutput:
 
 class TestShapes:
     def test_tensor_shape(self, brain_output: BrainOutput):
-        # BCH exportable dims: external(3) + hybrid(3) = 6
-        assert brain_output.tensor.shape == (B, T, 6)
+        # BCH exportable dims: external(4) + hybrid(4) = 8
+        assert brain_output.tensor.shape == (B, T, 8)
 
     def test_ram_shape(self, brain_output: BrainOutput):
         assert brain_output.ram.shape == (B, T, 26)
@@ -128,7 +128,7 @@ class TestNeuroState:
         assert da.mean() > 0.0
 
     def test_serotonin_around_baseline(self, brain_output: BrainOutput):
-        """BCH amplifies 5HT via neural_pitch — should be near or above baseline."""
+        """BCH amplifies 5HT via pitch_forecast — should be near or above baseline."""
         serotonin = brain_output.neuro[:, :, 3]
         assert serotonin.mean() >= 0.4  # at least close to baseline 0.5
 

@@ -41,7 +41,7 @@ def execute(
     Args:
         nuclei: All nuclei to execute (will be sorted by PROCESSING_DEPTH).
         h3_features: Per-demand H³ time series, keyed by 4-tuples.
-        r3_features: ``(B, T, 49)`` R³ spectral features.
+        r3_features: ``(B, T, 128)`` R³ spectral features.
         cross_unit_inputs: Optional cross-unit pathway tensors.
 
     Returns:

@@ -26,7 +26,7 @@ class BCHTrainingConfig:
     num_workers: int = 4
 
     # ── Model ─────────────────────────────────────────────────
-    target_dim: int = BCH_MANIFOLD_DIM  # 40 = R³(12) + H³(16) + BCH(12)
+    target_dim: int = BCH_MANIFOLD_DIM  # 112 = R³(16) + H³(50) + BCH(16) + RAM(26) + Neuro(4)
     hidden_dim: int = 256
     kernel_sizes: Tuple[int, ...] = (3, 5, 7, 11, 15)
 
