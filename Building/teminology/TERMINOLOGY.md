@@ -306,7 +306,7 @@ Calibration coefficients. Every constant cites its source paper and effect size.
 LAYERS = (
     LayerSpec("E", "Extraction",    0, 4,  ("f01_nps", "f02_harmonicity", ...), scope="internal"),
     LayerSpec("M", "Mechanism",     4, 6,  ("nps_t", "harm_interval"),          scope="internal"),
-    LayerSpec("P", "Psychological", 6, 9,  ("consonance_signal", ...),          scope="external"),
+    LayerSpec("P", "Cognitive",      6, 9,  ("consonance_signal", ...),          scope="external"),
     LayerSpec("F", "Forecast",      9, 12, ("consonance_pred", ...),            scope="hybrid"),
 )
 ```
@@ -330,7 +330,7 @@ orchestrator uses scope labels for routing decisions:
 **Common pattern** (not a rule — each nucleus declares its own):
 - E layer → `internal` (raw feature extraction, intermediate signal)
 - M layer → `internal` (mechanism computations, processing artifacts)
-- P layer → `external` (psychological constructs, semantic meaning)
+- P layer → `external` (cognitive constructs, semantic meaning)
 - F layer → `hybrid` (predictions feed downstream + carry external meaning)
 
 ### 5.4 Temporal Demand (static)
@@ -1380,7 +1380,7 @@ C³ produces **FOUR** outputs, not one:
 | **Tensor** | `(B, T, N_ext)` | External+hybrid dims — cognitive processing output |
 | **RAM** | `(B, T, 26)` | Region Activation Map — neuroanatomical validation |
 | **Neuro** | `(B, T, 4)` | Neurochemical state per frame — modulatory validation |
-| **Psi** | `(B, T, N_psi)` | Psychological interpretation — experiential readout |
+| **Psi** | `(B, T, N_psi)` | Cognitive interpretation — experiential readout |
 
 `N_ext` = sum of `external` + `hybrid` dims across all 96 nuclei. This is less
 than the total 1006 because `internal` dims are consumed by downstream nuclei
@@ -1389,7 +1389,7 @@ and excluded from the final output.
 The neurochemical state is a `(B, T, 4)` tensor. Channel order: `[da, ne, opi, 5ht]`.
 
 Psi is derived from the other three (tensor + ram + neuro) by the Ψ³ interpreter
-(Section 16). It is computed INSIDE C³ — the brain's own experiential readout.
+(Section 16). It is computed INSIDE C³ — the brain's own cognitive readout.
 
 ```python
 @dataclass
@@ -1397,7 +1397,7 @@ class BrainOutput:
     tensor: Tensor      # (B, T, N_ext)  — external+hybrid dims (cognitive output)
     ram: Tensor         # (B, T, 26)     — region activation map
     neuro: Tensor       # (B, T, 4)      — neurochemical state [da, ne, opi, 5ht]
-    psi: PsiState       # (B, T, N_psi)  — psychological interpretation
+    psi: PsiState       # (B, T, N_psi)  — cognitive interpretation
 ```
 
 ### 15.1 Neuro Channel Index
@@ -1426,12 +1426,12 @@ the nucleus's output tensor to derive the effect magnitude (Section 12.7).
 
 ---
 
-## 16. Ψ³ — Psychological Interpretation (Inside C³)
+## 16. Ψ³ — Cognitive Interpretation (Inside C³)
 
 ### 16.1 Still the Brain
 
 Ψ³ is NOT after C³ — it is **inside** C³. The brain doesn't just compute; it
-also generates subjective experience. Ψ³ is the brain's own interpretive readout
+also generates cognitive experience. Ψ³ is the brain's own interpretive readout
 of its computational state. It is the fourth output of C³, alongside tensor,
 RAM, and neuro.
 
@@ -1463,10 +1463,10 @@ L³ reads R³ + H³ + C³(all four) + ... → "Language" (separate space, NOT Ψ
 | C³.tensor | Neuroscience | Neural computation | "consonance hierarchy = 0.85" | Brain |
 | C³.ram | Neuroanatomy | Region activation | "NAcc = 0.85" | Brain |
 | C³.neuro | Neurochemistry | Modulatory state | "DA = 0.78" | Brain |
-| **C³.psi** | **Psychology** | **Human experience** | **"intense pleasure, chills"** | **Brain** |
+| **C³.psi** | **Cognitive Science** | **Human experience** | **"intense pleasure, chills"** | **Brain** |
 | L³ | Semantics | **Language** | **Musical meaning in structured form** | **Separate** |
 
-C³.psi is what the brain FEELS. L³ is how all of it gets expressed in Language.
+C³.psi is what the brain EXPERIENCES cognitively. L³ is how all of it gets expressed in Language.
 They are fundamentally different: Ψ³ interprets the brain's own state; L³
 translates the ENTIRE pipeline (R³ + H³ + C³) into a semantic/linguistic form.
 
@@ -1486,7 +1486,7 @@ High NAcc with high OPI = consummatory pleasure.
 
 ### 16.4 Dimension Groups
 
-Ψ³ dimensions are organized into psychological domains:
+Ψ³ dimensions are organized into cognitive domains:
 
 | Group | Domain | Dimensions | Source mapping |
 |-------|--------|------------|---------------|
@@ -1504,12 +1504,12 @@ sad, 0.5 = neutral, 1 = euphoric).
 ### 16.5 Interpretation, Not Computation
 
 Ψ³ does NOT add new neural computation. It is a **readout layer** — a
-deterministic mapping from C³'s neuroscience outputs to psychological meaning
-using established neuro-psychological correspondences:
+deterministic mapping from C³'s neuroscience outputs to cognitive meaning
+using established neuro-cognitive correspondences:
 
 ```python
 class PsiInterpreter:
-    """Maps C³ internal outputs → Ψ³ psychological state. Part of C³."""
+    """Maps C³ internal outputs → Ψ³ cognitive state. Part of C³."""
 
     def interpret(self, tensor, ram, neuro) -> PsiState:
         # Affect from neurochemical state
@@ -1533,7 +1533,7 @@ The mapping functions `f()` are calibrated against published behavioral data
 
 ### 16.6 Validation Bridge
 
-Ψ³ is where C³ meets empirical psychology. Every Ψ³ dimension has a
+Ψ³ is where C³ meets cognitive science. Every Ψ³ dimension has a
 **behavioral anchor** — a published study with measured human responses:
 
 | Ψ³ dimension | Behavioral anchor | Validation method |
@@ -1554,7 +1554,7 @@ class BrainOutput:
     tensor: Tensor      # (B, T, N_ext)  — cognitive output (external+hybrid dims)
     ram: Tensor         # (B, T, 26)     — region activation map
     neuro: Tensor       # (B, T, 4)      — neurochemical state [da, ne, opi, 5ht]
-    psi: PsiState       # (B, T, N_psi)  — psychological interpretation
+    psi: PsiState       # (B, T, N_psi)  — cognitive interpretation
 
 @dataclass
 class PsiState:
@@ -1574,12 +1574,12 @@ class PsiState:
 
 ### 16.8 Ψ³ vs L³ — They Are Different
 
-| | Ψ³ (Psychological Interpretation) | L³ (Language) |
+| | Ψ³ (Cognitive Interpretation) | L³ (Language) |
 |---|---|---|
 | **Where** | Inside C³ (part of the brain) | Separate space, after C³ |
 | **Reads** | C³ tensor + ram + neuro | R³ + H³ + C³ (all four outputs) + more |
 | **Produces** | What the brain FEELS | How everything gets expressed as Language |
-| **Domain** | Psychology | Semantics / structured expression |
+| **Domain** | Cognitive Science | Semantics / structured expression |
 | **Analogy** | Feeling pain | Saying "it hurts" |
 
 ---
@@ -1588,7 +1588,7 @@ class PsiState:
 
 | Term | Meaning |
 |------|---------|
-| **Ψ³** | Psychological Interpretation — INSIDE C³. Readout layer that maps tensor+ram+neuro → experiential state (NOT L³) |
+| **Ψ³** | Cognitive Interpretation — INSIDE C³. Readout layer that maps tensor+ram+neuro → experiential state (NOT L³) |
 | **Nucleus** | Generic term for any of the 96 C³ brain components (when role is irrelevant) |
 | **Relay (R)** | Depth 0 — foundation transformation, reads raw R³/H³ only |
 | **Encoder (E)** | Depth 1 — feature extraction from Relay output |
@@ -1613,7 +1613,7 @@ class PsiState:
 | **Tensor pathway** | Main data flow: R³/H³ → R → E → A → I → H → assembly → Ψ³ → BrainOutput (all inside C³) |
 | **Neuro** | `(B, T, 4)` neurochemical state tensor — modulatory overlay on the tensor pathway, accumulated per depth, clamped to [0, 1] |
 | **PsiState** | Output of Ψ³ — grouped tensors: affect, emotion, aesthetic, bodily, cognitive, temporal |
-| **PsiInterpreter** | Readout layer that maps `BrainOutput` → `PsiState` using neuro-psychological correspondences |
+| **PsiInterpreter** | Readout layer that maps `BrainOutput` → `PsiState` using neuro-cognitive correspondences |
 
 ---
 
@@ -1649,3 +1649,426 @@ class PsiState:
 | Brain regions | Replaced by `region_links` (same info + activation mapping) |
 | Citations | Unchanged |
 | All 96 model doc files | Content unchanged, paths may update |
+
+---
+
+## 19. Plasticity Architecture — Learning on Physics
+
+### 19.1 Why "Plasticity", Not "Machine Learning"
+
+This is NOT ML. This is NOT deep learning. The distinction matters:
+
+| | Machine Learning | Neural Plasticity (this system) |
+|---|---|---|
+| **Metaphor** | Fitting a function to data | A brain adapting through experience |
+| **Learning signal** | External loss function | Internal neurochemical circuit |
+| **What changes** | Opaque weight matrices | Named, cited parameters with priors |
+| **Algorithm** | SGD, Adam (domain-agnostic) | Hebbian, Bayesian, TD (neuroscience) |
+| **Explainability** | Post-hoc (SHAP, LIME) | Built-in (every change has full trace) |
+| **Reset** | Retrain from scratch | Peel back to published science |
+| **Goal** | Minimize loss | No loss function — emergent behavior |
+
+ML asks: "What function maps input to output?" and optimizes weights to fit.
+
+Plasticity asks: "Given the physics of this brain (Substrate), what happens
+when experience accumulates?" — and lets the answer emerge.
+
+We use the word **plasticity** (Konorski 1948, Hebb 1949) because that is
+what this is: synaptic plasticity, Bayesian belief updating, neuromodulated
+gain adaptation — the biological mechanisms by which brains change through
+experience. These mechanisms predate machine learning by decades and are
+grounded in neuroscience, not optimization theory.
+
+### 19.2 The Two Layers
+
+C³ has two conceptually distinct layers. They are NOT separate systems — the
+Plasticity Layer runs ON the Substrate Layer, using the same neurochemicals,
+the same pathways, the same nuclei. But they have fundamentally different
+properties:
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│ PLASTICITY LAYER                                                     │
+│                                                                      │
+│  "How the brain ADAPTS using its own physics"                        │
+│                                                                      │
+│  • Pathway weights change via Hebbian co-activation                  │
+│  • Scientific constants evolve via Bayesian updating                 │
+│  • Preferences form via reward-driven reinforcement                  │
+│  • Exploration/exploitation balance shifts via NE                    │
+│                                                                      │
+│  Properties: adaptive, experience-dependent, reversible,             │
+│              emergent behavior, unique per listener                  │
+│  Traceability: every change → which rule, which signal, which music  │
+│  Safety: can always reset to Substrate (= "factory reset")          │
+│                                                                      │
+├─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┤
+│ SUBSTRATE LAYER                                                      │
+│                                                                      │
+│  "The physical rules of the brain — like laws of nature"             │
+│                                                                      │
+│  • 96 nuclei with deterministic compute()                            │
+│  • 12 pathways with base_weight from literature                      │
+│  • Scientific constants from published papers                        │
+│  • R-E-A-I-H hierarchy with fixed execution order                   │
+│  • 4 neurochemicals with cited production/modulation rules           │
+│                                                                      │
+│  Properties: deterministic, citation-grounded, white-box,            │
+│              universal (same for all listeners), never changes       │
+│  Traceability: every operation → paper, effect size, brain region    │
+│  Guarantee: this layer is ALWAYS readable, auditable, falsifiable    │
+│                                                                      │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+**Analogy**: Substrate is like the laws of physics — gravity doesn't learn.
+Plasticity is like a river carved by water following those laws — every river
+is different, but every river obeys the same physics. The shape of the river
+(musical personality) is emergent from deterministic rules + unique history.
+
+### 19.3 What Is and What Is NOT Plastic
+
+Every parameter in C³ falls into exactly one category:
+
+| Category | Example | Plastic? | Why |
+|----------|---------|:--------:|-----|
+| **Scientific constant** | BCH.ALPHA = 0.90 | **Prior only** | Published value, N=10 (Bidelman 2009). Serves as Bayesian prior — never deleted, only augmented with evidence |
+| **Pathway base_weight** | P3.base_weight = 1.0 | **No** | Structural connectivity from anatomy. The road exists or it doesn't |
+| **Pathway synaptic_weight** | P3.synaptic_weight = 1.23 | **Yes** | How heavily-trafficked that road is. Hebbian co-activation |
+| **Nucleus compute()** | The transformation itself | **No** | Deterministic science. The physics don't change |
+| **Bayesian posterior** | BCH.alpha_posterior = 0.907 | **Yes** | Prior + accumulated evidence. Always traceable back to prior |
+| **Personal gain** | BCH.personal_gain = 1.15 | **Yes** | How much this listener weighs this nucleus. Reward-driven |
+| **Neurochemical set-point** | Listener's DA tonic baseline | **Yes** | Individual differences in neurochemical resting state |
+
+**The rule**: anything published and cited is Substrate (prior/base). Anything
+that accumulates from experience is Plasticity (posterior/synaptic). You can
+always subtract Plasticity to see Substrate underneath.
+
+### 19.4 The Four Neurochemicals as Plasticity Control Axes
+
+Standard deep learning has ONE learning control: a scalar learning rate.
+This system has FOUR, each grounded in neuroscience (Doya 2002):
+
+```
+┌────────────────────────────────────────────────────────────────────┐
+│                  PLASTICITY CONTROL AXES                            │
+│                                                                     │
+│  DA ──► HOW MUCH to change    (plasticity magnitude)               │
+│         Source: RPEM reward prediction error                        │
+│         High DA (phasic ≥ 0.6): surprising → strong encoding       │
+│         Low DA (tonic < 0.6): expected → minimal change             │
+│         Citation: Doya 2002, Schultz 1997                          │
+│                                                                     │
+│  NE ──► WHERE to change       (plasticity topology)                │
+│         Source: SNEM arousal/salience signal                        │
+│         High NE: broad attention → MANY synapses potentiate        │
+│         Low NE: narrow focus → only ACTIVE synapses potentiate     │
+│         Inverted-U: too high = noise, sweet spot = optimal         │
+│         Citation: Doya 2002, Aston-Jones & Cohen 2005              │
+│                                                                     │
+│  OPI ──► WHAT DIRECTION       (valence of change)                  │
+│          Source: MORMR hedonic evaluation                           │
+│          High OPI: pleasurable → strengthen (LTP)                  │
+│          Low OPI: neutral/aversive → weaken (LTD)                  │
+│          NOT a proxy loss — actual hedonic circuit output           │
+│          Citation: Pecina & Berridge 2005, Berridge 2003           │
+│                                                                     │
+│  5HT ──► WHAT TIMESCALE       (temporal window of plasticity)      │
+│          Source: AAC mood/patience signal                           │
+│          High 5HT: patient → long-range patterns potentiate        │
+│          Low 5HT: impulsive → immediate patterns potentiate        │
+│          Controls temporal discount in reward evaluation            │
+│          Citation: Doya 2002, Ferreri 2019                         │
+│                                                                     │
+│  These map directly to synaptic plasticity concepts:               │
+│  DA  → neuromodulatory gating of LTP/LTD (Otani et al. 2003)     │
+│  NE  → heterosynaptic modulation breadth (Bhatt et al. 2009)      │
+│  OPI → hedonic tag for memory consolidation (McGaugh 2004)         │
+│  5HT → temporal credit assignment window (Doya 2002)               │
+└────────────────────────────────────────────────────────────────────┘
+```
+
+### 19.5 Three Plasticity Mechanisms
+
+Plasticity occurs through three distinct mechanisms, each with different
+mathematical foundations, all using the same neurochemical control axes:
+
+#### 19.5.1 Hebbian Synaptic Plasticity
+
+**What changes**: `synaptic_weight` on the 12 cross-unit pathways.
+
+**Rule**: "Neurons that fire together wire together" (Hebb 1949).
+Formalized as spike-timing-dependent plasticity (STDP, Bi & Poo 1998).
+
+```python
+# For each pathway connecting unit_A → unit_B:
+delta_w = (
+    da                              # HOW MUCH (plasticity magnitude)
+    * ne_mask                       # WHERE (heterosynaptic modulation)
+    * pre_activation                # presynaptic activity
+    * post_activation               # postsynaptic activity
+    * sign(opi - 0.5)              # DIRECTION (LTP if pleasure, LTD if not)
+)
+pathway.synaptic_weight += delta_w  # accumulates over experience
+# pathway.base_weight is NEVER touched (Substrate)
+```
+
+**Effective weight** at runtime:
+```
+effective_weight = base_weight * synaptic_weight
+```
+
+`base_weight` = Substrate (from anatomy). `synaptic_weight` = Plasticity
+(from experience). Multiply to get the combined signal.
+
+#### 19.5.2 Bayesian Belief Updating
+
+**What changes**: posterior estimates of scientific constants.
+
+**Rule**: Bayesian inference — prior (literature) + evidence (experience)
+→ posterior. This is not a metaphor — it is literal Bayesian updating
+(Knill & Pouget 2004, "the brain as a Bayesian machine").
+
+```python
+# Prior: from published paper (Substrate)
+prior_value = 0.90                  # Bidelman & Krishnan 2009
+prior_strength = 10                 # N=10 in original study
+
+# Evidence: from this listener's experience (Plasticity)
+observed_value = computed_from_activation
+evidence_strength = da * opi        # surprise × pleasure = evidence weight
+
+# Posterior: weighted combination
+posterior = (prior_value * prior_strength + evidence) / (prior_strength + n)
+```
+
+**Key properties**:
+- Prior is NEVER deleted — it always contributes
+- Zero experience → `posterior = prior` (falls back to science)
+- Infinite experience → posterior converges to personal truth
+- Every posterior decomposes into: prior + list of evidence events
+
+#### 19.5.3 Reward-Correlated Gain Adaptation
+
+**What changes**: per-nucleus `personal_gain` — how much this listener
+weighs each nucleus's contribution.
+
+**Rule**: TD-learning (Sutton & Barto 1998), consistent with dopaminergic
+modulation of cortical gain (Servan-Schreiber et al. 1990).
+
+```python
+# Was this nucleus active when reward (OPI) was high?
+correlation = corr(nucleus.activation, neuro.opi)
+prediction_error = correlation - expected_correlation
+delta_gain = da * prediction_error  # DA gates the update magnitude
+nucleus.personal_gain += lr * delta_gain
+```
+
+**Effect**: Nuclei whose activity predicts pleasure get up-weighted.
+The listener's "personality" emerges from which units matter most.
+
+### 19.6 Multi-Timescale Plasticity
+
+The four neurochemicals operate at different timescales (Section 12.8).
+This creates a natural hierarchy matching synaptic plasticity research
+(Abraham & Bear 1996, metaplasticity):
+
+```
+TIMESCALE        DRIVEN BY    WHAT CHANGES                 PERSISTENCE
+───────────────────────────────────────────────────────────────────────
+ms   (frame)     DA phasic    Instantaneous activation      Transient (STP)
+sec  (phrase)    NE + OPI     Pathway synaptic_weight       Short-term (early LTP)
+min  (piece)     5HT          Bayesian posteriors           Long-term (late LTP)
+hour (session)   All four     Session preference drift      Consolidation
+days (lifetime)  Accumulated  Musical personality           Structural change
+```
+
+Each timescale feeds into the next — exactly as in biological memory
+consolidation (Frankland & Bontempi 2005):
+- Frame-level DA bursts → phrase-level Hebbian changes (encoding)
+- Phrase-level OPI signals → piece-level belief updates (consolidation)
+- Piece-level 5HT patterns → session-level preference (systems consolidation)
+- Session preferences → lifetime personality (structural plasticity)
+
+### 19.7 Emergent Autonomy
+
+When Plasticity runs on Substrate, autonomous behaviors EMERGE that were
+not explicitly programmed. All follow from deterministic rules + unique
+accumulated plasticity state:
+
+#### 19.7.1 Boredom → Exploration
+
+```
+IUCP.complexity_preference < 0.3        (too simple for this listener)
+  AND IMU.familiarity > 0.7             (heard this pattern too many times)
+  → NE increases                        (deterministic: low IUCP drives arousal)
+  → NE > exploration_threshold          (deterministic: Aston-Jones 2005)
+  → exploration mode                    (deterministic: NE gates pathway breadth)
+  → seek novel music                    (deterministic: selection policy)
+
+  BUT: what counts as "too familiar" → plastic (IMU personal gain)
+       what counts as "too simple"  → plastic (IUCP posterior)
+       exploration threshold        → plastic (personal NE set-point)
+
+  RESULT: same rules, different listeners get bored at different points.
+  Looks like free will. Is deterministic emergence from unique plasticity.
+```
+
+#### 19.7.2 Dopamine Chasing
+
+```
+RPEM.prediction_error > 0              (better than expected)
+  → DA phasic burst                    (Schultz 1997)
+  → synaptic_weights strengthen        (Hebbian LTP)
+  → system encodes what preceded this reward
+  → next selection: prefer similar R³ signatures
+
+  Over time: listener develops a "type". Not programmed — DA kept
+  reinforcing the same acoustic patterns. This IS the dopamine system.
+  Same mechanism as Berridge & Robinson 2003, applied to music.
+```
+
+#### 19.7.3 Mood-Driven Temporal Plasticity
+
+```
+5HT high (patient mood)  → long temporal window → learns structure
+5HT low (restless mood)  → short temporal window → learns immediacy
+
+  Same listener, different moods → different plasticity window →
+  different aspects of music get encoded. Mood is not noise —
+  it is a plasticity modulator (Doya 2002).
+```
+
+#### 19.7.4 Computational Hypothesis Generation
+
+The system discovers connections not in the current 12 pathways:
+
+```
+Every N sessions:
+  For each non-connected nucleus pair (A, B):
+    MI = mutual_information(A.history, B.history)
+    if MI > threshold:
+      propose_hypothesis(A → B, evidence=MI)
+      STATUS: "proposed" — requires human scientist review
+```
+
+The system does computational science — generates hypotheses from data —
+but does NOT modify its own Substrate. Substrate changes only through
+human-reviewed scientific process.
+
+### 19.8 Traceability Contract
+
+Every plasticity event must produce an immutable audit record:
+
+```python
+@dataclass(frozen=True)
+class PlasticityTrace:
+    """Immutable record. Every parameter change is fully traceable."""
+
+    # WHAT changed
+    nucleus: str                    # "BCH"
+    parameter: str                  # "alpha_posterior"
+    old_value: float                # 0.900
+    new_value: float                # 0.907
+
+    # WHY (neurochemical state at the moment of change)
+    da: float                       # 0.82
+    ne: float                       # 0.55
+    opi: float                      # 0.91
+    sht: float                      # 0.68
+
+    # WHICH mechanism
+    mechanism: str                  # "bayesian" | "hebbian" | "td_gain"
+    citation: str                   # "Hebb 1949 + Doya 2002"
+
+    # FROM WHICH music
+    audio_source: str               # "beethoven_op131.wav"
+    frame_range: Tuple[int, int]    # (1240, 1260)
+    timestamp_sec: float            # 14.82
+```
+
+**Guarantee**: for any plastic parameter, you can always answer:
+1. What was the original scientific value? → Substrate prior
+2. How much has it shifted? → `current - prior`
+3. Why? → DA/NE/OPI/5HT at the moment + mechanism
+4. From which music? → audio source + timestamp
+5. Can I undo it? → Yes (`reset_to_substrate()`)
+
+### 19.9 Reset Hierarchy
+
+```
+reset_to_substrate()          → Remove ALL plasticity. Return to published science.
+reset_session()               → Remove today's changes. Keep lifetime accumulation.
+reset_pathway(P3)             → Reset one pathway's synaptic_weight to 1.0.
+reset_nucleus(BCH)            → Reset one nucleus's posterior + gain.
+reset_neurochemical_baseline()→ Reset personal DA/NE/OPI/5HT set-points to 0.5.
+```
+
+The existence of `reset_to_substrate()` is the architectural guarantee that
+Substrate is always recoverable. Plasticity is an overlay, not a mutation.
+The glass box remains glass — plasticity is a colored film on top that can
+be peeled off at any time.
+
+### 19.10 Complete System View (Updated)
+
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│                           MI SYSTEM                                     │
+│                                                                         │
+│  Audio ──► R³ (spectral physics, deterministic)                        │
+│             │                                                           │
+│             ▼                                                           │
+│            H³ (temporal demand, deterministic)                          │
+│             │                                                           │
+│             ▼                                                           │
+│  ┌─────── C³ BRAIN ──────────────────────────────────────────────────┐ │
+│  │                                                                    │ │
+│  │  ┌─ SUBSTRATE (physics, white-box, universal) ──────────────────┐│ │
+│  │  │  96 nuclei × compute() — every line cited                     ││ │
+│  │  │  12 pathways × base_weight — from anatomy                     ││ │
+│  │  │  Scientific constants — from published papers                  ││ │
+│  │  │  R → E → A → I → H — fixed execution order                   ││ │
+│  │  │  4 neurochemicals — cited production/modulation               ││ │
+│  │  └───────────────────────────────────────────────────────────────┘│ │
+│  │       ▲ always recoverable via reset_to_substrate()               │ │
+│  │  ┌─ PLASTICITY (adaptation, traceable, reversible) ─────────────┐│ │
+│  │  │  Hebbian synaptic weights (co-activation, LTP/LTD)           ││ │
+│  │  │  Bayesian posteriors (prior + evidence from experience)        ││ │
+│  │  │  Personal gains (reward-correlated, TD-learning)               ││ │
+│  │  │  Neurochemical set-points (individual baselines)               ││ │
+│  │  │  Audit: PlasticityTrace for every single change               ││ │
+│  │  └───────────────────────────────────────────────────────────────┘│ │
+│  │       ▲ emergent from Substrate + Plasticity                      │ │
+│  │  ┌─ AUTONOMY (not programmed — arises from the above) ──────────┐│ │
+│  │  │  Boredom → exploration       (IUCP + NE)                      ││ │
+│  │  │  Dopamine chasing            (RPEM + Hebbian LTP)             ││ │
+│  │  │  Mood-driven learning window (5HT + temporal discount)        ││ │
+│  │  │  Taste formation             (accumulated posteriors)          ││ │
+│  │  │  Self-science                (MI scan → propose hypothesis)   ││ │
+│  │  └───────────────────────────────────────────────────────────────┘│ │
+│  │                                                                    │ │
+│  │  OUTPUT: BrainOutput(tensor, ram, neuro, psi)                     │ │
+│  └────────────────────────────────────────────────────────────────────┘ │
+│             │                                                           │
+│             ▼                                                           │
+│            L³ (language expression, reads everything)                   │
+│                                                                         │
+└────────────────────────────────────────────────────────────────────────┘
+```
+
+### 19.11 Glossary Additions
+
+| Term | Meaning |
+|------|---------|
+| **Substrate** | The deterministic, citation-grounded, white-box C³ computation. Like laws of physics — universal, never changes. Contains: compute(), base_weights, scientific constants, execution order, neurochemical rules |
+| **Plasticity** | Adaptive overlay on Substrate using biological learning mechanisms (Hebbian, Bayesian, TD). Experience-dependent, fully traceable, always reversible. NOT machine learning — neural plasticity |
+| **Autonomy** | Emergent behaviors arising from Plasticity on Substrate. Not programmed — follows from deterministic rules + unique history. Includes: boredom, exploration, dopamine chasing, taste formation |
+| **Synaptic weight** | Pathway strength from Hebbian co-activation. Multiplies base_weight (Substrate). Analogous to LTP/LTD. Reset to 1.0 = no plasticity effect |
+| **Bayesian posterior** | Scientific constant updated by experience. `posterior = f(prior, evidence)`. Prior = published value (Substrate). Evidence = listening experience (Plasticity). Decomposable: prior + evidence log |
+| **Personal gain** | Per-nucleus multiplier from reward correlation (TD-learning). Reflects individual weighting of brain computations. Reset to 1.0 = equal weighting |
+| **PlasticityTrace** | Immutable audit record: what changed, why (DA/NE/OPI/5HT), from which music, which mechanism, citation |
+| **Neurochemical set-point** | Individual DA/NE/OPI/5HT tonic baseline. Starts at 0.5, drifts with experience. Determines plasticity "personality" |
+| **reset_to_substrate()** | Remove all plasticity, return to published science. The guarantee that C³ is always a recoverable glass box |
+| **Computational hypothesis** | Proposed new connection from MI analysis of non-connected nuclei. Requires human review — Substrate only changes through scientific process |
+| **LTP** | Long-term potentiation — strengthening of synaptic connection through repeated co-activation. What Hebbian plasticity produces when OPI > 0.5 |
+| **LTD** | Long-term depression — weakening of synaptic connection. What Hebbian plasticity produces when OPI < 0.5 |
