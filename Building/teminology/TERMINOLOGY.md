@@ -1205,16 +1205,19 @@ H³ (temporal demand, multi-scale 4-tuples)
 │    RAM:     aggregate region links      ──► (B, T, 26)              │
 │    Neuro:   final neuro_state           ──► (B, T, 4)               │
 │                                                                      │
-│    Note: internal dims are consumed by downstream nuclei only.       │
-│    They do NOT appear in the final output tensor.                    │
+│    Ψ³ Interpreter (inside C³):                                       │
+│    tensor + ram + neuro ──► Psi (B, T, N_psi)                       │
+│                                                                      │
+│    Note: internal dims consumed by downstream nuclei only.           │
 └─────────────────────────────────────────────────────────────────────┘
   │
-  ├──► (B, T, N_ext)  Tensor output → L³, HYBRID (external+hybrid dims only)
-  ├──► (B, T, 26)     Region Activation Map → validation, visualization
-  ├──► (B, T, 4)      Neuro state → validation, visualization
+  ├──► (B, T, N_ext)   Tensor  ──┐
+  ├──► (B, T, 26)      RAM     ──┤──► L³ reads ALL of these + R³ + H³
+  ├──► (B, T, 4)       Neuro   ──┤    → translates into Language
+  ├──► (B, T, N_psi)   Psi     ──┘
   │
   ▼
-L³ (104D semantic space)
+L³ (Language — NOT Ψ³. L³ reads R³ + H³ + C³ and expresses in structured form)
 ```
 
 ---
@@ -1370,29 +1373,31 @@ REGION_REGISTRY = {
 
 ## 15. Complete C³ Output
 
-C³ produces THREE outputs, not one:
+C³ produces **FOUR** outputs, not one:
 
 | Output | Shape | Purpose |
 |--------|-------|---------|
-| **Tensor** | `(B, T, N_ext)` | External+hybrid dims only — feeds L³, HYBRID |
-| **RAM** | `(B, T, 26)` | Region Activation Map — validation, visualization |
-| **Neuro** | `(B, T, 4)` | Neurochemical state per frame — validation, visualization |
+| **Tensor** | `(B, T, N_ext)` | External+hybrid dims — cognitive processing output |
+| **RAM** | `(B, T, 26)` | Region Activation Map — neuroanatomical validation |
+| **Neuro** | `(B, T, 4)` | Neurochemical state per frame — modulatory validation |
+| **Psi** | `(B, T, N_psi)` | Psychological interpretation — experiential readout |
 
 `N_ext` = sum of `external` + `hybrid` dims across all 96 nuclei. This is less
 than the total 1006 because `internal` dims are consumed by downstream nuclei
-and excluded from the final output. The exact value of N_ext depends on the
-scope assignments in each nucleus's LAYERS (determined during the build phase).
+and excluded from the final output.
 
-The neurochemical state is a `(B, T, 4)` tensor, not a scalar dict. Each frame
-accumulates neuro effects through the depth hierarchy (see Section 12.8), so
-DA/NE/OPI/5HT values can vary across time. Channel order: `[da, ne, opi, 5ht]`.
+The neurochemical state is a `(B, T, 4)` tensor. Channel order: `[da, ne, opi, 5ht]`.
+
+Psi is derived from the other three (tensor + ram + neuro) by the Ψ³ interpreter
+(Section 16). It is computed INSIDE C³ — the brain's own experiential readout.
 
 ```python
 @dataclass
 class BrainOutput:
-    tensor: Tensor      # (B, T, N_ext) — external+hybrid dims (semantic output)
-    ram: Tensor         # (B, T, 26)    — region activation map
-    neuro: Tensor       # (B, T, 4)     — neurochemical state [da, ne, opi, 5ht]
+    tensor: Tensor      # (B, T, N_ext)  — external+hybrid dims (cognitive output)
+    ram: Tensor         # (B, T, 26)     — region activation map
+    neuro: Tensor       # (B, T, 4)      — neurochemical state [da, ne, opi, 5ht]
+    psi: PsiState       # (B, T, N_psi)  — psychological interpretation
 ```
 
 ### 15.1 Neuro Channel Index
@@ -1421,10 +1426,169 @@ the nucleus's output tensor to derive the effect magnitude (Section 12.7).
 
 ---
 
-## 16. Glossary — Quick Reference
+## 16. Ψ³ — Psychological Interpretation (Inside C³)
+
+### 16.1 Still the Brain
+
+Ψ³ is NOT after C³ — it is **inside** C³. The brain doesn't just compute; it
+also generates subjective experience. Ψ³ is the brain's own interpretive readout
+of its computational state. It is the fourth output of C³, alongside tensor,
+RAM, and neuro.
+
+```
+┌─────────────────────────── C³ BRAIN ───────────────────────────┐
+│                                                                 │
+│  R³/H³ → R → E → A → I → H                                    │
+│                          │                                      │
+│                          ▼                                      │
+│              ┌─── Assembly ───┐                                 │
+│              │ tensor (N_ext) │                                 │
+│              │ ram    (26)    │──► Ψ³ Interpreter ──► psi (N_psi)│
+│              │ neuro  (4)    │                                  │
+│              └────────────────┘                                 │
+│                                                                 │
+│  OUTPUT: tensor + ram + neuro + psi   (all FOUR are C³ outputs) │
+└─────────────────────────────────────────────────────────────────┘
+         │
+         ▼
+L³ reads R³ + H³ + C³(all four) + ... → "Language" (separate space, NOT Ψ³)
+```
+
+### 16.2 The Interpretive Layers
+
+| Layer | Domain | Language | Example | Where |
+|-------|--------|----------|---------|-------|
+| R³ | Physics | Spectral features | "roughness = 0.73" | Ear |
+| H³ | Temporal | Multi-scale dynamics | "4-bar periodicity at 500ms" | Ear |
+| C³.tensor | Neuroscience | Neural computation | "consonance hierarchy = 0.85" | Brain |
+| C³.ram | Neuroanatomy | Region activation | "NAcc = 0.85" | Brain |
+| C³.neuro | Neurochemistry | Modulatory state | "DA = 0.78" | Brain |
+| **C³.psi** | **Psychology** | **Human experience** | **"intense pleasure, chills"** | **Brain** |
+| L³ | Semantics | **Language** | **Musical meaning in structured form** | **Separate** |
+
+C³.psi is what the brain FEELS. L³ is how all of it gets expressed in Language.
+They are fundamentally different: Ψ³ interprets the brain's own state; L³
+translates the ENTIRE pipeline (R³ + H³ + C³) into a semantic/linguistic form.
+
+### 16.3 Inputs — Internal C³ Outputs
+
+Ψ³ reads the other three C³ outputs before they leave the brain:
+
+| Input | What Ψ³ extracts from it |
+|-------|--------------------------|
+| `tensor` (B, T, N_ext) | Cognitive state — what the 96 nuclei computed |
+| `ram` (B, T, 26) | Activation pattern — which brain systems are engaged |
+| `neuro` (B, T, 4) | Modulatory context — reward, arousal, pleasure, mood |
+
+All three are needed. The SAME tensor values mean different things under
+different neurochemical states. High NAcc with high DA = anticipatory reward.
+High NAcc with high OPI = consummatory pleasure.
+
+### 16.4 Dimension Groups
+
+Ψ³ dimensions are organized into psychological domains:
+
+| Group | Domain | Dimensions | Source mapping |
+|-------|--------|------------|---------------|
+| **Affect** | Core emotional coordinates | valence, arousal, tension, dominance | neuro (DA→valence, NE→arousal) + ram (amygdala, NAcc, VTA) |
+| **Emotion** | Categorical feelings | joy, sadness, fear, anger, awe, nostalgia, tenderness, serenity | affect + ram pattern matching (Koelsch 2014) |
+| **Aesthetic** | Musical judgement | beauty, groove, flow, complexity_preference, surprise, closure | tensor (PCU predictions) + neuro (DA for surprise) |
+| **Bodily** | Felt sensations | chills, movement_urge, breathing_change, tension_release | ram (PAG, hypothalamus, SMA) + neuro (OPI for chills) |
+| **Cognitive** | Mental states | familiarity, absorption, expectation, attention_focus | ram (hippocampus, dlPFC) + tensor (IMU, PCU outputs) |
+| **Temporal** | Moment-in-time | anticipation, resolution, buildup, release, cadence | tensor (F-layer forecasts) + neuro trajectory (DA rising/falling) |
+
+Exact dimension count (N_psi) is determined during the build phase. Each
+dimension is [0, 1] normalized with semantic anchors (e.g., valence: 0 = deeply
+sad, 0.5 = neutral, 1 = euphoric).
+
+### 16.5 Interpretation, Not Computation
+
+Ψ³ does NOT add new neural computation. It is a **readout layer** — a
+deterministic mapping from C³'s neuroscience outputs to psychological meaning
+using established neuro-psychological correspondences:
+
+```python
+class PsiInterpreter:
+    """Maps C³ internal outputs → Ψ³ psychological state. Part of C³."""
+
+    def interpret(self, tensor, ram, neuro) -> PsiState:
+        # Affect from neurochemical state
+        valence  = f(neuro[:,:,0], neuro[:,:,2])   # DA + OPI → valence
+        arousal  = f(neuro[:,:,1])                  # NE → arousal
+        tension  = f(ram[:,:,9], neuro[:,:,3])      # amygdala + 5HT → tension
+
+        # Bodily from region activation
+        chills   = f(ram[:,:,4], ram[:,:,12], neuro[:,:,2])  # PAG + hypothalamus + OPI
+        movement = f(ram[:,:,11], ram[:,:,22])      # putamen + SMA
+
+        # Aesthetic from cognitive output
+        surprise = f(tensor[..., pcu_prediction_dims])
+        groove   = f(ram[:,:,11], ram[:,:,22], tensor[..., stu_rhythm_dims])
+
+        return PsiState(valence, arousal, tension, ...)
+```
+
+The mapping functions `f()` are calibrated against published behavioral data
+(self-report ratings, physiological measures, fMRI contrasts).
+
+### 16.6 Validation Bridge
+
+Ψ³ is where C³ meets empirical psychology. Every Ψ³ dimension has a
+**behavioral anchor** — a published study with measured human responses:
+
+| Ψ³ dimension | Behavioral anchor | Validation method |
+|-------------|-------------------|-------------------|
+| valence | Self-reported valence ratings (Russell 1980) | Correlate Ψ³.valence with listener ratings |
+| chills | Self-reported chill frequency (Salimpoor 2009) | Ψ³.chills should peak where listeners report chills |
+| groove | Head-bobbing / tapping measurements (Janata 2012) | Ψ³.groove should predict movement responses |
+| tension | Continuous tension ratings (Krumhansl 1996) | Correlate Ψ³.tension with real-time dial ratings |
+| familiarity | Recognition memory tasks (Janata 2009) | Ψ³.familiarity should predict recognition accuracy |
+
+### 16.7 Complete C³ Output (Updated)
+
+C³ now produces **FOUR** outputs:
+
+```python
+@dataclass
+class BrainOutput:
+    tensor: Tensor      # (B, T, N_ext)  — cognitive output (external+hybrid dims)
+    ram: Tensor         # (B, T, 26)     — region activation map
+    neuro: Tensor       # (B, T, 4)      — neurochemical state [da, ne, opi, 5ht]
+    psi: PsiState       # (B, T, N_psi)  — psychological interpretation
+
+@dataclass
+class PsiState:
+    affect: Tensor      # (B, T, N_affect)   — valence, arousal, tension, dominance
+    emotion: Tensor     # (B, T, N_emotion)  — categorical emotions
+    aesthetic: Tensor   # (B, T, N_aesthetic) — beauty, groove, flow, surprise
+    bodily: Tensor      # (B, T, N_bodily)   — chills, movement_urge, etc.
+    cognitive: Tensor   # (B, T, N_cognitive) — familiarity, absorption, attention
+    temporal: Tensor    # (B, T, N_temporal)  — anticipation, resolution, buildup
+
+    @property
+    def flat(self) -> Tensor:
+        """All dimensions concatenated: (B, T, N_psi)"""
+        return torch.cat([self.affect, self.emotion, self.aesthetic,
+                          self.bodily, self.cognitive, self.temporal], dim=-1)
+```
+
+### 16.8 Ψ³ vs L³ — They Are Different
+
+| | Ψ³ (Psychological Interpretation) | L³ (Language) |
+|---|---|---|
+| **Where** | Inside C³ (part of the brain) | Separate space, after C³ |
+| **Reads** | C³ tensor + ram + neuro | R³ + H³ + C³ (all four outputs) + more |
+| **Produces** | What the brain FEELS | How everything gets expressed as Language |
+| **Domain** | Psychology | Semantics / structured expression |
+| **Analogy** | Feeling pain | Saying "it hurts" |
+
+---
+
+## 17. Glossary — Quick Reference
 
 | Term | Meaning |
 |------|---------|
+| **Ψ³** | Psychological Interpretation — INSIDE C³. Readout layer that maps tensor+ram+neuro → experiential state (NOT L³) |
 | **Nucleus** | Generic term for any of the 96 C³ brain components (when role is irrelevant) |
 | **Relay (R)** | Depth 0 — foundation transformation, reads raw R³/H³ only |
 | **Encoder (E)** | Depth 1 — feature extraction from Relay output |
@@ -1446,12 +1610,14 @@ the nucleus's output tensor to derive the effect magnitude (Section 12.7).
 | **Depth** | Integer processing depth (0-5), determines execution order |
 | **NeuroLink** | Declares which output dims of a nucleus affect which neurochemical, with effect type (produce/amplify/inhibit), weight, and citation |
 | **Neurochemical** | Semi-orthogonal modulatory overlay: DA, NE, OPI, 5HT — `(B, T, 4)` tensor via volume transmission, accumulated through depth hierarchy |
-| **Tensor pathway** | Main data flow: R³/H³ → R → E → A → I → H → (B, T, N_ext) (wired, point-to-point, external+hybrid dims) |
+| **Tensor pathway** | Main data flow: R³/H³ → R → E → A → I → H → assembly → Ψ³ → BrainOutput (all inside C³) |
 | **Neuro** | `(B, T, 4)` neurochemical state tensor — modulatory overlay on the tensor pathway, accumulated per depth, clamped to [0, 1] |
+| **PsiState** | Output of Ψ³ — grouped tensors: affect, emotion, aesthetic, bodily, cognitive, temporal |
+| **PsiInterpreter** | Readout layer that maps `BrainOutput` → `PsiState` using neuro-psychological correspondences |
 
 ---
 
-## 17. Migration Notes
+## 18. Migration Notes
 
 ### What Changes
 
@@ -1465,7 +1631,7 @@ the nucleus's output tensor to derive the effect magnitude (Section 12.7).
 | Compute signature | `compute(h3, r3, cross_unit)` | Varies by role (see Section 8) |
 | Brain regions | `brain_regions` (metadata only) | `region_links` (metadata + activation mapping) |
 | MNI coordinates | Per-nucleus property | Global `REGION_REGISTRY` (26 entries) |
-| Brain output | `(B, T, 1006)` tensor only | `BrainOutput(tensor, ram, neuro)` — three tensors, tensor is `(B, T, N_ext)` |
+| Brain output | `(B, T, 1006)` tensor only | `BrainOutput(tensor, ram, neuro, psi)` — four outputs |
 | Layer scope | All dims treated equally | Each layer tagged `internal`/`external`/`hybrid` — routing metadata |
 | Unit method | `for model in self.active_models` | Depth-ordered: R → E → A → I → H |
 
@@ -1476,7 +1642,7 @@ the nucleus's output tensor to derive the effect magnitude (Section 12.7).
 | Component acronyms (BCH, PSCL, etc.) | Unchanged |
 | Component full names | Unchanged |
 | OUTPUT_DIM per component | Unchanged (but now partitioned by scope) |
-| Total tensor output | Changes: `(B, T, N_ext)` — only external+hybrid dims; internal dims excluded |
+| Total output | `BrainOutput` with tensor `(B, T, N_ext)`, ram `(B, T, 26)`, neuro `(B, T, 4)`, psi `(B, T, N_psi)` |
 | 9 units | Unchanged |
 | E/M/P/F output layers | Unchanged |
 | H³ demand specs | Unchanged |
