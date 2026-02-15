@@ -1,13 +1,12 @@
 """MI Contracts — interfaces and value types for Musical Intelligence.
 
-Re-exports all 8 frozen dataclasses and 5 abstract base classes that define
+Re-exports all 8 frozen dataclasses and 4 abstract base classes that define
 the contract layer for the entire system.
 """
 from __future__ import annotations
 
 from .bases import (
     BaseCognitiveUnit,
-    BaseMechanism,
     BaseModel,
     BaseSemanticGroup,
     BaseSpectralGroup,
@@ -33,9 +32,8 @@ __all__ = [
     "ModelMetadata",
     "R3FeatureSpec",
     "SemanticGroupOutput",
-    # ABCs (5)
+    # ABCs (4)
     "BaseCognitiveUnit",
-    "BaseMechanism",
     "BaseModel",
     "BaseSemanticGroup",
     "BaseSpectralGroup",

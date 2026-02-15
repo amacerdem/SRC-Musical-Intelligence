@@ -1,7 +1,6 @@
 """SRP -- Striatal Reward Pathway.
 
 Unit: ARU | Tier: alpha | Output: 19D
-Mechanisms: AED, CPD
 """
 from __future__ import annotations
 
@@ -25,7 +24,7 @@ if TYPE_CHECKING:
 class SRP(BaseModel):
     """Striatal Reward Pathway.
 
-    ARU-alpha | 19D | Mechanisms: AED, CPD
+    ARU-alpha | 19D
     """
 
     NAME = "SRP"
@@ -33,7 +32,6 @@ class SRP(BaseModel):
     UNIT = "ARU"
     TIER = "alpha"
     OUTPUT_DIM = 19
-    MECHANISM_NAMES: Tuple[str, ...] = ("AED", "CPD",)
     CROSS_UNIT_READS: Tuple = ()
     LAYERS: Tuple[LayerSpec, ...] = (
         LayerSpec("E", "Extraction", 0, 6, ("srp_e0", "srp_e1", "srp_e2", "srp_e3", "srp_e4", "srp_e5",)),
@@ -79,7 +77,6 @@ class SRP(BaseModel):
 
     def compute(
         self,
-        mechanism_outputs: Dict[str, "Tensor"],
         h3_features: Dict[Tuple[int, int, int, int], "Tensor"],
         r3_features: "Tensor",
         cross_unit_inputs: Optional[Dict[str, "Tensor"]] = None,
@@ -87,25 +84,10 @@ class SRP(BaseModel):
         B, T, _ = r3_features.shape
         device = r3_features.device
 
-        # Gather mechanism features
-        parts = []
-        for name in self.MECHANISM_NAMES:
-            parts.append(
-                mechanism_outputs.get(name, torch.zeros(B, T, 30, device=device))
-            )
-        mech = torch.cat(parts, dim=-1)  # (B, T, total_mech)
-        total_m = mech.shape[-1]
-
-        # Vectorized projection: sample mechanism dims evenly
-        m_idx = torch.linspace(0, total_m - 1, self.OUTPUT_DIM).long().to(device)
-        m_proj = mech[..., m_idx]  # (B, T, OUTPUT_DIM)
-
-        # Vectorized R3 cycling
+        # Skeleton: R3 cycling + H3 modulation (to be replaced during build)
         r3_dim = r3_features.shape[-1]
         r3_idx = (torch.arange(self.OUTPUT_DIM) % r3_dim).to(device)
-        r3_proj = r3_features[..., r3_idx]  # (B, T, OUTPUT_DIM)
-
-        out = torch.sigmoid(0.7 * m_proj + 0.3 * r3_proj)
+        out = torch.sigmoid(r3_features[..., r3_idx])
 
         # H3 temporal modulation
         h3_mod = torch.ones(B, T, device=device)

@@ -1,7 +1,6 @@
 """STANM -- Spectrotemporal Attention Network Model.
 
 Unit: ASU | Tier: beta | Output: 10D
-Mechanisms: BEP, ASA
 """
 from __future__ import annotations
 
@@ -25,7 +24,7 @@ if TYPE_CHECKING:
 class STANM(BaseModel):
     """Spectrotemporal Attention Network Model.
 
-    ASU-beta | 10D | Mechanisms: BEP, ASA
+    ASU-beta | 10D
     """
 
     NAME = "STANM"
@@ -33,7 +32,6 @@ class STANM(BaseModel):
     UNIT = "ASU"
     TIER = "beta"
     OUTPUT_DIM = 10
-    MECHANISM_NAMES: Tuple[str, ...] = ("BEP", "ASA",)
     CROSS_UNIT_READS: Tuple = ()
     LAYERS: Tuple[LayerSpec, ...] = (
         LayerSpec("E", "Extraction", 0, 3, ("stanm_e0", "stanm_e1", "stanm_e2",)),
@@ -79,7 +77,6 @@ class STANM(BaseModel):
 
     def compute(
         self,
-        mechanism_outputs: Dict[str, "Tensor"],
         h3_features: Dict[Tuple[int, int, int, int], "Tensor"],
         r3_features: "Tensor",
         cross_unit_inputs: Optional[Dict[str, "Tensor"]] = None,
@@ -87,25 +84,10 @@ class STANM(BaseModel):
         B, T, _ = r3_features.shape
         device = r3_features.device
 
-        # Gather mechanism features
-        parts = []
-        for name in self.MECHANISM_NAMES:
-            parts.append(
-                mechanism_outputs.get(name, torch.zeros(B, T, 30, device=device))
-            )
-        mech = torch.cat(parts, dim=-1)  # (B, T, total_mech)
-        total_m = mech.shape[-1]
-
-        # Vectorized projection: sample mechanism dims evenly
-        m_idx = torch.linspace(0, total_m - 1, self.OUTPUT_DIM).long().to(device)
-        m_proj = mech[..., m_idx]  # (B, T, OUTPUT_DIM)
-
-        # Vectorized R3 cycling
+        # Skeleton: R3 cycling + H3 modulation (to be replaced during build)
         r3_dim = r3_features.shape[-1]
         r3_idx = (torch.arange(self.OUTPUT_DIM) % r3_dim).to(device)
-        r3_proj = r3_features[..., r3_idx]  # (B, T, OUTPUT_DIM)
-
-        out = torch.sigmoid(0.6 * m_proj + 0.4 * r3_proj)
+        out = torch.sigmoid(r3_features[..., r3_idx])
 
         # H3 temporal modulation
         h3_mod = torch.ones(B, T, device=device)

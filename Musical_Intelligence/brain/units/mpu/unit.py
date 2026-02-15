@@ -28,7 +28,6 @@ class MPUUnit(BaseCognitiveUnit):
 
     def __init__(self) -> None:
         self._models: List[BaseModel] = [cls() for cls in MODEL_CLASSES]
-        self._mechanism_outputs: Dict[str, Tensor] = {}
 
     # ------------------------------------------------------------------
     # Properties
@@ -38,14 +37,6 @@ class MPUUnit(BaseCognitiveUnit):
     def models(self) -> List[BaseModel]:
         """Models in tier order (alpha -> beta -> gamma)."""
         return self._models
-
-    # ------------------------------------------------------------------
-    # Mechanism injection
-    # ------------------------------------------------------------------
-
-    def set_mechanism_outputs(self, mechanism_outputs: Dict[str, Tensor]) -> None:
-        """Inject cached mechanism outputs before compute()."""
-        self._mechanism_outputs = mechanism_outputs
 
     # ------------------------------------------------------------------
     # Compute
@@ -68,7 +59,6 @@ class MPUUnit(BaseCognitiveUnit):
         outputs: List[Tensor] = []
         for model in self.active_models:
             out = model.compute(
-                self._mechanism_outputs,
                 h3_features,
                 r3_features,
                 cross_unit_inputs,

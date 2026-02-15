@@ -1,10 +1,9 @@
-"""Brain layer — mechanisms, units, circuits, pathways, regions, neurochemicals.
+"""Brain layer — units, circuits, pathways, regions, neurochemicals.
 
 The brain layer implements the C3 cognitive architecture:
-- 10 mechanisms (30D each, computed once per forward pass)
 - 9 cognitive units (96 models total, 1006D output)
 - 5 pathways (3 inter-unit, 2 intra-unit)
-- 5-phase orchestrated execution
+- 4-phase orchestrated execution
 
 Quick start::
 

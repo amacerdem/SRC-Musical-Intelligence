@@ -4,7 +4,7 @@ Verifies that MI-Core's learned representations maintain traceability
 to the deterministic MI Teacher's scientific foundations.
 
 For any C3 dimension d, traces:
-  d → model → formula → mechanism → paper citation
+  d → model → formula → paper citation
 
 This is the key differentiator of MI: every output dimension is
 scientifically grounded, not a black-box latent.
@@ -25,7 +25,6 @@ class TraceEntry:
         model: Model acronym (e.g. "PLE").
         layer: Output layer name (E/M/P/F).
         layer_index: Index within the model's output.
-        mechanism: Mechanism name (e.g. "BEP", "ASA").
         formula: Formula description (if available).
     """
 
@@ -34,7 +33,6 @@ class TraceEntry:
     model: str
     layer: str
     layer_index: int
-    mechanism: str
     formula: Optional[str] = None
 
 
@@ -66,10 +64,9 @@ class WhiteBoxTracer:
         for unit_name in (
             "SPU", "STU", "IMU", "ASU", "NDU", "MPU", "PCU", "ARU", "RPU"
         ):
-            unit = orch.units[unit_name]
+            unit = orch._units[unit_name]
             for model in unit.models:
                 layers = model.LAYERS
-                mechanisms = model.MECHANISM_NAMES
 
                 for layer_idx, layer_name in enumerate(layers):
                     abs_idx = dim_offset + layer_idx
@@ -79,7 +76,6 @@ class WhiteBoxTracer:
                         model=model.NAME,
                         layer=layer_name,
                         layer_index=layer_idx,
-                        mechanism=mechanisms[0] if mechanisms else "unknown",
                     )
 
                 dim_offset += model.OUTPUT_DIM
@@ -157,5 +153,5 @@ class WhiteBoxTracer:
         e = self.trace_dim(dim_index)
         return (
             f"C3[{e.dim_index}] → {e.unit}/{e.model}.{e.layer} "
-            f"(layer_idx={e.layer_index}, mechanism={e.mechanism})"
+            f"(layer_idx={e.layer_index})"
         )

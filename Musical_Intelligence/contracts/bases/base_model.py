@@ -47,7 +47,6 @@ class BaseModel(ABC):
                           ``"gamma"``.
         OUTPUT_DIM:       Total output dimensionality; must equal the sum of
                           all LAYERS dims.
-        MECHANISM_NAMES:  Names of internal mechanisms. Empty tuple if none.
         CROSS_UNIT_READS: Declared cross-unit data dependencies. Empty if the
                           model only reads H3/R3.
         LAYERS:           Output layer structure; each ``LayerSpec`` defines a
@@ -63,7 +62,6 @@ class BaseModel(ABC):
     UNIT: str = ""
     TIER: str = ""
     OUTPUT_DIM: int = 0
-    MECHANISM_NAMES: Tuple[str, ...] = ()
     CROSS_UNIT_READS: Tuple[CrossUnitPathway, ...] = ()
     LAYERS: Tuple[LayerSpec, ...] = ()
 
@@ -125,7 +123,6 @@ class BaseModel(ABC):
     @abstractmethod
     def compute(
         self,
-        mechanism_outputs: Dict[str, Tensor],
         h3_features: Dict[Tuple[int, int, int, int], Tensor],
         r3_features: Tensor,
         cross_unit_inputs: Optional[Dict[str, Tensor]] = None,
@@ -135,9 +132,6 @@ class BaseModel(ABC):
         Transforms inputs into the model's output tensor.
 
         Args:
-            mechanism_outputs: Outputs from this model's internal mechanisms.
-                Dict mapping mechanism name to ``(B, T, mechanism_dim)``
-                tensor. Empty dict if ``MECHANISM_NAMES`` is empty.
             h3_features: Per-demand H3 scalar time series, keyed by
                 ``(r3_idx, horizon, morph, law)`` 4-tuples.
                 Shape per value: ``(B, T)``.

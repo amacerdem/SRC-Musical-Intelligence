@@ -1,10 +1,9 @@
-"""BrainOrchestrator -- 5-phase execution of the C3 cognitive architecture.
+"""BrainOrchestrator -- 4-phase execution of the C3 cognitive architecture.
 
-Phase 1: Mechanisms   -- MechanismRunner computes all 10 mechanisms (cached).
-Phase 2: Independent  -- 7 units compute in parallel (SPU,STU,IMU,ASU,NDU,MPU,PCU).
-Phase 3: Routing      -- PathwayRunner routes inter-unit signals (P1,P3,P5).
-Phase 4: Dependent    -- ARU computes with pathway inputs, then RPU with ARU output.
-Phase 5: Assembly     -- Concatenate all 9 unit outputs → (B, T, 1006).
+Phase 1: Independent  -- 7 units compute in parallel (SPU,STU,IMU,ASU,NDU,MPU,PCU).
+Phase 2: Routing      -- PathwayRunner routes inter-unit signals (P1,P3,P5).
+Phase 3: Dependent    -- ARU computes with pathway inputs, then RPU with ARU output.
+Phase 4: Assembly     -- Concatenate all 9 unit outputs → (B, T, 1006).
 
 Usage::
 
@@ -20,7 +19,6 @@ from typing import TYPE_CHECKING, Dict, Tuple
 
 import torch
 
-from .mechanisms import MechanismRunner
 from .pathways import PathwayRunner
 from .units import (
     ARUUnit,
@@ -64,17 +62,14 @@ class BrainOutput:
 
 
 class BrainOrchestrator:
-    """5-phase orchestrator for the C3 cognitive architecture.
+    """4-phase orchestrator for the C3 cognitive architecture.
 
-    Manages 10 mechanisms, 9 cognitive units (96 models), and 5 pathways
-    to produce a 1006D brain output per time step.
+    Manages 9 cognitive units (96 models) and 5 pathways to produce a
+    1006D brain output per time step.
     """
 
     def __init__(self) -> None:
-        # Phase 1: Mechanisms
-        self._mechanism_runner = MechanismRunner()
-
-        # Phase 2+4: Cognitive units
+        # Phase 1+3: Cognitive units
         self._units: Dict[str, object] = {
             "SPU": SPUUnit(),
             "STU": STUUnit(),
@@ -87,7 +82,7 @@ class BrainOrchestrator:
             "RPU": RPUUnit(),
         }
 
-        # Phase 3: Pathway routing
+        # Phase 2: Pathway routing
         self._pathway_runner = PathwayRunner()
 
     # ------------------------------------------------------------------
@@ -123,7 +118,7 @@ class BrainOrchestrator:
         h3_features: Dict[Tuple[int, int, int, int], "Tensor"],
         r3_features: "Tensor",
     ) -> BrainOutput:
-        """Execute the 5-phase brain forward pass.
+        """Execute the 4-phase brain forward pass.
 
         Args:
             h3_features: Sparse H3 temporal features keyed by 4-tuples.
@@ -136,20 +131,7 @@ class BrainOrchestrator:
             and per-unit output tensors.
         """
         # ═══════════════════════════════════════════════════════════════
-        # Phase 1: Mechanisms
-        # ═══════════════════════════════════════════════════════════════
-        self._mechanism_runner.run(h3_features, r3_features)
-        mechanism_outputs = {
-            name: self._mechanism_runner.get(name)
-            for name in self._mechanism_runner._mechanisms
-        }
-
-        # Inject mechanism outputs into all units
-        for unit in self._units.values():
-            unit.set_mechanism_outputs(mechanism_outputs)
-
-        # ═══════════════════════════════════════════════════════════════
-        # Phase 2: Independent units
+        # Phase 1: Independent units
         # ═══════════════════════════════════════════════════════════════
         unit_outputs: Dict[str, Tensor] = {}
         for name in INDEPENDENT_UNITS:
@@ -159,19 +141,19 @@ class BrainOrchestrator:
             )
 
         # ═══════════════════════════════════════════════════════════════
-        # Phase 3: Pathway routing
+        # Phase 2: Pathway routing
         # ═══════════════════════════════════════════════════════════════
         cross_unit_inputs = self._pathway_runner.route(unit_outputs)
 
         # ═══════════════════════════════════════════════════════════════
-        # Phase 4: Dependent units
+        # Phase 3: Dependent units
         # ═══════════════════════════════════════════════════════════════
-        # 4a: ARU receives pathway inputs (P1, P3, P5)
+        # 3a: ARU receives pathway inputs (P1, P3, P5)
         unit_outputs["ARU"] = self._units["ARU"].compute(
             h3_features, r3_features, cross_unit_inputs=cross_unit_inputs
         )
 
-        # 4b: RPU receives ARU output via CROSS_UNIT_READS
+        # 3b: RPU receives ARU output via CROSS_UNIT_READS
         rpu_inputs = dict(cross_unit_inputs)
         rpu_inputs["ARU"] = unit_outputs["ARU"]
         unit_outputs["RPU"] = self._units["RPU"].compute(
@@ -179,7 +161,7 @@ class BrainOrchestrator:
         )
 
         # ═══════════════════════════════════════════════════════════════
-        # Phase 5: Assembly
+        # Phase 4: Assembly
         # ═══════════════════════════════════════════════════════════════
         ordered_outputs = [unit_outputs[name] for name in UNIT_ORDER]
         brain_tensor = torch.cat(ordered_outputs, dim=-1)
@@ -191,9 +173,6 @@ class BrainOrchestrator:
             dim = unit_outputs[name].shape[-1]
             unit_slices[name] = (offset, offset + dim)
             offset += dim
-
-        # Clear mechanism cache
-        self._mechanism_runner.clear()
 
         return BrainOutput(
             tensor=brain_tensor,

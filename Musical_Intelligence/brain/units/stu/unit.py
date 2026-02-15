@@ -1,7 +1,7 @@
 """STU — Sensorimotor Timing Unit.
 
 Independent (Phase 2).
-14 models, 148D total output, circuit: sensorimotor, d = 0.67.
+14 models, 147D total output, circuit: sensorimotor, d = 0.67.
 """
 from __future__ import annotations
 
@@ -18,7 +18,7 @@ from .models import MODEL_CLASSES
 class STUUnit(BaseCognitiveUnit):
     """Sensorimotor Timing Unit (STU).
 
-    Circuit: sensorimotor | d = 0.67 | 14 models | 148D
+    Circuit: sensorimotor | d = 0.67 | 14 models | 147D
     """
 
     UNIT_NAME = "STU"
@@ -28,7 +28,6 @@ class STUUnit(BaseCognitiveUnit):
 
     def __init__(self) -> None:
         self._models: List[BaseModel] = [cls() for cls in MODEL_CLASSES]
-        self._mechanism_outputs: Dict[str, Tensor] = {}
 
     # ------------------------------------------------------------------
     # Properties
@@ -38,14 +37,6 @@ class STUUnit(BaseCognitiveUnit):
     def models(self) -> List[BaseModel]:
         """Models in tier order (alpha -> beta -> gamma)."""
         return self._models
-
-    # ------------------------------------------------------------------
-    # Mechanism injection
-    # ------------------------------------------------------------------
-
-    def set_mechanism_outputs(self, mechanism_outputs: Dict[str, Tensor]) -> None:
-        """Inject cached mechanism outputs before compute()."""
-        self._mechanism_outputs = mechanism_outputs
 
     # ------------------------------------------------------------------
     # Compute
@@ -59,7 +50,7 @@ class STUUnit(BaseCognitiveUnit):
     ) -> Tensor:
         """Run all models in tier order and concatenate outputs.
 
-        Returns (B, T, 148) tensor.
+        Returns (B, T, 147) tensor.
         """
         if not self._models:
             B, T = r3_features.shape[:2]
@@ -68,7 +59,6 @@ class STUUnit(BaseCognitiveUnit):
         outputs: List[Tensor] = []
         for model in self.active_models:
             out = model.compute(
-                self._mechanism_outputs,
                 h3_features,
                 r3_features,
                 cross_unit_inputs,

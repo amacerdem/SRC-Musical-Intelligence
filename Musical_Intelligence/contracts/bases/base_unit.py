@@ -128,18 +128,6 @@ class BaseCognitiveUnit(ABC):
         return tuple(m.NAME for m in self.models)
 
     @property
-    def mechanism_names(self) -> Tuple[str, ...]:
-        """Flat tuple of all mechanism names across all models.
-
-        Returns:
-            Concatenated ``MECHANISM_NAMES`` from all models.
-        """
-        names: List[str] = []
-        for model in self.models:
-            names.extend(model.MECHANISM_NAMES)
-        return tuple(names)
-
-    @property
     def h3_demand(self) -> Set[Tuple[int, int, int, int]]:
         """Union of all H3 demands across all active models.
 
