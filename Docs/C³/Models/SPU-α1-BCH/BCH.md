@@ -4,8 +4,8 @@
 **Unit**: SPU (Spectral Processing Unit)
 **Circuit**: Perceptual (Brainstem–Cortical)
 **Tier**: α (Mechanistic) — >90% confidence
-**Version**: 2.2.0 (Phase 3E: R³ v2 expansion — added F:Pitch, H:Harmony feature dependencies)
-**Date**: 2026-02-13
+**Version**: 2.3.0 (Phase 3E: consistency audit — formulas match code, PPC deferred to Phase 6)
+**Date**: 2026-02-15
 
 > **Naming**: This document uses MI naming (R³, H³, C³). See [Road-map/01-GLOSSARY.md](../../01-GLOSSARY.md) for terminology.
 > **MI is independent from D0** — no shared code, no shared indices. All formulas implemented from scratch.
@@ -111,7 +111,7 @@ Fishman et al. 2001:   A1 phase-locking correlates with dissonance (monkey+human
 Terhardt 1974:         Virtual pitch computation in peripheral system
 ```
 
-### 2.2 Information Flow Architecture (EAR → BRAIN → PPC → BCH)
+### 2.2 Information Flow Architecture (EAR → BRAIN → BCH)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
@@ -144,7 +144,7 @@ Terhardt 1974:         Virtual pitch computation in peripheral system
 ║  │  │inharm.    │ │         │ │         │ │          │ │        │ │        ║
 ║  │  │harm_dev   │ │         │ │         │ │          │ │        │ │        ║
 ║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                         BCH reads: 30D                            │        ║
+║  │                         BCH reads: 10D directly                  │        ║
 ║  └────────────────────────────┬─────────────────────────────────────┘        ║
 ║                               │                                              ║
 ║                               ▼                                              ║
@@ -159,31 +159,22 @@ Terhardt 1974:         Virtual pitch computation in peripheral system
 ║  │  └──────┬───────┘ └──────┬────────┘ └──────┬────────────────┘   │        ║
 ║  │         │               │                  │                    │        ║
 ║  │         └───────────────┴──────────────────┘                    │        ║
-║  │                         BCH demand: ~16 of 2304 tuples          │        ║
+║  │                         BCH demand: 16 of 2304 tuples           │        ║
 ║  └────────────────────────────┬─────────────────────────────────────┘        ║
 ║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Perceptual Circuit ═══════    ║
+║  ═════════════════════════════╪═══════ BRAIN: Relay (Depth 0) ═════════    ║
 ║                               │                                              ║
 ║                               ▼                                              ║
-║  ┌─────────────────┐                                                        ║
-║  │  PPC (30D)      │  Pitch Processing Chain mechanism                      ║
-║  │                 │                                                        ║
-║  │ Pitch Sal [0:10]│  NPS, phase-locking, FFR strength                     ║
-║  │ Consonance[10:20]│ Harmonic template, harmonicity index                 ║
-║  │ Chroma   [20:30]│  Octave grouping (used more by PCCR)                  ║
-║  └────────┬────────┘                                                        ║
-║           │                                                                  ║
-║           ▼                                                                  ║
 ║  ┌──────────────────────────────────────────────────────────────────┐        ║
 ║  │                    BCH MODEL (12D Output)                        │        ║
 ║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f01_nps, f02_harmonicity, f03_hierarchy,   │        ║
-║  │                       f04_ffr_behavior                           │        ║
-║  │  Layer M (Math):      nps_t, harm_interval                       │        ║
-║  │  Layer P (Present):   consonance_signal, template_match,         │        ║
-║  │                       neural_pitch                               │        ║
-║  │  Layer F (Future):    consonance_pred, pitch_propagation,        │        ║
-║  │                       interval_expect                            │        ║
+║  │  Layer E (Extraction):  f01_nps, f02_harmonicity, f03_hierarchy, │        ║
+║  │                         f04_ffr_behavior                         │        ║
+║  │  Layer M (Mechanism):   nps_t, harm_interval                     │        ║
+║  │  Layer P (Cognitive):   consonance_signal, template_match,       │        ║
+║  │                         neural_pitch                             │        ║
+║  │  Layer F (Forecast):    consonance_pred, pitch_propagation,      │        ║
+║  │                         interval_expect                          │        ║
 ║  └──────────────────────────────────────────────────────────────────┘        ║
 ║                                                                              ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
@@ -279,6 +270,12 @@ IMPORTANT QUALIFICATION (added v2.1):
 | **C: Timbre** | [20] | tristimulus3 | 5th+ harmonic energy (high) | Pollard & Jansson 1982 |
 | **E: Interactions** | [41:49] | x_l5l7 (8D) | Consonance × Timbre coupling | Emergent harmonicity |
 
+> **Code status**: In the current implementation, BCH's `compute()` uses 10 R³ features
+> directly: [0, 1, 2, 3, 5, 14, 17, 18, 19, 20]. Features [4] sensory_pleasantness and
+> [6] harmonic_deviation are declared as class constants but not used in compute().
+> Feature [41] is referenced only via H³ temporal demands (not in compute()).
+> These will be integrated when PPC mechanism support is added in Phase 6.
+
 ### 4.2 R³ v2 Feature Dependencies ([49:128]) — NEW
 
 | R³ Group | Index | Feature | BCH Role | Scientific Basis |
@@ -297,28 +294,35 @@ IMPORTANT QUALIFICATION (added v2.1):
 R³ Physical Input                    Cognitive Output
 ────────────────────────────────    ──────────────────────────────────────
 R³[0] roughness (inverse) ───────┐
-R³[1] sethares_dissonance ───────┼──► Sensory Consonance
-R³[2] helmholtz_kang ────────────┤   Math: C = 1 - (w₁·R + w₂·S) / 2
-R³[3] stumpf_fusion ─────────────┘   where R=roughness, S=sethares
+R³[1] sethares_dissonance ───────┼──► Sensory Consonance (P-layer)
+                                 │   consonance_signal = 1 - (R+S) / 2
+R³[2] helmholtz_kang ────────────┤
+R³[3] stumpf_fusion ─────────────┼──► Template Match (P-layer)
+                                 │   template_match = (helm+stumpf) / 2
+
+R³[14] tonalness ────────────────┼──► Neural Pitch Salience (E-layer)
+R³[17] spectral_autocorrelation ─┘   f01 = σ(0.90 · tonal · autocorr)
 
 R³[18] tristimulus1 ─────────────┐
-R³[19] tristimulus2 ─────────────┼──► Harmonicity Index
-R³[20] tristimulus3 ─────────────┤   FFR preferentially encodes
-R³[5] inharmonicity (inverse) ───┤   harmonic spectra
-R³[6] harmonic_deviation ────────┘   Math: H = Σ coincidence / Σ harmonics
+R³[19] tristimulus2 ─────────────┼──► Harmonicity Index (E-layer)
+R³[20] tristimulus3 ─────────────┤   trist_balance = 1 - std(trist)
+R³[5] inharmonicity (inverse) ───┘   f02 = σ(0.85 · (1-inharm) · bal)
 
-R³[14] tonalness ────────────────┐
-R³[17] spectral_autocorrelation ─┼──► Neural Pitch Salience (NPS)
-R³[4] sensory_pleasantness ──────┘   FFR magnitude at fundamental
+R³[2] helmholtz_kang ────────────┐
+R³[3] stumpf_fusion ─────────────┼──► Consonance Hierarchy (E-layer)
+                                 │   f03 = σ(0.80 · helm · stumpf)
 
-R³[41:49] x_l5l7 ───────────────── Inter-Band Coherence
-                                     Consonant intervals show higher
-                                     cross-frequency coupling
+H³(0,6,18,0) roughness_trend ───┐
+H³(2,3,1,2) helmholtz_mean ─────┼──► Interval Expectation (F-layer)
+                                 │   σ(0.5·helm_mean + 0.5·(1-rough_trend))
 
+── Phase 6 planned ────────────────────────────────────────
+R³[4] sensory_pleasantness ──────── (declared, not yet used)
+R³[6] harmonic_deviation ────────── (declared, not yet used)
+R³[41:49] x_l5l7 ───────────────── (H³ demand only, not in compute)
 R³[49:60] chroma_vector (12D) ──┐
 R³[63] pitch_salience ──────────┼──► Explicit Pitch Consonance (v2)
-R³[75] key_clarity ─────────────┘   Chroma-based interval detection
-                                     + salience + tonal context
+R³[75] key_clarity ─────────────┘   + PPC mechanism integration
 ```
 
 ---
@@ -332,22 +336,22 @@ These correspond to brainstem processing timescales (gamma → alpha-beta → sy
 
 | R³ Index | Feature | H | Morph | Law | Purpose |
 |----------|---------|---|-------|-----|---------|
-| 0 | roughness | 0 | M0 (value) | L2 (bidi) | Current dissonance |
-| 0 | roughness | 3 | M1 (mean) | L2 (bidi) | Mean dissonance over 100ms |
-| 0 | roughness | 6 | M18 (trend) | L0 (fwd) | Dissonance trajectory |
-| 2 | helmholtz_kang | 0 | M0 (value) | L2 (bidi) | Current consonance |
-| 2 | helmholtz_kang | 3 | M1 (mean) | L2 (bidi) | Mean consonance over 100ms |
-| 3 | stumpf_fusion | 0 | M0 (value) | L2 (bidi) | Current tonal fusion |
-| 3 | stumpf_fusion | 6 | M1 (mean) | L0 (fwd) | Fusion over 200ms |
-| 5 | inharmonicity | 0 | M0 (value) | L2 (bidi) | Current inharmonicity |
-| 5 | inharmonicity | 3 | M18 (trend) | L0 (fwd) | Inharmonicity trajectory |
-| 6 | harmonic_deviation | 0 | M0 (value) | L2 (bidi) | Current deviation |
-| 6 | harmonic_deviation | 3 | M1 (mean) | L0 (fwd) | Mean deviation 100ms |
-| 18 | tristimulus1 | 0 | M0 (value) | L2 (bidi) | F0 energy |
-| 19 | tristimulus2 | 0 | M0 (value) | L2 (bidi) | Mid-harmonic energy |
-| 20 | tristimulus3 | 0 | M0 (value) | L2 (bidi) | High-harmonic energy |
-| 41 | x_l5l7[0] | 3 | M0 (value) | L2 (bidi) | Consonance×timbre coupling |
-| 41 | x_l5l7[0] | 6 | M14 (periodicity) | L2 (bidi) | Harmonic periodicity |
+| 0 | roughness | 0 | M0 (value) | L2 (integration) | Current dissonance |
+| 0 | roughness | 3 | M1 (mean) | L2 (integration) | Mean dissonance over 100ms |
+| 0 | roughness | 6 | M18 (trend) | L0 (memory) | Dissonance trajectory |
+| 2 | helmholtz_kang | 0 | M0 (value) | L2 (integration) | Current consonance |
+| 2 | helmholtz_kang | 3 | M1 (mean) | L2 (integration) | Mean consonance over 100ms |
+| 3 | stumpf_fusion | 0 | M0 (value) | L2 (integration) | Current tonal fusion |
+| 3 | stumpf_fusion | 6 | M1 (mean) | L0 (memory) | Fusion over 200ms |
+| 5 | inharmonicity | 0 | M0 (value) | L2 (integration) | Current inharmonicity |
+| 5 | inharmonicity | 3 | M18 (trend) | L0 (memory) | Inharmonicity trajectory |
+| 6 | harmonic_deviation | 0 | M0 (value) | L2 (integration) | Current deviation |
+| 6 | harmonic_deviation | 3 | M1 (mean) | L0 (memory) | Mean deviation 100ms |
+| 18 | tristimulus1 | 0 | M0 (value) | L2 (integration) | F0 energy |
+| 19 | tristimulus2 | 0 | M0 (value) | L2 (integration) | Mid-harmonic energy |
+| 20 | tristimulus3 | 0 | M0 (value) | L2 (integration) | High-harmonic energy |
+| 41 | x_l5l7[0] | 3 | M0 (value) | L2 (integration) | Consonance×timbre coupling |
+| 41 | x_l5l7[0] | 6 | M14 (periodicity) | L2 (integration) | Harmonic periodicity |
 
 **v1 demand**: 16 tuples
 
@@ -371,9 +375,14 @@ BCH is projected to consume R³ v2 features from F[49:65] and H[75:87], aligned 
 **v2 projected**: 10 tuples
 **Total projected**: 26 tuples of 294,912 theoretical = 0.0088%
 
-### 5.2 PPC Mechanism Binding
+### 5.2 PPC Mechanism Binding — PHASE 6 PLANNED
 
-BCH reads from the **PPC** (Pitch Processing Chain) mechanism:
+> **Current implementation**: BCH is a **Relay** (depth 0). Relays read R³ and H³
+> directly — they do NOT use mechanisms. The PPC mechanism binding below is the
+> planned Phase 6 architecture. In the current code, BCH computes all features
+> from raw R³ spectral inputs and H³ temporal demands.
+
+When PPC is integrated (Phase 6), BCH will read from the **PPC** (Pitch Processing Chain) mechanism:
 
 | PPC Sub-section | Range | BCH Role | Weight |
 |-----------------|-------|----------|--------|
@@ -393,32 +402,31 @@ BCH does NOT read from TPC — brainstem consonance processing is purely pitch/h
 BCH OUTPUT TENSOR: 12D PER FRAME (172.27 Hz)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-LAYER E — EXPLICIT FEATURES
+LAYER E — EXTRACTION (Explicit Features)
 ─────────────────────────────────────────────────────────────────────────────
 idx │ Name              │ Range  │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
  0  │ f01_nps           │ [0, 1] │ Neural Pitch Salience. FFR magnitude at
     │                   │        │ fundamental. Brainstem encoding strength.
-    │                   │        │ f01 = σ(α · tonalness · autocorr · PPC.pitch_sal)
+    │                   │        │ f01 = σ(α · tonalness · autocorr)
     │                   │        │ α = 0.90
 ────┼───────────────────┼────────┼────────────────────────────────────────────
  1  │ f02_harmonicity   │ [0, 1] │ Harmonicity Index. Harmonic coincidence
     │                   │        │ ratio. Primary consonance predictor.
-    │                   │        │ f02 = σ(β · (1-inharmonicity) · trist_balance
-    │                   │        │         · PPC.consonance_enc)
+    │                   │        │ f02 = σ(β · (1-inharmonicity) · trist_balance)
     │                   │        │ β = 0.85
 ────┼───────────────────┼────────┼────────────────────────────────────────────
  2  │ f03_hierarchy     │ [0, 1] │ Consonance Hierarchy ranking (P1>P5>P4>M3>
     │                   │        │ m6>TT). Rank-normalized from consonance
     │                   │        │ features.
-    │                   │        │ f03 = σ(γ · helmholtz · stumpf · PPC.pitch_sal)
+    │                   │        │ f03 = σ(γ · helmholtz · stumpf)
     │                   │        │ γ = 0.80
 ────┼───────────────────┼────────┼────────────────────────────────────────────
  3  │ f04_ffr_behavior  │ [0, 1] │ FFR-Behavior Correlation proxy.
     │                   │        │ Models r = 0.81 (Bidelman 2009).
     │                   │        │ f04 = 0.81 · (f01 + f02) / 2
 
-LAYER M — MATHEMATICAL MODEL OUTPUTS
+LAYER M — MECHANISM (Mathematical Model Outputs)
 ─────────────────────────────────────────────────────────────────────────────
 idx │ Name              │ Range  │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
@@ -428,7 +436,7 @@ idx │ Name              │ Range  │ Neuroscience Basis
  5  │ harm_interval     │ [0, 1] │ Harmonicity of current interval.
     │                   │        │ Harm(f1,f2) = Σ coincidence / Σ harmonics
 
-LAYER P — PRESENT PROCESSING
+LAYER P — COGNITIVE (Present Processing)
 ─────────────────────────────────────────────────────────────────────────────
 idx │ Name              │ Range  │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
@@ -436,12 +444,12 @@ idx │ Name              │ Range  │ Neuroscience Basis
     │                   │        │ 1 - (roughness + sethares) / 2
 ────┼───────────────────┼────────┼────────────────────────────────────────────
  7  │ template_match    │ [0, 1] │ Harmonic template match strength.
-    │                   │        │ PPC.consonance_encoding aggregation.
+    │                   │        │ (helmholtz + stumpf) / 2
 ────┼───────────────────┼────────┼────────────────────────────────────────────
  8  │ neural_pitch      │ [0, 1] │ Neural pitch strength.
-    │                   │        │ PPC.pitch_salience aggregation.
+    │                   │        │ (f01_nps + tonalness) / 2
 
-LAYER F — FUTURE PREDICTIONS
+LAYER F — FORECAST (Future Predictions)
 ─────────────────────────────────────────────────────────────────────────────
 idx │ Name              │ Range  │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
@@ -489,21 +497,32 @@ Auditory Nerve Model:
 
 ```python
 # f01: Neural Pitch Salience
-f01 = σ(0.90 · R³.tonalness[14] · R³.spectral_autocorrelation[17]
-         · mean(PPC.pitch_salience[0:10]))
+f01 = σ(0.90 · R³.tonalness[14] · R³.spectral_autocorrelation[17])
 
 # f02: Harmonicity Index
 trist_balance = 1.0 - std(R³.tristimulus[18:21])  # balanced = harmonic
-f02 = σ(0.85 · (1 - R³.inharmonicity[5]) · trist_balance
-         · mean(PPC.consonance_encoding[10:20]))
+f02 = σ(0.85 · (1 - R³.inharmonicity[5]) · trist_balance)
 
 # f03: Consonance Hierarchy
-f03 = σ(0.80 · R³.helmholtz_kang[2] · R³.stumpf_fusion[3]
-         · mean(PPC.pitch_salience[0:10]))
+f03 = σ(0.80 · R³.helmholtz_kang[2] · R³.stumpf_fusion[3])
 
 # f04: FFR-Behavior Correlation
 f04 = 0.81 · (f01 + f02) / 2
+
+# P-layer:
+consonance_signal = 1.0 - (R³.roughness[0] + R³.sethares[1]) / 2
+template_match    = (R³.helmholtz[2] + R³.stumpf[3]) / 2
+neural_pitch      = (f01 + R³.tonalness[14]) / 2
+
+# F-layer:
+consonance_pred    = σ(0.6 · f02 + 0.4 · f04)
+pitch_propagation  = σ(0.7 · f01 + 0.3 · neural_pitch)
+interval_expect    = σ(0.5 · H³.helmholtz_mean(2,3,1,2) + 0.5 · (1 - H³.roughness_trend(0,6,18,0)))
 ```
+
+> **Note**: BCH is a Relay (depth 0). Relays read R³ and H³ directly — they do NOT
+> use mechanisms. The PPC mechanism will be introduced in Phase 6 when BCH is
+> upgraded to integrate mechanism-processed features alongside raw R³ inputs.
 
 ---
 
@@ -568,125 +587,116 @@ f04 = 0.81 · (f01 + f02) / 2
 ### 11.1 Pseudocode
 
 ```python
-class BCH(BaseModel):
-    """Brainstem Consonance Hierarchy.
+class BCH(Relay):
+    """Brainstem Consonance Hierarchy — SPU Relay (Depth 0, 12D).
 
     Output: 12D per frame.
-    Reads: PPC mechanism (30D), R³ direct.
+    Reads: R³ direct (10 features) + H³ temporal demands (16 tuples).
+    Role: Relay — reads raw R³/H³ only, no mechanisms.
     """
     NAME = "BCH"
+    FULL_NAME = "Brainstem Consonance Hierarchy"
     UNIT = "SPU"
-    TIER = "α1"
     OUTPUT_DIM = 12
-    MECHANISM_NAMES = ("PPC",)        # Primary mechanism
 
-    ALPHA = 0.90   # NPS weight
-    BETA = 0.85    # Harmonicity weight
-    GAMMA = 0.80   # Hierarchy weight
+    # Scientific constants (module-level in actual code)
+    ALPHA = 0.90   # NPS weight (Bidelman & Krishnan 2009)
+    BETA = 0.85    # Harmonicity weight (Bidelman 2013)
+    GAMMA = 0.80   # Hierarchy weight (Bidelman & Heinz 2011)
     FFR_CORR = 0.81  # Bidelman 2009 correlation
 
     @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+    def h3_demand(self) -> Tuple[H3DemandSpec, ...]:
         """16 tuples for BCH computation."""
-        return [
+        return (
             # (r3_idx, horizon, morph, law)
-            (0, 0, 0, 2),    # roughness, 25ms, value, bidirectional
-            (0, 3, 1, 2),    # roughness, 100ms, mean, bidirectional
-            (0, 6, 18, 0),   # roughness, 200ms, trend, forward
-            (2, 0, 0, 2),    # helmholtz_kang, 25ms, value, bidirectional
-            (2, 3, 1, 2),    # helmholtz_kang, 100ms, mean, bidirectional
-            (3, 0, 0, 2),    # stumpf_fusion, 25ms, value, bidirectional
-            (3, 6, 1, 0),    # stumpf_fusion, 200ms, mean, forward
-            (5, 0, 0, 2),    # inharmonicity, 25ms, value, bidirectional
-            (5, 3, 18, 0),   # inharmonicity, 100ms, trend, forward
-            (6, 0, 0, 2),    # harmonic_deviation, 25ms, value, bidirectional
-            (6, 3, 1, 0),    # harmonic_deviation, 100ms, mean, forward
-            (18, 0, 0, 2),   # tristimulus1, 25ms, value, bidirectional
-            (19, 0, 0, 2),   # tristimulus2, 25ms, value, bidirectional
-            (20, 0, 0, 2),   # tristimulus3, 25ms, value, bidirectional
-            (41, 3, 0, 2),   # x_l5l7[0], 100ms, value, bidirectional
-            (41, 6, 14, 2),  # x_l5l7[0], 200ms, periodicity, bidirectional
-        ]
+            (0, 0, 0, 2),    # roughness, 25ms, value, integration
+            (0, 3, 1, 2),    # roughness, 100ms, mean, integration
+            (0, 6, 18, 0),   # roughness, 200ms, trend, memory
+            (2, 0, 0, 2),    # helmholtz_kang, 25ms, value, integration
+            (2, 3, 1, 2),    # helmholtz_kang, 100ms, mean, integration
+            (3, 0, 0, 2),    # stumpf_fusion, 25ms, value, integration
+            (3, 6, 1, 0),    # stumpf_fusion, 200ms, mean, memory
+            (5, 0, 0, 2),    # inharmonicity, 25ms, value, integration
+            (5, 3, 18, 0),   # inharmonicity, 100ms, trend, memory
+            (6, 0, 0, 2),    # harmonic_deviation, 25ms, value, integration
+            (6, 3, 1, 0),    # harmonic_deviation, 100ms, mean, memory
+            (18, 0, 0, 2),   # tristimulus1, 25ms, value, integration
+            (19, 0, 0, 2),   # tristimulus2, 25ms, value, integration
+            (20, 0, 0, 2),   # tristimulus3, 25ms, value, integration
+            (41, 3, 0, 2),   # x_l5l7[0], 100ms, value, integration
+            (41, 6, 14, 2),  # x_l5l7[0], 200ms, periodicity, integration
+        )
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
+    def compute(self, h3_features: Dict[Tuple[int,int,int,int], Tensor],
+                r3_features: Tensor) -> Tensor:
         """
         Compute BCH 12D output.
 
         Args:
-            mechanism_outputs: {"PPC": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) → (B,T) scalars
-            r3: (B,T,49) raw R³ features
+            h3_features: Dict of (r3_idx, horizon, morph, law) → (B,T) scalars
+            r3_features: (B,T,49) raw R³ features
 
         Returns:
             (B,T,12) BCH output
         """
-        ppc = mechanism_outputs["PPC"]    # (B, T, 30)
+        B, T = r3_features.shape[:2]
 
-        # R³ features
-        roughness = r3[..., 0:1]
-        sethares = r3[..., 1:2]
-        helmholtz = r3[..., 2:3]
-        stumpf = r3[..., 3:4]
-        inharmonicity = r3[..., 5:6]
-        harmonic_dev = r3[..., 6:7]
-        tonalness = r3[..., 14:15]
-        autocorr = r3[..., 17:18]
-        trist1 = r3[..., 18:19]
-        trist2 = r3[..., 19:20]
-        trist3 = r3[..., 20:21]
-        x_l5l7 = r3[..., 41:49]         # (B, T, 8)
+        # R³ features — 10 features used in computation
+        roughness     = r3_features[:, :, 0]     # (B, T)
+        sethares      = r3_features[:, :, 1]     # (B, T)
+        helmholtz     = r3_features[:, :, 2]     # (B, T)
+        stumpf        = r3_features[:, :, 3]     # (B, T)
+        inharmonicity = r3_features[:, :, 5]     # (B, T)
+        tonalness     = r3_features[:, :, 14]    # (B, T)
+        autocorr      = r3_features[:, :, 17]    # (B, T)
+        trist1        = r3_features[:, :, 18]    # (B, T)
+        trist2        = r3_features[:, :, 19]    # (B, T)
+        trist3        = r3_features[:, :, 20]    # (B, T)
 
-        # PPC sub-sections
-        ppc_pitch = ppc[..., 0:10]       # pitch salience
-        ppc_cons = ppc[..., 10:20]       # consonance encoding
-        ppc_chroma = ppc[..., 20:30]     # chroma processing
+        # ═══ Tristimulus balance ═══
+        trist_stack = torch.stack([trist1, trist2, trist3], dim=-1)
+        trist_balance = 1.0 - trist_stack.std(dim=-1)     # (B, T)
 
-        # ═══ LAYER E: Explicit features ═══
-        f01 = torch.sigmoid(self.ALPHA * (
-            tonalness * autocorr
-            * ppc_pitch.mean(-1, keepdim=True)
-        ))
-        trist_balance = 1.0 - torch.std(
-            torch.cat([trist1, trist2, trist3], dim=-1),
-            dim=-1, keepdim=True
+        # ═══ LAYER E: Extraction ═══
+        f01_nps = torch.sigmoid(ALPHA * tonalness * autocorr)
+        f02_harmonicity = torch.sigmoid(
+            BETA * (1.0 - inharmonicity) * trist_balance
         )
-        f02 = torch.sigmoid(self.BETA * (
-            (1.0 - inharmonicity) * trist_balance
-            * ppc_cons.mean(-1, keepdim=True)
-        ))
-        f03 = torch.sigmoid(self.GAMMA * (
-            helmholtz * stumpf
-            * ppc_pitch.mean(-1, keepdim=True)
-        ))
-        f04 = self.FFR_CORR * (f01 + f02) / 2
+        f03_hierarchy = torch.sigmoid(GAMMA * helmholtz * stumpf)
+        f04_ffr_behavior = FFR_CORR * (f01_nps + f02_harmonicity) / 2.0
 
-        # ═══ LAYER M: Mathematical ═══
-        nps_t = f01
-        harm_interval = f02
+        # ═══ LAYER M: Mechanism ═══
+        nps_t = f01_nps
+        harm_interval = f02_harmonicity
 
-        # ═══ LAYER P: Present ═══
-        consonance_signal = 1.0 - (roughness + sethares) / 2
-        template_match = ppc_cons.mean(-1, keepdim=True)
-        neural_pitch = ppc_pitch.mean(-1, keepdim=True)
+        # ═══ LAYER P: Cognitive ═══
+        consonance_signal = 1.0 - (roughness + sethares) / 2.0
+        template_match = (helmholtz + stumpf) / 2.0
+        neural_pitch = (f01_nps + tonalness) / 2.0
 
-        # ═══ LAYER F: Future ═══
+        # ═══ LAYER F: Forecast ═══
         consonance_pred = torch.sigmoid(
-            0.6 * f02 + 0.4 * f04
+            0.6 * f02_harmonicity + 0.4 * f04_ffr_behavior
         )
         pitch_propagation = torch.sigmoid(
-            0.7 * f01 + 0.3 * neural_pitch
+            0.7 * f01_nps + 0.3 * neural_pitch
         )
-        interval_expect = torch.sigmoid(
-            0.5 * h3_direct[(0, 6, 18, 0)]  # roughness trend
-            + 0.5 * h3_direct[(2, 3, 1, 2)]  # helmholtz mean
-        ).unsqueeze(-1)
+        roughness_trend = h3_features.get((0, 6, 18, 0))
+        helmholtz_mean  = h3_features.get((2, 3, 1, 2))
+        if roughness_trend is not None and helmholtz_mean is not None:
+            interval_expect = torch.sigmoid(
+                0.5 * helmholtz_mean + 0.5 * (1.0 - roughness_trend)
+            )
+        else:
+            interval_expect = torch.full((B, T), 0.5,
+                                         device=r3_features.device)
 
-        return torch.cat([
-            f01, f02, f03, f04,                          # E: 4D
-            nps_t, harm_interval,                        # M: 2D
-            consonance_signal, template_match, neural_pitch,  # P: 3D
-            consonance_pred, pitch_propagation, interval_expect,  # F: 3D
+        return torch.stack([
+            f01_nps, f02_harmonicity, f03_hierarchy, f04_ffr_behavior,
+            nps_t, harm_interval,
+            consonance_signal, template_match, neural_pitch,
+            consonance_pred, pitch_propagation, interval_expect,
         ], dim=-1)  # (B, T, 12)
 ```
 
@@ -700,9 +710,9 @@ class BCH(BaseModel):
 | **Effect Sizes** | r = 0.81 (synthetic, N=10); r = 0.34 (replication, N=14); NS for natural sounds | Bidelman 2009; Cousineau 2015 |
 | **Evidence Modality** | FFR, AN model, ECoG, MEG, ERP, intracranial, behavioral, computational | Multi-method convergence |
 | **Falsification Tests** | 2/5 confirmed | High validity |
-| **R³ Features Used** | 30D of 49D | Comprehensive |
+| **R³ Features Used** | 10D directly in compute + 2D via H³ only = 12 unique R³ indices | Focused |
 | **H³ Demand** | 16 tuples (0.69%) | Sparse, efficient |
-| **PPC Mechanism** | 30D (3 sub-sections) | Full coverage |
+| **Mechanism** | None (Relay reads R³/H³ directly; PPC planned Phase 6) | Depth 0 |
 | **Output Dimensions** | **12D** | 4-layer structure |
 | **Key Qualification** | NPS-behavior correlation is stimulus-dependent (synthetic > natural tones) | Cousineau et al. 2015 |
 
@@ -738,23 +748,26 @@ class BCH(BaseModel):
 
 ### What Changed from v1.0.0
 
-| Aspect | D0 (v1.0.0) | MI (v2.0.0) |
+| Aspect | D0 (v1.0.0) | MI (current) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D) | R³ (49D) |
-| Temporal | HC⁰ mechanisms (OSC, NPL, HRM, TIH) | PPC mechanism (30D) |
-| Consonance signal | S⁰.L5.roughness[30] + HC⁰.OSC | R³.roughness[0] + PPC.pitch_salience |
-| Harmonicity | S⁰.L6.tristimulus × HC⁰.HRM | R³.tristimulus × PPC.consonance_encoding |
-| NPS | S⁰.L5.spectral_centroid × HC⁰.NPL | R³.tonalness × PPC.pitch_salience |
-| Crossband coherence | S⁰.L7[86,91,103] × HC⁰.TIH | R³.x_l5l7[41:49] × PPC |
+| Temporal | HC⁰ mechanisms (OSC, NPL, HRM, TIH) | H³ 4-tuples (16 demands) |
+| Consonance signal | S⁰.L5.roughness[30] + HC⁰.OSC | 1 - (R³.roughness[0] + R³.sethares[1]) / 2 |
+| Harmonicity | S⁰.L6.tristimulus × HC⁰.HRM | σ(β · (1-inharm) · trist_balance) |
+| NPS | S⁰.L5.spectral_centroid × HC⁰.NPL | σ(α · R³.tonalness[14] · R³.autocorr[17]) |
+| Crossband coherence | S⁰.L7[86,91,103] × HC⁰.TIH | R³.x_l5l7[41] via H³ demand only |
 | Demand format | HC⁰ index ranges | H³ 4-tuples (sparse) |
 | Total demand | 40/2304 = 1.74% | 16/2304 = 0.69% |
+| Mechanism | 4 × HC⁰ (OSC, NPL, HRM, TIH) | None (Relay, depth 0) — PPC planned Phase 6 |
 
-### Why PPC replaces HC⁰ mechanisms
+### Why PPC is planned (Phase 6) instead of HC⁰
 
-The D0 pipeline used 4 separate HC⁰ mechanisms (OSC, NPL, HRM, TIH). In MI, these are unified into the PPC mechanism with 3 sub-sections:
+The D0 pipeline used 4 separate HC⁰ mechanisms (OSC, NPL, HRM, TIH). In MI Phase 6, these will be unified into the PPC mechanism with 3 sub-sections:
 - **OSC + NPL → PPC.pitch_salience** [0:10]: Phase-locking + FFR = pitch encoding
 - **HRM → PPC.consonance_encoding** [10:20]: Harmonic template = harmonicity
 - **TIH (partial) → PPC.chroma_processing** [20:30]: Temporal integration for chroma
+
+In the current implementation (Phase 3), BCH is a Relay that reads R³ and H³ directly without mechanisms. This was a deliberate simplification: the Relay role computes the foundational transformation, and mechanism integration will be added when PPC is implemented.
 
 ---
 

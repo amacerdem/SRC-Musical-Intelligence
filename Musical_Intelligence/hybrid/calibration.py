@@ -72,7 +72,8 @@ def extract_r3_features(
     # Extract R³
     from Musical_Intelligence.ear.r3 import R3Extractor
     r3_ext = R3Extractor()
-    r3_output = r3_ext.extract(mel)  # R3Output.features: (1, T, 128)
+    audio_tensor = torch.from_numpy(y).float().unsqueeze(0)  # (1, N)
+    r3_output = r3_ext.extract(mel, audio=audio_tensor, sr=sr)
 
     return r3_output.features[0].numpy()  # (T, 128)
 

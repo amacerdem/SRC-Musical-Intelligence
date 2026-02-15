@@ -54,6 +54,9 @@ class StageExecutor:
         mel: Tensor,
         groups: Dict[str, BaseSpectralGroup],
         dag: DependencyDAG,
+        *,
+        audio: "Tensor | None" = None,
+        sr: int = 44100,
     ) -> Dict[str, Tensor]:
         """Execute all spectral groups in DAG-ordered stages.
 
@@ -66,6 +69,12 @@ class StageExecutor:
                 be present.
             dag: The :class:`DependencyDAG` defining stage membership and
                 dependency edges.
+            audio: Optional ``(B, N_SAMPLES)`` raw waveform tensor at
+                *sr* Hz.  When provided, Stage 1 groups that override
+                ``compute_from_audio()`` receive it for higher-fidelity
+                feature extraction (e.g. psychoacoustic consonance).
+            sr: Sample rate in Hz (default 44100).  Only used when *audio*
+                is provided.
 
         Returns:
             Dict mapping canonical group name to output tensor
@@ -92,8 +101,13 @@ class StageExecutor:
                 dep_names = dag.get_dependencies(group_name)
 
                 if not dep_names:
-                    # Stage 1 group: compute from mel only
-                    outputs[group_name] = group.compute(mel)
+                    # Stage 1: try audio path first, fall back to mel
+                    result = None
+                    if audio is not None:
+                        result = group.compute_from_audio(mel, audio, sr)
+                    if result is None:
+                        result = group.compute(mel)
+                    outputs[group_name] = result
                 else:
                     # Stage 2-3 group: build deps_dict from prior outputs
                     deps_dict: Dict[str, Tensor] = {}

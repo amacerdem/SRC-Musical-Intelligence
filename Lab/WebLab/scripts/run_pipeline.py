@@ -33,7 +33,7 @@ def _to_list(t: torch.Tensor) -> list:
     return np.round(t.detach().cpu().numpy(), 4).tolist()
 
 
-def run_pipeline(audio_path: str, slug: str, output_dir: Path) -> None:
+def run_pipeline(audio_path: str, slug: str, output_dir: Path, *, duration_limit: float | None = None) -> None:
     exp_dir = output_dir / slug
     exp_dir.mkdir(parents=True, exist_ok=True)
     (exp_dir / "nuclei").mkdir(exist_ok=True)
@@ -54,12 +54,19 @@ def run_pipeline(audio_path: str, slug: str, output_dir: Path) -> None:
     if sr != 44100:
         audio_np = librosa.resample(audio_np, orig_sr=sr, target_sr=44100)
         sr = 44100
+    # Truncate if duration limit specified
+    if duration_limit is not None:
+        max_samples = int(duration_limit * sr)
+        audio_np = audio_np[:max_samples]
+        print(f"  Truncated to {duration_limit}s ({max_samples} samples)")
+
     waveform = torch.from_numpy(audio_np).float().unsqueeze(0)  # (1, N)
     duration_s = waveform.shape[-1] / sr
     print(f"  Audio loaded: {duration_s:.1f}s @ {sr}Hz ({time.time()-t0:.1f}s)")
 
-    # Copy audio file
-    shutil.copy2(audio_path, exp_dir / "audio.wav")
+    # Write audio — always write the (possibly truncated) waveform
+    dest_audio = exp_dir / "audio.wav"
+    sf.write(str(dest_audio), audio_np, sr)
 
     # ── 2. Cochlea (mel spectrogram) ──────────────────────────
     t0 = time.time()
@@ -81,7 +88,7 @@ def run_pipeline(audio_path: str, slug: str, output_dir: Path) -> None:
     t0 = time.time()
     from Musical_Intelligence.ear.r3 import R3Extractor
     r3_ext = R3Extractor()
-    r3_out = r3_ext.extract(mel)
+    r3_out = r3_ext.extract(mel, audio=waveform, sr=sr)
     r3_tensor = r3_out.features  # (1, T, 128)
     print(f"  R³ extracted: {r3_tensor.shape} ({time.time()-t0:.1f}s)")
 
@@ -271,8 +278,10 @@ def main():
     parser.add_argument("--slug", required=True, help="Experiment slug (directory name)")
     parser.add_argument("--output", default=str(_WEBLAB_DIR / "experiments"),
                         help="Output directory (default: Lab/WebLab/experiments)")
+    parser.add_argument("--duration", type=float, default=None,
+                        help="Max duration in seconds (truncate audio)")
     args = parser.parse_args()
-    run_pipeline(args.audio, args.slug, Path(args.output))
+    run_pipeline(args.audio, args.slug, Path(args.output), duration_limit=args.duration)
 
 
 if __name__ == "__main__":

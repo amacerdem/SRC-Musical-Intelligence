@@ -9,6 +9,8 @@ import type {
 } from "./types/experiment";
 import * as api from "./api/client";
 
+export type TabId = "r3" | "nucleus" | "brain" | "neuro" | "psi" | "h3" | "evidence";
+
 interface WebLabState {
   // Playback
   isPlaying: boolean;
@@ -16,11 +18,12 @@ interface WebLabState {
   frameIndex: number;
   lodFrameIndex: number;
   duration: number;
-  zoomRange: [number, number] | null;
+
+  // Navigation
+  activeTab: TabId;
 
   // Selection
   selectedNucleus: string | null;
-  detailDrawerOpen: boolean;
 
   // Experiment data
   experimentSlug: string | null;
@@ -42,9 +45,8 @@ interface WebLabState {
   setPlayback: (isPlaying: boolean) => void;
   updateTime: (currentTime: number) => void;
   seek: (time: number) => void;
+  setActiveTab: (tab: TabId) => void;
   selectNucleus: (name: string | null) => void;
-  toggleDrawer: () => void;
-  setZoomRange: (range: [number, number] | null) => void;
   loadRegistry: () => Promise<void>;
   loadExperimentList: () => Promise<void>;
   loadExperiment: (slug: string) => Promise<void>;
@@ -58,9 +60,8 @@ export const useStore = create<WebLabState>((set, get) => ({
   frameIndex: 0,
   lodFrameIndex: 0,
   duration: 0,
-  zoomRange: null,
+  activeTab: "r3",
   selectedNucleus: null,
-  detailDrawerOpen: false,
   experimentSlug: null,
   experiment: null,
   r3Data: null,
@@ -91,16 +92,14 @@ export const useStore = create<WebLabState>((set, get) => ({
     get().updateTime(time);
   },
 
+  setActiveTab: (tab) => set({ activeTab: tab }),
+
   selectNucleus: (name) => {
     set({ selectedNucleus: name });
     if (name && !get().nucleusData[name]) {
       get().loadNucleus(name);
     }
   },
-
-  toggleDrawer: () => set((s) => ({ detailDrawerOpen: !s.detailDrawerOpen })),
-
-  setZoomRange: (range) => set({ zoomRange: range }),
 
   loadRegistry: async () => {
     const [r3Reg, regionsData] = await Promise.all([

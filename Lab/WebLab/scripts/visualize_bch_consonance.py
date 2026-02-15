@@ -30,7 +30,8 @@ import matplotlib.patches as mpatches
 # ======================================================================
 _SCRIPT_DIR = Path(__file__).resolve().parent
 _WEBLAB_DIR = _SCRIPT_DIR.parent
-_EXP_DIR = _WEBLAB_DIR / "experiments" / "BCH-R-Nucleus"
+_SLUG = sys.argv[1] if len(sys.argv) > 1 else "BCH-R-Nucleus"
+_EXP_DIR = _WEBLAB_DIR / "experiments" / _SLUG
 _PROJECT_ROOT = _WEBLAB_DIR.parent.parent
 
 # ======================================================================

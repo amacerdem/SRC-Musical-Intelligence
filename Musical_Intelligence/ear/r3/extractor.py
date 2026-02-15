@@ -128,7 +128,13 @@ class R3Extractor:
     # ------------------------------------------------------------------
 
     @torch.no_grad()
-    def extract(self, mel: Tensor) -> R3Output:
+    def extract(
+        self,
+        mel: Tensor,
+        *,
+        audio: Tensor | None = None,
+        sr: int = 44100,
+    ) -> R3Output:
         """Extract 128-D R3 spectral features from a mel spectrogram.
 
         Parameters
@@ -136,6 +142,13 @@ class R3Extractor:
         mel : Tensor
             Shape ``(B, 128, T)`` log-mel spectrogram (log1p normalised).
             Frame rate 172.27 Hz (sr=44100, hop_length=256).
+        audio : Tensor, optional
+            Shape ``(B, N_SAMPLES)`` raw waveform at *sr* Hz.  When
+            provided, groups that override ``compute_from_audio()``
+            (e.g. ConsonanceGroup) use it for real psychoacoustic
+            computation instead of mel-based proxies.
+        sr : int
+            Sample rate in Hz (default 44100).
 
         Returns
         -------
@@ -148,7 +161,9 @@ class R3Extractor:
         B, N, T = mel.shape
 
         # 1. Execute all groups in DAG order
-        group_outputs = self._executor.execute(mel, self._groups, self._dag)
+        group_outputs = self._executor.execute(
+            mel, self._groups, self._dag, audio=audio, sr=sr,
+        )
 
         # 2. Normalize each group's output (safety clamp)
         group_outputs = self._normalizer.normalize_all(group_outputs)

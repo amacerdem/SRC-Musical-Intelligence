@@ -96,22 +96,28 @@ export function AudioTransport() {
     // Clear
     ctx.clearRect(0, 0, w, h);
 
-    // Draw waveform envelope
+    // Draw waveform envelope — bin to ~1 bar per 3px for smooth look
     const envelope = envelopeRef.current;
     if (envelope && envelope.length > 0) {
-      const numPoints = envelope.length;
-      const barWidth = w / numPoints;
+      const targetBars = Math.max(1, Math.round(w / 3));
+      const binSize = envelope.length / targetBars;
+      const barWidth = w / targetBars;
 
       ctx.fillStyle = colors.accent;
       ctx.globalAlpha = 0.6;
 
-      for (let i = 0; i < numPoints; i++) {
-        const val = envelope[i]!;
-        // Normalize: RMS values are typically 0..0.3; scale up for visibility
-        const barHeight = Math.min(val * 3, 1.0) * h;
+      for (let i = 0; i < targetBars; i++) {
+        const binStart = Math.floor(i * binSize);
+        const binEnd = Math.min(envelope.length, Math.floor((i + 1) * binSize));
+        let sum = 0;
+        for (let j = binStart; j < binEnd; j++) {
+          sum += envelope[j]!;
+        }
+        const avg = sum / (binEnd - binStart);
+        const barHeight = Math.min(avg * 3, 1.0) * h;
         const x = i * barWidth;
         const y = (h - barHeight) / 2;
-        ctx.fillRect(x, y, Math.max(barWidth - 0.5, 0.5), barHeight);
+        ctx.fillRect(x, y, Math.max(barWidth - 0.5, 1), barHeight);
       }
 
       ctx.globalAlpha = 1.0;

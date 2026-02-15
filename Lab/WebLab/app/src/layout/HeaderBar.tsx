@@ -7,8 +7,6 @@ export function HeaderBar() {
   const experiment = useStore((s) => s.experiment);
   const loadExperiment = useStore((s) => s.loadExperiment);
 
-  const nucleusCount = experiment ? experiment.nuclei.length : 0;
-
   return (
     <div
       style={{
@@ -78,40 +76,27 @@ export function HeaderBar() {
         </select>
       </div>
 
-      {/* Right: Nucleus count badge */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 6,
-        }}
-      >
-        <span
+      {/* Right: Experiment info */}
+      {experiment && (
+        <div
           style={{
-            fontSize: 10,
-            color: colors.text.muted,
-            textTransform: "uppercase",
-            letterSpacing: "0.05em",
-          }}
-        >
-          Nuclei
-        </span>
-        <span
-          style={{
-            background: `${colors.accent}20`,
-            color: colors.accent,
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
             fontSize: 11,
-            fontWeight: 700,
             fontFamily: fonts.data,
-            padding: "2px 8px",
-            borderRadius: 3,
-            minWidth: 28,
-            textAlign: "center",
+            color: colors.text.secondary,
           }}
         >
-          {nucleusCount}
-        </span>
-      </div>
+          <span>{experiment.duration_s.toFixed(1)}s</span>
+          <span style={{ color: colors.text.muted }}>&middot;</span>
+          <span>{experiment.lod_frames} frames</span>
+          <span style={{ color: colors.text.muted }}>&middot;</span>
+          <span>
+            {experiment.nuclei.length} {experiment.nuclei.length === 1 ? "nucleus" : "nuclei"}
+          </span>
+        </div>
+      )}
     </div>
   );
 }

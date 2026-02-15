@@ -105,6 +105,29 @@ class BaseSpectralGroup(ABC):
         """
         return self.compute(mel)
 
+    def compute_from_audio(
+        self,
+        mel: Tensor,
+        audio: Tensor,
+        sr: int = 44100,
+    ) -> Tensor | None:
+        """Compute spectral features with access to raw audio waveform.
+
+        Override this for groups that need raw audio (e.g. psychoacoustic
+        consonance models requiring STFT peak picking).  Return ``None``
+        to fall back to ``compute(mel)``.
+
+        Args:
+            mel:   ``(B, N_MELS, T)`` log-mel spectrogram.
+            audio: ``(B, N_SAMPLES)`` raw waveform at *sr* Hz.
+            sr:    Sample rate in Hz (default 44100).
+
+        Returns:
+            ``(B, T, OUTPUT_DIM)`` spectral features, or ``None`` to
+            indicate fallback to mel-only computation.
+        """
+        return None
+
     @property
     @abstractmethod
     def feature_names(self) -> Tuple[str, ...]:
