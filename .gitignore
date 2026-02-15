@@ -35,6 +35,9 @@ Literature/c3/papers/
 Lab/Experiments/
 Lab/Demo_Analysis/data/*.bin
 
+# Node
+node_modules/
+
 # Misc
 *.log
 .env
