@@ -1,3 +1,24 @@
+/** 12 distinct high-contrast colors for line charts on dark backgrounds. */
+export const LINE_PALETTE = [
+  "#ef4444", // red
+  "#3b82f6", // blue
+  "#22c55e", // green
+  "#f59e0b", // amber
+  "#8b5cf6", // violet
+  "#06b6d4", // cyan
+  "#ec4899", // pink
+  "#14b8a6", // teal
+  "#f97316", // orange
+  "#a855f7", // purple
+  "#84cc16", // lime
+  "#e11d48", // rose
+];
+
+/** Pick a distinct color from the palette by index. */
+export function lineColor(index: number): string {
+  return LINE_PALETTE[index % LINE_PALETTE.length]!;
+}
+
 /**
  * Build a smoothed SVG path by binning data points.
  * Reduces ~2000 frames down to ~targetPoints for pixel-appropriate detail.

@@ -1,12 +1,13 @@
 import React, { useMemo } from "react";
 import { useStore } from "../store";
 import { colors, fonts } from "../theme/tokens";
-import { buildSmoothPath } from "../utils/chart";
+import { buildSmoothPath, lineColor } from "../utils/chart";
 
 const CHART_H = 140;
-const MARGIN = { top: 8, right: 130, bottom: 20, left: 44 };
+const MARGIN = { top: 8, right: 6, bottom: 20, left: 44 };
 const PLOT_H = CHART_H - MARGIN.top - MARGIN.bottom;
 const LEFT_PANEL_W = 120;
+const LEGEND_W = 140;
 
 const SCOPE_COLORS: Record<string, string> = {
   internal: colors.scope.internal,
@@ -19,17 +20,6 @@ const SCOPE_LABELS: Record<string, string> = {
   external: "EXT",
   hybrid: "HYB",
 };
-
-/** Lighten a hex color for multi-line shading within a layer. */
-function shadeForIndex(baseHex: string, index: number, total: number): string {
-  const t = total <= 1 ? 0 : (index / (total - 1)) * 0.5 - 0.25;
-  const r = parseInt(baseHex.slice(1, 3), 16);
-  const g = parseInt(baseHex.slice(3, 5), 16);
-  const b = parseInt(baseHex.slice(5, 7), 16);
-  const mix = t > 0 ? 255 : 0;
-  const p = Math.abs(t);
-  return `rgb(${Math.round(r + (mix - r) * p)},${Math.round(g + (mix - g) * p)},${Math.round(b + (mix - b) * p)})`;
-}
 
 interface LayerChartProps {
   layerCode: string;
@@ -64,12 +54,12 @@ function LayerChart({
     for (let i = 0; i < dimCount; i++) {
       result.push({
         d: buildSmoothPath(output, start + i, plotW, PLOT_H),
-        color: shadeForIndex(scopeColor, i, dimCount),
+        color: lineColor(i),
         dimIdx: start + i,
       });
     }
     return result;
-  }, [output, start, dimCount, scopeColor, plotW]);
+  }, [output, start, dimCount, plotW]);
 
   // Current values at playhead
   const currentValues = useMemo(() => {
@@ -141,108 +131,135 @@ function LayerChart({
         </span>
       </div>
 
-      {/* SVG chart */}
-      <svg
-        viewBox={`0 0 ${svgW} ${CHART_H}`}
-        style={{ width: "100%", height: CHART_H, display: "block" }}
-        preserveAspectRatio="none"
-      >
-        <rect x={0} y={0} width={svgW} height={CHART_H} fill={colors.bg.panel} />
+      {/* Chart + legend row */}
+      <div style={{ display: "flex", alignItems: "stretch" }}>
+        {/* SVG chart */}
+        <svg
+          viewBox={`0 0 ${svgW} ${CHART_H}`}
+          style={{ flex: 1, height: CHART_H, display: "block" }}
+          preserveAspectRatio="none"
+        >
+          <rect x={0} y={0} width={svgW} height={CHART_H} fill={colors.bg.panel} />
 
-        {/* Y grid */}
-        {yTicks.map((tick) => {
-          const y = MARGIN.top + PLOT_H - tick * PLOT_H;
-          return (
-            <g key={tick}>
-              <line
-                x1={MARGIN.left}
-                y1={y}
-                x2={MARGIN.left + plotW}
-                y2={y}
-                stroke={colors.border}
-                strokeWidth={0.5}
-              />
-              <text
-                x={MARGIN.left - 6}
-                y={y + 3}
-                textAnchor="end"
-                fill={colors.text.muted}
-                fontSize={8}
-                fontFamily={fonts.data}
-              >
-                {tick.toFixed(1)}
-              </text>
-            </g>
-          );
-        })}
+          {/* Y grid */}
+          {yTicks.map((tick) => {
+            const y = MARGIN.top + PLOT_H - tick * PLOT_H;
+            return (
+              <g key={tick}>
+                <line
+                  x1={MARGIN.left}
+                  y1={y}
+                  x2={MARGIN.left + plotW}
+                  y2={y}
+                  stroke={colors.border}
+                  strokeWidth={0.5}
+                />
+                <text
+                  x={MARGIN.left - 6}
+                  y={y + 3}
+                  textAnchor="end"
+                  fill={colors.text.muted}
+                  fontSize={8}
+                  fontFamily={fonts.data}
+                >
+                  {tick.toFixed(1)}
+                </text>
+              </g>
+            );
+          })}
 
-        {/* Traces */}
-        <g transform={`translate(${MARGIN.left},${MARGIN.top})`}>
-          {paths.map((p, i) => (
-            <path
-              key={i}
-              d={p.d}
-              fill="none"
-              stroke={p.color}
-              strokeWidth={1.2}
-              opacity={0.85}
-            />
-          ))}
-        </g>
-
-        {/* Playhead */}
-        <line
-          x1={playheadX}
-          y1={MARGIN.top}
-          x2={playheadX}
-          y2={MARGIN.top + PLOT_H}
-          stroke={colors.playhead}
-          strokeWidth={1.5}
-          opacity={0.9}
-        />
-
-        {/* Right legend: fixed positions, color-matched */}
-        {paths.map((p, i) => {
-          const val = currentValues[i] ?? 0;
-          const lineHeight = dimCount > 1 ? PLOT_H / (dimCount - 1) : 0;
-          const y = MARGIN.top + i * lineHeight;
-          const dname = dimNames[i] ?? `d${i}`;
-          const short = dname.length > 12 ? dname.slice(0, 11) + "\u2026" : dname;
-          const xBase = MARGIN.left + plotW + 6;
-          return (
-            <g key={i}>
-              <line
-                x1={xBase}
-                y1={y}
-                x2={xBase + 12}
-                y2={y}
+          {/* Traces */}
+          <g transform={`translate(${MARGIN.left},${MARGIN.top})`}>
+            {paths.map((p, i) => (
+              <path
+                key={i}
+                d={p.d}
+                fill="none"
                 stroke={p.color}
-                strokeWidth={2}
+                strokeWidth={1.2}
                 opacity={0.85}
               />
-              <text
-                x={xBase + 16}
-                y={y + 3}
-                fill={p.color}
-                fontSize={7}
-                fontFamily={fonts.data}
-                fontWeight={600}
+            ))}
+          </g>
+
+          {/* Playhead */}
+          <line
+            x1={playheadX}
+            y1={MARGIN.top}
+            x2={playheadX}
+            y2={MARGIN.top + PLOT_H}
+            stroke={colors.playhead}
+            strokeWidth={1.5}
+            opacity={0.9}
+          />
+        </svg>
+
+        {/* HTML legend */}
+        <div
+          style={{
+            width: LEGEND_W,
+            flexShrink: 0,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            gap: 1,
+            padding: "4px 6px",
+            background: colors.bg.panel,
+            overflow: "hidden",
+          }}
+        >
+          {paths.map((p, i) => {
+            const val = currentValues[i] ?? 0;
+            const dname = dimNames[i] ?? `d${i}`;
+            return (
+              <div
+                key={i}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 4,
+                  lineHeight: 1.1,
+                }}
               >
-                {short}
-              </text>
-              <text
-                x={xBase + 16}
-                y={y + 12}
-                fill={colors.text.secondary}
-                fontSize={7}
-                fontFamily={fonts.data}
-              >
-                {val.toFixed(3)}
-              </text>
-            </g>
-          );
-        })}
-      </svg>
+                <span
+                  style={{
+                    width: 10,
+                    height: 2,
+                    background: p.color,
+                    flexShrink: 0,
+                    borderRadius: 1,
+                  }}
+                />
+                <span
+                  style={{
+                    fontSize: 9,
+                    fontFamily: fonts.data,
+                    color: p.color,
+                    fontWeight: 600,
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    flex: 1,
+                    minWidth: 0,
+                  }}
+                >
+                  {dname}
+                </span>
+                <span
+                  style={{
+                    fontSize: 9,
+                    fontFamily: fonts.data,
+                    color: colors.text.secondary,
+                    flexShrink: 0,
+                  }}
+                >
+                  {val.toFixed(2)}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }
