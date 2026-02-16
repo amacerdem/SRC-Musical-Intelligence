@@ -1,0 +1,447 @@
+#!/usr/bin/env python3
+"""C³ Kernel Stress Test — Swan Lake vs Duel of the Fates.
+
+Compares C³ Kernel belief dynamics on two maximally contrasting pieces:
+  - Swan Lake:       tonal, stable waltz, predictable → monotony-dominant
+  - Duel of Fates:   dramatic, aggressive, dynamic → surprise-dominant
+
+Tests whether the architecture produces meaningfully different dynamics:
+  - PE magnitude and variance
+  - Reward polarity shift
+  - Consonance/tempo dynamic range
+  - Prediction accuracy differences
+
+Usage:
+    python Tests/experiments/c3_kernel_stress_test.py
+"""
+from __future__ import annotations
+
+import os
+import sys
+import time
+
+_PROJECT_ROOT = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), os.pardir, os.pardir)
+)
+if _PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, _PROJECT_ROOT)
+
+import librosa
+import numpy as np
+import torch
+
+from Musical_Intelligence.ear.r3 import R3Extractor
+from Musical_Intelligence.ear.h3 import H3Extractor
+from Musical_Intelligence.brain.kernel.scheduler import C3Kernel
+
+
+# ── Constants ───────────────────────────────────────────────────────
+SR = 44100
+HOP = 256
+N_MELS = 128
+DURATION = 30  # seconds
+
+PIECES = {
+    "Swan Lake": os.path.join(
+        _PROJECT_ROOT, "Test-Audio",
+        "Swan Lake Suite, Op. 20a_ I. Scene _Swan Theme_. Moderato"
+        " - Pyotr Ilyich Tchaikovsky.wav",
+    ),
+    "Duel of Fates": os.path.join(
+        _PROJECT_ROOT, "Test-Audio",
+        "Duel of the Fates - Epic Version.wav",
+    ),
+}
+
+
+def run_pipeline(name: str, path: str) -> dict:
+    """Run full Audio → R³ → H³ → C³ Kernel pipeline on a piece."""
+    print(f"\n{'='*70}")
+    print(f"  {name}")
+    print(f"{'='*70}")
+
+    # ── 1. Load audio ──────────────────────────────────────────────
+    print(f"\n  [1/4] Loading audio...")
+    t0 = time.time()
+    waveform, sr = librosa.load(path, sr=SR, duration=DURATION, mono=True)
+    waveform_t = torch.from_numpy(waveform).unsqueeze(0).float()
+    actual_dur = waveform.shape[0] / SR
+    print(f"    Audio: {actual_dur:.1f}s, {sr}Hz")
+
+    # ── 2. Mel + R³ ───────────────────────────────────────────────
+    mel_np = librosa.feature.melspectrogram(
+        y=waveform, sr=sr, n_mels=N_MELS, hop_length=HOP
+    )
+    mel_db = librosa.power_to_db(mel_np, ref=np.max)
+    mel_norm = (mel_db - mel_db.min()) / (mel_db.max() - mel_db.min() + 1e-8)
+    mel_t = torch.from_numpy(mel_norm).unsqueeze(0).float()  # (1, 128, T)
+    T = mel_t.shape[2]
+
+    print(f"  [2/4] R³ extraction...")
+    t1 = time.time()
+    r3_ext = R3Extractor()
+    r3_out = r3_ext.extract(mel_t, audio=waveform_t, sr=SR)
+    r3_tensor = r3_out.features  # (1, T, 128)
+    feature_map = r3_out.feature_map
+    r3_time = time.time() - t1
+    print(f"    R³: {r3_tensor.shape}, {r3_time:.2f}s")
+
+    # ── 3. H³ ─────────────────────────────────────────────────────
+    print(f"  [3/4] H³ extraction...")
+    t2 = time.time()
+    kernel_tmp = C3Kernel(feature_map)
+    demand = set()
+    for belief in kernel_tmp._predictive:
+        for feat_name, h, m, law in belief.h3_predict_demands:
+            r3_idx = feature_map.resolve(feat_name)
+            demand.add((r3_idx, h, m, law))
+            demand.add((r3_idx, h, 2, law))  # M2 std for precision
+
+    h3_ext = H3Extractor()
+    h3_out = h3_ext.extract(r3_tensor, demand)
+    h3_dict = h3_out.features
+    h3_time = time.time() - t2
+    print(f"    H³: {len(h3_dict)} tuples, {h3_time:.2f}s")
+
+    # ── 4. C³ Kernel ──────────────────────────────────────────────
+    print(f"  [4/4] C³ Kernel belief cycle...")
+    t3 = time.time()
+    kernel = C3Kernel(feature_map)
+
+    traces = {
+        "perceived_consonance": [],
+        "tempo_state": [],
+        "reward_valence": [],
+        "pe_consonance": [],
+        "pe_tempo": [],
+    }
+
+    for t in range(T):
+        r3_frame = r3_tensor[:, t:t+1, :]
+        h3_frame = {}
+        for key, val in h3_dict.items():
+            if val.shape[1] > t:
+                h3_frame[key] = val[:, t:t+1]
+
+        out = kernel.tick(r3_frame, h3_frame)
+
+        traces["perceived_consonance"].append(
+            out.beliefs["perceived_consonance"].mean().item()
+        )
+        traces["tempo_state"].append(
+            out.beliefs["tempo_state"].mean().item()
+        )
+        traces["reward_valence"].append(
+            out.beliefs["reward_valence"].mean().item()
+        )
+        traces["pe_consonance"].append(
+            out.pe["perceived_consonance"].mean().item()
+        )
+        traces["pe_tempo"].append(
+            out.pe["tempo_state"].mean().item()
+        )
+
+    c3_time = time.time() - t3
+    total_time = time.time() - t0
+    print(f"    C³: {T} frames, {c3_time:.2f}s ({T/c3_time:.0f} fps)")
+    print(f"    Total: {total_time:.1f}s")
+
+    # Convert to numpy
+    for k in traces:
+        traces[k] = np.array(traces[k])
+
+    return {
+        "name": name,
+        "T": T,
+        "traces": traces,
+        "timing": {
+            "r3": r3_time, "h3": h3_time, "c3": c3_time, "total": total_time
+        },
+    }
+
+
+def analyze_piece(result: dict) -> dict:
+    """Compute statistics for a single piece."""
+    tr = result["traces"]
+    T = result["T"]
+    frame_rate = SR / HOP
+    window_frames = int(5 * frame_rate)
+    n_windows = T // window_frames
+
+    stats = {
+        "name": result["name"],
+        "T": T,
+        "duration": T / frame_rate,
+    }
+
+    for key in ["perceived_consonance", "tempo_state", "reward_valence",
+                "pe_consonance", "pe_tempo"]:
+        arr = tr[key]
+        stats[key] = {
+            "mean": float(arr.mean()),
+            "std": float(arr.std()),
+            "min": float(arr.min()),
+            "max": float(arr.max()),
+            "range": float(arr.max() - arr.min()),
+        }
+
+    # Per-window analysis
+    windows = []
+    for w in range(n_windows):
+        s = w * window_frames
+        e = (w + 1) * window_frames
+        t_start = s / frame_rate
+        t_end = e / frame_rate
+        windows.append({
+            "window": f"{t_start:.0f}-{t_end:.0f}s",
+            "cons_mean": float(tr["perceived_consonance"][s:e].mean()),
+            "tempo_mean": float(tr["tempo_state"][s:e].mean()),
+            "reward_mean": float(tr["reward_valence"][s:e].mean()),
+            "pe_cons_std": float(tr["pe_consonance"][s:e].std()),
+            "pe_tempo_std": float(tr["pe_tempo"][s:e].std()),
+            "pe_cons_mean": float(np.abs(tr["pe_consonance"][s:e]).mean()),
+            "pe_tempo_mean": float(np.abs(tr["pe_tempo"][s:e]).mean()),
+        })
+    stats["windows"] = windows
+
+    # First 5s vs last 5s (adaptation test)
+    first = slice(0, window_frames)
+    last = slice(-window_frames, None)
+    stats["adaptation"] = {
+        "pe_cons_first5s": float(np.abs(tr["pe_consonance"][first]).mean()),
+        "pe_cons_last5s": float(np.abs(tr["pe_consonance"][last]).mean()),
+        "pe_tempo_first5s": float(np.abs(tr["pe_tempo"][first]).mean()),
+        "pe_tempo_last5s": float(np.abs(tr["pe_tempo"][last]).mean()),
+        "reward_first5s": float(tr["reward_valence"][first].mean()),
+        "reward_last5s": float(tr["reward_valence"][last].mean()),
+    }
+
+    return stats
+
+
+def print_report(stats_list: list) -> None:
+    """Print comparative report for all pieces."""
+    print("\n")
+    print("=" * 80)
+    print("  C³ KERNEL COMPARATIVE STRESS TEST REPORT")
+    print("=" * 80)
+
+    # ── Section 1: Overview ────────────────────────────────────────
+    print("\n" + "─" * 80)
+    print("  1. OVERVIEW")
+    print("─" * 80)
+
+    header = f"{'Metric':<30s}"
+    for s in stats_list:
+        header += f" | {s['name']:>18s}"
+    print(header)
+    print("-" * (30 + 21 * len(stats_list)))
+
+    rows = [
+        ("Frames", lambda s: f"{s['T']:>18d}"),
+        ("Duration (s)", lambda s: f"{s['duration']:>18.1f}"),
+    ]
+    for label, fn in rows:
+        line = f"{label:<30s}"
+        for s in stats_list:
+            line += f" | {fn(s)}"
+        print(line)
+
+    # ── Section 2: Belief Dynamics ─────────────────────────────────
+    print("\n" + "─" * 80)
+    print("  2. BELIEF DYNAMICS")
+    print("─" * 80)
+
+    for belief in ["perceived_consonance", "tempo_state", "reward_valence"]:
+        bname = belief.replace("_", " ").title()
+        print(f"\n  {bname}:")
+        for metric in ["mean", "std", "min", "max", "range"]:
+            line = f"    {metric:<26s}"
+            for s in stats_list:
+                val = s[belief][metric]
+                line += f" | {val:>18.4f}"
+            print(line)
+
+    # ── Section 3: Prediction Error ────────────────────────────────
+    print("\n" + "─" * 80)
+    print("  3. PREDICTION ERROR (PE)")
+    print("─" * 80)
+
+    for pe_key in ["pe_consonance", "pe_tempo"]:
+        pname = pe_key.replace("_", " ").title()
+        print(f"\n  {pname}:")
+        for metric in ["mean", "std", "min", "max", "range"]:
+            line = f"    {metric:<26s}"
+            for s in stats_list:
+                val = s[pe_key][metric]
+                line += f" | {val:>18.4f}"
+            print(line)
+
+    # ── Section 4: Temporal Adaptation ─────────────────────────────
+    print("\n" + "─" * 80)
+    print("  4. TEMPORAL ADAPTATION (first 5s vs last 5s)")
+    print("─" * 80)
+
+    adapt_metrics = [
+        ("|PE_cons| first 5s",  "pe_cons_first5s"),
+        ("|PE_cons| last 5s",   "pe_cons_last5s"),
+        ("PE_cons reduction %", None),
+        ("|PE_tempo| first 5s", "pe_tempo_first5s"),
+        ("|PE_tempo| last 5s",  "pe_tempo_last5s"),
+        ("PE_tempo reduction %", None),
+        ("Reward first 5s",     "reward_first5s"),
+        ("Reward last 5s",      "reward_last5s"),
+        ("Reward drift",        None),
+    ]
+
+    for label, key in adapt_metrics:
+        line = f"    {label:<26s}"
+        for s in stats_list:
+            a = s["adaptation"]
+            if key is not None:
+                line += f" | {a[key]:>18.4f}"
+            elif "cons reduction" in label:
+                f5 = a["pe_cons_first5s"]
+                l5 = a["pe_cons_last5s"]
+                pct = (f5 - l5) / (f5 + 1e-8) * 100
+                line += f" | {pct:>17.1f}%"
+            elif "tempo reduction" in label:
+                f5 = a["pe_tempo_first5s"]
+                l5 = a["pe_tempo_last5s"]
+                pct = (f5 - l5) / (f5 + 1e-8) * 100
+                line += f" | {pct:>17.1f}%"
+            elif "drift" in label:
+                drift = a["reward_last5s"] - a["reward_first5s"]
+                line += f" | {drift:>18.4f}"
+        print(line)
+
+    # ── Section 5: Window-by-Window ────────────────────────────────
+    print("\n" + "─" * 80)
+    print("  5. WINDOW-BY-WINDOW (5s windows)")
+    print("─" * 80)
+
+    for s in stats_list:
+        print(f"\n  {s['name']}:")
+        print(f"    {'Window':<10s} | {'Cons':>8s} | {'Tempo':>8s} | "
+              f"{'Reward':>8s} | {'|PE_c|':>8s} | {'|PE_t|':>8s}")
+        print(f"    {'-'*58}")
+        for w in s["windows"]:
+            print(f"    {w['window']:<10s} | {w['cons_mean']:>8.4f} | "
+                  f"{w['tempo_mean']:>8.4f} | {w['reward_mean']:>8.4f} | "
+                  f"{w['pe_cons_mean']:>8.4f} | {w['pe_tempo_mean']:>8.4f}")
+
+    # ── Section 6: Diagnostic Verdict ──────────────────────────────
+    print("\n" + "─" * 80)
+    print("  6. DIAGNOSTIC VERDICT")
+    print("─" * 80)
+
+    # Compare the two pieces
+    if len(stats_list) == 2:
+        a, b = stats_list[0], stats_list[1]
+
+        # Consonance range difference
+        cons_range_a = a["perceived_consonance"]["range"]
+        cons_range_b = b["perceived_consonance"]["range"]
+        print(f"\n    Consonance dynamic range:  "
+              f"{a['name']}={cons_range_a:.3f}  vs  "
+              f"{b['name']}={cons_range_b:.3f}")
+
+        # PE magnitude difference
+        pe_c_a = a["pe_consonance"]["std"]
+        pe_c_b = b["pe_consonance"]["std"]
+        print(f"    PE_consonance std:         "
+              f"{a['name']}={pe_c_a:.4f}  vs  "
+              f"{b['name']}={pe_c_b:.4f}")
+
+        pe_t_a = a["pe_tempo"]["std"]
+        pe_t_b = b["pe_tempo"]["std"]
+        print(f"    PE_tempo std:              "
+              f"{a['name']}={pe_t_a:.4f}  vs  "
+              f"{b['name']}={pe_t_b:.4f}")
+
+        # Reward polarity
+        rew_a = a["reward_valence"]["mean"]
+        rew_b = b["reward_valence"]["mean"]
+        print(f"    Reward mean:               "
+              f"{a['name']}={rew_a:.4f}  vs  "
+              f"{b['name']}={rew_b:.4f}")
+
+        # Adaptation rate
+        adapt_a = (a["adaptation"]["pe_cons_first5s"] -
+                   a["adaptation"]["pe_cons_last5s"])
+        adapt_b = (b["adaptation"]["pe_cons_first5s"] -
+                   b["adaptation"]["pe_cons_last5s"])
+        print(f"    PE_cons adaptation (f-l):  "
+              f"{a['name']}={adapt_a:.4f}  vs  "
+              f"{b['name']}={adapt_b:.4f}")
+
+        # Diagnostic checks
+        print(f"\n    CHECKS:")
+        checks = []
+
+        # Check 1: Dynamic piece should have wider consonance range
+        if cons_range_b > cons_range_a:
+            checks.append(("Consonance range wider for dynamic piece", True))
+        else:
+            checks.append(("Consonance range wider for dynamic piece", False))
+
+        # Check 2: Dynamic piece should have higher PE
+        if pe_c_b > pe_c_a:
+            checks.append(("PE_consonance higher for dynamic piece", True))
+        else:
+            checks.append(("PE_consonance higher for dynamic piece", False))
+
+        # Check 3: Swan Lake should have more negative reward (monotony)
+        if rew_a < rew_b:
+            checks.append(("Monotony-dominant reward for predictable piece", True))
+        else:
+            checks.append(("Monotony-dominant reward for predictable piece", False))
+
+        # Check 4: PE should decrease over time for both
+        pe_decr_a = a["adaptation"]["pe_cons_first5s"] > a["adaptation"]["pe_cons_last5s"]
+        pe_decr_b = b["adaptation"]["pe_cons_first5s"] > b["adaptation"]["pe_cons_last5s"]
+        checks.append(("PE decreases over time (Swan Lake)", pe_decr_a))
+        checks.append(("PE decreases over time (Duel)", pe_decr_b))
+
+        # Check 5: Tempo PE should be very different between pieces
+        if pe_t_b > pe_t_a * 2:
+            checks.append(("PE_tempo significantly higher for dynamic piece", True))
+        else:
+            checks.append(("PE_tempo significantly higher for dynamic piece", False))
+
+        passed = sum(1 for _, ok in checks if ok)
+        total = len(checks)
+
+        for label, ok in checks:
+            status = "PASS" if ok else "FAIL"
+            print(f"      [{status}] {label}")
+
+        print(f"\n    SCORE: {passed}/{total} diagnostic checks passed")
+
+    print("\n" + "=" * 80)
+    print("  END OF REPORT")
+    print("=" * 80)
+
+
+def main() -> None:
+    results = []
+    for name, path in PIECES.items():
+        if not os.path.exists(path):
+            print(f"  SKIP: {name} — file not found: {path}")
+            continue
+        result = run_pipeline(name, path)
+        results.append(result)
+
+    if not results:
+        print("No audio files found!")
+        return
+
+    # Analyze all pieces
+    all_stats = [analyze_piece(r) for r in results]
+
+    # Print comparative report
+    print_report(all_stats)
+
+
+if __name__ == "__main__":
+    main()

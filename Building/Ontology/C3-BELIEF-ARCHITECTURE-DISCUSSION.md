@@ -309,13 +309,15 @@ IDENTITY:
   prediction errors, H³-informed linear forward models, and inverted-U
   salience-gated reward.
 
-BELIEFS (6):
+BELIEFS (5):
   perceived_consonance  (SPU, τ=0.3, fast)
   tempo_state           (STU, τ=0.7, medium)
   salience_state        (ASU, τ=0.5, medium-fast)
-  expectation_state     (PCU, τ=0.6, medium)       — precision estimator
   familiarity_state     (IMU, τ=0.85, slow)         — H³ ultra-horizon proxy in v1.0
   reward_valence        (ARU, τ=0.8, slow)
+
+PCU PRECISION ENGINE (not a belief, τ=0.6):
+  precision_pred_i = PCU.estimate(stability, τ, PE_history)
 
 META-SIGNALS (transient, not stored):
   PE_i = obs_i − expected_i                (typed, per-belief)
@@ -360,7 +362,7 @@ MIGRATION:
 
 ## Open Questions for Future Discussion
 
-1. **96 models → 6 beliefs**: How do individual models map to belief contributions? (e.g., which SPU models contribute to perceived_consonance and how?)
+1. **96 models → 5 beliefs**: How do individual models map to belief contributions? (e.g., which SPU models contribute to perceived_consonance and how?)
 2. **Neurochemical integration**: DA/NE/OPI/5HT → precision modulation? reward scaling? τ adjustment?
 3. **BrainOutput mapping**: Which beliefs map to RAM[26], neuro[4], Ψ³[31]?
 4. **Online vs offline**: L1/L2 H³ laws in predict() — causality constraint

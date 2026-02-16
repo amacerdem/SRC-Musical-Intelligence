@@ -105,9 +105,12 @@ class R3FeatureMap:
             object.__setattr__(self, "_group_by_name", group_map)
 
             spec_map: Dict[int, R3FeatureSpec] = {}
+            name_map: Dict[str, int] = {}
             for spec in self.feature_specs:
                 spec_map[spec.index] = spec
+                name_map[spec.name] = spec.index
             object.__setattr__(self, "_spec_by_index", spec_map)
+            object.__setattr__(self, "_index_by_name", name_map)
 
     # ------------------------------------------------------------------
     # Public accessors
@@ -155,6 +158,97 @@ class R3FeatureMap:
                 f"Valid range: [0, {self.total_dim})"
             )
         return spec_map[index]
+
+    def resolve(self, name: str) -> int:
+        """Resolve a semantic feature name to its current numeric index.
+
+        This is the primary API for C³ kernel code.  All R³ access should
+        go through ``resolve()`` rather than hard-coding indices.
+
+        Args:
+            name: Canonical feature name (e.g. ``"roughness"``,
+                  ``"onset_strength"``).
+
+        Returns:
+            The integer index in the R³ feature vector.
+
+        Raises:
+            KeyError: If *name* is not a known feature.
+        """
+        self._ensure_caches()
+        name_map: Dict[str, int] = self.__dict__["_index_by_name"]
+        if name not in name_map:
+            raise KeyError(
+                f"Unknown R³ feature {name!r}. "
+                f"Known features: {sorted(name_map.keys())[:10]}..."
+            )
+        return name_map[name]
+
+    def resolve_range(self, group: str) -> slice:
+        """Resolve a group name to an index slice.
+
+        Args:
+            group: Canonical group name (e.g. ``"consonance"``, ``"energy"``).
+
+        Returns:
+            A ``slice(start, end)`` covering the group's indices.
+
+        Raises:
+            KeyError: If *group* is not a known group name.
+        """
+        info = self.get_group(group)
+        return slice(info.start, info.end)
+
+    def resolve_many(self, names: Tuple[str, ...]) -> Tuple[int, ...]:
+        """Resolve multiple feature names to indices.
+
+        Args:
+            names: Tuple of canonical feature names.
+
+        Returns:
+            Tuple of integer indices in the same order.
+        """
+        return tuple(self.resolve(n) for n in names)
+
+    # ------------------------------------------------------------------
+    # Group exclusion (for ontology compliance)
+    # ------------------------------------------------------------------
+
+    @property
+    def dissolved_groups(self) -> Tuple[str, ...]:
+        """Groups dissolved from R³ per ontology v1.0.0.
+
+        These groups still exist in code (128D output) but are
+        ontologically excluded from C³ consumption.  C³ kernel code
+        MUST NOT read features from these groups.
+        """
+        return ("interactions", "information")
+
+    def is_dissolved(self, name: str) -> bool:
+        """Check whether a feature belongs to a dissolved group.
+
+        Works with both spec names (``"amp_x_roughness"``) and
+        index-based lookup.
+        """
+        self._ensure_caches()
+        name_map: Dict[str, int] = self.__dict__["_index_by_name"]
+        if name in name_map:
+            idx = name_map[name]
+            spec = self.__dict__["_spec_by_index"][idx]
+            return spec.group in self.dissolved_groups
+        # Fallback: check all specs by name
+        for spec in self.feature_specs:
+            if spec.name == name:
+                return spec.group in self.dissolved_groups
+        raise KeyError(f"Unknown R³ feature {name!r}")
+
+    def is_dissolved_index(self, index: int) -> bool:
+        """Check whether a feature index belongs to a dissolved group."""
+        self._ensure_caches()
+        spec = self.__dict__["_spec_by_index"].get(index)
+        if spec is None:
+            raise KeyError(f"No feature at index {index}")
+        return spec.group in self.dissolved_groups
 
     # ------------------------------------------------------------------
     # Convenience properties
