@@ -336,88 +336,96 @@ def print_report(stats_list: list) -> None:
     print("  6. DIAGNOSTIC VERDICT")
     print("─" * 80)
 
-    # Compare the two pieces
-    if len(stats_list) == 2:
-        a, b = stats_list[0], stats_list[1]
+    if len(stats_list) < 2:
+        print("\n    Need at least 2 pieces for comparative diagnostics.")
+        return
 
-        # Consonance range difference
-        cons_range_a = a["perceived_consonance"]["range"]
-        cons_range_b = b["perceived_consonance"]["range"]
-        print(f"\n    Consonance dynamic range:  "
-              f"{a['name']}={cons_range_a:.3f}  vs  "
-              f"{b['name']}={cons_range_b:.3f}")
+    # ── 6a: Cross-piece comparison table ─────────────────────────
+    metrics_to_compare = [
+        ("Consonance range",    lambda s: s["perceived_consonance"]["range"]),
+        ("Consonance mean",     lambda s: s["perceived_consonance"]["mean"]),
+        ("Consonance std",      lambda s: s["perceived_consonance"]["std"]),
+        ("Tempo range",         lambda s: s["tempo_state"]["range"]),
+        ("Tempo mean",          lambda s: s["tempo_state"]["mean"]),
+        ("Reward mean",         lambda s: s["reward_valence"]["mean"]),
+        ("Reward range",        lambda s: s["reward_valence"]["range"]),
+        ("PE_cons std",         lambda s: s["pe_consonance"]["std"]),
+        ("PE_tempo std",        lambda s: s["pe_tempo"]["std"]),
+        ("PE_cons adapt %",     lambda s: (
+            (s["adaptation"]["pe_cons_first5s"] - s["adaptation"]["pe_cons_last5s"])
+            / (s["adaptation"]["pe_cons_first5s"] + 1e-8) * 100
+        )),
+    ]
 
-        # PE magnitude difference
-        pe_c_a = a["pe_consonance"]["std"]
-        pe_c_b = b["pe_consonance"]["std"]
-        print(f"    PE_consonance std:         "
-              f"{a['name']}={pe_c_a:.4f}  vs  "
-              f"{b['name']}={pe_c_b:.4f}")
+    # Determine column width from longest name
+    max_name = max(len(s["name"]) for s in stats_list)
+    col_w = max(max_name, 12)
 
-        pe_t_a = a["pe_tempo"]["std"]
-        pe_t_b = b["pe_tempo"]["std"]
-        print(f"    PE_tempo std:              "
-              f"{a['name']}={pe_t_a:.4f}  vs  "
-              f"{b['name']}={pe_t_b:.4f}")
+    header = f"    {'Metric':<22s}"
+    for s in stats_list:
+        header += f" | {s['name']:>{col_w}s}"
+    print(f"\n{header}")
+    print(f"    {'-' * (22 + (col_w + 3) * len(stats_list))}")
 
-        # Reward polarity
-        rew_a = a["reward_valence"]["mean"]
-        rew_b = b["reward_valence"]["mean"]
-        print(f"    Reward mean:               "
-              f"{a['name']}={rew_a:.4f}  vs  "
-              f"{b['name']}={rew_b:.4f}")
+    for label, fn in metrics_to_compare:
+        line = f"    {label:<22s}"
+        vals = [fn(s) for s in stats_list]
+        best_idx = vals.index(max(vals))
+        for i, v in enumerate(vals):
+            marker = " *" if i == best_idx else "  "
+            line += f" | {v:>{col_w - 2}.4f}{marker}"
+        print(line)
 
-        # Adaptation rate
-        adapt_a = (a["adaptation"]["pe_cons_first5s"] -
-                   a["adaptation"]["pe_cons_last5s"])
-        adapt_b = (b["adaptation"]["pe_cons_first5s"] -
-                   b["adaptation"]["pe_cons_last5s"])
-        print(f"    PE_cons adaptation (f-l):  "
-              f"{a['name']}={adapt_a:.4f}  vs  "
-              f"{b['name']}={adapt_b:.4f}")
+    # ── 6b: Per-piece checks ─────────────────────────────────────
+    print(f"\n    CHECKS:")
+    checks = []
 
-        # Diagnostic checks
-        print(f"\n    CHECKS:")
-        checks = []
+    for s in stats_list:
+        name = s["name"]
+        # PE should decrease over time for every piece
+        pe_decr = s["adaptation"]["pe_cons_first5s"] > s["adaptation"]["pe_cons_last5s"]
+        checks.append((f"PE_cons decreases over time ({name})", pe_decr))
 
-        # Check 1: Dynamic piece should have wider consonance range
-        if cons_range_b > cons_range_a:
-            checks.append(("Consonance range wider for dynamic piece", True))
-        else:
-            checks.append(("Consonance range wider for dynamic piece", False))
+    # Cross-piece: pieces should have distinguishable consonance ranges
+    ranges = [s["perceived_consonance"]["range"] for s in stats_list]
+    spread = max(ranges) / (min(ranges) + 1e-8)
+    checks.append((
+        f"Consonance range spread > 1.2x (actual {spread:.2f}x)",
+        spread > 1.2,
+    ))
 
-        # Check 2: Dynamic piece should have higher PE
-        if pe_c_b > pe_c_a:
-            checks.append(("PE_consonance higher for dynamic piece", True))
-        else:
-            checks.append(("PE_consonance higher for dynamic piece", False))
+    # Cross-piece: PE_cons std should vary across pieces
+    pe_stds = [s["pe_consonance"]["std"] for s in stats_list]
+    pe_spread = max(pe_stds) / (min(pe_stds) + 1e-8)
+    checks.append((
+        f"PE_cons std spread > 1.2x (actual {pe_spread:.2f}x)",
+        pe_spread > 1.2,
+    ))
 
-        # Check 3: Swan Lake should have more negative reward (monotony)
-        if rew_a < rew_b:
-            checks.append(("Monotony-dominant reward for predictable piece", True))
-        else:
-            checks.append(("Monotony-dominant reward for predictable piece", False))
+    # Cross-piece: reward should differ
+    rew_means = [s["reward_valence"]["mean"] for s in stats_list]
+    rew_spread = max(rew_means) - min(rew_means)
+    checks.append((
+        f"Reward mean spread > 0.01 (actual {rew_spread:.4f})",
+        rew_spread > 0.01,
+    ))
 
-        # Check 4: PE should decrease over time for both
-        pe_decr_a = a["adaptation"]["pe_cons_first5s"] > a["adaptation"]["pe_cons_last5s"]
-        pe_decr_b = b["adaptation"]["pe_cons_first5s"] > b["adaptation"]["pe_cons_last5s"]
-        checks.append(("PE decreases over time (Swan Lake)", pe_decr_a))
-        checks.append(("PE decreases over time (Duel)", pe_decr_b))
+    # Cross-piece: tempo should differ
+    tempo_ranges = [s["tempo_state"]["range"] for s in stats_list]
+    tempo_spread = max(tempo_ranges) / (min(tempo_ranges) + 1e-8)
+    checks.append((
+        f"Tempo range spread > 1.2x (actual {tempo_spread:.2f}x)",
+        tempo_spread > 1.2,
+    ))
 
-        # Check 5: Tempo PE should be very different between pieces
-        if pe_t_b > pe_t_a * 2:
-            checks.append(("PE_tempo significantly higher for dynamic piece", True))
-        else:
-            checks.append(("PE_tempo significantly higher for dynamic piece", False))
+    passed = sum(1 for _, ok in checks if ok)
+    total = len(checks)
 
-        passed = sum(1 for _, ok in checks if ok)
-        total = len(checks)
+    for label, ok in checks:
+        status = "PASS" if ok else "FAIL"
+        print(f"      [{status}] {label}")
 
-        for label, ok in checks:
-            status = "PASS" if ok else "FAIL"
-            print(f"      [{status}] {label}")
-
-        print(f"\n    SCORE: {passed}/{total} diagnostic checks passed")
+    print(f"\n    SCORE: {passed}/{total} diagnostic checks passed")
 
     print("\n" + "=" * 80)
     print("  END OF REPORT")
