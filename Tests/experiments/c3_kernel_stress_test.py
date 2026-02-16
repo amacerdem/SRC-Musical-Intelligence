@@ -112,9 +112,11 @@ def run_pipeline(name: str, path: str) -> dict:
     traces = {
         "perceived_consonance": [],
         "tempo_state": [],
+        "familiarity_state": [],
         "reward_valence": [],
         "pe_consonance": [],
         "pe_tempo": [],
+        "pe_familiarity": [],
     }
 
     for t in range(T):
@@ -132,6 +134,9 @@ def run_pipeline(name: str, path: str) -> dict:
         traces["tempo_state"].append(
             out.beliefs["tempo_state"].mean().item()
         )
+        traces["familiarity_state"].append(
+            out.beliefs["familiarity_state"].mean().item()
+        )
         traces["reward_valence"].append(
             out.beliefs["reward_valence"].mean().item()
         )
@@ -140,6 +145,9 @@ def run_pipeline(name: str, path: str) -> dict:
         )
         traces["pe_tempo"].append(
             out.pe["tempo_state"].mean().item()
+        )
+        traces["pe_familiarity"].append(
+            out.pe["familiarity_state"].mean().item()
         )
 
     c3_time = time.time() - t3
@@ -175,8 +183,8 @@ def analyze_piece(result: dict) -> dict:
         "duration": T / frame_rate,
     }
 
-    for key in ["perceived_consonance", "tempo_state", "reward_valence",
-                "pe_consonance", "pe_tempo"]:
+    for key in ["perceived_consonance", "tempo_state", "familiarity_state",
+                "reward_valence", "pe_consonance", "pe_tempo", "pe_familiarity"]:
         arr = tr[key]
         stats[key] = {
             "mean": float(arr.mean()),
@@ -197,11 +205,13 @@ def analyze_piece(result: dict) -> dict:
             "window": f"{t_start:.0f}-{t_end:.0f}s",
             "cons_mean": float(tr["perceived_consonance"][s:e].mean()),
             "tempo_mean": float(tr["tempo_state"][s:e].mean()),
+            "fam_mean": float(tr["familiarity_state"][s:e].mean()),
             "reward_mean": float(tr["reward_valence"][s:e].mean()),
             "pe_cons_std": float(tr["pe_consonance"][s:e].std()),
             "pe_tempo_std": float(tr["pe_tempo"][s:e].std()),
             "pe_cons_mean": float(np.abs(tr["pe_consonance"][s:e]).mean()),
             "pe_tempo_mean": float(np.abs(tr["pe_tempo"][s:e]).mean()),
+            "pe_fam_mean": float(np.abs(tr["pe_familiarity"][s:e]).mean()),
         })
     stats["windows"] = windows
 
@@ -213,6 +223,10 @@ def analyze_piece(result: dict) -> dict:
         "pe_cons_last5s": float(np.abs(tr["pe_consonance"][last]).mean()),
         "pe_tempo_first5s": float(np.abs(tr["pe_tempo"][first]).mean()),
         "pe_tempo_last5s": float(np.abs(tr["pe_tempo"][last]).mean()),
+        "pe_fam_first5s": float(np.abs(tr["pe_familiarity"][first]).mean()),
+        "pe_fam_last5s": float(np.abs(tr["pe_familiarity"][last]).mean()),
+        "fam_first5s": float(tr["familiarity_state"][first].mean()),
+        "fam_last5s": float(tr["familiarity_state"][last].mean()),
         "reward_first5s": float(tr["reward_valence"][first].mean()),
         "reward_last5s": float(tr["reward_valence"][last].mean()),
     }
@@ -253,7 +267,8 @@ def print_report(stats_list: list) -> None:
     print("  2. BELIEF DYNAMICS")
     print("─" * 80)
 
-    for belief in ["perceived_consonance", "tempo_state", "reward_valence"]:
+    for belief in ["perceived_consonance", "tempo_state", "familiarity_state",
+                    "reward_valence"]:
         bname = belief.replace("_", " ").title()
         print(f"\n  {bname}:")
         for metric in ["mean", "std", "min", "max", "range"]:
@@ -268,7 +283,7 @@ def print_report(stats_list: list) -> None:
     print("  3. PREDICTION ERROR (PE)")
     print("─" * 80)
 
-    for pe_key in ["pe_consonance", "pe_tempo"]:
+    for pe_key in ["pe_consonance", "pe_tempo", "pe_familiarity"]:
         pname = pe_key.replace("_", " ").title()
         print(f"\n  {pname}:")
         for metric in ["mean", "std", "min", "max", "range"]:
@@ -290,6 +305,12 @@ def print_report(stats_list: list) -> None:
         ("|PE_tempo| first 5s", "pe_tempo_first5s"),
         ("|PE_tempo| last 5s",  "pe_tempo_last5s"),
         ("PE_tempo reduction %", None),
+        ("|PE_fam| first 5s",   "pe_fam_first5s"),
+        ("|PE_fam| last 5s",    "pe_fam_last5s"),
+        ("PE_fam reduction %",  None),
+        ("Familiarity first 5s", "fam_first5s"),
+        ("Familiarity last 5s",  "fam_last5s"),
+        ("Familiarity drift",    None),
         ("Reward first 5s",     "reward_first5s"),
         ("Reward last 5s",      "reward_last5s"),
         ("Reward drift",        None),
@@ -311,7 +332,15 @@ def print_report(stats_list: list) -> None:
                 l5 = a["pe_tempo_last5s"]
                 pct = (f5 - l5) / (f5 + 1e-8) * 100
                 line += f" | {pct:>17.1f}%"
-            elif "drift" in label:
+            elif "fam reduction" in label:
+                f5 = a["pe_fam_first5s"]
+                l5 = a["pe_fam_last5s"]
+                pct = (f5 - l5) / (f5 + 1e-8) * 100
+                line += f" | {pct:>17.1f}%"
+            elif "Familiarity drift" in label:
+                drift = a["fam_last5s"] - a["fam_first5s"]
+                line += f" | {drift:>18.4f}"
+            elif "Reward drift" in label:
                 drift = a["reward_last5s"] - a["reward_first5s"]
                 line += f" | {drift:>18.4f}"
         print(line)
@@ -324,12 +353,14 @@ def print_report(stats_list: list) -> None:
     for s in stats_list:
         print(f"\n  {s['name']}:")
         print(f"    {'Window':<10s} | {'Cons':>8s} | {'Tempo':>8s} | "
-              f"{'Reward':>8s} | {'|PE_c|':>8s} | {'|PE_t|':>8s}")
-        print(f"    {'-'*58}")
+              f"{'Famil':>8s} | {'Reward':>8s} | {'|PE_c|':>8s} | "
+              f"{'|PE_t|':>8s} | {'|PE_f|':>8s}")
+        print(f"    {'-'*78}")
         for w in s["windows"]:
             print(f"    {w['window']:<10s} | {w['cons_mean']:>8.4f} | "
-                  f"{w['tempo_mean']:>8.4f} | {w['reward_mean']:>8.4f} | "
-                  f"{w['pe_cons_mean']:>8.4f} | {w['pe_tempo_mean']:>8.4f}")
+                  f"{w['tempo_mean']:>8.4f} | {w['fam_mean']:>8.4f} | "
+                  f"{w['reward_mean']:>8.4f} | {w['pe_cons_mean']:>8.4f} | "
+                  f"{w['pe_tempo_mean']:>8.4f} | {w['pe_fam_mean']:>8.4f}")
 
     # ── Section 6: Diagnostic Verdict ──────────────────────────────
     print("\n" + "─" * 80)
@@ -347,10 +378,13 @@ def print_report(stats_list: list) -> None:
         ("Consonance std",      lambda s: s["perceived_consonance"]["std"]),
         ("Tempo range",         lambda s: s["tempo_state"]["range"]),
         ("Tempo mean",          lambda s: s["tempo_state"]["mean"]),
+        ("Familiarity mean",    lambda s: s["familiarity_state"]["mean"]),
+        ("Familiarity range",   lambda s: s["familiarity_state"]["range"]),
         ("Reward mean",         lambda s: s["reward_valence"]["mean"]),
         ("Reward range",        lambda s: s["reward_valence"]["range"]),
         ("PE_cons std",         lambda s: s["pe_consonance"]["std"]),
         ("PE_tempo std",        lambda s: s["pe_tempo"]["std"]),
+        ("PE_fam std",          lambda s: s["pe_familiarity"]["std"]),
         ("PE_cons adapt %",     lambda s: (
             (s["adaptation"]["pe_cons_first5s"] - s["adaptation"]["pe_cons_last5s"])
             / (s["adaptation"]["pe_cons_first5s"] + 1e-8) * 100
@@ -416,6 +450,22 @@ def print_report(stats_list: list) -> None:
     checks.append((
         f"Tempo range spread > 1.2x (actual {tempo_spread:.2f}x)",
         tempo_spread > 1.2,
+    ))
+
+    # Cross-piece: familiarity should differ (key new check)
+    fam_means = [s["familiarity_state"]["mean"] for s in stats_list]
+    fam_spread = max(fam_means) - min(fam_means)
+    checks.append((
+        f"Familiarity mean spread > 0.02 (actual {fam_spread:.4f})",
+        fam_spread > 0.02,
+    ))
+
+    # Familiarity should NOT be constant 0.5 (proves it's active)
+    fam_ranges = [s["familiarity_state"]["range"] for s in stats_list]
+    fam_active = all(r > 0.01 for r in fam_ranges)
+    checks.append((
+        f"Familiarity active (range > 0.01 for all pieces)",
+        fam_active,
     ))
 
     passed = sum(1 for _, ok in checks if ok)

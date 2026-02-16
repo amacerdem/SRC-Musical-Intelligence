@@ -3,10 +3,10 @@
 Executes the belief cycle per frame:
   Phase 0:  BCH relay → observe + update sensory beliefs (consonance, tempo)
   Phase 1:  observe + update salience (default 1.0 if not active)
-  Phase 2a: predict all beliefs + observe familiarity (default 0.5)
+  Phase 2a: predict all beliefs + observe familiarity (H³ macro stability)
   Phase 2b: compute PE + precision for predictive beliefs
   Phase 2c: update beliefs with Bayesian fusion
-  Phase 3:  compute reward from PEs
+  Phase 3:  compute reward from PEs, modulated by active familiarity
 
 Single pass.  No iteration.  No convergence loop.
 """
@@ -23,6 +23,7 @@ from .precision import PrecisionEngine
 from .reward import RewardAggregator, RewardConfig
 from .relays.bch_wrapper import BCHKernelWrapper
 from .beliefs.consonance import PerceivedConsonance
+from .beliefs.familiarity import FamiliarityState
 from .beliefs.tempo import TempoState
 from .beliefs.reward import RewardValence
 from ...ear.r3.registry.feature_map import R3FeatureMap
@@ -49,10 +50,10 @@ class KernelOutput:
 class C3Kernel:
     """Minimal C³ belief-cycle kernel.
 
-    v1.0 supports 3 active beliefs + 2 defaults + BCH relay:
+    v1.0 supports 4 active beliefs + 1 default + BCH relay:
       Relay:   BCH (causal L0-only, 3 approved outputs)
-      Active:  perceived_consonance, tempo_state, reward_valence
-      Default: salience_state=1.0, familiarity_state=0.5
+      Active:  perceived_consonance, tempo_state, familiarity_state, reward_valence
+      Default: salience_state=1.0
 
     Usage:
         kernel = C3Kernel(feature_map)
@@ -66,7 +67,6 @@ class C3Kernel:
         feature_map: R3FeatureMap,
         *,
         default_salience: float = 1.0,
-        default_familiarity: float = 0.5,
     ) -> None:
         self._fm = feature_map
 
@@ -76,12 +76,14 @@ class C3Kernel:
         # Instantiate beliefs
         self._consonance = PerceivedConsonance(feature_map)
         self._tempo = TempoState(feature_map)
+        self._familiarity = FamiliarityState(feature_map)
         self._reward_belief = RewardValence(feature_map)
 
         # All beliefs in phase order
         self._beliefs: List[Belief] = [
-            self._consonance,   # Phase 0
-            self._tempo,        # Phase 0
+            self._consonance,    # Phase 0
+            self._tempo,         # Phase 0
+            self._familiarity,   # Phase 2a
             self._reward_belief, # Phase 3
         ]
 
@@ -89,6 +91,7 @@ class C3Kernel:
         self._predictive: List[Belief] = [
             self._consonance,
             self._tempo,
+            self._familiarity,
         ]
 
         # Engines
@@ -97,7 +100,6 @@ class C3Kernel:
 
         # Defaults for inactive beliefs
         self._default_salience = default_salience
-        self._default_familiarity = default_familiarity
 
         # State: previous frame beliefs
         self._beliefs_prev: Dict[str, Tensor] = {}
@@ -118,6 +120,11 @@ class C3Kernel:
                 r3_idx = self._fm.resolve(feat_name)
                 demands.add((r3_idx, h, m, law))
                 demands.add((r3_idx, h, 2, law))  # M2=std for precision
+
+        # Familiarity observe demands (H³ stability measurement)
+        for feat_name, h, m, law in self._familiarity.h3_observe_demands:
+            r3_idx = self._fm.resolve(feat_name)
+            demands.add((r3_idx, h, m, law))
 
         # BCH L0 demands (Rule 2: deduplication)
         demands |= self._bch_wrapper.h3_demands
@@ -150,35 +157,44 @@ class C3Kernel:
 
         # Default beliefs for inactive units
         salience = torch.full((B, T), self._default_salience, device=device)
-        familiarity = torch.full((B, T), self._default_familiarity, device=device)
 
         # ── Phase 0: BCH relay + Sensory grounding ────────────────
         bch_out = self._bch_wrapper.compute(r3, h3)
         cons_likelihood = self._consonance.observe(r3, h3, bch_out=bch_out)
         tempo_likelihood = self._tempo.observe(r3, h3)
 
-        # ── Phase 2a: Predict all beliefs (reads beliefs_{t-1}) ─────
+        # ── Phase 2a: Predict + Observe familiarity ─────────────────
         cons_predicted = self._consonance.predict(self._beliefs_prev, h3)
         tempo_predicted = self._tempo.predict(self._beliefs_prev, h3)
+        fam_predicted = self._familiarity.predict(self._beliefs_prev, h3)
         reward_predicted = self._reward_belief.predict(self._beliefs_prev, h3)
+
+        # Familiarity observation (H³ macro stability)
+        fam_likelihood = self._familiarity.observe(r3, h3)
 
         # Broadcast predictions to match observation shape
         cons_predicted = self._broadcast(cons_predicted, B, T, device)
         tempo_predicted = self._broadcast(tempo_predicted, B, T, device)
+        fam_predicted = self._broadcast(fam_predicted, B, T, device)
         reward_predicted = self._broadcast(reward_predicted, B, T, device)
 
         # ── Phase 2b: Compute PE + precision ────────────────────────
         cons_pe = cons_likelihood.value - cons_predicted
         tempo_pe = tempo_likelihood.value - tempo_predicted
+        fam_pe = fam_likelihood.value - fam_predicted
 
         self._precision.record_pe("perceived_consonance", cons_pe)
         self._precision.record_pe("tempo_state", tempo_pe)
+        self._precision.record_pe("familiarity_state", fam_pe)
 
         cons_pi_pred = self._precision.estimate_precision_pred(
             "perceived_consonance", self._consonance.tau
         )
         tempo_pi_pred = self._precision.estimate_precision_pred(
             "tempo_state", self._tempo.tau
+        )
+        fam_pi_pred = self._precision.estimate_precision_pred(
+            "familiarity_state", self._familiarity.tau
         )
 
         # ── Phase 2c: Update beliefs (Bayesian fusion) ──────────────
@@ -188,8 +204,12 @@ class C3Kernel:
         tempo_posterior = self._tempo.update(
             tempo_likelihood, tempo_predicted, tempo_pi_pred
         )
+        fam_posterior = self._familiarity.update(
+            fam_likelihood, fam_predicted, fam_pi_pred
+        )
 
         # ── Phase 3: Reward computation ─────────────────────────────
+        # Familiarity PE modulates reward formula but is NOT a reward source
         pe_dict = {
             "perceived_consonance": cons_pe,
             "tempo_state": tempo_pe,
@@ -200,7 +220,7 @@ class C3Kernel:
         }
 
         reward_value = self._reward_agg.compute(
-            pe_dict, pi_pred_dict, salience, familiarity,
+            pe_dict, pi_pred_dict, salience, fam_posterior,
         )
 
         # Update reward belief with aggregated reward
@@ -223,7 +243,7 @@ class C3Kernel:
             "perceived_consonance": cons_posterior.detach(),
             "tempo_state": tempo_posterior.detach(),
             "salience_state": salience.detach(),
-            "familiarity_state": familiarity.detach(),
+            "familiarity_state": fam_posterior.detach(),
             "reward_valence": reward_posterior.detach(),
         }
         self._frame_count += 1
@@ -234,21 +254,24 @@ class C3Kernel:
                 "perceived_consonance": cons_posterior,
                 "tempo_state": tempo_posterior,
                 "salience_state": salience,
-                "familiarity_state": familiarity,
+                "familiarity_state": fam_posterior,
                 "reward_valence": reward_posterior,
             },
             pe={
                 "perceived_consonance": cons_pe,
                 "tempo_state": tempo_pe,
+                "familiarity_state": fam_pe,
                 "reward_valence": reward_pe,
             },
             precision_obs={
                 "perceived_consonance": cons_likelihood.precision,
                 "tempo_state": tempo_likelihood.precision,
+                "familiarity_state": fam_likelihood.precision,
             },
             precision_pred={
                 "perceived_consonance": cons_pi_pred,
                 "tempo_state": tempo_pi_pred,
+                "familiarity_state": fam_pi_pred,
                 "reward_valence": reward_pi_pred,
             },
             reward=reward_posterior,

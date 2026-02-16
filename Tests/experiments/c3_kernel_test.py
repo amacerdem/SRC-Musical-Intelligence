@@ -103,9 +103,11 @@ def main() -> None:
     traces = {
         "perceived_consonance": [],
         "tempo_state": [],
+        "familiarity_state": [],
         "reward_valence": [],
         "pe_consonance": [],
         "pe_tempo": [],
+        "pe_familiarity": [],
     }
 
     # Run frame-by-frame
@@ -126,6 +128,9 @@ def main() -> None:
         traces["tempo_state"].append(
             out.beliefs["tempo_state"].mean().item()
         )
+        traces["familiarity_state"].append(
+            out.beliefs["familiarity_state"].mean().item()
+        )
         traces["reward_valence"].append(
             out.beliefs["reward_valence"].mean().item()
         )
@@ -134,6 +139,9 @@ def main() -> None:
         )
         traces["pe_tempo"].append(
             out.pe["tempo_state"].mean().item()
+        )
+        traces["pe_familiarity"].append(
+            out.pe["familiarity_state"].mean().item()
         )
 
     elapsed = time.time() - t3
@@ -156,8 +164,8 @@ def main() -> None:
     n_windows = T // window_frames
 
     print(f"\n{'Window':>8s} | {'Consonance':>11s} | {'Tempo':>7s} | "
-          f"{'Reward':>8s} | {'PE_cons':>8s} | {'PE_tempo':>8s}")
-    print("-" * 70)
+          f"{'Familiar':>8s} | {'Reward':>8s} | {'PE_cons':>8s} | {'PE_tempo':>8s}")
+    print("-" * 80)
 
     for w in range(n_windows):
         s = w * window_frames
@@ -167,28 +175,33 @@ def main() -> None:
 
         cons_mean = traces["perceived_consonance"][s:e].mean()
         tempo_mean = traces["tempo_state"][s:e].mean()
+        fam_mean = traces["familiarity_state"][s:e].mean()
         reward_mean = traces["reward_valence"][s:e].mean()
         pe_c_std = traces["pe_consonance"][s:e].std()
         pe_t_std = traces["pe_tempo"][s:e].std()
 
         print(f"  {t_start:4.0f}-{t_end:2.0f}s | "
               f"  {cons_mean:9.4f} | {tempo_mean:7.4f} | "
-              f"{reward_mean:8.4f} | {pe_c_std:8.4f} | {pe_t_std:8.4f}")
+              f"{fam_mean:8.4f} | {reward_mean:8.4f} | "
+              f"{pe_c_std:8.4f} | {pe_t_std:8.4f}")
 
     # Global stats
     print(f"\n{'Global':>8s} | "
           f"  {traces['perceived_consonance'].mean():9.4f} | "
           f"{traces['tempo_state'].mean():7.4f} | "
+          f"{traces['familiarity_state'].mean():8.4f} | "
           f"{traces['reward_valence'].mean():8.4f} | "
           f"{traces['pe_consonance'].std():8.4f} | "
           f"{traces['pe_tempo'].std():8.4f}")
 
     # Dynamic range
-    print(f"\n  Consonance range: [{traces['perceived_consonance'].min():.3f}, "
+    print(f"\n  Consonance range:  [{traces['perceived_consonance'].min():.3f}, "
           f"{traces['perceived_consonance'].max():.3f}]")
-    print(f"  Tempo range:      [{traces['tempo_state'].min():.3f}, "
+    print(f"  Tempo range:       [{traces['tempo_state'].min():.3f}, "
           f"{traces['tempo_state'].max():.3f}]")
-    print(f"  Reward range:     [{traces['reward_valence'].min():.3f}, "
+    print(f"  Familiarity range: [{traces['familiarity_state'].min():.3f}, "
+          f"{traces['familiarity_state'].max():.3f}]")
+    print(f"  Reward range:      [{traces['reward_valence'].min():.3f}, "
           f"{traces['reward_valence'].max():.3f}]")
 
     # Total pipeline timing
