@@ -84,16 +84,10 @@ def main() -> None:
     print("\n[3/5] H³ extraction...")
     t2 = time.time()
 
-    # Build H³ demand set from kernel beliefs
+    # Build H³ demand set from kernel (beliefs + BCH L0 demands, deduped)
     kernel_tmp = C3Kernel(feature_map)
-    demand = set()
-    for belief in kernel_tmp._predictive:
-        for feat_name, h, m, law in belief.h3_predict_demands:
-            r3_idx = feature_map.resolve(feat_name)
-            demand.add((r3_idx, h, m, law))
-            # Also demand M2 (std) used in observe() precision
-            demand.add((r3_idx, h, 2, law))
-    print(f"  Demand: {len(demand)} tuples")
+    demand = kernel_tmp.h3_demands()
+    print(f"  Demand: {len(demand)} tuples (incl. BCH L0)")
 
     h3_ext = H3Extractor()
     h3_out = h3_ext.extract(r3_tensor, demand)

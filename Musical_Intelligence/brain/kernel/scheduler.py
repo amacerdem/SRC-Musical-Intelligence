@@ -1,7 +1,7 @@
 """C3Kernel — single-pass phase scheduler for C³ v1.0.
 
 Executes the belief cycle per frame:
-  Phase 0:  observe + update sensory beliefs (consonance, tempo)
+  Phase 0:  BCH relay → observe + update sensory beliefs (consonance, tempo)
   Phase 1:  observe + update salience (default 1.0 if not active)
   Phase 2a: predict all beliefs + observe familiarity (default 0.5)
   Phase 2b: compute PE + precision for predictive beliefs
@@ -13,7 +13,7 @@ Single pass.  No iteration.  No convergence loop.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Set, Tuple
 
 import torch
 from torch import Tensor
@@ -21,6 +21,7 @@ from torch import Tensor
 from .belief import Belief, BeliefState, Likelihood
 from .precision import PrecisionEngine
 from .reward import RewardAggregator, RewardConfig
+from .relays.bch_wrapper import BCHKernelWrapper
 from .beliefs.consonance import PerceivedConsonance
 from .beliefs.tempo import TempoState
 from .beliefs.reward import RewardValence
@@ -48,12 +49,14 @@ class KernelOutput:
 class C3Kernel:
     """Minimal C³ belief-cycle kernel.
 
-    v1.0 supports 3 active beliefs + 2 defaults:
+    v1.0 supports 3 active beliefs + 2 defaults + BCH relay:
+      Relay:   BCH (causal L0-only, 3 approved outputs)
       Active:  perceived_consonance, tempo_state, reward_valence
       Default: salience_state=1.0, familiarity_state=0.5
 
     Usage:
         kernel = C3Kernel(feature_map)
+        demands = kernel.h3_demands()  # collect for H³ extraction
         for t in range(T):
             output = kernel.tick(r3[:, t:t+1, :], h3_at_t)
     """
@@ -66,6 +69,9 @@ class C3Kernel:
         default_familiarity: float = 0.5,
     ) -> None:
         self._fm = feature_map
+
+        # Relay wrapper — BCH in causal (L0-only) mode
+        self._bch_wrapper = BCHKernelWrapper()
 
         # Instantiate beliefs
         self._consonance = PerceivedConsonance(feature_map)
@@ -97,6 +103,27 @@ class C3Kernel:
         self._beliefs_prev: Dict[str, Tensor] = {}
         self._frame_count: int = 0
 
+    def h3_demands(self) -> Set[Tuple[int, int, int, int]]:
+        """Collect all H³ demands from beliefs and relays.
+
+        Returns the union of:
+          - Belief predict demands (with M2 std variants)
+          - BCH L0 demands (deduped)
+        """
+        demands: Set[Tuple[int, int, int, int]] = set()
+
+        # Belief predict demands + M2 std variants
+        for belief in self._predictive:
+            for feat_name, h, m, law in belief.h3_predict_demands:
+                r3_idx = self._fm.resolve(feat_name)
+                demands.add((r3_idx, h, m, law))
+                demands.add((r3_idx, h, 2, law))  # M2=std for precision
+
+        # BCH L0 demands (Rule 2: deduplication)
+        demands |= self._bch_wrapper.h3_demands
+
+        return demands
+
     def reset(self) -> None:
         """Reset all state for a new piece/session."""
         self._beliefs_prev.clear()
@@ -125,9 +152,9 @@ class C3Kernel:
         salience = torch.full((B, T), self._default_salience, device=device)
         familiarity = torch.full((B, T), self._default_familiarity, device=device)
 
-        # ── Phase 0: Sensory grounding ──────────────────────────────
-        # observe() for consonance and tempo
-        cons_likelihood = self._consonance.observe(r3, h3)
+        # ── Phase 0: BCH relay + Sensory grounding ────────────────
+        bch_out = self._bch_wrapper.compute(r3, h3)
+        cons_likelihood = self._consonance.observe(r3, h3, bch_out=bch_out)
         tempo_likelihood = self._tempo.observe(r3, h3)
 
         # ── Phase 2a: Predict all beliefs (reads beliefs_{t-1}) ─────

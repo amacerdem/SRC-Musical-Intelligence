@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""C³ Kernel Stress Test — Swan Lake vs Duel of the Fates.
+"""C³ Kernel Stress Test — 3-Piece Comparative.
 
-Compares C³ Kernel belief dynamics on two maximally contrasting pieces:
-  - Swan Lake:       tonal, stable waltz, predictable → monotony-dominant
-  - Duel of Fates:   dramatic, aggressive, dynamic → surprise-dominant
+Compares C³ Kernel belief dynamics on three contrasting pieces:
+  - Swan Lake:            orchestral, tonal waltz, predictable
+  - Bach Cello Suite:     solo cello, monophonic, contrapuntal clarity
+  - Beethoven Pathétique: solo piano, dramatic Grave→Allegro, harmonic tension
 
 Tests whether the architecture produces meaningfully different dynamics:
   - PE magnitude and variance
@@ -47,9 +48,13 @@ PIECES = {
         "Swan Lake Suite, Op. 20a_ I. Scene _Swan Theme_. Moderato"
         " - Pyotr Ilyich Tchaikovsky.wav",
     ),
-    "Duel of Fates": os.path.join(
+    "Bach Cello": os.path.join(
         _PROJECT_ROOT, "Test-Audio",
-        "Duel of the Fates - Epic Version.wav",
+        "Cello Suite No. 1 in G Major, BWV 1007 I. Prélude.wav",
+    ),
+    "Beethoven Pathétique": os.path.join(
+        _PROJECT_ROOT, "Test-Audio",
+        "Beethoven - Pathetique Sonata Op13 I. Grave - Allegro.wav",
     ),
 }
 
@@ -89,13 +94,9 @@ def run_pipeline(name: str, path: str) -> dict:
     # ── 3. H³ ─────────────────────────────────────────────────────
     print(f"  [3/4] H³ extraction...")
     t2 = time.time()
+    # Build H³ demand set from kernel (beliefs + BCH L0 demands, deduped)
     kernel_tmp = C3Kernel(feature_map)
-    demand = set()
-    for belief in kernel_tmp._predictive:
-        for feat_name, h, m, law in belief.h3_predict_demands:
-            r3_idx = feature_map.resolve(feat_name)
-            demand.add((r3_idx, h, m, law))
-            demand.add((r3_idx, h, 2, law))  # M2 std for precision
+    demand = kernel_tmp.h3_demands()
 
     h3_ext = H3Extractor()
     h3_out = h3_ext.extract(r3_tensor, demand)
