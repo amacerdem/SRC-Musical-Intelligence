@@ -27,7 +27,7 @@ from Musical_Intelligence.ear.h3.constants.laws import (
 # Fixtures
 # ---------------------------------------------------------------------------
 
-B, T, D = 2, 60, 128  # batch, time steps, R3 feature dim
+B, T, D = 2, 60, 97  # batch, time steps, R3 feature dim
 
 
 @pytest.fixture(scope="module")

@@ -182,7 +182,7 @@ class BCH(Relay):
     )
 
     # ------------------------------------------------------------------
-    # R³ feature indices consumed (16 scalar + 1 via H³ = 17 unique)
+    # R³ feature indices consumed (14 scalar, Groups E/I dissolved)
     # ------------------------------------------------------------------
 
     # Consonance group A [0:7]
@@ -203,29 +203,27 @@ class BCH(Relay):
     _R3_TRIST2 = 19  # 2nd-4th harmonic energy
     _R3_TRIST3 = 20  # 5th+ harmonic energy
 
-    # Interaction features E [25:49]
-    _R3_X_L5L7_START = 41  # Consonance × Timbre coupling (8D: [41:49])
-    _R3_X_L5L7_END = 49
+    # Group E (Interactions) DISSOLVED — _R3_X_L5L7_START/END removed
 
-    # Pitch & Chroma group F [49:65]
-    _R3_PITCH_CLASS_ENTROPY = 62  # Chroma distribution entropy (low = tonal clarity)
-    _R3_PITCH_SALIENCE = 63       # Harmonic peak prominence (direct NPS measure)
+    # Pitch & Chroma group F [25:41]
+    _R3_PITCH_CLASS_ENTROPY = 38  # Chroma distribution entropy (low = tonal clarity)
+    _R3_PITCH_SALIENCE = 39       # Harmonic peak prominence (direct NPS measure)
 
-    # Harmony group H [75:87]
-    _R3_KEY_CLARITY = 75          # Krumhansl-Kessler tonal center strength
-    _R3_TONAL_STABILITY = 84      # Stability of tonal center over time
+    # Harmony group H [51:63]
+    _R3_KEY_CLARITY = 51          # Krumhansl-Kessler tonal center strength
+    _R3_TONAL_STABILITY = 60      # Stability of tonal center over time
 
     # ------------------------------------------------------------------
-    # H³ temporal demands — 50 tuples organized by temporal law
+    # H³ temporal demands — 48 tuples organized by temporal law
     #
-    # L2 (Integration) = Present: 21 demands at H0/H3/H6
+    # L2 (Integration) = Present: 19 demands at H0/H3/H6
     # L0 (Memory)      = Past:    17 demands at H3/H6/H12/H16/H18
     # L1 (Prediction)  = Future:  12 demands at H6/H12/H16
     # ------------------------------------------------------------------
 
     @property
     def h3_demand(self) -> Tuple[H3DemandSpec, ...]:
-        """50 temporal demands across three laws and six horizon scales.
+        """48 temporal demands across three laws and six horizon scales.
 
         Present (L2): H0 (5.8ms), H3 (23ms), H6 (200ms) — bidirectional
         Past    (L0): H3 (23ms), H6 (200ms), H12 (525ms), H16 (1s), H18 (2s)
@@ -233,7 +231,7 @@ class BCH(Relay):
         """
         return (
             # ═══════════════════════════════════════════════════════════
-            # PRESENT demands (L2 = Integration) — 21 tuples
+            # PRESENT demands (L2 = Integration) — 19 tuples
             # Bidirectional context around current frame
             # ═══════════════════════════════════════════════════════════
 
@@ -329,27 +327,11 @@ class BCH(Relay):
                 citation="Pollack 1952",
             ),
 
-            # --- Coupling (R³[41]) — 2 present scales ---
-            H3DemandSpec(
-                r3_idx=41, r3_name="x_l5l7_0",
-                horizon=3, horizon_label="23ms note",
-                morph=0, morph_name="value",
-                law=2, law_name="integration",
-                purpose="Consonance-timbre coupling strength",
-                citation="Cousineau et al. 2015",
-            ),
-            H3DemandSpec(
-                r3_idx=41, r3_name="x_l5l7_0",
-                horizon=6, horizon_label="200ms phrase",
-                morph=14, morph_name="periodicity",
-                law=2, law_name="integration",
-                purpose="Harmonic periodicity in coupling signal",
-                citation="Trulla et al. 2018",
-            ),
+            # Group E (Interactions) dissolved — coupling demands removed
 
-            # --- Pitch class entropy (R³[62]) — 2 present scales ---
+            # --- Pitch class entropy (R³[38]) — 2 present scales ---
             H3DemandSpec(
-                r3_idx=62, r3_name="pitch_class_entropy",
+                r3_idx=38, r3_name="pitch_class_entropy",
                 horizon=0, horizon_label="5.8ms frame",
                 morph=0, morph_name="value",
                 law=2, law_name="integration",
@@ -357,7 +339,7 @@ class BCH(Relay):
                 citation="Krumhansl 1990",
             ),
             H3DemandSpec(
-                r3_idx=62, r3_name="pitch_class_entropy",
+                r3_idx=38, r3_name="pitch_class_entropy",
                 horizon=3, horizon_label="23ms note",
                 morph=1, morph_name="mean",
                 law=2, law_name="integration",
@@ -365,9 +347,9 @@ class BCH(Relay):
                 citation="Krumhansl 1990",
             ),
 
-            # --- Pitch salience (R³[63]) — 3 present scales ---
+            # --- Pitch salience (R³[39]) — 3 present scales ---
             H3DemandSpec(
-                r3_idx=63, r3_name="pitch_salience",
+                r3_idx=39, r3_name="pitch_salience",
                 horizon=0, horizon_label="5.8ms frame",
                 morph=0, morph_name="value",
                 law=2, law_name="integration",
@@ -375,7 +357,7 @@ class BCH(Relay):
                 citation="Parncutt 1989",
             ),
             H3DemandSpec(
-                r3_idx=63, r3_name="pitch_salience",
+                r3_idx=39, r3_name="pitch_salience",
                 horizon=3, horizon_label="23ms note",
                 morph=0, morph_name="value",
                 law=2, law_name="integration",
@@ -383,7 +365,7 @@ class BCH(Relay):
                 citation="Bidelman & Krishnan 2009",
             ),
             H3DemandSpec(
-                r3_idx=63, r3_name="pitch_salience",
+                r3_idx=39, r3_name="pitch_salience",
                 horizon=6, horizon_label="200ms phrase",
                 morph=0, morph_name="value",
                 law=2, law_name="integration",
@@ -391,9 +373,9 @@ class BCH(Relay):
                 citation="Bidelman 2013",
             ),
 
-            # --- Key clarity (R³[75]) — 3 present scales ---
+            # --- Key clarity (R³[51]) — 3 present scales ---
             H3DemandSpec(
-                r3_idx=75, r3_name="key_clarity",
+                r3_idx=51, r3_name="key_clarity",
                 horizon=3, horizon_label="23ms note",
                 morph=0, morph_name="value",
                 law=2, law_name="integration",
@@ -401,7 +383,7 @@ class BCH(Relay):
                 citation="Krumhansl & Kessler 1982",
             ),
             H3DemandSpec(
-                r3_idx=75, r3_name="key_clarity",
+                r3_idx=51, r3_name="key_clarity",
                 horizon=3, horizon_label="23ms note",
                 morph=1, morph_name="mean",
                 law=2, law_name="integration",
@@ -409,7 +391,7 @@ class BCH(Relay):
                 citation="Krumhansl & Kessler 1982",
             ),
             H3DemandSpec(
-                r3_idx=75, r3_name="key_clarity",
+                r3_idx=51, r3_name="key_clarity",
                 horizon=6, horizon_label="200ms phrase",
                 morph=0, morph_name="value",
                 law=2, law_name="integration",
@@ -417,9 +399,9 @@ class BCH(Relay):
                 citation="Krumhansl 1990",
             ),
 
-            # --- Tonal stability (R³[84]) — 1 present scale ---
+            # --- Tonal stability (R³[60]) — 1 present scale ---
             H3DemandSpec(
-                r3_idx=84, r3_name="tonal_stability",
+                r3_idx=60, r3_name="tonal_stability",
                 horizon=3, horizon_label="23ms note",
                 morph=0, morph_name="value",
                 law=2, law_name="integration",
@@ -530,9 +512,9 @@ class BCH(Relay):
                 citation="Bidelman & Heinz 2011",
             ),
 
-            # --- Pitch salience memory (R³[63]) — 2 past scales ---
+            # --- Pitch salience memory (R³[39]) — 2 past scales ---
             H3DemandSpec(
-                r3_idx=63, r3_name="pitch_salience",
+                r3_idx=39, r3_name="pitch_salience",
                 horizon=12, horizon_label="525ms beat",
                 morph=1, morph_name="mean",
                 law=0, law_name="memory",
@@ -540,7 +522,7 @@ class BCH(Relay):
                 citation="Parncutt 1989",
             ),
             H3DemandSpec(
-                r3_idx=63, r3_name="pitch_salience",
+                r3_idx=39, r3_name="pitch_salience",
                 horizon=18, horizon_label="2s phrase",
                 morph=1, morph_name="mean",
                 law=0, law_name="memory",
@@ -548,9 +530,9 @@ class BCH(Relay):
                 citation="Bidelman & Krishnan 2009",
             ),
 
-            # --- Key clarity memory (R³[75]) — 2 past scales ---
+            # --- Key clarity memory (R³[51]) — 2 past scales ---
             H3DemandSpec(
-                r3_idx=75, r3_name="key_clarity",
+                r3_idx=51, r3_name="key_clarity",
                 horizon=12, horizon_label="525ms beat",
                 morph=1, morph_name="mean",
                 law=0, law_name="memory",
@@ -558,7 +540,7 @@ class BCH(Relay):
                 citation="Krumhansl & Kessler 1982",
             ),
             H3DemandSpec(
-                r3_idx=75, r3_name="key_clarity",
+                r3_idx=51, r3_name="key_clarity",
                 horizon=18, horizon_label="2s phrase",
                 morph=1, morph_name="mean",
                 law=0, law_name="memory",
@@ -566,9 +548,9 @@ class BCH(Relay):
                 citation="Krumhansl 1990",
             ),
 
-            # --- Tonal stability memory (R³[84]) — 1 past scale ---
+            # --- Tonal stability memory (R³[60]) — 1 past scale ---
             H3DemandSpec(
-                r3_idx=84, r3_name="tonal_stability",
+                r3_idx=60, r3_name="tonal_stability",
                 horizon=6, horizon_label="200ms phrase",
                 morph=1, morph_name="mean",
                 law=0, law_name="memory",
@@ -576,7 +558,7 @@ class BCH(Relay):
                 citation="Krumhansl & Kessler 1982",
             ),
             H3DemandSpec(
-                r3_idx=84, r3_name="tonal_stability",
+                r3_idx=60, r3_name="tonal_stability",
                 horizon=18, horizon_label="2s phrase",
                 morph=1, morph_name="mean",
                 law=0, law_name="memory",
@@ -645,9 +627,9 @@ class BCH(Relay):
                 citation="Bidelman 2013",
             ),
 
-            # --- Pitch salience prediction (R³[63]) — 2 future scales ---
+            # --- Pitch salience prediction (R³[39]) — 2 future scales ---
             H3DemandSpec(
-                r3_idx=63, r3_name="pitch_salience",
+                r3_idx=39, r3_name="pitch_salience",
                 horizon=6, horizon_label="200ms phrase",
                 morph=1, morph_name="mean",
                 law=1, law_name="prediction",
@@ -655,7 +637,7 @@ class BCH(Relay):
                 citation="Parncutt 1989",
             ),
             H3DemandSpec(
-                r3_idx=63, r3_name="pitch_salience",
+                r3_idx=39, r3_name="pitch_salience",
                 horizon=12, horizon_label="525ms beat",
                 morph=1, morph_name="mean",
                 law=1, law_name="prediction",
@@ -663,9 +645,9 @@ class BCH(Relay):
                 citation="Bidelman & Krishnan 2009",
             ),
 
-            # --- Key clarity prediction (R³[75]) — 2 future scales ---
+            # --- Key clarity prediction (R³[51]) — 2 future scales ---
             H3DemandSpec(
-                r3_idx=75, r3_name="key_clarity",
+                r3_idx=51, r3_name="key_clarity",
                 horizon=6, horizon_label="200ms phrase",
                 morph=1, morph_name="mean",
                 law=1, law_name="prediction",
@@ -673,7 +655,7 @@ class BCH(Relay):
                 citation="Krumhansl & Kessler 1982",
             ),
             H3DemandSpec(
-                r3_idx=75, r3_name="key_clarity",
+                r3_idx=51, r3_name="key_clarity",
                 horizon=16, horizon_label="1s measure",
                 morph=1, morph_name="mean",
                 law=1, law_name="prediction",
@@ -681,9 +663,9 @@ class BCH(Relay):
                 citation="Krumhansl 1990",
             ),
 
-            # --- Tonal stability prediction (R³[84]) — 2 future scales ---
+            # --- Tonal stability prediction (R³[60]) — 2 future scales ---
             H3DemandSpec(
-                r3_idx=84, r3_name="tonal_stability",
+                r3_idx=60, r3_name="tonal_stability",
                 horizon=6, horizon_label="200ms phrase",
                 morph=1, morph_name="mean",
                 law=1, law_name="prediction",
@@ -691,7 +673,7 @@ class BCH(Relay):
                 citation="Krumhansl 1990",
             ),
             H3DemandSpec(
-                r3_idx=84, r3_name="tonal_stability",
+                r3_idx=60, r3_name="tonal_stability",
                 horizon=12, horizon_label="525ms beat",
                 morph=1, morph_name="mean",
                 law=1, law_name="prediction",
@@ -928,7 +910,7 @@ class BCH(Relay):
         Models the ascending auditory pathway with temporally separated
         layers: Memory (past, L0), Present (now, L2), Future (ahead, L1).
 
-        All 16 R³ features and 50 H³ demands are consumed — no dead
+        All 14 R³ features and 48 H³ demands are consumed — no dead
         variables.  Each temporal layer uses a specific H³ law:
         - Memory  (Past):    L0 demands at H3–H18 (23ms–2s lookback)
         - Present (Now):     L2 demands at H0–H6 (5.8ms–200ms context)
@@ -937,7 +919,7 @@ class BCH(Relay):
         Args:
             h3_features: Dict mapping (r3_idx, horizon, morph, law) 4-tuples
                          to (B, T) temporal feature scalars.
-            r3_features: (B, T, 128) R³ spectral feature tensor.
+            r3_features: (B, T, 97) R³ spectral feature tensor.
 
         Returns:
             (B, T, 16) output: E(4) + Memory(4) + Present(4) + Future(4).
@@ -945,7 +927,7 @@ class BCH(Relay):
         B, T = r3_features.shape[:2]
         device = r3_features.device
 
-        # === Stage 1: Extract R³ features (16 scalar indices) ===
+        # === Stage 1: Extract R³ features (14 scalar indices) ===
 
         # Consonance group A [0:7] — all 7 used
         roughness     = r3_features[:, :, self._R3_ROUGHNESS]          # (B, T)
@@ -965,15 +947,15 @@ class BCH(Relay):
         trist2 = r3_features[:, :, self._R3_TRIST2]                    # (B, T)
         trist3 = r3_features[:, :, self._R3_TRIST3]                    # (B, T)
 
-        # Pitch & Chroma group F [49:65] — direct pitch measures
+        # Pitch & Chroma group F [25:41] — direct pitch measures
         pitch_class_entropy = r3_features[:, :, self._R3_PITCH_CLASS_ENTROPY]
         pitch_salience      = r3_features[:, :, self._R3_PITCH_SALIENCE]
 
-        # Harmony group H [75:87] — tonal context
+        # Harmony group H [51:63] — tonal context
         key_clarity     = r3_features[:, :, self._R3_KEY_CLARITY]
         tonal_stability = r3_features[:, :, self._R3_TONAL_STABILITY]
 
-        # === Stage 2: Extract H³ temporal features (50 demands) ===
+        # === Stage 2: Extract H³ temporal features (48 demands) ===
         #
         # Organized by law: L2 (Present), L0 (Past), L1 (Future).
         # Signed morphs (trend = M18) are centered at 0.5:
@@ -989,7 +971,7 @@ class BCH(Relay):
                 B, T, device=device,
             )
 
-        # ── PRESENT demands (L2 = Integration, 21 tuples) ──
+        # ── PRESENT demands (L2 = Integration, 19 tuples) ──
 
         # Roughness (R³[0])
         h3_rough_inst    = _h3((0, 0, 0, 2),  roughness)       # H0 present
@@ -1013,26 +995,24 @@ class BCH(Relay):
         h3_trist2        = _h3((19, 0, 0, 2), trist2)
         h3_trist3        = _h3((20, 0, 0, 2), trist3)
 
-        # Coupling (R³[41])
-        h3_coupling      = _h3((41, 3, 0, 2))                  # H3 present
-        h3_coupling_per  = _h3((41, 6, 14, 2))                 # H6 present
+        # Group E (Interactions) dissolved — coupling demands removed
 
-        # Pitch class entropy (R³[62])
-        h3_pce_inst      = _h3((62, 0, 0, 2), pitch_class_entropy)
-        h3_pce_mean      = _h3((62, 3, 1, 2), pitch_class_entropy)
+        # Pitch class entropy (R³[38])
+        h3_pce_inst      = _h3((38, 0, 0, 2), pitch_class_entropy)
+        h3_pce_mean      = _h3((38, 3, 1, 2), pitch_class_entropy)
 
-        # Pitch salience (R³[63])
-        h3_pitchsal_inst = _h3((63, 0, 0, 2), pitch_salience)  # H0 present
-        h3_pitchsal_h3   = _h3((63, 3, 0, 2), pitch_salience)  # H3 present
-        h3_pitchsal_h6   = _h3((63, 6, 0, 2), pitch_salience)  # H6 present
+        # Pitch salience (R³[39])
+        h3_pitchsal_inst = _h3((39, 0, 0, 2), pitch_salience)  # H0 present
+        h3_pitchsal_h3   = _h3((39, 3, 0, 2), pitch_salience)  # H3 present
+        h3_pitchsal_h6   = _h3((39, 6, 0, 2), pitch_salience)  # H6 present
 
-        # Key clarity (R³[75])
-        h3_keyclarity_h3   = _h3((75, 3, 0, 2), key_clarity)   # H3 present
-        h3_keyclarity_mean = _h3((75, 3, 1, 2), key_clarity)   # H3 present mean
-        h3_keyclarity_h6   = _h3((75, 6, 0, 2), key_clarity)   # H6 present
+        # Key clarity (R³[51])
+        h3_keyclarity_h3   = _h3((51, 3, 0, 2), key_clarity)   # H3 present
+        h3_keyclarity_mean = _h3((51, 3, 1, 2), key_clarity)   # H3 present mean
+        h3_keyclarity_h6   = _h3((51, 6, 0, 2), key_clarity)   # H6 present
 
-        # Tonal stability (R³[84])
-        h3_tonalstab_h3  = _h3((84, 3, 0, 2), tonal_stability) # H3 present
+        # Tonal stability (R³[60])
+        h3_tonalstab_h3  = _h3((60, 3, 0, 2), tonal_stability) # H3 present
 
         # ── PAST demands (L0 = Memory, 16 tuples) ──
 
@@ -1058,16 +1038,16 @@ class BCH(Relay):
         h3_hdev_H12_mem      = _h3((6, 12, 1, 0))              # H12 525ms mean
 
         # Pitch salience memory
-        h3_pitchsal_H12_mem  = _h3((63, 12, 1, 0))             # H12 525ms mean
-        h3_pitchsal_H18_mem  = _h3((63, 18, 1, 0))             # H18 2s mean
+        h3_pitchsal_H12_mem  = _h3((39, 12, 1, 0))             # H12 525ms mean
+        h3_pitchsal_H18_mem  = _h3((39, 18, 1, 0))             # H18 2s mean
 
         # Key clarity memory
-        h3_keyclarity_H12_mem = _h3((75, 12, 1, 0))            # H12 525ms mean
-        h3_keyclarity_H18_mem = _h3((75, 18, 1, 0))            # H18 2s mean
+        h3_keyclarity_H12_mem = _h3((51, 12, 1, 0))            # H12 525ms mean
+        h3_keyclarity_H18_mem = _h3((51, 18, 1, 0))            # H18 2s mean
 
         # Tonal stability memory
-        h3_tonalstab_H6_mem  = _h3((84, 6, 1, 0), tonal_stability)  # H6 200ms
-        h3_tonalstab_H18_mem = _h3((84, 18, 1, 0))             # H18 2s mean
+        h3_tonalstab_H6_mem  = _h3((60, 6, 1, 0), tonal_stability)  # H6 200ms
+        h3_tonalstab_H18_mem = _h3((60, 18, 1, 0))             # H18 2s mean
 
         # ── FUTURE demands (L1 = Prediction, 12 tuples) ──
 
@@ -1086,16 +1066,16 @@ class BCH(Relay):
         h3_inharm_H6_pred    = _h3((5, 6, 18, 1), _neutral)    # H6 200ms trend
 
         # Pitch salience prediction
-        h3_pitchsal_H6_pred  = _h3((63, 6, 1, 1))              # H6 200ms mean
-        h3_pitchsal_H12_pred = _h3((63, 12, 1, 1))             # H12 525ms mean
+        h3_pitchsal_H6_pred  = _h3((39, 6, 1, 1))              # H6 200ms mean
+        h3_pitchsal_H12_pred = _h3((39, 12, 1, 1))             # H12 525ms mean
 
         # Key clarity prediction
-        h3_keyclarity_H6_pred  = _h3((75, 6, 1, 1))            # H6 200ms mean
-        h3_keyclarity_H16_pred = _h3((75, 16, 1, 1))           # H16 1s mean
+        h3_keyclarity_H6_pred  = _h3((51, 6, 1, 1))            # H6 200ms mean
+        h3_keyclarity_H16_pred = _h3((51, 16, 1, 1))           # H16 1s mean
 
         # Tonal stability prediction
-        h3_tonalstab_H6_pred   = _h3((84, 6, 1, 1))            # H6 200ms mean
-        h3_tonalstab_H12_pred  = _h3((84, 12, 1, 1))           # H12 525ms mean
+        h3_tonalstab_H6_pred   = _h3((60, 6, 1, 1))            # H6 200ms mean
+        h3_tonalstab_H12_pred  = _h3((60, 12, 1, 1))           # H12 525ms mean
 
         # === Stage 3: Tristimulus balance (using present H³ values) ===
         trist_stack = torch.stack(
@@ -1112,7 +1092,7 @@ class BCH(Relay):
         # Blends proxy (tonalness × autocorr) with direct pitch_salience
         nps = ALPHA * (
             0.5 * tonalness * autocorr                         # proxy via C[14]×C[17]
-            + 0.5 * pitch_salience                             # direct via F[63]
+            + 0.5 * pitch_salience                             # direct via F[39]
         )                                                       # [0, 0.90]
 
         # harmonicity: Harmonicity Index — harmonic coincidence ratio
@@ -1181,16 +1161,15 @@ class BCH(Relay):
         # ═══════════════════════════════════════════════════════════════
 
         # consonance_signal: Current consonance in bidirectional context
+        # (Group E coupling terms removed — weights redistributed)
         consonance_signal = (
-            0.15 * (1.0 - h3_rough_inst)               # low roughness (H0)
-            + 0.15 * (1.0 - h3_rough_mean)             # sustained low roughness (H3)
+            0.20 * (1.0 - h3_rough_inst)               # low roughness (H0)
+            + 0.20 * (1.0 - h3_rough_mean)             # sustained low roughness (H3)
             + 0.10 * (1.0 - sethares)                  # low Sethares dissonance
             + 0.10 * sens_pleasant                      # sensory pleasantness
-            + 0.10 * (1.0 - harmonic_dev)              # harmonic regularity
+            + 0.15 * (1.0 - harmonic_dev)              # harmonic regularity
             + 0.10 * h3_keyclarity_h6                  # tonal context (H6)
-            + 0.10 * (1.0 - h3_pce_mean)               # tonal clarity (H3)
-            + 0.10 * h3_coupling                       # cons-timbre coupling (H3)
-            + 0.10 * h3_coupling_per                   # coupling periodicity (H6)
+            + 0.15 * (1.0 - h3_pce_mean)               # tonal clarity (H3)
         )                                               # [0, 1]
 
         # template_match: Harmonic template matching in context

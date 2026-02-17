@@ -76,7 +76,7 @@ class BCHKernelWrapper:
         """Run BCH and extract approved outputs.
 
         Args:
-            r3: (B, T, 128) R³ features.
+            r3: (B, T, 97) R³ features.
             h3: H³ morphology dict {(r3_idx, h, m, l): (B, T)}.
 
         Returns:

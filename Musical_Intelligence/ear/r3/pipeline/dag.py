@@ -1,20 +1,16 @@
-"""DependencyDAG -- 3-stage execution DAG for R3 spectral groups.
+"""DependencyDAG -- 2-stage execution DAG for R3 spectral groups.
 
-Hardcodes the dependency structure between the 11 R3 spectral groups (A-K).
-Groups are assigned to one of three stages based on their inter-group
-dependencies:
+Hardcodes the dependency structure between the 9 R3 spectral groups (A-K,
+excluding dissolved E and I).  Groups are assigned to one of two stages
+based on their inter-group dependencies:
 
     Stage 1 (7 groups, no deps):
         A(consonance), B(energy), C(timbre), D(change),
         F(pitch_chroma), J(timbre_extended), K(modulation)
 
-    Stage 2 (3 groups):
-        E(interactions)   <- {consonance, energy, timbre, change}
+    Stage 2 (2 groups):
         G(rhythm_groove)  <- {energy}
         H(harmony)        <- {pitch_chroma}
-
-    Stage 3 (1 group):
-        I(information)    <- {pitch_chroma, rhythm_groove, harmony}
 
 Groups within the same stage can theoretically execute in parallel (e.g., on
 separate CUDA streams). Synchronisation barriers are inserted between stages.
@@ -44,11 +40,9 @@ _GROUP_CANONICAL_NAMES: Tuple[str, ...] = (
     "energy",             # B
     "timbre",             # C
     "change",             # D
-    "interactions",       # E
     "pitch_chroma",       # F
     "rhythm_groove",      # G
     "harmony",            # H
-    "information",        # I
     "timbre_extended",    # J
     "modulation",         # K
 )
@@ -64,14 +58,14 @@ _NAME_TO_LETTER: Dict[str, str] = {v: k for k, v in _LETTER_TO_NAME.items()}
 
 
 class DependencyDAG:
-    """Immutable 3-stage dependency DAG for R3 spectral feature groups.
+    """Immutable 2-stage dependency DAG for R3 spectral feature groups.
 
     The DAG encodes which groups depend on which other groups' outputs.
-    Stage 1 groups depend only on the mel spectrogram.  Stage 2 and 3 groups
-    depend on outputs from earlier-stage groups.
+    Stage 1 groups depend only on the mel spectrogram.  Stage 2 groups
+    depend on outputs from Stage 1 groups.
 
     Attributes:
-        STAGE_GROUPS: Mapping from stage number (1, 2, 3) to a tuple of
+        STAGE_GROUPS: Mapping from stage number (1, 2) to a tuple of
             canonical group names computed in that stage.
         DEPENDENCIES: Mapping from canonical group name to a frozenset of
             canonical names of groups it depends on.  Stage 1 groups map to
@@ -92,12 +86,8 @@ class DependencyDAG:
             "modulation",
         ),
         2: (
-            "interactions",
             "rhythm_groove",
             "harmony",
-        ),
-        3: (
-            "information",
         ),
     }
 
@@ -114,11 +104,8 @@ class DependencyDAG:
         "timbre_extended": frozenset(),
         "modulation":      frozenset(),
         # Stage 2
-        "interactions":    frozenset({"consonance", "energy", "timbre", "change"}),
         "rhythm_groove":   frozenset({"energy"}),
         "harmony":         frozenset({"pitch_chroma"}),
-        # Stage 3
-        "information":     frozenset({"pitch_chroma", "rhythm_groove", "harmony"}),
     }
 
     # ------------------------------------------------------------------
@@ -127,14 +114,14 @@ class DependencyDAG:
 
     @property
     def stages(self) -> Tuple[int, ...]:
-        """Return the ordered stage numbers ``(1, 2, 3)``."""
-        return (1, 2, 3)
+        """Return the ordered stage numbers ``(1, 2)``."""
+        return (1, 2)
 
     def get_stage(self, n: int) -> Tuple[str, ...]:
         """Return the canonical group names assigned to stage *n*.
 
         Args:
-            n: Stage number (1, 2, or 3).
+            n: Stage number (1 or 2).
 
         Returns:
             Tuple of canonical group names for that stage.
@@ -152,7 +139,7 @@ class DependencyDAG:
         """Return the dependency group names for *group_name*.
 
         Args:
-            group_name: Canonical group name (e.g. ``"interactions"``).
+            group_name: Canonical group name (e.g. ``"rhythm_groove"``).
 
         Returns:
             Tuple of canonical group names that *group_name* depends on.
@@ -175,7 +162,7 @@ class DependencyDAG:
             group_name: Canonical group name.
 
         Returns:
-            Stage number (1, 2, or 3).
+            Stage number (1 or 2).
 
         Raises:
             KeyError: If *group_name* is not in any stage.
@@ -192,7 +179,7 @@ class DependencyDAG:
         """Validate the DAG for consistency.
 
         Checks:
-            1. All 11 groups are covered across the three stages.
+            1. All 9 groups are covered across the two stages.
             2. All dependency targets exist as known groups.
             3. No group depends on a group in the same or later stage
                (acyclicity by construction).
@@ -202,7 +189,7 @@ class DependencyDAG:
         """
         errors: list[str] = []
 
-        # 1. All 11 groups covered
+        # 1. All 9 groups covered
         all_groups_in_stages: set[str] = set()
         for groups in self.STAGE_GROUPS.values():
             all_groups_in_stages.update(groups)
@@ -268,4 +255,4 @@ class DependencyDAG:
         stage_summary = ", ".join(
             f"S{s}={len(g)}" for s, g in sorted(self.STAGE_GROUPS.items())
         )
-        return f"DependencyDAG({stage_summary}, groups=11)"
+        return f"DependencyDAG({stage_summary}, groups=9)"

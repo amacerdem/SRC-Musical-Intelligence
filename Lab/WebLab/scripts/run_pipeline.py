@@ -89,7 +89,7 @@ def run_pipeline(audio_path: str, slug: str, output_dir: Path, *, duration_limit
     from Musical_Intelligence.ear.r3 import R3Extractor
     r3_ext = R3Extractor()
     r3_out = r3_ext.extract(mel, audio=waveform, sr=sr)
-    r3_tensor = r3_out.features  # (1, T, 128)
+    r3_tensor = r3_out.features  # (1, T, 97)
     print(f"  R³ extracted: {r3_tensor.shape} ({time.time()-t0:.1f}s)")
 
     # ── 4. Nuclei setup ───────────────────────────────────────
@@ -130,7 +130,7 @@ def run_pipeline(audio_path: str, slug: str, output_dir: Path, *, duration_limit
 
     print(f"  Downsampling: stride={stride}, lod_frames={lod_frames}")
 
-    # R³ (T_lod, 128)
+    # R³ (T_lod, 97)
     r3_lod = r3_tensor[0, ::stride, :].detach()
     _write_json(exp_dir / "r3.json", _to_list(r3_lod))
 
@@ -258,7 +258,7 @@ def run_pipeline(audio_path: str, slug: str, output_dir: Path, *, duration_limit
         "lod_stride": stride,
         "frame_rate": round(FRAME_RATE, 6),
         "nuclei": [n.NAME for n in nuclei],
-        "r3_dim": 128,
+        "r3_dim": 97,
         "created_at": datetime.now().isoformat(),
     }
     _write_json(exp_dir / "meta.json", meta)

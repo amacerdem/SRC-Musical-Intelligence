@@ -6,7 +6,7 @@ satisfy the contracts defined in Musical_Intelligence.contracts.
 
 Generator summary:
     generate_mel            -> (B, n_mels, T)   mel spectrogram
-    generate_r3             -> (B, T, D)         R3 spectral features (128D)
+    generate_r3             -> (B, T, D)         R3 spectral features (97D)
     generate_r3_v1          -> (B, T, 49)        R3 v1 spectral features (49D)
     generate_h3_features    -> Dict[4-tuple, (B, T)]  sparse H3 features
     generate_minimal_demand -> Set[4-tuple]      random demand set
@@ -40,7 +40,7 @@ SWAN_LAKE_PATH: Path = (
 
 # H3 dimension constants (from Musical_Intelligence.ear.h3.constants)
 _N_R3_V1 = 49       # R3 v1 feature count
-_N_R3_V2 = 128      # R3 v2 feature count
+_N_R3_V2 = 97       # R3 v2 feature count (post-dissolution)
 _N_HORIZONS = 32    # H3 horizon count (H0-H31)
 _N_MORPHS = 24      # H3 morph count (M0-M23)
 _N_LAWS = 3         # H3 law count (L0-L2)
@@ -94,10 +94,10 @@ def generate_mel(
 def generate_r3(
     B: int,
     T: int,
-    D: int = 128,
+    D: int = 97,
     seed: int = _DEFAULT_SEED,
 ) -> Tensor:
-    """Generate a synthetic R3 spectral feature tensor (v2, 128D).
+    """Generate a synthetic R3 spectral feature tensor (v2, 97D).
 
     Produces a random tensor mimicking normalised R3 output from the
     11-group spectral extraction pipeline.
@@ -105,7 +105,7 @@ def generate_r3(
     Args:
         B:    Batch size.
         T:    Number of time frames.
-        D:    Feature dimensionality (default 128).
+        D:    Feature dimensionality (default 97).
         seed: Random seed for reproducibility.
 
     Returns:

@@ -30,17 +30,16 @@ from ....contracts.bases.base_spectral_group import BaseSpectralGroup
 
 logger = logging.getLogger(__name__)
 
-# The 11 expected subdirectory names in alphabetical/index order.
+# The 9 active subdirectory names in alphabetical/index order.
+# Groups E (interactions) and I (information) dissolved per ontology v1.0.0.
 _GROUP_SUBDIRS = (
     "a_consonance",
     "b_energy",
     "c_timbre",
     "d_change",
-    "e_interactions",
     "f_pitch_chroma",
     "g_rhythm_groove",
     "h_harmony",
-    "i_information",
     "j_timbre_extended",
     "k_modulation",
 )

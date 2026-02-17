@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Tuple
 
-R3_DIM: int = 128
+R3_DIM: int = 97
 
 R3_FEATURE_NAMES: Tuple[str, ...] = (
     # Group A: Consonance [0:7] -- 7D
@@ -34,116 +34,83 @@ R3_FEATURE_NAMES: Tuple[str, ...] = (
     "distribution_entropy",          # 22
     "distribution_flatness",         # 23
     "distribution_concentration",    # 24
-    # Group E: Interactions [25:49] -- 24D
-    "x_l0l5_0",                      # 25
-    "x_l0l5_1",                      # 26
-    "x_l0l5_2",                      # 27
-    "x_l0l5_3",                      # 28
-    "x_l0l5_4",                      # 29
-    "x_l0l5_5",                      # 30
-    "x_l0l5_6",                      # 31
-    "x_l0l5_7",                      # 32
-    "x_l4l5_0",                      # 33
-    "x_l4l5_1",                      # 34
-    "x_l4l5_2",                      # 35
-    "x_l4l5_3",                      # 36
-    "x_l4l5_4",                      # 37
-    "x_l4l5_5",                      # 38
-    "x_l4l5_6",                      # 39
-    "x_l4l5_7",                      # 40
-    "x_l5l7_0",                      # 41
-    "x_l5l7_1",                      # 42
-    "x_l5l7_2",                      # 43
-    "x_l5l7_3",                      # 44
-    "x_l5l7_4",                      # 45
-    "x_l5l7_5",                      # 46
-    "x_l5l7_6",                      # 47
-    "x_l5l7_7",                      # 48
-    # Group F: Pitch & Chroma [49:65] -- 16D
-    "chroma_C",                      # 49
-    "chroma_Db",                     # 50
-    "chroma_D",                      # 51
-    "chroma_Eb",                     # 52
-    "chroma_E",                      # 53
-    "chroma_F",                      # 54
-    "chroma_Gb",                     # 55
-    "chroma_G",                      # 56
-    "chroma_Ab",                     # 57
-    "chroma_A",                      # 58
-    "chroma_Bb",                     # 59
-    "chroma_B",                      # 60
-    "pitch_height",                  # 61
-    "pitch_class_entropy",           # 62
-    "pitch_salience",                # 63
-    "inharmonicity_index",           # 64
-    # Group G: Rhythm & Groove [65:75] -- 10D
-    "tempo_estimate",                # 65
-    "beat_strength",                 # 66
-    "pulse_clarity",                 # 67
-    "syncopation_index",             # 68
-    "metricality_index",             # 69
-    "isochrony_nPVI",                # 70
-    "groove_index",                  # 71
-    "event_density",                 # 72
-    "tempo_stability",               # 73
-    "rhythmic_regularity",           # 74
-    # Group H: Harmony & Tonality [75:87] -- 12D
-    "key_clarity",                   # 75
-    "tonnetz_fifth_x",               # 76
-    "tonnetz_fifth_y",               # 77
-    "tonnetz_minor_x",               # 78
-    "tonnetz_minor_y",               # 79
-    "tonnetz_major_x",               # 80
-    "tonnetz_major_y",               # 81
-    "voice_leading_distance",        # 82
-    "harmonic_change",               # 83
-    "tonal_stability",               # 84
-    "diatonicity",                   # 85
-    "syntactic_irregularity",        # 86
-    # Group I: Information & Surprise [87:94] -- 7D
-    "melodic_entropy",               # 87
-    "harmonic_entropy",              # 88
-    "rhythmic_information_content",  # 89
-    "spectral_surprise",             # 90
-    "information_rate",              # 91
-    "predictive_entropy",            # 92
-    "tonal_ambiguity",               # 93
-    # Group J: Timbre Extended [94:114] -- 20D
-    "mfcc_1",                        # 94
-    "mfcc_2",                        # 95
-    "mfcc_3",                        # 96
-    "mfcc_4",                        # 97
-    "mfcc_5",                        # 98
-    "mfcc_6",                        # 99
-    "mfcc_7",                        # 100
-    "mfcc_8",                        # 101
-    "mfcc_9",                        # 102
-    "mfcc_10",                       # 103
-    "mfcc_11",                       # 104
-    "mfcc_12",                       # 105
-    "mfcc_13",                       # 106
-    "spectral_contrast_1",           # 107
-    "spectral_contrast_2",           # 108
-    "spectral_contrast_3",           # 109
-    "spectral_contrast_4",           # 110
-    "spectral_contrast_5",           # 111
-    "spectral_contrast_6",           # 112
-    "spectral_contrast_7",           # 113
-    # Group K: Modulation & Psychoacoustic [114:128] -- 14D
-    "modulation_0_5Hz",              # 114
-    "modulation_1Hz",                # 115
-    "modulation_2Hz",                # 116
-    "modulation_4Hz",                # 117
-    "modulation_8Hz",                # 118
-    "modulation_16Hz",               # 119
-    "modulation_centroid",           # 120
-    "modulation_bandwidth",          # 121
-    "sharpness_zwicker",             # 122
-    "fluctuation_strength",          # 123
-    "loudness_a_weighted",           # 124
-    "alpha_ratio",                   # 125
-    "hammarberg_index",              # 126
-    "spectral_slope_0_500",          # 127
+    # Group F: Pitch & Chroma [25:41] -- 16D
+    "chroma_C",                      # 25
+    "chroma_Db",                     # 26
+    "chroma_D",                      # 27
+    "chroma_Eb",                     # 28
+    "chroma_E",                      # 29
+    "chroma_F",                      # 30
+    "chroma_Gb",                     # 31
+    "chroma_G",                      # 32
+    "chroma_Ab",                     # 33
+    "chroma_A",                      # 34
+    "chroma_Bb",                     # 35
+    "chroma_B",                      # 36
+    "pitch_height",                  # 37
+    "pitch_class_entropy",           # 38
+    "pitch_salience",                # 39
+    "inharmonicity_index",           # 40
+    # Group G: Rhythm & Groove [41:51] -- 10D
+    "tempo_estimate",                # 41
+    "beat_strength",                 # 42
+    "pulse_clarity",                 # 43
+    "syncopation_index",             # 44
+    "metricality_index",             # 45
+    "isochrony_nPVI",                # 46
+    "groove_index",                  # 47
+    "event_density",                 # 48
+    "tempo_stability",               # 49
+    "rhythmic_regularity",           # 50
+    # Group H: Harmony & Tonality [51:63] -- 12D
+    "key_clarity",                   # 51
+    "tonnetz_fifth_x",               # 52
+    "tonnetz_fifth_y",               # 53
+    "tonnetz_minor_x",               # 54
+    "tonnetz_minor_y",               # 55
+    "tonnetz_major_x",               # 56
+    "tonnetz_major_y",               # 57
+    "voice_leading_distance",        # 58
+    "harmonic_change",               # 59
+    "tonal_stability",               # 60
+    "diatonicity",                   # 61
+    "syntactic_irregularity",        # 62
+    # Group J: Timbre Extended [63:83] -- 20D
+    "mfcc_1",                        # 63
+    "mfcc_2",                        # 64
+    "mfcc_3",                        # 65
+    "mfcc_4",                        # 66
+    "mfcc_5",                        # 67
+    "mfcc_6",                        # 68
+    "mfcc_7",                        # 69
+    "mfcc_8",                        # 70
+    "mfcc_9",                        # 71
+    "mfcc_10",                       # 72
+    "mfcc_11",                       # 73
+    "mfcc_12",                       # 74
+    "mfcc_13",                       # 75
+    "spectral_contrast_1",           # 76
+    "spectral_contrast_2",           # 77
+    "spectral_contrast_3",           # 78
+    "spectral_contrast_4",           # 79
+    "spectral_contrast_5",           # 80
+    "spectral_contrast_6",           # 81
+    "spectral_contrast_7",           # 82
+    # Group K: Modulation & Psychoacoustic [83:97] -- 14D
+    "modulation_0_5Hz",              # 83
+    "modulation_1Hz",                # 84
+    "modulation_2Hz",                # 85
+    "modulation_4Hz",                # 86
+    "modulation_8Hz",                # 87
+    "modulation_16Hz",               # 88
+    "modulation_centroid",           # 89
+    "modulation_bandwidth",          # 90
+    "sharpness_zwicker",             # 91
+    "fluctuation_strength",          # 92
+    "loudness_a_weighted",           # 93
+    "alpha_ratio",                   # 94
+    "hammarberg_index",              # 95
+    "spectral_slope_0_500",          # 96
 )
 
 assert len(R3_FEATURE_NAMES) == R3_DIM

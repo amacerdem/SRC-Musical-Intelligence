@@ -15,7 +15,7 @@ class RhythmGrooveGroup(BaseSpectralGroup):
     GROUP_NAME = "rhythm_groove"
     DOMAIN = "temporal"
     OUTPUT_DIM = 10
-    INDEX_RANGE = (65, 75)
+    INDEX_RANGE = (41, 51)
     STAGE = 2
     DEPENDENCIES = ("energy",)
 

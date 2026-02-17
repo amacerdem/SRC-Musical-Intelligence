@@ -147,7 +147,7 @@ class C3Kernel:
         """Execute one frame through the full belief cycle.
 
         Args:
-            r3: R³ features, shape (B, T, 128).
+            r3: R³ features, shape (B, T, 97).
             h3: H³ morphology dict, {(r3_idx, h, m, l): (B, T)}.
 
         Returns:

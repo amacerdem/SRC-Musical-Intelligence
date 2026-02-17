@@ -1,8 +1,9 @@
-"""R3 spectral feature extraction — 128-D dense spectral vector.
+"""R3 spectral feature extraction — 97-D dense spectral vector.
 
-Provides the R3Extractor which auto-discovers 11 spectral groups (A-K),
-executes them in a 3-stage DAG, normalizes outputs, and produces a dense
-(B, T, 128) feature tensor with all values in [0, 1].
+Provides the R3Extractor which auto-discovers 9 spectral groups (A-K,
+excluding dissolved E and I), executes them in a 2-stage DAG, normalizes
+outputs, and produces a dense (B, T, 97) feature tensor with all values
+in [0, 1].
 
 Quick start
 -----------
@@ -12,15 +13,15 @@ Quick start
 
     extractor = R3Extractor()
     r3_output = extractor.extract(mel)       # mel: (B, 128, T)
-    features = r3_output.features            # (B, T, 128) in [0, 1]
-    names = r3_output.feature_names          # tuple of 128 strings
+    features = r3_output.features            # (B, T, 97) in [0, 1]
+    names = r3_output.feature_names          # tuple of 97 strings
 
 Classes
 -------
 R3Extractor
-    Orchestrates all 11 spectral groups into a 128-D feature vector.
+    Orchestrates all 9 spectral groups into a 97-D feature vector.
 R3Output
-    Frozen dataclass wrapping the (B, T, 128) tensor and metadata.
+    Frozen dataclass wrapping the (B, T, 97) tensor and metadata.
 """
 
 from __future__ import annotations

@@ -2,7 +2,7 @@
 
 Each R3 spectral group produces features with different raw ranges.  This
 module applies the documented normalization method per group so that every
-feature in the final 128-D vector is in [0, 1].
+feature in the final 97-D vector is in [0, 1].
 
 Since each group's ``compute()`` method already applies its own
 normalization internally (sigmoid, ratio, max-norm, etc.), this normalizer
@@ -60,11 +60,9 @@ _GROUP_METHODS: Dict[str, str] = {
     "energy":          "clamp",       # mixed max-norm/sigmoid
     "timbre":          "clamp",       # ratio/complement/clamp
     "change":          "clamp",       # max-norm/ratio/clamp
-    "interactions":    "clamp",       # products of [0,1] values
     "pitch_chroma":    "clamp",       # L1-norm/min-max/ratio
     "rhythm_groove":   "clamp",       # min-max/sigmoid/ratio
     "harmony":         "clamp",       # min-max/affine/ratio
-    "information":     "clamp",       # entropy/exp-map with ramp
     "timbre_extended": "clamp",       # per-coeff/clamp
     "modulation":      "clamp",       # per-rate max-norm/sigmoid
 }

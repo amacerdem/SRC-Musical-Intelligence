@@ -72,22 +72,22 @@ def synthetic_mel(batch_size: int) -> Tensor:
     """Random mel spectrogram tensor.
 
     Shape: (B, 128, T) with T=100, values in [0, 1].
-    Mimics log1p-normalised mel output from Cochlea.
+    Mimics log1p-normalised mel output from Cochlea (n_mels=128 is mel bins, not R3 dim).
     """
     return generate_mel(B=batch_size, T=100, n_mels=128)
 
 
 # ======================================================================
-# Synthetic R3 features (128D, current version)
+# Synthetic R3 features (97D, post-dissolution)
 # ======================================================================
 
 @pytest.fixture
 def synthetic_r3(batch_size: int) -> Tensor:
-    """Random R3 spectral feature tensor (v2, 128D).
+    """Random R3 spectral feature tensor (v2, 97D).
 
-    Shape: (B, T, 128) with T=100, values in [0, 1].
+    Shape: (B, T, 97) with T=100, values in [0, 1].
     """
-    return generate_r3(B=batch_size, T=100, D=128)
+    return generate_r3(B=batch_size, T=100, D=97)
 
 
 # ======================================================================
@@ -138,7 +138,7 @@ def synthetic_h3(
     Returns the sparse feature dictionary mapping 4-tuples to (B, T) tensors.
     Uses a minimal demand set (50 tuples) for fast execution.
     """
-    # H3 extractor expects (B, T, 128) but operates on v1 49D indices.
+    # H3 extractor expects (B, T, 97) but operates on v1 49D indices.
     # We generate (B, T, 49) and the demand set references indices 0-48.
     r3_v1 = generate_r3_v1(B=batch_size, T=100)
     output = h3_extractor.extract(r3_v1, minimal_demand_set)

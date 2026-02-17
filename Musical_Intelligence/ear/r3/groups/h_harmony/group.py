@@ -41,7 +41,7 @@ class HarmonyGroup(BaseSpectralGroup):
     GROUP_NAME = "harmony"
     DOMAIN = "tonal"
     OUTPUT_DIM = 12
-    INDEX_RANGE = (75, 87)
+    INDEX_RANGE = (51, 63)
     STAGE = 2
     DEPENDENCIES = ("pitch_chroma",)
 

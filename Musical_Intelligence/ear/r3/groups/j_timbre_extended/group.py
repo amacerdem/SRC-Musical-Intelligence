@@ -25,7 +25,7 @@ class TimbreExtendedGroup(BaseSpectralGroup):
     GROUP_NAME = "timbre_extended"
     DOMAIN = "spectral"
     OUTPUT_DIM = 20
-    INDEX_RANGE = (94, 114)
+    INDEX_RANGE = (63, 83)
     STAGE = 1
     DEPENDENCIES = ()
 

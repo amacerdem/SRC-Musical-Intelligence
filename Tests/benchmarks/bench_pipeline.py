@@ -3,7 +3,7 @@
 
 Benchmarks each stage of the Musical Intelligence pipeline separately:
 
-    Cochlea (mel) -> R3 (128D) -> H3 (sparse) -> Brain C3 (1006D)
+    Cochlea (mel) -> R3 (97D) -> H3 (sparse) -> Brain C3 (1006D)
 
 Tests multiple audio durations (1s, 5s, 10s, 30s) and reports per-stage
 timing, throughput (frames/second), and approximate memory usage.

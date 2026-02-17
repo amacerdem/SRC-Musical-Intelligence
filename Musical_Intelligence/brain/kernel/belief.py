@@ -8,7 +8,6 @@ Every C³ belief implements three methods:
 Contract:
   - No hidden state beyond declared fields
   - No direct R³ index access (use feature_map.resolve())
-  - No dissolved group access (E: interactions, I: information)
   - All parameters from config (no hardcoded values)
 """
 from __future__ import annotations
@@ -94,17 +93,6 @@ class Belief(ABC):
 
     def __init__(self, feature_map: R3FeatureMap) -> None:
         self._fm = feature_map
-        # Validate no dissolved features in our demands
-        self._validate_no_dissolved()
-
-    def _validate_no_dissolved(self) -> None:
-        """Ensure this belief doesn't read dissolved R³ features."""
-        for feat_name, _, _, _ in self.h3_predict_demands:
-            if self._fm.is_dissolved(feat_name):
-                raise ValueError(
-                    f"Belief {self.name!r}: H³ demand references dissolved "
-                    f"R³ feature {feat_name!r}"
-                )
 
     # ── resolve() shortcut ──────────────────────────────────────────
 
@@ -114,11 +102,6 @@ class Belief(ABC):
         Returns shape (B, T).
         """
         idx = self._fm.resolve(name)
-        if self._fm.is_dissolved_index(idx):
-            raise RuntimeError(
-                f"Belief {self.name!r}: attempted to read dissolved "
-                f"R³ feature {name!r} at index {idx}"
-            )
         return r3_tensor[..., idx]
 
     def _r3_range(self, r3_tensor: Tensor, group: str) -> Tensor:
@@ -126,11 +109,6 @@ class Belief(ABC):
 
         Returns shape (B, T, group_dim).
         """
-        if group in self._fm.dissolved_groups:
-            raise RuntimeError(
-                f"Belief {self.name!r}: attempted to read dissolved "
-                f"R³ group {group!r}"
-            )
         s = self._fm.resolve_range(group)
         return r3_tensor[..., s]
 

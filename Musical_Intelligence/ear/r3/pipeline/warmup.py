@@ -8,14 +8,13 @@ ramp.
 Warm-up tiers
 -------------
 - **Tier 0 (0 frames)**: Immediately valid.
-  Groups A, B, C, D, E, F, H, J, and K psychoacoustic features [122-127].
+  Groups A, B, C, D, F, H, J, and K psychoacoustic features [91-96].
 - **Tier 1 (344 frames, ~2.0s)**:
-  K modulation [114:122]: zero before warmup.
-  G tempo/beat/pulse [65:67]: autocorrelation window.
-  G other rhythm [69:74]: IOI-based features.
-  I entropy features [87,88,89,90,92]: confidence ramp ``min(1, t/344)``.
+  K modulation [83:91]: zero before warmup.
+  G tempo/beat/pulse [41:43]: autocorrelation window.
+  G other rhythm [45:50]: IOI-based features.
 - **Tier 2 (688 frames, ~4.0s)**:
-  G syncopation [68]: requires stable tempo + metrical grid.
+  G syncopation [44]: requires stable tempo + metrical grid.
 
 Source of truth
 ---------------
@@ -34,20 +33,18 @@ from typing import FrozenSet
 
 # Features that output zero until 344 frames have elapsed
 WARMUP_344_ZERO: FrozenSet[int] = frozenset(
-    list(range(114, 122))  # K modulation spectrum + centroid/bandwidth
+    list(range(83, 91))  # K modulation spectrum + centroid/bandwidth
 )
 
 # Features that use confidence ramp min(1.0, t/344)
 WARMUP_344_RAMP: FrozenSet[int] = frozenset({
-    65, 66, 67,      # G tempo, beat_strength, pulse_clarity
-    69, 70, 71, 72, 73, 74,  # G metricality through rhythmic_regularity
-    87, 88, 89, 90, 92,  # I melodic/harmonic entropy, rhythmic IC,
-                         #   spectral surprise, predictive entropy
+    41, 42, 43,      # G tempo, beat_strength, pulse_clarity
+    45, 46, 47, 48, 49, 50,  # G metricality through rhythmic_regularity
 })
 
 # Features that output zero until 688 frames have elapsed
 WARMUP_688_ZERO: FrozenSet[int] = frozenset({
-    68,  # G syncopation_index
+    44,  # G syncopation_index
 })
 
 # All warm-up features combined
@@ -59,7 +56,7 @@ class WarmupManager:
 
     Features without warm-up requirements are always fully confident.
     Features in the warm-up zone either produce zero output (modulation,
-    syncopation) or are scaled by a linear confidence ramp (entropy-based
+    syncopation) or are scaled by a linear confidence ramp (rhythm-based
     features).
 
     Usage
@@ -67,11 +64,11 @@ class WarmupManager:
     ::
 
         wm = WarmupManager()
-        conf = wm.get_confidence(frame_count=100, feature_index=114)
+        conf = wm.get_confidence(frame_count=100, feature_index=83)
         # → 0.0 (modulation not yet valid)
 
-        conf = wm.get_confidence(frame_count=200, feature_index=87)
-        # → 0.581 (melodic_entropy at 58.1% confidence)
+        conf = wm.get_confidence(frame_count=200, feature_index=41)
+        # → 0.581 (tempo_estimate at 58.1% confidence)
 
         wm.is_warmed_up(frame_count=688)
         # → True (all features fully warmed)
@@ -104,7 +101,7 @@ class WarmupManager:
         frame_count : int
             Number of frames processed so far (0-indexed).
         feature_index : int
-            R3 feature index in ``[0, 128)``.
+            R3 feature index in ``[0, 97)``.
 
         Returns
         -------
@@ -126,7 +123,7 @@ class WarmupManager:
         if feature_index in WARMUP_344_ZERO:
             return 1.0 if frame_count >= 344 else 0.0
 
-        # 344-frame ramp features (entropy, rhythm)
+        # 344-frame ramp features (rhythm)
         if feature_index in WARMUP_344_RAMP:
             return min(1.0, frame_count / 344.0)
 
@@ -138,7 +135,7 @@ class WarmupManager:
         Parameters
         ----------
         feature_index : int
-            R3 feature index in ``[0, 128)``.
+            R3 feature index in ``[0, 97)``.
 
         Returns
         -------

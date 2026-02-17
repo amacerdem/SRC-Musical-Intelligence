@@ -32,7 +32,7 @@ from Musical_Intelligence.brain.regions import REGION_REGISTRY
 # ---------------------------------------------------------------------------
 B = 2
 T = 200
-R3_DIM = 128
+R3_DIM = 97
 FRAME_RATE = 172.27
 
 

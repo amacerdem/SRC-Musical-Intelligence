@@ -1,8 +1,8 @@
-"""R3Extractor -- Orchestrates 128-D spectral feature extraction.
+"""R3Extractor -- Orchestrates 97-D spectral feature extraction.
 
-Auto-discovers all 11 spectral groups (A through K), registers them
+Auto-discovers all 9 spectral groups (A through K (excluding dissolved E and I)), registers them
 into an R3FeatureRegistry, freezes index assignments, then executes
-the 3-stage DAG pipeline to produce a dense (B, T, 128) R3 tensor.
+the 3-stage DAG pipeline to produce a dense (B, T, 97) R3 tensor.
 
 Usage
 -----
@@ -10,8 +10,8 @@ Usage
 
     extractor = R3Extractor()
     r3_output = extractor.extract(mel)
-    # r3_output.features: (B, T, 128) in [0, 1]
-    # r3_output.feature_names: tuple of 128 strings
+    # r3_output.features: (B, T, 97) in [0, 1]
+    # r3_output.feature_names: tuple of 97 strings
 """
 
 from __future__ import annotations
@@ -40,8 +40,8 @@ class R3Output:
     """Immutable output of the R3 spectral extractor.
 
     Attributes:
-        features:      ``(B, T, 128)`` tensor with all values in ``[0, 1]``.
-        feature_names: Ordered tuple of 128 feature name strings.
+        features:      ``(B, T, 97)`` tensor with all values in ``[0, 1]``.
+        feature_names: Ordered tuple of 97 feature name strings.
         feature_map:   Frozen registry snapshot with group metadata.
     """
 
@@ -55,7 +55,7 @@ class R3Output:
 # ======================================================================
 
 class R3Extractor:
-    """Orchestrates all R3 spectral groups into a 128-D feature vector.
+    """Orchestrates all R3 spectral groups into a 97-D feature vector.
 
     On construction, the extractor:
 
@@ -63,14 +63,14 @@ class R3Extractor:
        ``ear/r3/groups/{a_consonance..k_modulation}/``.
     2. Registers them into an ``R3FeatureRegistry`` and freezes index
        assignments.
-    3. Initialises the 3-stage ``DependencyDAG``, ``StageExecutor``,
+    3. Initialises the 2-stage ``DependencyDAG``, ``StageExecutor``,
        ``FeatureNormalizer``, and ``WarmupManager``.
 
     On ``extract(mel)``, it runs the full pipeline:
 
     1. Execute groups in DAG order → per-group ``(B, T, dim)`` tensors.
     2. Normalize each group's output (safety clamp to ``[0, 1]``).
-    3. Concatenate to produce ``(B, T, 128)`` dense R3 vector.
+    3. Concatenate to produce ``(B, T, 97)`` dense R3 vector.
     """
 
     def __init__(self) -> None:
@@ -115,12 +115,12 @@ class R3Extractor:
 
     @property
     def feature_names(self) -> Tuple[str, ...]:
-        """Ordered tuple of 128 feature name strings."""
+        """Ordered tuple of 97 feature name strings."""
         return self._feature_map.feature_names
 
     @property
     def total_dim(self) -> int:
-        """Total feature dimensionality (128)."""
+        """Total feature dimensionality (97)."""
         return self._feature_map.total_dim
 
     # ------------------------------------------------------------------
@@ -135,12 +135,12 @@ class R3Extractor:
         audio: Tensor | None = None,
         sr: int = 44100,
     ) -> R3Output:
-        """Extract 128-D R3 spectral features from a mel spectrogram.
+        """Extract 97-D R3 spectral features from a mel spectrogram.
 
         Parameters
         ----------
         mel : Tensor
-            Shape ``(B, 128, T)`` log-mel spectrogram (log1p normalised).
+            Shape ``(B, 97, T)`` log-mel spectrogram (log1p normalised).
             Frame rate 172.27 Hz (sr=44100, hop_length=256).
         audio : Tensor, optional
             Shape ``(B, N_SAMPLES)`` raw waveform at *sr* Hz.  When
@@ -154,8 +154,8 @@ class R3Extractor:
         -------
         R3Output
             Frozen dataclass with:
-            - ``features``: ``(B, T, 128)`` tensor, all values in ``[0, 1]``
-            - ``feature_names``: tuple of 128 strings
+            - ``features``: ``(B, T, 97)`` tensor, all values in ``[0, 1]``
+            - ``feature_names``: tuple of 97 strings
             - ``feature_map``: frozen R3FeatureMap
         """
         B, N, T = mel.shape
@@ -168,13 +168,13 @@ class R3Extractor:
         # 2. Normalize each group's output (safety clamp)
         group_outputs = self._normalizer.normalize_all(group_outputs)
 
-        # 3. Concatenate in index order to produce (B, T, 128)
+        # 3. Concatenate in index order to produce (B, T, 97)
         ordered_tensors = []
         for group_info in self._feature_map.groups:
             tensor = group_outputs[group_info.name]
             ordered_tensors.append(tensor)
 
-        features = torch.cat(ordered_tensors, dim=-1)  # (B, T, 128)
+        features = torch.cat(ordered_tensors, dim=-1)  # (B, T, 97)
 
         return R3Output(
             features=features,

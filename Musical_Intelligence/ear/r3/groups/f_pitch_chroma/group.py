@@ -45,7 +45,7 @@ class PitchChromaGroup(BaseSpectralGroup):
     GROUP_NAME = "pitch_chroma"
     DOMAIN = "tonal"
     OUTPUT_DIM = 16
-    INDEX_RANGE = (49, 65)
+    INDEX_RANGE = (25, 41)
     STAGE = 1
     DEPENDENCIES = ()
 

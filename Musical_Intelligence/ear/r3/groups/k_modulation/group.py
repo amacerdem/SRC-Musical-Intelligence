@@ -73,7 +73,7 @@ class ModulationGroup(BaseSpectralGroup):
     GROUP_NAME = "modulation"
     DOMAIN = "psychoacoustic"
     OUTPUT_DIM = 14
-    INDEX_RANGE = (114, 128)
+    INDEX_RANGE = (83, 97)
     STAGE = 1
     DEPENDENCIES = ()
 

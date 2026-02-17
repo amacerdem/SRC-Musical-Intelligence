@@ -41,32 +41,7 @@ R3_QUALITY_TIERS: Dict[str, QualityTier] = {
     "distribution_entropy":         QualityTier.S,
     "distribution_flatness":        QualityTier.S,
     "distribution_concentration":   QualityTier.P,
-    # Group E: Interactions [25:49] -- all Proxy
-    "x_l0l5_0":                     QualityTier.P,
-    "x_l0l5_1":                     QualityTier.P,
-    "x_l0l5_2":                     QualityTier.P,
-    "x_l0l5_3":                     QualityTier.P,
-    "x_l0l5_4":                     QualityTier.P,
-    "x_l0l5_5":                     QualityTier.P,
-    "x_l0l5_6":                     QualityTier.P,
-    "x_l0l5_7":                     QualityTier.P,
-    "x_l4l5_0":                     QualityTier.P,
-    "x_l4l5_1":                     QualityTier.P,
-    "x_l4l5_2":                     QualityTier.P,
-    "x_l4l5_3":                     QualityTier.P,
-    "x_l4l5_4":                     QualityTier.P,
-    "x_l4l5_5":                     QualityTier.P,
-    "x_l4l5_6":                     QualityTier.P,
-    "x_l4l5_7":                     QualityTier.P,
-    "x_l5l7_0":                     QualityTier.P,
-    "x_l5l7_1":                     QualityTier.P,
-    "x_l5l7_2":                     QualityTier.P,
-    "x_l5l7_3":                     QualityTier.P,
-    "x_l5l7_4":                     QualityTier.P,
-    "x_l5l7_5":                     QualityTier.P,
-    "x_l5l7_6":                     QualityTier.P,
-    "x_l5l7_7":                     QualityTier.P,
-    # Group F: Pitch & Chroma [49:65]
+    # Group F: Pitch & Chroma [25:41]
     "chroma_C":                     QualityTier.A,
     "chroma_Db":                    QualityTier.A,
     "chroma_D":                     QualityTier.A,
@@ -83,7 +58,7 @@ R3_QUALITY_TIERS: Dict[str, QualityTier] = {
     "pitch_class_entropy":          QualityTier.S,
     "pitch_salience":               QualityTier.A,
     "inharmonicity_index":          QualityTier.A,
-    # Group G: Rhythm & Groove [65:75]
+    # Group G: Rhythm & Groove [41:51]
     "tempo_estimate":               QualityTier.A,
     "beat_strength":                QualityTier.A,
     "pulse_clarity":                QualityTier.A,
@@ -94,7 +69,7 @@ R3_QUALITY_TIERS: Dict[str, QualityTier] = {
     "event_density":                QualityTier.S,
     "tempo_stability":              QualityTier.A,
     "rhythmic_regularity":          QualityTier.A,
-    # Group H: Harmony & Tonality [75:87]
+    # Group H: Harmony & Tonality [51:63]
     "key_clarity":                  QualityTier.A,
     "tonnetz_fifth_x":              QualityTier.S,
     "tonnetz_fifth_y":              QualityTier.S,
@@ -107,15 +82,7 @@ R3_QUALITY_TIERS: Dict[str, QualityTier] = {
     "tonal_stability":              QualityTier.A,
     "diatonicity":                  QualityTier.A,
     "syntactic_irregularity":       QualityTier.A,
-    # Group I: Information & Surprise [87:94]
-    "melodic_entropy":              QualityTier.A,
-    "harmonic_entropy":             QualityTier.A,
-    "rhythmic_information_content": QualityTier.A,
-    "spectral_surprise":            QualityTier.A,
-    "information_rate":             QualityTier.S,
-    "predictive_entropy":           QualityTier.A,
-    "tonal_ambiguity":              QualityTier.A,
-    # Group J: Timbre Extended [94:114]
+    # Group J: Timbre Extended [63:83]
     "mfcc_1":                       QualityTier.S,
     "mfcc_2":                       QualityTier.S,
     "mfcc_3":                       QualityTier.S,
@@ -136,7 +103,7 @@ R3_QUALITY_TIERS: Dict[str, QualityTier] = {
     "spectral_contrast_5":          QualityTier.S,
     "spectral_contrast_6":          QualityTier.S,
     "spectral_contrast_7":          QualityTier.S,
-    # Group K: Modulation & Psychoacoustic [114:128]
+    # Group K: Modulation & Psychoacoustic [83:97]
     "modulation_0_5Hz":             QualityTier.A,
     "modulation_1Hz":               QualityTier.A,
     "modulation_2Hz":               QualityTier.A,
@@ -153,11 +120,11 @@ R3_QUALITY_TIERS: Dict[str, QualityTier] = {
     "spectral_slope_0_500":         QualityTier.S,
 }
 
-assert len(R3_QUALITY_TIERS) == 128
+assert len(R3_QUALITY_TIERS) == 97
 _tier_counts = {t: sum(1 for v in R3_QUALITY_TIERS.values() if v is t) for t in QualityTier}
-assert _tier_counts[QualityTier.P] == 36, f"P={_tier_counts[QualityTier.P]}"
-assert _tier_counts[QualityTier.A] == 49, f"A={_tier_counts[QualityTier.A]}"
-assert _tier_counts[QualityTier.S] == 42, f"S={_tier_counts[QualityTier.S]}"
+assert _tier_counts[QualityTier.P] == 12, f"P={_tier_counts[QualityTier.P]}"
+assert _tier_counts[QualityTier.A] == 43, f"A={_tier_counts[QualityTier.A]}"
+assert _tier_counts[QualityTier.S] == 41, f"S={_tier_counts[QualityTier.S]}"
 assert _tier_counts[QualityTier.R] == 1, f"R={_tier_counts[QualityTier.R]}"
 assert R3_QUALITY_TIERS["sharpness_zwicker"] is QualityTier.R
 del _tier_counts

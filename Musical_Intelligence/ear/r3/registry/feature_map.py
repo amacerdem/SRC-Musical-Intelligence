@@ -211,46 +211,6 @@ class R3FeatureMap:
         return tuple(self.resolve(n) for n in names)
 
     # ------------------------------------------------------------------
-    # Group exclusion (for ontology compliance)
-    # ------------------------------------------------------------------
-
-    @property
-    def dissolved_groups(self) -> Tuple[str, ...]:
-        """Groups dissolved from R³ per ontology v1.0.0.
-
-        These groups still exist in code (128D output) but are
-        ontologically excluded from C³ consumption.  C³ kernel code
-        MUST NOT read features from these groups.
-        """
-        return ("interactions", "information")
-
-    def is_dissolved(self, name: str) -> bool:
-        """Check whether a feature belongs to a dissolved group.
-
-        Works with both spec names (``"amp_x_roughness"``) and
-        index-based lookup.
-        """
-        self._ensure_caches()
-        name_map: Dict[str, int] = self.__dict__["_index_by_name"]
-        if name in name_map:
-            idx = name_map[name]
-            spec = self.__dict__["_spec_by_index"][idx]
-            return spec.group in self.dissolved_groups
-        # Fallback: check all specs by name
-        for spec in self.feature_specs:
-            if spec.name == name:
-                return spec.group in self.dissolved_groups
-        raise KeyError(f"Unknown R³ feature {name!r}")
-
-    def is_dissolved_index(self, index: int) -> bool:
-        """Check whether a feature index belongs to a dissolved group."""
-        self._ensure_caches()
-        spec = self.__dict__["_spec_by_index"].get(index)
-        if spec is None:
-            raise KeyError(f"No feature at index {index}")
-        return spec.group in self.dissolved_groups
-
-    # ------------------------------------------------------------------
     # Convenience properties
     # ------------------------------------------------------------------
 

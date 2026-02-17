@@ -1,7 +1,7 @@
 """StageExecutor -- Executes R3 spectral groups in DAG-ordered stages.
 
-Iterates through the 3-stage dependency DAG and invokes each spectral group's
-``compute()`` (Stage 1) or ``compute_with_deps()`` (Stage 2-3) method in the
+Iterates through the 2-stage dependency DAG and invokes each spectral group's
+``compute()`` (Stage 1) or ``compute_with_deps()`` (Stage 2) method in the
 correct order.  Groups within the same stage are executed sequentially for now;
 the stage structure preserves the option for future CUDA multi-stream
 parallelism.
@@ -13,12 +13,7 @@ Execution flow::
             outputs[group_name] = group.compute(mel)
 
     Stage 2 (parallel-ready, after Stage 1):
-        For each group in {E, G, H}:
-            deps_dict = {dep_name: outputs[dep_name] for dep_name in group.DEPENDENCIES}
-            outputs[group_name] = group.compute_with_deps(mel, deps_dict)
-
-    Stage 3 (after Stage 2):
-        For I:
+        For each group in {G, H}:
             deps_dict = {dep_name: outputs[dep_name] for dep_name in group.DEPENDENCIES}
             outputs[group_name] = group.compute_with_deps(mel, deps_dict)
 
@@ -65,7 +60,7 @@ class StageExecutor:
                 ``N_MELS`` = 128, frame rate 172.27 Hz.
             groups: Dict mapping canonical ``GROUP_NAME`` (e.g.
                 ``"consonance"``) to the corresponding
-                :class:`BaseSpectralGroup` instance.  All 11 groups must
+                :class:`BaseSpectralGroup` instance.  All 9 groups must
                 be present.
             dag: The :class:`DependencyDAG` defining stage membership and
                 dependency edges.
