@@ -1,7 +1,7 @@
 """Unit tests for R3 spectral feature extraction.
 
 Tests the R3Extractor end-to-end: output shape, value range, feature names,
-group structure, and auto-discovery of all 11 spectral groups (A-K).
+group structure, and auto-discovery of all 9 spectral groups (A-K).
 """
 from __future__ import annotations
 
@@ -49,10 +49,10 @@ class TestR3ExtractorOutputShape:
     """Verify that R3 extraction produces the correct tensor shape."""
 
     def test_r3_extractor_output_shape(self, r3_output):
-        """extract from (1,128,100) mel produces (1,100,128) features."""
+        """extract from (1,128,100) mel produces (1,100,97) features."""
         features = r3_output.features
-        assert features.shape == (1, 100, 128), (
-            f"Expected (1, 100, 128), got {features.shape}"
+        assert features.shape == (1, 100, 97), (
+            f"Expected (1, 100, 97), got {features.shape}"
         )
 
     @pytest.mark.parametrize("batch_size", [1, 2, 4])
@@ -61,7 +61,7 @@ class TestR3ExtractorOutputShape:
         torch.manual_seed(0)
         mel = torch.rand(batch_size, 128, 50)
         out = extractor.extract(mel)
-        assert out.features.shape == (batch_size, 50, 128)
+        assert out.features.shape == (batch_size, 50, 97)
 
 
 class TestR3OutputRange:
@@ -82,16 +82,16 @@ class TestR3FeatureNames:
     """Verify feature names metadata."""
 
     def test_r3_feature_names_count(self, r3_output):
-        """R3Output must report exactly 128 feature names."""
+        """R3Output must report exactly 97 feature names."""
         names = r3_output.feature_names
-        assert len(names) == 128, (
-            f"Expected 128 feature names, got {len(names)}"
+        assert len(names) == 97, (
+            f"Expected 97 feature names, got {len(names)}"
         )
 
     def test_r3_feature_names_unique(self, r3_output):
-        """All 128 feature names must be unique."""
+        """All 97 feature names must be unique."""
         names = r3_output.feature_names
-        assert len(set(names)) == 128, "Duplicate feature names detected"
+        assert len(set(names)) == 97, "Duplicate feature names detected"
 
     def test_r3_feature_names_are_strings(self, r3_output):
         """Every feature name must be a non-empty string."""
@@ -100,20 +100,20 @@ class TestR3FeatureNames:
 
 
 class TestR3GroupBoundaries:
-    """Verify the 11 spectral groups partition the 128-D space exactly."""
+    """Verify the 9 spectral groups partition the 97-D space exactly."""
 
     def test_r3_group_boundaries(self, extractor):
-        """11 groups must sum to exactly 128D with no gaps or overlaps."""
+        """9 groups must sum to exactly 97D with no gaps or overlaps."""
         feature_map = extractor.feature_map
         groups = feature_map.groups
 
-        assert len(groups) == 11, (
-            f"Expected 11 groups, got {len(groups)}"
+        assert len(groups) == 9, (
+            f"Expected 9 groups, got {len(groups)}"
         )
 
         total_dim = sum(g.dim for g in groups)
-        assert total_dim == 128, (
-            f"Group dimensions sum to {total_dim}, expected 128"
+        assert total_dim == 97, (
+            f"Group dimensions sum to {total_dim}, expected 97"
         )
 
         # Verify contiguous, non-overlapping coverage
@@ -127,8 +127,8 @@ class TestR3GroupBoundaries:
             )
             expected_start = g.end
 
-        assert expected_start == 128, (
-            f"Final group ends at {expected_start}, expected 128"
+        assert expected_start == 97, (
+            f"Final group ends at {expected_start}, expected 97"
         )
 
 

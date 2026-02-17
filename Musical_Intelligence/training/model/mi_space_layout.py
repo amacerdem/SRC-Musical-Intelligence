@@ -14,8 +14,8 @@ FRAME_RATE: float = SAMPLE_RATE / HOP_LENGTH  # 172.27 Hz
 
 # ── Pipeline dimensions ──────────────────────────────────────
 COCHLEA_DIM: int = 128   # mel spectrogram bins
-R3_DIM: int = 128        # R³ spectral features (11 groups, A-K)
-R3_BRAIN_DIM: int = 128  # R³ features visible to brain (all groups A-K)
+R3_DIM: int = 97         # R³ spectral features (9 groups, A-K excl. E,I)
+R3_BRAIN_DIM: int = 97   # R³ features visible to brain (9 groups A-K excl. E,I)
 C3_DIM: int = 1006       # full C³ (all 96 nuclei exportable dims)
 
 # ── Brain regions and neurochemicals ─────────────────────────

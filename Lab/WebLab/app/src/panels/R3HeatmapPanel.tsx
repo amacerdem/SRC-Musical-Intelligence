@@ -8,10 +8,10 @@ const BG = "#0d0d14";
 const TEXT = "#c8c8d4";
 const BORDER = "#252538";
 const LABEL_WIDTH = 28;
-const FEATURES = 128;
+const FEATURES = 97;
 
 /**
- * R3HeatmapPanel - Canvas-based (T_lod x 128) heatmap of R3 spectral features.
+ * R3HeatmapPanel - Canvas-based (T_lod x 97) heatmap of R3 spectral features.
  * Full heatmap is rendered to an offscreen canvas on data change.
  * Only the playhead overlay redraws on frame change.
  */
@@ -150,7 +150,7 @@ export default function R3HeatmapPanel(): React.ReactElement {
           flexShrink: 0,
         }}
       >
-        R\u00b3 Spectral Features (128D)
+        R\u00b3 Spectral Features (97D)
       </div>
       <canvas
         ref={canvasRef}

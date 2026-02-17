@@ -314,7 +314,7 @@ export default function R3SpectralPage(): React.ReactElement {
             whiteSpace: "nowrap",
           }}
         >
-          R\u00b3 Spectral Features &mdash; 128D
+          R\u00b3 Spectral Features &mdash; 97D
         </span>
         <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
           {r3Groups.map((g) => {

@@ -15,7 +15,7 @@ Usage::
     )
     sample = dataset[0]
     # sample["mel"]:      (T, 128)
-    # sample["r3"]:       (T, 128)
+    # sample["r3"]:       (T, 97)
     # sample["h3_dense"]: (T, N)
     # sample["c3"]:       (T, 1006)
 """
@@ -41,7 +41,7 @@ class MIDataset(Dataset):
 
     Each HDF5 file contains:
         - ``mel``:      ``(T, 128)`` float32
-        - ``r3``:       ``(T, 128)`` float32
+        - ``r3``:       ``(T, 97)`` float32
         - ``h3_dense``: ``(T, N)``   float32
         - ``c3``:       ``(T, 1006)`` float32
 

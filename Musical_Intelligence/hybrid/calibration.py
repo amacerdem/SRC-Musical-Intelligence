@@ -30,8 +30,8 @@ class CalibrationResult:
     """Result of closed-loop calibration."""
     final_strength: float
     iterations: int
-    r3_original: np.ndarray       # (T, 128)
-    r3_transformed: np.ndarray    # (T, 128)
+    r3_original: np.ndarray       # (T, 97)
+    r3_transformed: np.ndarray    # (T, 97)
     r3_deltas_achieved: dict[int, float]  # idx → actual delta
     r3_deltas_target: dict[int, float]    # idx → target delta
     error_history: list[float]
@@ -48,7 +48,7 @@ def extract_r3_features(
     Extract R³ features from a waveform.
 
     Returns:
-        features: (T, 128) numpy array, values in [0, 1]
+        features: (T, 97) numpy array, values in [0, 1]
     """
     import torchaudio
 
@@ -75,12 +75,12 @@ def extract_r3_features(
     audio_tensor = torch.from_numpy(y).float().unsqueeze(0)  # (1, N)
     r3_output = r3_ext.extract(mel, audio=audio_tensor, sr=sr)
 
-    return r3_output.features[0].numpy()  # (T, 128)
+    return r3_output.features[0].numpy()  # (T, 97)
 
 
 def compute_r3_summary(features: np.ndarray) -> np.ndarray:
     """Compute mean R³ across time for stable comparison."""
-    return features.mean(axis=0)  # (128,)
+    return features.mean(axis=0)  # (97,)
 
 
 def compute_delta_error(

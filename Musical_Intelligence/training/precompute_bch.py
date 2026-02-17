@@ -78,7 +78,7 @@ def precompute_single(
 
     # 3. R³ extraction
     r3_out = r3_extractor.extract(mel, audio=waveform, sr=sr)
-    r3_tensor = r3_out.features  # (1, T, 128)
+    r3_tensor = r3_out.features  # (1, T, 97)
 
     # 4. H³ extraction (BCH demands only)
     h3_out = h3_extractor.extract(r3_tensor, bch_demands)

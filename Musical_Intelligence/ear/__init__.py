@@ -3,7 +3,7 @@
 The ear layer transforms raw audio (as mel spectrograms) into the
 perceptual feature representations consumed by the brain layer:
 
-- **R3**: Dense 128-D spectral feature vector at every time step.
+- **R3**: Dense 97-D spectral feature vector at every time step.
 - **H3**: Sparse temporal morphology features computed on demand.
 
 Quick start

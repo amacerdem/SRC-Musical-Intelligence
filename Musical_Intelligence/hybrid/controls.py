@@ -6,7 +6,7 @@ Maps 5 macro sliders (valence, arousal, tension, warmth, brightness)
   rhythm_density, harmonic_mode_bias, harmonic_rhythm)
 to concrete R³ feature targets and transform operator parameters.
 
-R³ Feature Index Reference (128D):
+R³ Feature Index Reference (97D, post-dissolution v1.0.0):
   A: Consonance      [0:7]   roughness, sethares_dissonance, helmholtz_kang,
                               stumpf_fusion, sensory_pleasantness, inharmonicity,
                               harmonic_deviation
@@ -17,15 +17,16 @@ R³ Feature Index Reference (128D):
                               tristimulus1, tristimulus2, tristimulus3
   D: Change          [21:25]  spectral_flux, distribution_entropy,
                               distribution_flatness, distribution_concentration
-  F: Pitch & Chroma  [49:65]  chroma_C..chroma_B, pitch_height,
+  F: Pitch & Chroma  [25:41]  chroma_C..chroma_B, pitch_height,
                               pitch_class_entropy, pitch_salience, inharmonicity_index
-  G: Rhythm & Groove [65:75]  tempo_estimate, beat_strength, pulse_clarity, ...
+  G: Rhythm & Groove [41:51]  tempo_estimate, beat_strength, pulse_clarity, ...
                               event_density, tempo_stability, rhythmic_regularity
-  H: Harmony         [75:87]  key_clarity, tonnetz(6), voice_leading_distance,
+  H: Harmony         [51:63]  key_clarity, tonnetz(6), voice_leading_distance,
                               harmonic_change, tonal_stability, diatonicity,
                               syntactic_irregularity
-  I: Information     [87:94]  melodic_entropy, harmonic_entropy, ...,
-                              spectral_surprise, information_rate
+  J: Timbre Extended [63:83]  spectral_irregularity, odd_even_ratio, ...
+  K: Modulation      [83:97]  modulation rates, sharpness_zwicker, loudness_a_weighted,
+                              alpha_ratio, hammarberg_index, spectral_slope_0_500
 """
 
 from __future__ import annotations
@@ -82,9 +83,9 @@ R3_DELTA_MAP: dict[str, list[tuple[int, float]]] = {
         (4,  0.10),   # sensory_pleasantness ↑
         (12, 0.04),   # warmth ↑ (slightly)
         (14, 0.05),   # tonalness ↑
-        (75, 0.06),   # key_clarity ↑
-        (84, 0.06),   # tonal_stability ↑
-        (85, 0.04),   # diatonicity ↑
+        (51, 0.06),   # key_clarity ↑ (H)
+        (60, 0.06),   # tonal_stability ↑ (H)
+        (61, 0.04),   # diatonicity ↑ (H)
     ],
     "arousal": [
         (7,  0.08),   # amplitude ↑
@@ -92,9 +93,7 @@ R3_DELTA_MAP: dict[str, list[tuple[int, float]]] = {
         (10, 0.08),   # loudness ↑
         (11, 0.10),   # onset_strength ↑
         (21, 0.10),   # spectral_flux ↑
-        (72, 0.06),   # event_density ↑
-        (90, 0.04),   # spectral_surprise ↑
-        (91, 0.04),   # information_rate ↑
+        (48, 0.06),   # event_density ↑ (G)
     ],
     "tension": [
         (0,  0.10),   # roughness ↑
@@ -102,26 +101,23 @@ R3_DELTA_MAP: dict[str, list[tuple[int, float]]] = {
         (5,  0.06),   # inharmonicity ↑
         (6,  0.04),   # harmonic_deviation ↑
         (22, 0.06),   # distribution_entropy ↑
-        (84, -0.06),  # tonal_stability ↓
-        (86, 0.06),   # syntactic_irregularity ↑
-        (87, 0.04),   # melodic_entropy ↑
-        (88, 0.04),   # harmonic_entropy ↑
-        (93, 0.04),   # tonal_ambiguity ↑
+        (60, -0.06),  # tonal_stability ↓ (H)
+        (62, 0.06),   # syntactic_irregularity ↑ (H)
     ],
     "warmth": [
         (12, 0.12),   # warmth ↑
         (13, -0.08),  # sharpness ↓
         (15, -0.03),  # clarity ↓ (slightly)
-        (122, -0.06), # sharpness_zwicker ↓
-        (125, -0.04), # alpha_ratio ↓
+        (91, -0.06),  # sharpness_zwicker ↓ (K)
+        (94, -0.04),  # alpha_ratio ↓ (K)
     ],
     "brightness": [
         (12, -0.06),  # warmth ↓
         (13, 0.10),   # sharpness ↑
         (15, 0.08),   # clarity ↑
-        (122, 0.08),  # sharpness_zwicker ↑
-        (125, 0.04),  # alpha_ratio ↑
-        (126, 0.04),  # hammarberg_index ↑
+        (91, 0.08),   # sharpness_zwicker ↑ (K)
+        (94, 0.04),   # alpha_ratio ↑ (K)
+        (95, 0.04),   # hammarberg_index ↑ (K)
     ],
 }
 

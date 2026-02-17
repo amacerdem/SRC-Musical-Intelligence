@@ -38,7 +38,7 @@ def executor() -> H3Executor:
 
 @pytest.fixture(scope="module")
 def r3_tensor() -> Tensor:
-    """Synthetic R3 feature tensor: (B, T, 128) in [0, 1]."""
+    """Synthetic R3 feature tensor: (B, T, 97) in [0, 1]."""
     torch.manual_seed(77)
     return torch.rand(B, T, D)
 

@@ -19,7 +19,7 @@ from typing import Dict, Set, Tuple
 # ---------------------------------------------------------------------------
 # Range bounds for the 4-tuple address axes
 # ---------------------------------------------------------------------------
-_R3_IDX_MAX = 127      # 128 R3 features  [0, 127]
+_R3_IDX_MAX = 96       # 97 R3 features  [0, 96]
 _HORIZON_MAX = 31      # 32 horizons       [0, 31]
 _MORPH_MAX = 23        # 24 morphs         [0, 23]
 _LAW_MAX = 2           # 3 laws            [0, 2]

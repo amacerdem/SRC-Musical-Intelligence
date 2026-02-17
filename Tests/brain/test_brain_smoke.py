@@ -24,7 +24,7 @@ from Musical_Intelligence.contracts.dataclasses.brain_output import BrainOutput
 
 B = 2
 T = 100
-R3_DIM = 128
+R3_DIM = 97
 
 
 @pytest.fixture(scope="module")

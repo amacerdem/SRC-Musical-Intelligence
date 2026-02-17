@@ -56,7 +56,7 @@ class PrecomputeCache:
         mel : Tensor
             Shape ``(T, 128)`` mel spectrogram.
         r3 : Tensor
-            Shape ``(T, 128)`` R3 features.
+            Shape ``(T, 97)`` R3 features.
         h3_dense : Tensor
             Shape ``(T, N)`` dense H3 features.
         c3 : Tensor

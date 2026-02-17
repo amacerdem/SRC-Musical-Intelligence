@@ -28,7 +28,7 @@ experts:
   capacity_factor: 1.25
   expert_dims:
     cochlea: 128               # E-Cochlea: mel features
-    r3: 128                    # E-R3: spectral features
+    r3: 97                     # E-R3: spectral features
     c3: 1006                   # E-C3: cognitive models
     l3: 104                    # E-L3: semantic (placeholder)
 

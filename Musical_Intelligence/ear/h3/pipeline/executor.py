@@ -79,7 +79,7 @@ class H3Executor:
         Parameters
         ----------
         r3_tensor : Tensor
-            Shape ``(B, T, 128)`` -- batch of R3 spectral feature sequences.
+            Shape ``(B, T, 97)`` -- batch of R3 spectral feature sequences.
             Values are assumed to be in ``[0, 1]``.
         demand_tree : dict
             Pre-built demand tree mapping each horizon index to a set of

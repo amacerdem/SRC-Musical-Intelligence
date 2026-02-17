@@ -3,7 +3,7 @@
 Each subclass computes a contiguous slice of the R3 feature vector from the
 mel spectrogram. The current v1 architecture defines 5 groups (A-E) producing
 49 features; the v2 architecture (Phase 6) extends to 11 groups (A-K)
-producing 128 features.
+producing 97 features.
 
 Groups are organized in a 3-stage DAG:
 

@@ -79,7 +79,7 @@ class H3Extractor:
         Parameters
         ----------
         r3 : Tensor
-            Shape ``(B, T, 128)`` R3 spectral feature tensor.
+            Shape ``(B, T, 97)`` R3 spectral feature tensor.
             All values should be in ``[0, 1]``.
         demand : set
             Set of 4-tuples ``(r3_idx, horizon, morph, law)``

@@ -16,7 +16,7 @@ class R3FeatureSpec:
         name:        Canonical name (e.g. ``"stumpf_fusion"``, ``"loudness"``).
         group:       Parent spectral group (e.g. ``"consonance"``, ``"energy"``).
         index:       Position in the R3 feature vector. Valid range is
-                     ``[0, 127]`` (128 features, v2).
+                     ``[0, 96]`` (97 features, v2).
         description: One-line description of what this feature measures.
         citation:    Primary citation (e.g. ``"Stumpf 1898"``).
         unit:        Physical unit if applicable (e.g. ``"dB"``, ``"Hz"``).

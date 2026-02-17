@@ -11,7 +11,7 @@ balance_loss_weight: 0.01      # Switch Transformer load balancing
 # Expert output dimensions (must match MI-Space layout)
 expert_dims:
   cochlea: 128
-  r3: 128
+  r3: 97
   c3: 1006
   l3: 104
 

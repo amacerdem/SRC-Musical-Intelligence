@@ -135,7 +135,7 @@ class BaseModel(ABC):
             h3_features: Per-demand H3 scalar time series, keyed by
                 ``(r3_idx, horizon, morph, law)`` 4-tuples.
                 Shape per value: ``(B, T)``.
-            r3_features: ``(B, T, 128)`` R3 spectral feature tensor.
+            r3_features: ``(B, T, 97)`` R3 spectral feature tensor.
             cross_unit_inputs: Named tensors from other models, keyed by
                 ``pathway_id``. ``None`` if no cross-unit dependencies.
 

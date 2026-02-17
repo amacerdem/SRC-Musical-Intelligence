@@ -89,7 +89,7 @@ class BaseCognitiveUnit(ABC):
         Args:
             h3_features: Temporal features covering the union of all model
                 demands. Dict mapping H3 4-tuples to ``(B, T)`` tensors.
-            r3_features: ``(B, T, 128)`` R3 spectral feature tensor.
+            r3_features: ``(B, T, 97)`` R3 spectral feature tensor.
             cross_unit_inputs: Named tensors from other units' models,
                 keyed by ``pathway_id``. ``None`` if no cross-unit deps.
 

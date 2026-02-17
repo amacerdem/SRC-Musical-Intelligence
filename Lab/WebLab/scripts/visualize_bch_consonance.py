@@ -91,7 +91,7 @@ def load_experiment():
         meta = json.load(f)
 
     with open(_EXP_DIR / "r3.json") as f:
-        r3 = np.array(json.load(f))  # (T_lod, 128)
+        r3 = np.array(json.load(f))  # (T_lod, 97)
 
     with open(_EXP_DIR / "nuclei" / "BCH.json") as f:
         bch_data = json.load(f)
@@ -275,7 +275,7 @@ def main():
 
     T_total = D["meta"]["total_frames"]
     fig.text(0.975, 0.977,
-             f"R³ 128D  |  H³ 16 tuples  |  C³ BCH 12D",
+             f"R³ 97D  |  H³ 16 tuples  |  C³ BCH 12D",
              fontsize=9, color=TEXT_DIM, va="top", ha="right")
     fig.text(0.975, 0.963,
              f"50 channels  |  {T_total} frames → {D['T_lod']} LOD  |  "
