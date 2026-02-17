@@ -4,10 +4,16 @@ observe(): BCH-enriched or R³-direct consonance observation.
   BCH mode:  0.5×consonance_signal + 0.3×template_match + 0.2×hierarchy
   Fallback:  weighted average of R³ consonance group features.
 
-predict(): H³-informed linear model.
+predict(): H³-informed linear model (single-scale, backward compat).
   trend: h3[(roughness, H8, M18, L0)] — roughness trend at meso
   period: h3[(tonalness, H12, M14, L0)] — tonalness periodicity at phrase
   context: tempo_{t-1} × 0.1
+
+predict_multiscale() [v2.0]: Scale-matched multi-horizon prediction.
+  8 horizons (H5..H28) across micro/meso/macro/ultra bands.
+  Each horizon predicts at its own timescale, weighted by
+  w(h, Δ) = exp(-α|h - Δ|) — peak when evidence matches target.
+  Single belief posterior via T_char-weighted aggregation.
 
 precision_obs:
   BCH mode:  inverse of BCH output variability (cross-signal agreement)
@@ -21,6 +27,7 @@ import torch
 from torch import Tensor
 
 from ..belief import Belief, Likelihood
+from ..temporal_weights import CONSONANCE_HORIZONS
 from ....ear.r3.registry.feature_map import R3FeatureMap
 
 if TYPE_CHECKING:
@@ -28,7 +35,11 @@ if TYPE_CHECKING:
 
 
 class PerceivedConsonance(Belief):
-    """Perceived consonance — fast sensory belief (τ=0.3)."""
+    """Perceived consonance — fast sensory belief (τ=0.3).
+
+    v2.0: Multi-scale prediction enabled.
+    8 horizons across 4 bands, T_char=525ms (common beat level).
+    """
 
     name = "perceived_consonance"
     owner_unit = "SPU"
@@ -46,6 +57,12 @@ class PerceivedConsonance(Belief):
     w_trend = 0.15
     w_period = 0.10
     context_weights = {"tempo_state": 0.1}
+
+    # ── Multi-scale (v2.0) ────────────────────────────────────────
+    multiscale_horizons = CONSONANCE_HORIZONS   # H5,H7,H10,H13,H18,H21,H24,H28
+    multiscale_feature = "roughness"
+    T_char = 0.525      # 525 ms — common beat, phrase-level consonance
+    multiscale_alpha = 0.3
 
     def __init__(self, feature_map: R3FeatureMap) -> None:
         super().__init__(feature_map)

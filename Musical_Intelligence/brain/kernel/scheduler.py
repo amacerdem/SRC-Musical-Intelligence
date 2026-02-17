@@ -1,12 +1,14 @@
-"""C3Kernel — single-pass phase scheduler for C³ v1.1.
+"""C3Kernel — single-pass phase scheduler for C³ v2.0.
 
 Executes the belief cycle per frame:
   Phase 0:  BCH relay → observe sensory beliefs (consonance, tempo)
   Phase 1:  observe + predict + update salience (attentional gate)
   Phase 2a: predict all beliefs + observe familiarity (H³ macro stability)
+          + multi-scale predict/observe for consonance (v2.0)
   Phase 2b: compute PE + precision for predictive beliefs
+          + per-horizon PE decomposition for consonance (v2.0)
   Phase 2c: update beliefs with Bayesian fusion
-  Phase 3:  compute reward from PEs, gated by salience, modulated by familiarity
+  Phase 3:  compute reward from multi-scale PEs (v2.0)
 
 Single pass.  No iteration.  No convergence loop.
 """
@@ -42,6 +44,8 @@ class KernelOutput:
     precision_obs: Dict[str, Tensor]     # belief_name → (B, T)
     precision_pred: Dict[str, Tensor]    # belief_name → scalar
     reward: Tensor                        # (B, T) reward_valence
+    # v2.0: per-horizon PE decomposition for multi-scale beliefs
+    ms_pe: Dict[str, Dict[int, Tensor]] = field(default_factory=dict)
 
 
 # ======================================================================
@@ -110,6 +114,7 @@ class C3Kernel:
 
         Returns the union of:
           - Belief predict demands (with M2 std variants)
+          - Multi-scale demands (M0/M18/M2 per horizon, v2.0)
           - BCH L0 demands (deduped)
         """
         demands: Set[Tuple[int, int, int, int]] = set()
@@ -124,6 +129,12 @@ class C3Kernel:
         # Belief observe demands (stability for familiarity, velocity for salience)
         for belief in self._predictive:
             for feat_name, h, m, law in belief.h3_observe_demands:
+                r3_idx = self._fm.resolve(feat_name)
+                demands.add((r3_idx, h, m, law))
+
+        # Multi-scale demands (v2.0): M0, M18, M2 per horizon
+        for belief in self._predictive:
+            for feat_name, h, m, law in belief.multiscale_h3_demands():
                 r3_idx = self._fm.resolve(feat_name)
                 demands.add((r3_idx, h, m, law))
 
@@ -178,7 +189,22 @@ class C3Kernel:
         )
 
         # ── Phase 2a: Predict + Observe familiarity ─────────────────
-        cons_predicted = self._consonance.predict(self._beliefs_prev, h3)
+
+        # Multi-scale predict/observe for consonance (v2.0)
+        cons_ms_predicted = self._consonance.predict_multiscale(
+            self._beliefs_prev, h3,
+        )
+        cons_ms_observed = self._consonance.observe_multiscale(h3)
+
+        # Aggregated prediction for single-belief update
+        if cons_ms_predicted:
+            cons_predicted = self._consonance.aggregate_prediction(
+                cons_ms_predicted,
+            )
+        else:
+            # Fallback to single-scale if multiscale not available
+            cons_predicted = self._consonance.predict(self._beliefs_prev, h3)
+
         tempo_predicted = self._tempo.predict(self._beliefs_prev, h3)
         fam_predicted = self._familiarity.predict(self._beliefs_prev, h3)
         reward_predicted = self._reward_belief.predict(self._beliefs_prev, h3)
@@ -193,6 +219,18 @@ class C3Kernel:
         reward_predicted = self._broadcast(reward_predicted, B, T, device)
 
         # ── Phase 2b: Compute PE + precision ────────────────────────
+
+        # Per-horizon PE decomposition for consonance (v2.0)
+        cons_ms_pe: Dict[int, Tensor] = {}
+        for h in cons_ms_predicted:
+            obs_h = cons_ms_observed.get(h)
+            pred_h = cons_ms_predicted[h]
+            if obs_h is not None and obs_h.dim() >= 2:
+                pred_h_bc = self._broadcast(pred_h, B, T, device)
+                obs_h_bc = self._broadcast(obs_h, B, T, device)
+                cons_ms_pe[h] = obs_h_bc - pred_h_bc
+
+        # Single-scale PE (BCH obs vs aggregated pred) — for belief update
         cons_pe = cons_likelihood.value - cons_predicted
         tempo_pe = tempo_likelihood.value - tempo_predicted
         fam_pe = fam_likelihood.value - fam_predicted
@@ -222,20 +260,34 @@ class C3Kernel:
             fam_likelihood, fam_predicted, fam_pi_pred
         )
 
-        # ── Phase 3: Reward computation ─────────────────────────────
-        # Salience gates reward.  Familiarity modulates but is NOT a PE source.
-        pe_dict = {
-            "perceived_consonance": cons_pe,
-            "tempo_state": tempo_pe,
-        }
-        pi_pred_dict = {
-            "perceived_consonance": cons_pi_pred,
-            "tempo_state": tempo_pi_pred,
-        }
+        # ── Phase 3: Reward computation (multi-scale v2.0) ───────────
+        # Consonance uses multi-scale PE decomposition.
+        # Tempo uses single-scale PE (will be upgraded later).
+        if cons_ms_pe:
+            # Uniform horizon weights for reward (all scales matter equally)
+            n_h = len(cons_ms_pe)
+            cons_reward_weights = {h: 1.0 / n_h for h in cons_ms_pe}
 
-        reward_value = self._reward_agg.compute(
-            pe_dict, pi_pred_dict, sal_posterior, fam_posterior,
-        )
+            reward_value = self._reward_agg.compute_multiscale(
+                ms_pe_dict={"perceived_consonance": cons_ms_pe},
+                ms_weights={"perceived_consonance": cons_reward_weights},
+                precision_pred_dict={
+                    "perceived_consonance": cons_pi_pred,
+                    "tempo_state": tempo_pi_pred,
+                },
+                salience=sal_posterior,
+                familiarity=fam_posterior,
+                single_pe_dict={"tempo_state": tempo_pe},
+                single_precision_dict={"tempo_state": tempo_pi_pred},
+            )
+        else:
+            # Fallback: single-scale reward (backward compat)
+            reward_value = self._reward_agg.compute(
+                {"perceived_consonance": cons_pe, "tempo_state": tempo_pe},
+                {"perceived_consonance": cons_pi_pred,
+                 "tempo_state": tempo_pi_pred},
+                sal_posterior, fam_posterior,
+            )
 
         # Update reward belief with aggregated reward
         reward_likelihood = Likelihood(
@@ -295,6 +347,7 @@ class C3Kernel:
                 "reward_valence": reward_pi_pred,
             },
             reward=reward_posterior,
+            ms_pe={"perceived_consonance": cons_ms_pe} if cons_ms_pe else {},
         )
 
     @staticmethod

@@ -88,7 +88,7 @@ class FamiliarityState(Belief):
         key_std = self._h3(h3, "key_clarity", 16, 2, 0)
         tonal_stab_std = self._h3(h3, "tonal_stability", 16, 2, 0)
 
-        has_h3 = tonalness_std.numel() > 1
+        has_h3 = tonalness_std.dim() >= 2
 
         if has_h3:
             return self._observe_h3(

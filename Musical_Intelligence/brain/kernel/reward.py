@@ -1,19 +1,19 @@
-"""RewardAggregator — ARU reward computation for C³ v1.0.
+"""RewardAggregator — ARU reward computation for C³ v1.0 / v2.0.
 
 RFC §6: Inverted-U salience-gated reward.
 
-reward_i = salience_i × (w1×surprise + w2×resolution + w3×exploration − w4×monotony)
-  surprise   = |PE_i| × π_pred × (1 − familiarity)
-  resolution = (1 − |PE_i|) × π_pred × familiarity
-  exploration = entropy(prediction_distribution)  → simplified to PE variance
-  monotony    = π_pred²
+v1.0 (single-scale):
+  reward_i = salience × (w1×surprise + w2×resolution + w3×exploration − w4×monotony)
 
-Final reward_valence = Σ reward_i × familiarity_mod
+v2.0 (multi-scale):
+  For beliefs with multi-horizon PEs, reward decomposes across horizons:
+  reward = Σ_h w_h × g(PE_h, π_pred, salience, familiarity)
+  This captures surprise/resolution at EACH temporal scale independently.
 """
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Dict
+from typing import Dict, Optional
 
 import torch
 from torch import Tensor
@@ -88,6 +88,95 @@ class RewardAggregator:
         # Familiarity modulation: moderate familiarity amplifies reward
         # Inverted-U: peak at ~0.5 familiarity
         familiarity_mod = 4.0 * familiarity * (1.0 - familiarity)  # peaks at 0.5
+        reward_total = reward_total * (0.5 + 0.5 * familiarity_mod)
+
+        return reward_total
+
+    def compute_multiscale(
+        self,
+        ms_pe_dict: Dict[str, Dict[int, Tensor]],
+        ms_weights: Dict[str, Dict[int, float]],
+        precision_pred_dict: Dict[str, Tensor],
+        salience: Tensor,
+        familiarity: Tensor,
+        *,
+        single_pe_dict: Optional[Dict[str, Tensor]] = None,
+        single_precision_dict: Optional[Dict[str, Tensor]] = None,
+    ) -> Tensor:
+        """Multi-scale reward: per-horizon PE decomposition.
+
+        For beliefs with multi-horizon PEs, reward is computed at each
+        temporal scale independently and aggregated.  Beliefs without
+        multi-scale PEs use single-scale path.
+
+        Args:
+            ms_pe_dict: ``{belief_name: {horizon: PE (B,T)}}``.
+            ms_weights: ``{belief_name: {horizon: weight}}``.
+                Normalized per-horizon weights for reward aggregation.
+            precision_pred_dict: ``{belief_name: precision_pred scalar}``.
+            salience: ``(B, T)`` salience state.
+            familiarity: ``(B, T)`` familiarity state.
+            single_pe_dict: PEs for beliefs still on single-scale path.
+            single_precision_dict: Precision for single-scale beliefs.
+
+        Returns:
+            reward_valence: ``(B, T)``.
+        """
+        reward_total = torch.zeros_like(salience)
+
+        # ── Multi-scale beliefs ───────────────────────────────────
+        for belief_name, pe_by_horizon in ms_pe_dict.items():
+            pi_raw = precision_pred_dict.get(belief_name, torch.tensor(1.0))
+            pi_pred = (pi_raw / 10.0).clamp(0.0, 1.0)
+            weights = ms_weights.get(belief_name, {})
+
+            for h, pe_h in pe_by_horizon.items():
+                w_h = weights.get(h, 0.0)
+                if w_h < 1e-12:
+                    continue
+                # Skip horizons that didn't produce real data
+                if pe_h.dim() < 2:
+                    continue
+
+                pe_abs = pe_h.abs()
+
+                surprise = pe_abs * pi_pred * (1.0 - familiarity)
+                resolution = (1.0 - pe_abs.clamp(max=1.0)) * pi_pred * familiarity
+                exploration = pe_abs * (1.0 - pi_pred)
+                monotony = pi_pred ** 2
+
+                reward_h = salience * (
+                    self.cfg.w_surprise * surprise
+                    + self.cfg.w_resolution * resolution
+                    + self.cfg.w_exploration * exploration
+                    - self.cfg.w_monotony * monotony
+                )
+
+                reward_total = reward_total + w_h * reward_h
+
+        # ── Single-scale beliefs (tempo, etc.) ────────────────────
+        if single_pe_dict:
+            single_prec = single_precision_dict or {}
+            for belief_name, pe in single_pe_dict.items():
+                pi_raw = single_prec.get(belief_name, torch.tensor(1.0))
+                pi_pred = (pi_raw / 10.0).clamp(0.0, 1.0)
+
+                pe_abs = pe.abs()
+                surprise = pe_abs * pi_pred * (1.0 - familiarity)
+                resolution = (1.0 - pe_abs.clamp(max=1.0)) * pi_pred * familiarity
+                exploration = pe_abs * (1.0 - pi_pred)
+                monotony = pi_pred ** 2
+
+                reward_i = salience * (
+                    self.cfg.w_surprise * surprise
+                    + self.cfg.w_resolution * resolution
+                    + self.cfg.w_exploration * exploration
+                    - self.cfg.w_monotony * monotony
+                )
+                reward_total = reward_total + reward_i
+
+        # Familiarity modulation (same as v1.0)
+        familiarity_mod = 4.0 * familiarity * (1.0 - familiarity)
         reward_total = reward_total * (0.5 + 0.5 * familiarity_mod)
 
         return reward_total

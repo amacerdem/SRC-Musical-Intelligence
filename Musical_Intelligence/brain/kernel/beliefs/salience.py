@@ -99,10 +99,10 @@ class SalienceState(Belief):
 
         # Signal 2: H³ velocity (amplitude rapid change at beat horizon)
         h3_vel = self._h3(h3, "amplitude", 6, 8, 0)  # M8=velocity
-        has_h3 = h3_vel.numel() > 1
+        has_h3 = h3_vel.dim() >= 2
 
         # Signal 3: PE_{t-1} carry-over
-        has_pe = prev_pe_mean is not None and prev_pe_mean.numel() > 1
+        has_pe = prev_pe_mean is not None and prev_pe_mean.dim() >= 2
 
         # Adaptive mixing based on signal availability
         if has_h3 and has_pe:
@@ -128,7 +128,7 @@ class SalienceState(Belief):
         # Precision: amplitude / (H³ std + ε)
         # Decoupled from onset — amplitude is continuous and reliable
         h3_std = self._h3(h3, "amplitude", 6, 2, 0)  # M2=std
-        if h3_std.numel() > 1:
+        if h3_std.dim() >= 2:
             precision = (amplitude / (h3_std + 0.1)).clamp(0.01, 10.0)
         else:
             precision = torch.full((B, T), 1.0, device=device)
