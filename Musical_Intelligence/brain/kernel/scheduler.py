@@ -1,12 +1,12 @@
-"""C3Kernel — single-pass phase scheduler for C³ v1.0.
+"""C3Kernel — single-pass phase scheduler for C³ v1.1.
 
 Executes the belief cycle per frame:
-  Phase 0:  BCH relay → observe + update sensory beliefs (consonance, tempo)
-  Phase 1:  observe + update salience (default 1.0 if not active)
+  Phase 0:  BCH relay → observe sensory beliefs (consonance, tempo)
+  Phase 1:  observe + predict + update salience (attentional gate)
   Phase 2a: predict all beliefs + observe familiarity (H³ macro stability)
   Phase 2b: compute PE + precision for predictive beliefs
   Phase 2c: update beliefs with Bayesian fusion
-  Phase 3:  compute reward from PEs, modulated by active familiarity
+  Phase 3:  compute reward from PEs, gated by salience, modulated by familiarity
 
 Single pass.  No iteration.  No convergence loop.
 """
@@ -24,6 +24,7 @@ from .reward import RewardAggregator, RewardConfig
 from .relays.bch_wrapper import BCHKernelWrapper
 from .beliefs.consonance import PerceivedConsonance
 from .beliefs.familiarity import FamiliarityState
+from .beliefs.salience import SalienceState
 from .beliefs.tempo import TempoState
 from .beliefs.reward import RewardValence
 from ...ear.r3.registry.feature_map import R3FeatureMap
@@ -50,10 +51,10 @@ class KernelOutput:
 class C3Kernel:
     """Minimal C³ belief-cycle kernel.
 
-    v1.0 supports 4 active beliefs + 1 default + BCH relay:
+    v1.1 supports 5 active beliefs + BCH relay:
       Relay:   BCH (causal L0-only, 3 approved outputs)
-      Active:  perceived_consonance, tempo_state, familiarity_state, reward_valence
-      Default: salience_state=1.0
+      Active:  perceived_consonance, tempo_state, salience_state,
+               familiarity_state, reward_valence
 
     Usage:
         kernel = C3Kernel(feature_map)
@@ -65,8 +66,6 @@ class C3Kernel:
     def __init__(
         self,
         feature_map: R3FeatureMap,
-        *,
-        default_salience: float = 1.0,
     ) -> None:
         self._fm = feature_map
 
@@ -76,6 +75,7 @@ class C3Kernel:
         # Instantiate beliefs
         self._consonance = PerceivedConsonance(feature_map)
         self._tempo = TempoState(feature_map)
+        self._salience = SalienceState(feature_map)
         self._familiarity = FamiliarityState(feature_map)
         self._reward_belief = RewardValence(feature_map)
 
@@ -83,6 +83,7 @@ class C3Kernel:
         self._beliefs: List[Belief] = [
             self._consonance,    # Phase 0
             self._tempo,         # Phase 0
+            self._salience,      # Phase 1
             self._familiarity,   # Phase 2a
             self._reward_belief, # Phase 3
         ]
@@ -91,6 +92,7 @@ class C3Kernel:
         self._predictive: List[Belief] = [
             self._consonance,
             self._tempo,
+            self._salience,
             self._familiarity,
         ]
 
@@ -98,11 +100,9 @@ class C3Kernel:
         self._precision = PrecisionEngine()
         self._reward_agg = RewardAggregator()
 
-        # Defaults for inactive beliefs
-        self._default_salience = default_salience
-
-        # State: previous frame beliefs
+        # State: previous frame beliefs + PE carry-over for salience
         self._beliefs_prev: Dict[str, Tensor] = {}
+        self._prev_pe_mean: Optional[Tensor] = None
         self._frame_count: int = 0
 
     def h3_demands(self) -> Set[Tuple[int, int, int, int]]:
@@ -121,10 +121,11 @@ class C3Kernel:
                 demands.add((r3_idx, h, m, law))
                 demands.add((r3_idx, h, 2, law))  # M2=std for precision
 
-        # Familiarity observe demands (H³ stability measurement)
-        for feat_name, h, m, law in self._familiarity.h3_observe_demands:
-            r3_idx = self._fm.resolve(feat_name)
-            demands.add((r3_idx, h, m, law))
+        # Belief observe demands (stability for familiarity, velocity for salience)
+        for belief in self._predictive:
+            for feat_name, h, m, law in belief.h3_observe_demands:
+                r3_idx = self._fm.resolve(feat_name)
+                demands.add((r3_idx, h, m, law))
 
         # BCH L0 demands (Rule 2: deduplication)
         demands |= self._bch_wrapper.h3_demands
@@ -134,6 +135,7 @@ class C3Kernel:
     def reset(self) -> None:
         """Reset all state for a new piece/session."""
         self._beliefs_prev.clear()
+        self._prev_pe_mean = None
         self._precision.reset()
         self._frame_count = 0
 
@@ -155,13 +157,25 @@ class C3Kernel:
         T = r3.shape[1]
         device = r3.device
 
-        # Default beliefs for inactive units
-        salience = torch.full((B, T), self._default_salience, device=device)
-
         # ── Phase 0: BCH relay + Sensory grounding ────────────────
         bch_out = self._bch_wrapper.compute(r3, h3)
         cons_likelihood = self._consonance.observe(r3, h3, bch_out=bch_out)
         tempo_likelihood = self._tempo.observe(r3, h3)
+
+        # ── Phase 1: Salience (attentional gate) ──────────────────
+        sal_likelihood = self._salience.observe(
+            r3, h3, prev_pe_mean=self._prev_pe_mean,
+        )
+        sal_predicted = self._salience.predict(self._beliefs_prev, h3)
+        sal_predicted = self._broadcast(sal_predicted, B, T, device)
+        sal_pe = sal_likelihood.value - sal_predicted
+        self._precision.record_pe("salience_state", sal_pe)
+        sal_pi_pred = self._precision.estimate_precision_pred(
+            "salience_state", self._salience.tau,
+        )
+        sal_posterior = self._salience.update(
+            sal_likelihood, sal_predicted, sal_pi_pred,
+        )
 
         # ── Phase 2a: Predict + Observe familiarity ─────────────────
         cons_predicted = self._consonance.predict(self._beliefs_prev, h3)
@@ -209,7 +223,7 @@ class C3Kernel:
         )
 
         # ── Phase 3: Reward computation ─────────────────────────────
-        # Familiarity PE modulates reward formula but is NOT a reward source
+        # Salience gates reward.  Familiarity modulates but is NOT a PE source.
         pe_dict = {
             "perceived_consonance": cons_pe,
             "tempo_state": tempo_pe,
@@ -220,7 +234,7 @@ class C3Kernel:
         }
 
         reward_value = self._reward_agg.compute(
-            pe_dict, pi_pred_dict, salience, fam_posterior,
+            pe_dict, pi_pred_dict, sal_posterior, fam_posterior,
         )
 
         # Update reward belief with aggregated reward
@@ -238,11 +252,14 @@ class C3Kernel:
         # Reward PE (for tracking only)
         reward_pe = reward_value - reward_predicted
 
-        # ── Store beliefs for next frame ────────────────────────────
+        # ── Store state for next frame ──────────────────────────────
+        # PE carry-over: mean |PE| of sensory beliefs → salience Phase 1
+        self._prev_pe_mean = (cons_pe.abs() + tempo_pe.abs()) / 2.0
+
         self._beliefs_prev = {
             "perceived_consonance": cons_posterior.detach(),
             "tempo_state": tempo_posterior.detach(),
-            "salience_state": salience.detach(),
+            "salience_state": sal_posterior.detach(),
             "familiarity_state": fam_posterior.detach(),
             "reward_valence": reward_posterior.detach(),
         }
@@ -253,24 +270,27 @@ class C3Kernel:
             beliefs={
                 "perceived_consonance": cons_posterior,
                 "tempo_state": tempo_posterior,
-                "salience_state": salience,
+                "salience_state": sal_posterior,
                 "familiarity_state": fam_posterior,
                 "reward_valence": reward_posterior,
             },
             pe={
                 "perceived_consonance": cons_pe,
                 "tempo_state": tempo_pe,
+                "salience_state": sal_pe,
                 "familiarity_state": fam_pe,
                 "reward_valence": reward_pe,
             },
             precision_obs={
                 "perceived_consonance": cons_likelihood.precision,
                 "tempo_state": tempo_likelihood.precision,
+                "salience_state": sal_likelihood.precision,
                 "familiarity_state": fam_likelihood.precision,
             },
             precision_pred={
                 "perceived_consonance": cons_pi_pred,
                 "tempo_state": tempo_pi_pred,
+                "salience_state": sal_pi_pred,
                 "familiarity_state": fam_pi_pred,
                 "reward_valence": reward_pi_pred,
             },

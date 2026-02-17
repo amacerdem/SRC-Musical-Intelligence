@@ -81,6 +81,10 @@ class Belief(ABC):
     # Each entry: (feature_name, horizon, morph, law)
     h3_predict_demands: Tuple[Tuple[str, int, int, int], ...] = ()
 
+    # ── H³ demand tuples for observe() ──────────────────────────────
+    # Used by beliefs that need H³ data for observation (e.g. familiarity, salience)
+    h3_observe_demands: Tuple[Tuple[str, int, int, int], ...] = ()
+
     # ── Context weights for cross-belief prediction ─────────────────
     context_weights: Dict[str, float] = {}
 
