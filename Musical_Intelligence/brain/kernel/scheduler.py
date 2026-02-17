@@ -1,4 +1,4 @@
-"""C3Kernel — single-pass phase scheduler for C³ v2.0.
+"""C3Kernel — single-pass phase scheduler for C³ v2.1.
 
 Executes the belief cycle per frame:
   Phase 0:  BCH relay → observe sensory beliefs (consonance, tempo)
@@ -6,9 +6,9 @@ Executes the belief cycle per frame:
   Phase 2a: predict all beliefs + observe familiarity (H³ macro stability)
           + multi-scale predict/observe for consonance (v2.0)
   Phase 2b: compute PE + precision for predictive beliefs
-          + per-horizon PE decomposition for consonance (v2.0)
+          + per-horizon PE + precision decomposition (v2.1)
   Phase 2c: update beliefs with Bayesian fusion
-  Phase 3:  compute reward from multi-scale PEs (v2.0)
+  Phase 3:  compute reward from multi-scale PEs with per-horizon π (v2.1)
 
 Single pass.  No iteration.  No convergence loop.
 """
@@ -46,6 +46,8 @@ class KernelOutput:
     reward: Tensor                        # (B, T) reward_valence
     # v2.0: per-horizon PE decomposition for multi-scale beliefs
     ms_pe: Dict[str, Dict[int, Tensor]] = field(default_factory=dict)
+    # v2.1: per-horizon precision for multi-scale beliefs
+    ms_precision_pred: Dict[str, Dict[int, Tensor]] = field(default_factory=dict)
 
 
 # ======================================================================
@@ -230,6 +232,18 @@ class C3Kernel:
                 obs_h_bc = self._broadcast(obs_h, B, T, device)
                 cons_ms_pe[h] = obs_h_bc - pred_h_bc
 
+        # Per-horizon precision for consonance (v2.1)
+        cons_ms_precision: Dict[int, Tensor] = {}
+        for h, pe_h in cons_ms_pe.items():
+            self._precision.record_pe_multiscale(
+                "perceived_consonance", h, pe_h,
+            )
+            cons_ms_precision[h] = (
+                self._precision.estimate_precision_pred_multiscale(
+                    "perceived_consonance", h, self._consonance.tau,
+                )
+            )
+
         # Single-scale PE (BCH obs vs aggregated pred) — for belief update
         cons_pe = cons_likelihood.value - cons_predicted
         tempo_pe = tempo_likelihood.value - tempo_predicted
@@ -260,8 +274,8 @@ class C3Kernel:
             fam_likelihood, fam_predicted, fam_pi_pred
         )
 
-        # ── Phase 3: Reward computation (multi-scale v2.0) ───────────
-        # Consonance uses multi-scale PE decomposition.
+        # ── Phase 3: Reward computation (v2.1: per-horizon precision) ──
+        # Consonance uses multi-scale PE + per-horizon precision.
         # Tempo uses single-scale PE (will be upgraded later).
         if cons_ms_pe:
             # Uniform horizon weights for reward (all scales matter equally)
@@ -271,6 +285,7 @@ class C3Kernel:
             reward_value = self._reward_agg.compute_multiscale(
                 ms_pe_dict={"perceived_consonance": cons_ms_pe},
                 ms_weights={"perceived_consonance": cons_reward_weights},
+                ms_precision_dict={"perceived_consonance": cons_ms_precision},
                 precision_pred_dict={
                     "perceived_consonance": cons_pi_pred,
                     "tempo_state": tempo_pi_pred,
@@ -348,6 +363,10 @@ class C3Kernel:
             },
             reward=reward_posterior,
             ms_pe={"perceived_consonance": cons_ms_pe} if cons_ms_pe else {},
+            ms_precision_pred=(
+                {"perceived_consonance": cons_ms_precision}
+                if cons_ms_precision else {}
+            ),
         )
 
     @staticmethod

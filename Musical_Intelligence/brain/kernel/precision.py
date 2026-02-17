@@ -1,4 +1,4 @@
-"""PrecisionEngine — PCU role in C³ v1.0.
+"""PrecisionEngine — PCU role in C³ v1.0 / v2.1.
 
 PCU is NOT a belief owner.  It estimates precision_pred for each belief
 and maintains PE history.  It never writes belief values.
@@ -7,6 +7,7 @@ RFC §2.2:
   precision_pred_i = g(belief_stability_i, τ_i, PE_history_consistency_i)
 
 v1.0: fixed τ=0.6, pe_history_window=32 frames, stability_decay=0.95.
+v2.1: horizon-specific precision via compound keys "belief:hN".
 """
 from __future__ import annotations
 
@@ -111,3 +112,27 @@ class PrecisionEngine:
         self._precision_prev[belief_name] = precision_pred
 
         return precision_pred.clamp(0.01, 10.0)
+
+    # ── Multi-scale precision (v2.1) ──────────────────────────────
+
+    def record_pe_multiscale(
+        self, belief_name: str, horizon: int, pe: Tensor,
+    ) -> None:
+        """Record PE for a specific horizon.
+
+        Uses compound key ``"belief_name:hN"`` to reuse the existing
+        ring-buffer infrastructure with per-horizon granularity.
+        """
+        self.record_pe(f"{belief_name}:h{horizon}", pe)
+
+    def estimate_precision_pred_multiscale(
+        self, belief_name: str, horizon: int, belief_tau: float,
+    ) -> Tensor:
+        """Estimate precision_pred for a specific horizon.
+
+        Returns:
+            Scalar tensor in [0.01, 10.0], same as single-scale variant.
+        """
+        return self.estimate_precision_pred(
+            f"{belief_name}:h{horizon}", belief_tau,
+        )

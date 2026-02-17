@@ -9,6 +9,12 @@ v2.0 (multi-scale):
   For beliefs with multi-horizon PEs, reward decomposes across horizons:
   reward = Σ_h w_h × g(PE_h, π_pred, salience, familiarity)
   This captures surprise/resolution at EACH temporal scale independently.
+
+v2.1 (horizon-specific precision):
+  Each horizon has its own precision_pred derived from its own PE history.
+  reward = Σ_h w_h × g(PE_h, π_pred_h, salience, familiarity)
+  Short horizons adapt fast (high π → surprise/resolution).
+  Long horizons adapt slow (low π → exploration).
 """
 from __future__ import annotations
 
@@ -96,6 +102,7 @@ class RewardAggregator:
         self,
         ms_pe_dict: Dict[str, Dict[int, Tensor]],
         ms_weights: Dict[str, Dict[int, float]],
+        ms_precision_dict: Dict[str, Dict[int, Tensor]],
         precision_pred_dict: Dict[str, Tensor],
         salience: Tensor,
         familiarity: Tensor,
@@ -103,17 +110,22 @@ class RewardAggregator:
         single_pe_dict: Optional[Dict[str, Tensor]] = None,
         single_precision_dict: Optional[Dict[str, Tensor]] = None,
     ) -> Tensor:
-        """Multi-scale reward: per-horizon PE decomposition.
+        """Multi-scale reward: per-horizon PE + precision decomposition.
 
-        For beliefs with multi-horizon PEs, reward is computed at each
-        temporal scale independently and aggregated.  Beliefs without
-        multi-scale PEs use single-scale path.
+        v2.1: Each horizon uses its own precision_pred derived from its
+        own PE history.  Short horizons adapt fast (high π_pred_h →
+        surprise/resolution).  Long horizons adapt slow (low π_pred_h →
+        exploration).
 
         Args:
             ms_pe_dict: ``{belief_name: {horizon: PE (B,T)}}``.
             ms_weights: ``{belief_name: {horizon: weight}}``.
                 Normalized per-horizon weights for reward aggregation.
+            ms_precision_dict: ``{belief_name: {horizon: precision_pred}}``.
+                Per-horizon precision.  Falls back to single-belief
+                precision from ``precision_pred_dict`` if not available.
             precision_pred_dict: ``{belief_name: precision_pred scalar}``.
+                Single-scale precision (fallback + single-scale beliefs).
             salience: ``(B, T)`` salience state.
             familiarity: ``(B, T)`` familiarity state.
             single_pe_dict: PEs for beliefs still on single-scale path.
@@ -124,10 +136,12 @@ class RewardAggregator:
         """
         reward_total = torch.zeros_like(salience)
 
-        # ── Multi-scale beliefs ───────────────────────────────────
+        # ── Multi-scale beliefs (v2.1: per-horizon precision) ────
         for belief_name, pe_by_horizon in ms_pe_dict.items():
-            pi_raw = precision_pred_dict.get(belief_name, torch.tensor(1.0))
-            pi_pred = (pi_raw / 10.0).clamp(0.0, 1.0)
+            pi_h_dict = ms_precision_dict.get(belief_name, {})
+            pi_fallback = precision_pred_dict.get(
+                belief_name, torch.tensor(1.0),
+            )
             weights = ms_weights.get(belief_name, {})
 
             for h, pe_h in pe_by_horizon.items():
@@ -137,6 +151,10 @@ class RewardAggregator:
                 # Skip horizons that didn't produce real data
                 if pe_h.dim() < 2:
                     continue
+
+                # Per-horizon precision (v2.1)
+                pi_raw = pi_h_dict.get(h, pi_fallback)
+                pi_pred = (pi_raw / 10.0).clamp(0.0, 1.0)
 
                 pe_abs = pe_h.abs()
 
