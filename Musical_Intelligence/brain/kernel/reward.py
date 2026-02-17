@@ -1,4 +1,4 @@
-"""RewardAggregator — ARU reward computation for C³ v1.0 / v2.0.
+"""RewardAggregator — ARU reward computation for C³ v1.0 / v2.3.
 
 RFC §6: Inverted-U salience-gated reward.
 
@@ -15,6 +15,12 @@ v2.1 (horizon-specific precision):
   reward = Σ_h w_h × g(PE_h, π_pred_h, salience, familiarity)
   Short horizons adapt fast (high π → surprise/resolution).
   Long horizons adapt slow (low π → exploration).
+
+v2.3 (precision compression):
+  π_eff = tanh(π_raw / scale) replaces linear π_raw / 10.
+  Breaks monotony saturation: at scale=12, π_raw=10 → π_eff=0.68
+  instead of 0.95.  Monotony drops from 0.90 to 0.37 (−59%).
+  Operating range expands from [0.93, 1.0] to [0.55, 0.68].
 """
 from __future__ import annotations
 
@@ -32,6 +38,11 @@ class RewardConfig:
     w_resolution: float = 1.2
     w_exploration: float = 0.3
     w_monotony: float = 0.8
+    # v2.3: tanh compression scale for precision normalization.
+    # π_eff = tanh(π_raw / precision_scale).
+    # scale=12: π_raw=10 → 0.68, monotony=0.37.
+    # scale=15: π_raw=10 → 0.58, monotony=0.27 (more aggressive).
+    precision_scale: float = 12.0
 
 
 class RewardAggregator:
@@ -62,10 +73,10 @@ class RewardAggregator:
 
         for belief_name, pe in pe_dict.items():
             pi_raw = precision_pred_dict.get(belief_name, torch.tensor(1.0))
-            # Normalize precision to [0, 1] — the reward formula assumes
-            # pi_pred is a confidence probability, not a raw reliability index.
+            # v2.3: tanh compression — breaks monotony saturation.
             # PrecisionEngine outputs in [0.01, 10.0].
-            pi_pred = (pi_raw / 10.0).clamp(0.0, 1.0)
+            # tanh(10/12) ≈ 0.68 vs linear 10/10 = 1.0.
+            pi_pred = torch.tanh(pi_raw / self.cfg.precision_scale)
 
             pe_abs = pe.abs()
 
@@ -152,9 +163,9 @@ class RewardAggregator:
                 if pe_h.dim() < 2:
                     continue
 
-                # Per-horizon precision (v2.1)
+                # Per-horizon precision (v2.1 + v2.3 tanh compression)
                 pi_raw = pi_h_dict.get(h, pi_fallback)
-                pi_pred = (pi_raw / 10.0).clamp(0.0, 1.0)
+                pi_pred = torch.tanh(pi_raw / self.cfg.precision_scale)
 
                 pe_abs = pe_h.abs()
 
@@ -177,7 +188,7 @@ class RewardAggregator:
             single_prec = single_precision_dict or {}
             for belief_name, pe in single_pe_dict.items():
                 pi_raw = single_prec.get(belief_name, torch.tensor(1.0))
-                pi_pred = (pi_raw / 10.0).clamp(0.0, 1.0)
+                pi_pred = torch.tanh(pi_raw / self.cfg.precision_scale)
 
                 pe_abs = pe.abs()
                 surprise = pe_abs * pi_pred * (1.0 - familiarity)
