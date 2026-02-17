@@ -86,7 +86,7 @@ def run_pipeline(name: str, path: str) -> dict:
     t1 = time.time()
     r3_ext = R3Extractor()
     r3_out = r3_ext.extract(mel_t, audio=waveform_t, sr=SR)
-    r3_tensor = r3_out.features  # (1, T, 128)
+    r3_tensor = r3_out.features  # (1, T, 97)
     feature_map = r3_out.feature_map
     r3_time = time.time() - t1
     print(f"    R³: {r3_tensor.shape}, {r3_time:.2f}s")

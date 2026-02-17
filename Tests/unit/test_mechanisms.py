@@ -50,9 +50,9 @@ def all_mechanisms():
 
 @pytest.fixture(scope="module")
 def synthetic_r3() -> Tensor:
-    """Synthetic R3 features: (B, T, 128) in [0, 1]."""
+    """Synthetic R3 features: (B, T, 97) in [0, 1]."""
     torch.manual_seed(99)
-    return torch.rand(B, T, 128)
+    return torch.rand(B, T, 97)
 
 
 @pytest.fixture(scope="module")
@@ -160,7 +160,7 @@ class TestMechanismH3Demand:
                 f"{cls.__name__}: demand entry {t} is not a 4-tuple"
             )
             r3_idx, horizon, morph, law = t
-            assert 0 <= r3_idx <= 127, (
+            assert 0 <= r3_idx <= 96, (
                 f"{cls.__name__}: r3_idx {r3_idx} out of range"
             )
             assert 0 <= horizon <= 31, (

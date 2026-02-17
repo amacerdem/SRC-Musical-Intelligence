@@ -105,7 +105,7 @@ class TestR3ToH3Pipeline:
         sample_demand: set,
     ) -> None:
         """R3 extract -> H3 extract produces a valid sparse dictionary."""
-        r3_tensor = r3_output.features  # (B, T, 128)
+        r3_tensor = r3_output.features  # (B, T, 97)
 
         h3_out = h3_extractor.extract(r3_tensor, sample_demand)
 
@@ -168,11 +168,11 @@ class TestR3H3ShapeConsistency:
         sample_demand: set,
     ) -> None:
         """R3 time dimension T propagates correctly through H3."""
-        r3_tensor = r3_output.features  # (B, T, 128)
+        r3_tensor = r3_output.features  # (B, T, 97)
         B_r3, T_r3, D_r3 = r3_tensor.shape
 
         # R3 basic checks
-        assert D_r3 == 128, f"R3 output dim should be 128, got {D_r3}"
+        assert D_r3 == 97, f"R3 output dim should be 97, got {D_r3}"
         assert B_r3 == 1, f"Batch size should be 1, got {B_r3}"
 
         # H3 extraction
@@ -200,9 +200,9 @@ class TestR3H3ShapeConsistency:
         )
 
     def test_r3_feature_names(self, r3_output) -> None:
-        """R3 output should provide exactly 128 feature names."""
+        """R3 output should provide exactly 97 feature names."""
         names = r3_output.feature_names
-        assert len(names) == 128, (
-            f"Expected 128 feature names, got {len(names)}"
+        assert len(names) == 97, (
+            f"Expected 97 feature names, got {len(names)}"
         )
-        assert len(set(names)) == 128, "Feature names must be unique"
+        assert len(set(names)) == 97, "Feature names must be unique"

@@ -4,7 +4,7 @@
 Tests the minimal 3-belief kernel:
   perceived_consonance (SPU) + tempo_state (STU) + reward_valence (ARU)
 
-Pipeline: Audio → Cochlea → R³(128D) → H³(sparse) → C³ Kernel → traces
+Pipeline: Audio → Cochlea → R³(97D) → H³(sparse) → C³ Kernel → traces
 
 Expected behavior:
   - First 5s: low familiarity (default), higher PE
@@ -76,7 +76,7 @@ def main() -> None:
     t1 = time.time()
     r3_ext = R3Extractor()
     r3_out = r3_ext.extract(mel_t, audio=waveform_t, sr=SR)
-    r3_tensor = r3_out.features  # (1, T, 128)
+    r3_tensor = r3_out.features  # (1, T, 97)
     feature_map = r3_out.feature_map
     print(f"  R³: {r3_tensor.shape}, {time.time()-t1:.2f}s")
 
@@ -112,7 +112,7 @@ def main() -> None:
 
     # Run frame-by-frame
     for t in range(T):
-        r3_frame = r3_tensor[:, t:t+1, :]  # (1, 1, 128)
+        r3_frame = r3_tensor[:, t:t+1, :]  # (1, 1, 97)
 
         # Extract H³ for this frame (slice all tuples)
         h3_frame = {}

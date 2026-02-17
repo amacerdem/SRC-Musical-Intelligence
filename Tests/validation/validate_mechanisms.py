@@ -45,7 +45,7 @@ MECHANISM_CLASSES = {
     "MEM": MEM, "SYN": SYN, "AED": AED, "CPD": CPD, "C0P": C0P,
 }
 EXPECTED_OUTPUT_DIM = 30
-B, T, R3_DIM = 1, 100, 128
+B, T, R3_DIM = 1, 100, 97
 
 
 # ---------------------------------------------------------------------------

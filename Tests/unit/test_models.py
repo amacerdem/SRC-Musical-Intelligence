@@ -196,7 +196,7 @@ class TestModelH3DemandTuples:
                 f"{model.UNIT}-{model.NAME}: invalid tuple {t}"
             )
             r3_idx, horizon, morph, law = t
-            assert 0 <= r3_idx <= 127
+            assert 0 <= r3_idx <= 96
             assert 0 <= horizon <= 31
             assert 0 <= morph <= 23
             assert 0 <= law <= 2
@@ -209,7 +209,7 @@ class TestModelComputeShape:
     def test_model_compute_shape(self, model):
         """compute() must return (B, T, OUTPUT_DIM) given synthetic inputs."""
         torch.manual_seed(42)
-        r3_features = torch.rand(B, T, 128)
+        r3_features = torch.rand(B, T, 97)
 
         # Build synthetic mechanism outputs
         mechanism_outputs = {}

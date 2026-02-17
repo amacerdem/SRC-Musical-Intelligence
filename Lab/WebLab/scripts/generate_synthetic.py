@@ -67,8 +67,8 @@ def _generate_sine_wav(path: Path) -> None:
 def _generate_r3() -> list[list[float]]:
     """Generate synthetic R³ data: slow oscillations per group."""
     r3 = np.zeros((T_LOD, R3_DIM), dtype=np.float32)
-    freqs = [0.5, 1.0, 2.0, 3.0, 0.3, 1.5, 2.5, 0.8, 1.2, 0.6, 1.8]
-    group_bounds = [(0,7),(7,12),(12,21),(21,25),(25,49),(49,65),(65,75),(75,87),(87,94),(94,114),(114,128)]
+    freqs = [0.5, 1.0, 2.0, 3.0, 0.3, 1.5, 2.5, 0.8, 1.2]
+    group_bounds = [(0,7),(7,12),(12,21),(21,25),(25,41),(41,51),(51,63),(63,83),(83,97)]
 
     for gi, (start, end) in enumerate(group_bounds):
         freq = freqs[gi]

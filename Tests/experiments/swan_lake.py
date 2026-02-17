@@ -6,7 +6,7 @@ producing a comprehensive cognitive profile report.
 
 Pipeline stages:
     1. Audio loading and mel spectrogram
-    2. R3 spectral feature extraction (128D)
+    2. R3 spectral feature extraction (97D)
     3. H3 temporal morphology extraction (sparse)
     4. Brain forward pass (1006D)
 
@@ -122,8 +122,8 @@ def analyze_r3_dynamics(
 
     for t_start in range(0, T, interval_frames):
         t_end = min(t_start + interval_frames, T)
-        segment = features[0, t_start:t_end, :]  # (frames, 128)
-        seg_mean = segment.mean(dim=0)  # (128,)
+        segment = features[0, t_start:t_end, :]  # (frames, 97)
+        seg_mean = segment.mean(dim=0)  # (97,)
 
         row = {
             "time_s": frame_to_time(t_start),
@@ -405,7 +405,7 @@ def main() -> None:
     r3_ext = R3Extractor()
     r3_output = r3_ext.extract(mel)
     timings["r3_extraction"] = time.perf_counter() - t0
-    r3_features = r3_output.features  # (B, T, 128)
+    r3_features = r3_output.features  # (B, T, 97)
 
     rw.print(f"  R3 output: {tuple(r3_features.shape)}")
     rw.print(f"  Value range: [{r3_features.min().item():.4f}, "

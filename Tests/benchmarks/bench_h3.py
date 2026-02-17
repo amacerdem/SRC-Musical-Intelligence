@@ -196,8 +196,8 @@ def main() -> None:
     print(header)
     print("-" * len(header))
 
-    # Theoretical max per horizon = 128 * 24 * 3 = 9216
-    THEORETICAL_PER_HORIZON = 128 * 24 * 3
+    # Theoretical max per horizon = 97 * 24 * 3 = 6984
+    THEORETICAL_PER_HORIZON = 97 * 24 * 3
 
     for h in range(32):
         count = stats["per_horizon"].get(h, 0)

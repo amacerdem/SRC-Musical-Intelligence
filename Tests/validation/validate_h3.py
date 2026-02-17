@@ -65,7 +65,7 @@ HOP = 256
 N_MELS = 128
 FRAME_RATE = SR / HOP
 
-THEORETICAL_SPACE = R3_DIM * N_HORIZONS * N_MORPHS * N_LAWS  # 128*32*24*3 = 294,912
+THEORETICAL_SPACE = R3_DIM * N_HORIZONS * N_MORPHS * N_LAWS  # 97*32*24*3 = 223,488
 
 UNIT_NAMES = ("SPU", "STU", "IMU", "ASU", "NDU", "MPU", "PCU", "ARU", "RPU")
 UNIT_CLASSES = {
@@ -302,7 +302,7 @@ def main() -> None:
         mel = _load_mel(SWAN_LAKE_PATH)
         r3_ext = R3Extractor()
         r3_out = r3_ext.extract(mel)
-        r3_features = r3_out.features  # (B, T, 128)
+        r3_features = r3_out.features  # (B, T, 97)
         r3_time = time.perf_counter() - t0
         print(f"  R3 extraction: {tuple(r3_features.shape)}, time={r3_time:.3f}s")
 

@@ -133,13 +133,13 @@ class TestR3GroupBoundaries:
 
 
 class TestR3AutoDiscovery:
-    """Verify auto_discover_groups finds all 11 spectral groups."""
+    """Verify auto_discover_groups finds all 9 spectral groups."""
 
     def test_r3_groups_all_discovered(self):
-        """auto_discover_groups() must return exactly 11 group instances."""
+        """auto_discover_groups() must return exactly 9 group instances."""
         groups = auto_discover_groups()
-        assert len(groups) == 11, (
-            f"Expected 11 discovered groups, got {len(groups)}"
+        assert len(groups) == 9, (
+            f"Expected 9 discovered groups, got {len(groups)}"
         )
 
     def test_r3_groups_sorted_by_index(self):

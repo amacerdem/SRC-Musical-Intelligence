@@ -101,10 +101,10 @@ def pipeline_data():
     print(f"  Mel shape: {mel.shape}")
 
     # --- Stage 2: Mel → R³ ---
-    print("[Stage 2] Extracting R³ features (128D)...")
+    print("[Stage 2] Extracting R³ features (97D)...")
     r3_extractor = R3Extractor()
     r3_output = r3_extractor.extract(mel)
-    r3 = r3_output.features  # (1, T, 128)
+    r3 = r3_output.features  # (1, T, 97)
     results["r3"] = r3
     print(f"  R³ shape: {r3.shape}, range: [{r3.min():.4f}, {r3.max():.4f}]")
 
@@ -855,7 +855,7 @@ class TestHMCEVisualization:
         matplotlib.use("Agg")
         import matplotlib.pyplot as plt
 
-        r3 = pipeline_data["r3"][0].numpy()  # (T, 128)
+        r3 = pipeline_data["r3"][0].numpy()  # (T, 97)
         T = r3.shape[0]
         time_s = np.arange(T) / 172.27
 

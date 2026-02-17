@@ -4,7 +4,7 @@
 > Bu dizin, Musical Intelligence (MI) projesinin tam test altyapisini icerir.
 > Birim testleri, entegrasyon testleri, performans olcumleri, dogrulama testleri
 > ve deneysel senaryolar olmak uzere 5 kategori altinda organize edilmistir.
-> Tum testler, Audio -> Cochlea(mel) -> R3(128D) -> H3(sparse) -> Brain(1006D)
+> Tum testler, Audio -> Cochlea(mel) -> R3(97D) -> H3(sparse) -> Brain(1006D)
 > boru hattini kapsar. Temel performans referansi Swan Lake (30s) uzerinden
 > olusturulmustur: toplam ~149 saniye (H3 darbogaziyla).
 
@@ -43,9 +43,9 @@ validity of the system.
     |
     v
   +------------------+
-  |       R3          |   11 spectral groups (A-K)
-  |  Spectral Extract |   3-stage DAG pipeline + normalization
-  +------------------+   Output: (B, T, 128)  values in [0, 1]
+  |       R3          |   9 spectral groups (A-K)
+  |  Spectral Extract |   2-stage DAG pipeline + normalization
+  +------------------+   Output: (B, T, 97)  values in [0, 1]
     |
     +----------+
     |          |
@@ -69,7 +69,7 @@ validity of the system.
           +------------------+
 
   4-tuple address space: (r3_idx, horizon, morph, law)
-  Theoretical H3 space: 128 x 32 x 24 x 3 = 294,912 features
+  Theoretical H3 space: 97 x 32 x 24 x 3 = 223,488 features
   Sparse execution: only demanded tuples are computed
 ```
 
@@ -113,7 +113,7 @@ Tests/
 |-- validation/             # Scientific invariant checks (python)
 |   |-- __init__.py
 |   |-- val_output_range.py # All outputs in [0, 1]
-|   |-- val_r3_groups.py    # 11 groups sum to 128D
+|   |-- val_r3_groups.py    # 9 groups sum to 97D
 |   |-- val_h3_sparsity.py  # Only demanded tuples computed
 |   |-- val_brain_dims.py   # 9 units sum to 1006D
 |   `-- val_determinism.py  # Same input -> same output
@@ -223,7 +223,7 @@ T=5168 frames at 172.27 Hz, single CPU, batch size 1):
 | Stage    | Wall Time | Frames | ms/frame | Output Shape     | Notes                    |
 |----------|-----------|--------|----------|------------------|--------------------------|
 | Cochlea  | 1.7 s     | 5168   | 0.33     | (1, 128, 5168)   | librosa mel spectrogram  |
-| R3       | 1.2 s     | 5168   | 0.23     | (1, 5168, 128)   | 11 groups, DAG pipeline  |
+| R3       | 1.2 s     | 5168   | 0.23     | (1, 5168, 97)    | 9 groups, DAG pipeline   |
 | H3       | 146 s     | 5168   | 28.25    | sparse dict      | Bottleneck stage         |
 | Brain    | 0.16 s    | 5168   | 0.03     | (1, 5168, 1006)  | 10 mechs + 96 models     |
 | **Total**| **149 s** | 5168   | 28.84    | (1, 5168, 1006)  | H3 dominates at 98%      |
@@ -248,7 +248,7 @@ The test suite uses synthetic data generators (`Tests/fixtures/generators.py`)
 to create reproducible test inputs without requiring audio files. Key fixtures:
 
 - **`synthetic_mel`**: Random mel spectrogram `(B, 128, T)` for R3 input
-- **`synthetic_r3`**: Random R3 tensor `(B, T, 128)` for H3/Brain input
+- **`synthetic_r3`**: Random R3 tensor `(B, T, 97)` for H3/Brain input
 - **`synthetic_r3_v1`**: Random R3 v1 tensor `(B, T, 49)` for legacy Brain input
 - **`synthetic_h3`**: Extracted H3 features from synthetic R3 with minimal demand
 - **`brain_orchestrator`**: Pre-constructed `BrainOrchestrator` instance

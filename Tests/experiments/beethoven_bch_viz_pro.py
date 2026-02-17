@@ -368,7 +368,7 @@ def main():
     total_ch = 12 + n_active_ram + 4 + 28
     fig.text(
         0.975, 0.977,
-        f"R³ 128D  |  H³ 16 tuples  |  C³ BCH 12D",
+        f"R³ 97D  |  H³ 16 tuples  |  C³ BCH 12D",
         fontsize=9, color=TEXT_DIM, va="top", ha="right",
     )
     fig.text(

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """R3 Spectral Feature Validation Report.
 
-Validates the 128-D R3 spectral feature extractor against the Swan Lake
+Validates the 97-D R3 spectral feature extractor against the Swan Lake
 test audio. Checks value ranges, NaN/Inf absence, per-group statistics,
 group boundary alignment, and warmup feature behavior.
 
@@ -83,7 +83,7 @@ def _load_mel(path: str, duration: float = 30.0) -> torch.Tensor:
 # Validation checks
 # ---------------------------------------------------------------------------
 def validate_shape(features: torch.Tensor) -> dict:
-    """Check output shape is (B, T, 128)."""
+    """Check output shape is (B, T, 97)."""
     B, T, D = features.shape
     passed = D == R3_DIM
     return {
@@ -118,7 +118,7 @@ def validate_no_nan_inf(features: torch.Tensor) -> dict:
 
 
 def validate_group_boundaries(features: torch.Tensor) -> dict:
-    """Check group boundaries cover [0, 128) without gaps/overlaps."""
+    """Check group boundaries cover [0, 97) without gaps/overlaps."""
     errors = []
     prev_end = 0
     total_dim = 0
@@ -134,7 +134,7 @@ def validate_group_boundaries(features: torch.Tensor) -> dict:
     if total_dim != R3_DIM:
         errors.append(f"Total dim={total_dim}, expected {R3_DIM}")
     passed = len(errors) == 0
-    detail = "All 11 groups contiguous [0, 128)" if passed else "; ".join(errors)
+    detail = "All 9 groups contiguous [0, 97)" if passed else "; ".join(errors)
     return {
         "test": "Group boundary alignment",
         "passed": passed,
@@ -275,7 +275,7 @@ def main() -> None:
     extractor = R3Extractor()
     r3_output = extractor.extract(mel)
     extract_time = time.perf_counter() - t0
-    features = r3_output.features  # (B, T, 128)
+    features = r3_output.features  # (B, T, 97)
     print(f"  Extractor: {extractor}")
     print(f"  Output shape: {tuple(features.shape)}")
     print(f"  Feature names: {len(r3_output.feature_names)} entries")

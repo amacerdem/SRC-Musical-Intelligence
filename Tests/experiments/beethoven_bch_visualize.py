@@ -65,7 +65,7 @@ def run_pipeline(device: torch.device):
     print("  R³ extraction...", flush=True)
     r3_ext = R3Extractor()
     r3_out = r3_ext.extract(mel_t)
-    r3 = r3_out.features  # (1, T, 128)
+    r3 = r3_out.features  # (1, T, 97)
 
     # BCH demand → H³
     print("  H³ extraction...", flush=True)

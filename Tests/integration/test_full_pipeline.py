@@ -1,6 +1,6 @@
 """Full end-to-end integration tests for the MI pipeline.
 
-Pipeline stages: Audio (WAV) -> Cochlea (mel) -> R3 (128D) -> H3 (sparse) -> Brain C3 (1006D)
+Pipeline stages: Audio (WAV) -> Cochlea (mel) -> R3 (97D) -> H3 (sparse) -> Brain C3 (1006D)
 
 Tests include:
 - Synthetic mel test (fast, no audio dependency)
@@ -35,7 +35,7 @@ from Musical_Intelligence.brain import BrainOrchestrator
 # ---------------------------------------------------------------------------
 # Constants
 # ---------------------------------------------------------------------------
-EXPECTED_R3_DIM = 128
+EXPECTED_R3_DIM = 97
 EXPECTED_BRAIN_DIM = 1006
 
 SWAN_LAKE = (

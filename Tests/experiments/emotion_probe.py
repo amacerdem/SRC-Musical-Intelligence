@@ -99,8 +99,8 @@ def load_mel(path: str, offset: float, duration: float) -> Tensor:
 # ─── R³ Group Statistics ──────────────────────────────────────────────────────
 def r3_group_means(features: Tensor) -> dict:
     """Compute mean value per R³ group, averaged over all frames."""
-    # features: (1, T, 128)
-    feat = features[0]  # (T, 128)
+    # features: (1, T, 97)
+    feat = features[0]  # (T, 97)
     result = {}
     for g in R3_GROUP_BOUNDARIES:
         vals = feat[:, g.start:g.end]  # (T, group_dim)
@@ -115,7 +115,7 @@ def r3_group_means(features: Tensor) -> dict:
 
 def r3_key_features(features: Tensor) -> dict:
     """Extract specific emotion-relevant features by name."""
-    feat = features[0]  # (T, 128)
+    feat = features[0]  # (T, 97)
     names = R3_FEATURE_NAMES
 
     # Map name → index for lookup
@@ -262,7 +262,7 @@ def run_full_pipeline(mels: dict, r3_results: dict) -> dict:
     brain_results = {}
 
     for emotion, r3_data in r3_results.items():
-        r3_features = r3_data["raw_features"]  # (1, T, 128)
+        r3_features = r3_data["raw_features"]  # (1, T, 97)
 
         t0 = time.time()
         h3_output = h3_ext.extract(r3_features, demand)
@@ -311,7 +311,7 @@ def print_header():
 def print_r3_comparison(r3_results: dict):
     print()
     print("-" * 80)
-    print("  LEVEL 1: R³ SPECTRAL FEATURES (128D)")
+    print("  LEVEL 1: R³ SPECTRAL FEATURES (97D)")
     print("-" * 80)
 
     # Group comparison table

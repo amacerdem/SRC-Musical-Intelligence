@@ -44,13 +44,13 @@ def brain() -> BrainOrchestrator:
 
 @pytest.fixture(scope="module")
 def synthetic_r3() -> torch.Tensor:
-    """Synthetic R3 features: (B=1, T=100, 128) in [0, 1].
+    """Synthetic R3 features: (B=1, T=100, 97) in [0, 1].
 
     T=100 keeps tests fast while providing enough frames for all
     mechanisms and models to operate.
     """
     gen = torch.Generator().manual_seed(42)
-    return torch.rand(1, 100, 128, generator=gen)
+    return torch.rand(1, 100, 97, generator=gen)
 
 
 @pytest.fixture(scope="module")

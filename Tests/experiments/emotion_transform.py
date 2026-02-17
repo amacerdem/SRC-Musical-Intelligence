@@ -234,7 +234,7 @@ def normalize_mel_for_r3(mel_power: np.ndarray) -> Tensor:
 def extract_r3_key_features(r3_ext: R3Extractor, mel_tensor: Tensor) -> dict:
     """Extract emotion-relevant R³ features."""
     r3_output = r3_ext.extract(mel_tensor)
-    feat = r3_output.features[0]  # (T, 128)
+    feat = r3_output.features[0]  # (T, 97)
 
     name_to_idx = {n: i for i, n in enumerate(R3_FEATURE_NAMES)}
 

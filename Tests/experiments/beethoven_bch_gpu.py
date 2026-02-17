@@ -7,7 +7,7 @@ Consonance Hierarchy), entirely on Apple MPS GPU.
 
 Pipeline stages:
     1. Audio → mel spectrogram (CPU, then → MPS)
-    2. R³ spectral feature extraction (128D) on MPS
+    2. R³ spectral feature extraction (97D) on MPS
     3. H³ temporal morphology extraction (BCH's 16 demands) on MPS
     4. Brain forward pass (BCH only, 12D output) on MPS
 
@@ -166,7 +166,7 @@ def main() -> None:
     r3_ext = R3Extractor()
     r3_output = r3_ext.extract(mel)
     timings["r3_extraction"] = time.perf_counter() - t0
-    r3_features = r3_output.features  # (B, T, 128)
+    r3_features = r3_output.features  # (B, T, 97)
 
     rw.print(f"  R³ output: {tuple(r3_features.shape)}")
     rw.print(f"  Device: {r3_features.device}")
@@ -387,7 +387,7 @@ def main() -> None:
         rw.print(f"  [{status}] {name}")
 
     # Shape checks
-    check("R³ shape is (1, T, 128)", r3_features.shape == (1, T, 128))
+    check("R³ shape is (1, T, 97)", r3_features.shape == (1, T, 97))
     check("BCH full output is (1, T, 12)", bch_full.shape == (1, T, 12))
     check("RAM shape is (1, T, 26)", ram.shape == (1, T, 26))
     check("Neuro shape is (1, T, 4)", neuro.shape == (1, T, 4))
