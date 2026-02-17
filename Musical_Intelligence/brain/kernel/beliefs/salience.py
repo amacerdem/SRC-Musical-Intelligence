@@ -12,9 +12,9 @@ observe(): Bottom-up attention signal from 3 sources:
   continuous signal during sustained passages. Multiplicative product
   creates a degenerate zero-observation for most frames.
 
-predict(): H³-informed linear model.
+predict(): H³-informed linear model (bottom-up only).
   trend: h3[(amplitude, H6, M18, L0)] — amplitude trend at beat scale
-  context: perceived_consonance_{t-1} × 0.1, tempo_state_{t-1} × 0.1
+  No cross-belief context — salience prediction is purely bottom-up.
 
 precision_obs: amplitude / (H³_std + ε).  Decoupled from onset to
   maintain meaningful precision during sustained passages.
@@ -42,8 +42,8 @@ class SalienceState(Belief):
 
     name = "salience_state"
     owner_unit = "ASU"
-    tau = 0.5
-    baseline = 0.5
+    tau = 0.3       # Fast response — attention is reactive, not inertial
+    baseline = 0.3  # Matched to typical observation level (energy signal)
     phase = 1
 
     # H³ demands for observe(): velocity at beat scale
@@ -56,12 +56,9 @@ class SalienceState(Belief):
         ("amplitude", 6, 18, 0),  # M18=trend, H6=beat, L0=memory
     )
 
-    w_trend = 0.15
-    w_period = 0.0    # No periodicity term for salience
-    context_weights = {
-        "perceived_consonance": 0.1,
-        "tempo_state": 0.1,
-    }
+    w_trend = 0.20   # Slightly higher — salience should follow energy trends
+    w_period = 0.0   # No periodicity term for salience
+    context_weights = {}  # No cross-belief inflation — salience is bottom-up
 
     # Signal mixing weights (additive, sum to 1.0)
     _W_ENERGY = 0.40         # Bottom-up loudness + transient
