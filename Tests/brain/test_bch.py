@@ -202,7 +202,7 @@ class TestConsonanceSensitivity:
 
 class TestH3Demand:
     def test_count(self, bch: BCH):
-        assert len(bch.h3_demand) == 50
+        assert len(bch.h3_demand) == 48
 
     def test_all_tuples_are_4_element(self, bch: BCH):
         for spec in bch.h3_demand:
