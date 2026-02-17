@@ -1,4 +1,4 @@
-"""C3Kernel — single-pass phase scheduler for C³ v2.1.
+"""C3Kernel — single-pass phase scheduler for C³ v2.2.
 
 Executes the belief cycle per frame:
   Phase 0:  BCH relay → observe sensory beliefs (consonance, tempo)
@@ -9,6 +9,7 @@ Executes the belief cycle per frame:
           + per-horizon PE + precision decomposition (v2.1)
   Phase 2c: update beliefs with Bayesian fusion
   Phase 3:  compute reward from multi-scale PEs with per-horizon π (v2.1)
+          + horizon activation gating — data-readiness weights (v2.2)
 
 Single pass.  No iteration.  No convergence loop.
 """
@@ -29,7 +30,9 @@ from .beliefs.familiarity import FamiliarityState
 from .beliefs.salience import SalienceState
 from .beliefs.tempo import TempoState
 from .beliefs.reward import RewardValence
+from ...ear.h3.constants.horizons import FRAME_RATE
 from ...ear.r3.registry.feature_map import R3FeatureMap
+from .temporal_weights import activated_reward_weights
 
 
 # ======================================================================
@@ -274,13 +277,16 @@ class C3Kernel:
             fam_likelihood, fam_predicted, fam_pi_pred
         )
 
-        # ── Phase 3: Reward computation (v2.1: per-horizon precision) ──
+        # ── Phase 3: Reward computation (v2.2: activated horizon weights) ──
         # Consonance uses multi-scale PE + per-horizon precision.
         # Tempo uses single-scale PE (will be upgraded later).
         if cons_ms_pe:
-            # Uniform horizon weights for reward (all scales matter equally)
-            n_h = len(cons_ms_pe)
-            cons_reward_weights = {h: 1.0 / n_h for h in cons_ms_pe}
+            # Horizon activation gating (v2.2): weight by data-readiness.
+            # Ultra horizons (H24, H28) suppressed until enough data exists.
+            elapsed_s = self._frame_count / FRAME_RATE
+            cons_reward_weights = activated_reward_weights(
+                elapsed_s, tuple(cons_ms_pe.keys()),
+            )
 
             reward_value = self._reward_agg.compute_multiscale(
                 ms_pe_dict={"perceived_consonance": cons_ms_pe},

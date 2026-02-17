@@ -1,18 +1,23 @@
 """Scale-matched exponential temporal weighting for multi-horizon prediction.
 
-Implements the core weighting function for C³ v2.0 multi-scale prediction:
+Implements two core weighting functions for C³ multi-scale prediction:
 
+v2.0 — Scale-matched evidence weighting:
     w(h, Δ) = exp(-α |h - Δ|)
+    Evidence from H³ at horizon h peaks when h matches prediction target Δ.
 
-where h is an evidence horizon index and Δ is the prediction target horizon.
-
-The weight peaks when evidence and prediction are at the same temporal scale
-(h = Δ) and decays exponentially with index distance.  Since H³ horizons are
-quasi-log spaced, index distance approximates log-time distance.
+v2.2 — Horizon activation (data-readiness gating):
+    a(t, T_h) = σ(k · (t / T_h − 1))
+    A horizon contributes to reward only after enough elapsed time relative
+    to its window length.  Prevents ultra horizons (H24, H28) from producing
+    spurious negative reward in early phases when insufficient data exists.
 
 Usage:
     weights = scale_matched_weights(target_h=18, evidence_horizons=CONSONANCE_HORIZONS)
     trend_sum = sum(w * h3_trend[h] for h, w in weights.items())
+
+    rw = activated_reward_weights(elapsed_s=15.0, horizons=CONSONANCE_HORIZONS)
+    reward = sum(rw[h] * reward_h for h, reward_h in per_horizon_reward.items())
 """
 from __future__ import annotations
 
@@ -118,3 +123,84 @@ def aggregate_weights(
     """
     closest_h = min(horizons, key=lambda h: abs(HORIZON_SECONDS[h] - T_char))
     return scale_matched_weights(closest_h, horizons, alpha)
+
+
+# ---------------------------------------------------------------------------
+# Horizon activation — data-readiness gating (v2.2)
+# ---------------------------------------------------------------------------
+
+DEFAULT_ACTIVATION_K: float = 5.0
+"""Sigmoid steepness for horizon activation.
+
+k=5 gives:
+  t = 0.5 × T_h  →  activation ≈ 0.08  (barely active)
+  t = 1.0 × T_h  →  activation = 0.50   (half active)
+  t = 2.0 × T_h  →  activation ≈ 0.99  (fully active)
+
+For 30s excerpts:
+  H5-H21 (≤8s)   →  fully active after first seconds
+  H24   (36s)     →  0.30 at 30s, gradually activating
+  H28   (414s)    →  0.01 at 30s, essentially silent
+"""
+
+
+def horizon_activation(
+    elapsed_s: float,
+    horizon_s: float,
+    k: float = DEFAULT_ACTIVATION_K,
+) -> float:
+    """Compute activation level for a single horizon.
+
+    A horizon should contribute to reward in proportion to how much data
+    it has seen relative to its window length.  Before ``t = T_h``, the
+    horizon has not accumulated a full window of evidence and its
+    prediction/PE values are unreliable.
+
+    Args:
+        elapsed_s: Elapsed time in seconds since piece start.
+        horizon_s: Horizon window duration in seconds.
+        k: Sigmoid steepness.
+
+    Returns:
+        Activation in (0, 1).  Near 0 when ``t << T_h``,
+        0.5 when ``t = T_h``, near 1.0 when ``t >> T_h``.
+    """
+    x = k * (elapsed_s / (horizon_s + 1e-12) - 1.0)
+    # Clamp to avoid overflow in exp
+    x = max(-20.0, min(20.0, x))
+    return 1.0 / (1.0 + math.exp(-x))
+
+
+def activated_reward_weights(
+    elapsed_s: float,
+    horizons: Sequence[int],
+    k: float = DEFAULT_ACTIVATION_K,
+) -> Dict[int, float]:
+    """Compute activation-weighted horizon weights for reward.
+
+    Each horizon's weight is proportional to its activation level (how much
+    data it has seen).  Weights are normalized to sum to 1.0.
+
+    This replaces uniform ``1/n_h`` weighting in the reward formula,
+    preventing ultra horizons from dominating reward with unreliable PEs.
+
+    Args:
+        elapsed_s: Elapsed time in seconds since piece start.
+        horizons: Horizon indices.
+        k: Sigmoid steepness.
+
+    Returns:
+        Normalized weight dict ``{horizon_idx: weight}``.
+    """
+    raw: Dict[int, float] = {}
+    for h in horizons:
+        h_seconds = HORIZON_SECONDS[h]
+        raw[h] = horizon_activation(elapsed_s, h_seconds, k)
+
+    total = sum(raw.values())
+    if total < 1e-12:
+        # All horizons inactive (very early frames) — uniform fallback
+        n = len(horizons)
+        return {h: 1.0 / n for h in horizons}
+
+    return {h: w / total for h, w in raw.items()}
