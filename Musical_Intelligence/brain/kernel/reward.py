@@ -1,4 +1,4 @@
-"""RewardAggregator — ARU reward computation for C³ v1.0 / v2.3.
+"""RewardAggregator — ARU reward computation for C³ v1.0 / v2.5.
 
 RFC §6: Inverted-U salience-gated reward.
 
@@ -21,6 +21,13 @@ v2.3 (precision compression):
   Breaks monotony saturation: at scale=12, π_raw=10 → π_eff=0.68
   instead of 0.95.  Monotony drops from 0.90 to 0.37 (−59%).
   Operating range expands from [0.93, 1.0] to [0.55, 0.68].
+
+v2.5 (surprise-dominant rebalancing):
+  Weights shifted to make reward PE-responsive:
+  w_surprise 1.0→1.5, w_resolution 1.2→0.8, w_exploration 0.3→0.5,
+  w_monotony 0.8→0.6.  Reward formula slope A = d(reward)/d(|PE|)
+  increases from 0.028 to 0.398 — climaxes now produce visibly higher
+  reward than calm passages.
 """
 from __future__ import annotations
 
@@ -33,11 +40,17 @@ from torch import Tensor
 
 @dataclass
 class RewardConfig:
-    """Weights for reward components.  All from YAML config."""
-    w_surprise: float = 1.0
-    w_resolution: float = 1.2
-    w_exploration: float = 0.3
-    w_monotony: float = 0.8
+    """Weights for reward components.  All from YAML config.
+
+    v2.5: surprise-dominant rebalancing.
+    Old: w_s=1.0, w_r=1.2, w_e=0.3, w_m=0.8 → slope A=0.028 (nearly flat).
+    New: w_s=1.5, w_r=0.8, w_e=0.5, w_m=0.6 → slope A=0.398 (14× steeper).
+    Climaxes now produce visibly higher reward than calm passages.
+    """
+    w_surprise: float = 1.5
+    w_resolution: float = 0.8
+    w_exploration: float = 0.5
+    w_monotony: float = 0.6
     # v2.3: tanh compression scale for precision normalization.
     # π_eff = tanh(π_raw / precision_scale).
     # scale=12: π_raw=10 → 0.68, monotony=0.37.

@@ -2,22 +2,19 @@
 
 observe(): Bottom-up attention signal from 3 sources:
   1. energy + onset (R³, additive) — loudness + transient detection
-  2. |H³ velocity| (amplitude at H6, L0) — rapid change detection
+  2. max(H³ velocity across amplitude/onset/flux) — multi-feature change
   3. mean |PE_{t-1}| — previous surprise → current attention
 
-  Weights: 0.40 / 0.35 / 0.25 (sum to 1.0, output in [0, 1]).
+  Mixing: mean+max — 0.5×weighted_avg + 0.5×element_max.
+  Prevents peak dilution: at a climax the dominant signal is preserved.
   Fallback: energy-only when H³ or PE unavailable (first frames).
-
-  Note: energy and onset are additive (not multiplicative) to ensure
-  continuous signal during sustained passages. Multiplicative product
-  creates a degenerate zero-observation for most frames.
 
 predict(): H³-informed linear model (bottom-up only).
   trend: h3[(amplitude, H6, M18, L0)] — amplitude trend at beat scale
   No cross-belief context — salience prediction is purely bottom-up.
 
-precision_obs: amplitude / (H³_std + ε).  Decoupled from onset to
-  maintain meaningful precision during sustained passages.
+precision_obs: change-responsive — proportional to change magnitude.
+  High change = high confidence = faster Bayesian response.
 
 RFC §5: Phase 1 — attentional gate before belief prediction.
 Salience gates reward (not beliefs): reward_i = salience × (surprise + ...)
@@ -34,7 +31,7 @@ from ....ear.r3.registry.feature_map import R3FeatureMap
 
 
 class SalienceState(Belief):
-    """Attentional salience — medium inertia belief (τ=0.5).
+    """Attentional salience — fast reactive belief (τ=0.3).
 
     Gates reward computation: only salient events contribute to reward.
     Owned by ASU (Attentional Salience Unit).
@@ -46,9 +43,11 @@ class SalienceState(Belief):
     baseline = 0.3  # Matched to typical observation level (energy signal)
     phase = 1
 
-    # H³ demands for observe(): velocity at beat scale
+    # H³ demands for observe(): velocity at beat scale (multi-feature)
     h3_observe_demands = (
-        ("amplitude", 6, 8, 0),   # M8=velocity, H6=beat, L0=memory
+        ("amplitude", 6, 8, 0),        # M8=velocity, H6=beat, L0=memory
+        ("onset_strength", 6, 8, 0),   # onset velocity, H6=beat, L0=memory
+        ("spectral_flux", 6, 8, 0),    # spectral change velocity, H6, L0
     )
 
     # H³ demands for predict(): trend at beat scale
@@ -62,7 +61,7 @@ class SalienceState(Belief):
 
     # Signal mixing weights (additive, sum to 1.0)
     _W_ENERGY = 0.40         # Bottom-up loudness + transient
-    _W_H3_VELOCITY = 0.35   # Rapid temporal change
+    _W_H3_VELOCITY = 0.35   # Rapid temporal change (max across features)
     _W_PREV_PE = 0.25       # Surprise carry-over
 
     def __init__(self, feature_map: R3FeatureMap) -> None:
@@ -79,57 +78,75 @@ class SalienceState(Belief):
     ) -> Likelihood:
         """Extract salience from bottom-up attention signals.
 
-        3 signals (additive):
+        3 signals with mean+max mixing:
           1. energy — 0.6×amplitude + 0.4×onset (continuous, non-zero)
-          2. H³ amplitude velocity — rapid change at beat scale
+          2. H³ change — max velocity across amplitude/onset/flux
           3. mean |PE_{t-1}| — surprise carry-over from previous frame
 
-        Signal weights adapt when components are unavailable.
-        Precision decoupled from observation: amplitude / (H³_std + ε).
+        value = 0.5×weighted_avg + 0.5×element_max (peak preservation).
+        Precision: proportional to change magnitude (not just amplitude).
         """
         B, T = r3.shape[0], r3.shape[1]
         device = r3.device
 
         # Signal 1: energy + onset (additive, not multiplicative)
-        # amplitude provides continuous loudness signal
-        # onset provides transient boost at note attacks
         amplitude = r3[..., self._idx_amplitude]
         onset = r3[..., self._idx_onset]
         energy = (0.6 * amplitude + 0.4 * onset).clamp(0.0, 1.0)
 
-        # Signal 2: H³ velocity (amplitude rapid change at beat horizon)
-        h3_vel = self._h3(h3, "amplitude", 6, 8, 0)  # M8=velocity
-        has_h3 = h3_vel.dim() >= 2
+        # Signal 2: multi-feature H³ velocity — max across change detectors
+        vel_amp = self._h3(h3, "amplitude", 6, 8, 0)
+        vel_onset = self._h3(h3, "onset_strength", 6, 8, 0)
+        vel_flux = self._h3(h3, "spectral_flux", 6, 8, 0)
+        has_h3 = vel_amp.dim() >= 2
 
         # Signal 3: PE_{t-1} carry-over
         has_pe = prev_pe_mean is not None and prev_pe_mean.dim() >= 2
 
         # Adaptive mixing based on signal availability
         if has_h3 and has_pe:
-            vel_norm = h3_vel.abs().clamp(0.0, 1.0)
+            h3_change = torch.maximum(
+                torch.maximum(vel_amp.abs(), vel_onset.abs()),
+                vel_flux.abs(),
+            ).clamp(0.0, 1.0)
             pe_norm = prev_pe_mean.abs().clamp(0.0, 1.0)
-            value = (
+
+            # Mean+max mixing: base preserves average, peak preserves spikes
+            base = (
                 self._W_ENERGY * energy
-                + self._W_H3_VELOCITY * vel_norm
+                + self._W_H3_VELOCITY * h3_change
                 + self._W_PREV_PE * pe_norm
             )
+            peak = torch.maximum(
+                torch.maximum(energy, h3_change), pe_norm,
+            )
+            value = 0.5 * base + 0.5 * peak
         elif has_h3:
-            vel_norm = h3_vel.abs().clamp(0.0, 1.0)
-            value = 0.55 * energy + 0.45 * vel_norm
+            h3_change = torch.maximum(
+                torch.maximum(vel_amp.abs(), vel_onset.abs()),
+                vel_flux.abs(),
+            ).clamp(0.0, 1.0)
+            base = 0.55 * energy + 0.45 * h3_change
+            peak = torch.maximum(energy, h3_change)
+            value = 0.5 * base + 0.5 * peak
         elif has_pe:
             pe_norm = prev_pe_mean.abs().clamp(0.0, 1.0)
-            value = 0.60 * energy + 0.40 * pe_norm
+            base = 0.60 * energy + 0.40 * pe_norm
+            peak = torch.maximum(energy, pe_norm)
+            value = 0.5 * base + 0.5 * peak
         else:
             # Pure bottom-up — first frames
             value = energy
+            h3_change = energy  # Precision fallback
 
         value = value.clamp(0.0, 1.0)
 
-        # Precision: amplitude / (H³ std + ε)
-        # Decoupled from onset — amplitude is continuous and reliable
-        h3_std = self._h3(h3, "amplitude", 6, 2, 0)  # M2=std
-        if h3_std.dim() >= 2:
-            precision = (amplitude / (h3_std + 0.1)).clamp(0.01, 10.0)
+        # Precision: change-responsive — high change = high confidence
+        # Breaks the self-reinforcing loop: flat salience → low PE →
+        # high precision_pred → low gain → salience stays flat.
+        if has_h3:
+            change_mag = (0.5 * energy + 0.5 * h3_change).clamp(0.01, 1.0)
+            precision = (change_mag * 10.0).clamp(0.5, 10.0)
         else:
             precision = torch.full((B, T), 1.0, device=device)
 

@@ -1,8 +1,9 @@
-"""C3Kernel — single-pass phase scheduler for C³ v2.2.
+"""C3Kernel — single-pass phase scheduler for C³ v2.5.
 
 Executes the belief cycle per frame:
   Phase 0:  BCH relay → observe sensory beliefs (consonance, tempo)
   Phase 1:  observe + predict + update salience (attentional gate)
+          + multi-feature H³ velocity, mean+max mixing (v2.5)
   Phase 2a: predict all beliefs + observe familiarity (H³ macro stability)
           + multi-scale predict/observe for consonance (v2.0)
   Phase 2b: compute PE + precision for predictive beliefs
@@ -10,6 +11,7 @@ Executes the belief cycle per frame:
   Phase 2c: update beliefs with Bayesian fusion
   Phase 3:  compute reward from multi-scale PEs with per-horizon π (v2.1)
           + horizon activation gating — data-readiness weights (v2.2)
+          + surprise-dominant reward weights (v2.5)
 
 Single pass.  No iteration.  No convergence loop.
 """
@@ -326,8 +328,11 @@ class C3Kernel:
         reward_pe = reward_value - reward_predicted
 
         # ── Store state for next frame ──────────────────────────────
-        # PE carry-over: mean |PE| of sensory beliefs → salience Phase 1
-        self._prev_pe_mean = (cons_pe.abs() + tempo_pe.abs()) / 2.0
+        # PE carry-over: mean |PE| of predictive beliefs → salience Phase 1
+        # v2.5: include fam_pe — structural boundary surprises boost attention
+        self._prev_pe_mean = (
+            cons_pe.abs() + tempo_pe.abs() + fam_pe.abs()
+        ) / 3.0
 
         self._beliefs_prev = {
             "perceived_consonance": cons_posterior.detach(),
