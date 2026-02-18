@@ -1,16 +1,31 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { beliefColors } from "@/design/tokens";
 
 const beliefs = ["consonance", "tempo", "salience", "familiarity", "reward"] as const;
 
 interface Props {
-  width?: number;
   height?: number;
 }
 
-export function BeliefMiniTrace({ width = 200, height = 80 }: Props) {
+export function BeliefMiniTrace({ height = 120 }: Props) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animRef = useRef(0);
+  const [width, setWidth] = useState(400);
+
+  // Observe container width changes
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+    const ro = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const w = Math.floor(entry.contentRect.width);
+        if (w > 0) setWidth(w);
+      }
+    });
+    ro.observe(container);
+    return () => ro.disconnect();
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -62,5 +77,9 @@ export function BeliefMiniTrace({ width = 200, height = 80 }: Props) {
     return () => cancelAnimationFrame(animRef.current);
   }, [width, height]);
 
-  return <canvas ref={canvasRef} className="opacity-70" />;
+  return (
+    <div ref={containerRef} className="w-full">
+      <canvas ref={canvasRef} className="opacity-70" />
+    </div>
+  );
 }

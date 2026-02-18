@@ -35,16 +35,16 @@ import type { MindAxes } from "@/types/mind";
 
 /* ── Axis metadata ──────────────────────────────────────────── */
 const AXIS_META: { key: keyof MindAxes; label: string; shortLabel: string; belief: keyof typeof beliefColors }[] = [
-  { key: "entropyTolerance", label: "Entropy Tolerance", shortLabel: "ENT", belief: "consonance" },
-  { key: "resolutionCraving", label: "Resolution Craving", shortLabel: "RES", belief: "tempo" },
-  { key: "monotonyTolerance", label: "Monotony Tolerance", shortLabel: "MON", belief: "familiarity" },
-  { key: "salienceSensitivity", label: "Salience Sensitivity", shortLabel: "SAL", belief: "salience" },
-  { key: "tensionAppetite", label: "Tension Appetite", shortLabel: "TEN", belief: "reward" },
+  { key: "entropyTolerance", label: "Chaos Appetite", shortLabel: "CHS", belief: "consonance" },
+  { key: "resolutionCraving", label: "Need for Closure", shortLabel: "CLO", belief: "tempo" },
+  { key: "monotonyTolerance", label: "Repetition Comfort", shortLabel: "RPT", belief: "familiarity" },
+  { key: "salienceSensitivity", label: "Surprise Sensitivity", shortLabel: "SRP", belief: "salience" },
+  { key: "tensionAppetite", label: "Tension Love", shortLabel: "TNS", belief: "reward" },
 ];
 
 const BELIEF_NAMES = ["consonance", "tempo", "salience", "familiarity", "reward"] as const;
 const BELIEF_LABELS: Record<string, string> = {
-  consonance: "Consonance", tempo: "Tempo", salience: "Salience", familiarity: "Familiarity", reward: "Reward",
+  consonance: "Harmony", tempo: "Rhythm", salience: "Attention", familiarity: "Memory", reward: "Pleasure",
 };
 const DAY_NAMES = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
@@ -54,6 +54,8 @@ export function Dashboard() {
   const persona = mind ? getPersona(mind.personaId) : null;
   const scrollRef = useRef<HTMLDivElement>(null);
   const [chatOpen, setChatOpen] = useState(false);
+  const [chatMessages, setChatMessages] = useState<{ from: "you" | "them"; text: string }[]>([]);
+  const [chatInput, setChatInput] = useState("");
 
   useScrollBatch(".scroll-section", scrollRef, { stagger: 0.08 });
 
@@ -71,6 +73,25 @@ export function Dashboard() {
   const similarMind = useMemo(() => findSimilarMind(mind.axes, persona, mockUsers), [mind.axes, persona]);
   const brainQuote = useMemo(() => generateBrainQuote(persona, mind.axes), [persona, mind.axes]);
   const recentWithContext = useMemo(() => getRecentTracksWithContext(), []);
+
+  const handleSendChat = () => {
+    const text = chatInput.trim();
+    if (!text) return;
+    setChatMessages((prev) => [...prev, { from: "you", text }]);
+    setChatInput("");
+    // Context-aware auto-reply
+    setTimeout(() => {
+      const otherPersona = similarMind ? getPersona(similarMind.user.mind.personaId) : null;
+      const replies = [
+        `That resonates with how my ${otherPersona?.name || "mind"} processes harmony. My consonance system would fire differently at that moment though — I hear the tension before the resolution.`,
+        `I've been thinking about that too. My H³ temporal morphology has been shifting lately — I'm hearing longer arcs in music, not just beat-level patterns.`,
+        `Your mind is ${similarMind ? similarMind.similarity : 80}% aligned with mine, but it's that ${100 - (similarMind?.similarity ?? 80)}% divergence that makes this interesting. You hear structures I literally can't predict.`,
+        `My reward signal peaks in different places than yours — where you get the DA spike, I get the slow serotonin build. That's what makes shared listening between our minds transformative.`,
+        `Have you tried listening at your peak hour? My salience sensitivity changes dramatically between morning and ${weeklyStats.peakListeningHour > 18 ? "late night" : "evening"} sessions.`,
+      ];
+      setChatMessages((prev) => [...prev, { from: "them", text: replies[prev.length % replies.length] }]);
+    }, 1200);
+  };
 
   return (
     <motion.div {...pageTransition} className="relative min-h-screen overflow-hidden pb-16">
@@ -170,7 +191,7 @@ export function Dashboard() {
         <div className="scroll-section mt-12 mb-16">
           <div className="flex items-center gap-2 mb-6">
             <Brain size={14} style={{ color: beliefColors.reward.primary }} />
-            <span className="hud-label">Your Brain This Week</span>
+            <span className="hud-label">Your Week in Music</span>
           </div>
           <div className="spatial-card p-8 glow-border" style={{ "--glow-color": color } as React.CSSProperties}>
             <p className="text-sm md:text-base text-slate-400 leading-relaxed font-body font-light">
@@ -248,7 +269,7 @@ export function Dashboard() {
                 ))}
               </div>
 
-              <span className="hud-label mb-3 block">Belief Shifts</span>
+              <span className="hud-label mb-3 block">How You're Shifting</span>
               <div className="flex gap-3">
                 {BELIEF_NAMES.map((b, i) => {
                   const delta = weeklyStats.beliefDeltas[i];
@@ -277,7 +298,7 @@ export function Dashboard() {
               </div>
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="hud-label" style={{ color: `${beliefColors.reward.primary}80` }}>Peak Prediction Error</span>
+                  <span className="hud-label" style={{ color: `${beliefColors.reward.primary}80` }}>Your Biggest Surprise</span>
                   <span className="hud-value text-sm">{peInsight.title}</span>
                 </div>
                 <p className="text-xs text-slate-500 leading-relaxed font-body font-light">{peInsight.body}</p>
@@ -290,10 +311,10 @@ export function Dashboard() {
         <div className="scroll-section mb-16">
           <div className="flex items-center gap-2 mb-6">
             <BarChart3 size={14} className="text-slate-600" />
-            <span className="hud-label">Belief Traces</span>
+            <span className="hud-label">Your Mind in Motion</span>
           </div>
           <div className="spatial-card p-6">
-            <BeliefMiniTrace width={600} height={120} />
+            <BeliefMiniTrace height={120} />
             <div className="flex gap-4 mt-3">
               {BELIEF_NAMES.map((b) => (
                 <div key={b} className="flex items-center gap-1.5">
@@ -310,13 +331,13 @@ export function Dashboard() {
         {/* ── MONTHLY EVOLUTION ─────────────────────────────────── */}
         <div className="scroll-section mb-16">
           <div className="flex items-center gap-2 mb-6">
-            <span className="hud-label">Mind Evolution — 4 Weeks</span>
+            <span className="hud-label">How You've Grown — 4 Weeks</span>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-6">
             {/* Monthly belief trajectory chart */}
             <div className="spatial-card p-6">
-              <span className="hud-label mb-4 block">Belief Trajectory</span>
+              <span className="hud-label mb-4 block">Your Journey</span>
               <div className="space-y-4">
                 {BELIEF_NAMES.map((b, bIdx) => {
                   const values = monthlyEvolution.weeklySnapshots.map(s => s[bIdx]);
@@ -356,7 +377,7 @@ export function Dashboard() {
 
             {/* Evolution narrative */}
             <div className="spatial-card p-6">
-              <span className="hud-label mb-4 block">Neural Trajectory Analysis</span>
+              <span className="hud-label mb-4 block">What's Changing</span>
               <div className="space-y-4">
                 {evolution.map((line, i) => (
                   <motion.p
@@ -426,7 +447,7 @@ export function Dashboard() {
 
         {/* ── MIND AXES (compact) ───────────────────────────────── */}
         <div className="scroll-section mb-16">
-          <span className="hud-label mb-5 block">Mind Axes</span>
+          <span className="hud-label mb-5 block">Your Musical DNA</span>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
             {AXIS_META.map((axis, i) => {
               const value = mind.axes[axis.key];
@@ -532,7 +553,7 @@ export function Dashboard() {
                     <span className="hud-value text-2xl" style={{ color: beliefColors.familiarity.primary }}>
                       {similarMind.similarity}%
                     </span>
-                    <p className="text-[10px] font-mono text-slate-600 mt-1">Neural Similarity</p>
+                    <p className="text-[10px] font-mono text-slate-600 mt-1">Mind Similarity</p>
                   </div>
                 </div>
 
@@ -703,20 +724,47 @@ export function Dashboard() {
                     <span className="text-[9px] font-mono text-slate-700 mt-1 block">just now</span>
                   </div>
                 </div>
+
+                {/* User messages */}
+                {chatMessages.map((msg, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className={`flex gap-3 ${msg.from === "you" ? "flex-row-reverse" : ""}`}
+                  >
+                    {msg.from === "them" && (
+                      <Avatar src={similarMind.user.avatarUrl || undefined} name={similarMind.user.displayName} size={28} borderColor={getPersona(similarMind.user.mind.personaId).color} />
+                    )}
+                    <div className={`rounded-xl p-3 max-w-[80%] ${msg.from === "you" ? "ml-auto" : ""}`}
+                      style={{
+                        background: msg.from === "you" ? `${color}15` : "rgba(255,255,255,0.03)",
+                        border: `1px solid ${msg.from === "you" ? `${color}30` : "rgba(255,255,255,0.04)"}`,
+                      }}
+                    >
+                      <p className="text-xs text-slate-400 font-body font-light">{msg.text}</p>
+                    </div>
+                  </motion.div>
+                ))}
               </div>
 
               {/* Chat input */}
-              <div className="p-4 border-t border-white/[0.04]">
+              <form
+                className="p-4 border-t border-white/[0.04]"
+                onSubmit={(e) => { e.preventDefault(); handleSendChat(); }}
+              >
                 <div className="flex gap-3">
                   <input
                     type="text"
                     placeholder="Share your mind..."
+                    value={chatInput}
+                    onChange={(e) => setChatInput(e.target.value)}
                     className="flex-1 px-4 py-2.5 rounded-xl text-sm text-slate-300 placeholder-slate-700 font-body font-light focus:outline-none"
                     style={{ background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.06)" }}
                   />
-                  <Button variant="primary" size="sm">Send</Button>
+                  <Button variant="primary" size="sm" type="submit">Send</Button>
                 </div>
-              </div>
+              </form>
             </motion.div>
           </motion.div>
         )}

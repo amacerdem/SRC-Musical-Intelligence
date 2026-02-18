@@ -1,7 +1,7 @@
 /* ── Psychoacoustic Insight Engine ─────────────────────────────────
- *  Generates neuroscience-grounded commentary as if your brain is
- *  speaking to you through music. Every sentence maps to real C³
- *  belief dynamics, R³ perceptual features, or H³ temporal morphology.
+ *  Generates commentary as if your mind is speaking to you through
+ *  music. Grounded in real cognitive science, but written so anyone
+ *  can understand what's happening.
  *  ──────────────────────────────────────────────────────────────── */
 
 import type { MindAxes } from "@/types/mind";
@@ -10,10 +10,10 @@ import { lastWeekDays, weeklyStats, monthlyEvolution, recentTracks } from "./moc
 
 /* ── Neurochemical language map ───────────────────────────────── */
 const NEUROCHEMICALS = {
-  dopamine: { name: "Dopamine", role: "prediction error signal", emoji: "DA", color: "#FBBF24" },
-  norepinephrine: { name: "Norepinephrine", role: "exploration drive", emoji: "NE", color: "#84CC16" },
-  opioids: { name: "Endogenous opioids", role: "consonance pleasure", emoji: "μ-OPI", color: "#C084FC" },
-  serotonin: { name: "Serotonin", role: "patience & repetition tolerance", emoji: "5-HT", color: "#38BDF8" },
+  dopamine: { name: "Dopamine", role: "the thrill of surprise", emoji: "DA", color: "#FBBF24" },
+  norepinephrine: { name: "Norepinephrine", role: "your curiosity engine", emoji: "NE", color: "#84CC16" },
+  opioids: { name: "Endogenous opioids", role: "the warmth of beauty", emoji: "μ-OPI", color: "#C084FC" },
+  serotonin: { name: "Serotonin", role: "patience & comfort", emoji: "5-HT", color: "#38BDF8" },
 } as const;
 
 /* ── Belief commentary generators ─────────────────────────────── */
@@ -26,7 +26,7 @@ interface InsightBlock {
   intensity: number; // 0-1, how significant this insight is
 }
 
-/** Generate the "Your Brain This Week" opening monologue */
+/** Generate the "Your Week in Music" opening monologue */
 export function generateWeeklyMonologue(persona: Persona, axes: MindAxes): string {
   const deltas = weeklyStats.beliefDeltas;
   const dominantDelta = Math.max(...deltas.map(Math.abs));
@@ -36,28 +36,28 @@ export function generateWeeklyMonologue(persona: Persona, axes: MindAxes): strin
 
   const lines: string[] = [];
 
-  // Opening — intimate, first-person brain voice
+  // Opening — intimate, first-person mind voice
   if (dominant === "reward") {
-    lines.push(`Your reward circuitry shifted +${(deltas[4] * 100).toFixed(0)}% this week. That's not noise — your striatal prediction-error system is recalibrating what "good" means to you.`);
+    lines.push(`Your sense of musical pleasure shifted +${(deltas[4] * 100).toFixed(0)}% this week. That's significant — your mind is recalibrating what "good music" means to you. The songs that moved you last month might not hit the same way next month.`);
   } else if (dominant === "familiarity") {
-    lines.push(`Something changed in your temporal cortex this week. Your familiarity tolerance climbed +${(deltas[3] * 100).toFixed(0)}% — you're building deeper pattern models, letting repetition become depth instead of boredom.`);
+    lines.push(`Something shifted in how you recognize music this week. Your memory response climbed +${(deltas[3] * 100).toFixed(0)}% — you're building deeper connections with the music you hear, finding new layers in songs you already know.`);
   } else if (dominant === "tempo") {
-    lines.push(`Your supplementary motor area lit up differently this week. Tempo engagement surged +${(deltas[1] * 100).toFixed(0)}% — your internal clock is syncing to more complex rhythmic structures.`);
+    lines.push(`You felt rhythm differently this week. Your rhythmic engagement surged +${(deltas[1] * 100).toFixed(0)}% — your body is locking into more complex beats, anticipating groove patterns before they drop.`);
   } else if (dominant === "salience") {
-    lines.push(`Your anterior insula went quiet this week. Salience dropped ${(deltas[2] * 100).toFixed(0)}% — you were processing inward, not reacting to drama. That's depth.`);
+    lines.push(`Your attention to musical detail went quiet this week. Surprise sensitivity dropped ${(deltas[2] * 100).toFixed(0)}% — you were listening inward, soaking things in rather than reacting to every twist. That's depth, not disengagement.`);
   } else {
-    lines.push(`Your auditory cortex reconfigured this week. Consonance perception shifted ${(deltas[0] * 100).toFixed(0)}% — your harmonic templates are updating, hearing intervals differently than 7 days ago.`);
+    lines.push(`Your sense of harmony shifted ${(deltas[0] * 100).toFixed(0)}% this week. The way you hear chords and intervals is changing — melodies that once felt neutral are starting to carry emotional weight.`);
   }
 
   // Persona-specific observation
   if (axes.tensionAppetite > 0.7) {
-    lines.push(`With your tension appetite at ${Math.round(axes.tensionAppetite * 100)}%, every unresolved suspension is fuel for your dopaminergic system. The Electronic → Post-Rock ratio shift this week fed that engine directly.`);
+    lines.push(`With your love of tension at ${Math.round(axes.tensionAppetite * 100)}%, you live for that moment right before the music resolves. This week's mix of Electronic and Post-Rock fed that craving perfectly — long builds, delayed payoffs, maximum anticipation.`);
   } else if (axes.monotonyTolerance > 0.6) {
-    lines.push(`Your high monotony tolerance (${Math.round(axes.monotonyTolerance * 100)}%) means your serotonin-mediated patience system is unusually strong. This week's ambient listening deepened your recurrence models without triggering habituation.`);
+    lines.push(`Your comfort with repetition (${Math.round(axes.monotonyTolerance * 100)}%) is a superpower most listeners don't have. This week's ambient sessions let you sink deeper into patterns without getting bored — each loop revealed something new.`);
   } else if (axes.entropyTolerance > 0.7) {
-    lines.push(`Entropy tolerance at ${Math.round(axes.entropyTolerance * 100)}% — your norepinephrine-driven exploration system runs hot. The genre diversity this week kept your novelty-detection circuits engaged without saturation.`);
+    lines.push(`Chaos appetite at ${Math.round(axes.entropyTolerance * 100)}% — you thrive on the unexpected. The genre diversity this week kept your curiosity satisfied without burning you out. You need variety like breathing.`);
   } else {
-    lines.push(`Your resolution craving (${Math.round(axes.resolutionCraving * 100)}%) shaped this week's trajectory. Every V-I cadence, every resolved suspension — your brain's prediction system marked each one as a micro-reward.`);
+    lines.push(`Your need for closure (${Math.round(axes.resolutionCraving * 100)}%) shaped your week. Every resolved chord, every satisfying ending — your mind marked each one as a small victory. You hear music as a series of promises kept.`);
   }
 
   return lines.join(" ");
@@ -73,35 +73,35 @@ export function generateDailyInsights(persona: Persona): InsightBlock[] {
 
     const insightMap: Record<string, () => InsightBlock> = {
       consonance: () => ({
-        title: `${day.topGenre} shaped your harmonic perception`,
-        body: `Consonance peaked at ${snap[0].toFixed(2)} — your superior temporal gyrus was mapping interval hierarchies. ${day.tracksPlayed} tracks through your ${persona.family} architecture.`,
+        title: `${day.topGenre} shaped how you hear harmony`,
+        body: `Your sense of harmony peaked at ${snap[0].toFixed(2)} — you were deeply tuned into chord progressions and intervals. ${day.tracksPlayed} tracks through your ${persona.family} ears.`,
         belief: "consonance",
         neuroChem: "opioids",
         intensity: snap[0],
       }),
       tempo: () => ({
-        title: `Your motor cortex locked onto ${day.topGenre} rhythms`,
-        body: `Tempo state hit ${snap[1].toFixed(2)} across ${day.minutesListened} minutes. Your basal ganglia-supplementary motor loop was entraining to beat structures stronger than usual.`,
+        title: `Your body locked onto ${day.topGenre} rhythms`,
+        body: `Rhythmic engagement hit ${snap[1].toFixed(2)} across ${day.minutesListened} minutes. You were moving with the music more than usual — anticipating beats before they landed.`,
         belief: "tempo",
         intensity: snap[1],
       }),
       salience: () => ({
-        title: `High-attention listening session`,
-        body: `Salience at ${snap[2].toFixed(2)} — your anterior cingulate cortex flagged ${day.tracksPlayed} moments of musical significance. ${day.topGenre} tends to trigger your ${persona.name} salience filters.`,
+        title: `A high-attention listening session`,
+        body: `Your attention peaked at ${snap[2].toFixed(2)} — ${day.tracksPlayed} moments grabbed you. ${day.topGenre} tends to hit your ${persona.name} mind's surprise triggers hard.`,
         belief: "salience",
         neuroChem: "norepinephrine",
         intensity: snap[2],
       }),
       familiarity: () => ({
-        title: `Pattern recognition deepened`,
-        body: `Familiarity climbed to ${snap[3].toFixed(2)}. Your hippocampal recurrence detector is building stronger models — you're hearing structure where you used to hear surface.`,
+        title: `You went deeper into what you know`,
+        body: `Memory response climbed to ${snap[3].toFixed(2)}. You're building stronger connections with familiar sounds — hearing structure where you used to hear surface.`,
         belief: "familiarity",
         neuroChem: "serotonin",
         intensity: snap[3],
       }),
       reward: () => ({
-        title: `Peak reward state — your striatum fired`,
-        body: `Reward valence reached ${snap[4].toFixed(2)}. The prediction-error cascade aligned perfectly: enough surprise to trigger DA release, enough familiarity for opioid-mediated pleasure. This is what flow sounds like.`,
+        title: `Peak pleasure — this is what flow sounds like`,
+        body: `Musical pleasure reached ${snap[4].toFixed(2)}. Everything aligned: enough surprise to keep you engaged, enough familiarity to feel right. Your mind was in the zone.`,
         belief: "reward",
         neuroChem: "dopamine",
         intensity: snap[4],
@@ -121,7 +121,7 @@ export function generateEvolutionNarrative(axes: MindAxes): string[] {
   const lines: string[] = [];
 
   // Overall trajectory
-  lines.push(`Over 4 weeks, your ${evo.mostChangedBelief} belief shifted +${(evo.mostChangedDelta * 100).toFixed(0)}%. ${evo.driftDescription}`);
+  lines.push(`Over 4 weeks, your ${evo.mostChangedBelief} response shifted +${(evo.mostChangedDelta * 100).toFixed(0)}%. ${evo.driftDescription}`);
 
   // Per-belief micro-narratives
   beliefs.forEach((b, i) => {
@@ -129,13 +129,13 @@ export function generateEvolutionNarrative(axes: MindAxes): string[] {
     const end = snapshots[3][i];
     const delta = end - start;
     if (Math.abs(delta) > 0.05) {
-      const direction = delta > 0 ? "ascending" : "descending";
+      const direction = delta > 0 ? "growing" : "softening";
       const mapping: Record<string, string> = {
-        consonance: `Your harmonic perception is ${direction} (${start.toFixed(2)} → ${end.toFixed(2)}). Your Plomp-Levelt roughness sensitivity is recalibrating — intervals that once felt neutral now carry emotional weight.`,
-        tempo: `Temporal processing ${direction} (${start.toFixed(2)} → ${end.toFixed(2)}). Your supplementary motor area is building richer internal metronome models, anticipating beat deviations before they land.`,
-        salience: `Attentional gating ${direction} (${start.toFixed(2)} → ${end.toFixed(2)}). Your anterior insula is sharpening its filter — fewer false alarms, stronger response to genuinely novel events.`,
-        familiarity: `Recurrence modeling ${direction} (${start.toFixed(2)} → ${end.toFixed(2)}). Your hippocampal-cortical loop is consolidating patterns more efficiently. What took 3 listens before now registers in 1.`,
-        reward: `Reward geometry ${direction} (${start.toFixed(2)} → ${end.toFixed(2)}). Your ventral tegmental area is recalibrating — the inverted-U curve is shifting, requiring more nuanced prediction errors to trigger the same pleasure response.`,
+        consonance: `Your sense of harmony is ${direction} (${start.toFixed(2)} → ${end.toFixed(2)}). Chords and intervals that once felt neutral are starting to carry more emotional weight for you.`,
+        tempo: `Your rhythmic feel is ${direction} (${start.toFixed(2)} → ${end.toFixed(2)}). You're building richer internal timing — anticipating groove changes before they happen.`,
+        salience: `Your surprise sensitivity is ${direction} (${start.toFixed(2)} → ${end.toFixed(2)}). You're getting better at filtering noise from signal — responding to genuinely important musical moments.`,
+        familiarity: `Your musical memory is ${direction} (${start.toFixed(2)} → ${end.toFixed(2)}). Patterns click faster now — what took 3 listens before registers on the first play.`,
+        reward: `Your pleasure response is ${direction} (${start.toFixed(2)} → ${end.toFixed(2)}). Your mind is getting more selective — it takes more nuanced music to produce the same rush.`,
       };
       lines.push(mapping[b]);
     }
@@ -148,7 +148,7 @@ export function generateEvolutionNarrative(axes: MindAxes): string[] {
 export function generatePEInsight(): InsightBlock {
   const pe = weeklyStats.peakPE;
   return {
-    title: `Peak Prediction Error: ${pe.magnitude.toFixed(2)}σ`,
+    title: `Biggest Surprise: ${pe.magnitude.toFixed(2)}x intensity`,
     body: pe.description,
     belief: pe.belief as InsightBlock["belief"],
     neuroChem: "dopamine",
@@ -156,7 +156,7 @@ export function generatePEInsight(): InsightBlock {
   };
 }
 
-/** Generate neuroscience-backed music recommendations */
+/** Generate music recommendations based on your profile */
 export function generateRecommendations(persona: Persona, axes: MindAxes): {
   title: string;
   artist: string;
@@ -166,14 +166,13 @@ export function generateRecommendations(persona: Persona, axes: MindAxes): {
 }[] {
   const recs: ReturnType<typeof generateRecommendations> = [];
 
-  // Recommendation based on PE optimization
   if (axes.resolutionCraving > 0.6) {
     recs.push({
       title: "Nuvole Bianche",
       artist: "Ludovico Einaudi",
-      reason: "Your resolution craving is high — this piece's delayed cadential patterns will maximize your V→I prediction-error-to-resolution reward cycle.",
+      reason: "You love when music resolves beautifully. This piece teases you with delayed endings — building anticipation then delivering exactly the closure your mind craves.",
       belief: "consonance",
-      peOptimization: "High PE at deceptive cadences → strong resolution reward",
+      peOptimization: "Delayed resolution → deeper satisfaction when it arrives",
     });
   }
 
@@ -181,9 +180,9 @@ export function generateRecommendations(persona: Persona, axes: MindAxes): {
     recs.push({
       title: "Luminous Beings",
       artist: "Jon Hopkins",
-      reason: "Tension builds across 7 minutes before the harmonic shift at 4:32 — your tension appetite will sustain the anticipatory dopamine accumulation.",
+      reason: "7 minutes of slowly building intensity before the release at 4:32. Your love of tension means you'll ride the anticipation like a wave — and the payoff is worth every second.",
       belief: "reward",
-      peOptimization: "Sustained PE accumulation → massive resolution at climax",
+      peOptimization: "Long build → massive release at the climax",
     });
   }
 
@@ -191,9 +190,9 @@ export function generateRecommendations(persona: Persona, axes: MindAxes): {
     recs.push({
       title: "Ageispolis",
       artist: "Aphex Twin",
-      reason: "Your entropy tolerance can handle the micro-timing deviations. Your norepinephrine system will fire at each rhythmic disruption without overwhelming your prediction models.",
+      reason: "Your chaos appetite can handle the unexpected rhythms. Each micro-disruption will spark your curiosity without overwhelming you — the perfect edge between confusion and discovery.",
       belief: "tempo",
-      peOptimization: "Moderate PE from rhythmic entropy → exploration reward",
+      peOptimization: "Rhythmic surprises → exploration and discovery",
     });
   }
 
@@ -201,18 +200,18 @@ export function generateRecommendations(persona: Persona, axes: MindAxes): {
     recs.push({
       title: "Music for 18 Musicians",
       artist: "Steve Reich",
-      reason: "Phase-shifting patterns will engage your recurrence detector. With monotony tolerance at ${Math.round(axes.monotonyTolerance * 100)}%, the gradual transformations will register as deepening familiarity, not habituation.",
+      reason: `Phase-shifting patterns that evolve so slowly you barely notice — until you realize you're somewhere completely new. With your repetition comfort at ${Math.round(axes.monotonyTolerance * 100)}%, this will feel like a meditation, not a loop.`,
       belief: "familiarity",
-      peOptimization: "Low PE amplitude + high recurrence = serotonin-mediated depth",
+      peOptimization: "Gradual evolution → deep immersion without boredom",
     });
   }
 
   recs.push({
     title: "On The Nature of Daylight",
     artist: "Max Richter",
-    reason: "The viola entry at 4:05 resolves 3 minutes of accumulated tension. Your salience system will flag it as the single most significant event — a textbook prediction error cascade.",
+    reason: "The viola entry at 4:05 cuts through 3 minutes of quiet tension. Your mind will flag it as THE moment — the one event in the whole piece that redefines everything before it.",
     belief: "salience",
-    peOptimization: "Salience-gated PE → reward amplification through attentional focus",
+    peOptimization: "One unforgettable moment → lasting impact",
   });
 
   return recs.slice(0, 4);
@@ -251,11 +250,11 @@ export function findSimilarMind(
   // Find shared traits (axes within 0.15 of each other)
   const traits: string[] = [];
   const axisNames: [keyof MindAxes, string][] = [
-    ["entropyTolerance", "entropy processing"],
-    ["resolutionCraving", "resolution drive"],
-    ["monotonyTolerance", "repetition depth"],
-    ["salienceSensitivity", "attentional gating"],
-    ["tensionAppetite", "tension architecture"],
+    ["entropyTolerance", "chaos appetite"],
+    ["resolutionCraving", "need for closure"],
+    ["monotonyTolerance", "repetition comfort"],
+    ["salienceSensitivity", "surprise sensitivity"],
+    ["tensionAppetite", "tension love"],
   ];
 
   let maxDivAxis = "";
@@ -270,50 +269,50 @@ export function findSimilarMind(
     }
   }
 
-  // Connection insight — neuroscience-grounded
+  // Connection insight — human-friendly
   const connectionInsights = [
-    `Your auditory cortices process harmonic information through remarkably similar neural pathways. When ${best.user.displayName} hears a deceptive cadence, their prediction error magnitude is within 0.12σ of yours.`,
-    `Both minds share a ${currentPersona.family} affinity for ${traits[0] || "musical complexity"}. Your temporal processing windows overlap — you hear the same structural boundaries in a piece.`,
-    `The similarity in your belief architectures means you likely reach peak reward at the same musical moments. Your ventral tegmental areas fire in near-synchrony.`,
-    `Your H³ temporal morphology profiles suggest you perceive musical time at similar scales. The micro-meso horizon boundary falls in the same place for both minds.`,
+    `You and ${best.user.displayName} hear music through remarkably similar ears. When they hear an unexpected chord change, their reaction is nearly identical to yours — same surprise, same satisfaction.`,
+    `Both minds share a ${currentPersona.family} love for ${traits[0] || "musical complexity"}. You pick up on the same details in a song — the same moments grab both of you.`,
+    `Your musical minds are so aligned that you'd probably love each other's playlists. You reach the emotional peak at the same moments in a piece.`,
+    `You both experience time in music the same way — short moments feel equally intense, long passages build the same way. Shared listening would feel natural.`,
   ];
 
   return {
     user: best.user,
     similarity: best.similarity,
     sharedTraits: traits.slice(0, 3),
-    divergence: `${maxDivAxis} differs most — this creates complementary tension in shared listening.`,
+    divergence: `${maxDivAxis} is where you differ most — that's what makes shared listening interesting, not boring.`,
     connectionInsight: connectionInsights[Math.abs(best.similarity) % connectionInsights.length],
   };
 }
 
-/** Generate the "Your Brain Says" footer insight — one powerful sentence */
+/** Generate the closing insight — one powerful sentence */
 export function generateBrainQuote(persona: Persona, axes: MindAxes): string {
   const quotes: Record<string, string[]> = {
     Alchemists: [
-      "Your dopamine system isn't chasing the drop — it's chasing the moment your prediction model breaks and rebuilds itself stronger.",
-      "The tension you crave isn't stress. It's your brain's way of building a model complex enough to be worth resolving.",
-      "Every unresolved chord is an open question your striatum refuses to leave unanswered.",
+      "You're not chasing the drop. You're chasing the moment everything you expected shatters — and something better takes its place.",
+      "The tension you crave isn't stress. It's your mind building something complex enough to be worth the resolution.",
+      "Every unresolved chord is a question you refuse to leave unanswered. That's not anxiety — that's hunger.",
     ],
     Architects: [
-      "You don't hear music. You hear the blueprint behind it. Every deviation from the template is data.",
-      "Your auditory cortex maintains a running structural model — and the pleasure comes from watching it prove itself right.",
-      "Consonance isn't beauty to you. It's confirmation that your internal model of harmony matches reality.",
+      "You don't just hear music. You hear the blueprint behind it. Every deviation from the pattern is information.",
+      "Your mind builds a running model of every song — and the pleasure comes from watching it prove itself right.",
+      "Harmony isn't beauty to you. It's confirmation that the universe has structure and you can hear it.",
     ],
     Explorers: [
-      "Your norepinephrine system runs 2σ hotter than the median listener. You need novelty like oxygen.",
-      "When you hear something you've never heard before, your brain doesn't flinch. It leans in. That's rare.",
-      "Your prediction models are deliberately loose — they allow more entropy through, which means more surprise, more learning, more reward.",
+      "Your curiosity runs hotter than most. You need the unknown like oxygen — silence is just an unexplored frequency.",
+      "When you hear something completely new, you don't flinch. You lean in. That's rarer than you think.",
+      "Your mind keeps its expectations deliberately loose — so more surprise gets through, more learning happens, more joy arrives.",
     ],
     Anchors: [
-      "Your temporal cortex wraps sound in memory. Every melody is a key to a room you've already been in.",
-      "The familiarity response in your hippocampus is unusually strong — repetition doesn't bore you, it deepens the neural groove.",
-      "You listen with your entire history. Each note activates a chain of associations that most minds never build.",
+      "Your mind wraps sound in memory. Every melody is a key to a room you've already been in — but see differently each time.",
+      "Repetition doesn't bore you. It deepens. Each listen carves the groove a little wider, a little richer.",
+      "You listen with your entire history. Each note lights up a chain of memories that most people never build.",
     ],
     Kineticists: [
-      "Your motor cortex doesn't just respond to rhythm — it predicts it. You feel the beat before it arrives.",
-      "The groove is a precision instrument in your brain. Micro-timing deviations of 10ms register as distinct textures.",
-      "Your basal ganglia lock onto rhythmic structures with unusual speed — you're entrained before most people have found the beat.",
+      "Your body doesn't just respond to rhythm — it predicts it. You feel the beat before it lands.",
+      "The groove is a precision instrument in your mind. Tiny timing shifts that others miss register as completely different textures.",
+      "You lock onto rhythmic structures with unusual speed — you're moving before most people have even found the beat.",
     ],
   };
 
@@ -322,15 +321,15 @@ export function generateBrainQuote(persona: Persona, axes: MindAxes): string {
   return familyQuotes[persona.id % familyQuotes.length];
 }
 
-/** Recent tracks with neuroscience context */
+/** Recent tracks with context about what your mind experienced */
 export function getRecentTracksWithContext() {
   return recentTracks.map((track) => ({
     ...track,
     neuralContext: track.rewardIntensity > 0.85
-      ? `Your C³ reward system peaked here — prediction error magnitude exceeded baseline by ${(track.rewardIntensity * 3.5).toFixed(1)}×. This is a signature PE event.`
+      ? `Your mind lit up here — the surprise-to-satisfaction ratio was ${(track.rewardIntensity * 3.5).toFixed(1)}x above your baseline. This is one of those rare moments where everything clicks.`
       : track.rewardIntensity > 0.7
-      ? `Moderate-high reward activation. Your precision-weighted prediction error created a sustained dopaminergic response through this section.`
-      : `Steady-state processing. Your belief trajectories were stable — familiarity-driven listening with low PE amplitude.`,
+      ? `Strong response. Something in this section caught your attention and held it — a sustained wave of enjoyment that built slowly and paid off.`
+      : `Steady-state listening. Your mind was comfortable here — familiar territory, low surprise, the kind of music you can sink into without thinking.`,
   }));
 }
 
