@@ -141,7 +141,7 @@ class PerceivedConsonance(Belief):
 
         h3_std_key = (self._idx_roughness, 8, 2, 0)  # M2=std, H8, L0
         h3_std = h3.get(h3_std_key, torch.tensor(0.1))
-        if h3_std.numel() == 1:
+        if h3_std.dim() < 2:
             h3_std = torch.full_like(value, 0.1)
 
         precision = spectral_snr / (h3_std + 1e-6)

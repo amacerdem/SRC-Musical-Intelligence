@@ -1,7 +1,15 @@
 """DAEDKernelWrapper — causal-mode DAED adapter for C³ Kernel.
 
 Wraps the production DAED Relay (RPU, 8D) for use inside the
-kernel belief cycle.  Feeds reward_valence belief in Wave 1.
+kernel belief cycle.  Feeds reward modulation in Wave 2.
+
+v3.0 Wave 2: Cross-relay pathways P1 + P7.
+  P1 (BCH → DAED): consonance_signal amplifies wanting_index.
+    Consonant harmony drives anticipatory approach motivation.
+    wanting *= (1 + 0.4 × consonance_signal)
+  P7 (MMP → DAED): familiarity_level amplifies liking_index.
+    Familiar passages enhance hedonic pleasure (mere exposure effect).
+    liking *= (1 + 0.3 × familiarity_level)
 
 Rules:
   1. Expose E-layer wanting+liking (2D) + P-layer (2D) = 4 approved outputs
@@ -62,6 +70,11 @@ class DAEDKernelWrapper(RelayKernelWrapper):
     _IDX_CAUDATE = 6
     _IDX_NACC = 7
 
+    # P1 cross-relay: BCH consonance_signal → wanting gain
+    _BCH_WANTING_GAIN = 0.4  # 40% max amplification from consonance
+    # P7 cross-relay: MMP familiarity_level → liking gain
+    _MMP_LIKING_GAIN = 0.3   # 30% max amplification from familiarity
+
     def __init__(self) -> None:
         self._daed = DAED()
 
@@ -84,21 +97,43 @@ class DAEDKernelWrapper(RelayKernelWrapper):
         self,
         r3: Tensor,
         h3: Dict[Tuple[int, int, int, int], Tensor],
+        *,
+        bch_consonance: Optional[Tensor] = None,
+        mmp_familiarity: Optional[Tensor] = None,
     ) -> Optional[DAEDOutput]:
         """Run DAED and extract wanting/liking + regional activations.
 
         Args:
             r3: (B, T, 97) R³ features.
             h3: H³ morphology dict {(r3_idx, h, m, l): (B, T)}.
+            bch_consonance: (B, T) BCH consonance_signal for P1 pathway.
+                Consonant harmony amplifies anticipatory wanting.
+            mmp_familiarity: (B, T) MMP familiarity_level for P7 pathway.
+                Familiar passages amplify hedonic liking (mere exposure).
 
         Returns:
             DAEDOutput with 4 approved dimensions, or None.
         """
         daed_8d = self._daed.compute(h3, r3)  # (B, T, 8)
 
+        wanting = daed_8d[..., self._IDX_WANTING]
+        liking = daed_8d[..., self._IDX_LIKING]
+
+        # P1 cross-relay: consonance → wanting amplification
+        if bch_consonance is not None:
+            wanting = wanting * (
+                1.0 + self._BCH_WANTING_GAIN * bch_consonance.clamp(0.0, 1.0)
+            )
+
+        # P7 cross-relay: familiarity → liking amplification
+        if mmp_familiarity is not None:
+            liking = liking * (
+                1.0 + self._MMP_LIKING_GAIN * mmp_familiarity.clamp(0.0, 1.0)
+            )
+
         return DAEDOutput(
-            wanting_index=daed_8d[..., self._IDX_WANTING],
-            liking_index=daed_8d[..., self._IDX_LIKING],
+            wanting_index=wanting,
+            liking_index=liking,
             caudate_activation=daed_8d[..., self._IDX_CAUDATE],
             nacc_activation=daed_8d[..., self._IDX_NACC],
         )

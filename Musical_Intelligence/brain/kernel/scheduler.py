@@ -1,22 +1,37 @@
-"""C3Kernel — single-pass phase scheduler for C³ v3.0.
+"""C3Kernel — single-pass phase scheduler for C³ v3.1.
 
 Executes the belief cycle per frame:
-  Phase 0:  6 relay wrappers (BCH, HMCE, SNEM, MMP, DAED, MPG)
+  Phase 0a: Independent relays (BCH, SNEM, MMP, MPG)
+  Phase 0b: Dependent relays with cross-inputs:
+              HMCE (+SNEM beat_locked_activity → A1 gain)
+              DAED (+BCH consonance_signal → wanting, +MMP familiarity → liking)
           + observe sensory beliefs (consonance, tempo)
   Phase 1:  observe + predict + update salience (attentional gate)
           + multi-feature H³ velocity, mean+max mixing (v2.5)
   Phase 2a: predict all beliefs + observe familiarity (H³ macro stability)
-          + multi-scale predict/observe for consonance (v2.0)
+          + multi-scale predict/observe for consonance (v2.0, 8 horizons)
+          + multi-scale predict/observe for tempo (v3.1, 6 horizons)
   Phase 2b: compute PE + precision for predictive beliefs
           + per-horizon PE + precision decomposition (v2.1)
   Phase 2c: update beliefs with Bayesian fusion
   Phase 3:  compute reward from multi-scale PEs with per-horizon π (v2.1)
           + horizon activation gating — data-readiness weights (v2.2)
           + surprise-dominant reward weights (v2.5)
+          + DAED DA modulation — wanting/liking gain on reward (v3.0)
 
-v3.0 Wave 0: All 6 relay wrappers instantiated and computed per frame.
-  Outputs stored in relay_outputs dict but NOT consumed by beliefs yet.
-  Zero regression — beliefs use existing R³+H³ paths unchanged.
+v3.1: Multi-scale tempo prediction.
+  Tempo gets 6-horizon prediction (H5-H21) using onset_strength.
+  Per-horizon PE + precision feed into multiscale reward.
+  Uniform weights (no ultra horizons → no activation gating needed).
+
+v3.0 Wave 2: Cross-relay pathways + DAED→reward.
+  Phase 0 splits into 0a (independent) + 0b (dependent):
+    P1: BCH consonance_signal → DAED wanting amplification
+    P3: SNEM beat_locked_activity → HMCE A1 encoding gain
+    P7: MMP familiarity_level → DAED liking amplification
+  DAED → reward: DA gain = 1 + 0.25×(0.6×wanting + 0.4×liking)
+  Relay→belief wiring (Wave 1):
+    BCH→consonance, HMCE→tempo, SNEM+MPG→salience, MMP→familiarity
 
 Single pass.  No iteration.  No convergence loop.
 """
@@ -45,6 +60,7 @@ from .beliefs.tempo import TempoState
 from .beliefs.reward import RewardValence
 from ...ear.h3.constants.horizons import FRAME_RATE
 from ...ear.r3.registry.feature_map import R3FeatureMap
+from .ram import assemble_ram
 from .temporal_weights import activated_reward_weights
 
 
@@ -66,6 +82,8 @@ class KernelOutput:
     ms_precision_pred: Dict[str, Dict[int, Tensor]] = field(default_factory=dict)
     # v3.0: relay wrapper outputs (populated but not yet consumed by beliefs)
     relay_outputs: Dict[str, Any] = field(default_factory=dict)
+    # v3.1: Region Activation Map — (B, T, 26) brain region activations
+    ram: Optional[Tensor] = None
 
 
 # ======================================================================
@@ -81,8 +99,11 @@ class C3Kernel:
       Active:  perceived_consonance, tempo_state, salience_state,
                familiarity_state, reward_valence
 
-    Wave 0: All relays computed per frame, outputs stored in
-    relay_outputs dict.  Beliefs NOT yet consuming relay data.
+    Wave 2: Cross-relay pathways + DAED→reward modulation:
+      Phase 0a: BCH, SNEM, MMP, MPG (independent)
+      Phase 0b: HMCE(+SNEM), DAED(+BCH,+MMP) (dependent)
+      Relay→belief: BCH→consonance, HMCE→tempo, SNEM+MPG→salience, MMP→familiarity
+      DAED→reward: DA gain on reward_valence
 
     Usage:
         kernel = C3Kernel(feature_map)
@@ -211,20 +232,43 @@ class C3Kernel:
         T = r3.shape[1]
         device = r3.device
 
-        # ── Phase 0: All relays + Sensory grounding ─────────────────
+        # ── Phase 0a: Independent relays ──────────────────────────────
         bch_out = self._bch_wrapper.compute(r3, h3)
+        snem_out = self._snem_wrapper.compute(r3, h3)
+        mmp_out = self._mmp_wrapper.compute(r3, h3)
+        mpg_out = self._mpg_wrapper.compute(r3, h3)
 
-        # v3.0 Wave 0: Compute all 5 relay wrappers (populated, not consumed)
-        relay_outputs: Dict[str, Any] = {}
-        for wrapper in self._relay_wrappers:
-            relay_outputs[wrapper.name] = wrapper.compute(r3, h3)
+        # ── Phase 0b: Dependent relays (cross-inputs from 0a) ────────
+        # P3: SNEM beat_locked_activity → HMCE A1 encoding gain
+        snem_beat = snem_out.beat_locked_activity if snem_out is not None else None
+        hmce_out = self._hmce_wrapper.compute(r3, h3, snem_beat=snem_beat)
 
+        # P1+P7: BCH consonance + MMP familiarity → DAED wanting/liking
+        bch_cons = bch_out.consonance_signal if bch_out is not None else None
+        mmp_fam = mmp_out.familiarity_level if mmp_out is not None else None
+        daed_out = self._daed_wrapper.compute(
+            r3, h3, bch_consonance=bch_cons, mmp_familiarity=mmp_fam,
+        )
+
+        relay_outputs: Dict[str, Any] = {
+            "BCH": bch_out,
+            "HMCE": hmce_out,
+            "SNEM": snem_out,
+            "MMP": mmp_out,
+            "DAED": daed_out,
+            "MPG": mpg_out,
+        }
+
+        # ── Phase 0c: Sensory grounding ──────────────────────────────
         cons_likelihood = self._consonance.observe(r3, h3, bch_out=bch_out)
-        tempo_likelihood = self._tempo.observe(r3, h3)
+        tempo_likelihood = self._tempo.observe(r3, h3, hmce_out=hmce_out)
 
         # ── Phase 1: Salience (attentional gate) ──────────────────
         sal_likelihood = self._salience.observe(
-            r3, h3, prev_pe_mean=self._prev_pe_mean,
+            r3, h3,
+            prev_pe_mean=self._prev_pe_mean,
+            snem_out=snem_out,
+            mpg_out=mpg_out,
         )
         sal_predicted = self._salience.predict(self._beliefs_prev, h3)
         sal_predicted = self._broadcast(sal_predicted, B, T, device)
@@ -254,12 +298,25 @@ class C3Kernel:
             # Fallback to single-scale if multiscale not available
             cons_predicted = self._consonance.predict(self._beliefs_prev, h3)
 
-        tempo_predicted = self._tempo.predict(self._beliefs_prev, h3)
+        # Multi-scale predict/observe for tempo (v3.1)
+        tempo_ms_predicted = self._tempo.predict_multiscale(
+            self._beliefs_prev, h3,
+        )
+        tempo_ms_observed = self._tempo.observe_multiscale(h3)
+
+        # Aggregated prediction for single-belief update
+        if tempo_ms_predicted:
+            tempo_predicted = self._tempo.aggregate_prediction(
+                tempo_ms_predicted,
+            )
+        else:
+            tempo_predicted = self._tempo.predict(self._beliefs_prev, h3)
+
         fam_predicted = self._familiarity.predict(self._beliefs_prev, h3)
         reward_predicted = self._reward_belief.predict(self._beliefs_prev, h3)
 
-        # Familiarity observation (H³ macro stability)
-        fam_likelihood = self._familiarity.observe(r3, h3)
+        # Familiarity observation (H³ macro stability + MMP recognition)
+        fam_likelihood = self._familiarity.observe(r3, h3, mmp_out=mmp_out)
 
         # Broadcast predictions to match observation shape
         cons_predicted = self._broadcast(cons_predicted, B, T, device)
@@ -288,6 +345,28 @@ class C3Kernel:
             cons_ms_precision[h] = (
                 self._precision.estimate_precision_pred_multiscale(
                     "perceived_consonance", h, self._consonance.tau,
+                )
+            )
+
+        # Per-horizon PE decomposition for tempo (v3.1)
+        tempo_ms_pe: Dict[int, Tensor] = {}
+        for h in tempo_ms_predicted:
+            obs_h = tempo_ms_observed.get(h)
+            pred_h = tempo_ms_predicted[h]
+            if obs_h is not None and obs_h.dim() >= 2:
+                pred_h_bc = self._broadcast(pred_h, B, T, device)
+                obs_h_bc = self._broadcast(obs_h, B, T, device)
+                tempo_ms_pe[h] = obs_h_bc - pred_h_bc
+
+        # Per-horizon precision for tempo (v3.1)
+        tempo_ms_precision: Dict[int, Tensor] = {}
+        for h, pe_h in tempo_ms_pe.items():
+            self._precision.record_pe_multiscale(
+                "tempo_state", h, pe_h,
+            )
+            tempo_ms_precision[h] = (
+                self._precision.estimate_precision_pred_multiscale(
+                    "tempo_state", h, self._tempo.tau,
                 )
             )
 
@@ -321,29 +400,52 @@ class C3Kernel:
             fam_likelihood, fam_predicted, fam_pi_pred
         )
 
-        # ── Phase 3: Reward computation (v2.2: activated horizon weights) ──
-        # Consonance uses multi-scale PE + per-horizon precision.
-        # Tempo uses single-scale PE (will be upgraded later).
-        if cons_ms_pe:
-            # Horizon activation gating (v2.2): weight by data-readiness.
-            # Ultra horizons (H24, H28) suppressed until enough data exists.
+        # ── Phase 3: Reward computation (v3.1: dual multiscale) ────────
+        # Consonance: 8-horizon with activation gating (ultra horizons suppressed).
+        # Tempo: 6-horizon with uniform weights (no ultra → no gating needed).
+        if cons_ms_pe or tempo_ms_pe:
+            # Consonance: horizon activation gating (v2.2)
             elapsed_s = self._frame_count / FRAME_RATE
-            cons_reward_weights = activated_reward_weights(
-                elapsed_s, tuple(cons_ms_pe.keys()),
-            )
+            ms_pe_dict: Dict[str, Dict[int, Tensor]] = {}
+            ms_weights: Dict[str, Dict[int, float]] = {}
+            ms_prec: Dict[str, Dict[int, Tensor]] = {}
+
+            if cons_ms_pe:
+                cons_reward_weights = activated_reward_weights(
+                    elapsed_s, tuple(cons_ms_pe.keys()),
+                )
+                ms_pe_dict["perceived_consonance"] = cons_ms_pe
+                ms_weights["perceived_consonance"] = cons_reward_weights
+                ms_prec["perceived_consonance"] = cons_ms_precision
+
+            # Tempo: uniform weights (all 6 horizons fill within seconds)
+            if tempo_ms_pe:
+                n_h = len(tempo_ms_pe)
+                tempo_reward_weights = {h: 1.0 / n_h for h in tempo_ms_pe}
+                ms_pe_dict["tempo_state"] = tempo_ms_pe
+                ms_weights["tempo_state"] = tempo_reward_weights
+                ms_prec["tempo_state"] = tempo_ms_precision
+
+            # Single-scale fallback for beliefs not yet on multiscale
+            single_pe: Optional[Dict[str, Tensor]] = None
+            single_prec: Optional[Dict[str, Tensor]] = None
+            if not tempo_ms_pe:
+                single_pe = {"tempo_state": tempo_pe}
+                single_prec = {"tempo_state": tempo_pi_pred}
 
             reward_value = self._reward_agg.compute_multiscale(
-                ms_pe_dict={"perceived_consonance": cons_ms_pe},
-                ms_weights={"perceived_consonance": cons_reward_weights},
-                ms_precision_dict={"perceived_consonance": cons_ms_precision},
+                ms_pe_dict=ms_pe_dict,
+                ms_weights=ms_weights,
+                ms_precision_dict=ms_prec,
                 precision_pred_dict={
                     "perceived_consonance": cons_pi_pred,
                     "tempo_state": tempo_pi_pred,
                 },
                 salience=sal_posterior,
                 familiarity=fam_posterior,
-                single_pe_dict={"tempo_state": tempo_pe},
-                single_precision_dict={"tempo_state": tempo_pi_pred},
+                single_pe_dict=single_pe,
+                single_precision_dict=single_prec,
+                daed_out=daed_out,
             )
         else:
             # Fallback: single-scale reward (backward compat)
@@ -352,6 +454,7 @@ class C3Kernel:
                 {"perceived_consonance": cons_pi_pred,
                  "tempo_state": tempo_pi_pred},
                 sal_posterior, fam_posterior,
+                daed_out=daed_out,
             )
 
         # Update reward belief with aggregated reward
@@ -385,6 +488,9 @@ class C3Kernel:
         }
         self._frame_count += 1
 
+        # ── Region Activation Map (v3.1) ─────────────────────────────
+        ram = assemble_ram(relay_outputs, B, T, device)
+
         # ── Assemble output ─────────────────────────────────────────
         return KernelOutput(
             beliefs={
@@ -415,12 +521,16 @@ class C3Kernel:
                 "reward_valence": reward_pi_pred,
             },
             reward=reward_posterior,
-            ms_pe={"perceived_consonance": cons_ms_pe} if cons_ms_pe else {},
-            ms_precision_pred=(
-                {"perceived_consonance": cons_ms_precision}
-                if cons_ms_precision else {}
-            ),
+            ms_pe={
+                **({"perceived_consonance": cons_ms_pe} if cons_ms_pe else {}),
+                **({"tempo_state": tempo_ms_pe} if tempo_ms_pe else {}),
+            },
+            ms_precision_pred={
+                **({"perceived_consonance": cons_ms_precision} if cons_ms_precision else {}),
+                **({"tempo_state": tempo_ms_precision} if tempo_ms_precision else {}),
+            },
             relay_outputs=relay_outputs,
+            ram=ram,
         )
 
     @staticmethod

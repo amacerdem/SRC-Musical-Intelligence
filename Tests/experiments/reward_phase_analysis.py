@@ -55,11 +55,11 @@ PIECES = {
     ),
 }
 
-# Reward config (must match RewardConfig defaults)
-W_SURPRISE = 1.0
-W_RESOLUTION = 1.2
-W_EXPLORATION = 0.3
-W_MONOTONY = 0.8
+# Reward config (must match RewardConfig defaults — v2.5 surprise-dominant)
+W_SURPRISE = 1.5
+W_RESOLUTION = 0.8
+W_EXPLORATION = 0.5
+W_MONOTONY = 0.6
 
 
 def run_piece(name: str, path: str) -> dict:

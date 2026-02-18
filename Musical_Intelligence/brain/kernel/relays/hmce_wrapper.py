@@ -3,6 +3,11 @@
 Wraps the production HMCE Relay (STU, 13D) for use inside the
 kernel belief cycle.  Feeds tempo_state belief in Wave 1.
 
+v3.0 Wave 2: Cross-relay pathway P3 (SNEM → HMCE).
+  When SNEM beat_locked_activity is available, A1 encoding is
+  amplified — beat entrainment strengthens onset-level cortical
+  response.  Modulation: a1 *= (1 + 0.3 × beat_locked_activity).
+
 Rules:
   1. Expose P-layer (3D) + F-layer (3D) = 6 approved outputs
   2. H³ demand deduplication against existing kernel demands
@@ -49,6 +54,9 @@ class HMCEKernelWrapper(RelayKernelWrapper):
     _P_START, _P_END = 7, 10      # a1_encoding, stg_encoding, mtg_encoding
     _F_START, _F_END = 10, 13     # context_prediction, phrase_expect, structure_predict
 
+    # P3 cross-relay: SNEM beat_locked_activity → A1 encoding gain
+    _SNEM_A1_GAIN = 0.3  # 30% max amplification from beat entrainment
+
     def __init__(self) -> None:
         self._hmce = HMCE()
 
@@ -71,20 +79,31 @@ class HMCEKernelWrapper(RelayKernelWrapper):
         self,
         r3: Tensor,
         h3: Dict[Tuple[int, int, int, int], Tensor],
+        *,
+        snem_beat: Optional[Tensor] = None,
     ) -> Optional[HMCEOutput]:
         """Run HMCE and extract P-layer + F-layer outputs.
 
         Args:
             r3: (B, T, 97) R³ features.
             h3: H³ morphology dict {(r3_idx, h, m, l): (B, T)}.
+            snem_beat: (B, T) SNEM beat_locked_activity for P3 pathway.
+                When available, amplifies A1 encoding — beat entrainment
+                strengthens short-scale cortical response.
 
         Returns:
             HMCEOutput with 6 approved dimensions, or None.
         """
         hmce_13d = self._hmce.compute(h3, r3)  # (B, T, 13)
 
+        a1 = hmce_13d[..., 7]
+
+        # P3 cross-relay: beat entrainment → A1 gain
+        if snem_beat is not None:
+            a1 = a1 * (1.0 + self._SNEM_A1_GAIN * snem_beat.clamp(0.0, 1.0))
+
         return HMCEOutput(
-            a1_encoding=hmce_13d[..., 7],
+            a1_encoding=a1,
             stg_encoding=hmce_13d[..., 8],
             mtg_encoding=hmce_13d[..., 9],
             context_prediction=hmce_13d[..., 10],

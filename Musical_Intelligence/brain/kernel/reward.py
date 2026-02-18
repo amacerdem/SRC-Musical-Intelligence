@@ -1,4 +1,4 @@
-"""RewardAggregator — ARU reward computation for C³ v1.0 / v2.5.
+"""RewardAggregator — ARU reward computation for C³ v1.0 / v3.0.
 
 RFC §6: Inverted-U salience-gated reward.
 
@@ -28,14 +28,23 @@ v2.5 (surprise-dominant rebalancing):
   w_monotony 0.8→0.6.  Reward formula slope A = d(reward)/d(|PE|)
   increases from 0.028 to 0.398 — climaxes now produce visibly higher
   reward than calm passages.
+
+v3.0 Wave 2 (DA modulation):
+  DAED wanting/liking → mesolimbic dopamine gain on reward.
+  da_gain = 1 + w_da × (0.6×wanting + 0.4×liking)
+  Applied AFTER familiarity_mod.  When DAED unavailable, gain=1 (no-op).
+  wanting=anticipatory DA (caudate), liking=consummatory DA (NAcc).
 """
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Dict, Optional
+from typing import TYPE_CHECKING, Dict, Optional
 
 import torch
 from torch import Tensor
+
+if TYPE_CHECKING:
+    from .relays.daed_wrapper import DAEDOutput
 
 
 @dataclass
@@ -56,6 +65,10 @@ class RewardConfig:
     # scale=12: π_raw=10 → 0.68, monotony=0.37.
     # scale=15: π_raw=10 → 0.58, monotony=0.27 (more aggressive).
     precision_scale: float = 12.0
+    # v3.0: DA modulation gain from DAED wanting/liking.
+    # da_gain = 1 + w_da × (0.6×wanting + 0.4×liking)
+    # w_da=0.25: ±25% reward modulation range from DA pathway.
+    w_da: float = 0.25
 
 
 class RewardAggregator:
@@ -70,6 +83,8 @@ class RewardAggregator:
         precision_pred_dict: Dict[str, Tensor],
         salience: Tensor,
         familiarity: Tensor,
+        *,
+        daed_out: Optional[DAEDOutput] = None,
     ) -> Tensor:
         """Compute aggregate reward valence.
 
@@ -78,6 +93,7 @@ class RewardAggregator:
             precision_pred_dict: {belief_name: precision_pred scalar}.
             salience: (B, T) salience state.  Default 1.0 if ASU not active.
             familiarity: (B, T) familiarity state.  Default 0.5 if IMU not active.
+            daed_out: DAED relay output for DA modulation (v3.0).
 
         Returns:
             reward_valence: (B, T) in roughly [-1, 1] (unbounded in theory).
@@ -120,6 +136,9 @@ class RewardAggregator:
         familiarity_mod = 4.0 * familiarity * (1.0 - familiarity)  # peaks at 0.5
         reward_total = reward_total * (0.5 + 0.5 * familiarity_mod)
 
+        # v3.0: DA modulation from DAED mesolimbic pathway
+        reward_total = self._apply_da_gain(reward_total, daed_out)
+
         return reward_total
 
     def compute_multiscale(
@@ -133,6 +152,7 @@ class RewardAggregator:
         *,
         single_pe_dict: Optional[Dict[str, Tensor]] = None,
         single_precision_dict: Optional[Dict[str, Tensor]] = None,
+        daed_out: Optional[DAEDOutput] = None,
     ) -> Tensor:
         """Multi-scale reward: per-horizon PE + precision decomposition.
 
@@ -154,6 +174,7 @@ class RewardAggregator:
             familiarity: ``(B, T)`` familiarity state.
             single_pe_dict: PEs for beliefs still on single-scale path.
             single_precision_dict: Precision for single-scale beliefs.
+            daed_out: DAED relay output for DA modulation (v3.0).
 
         Returns:
             reward_valence: ``(B, T)``.
@@ -221,4 +242,31 @@ class RewardAggregator:
         familiarity_mod = 4.0 * familiarity * (1.0 - familiarity)
         reward_total = reward_total * (0.5 + 0.5 * familiarity_mod)
 
+        # v3.0: DA modulation from DAED mesolimbic pathway
+        reward_total = self._apply_da_gain(reward_total, daed_out)
+
         return reward_total
+
+    def _apply_da_gain(
+        self,
+        reward: Tensor,
+        daed_out: Optional[DAEDOutput],
+    ) -> Tensor:
+        """Apply mesolimbic DA gain from DAED wanting/liking.
+
+        da_gain = 1 + w_da × (0.6×wanting + 0.4×liking)
+        wanting → anticipatory DA (caudate, pre-climax amplification).
+        liking  → consummatory DA (NAcc, pleasure amplification).
+
+        When daed_out is None, returns reward unchanged (backward compat).
+        """
+        if daed_out is None:
+            return reward
+
+        da_signal = (
+            0.6 * daed_out.wanting_index.clamp(0.0, 1.0)
+            + 0.4 * daed_out.liking_index.clamp(0.0, 1.0)
+        )
+        da_gain = 1.0 + self.cfg.w_da * da_signal
+
+        return reward * da_gain

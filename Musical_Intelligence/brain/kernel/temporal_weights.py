@@ -43,6 +43,13 @@ HORIZON_SECONDS: tuple[float, ...] = tuple(ms / 1000.0 for ms in HORIZON_MS)
 #   Ultra:  H24 (36 s, section)            H28 (414 s, movement)
 CONSONANCE_HORIZONS: tuple[int, ...] = (5, 7, 10, 13, 18, 21, 24, 28)
 
+# 6 horizons for tempo: micro to macro, NO ultra (tempo is beat/phrase-level).
+# Ultra horizons (H24=36s, H28=414s) are meaningless for tempo in 30s excerpts.
+#   Micro:  H5  (46 ms, sub-beat ornament)  H7  (250 ms, beat onset)
+#   Meso:   H10 (400 ms, beat period)       H13 (600 ms, beat group)
+#   Macro:  H18 (2 s, bar/phrase)            H21 (8 s, phrase group)
+TEMPO_HORIZONS: tuple[int, ...] = (5, 7, 10, 13, 18, 21)
+
 # Default decay rate for 8-horizon sparse set.
 # α=0.3 gives ~49% at target, ~20% at ±3 indices, ~5% at ±8.
 # For denser horizon sets (16 or 32), increase to ~0.6-1.2.

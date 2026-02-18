@@ -1,19 +1,20 @@
 """FamiliarityState — IMU belief, Phase 2a.
 
-observe(): Recurrence-aware familiarity from H³ periodicity + stability.
-  H³ path:  M14 (periodicity/autocorrelation) as primary signal,
-            M2 (std) as supporting stability evidence,
-            energy gate from R³ tonal features to suppress silence.
+observe(): Dual-process familiarity (v3.0):
+  Implicit pathway (65%): H³ periodicity + stability + energy gate
+    M14 periodicity/autocorrelation → "this pattern recurs"
+    M2 std → supporting stability evidence
+    Energy gate → suppress silence
+  Explicit pathway (35%): MMP recognition_state (v3.0)
+    Hippocampal/perirhinal recognition → "I know this melody"
   Fallback: R³-only weighted average with energy gate (early frames)
-
-  High M14 periodicity → "this pattern recurs" → high familiarity
-  Low energy (silence)  → gate ≈ 0 → familiarity ≈ 0
 
 predict(): H³-informed linear model.
   trend: h3[(tonalness, H16, M18, L0)] — tonalness trend at macro
   context: perceived_consonance_{t-1} × 0.1
 
 precision_obs: cross-feature periodicity agreement, energy-gated
+  MMP enrichment: Bayesian precision combination π_total = π_implicit + π_mmp
 
 RFC §6 interaction with reward:
   surprise   = |PE| × π_pred × (1 − familiarity)
@@ -22,13 +23,16 @@ RFC §6 interaction with reward:
 """
 from __future__ import annotations
 
-from typing import Dict, Tuple
+from typing import TYPE_CHECKING, Dict, Optional, Tuple
 
 import torch
 from torch import Tensor
 
 from ..belief import Belief, Likelihood
 from ....ear.r3.registry.feature_map import R3FeatureMap
+
+if TYPE_CHECKING:
+    from ..relays.mmp_wrapper import MMPOutput
 
 
 class FamiliarityState(Belief):
@@ -74,17 +78,26 @@ class FamiliarityState(Belief):
         self._idx_key_clarity = feature_map.resolve("key_clarity")
         self._idx_tonal_stability = feature_map.resolve("tonal_stability")
 
+    # v3.0: Dual-process weights (literature: 65% implicit / 35% explicit)
+    _W_IMPLICIT = 0.65
+    _W_EXPLICIT = 0.35
+
     def observe(
         self,
         r3: Tensor,
         h3: Dict[Tuple[int, int, int, int], Tensor],
+        *,
+        mmp_out: Optional[MMPOutput] = None,
     ) -> Likelihood:
-        """Measure recurrence-aware familiarity from H³ periodicity + stability.
+        """Dual-process familiarity from implicit (H³) + explicit (MMP) pathways.
 
-        H³ path (normal):
-            Primary: M14 periodicity (autocorrelation) — pattern recurrence.
-            Supporting: M2 std (stability) — low variability.
-            Gate: R³ tonal energy — suppresses familiarity during silence.
+        v3.0 dual-process mode:
+            Implicit (65%): H³ periodicity + stability — "this pattern recurs"
+            Explicit (35%): MMP recognition_state — "I know this melody"
+            Precision: π_total = π_implicit + π_mmp (Bayesian combination)
+
+        H³-only mode (no MMP):
+            100% implicit pathway (backward compatible with v2.4).
 
         R³ fallback (early frames / missing H³):
             Weighted average of tonal features, energy-gated.
@@ -108,6 +121,7 @@ class FamiliarityState(Belief):
             return self._observe_h3(
                 r3, tonalness_std, key_std, tonal_stab_std,
                 tonalness_period, key_period, tonal_stab_period,
+                mmp_out=mmp_out,
             )
         return self._observe_r3_fallback(r3, B, T, device)
 
@@ -120,8 +134,13 @@ class FamiliarityState(Belief):
         tonalness_period: Tensor,
         key_period: Tensor,
         tonal_stab_period: Tensor,
+        *,
+        mmp_out: Optional[MMPOutput] = None,
     ) -> Likelihood:
-        """H³-enriched observation: recurrence + stability, energy-gated."""
+        """H³-enriched observation: recurrence + stability, energy-gated.
+
+        v3.0: Dual-process when MMP available — 65% implicit + 35% explicit.
+        """
         # === Energy gate: suppress familiarity during silence ===
         r3_tonalness = r3[..., self._idx_tonalness]
         r3_key = r3[..., self._idx_key_clarity]
@@ -146,12 +165,26 @@ class FamiliarityState(Belief):
         # === R³ tonal level (minor) ===
         r3_level = 0.40 * r3_tonalness + 0.30 * r3_key + 0.30 * r3_tonal_stab
 
-        # === Combine: recurrence (50%) + stability (35%) + R³ level (15%) ===
-        raw_value = (
+        # === Implicit pathway: recurrence (50%) + stability (35%) + R³ (15%) ===
+        implicit_value = (
             0.50 * period_signal
             + 0.35 * fam_stability
             + 0.15 * r3_level
         )
+
+        # === Dual-process: blend implicit + explicit (v3.0) ===
+        if mmp_out is not None:
+            # Explicit pathway: MMP recognition_state (hippocampal/perirhinal)
+            # recognition_state is the composite recognition signal from MMP
+            explicit_value = mmp_out.recognition_state.clamp(0.0, 1.0)
+
+            # Dual-process: 65% implicit + 35% explicit
+            raw_value = (
+                self._W_IMPLICIT * implicit_value
+                + self._W_EXPLICIT * explicit_value
+            )
+        else:
+            raw_value = implicit_value
 
         # Apply energy gate: silence → familiarity ≈ 0
         value = (raw_value * gate).clamp(0.0, 1.0)
@@ -161,7 +194,17 @@ class FamiliarityState(Belief):
             tonalness_period, key_period, tonal_stab_period,
         ], dim=-1)  # (B, T, 3)
         agreement = 1.0 / (period_stack.std(dim=-1) + 0.1)
-        precision = (agreement * gate).clamp(0.01, 10.0)
+        implicit_precision = agreement * gate
+
+        # MMP precision boost: Bayesian combination π_total = π_implicit + π_mmp
+        if mmp_out is not None:
+            # MMP cross-signal agreement (recognition × melodic_identity)
+            mmp_agreement = (
+                mmp_out.recognition_state * mmp_out.melodic_identity
+            ).clamp(0.01, 5.0)
+            precision = (implicit_precision + 0.3 * mmp_agreement).clamp(0.01, 10.0)
+        else:
+            precision = implicit_precision.clamp(0.01, 10.0)
 
         return Likelihood(value=value, precision=precision)
 
