@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MI NeuroMap — Musical Intelligence Neural Architecture</title>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<style>
+/* ── Reset & Base ──────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;
+  background:#060a14;color:#c9d1d9;
+  font-family:'SF Mono','Fira Code','JetBrains Mono',monospace;font-size:12px}
+
+/* ── Header ────────────────────────────────────────────────────── */
+#header{position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 24px;
+  background:linear-gradient(180deg,rgba(6,10,20,0.97) 0%,rgba(6,10,20,0.85) 100%);
+  border-bottom:1px solid rgba(88,166,255,0.15);backdrop-filter:blur(12px)}
+#header h1{font-size:15px;font-weight:600;letter-spacing:1.5px;
+  background:linear-gradient(135deg,#58A6FF,#BC8CFF);-webkit-background-clip:text;
+  -webkit-text-fill-color:transparent}
+#header .stats{font-size:11px;color:#8b949e;display:flex;gap:20px}
+#header .stats span{color:#58A6FF}
+
+/* ── Canvas ────────────────────────────────────────────────────── */
+#canvas{width:100%;height:100%;cursor:grab}
+#canvas:active{cursor:grabbing}
+
+/* ── Tooltip ───────────────────────────────────────────────────── */
+#tooltip{position:fixed;pointer-events:none;z-index:200;
+  padding:12px 16px;border-radius:8px;
+  background:rgba(13,17,23,0.96);border:1px solid rgba(88,166,255,0.3);
+  backdrop-filter:blur(16px);box-shadow:0 8px 32px rgba(0,0,0,0.6);
+  max-width:380px;font-size:11px;line-height:1.6;
+  opacity:0;transition:opacity 0.15s ease}
+#tooltip.visible{opacity:1}
+#tooltip .tt-title{font-size:13px;font-weight:700;color:#f0f6fc;margin-bottom:4px}
+#tooltip .tt-sub{color:#8b949e;margin-bottom:6px}
+#tooltip .tt-dim{color:#58A6FF;font-weight:600}
+#tooltip .tt-features{color:#7ee787;font-size:10px;line-height:1.5;margin-top:6px;
+  max-height:120px;overflow-y:auto}
+#tooltip .tt-eq{color:#d2a8ff;font-size:10px;font-style:italic;margin-top:4px}
+
+/* ── Legend ─────────────────────────────────────────────────────── */
+#legend{position:fixed;bottom:16px;left:16px;z-index:100;
+  padding:12px 16px;border-radius:8px;
+  background:rgba(13,17,23,0.92);border:1px solid rgba(48,54,61,0.6);
+  backdrop-filter:blur(8px);font-size:10px}
+#legend h3{font-size:11px;color:#8b949e;margin-bottom:8px;letter-spacing:1px}
+.legend-row{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.legend-swatch{width:14px;height:10px;border-radius:2px;flex-shrink:0}
+
+/* ── Info panel ────────────────────────────────────────────────── */
+#info{position:fixed;bottom:16px;right:16px;z-index:100;
+  padding:10px 14px;border-radius:8px;
+  background:rgba(13,17,23,0.92);border:1px solid rgba(48,54,61,0.6);
+  backdrop-filter:blur(8px);font-size:10px;color:#8b949e}
+#info kbd{background:rgba(110,118,129,0.2);padding:1px 6px;border-radius:3px;
+  border:1px solid rgba(110,118,129,0.3);font-size:10px}
+
+/* ── SVG Styles ────────────────────────────────────────────────── */
+.region-bg{rx:12;ry:12}
+.node-rect{rx:6;ry:6;stroke-width:1.5;cursor:pointer;
+  transition:filter 0.2s ease,stroke-width 0.15s ease}
+.node-rect:hover{filter:brightness(1.3) drop-shadow(0 0 8px currentColor);stroke-width:2.5}
+.node-rect.highlight{stroke-width:3;filter:brightness(1.4) drop-shadow(0 0 12px currentColor)}
+.node-label{font-family:'SF Mono','Fira Code',monospace;pointer-events:none;fill:#e6edf3;dominant-baseline:central}
+.node-sublabel{font-family:'SF Mono','Fira Code',monospace;pointer-events:none;fill:#8b949e;dominant-baseline:central}
+.edge-path{fill:none;stroke-width:1;opacity:0.25;
+  transition:opacity 0.2s ease,stroke-width 0.2s ease}
+.edge-path.highlight{opacity:0.8;stroke-width:2.5}
+.region-label{font-family:'SF Mono','Fira Code',monospace;fill:#8b949e;
+  font-size:13px;font-weight:700;letter-spacing:2px}
+.region-sublabel{font-family:'SF Mono','Fira Code',monospace;fill:#484f58;
+  font-size:10px;letter-spacing:1px}
+.unit-band{rx:8;ry:8}
+.phase-label{font-family:'SF Mono','Fira Code',monospace;fill:#484f58;
+  font-size:9px;letter-spacing:1px}
+.dim-badge{font-family:'SF Mono','Fira Code',monospace;fill:#0d1117;
+  font-size:8px;font-weight:700;dominant-baseline:central;text-anchor:middle}
+.dim-badge-bg{rx:4;ry:4}
+.tau-label{font-family:'SF Mono','Fira Code',monospace;font-size:9px;fill:#d2a8ff;
+  dominant-baseline:central;pointer-events:none}
+</style>
+</head>
+<body>
+
+<div id="header">
+  <h1>MUSICAL INTELLIGENCE — Neural Architecture</h1>
+  <div class="stats">
+    R3 <span id="stat-r3">97D</span> |
+    H3 <span id="stat-h3">24M × 32H × 3L</span> |
+    C3 <span id="stat-c3">96 models</span> |
+    Kernel <span id="stat-kernel">5 beliefs</span>
+  </div>
+</div>
+
+<svg id="canvas"></svg>
+
+<div id="tooltip">
+  <div class="tt-title"></div>
+  <div class="tt-sub"></div>
+  <div class="tt-features"></div>
+  <div class="tt-eq"></div>
+</div>
+
+<div id="legend">
+  <h3>MODULES</h3>
+  <div class="legend-row"><div class="legend-swatch" style="background:#e6edf3"></div>Input / Output</div>
+  <div class="legend-row"><div class="legend-swatch" style="background:#FF6B35"></div>R3 Perceptual Groups</div>
+  <div class="legend-row"><div class="legend-swatch" style="background:#4CC9F0"></div>H3 Morph Families</div>
+  <div class="legend-row"><div class="legend-swatch" style="background:#30a14e"></div>H3 Horizon Bands</div>
+  <div class="legend-row"><div class="legend-swatch" style="background:#1f6feb"></div>C3 Relay (alpha)</div>
+  <div class="legend-row"><div class="legend-swatch" style="background:#388bfd"></div>C3 Encoder (beta-1)</div>
+  <div class="legend-row"><div class="legend-swatch" style="background:#a371f7"></div>C3 Associator (beta-2)</div>
+  <div class="legend-row"><div class="legend-swatch" style="background:#db61a2"></div>C3 Integrator (beta-3)</div>
+  <div class="legend-row"><div class="legend-swatch" style="background:#f78166"></div>C3 Gamma (gamma)</div>
+  <div class="legend-row"><div class="legend-swatch" style="background:#d2a8ff"></div>Kernel Belief</div>
+  <div class="legend-row"><div class="legend-swatch" style="background:#f0883e"></div>Reward / Precision</div>
+</div>
+
+<div id="info">
+  <kbd>Scroll</kbd> zoom &nbsp; <kbd>Drag</kbd> pan &nbsp; <kbd>Click</kbd> highlight connections &nbsp; <kbd>Esc</kbd> reset
+</div>
+
+<script>
+// ── Constants ──────────────────────────────────────────────────────────
+const W = 5200, H = 3400;
+const TIER_COLORS = {
+  input:      {fill:'#161b22', stroke:'#e6edf3'},
+  r3:         {fill:'#1a1207', stroke:'#FF6B35'},
+  h3_family:  {fill:'#0a1a24', stroke:'#4CC9F0'},
+  h3_horizon: {fill:'#0a1a14', stroke:'#30a14e'},
+  relay:      {fill:'#0d1526', stroke:'#1f6feb'},
+  encoder:    {fill:'#0d1830', stroke:'#388bfd'},
+  associator: {fill:'#1a0d2e', stroke:'#a371f7'},
+  integrator: {fill:'#24091a', stroke:'#db61a2'},
+  gamma:      {fill:'#1f1007', stroke:'#f78166'},
+  belief:     {fill:'#1a0f2e', stroke:'#d2a8ff'},
+  precision:  {fill:'#1a1400', stroke:'#f0883e'},
+  reward:     {fill:'#1f0a0a', stroke:'#f85149'},
+  output:     {fill:'#161b22', stroke:'#e6edf3'},
+};
+
+// R³ group colors (warm spectrum)
+const R3_COLORS = {
+  A:'#FF6B35', B:'#FF9F1C', C:'#FFD166', D:'#EF476F',
+  F:'#06D6A0', G:'#118AB2', H:'#073B4C', J:'#7209B7', K:'#560BAD'
+};
+
+// Unit colors
+const UNIT_COLORS = {
+  spu:'#58A6FF', stu:'#3FB950', asu:'#D29922',
+  imu:'#BC8CFF', ndu:'#F78166', rpu:'#F85149'
+};
+
+// ── Layout config ──────────────────────────────────────────────────────
+const COL = {
+  audio: 80, cochlea: 280,
+  r3: 560,
+  h3_family: 950, h3_horizon: 1200,
+  relay: 1520, encoder: 1820, associator: 2150, integrator: 2480, gamma: 2780,
+  belief: 3150, precision: 3500, reward: 3500, output: 3850,
+  psi: 4150
+};
+
+const UNIT_Y = {spu:280, stu:700, asu:1120, imu:1540, ndu:1960, rpu:2380};
+const UNIT_H = 380;
+const NODE_W = 90, NODE_H = 44;
+
+// ── Fetch data and render ──────────────────────────────────────────────
+async function init() {
+  const data = await fetch('/api/graph').then(r => r.json());
+
+  const svg = d3.select('#canvas')
+    .attr('width', '100%').attr('height', '100%')
+    .attr('viewBox', `0 0 ${W} ${H}`);
+
+  // Defs: gradients, markers, filters
+  const defs = svg.append('defs');
+
+  // Arrow marker
+  defs.append('marker').attr('id','arrow').attr('viewBox','0 0 10 6')
+    .attr('refX',10).attr('refY',3).attr('markerWidth',8).attr('markerHeight',6)
+    .attr('orient','auto')
+    .append('path').attr('d','M0,0 L10,3 L0,6 Z').attr('fill','#484f58');
+
+  // Glow filter
+  const glow = defs.append('filter').attr('id','glow').attr('x','-50%').attr('y','-50%')
+    .attr('width','200%').attr('height','200%');
+  glow.append('feGaussianBlur').attr('stdDeviation','3').attr('result','blur');
+  glow.append('feMerge').selectAll('feMergeNode').data(['blur','SourceGraphic'])
+    .join('feMergeNode').attr('in', d => d);
+
+  const g = svg.append('g').attr('class','main');
+
+  // Zoom
+  const zoom = d3.zoom().scaleExtent([0.15, 12])
+    .on('zoom', ({transform}) => g.attr('transform', transform));
+  svg.call(zoom);
+  // Initial view: fit to screen
+  // Fit-to-screen: center the graph in the viewport
+  requestAnimationFrame(() => {
+    const vw = window.innerWidth, vh = window.innerHeight;
+    const scale = Math.min(vw / W, vh / H) * 9.0;
+    const tx = vw / 2 - (W / 2) * scale;
+    const ty = vh / 2 - (H / 2) * scale;
+    svg.call(zoom.transform, d3.zoomIdentity.translate(tx, ty).scale(scale));
+  });
+
+  // Build nodes & edges
+  const {nodes, edges} = buildGraph(data);
+  const nodeMap = Object.fromEntries(nodes.map(n => [n.id, n]));
+
+  // ── Draw regions ───────────────────────────────────────────────
+  drawRegions(g);
+
+  // ── Draw unit bands ────────────────────────────────────────────
+  drawUnitBands(g, data.c3_units);
+
+  // ── Draw edges ─────────────────────────────────────────────────
+  const edgeG = g.append('g').attr('class','edges');
+  edgeG.selectAll('path').data(edges).join('path')
+    .attr('class','edge-path')
+    .attr('d', d => {
+      const s = nodeMap[d.source], t = nodeMap[d.target];
+      if (!s || !t) return '';
+      const sx = s.x + (s.w||NODE_W)/2, sy = s.y + (s.h||NODE_H)/2;
+      const tx = t.x - (t.w||NODE_W)/2 + (t.w||NODE_W)*0.02, ty = t.y + (t.h||NODE_H)/2;
+      const mx = (sx + tx) / 2;
+      return `M${sx},${sy} C${mx},${sy} ${mx},${ty} ${tx},${ty}`;
+    })
+    .attr('stroke', d => d.color || '#484f58')
+    .attr('marker-end','url(#arrow)')
+    .attr('data-source', d => d.source)
+    .attr('data-target', d => d.target);
+
+  // ── Draw nodes ─────────────────────────────────────────────────
+  const nodeG = g.append('g').attr('class','nodes');
+  const nodeEls = nodeG.selectAll('g.node').data(nodes).join('g')
+    .attr('class','node')
+    .attr('transform', d => `translate(${d.x},${d.y})`);
+
+  // Node rect
+  nodeEls.append('rect')
+    .attr('class','node-rect')
+    .attr('width', d => d.w || NODE_W)
+    .attr('height', d => d.h || NODE_H)
+    .attr('fill', d => (TIER_COLORS[d.tier]||TIER_COLORS.input).fill)
+    .attr('stroke', d => d.color || (TIER_COLORS[d.tier]||TIER_COLORS.input).stroke)
+    .style('color', d => d.color || '#58A6FF');
+
+  // Dim badge (circle with dimension count)
+  nodeEls.filter(d => d.dim > 0).each(function(d) {
+    const el = d3.select(this);
+    const bx = (d.w||NODE_W) - 6, by = -4;
+    el.append('rect').attr('class','dim-badge-bg')
+      .attr('x', bx-12).attr('y', by-6).attr('width',24).attr('height',13)
+      .attr('fill', d.color || '#58A6FF');
+    el.append('text').attr('class','dim-badge')
+      .attr('x', bx).attr('y', by+1)
+      .text(d.dim + 'D');
+  });
+
+  // Main label
+  nodeEls.append('text')
+    .attr('class','node-label')
+    .attr('x', d => (d.w||NODE_W)/2).attr('y', d => (d.h||NODE_H)/2 - 5)
+    .attr('text-anchor','middle')
+    .attr('font-size', d => d.fontSize || 10)
+    .text(d => d.label);
+
+  // Sublabel
+  nodeEls.filter(d => d.sublabel).append('text')
+    .attr('class','node-sublabel')
+    .attr('x', d => (d.w||NODE_W)/2).attr('y', d => (d.h||NODE_H)/2 + 9)
+    .attr('text-anchor','middle')
+    .attr('font-size', 8)
+    .text(d => d.sublabel);
+
+  // Tau labels for beliefs
+  nodeEls.filter(d => d.tau != null).append('text')
+    .attr('class','tau-label')
+    .attr('x', d => (d.w||NODE_W)/2).attr('y', (d) => (d.h||NODE_H) + 13)
+    .attr('text-anchor','middle')
+    .text(d => `tau=${d.tau}`);
+
+  // ── Interaction ────────────────────────────────────────────────
+  const tooltip = d3.select('#tooltip');
+  let selectedNode = null;
+
+  nodeEls.on('mouseover', function(event, d) {
+    tooltip.select('.tt-title').text(d.fullName || d.label);
+    tooltip.select('.tt-sub').html(
+      (d.dim ? `<span class="tt-dim">${d.dim}D</span> ` : '') +
+      (d.desc || d.tier || '')
+    );
+    tooltip.select('.tt-features').html(
+      d.features ? d.features.map(f => `<div>- ${f}</div>`).join('') :
+      d.morphs ? d.morphs.map(m => `<div>- ${m}</div>`).join('') :
+      d.observe ? `<div><b>observe:</b> ${d.observe}</div>` : ''
+    );
+    tooltip.select('.tt-eq').text(d.predict || d.equation || '');
+    tooltip.classed('visible', true);
+  })
+  .on('mousemove', function(event) {
+    const tx = Math.min(event.clientX + 16, window.innerWidth - 400);
+    const ty = Math.min(event.clientY - 10, window.innerHeight - 200);
+    tooltip.style('left', tx+'px').style('top', ty+'px');
+  })
+  .on('mouseout', () => tooltip.classed('visible', false))
+  .on('click', function(event, d) {
+    event.stopPropagation();
+    if (selectedNode === d.id) { resetHighlight(); selectedNode=null; return; }
+    selectedNode = d.id;
+    highlightConnections(d.id, edges, nodeMap);
+  });
+
+  svg.on('click', () => { resetHighlight(); selectedNode=null; });
+  d3.select('body').on('keydown', e => {
+    if (e.key === 'Escape') { resetHighlight(); selectedNode=null; }
+  });
+
+  function highlightConnections(nodeId) {
+    const connected = new Set([nodeId]);
+    edges.forEach(e => {
+      if (e.source === nodeId) connected.add(e.target);
+      if (e.target === nodeId) connected.add(e.source);
+    });
+    nodeEls.select('.node-rect').classed('highlight', d => connected.has(d.id));
+    nodeEls.style('opacity', d => connected.has(d.id) ? 1 : 0.15);
+    edgeG.selectAll('.edge-path')
+      .classed('highlight', d => d.source === nodeId || d.target === nodeId)
+      .style('opacity', d => (d.source === nodeId || d.target === nodeId) ? 0.85 : 0.04);
+  }
+
+  function resetHighlight() {
+    nodeEls.select('.node-rect').classed('highlight', false);
+    nodeEls.style('opacity', 1);
+    edgeG.selectAll('.edge-path').classed('highlight', false).style('opacity', null);
+  }
+}
+
+// ── Build nodes & edges from API data ──────────────────────────────────
+function buildGraph(data) {
+  const nodes = [];
+  const edges = [];
+
+  // ── INPUT ──────────────────────────────────────────────
+  nodes.push({
+    id:'audio', label:'Audio', sublabel:'44.1kHz PCM', tier:'input',
+    x:COL.audio, y:H/2-70, w:110, h:56, dim:0, color:'#e6edf3',
+    fullName:'Audio Input', desc:'Raw audio waveform, 44100 Hz sample rate',
+    fontSize:12
+  });
+  nodes.push({
+    id:'cochlea', label:'Cochlea', sublabel:'Mel 128D x T', tier:'input',
+    x:COL.cochlea, y:H/2-70, w:120, h:56, dim:128, color:'#e6edf3',
+    fullName:'Cochlear Processing', desc:'STFT (hop=256) -> Mel filterbank (128 bands) -> log normalization. Frame rate: 172.27 Hz',
+    fontSize:12
+  });
+  edges.push({source:'audio', target:'cochlea', color:'#484f58'});
+
+  // ── R3 GROUPS ──────────────────────────────────────────
+  const r3StartY = 160;
+  const r3Spacing = (H - 400) / (data.r3_groups.length);
+  data.r3_groups.forEach((g, i) => {
+    const nid = 'r3_' + g.letter.toLowerCase();
+    const nodeH = Math.max(40, 28 + g.dim * 1.2);
+    nodes.push({
+      id: nid, label: g.letter, sublabel: g.name, tier:'r3',
+      x: COL.r3, y: r3StartY + i * r3Spacing, w: 110, h: nodeH,
+      dim: g.dim, color: R3_COLORS[g.letter] || '#FF6B35',
+      fullName: `R3 Group ${g.letter}: ${g.name}`,
+      desc: g.desc + ` | Range [${g.range[0]}:${g.range[1]}]`,
+      features: g.features, fontSize: 12
+    });
+    edges.push({source:'cochlea', target: nid, color: R3_COLORS[g.letter] || '#FF6B35'});
+  });
+
+  // ── H3 MORPH FAMILIES ─────────────────────────────────
+  const h3Colors = ['#4CC9F0','#4895EF','#4361EE','#3F37C9','#3A0CA3'];
+  const h3FamStartY = 300;
+  const h3FamSpacing = 420;
+  data.h3_families.forEach((f, i) => {
+    const nid = 'h3_' + f.id;
+    nodes.push({
+      id: nid, label: f.name, sublabel: `${f.count} morphs`, tier:'h3_family',
+      x: COL.h3_family, y: h3FamStartY + i * h3FamSpacing, w: 120, h: 48,
+      dim: f.count, color: h3Colors[i],
+      fullName: `H3 Morph Family: ${f.name}`,
+      desc: `${f.count} morphological operators`,
+      morphs: f.morphs, fontSize: 10
+    });
+    // Every R3 group feeds every morph family
+    data.r3_groups.forEach(g => {
+      edges.push({
+        source: 'r3_' + g.letter.toLowerCase(), target: nid,
+        color: h3Colors[i]
+      });
+    });
+  });
+
+  // ── H3 HORIZON BANDS ──────────────────────────────────
+  const hzColors = ['#238636','#2ea043','#3fb950','#56d364'];
+  const hzStartY = 200;
+  const hzSpacing = 600;
+  data.h3_horizons.forEach((hz, i) => {
+    const nid = 'h3_hz_' + hz.band;
+    nodes.push({
+      id: nid, label: hz.label, sublabel: hz.time, tier:'h3_horizon',
+      x: COL.h3_horizon, y: hzStartY + i * hzSpacing, w: 130, h: 48,
+      dim: hz.count, color: hzColors[i],
+      fullName: `H3 Horizon Band: ${hz.label}`,
+      desc: `${hz.range} — ${hz.time} — ${hz.count} horizons per band`,
+      fontSize: 10
+    });
+    // Morph families -> horizons
+    data.h3_families.forEach(f => {
+      edges.push({source:'h3_'+f.id, target:nid, color:hzColors[i]});
+    });
+  });
+
+  // ── H3 LAW NODE ───────────────────────────────────────
+  nodes.push({
+    id:'h3_laws', label:'3 Laws', sublabel:'L0 L1 L2', tier:'h3_horizon',
+    x: COL.h3_horizon, y: hzStartY + 4 * hzSpacing - 100, w: 130, h: 44,
+    dim: 3, color:'#30a14e',
+    fullName:'H3 Temporal Laws',
+    desc:'L0=Memory(backward), L1=Forward, L2=Integration(bidirectional). Kernel uses L0 only (causal).',
+    features: data.h3_laws.map(l => `${l.id}: ${l.name} (${l.direction}) — ${l.desc}`),
+    fontSize: 10
+  });
+  data.h3_horizons.forEach(hz => {
+    edges.push({source:'h3_hz_'+hz.band, target:'h3_laws', color:'#30a14e'});
+  });
+
+  // ── C3 UNITS: NUCLEI ──────────────────────────────────
+  const TIERS = ['relay','encoder','associator','integrator','gamma'];
+  const TIER_COL = {
+    relay: COL.relay, encoder: COL.encoder, associator: COL.associator,
+    integrator: COL.integrator, gamma: COL.gamma
+  };
+  const TIER_TYPE_COLORS = {
+    relay:'#1f6feb', encoder:'#388bfd', associator:'#a371f7',
+    integrator:'#db61a2', gamma:'#f78166'
+  };
+
+  data.c3_units.forEach(unit => {
+    const uy = UNIT_Y[unit.id];
+
+    TIERS.forEach(tier => {
+      const nuclei = unit[tier] || [];
+      const maxInTier = 3;
+      const tierNodeH = 38;
+      const spacing = tierNodeH + 8;
+      const startY = uy + (UNIT_H/2) - (nuclei.length * spacing)/2;
+
+      nuclei.forEach((n, ni) => {
+        const nid = `c3_${unit.id}_${n.id}`;
+        nodes.push({
+          id: nid, label: n.name, sublabel: `${n.dim}D`, tier: tier,
+          x: TIER_COL[tier], y: startY + ni * spacing,
+          w: 96, h: tierNodeH, dim: n.dim,
+          color: UNIT_COLORS[unit.id],
+          fullName: n.full || n.name,
+          desc: `${unit.abbr} ${tier} | ${n.dim} dimensions`,
+          unit: unit.id, fontSize: 10
+        });
+
+        // Intra-unit edges: tier -> next tier
+        if (tier !== 'relay') {
+          const prevTier = TIERS[TIERS.indexOf(tier)-1];
+          const prevNuclei = unit[prevTier] || [];
+          prevNuclei.forEach(pn => {
+            edges.push({
+              source: `c3_${unit.id}_${pn.id}`,
+              target: nid,
+              color: UNIT_COLORS[unit.id]
+            });
+          });
+        }
+      });
+    });
+
+    // R3 -> Relay edges
+    const relayId = `c3_${unit.id}_${unit.relay[0].id}`;
+    const r3Sources = data.r3_to_relay[unit.relay[0].id] || [];
+    r3Sources.forEach(letter => {
+      edges.push({
+        source: 'r3_' + letter.toLowerCase(),
+        target: relayId,
+        color: UNIT_COLORS[unit.id]
+      });
+    });
+
+    // H3 -> Relay edges (horizon bands connect to relays)
+    edges.push({source:'h3_laws', target: relayId, color: UNIT_COLORS[unit.id]});
+  });
+
+  // ── KERNEL BELIEFS ─────────────────────────────────────
+  data.kernel_beliefs.forEach(b => {
+    const unitY = UNIT_Y[b.unit] || 2600;
+    const nid = 'belief_' + b.id;
+    nodes.push({
+      id: nid, label: b.name.split(' ').slice(0,2).join('\n'),
+      sublabel: `Phase ${b.phase}`, tier:'belief',
+      x: COL.belief, y: unitY + UNIT_H/2 - 30, w: 120, h: 56,
+      dim: 0, color: UNIT_COLORS[b.unit] || '#d2a8ff',
+      fullName: `Kernel Belief: ${b.name}`,
+      desc: b.desc,
+      observe: b.observe, predict: b.predict,
+      tau: b.tau, unit: b.unit, fontSize: 10
+    });
+
+    // Last tier of unit -> belief
+    const unit = data.c3_units.find(u => u.id === b.unit);
+    if (unit) {
+      // Find last non-empty tier
+      const lastTier = [...TIERS].reverse().find(t => (unit[t]||[]).length > 0);
+      if (lastTier) {
+        (unit[lastTier]||[]).forEach(n => {
+          edges.push({
+            source: `c3_${unit.id}_${n.id}`,
+            target: nid,
+            color: UNIT_COLORS[b.unit]
+          });
+        });
+      }
+    }
+
+    // H3 -> Belief direct demands
+    const demands = data.h3_to_belief[b.id] || [];
+    if (demands.length > 0) {
+      edges.push({source:'h3_laws', target: nid, color:'#30a14e'});
+    }
+  });
+
+  // ── PRECISION ENGINE ───────────────────────────────────
+  nodes.push({
+    id:'precision', label:'Precision', sublabel:'PCU Engine', tier:'precision',
+    x: COL.precision, y: UNIT_Y.spu + 60, w: 110, h: 50,
+    dim: 0, color:'#f0883e',
+    fullName:'Precision Engine (PCU)',
+    desc:'Per-belief, per-horizon precision estimation from PE history ring buffer. tau=0.6. Compound keys "belief:hN".',
+    equation:'pi_eff = tanh(pi_raw / 12.0)',
+    fontSize: 10
+  });
+  // Beliefs -> Precision
+  data.kernel_beliefs.filter(b=>b.id!=='reward').forEach(b => {
+    edges.push({source:'belief_'+b.id, target:'precision', color:'#f0883e'});
+  });
+
+  // ── REWARD AGGREGATOR ──────────────────────────────────
+  nodes.push({
+    id:'reward_agg', label:'Reward', sublabel:'Aggregator', tier:'reward',
+    x: COL.reward, y: UNIT_Y.rpu + 80, w: 110, h: 50,
+    dim: 0, color:'#f85149',
+    fullName:'Reward Aggregator (ARU)',
+    desc:'Multi-scale PE, horizon activation sigmoid, tanh precision compression. v2.3.',
+    equation:'R = sal * sum(w_s*surprise + w_r*resolution + w_e*exploration - w_m*monotony) * fam_mod',
+    fontSize: 10
+  });
+  // Beliefs -> Reward
+  data.kernel_beliefs.forEach(b => {
+    edges.push({source:'belief_'+b.id, target:'reward_agg', color:'#f85149'});
+  });
+  // Precision -> Reward
+  edges.push({source:'precision', target:'reward_agg', color:'#f0883e'});
+
+  // ── OUTPUT (Psi3) ──────────────────────────────────────
+  nodes.push({
+    id:'output', label:'Psi-3', sublabel:'1006D State', tier:'output',
+    x: COL.psi, y: H/2-40, w: 120, h: 60, dim: 1006, color:'#e6edf3',
+    fullName:'Psi-3 Latent State Vector',
+    desc:'Full cognitive state: R3(97D) + H3(~58 tuples) + C3(5 beliefs + auxiliary). Total ~1006D per frame.',
+    fontSize: 13
+  });
+  edges.push({source:'precision', target:'output', color:'#8b949e'});
+  edges.push({source:'reward_agg', target:'output', color:'#8b949e'});
+  data.kernel_beliefs.forEach(b => {
+    edges.push({source:'belief_'+b.id, target:'output', color:'#8b949e'});
+  });
+
+  return {nodes, edges};
+}
+
+// ── Draw background regions ────────────────────────────────────────────
+function drawRegions(g) {
+  const regions = g.append('g').attr('class','regions');
+
+  const regionDefs = [
+    {x:50, y:80, w:220, h:H-160, label:'INPUT', sub:'', fill:'rgba(22,27,34,0.4)', stroke:'rgba(110,118,129,0.15)'},
+    {x:440, y:80, w:240, h:H-160, label:'R\u00b3 PERCEPTION', sub:'9 groups \u2022 97D', fill:'rgba(26,18,7,0.3)', stroke:'rgba(255,107,53,0.12)'},
+    {x:830, y:80, w:580, h:H-160, label:'H\u00b3 TEMPORAL MORPHOLOGY', sub:'24 morphs \u2022 32 horizons \u2022 3 laws', fill:'rgba(10,26,36,0.3)', stroke:'rgba(76,201,240,0.12)'},
+    {x:1460, y:80, w:1400, h:H-160, label:'C\u00b3 COGNITIVE BRAIN', sub:'6 units \u2022 96 models', fill:'rgba(13,21,38,0.3)', stroke:'rgba(88,166,255,0.12)'},
+    {x:3080, y:80, w:340, h:H-160, label:'KERNEL', sub:'5 beliefs \u2022 PCU \u2022 reward', fill:'rgba(26,15,46,0.3)', stroke:'rgba(210,168,255,0.12)'},
+    {x:3480, y:80, w:210, h:H-160, label:'META', sub:'precision \u2022 reward', fill:'rgba(31,10,10,0.3)', stroke:'rgba(248,81,73,0.12)'},
+    {x:4080, y:80, w:200, h:H-160, label:'OUTPUT', sub:'', fill:'rgba(22,27,34,0.3)', stroke:'rgba(110,118,129,0.12)'},
+  ];
+
+  regionDefs.forEach(r => {
+    regions.append('rect').attr('class','region-bg')
+      .attr('x',r.x).attr('y',r.y).attr('width',r.w).attr('height',r.h)
+      .attr('fill',r.fill).attr('stroke',r.stroke);
+    regions.append('text').attr('class','region-label')
+      .attr('x',r.x+r.w/2).attr('y',r.y+24).attr('text-anchor','middle')
+      .text(r.label);
+    if (r.sub) {
+      regions.append('text').attr('class','region-sublabel')
+        .attr('x',r.x+r.w/2).attr('y',r.y+40).attr('text-anchor','middle')
+        .text(r.sub);
+    }
+  });
+
+  // C3 tier column labels
+  const tierLabels = [
+    {x:COL.relay+48, label:'RELAY alpha'},
+    {x:COL.encoder+48, label:'ENCODER beta-1'},
+    {x:COL.associator+48, label:'ASSOC beta-2'},
+    {x:COL.integrator+48, label:'INTEG beta-3'},
+    {x:COL.gamma+48, label:'GAMMA gamma'},
+  ];
+  tierLabels.forEach(t => {
+    regions.append('text').attr('class','phase-label')
+      .attr('x',t.x).attr('y',120).attr('text-anchor','middle')
+      .attr('transform',`rotate(-0,${t.x},120)`)
+      .text(t.label);
+  });
+}
+
+// ── Draw unit bands ────────────────────────────────────────────────────
+function drawUnitBands(g, units) {
+  const bands = g.append('g').attr('class','unit-bands');
+  units.forEach(u => {
+    const uy = UNIT_Y[u.id];
+    // Background band
+    bands.append('rect').attr('class','unit-band')
+      .attr('x', COL.relay - 20).attr('y', uy)
+      .attr('width', COL.gamma + 120 - COL.relay + 40).attr('height', UNIT_H)
+      .attr('fill', 'rgba(0,0,0,0.15)')
+      .attr('stroke', UNIT_COLORS[u.id])
+      .attr('stroke-opacity', 0.12)
+      .attr('stroke-width', 1);
+    // Unit label
+    bands.append('text')
+      .attr('x', COL.relay - 10).attr('y', uy + 16)
+      .attr('fill', UNIT_COLORS[u.id]).attr('font-size', 11)
+      .attr('font-weight', 700).attr('letter-spacing', '1.5px')
+      .attr('font-family', "'SF Mono','Fira Code',monospace")
+      .text(u.abbr);
+    bands.append('text')
+      .attr('x', COL.relay - 10).attr('y', uy + 30)
+      .attr('fill', '#484f58').attr('font-size', 8)
+      .attr('font-family', "'SF Mono','Fira Code',monospace")
+      .text(u.name);
+    // Belief ownership arrow text
+    if (u.belief) {
+      bands.append('text')
+        .attr('x', COL.gamma + 130).attr('y', uy + UNIT_H/2 + 4)
+        .attr('fill', '#484f58').attr('font-size', 9).attr('text-anchor','start')
+        .attr('font-family', "'SF Mono','Fira Code',monospace")
+        .text('\u2192');
+    }
+  });
+}
+
+// ── Start ──────────────────────────────────────────────────────────────
+init();
+</script>
+</body>
+</html>
