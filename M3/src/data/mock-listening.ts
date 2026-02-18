@@ -109,7 +109,7 @@ export const weeklyStats: WeeklyStats = {
   peakListeningHour: 22,
   beliefDeltas: [+0.05, +0.11, -0.02, +0.17, +0.22],
   peakPE: {
-    description: "Jon Hopkins — 'Luminous Beings' at 4:32 — the bass drop violated your consonance prediction by 0.41σ while familiarity was at 0.72. Your striatal reward pathway fired a 3.2x baseline response.",
+    description: "Jon Hopkins — 'Luminous Beings' at 4:32 — the bass drop completely blindsided your sense of harmony while the track already felt deeply familiar. That contrast — surprise inside comfort — triggered a 3.2x pleasure spike.",
     belief: "reward",
     magnitude: 0.41,
   },
@@ -123,7 +123,7 @@ export const monthlyEvolution: MonthlyEvolution = {
     [0.63, 0.58, 0.73, 0.45, 0.38], // Week 3
     [0.67, 0.66, 0.76, 0.58, 0.56], // Week 4 (current)
   ],
-  driftDescription: "Your mind is becoming more reward-sensitive. Familiarity tolerance climbing steadily — you're building deeper pattern recognition. Tempo engagement accelerated this week, possibly from the Electronic/Post-Rock ratio shift.",
+  driftDescription: "You're getting more selective about what moves you. Your sense of musical memory is growing — patterns click faster. And this week's rhythmic engagement jumped, probably from the Electronic/Post-Rock mix.",
   mostChangedBelief: "reward",
   mostChangedDelta: 0.35,
 };

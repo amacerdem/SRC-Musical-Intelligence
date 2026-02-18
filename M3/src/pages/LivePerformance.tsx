@@ -17,7 +17,7 @@ type Mode = "solo" | "duo";
 type SessionState = "idle" | "performing" | "finished";
 
 const MIND_CONTROLS = [
-  { label: "Harmony", belief: "consonance" as const, description: "Consonance & dissonance balance" },
+  { label: "Harmony", belief: "consonance" as const, description: "How pure vs rough the chords sound" },
   { label: "Rhythm", belief: "tempo" as const, description: "Tempo patterns & groove" },
   { label: "Dynamics", belief: "salience" as const, description: "Volume & textural changes" },
   { label: "Memory", belief: "familiarity" as const, description: "Repetition & variation" },
@@ -191,11 +191,11 @@ export function LivePerformance() {
             </div>
             <div className="space-y-6">
               <SliderControl label="Intensity" value={intensity} onChange={setIntensity} color={color}
-                description="Controls salience gating threshold — how dramatic the musical events" />
+                description="How dramatic the music feels — subtle whispers to overwhelming waves" />
               <SliderControl label="Energy" value={energy} onChange={setEnergy} color={beliefColors.tempo.primary}
-                description="Controls tempo complexity and rhythmic density" />
+                description="Rhythmic density and drive — from floating to pounding" />
               <SliderControl label="Mood" value={mood} onChange={setMood} color={beliefColors.consonance.primary}
-                description="Controls consonance/dissonance ratio in harmonic choices" />
+                description="Dark and tense vs bright and resolved" />
             </div>
           </motion.div>
 
@@ -313,16 +313,16 @@ export function LivePerformance() {
                   </div>
                   <div>
                     <span className="hud-value text-2xl" style={{ color: beliefColors.reward.primary }}>{(peakReward * 100).toFixed(0)}</span>
-                    <p className="text-[9px] font-mono text-slate-700">Peak Reward</p>
+                    <p className="text-[9px] font-mono text-slate-700">Peak Pleasure</p>
                   </div>
                   <div>
                     <span className="hud-value text-2xl" style={{ color: beliefColors.salience.primary }}>{(beliefStates[2] * 100).toFixed(0)}</span>
-                    <p className="text-[9px] font-mono text-slate-700">Avg Salience</p>
+                    <p className="text-[9px] font-mono text-slate-700">Attention</p>
                   </div>
                 </div>
                 <p className="text-xs text-slate-600 font-body font-light">
                   Your {persona?.name ?? "mind"} generated {sessionTime} seconds of live music.
-                  Prediction error cascade peaked at {formatSessionTime(Math.round(sessionTime * 0.65))}.
+                  The most surprising moment was around {formatSessionTime(Math.round(sessionTime * 0.65))}.
                 </p>
                 <Button variant="glass" size="sm" className="mt-4" onClick={() => setSessionState("idle")}>New Session</Button>
               </div>

@@ -24,16 +24,16 @@ import { useScrollBatch } from "@/hooks/useScrollTrigger";
 import type { MindAxes } from "@/types/mind";
 
 const AXIS_LABELS: { key: keyof MindAxes; label: string; short: string; belief: keyof typeof beliefColors }[] = [
-  { key: "entropyTolerance", label: "Entropy", short: "ENT", belief: "consonance" },
-  { key: "resolutionCraving", label: "Resolution", short: "RES", belief: "tempo" },
-  { key: "monotonyTolerance", label: "Monotony", short: "MON", belief: "familiarity" },
-  { key: "salienceSensitivity", label: "Salience", short: "SAL", belief: "salience" },
-  { key: "tensionAppetite", label: "Tension", short: "TEN", belief: "reward" },
+  { key: "entropyTolerance", label: "Chaos", short: "CHS", belief: "consonance" },
+  { key: "resolutionCraving", label: "Closure", short: "CLO", belief: "tempo" },
+  { key: "monotonyTolerance", label: "Repetition", short: "RPT", belief: "familiarity" },
+  { key: "salienceSensitivity", label: "Surprise", short: "SRP", belief: "salience" },
+  { key: "tensionAppetite", label: "Tension", short: "TNS", belief: "reward" },
 ];
 
 const BELIEF_NAMES = ["consonance", "tempo", "salience", "familiarity", "reward"] as const;
 const BELIEF_LABELS: Record<string, string> = {
-  consonance: "Cons", tempo: "Tempo", salience: "Sal", familiarity: "Fam", reward: "Rew",
+  consonance: "Harm", tempo: "Rhtm", salience: "Attn", familiarity: "Mem", reward: "Plsr",
 };
 
 function computeCompatibility(a: MindAxes, b: MindAxes): number {
@@ -114,10 +114,10 @@ export function ProfileView() {
     // Auto-reply after a short delay
     setTimeout(() => {
       const replies = [
-        `That's interesting — my ${persona.name} mind processes that differently. My salience system would peak at the harmonic shift.`,
-        `I've been deep into ${listening?.topGenres[0]?.name || "new genres"} lately. My H³ temporal morphology is reshaping.`,
-        `Your axes and mine overlap on ${AXIS_LABELS[Math.floor(Math.random() * 5)].label.toLowerCase()} — I can feel it in how we describe music.`,
-        `Have you noticed how your reward signal changes across genres? Mine shifts dramatically between ${listening?.topGenres[0]?.name || "Electronic"} and ${listening?.topGenres[1]?.name || "Jazz"}.`,
+        `That's interesting — my ${persona.name} mind hears that differently. I'd probably catch the harmonic shift before the melody change.`,
+        `I've been deep into ${listening?.topGenres[0]?.name || "new genres"} lately. It's changing how I hear everything else too.`,
+        `We both score high on ${AXIS_LABELS[Math.floor(Math.random() * 5)].label.toLowerCase()} — I can feel it in how we describe music.`,
+        `Have you noticed how different genres hit you differently? My pleasure response shifts completely between ${listening?.topGenres[0]?.name || "Electronic"} and ${listening?.topGenres[1]?.name || "Jazz"}.`,
       ];
       setMessages((prev) => [...prev, { from: "them", text: replies[prev.length % replies.length] }]);
     }, 1200);
@@ -246,7 +246,7 @@ export function ProfileView() {
               {/* Compatibility panel */}
               {compatibility !== null && compatLabel && (
                 <div className="spatial-card p-6 glow-border" style={{ "--glow-color": compatLabel.color } as React.CSSProperties}>
-                  <span className="hud-label mb-5 block">Neural Compatibility</span>
+                  <span className="hud-label mb-5 block">Mind Compatibility</span>
                   <div className="flex items-start gap-6 mb-5">
                     <div className="text-center shrink-0">
                       <span className="text-4xl font-display font-bold" style={{ color: compatLabel.color }}>
@@ -342,7 +342,7 @@ export function ProfileView() {
 
                   {/* Belief snapshot */}
                   <div className="pt-4 border-t border-white/[0.04]">
-                    <span className="hud-label mb-3 block">Current Belief State</span>
+                    <span className="hud-label mb-3 block">Current Mind State</span>
                     <div className="flex gap-3">
                       {BELIEF_NAMES.map((b, i) => {
                         const val = listening.beliefSnapshot[i];

@@ -201,7 +201,7 @@ export function Compose() {
                 style={{ accentColor: beliefColors.consonance.primary, background: `linear-gradient(90deg, ${beliefColors.consonance.primary}40 ${complexity}%, rgba(255,255,255,0.05) ${complexity}%)` }}
               />
               <p className="text-[9px] text-slate-700 font-mono mt-2">
-                Maps to: harmonic vocabulary size, entropy tolerance, consonance target range
+                Controls harmonic richness — simple melodies vs dense chord structures
               </p>
             </div>
 
@@ -214,11 +214,11 @@ export function Compose() {
                 </div>
                 <p className="text-[10px] text-slate-600 font-body font-light leading-relaxed">
                   As a <span style={{ color: accentColor }}>{persona.name}</span>, your{" "}
-                  {persona.axes.tensionAppetite > 0.7 ? "high tension appetite shapes the build-up architecture" :
-                   persona.axes.monotonyTolerance > 0.6 ? "deep monotony tolerance allows for rich repetition structures" :
-                   persona.axes.entropyTolerance > 0.7 ? "entropy tolerance unlocks chaotic harmonic vocabularies" :
-                   "resolution craving drives strong cadential patterns"}.{" "}
-                  Your {persona.family} neural family biases the generation toward{" "}
+                  {persona.axes.tensionAppetite > 0.7 ? "love of tension means longer build-ups and delayed resolutions" :
+                   persona.axes.monotonyTolerance > 0.6 ? "comfort with repetition allows for deeper, evolving patterns" :
+                   persona.axes.entropyTolerance > 0.7 ? "chaos appetite opens up wilder harmonic choices" :
+                   "need for closure drives satisfying resolutions throughout"}.{" "}
+                  Your {persona.family} mind naturally leans toward{" "}
                   {persona.family === "Alchemists" ? "tension-release cycles" :
                    persona.family === "Architects" ? "structural precision" :
                    persona.family === "Explorers" ? "novel sonic territories" :
@@ -334,7 +334,7 @@ export function Compose() {
 
                     {/* Belief contribution bars */}
                     <div className="border-t border-white/5 pt-5 mb-4">
-                      <span className="hud-label mb-3 block">Belief Influence on Generation</span>
+                      <span className="hud-label mb-3 block">How Your Mind Shaped This</span>
                       <div className="grid grid-cols-5 gap-2">
                         {BELIEF_NAMES.map((b) => {
                           const val = beliefInfluence[b];
