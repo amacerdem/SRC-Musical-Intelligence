@@ -2,11 +2,11 @@ import { motion } from "framer-motion";
 import { beliefColors } from "@/design/tokens";
 
 const beliefs = [
-  { name: "Consonance", key: "consonance" as const, orbit: 120, speed: 24, startAngle: 0 },
-  { name: "Tempo", key: "tempo" as const, orbit: 150, speed: 30, startAngle: 72 },
-  { name: "Salience", key: "salience" as const, orbit: 180, speed: 36, startAngle: 144 },
-  { name: "Familiarity", key: "familiarity" as const, orbit: 210, speed: 28, startAngle: 216 },
-  { name: "Reward", key: "reward" as const, orbit: 240, speed: 32, startAngle: 288 },
+  { name: "Consonance", key: "consonance" as const, orbit: 180, speed: 24, startAngle: 0 },
+  { name: "Tempo", key: "tempo" as const, orbit: 225, speed: 30, startAngle: 72 },
+  { name: "Salience", key: "salience" as const, orbit: 270, speed: 36, startAngle: 144 },
+  { name: "Familiarity", key: "familiarity" as const, orbit: 315, speed: 28, startAngle: 216 },
+  { name: "Reward", key: "reward" as const, orbit: 360, speed: 32, startAngle: 288 },
 ];
 
 interface Props {

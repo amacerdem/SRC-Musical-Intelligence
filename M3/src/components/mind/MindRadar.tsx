@@ -39,7 +39,7 @@ export function MindRadar({
 
   return (
     <ResponsiveContainer width={size} height={size}>
-      <RadarChart data={data} cx="50%" cy="50%" outerRadius="65%">
+      <RadarChart data={data} cx="50%" cy="50%" outerRadius="50%">
         <PolarGrid stroke="#1E1E2E" />
         <PolarAngleAxis
           dataKey="axis"

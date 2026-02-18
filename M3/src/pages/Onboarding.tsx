@@ -1,10 +1,12 @@
 import { useCallback, useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 import { useOnboardingStore } from "@/stores/useOnboardingStore";
 import { useUserStore } from "@/stores/useUserStore";
 import { MindOrganismCanvas } from "@/components/mind/MindOrganismCanvas";
-import { personas } from "@/data/personas";
+import { MindRadar } from "@/components/mind/MindRadar";
+import { personas, getPersona } from "@/data/personas";
 import { beliefColors } from "@/design/tokens";
 
 /* ── Platform SVG logos (inline, no dependencies) ────────────────── */
@@ -41,18 +43,18 @@ const MOCK_STATS = {
   listeningYears: 8,
 };
 
-/* ── Conversational analysis phases ──────────────────────────────── */
+/* ── Conversational analysis phases — more descriptive ───────────── */
 const ANALYSIS_PHASES = [
-  { text: "Connecting to your music...", belief: null },
-  { text: "Interesting... 2,847 tracks. Let me look deeper.", belief: null },
-  { text: "Your harmony choices reveal something unusual...", belief: "consonance" as const },
-  { text: "I see tension in your playlists. You like the build-up.", belief: "consonance" as const },
-  { text: "Your tempo patterns are fascinating. Not what I expected.", belief: "tempo" as const },
-  { text: "You notice everything, don't you? High salience.", belief: "salience" as const },
-  { text: "The contrasts... you live for the dynamic shifts.", belief: "salience" as const },
-  { text: "Repetition doesn't bore you. It deepens.", belief: "familiarity" as const },
-  { text: "Your reward geometry is... complex. I like it.", belief: "reward" as const },
-  { text: "I know who you are now.", belief: "reward" as const },
+  { text: "Connecting to your music library...", belief: null },
+  { text: "Scanning your library... 2,847 tracks across 8 years of listening.", belief: null },
+  { text: "Analyzing harmonic patterns... Your chord choices reveal something unusual.", belief: "consonance" as const },
+  { text: "Mapping tension arcs... You're drawn to the build-up before resolution.", belief: "consonance" as const },
+  { text: "Decoding temporal fingerprint... Your tempo patterns are fascinatingly unpredictable.", belief: "tempo" as const },
+  { text: "Measuring attentional peaks... High salience sensitivity detected.", belief: "salience" as const },
+  { text: "Tracing dynamic contrasts... You live for the shift between silence and chaos.", belief: "salience" as const },
+  { text: "Evaluating recurrence patterns... Repetition doesn't bore you — it deepens.", belief: "familiarity" as const },
+  { text: "Computing reward geometry... Your dopamine landscape is complex. Interesting.", belief: "reward" as const },
+  { text: "Synthesis complete. I know who you are now.", belief: "reward" as const },
 ];
 
 /* ── Typewriter hook ─────────────────────────────────────────────── */
@@ -96,9 +98,9 @@ function useTicker(target: number, duration: number, active: boolean) {
 
 export function Onboarding() {
   const navigate = useNavigate();
-  const { step, setStep, setPersona, setProgress, analysisProgress, analysisPhase } =
+  const { step, setStep, setPersona, setProgress, analysisProgress, analysisPhase, selectedPersonaId } =
     useOnboardingStore();
-  const { completeOnboarding, displayName, setDisplayName } = useUserStore();
+  const { completeOnboarding, displayName, setDisplayName, mind } = useUserStore();
   const [userName, setUserName] = useState(displayName || "");
 
   const startEvolution = useCallback((name: string) => {
@@ -121,20 +123,21 @@ export function Onboarding() {
         const randomPersona = personas[Math.floor(Math.random() * personas.length)];
         setPersona(randomPersona.id);
 
+        completeOnboarding({
+          personaId: randomPersona.id,
+          axes: randomPersona.axes,
+          stage: 1,
+          subTrait: null,
+        }, name);
+
         setTimeout(() => {
-          completeOnboarding({
-            personaId: randomPersona.id,
-            axes: randomPersona.axes,
-            stage: 1,
-            subTrait: null,
-          }, name);
-          navigate("/reveal");
-        }, 800);
+          setStep("reveal");
+        }, 1200);
       }
     }, 200);
 
     return () => clearInterval(interval);
-  }, [setStep, setProgress, setPersona, completeOnboarding, navigate, setDisplayName]);
+  }, [setStep, setProgress, setPersona, completeOnboarding, setDisplayName]);
 
   return (
     <div className="fixed inset-0 bg-black overflow-hidden">
@@ -146,6 +149,9 @@ export function Onboarding() {
         )}
         {step === "evolving" && (
           <EvolvingStep key="evolving" progress={analysisProgress} phase={analysisPhase} userName={userName} />
+        )}
+        {step === "reveal" && selectedPersonaId && mind && (
+          <RevealStep key="reveal" personaId={selectedPersonaId} mind={mind} displayName={userName} onEnter={() => navigate("/dashboard")} />
         )}
       </AnimatePresence>
     </div>
@@ -268,13 +274,14 @@ function ConnectButton({ logo, name, sub, color, onClick, delay }: {
   );
 }
 
+/* ── Evolving Step — Mind Forming ────────────────────────────────── */
 function EvolvingStep({ progress, phase, userName }: { progress: number; phase: string; userName: string }) {
   const hue = 260 + progress * 0.6;
   const color = `hsl(${hue}, 60%, 55%)`;
   const orgStage = progress > 70 ? 2 : 1 as const;
-  const orgIntensity = 0.1 + progress * 0.005;
+  const orgIntensity = 0.15 + progress * 0.007;
 
-  const typedPhase = useTypewriter(phase, 25);
+  const typedPhase = useTypewriter(phase, 22);
   const songCount = useTicker(MOCK_STATS.songCount, 6000, progress > 5);
   const totalHours = useTicker(Math.floor(MOCK_STATS.totalMinutes / 60), 8000, progress > 5);
 
@@ -288,21 +295,29 @@ function EvolvingStep({ progress, phase, userName }: { progress: number; phase: 
   const uniqueBeliefs = [...new Set(activeBeliefs)];
 
   return (
-    <div className="h-full flex flex-col items-center justify-center relative">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0, scale: 1.05, filter: "blur(10px)" }}
+      transition={{ duration: 1 }}
+      className="h-full flex flex-col items-center justify-center relative"
+    >
+      {/* Organism background — large, growing */}
       <motion.div
-        initial={{ scale: 0.2, opacity: 0 }}
-        animate={{ scale: 0.5 + progress * 0.005, opacity: 0.3 + progress * 0.005 }}
-        transition={{ duration: 0.3 }}
+        initial={{ scale: 0.3, opacity: 0 }}
+        animate={{ scale: 0.6 + progress * 0.006, opacity: 0.35 + progress * 0.005 }}
+        transition={{ duration: 0.4 }}
         className="absolute inset-0"
+        style={{ transform: `scale(${0.6 + progress * 0.006})`, transformOrigin: "center center" }}
       >
         <MindOrganismCanvas color={color} stage={orgStage} intensity={orgIntensity} breathRate={6 - progress * 0.03} className="w-full h-full" interactive={false} />
       </motion.div>
 
-      {/* Orbital trails */}
+      {/* Orbital trails — larger radii */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         {uniqueBeliefs.map((belief, i) => {
           const bColor = beliefColors[belief].primary;
-          const radius = 100 + i * 35;
+          const radius = 160 + i * 50;
           return (
             <motion.div
               key={belief}
@@ -312,76 +327,89 @@ function EvolvingStep({ progress, phase, userName }: { progress: number; phase: 
               className="absolute rounded-full"
               style={{
                 width: radius * 2, height: radius * 2,
-                border: `1px solid ${bColor}10`,
-                animation: `orbit ${24 + i * 4}s linear infinite`,
+                background: `conic-gradient(from ${i * 72}deg, ${bColor}25, transparent 20%, transparent 100%)`,
+                maskImage: `radial-gradient(transparent ${radius - 3}px, black ${radius - 2}px, black ${radius + 2}px, transparent ${radius + 3}px)`,
+                WebkitMaskImage: `radial-gradient(transparent ${radius - 3}px, black ${radius - 2}px, black ${radius + 2}px, transparent ${radius + 3}px)`,
+                animation: `orbit ${22 + i * 5}s linear infinite`,
               }}
             >
-              <div className="absolute w-2 h-2 rounded-full" style={{ top: -4, left: radius - 4, background: bColor, boxShadow: `0 0 12px ${bColor}60` }} />
+              <div className="absolute w-3 h-3 rounded-full" style={{ top: -6, left: radius - 6, background: bColor, boxShadow: `0 0 16px ${bColor}70, 0 0 40px ${bColor}25` }} />
             </motion.div>
           );
         })}
       </div>
 
-      <div className="relative z-10 text-center max-w-lg mx-auto px-6">
-        <motion.h2
-          initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
+      <div className="relative z-10 text-center max-w-2xl mx-auto px-6">
+        {/* Title */}
+        <motion.div
+          initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 1 }}
-          className="text-xl font-display font-bold text-slate-300 mb-8"
+          transition={{ duration: 1.2 }}
+          className="mb-6"
         >
-          {userName ? `${userName}'s Mind is Forming` : "Your Mind is Forming"}
-        </motion.h2>
+          <p className="text-sm font-display font-light text-slate-600 tracking-[0.2em] uppercase mb-3">
+            Neural Genesis
+          </p>
+          <h2 className="text-3xl md:text-4xl font-display font-bold text-slate-200 mb-2">
+            {userName ? `${userName}'s Mind is Forming` : "Your Mind is Forming"}
+          </h2>
+          <p className="text-base font-display font-light text-slate-500">
+            Mapping 97 perceptual dimensions across your listening history
+          </p>
+        </motion.div>
 
-        {/* Belief indicators */}
-        <div className="flex justify-center gap-4 mb-8">
+        {/* Belief indicators — bigger */}
+        <div className="flex justify-center gap-6 mb-8">
           {(["consonance", "tempo", "salience", "familiarity", "reward"] as const).map((b) => {
             const isActive = uniqueBeliefs.includes(b);
             const bColor = beliefColors[b].primary;
             return (
-              <motion.div key={b} initial={{ opacity: 0.1 }} animate={{ opacity: isActive ? 0.8 : 0.1 }} transition={{ duration: 0.5 }} className="flex flex-col items-center gap-1">
-                <div className="w-2 h-2 rounded-full transition-all duration-500" style={{ background: bColor, boxShadow: isActive ? `0 0 10px ${bColor}60` : "none" }} />
-                <span className="text-[8px] font-mono uppercase tracking-wider" style={{ color: isActive ? `${bColor}80` : "#1E293B" }}>{b.slice(0, 4)}</span>
+              <motion.div key={b} initial={{ opacity: 0.1 }} animate={{ opacity: isActive ? 0.9 : 0.1 }} transition={{ duration: 0.6 }} className="flex flex-col items-center gap-2">
+                <div className="w-3 h-3 rounded-full transition-all duration-500" style={{ background: bColor, boxShadow: isActive ? `0 0 14px ${bColor}70, 0 0 30px ${bColor}25` : "none" }} />
+                <span className="text-[10px] font-display font-light uppercase tracking-[0.15em]" style={{ color: isActive ? `${bColor}CC` : "#1E293B" }}>
+                  {b}
+                </span>
               </motion.div>
             );
           })}
         </div>
 
-        {/* Phase text — typewriter effect */}
-        <div className="h-6 mb-6">
-          <p className="text-sm text-slate-400 font-body font-light italic">
+        {/* Phase text — typewriter */}
+        <div className="h-8 mb-8">
+          <p className="text-base text-slate-400 font-body font-light italic leading-relaxed">
             {typedPhase}
             <motion.span
               animate={{ opacity: [1, 0] }}
               transition={{ repeat: Infinity, duration: 0.6 }}
-              className="inline-block w-[2px] h-3.5 bg-slate-500 ml-0.5 align-text-bottom"
+              className="inline-block w-[2px] h-4 bg-slate-500 ml-1 align-text-bottom"
             />
           </p>
         </div>
 
-        {/* Stats panel — appears during analysis */}
+        {/* Stats panel */}
         <AnimatePresence>
           {progress > 10 && (
             <motion.div
-              initial={{ opacity: 0, y: 15, scale: 0.95 }}
+              initial={{ opacity: 0, y: 20, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="mb-8 mx-auto max-w-sm"
+              className="mb-10 mx-auto max-w-md"
             >
-              <div className="rounded-2xl p-5" style={{ background: "rgba(0,0,0,0.6)", backdropFilter: "blur(16px)", border: "1px solid rgba(255,255,255,0.05)" }}>
+              <div className="rounded-2xl p-6" style={{ background: "rgba(0,0,0,0.6)", backdropFilter: "blur(16px)", border: "1px solid rgba(255,255,255,0.05)" }}>
                 {/* Track & Hours counters */}
-                <div className="flex justify-center gap-8 mb-4">
+                <div className="flex justify-center gap-12 mb-5">
                   <div className="text-center">
-                    <div className="text-lg font-mono font-medium text-slate-200">
+                    <div className="text-2xl font-mono font-medium text-slate-200">
                       {songCount.toLocaleString()}
                     </div>
-                    <div className="text-[9px] uppercase tracking-widest text-slate-600">tracks scanned</div>
+                    <div className="text-[11px] uppercase tracking-widest text-slate-600 font-display">tracks scanned</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-lg font-mono font-medium text-slate-200">
+                    <div className="text-2xl font-mono font-medium text-slate-200">
                       {totalHours.toLocaleString()}
                     </div>
-                    <div className="text-[9px] uppercase tracking-widest text-slate-600">hours of listening</div>
+                    <div className="text-[11px] uppercase tracking-widest text-slate-600 font-display">hours of listening</div>
                   </div>
                 </div>
 
@@ -393,7 +421,7 @@ function EvolvingStep({ progress, phase, userName }: { progress: number; phase: 
                       animate={{ opacity: 1, height: "auto" }}
                       exit={{ opacity: 0, height: 0 }}
                       transition={{ duration: 0.5 }}
-                      className="flex flex-wrap justify-center gap-1.5 mb-3"
+                      className="flex flex-wrap justify-center gap-2 mb-4"
                     >
                       {MOCK_STATS.topGenres.map((genre, i) => (
                         <motion.span
@@ -401,7 +429,7 @@ function EvolvingStep({ progress, phase, userName }: { progress: number; phase: 
                           initial={{ opacity: 0, scale: 0.8 }}
                           animate={{ opacity: 1, scale: 1 }}
                           transition={{ delay: i * 0.15, duration: 0.4 }}
-                          className="px-2.5 py-1 rounded-full text-[10px] font-mono text-slate-400"
+                          className="px-3 py-1.5 rounded-full text-xs font-display font-light text-slate-400"
                           style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}
                         >
                           {genre}
@@ -421,8 +449,8 @@ function EvolvingStep({ progress, phase, userName }: { progress: number; phase: 
                       transition={{ duration: 0.5 }}
                       className="text-center"
                     >
-                      <span className="text-[9px] uppercase tracking-widest text-slate-700 block mb-1.5">Top Artists</span>
-                      <p className="text-xs text-slate-500 font-body font-light">
+                      <span className="text-[10px] uppercase tracking-[0.15em] text-slate-700 block mb-2 font-display">Top Artists</span>
+                      <p className="text-sm text-slate-500 font-body font-light">
                         {MOCK_STATS.topArtists.map((artist, i) => (
                           <motion.span
                             key={artist}
@@ -430,7 +458,7 @@ function EvolvingStep({ progress, phase, userName }: { progress: number; phase: 
                             animate={{ opacity: 1 }}
                             transition={{ delay: i * 0.2, duration: 0.4 }}
                           >
-                            {i > 0 && <span className="text-slate-700 mx-1">&middot;</span>}
+                            {i > 0 && <span className="text-slate-700 mx-1.5">&middot;</span>}
                             {artist}
                           </motion.span>
                         ))}
@@ -443,14 +471,199 @@ function EvolvingStep({ progress, phase, userName }: { progress: number; phase: 
           )}
         </AnimatePresence>
 
-        {/* Progress bar */}
-        <div className="w-64 mx-auto">
-          <div className="w-full h-[2px] rounded-full bg-white/[0.04] overflow-hidden">
-            <motion.div className="h-full rounded-full" style={{ background: `linear-gradient(90deg, ${color}80, ${color})`, boxShadow: `0 0 20px ${color}30` }} animate={{ width: `${progress}%` }} transition={{ duration: 0.3 }} />
+        {/* Progress bar — wider */}
+        <div className="w-80 mx-auto">
+          <div className="w-full h-[3px] rounded-full bg-white/[0.04] overflow-hidden">
+            <motion.div className="h-full rounded-full" style={{ background: `linear-gradient(90deg, ${color}80, ${color})`, boxShadow: `0 0 24px ${color}40` }} animate={{ width: `${progress}%` }} transition={{ duration: 0.3 }} />
           </div>
-          <div className="mt-3 text-[10px] font-mono text-slate-700 tracking-wider">{progress}%</div>
+          <div className="mt-3 flex justify-between items-center">
+            <span className="text-[10px] font-display font-light text-slate-700 tracking-wider uppercase">Forming</span>
+            <span className="text-xs font-mono text-slate-600 tracking-wider">{progress}%</span>
+            <span className="text-[10px] font-display font-light text-slate-700 tracking-wider uppercase">Complete</span>
+          </div>
         </div>
       </div>
-    </div>
+    </motion.div>
+  );
+}
+
+/* ── Reveal Step — Persona emerges in-page ───────────────────────── */
+type RevealPhase = "void" | "birth" | "name" | "radar" | "ready";
+
+function RevealStep({ personaId, mind, displayName, onEnter }: {
+  personaId: number;
+  mind: { personaId: number; axes: { entropyTolerance: number; resolutionCraving: number; monotonyTolerance: number; salienceSensitivity: number; tensionAppetite: number }; stage: number; subTrait: string | null };
+  displayName: string;
+  onEnter: () => void;
+}) {
+  const [phase, setPhase] = useState<RevealPhase>("void");
+  const persona = getPersona(personaId);
+
+  useEffect(() => {
+    if (!persona) return;
+    const timers = [
+      setTimeout(() => setPhase("birth"), 1200),
+      setTimeout(() => setPhase("name"), 3500),
+      setTimeout(() => setPhase("radar"), 6500),
+      setTimeout(() => setPhase("ready"), 8500),
+    ];
+    return () => timers.forEach(clearTimeout);
+  }, [persona]);
+
+  if (!persona) return null;
+
+  const color = persona.color;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, filter: "blur(10px)" }}
+      animate={{ opacity: 1, filter: "blur(0px)" }}
+      transition={{ duration: 1.5 }}
+      className="h-full relative"
+    >
+      {/* Conic gradient trails per belief */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        {phase !== "void" && (["consonance", "tempo", "salience", "familiarity", "reward"] as const).map((b, i) => {
+          const bColor = beliefColors[b].primary;
+          const radius = 180 + i * 50;
+          return (
+            <motion.div
+              key={b}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 0.2, scale: 1 }}
+              transition={{ duration: 2, delay: i * 0.2, ease: [0.22, 1, 0.36, 1] }}
+              className="absolute rounded-full"
+              style={{
+                width: radius * 2, height: radius * 2,
+                background: `conic-gradient(from ${i * 72}deg, ${bColor}25, transparent 20%, transparent 100%)`,
+                maskImage: `radial-gradient(transparent ${radius - 3}px, black ${radius - 2}px, black ${radius + 2}px, transparent ${radius + 3}px)`,
+                WebkitMaskImage: `radial-gradient(transparent ${radius - 3}px, black ${radius - 2}px, black ${radius + 2}px, transparent ${radius + 3}px)`,
+                animation: `orbit ${28 + i * 4}s linear infinite`,
+              }}
+            />
+          );
+        })}
+      </div>
+
+      {/* Organism explodes from center — large, detailed, persona-colored */}
+      <AnimatePresence>
+        {phase !== "void" && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.05 }}
+            animate={{
+              opacity: phase === "ready" ? 0.7 : phase === "radar" ? 0.55 : 0.35,
+              scale: 1,
+            }}
+            transition={{ duration: 3, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute inset-0"
+            style={{ transform: "scale(1.8)", transformOrigin: "center center" }}
+          >
+            <MindOrganismCanvas
+              color={color}
+              secondaryColor={`${color}80`}
+              stage={phase === "ready" ? 3 : phase === "radar" ? 2 : 1}
+              intensity={phase === "ready" ? 0.95 : phase === "radar" ? 0.7 : 0.5}
+              breathRate={phase === "ready" ? 4 : 3}
+              variant="hero"
+              constellations={phase === "radar" || phase === "ready"}
+              interactive={phase === "ready"}
+              className="w-full h-full"
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Color wash — stronger with persona color */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: phase === "ready" ? 1 : phase !== "void" ? 0.7 : 0 }}
+        transition={{ duration: 2 }}
+        style={{ background: `radial-gradient(ellipse 70% 60% at 50% 45%, ${color}18, transparent 70%)` }}
+      />
+
+      {/* Content */}
+      <div className="relative z-10 flex flex-col items-center justify-center h-full px-6">
+        <AnimatePresence>
+          {phase === "void" && (
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 0.4 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }}>
+              <motion.span animate={{ opacity: [0.2, 0.6, 0.2] }} transition={{ duration: 2, repeat: Infinity }} className="text-base text-slate-600 font-display font-light tracking-[0.15em]">
+                Preparing your mind...
+              </motion.span>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Name — character-by-character */}
+        <AnimatePresence>
+          {(phase === "name" || phase === "radar" || phase === "ready") && (
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }} className="text-center">
+              <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 0.4, y: 0 }} transition={{ duration: 1 }} className="text-sm font-display font-light text-slate-500 tracking-[0.2em] uppercase mb-6">
+                {displayName && displayName !== "You" ? `${displayName}, you are` : "You are"}
+              </motion.p>
+
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold mb-5 leading-none flex justify-center flex-wrap">
+                {persona.name.split("").map((char, i) => (
+                  <motion.span
+                    key={i}
+                    initial={{ opacity: 0, y: 50, scale: 0.3, filter: "blur(15px)" }}
+                    animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+                    transition={{ duration: 0.7, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
+                    style={{ color, display: "inline-block" }}
+                  >
+                    {char === " " ? "\u00A0" : char}
+                  </motion.span>
+                ))}
+              </h1>
+
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.5 }}
+                transition={{ delay: persona.name.length * 0.06 + 0.5, duration: 1 }}
+                className="text-xl text-slate-500 font-display font-light italic"
+              >
+                "{persona.tagline}"
+              </motion.p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Radar */}
+        <AnimatePresence>
+          {(phase === "radar" || phase === "ready") && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.6, filter: "blur(15px)" }}
+              animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+              transition={{ duration: 1.2, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-10"
+            >
+              <MindRadar axes={mind.axes} color={color} size={400} />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* CTA + Description */}
+        <AnimatePresence>
+          {phase === "ready" && (
+            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.5 }} className="mt-10 text-center max-w-lg">
+              <p className="text-base text-slate-500 mb-3 leading-relaxed font-light">{persona.description}</p>
+              <motion.p initial={{ opacity: 0 }} animate={{ opacity: 0.3 }} transition={{ delay: 1, duration: 1.5 }} className="text-xs font-display font-light text-slate-600 tracking-[0.2em] uppercase mb-8">
+                This is your Musical Mind
+              </motion.p>
+              <button
+                onClick={onEnter}
+                className="group relative px-10 py-4 rounded-full transition-all duration-500 hover:scale-[1.03]"
+                style={{ background: `${color}08`, border: `1px solid ${color}20` }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = `${color}18`; e.currentTarget.style.boxShadow = `0 0 50px ${color}20`; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = `${color}08`; e.currentTarget.style.boxShadow = "none"; }}
+              >
+                <span className="text-base font-display font-medium text-slate-200">Enter Your Mind</span>
+                <ArrowRight size={18} className="inline ml-2 text-slate-400 group-hover:translate-x-1 transition-transform" />
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </motion.div>
   );
 }

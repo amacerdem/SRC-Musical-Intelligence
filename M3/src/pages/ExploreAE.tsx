@@ -96,7 +96,7 @@ export function ExploreAE() {
                 style={{ background: "rgba(0,0,0,0.5)", backdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.06)" }}
               >
                 <span className="hud-label mb-6">Mind Profile</span>
-                <MindRadar axes={aeProfile.mind.axes} color={AE_COLOR} size={380} />
+                <MindRadar axes={aeProfile.mind.axes} color={AE_COLOR} size={500} />
               </div>
             </motion.div>
 

@@ -196,7 +196,7 @@ export function ProfileView() {
                   color={persona.color}
                   compareAxes={myMind?.axes}
                   compareColor={myMind ? (myPersona?.color ?? beliefColors.consonance.primary) : undefined}
-                  size={280}
+                  size={400}
                 />
                 {myMind && (
                   <div className="flex items-center gap-8 mt-5 text-xs">

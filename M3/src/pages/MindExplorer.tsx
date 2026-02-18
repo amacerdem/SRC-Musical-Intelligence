@@ -148,7 +148,7 @@ export function MindExplorer() {
                 color={persona.color}
                 compareAxes={compareMode ? aeProfile.mind.axes : undefined}
                 compareColor={compareMode ? aePersona.color : undefined}
-                size={460}
+                size={580}
               />
 
               {compareMode && (
