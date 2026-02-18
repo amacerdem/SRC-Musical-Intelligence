@@ -1,7 +1,8 @@
-"""C3Kernel — single-pass phase scheduler for C³ v2.5.
+"""C3Kernel — single-pass phase scheduler for C³ v3.0.
 
 Executes the belief cycle per frame:
-  Phase 0:  BCH relay → observe sensory beliefs (consonance, tempo)
+  Phase 0:  6 relay wrappers (BCH, HMCE, SNEM, MMP, DAED, MPG)
+          + observe sensory beliefs (consonance, tempo)
   Phase 1:  observe + predict + update salience (attentional gate)
           + multi-feature H³ velocity, mean+max mixing (v2.5)
   Phase 2a: predict all beliefs + observe familiarity (H³ macro stability)
@@ -13,12 +14,16 @@ Executes the belief cycle per frame:
           + horizon activation gating — data-readiness weights (v2.2)
           + surprise-dominant reward weights (v2.5)
 
+v3.0 Wave 0: All 6 relay wrappers instantiated and computed per frame.
+  Outputs stored in relay_outputs dict but NOT consumed by beliefs yet.
+  Zero regression — beliefs use existing R³+H³ paths unchanged.
+
 Single pass.  No iteration.  No convergence loop.
 """
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Set, Tuple
+from typing import Any, Dict, List, Optional, Set, Tuple
 
 import torch
 from torch import Tensor
@@ -27,6 +32,12 @@ from .belief import Belief, BeliefState, Likelihood
 from .precision import PrecisionEngine
 from .reward import RewardAggregator, RewardConfig
 from .relays.bch_wrapper import BCHKernelWrapper
+from .relays.hmce_wrapper import HMCEKernelWrapper
+from .relays.snem_wrapper import SNEMKernelWrapper
+from .relays.mmp_wrapper import MMPKernelWrapper
+from .relays.daed_wrapper import DAEDKernelWrapper
+from .relays.mpg_wrapper import MPGKernelWrapper
+from .relays.base_wrapper import RelayKernelWrapper
 from .beliefs.consonance import PerceivedConsonance
 from .beliefs.familiarity import FamiliarityState
 from .beliefs.salience import SalienceState
@@ -53,6 +64,8 @@ class KernelOutput:
     ms_pe: Dict[str, Dict[int, Tensor]] = field(default_factory=dict)
     # v2.1: per-horizon precision for multi-scale beliefs
     ms_precision_pred: Dict[str, Dict[int, Tensor]] = field(default_factory=dict)
+    # v3.0: relay wrapper outputs (populated but not yet consumed by beliefs)
+    relay_outputs: Dict[str, Any] = field(default_factory=dict)
 
 
 # ======================================================================
@@ -60,12 +73,16 @@ class KernelOutput:
 # ======================================================================
 
 class C3Kernel:
-    """Minimal C³ belief-cycle kernel.
+    """C³ belief-cycle kernel with relay integration.
 
-    v1.1 supports 5 active beliefs + BCH relay:
-      Relay:   BCH (causal L0-only, 3 approved outputs)
+    v3.0 supports 5 active beliefs + 6 relay wrappers:
+      Relays:  BCH (SPU, 3D), HMCE (STU, 6D), SNEM (ASU, 6D),
+               MMP (IMU, 6D), DAED (RPU, 4D), MPG (NDU, 3D)
       Active:  perceived_consonance, tempo_state, salience_state,
                familiarity_state, reward_valence
+
+    Wave 0: All relays computed per frame, outputs stored in
+    relay_outputs dict.  Beliefs NOT yet consuming relay data.
 
     Usage:
         kernel = C3Kernel(feature_map)
@@ -80,8 +97,22 @@ class C3Kernel:
     ) -> None:
         self._fm = feature_map
 
-        # Relay wrapper — BCH in causal (L0-only) mode
+        # Relay wrappers — all in causal (L0-only) mode
         self._bch_wrapper = BCHKernelWrapper()
+        self._hmce_wrapper = HMCEKernelWrapper()
+        self._snem_wrapper = SNEMKernelWrapper()
+        self._mmp_wrapper = MMPKernelWrapper()
+        self._daed_wrapper = DAEDKernelWrapper()
+        self._mpg_wrapper = MPGKernelWrapper()
+
+        # All relay wrappers (excluding BCH which has its own path)
+        self._relay_wrappers: List[RelayKernelWrapper] = [
+            self._hmce_wrapper,
+            self._snem_wrapper,
+            self._mmp_wrapper,
+            self._daed_wrapper,
+            self._mpg_wrapper,
+        ]
 
         # Instantiate beliefs
         self._consonance = PerceivedConsonance(feature_map)
@@ -123,6 +154,7 @@ class C3Kernel:
           - Belief predict demands (with M2 std variants)
           - Multi-scale demands (M0/M18/M2 per horizon, v2.0)
           - BCH L0 demands (deduped)
+          - v3.0: 5 relay wrapper L0 demands (HMCE, SNEM, MMP, DAED, MPG)
         """
         demands: Set[Tuple[int, int, int, int]] = set()
 
@@ -147,6 +179,10 @@ class C3Kernel:
 
         # BCH L0 demands (Rule 2: deduplication)
         demands |= self._bch_wrapper.h3_demands
+
+        # v3.0: Relay wrapper L0 demands (auto-deduped via set union)
+        for wrapper in self._relay_wrappers:
+            demands |= wrapper.h3_demands
 
         return demands
 
@@ -175,8 +211,14 @@ class C3Kernel:
         T = r3.shape[1]
         device = r3.device
 
-        # ── Phase 0: BCH relay + Sensory grounding ────────────────
+        # ── Phase 0: All relays + Sensory grounding ─────────────────
         bch_out = self._bch_wrapper.compute(r3, h3)
+
+        # v3.0 Wave 0: Compute all 5 relay wrappers (populated, not consumed)
+        relay_outputs: Dict[str, Any] = {}
+        for wrapper in self._relay_wrappers:
+            relay_outputs[wrapper.name] = wrapper.compute(r3, h3)
+
         cons_likelihood = self._consonance.observe(r3, h3, bch_out=bch_out)
         tempo_likelihood = self._tempo.observe(r3, h3)
 
@@ -378,6 +420,7 @@ class C3Kernel:
                 {"perceived_consonance": cons_ms_precision}
                 if cons_ms_precision else {}
             ),
+            relay_outputs=relay_outputs,
         )
 
     @staticmethod
