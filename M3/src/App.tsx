@@ -14,7 +14,6 @@ import { Friends } from "@/pages/Friends";
 import { ProfileView } from "@/pages/ProfileView";
 import { LivePerformance } from "@/pages/LivePerformance";
 import { Leaderboard } from "@/pages/Leaderboard";
-import { Compose } from "@/pages/Compose";
 import { Discover } from "@/pages/Discover";
 import { InfoHub } from "@/pages/InfoHub";
 
@@ -40,7 +39,6 @@ export default function App() {
               }
             />
             <Route path="/live" element={<LivePerformance />} />
-            <Route path="/compose" element={<Compose />} />
             <Route path="/discover" element={<Discover />} />
             <Route path="/friends" element={<Friends />} />
             <Route path="/friends/:userId" element={<ProfileView />} />
@@ -51,7 +49,6 @@ export default function App() {
 
           {/* Redirects for old routes */}
           <Route path="/arena" element={<Navigate to="/live" replace />} />
-          <Route path="/create" element={<Navigate to="/compose" replace />} />
           <Route path="/listen" element={<Navigate to="/discover" replace />} />
           <Route path="/social/:userId" element={<Navigate to="/friends" replace />} />
           <Route path="/social" element={<Navigate to="/friends" replace />} />

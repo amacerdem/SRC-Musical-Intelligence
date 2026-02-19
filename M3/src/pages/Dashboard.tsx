@@ -115,7 +115,7 @@ export function Dashboard() {
         variants={fadeIn}
         initial="initial"
         animate="animate"
-        className="fixed top-14 left-6 z-30 flex items-center gap-5"
+        className="fixed top-10 left-6 z-30 flex items-center gap-5"
       >
         <HUDStat label="Streak" value={`${streak}d`} icon={<Flame size={14} />} accent={color} />
         <HUDStat label="Tracks" value={String(tracksAnalyzed)} icon={<Music size={13} />} />
@@ -132,10 +132,10 @@ export function Dashboard() {
       </motion.div>
 
       {/* ═══ MAIN LAYOUT ══════════════════════════════════════════ */}
-      <div className="relative z-10 h-full flex flex-col px-5 sm:px-8 md:px-10 pt-16 pb-24">
+      <div className="relative z-10 h-full flex flex-col px-5 sm:px-8 md:px-10 pt-10 pb-24">
 
         {/* ── TOP: Identity ───────────────────────────────────── */}
-        <motion.div {...cinematicReveal} className="text-center py-2">
+        <motion.div {...cinematicReveal} className="text-center py-0.5">
           <span className="text-xs font-display font-light tracking-[0.25em] uppercase" style={{ color: `${color}90` }}>
             {STAGE_NAMES[mind.stage]}
           </span>
@@ -147,7 +147,7 @@ export function Dashboard() {
         </motion.div>
 
         {/* ── MAIN GRID ───────────────────────────────────────── */}
-        <div className="flex-1 grid grid-cols-12 gap-4 min-h-0 overflow-hidden mt-2">
+        <div className="flex-1 grid grid-cols-12 gap-4 min-h-0 overflow-hidden mt-1">
 
           {/* ═ LEFT COLUMN (3 cols): Radar + DNA + Signals ═════ */}
           <div className="col-span-3 flex flex-col gap-3 min-h-0">
@@ -160,28 +160,28 @@ export function Dashboard() {
               className="spatial-card p-3 flex flex-col items-center flex-1 min-h-0"
             >
               <div className="w-full h-full flex items-center justify-center">
-                <MindRadar axes={mind.axes} color={color} size={220} />
+                <MindRadar axes={mind.axes} color={color} size={280} />
               </div>
             </motion.div>
 
             {/* Your DNA */}
-            <div className="spatial-card p-3 flex-shrink-0">
-              <span className="text-xs font-display font-light tracking-[0.15em] uppercase text-slate-500 block mb-2">Your DNA</span>
-              <div className="space-y-2">
+            <div className="spatial-card p-4 flex-shrink-0">
+              <span className="text-sm font-display font-light tracking-[0.15em] uppercase text-slate-500 block mb-3">Your DNA</span>
+              <div className="space-y-3">
                 {AXIS_META.map((axis, i) => {
                   const value = mind.axes[axis.key];
                   const pct = Math.round(value * 100);
                   const axisColor = beliefColors[axis.belief].primary;
                   return (
                     <div key={axis.key}>
-                      <div className="flex items-center justify-between mb-0.5">
-                        <div className="flex items-center gap-1.5">
-                          <NucleusDot color={axisColor} size={3} active />
-                          <span className="text-[11px] font-display text-slate-400">{axis.shortLabel}</span>
+                      <div className="flex items-center justify-between mb-1">
+                        <div className="flex items-center gap-2">
+                          <NucleusDot color={axisColor} size={4} active />
+                          <span className="text-[14px] font-display text-slate-400">{axis.shortLabel}</span>
                         </div>
-                        <span className="text-[11px] font-mono font-medium" style={{ color: axisColor }}>{pct}</span>
+                        <span className="text-[14px] font-mono font-medium" style={{ color: axisColor }}>{pct}</span>
                       </div>
-                      <div className="w-full h-[3px] rounded-full bg-white/5 overflow-hidden">
+                      <div className="w-full h-[5px] rounded-full bg-white/5 overflow-hidden">
                         <motion.div
                           className="h-full rounded-full"
                           style={{ backgroundColor: axisColor }}
@@ -327,18 +327,18 @@ export function Dashboard() {
           </div>
 
           {/* ═ RIGHT COLUMN (4 cols): Weekly + Deltas + Brain ═ */}
-          <div className="col-span-4 flex flex-col gap-3 min-h-0">
+          <div className="col-span-4 flex flex-col gap-2 min-h-0">
 
             {/* Weekly Listening Chart */}
-            <div className="spatial-card p-4 flex-shrink-0">
-              <div className="flex items-center justify-between mb-3">
+            <div className="spatial-card p-3 flex-shrink-0">
+              <div className="flex items-center justify-between mb-2">
                 <span className="text-xs font-display font-light tracking-[0.15em] uppercase text-slate-500">This Week</span>
                 <div className="flex items-center gap-2">
                   <Clock size={12} className="text-slate-600" />
                   <span className="text-xs font-mono text-slate-400">{Math.floor(weeklyStats.totalMinutes / 60)}h {weeklyStats.totalMinutes % 60}m</span>
                 </div>
               </div>
-              <div className="flex items-end gap-1.5 h-24">
+              <div className="flex items-end gap-1.5 h-20">
                 {lastWeekDays.map((day, i) => {
                   const maxMin = Math.max(...lastWeekDays.map(d => d.minutesListened));
                   const height = (day.minutesListened / maxMin) * 100;
@@ -358,15 +358,15 @@ export function Dashboard() {
                   );
                 })}
               </div>
-              <div className="flex justify-between mt-3 text-[11px] font-mono text-slate-500">
+              <div className="flex justify-between mt-2 text-[11px] font-mono text-slate-500">
                 <span>{weeklyStats.totalTracks} tracks</span>
                 <span>Peak: {weeklyStats.peakListeningHour}:00</span>
               </div>
             </div>
 
             {/* Belief Evolution Deltas */}
-            <div className="spatial-card p-4 flex-shrink-0">
-              <div className="flex items-center justify-between mb-3">
+            <div className="spatial-card p-3 flex-shrink-0">
+              <div className="flex items-center justify-between mb-2">
                 <span className="text-xs font-display font-light tracking-[0.15em] uppercase text-slate-500">Weekly Evolution</span>
                 <div className="flex items-center gap-1.5">
                   <TrendingUp size={13} style={{ color }} />
@@ -407,12 +407,12 @@ export function Dashboard() {
             </div>
 
             {/* Brain Monologue */}
-            <div className="spatial-card p-4 flex-1 min-h-0 overflow-hidden">
-              <div className="flex items-center gap-2 mb-2">
+            <div className="spatial-card p-3 flex-shrink-0 overflow-hidden">
+              <div className="flex items-center gap-2 mb-1.5">
                 <Brain size={14} style={{ color: beliefColors.reward.primary }} />
                 <span className="text-xs font-display font-light tracking-[0.15em] uppercase text-slate-500">Your Brain This Week</span>
               </div>
-              <p className="text-[13px] text-slate-400 leading-relaxed font-body font-light line-clamp-5">
+              <p className="text-[12px] text-slate-400 leading-relaxed font-body font-light line-clamp-3">
                 {monologue}
               </p>
             </div>

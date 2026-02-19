@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import {
   Compass,
   LayoutGrid,
-  PenTool,
   Radio,
   Trophy,
   Users,
@@ -21,7 +20,6 @@ import { useDesktop } from "@/hooks/useMediaQuery";
 const mainNav = [
   { to: "/dashboard", icon: LayoutGrid, label: "Home", belief: "consonance" as const },
   { to: "/live", icon: Radio, label: "Live", belief: "tempo" as const },
-  { to: "/compose", icon: PenTool, label: "Compose", belief: "reward" as const },
   { to: "/discover", icon: Compass, label: "Discover", belief: "salience" as const },
 ];
 
@@ -49,7 +47,7 @@ export function FloatingNav() {
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
-        className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50"
+        className="fixed bottom-5 right-6 z-50"
       >
         <div className={`nav-dock flex items-center ${isDesktop ? "px-2.5 py-2 gap-1" : "px-2 py-1.5 gap-0.5"}`}>
           {mainNav.map(({ to, icon: Icon, label, belief }) => {

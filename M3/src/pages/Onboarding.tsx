@@ -1,7 +1,7 @@
 import { useCallback, useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Check, Crown, Sparkles, Zap, Music, Brain, Radio, Users, Star, Shield, Headphones, Eye } from "lucide-react";
 import { useOnboardingStore } from "@/stores/useOnboardingStore";
 import { useUserStore } from "@/stores/useUserStore";
 import { MindOrganismCanvas } from "@/components/mind/MindOrganismCanvas";
@@ -57,6 +57,68 @@ const ANALYSIS_PHASES = [
   { text: "Synthesis complete. I know who you are now.", belief: "reward" as const },
 ];
 
+/* ── Membership Plans ────────────────────────────────────────────── */
+const PLANS = [
+  {
+    id: "pulse",
+    name: "Pulse",
+    price: "$9.99",
+    period: "/mo",
+    tagline: "Feel the rhythm of your mind",
+    description: "The perfect starting point for your musical self-discovery. Begin to understand the hidden patterns in how you listen.",
+    icon: Headphones,
+    color: "#6366F1",
+    features: [
+      { text: "Musical Mind persona discovery", icon: Brain },
+      { text: "5-axis mind radar visualization", icon: Radio },
+      { text: "Weekly evolution reports", icon: Zap },
+      { text: "Basic listening analytics", icon: Music },
+      { text: "Community forum access", icon: Users },
+      { text: "50 track analyses / month", icon: Star },
+    ],
+  },
+  {
+    id: "resonance",
+    name: "Resonance",
+    price: "$19.99",
+    period: "/mo",
+    tagline: "Amplify your musical identity",
+    description: "For the curious soul who craves depth. Unlock the full spectrum of your listening DNA and connect with minds like yours.",
+    icon: Sparkles,
+    color: "#A855F7",
+    popular: true,
+    features: [
+      { text: "Everything in Pulse", icon: Check },
+      { text: "Live Performance neural mode", icon: Radio },
+      { text: "Advanced 97D perceptual map", icon: Brain },
+      { text: "Mind compatibility matching", icon: Users },
+      { text: "Unlimited track analyses", icon: Zap },
+      { text: "Custom evolution paths", icon: Star },
+      { text: "Priority community badge", icon: Shield },
+    ],
+  },
+  {
+    id: "transcendence",
+    name: "Transcendence",
+    price: "$49.99",
+    period: "/mo",
+    tagline: "Unlock the full spectrum",
+    description: "The ultimate experience. Real-time neural mapping, AI insights, and an exclusive community of visionary listeners who hear what others can't.",
+    icon: Crown,
+    color: "#FBBF24",
+    features: [
+      { text: "Everything in Resonance", icon: Check },
+      { text: "Real-time brain region activation", icon: Brain },
+      { text: "AI-powered mind insights", icon: Sparkles },
+      { text: "Exclusive Visionary sessions", icon: Crown },
+      { text: "Early access to all features", icon: Zap },
+      { text: "Personal sound signature", icon: Music },
+      { text: "1-on-1 mind coaching", icon: Eye },
+      { text: "Founding member status", icon: Shield },
+    ],
+  },
+];
+
 /* ── Typewriter hook ─────────────────────────────────────────────── */
 function useTypewriter(text: string, speed = 30) {
   const [displayed, setDisplayed] = useState("");
@@ -98,7 +160,7 @@ function useTicker(target: number, duration: number, active: boolean) {
 
 export function Onboarding() {
   const navigate = useNavigate();
-  const { step, setStep, setPersona, setProgress, analysisProgress, analysisPhase, selectedPersonaId } =
+  const { step, setStep, setPersona, setProgress, setSelectedPlan, analysisProgress, analysisPhase, selectedPersonaId } =
     useOnboardingStore();
   const { completeOnboarding, displayName, setDisplayName, mind } = useUserStore();
   const [userName, setUserName] = useState(displayName || "");
@@ -144,6 +206,21 @@ export function Onboarding() {
       <div className="cinematic-vignette" />
 
       <AnimatePresence mode="wait">
+        {step === "plans" && (
+          <PlanStep
+            key="plans"
+            onSelect={(planId) => {
+              setSelectedPlan(planId);
+              setStep("signup");
+            }}
+          />
+        )}
+        {step === "signup" && (
+          <SignupStep
+            key="signup"
+            onComplete={() => setStep("connect")}
+          />
+        )}
         {step === "connect" && (
           <ConnectStep key="connect" userName={userName} onNameChange={setUserName} onConnect={() => startEvolution(userName)} />
         )}
@@ -158,6 +235,397 @@ export function Onboarding() {
   );
 }
 
+/* ── Plan Selection Step ─────────────────────────────────────────── */
+function PlanStep({ onSelect }: { onSelect: (planId: string) => void }) {
+  const [hoveredPlan, setHoveredPlan] = useState<string | null>(null);
+  const [entered, setEntered] = useState(false);
+
+  useEffect(() => {
+    const t = setTimeout(() => setEntered(true), 300);
+    return () => clearTimeout(t);
+  }, []);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: entered ? 1 : 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 1 }}
+      className="h-full flex flex-col items-center relative overflow-y-auto"
+    >
+      {/* Ambient organism background */}
+      <div className="fixed inset-0 opacity-[0.06]">
+        <MindOrganismCanvas color="#6366F1" secondaryColor="#A855F7" stage={1} intensity={0.2} className="w-full h-full" interactive={false} />
+      </div>
+
+      <div className="relative z-10 w-full max-w-5xl mx-auto px-6 py-12 md:py-16">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          className="text-center mb-4"
+        >
+          <p className="hud-label mb-4">Choose Your Journey</p>
+          <h1 className="text-3xl md:text-5xl font-display font-bold text-slate-200 mb-4">
+            Your mind deserves to be{" "}
+            <span
+              style={{
+                background: "linear-gradient(135deg, #A855F7, #EC4899)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
+              heard
+            </span>
+          </h1>
+          <p className="text-base md:text-lg text-slate-500 font-display font-light max-w-2xl mx-auto leading-relaxed">
+            Every listener carries a unique neural fingerprint. Choose how deep you want to go
+            into the architecture of your musical consciousness.
+          </p>
+        </motion.div>
+
+        {/* Community note */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8, duration: 1 }}
+          className="text-center text-sm text-slate-600 font-display font-light mb-10 md:mb-14"
+        >
+          Join 24,000+ listeners who already discovered their musical mind
+        </motion.p>
+
+        {/* Plans grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 mb-12">
+          {PLANS.map((plan, idx) => {
+            const Icon = plan.icon;
+            const isHovered = hoveredPlan === plan.id;
+            const isPopular = plan.popular;
+
+            return (
+              <motion.div
+                key={plan.id}
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 + idx * 0.15, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                onMouseEnter={() => setHoveredPlan(plan.id)}
+                onMouseLeave={() => setHoveredPlan(null)}
+                className="relative group"
+              >
+                {/* Popular badge */}
+                {isPopular && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.2, duration: 0.5 }}
+                    className="absolute -top-3.5 left-1/2 -translate-x-1/2 z-20"
+                  >
+                    <div
+                      className="px-4 py-1 rounded-full text-[10px] font-display font-semibold uppercase tracking-[0.15em]"
+                      style={{
+                        background: `linear-gradient(135deg, ${plan.color}, #EC4899)`,
+                        color: "#000",
+                        boxShadow: `0 0 20px ${plan.color}40`,
+                      }}
+                    >
+                      Most Popular
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* Card */}
+                <div
+                  className="relative rounded-2xl p-6 md:p-7 transition-all duration-500 cursor-pointer h-full flex flex-col"
+                  style={{
+                    background: isHovered
+                      ? `rgba(255,255,255,0.04)`
+                      : "rgba(0,0,0,0.5)",
+                    backdropFilter: "blur(16px)",
+                    border: `1px solid ${isHovered || isPopular ? `${plan.color}30` : "rgba(255,255,255,0.05)"}`,
+                    boxShadow: isHovered
+                      ? `0 0 60px ${plan.color}12, 0 20px 60px -20px rgba(0,0,0,0.5)`
+                      : isPopular
+                        ? `0 0 40px ${plan.color}08`
+                        : "none",
+                    transform: isHovered ? "translateY(-4px)" : "translateY(0)",
+                  }}
+                  onClick={() => onSelect(plan.id)}
+                >
+                  {/* Icon + name */}
+                  <div className="flex items-center gap-3 mb-4">
+                    <div
+                      className="w-10 h-10 rounded-xl flex items-center justify-center"
+                      style={{ background: `${plan.color}12`, border: `1px solid ${plan.color}20` }}
+                    >
+                      <Icon size={20} style={{ color: plan.color }} />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-display font-bold text-slate-200">{plan.name}</h3>
+                      <p className="text-xs text-slate-600 font-display font-light italic">{plan.tagline}</p>
+                    </div>
+                  </div>
+
+                  {/* Price */}
+                  <div className="mb-4">
+                    <span className="text-4xl font-display font-bold" style={{ color: plan.color }}>
+                      {plan.price}
+                    </span>
+                    <span className="text-sm text-slate-600 font-display font-light">{plan.period}</span>
+                  </div>
+
+                  {/* Description */}
+                  <p className="text-sm text-slate-500 font-display font-light leading-relaxed mb-6">
+                    {plan.description}
+                  </p>
+
+                  {/* Features */}
+                  <div className="space-y-2.5 mb-7 flex-1">
+                    {plan.features.map((feature, fi) => {
+                      const FIcon = feature.icon;
+                      return (
+                        <div key={fi} className="flex items-start gap-2.5">
+                          <FIcon size={14} className="mt-0.5 flex-shrink-0" style={{ color: `${plan.color}90` }} />
+                          <span className="text-sm text-slate-400 font-display font-light">{feature.text}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {/* CTA button */}
+                  <button
+                    className="w-full py-3.5 rounded-xl text-sm font-display font-semibold transition-all duration-500 tracking-wide"
+                    style={{
+                      background: isPopular || isHovered
+                        ? `linear-gradient(135deg, ${plan.color}, ${plan.color}CC)`
+                        : `${plan.color}10`,
+                      color: isPopular || isHovered ? "#000" : plan.color,
+                      border: `1px solid ${plan.color}${isPopular || isHovered ? "60" : "20"}`,
+                      boxShadow: isPopular || isHovered ? `0 0 30px ${plan.color}25` : "none",
+                    }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onSelect(plan.id);
+                    }}
+                  >
+                    {isPopular ? "Start Your Journey" : "Choose " + plan.name}
+                  </button>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* Bottom trust text */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5, duration: 1 }}
+          className="text-center pb-8"
+        >
+          <p className="text-xs text-slate-700 font-display font-light">
+            Cancel anytime. No questions asked. Your mind, your rules.
+          </p>
+        </motion.div>
+      </div>
+    </motion.div>
+  );
+}
+
+/* ── Signup Step (Email + Password) ──────────────────────────────── */
+function SignupStep({ onComplete }: { onComplete: () => void }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [entered, setEntered] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const { selectedPlan } = useOnboardingStore();
+
+  const plan = PLANS.find((p) => p.id === selectedPlan);
+  const canProceed = email.trim().length > 0 && password.trim().length > 0;
+
+  useEffect(() => {
+    const t = setTimeout(() => setEntered(true), 200);
+    return () => clearTimeout(t);
+  }, []);
+
+  const handleSubmit = () => {
+    if (canProceed) onComplete();
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: entered ? 1 : 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.8 }}
+      className="h-full flex items-center justify-center relative"
+    >
+      {/* Ambient organism background */}
+      <div className="fixed inset-0 opacity-[0.06]">
+        <MindOrganismCanvas
+          color={plan?.color || "#A855F7"}
+          stage={1}
+          intensity={0.2}
+          className="w-full h-full"
+          interactive={false}
+        />
+      </div>
+
+      <div className="relative z-10 w-full max-w-md mx-auto px-6">
+        {/* Selected plan badge */}
+        {plan && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+            className="flex justify-center mb-8"
+          >
+            <div
+              className="flex items-center gap-2 px-4 py-2 rounded-full"
+              style={{
+                background: `${plan.color}08`,
+                border: `1px solid ${plan.color}20`,
+              }}
+            >
+              <plan.icon size={14} style={{ color: plan.color }} />
+              <span className="text-xs font-display font-medium" style={{ color: plan.color }}>
+                {plan.name}
+              </span>
+              <span className="text-xs text-slate-600 font-display font-light">
+                {plan.price}{plan.period}
+              </span>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Title */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 1 }}
+          className="text-center mb-10"
+        >
+          <p className="hud-label mb-4">Almost There</p>
+          <h1 className="text-2xl md:text-3xl font-display font-bold text-slate-200 mb-3">
+            Create your{" "}
+            <span
+              style={{
+                background: `linear-gradient(135deg, ${plan?.color || "#A855F7"}, #EC4899)`,
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
+              M³
+            </span>
+            {" "}account
+          </h1>
+          <p className="text-sm text-slate-500 font-display font-light">
+            A few keystrokes away from meeting your musical mind
+          </p>
+        </motion.div>
+
+        {/* Form */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8, duration: 0.8 }}
+          className="space-y-4 mb-8"
+        >
+          {/* Email */}
+          <div>
+            <label className="block text-[11px] uppercase tracking-[0.15em] text-slate-600 font-display font-medium mb-2">
+              Email
+            </label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="your@email.com"
+              autoFocus
+              className="w-full text-base font-display text-slate-200 bg-transparent rounded-xl px-4 py-3.5 outline-none transition-all duration-500 placeholder:text-slate-700"
+              style={{
+                background: "rgba(255,255,255,0.03)",
+                border: `1px solid ${email ? `${plan?.color || "#A855F7"}30` : "rgba(255,255,255,0.06)"}`,
+              }}
+              onFocus={(e) => { e.currentTarget.style.borderColor = `${plan?.color || "#A855F7"}50`; }}
+              onBlur={(e) => { e.currentTarget.style.borderColor = email ? `${plan?.color || "#A855F7"}30` : "rgba(255,255,255,0.06)"; }}
+              onKeyDown={(e) => { if (e.key === "Enter") { const pw = document.getElementById("pw-input"); pw?.focus(); } }}
+            />
+          </div>
+
+          {/* Password */}
+          <div>
+            <label className="block text-[11px] uppercase tracking-[0.15em] text-slate-600 font-display font-medium mb-2">
+              Password
+            </label>
+            <div className="relative">
+              <input
+                id="pw-input"
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Create a password"
+                className="w-full text-base font-display text-slate-200 bg-transparent rounded-xl px-4 py-3.5 pr-12 outline-none transition-all duration-500 placeholder:text-slate-700"
+                style={{
+                  background: "rgba(255,255,255,0.03)",
+                  border: `1px solid ${password ? `${plan?.color || "#A855F7"}30` : "rgba(255,255,255,0.06)"}`,
+                }}
+                onFocus={(e) => { e.currentTarget.style.borderColor = `${plan?.color || "#A855F7"}50`; }}
+                onBlur={(e) => { e.currentTarget.style.borderColor = password ? `${plan?.color || "#A855F7"}30` : "rgba(255,255,255,0.06)"; }}
+                onKeyDown={(e) => { if (e.key === "Enter" && canProceed) handleSubmit(); }}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-600 hover:text-slate-400 transition-colors"
+              >
+                <Eye size={18} />
+              </button>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Submit button */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: canProceed ? 1 : 0.3, y: 0 }}
+          transition={{ delay: 1, duration: 0.8 }}
+        >
+          <button
+            onClick={handleSubmit}
+            disabled={!canProceed}
+            className="w-full py-4 rounded-xl text-base font-display font-semibold transition-all duration-500 tracking-wide"
+            style={{
+              background: canProceed
+                ? `linear-gradient(135deg, ${plan?.color || "#A855F7"}, ${plan?.color || "#A855F7"}CC)`
+                : "rgba(255,255,255,0.03)",
+              color: canProceed ? "#000" : "rgba(255,255,255,0.2)",
+              border: `1px solid ${canProceed ? `${plan?.color || "#A855F7"}60` : "rgba(255,255,255,0.05)"}`,
+              boxShadow: canProceed ? `0 0 40px ${plan?.color || "#A855F7"}20` : "none",
+              cursor: canProceed ? "pointer" : "not-allowed",
+            }}
+          >
+            Continue
+            <ArrowRight size={16} className="inline ml-2" />
+          </button>
+        </motion.div>
+
+        {/* Terms */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.3, duration: 1 }}
+          className="text-center text-[11px] text-slate-700 font-display font-light mt-5 leading-relaxed"
+        >
+          By continuing, you agree to our Terms of Service and Privacy Policy.
+          <br />
+          We respect your data as much as we respect your taste in music.
+        </motion.p>
+      </div>
+    </motion.div>
+  );
+}
+
+/* ── Connect Step (Spotify + Name) ───────────────────────────────── */
 function ConnectStep({ userName, onNameChange, onConnect }: { userName: string; onNameChange: (n: string) => void; onConnect: () => void }) {
   const [entered, setEntered] = useState(false);
   const canProceed = userName.trim().length >= 2;

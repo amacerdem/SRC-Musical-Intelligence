@@ -1,36 +1,224 @@
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Zap, Clock, Users, Play, Square, Radio } from "lucide-react";
-import { challenges } from "@/data/challenges";
-import { Badge } from "@/components/ui/Badge";
+import {
+  Play, Square, Shield, Sprout, Users, Target, Trophy, Zap, X,
+  Heart, Sparkles, Layers, RotateCcw, Gauge, Activity, BarChart3, LayoutGrid,
+} from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { MindOrganismCanvas, type OrganismHandle } from "@/components/mind/MindOrganismCanvas";
 import { NucleusDot } from "@/components/mind/NucleusDot";
-import { MiniOrganism } from "@/components/mind/MiniOrganism";
 import { useUserStore } from "@/stores/useUserStore";
 import { getPersona } from "@/data/personas";
-import { pageTransition, staggerChildren, slideUp, fadeIn, glowPulse } from "@/design/animations";
+import { mockUsers } from "@/data/mock-users";
+import { pageTransition, staggerChildren, slideUp, fadeIn } from "@/design/animations";
 import { beliefColors } from "@/design/tokens";
-import { useScrollBatch } from "@/hooks/useScrollTrigger";
+import type { MindAxes, NeuralFamily } from "@/types/mind";
+import type { UserProfile } from "@/types/social";
 
 type Mode = "solo" | "duo";
 type SessionState = "idle" | "performing" | "finished";
 
-const MIND_CONTROLS = [
-  { label: "Harmony", belief: "consonance" as const, description: "How pure vs rough the chords sound" },
-  { label: "Rhythm", belief: "tempo" as const, description: "Tempo patterns & groove" },
-  { label: "Dynamics", belief: "salience" as const, description: "Volume & textural changes" },
-  { label: "Memory", belief: "familiarity" as const, description: "Repetition & variation" },
+/* ── Axis training metadata ──────────────────────────────────── */
+const AXIS_KEYS: (keyof MindAxes)[] = [
+  "entropyTolerance", "resolutionCraving", "monotonyTolerance",
+  "salienceSensitivity", "tensionAppetite",
 ];
 
-function getCountdown(endsAt: string): string {
-  const diff = new Date(endsAt).getTime() - Date.now();
-  if (diff <= 0) return "Ended";
-  const hours = Math.floor(diff / (1000 * 60 * 60));
-  const days = Math.floor(hours / 24);
-  const remainingHours = hours % 24;
-  if (days > 0) return `${days}d ${remainingHours}h left`;
-  return `${hours}h left`;
+const AXIS_META: Record<keyof MindAxes, {
+  label: string;
+  belief: keyof typeof beliefColors;
+  strengthen: Record<NeuralFamily, string>;
+  develop: Record<NeuralFamily, string>;
+}> = {
+  entropyTolerance: {
+    label: "Chaos Tolerance",
+    belief: "consonance",
+    strengthen: {
+      Alchemists: "Channel chaos into transformation — let dissonance fuel your alchemy",
+      Architects: "Use controlled chaos to stress-test your structures",
+      Explorers: "Push deeper into the noise — your edge is where others retreat",
+      Anchors: "Let chaotic textures color your emotional palette",
+      Kineticists: "Layer polyrhythmic chaos over your groove foundation",
+    },
+    develop: {
+      Alchemists: "Sit with unresolved chaos longer before seeking the drop",
+      Architects: "Try free-form listening without seeking patterns",
+      Explorers: "You already thrive here — explore chaos in unfamiliar genres",
+      Anchors: "Gradually introduce noisy textures into your comfort zone",
+      Kineticists: "Listen to broken-beat and glitch to expand rhythmic chaos",
+    },
+  },
+  resolutionCraving: {
+    label: "Need for Closure",
+    belief: "tempo",
+    strengthen: {
+      Alchemists: "Maximize the payoff — build longer arcs before resolution",
+      Architects: "Perfect your cadence sensitivity with complex harmonic progressions",
+      Explorers: "Use resolution as a surprise tool in unexpected contexts",
+      Anchors: "Deepen emotional satisfaction through delayed gratification",
+      Kineticists: "Find rhythmic resolution in polymetric convergence points",
+    },
+    develop: {
+      Alchemists: "Practice leaving tension unresolved — embrace the open ending",
+      Architects: "Try ambient pieces that avoid traditional cadences",
+      Explorers: "Let go of needing an ending — some journeys don't close",
+      Anchors: "Explore music that fades rather than resolves",
+      Kineticists: "Listen to asymmetric rhythms that never fully land",
+    },
+  },
+  monotonyTolerance: {
+    label: "Repetition Comfort",
+    belief: "familiarity",
+    strengthen: {
+      Alchemists: "Find transformation within repetition — the loop evolves you",
+      Architects: "Hear the micro-variations that hide inside repetition",
+      Explorers: "Discover how repetition creates its own kind of novelty",
+      Anchors: "Let familiar patterns anchor you deeper into feeling",
+      Kineticists: "Lock into the groove — repetition is where pocket lives",
+    },
+    develop: {
+      Alchemists: "Build patience with minimal techno and loop-based music",
+      Architects: "Study Steve Reich — repetition as architectural material",
+      Explorers: "Challenge yourself with long drone pieces",
+      Anchors: "Sit with a single repeated melody and notice what shifts",
+      Kineticists: "Try meditative drum loops to build rhythmic patience",
+    },
+  },
+  salienceSensitivity: {
+    label: "Attention Sensitivity",
+    belief: "salience",
+    strengthen: {
+      Alchemists: "Amplify your sensitivity to dramatic peaks and drops",
+      Architects: "Sharpen your detection of structural turning points",
+      Explorers: "Train your ear to catch the most novel moments instantly",
+      Anchors: "Attune to the emotional weight of key musical moments",
+      Kineticists: "Push your sensitivity with dense polyrhythmic passages",
+    },
+    develop: {
+      Alchemists: "Practice noticing subtle shifts, not just the obvious peaks",
+      Architects: "Listen for quiet structural changes in ambient music",
+      Explorers: "Slow down and attend to detail within familiar territory",
+      Anchors: "Expand your attention beyond emotional peaks to texture",
+      Kineticists: "Train with dynamic pieces that reward patient attention",
+    },
+  },
+  tensionAppetite: {
+    label: "Tension Appetite",
+    belief: "reward",
+    strengthen: {
+      Alchemists: "You are the master of tension — push build-ups even further",
+      Architects: "Engineer longer suspension arcs with more complex layering",
+      Explorers: "Seek tension in unfamiliar harmonic territories",
+      Anchors: "Let tension deepen your emotional investment in the music",
+      Kineticists: "Build rhythmic tension through accelerating density",
+    },
+    develop: {
+      Alchemists: "Explore music with slow, gentle tension curves",
+      Architects: "Try pieces that build tension subtly over long durations",
+      Explorers: "Let tension accumulate naturally instead of seeking it",
+      Anchors: "Gradually increase tolerance with cinematic build-ups",
+      Kineticists: "Listen to progressive pieces that build energy slowly",
+    },
+  },
+};
+
+function splitAxes(axes: MindAxes): { strong: (keyof MindAxes)[]; weak: (keyof MindAxes)[] } {
+  const sorted = AXIS_KEYS.slice().sort((a, b) => axes[b] - axes[a]);
+  return { strong: sorted.slice(0, 3), weak: sorted.slice(3) };
+}
+
+/* ── Duo session game conditions ──────────────────────────────── */
+
+interface DuoConditions {
+  task: string;
+  taskDetail: string;
+  goal: string;
+  goalMetric: string;
+  xpReward: number;
+  difficulty: "Easy" | "Medium" | "Hard" | "Legendary";
+  complementaryAxis: string;
+}
+
+const DUO_TASKS: Record<keyof MindAxes, { task: string; detail: string }> = {
+  entropyTolerance: {
+    task: "Chaos Sync",
+    detail: "One embraces chaos, the other seeks order. Find the shared frequency where both minds resonate.",
+  },
+  resolutionCraving: {
+    task: "Resolution Negotiation",
+    detail: "One craves closure, the other resists. Navigate the tension and find where both feel complete.",
+  },
+  monotonyTolerance: {
+    task: "Repetition Bridge",
+    detail: "One thrives in loops, the other needs novelty. Build a bridge between patience and exploration.",
+  },
+  salienceSensitivity: {
+    task: "Attention Fusion",
+    detail: "Your attention peaks differ. Synchronize your salience — notice the same moments together.",
+  },
+  tensionAppetite: {
+    task: "Tension Alchemy",
+    detail: "One builds tension higher, the other seeks release sooner. Find the alchemical balance point.",
+  },
+};
+
+const DIFFICULTY_COLORS: Record<DuoConditions["difficulty"], string> = {
+  Easy: "#10B981",
+  Medium: "#F59E0B",
+  Hard: "#EF4444",
+  Legendary: "#A855F7",
+};
+
+/* ── Controllers ─────────────────────────────────────────────── */
+
+const EMOTIONAL_CONTROLLERS = [
+  { id: "valence", label: "Valence", description: "Mood polarity", Icon: Heart, color: "#EC4899" },
+  { id: "arousal", label: "Arousal", description: "Calm ↔ Excited", Icon: Sparkles, color: "#F59E0B" },
+  { id: "depth", label: "Depth", description: "Surface ↔ Deep", Icon: Layers, color: "#8B5CF6" },
+  { id: "nostalgia", label: "Nostalgia", description: "Present ↔ Memory", Icon: RotateCcw, color: "#38BDF8" },
+];
+
+const PHYSICAL_CONTROLLERS = [
+  { id: "tempo", label: "Tempo", description: "Rhythm speed", Icon: Gauge, color: "#F97316" },
+  { id: "energy", label: "Energy", description: "Intensity level", Icon: Activity, color: "#EF4444" },
+  { id: "dynamics", label: "Dynamics", description: "Contrast range", Icon: BarChart3, color: "#84CC16" },
+  { id: "density", label: "Density", description: "Note density", Icon: LayoutGrid, color: "#06B6D4" },
+];
+
+function generateDuoConditions(
+  myAxes: MindAxes,
+  friendAxes: MindAxes,
+  myFamily: NeuralFamily,
+  friendFamily: NeuralFamily,
+): DuoConditions {
+  const gaps = AXIS_KEYS.map((k) => ({
+    key: k,
+    gap: Math.abs(myAxes[k] - friendAxes[k]),
+    label: AXIS_META[k].label,
+  }));
+  gaps.sort((a, b) => b.gap - a.gap);
+  const topGap = gaps[0];
+
+  const totalDist = gaps.reduce((s, g) => s + g.gap, 0);
+  const difficulty: DuoConditions["difficulty"] =
+    totalDist > 2.5 ? "Legendary" : totalDist > 1.8 ? "Hard" : totalDist > 1.0 ? "Medium" : "Easy";
+
+  const baseXP = Math.round(200 + totalDist * 400);
+  const sameFamily = myFamily === friendFamily;
+  const goal = sameFamily
+    ? `Push your shared ${myFamily} strengths to the limit — synchronized peak above 85%`
+    : `Fuse ${myFamily} × ${friendFamily} perspectives — achieve belief alignment within 15%`;
+  const goalMetric = sameFamily ? "Combined Peak > 85%" : "Belief Delta < 15%";
+
+  return {
+    task: DUO_TASKS[topGap.key].task,
+    taskDetail: DUO_TASKS[topGap.key].detail,
+    goal,
+    goalMetric,
+    xpReward: baseXP,
+    difficulty,
+    complementaryAxis: topGap.label,
+  };
 }
 
 function formatSessionTime(seconds: number): string {
@@ -41,22 +229,63 @@ function formatSessionTime(seconds: number): string {
 
 export function LivePerformance() {
   const [mode, setMode] = useState<Mode>("solo");
-  const [intensity, setIntensity] = useState(50);
-  const [energy, setEnergy] = useState(60);
-  const [mood, setMood] = useState(40);
   const [sessionState, setSessionState] = useState<SessionState>("idle");
   const [sessionTime, setSessionTime] = useState(0);
   const [beliefStates, setBeliefStates] = useState([0.5, 0.5, 0.5, 0.5, 0.5]);
   const [peakReward, setPeakReward] = useState(0);
   const [sessionCount] = useState(17);
+  const [axisEmphasis, setAxisEmphasis] = useState<Record<string, number>>({});
+  const [selectedFriend, setSelectedFriend] = useState<UserProfile | null>(null);
+  const [activeControllers, setActiveControllers] = useState<Set<string>>(new Set());
 
   const { mind } = useUserStore();
   const persona = mind ? getPersona(mind.personaId) : null;
   const color = persona?.color ?? beliefColors.tempo.primary;
+  const family = persona?.family ?? "Explorers";
   const organismRef = useRef<OrganismHandle>(null);
-  const challengeGridRef = useRef<HTMLDivElement>(null);
-  const timerRef = useRef<number>(0);
-  useScrollBatch(".scroll-challenge", challengeGridRef, { stagger: 0.06 });
+
+  const { strong, weak } = useMemo(
+    () => mind ? splitAxes(mind.axes) : { strong: AXIS_KEYS.slice(0, 3), weak: AXIS_KEYS.slice(3) },
+    [mind],
+  );
+
+  // Generate duo conditions when a friend is selected
+  const duoConditions = useMemo(() => {
+    if (!selectedFriend || !mind) return null;
+    const friendPersona = getPersona(selectedFriend.mind.personaId);
+    return generateDuoConditions(mind.axes, selectedFriend.mind.axes, family, friendPersona.family);
+  }, [selectedFriend, mind, family]);
+
+  // Clear friend selection when switching back to solo
+  useEffect(() => {
+    if (mode === "solo") setSelectedFriend(null);
+  }, [mode]);
+
+  // Initialize axis emphasis from persona axes
+  useEffect(() => {
+    if (!mind) return;
+    const init: Record<string, number> = {};
+    for (const k of AXIS_KEYS) init[k] = Math.round(mind.axes[k] * 100);
+    setAxisEmphasis(init);
+  }, [mind]);
+
+  const setEmphasis = useCallback((key: string, val: number) => {
+    setAxisEmphasis((prev) => ({ ...prev, [key]: val }));
+  }, []);
+
+  const toggleController = useCallback((id: string) => {
+    setActiveControllers((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id); else next.add(id);
+      return next;
+    });
+  }, []);
+
+  // Compute average emphasis for organism animation
+  const avgEmphasis = useMemo(() => {
+    const vals = Object.values(axisEmphasis);
+    return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length / 100 : 0.5;
+  }, [axisEmphasis]);
 
   // Session timer + belief state simulation
   useEffect(() => {
@@ -65,42 +294,28 @@ export function LivePerformance() {
     const interval = setInterval(() => {
       setSessionTime((t) => t + 1);
 
-      // Simulate belief state evolution based on slider values
       setBeliefStates((prev) => {
-        const intFactor = intensity / 100;
-        const engFactor = energy / 100;
-        const moodFactor = mood / 100;
         const t = Date.now() / 1000;
+        const e = axisEmphasis;
+        const ef = (k: string) => (e[k] ?? 50) / 100;
 
         const newStates = [
-          // consonance — influenced by mood
-          Math.max(0, Math.min(1, prev[0] + (moodFactor - 0.5) * 0.02 + Math.sin(t * 0.3) * 0.01)),
-          // tempo — influenced by energy
-          Math.max(0, Math.min(1, prev[1] + (engFactor - 0.5) * 0.02 + Math.sin(t * 0.5) * 0.015)),
-          // salience — influenced by intensity
-          Math.max(0, Math.min(1, prev[2] + (intFactor - 0.5) * 0.025 + Math.sin(t * 0.7) * 0.012)),
-          // familiarity — gradually builds
-          Math.max(0, Math.min(1, prev[3] + 0.003 + Math.sin(t * 0.2) * 0.008)),
-          // reward — combination of all, with PE dynamics
-          Math.max(0, Math.min(1, prev[4] + (intFactor * 0.01 + engFactor * 0.005 - 0.005) + Math.sin(t * 0.4) * 0.02)),
+          Math.max(0, Math.min(1, prev[0] + (ef("entropyTolerance") - 0.5) * 0.02 + Math.sin(t * 0.3) * 0.01)),
+          Math.max(0, Math.min(1, prev[1] + (ef("resolutionCraving") - 0.5) * 0.02 + Math.sin(t * 0.5) * 0.015)),
+          Math.max(0, Math.min(1, prev[2] + (ef("salienceSensitivity") - 0.5) * 0.025 + Math.sin(t * 0.7) * 0.012)),
+          Math.max(0, Math.min(1, prev[3] + (ef("monotonyTolerance") - 0.5) * 0.015 + Math.sin(t * 0.2) * 0.008)),
+          Math.max(0, Math.min(1, prev[4] + (ef("tensionAppetite") * 0.01 + avgEmphasis * 0.005 - 0.005) + Math.sin(t * 0.4) * 0.02)),
         ];
 
-        // Track peak reward
-        if (newStates[4] > peakReward) {
-          setPeakReward(newStates[4]);
-        }
-
+        if (newStates[4] > peakReward) setPeakReward(newStates[4]);
         return newStates;
       });
 
-      // Pulse organism on high reward moments
-      if (Math.random() > 0.92) {
-        organismRef.current?.pulse(0.5);
-      }
+      if (Math.random() > 0.92) organismRef.current?.pulse(0.5);
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [sessionState, intensity, energy, mood, peakReward]);
+  }, [sessionState, axisEmphasis, avgEmphasis, peakReward]);
 
   const handleStart = useCallback(() => {
     setSessionState("performing");
@@ -118,7 +333,7 @@ export function LivePerformance() {
   const BELIEF_NAMES = ["consonance", "tempo", "salience", "familiarity", "reward"] as const;
 
   return (
-    <motion.div {...pageTransition} className="min-h-screen bg-black pb-16 relative overflow-hidden">
+    <motion.div {...pageTransition} className="h-screen bg-black relative overflow-hidden flex flex-col">
       <div className="cinematic-vignette" />
 
       {/* Organism — responsive to session state */}
@@ -128,8 +343,8 @@ export function LivePerformance() {
           color={sessionState === "performing" ? beliefColors.reward.primary : beliefColors.tempo.primary}
           secondaryColor={beliefColors.reward.primary}
           stage={sessionState === "performing" ? 2 : 1}
-          intensity={sessionState === "performing" ? 0.5 + (intensity / 100) * 0.4 : 0.3}
-          breathRate={sessionState === "performing" ? 2 + (energy / 100) * 3 : 5}
+          intensity={sessionState === "performing" ? 0.5 + avgEmphasis * 0.4 : 0.3}
+          breathRate={sessionState === "performing" ? 2 + avgEmphasis * 3 : 5}
           variant="hero"
           constellations
           className="w-full h-full"
@@ -137,149 +352,478 @@ export function LivePerformance() {
         />
       </div>
 
-      {/* Header */}
-      <motion.div variants={fadeIn} initial="initial" animate="animate" className="relative z-10 text-center mb-10 pt-8">
-        <span className="hud-label mb-3 block">Performance</span>
-        <h1 className="text-4xl md:text-5xl font-display font-bold text-slate-100 tracking-tight mb-3">
-          Live Performance
-        </h1>
-        <p className="hud-label text-xs">Create music with your mind in real-time</p>
+      <motion.div variants={staggerChildren} initial="initial" animate="animate" className="relative z-10 w-full px-3 flex-1 min-h-0 flex flex-col pt-0 pb-1">
+        {/* ── Solo: 3-column layout ──────────────────────────── */}
+        {mode === "solo" && (
+          <div className="grid grid-cols-12 gap-2 flex-1 min-h-0">
 
-        {/* Session timer overlay when performing */}
-        <AnimatePresence>
-          {sessionState === "performing" && (
-            <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
-              className="mt-4 flex items-center justify-center gap-3"
-            >
-              <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-              <span className="text-red-400 font-mono text-lg">{formatSessionTime(sessionTime)}</span>
-              <span className="hud-label text-red-400/60">LIVE</span>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.div>
+            {/* ═ LEFT: Axis bars ═══════════════════════════════ */}
+            <div className="col-span-3 flex flex-col gap-2 overflow-y-auto scrollbar-thin">
+              {/* Strengthen Your Edge */}
+              <motion.div variants={slideUp} className="spatial-card p-3">
+                <div className="flex items-center gap-2 mb-2">
+                  <Shield size={14} style={{ color }} />
+                  <span className="hud-label text-[9px]">Strengthen Your Edge</span>
+                </div>
+                {persona && (
+                  <p className="text-[9px] text-slate-600 font-body font-light mb-2">
+                    As a <span style={{ color }} className="font-medium">{persona.name}</span>, lean into what makes you powerful.
+                  </p>
+                )}
+                <div className="space-y-2.5">
+                  {strong.map((axisKey) => {
+                    const meta = AXIS_META[axisKey];
+                    const axisColor = beliefColors[meta.belief].primary;
+                    const val = axisEmphasis[axisKey] ?? 50;
+                    return (
+                      <div key={axisKey}>
+                        <div className="flex items-center justify-between mb-0.5">
+                          <div className="flex items-center gap-1.5">
+                            <NucleusDot color={axisColor} size={2} active />
+                            <span className="text-[11px] font-display text-slate-300">{meta.label}</span>
+                          </div>
+                          <span className="text-[10px] font-mono" style={{ color: axisColor }}>{val}%</span>
+                        </div>
+                        <input type="range" min={0} max={100} value={val}
+                          onChange={(e) => setEmphasis(axisKey, Number(e.target.value))}
+                          className="w-full h-[3px] rounded-full appearance-none cursor-pointer mb-0.5"
+                          style={{ background: `linear-gradient(90deg, ${axisColor} ${val}%, rgba(255,255,255,0.05) ${val}%)`, accentColor: axisColor }}
+                        />
+                        <p className="text-[8px] text-slate-600 font-body font-light leading-relaxed">
+                          {meta.strengthen[family]}
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </motion.div>
 
-      {/* Mode toggle */}
-      <motion.div variants={fadeIn} initial="initial" animate="animate" className="relative z-10 flex justify-center mb-12">
-        <div className="flex rounded-full p-1" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}>
-          {(["solo", "duo"] as const).map((m) => (
-            <button key={m} onClick={() => setMode(m)} disabled={sessionState === "performing"}
-              className="px-6 py-2 rounded-full text-sm font-display font-medium transition-all duration-300 capitalize disabled:opacity-50"
-              style={{
-                background: mode === m ? `${color}15` : "transparent",
-                color: mode === m ? "#E2E8F0" : "#475569",
-                border: mode === m ? `1px solid ${color}25` : "1px solid transparent",
-              }}
-            >
-              {m === "solo" ? "Solo Performance" : "Duo Session"}
-            </button>
-          ))}
-        </div>
-      </motion.div>
-
-      <motion.div variants={staggerChildren} initial="initial" animate="animate" className="relative z-10 max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto px-4">
-        {/* Control panels */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          {/* You Control */}
-          <motion.div variants={slideUp} className="spatial-card p-7">
-            <div className="flex items-center gap-2 mb-6">
-              <NucleusDot color={color} size={5} active pulsing={sessionState === "performing"} />
-              <span className="hud-label">You Control</span>
-              {sessionState === "performing" && (
-                <span className="text-[9px] font-mono text-slate-700 ml-auto">Adjustments affect output in real-time</span>
-              )}
+              {/* Develop New Ground */}
+              <motion.div variants={slideUp} className="spatial-card p-3">
+                <div className="flex items-center gap-2 mb-2">
+                  <Sprout size={14} style={{ color: beliefColors.salience.primary }} />
+                  <span className="hud-label text-[9px]">Develop New Ground</span>
+                </div>
+                {persona && (
+                  <p className="text-[9px] text-slate-600 font-body font-light mb-2">
+                    Expand your <span style={{ color: beliefColors.salience.primary }} className="font-medium">{persona.family}</span> mind into new territory.
+                  </p>
+                )}
+                <div className="space-y-2.5">
+                  {weak.map((axisKey) => {
+                    const meta = AXIS_META[axisKey];
+                    const axisColor = beliefColors[meta.belief].primary;
+                    const val = axisEmphasis[axisKey] ?? 50;
+                    return (
+                      <div key={axisKey}>
+                        <div className="flex items-center justify-between mb-0.5">
+                          <div className="flex items-center gap-1.5">
+                            <NucleusDot color={axisColor} size={2} active />
+                            <span className="text-[11px] font-display text-slate-300">{meta.label}</span>
+                          </div>
+                          <span className="text-[10px] font-mono" style={{ color: axisColor }}>{val}%</span>
+                        </div>
+                        <input type="range" min={0} max={100} value={val}
+                          onChange={(e) => setEmphasis(axisKey, Number(e.target.value))}
+                          className="w-full h-[3px] rounded-full appearance-none cursor-pointer mb-0.5"
+                          style={{ background: `linear-gradient(90deg, ${axisColor} ${val}%, rgba(255,255,255,0.05) ${val}%)`, accentColor: axisColor }}
+                        />
+                        <p className="text-[8px] text-slate-600 font-body font-light leading-relaxed">
+                          {meta.develop[family]}
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </motion.div>
             </div>
-            <div className="space-y-6">
-              <SliderControl label="Intensity" value={intensity} onChange={setIntensity} color={color}
-                description="How dramatic the music feels — subtle whispers to overwhelming waves" />
-              <SliderControl label="Energy" value={energy} onChange={setEnergy} color={beliefColors.tempo.primary}
-                description="Rhythmic density and drive — from floating to pounding" />
-              <SliderControl label="Mood" value={mood} onChange={setMood} color={beliefColors.consonance.primary}
-                description="Dark and tense vs bright and resolved" />
-            </div>
-          </motion.div>
 
-          {/* Your Mind Controls */}
-          <motion.div variants={slideUp} className="spatial-card p-7">
-            <div className="flex items-center gap-2 mb-6">
-              <NucleusDot color={beliefColors.reward.primary} size={5} active />
-              <span className="hud-label">Your Mind Controls</span>
-            </div>
-            <div className="space-y-3">
-              {MIND_CONTROLS.map((ctrl, i) => {
-                const bColor = beliefColors[ctrl.belief].primary;
-                const stateValue = beliefStates[i];
-                const isPerforming = sessionState === "performing";
-                return (
-                  <div key={ctrl.belief} className="flex items-center gap-3 py-2.5 px-3 rounded-xl transition-all"
-                    style={{ background: `${bColor}${isPerforming ? "0a" : "06"}`, border: `1px solid ${bColor}${isPerforming ? "15" : "08"}` }}
-                  >
-                    <div className="w-8 h-8 rounded-lg flex items-center justify-center">
-                      <MiniOrganism color={bColor} stage={1} size={32} />
-                    </div>
-                    <div className="flex-1">
-                      <div className="text-sm font-body font-medium text-slate-300">{ctrl.label}</div>
-                      <div className="text-[10px] text-slate-600 font-body font-light">{ctrl.description}</div>
-                    </div>
-                    {/* Live belief state indicator */}
-                    <div className="flex items-center gap-2">
-                      {isPerforming && (
-                        <span className="text-[10px] font-mono" style={{ color: bColor }}>
-                          {(stateValue * 100).toFixed(0)}
-                        </span>
-                      )}
-                      <div className={`w-2 h-2 rounded-full ${isPerforming ? "animate-pulse" : ""}`}
-                        style={{
-                          background: bColor,
-                          boxShadow: isPerforming ? `0 0 ${8 + stateValue * 12}px ${bColor}${Math.round(stateValue * 99).toString(16).padStart(2, "0")}` : `0 0 8px ${bColor}60`,
-                        }}
-                      />
-                    </div>
-                  </div>
-                );
-              })}
-
-              {/* Reward — special treatment */}
-              {sessionState === "performing" && (
-                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-                  className="flex items-center gap-3 py-2.5 px-3 rounded-xl mt-2"
-                  style={{ background: `${beliefColors.reward.primary}0a`, border: `1px solid ${beliefColors.reward.primary}20` }}
+            {/* ═ CENTER: iPhone mockup + controls ══════════════ */}
+            <div className="col-span-6 flex flex-col items-center gap-2 min-h-0">
+              {/* Phone wrapper — fills available height, phone derives width from aspect-ratio */}
+              <div className="flex-1 min-h-0 flex items-center justify-center w-full">
+              <motion.div
+                variants={fadeIn}
+                initial="initial"
+                animate="animate"
+                className="relative h-full"
+                style={{ aspectRatio: "9 / 19.5", maxWidth: 450, maxHeight: "100%" }}
+              >
+                {/* Outer bezel */}
+                <div
+                  className="absolute inset-0 rounded-[56px] overflow-hidden"
+                  style={{ border: "3px solid rgba(255,255,255,0.08)", background: "#050505" }}
                 >
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center">
-                    <MiniOrganism color={beliefColors.reward.primary} stage={2} size={32} />
-                  </div>
-                  <div className="flex-1">
-                    <div className="text-sm font-body font-medium text-slate-300">Reward</div>
-                    <div className="text-[10px] text-slate-600 font-body font-light">Emergent from all belief interactions</div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-mono" style={{ color: beliefColors.reward.primary }}>
-                      {(beliefStates[4] * 100).toFixed(0)}
-                    </span>
-                    <div className="w-2 h-2 rounded-full animate-pulse"
-                      style={{ background: beliefColors.reward.primary, boxShadow: `0 0 ${8 + beliefStates[4] * 16}px ${beliefColors.reward.primary}80` }}
+                  {/* Dynamic Island */}
+                  <div className="absolute top-[14px] left-1/2 -translate-x-1/2 w-[100px] h-[28px] bg-black rounded-full z-20" style={{ border: "1px solid rgba(255,255,255,0.06)" }} />
+
+                  {/* Screen area */}
+                  <div className="absolute inset-[3px] rounded-[53px] overflow-hidden">
+                    {/* Ambient glow background */}
+                    <motion.div
+                      className="absolute inset-0"
+                      animate={{
+                        background: sessionState === "performing"
+                          ? [`radial-gradient(circle at 50% 40%, ${beliefColors.reward.primary}20, ${color}08, transparent 70%)`,
+                             `radial-gradient(circle at 50% 60%, ${color}20, ${beliefColors.reward.primary}08, transparent 70%)`,
+                             `radial-gradient(circle at 50% 40%, ${beliefColors.reward.primary}20, ${color}08, transparent 70%)`]
+                          : `radial-gradient(circle at 50% 45%, ${color}12, transparent 65%)`,
+                      }}
+                      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                     />
+
+                    {/* Title inside phone */}
+                    <div className="absolute top-[48px] left-0 right-0 z-20 text-center">
+                      <span className="text-[11px] font-display font-bold text-slate-200 tracking-wide">Live Performance</span>
+                    </div>
+
+                    {/* Solo / Duo toggle inside phone */}
+                    <div className="absolute top-[66px] left-0 right-0 z-20 flex justify-center">
+                      <div className="flex rounded-full p-0.5" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                        {(["solo", "duo"] as const).map((m) => (
+                          <button key={m} onClick={() => setMode(m)} disabled={sessionState === "performing"}
+                            className="px-3 py-0.5 rounded-full text-[9px] font-display font-medium transition-all duration-300 disabled:opacity-50"
+                            style={{
+                              background: mode === m ? `${color}20` : "transparent",
+                              color: mode === m ? "#E2E8F0" : "#64748B",
+                              border: mode === m ? `1px solid ${color}30` : "1px solid transparent",
+                            }}
+                          >
+                            {m === "solo" ? "Solo" : "Duo"}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Mini belief bars */}
+                    <div className="absolute top-[92px] left-5 right-5 z-10">
+                      <div className="flex gap-1.5">
+                        {BELIEF_NAMES.map((b, i) => (
+                          <div key={b} className="flex-1">
+                            <div className="h-[3px] rounded-full" style={{ background: `${beliefColors[b].primary}20` }}>
+                              <motion.div
+                                className="h-full rounded-full"
+                                style={{ background: beliefColors[b].primary }}
+                                animate={{ width: `${beliefStates[i] * 100}%` }}
+                                transition={{ duration: 0.5 }}
+                              />
+                            </div>
+                            <span className="text-[7px] font-mono block text-center mt-0.5" style={{ color: `${beliefColors[b].primary}60` }}>{b.slice(0, 3)}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Center content */}
+                    <div className="absolute inset-0 flex flex-col items-center justify-center">
+                      {sessionState === "performing" ? (
+                        <>
+                          <div className="w-4 h-4 rounded-full bg-red-500 animate-pulse mb-3" />
+                          <span className="text-4xl font-mono text-slate-200 tracking-wider">{formatSessionTime(sessionTime)}</span>
+                          <span className="text-[10px] text-red-400/60 font-mono mt-2 tracking-[0.3em]">LIVE</span>
+                          <motion.div
+                            className="w-24 h-[2px] mt-4"
+                            style={{ background: beliefColors.reward.primary }}
+                            animate={{ opacity: [0.3, 0.8, 0.3], scaleX: [0.5, 1, 0.5] }}
+                            transition={{ duration: 2, repeat: Infinity }}
+                          />
+                          <button onClick={handleStop} className="mt-5 px-5 py-2 rounded-full text-[11px] font-display text-slate-300 transition-all"
+                            style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}>
+                            <Square size={12} className="inline mr-1.5 -mt-px" /> End Session
+                          </button>
+                        </>
+                      ) : sessionState === "finished" ? (
+                        <>
+                          <span className="text-sm font-display text-slate-500 mb-2">Session Complete</span>
+                          <span className="hud-value text-3xl" style={{ color: beliefColors.reward.primary }}>{(peakReward * 100).toFixed(0)}</span>
+                          <span className="text-[9px] font-mono text-slate-600 mt-1">Peak Reward</span>
+                          <button onClick={() => { setSessionState("idle"); }} className="mt-4 px-5 py-2 rounded-full text-[11px] font-display text-slate-300 transition-all"
+                            style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}>
+                            New Session
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <NucleusDot color={color} size={14} active pulsing />
+                          <span className="text-sm font-display text-slate-400 mt-4">{persona?.name ?? "Ready"}</span>
+                          <span className="text-[10px] font-mono mt-1" style={{ color: `${color}80` }}>{persona?.family}</span>
+                          <button onClick={handleStart} className="mt-5 px-6 py-2.5 rounded-full text-[12px] font-display font-medium text-white transition-all"
+                            style={{ background: `linear-gradient(135deg, ${color}, ${beliefColors.reward.primary})`, boxShadow: `0 0 20px ${color}30` }}>
+                            <Play size={14} className="inline mr-1.5 -mt-px" /> Start Solo
+                          </button>
+                        </>
+                      )}
+                    </div>
+
+                    {/* Bottom: active controllers indicator */}
+                    <div className="absolute bottom-7 left-5 right-5 z-10">
+                      <div className="flex justify-center gap-2">
+                        {[...EMOTIONAL_CONTROLLERS, ...PHYSICAL_CONTROLLERS].map((c) => (
+                          <motion.div
+                            key={c.id}
+                            className="w-2 h-2 rounded-full"
+                            style={{ background: activeControllers.has(c.id) ? c.color : "rgba(255,255,255,0.06)" }}
+                            animate={{ opacity: activeControllers.has(c.id) ? [0.6, 1, 0.6] : 0.3 }}
+                            transition={{ duration: 2, repeat: Infinity }}
+                          />
+                        ))}
+                      </div>
+                      <span className="text-[8px] font-mono text-slate-700 block text-center mt-1.5">
+                        {activeControllers.size > 0 ? `${activeControllers.size} active` : "No controllers"}
+                      </span>
+                    </div>
                   </div>
+                </div>
+
+                {/* Side buttons */}
+                <div className="absolute -left-[2px] top-[28%] w-[3px] h-[5%] rounded-l bg-slate-800" />
+                <div className="absolute -left-[2px] top-[36%] w-[3px] h-[8%] rounded-l bg-slate-800" />
+                <div className="absolute -left-[2px] top-[47%] w-[3px] h-[8%] rounded-l bg-slate-800" />
+                <div className="absolute -right-[2px] top-[34%] w-[3px] h-[10%] rounded-r bg-slate-800" />
+              </motion.div>
+              </div>
+            </div>
+
+            {/* ═ RIGHT: Controllers ════════════════════════════ */}
+            <div className="col-span-3 flex flex-col gap-2 overflow-y-auto scrollbar-thin">
+              {/* Emotional Controllers */}
+              <motion.div variants={slideUp} className="spatial-card p-3">
+                <div className="flex items-center gap-2 mb-2">
+                  <Heart size={14} className="text-pink-400" />
+                  <span className="hud-label text-[9px]">Emotional</span>
+                </div>
+                <div className="space-y-2">
+                  {EMOTIONAL_CONTROLLERS.map(({ id, label, description, Icon, color: cColor }) => {
+                    const isActive = activeControllers.has(id);
+                    return (
+                      <button
+                        key={id}
+                        onClick={() => toggleController(id)}
+                        className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-300"
+                        style={{
+                          background: isActive ? `${cColor}12` : "rgba(255,255,255,0.02)",
+                          border: `1px solid ${isActive ? `${cColor}30` : "rgba(255,255,255,0.04)"}`,
+                        }}
+                      >
+                        <Icon size={14} style={{ color: isActive ? cColor : "#475569" }} />
+                        <div className="flex-1 text-left">
+                          <div className="text-[11px] font-display" style={{ color: isActive ? "#E2E8F0" : "#64748B" }}>{label}</div>
+                          <div className="text-[8px] font-mono text-slate-700">{description}</div>
+                        </div>
+                        <motion.div
+                          className="w-2 h-2 rounded-full flex-shrink-0"
+                          style={{ background: isActive ? cColor : "rgba(255,255,255,0.06)" }}
+                          animate={{ opacity: isActive ? [0.5, 1, 0.5] : 0.3 }}
+                          transition={{ duration: 2, repeat: Infinity }}
+                        />
+                      </button>
+                    );
+                  })}
+                </div>
+              </motion.div>
+
+              {/* Physical Controllers */}
+              <motion.div variants={slideUp} className="spatial-card p-3">
+                <div className="flex items-center gap-2 mb-2">
+                  <Activity size={14} className="text-red-400" />
+                  <span className="hud-label text-[9px]">Physical</span>
+                </div>
+                <div className="space-y-2">
+                  {PHYSICAL_CONTROLLERS.map(({ id, label, description, Icon, color: cColor }) => {
+                    const isActive = activeControllers.has(id);
+                    return (
+                      <button
+                        key={id}
+                        onClick={() => toggleController(id)}
+                        className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-300"
+                        style={{
+                          background: isActive ? `${cColor}12` : "rgba(255,255,255,0.02)",
+                          border: `1px solid ${isActive ? `${cColor}30` : "rgba(255,255,255,0.04)"}`,
+                        }}
+                      >
+                        <Icon size={14} style={{ color: isActive ? cColor : "#475569" }} />
+                        <div className="flex-1 text-left">
+                          <div className="text-[11px] font-display" style={{ color: isActive ? "#E2E8F0" : "#64748B" }}>{label}</div>
+                          <div className="text-[8px] font-mono text-slate-700">{description}</div>
+                        </div>
+                        <motion.div
+                          className="w-2 h-2 rounded-full flex-shrink-0"
+                          style={{ background: isActive ? cColor : "rgba(255,255,255,0.06)" }}
+                          animate={{ opacity: isActive ? [0.5, 1, 0.5] : 0.3 }}
+                          transition={{ duration: 2, repeat: Infinity }}
+                        />
+                      </button>
+                    );
+                  })}
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        )}
+
+        {/* ── Duo: Friends bar + game conditions ────────────── */}
+        {mode === "duo" && (
+          <motion.div variants={slideUp} className="mb-4 space-y-3">
+            {/* Mode toggle for duo */}
+            <div className="flex justify-center">
+              <div className="flex rounded-full p-0.5" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}>
+                {(["solo", "duo"] as const).map((m) => (
+                  <button key={m} onClick={() => setMode(m)} disabled={sessionState === "performing"}
+                    className="px-4 py-1 rounded-full text-[10px] font-display font-medium transition-all duration-300 disabled:opacity-50"
+                    style={{
+                      background: mode === m ? `${color}20` : "transparent",
+                      color: mode === m ? "#E2E8F0" : "#64748B",
+                      border: mode === m ? `1px solid ${color}30` : "1px solid transparent",
+                    }}
+                  >
+                    {m === "solo" ? "Solo" : "Duo"}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Friends selection bar */}
+            <div className="spatial-card p-4">
+              <div className="flex items-center gap-2 mb-3">
+                <Users size={16} className="text-slate-400" />
+                <span className="hud-label">Choose Your Partner</span>
+              </div>
+              <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin">
+                {mockUsers.map((friend) => {
+                  const fp = getPersona(friend.mind.personaId);
+                  const isSelected = selectedFriend?.id === friend.id;
+                  return (
+                    <button
+                      key={friend.id}
+                      onClick={() => setSelectedFriend(isSelected ? null : friend)}
+                      className="flex-shrink-0 flex items-center gap-2 px-3 py-2 rounded-xl transition-all duration-300"
+                      style={{
+                        background: isSelected ? `${fp.color}20` : "rgba(255,255,255,0.03)",
+                        border: `1px solid ${isSelected ? `${fp.color}40` : "rgba(255,255,255,0.06)"}`,
+                      }}
+                    >
+                      <div
+                        className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
+                        style={{ background: `${fp.color}25`, color: fp.color }}
+                      >
+                        {friend.displayName.charAt(0)}
+                      </div>
+                      <div className="text-left">
+                        <div className="text-[11px] font-display text-slate-300">{friend.displayName}</div>
+                        <div className="text-[9px] font-mono" style={{ color: fp.color }}>{fp.name}</div>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Duo game conditions — shown when a friend is selected */}
+            <AnimatePresence>
+              {selectedFriend && duoConditions && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="overflow-hidden"
+                >
+                  {(() => {
+                    const fp = getPersona(selectedFriend.mind.personaId);
+                    const diffColor = DIFFICULTY_COLORS[duoConditions.difficulty];
+                    return (
+                      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+                        {/* Task */}
+                        <div className="spatial-card p-4 glow-border" style={{ "--glow-color": beliefColors.salience.primary } as React.CSSProperties}>
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="flex items-center gap-2">
+                              <Target size={14} style={{ color: beliefColors.salience.primary }} />
+                              <span className="hud-label">Task</span>
+                            </div>
+                            <span className="text-[9px] font-mono px-2 py-0.5 rounded-full" style={{ color: diffColor, background: `${diffColor}15`, border: `1px solid ${diffColor}30` }}>
+                              {duoConditions.difficulty}
+                            </span>
+                          </div>
+                          <h4 className="text-sm font-display font-semibold text-slate-200 mb-1">{duoConditions.task}</h4>
+                          <p className="text-[9px] text-slate-500 font-body font-light leading-relaxed">{duoConditions.taskDetail}</p>
+                          <div className="mt-2 flex items-center gap-1.5">
+                            <NucleusDot color={beliefColors.consonance.primary} size={2} active />
+                            <span className="text-[8px] font-mono text-slate-600">Key axis: {duoConditions.complementaryAxis}</span>
+                          </div>
+                        </div>
+
+                        {/* Goal */}
+                        <div className="spatial-card p-4 glow-border" style={{ "--glow-color": beliefColors.tempo.primary } as React.CSSProperties}>
+                          <div className="flex items-center gap-2 mb-2">
+                            <Zap size={14} style={{ color: beliefColors.tempo.primary }} />
+                            <span className="hud-label">Goal</span>
+                          </div>
+                          <p className="text-[10px] text-slate-300 font-body leading-relaxed mb-2">{duoConditions.goal}</p>
+                          <div className="flex items-center gap-2 mt-auto">
+                            <div className="text-[9px] font-mono px-2 py-0.5 rounded-full" style={{ color: beliefColors.tempo.primary, background: `${beliefColors.tempo.primary}15` }}>
+                              {duoConditions.goalMetric}
+                            </div>
+                          </div>
+                          <div className="mt-2 flex items-center gap-3">
+                            <div className="flex items-center gap-1">
+                              <div className="w-4 h-4 rounded-full flex items-center justify-center text-[7px] font-bold" style={{ background: `${color}25`, color }}>
+                                {persona?.name.charAt(0)}
+                              </div>
+                              <span className="text-[8px] font-mono" style={{ color }}>{persona?.family}</span>
+                            </div>
+                            <span className="text-[8px] text-slate-700">×</span>
+                            <div className="flex items-center gap-1">
+                              <div className="w-4 h-4 rounded-full flex items-center justify-center text-[7px] font-bold" style={{ background: `${fp.color}25`, color: fp.color }}>
+                                {fp.name.charAt(0)}
+                              </div>
+                              <span className="text-[8px] font-mono" style={{ color: fp.color }}>{fp.family}</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Reward */}
+                        <div className="spatial-card p-4 glow-border" style={{ "--glow-color": beliefColors.reward.primary } as React.CSSProperties}>
+                          <div className="flex items-center gap-2 mb-2">
+                            <Trophy size={14} style={{ color: beliefColors.reward.primary }} />
+                            <span className="hud-label">Reward</span>
+                          </div>
+                          <div className="flex items-baseline gap-1 mb-2">
+                            <span className="hud-value text-2xl" style={{ color: beliefColors.reward.primary }}>{duoConditions.xpReward}</span>
+                            <span className="text-[10px] font-mono text-slate-600">XP</span>
+                          </div>
+                          <div className="space-y-1">
+                            <div className="flex items-center gap-1.5">
+                              <NucleusDot color={beliefColors.reward.primary} size={2} active pulsing />
+                              <span className="text-[9px] text-slate-500 font-body">Both players earn full XP</span>
+                            </div>
+                            <div className="flex items-center gap-1.5">
+                              <NucleusDot color={beliefColors.salience.primary} size={2} active />
+                              <span className="text-[9px] text-slate-500 font-body">+50% bonus if goal met</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })()}
                 </motion.div>
               )}
-            </div>
+            </AnimatePresence>
           </motion.div>
-        </div>
+        )}
 
-        {/* Real-time belief trace (during session) */}
+        {/* Real-time belief trace (during session — duo mode only) */}
         <AnimatePresence>
-          {sessionState === "performing" && (
+          {mode === "duo" && sessionState === "performing" && (
             <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }}
-              className="mb-8"
+              className="mb-4"
             >
-              <div className="spatial-card p-6 glow-border" style={{ "--glow-color": beliefColors.reward.primary } as React.CSSProperties}>
-                <div className="flex items-center justify-between mb-4">
+              <div className="spatial-card p-4 glow-border" style={{ "--glow-color": beliefColors.reward.primary } as React.CSSProperties}>
+                <div className="flex items-center justify-between mb-2">
                   <span className="hud-label">Live Belief States</span>
                   <span className="text-[10px] font-mono text-slate-700">
                     Peak reward: <span style={{ color: beliefColors.reward.primary }}>{(peakReward * 100).toFixed(0)}</span>
                   </span>
                 </div>
-                <div className="flex items-end gap-3 h-20">
+                <div className="flex items-end gap-3 h-16">
                   {BELIEF_NAMES.map((b, i) => {
                     const val = beliefStates[i];
                     const bColor = beliefColors[b].primary;
@@ -298,15 +842,15 @@ export function LivePerformance() {
           )}
         </AnimatePresence>
 
-        {/* Session finished summary */}
+        {/* Session finished summary (duo mode only) */}
         <AnimatePresence>
-          {sessionState === "finished" && (
+          {mode === "duo" && sessionState === "finished" && (
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
-              className="mb-8"
+              className="mb-4"
             >
-              <div className="spatial-card p-8 glow-border text-center" style={{ "--glow-color": beliefColors.reward.primary } as React.CSSProperties}>
+              <div className="spatial-card p-5 glow-border text-center" style={{ "--glow-color": beliefColors.reward.primary } as React.CSSProperties}>
                 <h3 className="text-lg font-display font-medium text-slate-300 mb-2">Session Complete</h3>
-                <div className="flex justify-center gap-8 mb-4">
+                <div className="flex justify-center gap-8 mb-3">
                   <div>
                     <span className="hud-value text-2xl" style={{ color: beliefColors.tempo.primary }}>{formatSessionTime(sessionTime)}</span>
                     <p className="text-[9px] font-mono text-slate-700">Duration</p>
@@ -330,104 +874,50 @@ export function LivePerformance() {
           )}
         </AnimatePresence>
 
-        {/* Start/Stop session */}
-        <motion.div variants={slideUp} className="flex justify-center mb-12">
-          {sessionState === "idle" || sessionState === "finished" ? (
-            <Button variant="primary" size="lg" onClick={handleStart}>
-              <Play size={18} className="mr-2" />
-              Start {mode === "solo" ? "Solo" : "Duo"} Session
-            </Button>
-          ) : (
-            <Button variant="glass" size="lg" onClick={handleStop}>
-              <Square size={18} className="mr-2" />
-              End Session
-            </Button>
-          )}
-        </motion.div>
+        {/* Start/Stop session (duo mode only — solo has it inside grid) */}
+        {mode === "duo" && (
+          <>
+            <motion.div variants={slideUp} className="flex justify-center mb-4">
+              {sessionState === "idle" || sessionState === "finished" ? (
+                <Button variant="primary" size="lg" onClick={handleStart}>
+                  <Play size={18} className="mr-2" />
+                  Start Duo Session
+                </Button>
+              ) : (
+                <Button variant="glass" size="lg" onClick={handleStop}>
+                  <Square size={18} className="mr-2" />
+                  End Session
+                </Button>
+              )}
+            </motion.div>
 
-        {/* Stats */}
-        <motion.div variants={slideUp} className="flex justify-center gap-12 mb-12">
-          <div className="text-center">
-            <div className="flex items-center justify-center gap-2 mb-2">
-              <NucleusDot color={beliefColors.salience.primary} size={5} active pulsing />
-              <span className="hud-label">Sessions</span>
-            </div>
-            <span className="hud-value text-3xl" style={{ color: beliefColors.salience.primary }}>{sessionCount}</span>
-          </div>
-          <div className="text-center">
-            <div className="flex items-center justify-center gap-2 mb-2">
-              <NucleusDot color={beliefColors.tempo.primary} size={5} active />
-              <span className="hud-label">Total Time</span>
-            </div>
-            <span className="hud-value text-3xl" style={{ color: beliefColors.tempo.primary }}>4h</span>
-          </div>
-          <div className="text-center">
-            <div className="flex items-center justify-center gap-2 mb-2">
-              <NucleusDot color={beliefColors.reward.primary} size={5} active pulsing />
-              <span className="hud-label">Best Streak</span>
-            </div>
-            <span className="hud-value text-3xl" style={{ color: beliefColors.reward.primary }}>5</span>
-          </div>
-        </motion.div>
-
-        {/* Challenges */}
-        <span className="hud-label mb-6 block">Active Sessions</span>
-        <div ref={challengeGridRef} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {challenges.map((ch) => {
-            const chColor = beliefColors[ch.type === "entropy" ? "tempo" : ch.type === "resolution" ? "salience" : ch.type === "fusion" ? "consonance" : "familiarity"].primary;
-            const countdown = getCountdown(ch.endsAt);
-            return (
-              <motion.div key={ch.id} className="scroll-challenge" animate={glowPulse.animate}>
-                <div className="spatial-card p-6 relative overflow-hidden group cursor-pointer transition-all duration-500"
-                  onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.boxShadow = `0 4px 40px ${chColor}15`; }}
-                  onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.boxShadow = "none"; }}
-                >
-                  <div className="absolute top-0 left-0 right-0 h-[1px]" style={{ background: `linear-gradient(90deg, ${chColor}40, transparent)` }} />
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex items-center gap-3">
-                      <div className="relative w-10 h-10 rounded-xl flex items-center justify-center overflow-hidden">
-                        <MiniOrganism color={chColor} stage={1} size={40} />
-                        <div className="absolute inset-0 flex items-center justify-center z-10" style={{ color: chColor }}><Zap size={16} /></div>
-                      </div>
-                      <div>
-                        <h3 className="text-sm font-body font-semibold text-slate-200">{ch.title}</h3>
-                        <Badge label={ch.type} color={chColor} />
-                      </div>
-                    </div>
-                    <span className="hud-value text-xs" style={{ color: beliefColors.reward.primary }}>+{ch.xpReward} XP</span>
-                  </div>
-                  <p className="text-xs text-slate-600 mb-4 leading-relaxed font-body font-light">{ch.description}</p>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4 text-xs text-slate-700">
-                      <span className="flex items-center gap-1 font-mono"><Users size={11} /> {ch.participants.toLocaleString()}</span>
-                      <span className="flex items-center gap-1 font-mono"><Clock size={11} /> {countdown}</span>
-                    </div>
-                    <Button variant="primary" size="sm">Join</Button>
-                  </div>
+            <motion.div variants={slideUp} className="flex justify-center gap-12">
+              <div className="text-center">
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <NucleusDot color={beliefColors.salience.primary} size={5} active pulsing />
+                  <span className="hud-label">Sessions</span>
                 </div>
-              </motion.div>
-            );
-          })}
-        </div>
+                <span className="hud-value text-3xl" style={{ color: beliefColors.salience.primary }}>{sessionCount}</span>
+              </div>
+              <div className="text-center">
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <NucleusDot color={beliefColors.tempo.primary} size={5} active />
+                  <span className="hud-label">Total Time</span>
+                </div>
+                <span className="hud-value text-3xl" style={{ color: beliefColors.tempo.primary }}>4h</span>
+              </div>
+              <div className="text-center">
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <NucleusDot color={beliefColors.reward.primary} size={5} active pulsing />
+                  <span className="hud-label">Best Streak</span>
+                </div>
+                <span className="hud-value text-3xl" style={{ color: beliefColors.reward.primary }}>5</span>
+              </div>
+            </motion.div>
+          </>
+        )}
+
       </motion.div>
     </motion.div>
-  );
-}
-
-function SliderControl({ label, value, onChange, color, description }: {
-  label: string; value: number; onChange: (v: number) => void; color: string; description?: string;
-}) {
-  return (
-    <div>
-      <div className="flex items-center justify-between mb-2">
-        <span className="text-sm font-body font-medium text-slate-400">{label}</span>
-        <span className="hud-value text-xs" style={{ color }}>{value}%</span>
-      </div>
-      <input type="range" min={0} max={100} value={value} onChange={(e) => onChange(Number(e.target.value))}
-        className="w-full h-[3px] rounded-full appearance-none cursor-pointer"
-        style={{ background: `linear-gradient(90deg, ${color} ${value}%, rgba(255,255,255,0.05) ${value}%)`, accentColor: color }}
-      />
-      {description && <p className="text-[9px] text-slate-700 font-mono mt-1">{description}</p>}
-    </div>
   );
 }
