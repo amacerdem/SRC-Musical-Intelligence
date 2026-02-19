@@ -353,12 +353,11 @@ export function LivePerformance() {
       </div>
 
       <motion.div variants={staggerChildren} initial="initial" animate="animate" className="relative z-10 w-full px-3 flex-1 min-h-0 flex flex-col pt-0 pb-1">
-        {/* ── Solo: 3-column layout ──────────────────────────── */}
-        {mode === "solo" && (
-          <div className="grid grid-cols-12 gap-2 flex-1 min-h-0">
+        {/* ── Main layout ──────────────────────────────────── */}
+        <div className="grid grid-cols-12 gap-2 flex-1 min-h-0">
 
-            {/* ═ LEFT: Axis bars ═══════════════════════════════ */}
-            <div className="col-span-3 flex flex-col gap-2 overflow-y-auto scrollbar-thin">
+          {/* ═ LEFT: Axis bars ═══════════════════════════════ */}
+          <div className="col-span-3 flex flex-col gap-2 overflow-y-auto scrollbar-thin">
               {/* Strengthen Your Edge */}
               <motion.div variants={slideUp} className="spatial-card p-3">
                 <div className="flex items-center gap-2 mb-2">
@@ -438,16 +437,16 @@ export function LivePerformance() {
               </motion.div>
             </div>
 
-            {/* ═ CENTER: iPhone mockup + controls ══════════════ */}
-            <div className="col-span-6 flex flex-col items-center gap-2 min-h-0">
+          {/* ═ CENTER: iPhone mockup + controls ══════════════ */}
+          <div className="col-span-6 flex flex-col items-center gap-2 min-h-0">
               {/* Phone wrapper — fills available height, phone derives width from aspect-ratio */}
-              <div className="flex-1 min-h-0 flex items-center justify-center w-full">
+              <div className="flex-1 min-h-0 flex items-start justify-center w-full">
               <motion.div
                 variants={fadeIn}
                 initial="initial"
                 animate="animate"
                 className="relative h-full"
-                style={{ aspectRatio: "9 / 19.5", maxWidth: 450, maxHeight: "100%" }}
+                style={{ aspectRatio: "9 / 19.5", maxWidth: 618, maxHeight: "100%" }}
               >
                 {/* Outer bezel */}
                 <div
@@ -472,31 +471,8 @@ export function LivePerformance() {
                       transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                     />
 
-                    {/* Title inside phone */}
-                    <div className="absolute top-[48px] left-0 right-0 z-20 text-center">
-                      <span className="text-[11px] font-display font-bold text-slate-200 tracking-wide">Live Performance</span>
-                    </div>
-
-                    {/* Solo / Duo toggle inside phone */}
-                    <div className="absolute top-[66px] left-0 right-0 z-20 flex justify-center">
-                      <div className="flex rounded-full p-0.5" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)" }}>
-                        {(["solo", "duo"] as const).map((m) => (
-                          <button key={m} onClick={() => setMode(m)} disabled={sessionState === "performing"}
-                            className="px-3 py-0.5 rounded-full text-[9px] font-display font-medium transition-all duration-300 disabled:opacity-50"
-                            style={{
-                              background: mode === m ? `${color}20` : "transparent",
-                              color: mode === m ? "#E2E8F0" : "#64748B",
-                              border: mode === m ? `1px solid ${color}30` : "1px solid transparent",
-                            }}
-                          >
-                            {m === "solo" ? "Solo" : "Duo"}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
                     {/* Mini belief bars */}
-                    <div className="absolute top-[92px] left-5 right-5 z-10">
+                    <div className="absolute top-[52px] left-5 right-5 z-10">
                       <div className="flex gap-1.5">
                         {BELIEF_NAMES.map((b, i) => (
                           <div key={b} className="flex-1">
@@ -515,10 +491,32 @@ export function LivePerformance() {
                     </div>
 
                     {/* Center content */}
-                    <div className="absolute inset-0 flex flex-col items-center justify-center">
+                    <div className="absolute inset-0 flex flex-col items-center justify-center px-4">
+                      {/* Title */}
+                      <span className="text-[13px] font-display font-bold text-slate-200 tracking-wide">Live Performance</span>
+
+                      {/* Solo / Duo toggle */}
+                      <div className="mt-2">
+                        <div className="flex rounded-full p-0.5" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                          {(["solo", "duo"] as const).map((m) => (
+                            <button key={m} onClick={() => setMode(m)} disabled={sessionState === "performing"}
+                              className="px-3 py-0.5 rounded-full text-[9px] font-display font-medium transition-all duration-300 disabled:opacity-50"
+                              style={{
+                                background: mode === m ? `${color}20` : "transparent",
+                                color: mode === m ? "#E2E8F0" : "#64748B",
+                                border: mode === m ? `1px solid ${color}30` : "1px solid transparent",
+                              }}
+                            >
+                              {m === "solo" ? "Solo" : "Duo"}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* State-specific content */}
                       {sessionState === "performing" ? (
                         <>
-                          <div className="w-4 h-4 rounded-full bg-red-500 animate-pulse mb-3" />
+                          <div className="w-4 h-4 rounded-full bg-red-500 animate-pulse mt-6 mb-3" />
                           <span className="text-4xl font-mono text-slate-200 tracking-wider">{formatSessionTime(sessionTime)}</span>
                           <span className="text-[10px] text-red-400/60 font-mono mt-2 tracking-[0.3em]">LIVE</span>
                           <motion.div
@@ -534,7 +532,7 @@ export function LivePerformance() {
                         </>
                       ) : sessionState === "finished" ? (
                         <>
-                          <span className="text-sm font-display text-slate-500 mb-2">Session Complete</span>
+                          <span className="text-sm font-display text-slate-500 mt-6 mb-2">Session Complete</span>
                           <span className="hud-value text-3xl" style={{ color: beliefColors.reward.primary }}>{(peakReward * 100).toFixed(0)}</span>
                           <span className="text-[9px] font-mono text-slate-600 mt-1">Peak Reward</span>
                           <button onClick={() => { setSessionState("idle"); }} className="mt-4 px-5 py-2 rounded-full text-[11px] font-display text-slate-300 transition-all"
@@ -542,16 +540,107 @@ export function LivePerformance() {
                             New Session
                           </button>
                         </>
-                      ) : (
+                      ) : mode === "solo" ? (
                         <>
-                          <NucleusDot color={color} size={14} active pulsing />
-                          <span className="text-sm font-display text-slate-400 mt-4">{persona?.name ?? "Ready"}</span>
+                          <div className="mt-5"><NucleusDot color={color} size={14} active pulsing /></div>
+                          <span className="text-sm font-display text-slate-400 mt-3">{persona?.name ?? "Ready"}</span>
                           <span className="text-[10px] font-mono mt-1" style={{ color: `${color}80` }}>{persona?.family}</span>
                           <button onClick={handleStart} className="mt-5 px-6 py-2.5 rounded-full text-[12px] font-display font-medium text-white transition-all"
                             style={{ background: `linear-gradient(135deg, ${color}, ${beliefColors.reward.primary})`, boxShadow: `0 0 20px ${color}30` }}>
                             <Play size={14} className="inline mr-1.5 -mt-px" /> Start Solo
                           </button>
                         </>
+                      ) : (
+                        <div className="mt-4 w-full overflow-y-auto" style={{ maxHeight: "60%" }}>
+                          {!selectedFriend ? (
+                            /* ── Friends list ── */
+                            <div className="space-y-1.5">
+                              <div className="flex items-center gap-1.5 mb-1.5">
+                                <Users size={10} className="text-slate-500" />
+                                <span className="text-[8px] font-display text-slate-500 uppercase tracking-wider">Choose Partner</span>
+                              </div>
+                              {mockUsers.slice(0, 3).map((friend) => {
+                                const fp = getPersona(friend.mind.personaId);
+                                return (
+                                  <button key={friend.id} onClick={() => setSelectedFriend(friend)}
+                                    className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-lg transition-all"
+                                    style={{
+                                      background: "rgba(255,255,255,0.03)",
+                                      border: "1px solid rgba(255,255,255,0.06)",
+                                    }}>
+                                    <img src={friend.avatarUrl} alt={friend.displayName}
+                                      className="w-7 h-7 rounded-full object-cover flex-shrink-0"
+                                      style={{ border: `1.5px solid ${fp.color}40` }}
+                                      onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+                                    />
+                                    <div className="text-left flex-1 min-w-0">
+                                      <div className="text-[9px] font-display text-slate-300 truncate">{friend.displayName}</div>
+                                      <div className="text-[7px] font-mono truncate" style={{ color: fp.color }}>{fp.name}</div>
+                                    </div>
+                                    <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: `${fp.color}40` }} />
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          ) : (
+                            /* ── Selected friend + game conditions ── */
+                            (() => {
+                              const fp = getPersona(selectedFriend.mind.personaId);
+                              const diffColor = duoConditions ? DIFFICULTY_COLORS[duoConditions.difficulty] : color;
+                              return (
+                                <div className="space-y-2">
+                                  {/* Selected friend header */}
+                                  <div className="flex items-center gap-2.5 px-2 py-1.5 rounded-lg"
+                                    style={{ background: `${fp.color}12`, border: `1px solid ${fp.color}25` }}>
+                                    <img src={selectedFriend.avatarUrl} alt={selectedFriend.displayName}
+                                      className="w-7 h-7 rounded-full object-cover flex-shrink-0"
+                                      style={{ border: `1.5px solid ${fp.color}50` }}
+                                      onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+                                    />
+                                    <div className="flex-1 min-w-0">
+                                      <div className="text-[9px] font-display text-slate-200 truncate">{selectedFriend.displayName}</div>
+                                      <div className="text-[7px] font-mono truncate" style={{ color: fp.color }}>{fp.name} · {fp.family}</div>
+                                    </div>
+                                    <button onClick={() => setSelectedFriend(null)} className="text-slate-600 hover:text-slate-400 transition-colors">
+                                      <X size={10} />
+                                    </button>
+                                  </div>
+
+                                  {/* Compact game conditions */}
+                                  {duoConditions && (
+                                    <>
+                                      <div className="px-2 py-1.5 rounded-lg" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)" }}>
+                                        <div className="flex items-center justify-between mb-1">
+                                          <div className="flex items-center gap-1">
+                                            <Target size={8} style={{ color: beliefColors.salience.primary }} />
+                                            <span className="text-[8px] font-display text-slate-400">{duoConditions.task}</span>
+                                          </div>
+                                          <span className="text-[7px] font-mono px-1.5 py-0.5 rounded-full" style={{ color: diffColor, background: `${diffColor}15` }}>
+                                            {duoConditions.difficulty}
+                                          </span>
+                                        </div>
+                                        <p className="text-[7px] text-slate-600 font-body leading-relaxed">{duoConditions.taskDetail}</p>
+                                      </div>
+                                      <div className="flex items-center justify-between px-2">
+                                        <div className="flex items-center gap-1">
+                                          <Trophy size={8} style={{ color: beliefColors.reward.primary }} />
+                                          <span className="text-[8px] font-mono" style={{ color: beliefColors.reward.primary }}>{duoConditions.xpReward} XP</span>
+                                        </div>
+                                        <span className="text-[7px] font-mono text-slate-600">{duoConditions.goalMetric}</span>
+                                      </div>
+                                    </>
+                                  )}
+
+                                  {/* Start button */}
+                                  <button onClick={handleStart} className="w-full mt-1 px-4 py-2 rounded-full text-[10px] font-display font-medium text-white transition-all"
+                                    style={{ background: `linear-gradient(135deg, ${color}, ${beliefColors.reward.primary})`, boxShadow: `0 0 15px ${color}30` }}>
+                                    <Play size={12} className="inline mr-1.5 -mt-px" /> Start Duo
+                                  </button>
+                                </div>
+                              );
+                            })()
+                          )}
+                        </div>
                       )}
                     </div>
 
@@ -584,8 +673,8 @@ export function LivePerformance() {
               </div>
             </div>
 
-            {/* ═ RIGHT: Controllers ════════════════════════════ */}
-            <div className="col-span-3 flex flex-col gap-2 overflow-y-auto scrollbar-thin">
+          {/* ═ RIGHT: Controllers ════════════════════════════ */}
+          <div className="col-span-3 flex flex-col gap-2 overflow-y-auto scrollbar-thin">
               {/* Emotional Controllers */}
               <motion.div variants={slideUp} className="spatial-card p-3">
                 <div className="flex items-center gap-2 mb-2">
@@ -657,265 +746,10 @@ export function LivePerformance() {
                   })}
                 </div>
               </motion.div>
-            </div>
           </div>
-        )}
+        </div>
 
-        {/* ── Duo: Friends bar + game conditions ────────────── */}
-        {mode === "duo" && (
-          <motion.div variants={slideUp} className="mb-4 space-y-3">
-            {/* Mode toggle for duo */}
-            <div className="flex justify-center">
-              <div className="flex rounded-full p-0.5" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}>
-                {(["solo", "duo"] as const).map((m) => (
-                  <button key={m} onClick={() => setMode(m)} disabled={sessionState === "performing"}
-                    className="px-4 py-1 rounded-full text-[10px] font-display font-medium transition-all duration-300 disabled:opacity-50"
-                    style={{
-                      background: mode === m ? `${color}20` : "transparent",
-                      color: mode === m ? "#E2E8F0" : "#64748B",
-                      border: mode === m ? `1px solid ${color}30` : "1px solid transparent",
-                    }}
-                  >
-                    {m === "solo" ? "Solo" : "Duo"}
-                  </button>
-                ))}
-              </div>
-            </div>
 
-            {/* Friends selection bar */}
-            <div className="spatial-card p-4">
-              <div className="flex items-center gap-2 mb-3">
-                <Users size={16} className="text-slate-400" />
-                <span className="hud-label">Choose Your Partner</span>
-              </div>
-              <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin">
-                {mockUsers.map((friend) => {
-                  const fp = getPersona(friend.mind.personaId);
-                  const isSelected = selectedFriend?.id === friend.id;
-                  return (
-                    <button
-                      key={friend.id}
-                      onClick={() => setSelectedFriend(isSelected ? null : friend)}
-                      className="flex-shrink-0 flex items-center gap-2 px-3 py-2 rounded-xl transition-all duration-300"
-                      style={{
-                        background: isSelected ? `${fp.color}20` : "rgba(255,255,255,0.03)",
-                        border: `1px solid ${isSelected ? `${fp.color}40` : "rgba(255,255,255,0.06)"}`,
-                      }}
-                    >
-                      <div
-                        className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
-                        style={{ background: `${fp.color}25`, color: fp.color }}
-                      >
-                        {friend.displayName.charAt(0)}
-                      </div>
-                      <div className="text-left">
-                        <div className="text-[11px] font-display text-slate-300">{friend.displayName}</div>
-                        <div className="text-[9px] font-mono" style={{ color: fp.color }}>{fp.name}</div>
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Duo game conditions — shown when a friend is selected */}
-            <AnimatePresence>
-              {selectedFriend && duoConditions && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  className="overflow-hidden"
-                >
-                  {(() => {
-                    const fp = getPersona(selectedFriend.mind.personaId);
-                    const diffColor = DIFFICULTY_COLORS[duoConditions.difficulty];
-                    return (
-                      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
-                        {/* Task */}
-                        <div className="spatial-card p-4 glow-border" style={{ "--glow-color": beliefColors.salience.primary } as React.CSSProperties}>
-                          <div className="flex items-center justify-between mb-2">
-                            <div className="flex items-center gap-2">
-                              <Target size={14} style={{ color: beliefColors.salience.primary }} />
-                              <span className="hud-label">Task</span>
-                            </div>
-                            <span className="text-[9px] font-mono px-2 py-0.5 rounded-full" style={{ color: diffColor, background: `${diffColor}15`, border: `1px solid ${diffColor}30` }}>
-                              {duoConditions.difficulty}
-                            </span>
-                          </div>
-                          <h4 className="text-sm font-display font-semibold text-slate-200 mb-1">{duoConditions.task}</h4>
-                          <p className="text-[9px] text-slate-500 font-body font-light leading-relaxed">{duoConditions.taskDetail}</p>
-                          <div className="mt-2 flex items-center gap-1.5">
-                            <NucleusDot color={beliefColors.consonance.primary} size={2} active />
-                            <span className="text-[8px] font-mono text-slate-600">Key axis: {duoConditions.complementaryAxis}</span>
-                          </div>
-                        </div>
-
-                        {/* Goal */}
-                        <div className="spatial-card p-4 glow-border" style={{ "--glow-color": beliefColors.tempo.primary } as React.CSSProperties}>
-                          <div className="flex items-center gap-2 mb-2">
-                            <Zap size={14} style={{ color: beliefColors.tempo.primary }} />
-                            <span className="hud-label">Goal</span>
-                          </div>
-                          <p className="text-[10px] text-slate-300 font-body leading-relaxed mb-2">{duoConditions.goal}</p>
-                          <div className="flex items-center gap-2 mt-auto">
-                            <div className="text-[9px] font-mono px-2 py-0.5 rounded-full" style={{ color: beliefColors.tempo.primary, background: `${beliefColors.tempo.primary}15` }}>
-                              {duoConditions.goalMetric}
-                            </div>
-                          </div>
-                          <div className="mt-2 flex items-center gap-3">
-                            <div className="flex items-center gap-1">
-                              <div className="w-4 h-4 rounded-full flex items-center justify-center text-[7px] font-bold" style={{ background: `${color}25`, color }}>
-                                {persona?.name.charAt(0)}
-                              </div>
-                              <span className="text-[8px] font-mono" style={{ color }}>{persona?.family}</span>
-                            </div>
-                            <span className="text-[8px] text-slate-700">×</span>
-                            <div className="flex items-center gap-1">
-                              <div className="w-4 h-4 rounded-full flex items-center justify-center text-[7px] font-bold" style={{ background: `${fp.color}25`, color: fp.color }}>
-                                {fp.name.charAt(0)}
-                              </div>
-                              <span className="text-[8px] font-mono" style={{ color: fp.color }}>{fp.family}</span>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Reward */}
-                        <div className="spatial-card p-4 glow-border" style={{ "--glow-color": beliefColors.reward.primary } as React.CSSProperties}>
-                          <div className="flex items-center gap-2 mb-2">
-                            <Trophy size={14} style={{ color: beliefColors.reward.primary }} />
-                            <span className="hud-label">Reward</span>
-                          </div>
-                          <div className="flex items-baseline gap-1 mb-2">
-                            <span className="hud-value text-2xl" style={{ color: beliefColors.reward.primary }}>{duoConditions.xpReward}</span>
-                            <span className="text-[10px] font-mono text-slate-600">XP</span>
-                          </div>
-                          <div className="space-y-1">
-                            <div className="flex items-center gap-1.5">
-                              <NucleusDot color={beliefColors.reward.primary} size={2} active pulsing />
-                              <span className="text-[9px] text-slate-500 font-body">Both players earn full XP</span>
-                            </div>
-                            <div className="flex items-center gap-1.5">
-                              <NucleusDot color={beliefColors.salience.primary} size={2} active />
-                              <span className="text-[9px] text-slate-500 font-body">+50% bonus if goal met</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })()}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
-        )}
-
-        {/* Real-time belief trace (during session — duo mode only) */}
-        <AnimatePresence>
-          {mode === "duo" && sessionState === "performing" && (
-            <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }}
-              className="mb-4"
-            >
-              <div className="spatial-card p-4 glow-border" style={{ "--glow-color": beliefColors.reward.primary } as React.CSSProperties}>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="hud-label">Live Belief States</span>
-                  <span className="text-[10px] font-mono text-slate-700">
-                    Peak reward: <span style={{ color: beliefColors.reward.primary }}>{(peakReward * 100).toFixed(0)}</span>
-                  </span>
-                </div>
-                <div className="flex items-end gap-3 h-16">
-                  {BELIEF_NAMES.map((b, i) => {
-                    const val = beliefStates[i];
-                    const bColor = beliefColors[b].primary;
-                    return (
-                      <div key={b} className="flex-1 flex flex-col items-center gap-1">
-                        <motion.div className="w-full rounded-t-sm" style={{ backgroundColor: bColor, opacity: 0.3 + val * 0.5 }}
-                          animate={{ height: `${val * 80}px` }} transition={{ duration: 0.5 }}
-                        />
-                        <span className="text-[8px] font-mono" style={{ color: `${bColor}80` }}>{b.slice(0, 4)}</span>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Session finished summary (duo mode only) */}
-        <AnimatePresence>
-          {mode === "duo" && sessionState === "finished" && (
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
-              className="mb-4"
-            >
-              <div className="spatial-card p-5 glow-border text-center" style={{ "--glow-color": beliefColors.reward.primary } as React.CSSProperties}>
-                <h3 className="text-lg font-display font-medium text-slate-300 mb-2">Session Complete</h3>
-                <div className="flex justify-center gap-8 mb-3">
-                  <div>
-                    <span className="hud-value text-2xl" style={{ color: beliefColors.tempo.primary }}>{formatSessionTime(sessionTime)}</span>
-                    <p className="text-[9px] font-mono text-slate-700">Duration</p>
-                  </div>
-                  <div>
-                    <span className="hud-value text-2xl" style={{ color: beliefColors.reward.primary }}>{(peakReward * 100).toFixed(0)}</span>
-                    <p className="text-[9px] font-mono text-slate-700">Peak Pleasure</p>
-                  </div>
-                  <div>
-                    <span className="hud-value text-2xl" style={{ color: beliefColors.salience.primary }}>{(beliefStates[2] * 100).toFixed(0)}</span>
-                    <p className="text-[9px] font-mono text-slate-700">Attention</p>
-                  </div>
-                </div>
-                <p className="text-xs text-slate-600 font-body font-light">
-                  Your {persona?.name ?? "mind"} generated {sessionTime} seconds of live music.
-                  The most surprising moment was around {formatSessionTime(Math.round(sessionTime * 0.65))}.
-                </p>
-                <Button variant="glass" size="sm" className="mt-4" onClick={() => setSessionState("idle")}>New Session</Button>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Start/Stop session (duo mode only — solo has it inside grid) */}
-        {mode === "duo" && (
-          <>
-            <motion.div variants={slideUp} className="flex justify-center mb-4">
-              {sessionState === "idle" || sessionState === "finished" ? (
-                <Button variant="primary" size="lg" onClick={handleStart}>
-                  <Play size={18} className="mr-2" />
-                  Start Duo Session
-                </Button>
-              ) : (
-                <Button variant="glass" size="lg" onClick={handleStop}>
-                  <Square size={18} className="mr-2" />
-                  End Session
-                </Button>
-              )}
-            </motion.div>
-
-            <motion.div variants={slideUp} className="flex justify-center gap-12">
-              <div className="text-center">
-                <div className="flex items-center justify-center gap-2 mb-2">
-                  <NucleusDot color={beliefColors.salience.primary} size={5} active pulsing />
-                  <span className="hud-label">Sessions</span>
-                </div>
-                <span className="hud-value text-3xl" style={{ color: beliefColors.salience.primary }}>{sessionCount}</span>
-              </div>
-              <div className="text-center">
-                <div className="flex items-center justify-center gap-2 mb-2">
-                  <NucleusDot color={beliefColors.tempo.primary} size={5} active />
-                  <span className="hud-label">Total Time</span>
-                </div>
-                <span className="hud-value text-3xl" style={{ color: beliefColors.tempo.primary }}>4h</span>
-              </div>
-              <div className="text-center">
-                <div className="flex items-center justify-center gap-2 mb-2">
-                  <NucleusDot color={beliefColors.reward.primary} size={5} active pulsing />
-                  <span className="hud-label">Best Streak</span>
-                </div>
-                <span className="hud-value text-3xl" style={{ color: beliefColors.reward.primary }}>5</span>
-              </div>
-            </motion.div>
-          </>
-        )}
 
       </motion.div>
     </motion.div>
