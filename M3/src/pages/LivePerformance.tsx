@@ -237,6 +237,7 @@ export function LivePerformance() {
   const [axisEmphasis, setAxisEmphasis] = useState<Record<string, number>>({});
   const [selectedFriend, setSelectedFriend] = useState<UserProfile | null>(null);
   const [activeControllers, setActiveControllers] = useState<Set<string>>(new Set());
+  const [duoWaiting, setDuoWaiting] = useState(false);
 
   const { mind } = useUserStore();
   const persona = mind ? getPersona(mind.personaId) : null;
@@ -318,17 +319,37 @@ export function LivePerformance() {
   }, [sessionState, axisEmphasis, avgEmphasis, peakReward]);
 
   const handleStart = useCallback(() => {
-    setSessionState("performing");
-    setSessionTime(0);
-    setBeliefStates([0.5, 0.5, 0.5, 0.5, 0.3]);
-    setPeakReward(0.3);
-    organismRef.current?.pulse(0.8);
-  }, []);
+    if (mode === "duo" && selectedFriend) {
+      setDuoWaiting(true);
+      organismRef.current?.pulse(0.5);
+    } else {
+      setSessionState("performing");
+      setSessionTime(0);
+      setBeliefStates([0.5, 0.5, 0.5, 0.5, 0.3]);
+      setPeakReward(0.3);
+      organismRef.current?.pulse(0.8);
+    }
+  }, [mode, selectedFriend]);
 
   const handleStop = useCallback(() => {
     setSessionState("finished");
+    setDuoWaiting(false);
     organismRef.current?.pulse(0.3);
   }, []);
+
+  // Duo waiting → performing after 5 seconds
+  useEffect(() => {
+    if (!duoWaiting) return;
+    const timeout = setTimeout(() => {
+      setDuoWaiting(false);
+      setSessionState("performing");
+      setSessionTime(0);
+      setBeliefStates([0.5, 0.5, 0.5, 0.5, 0.3]);
+      setPeakReward(0.3);
+      organismRef.current?.pulse(0.8);
+    }, 5000);
+    return () => clearTimeout(timeout);
+  }, [duoWaiting]);
 
   const BELIEF_NAMES = ["consonance", "tempo", "salience", "familiarity", "reward"] as const;
 
@@ -492,44 +513,50 @@ export function LivePerformance() {
 
                     {/* Center content */}
                     <div className="absolute inset-0 flex flex-col items-center justify-center px-4">
-                      {/* Title */}
-                      <span className="text-[13px] font-display font-bold text-slate-200 tracking-wide">Live Performance</span>
-
-                      {/* Solo / Duo toggle */}
-                      <div className="mt-2">
-                        <div className="flex rounded-full p-0.5" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)" }}>
-                          {(["solo", "duo"] as const).map((m) => (
-                            <button key={m} onClick={() => setMode(m)} disabled={sessionState === "performing"}
-                              className="px-3 py-0.5 rounded-full text-[9px] font-display font-medium transition-all duration-300 disabled:opacity-50"
-                              style={{
-                                background: mode === m ? `${color}20` : "transparent",
-                                color: mode === m ? "#E2E8F0" : "#64748B",
-                                border: mode === m ? `1px solid ${color}30` : "1px solid transparent",
-                              }}
-                            >
-                              {m === "solo" ? "Solo" : "Duo"}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
+                      {/* Title + toggle — hidden during performing */}
+                      {sessionState !== "performing" && (
+                        <>
+                          <span className="text-[13px] font-display font-bold text-slate-200 tracking-wide">Live Performance</span>
+                          <div className="mt-2">
+                            <div className="flex rounded-full p-0.5" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                              {(["solo", "duo"] as const).map((m) => (
+                                <button key={m} onClick={() => setMode(m)} disabled={sessionState === "performing"}
+                                  className="px-3 py-0.5 rounded-full text-[9px] font-display font-medium transition-all duration-300 disabled:opacity-50"
+                                  style={{
+                                    background: mode === m ? `${color}20` : "transparent",
+                                    color: mode === m ? "#E2E8F0" : "#64748B",
+                                    border: mode === m ? `1px solid ${color}30` : "1px solid transparent",
+                                  }}
+                                >
+                                  {m === "solo" ? "Solo" : "Duo"}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        </>
+                      )}
 
                       {/* State-specific content */}
-                      {sessionState === "performing" ? (
+                      {duoWaiting ? (
                         <>
-                          <div className="w-4 h-4 rounded-full bg-red-500 animate-pulse mt-6 mb-3" />
-                          <span className="text-4xl font-mono text-slate-200 tracking-wider">{formatSessionTime(sessionTime)}</span>
-                          <span className="text-[10px] text-red-400/60 font-mono mt-2 tracking-[0.3em]">LIVE</span>
                           <motion.div
-                            className="w-24 h-[2px] mt-4"
-                            style={{ background: beliefColors.reward.primary }}
-                            animate={{ opacity: [0.3, 0.8, 0.3], scaleX: [0.5, 1, 0.5] }}
-                            transition={{ duration: 2, repeat: Infinity }}
+                            className="mt-6"
+                            animate={{ scale: [1, 1.3, 1], opacity: [0.4, 1, 0.4] }}
+                            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                          >
+                            <NucleusDot color={color} size={18} active pulsing />
+                          </motion.div>
+                          <span className="text-[11px] font-display text-slate-300 mt-4">Sending performance invite...</span>
+                          <span className="text-[9px] font-mono mt-2" style={{ color: `${color}60` }}>Waiting for the other Mind</span>
+                          <motion.div
+                            className="w-16 h-[2px] mt-4 rounded-full"
+                            style={{ background: color }}
+                            animate={{ scaleX: [0, 1, 0], opacity: [0.3, 0.8, 0.3] }}
+                            transition={{ duration: 1.5, repeat: Infinity }}
                           />
-                          <button onClick={handleStop} className="mt-5 px-5 py-2 rounded-full text-[11px] font-display text-slate-300 transition-all"
-                            style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}>
-                            <Square size={12} className="inline mr-1.5 -mt-px" /> End Session
-                          </button>
                         </>
+                      ) : sessionState === "performing" ? (
+                        null
                       ) : sessionState === "finished" ? (
                         <>
                           <span className="text-sm font-display text-slate-500 mt-6 mb-2">Session Complete</span>
@@ -644,6 +671,30 @@ export function LivePerformance() {
                       )}
                     </div>
 
+                    {/* Duo session videos — appear during performing */}
+                    {mode === "duo" && sessionState === "performing" && (
+                      <>
+                        <motion.div
+                          className="absolute bottom-[70px] right-3 z-20 rounded-xl overflow-hidden shadow-lg"
+                          style={{ width: "52%", maxWidth: 150, border: "1px solid rgba(255,255,255,0.1)" }}
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ duration: 0.5 }}
+                        >
+                          <LoopingVideo src="/Duo/Gen-4 Turbo having so much fun 1052318284.mp4" className="w-full object-cover rounded-xl" />
+                        </motion.div>
+                        <motion.div
+                          className="absolute top-[70px] left-3 z-20 rounded-xl overflow-hidden shadow-lg"
+                          style={{ width: "52%", maxWidth: 150, border: "1px solid rgba(255,255,255,0.1)" }}
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ duration: 0.5, delay: 0.3 }}
+                        >
+                          <LoopingVideo src="/Duo/Gen-4 Turbo having so much fun hareketli ve heyecanli 2494731309.mp4" className="w-full object-cover rounded-xl" />
+                        </motion.div>
+                      </>
+                    )}
+
                     {/* Bottom: active controllers indicator */}
                     <div className="absolute bottom-7 left-5 right-5 z-10">
                       <div className="flex justify-center gap-2">
@@ -754,4 +805,62 @@ export function LivePerformance() {
       </motion.div>
     </motion.div>
   );
+}
+
+/* ── Ping-pong video: forward → reverse → forward, never stops ── */
+function LoopingVideo({ src, className }: { src: string; className?: string }) {
+  const ref = useRef<HTMLVideoElement>(null);
+  const dir = useRef<1 | -1>(1);
+  const raf = useRef(0);
+  const prev = useRef(0);
+
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    let alive = true;
+
+    /* reverse tick: step currentTime backward each frame */
+    const tick = (ts: number) => {
+      if (!alive) return;
+      if (!prev.current) prev.current = ts;
+      const dt = (ts - prev.current) / 1000;
+      prev.current = ts;
+      const t = v.currentTime - dt;
+      if (t <= 0) {
+        /* reached start → play forward */
+        v.currentTime = 0;
+        dir.current = 1;
+        prev.current = 0;
+        v.play().catch(() => {});
+        return;
+      }
+      v.currentTime = t;
+      raf.current = requestAnimationFrame(tick);
+    };
+
+    /* detect near-end while playing forward */
+    const onUpdate = () => {
+      if (dir.current !== 1 || !v.duration) return;
+      if (v.currentTime >= v.duration - 0.15) {
+        v.pause();
+        dir.current = -1;
+        prev.current = 0;
+        raf.current = requestAnimationFrame(tick);
+      }
+    };
+
+    v.addEventListener("timeupdate", onUpdate);
+    /* also catch ended as safety net */
+    v.addEventListener("ended", () => {
+      if (dir.current === 1) { v.pause(); dir.current = -1; prev.current = 0; raf.current = requestAnimationFrame(tick); }
+    });
+    v.muted = true;
+    v.playsInline = true;
+    dir.current = 1;
+    v.play().catch(() => {});
+
+    return () => { alive = false; v.removeEventListener("timeupdate", onUpdate); cancelAnimationFrame(raf.current); };
+  }, []);
+
+  return <video ref={ref} src={src} muted playsInline preload="auto" className={className} />;
 }
