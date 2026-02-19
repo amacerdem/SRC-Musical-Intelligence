@@ -1,19 +1,23 @@
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Play, Square, Shield, Sprout, Users, Target, Trophy, Zap, X,
+  Play, Square, Shield, Sprout, Users, Target, Trophy, X,
   Heart, Sparkles, Layers, RotateCcw, Gauge, Activity, BarChart3, LayoutGrid,
 } from "lucide-react";
-import { Button } from "@/components/ui/Button";
 import { MindOrganismCanvas, type OrganismHandle } from "@/components/mind/MindOrganismCanvas";
+import { DuoOrganismCanvas, type DuoOrganismHandle } from "@/components/mind/DuoOrganismCanvas";
 import { NucleusDot } from "@/components/mind/NucleusDot";
 import { useUserStore } from "@/stores/useUserStore";
 import { getPersona } from "@/data/personas";
 import { mockUsers } from "@/data/mock-users";
 import { pageTransition, staggerChildren, slideUp, fadeIn } from "@/design/animations";
 import { beliefColors } from "@/design/tokens";
+import { useAnalysisData } from "@/components/viz/hooks/useAnalysisData";
+import { getFrameInterp, sampleTrace } from "@/components/viz/hooks/useAudioSync";
+import type { AnalysisFrame } from "@/canvas/duo-organism";
 import type { MindAxes, NeuralFamily } from "@/types/mind";
 import type { UserProfile } from "@/types/social";
+import type { GameEvent } from "@/game/duo-game-engine";
 
 type Mode = "solo" | "duo";
 type SessionState = "idle" | "performing" | "finished";
@@ -233,17 +237,74 @@ export function LivePerformance() {
   const [sessionTime, setSessionTime] = useState(0);
   const [beliefStates, setBeliefStates] = useState([0.5, 0.5, 0.5, 0.5, 0.5]);
   const [peakReward, setPeakReward] = useState(0);
-  const [sessionCount] = useState(17);
+
   const [axisEmphasis, setAxisEmphasis] = useState<Record<string, number>>({});
   const [selectedFriend, setSelectedFriend] = useState<UserProfile | null>(null);
   const [activeControllers, setActiveControllers] = useState<Set<string>>(new Set());
   const [duoWaiting, setDuoWaiting] = useState(false);
+
+  // Game state
+  const [gameScore, setGameScore] = useState(0);
+  const [gameCombo, setGameCombo] = useState(1);
+  const [gameToasts, setGameToasts] = useState<{ id: string; icon: string; name: string; xp: number; ts: number }[]>([]);
+  const [activeGameTask, setActiveGameTask] = useState<{ name: string; description: string; progress: number; xp: number; remaining: number } | null>(null);
+  const [finalScore, setFinalScore] = useState(0);
+  const [achievementCount, setAchievementCount] = useState(0);
+  const [duoStarted, setDuoStarted] = useState(false);
 
   const { mind } = useUserStore();
   const persona = mind ? getPersona(mind.personaId) : null;
   const color = persona?.color ?? beliefColors.tempo.primary;
   const family = persona?.family ?? "Explorers";
   const organismRef = useRef<OrganismHandle>(null);
+  const duoOrganismRef = useRef<DuoOrganismHandle>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  // ── Analysis data for data-driven duo animation ──
+  const { data: analysisData } = useAnalysisData();
+
+  // Precompute min/max for normalization of each trace to [0,1]
+  const traceRanges = useMemo(() => {
+    if (!analysisData) return null;
+    const range = (arr: number[]) => {
+      let mn = Infinity, mx = -Infinity;
+      for (const v of arr) { if (v < mn) mn = v; if (v > mx) mx = v; }
+      return { min: mn, max: mx, span: Math.max(mx - mn, 0.001) };
+    };
+    return {
+      // Beliefs
+      consonance: range(analysisData.beliefs.consonance),
+      tempo: range(analysisData.beliefs.tempo),
+      salience: range(analysisData.beliefs.salience),
+      familiarity: range(analysisData.beliefs.familiarity),
+      reward: range(analysisData.beliefs.reward),
+      // R3 groups
+      r3: Object.keys(analysisData.r3_groups).filter(k => k !== "time_s")
+        .map(k => range((analysisData.r3_groups as Record<string, number[]>)[k])),
+      // Prediction errors
+      pe: ["consonance", "tempo", "salience", "familiarity"].map(
+        k => range(analysisData.prediction_errors[k as keyof typeof analysisData.prediction_errors])
+      ),
+      // Precision
+      prec: ["consonance", "tempo", "salience", "familiarity"].map(
+        k => range(analysisData.precision[k as keyof typeof analysisData.precision])
+      ),
+      // RAM (per region)
+      ram: analysisData.ram.regions.map(
+        r => range(analysisData.ram.traces[r])
+      ),
+      // Relays
+      relays: [
+        range(analysisData.relays.bch_consonance_signal),
+        range(analysisData.relays.hmce_a1_encoding),
+        range(analysisData.relays.snem_entrainment),
+        range(analysisData.relays.mmp_familiarity),
+        range(analysisData.relays.daed_wanting),
+        range(analysisData.relays.daed_liking),
+        range(analysisData.relays.mpg_onset),
+      ],
+    };
+  }, [analysisData]);
 
   const { strong, weak } = useMemo(
     () => mind ? splitAxes(mind.axes) : { strong: AXIS_KEYS.slice(0, 3), weak: AXIS_KEYS.slice(3) },
@@ -331,11 +392,6 @@ export function LivePerformance() {
     }
   }, [mode, selectedFriend]);
 
-  const handleStop = useCallback(() => {
-    setSessionState("finished");
-    setDuoWaiting(false);
-    organismRef.current?.pulse(0.3);
-  }, []);
 
   // Duo waiting → performing after 5 seconds
   useEffect(() => {
@@ -350,6 +406,167 @@ export function LivePerformance() {
     }, 5000);
     return () => clearTimeout(timeout);
   }, [duoWaiting]);
+
+  // Duo 3-second delay — organism canvas mounts immediately but animation + audio start after 3s
+  useEffect(() => {
+    if (sessionState !== "performing" || mode !== "duo") {
+      setDuoStarted(false);
+      return;
+    }
+    const timeout = setTimeout(() => {
+      setDuoStarted(true);
+      // Start audio
+      if (!audioRef.current) {
+        audioRef.current = new Audio("/music/Shifting Rooms.mp3");
+        audioRef.current.loop = true;
+      }
+      audioRef.current.currentTime = 0;
+      audioRef.current.play().catch(() => {});
+    }, 3000);
+    return () => clearTimeout(timeout);
+  }, [sessionState, mode]);
+
+  // Duo animation — driven by analysis JSON synced to audio
+  useEffect(() => {
+    if (!duoStarted || sessionState !== "performing" || mode !== "duo") return;
+    let alive = true;
+
+    const norm = (value: number, r: { min: number; span: number }) =>
+      Math.max(0, Math.min(1, (value - r.min) / r.span));
+
+    // R3 group keys in order
+    const r3Keys = [
+      "A_consonance", "B_energy", "C_timbre", "D_change",
+      "F_pitch", "G_rhythm", "H_harmony", "J_ext_timbre", "K_modulation",
+    ];
+    const relayKeys: (keyof NonNullable<typeof analysisData>["relays"])[] = [
+      "bch_consonance_signal", "hmce_a1_encoding", "snem_entrainment",
+      "mmp_familiarity", "daed_wanting", "daed_liking", "mpg_onset",
+    ];
+
+    const tick = () => {
+      if (!alive) return;
+
+      if (analysisData && traceRanges && audioRef.current) {
+        const currentTime = audioRef.current.currentTime;
+        const duration = analysisData.meta.duration_s;
+        const tp = analysisData.meta.trace_points;
+        const { index, frac, nextIndex } = getFrameInterp(currentTime, duration, tp);
+
+        // Sample & normalize all traces into a full AnalysisFrame
+        const frame: AnalysisFrame = {
+          beliefs: {
+            consonance: norm(sampleTrace(analysisData.beliefs.consonance, index, frac, nextIndex), traceRanges.consonance),
+            tempo: norm(sampleTrace(analysisData.beliefs.tempo, index, frac, nextIndex), traceRanges.tempo),
+            salience: norm(sampleTrace(analysisData.beliefs.salience, index, frac, nextIndex), traceRanges.salience),
+            familiarity: norm(sampleTrace(analysisData.beliefs.familiarity, index, frac, nextIndex), traceRanges.familiarity),
+            reward: norm(sampleTrace(analysisData.beliefs.reward, index, frac, nextIndex), traceRanges.reward),
+          },
+          r3: r3Keys.map((k, i) =>
+            norm(sampleTrace((analysisData.r3_groups as Record<string, number[]>)[k], index, frac, nextIndex), traceRanges.r3[i])
+          ),
+          pe: [0, 1, 2, 3].map(i => {
+            const k = (["consonance", "tempo", "salience", "familiarity"] as const)[i];
+            return norm(sampleTrace(analysisData.prediction_errors[k], index, frac, nextIndex), traceRanges.pe[i]);
+          }),
+          precision: [0, 1, 2, 3].map(i => {
+            const k = (["consonance", "tempo", "salience", "familiarity"] as const)[i];
+            return norm(sampleTrace(analysisData.precision[k], index, frac, nextIndex), traceRanges.prec[i]);
+          }),
+          ram: analysisData.ram.regions.map((r, i) =>
+            norm(sampleTrace(analysisData.ram.traces[r], index, frac, nextIndex), traceRanges.ram[i])
+          ),
+          relays: relayKeys.map((k, i) =>
+            norm(sampleTrace(analysisData.relays[k], index, frac, nextIndex), traceRanges.relays[i])
+          ),
+        };
+
+        // Push full frame to DuoOrganism — drives all data-driven visuals
+        duoOrganismRef.current?.setAnalysisFrame(frame);
+
+        // Update belief bar display
+        setBeliefStates([
+          frame.beliefs.consonance,
+          frame.beliefs.tempo,
+          frame.beliefs.salience,
+          frame.beliefs.familiarity,
+          frame.beliefs.reward,
+        ]);
+        if (frame.beliefs.reward > peakReward) setPeakReward(frame.beliefs.reward);
+      } else {
+        // Fallback: simple sine simulation when JSON not loaded
+        const t = performance.now() / 1000;
+        const noiseish = (time: number, seed: number) =>
+          0.5 + 0.35 * Math.sin(time * (0.3 + seed * 0.2)) + 0.15 * Math.sin(time * 0.7 + seed * 3.7);
+        const emo = [0, 1, 2, 3].map(i => Math.max(0, Math.min(1, noiseish(t, i))));
+        const phys = [0, 1, 2, 3].map(i => Math.max(0, Math.min(1, noiseish(t, i + 10))));
+        duoOrganismRef.current?.updateParams(emo, phys);
+      }
+
+      // Update game state from engine
+      const gs = duoOrganismRef.current?.getGameState();
+      if (gs) {
+        setGameScore(Math.round(gs.score));
+        setGameCombo(gs.combo);
+        if (gs.activeTask) {
+          setActiveGameTask({
+            name: gs.activeTask.task.name,
+            description: gs.activeTask.task.description,
+            progress: gs.activeTask.progress,
+            xp: gs.activeTask.task.xp,
+            remaining: Math.max(0, gs.activeTask.task.durationSec - (gs.sessionTime - gs.activeTask.startTime)),
+          });
+        } else {
+          setActiveGameTask(null);
+        }
+      }
+
+      requestAnimationFrame(tick);
+    };
+    const id = requestAnimationFrame(tick);
+    return () => { alive = false; cancelAnimationFrame(id); };
+  }, [duoStarted, sessionState, mode, analysisData, traceRanges]);
+
+  // Handle game events from DuoOrganismCanvas
+  const handleGameEvent = useCallback((events: GameEvent[]) => {
+    for (const ev of events) {
+      if (ev.type === "achievement" && ev.achievement) {
+        const a = ev.achievement;
+        setGameToasts(prev => [...prev.slice(-4), { id: a.id, icon: a.icon, name: a.name, xp: ev.xp ?? a.xp, ts: Date.now() }]);
+        setAchievementCount(prev => prev + 1);
+      }
+      if (ev.type === "task_complete" && ev.task) {
+        setGameToasts(prev => [...prev.slice(-4), { id: ev.task!.id + "_done", icon: "✓", name: ev.task!.name, xp: ev.xp ?? ev.task!.xp, ts: Date.now() }]);
+      }
+    }
+  }, []);
+
+  // Auto-remove toasts after 3s
+  useEffect(() => {
+    if (gameToasts.length === 0) return;
+    const timeout = setTimeout(() => {
+      setGameToasts(prev => prev.filter(t => Date.now() - t.ts < 3000));
+    }, 3000);
+    return () => clearTimeout(timeout);
+  }, [gameToasts]);
+
+  // Store final score when session ends
+  const handleDuoStop = useCallback(() => {
+    const gs = duoOrganismRef.current?.getGameState();
+    if (gs) {
+      setFinalScore(Math.round(gs.score));
+      setAchievementCount(gs.achievements.size);
+    }
+    // Stop audio
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+    setDuoStarted(false);
+    setSessionState("finished");
+    setDuoWaiting(false);
+    organismRef.current?.pulse(0.3);
+  }, []);
 
   const BELIEF_NAMES = ["consonance", "tempo", "salience", "familiarity", "reward"] as const;
 
@@ -520,7 +737,7 @@ export function LivePerformance() {
                           <div className="mt-2">
                             <div className="flex rounded-full p-0.5" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)" }}>
                               {(["solo", "duo"] as const).map((m) => (
-                                <button key={m} onClick={() => setMode(m)} disabled={sessionState === "performing"}
+                                <button key={m} onClick={() => setMode(m)}
                                   className="px-3 py-0.5 rounded-full text-[9px] font-display font-medium transition-all duration-300 disabled:opacity-50"
                                   style={{
                                     background: mode === m ? `${color}20` : "transparent",
@@ -558,15 +775,38 @@ export function LivePerformance() {
                       ) : sessionState === "performing" ? (
                         null
                       ) : sessionState === "finished" ? (
-                        <>
-                          <span className="text-sm font-display text-slate-500 mt-6 mb-2">Session Complete</span>
-                          <span className="hud-value text-3xl" style={{ color: beliefColors.reward.primary }}>{(peakReward * 100).toFixed(0)}</span>
-                          <span className="text-[9px] font-mono text-slate-600 mt-1">Peak Reward</span>
-                          <button onClick={() => { setSessionState("idle"); }} className="mt-4 px-5 py-2 rounded-full text-[11px] font-display text-slate-300 transition-all"
-                            style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}>
-                            New Session
-                          </button>
-                        </>
+                        mode === "duo" ? (
+                          <>
+                            <span className="text-sm font-display text-slate-500 mt-4 mb-2">Duo Session Complete</span>
+                            <span className="hud-value text-3xl" style={{ color: beliefColors.reward.primary }}>{finalScore}</span>
+                            <span className="text-[9px] font-mono text-slate-600 mt-1">Total Score</span>
+                            <div className="flex items-center gap-3 mt-3">
+                              <div className="text-center">
+                                <span className="text-[13px] font-display font-bold" style={{ color: beliefColors.salience.primary }}>{achievementCount}</span>
+                                <span className="text-[7px] font-mono text-slate-600 block">Achievements</span>
+                              </div>
+                              <div className="w-px h-5 bg-white/5" />
+                              <div className="text-center">
+                                <span className="text-[13px] font-display font-bold text-slate-300">{formatSessionTime(sessionTime)}</span>
+                                <span className="text-[7px] font-mono text-slate-600 block">Duration</span>
+                              </div>
+                            </div>
+                            <button onClick={() => { setSessionState("idle"); setGameScore(0); setGameCombo(1); setFinalScore(0); setAchievementCount(0); setGameToasts([]); setActiveGameTask(null); }} className="mt-4 px-5 py-2 rounded-full text-[11px] font-display text-slate-300 transition-all"
+                              style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}>
+                              New Session
+                            </button>
+                          </>
+                        ) : (
+                          <>
+                            <span className="text-sm font-display text-slate-500 mt-6 mb-2">Session Complete</span>
+                            <span className="hud-value text-3xl" style={{ color: beliefColors.reward.primary }}>{(peakReward * 100).toFixed(0)}</span>
+                            <span className="text-[9px] font-mono text-slate-600 mt-1">Peak Reward</span>
+                            <button onClick={() => { setSessionState("idle"); }} className="mt-4 px-5 py-2 rounded-full text-[11px] font-display text-slate-300 transition-all"
+                              style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}>
+                              New Session
+                            </button>
+                          </>
+                        )
                       ) : mode === "solo" ? (
                         <>
                           <div className="mt-5"><NucleusDot color={color} size={14} active pulsing /></div>
@@ -671,27 +911,139 @@ export function LivePerformance() {
                       )}
                     </div>
 
-                    {/* Duo session videos — appear during performing */}
+                    {/* ── Duo Generative Organism — fills phone during performing ── */}
                     {mode === "duo" && sessionState === "performing" && (
                       <>
+                        {/* Full-screen dual organism canvas */}
                         <motion.div
-                          className="absolute bottom-[70px] right-3 z-20 rounded-xl overflow-hidden shadow-lg"
-                          style={{ width: "52%", maxWidth: 150, border: "1px solid rgba(255,255,255,0.1)" }}
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          animate={{ opacity: 1, scale: 1 }}
+                          className="absolute inset-[3px] rounded-[53px] overflow-hidden z-10"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ duration: 1.5 }}
+                        >
+                          <DuoOrganismCanvas ref={duoOrganismRef} onGameEvent={handleGameEvent} />
+                        </motion.div>
+
+                        {/* Duo session videos — top-left & bottom-right corners */}
+                        <motion.div
+                          className="absolute inset-0 z-20 pointer-events-none"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ duration: 1.5, delay: 0.5 }}
+                        >
+                          {/* Top-left video */}
+                          <div className="absolute top-[52px] left-3 rounded-xl overflow-hidden shadow-lg pointer-events-auto"
+                            style={{ width: "47%", maxWidth: 160, border: "1px solid rgba(255,255,255,0.12)", boxShadow: "0 0 30px rgba(0,0,0,0.6)" }}>
+                            <LoopingVideo src="/Duo/Gen-4 Turbo having so much fun hareketli ve heyecanli 2494731309.mp4" className="w-full h-auto block" />
+                          </div>
+                          {/* Bottom-right video */}
+                          <div className="absolute bottom-[72px] right-3 rounded-xl overflow-hidden shadow-lg pointer-events-auto"
+                            style={{ width: "47%", maxWidth: 160, border: "1px solid rgba(255,255,255,0.12)", boxShadow: "0 0 30px rgba(0,0,0,0.6)" }}>
+                            <LoopingVideo src="/Duo/Gen-4 Turbo having so much fun 1052318284.mp4" className="w-full h-auto block" />
+                          </div>
+                        </motion.div>
+
+                        {/* Game HUD — top bar (appears after 3s delay) */}
+                        {duoStarted && <motion.div
+                          className="absolute top-[52px] left-5 right-5 z-30"
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.5 }}
                         >
-                          <LoopingVideo src="/Duo/Gen-4 Turbo having so much fun 1052318284.mp4" className="w-full object-cover rounded-xl" />
-                        </motion.div>
-                        <motion.div
-                          className="absolute top-[70px] left-3 z-20 rounded-xl overflow-hidden shadow-lg"
-                          style={{ width: "52%", maxWidth: 150, border: "1px solid rgba(255,255,255,0.1)" }}
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ duration: 0.5, delay: 0.3 }}
+                          <div className="flex items-center justify-between px-2 py-1 rounded-lg"
+                            style={{ background: "rgba(0,0,0,0.5)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.06)" }}>
+                            <div className="flex items-center gap-1">
+                              <span className="text-[8px] font-mono text-slate-500">⏱</span>
+                              <span className="text-[9px] font-mono text-slate-300">{formatSessionTime(sessionTime)}</span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <span className="text-[8px] font-mono" style={{ color: beliefColors.reward.primary }}>⚡</span>
+                              <span className="text-[9px] font-mono font-medium" style={{ color: beliefColors.reward.primary }}>{gameScore}</span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <span className="text-[8px] font-mono text-orange-400">🔥</span>
+                              <span className="text-[9px] font-mono font-medium text-orange-400">x{gameCombo.toFixed(1)}</span>
+                            </div>
+                          </div>
+                        </motion.div>}
+
+                        {/* Active Task Card — bottom-left (after 3s delay) */}
+                        {duoStarted && <AnimatePresence>
+                          {activeGameTask && (
+                            <motion.div
+                              key="task"
+                              className="absolute bottom-[80px] left-4 z-30"
+                              style={{ maxWidth: "55%" }}
+                              initial={{ opacity: 0, x: -20, scale: 0.9 }}
+                              animate={{ opacity: 1, x: 0, scale: activeGameTask.progress > 0.9 ? [1, 1.02, 1] : 1 }}
+                              exit={{ opacity: 0, x: -20, scale: 0.9 }}
+                              transition={{ duration: 0.3 }}
+                            >
+                              <div className="px-2.5 py-2 rounded-xl"
+                                style={{ background: "rgba(0,0,0,0.6)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                                <div className="flex items-center gap-1 mb-1">
+                                  <Target size={7} style={{ color: beliefColors.salience.primary }} />
+                                  <span className="text-[8px] font-display text-slate-300">{activeGameTask.name}</span>
+                                </div>
+                                <div className="w-full h-[3px] rounded-full mb-1" style={{ background: "rgba(255,255,255,0.08)" }}>
+                                  <motion.div
+                                    className="h-full rounded-full"
+                                    style={{ background: activeGameTask.progress > 0.9 ? beliefColors.reward.primary : beliefColors.salience.primary }}
+                                    animate={{ width: `${activeGameTask.progress * 100}%` }}
+                                    transition={{ duration: 0.3 }}
+                                  />
+                                </div>
+                                <div className="flex items-center justify-between">
+                                  <span className="text-[7px] font-mono" style={{ color: beliefColors.reward.primary }}>+{activeGameTask.xp} XP</span>
+                                  <span className="text-[7px] font-mono text-slate-600">{Math.ceil(activeGameTask.remaining)}s</span>
+                                </div>
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>}
+
+                        {/* Achievement Toasts (after 3s delay) */}
+                        {duoStarted && <div className="absolute top-[90px] left-0 right-0 z-40 flex flex-col items-center gap-1.5 pointer-events-none">
+                          <AnimatePresence>
+                            {gameToasts.map((toast) => (
+                              <motion.div
+                                key={toast.id + toast.ts}
+                                initial={{ opacity: 0, scale: 0.8, y: 10 }}
+                                animate={{ opacity: 1, scale: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -20, scale: 0.9 }}
+                                transition={{ duration: 0.4 }}
+                                className="px-3 py-1.5 rounded-xl"
+                                style={{
+                                  background: "rgba(0,0,0,0.7)",
+                                  backdropFilter: "blur(12px)",
+                                  border: `1px solid ${beliefColors.reward.primary}30`,
+                                  boxShadow: `0 0 20px ${beliefColors.reward.primary}15`,
+                                }}
+                              >
+                                <div className="flex items-center gap-2">
+                                  <span className="text-[11px]">{toast.icon}</span>
+                                  <div>
+                                    <span className="text-[9px] font-display font-medium text-slate-200 block">{toast.name}</span>
+                                    <span className="text-[8px] font-mono" style={{ color: beliefColors.reward.primary }}>+{toast.xp} XP</span>
+                                  </div>
+                                </div>
+                              </motion.div>
+                            ))}
+                          </AnimatePresence>
+                        </div>}
+
+                        {/* End Session button — bottom center (after 3s delay) */}
+                        {duoStarted && <motion.div
+                          className="absolute bottom-[40px] left-0 right-0 z-30 flex justify-center"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ delay: 1 }}
                         >
-                          <LoopingVideo src="/Duo/Gen-4 Turbo having so much fun hareketli ve heyecanli 2494731309.mp4" className="w-full object-cover rounded-xl" />
-                        </motion.div>
+                          <button onClick={handleDuoStop} className="px-4 py-1.5 rounded-full text-[9px] font-display text-slate-400 transition-all hover:text-slate-200"
+                            style={{ background: "rgba(0,0,0,0.5)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                            <Square size={8} className="inline mr-1 -mt-px" /> End Session
+                          </button>
+                        </motion.div>}
                       </>
                     )}
 
@@ -819,7 +1171,6 @@ function LoopingVideo({ src, className }: { src: string; className?: string }) {
     if (!v) return;
     let alive = true;
 
-    /* reverse tick: step currentTime backward each frame */
     const tick = (ts: number) => {
       if (!alive) return;
       if (!prev.current) prev.current = ts;
@@ -827,7 +1178,6 @@ function LoopingVideo({ src, className }: { src: string; className?: string }) {
       prev.current = ts;
       const t = v.currentTime - dt;
       if (t <= 0) {
-        /* reached start → play forward */
         v.currentTime = 0;
         dir.current = 1;
         prev.current = 0;
@@ -838,7 +1188,6 @@ function LoopingVideo({ src, className }: { src: string; className?: string }) {
       raf.current = requestAnimationFrame(tick);
     };
 
-    /* detect near-end while playing forward */
     const onUpdate = () => {
       if (dir.current !== 1 || !v.duration) return;
       if (v.currentTime >= v.duration - 0.15) {
@@ -850,7 +1199,6 @@ function LoopingVideo({ src, className }: { src: string; className?: string }) {
     };
 
     v.addEventListener("timeupdate", onUpdate);
-    /* also catch ended as safety net */
     v.addEventListener("ended", () => {
       if (dir.current === 1) { v.pause(); dir.current = -1; prev.current = 0; raf.current = requestAnimationFrame(tick); }
     });
