@@ -7,9 +7,9 @@ v3.0 Wave 2: Cross-relay pathways P1 + P7.
   P1 (BCH → DAED): consonance_signal amplifies wanting_index.
     Consonant harmony drives anticipatory approach motivation.
     wanting *= (1 + 0.4 × consonance_signal)
-  P7 (MMP → DAED): familiarity_level amplifies liking_index.
+  P7 (MEAMN → DAED): memory_state amplifies liking_index.
     Familiar passages enhance hedonic pleasure (mere exposure effect).
-    liking *= (1 + 0.3 × familiarity_level)
+    liking *= (1 + 0.3 × memory_state)
 
 Rules:
   1. Expose E-layer wanting+liking (2D) + P-layer (2D) = 4 approved outputs
@@ -72,8 +72,8 @@ class DAEDKernelWrapper(RelayKernelWrapper):
 
     # P1 cross-relay: BCH consonance_signal → wanting gain
     _BCH_WANTING_GAIN = 0.4  # 40% max amplification from consonance
-    # P7 cross-relay: MMP familiarity_level → liking gain
-    _MMP_LIKING_GAIN = 0.3   # 30% max amplification from familiarity
+    # P7 cross-relay: MEAMN memory_state → liking gain
+    _MEAMN_LIKING_GAIN = 0.3   # 30% max amplification from familiarity
 
     def __init__(self) -> None:
         self._daed = DAED()
@@ -108,7 +108,7 @@ class DAEDKernelWrapper(RelayKernelWrapper):
             h3: H³ morphology dict {(r3_idx, h, m, l): (B, T)}.
             bch_consonance: (B, T) BCH consonance_signal for P1 pathway.
                 Consonant harmony amplifies anticipatory wanting.
-            mmp_familiarity: (B, T) MMP familiarity_level for P7 pathway.
+            mmp_familiarity: (B, T) MEAMN memory_state for P7 pathway.
                 Familiar passages amplify hedonic liking (mere exposure).
 
         Returns:
@@ -128,7 +128,7 @@ class DAEDKernelWrapper(RelayKernelWrapper):
         # P7 cross-relay: familiarity → liking amplification
         if mmp_familiarity is not None:
             liking = liking * (
-                1.0 + self._MMP_LIKING_GAIN * mmp_familiarity.clamp(0.0, 1.0)
+                1.0 + self._MEAMN_LIKING_GAIN * mmp_familiarity.clamp(0.0, 1.0)
             )
 
         return DAEDOutput(

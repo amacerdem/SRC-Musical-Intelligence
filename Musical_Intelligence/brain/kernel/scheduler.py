@@ -1,10 +1,10 @@
 """C3Kernel — single-pass phase scheduler for C³ v3.1.
 
 Executes the belief cycle per frame:
-  Phase 0a: Independent relays (BCH, SNEM, MMP, MPG)
+  Phase 0a: Independent relays (BCH, SNEM, MEAMN, MPG, SRP, PEOM, HTP)
   Phase 0b: Dependent relays with cross-inputs:
               HMCE (+SNEM beat_locked_activity → A1 gain)
-              DAED (+BCH consonance_signal → wanting, +MMP familiarity → liking)
+              DAED (+BCH consonance_signal → wanting, +MEAMN memory → liking)
           + observe sensory beliefs (consonance, tempo)
   Phase 1:  observe + predict + update salience (attentional gate)
           + multi-feature H³ velocity, mean+max mixing (v2.5)
@@ -28,10 +28,11 @@ v3.0 Wave 2: Cross-relay pathways + DAED→reward.
   Phase 0 splits into 0a (independent) + 0b (dependent):
     P1: BCH consonance_signal → DAED wanting amplification
     P3: SNEM beat_locked_activity → HMCE A1 encoding gain
-    P7: MMP familiarity_level → DAED liking amplification
+    P7: MEAMN memory_state → DAED liking amplification
   DAED → reward: DA gain = 1 + 0.25×(0.6×wanting + 0.4×liking)
   Relay→belief wiring (Wave 1):
-    BCH→consonance, HMCE→tempo, SNEM+MPG→salience, MMP→familiarity
+    BCH→consonance, HMCE→tempo, SNEM+MPG→salience, MEAMN→familiarity
+    SRP→reward, PEOM→tempo, HTP→prediction (scaffolding)
 
 Single pass.  No iteration.  No convergence loop.
 """
@@ -49,9 +50,12 @@ from .reward import RewardAggregator, RewardConfig
 from .relays.bch_wrapper import BCHKernelWrapper
 from .relays.hmce_wrapper import HMCEKernelWrapper
 from .relays.snem_wrapper import SNEMKernelWrapper
-from .relays.mmp_wrapper import MMPKernelWrapper
+from .relays.meamn_wrapper import MEAMNKernelWrapper
 from .relays.daed_wrapper import DAEDKernelWrapper
 from .relays.mpg_wrapper import MPGKernelWrapper
+from .relays.srp_wrapper import SRPKernelWrapper
+from .relays.peom_wrapper import PEOMKernelWrapper
+from .relays.htp_wrapper import HTPKernelWrapper
 from .relays.base_wrapper import RelayKernelWrapper
 from .beliefs.consonance import PerceivedConsonance
 from .beliefs.familiarity import FamiliarityState
@@ -93,16 +97,17 @@ class KernelOutput:
 class C3Kernel:
     """C³ belief-cycle kernel with relay integration.
 
-    v3.0 supports 5 active beliefs + 6 relay wrappers:
+    v3.2 supports 5 active beliefs + 9 relay wrappers (1 per unit):
       Relays:  BCH (SPU, 3D), HMCE (STU, 6D), SNEM (ASU, 6D),
-               MMP (IMU, 6D), DAED (RPU, 4D), MPG (NDU, 3D)
+               MEAMN (IMU, 6D), DAED (RPU, 4D), MPG (NDU, 3D),
+               SRP (ARU, 7D), PEOM (MPU, 4D), HTP (PCU, 5D)
       Active:  perceived_consonance, tempo_state, salience_state,
                familiarity_state, reward_valence
 
     Wave 2: Cross-relay pathways + DAED→reward modulation:
-      Phase 0a: BCH, SNEM, MMP, MPG (independent)
-      Phase 0b: HMCE(+SNEM), DAED(+BCH,+MMP) (dependent)
-      Relay→belief: BCH→consonance, HMCE→tempo, SNEM+MPG→salience, MMP→familiarity
+      Phase 0a: BCH, SNEM, MEAMN, MPG, SRP, PEOM, HTP (independent)
+      Phase 0b: HMCE(+SNEM), DAED(+BCH,+MEAMN) (dependent)
+      Relay→belief: BCH→consonance, HMCE→tempo, SNEM+MPG→salience, MEAMN→familiarity
       DAED→reward: DA gain on reward_valence
 
     Usage:
@@ -122,17 +127,23 @@ class C3Kernel:
         self._bch_wrapper = BCHKernelWrapper()
         self._hmce_wrapper = HMCEKernelWrapper()
         self._snem_wrapper = SNEMKernelWrapper()
-        self._mmp_wrapper = MMPKernelWrapper()
+        self._meamn_wrapper = MEAMNKernelWrapper()
         self._daed_wrapper = DAEDKernelWrapper()
         self._mpg_wrapper = MPGKernelWrapper()
+        self._srp_wrapper = SRPKernelWrapper()
+        self._peom_wrapper = PEOMKernelWrapper()
+        self._htp_wrapper = HTPKernelWrapper()
 
         # All relay wrappers (excluding BCH which has its own path)
         self._relay_wrappers: List[RelayKernelWrapper] = [
             self._hmce_wrapper,
             self._snem_wrapper,
-            self._mmp_wrapper,
+            self._meamn_wrapper,
             self._daed_wrapper,
             self._mpg_wrapper,
+            self._srp_wrapper,
+            self._peom_wrapper,
+            self._htp_wrapper,
         ]
 
         # Instantiate beliefs
@@ -175,7 +186,7 @@ class C3Kernel:
           - Belief predict demands (with M2 std variants)
           - Multi-scale demands (M0/M18/M2 per horizon, v2.0)
           - BCH L0 demands (deduped)
-          - v3.0: 5 relay wrapper L0 demands (HMCE, SNEM, MMP, DAED, MPG)
+          - v3.0: 8 relay wrapper L0 demands (HMCE, SNEM, MEAMN, DAED, MPG, SRP, PEOM, HTP)
         """
         demands: Set[Tuple[int, int, int, int]] = set()
 
@@ -235,28 +246,34 @@ class C3Kernel:
         # ── Phase 0a: Independent relays ──────────────────────────────
         bch_out = self._bch_wrapper.compute(r3, h3)
         snem_out = self._snem_wrapper.compute(r3, h3)
-        mmp_out = self._mmp_wrapper.compute(r3, h3)
+        meamn_out = self._meamn_wrapper.compute(r3, h3)
         mpg_out = self._mpg_wrapper.compute(r3, h3)
+        srp_out = self._srp_wrapper.compute(r3, h3)
+        peom_out = self._peom_wrapper.compute(r3, h3)
+        htp_out = self._htp_wrapper.compute(r3, h3)
 
         # ── Phase 0b: Dependent relays (cross-inputs from 0a) ────────
         # P3: SNEM beat_locked_activity → HMCE A1 encoding gain
         snem_beat = snem_out.beat_locked_activity if snem_out is not None else None
         hmce_out = self._hmce_wrapper.compute(r3, h3, snem_beat=snem_beat)
 
-        # P1+P7: BCH consonance + MMP familiarity → DAED wanting/liking
+        # P1+P7: BCH consonance + MEAMN memory_state → DAED wanting/liking
         bch_cons = bch_out.consonance_signal if bch_out is not None else None
-        mmp_fam = mmp_out.familiarity_level if mmp_out is not None else None
+        meamn_fam = meamn_out.memory_state if meamn_out is not None else None
         daed_out = self._daed_wrapper.compute(
-            r3, h3, bch_consonance=bch_cons, mmp_familiarity=mmp_fam,
+            r3, h3, bch_consonance=bch_cons, mmp_familiarity=meamn_fam,
         )
 
         relay_outputs: Dict[str, Any] = {
             "BCH": bch_out,
             "HMCE": hmce_out,
             "SNEM": snem_out,
-            "MMP": mmp_out,
+            "MEAMN": meamn_out,
             "DAED": daed_out,
             "MPG": mpg_out,
+            "SRP": srp_out,
+            "PEOM": peom_out,
+            "HTP": htp_out,
         }
 
         # ── Phase 0c: Sensory grounding ──────────────────────────────
@@ -315,8 +332,8 @@ class C3Kernel:
         fam_predicted = self._familiarity.predict(self._beliefs_prev, h3)
         reward_predicted = self._reward_belief.predict(self._beliefs_prev, h3)
 
-        # Familiarity observation (H³ macro stability + MMP recognition)
-        fam_likelihood = self._familiarity.observe(r3, h3, mmp_out=mmp_out)
+        # Familiarity observation (H³ macro stability + MEAMN recognition)
+        fam_likelihood = self._familiarity.observe(r3, h3, mmp_out=meamn_out)
 
         # Broadcast predictions to match observation shape
         cons_predicted = self._broadcast(cons_predicted, B, T, device)

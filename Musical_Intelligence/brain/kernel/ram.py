@@ -68,13 +68,12 @@ REGION_LINK_TABLE: Dict[Tuple[str, str], Dict[str, float]] = {
     ("SNEM", "beat_onset_pred"): {"PMC": 0.60},
     # meter_position_pred, enhancement_pred: no region_links
 
-    # ── MMP (Musical Mnemonic Preservation, IMU) ──────────────────
-    ("MMP", "recognition_state"): {"SMA": 0.90},
-    ("MMP", "melodic_identity"): {"STG": 0.70},
-    ("MMP", "familiarity_level"): {"hippocampus": 0.50},
-    ("MMP", "emotional_forecast"): {"amygdala": 0.60},
-    ("MMP", "scaffold_forecast"): {"ACC": 0.80},
-    # recognition_forecast: no region_links
+    # ── MEAMN (Music-Evoked Autobiographical Memory Network, IMU) ──
+    ("MEAMN", "memory_state"): {"hippocampus": 0.90},
+    ("MEAMN", "emotional_color"): {"amygdala": 0.80},
+    ("MEAMN", "nostalgia_link"): {"AG": 0.60, "STG": 0.80},
+    ("MEAMN", "self_referential_pred"): {"vmPFC": 0.85},
+    # mem_vividness_pred, emo_response_pred: no region_links
 
     # ── DAED (Dopamine Anticipation-Experience Dissociation, RPU) ──
     ("DAED", "wanting_index"): {"amygdala": 0.60, "hippocampus": 0.40},
@@ -86,6 +85,25 @@ REGION_LINK_TABLE: Dict[Tuple[str, str], Dict[str, float]] = {
     ("MPG", "onset_state"): {"STG": 0.60},          # Planum_Temporale → STG
     ("MPG", "contour_state"): {"STG": 0.70},        # Planum_Polare → STG
     # phrase_boundary_pred: no region_links
+
+    # ── SRP (Striatal Reward Pathway, ARU) ──────────────────────
+    ("SRP", "wanting"): {"caudate": 0.70},
+    ("SRP", "liking"): {"NAcc": 0.80},
+    ("SRP", "tension"): {"IFG": 0.60},
+    # pleasure, reward_forecast, chills_proximity, resolution_expect: no region_links
+
+    # ── PEOM (Period Entrainment Optimization Model, MPU) ───────
+    ("PEOM", "period_lock_strength"): {"STG": 0.60},
+    ("PEOM", "next_beat_pred"): {"SMA": 0.70},     # pre_SMA → SMA
+    # kinematic_smoothness: Cerebellum not in registry
+    # velocity_profile_pred: no region_links
+
+    # ── HTP (Hierarchical Temporal Prediction, PCU) ─────────────
+    ("HTP", "sensory_match"): {"A1_HG": 0.90},     # HG → A1_HG
+    ("HTP", "pitch_prediction"): {"STG": 0.85},    # PT → STG
+    ("HTP", "abstract_prediction"): {"STG": 0.80},
+    ("HTP", "abstract_future_500ms"): {"ACC": 0.60},
+    # midlevel_future_200ms: no region_links
 }
 
 
