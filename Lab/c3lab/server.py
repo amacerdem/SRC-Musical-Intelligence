@@ -138,6 +138,14 @@ LAYER2_OUTPUTS = [
     {"id": "pe_familiarity", "label": "|PE| Familiarity", "color": "#BC8CFF"},
     {"id": "precision_consonance", "label": "Precision Cons", "color": "#58A6FF"},
     {"id": "precision_tempo", "label": "Precision Tempo", "color": "#3FB950"},
+    # Relay outputs (v3.1)
+    {"id": "relay_bch_consonance", "label": "BCH Consonance Signal", "color": "#79C0FF"},
+    {"id": "relay_hmce_a1", "label": "HMCE A1 Encoding", "color": "#7EE787"},
+    {"id": "relay_snem_entrainment", "label": "SNEM Entrainment", "color": "#FFA657"},
+    {"id": "relay_mmp_familiarity", "label": "MMP Familiarity", "color": "#D2A8FF"},
+    {"id": "relay_daed_wanting", "label": "DAED Wanting", "color": "#FF7B72"},
+    {"id": "relay_daed_liking", "label": "DAED Liking", "color": "#F778BA"},
+    {"id": "relay_mpg_onset", "label": "MPG Onset", "color": "#A5D6FF"},
 ]
 
 LAYER2_JUDGMENTS = [
@@ -195,6 +203,16 @@ KERNEL_PARAMS = {
                             "label": "Tempo period weight"},
         "fam_w_trend": {"value": 0.10, "min": 0.0, "max": 1.0, "step": 0.05,
                          "label": "Familiarity trend weight"},
+    },
+    "relays": {
+        "p1_bch_daed_gain": {"value": 0.4, "min": 0.0, "max": 1.0, "step": 0.05,
+                              "label": "P1: BCH→DAED wanting gain"},
+        "p3_snem_hmce_gain": {"value": 0.3, "min": 0.0, "max": 1.0, "step": 0.05,
+                               "label": "P3: SNEM→HMCE A1 gain"},
+        "p7_mmp_daed_gain": {"value": 0.3, "min": 0.0, "max": 1.0, "step": 0.05,
+                              "label": "P7: MMP→DAED liking gain"},
+        "w_da": {"value": 0.25, "min": 0.0, "max": 1.0, "step": 0.05,
+                  "label": "DA modulation magnitude"},
     },
 }
 
@@ -424,7 +442,7 @@ async def export_annotations(piece: str):
 
     # Build system snapshot
     snapshot = {
-        "kernel_version": "C3 v2.3 (Precision Compression)",
+        "kernel_version": "C3 v3.1 (Multi-Scale Tempo + RAM + Relays)",
         "export_date": time.strftime("%Y-%m-%d %H:%M:%S"),
         "piece": {
             "slug": piece,

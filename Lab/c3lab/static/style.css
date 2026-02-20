@@ -278,6 +278,11 @@ select:focus, input:focus, textarea:focus {
   overflow: hidden;
 }
 
+.chart-container.chart-ram {
+  min-height: 320px;
+  flex: 2;
+}
+
 /* Make Plotly charts fill containers */
 .chart-container .js-plotly-plot,
 .chart-container .plotly,
