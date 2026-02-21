@@ -21,16 +21,16 @@ The **Precision-Weighted Uncertainty Processing** (PWUP) model describes how pre
 PRECISION-WEIGHTED UNCERTAINTY PROCESSING
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-TONAL CONTEXT (High Precision)         ATONAL CONTEXT (Low Precision)
-─────────────────────────────          ────────────────────────────
-Key Clarity: ~0.8                      Key Clarity: ~0.5
-Entropy: Low                           Entropy: High
+TONAL CONTEXT (High Precision) ATONAL CONTEXT (Low Precision)
+───────────────────────────── ────────────────────────────
+Key Clarity: ~0.8 Key Clarity: ~0.5
+Entropy: Low Entropy: High
 
-  Raw PE ───► × Precision ───► STRONG    Raw PE ───► × Precision ───► WEAK
-              (high weight)     OUTPUT                (low weight)     OUTPUT
+ Raw PE ───► × Precision ───► STRONG Raw PE ───► × Precision ───► WEAK
+ (high weight) OUTPUT (low weight) OUTPUT
 
-     Prediction Error                       Prediction Error
-     FULL RESPONSE                          ATTENUATED RESPONSE
+ Prediction Error Prediction Error
+ FULL RESPONSE ATTENUATED RESPONSE
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 KEY INSIGHT: Precision-weighting modulates prediction error responses
@@ -52,58 +52,57 @@ PWUP provides context-dependent modulation of prediction error:
 
 ## 2. Neural Circuit: Complete Anatomy
 
-### 2.1 Information Flow Architecture (EAR → BRAIN → PPC+TPC+MEM → PWUP)
+### 2.1 Information Flow Architecture (EAR → BRAIN → PWUP)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    PWUP COMPUTATION ARCHITECTURE                            ║
+║ PWUP COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins x 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                         PWUP reads: ~16D                        │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                         PWUP demand: ~14 of 2304 tuples          │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Imagery Circuit ═══════════   ║
-║                               │                                              ║
-║                       ┌───────┴───────┐───────┐                              ║
-║                       ▼               ▼       ▼                              ║
-║  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐              ║
-║  │  PPC (30D)      │  │  TPC (30D)      │  │  MEM (30D)      │              ║
-║  └────────┬────────┘  └────────┬────────┘  └────────┬────────┘              ║
-║           └────────────┬───────┴────────────────────┘                        ║
-║                        ▼                                                     ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    PWUP MODEL (10D Output)                       │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f01_tonal_precision,                       │        ║
-║  │                       f02_rhythmic_precision,                    │        ║
-║  │                       f03_weighted_error,                        │        ║
-║  │                       f04_uncertainty_index                      │        ║
-║  │  Layer P (Present):   tonal_precision_weight,                    │        ║
-║  │                       rhythmic_precision_weight,                 │        ║
-║  │                       attenuated_response                        │        ║
-║  │  Layer F (Future):    precision_adjustment, context_uncertainty,  │        ║
-║  │                       response_attenuation_200ms                 │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins x 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ PWUP reads: ~16D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ PWUP demand: ~14 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Imagery Circuit ═══════════ ║
+║ │ ║
+║ ┌───────┴───────┐───────┐ ║
+║ ▼ ▼ ▼ ║
+║ ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐ ║
+║ └────────┬────────┘ └────────┬────────┘ └────────┬────────┘ ║
+║ └────────────┬───────┴────────────────────┘ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ PWUP MODEL (10D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f01_tonal_precision, │ ║
+║ │ f02_rhythmic_precision, │ ║
+║ │ f03_weighted_error, │ ║
+║ │ f04_uncertainty_index │ ║
+║ │ Layer P (Present): tonal_precision_weight, │ ║
+║ │ rhythmic_precision_weight, │ ║
+║ │ attenuated_response │ ║
+║ │ Layer F (Future): precision_adjustment, context_uncertainty, │ ║
+║ │ response_attenuation_200ms │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -131,16 +130,16 @@ PWUP provides context-dependent modulation of prediction error:
 ### 3.2 Effect Size Summary
 
 ```
-Primary Effect:       d = 3 (very large, key clarity difference; Mencke 2019)
-Secondary Effects:    d = 2 (pulse clarity; Mencke 2019)
-                      beta = -0.124 (uncertainty x surprise interaction; Cheung 2019)
-                      F(1,39) = 7.07, p = 0.011 (vmPFC precision modulation; Harding 2025)
-                      MMN = -0.34 uV at 173ms (interval PE; Wagner 2018)
-                      Quadratic IC/entropy on liking (Gold 2019)
-                      R Heschl's F(2,88) = 13.1 (sensory precision; Bravo 2017)
-Heterogeneity:        Low — consistent precision-weighting effects across fMRI, EEG, behavioral
-Quality Assessment:   beta-tier (fMRI + EEG + behavioral + theoretical convergence)
-Replication:          Strong convergence across 12 papers; Bayesian brain theory well-supported
+Primary Effect: d = 3 (very large, key clarity difference; Mencke 2019)
+Secondary Effects: d = 2 (pulse clarity; Mencke 2019)
+ beta = -0.124 (uncertainty x surprise interaction; Cheung 2019)
+ F(1,39) = 7.07, p = 0.011 (vmPFC precision modulation; Harding 2025)
+ MMN = -0.34 uV at 173ms (interval PE; Wagner 2018)
+ Quadratic IC/entropy on liking (Gold 2019)
+ R Heschl's F(2,88) = 13.1 (sensory precision; Bravo 2017)
+Heterogeneity: Low — consistent precision-weighting effects across fMRI, EEG, behavioral
+Quality Assessment: beta-tier (fMRI + EEG + behavioral + theoretical convergence)
+Replication: Strong convergence across 12 papers; Bayesian brain theory well-supported
 ```
 
 ---
@@ -173,20 +172,16 @@ Replication:          Strong convergence across 12 papers; Bayesian brain theory
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[4] sensory_pleasantness ─────┐
 R³[14] tonalness ───────────────┼──► Tonal precision (key clarity proxy)
-MEM.long_term_memory[10:20] ────┘   High consonance → high precision (tonal)
-                                    Low consonance → low precision (atonal)
+ Low consonance → low precision (atonal)
 
 R³[21] spectral_change ─────────┐
-MEM.working_memory[0:10] ───────┼──► Raw prediction error magnitude
-PPC.pitch_extraction[0:10] ─────┘
 
 R³[41:49] x_l5l7 ──────────────┐
-MEM.prediction_buffer[20:30] ───┼──► Precision-weighted PE
-H³ entropy tuples ──────────────┘   PE_weighted = PE_raw × (1 - uncertainty)
+H³ entropy tuples ──────────────┘ PE_weighted = PE_raw × (1 - uncertainty)
 ```
 
 ---
@@ -218,7 +213,7 @@ PWUP requires H³ features for precision estimation (slow contextual assessment)
 
 #### R³ v2 Projected Expansion
 
-PWUP projected v2 from F:Pitch and I:Information, aligned with MEM horizons.
+PWUP projected v2 from F:Pitch and I:Information, aligned with corresponding H³ horizons.
 
 | R³ Idx | Feature | Group | H | Morph | Law | Purpose |
 |:------:|---------|:-----:|:-:|-------|:---:|---------|
@@ -228,20 +223,6 @@ PWUP projected v2 from F:Pitch and I:Information, aligned with MEM horizons.
 
 **v2 projected**: 3 tuples
 **Total projected**: 17 tuples of 294,912 theoretical = 0.0058%
-
-### 5.2 PPC + TPC + MEM Mechanism Binding
-
-| Mechanism | Sub-section | Range | PWUP Role | Weight |
-|-----------|-------------|-------|-----------|--------|
-| **PPC** | Pitch Extraction | PPC[0:10] | Phase-locking for tonality detection | 0.7 |
-| **PPC** | Interval Analysis | PPC[10:20] | Tonal interval certainty | 0.6 |
-| **PPC** | Contour Tracking | PPC[20:30] | Harmonic memory pattern | 0.5 |
-| **TPC** | Spectral Shape | TPC[0:10] | Rhythmic precision proxy | 0.6 |
-| **TPC** | Temporal Envelope | TPC[10:20] | Pulse-based weighting | 0.7 |
-| **TPC** | Source Identity | TPC[20:30] | Context assessment | 0.5 |
-| **MEM** | Working Memory | MEM[0:10] | PE computation | **1.0** (primary) |
-| **MEM** | Long-Term Memory | MEM[10:20] | Precision estimation | **1.0** (primary) |
-| **MEM** | Prediction Buffer | MEM[20:30] | Weighted PE output | **0.9** |
 
 ---
 
@@ -255,45 +236,42 @@ PWUP OUTPUT TENSOR: 10D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 0  │ f01_tonal_precision      │ [0, 1] │ Key-based precision weight.
-    │                          │        │ f01 = σ(0.40 * tonalness_mean_1s
-    │                          │        │       + 0.35 * consonance_mean_1s
-    │                          │        │       + 0.25 * mean(MEM.ltm[10:20]))
+ 0 │ f01_tonal_precision │ [0, 1] │ Key-based precision weight.
+ │ │ │ f01 = σ(0.40 * tonalness_mean_1s
+ │ │ │ + 0.35 * consonance_mean_1s
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 1  │ f02_rhythmic_precision   │ [0, 1] │ Pulse-based precision weight.
-    │                          │        │ f02 = σ(0.40 * periodicity_1s
-    │                          │        │       + 0.30 * flux_periodicity_100ms
-    │                          │        │       + 0.30 * mean(TPC.env[10:20]))
+ 1 │ f02_rhythmic_precision │ [0, 1] │ Pulse-based precision weight.
+ │ │ │ f02 = σ(0.40 * periodicity_1s
+ │ │ │ + 0.30 * flux_periodicity_100ms
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 2  │ f03_weighted_error       │ [0, 1] │ Precision-weighted PE.
-    │                          │        │ f03 = σ(0.50 * raw_pe * f01
-    │                          │        │       + 0.50 * mean(MEM.pred[20:30]))
+ 2 │ f03_weighted_error │ [0, 1] │ Precision-weighted PE.
+ │ │ │ f03 = σ(0.50 * raw_pe * f01
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 3  │ f04_uncertainty_index    │ [0, 1] │ Context uncertainty level.
-    │                          │        │ f04 = σ(0.50 * consonance_entropy_1s
-    │                          │        │       + 0.50 * coupling_entropy_1s)
+ 3 │ f04_uncertainty_index │ [0, 1] │ Context uncertainty level.
+ │ │ │ f04 = σ(0.50 * consonance_entropy_1s
+ │ │ │ + 0.50 * coupling_entropy_1s)
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 4  │ tonal_precision_weight   │ [0, 1] │ PPC tonality weighting factor.
+ 4 │ tonal_precision_weight │ [0, 1] │ pitch-processing tonality weighting factor.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 5  │ rhythmic_precision_weight│ [0, 1] │ TPC rhythmic weighting factor.
+ 5 │ rhythmic_precision_weight│ [0, 1] │ timbre-processing rhythmic weighting factor.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 6  │ attenuated_response      │ [0, 1] │ MEM weighted PE output.
+ 6 │ attenuated_response │ [0, 1] │ memory-encoding weighted PE output.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 7  │ precision_adjustment     │ [0, 1] │ Trial-by-trial weight update.
+ 7 │ precision_adjustment │ [0, 1] │ Trial-by-trial weight update.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 8  │ context_uncertainty      │ [0, 1] │ Model confidence prediction.
+ 8 │ context_uncertainty │ [0, 1] │ Model confidence prediction.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 9  │ response_attenuation     │ [0, 1] │ Error magnitude prediction (200ms).
+ 9 │ response_attenuation │ [0, 1] │ Error magnitude prediction (200ms).
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 10D per frame at 172.27 Hz
@@ -313,7 +291,7 @@ Precision(tonal) ≈ 0.8 (high certainty)
 Precision(atonal) ≈ 0.5 (low certainty)
 
 PE_weighted = L9.kurtosis × (1 - L9.entropy_normalized)
-            = PE × precision
+ = PE × precision
 ```
 
 ### 7.2 Feature Formulas
@@ -323,24 +301,21 @@ PE_weighted = L9.kurtosis × (1 - L9.entropy_normalized)
 
 # f01: Tonal Precision
 f01 = σ(0.40 * tonalness_mean_1s
-       + 0.35 * consonance_mean_1s
-       + 0.25 * mean(MEM.long_term_memory[10:20]))
+ + 0.35 * consonance_mean_1s
 # coefficients: 0.40 + 0.35 + 0.25 = 1.0 ✓
 
 # f02: Rhythmic Precision
 f02 = σ(0.40 * periodicity_1s
-       + 0.30 * flux_periodicity_100ms
-       + 0.30 * mean(TPC.temporal_envelope[10:20]))
+ + 0.30 * flux_periodicity_100ms
 # coefficients: 0.40 + 0.30 + 0.30 = 1.0 ✓
 
 # f03: Weighted Error
 f03 = σ(0.50 * raw_pe * f01
-       + 0.50 * mean(MEM.prediction_buffer[20:30]))
 # coefficients: 0.50 + 0.50 = 1.0 ✓
 
 # f04: Uncertainty Index
 f04 = σ(0.50 * consonance_entropy_1s
-       + 0.50 * coupling_entropy_1s)
+ + 0.50 * coupling_entropy_1s)
 # coefficients: 0.50 + 0.50 = 1.0 ✓
 ```
 
@@ -374,25 +349,22 @@ f04 = σ(0.50 * consonance_entropy_1s
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    PWUP INTERACTIONS                                         │
+│ PWUP INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (PCU):                                                         │
-│  HTP.hierarchy_gradient ──────► PWUP (hierarchy sets precision levels)     │
-│  ICEM.information_content ────► PWUP (raw IC for weighting)                │
-│  PWUP.uncertainty_index ──────► UDP (uncertainty for reward inversion)      │
-│  PWUP.weighted_error ─────────► PSH (weighted PE for silencing)            │
-│                                                                             │
-│  CROSS-UNIT (PCU → ASU):                                                   │
-│  PWUP.tonal_precision ────────► ASU (precision for salience weighting)     │
-│                                                                             │
-│  UPSTREAM DEPENDENCIES:                                                     │
-│  PPC mechanism (30D) ─────────► PWUP (tonality detection)                  │
-│  TPC mechanism (30D) ─────────► PWUP (rhythmic precision)                  │
-│  MEM mechanism (30D) ─────────► PWUP (context/PE computation)              │
-│  R³ (~16D) ───────────────────► PWUP (direct spectral features)            │
-│  H³ (14 tuples) ──────────────► PWUP (temporal dynamics)                   │
-│                                                                             │
+│ │
+│ INTRA-UNIT (PCU): │
+│ HTP.hierarchy_gradient ──────► PWUP (hierarchy sets precision levels) │
+│ ICEM.information_content ────► PWUP (raw IC for weighting) │
+│ PWUP.uncertainty_index ──────► UDP (uncertainty for reward inversion) │
+│ PWUP.weighted_error ─────────► PSH (weighted PE for silencing) │
+│ │
+│ CROSS-UNIT (PCU → ASU): │
+│ PWUP.tonal_precision ────────► ASU (precision for salience weighting) │
+│ │
+│ UPSTREAM DEPENDENCIES: │
+│ R³ (~16D) ───────────────────► PWUP (direct spectral features) │
+│ H³ (14 tuples) ──────────────► PWUP (temporal dynamics) │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -416,101 +388,86 @@ f04 = σ(0.50 * consonance_entropy_1s
 
 ```python
 class PWUP(BaseModel):
-    """Precision-Weighted Uncertainty Processing Model.
+ """Precision-Weighted Uncertainty Processing Model.
 
-    Output: 10D per frame.
-    Reads: PPC mechanism (30D), TPC mechanism (30D), MEM mechanism (30D), R³ direct.
-    """
-    NAME = "PWUP"
-    UNIT = "PCU"
-    TIER = "β1"
-    OUTPUT_DIM = 10
-    MECHANISM_NAMES = ("PPC", "TPC", "MEM")
+ Output: 10D per frame.
+ """
+ NAME = "PWUP"
+ UNIT = "PCU"
+ TIER = "β1"
+ OUTPUT_DIM = 10
+ TAU_DECAY = 1.0 # s
+ KEY_CLARITY_TONAL = 0.8 # High certainty threshold
+ KEY_CLARITY_ATONAL = 0.5 # Low certainty threshold
+ PRECISION_EFFECT_D = 3.0 # Effect size (Mencke 2019)
 
-    TAU_DECAY = 1.0                # s
-    KEY_CLARITY_TONAL = 0.8        # High certainty threshold
-    KEY_CLARITY_ATONAL = 0.5       # Low certainty threshold
-    PRECISION_EFFECT_D = 3.0       # Effect size (Mencke 2019)
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """14 tuples for PWUP computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ # ── Precision estimation: slow context ──
+ (4, 3, 0, 2), # sensory_pleasantness, 100ms, value, bidi
+ (4, 16, 1, 0), # sensory_pleasantness, 1000ms, mean, fwd
+ (4, 16, 20, 0), # sensory_pleasantness, 1000ms, entropy, fwd
+ (14, 8, 1, 0), # tonalness, 500ms, mean, fwd
+ (14, 16, 1, 0), # tonalness, 1000ms, mean, fwd
+ (5, 8, 1, 0), # periodicity, 500ms, mean, fwd
+ (5, 16, 14, 2), # periodicity, 1000ms, periodicity, bidi
+ # ── PE computation: fast events ──
+ (21, 3, 0, 2), # spectral_change, 100ms, value, bidi
+ (21, 3, 2, 2), # spectral_change, 100ms, std, bidi
+ (10, 3, 0, 2), # spectral_flux, 100ms, value, bidi
+ (10, 3, 14, 2), # spectral_flux, 100ms, periodicity, bidi
+ # ── Precision-weighted coupling ──
+ (41, 8, 0, 0), # x_l5l7[0], 500ms, value, fwd
+ (41, 16, 1, 0), # x_l5l7[0], 1000ms, mean, fwd
+ (41, 16, 20, 0), # x_l5l7[0], 1000ms, entropy, fwd
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """14 tuples for PWUP computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # ── Precision estimation: slow context ──
-            (4, 3, 0, 2),      # sensory_pleasantness, 100ms, value, bidi
-            (4, 16, 1, 0),     # sensory_pleasantness, 1000ms, mean, fwd
-            (4, 16, 20, 0),    # sensory_pleasantness, 1000ms, entropy, fwd
-            (14, 8, 1, 0),     # tonalness, 500ms, mean, fwd
-            (14, 16, 1, 0),    # tonalness, 1000ms, mean, fwd
-            (5, 8, 1, 0),      # periodicity, 500ms, mean, fwd
-            (5, 16, 14, 2),    # periodicity, 1000ms, periodicity, bidi
-            # ── PE computation: fast events ──
-            (21, 3, 0, 2),     # spectral_change, 100ms, value, bidi
-            (21, 3, 2, 2),     # spectral_change, 100ms, std, bidi
-            (10, 3, 0, 2),     # spectral_flux, 100ms, value, bidi
-            (10, 3, 14, 2),    # spectral_flux, 100ms, periodicity, bidi
-            # ── Precision-weighted coupling ──
-            (41, 8, 0, 0),     # x_l5l7[0], 500ms, value, fwd
-            (41, 16, 1, 0),    # x_l5l7[0], 1000ms, mean, fwd
-            (41, 16, 20, 0),   # x_l5l7[0], 1000ms, entropy, fwd
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ # H³ direct
+ tonalness_mean_1s = h3_direct[(14, 16, 1, 0)].unsqueeze(-1)
+ consonance_mean_1s = h3_direct[(4, 16, 1, 0)].unsqueeze(-1)
+ consonance_entropy_1s = h3_direct[(4, 16, 20, 0)].unsqueeze(-1)
+ periodicity_1s = h3_direct[(5, 16, 14, 2)].unsqueeze(-1)
+ flux_period_100ms = h3_direct[(10, 3, 14, 2)].unsqueeze(-1)
+ raw_pe = h3_direct[(21, 3, 0, 2)].unsqueeze(-1)
+ coupling_entropy_1s = h3_direct[(41, 16, 20, 0)].unsqueeze(-1)
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        ppc = mechanism_outputs["PPC"]
-        tpc = mechanism_outputs["TPC"]
-        mem = mechanism_outputs["MEM"]
+ # ═══ LAYER E ═══
+ f01 = torch.sigmoid(
+ 0.40 * tonalness_mean_1s
+ + 0.35 * consonance_mean_1s
+ )
+ f02 = torch.sigmoid(
+ 0.40 * periodicity_1s
+ + 0.30 * flux_period_100ms
+ )
+ f03 = torch.sigmoid(
+ 0.50 * raw_pe * f01
+ )
+ f04 = torch.sigmoid(
+ 0.50 * consonance_entropy_1s
+ + 0.50 * coupling_entropy_1s
+ )
 
-        tpc_env = tpc[..., 10:20]
-        mem_wm = mem[..., 0:10]
-        mem_ltm = mem[..., 10:20]
-        mem_pred = mem[..., 20:30]
+ # ═══ LAYER P ═══
+ tonal_weight = f01
+ rhythmic_weight = f02
+ attenuated = f03
 
-        # H³ direct
-        tonalness_mean_1s = h3_direct[(14, 16, 1, 0)].unsqueeze(-1)
-        consonance_mean_1s = h3_direct[(4, 16, 1, 0)].unsqueeze(-1)
-        consonance_entropy_1s = h3_direct[(4, 16, 20, 0)].unsqueeze(-1)
-        periodicity_1s = h3_direct[(5, 16, 14, 2)].unsqueeze(-1)
-        flux_period_100ms = h3_direct[(10, 3, 14, 2)].unsqueeze(-1)
-        raw_pe = h3_direct[(21, 3, 0, 2)].unsqueeze(-1)
-        coupling_entropy_1s = h3_direct[(41, 16, 20, 0)].unsqueeze(-1)
+ # ═══ LAYER F ═══
+ precision_adj = torch.sigmoid(0.5 * f01 + 0.5 * f02)
+ context_unc = f04
+ response_att = torch.sigmoid(0.5 * f03 + 0.5 * f04)
 
-        # ═══ LAYER E ═══
-        f01 = torch.sigmoid(
-            0.40 * tonalness_mean_1s
-            + 0.35 * consonance_mean_1s
-            + 0.25 * mem_ltm.mean(-1, keepdim=True)
-        )
-        f02 = torch.sigmoid(
-            0.40 * periodicity_1s
-            + 0.30 * flux_period_100ms
-            + 0.30 * tpc_env.mean(-1, keepdim=True)
-        )
-        f03 = torch.sigmoid(
-            0.50 * raw_pe * f01
-            + 0.50 * mem_pred.mean(-1, keepdim=True)
-        )
-        f04 = torch.sigmoid(
-            0.50 * consonance_entropy_1s
-            + 0.50 * coupling_entropy_1s
-        )
-
-        # ═══ LAYER P ═══
-        tonal_weight = f01
-        rhythmic_weight = f02
-        attenuated = f03
-
-        # ═══ LAYER F ═══
-        precision_adj = torch.sigmoid(0.5 * f01 + 0.5 * f02)
-        context_unc = f04
-        response_att = torch.sigmoid(0.5 * f03 + 0.5 * f04)
-
-        return torch.cat([
-            f01, f02, f03, f04,                   # E: 4D
-            tonal_weight, rhythmic_weight, attenuated,  # P: 3D
-            precision_adj, context_unc, response_att,   # F: 3D
-        ], dim=-1)  # (B, T, 10)
+ return torch.cat([
+ f01, f02, f03, f04, # E: 4D
+ tonal_weight, rhythmic_weight, attenuated, # P: 3D
+ precision_adj, context_unc, response_att, # F: 3D
+ ], dim=-1) # (B, T, 10)
 ```
 
 ---
@@ -526,9 +483,6 @@ class PWUP(BaseModel):
 | **Falsification Tests** | 5/5 testable, 2 confirmed | Moderate validity |
 | **R³ Features Used** | ~16D of 49D | Consonance + energy + timbre + change + interactions |
 | **H³ Demand** | 14 tuples (0.61%) | Sparse, efficient |
-| **PPC Mechanism** | 30D (3 sub-sections) | Tonality detection |
-| **TPC Mechanism** | 30D (3 sub-sections) | Rhythmic precision |
-| **MEM Mechanism** | 30D (3 sub-sections) | Context/PE computation |
 | **Output Dimensions** | **10D** | 3-layer structure (no M layer) |
 
 ---
@@ -557,21 +511,13 @@ class PWUP(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D) | R³ (49D) |
-| Temporal | HC⁰ mechanisms (TIH, NPL, HRM, EFC) | PPC (30D) + TPC (30D) + MEM (30D) mechanisms |
 | Tonal precision | S⁰.L3.coherence[14] + S⁰.L6[68:71] | R³[4] sensory_pleasantness + R³[14] tonalness |
 | Uncertainty | S⁰.L9.entropy[116:120] | H³ consonance/coupling entropy tuples |
-| PE signal | S⁰.L9.kurtosis[120:124] + HC⁰.EFC | R³[21] spectral_change + MEM.working_memory |
-| Precision-weighted PE | S⁰.X_L5L9[224:232] | R³[41:49] x_l5l7 + MEM.prediction_buffer |
+| PE signal | S⁰.L9.kurtosis[120:124] + HC⁰.EFC | R³[21] spectral_change |
+| Precision-weighted PE | S⁰.X_L5L9[224:232] | R³[41:49] x_l5l7 |
 | Demand format | HC⁰ index ranges | H³ 4-tuples (sparse) |
 | Total demand | 25/2304 = 1.09% | 14/2304 = 0.61% |
 | Output | 10D | 10D (same) |
-
-### Why PPC + TPC + MEM replaces HC⁰ mechanisms
-
-- **TIH → MEM.long_term_memory** [10:20]: Temporal integration hierarchy for context maps to MEM's long-term contextual assessment.
-- **NPL → PPC.pitch_extraction** [0:10]: Neural phase locking for tonality maps to PPC's pitch/tonal detection.
-- **HRM → MEM.prediction_buffer** [20:30]: Hippocampal replay for context retrieval maps to MEM's prediction buffer.
-- **EFC → MEM.working_memory** [0:10]: Efference copy for PE computation maps to MEM's working memory.
 
 ---
 

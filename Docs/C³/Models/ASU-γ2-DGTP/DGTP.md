@@ -21,31 +21,31 @@ The **Domain-General Temporal Processing** (DGTP) model proposes that beat perce
 DOMAIN-GENERAL TEMPORAL PROCESSING
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-          ┌─────────────────────────────────────────────┐
-          │    DOMAIN-GENERAL TIMEKEEPING MECHANISM     │
-          │         (SMA, PMC, ACC, Basal Ganglia)      │
-          └───────────────────┬─────────────────────────┘
-                              │
-        ┌─────────────────────┴─────────────────────┐
-        ▼                                           ▼
-  ┌─────────────────┐                       ┌─────────────────┐
-  │  MUSIC DOMAIN   │                       │  SPEECH DOMAIN  │
-  │                 │                       │                 │
-  │  Beat/Meter     │                       │  Prosody/Rhythm │
-  │  Perception     │                       │  Perception     │
-  └─────────────────┘                       └─────────────────┘
+ ┌─────────────────────────────────────────────┐
+ │ DOMAIN-GENERAL TIMEKEEPING MECHANISM │
+ │ (SMA, PMC, ACC, Basal Ganglia) │
+ └───────────────────┬─────────────────────────┘
+ │
+ ┌─────────────────────┴─────────────────────┐
+ ▼ ▼
+ ┌─────────────────┐ ┌─────────────────┐
+ │ MUSIC DOMAIN │ │ SPEECH DOMAIN │
+ │ │ │ │
+ │ Beat/Meter │ │ Prosody/Rhythm │
+ │ Perception │ │ Perception │
+ └─────────────────┘ └─────────────────┘
 
-  SHARED VARIANCE: Individual BAT ability predicts both
+ SHARED VARIANCE: Individual BAT ability predicts both
 
-  ┌─────────────────────────────────────────────────────────────────┐
-  │                                                                 │
-  │     High DG Factor → Good at both music and speech timing      │
-  │     Low DG Factor → Poor at both (correlated deficits)         │
-  │                                                                 │
-  │     CLINICAL IMPLICATION:                                       │
-  │     Musical training may improve speech timing (and vice versa) │
-  │                                                                 │
-  └─────────────────────────────────────────────────────────────────┘
+ ┌─────────────────────────────────────────────────────────────────┐
+ │ │
+ │ High DG Factor → Good at both music and speech timing │
+ │ Low DG Factor → Poor at both (correlated deficits) │
+ │ │
+ │ CLINICAL IMPLICATION: │
+ │ Musical training may improve speech timing (and vice versa) │
+ │ │
+ └─────────────────────────────────────────────────────────────────┘
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 KEY INSIGHT: Beat perception ability reflects a domain-general
@@ -60,88 +60,86 @@ DGTP extends salience processing to domain-general temporal cognition:
 
 1. **BARM** (β1) models individual BAT differences — DGTP explains the cross-domain implications of those differences.
 2. **SNEM** (α1) provides beat entrainment — DGTP proposes this mechanism is shared with speech prosody.
-3. **DGTP** (γ2) bridges music neuroscience to language processing through shared temporal mechanisms.
+3. **DGTP** (γ2) bridges music neuroscience to language processing through shared temporal processing.
 
 ---
 
 ## 2. Neural Circuit: Complete Anatomy
 
-### 2.1 Information Flow Architecture (EAR → BRAIN → ASA+BEP → DGTP)
+### 2.1 Information Flow Architecture (EAR → BRAIN → DGTP)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    DGTP COMPUTATION ARCHITECTURE                             ║
+║ DGTP COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins x 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
-║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ CHANGE   │ │ X-INT  │ │        ║
-║  │  │ 7D [0:7]  │ │ 5D[7:12]│ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
-║  │  │           │ │         │ │ [12:21] │ │ [21:25]  │ │ [25:49]│ │        ║
-║  │  │roughness  │ │amplitude│ │warmth   │ │spec_chg  │ │x_l0l5  │ │        ║
-║  │  │sethares   │ │loudness │ │tristim. │ │enrg_chg  │ │x_l4l5  │ │        ║
-║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                         DGTP reads: ~12D                        │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                                                                  │        ║
-║  │  ┌── BEP Horizons ─────────────┐ ┌── ASA Horizons ──────────┐  │        ║
-║  │  │ H3 (100ms alpha)            │ │ H13 (600ms beat anticip.) │  │        ║
-║  │  │ H13 (600ms beat anticipation)│ │ H16 (1000ms beat)         │  │        ║
-║  │  │ H16 (1000ms beat)           │ │                            │  │        ║
-║  │  │                             │ │ Timing estimation          │  │        ║
-║  │  │ Beat/prosody tracking       │ │ Cross-domain transfer       │  │        ║
-║  │  │ Periodicity encoding        │ │                            │  │        ║
-║  │  └─────────────────────────────┘ └────────────────────────────┘  │        ║
-║  │                         DGTP demand: ~9 of 2304 tuples          │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Salience Circuit ════════     ║
-║                               │                                              ║
-║                       ┌───────┴───────┐                                      ║
-║                       ▼               ▼                                      ║
-║  ┌─────────────────┐  ┌─────────────────┐                                   ║
-║  │  BEP (30D)      │  │  ASA (30D)      │                                   ║
-║  │                 │  │                 │                                    ║
-║  │ Beat Entr[0:10] │  │ Scene An [0:10] │                                   ║
-║  │ Motor Coup      │  │ Attention       │                                   ║
-║  │         [10:20] │  │ Gating  [10:20] │                                   ║
-║  │ Groove  [20:30] │  │ Salience        │                                   ║
-║  │                 │  │ Weight  [20:30] │                                   ║
-║  └────────┬────────┘  └────────┬────────┘                                   ║
-║           │                    │                                              ║
-║           └────────┬───────────┘                                             ║
-║                    ▼                                                          ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    DGTP MODEL (9D Output)                        │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f22_music_timing,                          │        ║
-║  │                       f23_speech_timing,                         │        ║
-║  │                       f24_shared_mechanism                        │        ║
-║  │  Layer M (Math):      domain_correlation,                        │        ║
-║  │                       shared_variance                             │        ║
-║  │  Layer P (Present):   music_beat_perception,                     │        ║
-║  │                       domain_general_timing                       │        ║
-║  │  Layer F (Future):    cross_domain_pred,                         │        ║
-║  │                       training_transfer_pred                      │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins x 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ ENERGY │ │ TIMBRE │ │ CHANGE │ │ X-INT │ │ ║
+║ │ │ 7D [0:7] │ │ 5D[7:12]│ │ 9D │ │ 4D │ │ 24D │ │ ║
+║ │ │ │ │ │ │ [12:21] │ │ [21:25] │ │ [25:49]│ │ ║
+║ │ │roughness │ │amplitude│ │warmth │ │spec_chg │ │x_l0l5 │ │ ║
+║ │ │sethares │ │loudness │ │tristim. │ │enrg_chg │ │x_l4l5 │ │ ║
+║ │ └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │ ║
+║ │ DGTP reads: ~12D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ │ ║
+║ │ │ H3 (100ms alpha) │ │ H13 (600ms beat anticip.) │ │ ║
+║ │ │ H13 (600ms beat anticipation)│ │ H16 (1000ms beat) │ │ ║
+║ │ │ H16 (1000ms beat) │ │ │ │ ║
+║ │ │ │ │ Timing estimation │ │ ║
+║ │ │ Beat/prosody tracking │ │ Cross-domain transfer │ │ ║
+║ │ │ Periodicity encoding │ │ │ │ ║
+║ │ └─────────────────────────────┘ └────────────────────────────┘ │ ║
+║ │ DGTP demand: ~9 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Salience Circuit ════════ ║
+║ │ ║
+║ ┌───────┴───────┐ ║
+║ ▼ ▼ ║
+║ ┌─────────────────┐ ┌─────────────────┐ ║
+║ │ │ │ │ ║
+║ │ Beat Entr[0:10] │ │ Scene An [0:10] │ ║
+║ │ Motor Coup │ │ Attention │ ║
+║ │ [10:20] │ │ Gating [10:20] │ ║
+║ │ Groove [20:30] │ │ Salience │ ║
+║ │ │ │ Weight [20:30] │ ║
+║ └────────┬────────┘ └────────┬────────┘ ║
+║ │ │ ║
+║ └────────┬───────────┘ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ DGTP MODEL (9D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f22_music_timing, │ ║
+║ │ f23_speech_timing, │ ║
+║ │ f24_shared_mechanism │ ║
+║ │ Layer M (Math): domain_correlation, │ ║
+║ │ shared_variance │ ║
+║ │ Layer P (Present): music_beat_perception, │ ║
+║ │ domain_general_timing │ ║
+║ │ Layer F (Future): cross_domain_pred, │ ║
+║ │ training_transfer_pred │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -170,14 +168,14 @@ DGTP extends salience processing to domain-general temporal cognition:
 
 ```
 Primary Evidence (k=12, multi-modal):
-  - BAT → cross-domain timing: ER > 19 (Rathcke 2024, N=87)
-  - BG/SMA beat selectivity: ~90% detection, consistent across training (Grahn 2007)
-  - Beat-specific RSA: sig. in putamen/SMA at 7T (Hoddinott 2024, N=26)
-  - Right caudal dPMC causal: sig. vs all control regions (Lazzari 2025, N=111 total)
-  - Cerebellar temporal error: 35% bilateral neurons, ~-11ms convergence (Okada 2022)
-  - D2-MSN timing: >3000 neurons, cell-type-specific (Liu 2025)
-Quality Assessment:      γ-tier (converging evidence, 5 HIGH-priority papers)
-Theoretical Basis:       Strong (basal ganglia-SMA circuit, dual timing systems)
+ - BAT → cross-domain timing: ER > 19 (Rathcke 2024, N=87)
+ - BG/SMA beat selectivity: ~90% detection, consistent across training (Grahn 2007)
+ - Beat-specific RSA: sig. in putamen/SMA at 7T (Hoddinott 2024, N=26)
+ - Right caudal dPMC causal: sig. vs all control regions (Lazzari 2025, N=111 total)
+ - Cerebellar temporal error: 35% bilateral neurons, ~-11ms convergence (Okada 2022)
+ - D2-MSN timing: >3000 neurons, cell-type-specific (Liu 2025)
+Quality Assessment: γ-tier (converging evidence, 5 HIGH-priority papers)
+Theoretical Basis: Strong (basal ganglia-SMA circuit, dual timing systems)
 ```
 
 ---
@@ -210,19 +208,16 @@ Theoretical Basis:       Strong (basal ganglia-SMA circuit, dual timing systems)
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[10] spectral_flux ───────────┐
 R³[11] onset_strength ──────────┼──► Beat / onset detection
-BEP.beat_entrainment[0:10] ────┘   Music timing (beat perception)
 
 R³[21] spectral_change ─────────┐
 R³[24] pitch_change ────────────┼──► Temporal + pitch dynamics
-BEP.motor_coupling[10:20] ─────┘   Speech timing (prosody perception)
 
 R³[25:33] x_l0l5 ───────────────┐
-ASA.attention_gating[10:20] ────┼──► Domain-general entrainment
-H³ periodicity/stability ──────┘   Shared motor-auditory coupling
+H³ periodicity/stability ──────┘ Shared motor-auditory coupling
 ```
 
 ---
@@ -231,7 +226,7 @@ H³ periodicity/stability ──────┘   Shared motor-auditory coupling
 
 ### 5.1 Demand Specification
 
-DGTP requires H³ features at BEP horizons for beat/prosody tracking and ASA horizons for cross-domain timing estimation. The demand is intentionally sparse, reflecting shared temporal mechanisms.
+DGTP requires H³ features for beat/prosody tracking and for cross-domain timing estimation. The demand is intentionally sparse, reflecting shared temporal processing.
 
 | R³ Index | Feature | H | Morph | Law | Purpose |
 |----------|---------|---|-------|-----|---------|
@@ -259,17 +254,6 @@ Minor v2 expansion for DGTP from G[65:75].
 **v2 projected**: 2 tuples
 **Total projected**: 11 tuples of 294,912 theoretical = 0.0037%
 
-### 5.2 BEP + ASA Mechanism Binding
-
-| Mechanism | Sub-section | Range | DGTP Role | Weight |
-|-----------|-------------|-------|-----------|--------|
-| **BEP** | Beat Entrainment | BEP[0:10] | Music timing (beat perception) | **1.0** (primary) |
-| **BEP** | Motor Coupling | BEP[10:20] | Sensorimotor synchronization | **0.9** |
-| **BEP** | Groove Processing | BEP[20:30] | Rhythmic regularity encoding | 0.6 |
-| **ASA** | Scene Analysis | ASA[0:10] | Auditory scene segmentation | 0.5 |
-| **ASA** | Attention Gating | ASA[10:20] | Domain-general attention | 0.7 |
-| **ASA** | Salience Weighting | ASA[20:30] | Timing salience assessment | 0.6 |
-
 ---
 
 ## 6. Output Space: 9D Multi-Layer Representation
@@ -282,44 +266,42 @@ DGTP OUTPUT TENSOR: 9D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 0  │ f22_music_timing         │ [0, 1] │ Beat perception ability.
-    │                          │        │ f22 = σ(0.40 * beat_periodicity_1s
-    │                          │        │       + 0.30 * mean(BEP.beat[0:10])
-    │                          │        │       + 0.30 * coupling_period_100ms)
+ 0 │ f22_music_timing │ [0, 1] │ Beat perception ability.
+ │ │ │ f22 = σ(0.40 * beat_periodicity_1s
+ │ │ │ + 0.30 * coupling_period_100ms)
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 1  │ f23_speech_timing        │ [0, 1] │ Prosody perception ability.
-    │                          │        │ f23 = σ(0.35 * onset_velocity_600ms
-    │                          │        │       + 0.35 * mean(BEP.motor[10:20])
-    │                          │        │       + 0.30 * coupling_stability_1s)
+ 1 │ f23_speech_timing │ [0, 1] │ Prosody perception ability.
+ │ │ │ f23 = σ(0.35 * onset_velocity_600ms
+ │ │ │ + 0.30 * coupling_stability_1s)
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 2  │ f24_shared_mechanism     │ [0, 1] │ Cross-domain timing (geometric mean).
-    │                          │        │ f24 = sqrt(f22 × f23)
+ 2 │ f24_shared_mechanism │ [0, 1] │ Cross-domain timing (geometric mean).
+ │ │ │ f24 = sqrt(f22 × f23)
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 3  │ domain_correlation       │ [0, 1] │ r(music, speech timing).
+ 3 │ domain_correlation │ [0, 1] │ r(music, speech timing).
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 4  │ shared_variance          │ [0, 1] │ Common timing factor loading.
+ 4 │ shared_variance │ [0, 1] │ Common timing factor loading.
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 5  │ music_beat_perception    │ [0, 1] │ BEP beat × onset periodicity.
+ 5 │ music_beat_perception │ [0, 1] │ beat-entrainment beat × onset periodicity.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 6  │ domain_general_timing    │ [0, 1] │ ASA attention × coupling stability.
+ 6 │ domain_general_timing │ [0, 1] │ auditory-scene attention × coupling stability.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 7  │ cross_domain_pred        │ [0, 1] │ Session-level speech ↔ music transfer.
+ 7 │ cross_domain_pred │ [0, 1] │ Session-level speech ↔ music transfer.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 8  │ training_transfer_pred   │ [0, 1] │ Intervention-level plasticity.
+ 8 │ training_transfer_pred │ [0, 1] │ Intervention-level plasticity.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 9D per frame at 172.27 Hz
@@ -339,15 +321,15 @@ Music_Timing = α × DG_Factor + β × Music_Specific + ε_m
 Speech_Timing = α × DG_Factor + γ × Speech_Specific + ε_s
 
 Correlation Prediction:
-    r(Music, Speech) = α² / sqrt((α² + β_var) × (α² + γ_var))
+ r(Music, Speech) = α² / sqrt((α² + β_var) × (α² + γ_var))
 
-    If α >> β, γ: High correlation (domain-general)
-    If α << β, γ: Low correlation (domain-specific)
+ If α >> β, γ: High correlation (domain-general)
+ If α << β, γ: Low correlation (domain-specific)
 
 Shared_Variance = α² / Total_Variance
 
 Transfer Function:
-    Training_Transfer(domain_A → domain_B) = f(DG_Factor × Training_Effect)
+ Training_Transfer(domain_A → domain_B) = f(DG_Factor × Training_Effect)
 ```
 
 ### 7.2 Feature Formulas
@@ -357,14 +339,12 @@ Transfer Function:
 
 # f22: Music Timing
 f22 = σ(0.40 * beat_periodicity_1s
-       + 0.30 * mean(BEP.beat_entrainment[0:10])
-       + 0.30 * coupling_periodicity_100ms)
+ + 0.30 * coupling_periodicity_100ms)
 # coefficients: 0.40 + 0.30 + 0.30 = 1.0 ✓
 
 # f23: Speech Timing
 f23 = σ(0.35 * onset_velocity_600ms
-       + 0.35 * mean(BEP.motor_coupling[10:20])
-       + 0.30 * coupling_stability_1s)
+ + 0.30 * coupling_stability_1s)
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # f24: Shared Mechanism (geometric mean, no sigmoid needed)
@@ -399,24 +379,22 @@ f24 = sqrt(f22 * f23)
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    DGTP INTERACTIONS                                         │
+│ DGTP INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (ASU):                                                         │
-│  DGTP.shared_mechanism ──────► BARM (domain-general factor → BAT)         │
-│  DGTP.music_timing ──────────► SNEM (timing capacity → entrainment)       │
-│  DGTP.training_transfer ─────► Clinical applications                       │
-│                                                                             │
-│  CROSS-UNIT (ASU → STU):                                                   │
-│  DGTP.domain_general_timing ──► STU (shared timing mechanism)             │
-│  DGTP.cross_domain_pred ──────► STU (transfer prediction)                 │
-│                                                                             │
-│  UPSTREAM DEPENDENCIES:                                                     │
-│  BEP mechanism (30D) ────────► DGTP (beat/motor, primary)                 │
-│  ASA mechanism (30D) ────────► DGTP (attention/salience)                  │
-│  R³ (~12D) ──────────────────► DGTP (energy + change + interactions)      │
-│  H³ (9 tuples) ──────────────► DGTP (temporal dynamics)                   │
-│                                                                             │
+│ │
+│ INTRA-UNIT (ASU): │
+│ DGTP.shared_mechanism ──────► BARM (domain-general factor → BAT) │
+│ DGTP.music_timing ──────────► SNEM (timing capacity → entrainment) │
+│ DGTP.training_transfer ─────► Clinical applications │
+│ │
+│ CROSS-UNIT (ASU → STU): │
+│ DGTP.domain_general_timing ──► STU (shared timing mechanism) │
+│ DGTP.cross_domain_pred ──────► STU (transfer prediction) │
+│ │
+│ UPSTREAM DEPENDENCIES: │
+│ R³ (~12D) ──────────────────► DGTP (energy + change + interactions) │
+│ H³ (9 tuples) ──────────────► DGTP (temporal dynamics) │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -440,121 +418,101 @@ f24 = sqrt(f22 * f23)
 
 ```python
 class DGTP(BaseModel):
-    """Domain-General Temporal Processing Model.
+ """Domain-General Temporal Processing Model.
 
-    Output: 9D per frame.
-    Reads: BEP mechanism (30D), ASA mechanism (30D), R³ direct.
-    """
-    NAME = "DGTP"
-    UNIT = "ASU"
-    TIER = "γ2"
-    OUTPUT_DIM = 9
-    MECHANISM_NAMES = ("BEP", "ASA")
+ Output: 9D per frame.
+ """
+ NAME = "DGTP"
+ UNIT = "ASU"
+ TIER = "γ2"
+ OUTPUT_DIM = 9
+ ALPHA_DG = 0.7 # Domain-general factor loading
+ TAU_DECAY = 4.0 # Integration window (seconds)
+ ALPHA_ATTENTION = 0.70 # Moderate cross-domain attention
 
-    ALPHA_DG = 0.7         # Domain-general factor loading
-    TAU_DECAY = 4.0        # Integration window (seconds)
-    ALPHA_ATTENTION = 0.70 # Moderate cross-domain attention
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """9 tuples for DGTP computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ (10, 3, 0, 2), # spectral_flux, 100ms, value, bidi
+ (10, 3, 17, 2), # spectral_flux, 100ms, periodicity, bidi
+ (10, 16, 17, 2), # spectral_flux, 1000ms, periodicity, bidi
+ (11, 13, 8, 0), # onset_strength, 600ms, velocity, fwd
+ (11, 13, 11, 0), # onset_strength, 600ms, acceleration, fwd
+ # ── Motor-auditory coupling ──
+ (25, 16, 1, 0), # x_l0l5[0], 1000ms, mean, fwd
+ (25, 16, 2, 0), # x_l0l5[0], 1000ms, std, fwd
+ (25, 16, 19, 0), # x_l0l5[0], 1000ms, stability, fwd
+ (25, 3, 17, 2), # x_l0l5[0], 100ms, periodicity, bidi
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """9 tuples for DGTP computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # ── BEP horizons: beat/prosody tracking ──
-            (10, 3, 0, 2),     # spectral_flux, 100ms, value, bidi
-            (10, 3, 17, 2),    # spectral_flux, 100ms, periodicity, bidi
-            (10, 16, 17, 2),   # spectral_flux, 1000ms, periodicity, bidi
-            (11, 13, 8, 0),    # onset_strength, 600ms, velocity, fwd
-            (11, 13, 11, 0),   # onset_strength, 600ms, acceleration, fwd
-            # ── Motor-auditory coupling ──
-            (25, 16, 1, 0),    # x_l0l5[0], 1000ms, mean, fwd
-            (25, 16, 2, 0),    # x_l0l5[0], 1000ms, std, fwd
-            (25, 16, 19, 0),   # x_l0l5[0], 1000ms, stability, fwd
-            (25, 3, 17, 2),    # x_l0l5[0], 100ms, periodicity, bidi
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute DGTP 9D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute DGTP 9D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"BEP": (B,T,30), "ASA": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,9) DGTP output
+ """
+ # H³ direct features
+ beat_period_1s = h3_direct[(10, 16, 17, 2)].unsqueeze(-1)
+ coupling_period_100ms = h3_direct[(25, 3, 17, 2)].unsqueeze(-1)
+ onset_velocity_600ms = h3_direct[(11, 13, 8, 0)].unsqueeze(-1)
+ coupling_stability_1s = h3_direct[(25, 16, 19, 0)].unsqueeze(-1)
+ coupling_mean_1s = h3_direct[(25, 16, 1, 0)].unsqueeze(-1)
 
-        Returns:
-            (B,T,9) DGTP output
-        """
-        bep = mechanism_outputs["BEP"]    # (B, T, 30)
-        asa = mechanism_outputs["ASA"]    # (B, T, 30)
+ # ═══ LAYER E: Explicit features ═══
 
-        # BEP sub-sections
-        bep_beat = bep[..., 0:10]
-        bep_motor = bep[..., 10:20]
-        bep_groove = bep[..., 20:30]
+ # f22: Music Timing (coefficients sum = 1.0)
+ f22 = torch.sigmoid(
+ 0.40 * beat_period_1s
+ + 0.30 * coupling_period_100ms
+ )
 
-        # ASA sub-sections
-        asa_attn = asa[..., 10:20]
+ # f23: Speech Timing (coefficients sum = 1.0)
+ f23 = torch.sigmoid(
+ 0.35 * onset_velocity_600ms
+ + 0.30 * coupling_stability_1s
+ )
 
-        # H³ direct features
-        beat_period_1s = h3_direct[(10, 16, 17, 2)].unsqueeze(-1)
-        coupling_period_100ms = h3_direct[(25, 3, 17, 2)].unsqueeze(-1)
-        onset_velocity_600ms = h3_direct[(11, 13, 8, 0)].unsqueeze(-1)
-        coupling_stability_1s = h3_direct[(25, 16, 19, 0)].unsqueeze(-1)
-        coupling_mean_1s = h3_direct[(25, 16, 1, 0)].unsqueeze(-1)
+ # f24: Shared Mechanism (geometric mean)
+ f24 = torch.sqrt(torch.clamp(f22 * f23, min=1e-8))
 
-        # ═══ LAYER E: Explicit features ═══
+ # ═══ LAYER M: Mathematical ═══
+ domain_correlation = torch.sigmoid(
+ 0.5 * f22 * f23 + 0.5 * coupling_mean_1s
+ )
+ shared_variance = torch.sigmoid(
+ 0.5 * f24 + 0.5 * coupling_stability_1s
+ )
 
-        # f22: Music Timing (coefficients sum = 1.0)
-        f22 = torch.sigmoid(
-            0.40 * beat_period_1s
-            + 0.30 * bep_beat.mean(-1, keepdim=True)
-            + 0.30 * coupling_period_100ms
-        )
+ # ═══ LAYER P: Present ═══
+ music_beat = torch.sigmoid(
+ + 0.5 * beat_period_1s
+ )
+ dg_timing = torch.sigmoid(
+ + 0.5 * coupling_stability_1s
+ )
 
-        # f23: Speech Timing (coefficients sum = 1.0)
-        f23 = torch.sigmoid(
-            0.35 * onset_velocity_600ms
-            + 0.35 * bep_motor.mean(-1, keepdim=True)
-            + 0.30 * coupling_stability_1s
-        )
+ # ═══ LAYER F: Future ═══
+ cross_domain_pred = torch.sigmoid(
+ 0.5 * f24 + 0.5 * coupling_mean_1s
+ )
+ training_transfer = torch.sigmoid(
+ 0.5 * f24 + 0.5 * domain_correlation
+ )
 
-        # f24: Shared Mechanism (geometric mean)
-        f24 = torch.sqrt(torch.clamp(f22 * f23, min=1e-8))
-
-        # ═══ LAYER M: Mathematical ═══
-        domain_correlation = torch.sigmoid(
-            0.5 * f22 * f23 + 0.5 * coupling_mean_1s
-        )
-        shared_variance = torch.sigmoid(
-            0.5 * f24 + 0.5 * coupling_stability_1s
-        )
-
-        # ═══ LAYER P: Present ═══
-        music_beat = torch.sigmoid(
-            0.5 * bep_beat.mean(-1, keepdim=True)
-            + 0.5 * beat_period_1s
-        )
-        dg_timing = torch.sigmoid(
-            0.5 * asa_attn.mean(-1, keepdim=True)
-            + 0.5 * coupling_stability_1s
-        )
-
-        # ═══ LAYER F: Future ═══
-        cross_domain_pred = torch.sigmoid(
-            0.5 * f24 + 0.5 * coupling_mean_1s
-        )
-        training_transfer = torch.sigmoid(
-            0.5 * f24 + 0.5 * domain_correlation
-        )
-
-        return torch.cat([
-            f22, f23, f24,                                  # E: 3D
-            domain_correlation, shared_variance,            # M: 2D
-            music_beat, dg_timing,                          # P: 2D
-            cross_domain_pred, training_transfer,           # F: 2D
-        ], dim=-1)  # (B, T, 9)
+ return torch.cat([
+ f22, f23, f24, # E: 3D
+ domain_correlation, shared_variance, # M: 2D
+ music_beat, dg_timing, # P: 2D
+ cross_domain_pred, training_transfer, # F: 2D
+ ], dim=-1) # (B, T, 9)
 ```
 
 ---
@@ -570,8 +528,6 @@ class DGTP(BaseModel):
 | **Falsification Tests** | 1/5 partially supported | Limited validation |
 | **R³ Features Used** | ~12D of 49D | Energy + change + interactions |
 | **H³ Demand** | 9 tuples (0.39%) | Sparse, efficient |
-| **BEP Mechanism** | 30D (3 sub-sections) | Beat/motor (primary) |
-| **ASA Mechanism** | 30D (3 sub-sections) | Attention/salience |
 | **Output Dimensions** | **9D** | 4-layer structure |
 
 ---
@@ -611,19 +567,12 @@ class DGTP(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) | MI (v2.1.0) |
 |--------|-------------|-------------|-------------|
 | Input space | S⁰ (256D) | R³ (49D) | R³ (49D) — no change |
-| Temporal | HC⁰ mechanisms (NPL, PTM, ITM) | BEP (30D) + ASA (30D) mechanisms | Same — 9 H³ tuples |
-| Music timing | S⁰.L6.tempo[72] + HC⁰.NPL | R³.spectral_flux[10] + BEP.beat_entrainment | Same |
-| Speech timing | S⁰.L4.onset_rate[27] + HC⁰.PTM | R³.onset_strength[11] + BEP.motor_coupling | Same |
+| Music timing | S⁰.L6.tempo[72] + HC⁰.NPL | R³.spectral_flux[10] | Same |
+| Speech timing | S⁰.L4.onset_rate[27] + HC⁰.PTM | R³.onset_strength[11] | Same |
 | Shared mechanism | S⁰.L6.tempo × HC⁰.ITM | R³.x_l0l5[25:33] + H³ stability tuples | Same |
 | Papers | 0 | 2 (Rathcke + Patel) | **12** (5 HIGH, 7 MEDIUM) |
 | Brain regions | 0 | 4 (literature inference) | **8** (fMRI/7T/TMS/single-unit) |
 | Output | 9D | 9D (same) | 9D — no change |
-
-### Why BEP + ASA replaces HC⁰ mechanisms
-
-- **NPL → BEP.beat_entrainment** [0:10]: Neural phase locking for beat perception maps to BEP's beat frequency monitoring.
-- **PTM → BEP.motor_coupling** [10:20]: Predictive timing for speech maps to BEP's sensorimotor synchronization.
-- **ITM → ASA.attention_gating** [10:20] + H³ stability tuples: Interval timing maps to ASA's domain-general temporal attention and H³ coupling stability.
 
 ---
 

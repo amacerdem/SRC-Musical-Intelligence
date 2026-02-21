@@ -21,19 +21,17 @@ The **Hierarchical Groove State Integration Circuit** (HGSIC) models how multi-l
 THE THREE LEVELS OF GROOVE STATE INTEGRATION
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-BEAT LEVEL (200ms, H6)                 METER LEVEL (500ms, H11)
-Brain region: Posterior STG            Brain region: pSTG + Premotor
-Mechanism: BEP.beat_induction          Mechanism: BEP.meter_extraction
-Function: "What is the pulse?"         Function: "What is the pattern?"
-Input: Sound intensity tracking        Input: Accent grouping, syncopation
-Evidence: r = 0.49 (Potes 2012)        Evidence: 110ms delay (Potes 2012)
+BEAT LEVEL (200ms, H6) METER LEVEL (500ms, H11)
+Brain region: Posterior STG Brain region: pSTG + Premotor
+Function: "What is the pulse?" Function: "What is the pattern?"
+Input: Sound intensity tracking Input: Accent grouping, syncopation
+Evidence: r = 0.49 (Potes 2012) Evidence: 110ms delay (Potes 2012)
 
-              MOTOR LEVEL (1000ms, H16)
-              Brain region: Premotor / Motor Cortex
-              Mechanism: BEP.motor_entrainment
-              Function: "How does it groove?"
-              Input: Beat × Meter integration
-              Evidence: r = 0.70 cross-correlation
+ MOTOR LEVEL (1000ms, H16)
+ Brain region: Premotor / Motor Cortex
+ Function: "How does it groove?"
+ Input: Beat × Meter integration
+ Evidence: r = 0.70 cross-correlation
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 KEY INSIGHT: Groove emerges from the HIERARCHICAL INTEGRATION of beat
@@ -61,118 +59,117 @@ HGSIC provides the **groove integration** that connects beat-level perception to
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                 HGSIC — COMPLETE CIRCUIT                                     ║
+║ HGSIC — COMPLETE CIRCUIT ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  MUSICAL INPUT (rhythmic sound with dynamic intensity)                      ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │        POSTERIOR SUPERIOR TEMPORAL GYRUS (pSTG)                     │    ║
-║  │        High-gamma (70–170 Hz) ↔ sound intensity                   │    ║
-║  │                                                                     │    ║
-║  │   Beat induction: pulse extraction from intensity envelope         │    ║
-║  │   Gamma ↔ intensity: r = 0.49 (Potes 2012, ECoG, n=8)           │    ║
-║  └──────────────────────────┬──────────────────────────────────────────┘    ║
-║                              │                                               ║
-║                              │  110 ms delay (dorsal auditory stream)        ║
-║                              │  Cross-correlation: r = 0.70                  ║
-║                              │                                               ║
-║                              ▼                                               ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │        PREMOTOR / MOTOR CORTEX                                     │    ║
-║  │        Meter extraction + motor entrainment                        │    ║
-║  │                                                                     │    ║
-║  │   Metric grouping of beat-level signals                            │    ║
-║  │   Motor entrainment: body synchronization to groove                │    ║
-║  │   Groove state = hierarchical beat × meter × motor integration    │    ║
-║  └─────────────────────────────────────────────────────────────────────┘    ║
-║                                                                              ║
-║  DORSAL AUDITORY-MOTOR PATHWAY: pSTG → Premotor → Motor cortex             ║
-║  (Beat → Meter → Groove: hierarchical temporal integration)                 ║
-║                                                                              ║
+║ ║
+║ MUSICAL INPUT (rhythmic sound with dynamic intensity) ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ POSTERIOR SUPERIOR TEMPORAL GYRUS (pSTG) │ ║
+║ │ High-gamma (70–170 Hz) ↔ sound intensity │ ║
+║ │ │ ║
+║ │ Beat induction: pulse extraction from intensity envelope │ ║
+║ │ Gamma ↔ intensity: r = 0.49 (Potes 2012, ECoG, n=8) │ ║
+║ └──────────────────────────┬──────────────────────────────────────────┘ ║
+║ │ ║
+║ │ 110 ms delay (dorsal auditory stream) ║
+║ │ Cross-correlation: r = 0.70 ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ PREMOTOR / MOTOR CORTEX │ ║
+║ │ Meter extraction + motor entrainment │ ║
+║ │ │ ║
+║ │ Metric grouping of beat-level signals │ ║
+║ │ Motor entrainment: body synchronization to groove │ ║
+║ │ Groove state = hierarchical beat × meter × motor integration │ ║
+║ └─────────────────────────────────────────────────────────────────────┘ ║
+║ ║
+║ DORSAL AUDITORY-MOTOR PATHWAY: pSTG → Premotor → Motor cortex ║
+║ (Beat → Meter → Groove: hierarchical temporal integration) ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 CRITICAL EVIDENCE:
 ─────────────────
-Potes 2012 (ECoG):  pSTG high-gamma ↔ sound intensity, r = 0.49 (n=8)
-Potes 2012 (ECoG):  Auditory → motor delay 110ms, r = 0.70 (n=4)
-Potes 2012 (ECoG):  High gamma band 70-170 Hz, posterior STG
+Potes 2012 (ECoG): pSTG high-gamma ↔ sound intensity, r = 0.49 (n=8)
+Potes 2012 (ECoG): Auditory → motor delay 110ms, r = 0.70 (n=4)
+Potes 2012 (ECoG): High gamma band 70-170 Hz, posterior STG
 ```
 
-### 2.2 Information Flow Architecture (EAR → BRAIN → BEP → HGSIC)
+### 2.2 Information Flow Architecture (EAR → BRAIN → HGSIC)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    HGSIC COMPUTATION ARCHITECTURE                            ║
+║ HGSIC COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins × 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
-║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ CHANGE   │ │ X-INT  │ │        ║
-║  │  │ 7D [0:7]  │ │ 5D[7:12]│ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
-║  │  │           │ │         │ │ [12:21] │ │ [21:25]  │ │ [25:49]│ │        ║
-║  │  │           │ │amplitude│ │         │ │spec_chg  │ │x_l0l5  │ │        ║
-║  │  │           │ │loudness │ │         │ │energy_chg│ │x_l4l5  │ │        ║
-║  │  │           │ │centroid │ │         │ │pitch_chg │ │        │ │        ║
-║  │  │           │ │flux     │ │         │ │timbre_chg│ │        │ │        ║
-║  │  │           │ │onset    │ │         │ │          │ │        │ │        ║
-║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                         HGSIC reads: 9D                          │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                                                                  │        ║
-║  │  ┌── Beat ───────┐ ┌── Motor ────────┐ ┌── Bar ─────────────┐ │        ║
-║  │  │ 200ms (H6)     │ │ 500ms (H11)     │ │ 1000ms (H16)      │ │        ║
-║  │  │                │ │                  │ │                     │ │        ║
-║  │  │ Beat-level     │ │ Motor prep      │ │ Bar-level meter     │ │        ║
-║  │  │ (intensity)    │ │ (110ms delay)    │ │ (groove state)     │ │        ║
-║  │  └──────┬─────────┘ └──────┬───────────┘ └──────┬──────────────┘ │        ║
-║  │         │                  │                     │               │        ║
-║  │         └──────────────────┴─────────────────────┘               │        ║
-║  │                         HGSIC demand: ~15 of 2304 tuples         │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Sensorimotor Circuit ═══════  ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌─────────────────┐                                                        ║
-║  │  BEP (30D)      │  Beat Entrainment Processing mechanism                ║
-║  │                 │                                                        ║
-║  │ Beat Ind [0:10] │  Beat strength, tempo, phase, regularity              ║
-║  │ Meter    [10:20]│  Meter, syncopation, accent pattern, groove           ║
-║  │ Motor    [20:30]│  Movement urge, sync precision, coupling              ║
-║  └────────┬────────┘                                                        ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    HGSIC MODEL (11D Output)                      │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f01_beat_gamma, f02_meter_integration,     │        ║
-║  │                       f03_motor_groove                           │        ║
-║  │  Layer M (Math):      groove_index, coupling_strength            │        ║
-║  │  Layer P (Present):   pstg_activation, motor_preparation,        │        ║
-║  │                       onset_sync                                 │        ║
-║  │  Layer F (Future):    groove_prediction, beat_expectation,       │        ║
-║  │                       motor_anticipation                         │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins × 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ ENERGY │ │ TIMBRE │ │ CHANGE │ │ X-INT │ │ ║
+║ │ │ 7D [0:7] │ │ 5D[7:12]│ │ 9D │ │ 4D │ │ 24D │ │ ║
+║ │ │ │ │ │ │ [12:21] │ │ [21:25] │ │ [25:49]│ │ ║
+║ │ │ │ │amplitude│ │ │ │spec_chg │ │x_l0l5 │ │ ║
+║ │ │ │ │loudness │ │ │ │energy_chg│ │x_l4l5 │ │ ║
+║ │ │ │ │centroid │ │ │ │pitch_chg │ │ │ │ ║
+║ │ │ │ │flux │ │ │ │timbre_chg│ │ │ │ ║
+║ │ │ │ │onset │ │ │ │ │ │ │ │ ║
+║ │ └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │ ║
+║ │ HGSIC reads: 9D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ │ ║
+║ │ ┌── Beat ───────┐ ┌── Motor ────────┐ ┌── Bar ─────────────┐ │ ║
+║ │ │ 200ms (H6) │ │ 500ms (H11) │ │ 1000ms (H16) │ │ ║
+║ │ │ │ │ │ │ │ │ ║
+║ │ │ Beat-level │ │ Motor prep │ │ Bar-level meter │ │ ║
+║ │ │ (intensity) │ │ (110ms delay) │ │ (groove state) │ │ ║
+║ │ └──────┬─────────┘ └──────┬───────────┘ └──────┬──────────────┘ │ ║
+║ │ │ │ │ │ ║
+║ │ └──────────────────┴─────────────────────┘ │ ║
+║ │ HGSIC demand: ~15 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Sensorimotor Circuit ═══════ ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────┐ ║
+║ │ │ ║
+║ │ Beat Ind [0:10] │ Beat strength, tempo, phase, regularity ║
+║ │ Meter [10:20]│ Meter, syncopation, accent pattern, groove ║
+║ │ Motor [20:30]│ Movement urge, sync precision, coupling ║
+║ └────────┬────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ HGSIC MODEL (11D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f01_beat_gamma, f02_meter_integration, │ ║
+║ │ f03_motor_groove │ ║
+║ │ Layer M (Math): groove_index, coupling_strength │ ║
+║ │ Layer P (Present): pstg_activation, motor_preparation, │ ║
+║ │ onset_sync │ ║
+║ │ Layer F (Future): groove_prediction, beat_expectation, │ ║
+║ │ motor_anticipation │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -190,7 +187,7 @@ Potes 2012 (ECoG):  High gamma band 70-170 Hz, posterior STG
 | 4 | **Grahn & Brett 2007** | fMRI 3T, ROI | 27 | Putamen ROI: metric simple > complex and nonmetric | L put t=4.05, R put t=3.65; SMA t=2.36 | **Beat specificity**: putamen selectively responds to beat-inducing rhythms |
 | 5 | **Spiech et al. 2022** | Pupillometry + behavioral | 30 | Groove (Urge to Move) follows inverted U-curve with syncopation level | χ²(1)=14.643 p<0.001; syncopation F(1,29)=4.781 p=0.037 | **Groove model**: inverted-U syncopation curve, groove_index optimization |
 | 6 | **Spiech et al. 2022** | Pupillometry | 30 | Pupil drift rate indexes groove with beat perception mediation | Quadratic χ²(1)=9.721 p=0.002; CA-BAT interaction χ²(2)=15.939 | **Individual differences**: beat perception ability mediates groove |
-| 7 | **Thaut et al. 2015** | Review | — | Period entrainment (not phase lock) optimizes motor control; CTR provides continuous time reference | Sub-threshold: 2% of absolute interval | **Theoretical mechanism**: period entrainment for BEP.motor_entrainment |
+| 7 | **Thaut et al. 2015** | Review | — | Period entrainment (not phase lock) optimizes motor control; CTR provides continuous time reference | Sub-threshold: 2% of absolute interval | **Theoretical mechanism**: period entrainment for motor_entrainment |
 | 8 | **Large et al. 2023** | Review, computational | — | Optimal beat 0.5-8 Hz; three frameworks (oscillatory, predictive, Bayesian) | Optimal ~2 Hz (500 ms) | **Theoretical frame**: dynamical systems model for beat-groove hierarchy |
 | 9 | **Ayyildiz et al. 2025** | Behavioral (online) | 100 | Micro-timing variations (SD=4ms) enhance music-evoked imagery and engagement | Micro vs mechanical: Odds=100.69, Post.Prob=0.99 | **Micro-timing sensitivity**: sub-threshold timing affects groove-adjacent processing |
 | 10 | **Noboa et al. 2025** | EEG, SS-EPs | 30 | Beat-frequency SS-EPs at 1.25 Hz and harmonics; syncopated vs unsyncopated | F(1,29)=9.094 rhythm; F(1,29)=148.618 frequency | **Neural beat tracking**: SS-EPs faithfully track beat even in syncopation |
@@ -224,23 +221,23 @@ GROOVE STATE INTEGRATION
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Level 1 — BEAT INDUCTION (pSTG, H6 = 200ms)
-  γ_pSTG(t) = 0.49 · I(t) + β
-  Beat pulse extraction from intensity envelope
-  High-gamma 70-170 Hz tracks sound energy
+ γ_pSTG(t) = 0.49 · I(t) + β
+ Beat pulse extraction from intensity envelope
+ High-gamma 70-170 Hz tracks sound energy
 
 Level 2 — METER EXTRACTION (pSTG + Premotor, H11 = 500ms)
-  Meter(t) = accent_pattern(Beat(t), t_window=500ms)
-  Syncopation detection, metric grouping
-  Auditory-motor delay: 110 ms
+ Meter(t) = accent_pattern(Beat(t), t_window=500ms)
+ Syncopation detection, metric grouping
+ Auditory-motor delay: 110 ms
 
 Level 3 — MOTOR ENTRAINMENT (Motor cortex, H16 = 1000ms)
-  Groove(t) = 0.70 · Beat(t) × Meter(t) × Motor(t − 110ms)
-  Bar-level integration of beat × meter → groove state
-  Cross-correlation at 110ms: r = 0.70
+ Groove(t) = 0.70 · Beat(t) × Meter(t) × Motor(t − 110ms)
+ Bar-level integration of beat × meter → groove state
+ Cross-correlation at 110ms: r = 0.70
 
 INTEGRATED MODEL:
-  Groove_State = f(Beat_Induction, Meter_Extraction, Motor_Entrainment)
-  = hierarchical product across H6 → H11 → H16
+ Groove_State = f(Beat_Induction, Meter_Extraction, Motor_Entrainment)
+ = hierarchical product across H6 → H11 → H16
 ```
 
 ### 3.3 Effect Size Summary
@@ -249,39 +246,39 @@ INTEGRATED MODEL:
 PRIMARY EFFECT SIZES:
 ─────────────────────────────────────────────────────────────────────
 Potes et al. 2012 (ECoG, N=8):
-  pSTG high-gamma ↔ intensity: r = 0.49 avg (range 0.43-0.58)
-  Per subject: A=0.43, B=0.53, C=0.45, D=0.52, E=0.50, F=0.43, G=0.51, H=0.58
-  Auditory→motor coupling: r = 0.70 at 110 ms lag (N=4 with motor electrodes)
-  Gamma band: 70-170 Hz
-  NOTE: Intensity tracking, NOT groove/beat directly (see §3.1.2)
+ pSTG high-gamma ↔ intensity: r = 0.49 avg (range 0.43-0.58)
+ Per subject: A=0.43, B=0.53, C=0.45, D=0.52, E=0.50, F=0.43, G=0.51, H=0.58
+ Auditory→motor coupling: r = 0.70 at 110 ms lag (N=4 with motor electrodes)
+ Gamma band: 70-170 Hz
+ NOTE: Intensity tracking, NOT groove/beat directly (see §3.1.2)
 
 Grahn & Brett 2007 (fMRI, N=27):
-  L putamen: Z = 5.67 (MNI -24, 6, 9)
-  R putamen: Z = 5.08 (MNI 21, 6, 6)
-  L SMA: Z = 5.03 (MNI -9, 6, 60)
-  R SMA: Z = 4.97 (MNI 3, 6, 66)
-  Beat-specific: putamen ROI MS vs MC t = 4.05, MS vs NM t = 3.40
-  Musicians > non-musicians: SMA t = 1.99, cerebellum t = 2.77-2.91
+ L putamen: Z = 5.67 (MNI -24, 6, 9)
+ R putamen: Z = 5.08 (MNI 21, 6, 6)
+ L SMA: Z = 5.03 (MNI -9, 6, 60)
+ R SMA: Z = 4.97 (MNI 3, 6, 66)
+ Beat-specific: putamen ROI MS vs MC t = 4.05, MS vs NM t = 3.40
+ Musicians > non-musicians: SMA t = 1.99, cerebellum t = 2.77-2.91
 
 Spiech et al. 2022 (Pupillometry + behavioral, N=30):
-  Groove inverted-U: Urge to Move χ²(1) = 14.643, p < 0.001
-  Syncopation main effect: F(1,29) = 4.781, p = 0.037, η²G = 0.045
-  Enjoyment syncopation: F(1,29) = 10.515, p = 0.003, η²G = 0.095
-  Beat perception mediates: CA-BAT interaction χ²(2) = 15.939, p < 0.001
-  Pupil drift quadratic: χ²(1) = 9.721, p = 0.002
+ Groove inverted-U: Urge to Move χ²(1) = 14.643, p < 0.001
+ Syncopation main effect: F(1,29) = 4.781, p = 0.037, η²G = 0.045
+ Enjoyment syncopation: F(1,29) = 10.515, p = 0.003, η²G = 0.095
+ Beat perception mediates: CA-BAT interaction χ²(2) = 15.939, p < 0.001
+ Pupil drift quadratic: χ²(1) = 9.721, p = 0.002
 
 Ayyildiz et al. 2025 (Behavioral, N=100):
-  Micro-timing vs mechanical: Odds = 100.69, Post. Prob = 0.99
-  Imagined distance: Odds > 9999, Post. Prob = 1.00
+ Micro-timing vs mechanical: Odds = 100.69, Post. Prob = 0.99
+ Imagined distance: Odds > 9999, Post. Prob = 1.00
 
 Noboa et al. 2025 (EEG, N=30):
-  Beat-frequency SS-EPs: F(1,29) = 148.618 (frequency)
-  Rhythm effect: F(1,29) = 9.094
+ Beat-frequency SS-EPs: F(1,29) = 148.618 (frequency)
+ Rhythm effect: F(1,29) = 9.094
 
 REPLICATION STATUS:
-  Putamen/SMA beat specificity: Grahn 2007 + Hoddinott 2024 (7T RSA, C-Score)
-  Groove-syncopation curve: Spiech 2022 (pupillometry + behavioral)
-  Entrainment frequency range: 0.5-8 Hz confirmed (Large 2023 review)
+ Putamen/SMA beat specificity: Grahn 2007 + Hoddinott 2024 (7T RSA, C-Score)
+ Groove-syncopation curve: Spiech 2022 (pupillometry + behavioral)
+ Entrainment frequency range: 0.5-8 Hz confirmed (Large 2023 review)
 
 QUALITY ASSESSMENT: β-tier (12 papers, 7 methods, primary Potes QUALIFIED)
 ```
@@ -320,27 +317,27 @@ QUALITY ASSESSMENT: β-tier (12 papers, 7 methods, primary Potes QUALIFIED)
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[7] amplitude ────────────────┐
 R³[8] loudness ─────────────────┼──► pSTG Beat Induction (γ activity)
-R³[11] onset_strength ──────────┘   Math: γ_pSTG(t) = 0.49 · I(t) + β
-                                    BEP.beat_induction at H6 (200ms)
+R³[11] onset_strength ──────────┘ Math: γ_pSTG(t) = 0.49 · I(t) + β
+ beat_induction at H6 (200ms)
 
 R³[10] spectral_flux ──────────┐
 R³[22] energy_change ──────────┼──► Meter Extraction (accent pattern)
-R³[21] spectral_change ────────┘   Accent grouping from dynamics
-                                    BEP.meter_extraction at H11 (500ms)
+R³[21] spectral_change ────────┘ Accent grouping from dynamics
+ meter_extraction at H11 (500ms)
 
 R³[9] spectral_centroid_energy ─┐
 R³[23] pitch_change ────────────┼──► Motor Groove (hierarchical state)
-R³[24] timbre_change ───────────┘   Groove = Beat × Meter × Motor coupling
-                                    BEP.motor_entrainment at H16 (1000ms)
+R³[24] timbre_change ───────────┘ Groove = Beat × Meter × Motor coupling
+ motor_entrainment at H16 (1000ms)
 
 R³[71] groove_index ───────────┐
 R³[68] syncopation_index ──────┼──► Groove Feature Integration (v2)
-R³[89] rhythmic_info_content ──┤   Direct groove metrics + information
-R³[117] modulation_4Hz ────────┘   Sub-beat modulation energy
+R³[89] rhythmic_info_content ──┤ Direct groove metrics + information
+R³[117] modulation_4Hz ────────┘ Sub-beat modulation energy
 ```
 
 ---
@@ -349,7 +346,7 @@ R³[117] modulation_4Hz ────────┘   Sub-beat modulation energy
 
 ### 5.1 Demand Specification
 
-HGSIC requires H³ features at three BEP horizons: H6 (200ms), H11 (500ms), H16 (1000ms).
+HGSIC requires H³ features at three horizons: H6 (200ms), H11 (500ms), H16 (1000ms).
 These correspond to beat → meter → groove (bar-level) timescales.
 
 | R³ Index | Feature | H | Morph | Law | Purpose |
@@ -374,7 +371,7 @@ These correspond to beat → meter → groove (bar-level) timescales.
 
 #### R³ v2 Projected Expansion
 
-HGSIC projected v2 features from G:Rhythm, I:Interaction, and K:Modulation, aligned with BEP horizons.
+HGSIC projected v2 features from G:Rhythm, I:Interaction, and K:Modulation, aligned with corresponding H³ horizons.
 
 | R³ Idx | Feature | Group | H | Morph | Law | Purpose |
 |:------:|---------|:-----:|:-:|-------|:---:|---------|
@@ -390,18 +387,6 @@ HGSIC projected v2 features from G:Rhythm, I:Interaction, and K:Modulation, alig
 **v2 projected**: 8 tuples
 **Total projected**: 23 tuples of 294,912 theoretical = 0.0078%
 
-### 5.2 Mechanism Binding
-
-HGSIC reads from **BEP** (primary, sole mechanism):
-
-| Mechanism | Sub-section | Range | HGSIC Role | Weight |
-|-----------|-------------|-------|-----------|--------|
-| **BEP** | Beat Induction | BEP[0:10] | Intensity → gamma → pulse extraction | **1.0** (primary) |
-| **BEP** | Meter Extraction | BEP[10:20] | Accent grouping, syncopation, metric structure | **1.0** (primary) |
-| **BEP** | Motor Entrainment | BEP[20:30] | Motor coupling, groove state, movement urge | **1.0** (primary) |
-
-HGSIC does NOT read from TMH — groove state integration is about beat-meter-motor hierarchy, not long-range temporal memory.
-
 ---
 
 ## 6. Output Space: 11D Multi-Layer Representation
@@ -414,62 +399,62 @@ HGSIC OUTPUT TENSOR: 11D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 0  │ f01_beat_gamma    │ [0, 1] │ pSTG high-gamma beat tracking (70-170 Hz).
-    │                   │        │ Intensity → gamma correlation at beat level.
-    │                   │        │ f01 = σ(0.49 · amplitude · loudness ·
-    │                   │        │         onset · BEP.beat_induction)
-    │                   │        │ 0.49 from Potes 2012 (pSTG r)
+ 0 │ f01_beat_gamma │ [0, 1] │ pSTG high-gamma beat tracking (70-170 Hz).
+ │ │ │ Intensity → gamma correlation at beat level.
+ │ │ │ f01 = σ(0.49 · amplitude · loudness ·
+ │ │ │ onset · beat_induction)
+ │ │ │ 0.49 from Potes 2012 (pSTG r)
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 1  │ f02_meter_integr  │ [0, 1] │ Metric structure from accent grouping.
-    │                   │        │ Syncopation and accent pattern detection.
-    │                   │        │ f02 = σ(0.51 · f01 · energy_periodicity ·
-    │                   │        │         BEP.meter_extraction)
-    │                   │        │ |0.51| ≤ 1.0 (sigmoid rule)
+ 1 │ f02_meter_integr │ [0, 1] │ Metric structure from accent grouping.
+ │ │ │ Syncopation and accent pattern detection.
+ │ │ │ f02 = σ(0.51 · f01 · energy_periodicity ·
+ │ │ │ meter_extraction)
+ │ │ │ |0.51| ≤ 1.0 (sigmoid rule)
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 2  │ f03_motor_groove  │ [0, 1] │ Motor entrainment groove state.
-    │                   │        │ Hierarchical beat × meter → motor coupling.
-    │                   │        │ f03 = σ(0.70 · f01 · f02 ·
-    │                   │        │         BEP.motor_entrainment)
-    │                   │        │ 0.70 from Potes 2012 (coupling r)
+ 2 │ f03_motor_groove │ [0, 1] │ Motor entrainment groove state.
+ │ │ │ Hierarchical beat × meter → motor coupling.
+ │ │ │ f03 = σ(0.70 · f01 · f02 ·
+ │ │ │ motor_entrainment)
+ │ │ │ 0.70 from Potes 2012 (coupling r)
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 3  │ groove_index      │ [0, 1] │ Integrated groove state index.
-    │                   │        │ Weighted hierarchical combination.
-    │                   │        │ groove = (1·f01 + 2·f02 + 3·f03) / 6
+ 3 │ groove_index │ [0, 1] │ Integrated groove state index.
+ │ │ │ Weighted hierarchical combination.
+ │ │ │ groove = (1·f01 + 2·f02 + 3·f03) / 6
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 4  │ coupling_strength │ [0, 1] │ Auditory-motor coupling strength at 110ms.
-    │                   │        │ amplitude_smoothness × energy_periodicity.
+ 4 │ coupling_strength │ [0, 1] │ Auditory-motor coupling strength at 110ms.
+ │ │ │ amplitude_smoothness × energy_periodicity.
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 5  │ pstg_activation   │ [0, 1] │ pSTG current activation state.
-    │                   │        │ Intensity × beat-level BEP.
+ 5 │ pstg_activation │ [0, 1] │ pSTG current activation state.
+ │ │ │ Intensity × beat-level H³.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 6  │ motor_preparation │ [0, 1] │ Premotor preparation state.
-    │                   │        │ Motor entrainment × meter context.
+ 6 │ motor_preparation │ [0, 1] │ Premotor preparation state.
+ │ │ │ Motor entrainment × meter context.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 7  │ onset_sync        │ [0, 1] │ Onset synchronization signal.
-    │                   │        │ spectral_flux × onset_strength at H6.
+ 7 │ onset_sync │ [0, 1] │ Onset synchronization signal.
+ │ │ │ spectral_flux × onset_strength at H6.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 8  │ groove_prediction │ [0, 1] │ Predicted groove state (110ms ahead).
-    │                   │        │ BEP.motor_entrainment × groove trend.
+ 8 │ groove_prediction │ [0, 1] │ Predicted groove state (110ms ahead).
+ │ │ │ motor_entrainment × groove trend.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 9  │ beat_expectation  │ [0, 1] │ Next beat timing prediction.
-    │                   │        │ BEP.beat_induction × periodicity at H16.
+ 9 │ beat_expectation │ [0, 1] │ Next beat timing prediction.
+ │ │ │ beat_induction × periodicity at H16.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
-10  │ motor_anticipation│ [0, 1] │ Motor system anticipatory activation.
-    │                   │        │ Smoothness × trend at bar level.
+10 │ motor_anticipation│ [0, 1] │ Motor system anticipatory activation.
+ │ │ │ Smoothness × trend at bar level.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 11D per frame at 172.27 Hz
@@ -484,29 +469,26 @@ TOTAL: 11D per frame at 172.27 Hz
 
 ```python
 # f01: Beat Gamma (pSTG, r = 0.49)
-amp_val = h3[(7, 6, 0, 0)]           # amplitude value at H6
-loud_val = h3[(8, 6, 0, 0)]          # loudness value at H6
-onset_val = h3[(11, 6, 0, 0)]        # onset_strength value at H6
+amp_val = h3[(7, 6, 0, 0)] # amplitude value at H6
+loud_val = h3[(8, 6, 0, 0)] # loudness value at H6
+onset_val = h3[(11, 6, 0, 0)] # onset_strength value at H6
 f01 = σ(0.49 · amp_val · loud_val · onset_val
-         · mean(BEP.beat_induction[0:10]))
 # |0.49| ≤ 1.0 ✓ — Potes 2012 pSTG correlation
 
 # f02: Meter Integration (accent pattern)
-energy_period = h3[(22, 11, 14, 2)]  # energy_change periodicity at H11
+energy_period = h3[(22, 11, 14, 2)] # energy_change periodicity at H11
 f02 = σ(0.51 · f01 · energy_period
-         · mean(BEP.meter_extraction[10:20]))
 # |0.51| ≤ 1.0 ✓
 
 # f03: Motor Groove (hierarchical integration, r = 0.70)
 f03 = σ(0.70 · f01 · f02
-         · mean(BEP.motor_entrainment[20:30]))
 # |0.70| ≤ 1.0 ✓ — Potes 2012 coupling correlation
 
 # f04 (groove_index): Weighted hierarchical combination
 groove_index = (1 · f01 + 2 · f02 + 3 · f03) / 6
 
 # f05 (coupling_strength): Auditory-motor coupling
-amp_smooth = h3[(7, 16, 15, 0)]      # amplitude smoothness at H16
+amp_smooth = h3[(7, 16, 15, 0)] # amplitude smoothness at H16
 coupling_strength = σ(0.50 · amp_smooth · energy_period)
 # |0.50| ≤ 1.0 ✓
 ```
@@ -518,37 +500,33 @@ coupling_strength = σ(0.50 · amp_smooth · energy_period)
 
 # pstg_activation: current auditory gamma state
 pstg_activation = σ(0.5 · amp_val · loud_val
-                    + 0.4 · mean(BEP.beat_induction[0:10]))
 # |0.5| + |0.4| = 0.9 ≤ 1.0 ✓
 
 # motor_preparation: premotor readiness
-motor_preparation = σ(0.4 · mean(BEP.motor_entrainment[20:30])
-                      + 0.3 · mean(BEP.meter_extraction[10:20])
-                      + 0.2 · f02)
+ + 0.2 · f02)
 # |0.4| + |0.3| + |0.2| = 0.9 ≤ 1.0 ✓
 
 # onset_sync: onset synchronization trigger
-flux_val = h3[(10, 6, 0, 0)]         # spectral_flux value at H6
+flux_val = h3[(10, 6, 0, 0)] # spectral_flux value at H6
 onset_sync = σ(0.50 · flux_val · onset_val)
 # |0.50| ≤ 1.0 ✓
 
 # ═══ LAYER F: Future ═══
 
 # groove_prediction: predicted groove state
-amp_trend = h3[(7, 16, 18, 0)]       # amplitude trend at H16
+amp_trend = h3[(7, 16, 18, 0)] # amplitude trend at H16
 groove_prediction = σ(0.5 · f03 + 0.4 · amp_trend)
 # |0.5| + |0.4| = 0.9 ≤ 1.0 ✓
 
 # beat_expectation: next beat timing
-centroid_period = h3[(9, 16, 14, 2)]  # centroid periodicity at H16
-beat_expectation = σ(0.5 · mean(BEP.beat_induction[0:10])
-                     + 0.5 · centroid_period)
+centroid_period = h3[(9, 16, 14, 2)] # centroid periodicity at H16
+ + 0.5 · centroid_period)
 # |0.5| + |0.5| = 1.0 ≤ 1.0 ✓
 
 # motor_anticipation: anticipatory motor activation
-pitch_period = h3[(23, 16, 14, 2)]    # pitch_change periodicity at H16
+pitch_period = h3[(23, 16, 14, 2)] # pitch_change periodicity at H16
 motor_anticipation = σ(0.4 · amp_smooth + 0.3 · amp_trend
-                       + 0.3 · pitch_period)
+ + 0.3 · pitch_period)
 # |0.4| + |0.3| + |0.3| = 1.0 ≤ 1.0 ✓
 ```
 
@@ -579,24 +557,22 @@ motor_anticipation = σ(0.4 · amp_smooth + 0.3 · amp_trend
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    HGSIC INTERACTIONS                                         │
+│ HGSIC INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (STU):                                                         │
-│  AMSC.auditory_activatn ──────► HGSIC (gamma for groove state)            │
-│  ETAM.entrainment_state ──────► HGSIC (multi-scale entrainment → groove)  │
-│  HGSIC.groove_index ──────────► OMS (groove target for oscillatory sync)  │
-│  HGSIC.motor_preparation ─────► EDTA (groove-modulated tempo accuracy)    │
-│  HGSIC.beat_expectation ──────► TPIO (beat prediction for interval est.)  │
-│                                                                             │
-│  CROSS-UNIT (P2: STU internal):                                            │
-│  BEP.beat_induction ↔ BEP.motor_entrainment (r = 0.70)                   │
-│  Beat induction → metric grouping → motor groove (hierarchical cascade)   │
-│                                                                             │
-│  CROSS-UNIT (P5: STU → ARU):                                              │
-│  HGSIC.groove_index ──► ARU.AED (groove → arousal modulation)             │
-│  HGSIC.motor_groove ──► ARU.SRP (motor engagement → reward pathway)       │
-│                                                                             │
+│ │
+│ INTRA-UNIT (STU): │
+│ AMSC.auditory_activatn ──────► HGSIC (gamma for groove state) │
+│ ETAM.entrainment_state ──────► HGSIC (multi-scale entrainment → groove) │
+│ HGSIC.groove_index ──────────► OMS (groove target for oscillatory sync) │
+│ HGSIC.motor_preparation ─────► EDTA (groove-modulated tempo accuracy) │
+│ HGSIC.beat_expectation ──────► TPIO (beat prediction for interval est.) │
+│ │
+│ CROSS-UNIT (P2: STU internal): │
+│ Beat induction → metric grouping → motor groove (hierarchical cascade) │
+│ │
+│ CROSS-UNIT (P5: STU → ARU): │
+│ HGSIC.motor_groove ──► ARU.SRP (motor engagement → reward pathway) │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -624,129 +600,111 @@ motor_anticipation = σ(0.4 · amp_smooth + 0.3 · amp_trend
 
 ```python
 class HGSIC(BaseModel):
-    """Hierarchical Groove State Integration Circuit.
+ """Hierarchical Groove State Integration Circuit.
 
-    Output: 11D per frame.
-    Reads: BEP mechanism (30D).
-    """
-    NAME = "HGSIC"
-    UNIT = "STU"
-    TIER = "β5"
-    OUTPUT_DIM = 11
-    MECHANISM_NAMES = ("BEP",)        # Primary and sole mechanism
+ Output: 11D per frame.
+ """
+ NAME = "HGSIC"
+ UNIT = "STU"
+ TIER = "β5"
+ OUTPUT_DIM = 11
+ AUDITORY_CORR = 0.49 # pSTG gamma ↔ intensity (Potes 2012)
+ MOTOR_COUPLING = 0.70 # auditory → motor (Potes 2012)
+ METER_WEIGHT = 0.51 # meter integration weight
 
-    AUDITORY_CORR = 0.49   # pSTG gamma ↔ intensity (Potes 2012)
-    MOTOR_COUPLING = 0.70  # auditory → motor (Potes 2012)
-    METER_WEIGHT = 0.51    # meter integration weight
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """15 tuples for HGSIC computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ # Beat level (H6 = 200ms)
+ (7, 6, 0, 0), # amplitude, value, forward
+ (7, 6, 4, 0), # amplitude, max, forward
+ (8, 6, 0, 0), # loudness, value, forward
+ (10, 6, 0, 0), # spectral_flux, value, forward
+ (10, 6, 17, 0), # spectral_flux, peaks, forward
+ (11, 6, 0, 0), # onset_strength, value, forward
+ # Motor window (H11 = 500ms)
+ (22, 11, 1, 0), # energy_change, mean, forward
+ (22, 11, 14, 2), # energy_change, periodicity, bidirectional
+ (21, 11, 1, 0), # spectral_change, mean, forward
+ (8, 11, 1, 0), # loudness, mean, forward
+ # Bar level (H16 = 1000ms)
+ (9, 16, 14, 2), # spectral_centroid_energy, periodicity, bidi
+ (7, 16, 15, 0), # amplitude, smoothness, forward
+ (7, 16, 18, 0), # amplitude, trend, forward
+ (23, 16, 14, 2), # pitch_change, periodicity, bidirectional
+ (24, 16, 1, 0), # timbre_change, mean, forward
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """15 tuples for HGSIC computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # Beat level (H6 = 200ms)
-            (7, 6, 0, 0),     # amplitude, value, forward
-            (7, 6, 4, 0),     # amplitude, max, forward
-            (8, 6, 0, 0),     # loudness, value, forward
-            (10, 6, 0, 0),    # spectral_flux, value, forward
-            (10, 6, 17, 0),   # spectral_flux, peaks, forward
-            (11, 6, 0, 0),    # onset_strength, value, forward
-            # Motor window (H11 = 500ms)
-            (22, 11, 1, 0),   # energy_change, mean, forward
-            (22, 11, 14, 2),  # energy_change, periodicity, bidirectional
-            (21, 11, 1, 0),   # spectral_change, mean, forward
-            (8, 11, 1, 0),    # loudness, mean, forward
-            # Bar level (H16 = 1000ms)
-            (9, 16, 14, 2),   # spectral_centroid_energy, periodicity, bidi
-            (7, 16, 15, 0),   # amplitude, smoothness, forward
-            (7, 16, 18, 0),   # amplitude, trend, forward
-            (23, 16, 14, 2),  # pitch_change, periodicity, bidirectional
-            (24, 16, 1, 0),   # timbre_change, mean, forward
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute HGSIC 11D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute HGSIC 11D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"BEP": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,11) HGSIC output
+ """
+ # H³ features
+ amp_val = h3_direct[(7, 6, 0, 0)].unsqueeze(-1)
+ loud_val = h3_direct[(8, 6, 0, 0)].unsqueeze(-1)
+ onset_val = h3_direct[(11, 6, 0, 0)].unsqueeze(-1)
+ energy_period = h3_direct[(22, 11, 14, 2)].unsqueeze(-1)
+ flux_val = h3_direct[(10, 6, 0, 0)].unsqueeze(-1)
+ amp_smooth = h3_direct[(7, 16, 15, 0)].unsqueeze(-1)
+ amp_trend = h3_direct[(7, 16, 18, 0)].unsqueeze(-1)
+ centroid_period = h3_direct[(9, 16, 14, 2)].unsqueeze(-1)
+ pitch_period = h3_direct[(23, 16, 14, 2)].unsqueeze(-1)
 
-        Returns:
-            (B,T,11) HGSIC output
-        """
-        bep = mechanism_outputs["BEP"]    # (B, T, 30)
+ # ═══ LAYER E: Explicit features ═══
+ f01 = torch.sigmoid(self.AUDITORY_CORR * (
+ amp_val * loud_val * onset_val
+ ))
+ f02 = torch.sigmoid(self.METER_WEIGHT * (
+ f01 * energy_period
+ ))
+ f03 = torch.sigmoid(self.MOTOR_COUPLING * (
+ f01 * f02
+ ))
 
-        # BEP sub-sections
-        bep_beat = bep[..., 0:10]         # beat induction
-        bep_meter = bep[..., 10:20]       # meter extraction
-        bep_motor = bep[..., 20:30]       # motor entrainment
+ # ═══ LAYER M: Mathematical ═══
+ groove_index = (1 * f01 + 2 * f02 + 3 * f03) / 6
+ coupling_strength = torch.sigmoid(
+ 0.50 * amp_smooth * energy_period
+ )
 
-        # H³ features
-        amp_val = h3_direct[(7, 6, 0, 0)].unsqueeze(-1)
-        loud_val = h3_direct[(8, 6, 0, 0)].unsqueeze(-1)
-        onset_val = h3_direct[(11, 6, 0, 0)].unsqueeze(-1)
-        energy_period = h3_direct[(22, 11, 14, 2)].unsqueeze(-1)
-        flux_val = h3_direct[(10, 6, 0, 0)].unsqueeze(-1)
-        amp_smooth = h3_direct[(7, 16, 15, 0)].unsqueeze(-1)
-        amp_trend = h3_direct[(7, 16, 18, 0)].unsqueeze(-1)
-        centroid_period = h3_direct[(9, 16, 14, 2)].unsqueeze(-1)
-        pitch_period = h3_direct[(23, 16, 14, 2)].unsqueeze(-1)
+ # ═══ LAYER P: Present ═══
+ pstg_activation = torch.sigmoid(
+ 0.5 * amp_val * loud_val
+ )
+ motor_preparation = torch.sigmoid(
+ + 0.2 * f02
+ )
+ onset_sync = torch.sigmoid(0.50 * flux_val * onset_val)
 
-        # ═══ LAYER E: Explicit features ═══
-        f01 = torch.sigmoid(self.AUDITORY_CORR * (
-            amp_val * loud_val * onset_val
-            * bep_beat.mean(-1, keepdim=True)
-        ))
-        f02 = torch.sigmoid(self.METER_WEIGHT * (
-            f01 * energy_period
-            * bep_meter.mean(-1, keepdim=True)
-        ))
-        f03 = torch.sigmoid(self.MOTOR_COUPLING * (
-            f01 * f02
-            * bep_motor.mean(-1, keepdim=True)
-        ))
+ # ═══ LAYER F: Future ═══
+ groove_prediction = torch.sigmoid(
+ 0.5 * f03 + 0.4 * amp_trend
+ )
+ beat_expectation = torch.sigmoid(
+ + 0.5 * centroid_period
+ )
+ motor_anticipation = torch.sigmoid(
+ 0.4 * amp_smooth + 0.3 * amp_trend
+ + 0.3 * pitch_period
+ )
 
-        # ═══ LAYER M: Mathematical ═══
-        groove_index = (1 * f01 + 2 * f02 + 3 * f03) / 6
-        coupling_strength = torch.sigmoid(
-            0.50 * amp_smooth * energy_period
-        )
-
-        # ═══ LAYER P: Present ═══
-        pstg_activation = torch.sigmoid(
-            0.5 * amp_val * loud_val
-            + 0.4 * bep_beat.mean(-1, keepdim=True)
-        )
-        motor_preparation = torch.sigmoid(
-            0.4 * bep_motor.mean(-1, keepdim=True)
-            + 0.3 * bep_meter.mean(-1, keepdim=True)
-            + 0.2 * f02
-        )
-        onset_sync = torch.sigmoid(0.50 * flux_val * onset_val)
-
-        # ═══ LAYER F: Future ═══
-        groove_prediction = torch.sigmoid(
-            0.5 * f03 + 0.4 * amp_trend
-        )
-        beat_expectation = torch.sigmoid(
-            0.5 * bep_beat.mean(-1, keepdim=True)
-            + 0.5 * centroid_period
-        )
-        motor_anticipation = torch.sigmoid(
-            0.4 * amp_smooth + 0.3 * amp_trend
-            + 0.3 * pitch_period
-        )
-
-        return torch.cat([
-            f01, f02, f03,                                    # E: 3D
-            groove_index, coupling_strength,                   # M: 2D
-            pstg_activation, motor_preparation, onset_sync,    # P: 3D
-            groove_prediction, beat_expectation,               # F: 3D
-            motor_anticipation,
-        ], dim=-1)  # (B, T, 11)
+ return torch.cat([
+ f01, f02, f03, # E: 3D
+ groove_index, coupling_strength, # M: 2D
+ pstg_activation, motor_preparation, onset_sync, # P: 3D
+ groove_prediction, beat_expectation, # F: 3D
+ motor_anticipation,
+ ], dim=-1) # (B, T, 11)
 ```
 
 ---
@@ -762,7 +720,6 @@ class HGSIC(BaseModel):
 | **Falsification Tests** | 7/9 confirmed, 1 constrains | Intensity tracking, motor propagation, beat-specific regions, groove curve, beat perception mediation, micro-timing, tempo range confirmed; Potes intensity interpretation CONSTRAINS |
 | **R³ Features Used** | 9D of 49D | Energy + Change |
 | **H³ Demand** | 15 tuples (0.65%) | Sparse, efficient |
-| **BEP Mechanism** | 30D (3 sub-sections) | Full coverage |
 | **Output Dimensions** | **11D** | 4-layer structure (E3 + M2 + P3 + F3) |
 
 ---
@@ -808,25 +765,14 @@ class HGSIC(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D): L0, L4, L5, L7, X_L0L4, X_L4L5 | R³ (49D): Energy[7:12], Change[21:25] |
-| Temporal | HC⁰ mechanisms (OSC, NPL, ITM, GRV) | BEP mechanism (30D) |
-| Intensity signal | S⁰.L0.amplitude[2] + HC⁰.OSC | R³.amplitude[7] + BEP.beat_induction |
-| Motor coupling | S⁰.L7.crossband × HC⁰.NPL | BEP.motor_entrainment[20:30] |
-| Gamma proxy | S⁰.L7[80:104] (crossband ratios) | R³.Energy + BEP features |
-| Groove model | S⁰.L5 × HC⁰.GRV (flat combination) | BEP hierarchical (beat→meter→motor) |
-| Interval timing | S⁰.L4 × HC⁰.ITM | BEP.meter_extraction[10:20] |
+| Intensity signal | S⁰.L0.amplitude[2] + HC⁰.OSC | R³.amplitude[7] |
+| Motor coupling | S⁰.L7.crossband × HC⁰.NPL | motor_entrainment[20:30] |
+| Gamma proxy | S⁰.L7[80:104] (crossband ratios) | R³.Energy + beat-entrainment features |
+| Groove model | S⁰.L5 × HC⁰.GRV (flat combination) | beat-entrainment hierarchical (beat→meter→motor) |
+| Interval timing | S⁰.L4 × HC⁰.ITM | meter_extraction[10:20] |
 | Demand format | HC⁰ index ranges (30/2304 = 1.30%) | H³ 4-tuples (15/2304 = 0.65%) |
 | Output dimensions | 12D | **11D** (catalog value, consolidated) |
 | Integration model | Flat | Hierarchical (3-level cascade) |
-
-### Why BEP replaces HC⁰ mechanisms
-
-The D0 pipeline used 4 separate HC⁰ mechanisms (OSC, NPL, ITM, GRV). In MI, these are unified into the BEP mechanism with 3 hierarchical sub-sections:
-- **OSC → BEP.beat_induction** [0:10]: Oscillatory gamma tracking → beat-level pulse extraction
-- **NPL → BEP.beat_induction** [0:10]: Phase-locking → auditory beat coupling
-- **ITM → BEP.meter_extraction** [10:20]: Interval timing → metric accent grouping
-- **GRV → BEP.motor_entrainment** [20:30]: Groove processing → motor engagement state
-
-The key architectural change: D0 combined these flat (equal-weight); MI cascades them hierarchically (beat → meter → groove), which better reflects the dorsal auditory-motor pathway anatomy.
 
 ---
 
@@ -840,7 +786,6 @@ The key architectural change: D0 combined these flat (equal-weight); MI cascades
 ## Code Note (Phase 5)
 
 The `mi_beta/brain/units/stu/models/hgsic.py` implementation has:
-- `MECHANISM_NAMES = ("BEP", "TMH")` — doc specifies `("BEP",)` only. **Code has extra TMH mechanism** not specified in doc.
 - `h3_demand = ()` — empty, should be populated with the 15 tuples from §5.1.
 - `version = "2.0.0"` — needs update to `"2.1.0"`.
 - `paper_count = 5` — should be `12`.

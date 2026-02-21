@@ -24,46 +24,46 @@ SOCIAL SYNCHRONY REWARD INTEGRATION
 GROUP MUSIC-MAKING
 ──────────────────
 
- Person A  ←──── Shared Musical Stimulus ────►  Person B
-    │                                                │
-    ▼                                                ▼
-┌─────────────┐    Behavioral Synchrony     ┌─────────────┐
-│ Motor Plan  │◄──── (timing, gesture) ────►│ Motor Plan  │
-│ (SMA, PMC)  │                             │ (SMA, PMC)  │
-└──────┬──────┘                             └──────┬──────┘
-       │            Inter-Brain Coupling            │
-       │     ┌──────────────────────────────┐       │
-       └────►│   Prefrontal Synchronization │◄──────┘
-             │   (rDLPFC, rTPJ, vmPFC)      │
-             │                              │
-             │   fNIRS: ↑ INS (p < 0.001)   │
-             │   Leader→Follower alignment   │
-             └──────────────┬───────────────┘
-                            │
-                    ┌───────▼───────┐
-                    │ REWARD SYSTEM │
-                    │               │
-                    │  NAcc: ↑ DA   │     Endorphin release
-                    │  vmPFC: value │     (Dunbar 2012)
-                    │  VTA: signal  │     β-endorphin ↑
-                    │  OFC: hedonic │     Pain threshold ↑
-                    │               │
-                    └───────┬───────┘
-                            │
-                    ┌───────▼───────┐
-                    │ GROUP FLOW    │
-                    │               │
-                    │ Shared flow   │  Emotional synchrony
-                    │ Social bond   │  Oxytocin release
-                    │ Collective    │  Trust & cohesion ↑
-                    │ pleasure      │
-                    └───────────────┘
+ Person A ←──── Shared Musical Stimulus ────► Person B
+ │ │
+ ▼ ▼
+┌─────────────┐ Behavioral Synchrony ┌─────────────┐
+│ Motor Plan │◄──── (timing, gesture) ────►│ Motor Plan │
+│ (SMA, PMC) │ │ (SMA, PMC) │
+└──────┬──────┘ └──────┬──────┘
+ │ Inter-Brain Coupling │
+ │ ┌──────────────────────────────┐ │
+ └────►│ Prefrontal Synchronization │◄──────┘
+ │ (rDLPFC, rTPJ, vmPFC) │
+ │ │
+ │ fNIRS: ↑ INS (p < 0.001) │
+ │ Leader→Follower alignment │
+ └──────────────┬───────────────┘
+ │
+ ┌───────▼───────┐
+ │ REWARD SYSTEM │
+ │ │
+ │ NAcc: ↑ DA │ Endorphin release
+ │ vmPFC: value │ (Dunbar 2012)
+ │ VTA: signal │ β-endorphin ↑
+ │ OFC: hedonic │ Pain threshold ↑
+ │ │
+ └───────┬───────┘
+ │
+ ┌───────▼───────┐
+ │ GROUP FLOW │
+ │ │
+ │ Shared flow │ Emotional synchrony
+ │ Social bond │ Oxytocin release
+ │ Collective │ Trust & cohesion ↑
+ │ pleasure │
+ └───────────────┘
 
 TEMPORAL DYNAMICS:
-  Synchrony onset:   ~2-5s after coordinated action begins
-  Peak group flow:   Sustained during coordinated improvisation
-  Social bonding:    Cumulative over minutes of joint music-making
-  Reward amplification: 1.3-1.8x solitary listening baseline
+ Synchrony onset: ~2-5s after coordinated action begins
+ Peak group flow: Sustained during coordinated improvisation
+ Social bonding: Cumulative over minutes of joint music-making
+ Reward amplification: 1.3-1.8x solitary listening baseline
 
 EFFECT SIZE: d = 0.85 (social bonding ↑ neural synchrony, Ni et al. 2024)
 
@@ -93,81 +93,79 @@ SSRI provides the social-reward bridge for the Reward Processing Unit:
 
 ## 2. Neural Circuit: Complete Anatomy
 
-### 2.1 Information Flow Architecture (EAR → BRAIN → AED+CPD+C0P → SSRI)
+### 2.1 Information Flow Architecture (EAR → BRAIN → SSRI)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    SSRI COMPUTATION ARCHITECTURE                             ║
+║ SSRI COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins x 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
-║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ CHANGE   │ │ X-INT  │ │        ║
-║  │  │ 7D [0:7]  │ │ 5D[7:12]│ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
-║  │  │           │ │         │ │ [12:21] │ │ [21:25]  │ │ [25:49]│ │        ║
-║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                         SSRI reads: ~15D                        │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                                                                  │        ║
-║  │  ┌── AED Horizons ──────────────┐ ┌── CPD Horizons ──────────┐  │        ║
-║  │  │ H3 (100ms alpha)             │ │ H4 (125ms theta)          │  │        ║
-║  │  │ H8 (500ms delta)             │ │ H8 (500ms delta)          │  │        ║
-║  │  │ H16 (1000ms beat)            │ │ H16 (1000ms beat)         │  │        ║
-║  │  │ H20 (5000ms LTI)            │ │ H20 (5000ms LTI)          │  │        ║
-║  │  │                              │ │                            │  │        ║
-║  │  │ Affective synchrony          │ │ Phase-locked coordination  │  │        ║
-║  │  │ Social valence tracking      │ │ Group flow sustain         │  │        ║
-║  │  └──────────────────────────────┘ └────────────────────────────┘  │        ║
-║  │                         SSRI demand: ~18 of 2304 tuples           │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Social-Reward Circuit ═══    ║
-║                               │                                              ║
-║                       ┌───────┴───────┐                                      ║
-║                       ▼               ▼                                      ║
-║  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐              ║
-║  │  AED (30D)      │  │  CPD (30D)      │  │  C0P (30D)      │              ║
-║  │                 │  │                 │  │                 │              ║
-║  │ Valence  [0:10] │  │ Anticip. [0:10] │  │ Tension  [0:10] │              ║
-║  │ Arousal  [10:20]│  │ Peak Exp [10:20]│  │ Expect.  [10:20]│              ║
-║  │ Emotion  [20:30]│  │ Resolut. [20:30]│  │ Approach [20:30]│              ║
-║  └────────┬────────┘  └────────┬────────┘  └────────┬────────┘              ║
-║           │                    │                    │                        ║
-║           └────────────┬───────┴────────────────────┘                        ║
-║                        ▼                                                     ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    SSRI MODEL (11D Output)                       │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f01_synchrony_reward,                      │        ║
-║  │                       f02_social_bonding_index,                   │        ║
-║  │                       f03_group_flow_state,                       │        ║
-║  │                       f04_entrainment_quality,                    │        ║
-║  │                       f05_collective_pleasure                     │        ║
-║  │  Layer M (Math):      social_prediction_error,                    │        ║
-║  │                       synchrony_amplification_ratio               │        ║
-║  │  Layer P (Present):   prefrontal_coupling_state,                  │        ║
-║  │                       endorphin_proxy                             │        ║
-║  │  Layer F (Future):    bonding_trajectory_pred,                    │        ║
-║  │                       flow_sustain_pred                            │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins x 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ ENERGY │ │ TIMBRE │ │ CHANGE │ │ X-INT │ │ ║
+║ │ │ 7D [0:7] │ │ 5D[7:12]│ │ 9D │ │ 4D │ │ 24D │ │ ║
+║ │ │ │ │ │ │ [12:21] │ │ [21:25] │ │ [25:49]│ │ ║
+║ │ └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │ ║
+║ │ SSRI reads: ~15D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ │ ║
+║ │ │ H3 (100ms alpha) │ │ H4 (125ms theta) │ │ ║
+║ │ │ H8 (500ms delta) │ │ H8 (500ms delta) │ │ ║
+║ │ │ H16 (1000ms beat) │ │ H16 (1000ms beat) │ │ ║
+║ │ │ H20 (5000ms LTI) │ │ H20 (5000ms LTI) │ │ ║
+║ │ │ │ │ │ │ ║
+║ │ │ Affective synchrony │ │ Phase-locked coordination │ │ ║
+║ │ │ Social valence tracking │ │ Group flow sustain │ │ ║
+║ │ └──────────────────────────────┘ └────────────────────────────┘ │ ║
+║ │ SSRI demand: ~18 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Social-Reward Circuit ═══ ║
+║ │ ║
+║ ┌───────┴───────┐ ║
+║ ▼ ▼ ║
+║ ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐ ║
+║ │ │ │ │ │ │ ║
+║ │ Valence [0:10] │ │ Anticip. [0:10] │ │ Tension [0:10] │ ║
+║ │ Arousal [10:20]│ │ Peak Exp [10:20]│ │ Expect. [10:20]│ ║
+║ │ Emotion [20:30]│ │ Resolut. [20:30]│ │ Approach [20:30]│ ║
+║ └────────┬────────┘ └────────┬────────┘ └────────┬────────┘ ║
+║ │ │ │ ║
+║ └────────────┬───────┴────────────────────┘ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SSRI MODEL (11D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f01_synchrony_reward, │ ║
+║ │ f02_social_bonding_index, │ ║
+║ │ f03_group_flow_state, │ ║
+║ │ f04_entrainment_quality, │ ║
+║ │ f05_collective_pleasure │ ║
+║ │ Layer M (Math): social_prediction_error, │ ║
+║ │ synchrony_amplification_ratio │ ║
+║ │ Layer P (Present): prefrontal_coupling_state, │ ║
+║ │ endorphin_proxy │ ║
+║ │ Layer F (Future): bonding_trajectory_pred, │ ║
+║ │ flow_sustain_pred │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -199,19 +197,19 @@ SSRI provides the social-reward bridge for the Reward Processing Unit:
 ### 3.2 Effect Size Summary
 
 ```
-Primary Evidence (k=17):  Multi-method convergence (fNIRS, EEG, MEG, fMRI, PET, pupillometry, behavioral)
-Heterogeneity:            Moderate-high (social contexts: dance, drumming, brass band, piano, storytelling)
-Quality Assessment:       β-tier (cross-domain synthesis required; social → reward bridge)
-Replication:              Robust for social bonding → neural synchrony link (Ni 2024: N=528)
-                          Robust for groove/entrainment → noradrenergic arousal (Spiech 2022: N=30)
-                          Strong for DA mechanism in music reward (Salimpoor 2011, Mori & Zatorre 2024)
-                          Moderate for synchrony → reward amplification (Kokal 2011)
-Note:                     4 entries NOT in Literature/catalog.json (Dunbar 2012, Tarr 2014,
-                          Kokal 2011, Novembre 2012). These are canonical papers in the field
-                          cited per the Beta_upgrade.md specification. Effect sizes are estimated
-                          from published reports and marked accordingly.
-                          13 entries verified against Literature/catalog.json summaries.
-Total N across studies:   ~1200+ participants (largest: Ni et al. 2024, N=528)
+Primary Evidence (k=17): Multi-method convergence (fNIRS, EEG, MEG, fMRI, PET, pupillometry, behavioral)
+Heterogeneity: Moderate-high (social contexts: dance, drumming, brass band, piano, storytelling)
+Quality Assessment: β-tier (cross-domain synthesis required; social → reward bridge)
+Replication: Robust for social bonding → neural synchrony link (Ni 2024: N=528)
+ Robust for groove/entrainment → noradrenergic arousal (Spiech 2022: N=30)
+ Strong for DA mechanism in music reward (Salimpoor 2011, Mori & Zatorre 2024)
+ Moderate for synchrony → reward amplification (Kokal 2011)
+Note: 4 entries NOT in Literature/catalog.json (Dunbar 2012, Tarr 2014,
+ Kokal 2011, Novembre 2012). These are canonical papers in the field
+ cited per the Beta_upgrade.md specification. Effect sizes are estimated
+ from published reports and marked accordingly.
+ 13 entries verified against Literature/catalog.json summaries.
+Total N across studies: ~1200+ participants (largest: Ni et al. 2024, N=528)
 ```
 
 ---
@@ -251,27 +249,23 @@ Total N across studies:   ~1200+ participants (largest: Ni et al. 2024, N=528)
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[10] spectral_flux ──────────┐
 R³[7] amplitude ───────────────┼──► Onset synchrony / entrainment quality
-H³ periodicity/velocity tuples ┘   Temporal alignment of co-performers
+H³ periodicity/velocity tuples ┘ Temporal alignment of co-performers
 
 R³[4] sensory_pleasantness ────┐
 R³[12] warmth ─────────────────┼──► Shared hedonic quality / timbral blend
-AED.valence_tracking[0:10] ────┘   Collective pleasure from harmonic consonance
 
 R³[22] energy_change ──────────┐
 R³[21] spectral_change ────────┼──► Social prediction error
-C0P.expectation_surprise[10:20]┘   Mismatch between expected and actual coordination
 
 R³[8] loudness ────────────────┐
 R³[11] rms_energy ─────────────┼──► Dynamic intensity matching
-CPD.anticipation[0:10] ────────┘   Shared anticipation through amplitude coupling
 
 R³[25:33] x_l0l5 ─────────────┐
-AED.emotional_trajectory[20:30]┼──► Social bonding integration
-H³ long-range trend tuples ────┘   Sustained emotional synchrony over musical phrases
+H³ long-range trend tuples ────┘ Sustained emotional synchrony over musical phrases
 ```
 
 ---
@@ -307,7 +301,7 @@ SSRI requires H³ features at multiple time scales: fast scales (100-125ms) for 
 
 #### R³ v2 Projected Expansion
 
-SSRI projected v2 from G:Rhythm + I:Information, aligned with AED+CPD+C0P horizons.
+SSRI projected v2 from G:Rhythm + I:Information, aligned with H³ direct+Cognitive polarity horizons.
 
 | R³ Idx | Feature | Group | H | Morph | Law | Purpose |
 |:------:|---------|:-----:|:-:|-------|:---:|---------|
@@ -325,20 +319,6 @@ SSRI projected v2 from G:Rhythm + I:Information, aligned with AED+CPD+C0P horizo
 **v2 projected**: 10 tuples
 **Total projected**: 28 tuples of 294,912 theoretical = 0.0095%
 
-### 5.2 AED + CPD + C0P Mechanism Binding
-
-| Mechanism | Sub-section | Range | SSRI Role | Weight |
-|-----------|-------------|-------|-----------|--------|
-| **AED** | Valence Tracking | AED[0:10] | Shared valence / collective hedonic signal | **1.0** (primary) |
-| **AED** | Arousal Dynamics | AED[10:20] | Arousal matching / group energy level | 0.9 |
-| **AED** | Emotional Trajectory | AED[20:30] | Emotional synchrony across phrase arcs | **0.9** |
-| **CPD** | Anticipation | CPD[0:10] | Shared anticipation / joint expectation | **1.0** (primary) |
-| **CPD** | Peak Experience | CPD[10:20] | Collective peak / group chills | 0.8 |
-| **CPD** | Resolution | CPD[20:30] | Shared resolution satisfaction | 0.7 |
-| **C0P** | Tension-Release | C0P[0:10] | Coordination tension / release cycle | 0.8 |
-| **C0P** | Expectation-Surprise | C0P[10:20] | Social prediction error computation | **0.9** (secondary) |
-| **C0P** | Approach-Avoidance | C0P[20:30] | Social approach motivation / bonding drive | 0.8 |
-
 ---
 
 ## 6. Output Space: 11D Multi-Layer Representation
@@ -351,69 +331,62 @@ SSRI OUTPUT TENSOR: 11D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 0  │ f01_synchrony_reward     │ [0, 1] │ Reward from interpersonal synchrony.
-    │                          │        │ f01 = σ(0.25 * onset_periodicity_500ms
-    │                          │        │       + 0.25 * mean(CPD.anticip[0:10])
-    │                          │        │       + 0.20 * mean(AED.valence[0:10])
-    │                          │        │       + 0.15 * mean_pleasantness_1s
-    │                          │        │       + 0.15 * coupling_trend_1s)
+ 0 │ f01_synchrony_reward │ [0, 1] │ Reward from interpersonal synchrony.
+ │ │ │ f01 = σ(0.25 * onset_periodicity_500ms
+ │ │ │ + 0.15 * mean_pleasantness_1s
+ │ │ │ + 0.15 * coupling_trend_1s)
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 1  │ f02_social_bonding_index │ [0, 1] │ Social bonding strength proxy.
-    │                          │        │ f02 = σ(0.25 * coupling_mean_5s
-    │                          │        │       + 0.25 * mean(AED.emotion[20:30])
-    │                          │        │       + 0.20 * f01
-    │                          │        │       + 0.15 * loudness_trend_5s
-    │                          │        │       + 0.15 * mean_warmth_1s)
+ 1 │ f02_social_bonding_index │ [0, 1] │ Social bonding strength proxy.
+ │ │ │ f02 = σ(0.25 * coupling_mean_5s
+ │ │ │ + 0.20 * f01
+ │ │ │ + 0.15 * loudness_trend_5s
+ │ │ │ + 0.15 * mean_warmth_1s)
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 2  │ f03_group_flow_state     │ [0, 1] │ Group flow / collective absorption.
-    │                          │        │ f03 = σ(0.25 * f01
-    │                          │        │       + 0.25 * mean(CPD.peak[10:20])
-    │                          │        │       + 0.20 * mean(AED.arousal[10:20])
-    │                          │        │       + 0.15 * mean_amplitude_500ms
-    │                          │        │       + 0.15 * spectral_entropy_500ms)
+ 2 │ f03_group_flow_state │ [0, 1] │ Group flow / collective absorption.
+ │ │ │ f03 = σ(0.25 * f01
+ │ │ │ + 0.15 * mean_amplitude_500ms
+ │ │ │ + 0.15 * spectral_entropy_500ms)
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 3  │ f04_entrainment_quality  │ [0, 1] │ Temporal entrainment precision.
-    │                          │        │ f04 = σ(0.30 * onset_periodicity_500ms
-    │                          │        │       + 0.25 * beat_periodicity_125ms
-    │                          │        │       + 0.25 * onset_100ms
-    │                          │        │       + 0.20 * energy_velocity_500ms)
+ 3 │ f04_entrainment_quality │ [0, 1] │ Temporal entrainment precision.
+ │ │ │ f04 = σ(0.30 * onset_periodicity_500ms
+ │ │ │ + 0.25 * beat_periodicity_125ms
+ │ │ │ + 0.25 * onset_100ms
+ │ │ │ + 0.20 * energy_velocity_500ms)
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 4  │ f05_collective_pleasure  │ [0, 1] │ Shared hedonic experience.
-    │                          │        │ f05 = σ(0.25 * mean_pleasantness_500ms
-    │                          │        │       + 0.25 * mean(AED.valence[0:10])
-    │                          │        │       + 0.20 * f03
-    │                          │        │       + 0.15 * f02
-    │                          │        │       + 0.15 * mean(CPD.resolut[20:30]))
+ 4 │ f05_collective_pleasure │ [0, 1] │ Shared hedonic experience.
+ │ │ │ f05 = σ(0.25 * mean_pleasantness_500ms
+ │ │ │ + 0.20 * f03
+ │ │ │ + 0.15 * f02
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 5  │ social_prediction_error  │ [-1,1] │ Social RPE: coordination quality vs.
-    │                          │        │ expectation. SPE = f04 - mean(
-    │                          │        │ C0P.expect_surprise[10:20]).
+ 5 │ social_prediction_error │ [-1,1] │ Social RPE: coordination quality vs.
+ │ │ │ expectation. SPE = f04 - mean(
+ │ │ │ expect_surprise[10:20]).
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 6  │ synchrony_amplification  │ [0, 3] │ Ratio of social reward to solo baseline.
-    │                          │        │ SA = 1.0 + f01 * (f04 + f02).
+ 6 │ synchrony_amplification │ [0, 3] │ Ratio of social reward to solo baseline.
+ │ │ │ SA = 1.0 + f01 * (f04 + f02).
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 7  │ prefrontal_coupling      │ [0, 1] │ Current rDLPFC/rTPJ synchronization.
+ 7 │ prefrontal_coupling │ [0, 1] │ Current rDLPFC/rTPJ synchronization.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 8  │ endorphin_proxy          │ [0, 1] │ Endorphin release estimate from
-    │                          │        │ sustained coordinated activity.
+ 8 │ endorphin_proxy │ [0, 1] │ Endorphin release estimate from
+ │ │ │ sustained coordinated activity.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 9  │ bonding_trajectory_pred  │ [0, 1] │ Predicted social bonding direction.
+ 9 │ bonding_trajectory_pred │ [0, 1] │ Predicted social bonding direction.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
-10  │ flow_sustain_pred        │ [0, 1] │ Predicted group flow sustainability.
+10 │ flow_sustain_pred │ [0, 1] │ Predicted group flow sustainability.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 11D per frame at 172.27 Hz
@@ -430,32 +403,32 @@ TOTAL: 11D per frame at 172.27 Hz
 Social Synchrony Reward Integration:
 
 SYNCHRONY-REWARD COUPLING:
-  R_social = R_individual × (1 + κ·Synchrony_Quality)
+ R_social = R_individual × (1 + κ·Synchrony_Quality)
 
-  Where:
-    R_individual = DAED.consummatory_da (solo listening baseline)
-    Synchrony_Quality = f(entrainment_precision, emotional_matching, coordination)
-    κ = 0.3-0.8 (social amplification coefficient)
+ Where:
+ R_individual = Dconsummatory_da (solo listening baseline)
+ Synchrony_Quality = f(entrainment_precision, emotional_matching, coordination)
+ κ = 0.3-0.8 (social amplification coefficient)
 
 SOCIAL PREDICTION ERROR:
-  SPE(t) = Coordination_Actual(t) - E[Coordination(t)]
-  NAcc_social = NAcc_solo + γ·max(SPE, 0)
+ SPE(t) = Coordination_Actual(t) - E[Coordination(t)]
+ NAcc_social = NAcc_solo + γ·max(SPE, 0)
 
-  Positive SPE → "better-than-expected" coordination → reward surge
-  Negative SPE → coordination breakdown → reward suppression
+ Positive SPE → "better-than-expected" coordination → reward surge
+ Negative SPE → coordination breakdown → reward suppression
 
 ENDORPHIN DYNAMICS:
-  dβ-endorphin/dt = τ_endo⁻¹ · (Sustained_Synchrony - Current_Endorphin)
-  where τ_endo = 30.0s (slow endorphin release/decay)
+ dβ-endorphin/dt = τ_endo⁻¹ · (Sustained_Synchrony - Current_Endorphin)
+ where τ_endo = 30.0s (slow endorphin release/decay)
 
 GROUP FLOW:
-  Flow_Group = α·Entrainment × β·SharedAffect × γ·Challenge_Skill_Balance
-  where α = 0.40, β = 0.35, γ = 0.25
+ Flow_Group = α·Entrainment × β·SharedAffect × γ·Challenge_Skill_Balance
+ where α = 0.40, β = 0.35, γ = 0.25
 
 Parameters:
-  κ_social = 0.60  (social amplification coefficient, from ~1.3-1.8x range)
-  τ_endo = 30.0s   (endorphin dynamics time constant)
-  τ_bond = 120.0s  (social bonding accumulation time constant)
+ κ_social = 0.60 (social amplification coefficient, from ~1.3-1.8x range)
+ τ_endo = 30.0s (endorphin dynamics time constant)
+ τ_bond = 120.0s (social bonding accumulation time constant)
 ```
 
 ### 7.2 Feature Formulas
@@ -465,45 +438,37 @@ Parameters:
 
 # f01: Synchrony Reward
 f01 = σ(0.25 * onset_periodicity_500ms
-       + 0.25 * mean(CPD.anticipation[0:10])
-       + 0.20 * mean(AED.valence_tracking[0:10])
-       + 0.15 * mean_pleasantness_1s
-       + 0.15 * coupling_trend_1s)
+ + 0.15 * mean_pleasantness_1s
+ + 0.15 * coupling_trend_1s)
 # coefficients: 0.25 + 0.25 + 0.20 + 0.15 + 0.15 = 1.0 ✓
 
 # f02: Social Bonding Index
 f02 = σ(0.25 * coupling_mean_5s
-       + 0.25 * mean(AED.emotional_trajectory[20:30])
-       + 0.20 * f01
-       + 0.15 * loudness_trend_5s
-       + 0.15 * mean_warmth_1s)
+ + 0.20 * f01
+ + 0.15 * loudness_trend_5s
+ + 0.15 * mean_warmth_1s)
 # coefficients: 0.25 + 0.25 + 0.20 + 0.15 + 0.15 = 1.0 ✓
 
 # f03: Group Flow State
 f03 = σ(0.25 * f01
-       + 0.25 * mean(CPD.peak_experience[10:20])
-       + 0.20 * mean(AED.arousal_dynamics[10:20])
-       + 0.15 * mean_amplitude_500ms
-       + 0.15 * spectral_entropy_500ms)
+ + 0.15 * mean_amplitude_500ms
+ + 0.15 * spectral_entropy_500ms)
 # coefficients: 0.25 + 0.25 + 0.20 + 0.15 + 0.15 = 1.0 ✓
 
 # f04: Entrainment Quality
 f04 = σ(0.30 * onset_periodicity_500ms
-       + 0.25 * beat_periodicity_125ms
-       + 0.25 * onset_100ms
-       + 0.20 * energy_velocity_500ms)
+ + 0.25 * beat_periodicity_125ms
+ + 0.25 * onset_100ms
+ + 0.20 * energy_velocity_500ms)
 # coefficients: 0.30 + 0.25 + 0.25 + 0.20 = 1.0 ✓
 
 # f05: Collective Pleasure
 f05 = σ(0.25 * mean_pleasantness_500ms
-       + 0.25 * mean(AED.valence_tracking[0:10])
-       + 0.20 * f03
-       + 0.15 * f02
-       + 0.15 * mean(CPD.resolution[20:30]))
+ + 0.20 * f03
+ + 0.15 * f02
 # coefficients: 0.25 + 0.25 + 0.20 + 0.15 + 0.15 = 1.0 ✓
 
 # Social Prediction Error ([-1, 1])
-social_pred_error = tanh(f04 - mean(C0P.expectation_surprise[10:20]))
 
 # Synchrony Amplification Ratio
 sync_amplification = 1.0 + f01 * (f04 + f02)
@@ -536,44 +501,41 @@ sync_amplification = 1.0 + f01 * (f04 + f02)
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    SSRI INTERACTIONS                                         │
+│ SSRI INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (RPU):                                                         │
-│  SSRI.synchrony_reward ─────────► DAED (social amplification of DA)       │
-│  SSRI.collective_pleasure ──────► MORMR (collective → opioid release)     │
-│  SSRI.social_prediction_error ──► RPEM (social RPE → striatal learning)   │
-│  SSRI.group_flow_state ─────────► MCCN (group flow → collective chills)   │
-│  SSRI.social_bonding_index ─────► MEAMR (bonding → shared memory)         │
-│  SSRI.entrainment_quality ──────► IUCP (coordination → complexity pref.)  │
-│                                                                             │
-│  CROSS-UNIT (RPU → STU):                                                   │
-│  SSRI.entrainment_quality ──────► STU.synchronization (motor coupling)    │
-│  SSRI.group_flow_state ─────────► STU.timing_precision (flow → timing)    │
-│                                                                             │
-│  CROSS-UNIT (RPU → ARU):                                                   │
-│  SSRI.social_bonding_index ─────► ARU.valence (bonding → positive affect) │
-│  SSRI.collective_pleasure ──────► ARU.arousal (collective → arousal)      │
-│                                                                             │
-│  CROSS-UNIT (RPU → IMU):                                                   │
-│  SSRI.social_bonding_index ─────► IMU.encoding (social → memory binding)  │
-│                                                                             │
-│  CROSS-UNIT (RPU → MPU):                                                   │
-│  SSRI.entrainment_quality ──────► MPU.motor_planning (coordination)       │
-│                                                                             │
-│  UPSTREAM DEPENDENCIES:                                                     │
-│  AED mechanism (30D) ──────────► SSRI (shared valence/emotion tracking)   │
-│  CPD mechanism (30D) ──────────► SSRI (shared anticipation/peak/resolut.) │
-│  C0P mechanism (30D) ──────────► SSRI (coordination tension/prediction)   │
-│  R³ (~15D) ─────────────────────► SSRI (direct spectral features)        │
-│  H³ (18 tuples) ────────────────► SSRI (multi-scale temporal dynamics)   │
-│                                                                             │
-│  NOVEL PATHWAY (SSRI-specific):                                            │
-│  SSRI ←── Inter-brain coupling ──► Second brain (not yet modeled)         │
-│  NOTE: Current implementation models the ACOUSTIC correlates of             │
-│  social synchrony. Full inter-brain modeling requires hyperscanning         │
-│  data pipeline (future Phase 2+).                                          │
-│                                                                             │
+│ │
+│ INTRA-UNIT (RPU): │
+│ SSRI.synchrony_reward ─────────► DAED (social amplification of DA) │
+│ SSRI.collective_pleasure ──────► MORMR (collective → opioid release) │
+│ SSRI.social_prediction_error ──► RPEM (social RPE → striatal learning) │
+│ SSRI.group_flow_state ─────────► MCCN (group flow → collective chills) │
+│ SSRI.social_bonding_index ─────► MEAMR (bonding → shared memory) │
+│ SSRI.entrainment_quality ──────► IUCP (coordination → complexity pref.) │
+│ │
+│ CROSS-UNIT (RPU → STU): │
+│ SSRI.entrainment_quality ──────► STU.synchronization (motor coupling) │
+│ SSRI.group_flow_state ─────────► STU.timing_precision (flow → timing) │
+│ │
+│ CROSS-UNIT (RPU → ARU): │
+│ SSRI.social_bonding_index ─────► ARU.valence (bonding → positive affect) │
+│ SSRI.collective_pleasure ──────► ARU.arousal (collective → arousal) │
+│ │
+│ CROSS-UNIT (RPU → IMU): │
+│ SSRI.social_bonding_index ─────► IMU.encoding (social → memory binding) │
+│ │
+│ CROSS-UNIT (RPU → MPU): │
+│ SSRI.entrainment_quality ──────► MPU.motor_planning (coordination) │
+│ │
+│ UPSTREAM DEPENDENCIES: │
+│ R³ (~15D) ─────────────────────► SSRI (direct spectral features) │
+│ H³ (18 tuples) ────────────────► SSRI (multi-scale temporal dynamics) │
+│ │
+│ NOVEL PATHWAY (SSRI-specific): │
+│ SSRI ←── Inter-brain coupling ──► Second brain (not yet modeled) │
+│ NOTE: Current implementation models the ACOUSTIC correlates of │
+│ social synchrony. Full inter-brain modeling requires hyperscanning │
+│ data pipeline (future Phase 2+). │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -602,207 +564,175 @@ sync_amplification = 1.0 + f01 * (f04 + f02)
 
 ```python
 class SSRI(BaseModel):
-    """Social Synchrony Reward Integration Model.
+ """Social Synchrony Reward Integration Model.
 
-    Output: 11D per frame.
-    Reads: AED mechanism (30D), CPD mechanism (30D), C0P mechanism (30D), R³ direct.
+ Output: 11D per frame.
 
-    Models how interpersonal neural synchronization and behavioral
-    coordination during group music-making generates hedonic reward
-    through prefrontal-limbic pathways. Captures "group flow".
-    """
-    NAME = "SSRI"
-    UNIT = "RPU"
-    TIER = "β4"
-    OUTPUT_DIM = 11
-    MECHANISM_NAMES = ("AED", "CPD", "C0P")
+ Models how interpersonal neural synchronization and behavioral
+ coordination during group music-making generates hedonic reward
+ through prefrontal-limbic pathways. Captures "group flow".
+ """
+ NAME = "SSRI"
+ UNIT = "RPU"
+ TIER = "β4"
+ OUTPUT_DIM = 11
+ KAPPA_SOCIAL = 0.60 # Social amplification coefficient
+ TAU_ENDORPHIN = 30.0 # Endorphin dynamics time constant (seconds)
+ TAU_BONDING = 120.0 # Social bonding accumulation (seconds)
+ ALPHA_FLOW = 0.40 # Group flow: entrainment weight
+ BETA_AFFECT = 0.35 # Group flow: shared affect weight
+ GAMMA_CHALLENGE = 0.25 # Group flow: challenge-skill balance weight
 
-    KAPPA_SOCIAL = 0.60       # Social amplification coefficient
-    TAU_ENDORPHIN = 30.0      # Endorphin dynamics time constant (seconds)
-    TAU_BONDING = 120.0       # Social bonding accumulation (seconds)
-    ALPHA_FLOW = 0.40         # Group flow: entrainment weight
-    BETA_AFFECT = 0.35        # Group flow: shared affect weight
-    GAMMA_CHALLENGE = 0.25    # Group flow: challenge-skill balance weight
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """18 tuples for SSRI computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ # ── Fast: onset alignment / micro-timing ──
+ (10, 3, 0, 2), # spectral_flux, 100ms, value, bidi
+ (10, 4, 14, 2), # spectral_flux, 125ms, periodicity, bidi
+ (10, 8, 14, 2), # spectral_flux, 500ms, periodicity, bidi
+ # ── Medium: beat-level synchrony ──
+ (7, 8, 1, 2), # amplitude, 500ms, mean, bidi
+ (7, 16, 8, 0), # amplitude, 1000ms, velocity, fwd
+ (8, 8, 1, 2), # loudness, 500ms, mean, bidi
+ (8, 16, 1, 2), # loudness, 1000ms, mean, bidi
+ (4, 8, 1, 2), # sensory_pleasantness, 500ms, mean, bidi
+ (4, 16, 1, 2), # sensory_pleasantness, 1000ms, mean, bidi
+ (22, 8, 8, 0), # energy_change, 500ms, velocity, fwd
+ (22, 16, 20, 2), # energy_change, 1000ms, entropy, bidi
+ (12, 16, 1, 2), # warmth, 1000ms, mean, bidi
+ (21, 8, 20, 2), # spectral_change, 500ms, entropy, bidi
+ (0, 8, 1, 2), # roughness, 500ms, mean, bidi
+ # ── Cross-layer coupling ──
+ (25, 8, 0, 2), # x_l0l5[0], 500ms, value, bidi
+ (25, 16, 18, 2), # x_l0l5[0], 1000ms, trend, bidi
+ # ── Long-range: social bonding / group flow ──
+ (25, 20, 1, 0), # x_l0l5[0], 5000ms, mean, fwd
+ (8, 20, 18, 0), # loudness, 5000ms, trend, fwd
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """18 tuples for SSRI computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # ── Fast: onset alignment / micro-timing ──
-            (10, 3, 0, 2),     # spectral_flux, 100ms, value, bidi
-            (10, 4, 14, 2),    # spectral_flux, 125ms, periodicity, bidi
-            (10, 8, 14, 2),    # spectral_flux, 500ms, periodicity, bidi
-            # ── Medium: beat-level synchrony ──
-            (7, 8, 1, 2),      # amplitude, 500ms, mean, bidi
-            (7, 16, 8, 0),     # amplitude, 1000ms, velocity, fwd
-            (8, 8, 1, 2),      # loudness, 500ms, mean, bidi
-            (8, 16, 1, 2),     # loudness, 1000ms, mean, bidi
-            (4, 8, 1, 2),      # sensory_pleasantness, 500ms, mean, bidi
-            (4, 16, 1, 2),     # sensory_pleasantness, 1000ms, mean, bidi
-            (22, 8, 8, 0),     # energy_change, 500ms, velocity, fwd
-            (22, 16, 20, 2),   # energy_change, 1000ms, entropy, bidi
-            (12, 16, 1, 2),    # warmth, 1000ms, mean, bidi
-            (21, 8, 20, 2),    # spectral_change, 500ms, entropy, bidi
-            (0, 8, 1, 2),      # roughness, 500ms, mean, bidi
-            # ── Cross-layer coupling ──
-            (25, 8, 0, 2),     # x_l0l5[0], 500ms, value, bidi
-            (25, 16, 18, 2),   # x_l0l5[0], 1000ms, trend, bidi
-            # ── Long-range: social bonding / group flow ──
-            (25, 20, 1, 0),    # x_l0l5[0], 5000ms, mean, fwd
-            (8, 20, 18, 0),    # loudness, 5000ms, trend, fwd
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute SSRI 11D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute SSRI 11D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"AED": (B,T,30), "CPD": (B,T,30), "C0P": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,11) SSRI output
+ """
+ # H³ direct features — fast
+ onset_100ms = h3_direct[(10, 3, 0, 2)].unsqueeze(-1)
+ beat_periodicity_125ms = h3_direct[(10, 4, 14, 2)].unsqueeze(-1)
+ onset_periodicity_500ms = h3_direct[(10, 8, 14, 2)].unsqueeze(-1)
 
-        Returns:
-            (B,T,11) SSRI output
-        """
-        aed = mechanism_outputs["AED"]    # (B, T, 30)
-        cpd = mechanism_outputs["CPD"]    # (B, T, 30)
-        c0p = mechanism_outputs["C0P"]    # (B, T, 30)
+ # H³ direct features — medium
+ mean_amplitude_500ms = h3_direct[(7, 8, 1, 2)].unsqueeze(-1)
+ amplitude_velocity_1s = h3_direct[(7, 16, 8, 0)].unsqueeze(-1)
+ mean_loudness_500ms = h3_direct[(8, 8, 1, 2)].unsqueeze(-1)
+ mean_loudness_1s = h3_direct[(8, 16, 1, 2)].unsqueeze(-1)
+ mean_pleasantness_500ms = h3_direct[(4, 8, 1, 2)].unsqueeze(-1)
+ mean_pleasantness_1s = h3_direct[(4, 16, 1, 2)].unsqueeze(-1)
+ energy_velocity_500ms = h3_direct[(22, 8, 8, 0)].unsqueeze(-1)
+ energy_entropy_1s = h3_direct[(22, 16, 20, 2)].unsqueeze(-1)
+ mean_warmth_1s = h3_direct[(12, 16, 1, 2)].unsqueeze(-1)
+ spectral_entropy_500ms = h3_direct[(21, 8, 20, 2)].unsqueeze(-1)
+ mean_roughness_500ms = h3_direct[(0, 8, 1, 2)].unsqueeze(-1)
 
-        # AED sub-sections
-        aed_valence = aed[..., 0:10]      # valence tracking
-        aed_arousal = aed[..., 10:20]     # arousal dynamics
-        aed_emotion = aed[..., 20:30]     # emotional trajectory
+ # H³ direct features — coupling / long-range
+ coupling_500ms = h3_direct[(25, 8, 0, 2)].unsqueeze(-1)
+ coupling_trend_1s = h3_direct[(25, 16, 18, 2)].unsqueeze(-1)
+ coupling_mean_5s = h3_direct[(25, 20, 1, 0)].unsqueeze(-1)
+ loudness_trend_5s = h3_direct[(8, 20, 18, 0)].unsqueeze(-1)
 
-        # CPD sub-sections
-        cpd_anticip = cpd[..., 0:10]      # anticipation
-        cpd_peak = cpd[..., 10:20]        # peak experience
-        cpd_resolut = cpd[..., 20:30]     # resolution
+ # ═══ LAYER E: Explicit features ═══
 
-        # C0P sub-sections
-        c0p_tension = c0p[..., 0:10]      # tension-release
-        c0p_expect = c0p[..., 10:20]      # expectation-surprise
-        c0p_approach = c0p[..., 20:30]    # approach-avoidance
+ # f01: Synchrony Reward (coefficients sum = 1.0)
+ f01 = torch.sigmoid(
+ 0.25 * onset_periodicity_500ms
+ + 0.15 * mean_pleasantness_1s
+ + 0.15 * coupling_trend_1s
+ )
 
-        # H³ direct features — fast
-        onset_100ms = h3_direct[(10, 3, 0, 2)].unsqueeze(-1)
-        beat_periodicity_125ms = h3_direct[(10, 4, 14, 2)].unsqueeze(-1)
-        onset_periodicity_500ms = h3_direct[(10, 8, 14, 2)].unsqueeze(-1)
+ # f02: Social Bonding Index (coefficients sum = 1.0)
+ f02 = torch.sigmoid(
+ 0.25 * coupling_mean_5s
+ + 0.20 * f01
+ + 0.15 * loudness_trend_5s
+ + 0.15 * mean_warmth_1s
+ )
 
-        # H³ direct features — medium
-        mean_amplitude_500ms = h3_direct[(7, 8, 1, 2)].unsqueeze(-1)
-        amplitude_velocity_1s = h3_direct[(7, 16, 8, 0)].unsqueeze(-1)
-        mean_loudness_500ms = h3_direct[(8, 8, 1, 2)].unsqueeze(-1)
-        mean_loudness_1s = h3_direct[(8, 16, 1, 2)].unsqueeze(-1)
-        mean_pleasantness_500ms = h3_direct[(4, 8, 1, 2)].unsqueeze(-1)
-        mean_pleasantness_1s = h3_direct[(4, 16, 1, 2)].unsqueeze(-1)
-        energy_velocity_500ms = h3_direct[(22, 8, 8, 0)].unsqueeze(-1)
-        energy_entropy_1s = h3_direct[(22, 16, 20, 2)].unsqueeze(-1)
-        mean_warmth_1s = h3_direct[(12, 16, 1, 2)].unsqueeze(-1)
-        spectral_entropy_500ms = h3_direct[(21, 8, 20, 2)].unsqueeze(-1)
-        mean_roughness_500ms = h3_direct[(0, 8, 1, 2)].unsqueeze(-1)
+ # f03: Group Flow State (coefficients sum = 1.0)
+ f03 = torch.sigmoid(
+ 0.25 * f01
+ + 0.15 * mean_amplitude_500ms
+ + 0.15 * spectral_entropy_500ms
+ )
 
-        # H³ direct features — coupling / long-range
-        coupling_500ms = h3_direct[(25, 8, 0, 2)].unsqueeze(-1)
-        coupling_trend_1s = h3_direct[(25, 16, 18, 2)].unsqueeze(-1)
-        coupling_mean_5s = h3_direct[(25, 20, 1, 0)].unsqueeze(-1)
-        loudness_trend_5s = h3_direct[(8, 20, 18, 0)].unsqueeze(-1)
+ # f04: Entrainment Quality (coefficients sum = 1.0)
+ f04 = torch.sigmoid(
+ 0.30 * onset_periodicity_500ms
+ + 0.25 * beat_periodicity_125ms
+ + 0.25 * onset_100ms
+ + 0.20 * energy_velocity_500ms
+ )
 
-        # ═══ LAYER E: Explicit features ═══
+ # f05: Collective Pleasure (coefficients sum = 1.0)
+ f05 = torch.sigmoid(
+ 0.25 * mean_pleasantness_500ms
+ + 0.20 * f03
+ + 0.15 * f02
+ )
 
-        # f01: Synchrony Reward (coefficients sum = 1.0)
-        f01 = torch.sigmoid(
-            0.25 * onset_periodicity_500ms
-            + 0.25 * cpd_anticip.mean(-1, keepdim=True)
-            + 0.20 * aed_valence.mean(-1, keepdim=True)
-            + 0.15 * mean_pleasantness_1s
-            + 0.15 * coupling_trend_1s
-        )
+ # ═══ LAYER M: Mathematical ═══
 
-        # f02: Social Bonding Index (coefficients sum = 1.0)
-        f02 = torch.sigmoid(
-            0.25 * coupling_mean_5s
-            + 0.25 * aed_emotion.mean(-1, keepdim=True)
-            + 0.20 * f01
-            + 0.15 * loudness_trend_5s
-            + 0.15 * mean_warmth_1s
-        )
+ # Social Prediction Error ([-1, 1])
+ social_pred_error = torch.tanh(
+ )
 
-        # f03: Group Flow State (coefficients sum = 1.0)
-        f03 = torch.sigmoid(
-            0.25 * f01
-            + 0.25 * cpd_peak.mean(-1, keepdim=True)
-            + 0.20 * aed_arousal.mean(-1, keepdim=True)
-            + 0.15 * mean_amplitude_500ms
-            + 0.15 * spectral_entropy_500ms
-        )
+ # Synchrony Amplification Ratio ([1.0, ~3.0])
+ sync_amplification = 1.0 + f01 * (f04 + f02)
 
-        # f04: Entrainment Quality (coefficients sum = 1.0)
-        f04 = torch.sigmoid(
-            0.30 * onset_periodicity_500ms
-            + 0.25 * beat_periodicity_125ms
-            + 0.25 * onset_100ms
-            + 0.20 * energy_velocity_500ms
-        )
+ # ═══ LAYER P: Present ═══
 
-        # f05: Collective Pleasure (coefficients sum = 1.0)
-        f05 = torch.sigmoid(
-            0.25 * mean_pleasantness_500ms
-            + 0.25 * aed_valence.mean(-1, keepdim=True)
-            + 0.20 * f03
-            + 0.15 * f02
-            + 0.15 * cpd_resolut.mean(-1, keepdim=True)
-        )
+ # Prefrontal Coupling State
+ prefrontal_coupling = torch.sigmoid(
+ 0.40 * f04
+ + 0.30 * coupling_500ms
+ )
 
-        # ═══ LAYER M: Mathematical ═══
+ # Endorphin Proxy (slow-building from sustained synchrony)
+ endorphin_proxy = torch.sigmoid(
+ 0.40 * f02
+ + 0.30 * f03
+ + 0.30 * coupling_mean_5s
+ )
 
-        # Social Prediction Error ([-1, 1])
-        social_pred_error = torch.tanh(
-            f04 - c0p_expect.mean(-1, keepdim=True)
-        )
+ # ═══ LAYER F: Future ═══
 
-        # Synchrony Amplification Ratio ([1.0, ~3.0])
-        sync_amplification = 1.0 + f01 * (f04 + f02)
+ # Bonding Trajectory Prediction
+ bonding_traj_pred = torch.sigmoid(
+ 0.50 * f02
+ + 0.30 * coupling_trend_1s
+ + 0.20 * loudness_trend_5s
+ )
 
-        # ═══ LAYER P: Present ═══
+ # Flow Sustain Prediction
+ flow_sustain_pred = torch.sigmoid(
+ 0.40 * f03
+ + 0.30 * f04
+ + 0.30 * mean(aed_arousal, dim=-1, keepdim=True)
+ )
 
-        # Prefrontal Coupling State
-        prefrontal_coupling = torch.sigmoid(
-            0.40 * f04
-            + 0.30 * coupling_500ms
-            + 0.30 * c0p_approach.mean(-1, keepdim=True)
-        )
-
-        # Endorphin Proxy (slow-building from sustained synchrony)
-        endorphin_proxy = torch.sigmoid(
-            0.40 * f02
-            + 0.30 * f03
-            + 0.30 * coupling_mean_5s
-        )
-
-        # ═══ LAYER F: Future ═══
-
-        # Bonding Trajectory Prediction
-        bonding_traj_pred = torch.sigmoid(
-            0.50 * f02
-            + 0.30 * coupling_trend_1s
-            + 0.20 * loudness_trend_5s
-        )
-
-        # Flow Sustain Prediction
-        flow_sustain_pred = torch.sigmoid(
-            0.40 * f03
-            + 0.30 * f04
-            + 0.30 * mean(aed_arousal, dim=-1, keepdim=True)
-        )
-
-        return torch.cat([
-            f01, f02, f03, f04, f05,                      # E: 5D
-            social_pred_error, sync_amplification,         # M: 2D
-            prefrontal_coupling, endorphin_proxy,          # P: 2D
-            bonding_traj_pred, flow_sustain_pred,          # F: 2D
-        ], dim=-1)  # (B, T, 11)
+ return torch.cat([
+ f01, f02, f03, f04, f05, # E: 5D
+ social_pred_error, sync_amplification, # M: 2D
+ prefrontal_coupling, endorphin_proxy, # P: 2D
+ bonding_traj_pred, flow_sustain_pred, # F: 2D
+ ], dim=-1) # (B, T, 11)
 ```
 
 ---
@@ -818,9 +748,6 @@ class SSRI(BaseModel):
 | **Falsification Tests** | 5/10 confirmed, 5 testable | Moderate-high validity |
 | **R³ Features Used** | ~15D of 49D | Consonance + energy + timbre + change + interactions |
 | **H³ Demand** | 18 tuples (0.78%) | Sparse, efficient |
-| **AED Mechanism** | 30D (3 sub-sections) | Shared valence/arousal/emotion |
-| **CPD Mechanism** | 30D (3 sub-sections) | Shared anticipation/peak/resolution |
-| **C0P Mechanism** | 30D (3 sub-sections) | Coordination tension/prediction/approach |
 | **Output Dimensions** | **11D** | 4-layer structure (5E + 2M + 2P + 2F) |
 | **Catalog-verified** | 13/17 papers in Literature/catalog.json | 4 canonical field papers cited per spec |
 | **Novel Contribution** | First RPU model to capture social reward amplification | Bridges individual → collective reward |

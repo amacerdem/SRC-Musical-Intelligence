@@ -21,26 +21,26 @@ The **Uncertainty-Driven Pleasure** (UDP) model describes how in high-uncertaint
 UNCERTAINTY-DRIVEN PLEASURE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-TONAL CONTEXT (Low Uncertainty)        ATONAL CONTEXT (High Uncertainty)
-────────────────────────────          ──────────────────────────────
-Entropy: Low                          Entropy: High
-Predictions: Easy                     Predictions: Hard
+TONAL CONTEXT (Low Uncertainty) ATONAL CONTEXT (High Uncertainty)
+──────────────────────────── ──────────────────────────────
+Entropy: Low Entropy: High
+Predictions: Easy Predictions: Hard
 
-  Prediction ────► Error ────►         Prediction ────► Confirm ────►
-  Easy             REWARDING           Hard              REWARDING
-  (standard RPE)                       (model improvement signal)
+ Prediction ────► Error ────► Prediction ────► Confirm ────►
+ Easy REWARDING Hard REWARDING
+ (standard RPE) (model improvement signal)
 
-  Confirmation ──► Neutral             Error ──────────► Less Rewarding
-  (expected)                           (expected given uncertainty)
+ Confirmation ──► Neutral Error ──────────► Less Rewarding
+ (expected) (expected given uncertainty)
 
 ┌──────────────────────────────────────────────────────────────────┐
-│             REWARD INVERSION (Mencke 2019)                       │
-│                                                                  │
-│  Standard:  Reward(error) > Reward(confirmation)                │
-│  Inverted:  Reward(confirmation) > Reward(error)                │
-│                                                                  │
-│  Switch point: When context uncertainty exceeds threshold        │
-│  Mechanism: Correct predictions signal learning progress         │
+│ REWARD INVERSION (Mencke 2019) │
+│ │
+│ Standard: Reward(error) > Reward(confirmation) │
+│ Inverted: Reward(confirmation) > Reward(error) │
+│ │
+│ Switch point: When context uncertainty exceeds threshold │
+│ Mechanism: Correct predictions signal learning progress │
 └──────────────────────────────────────────────────────────────────┘
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -64,63 +64,62 @@ UDP reveals context-dependent reward inversion:
 
 ## 2. Neural Circuit: Complete Anatomy
 
-### 2.1 Information Flow Architecture (EAR → BRAIN → PPC+TPC+MEM → UDP)
+### 2.1 Information Flow Architecture (EAR → BRAIN → UDP)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    UDP COMPUTATION ARCHITECTURE                             ║
+║ UDP COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins x 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                         UDP reads: ~17D                          │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                         UDP demand: ~16 of 2304 tuples           │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Imagery Circuit ═══════════   ║
-║                               │                                              ║
-║                       ┌───────┴───────┐───────┐                              ║
-║                       ▼               ▼       ▼                              ║
-║  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐              ║
-║  │  PPC (30D)      │  │  TPC (30D)      │  │  MEM (30D)      │              ║
-║  │                 │  │                 │  │                 │              ║
-║  │ Pitch Ext[0:10] │  │ Spec Shp [0:10] │  │ Work Mem [0:10] │              ║
-║  │ Interval  [10:20]│ │ Temp Env [10:20]│  │ Long-Term[10:20]│              ║
-║  │ Contour  [20:30] │ │ Source Id[20:30]│  │ Pred Buf [20:30]│              ║
-║  └────────┬────────┘  └────────┬────────┘  └────────┬────────┘              ║
-║           └────────────┬───────┴────────────────────┘                        ║
-║                        ▼                                                     ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    UDP MODEL (10D Output)                        │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f01_uncertainty_level,                     │        ║
-║  │                       f02_confirmation_reward,                   │        ║
-║  │                       f03_error_reward,                          │        ║
-║  │                       f04_pleasure_index                         │        ║
-║  │  Layer P (Present):   context_assessment,                        │        ║
-║  │                       prediction_accuracy,                       │        ║
-║  │                       reward_computation                         │        ║
-║  │  Layer F (Future):    reward_expectation,                        │        ║
-║  │                       model_improvement,                         │        ║
-║  │                       pleasure_anticipation                      │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins x 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ UDP reads: ~17D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ UDP demand: ~16 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Imagery Circuit ═══════════ ║
+║ │ ║
+║ ┌───────┴───────┐───────┐ ║
+║ ▼ ▼ ▼ ║
+║ ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐ ║
+║ │ │ │ │ │ │ ║
+║ │ Pitch Ext[0:10] │ │ Spec Shp [0:10] │ │ Work Mem [0:10] │ ║
+║ │ Interval [10:20]│ │ Temp Env [10:20]│ │ Long-Term[10:20]│ ║
+║ │ Contour [20:30] │ │ Source Id[20:30]│ │ Pred Buf [20:30]│ ║
+║ └────────┬────────┘ └────────┬────────┘ └────────┬────────┘ ║
+║ └────────────┬───────┴────────────────────┘ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ UDP MODEL (10D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f01_uncertainty_level, │ ║
+║ │ f02_confirmation_reward, │ ║
+║ │ f03_error_reward, │ ║
+║ │ f04_pleasure_index │ ║
+║ │ Layer P (Present): context_assessment, │ ║
+║ │ prediction_accuracy, │ ║
+║ │ reward_computation │ ║
+║ │ Layer F (Future): reward_expectation, │ ║
+║ │ model_improvement, │ ║
+║ │ pleasure_anticipation │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -148,14 +147,14 @@ UDP reveals context-dependent reward inversion:
 ### 3.2 Effect Size Summary
 
 ```
-Primary Effect:       Reward inversion in high-uncertainty contexts (Mencke 2019)
-                      IC x entropy saddle interaction on pleasure (Cheung 2019, Gold 2019, 2023)
-                      Dopamine release caudate (anticipation) and NAcc (peak): 6-9% BP change
-Heterogeneity:        Low — IC x entropy interaction replicated across 3 independent groups
-Quality Assessment:   β-tier (behavioral + fMRI + PET + EEG convergence)
-Replication:          Cheung 2019 → Gold 2023 (direct replication of IC x entropy)
-                      Salimpoor 2011 → Gold 2023 (VS pleasure correlation)
-Sample Sizes:         Range 8-75; majority 18-43; total across studies ~370+
+Primary Effect: Reward inversion in high-uncertainty contexts (Mencke 2019)
+ IC x entropy saddle interaction on pleasure (Cheung 2019, Gold 2019, 2023)
+ Dopamine release caudate (anticipation) and NAcc (peak): 6-9% BP change
+Heterogeneity: Low — IC x entropy interaction replicated across 3 independent groups
+Quality Assessment: β-tier (behavioral + fMRI + PET + EEG convergence)
+Replication: Cheung 2019 → Gold 2023 (direct replication of IC x entropy)
+ Salimpoor 2011 → Gold 2023 (VS pleasure correlation)
+Sample Sizes: Range 8-75; majority 18-43; total across studies ~370+
 ```
 
 ---
@@ -190,21 +189,17 @@ Sample Sizes:         Range 8-75; majority 18-43; total across studies ~370+
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[4] sensory_pleasantness ────┐
 R³[14] tonalness ──────────────┼──► Context certainty (inverse of uncertainty)
-MEM.long_term_memory[10:20] ───┘   Low consonance → high uncertainty (atonal)
 
 R³[21] spectral_change ────────┐
-MEM.working_memory[0:10] ──────┼──► Prediction accuracy
-PPC.pitch_extraction[0:10] ────┘   Low change = match (confirmation)
-                                   High change = error
+ High change = error
 
 R³[41:49] x_l5l7 ─────────────┐
-MEM.prediction_buffer[20:30] ──┼──► Context-dependent reward
-H³ entropy tuples ─────────────┘   Tonal: Reward(error) > Reward(confirm)
-                                   Atonal: Reward(confirm) > Reward(error)
+H³ entropy tuples ─────────────┘ Tonal: Reward(error) > Reward(confirm)
+ Atonal: Reward(confirm) > Reward(error)
 ```
 
 ---
@@ -238,7 +233,7 @@ UDP requires H³ features for context assessment (slow uncertainty estimation ov
 
 #### R³ v2 Projected Expansion
 
-UDP projected v2 from H:Harmony, I:Information, and K:Modulation, aligned with PPC+TPC+MEM horizons.
+UDP projected v2 from H:Harmony, I:Information, and K:Modulation, aligned with H³ direct+Memory horizons.
 
 | R³ Idx | Feature | Group | H | Morph | Law | Purpose |
 |:------:|---------|:-----:|:-:|-------|:---:|---------|
@@ -254,20 +249,6 @@ UDP projected v2 from H:Harmony, I:Information, and K:Modulation, aligned with P
 **v2 projected**: 8 tuples
 **Total projected**: 24 tuples of 294,912 theoretical = 0.0081%
 
-### 5.2 PPC + TPC + MEM Mechanism Binding
-
-| Mechanism | Sub-section | Range | UDP Role | Weight |
-|-----------|-------------|-------|----------|--------|
-| **PPC** | Pitch Extraction | PPC[0:10] | Pitch prediction accuracy | 0.7 |
-| **PPC** | Interval Analysis | PPC[10:20] | Interval confirmation/error | 0.8 |
-| **PPC** | Contour Tracking | PPC[20:30] | Melodic expectation | 0.6 |
-| **TPC** | Spectral Shape | TPC[0:10] | Timbral context assessment | 0.5 |
-| **TPC** | Temporal Envelope | TPC[10:20] | Event timing confirmation | 0.6 |
-| **TPC** | Source Identity | TPC[20:30] | Context categorization | 0.5 |
-| **MEM** | Working Memory | MEM[0:10] | Prediction-outcome comparison | **1.0** (primary) |
-| **MEM** | Long-Term Memory | MEM[10:20] | Context uncertainty estimation | **1.0** (primary) |
-| **MEM** | Prediction Buffer | MEM[20:30] | Reward computation | **0.9** |
-
 ---
 
 ## 6. Output Space: 10D Multi-Layer Representation
@@ -280,46 +261,43 @@ UDP OUTPUT TENSOR: 10D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 0  │ f01_uncertainty_level    │ [0, 1] │ Context uncertainty index.
-    │                          │        │ f01 = σ(0.40 * consonance_entropy_1s
-    │                          │        │       + 0.30 * (1 - tonalness_mean_1s)
-    │                          │        │       + 0.30 * reward_entropy_1s)
+ 0 │ f01_uncertainty_level │ [0, 1] │ Context uncertainty index.
+ │ │ │ f01 = σ(0.40 * consonance_entropy_1s
+ │ │ │ + 0.30 * (1 - tonalness_mean_1s)
+ │ │ │ + 0.30 * reward_entropy_1s)
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 1  │ f02_confirmation_reward  │ [0, 1] │ Context-dependent confirmation reward.
-    │                          │        │ f02 = σ(0.40 * f01 * (1 - pe_100ms)
-    │                          │        │       + 0.30 * mean(MEM.ltm[10:20])
-    │                          │        │       + 0.30 * periodicity_trend_1s)
+ 1 │ f02_confirmation_reward │ [0, 1] │ Context-dependent confirmation reward.
+ │ │ │ f02 = σ(0.40 * f01 * (1 - pe_100ms)
+ │ │ │ + 0.30 * periodicity_trend_1s)
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 2  │ f03_error_reward         │ [0, 1] │ Standard error reward.
-    │                          │        │ f03 = σ(0.40 * (1 - f01) * pe_100ms
-    │                          │        │       + 0.30 * pe_max_100ms
-    │                          │        │       + 0.30 * mean(MEM.wm[0:10]))
+ 2 │ f03_error_reward │ [0, 1] │ Standard error reward.
+ │ │ │ f03 = σ(0.40 * (1 - f01) * pe_100ms
+ │ │ │ + 0.30 * pe_max_100ms
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 3  │ f04_pleasure_index       │ [0, 1] │ Net pleasure signal.
-    │                          │        │ f04 = σ(0.50 * max(f02, f03)
-    │                          │        │       + 0.50 * mean(MEM.pred[20:30]))
+ 3 │ f04_pleasure_index │ [0, 1] │ Net pleasure signal.
+ │ │ │ f04 = σ(0.50 * max(f02, f03)
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 4  │ context_assessment       │ [0, 1] │ MEM uncertainty assessment.
+ 4 │ context_assessment │ [0, 1] │ memory-encoding uncertainty assessment.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 5  │ prediction_accuracy      │ [0, 1] │ PPC match/mismatch signal.
+ 5 │ prediction_accuracy │ [0, 1] │ pitch-processing match/mismatch signal.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 6  │ reward_computation       │ [0, 1] │ MEM context-dependent reward.
+ 6 │ reward_computation │ [0, 1] │ memory-encoding context-dependent reward.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 7  │ reward_expectation       │ [0, 1] │ Striatum reward prediction.
+ 7 │ reward_expectation │ [0, 1] │ Striatum reward prediction.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 8  │ model_improvement        │ [0, 1] │ Prediction quality trajectory.
+ 8 │ model_improvement │ [0, 1] │ Prediction quality trajectory.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 9  │ pleasure_anticipation    │ [0, 1] │ Affective state (1-3s).
+ 9 │ pleasure_anticipation │ [0, 1] │ Affective state (1-3s).
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 10D per frame at 172.27 Hz
@@ -335,8 +313,8 @@ TOTAL: 10D per frame at 172.27 Hz
 ```
 Reward = α·Confirmation + β·Error
 where:
-  if Uncertainty > threshold:  α > β (atonal: confirmation rewarding)
-  else:                        β > α (tonal: error rewarding)
+ if Uncertainty > threshold: α > β (atonal: confirmation rewarding)
+ else: β > α (tonal: error rewarding)
 
 Uncertainty = entropy_normalized(context)
 Confirmation = 1 - |prediction - observation|
@@ -352,30 +330,27 @@ Pleasure = max(α·Confirmation, β·Error)
 
 # f01: Uncertainty Level
 f01 = σ(0.40 * consonance_entropy_1s
-       + 0.30 * (1 - tonalness_mean_1s)
-       + 0.30 * reward_entropy_1s)
+ + 0.30 * (1 - tonalness_mean_1s)
+ + 0.30 * reward_entropy_1s)
 # coefficients: 0.40 + 0.30 + 0.30 = 1.0 ✓
 
 # f02: Confirmation Reward (high when uncertain + correct)
-f02 = σ(0.40 * f01 * (1 - pe_100ms)        # uncertainty × confirmation
-       + 0.30 * mean(MEM.long_term_memory[10:20])
-       + 0.30 * periodicity_trend_1s)
+f02 = σ(0.40 * f01 * (1 - pe_100ms) # uncertainty × confirmation
+ + 0.30 * periodicity_trend_1s)
 # coefficients: 0.40 + 0.30 + 0.30 = 1.0 ✓
 
 # f03: Error Reward (high when certain + error)
-f03 = σ(0.40 * (1 - f01) * pe_100ms        # certainty × error
-       + 0.30 * pe_max_100ms
-       + 0.30 * mean(MEM.working_memory[0:10]))
+f03 = σ(0.40 * (1 - f01) * pe_100ms # certainty × error
+ + 0.30 * pe_max_100ms
 # coefficients: 0.40 + 0.30 + 0.30 = 1.0 ✓
 
 # f04: Pleasure Index
 f04 = σ(0.50 * max(f02, f03)
-       + 0.50 * mean(MEM.prediction_buffer[20:30]))
 # coefficients: 0.50 + 0.50 = 1.0 ✓
 
 # Reward signal decay
 dReward/dt = τ⁻¹ · (Target_Reward - Current_Reward)
-    where τ = 3s (Mencke 2019)
+ where τ = 3s (Mencke 2019)
 ```
 
 ---
@@ -405,26 +380,23 @@ dReward/dt = τ⁻¹ · (Target_Reward - Current_Reward)
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    UDP INTERACTIONS                                          │
+│ UDP INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (PCU):                                                         │
-│  PWUP.uncertainty_index ─────► UDP (uncertainty determines reward mode)    │
-│  UDP.pleasure_index ─────────► MAA (pleasure for appreciation)             │
-│  UDP.confirmation_reward ────► PSH (confirmation triggers silencing)       │
-│  WMED.wm_contribution ──────► UDP (WM aids uncertainty estimation)         │
-│                                                                             │
-│  CROSS-UNIT (PCU → ARU):                                                   │
-│  UDP.pleasure_index ─────────► ARU (pleasure signal for reward circuit)    │
-│  UDP.reward_expectation ─────► ARU (anticipatory reward signal)            │
-│                                                                             │
-│  UPSTREAM DEPENDENCIES:                                                     │
-│  PPC mechanism (30D) ────────► UDP (pitch prediction accuracy)             │
-│  TPC mechanism (30D) ────────► UDP (temporal context assessment)           │
-│  MEM mechanism (30D) ────────► UDP (context/prediction/reward)             │
-│  R³ (~17D) ──────────────────► UDP (direct spectral features)             │
-│  H³ (16 tuples) ─────────────► UDP (temporal dynamics)                    │
-│                                                                             │
+│ │
+│ INTRA-UNIT (PCU): │
+│ PWUP.uncertainty_index ─────► UDP (uncertainty determines reward mode) │
+│ UDP.pleasure_index ─────────► MAA (pleasure for appreciation) │
+│ UDP.confirmation_reward ────► PSH (confirmation triggers silencing) │
+│ WMED.wm_contribution ──────► UDP (WM aids uncertainty estimation) │
+│ │
+│ CROSS-UNIT (PCU → ARU): │
+│ UDP.pleasure_index ─────────► ARU (pleasure signal for reward circuit) │
+│ UDP.reward_expectation ─────► ARU (anticipatory reward signal) │
+│ │
+│ UPSTREAM DEPENDENCIES: │
+│ R³ (~17D) ──────────────────► UDP (direct spectral features) │
+│ H³ (16 tuples) ─────────────► UDP (temporal dynamics) │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -450,127 +422,109 @@ dReward/dt = τ⁻¹ · (Target_Reward - Current_Reward)
 
 ```python
 class UDP(BaseModel):
-    """Uncertainty-Driven Pleasure Model.
+ """Uncertainty-Driven Pleasure Model.
 
-    Output: 10D per frame.
-    Reads: PPC mechanism (30D), TPC mechanism (30D), MEM mechanism (30D), R³ direct.
-    """
-    NAME = "UDP"
-    UNIT = "PCU"
-    TIER = "β3"
-    OUTPUT_DIM = 10
-    MECHANISM_NAMES = ("PPC", "TPC", "MEM")
+ Output: 10D per frame.
+ """
+ NAME = "UDP"
+ UNIT = "PCU"
+ TIER = "β3"
+ OUTPUT_DIM = 10
+ TAU_DECAY = 3.0 # s (Mencke 2019)
+ UNCERTAINTY_THRESHOLD = 0.5 # Inversion point
 
-    TAU_DECAY = 3.0                # s (Mencke 2019)
-    UNCERTAINTY_THRESHOLD = 0.5    # Inversion point
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """16 tuples for UDP computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ # ── Context assessment: slow uncertainty ──
+ (4, 3, 0, 2), # sensory_pleasantness, 100ms, value, bidi
+ (4, 16, 1, 0), # sensory_pleasantness, 1000ms, mean, fwd
+ (4, 16, 20, 0), # sensory_pleasantness, 1000ms, entropy, fwd
+ (14, 8, 1, 0), # tonalness, 500ms, mean, fwd
+ (14, 16, 1, 0), # tonalness, 1000ms, mean, fwd
+ (5, 8, 1, 0), # periodicity, 500ms, mean, fwd
+ (5, 16, 18, 0), # periodicity, 1000ms, trend, fwd
+ # ── Event detection: fast PE ──
+ (21, 1, 0, 2), # spectral_change, 50ms, value, bidi
+ (21, 3, 0, 2), # spectral_change, 100ms, value, bidi
+ (21, 3, 4, 2), # spectral_change, 100ms, max, bidi
+ (10, 3, 0, 2), # spectral_flux, 100ms, value, bidi
+ (10, 3, 8, 2), # spectral_flux, 100ms, velocity, bidi
+ # ── Reward computation: coupling ──
+ (41, 8, 0, 0), # x_l5l7[0], 500ms, value, fwd
+ (41, 16, 1, 0), # x_l5l7[0], 1000ms, mean, fwd
+ (41, 16, 20, 0), # x_l5l7[0], 1000ms, entropy, fwd
+ (41, 16, 6, 0), # x_l5l7[0], 1000ms, skew, fwd
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """16 tuples for UDP computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # ── Context assessment: slow uncertainty ──
-            (4, 3, 0, 2),      # sensory_pleasantness, 100ms, value, bidi
-            (4, 16, 1, 0),     # sensory_pleasantness, 1000ms, mean, fwd
-            (4, 16, 20, 0),    # sensory_pleasantness, 1000ms, entropy, fwd
-            (14, 8, 1, 0),     # tonalness, 500ms, mean, fwd
-            (14, 16, 1, 0),    # tonalness, 1000ms, mean, fwd
-            (5, 8, 1, 0),      # periodicity, 500ms, mean, fwd
-            (5, 16, 18, 0),    # periodicity, 1000ms, trend, fwd
-            # ── Event detection: fast PE ──
-            (21, 1, 0, 2),     # spectral_change, 50ms, value, bidi
-            (21, 3, 0, 2),     # spectral_change, 100ms, value, bidi
-            (21, 3, 4, 2),     # spectral_change, 100ms, max, bidi
-            (10, 3, 0, 2),     # spectral_flux, 100ms, value, bidi
-            (10, 3, 8, 2),     # spectral_flux, 100ms, velocity, bidi
-            # ── Reward computation: coupling ──
-            (41, 8, 0, 0),     # x_l5l7[0], 500ms, value, fwd
-            (41, 16, 1, 0),    # x_l5l7[0], 1000ms, mean, fwd
-            (41, 16, 20, 0),   # x_l5l7[0], 1000ms, entropy, fwd
-            (41, 16, 6, 0),    # x_l5l7[0], 1000ms, skew, fwd
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute UDP 10D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute UDP 10D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"PPC": (B,T,30), "TPC": (B,T,30), "MEM": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,10) UDP output
+ """
+ # Mechanism sub-sections
+ # H³ direct features
+ consonance_entropy_1s = h3_direct[(4, 16, 20, 0)].unsqueeze(-1)
+ tonalness_mean_1s = h3_direct[(14, 16, 1, 0)].unsqueeze(-1)
+ reward_entropy_1s = h3_direct[(41, 16, 20, 0)].unsqueeze(-1)
+ pe_100ms = h3_direct[(21, 3, 0, 2)].unsqueeze(-1)
+ pe_max_100ms = h3_direct[(21, 3, 4, 2)].unsqueeze(-1)
+ periodicity_trend_1s = h3_direct[(5, 16, 18, 0)].unsqueeze(-1)
 
-        Returns:
-            (B,T,10) UDP output
-        """
-        ppc = mechanism_outputs["PPC"]
-        tpc = mechanism_outputs["TPC"]
-        mem = mechanism_outputs["MEM"]
+ # ═══ LAYER E: Explicit features ═══
 
-        # Mechanism sub-sections
-        ppc_pitch = ppc[..., 0:10]
-        ppc_interval = ppc[..., 10:20]
-        mem_wm = mem[..., 0:10]
-        mem_ltm = mem[..., 10:20]
-        mem_pred = mem[..., 20:30]
+ # f01: Uncertainty Level (coefficients sum = 1.0)
+ f01 = torch.sigmoid(
+ 0.40 * consonance_entropy_1s
+ + 0.30 * (1 - tonalness_mean_1s)
+ + 0.30 * reward_entropy_1s
+ )
 
-        # H³ direct features
-        consonance_entropy_1s = h3_direct[(4, 16, 20, 0)].unsqueeze(-1)
-        tonalness_mean_1s = h3_direct[(14, 16, 1, 0)].unsqueeze(-1)
-        reward_entropy_1s = h3_direct[(41, 16, 20, 0)].unsqueeze(-1)
-        pe_100ms = h3_direct[(21, 3, 0, 2)].unsqueeze(-1)
-        pe_max_100ms = h3_direct[(21, 3, 4, 2)].unsqueeze(-1)
-        periodicity_trend_1s = h3_direct[(5, 16, 18, 0)].unsqueeze(-1)
+ # f02: Confirmation Reward (coefficients sum = 1.0)
+ f02 = torch.sigmoid(
+ 0.40 * f01 * (1 - pe_100ms)
+ + 0.30 * periodicity_trend_1s
+ )
 
-        # ═══ LAYER E: Explicit features ═══
+ # f03: Error Reward (coefficients sum = 1.0)
+ f03 = torch.sigmoid(
+ 0.40 * (1 - f01) * pe_100ms
+ + 0.30 * pe_max_100ms
+ )
 
-        # f01: Uncertainty Level (coefficients sum = 1.0)
-        f01 = torch.sigmoid(
-            0.40 * consonance_entropy_1s
-            + 0.30 * (1 - tonalness_mean_1s)
-            + 0.30 * reward_entropy_1s
-        )
+ # f04: Pleasure Index (coefficients sum = 1.0)
+ f04 = torch.sigmoid(
+ 0.50 * torch.max(f02, f03)
+ )
 
-        # f02: Confirmation Reward (coefficients sum = 1.0)
-        f02 = torch.sigmoid(
-            0.40 * f01 * (1 - pe_100ms)
-            + 0.30 * mem_ltm.mean(-1, keepdim=True)
-            + 0.30 * periodicity_trend_1s
-        )
+ # ═══ LAYER P: Present ═══
+ context_assess = f01
+ pred_accuracy = torch.sigmoid(
+ + 0.5 * (1 - pe_100ms)
+ )
+ reward_comp = f04
 
-        # f03: Error Reward (coefficients sum = 1.0)
-        f03 = torch.sigmoid(
-            0.40 * (1 - f01) * pe_100ms
-            + 0.30 * pe_max_100ms
-            + 0.30 * mem_wm.mean(-1, keepdim=True)
-        )
+ # ═══ LAYER F: Future ═══
+ reward_expect = torch.sigmoid(0.5 * f04 + 0.5 * f01)
+ model_improve = torch.sigmoid(
+ 0.5 * f02 + 0.5 * periodicity_trend_1s
+ )
+ pleasure_antic = torch.sigmoid(0.5 * f04 + 0.5 * reward_expect)
 
-        # f04: Pleasure Index (coefficients sum = 1.0)
-        f04 = torch.sigmoid(
-            0.50 * torch.max(f02, f03)
-            + 0.50 * mem_pred.mean(-1, keepdim=True)
-        )
-
-        # ═══ LAYER P: Present ═══
-        context_assess = f01
-        pred_accuracy = torch.sigmoid(
-            0.5 * ppc_pitch.mean(-1, keepdim=True)
-            + 0.5 * (1 - pe_100ms)
-        )
-        reward_comp = f04
-
-        # ═══ LAYER F: Future ═══
-        reward_expect = torch.sigmoid(0.5 * f04 + 0.5 * f01)
-        model_improve = torch.sigmoid(
-            0.5 * f02 + 0.5 * periodicity_trend_1s
-        )
-        pleasure_antic = torch.sigmoid(0.5 * f04 + 0.5 * reward_expect)
-
-        return torch.cat([
-            f01, f02, f03, f04,                             # E: 4D
-            context_assess, pred_accuracy, reward_comp,     # P: 3D
-            reward_expect, model_improve, pleasure_antic,   # F: 3D
-        ], dim=-1)  # (B, T, 10)
+ return torch.cat([
+ f01, f02, f03, f04, # E: 4D
+ context_assess, pred_accuracy, reward_comp, # P: 3D
+ reward_expect, model_improve, pleasure_antic, # F: 3D
+ ], dim=-1) # (B, T, 10)
 ```
 
 ---
@@ -585,9 +539,6 @@ class UDP(BaseModel):
 | **Falsification Tests** | 7/7 testable, 5 confirmed or partially confirmed | Strong validity |
 | **R³ Features Used** | ~17D of 49D | Consonance + energy + timbre + change + interactions |
 | **H³ Demand** | 16 tuples (0.69%) | Sparse, efficient |
-| **PPC Mechanism** | 30D (3 sub-sections) | Pitch prediction accuracy |
-| **TPC Mechanism** | 30D (3 sub-sections) | Temporal context assessment |
-| **MEM Mechanism** | 30D (3 sub-sections) | Context/prediction/reward |
 | **Output Dimensions** | **10D** | 3-layer structure (no M layer) |
 
 ---
@@ -616,11 +567,10 @@ class UDP(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D) | R³ (49D) |
-| Temporal | HC⁰ mechanisms (EFC, AED, ASA, CPD) | PPC (30D) + TPC (30D) + MEM (30D) mechanisms |
 | Context certainty | S⁰.L3.coherence[14] | R³[4] sensory_pleasantness + R³[14] tonalness |
 | Uncertainty | S⁰.L9.entropy[116:120] | H³ consonance/coupling entropy tuples |
-| Prediction accuracy | S⁰.L9.kurtosis[120:124] + HC⁰.EFC | R³[21] spectral_change + MEM.working_memory |
-| Reward computation | S⁰.X_L5L9[224:232] + HC⁰.AED/CPD | R³[41:49] x_l5l7 + MEM.prediction_buffer |
+| Prediction accuracy | S⁰.L9.kurtosis[120:124] + HC⁰.EFC | R³[21] spectral_change |
+| Reward computation | S⁰.X_L5L9[224:232] + HC⁰ affect/peak | R³[41:49] x_l5l7 |
 | Demand format | HC⁰ index ranges | H³ 4-tuples (sparse) |
 | Total demand | 24/2304 = 1.04% | 16/2304 = 0.69% |
 | Output | 10D | 10D (same) |
@@ -634,13 +584,6 @@ class UDP(BaseModel):
 | Evidence modality | Behavioral + theoretical | Behavioral + fMRI + PET + EEG + psychophysiology + computational |
 | Falsification | 5 criteria, 1 confirmed | 7 criteria, 5 confirmed or partially confirmed |
 | Effect sizes | 1 (reward inversion demonstrated) | 15+ quantitative effect sizes |
-
-### Why PPC + TPC + MEM replaces HC⁰ mechanisms
-
-- **EFC → MEM.working_memory** [0:10]: Efference copy for prediction-outcome comparison maps to MEM's working memory.
-- **AED → MEM.prediction_buffer** [20:30]: Affective entrainment dynamics for reward computation maps to MEM's prediction/reward buffer.
-- **ASA → TPC.source_identity** [20:30]: Auditory scene analysis for context categorization maps to TPC's source identity.
-- **CPD → MEM.long_term_memory** [10:20]: Chills/peak detection for reward peaks maps to MEM's long-term contextual assessment.
 
 ---
 

@@ -32,8 +32,8 @@
 | Refractory period 10–30s | Grewe 2009, de Fleurian 2021 | **HIGH** |
 | Prediction error drives ANS | Mas-Herrero 2021: causal TMS evidence (d=0.81) | **HIGH** |
 | Dopamine drives ANS responses | Ferreri 2019: pharmacological causal evidence | **HIGH** |
-| ASA 350ms window | Micheyl 2007, Giraud & Poeppel 2012, P3a latency 250–350ms | **VERY HIGH** |
-| ASA 3 sub-sections mapping | Stream segregation / salience / integration = distinct neural subsystems | **HIGH** |
+| Auditory scene 350ms window | Micheyl 2007, Giraud & Poeppel 2012, P3a latency 250–350ms | **VERY HIGH** |
+| H³ direct features mapping | Stream segregation / salience / integration = distinct neural subsystems | **HIGH** |
 
 ### 1.2 NEEDS UPDATE — Documentation Corrections
 
@@ -55,7 +55,6 @@
 | **Baroreflex pathway** | Bernardi 2009, Koelsch 2010: BP rise → compensatory vagal HR slowing | Add to neural circuit diagram |
 | **Individual differences** | Openness r=0.41 (Colver 2016), absorption r=0.35, musical training r=0.25 | Document as moderators |
 | **Autonomic space model** | Berntson 1991/1993: 2D (sympathetic × parasympathetic), chills occupy co-activation quadrant | Validates α5 dimension |
-| **P3a–SCR coupling** | r = 0.35–0.45 at 250–350ms = exactly H9 window | Validates ASA mechanism design |
 | **Causal DA→ANS** | Ferreri 2019: Levodopa↑SCR (t=–2.26, p=0.033), Risperidone↓pleasure | Validates SRP→AAC convergence |
 | **mu-Opioid involvement** | Putkinen 2025 (N=14): First PET evidence for opioid role in music | Enriches neuroscience context |
 
@@ -200,17 +199,17 @@ Correct model is 2D:
 
 ```
 Parasympathetic ↑
-        │   CO-ACTIVATION          RECIPROCAL PNS
-        │    * Musical chills       * Calm music
-        │    * Awe                  * Resolution
-        │    * Being moved          * Sleep
-        │
-        ├──────────────────────────────────→ Sympathetic ↑
-        │
-        │   CO-INHIBITION          RECIPROCAL SNS
-        │    * Boredom              * Fast loud music
-        │    * Disengagement        * Fear
-        │                           * Startle
+ │ CO-ACTIVATION RECIPROCAL PNS
+ │ * Musical chills * Calm music
+ │ * Awe * Resolution
+ │ * Being moved * Sleep
+ │
+ ├──────────────────────────────────→ Sympathetic ↑
+ │
+ │ CO-INHIBITION RECIPROCAL SNS
+ │ * Boredom * Fast loud music
+ │ * Disengagement * Fear
+ │ * Startle
 ```
 
 Musical chills occupy the **co-activation quadrant** (Kreibig 2013).
@@ -258,21 +257,21 @@ shows near-zero at chills because both branches cancel in the net balance.
 ### 4.3 Anticipatory ANS Timeline (Before Expected Peak)
 
 ```
-t–30s    Caudate DA ramp begins (Salimpoor 2011, Howe 2013)
-t–15s    DA ramp accelerates, wanting increases
-t–10s    SCL (tonic) begins rising
-t–5s     HR may show anticipatory deceleration (attentional)
-t–3s     SCR anticipatory rise begins
-t–2s     Respiratory alignment to expected phrase
-t–1s     BVP shows preparatory vasoconstriction
-t–0.5s   HR deceleration deepens (orienting response)
-t=0      PEAK MUSICAL MOMENT
-t+0.5s   HR reaches maximum deceleration; pupil already dilated
-t+1–2s   SCR onset (if not already rising anticipatorily)
-t+2–3s   SCR peak
-t+3–5s   BVP peak constriction
-t+5–10s  RespR normalizing
-t+5–30s  Temperature begins declining (slowest)
+t–30s Caudate DA ramp begins (Salimpoor 2011, Howe 2013)
+t–15s DA ramp accelerates, wanting increases
+t–10s SCL (tonic) begins rising
+t–5s HR may show anticipatory deceleration (attentional)
+t–3s SCR anticipatory rise begins
+t–2s Respiratory alignment to expected phrase
+t–1s BVP shows preparatory vasoconstriction
+t–0.5s HR deceleration deepens (orienting response)
+t=0 PEAK MUSICAL MOMENT
+t+0.5s HR reaches maximum deceleration; pupil already dilated
+t+1–2s SCR onset (if not already rising anticipatorily)
+t+2–3s SCR peak
+t+3–5s BVP peak constriction
+t+5–10s RespR normalizing
+t+5–30s Temperature begins declining (slowest)
 t+10–30s Refractory period (Grewe 2009)
 ```
 
@@ -280,17 +279,16 @@ t+10–30s Refractory period (Grewe 2009)
 
 | ANS Process | Required Scale | Best H-Frame | Current Usage |
 |-------------|---------------|-------------|---------------|
-| BVP onset | 200–500ms | H6 (200ms) | AED H6+H16 average |
-| HR deceleration | 0.5–3s | H12 (525ms), H16 (1s) | AED D5 |
-| SCR onset | 1–3s | H16 (1000ms) | AED D4 |
+| BVP onset | 200–500ms | H6 (200ms) | H6+H16 average |
+| HR deceleration | 0.5–3s | H12 (525ms), H16 (1s) | D5 |
+| SCR onset | 1–3s | H16 (1000ms) | D4 |
 | Respiratory coupling | 3–8s | H19 (3s), H20 (5s) | AAC respr |
 | Temp onset | 5–30s | H22 (15s), H24 (30s) | AAC temp (via H19) |
 | Anticipatory DA | 15–30s | H22 (15s), H24 (30s) | SRP anticipation |
-| Refractory period | 10–30s | H22 (15s) | CPD implicit |
+| Refractory period | 10–30s | H22 (15s) | peak-detection implicit |
 
 ---
 
-## 5. ASA Mechanism Validation
 
 ### 5.1 The 350ms Window — Converging Evidence
 
@@ -308,7 +306,7 @@ t+10–30s Refractory period (Grewe 2009)
 
 The P3a (250–350ms) amplitude at Fz/Cz correlates with subsequent SCR magnitude
 (r = 0.35–0.45; Friedman 2001). P3a occurs at 250–350ms — precisely within H9.
-This validates the direct pathway: ASA → auditory salience → SCR.
+This validates the direct pathway: auditory scene → auditory salience → SCR.
 
 ### 5.3 Scene Complexity → ANS
 
@@ -324,7 +322,7 @@ Source: Pichora-Fuller 2016 (FUEL framework), Zekveld 2010
 
 Pupil dilation ~0.05–0.08mm per additional source. Dense orchestral passages
 activate the **salience network** (ACC + Anterior Insula; Alluri 2012) — exactly
-where ASA is routed in our architecture.
+where auditory-scene is routed in our architecture.
 
 ### 5.4 Texture Transitions — Potent ANS Triggers
 
@@ -351,7 +349,7 @@ Musical texture transitions are among the STRONGEST ANS triggers (Guhn 2007):
 - TMS disruption of IFG (inferior frontal gyrus) **reduces** musical pleasure: d=0.81
 - TMS also reduces **wanting**: d=0.50
 - Pathway: IFG (prediction) → amygdala/insula → hypothalamus → ANS
-- Validates: CPD → AAC architectural pathway.
+- Validates: peak-detection → AAC architectural pathway.
 
 ### 6.3 Opioid System
 
@@ -450,11 +448,9 @@ Requires ALL channels to co-activate. Closer to actual physiology.
 
 ```python
 # Current:
-hr = σ(0.5 * (1 - aed_arousal * 0.6) + 0.3 * tempo_signal + 0.2 * asa_segregation)
 
 # Proposed v1.1 (add brief acceleration at onset):
-hr_raw = 0.5 * (1 - aed_arousal * 0.6) + 0.3 * tempo_signal + 0.2 * asa_segregation
-hr_onset_boost = velocity_signal * 0.15  # sympathetic acceleration at onset
+hr_onset_boost = velocity_signal * 0.15 # sympathetic acceleration at onset
 # hr_onset_boost decays with ~0.5s tau (handled by H-Frame windowing)
 hr = σ(hr_raw + hr_onset_boost * exp(-t/0.5))
 ```
@@ -463,10 +459,8 @@ hr = σ(hr_raw + hr_onset_boost * exp(-t/0.5))
 
 ```python
 # Current:
-respr = σ(0.6 * aed_arousal + 0.4 * energy_velocity)
 
 # Proposed v1.1 (breath-hold at peak moments):
-respr_raw = σ(0.6 * aed_arousal + 0.4 * energy_velocity)
 breath_hold = max(0, chills_intensity - 0.7) * 0.3
 respr = respr_raw * (1 - breath_hold)
 ```
@@ -475,7 +469,6 @@ respr = respr_raw * (1 - breath_hold)
 
 ```python
 # Current:
-bvp = σ(1 - 0.6 * aed_arousal * 0.5 - 0.2 * asa_salience + 0.2 * stability)
 
 # Proposed v1.1 (chill subtype sensitivity):
 # "Cold chill": BVP ↓ (vasoconstriction) — current behavior

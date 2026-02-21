@@ -21,38 +21,38 @@ The **Nostalgia-Enhanced Memory-Affect Circuit** (NEMAC) models how self-selecte
 THE SELF-SELECTED ADVANTAGE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-SELF-SELECTED MUSIC                 OTHER-SELECTED MUSIC
-──────────────────                  ────────────────────
-       │                                  │
-       ▼                                  ▼
- Auditory Cortex ✓                  Auditory Cortex ✓
-       │                                  │
-       ▼                                  ▼
- Temporal Cortex                    Temporal Cortex
- (STRONG memory match)              (WEAK memory match)
-       │                                  │
-  ┌────┴────┐                             │
-  ▼         ▼                             ▼
-mPFC    Hippocampus                 Minimal mPFC/
-(Self)  (Memory)                    Hippocampus
-  │         │                             │
-  └────┬────┘                             │
-       ▼                                  ▼
-HIGH NOSTALGIA                      LOW NOSTALGIA
-HIGH WELL-BEING                     LOW WELL-BEING
-d = 0.88 advantage                  baseline
+SELF-SELECTED MUSIC OTHER-SELECTED MUSIC
+────────────────── ────────────────────
+ │ │
+ ▼ ▼
+ Auditory Cortex ✓ Auditory Cortex ✓
+ │ │
+ ▼ ▼
+ Temporal Cortex Temporal Cortex
+ (STRONG memory match) (WEAK memory match)
+ │ │
+ ┌────┴────┐ │
+ ▼ ▼ ▼
+mPFC Hippocampus Minimal mPFC/
+(Self) (Memory) Hippocampus
+ │ │ │
+ └────┬────┘ │
+ ▼ ▼
+HIGH NOSTALGIA LOW NOSTALGIA
+HIGH WELL-BEING LOW WELL-BEING
+d = 0.88 advantage baseline
 
 ACOUSTIC PREDICTION:
-  N_predicted = f(tempo, mode, timbre, spectral features)
-  Accuracy: r = 0.985 (extremely high)
-  → Nostalgia can be predicted from audio alone!
+ N_predicted = f(tempo, mode, timbre, spectral features)
+ Accuracy: r = 0.985 (extremely high)
+ → Nostalgia can be predicted from audio alone!
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Sakakibara et al. (2025):
-  Self > Other-selected: d = 0.88 (large)
-  Nostalgic > Non-nostalgic: d = 0.711 (moderate-large)
-  Acoustic → nostalgia prediction: r = 0.985
-  EEG decoder: 64.0% (younger), 71.5% (older)
+ Self > Other-selected: d = 0.88 (large)
+ Nostalgic > Non-nostalgic: d = 0.711 (moderate-large)
+ Acoustic → nostalgia prediction: r = 0.985
+ EEG decoder: 64.0% (younger), 71.5% (older)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -73,52 +73,52 @@ NEMAC provides the **autobiographical complement** to SRP's moment-by-moment rew
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    NEMAC — MEMORY-AFFECT PATHWAY                            ║
+║ NEMAC — MEMORY-AFFECT PATHWAY ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  MUSICAL INPUT (personally meaningful)                                      ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────────────────────────────┐                               ║
-║  │  AUDITORY CORTEX (A1/STG)                │                               ║
-║  │  Spectrotemporal pattern matching        │                               ║
-║  │  → R³ spectral features                  │                               ║
-║  └──────┬───────────────────────┬───────────┘                               ║
-║         │                       │                                            ║
-║         ▼                       ▼                                            ║
-║  ┌──────────────────┐   ┌──────────────────┐                               ║
-║  │  HIPPOCAMPUS     │   │  mPFC (medial    │                               ║
-║  │                  │   │   Prefrontal)    │                               ║
-║  │  Autobiographical│   │                  │                               ║
-║  │  memory retrieval│   │  Self-referential│                               ║
-║  │  Pattern match   │◄──┤  processing      │                               ║
-║  │  Episodic recall │   │  "This is MY     │                               ║
-║  │                  │   │   music"          │                               ║
-║  └────────┬─────────┘   └────────┬─────────┘                               ║
-║           │                       │                                          ║
-║           └──────────┬────────────┘                                          ║
-║                      ▼                                                       ║
-║  ┌──────────────────────────────────────────┐                               ║
-║  │  DEFAULT MODE NETWORK (DMN)               │                               ║
-║  │  mPFC + Posterior Cingulate + Angular     │                               ║
-║  │  Gyrus + Hippocampus                      │                               ║
-║  │                                           │                               ║
-║  │  Nostalgia = Memory × Self × Warmth       │                               ║
-║  └──────┬────────────────────────────────────┘                               ║
-║         │                                                                    ║
-║         ▼                                                                    ║
-║  ┌──────────────────────────────────────────┐                               ║
-║  │  NAcc (REWARD)                            │                               ║
-║  │  Nostalgic reward via VTA dopamine        │                               ║
-║  │  Chills at peak nostalgic moments         │                               ║
-║  └───────────────────────────────────────────┘                               ║
-║                                                                              ║
-║  CRITICAL EVIDENCE:                                                         ║
-║  ─────────────────                                                          ║
-║  Sakakibara 2025: Self > Other, d = 0.88                                    ║
-║  Sakakibara 2025: Acoustic prediction r = 0.985                             ║
-║  Barrett 2010: Nostalgic music → mPFC + hippocampus                         ║
-║  Janata 2007: Music-evoked autobiographical memories                        ║
+║ ║
+║ MUSICAL INPUT (personally meaningful) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────┐ ║
+║ │ AUDITORY CORTEX (A1/STG) │ ║
+║ │ Spectrotemporal pattern matching │ ║
+║ │ → R³ spectral features │ ║
+║ └──────┬───────────────────────┬───────────┘ ║
+║ │ │ ║
+║ ▼ ▼ ║
+║ ┌──────────────────┐ ┌──────────────────┐ ║
+║ │ HIPPOCAMPUS │ │ mPFC (medial │ ║
+║ │ │ │ Prefrontal) │ ║
+║ │ Autobiographical│ │ │ ║
+║ │ memory retrieval│ │ Self-referential│ ║
+║ │ Pattern match │◄──┤ processing │ ║
+║ │ Episodic recall │ │ "This is MY │ ║
+║ │ │ │ music" │ ║
+║ └────────┬─────────┘ └────────┬─────────┘ ║
+║ │ │ ║
+║ └──────────┬────────────┘ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────┐ ║
+║ │ DEFAULT MODE NETWORK (DMN) │ ║
+║ │ mPFC + Posterior Cingulate + Angular │ ║
+║ │ Gyrus + Hippocampus │ ║
+║ │ │ ║
+║ │ Nostalgia = Memory × Self × Warmth │ ║
+║ └──────┬────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────┐ ║
+║ │ NAcc (REWARD) │ ║
+║ │ Nostalgic reward via VTA dopamine │ ║
+║ │ Chills at peak nostalgic moments │ ║
+║ └───────────────────────────────────────────┘ ║
+║ ║
+║ CRITICAL EVIDENCE: ║
+║ ───────────────── ║
+║ Sakakibara 2025: Self > Other, d = 0.88 ║
+║ Sakakibara 2025: Acoustic prediction r = 0.985 ║
+║ Barrett 2010: Nostalgic music → mPFC + hippocampus ║
+║ Janata 2007: Music-evoked autobiographical memories ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -146,29 +146,29 @@ NOSTALGIA-MEMORY-AFFECT MODEL
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Nostalgia intensity:
-  N(t) = M(t) × S(t) × W(t)
+ N(t) = M(t) × S(t) × W(t)
 
 where:
-  M(t) = memory vividness (hippocampal activity) [0,1]
-  S(t) = self-reference (mPFC activity) [0,1]
-  W(t) = affective warmth (R³ spectral warmth) [0,1]
+ M(t) = memory vividness (hippocampal activity) [0,1]
+ S(t) = self-reference (mPFC activity) [0,1]
+ W(t) = affective warmth (R³ spectral warmth) [0,1]
 
 Self-selected advantage:
-  N_self(t) > N_other(t) consistently, d = 0.88
+ N_self(t) > N_other(t) consistently, d = 0.88
 
 Acoustic prediction (Sakakibara 2025):
-  N_predicted = Σᵢ wᵢ × acoustic_featureᵢ
-  r = 0.985 → nostalgia largely predictable from audio
+ N_predicted = Σᵢ wᵢ × acoustic_featureᵢ
+ r = 0.985 → nostalgia largely predictable from audio
 
 Well-being enhancement:
-  ΔWellbeing = β × N(t) × duration + ε
-  β ≈ 0.7 (nostalgia → well-being coefficient)
+ ΔWellbeing = β × N(t) × duration + ε
+ β ≈ 0.7 (nostalgia → well-being coefficient)
 
 Nostalgia response:
-  f11 = β₁ × MPFC_activation + β₂ × Hippocampus_activation
-  β₁ = 0.6 (self-reference weight)
-  β₂ = 0.4 (memory weight)
-  |0.6| + |0.4| = 1.0 (no saturation)
+ f11 = β₁ × MPFC_activation + β₂ × Hippocampus_activation
+ β₁ = 0.6 (self-reference weight)
+ β₂ = 0.4 (memory weight)
+ |0.6| + |0.4| = 1.0 (no saturation)
 ```
 
 ---
@@ -183,54 +183,54 @@ NEMAC OUTPUT TENSOR: 11D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 0  │ f05_chills        │ [0, 1] │ Peak emotional magnitude at nostalgic moments.
-    │                   │        │ σ(α × warmth × vividness × reward).
-    │                   │        │ Salimpoor 2011: chills ↔ DA, r = 0.84.
+ 0 │ f05_chills │ [0, 1] │ Peak emotional magnitude at nostalgic moments.
+ │ │ │ σ(α × warmth × vividness × reward).
+ │ │ │ Salimpoor 2011: chills ↔ DA, r = 0.84.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 1  │ f11_nostalgia     │ [0, 1] │ Memory-enhanced emotional response.
-    │                   │        │ 0.6×mPFC + 0.4×hippocampus.
-    │                   │        │ Sakakibara 2025: d = 0.711.
+ 1 │ f11_nostalgia │ [0, 1] │ Memory-enhanced emotional response.
+ │ │ │ 0.6×mPFC + 0.4×hippocampus.
+ │ │ │ Sakakibara 2025: d = 0.711.
 
 LAYER M — MEMORY INTEGRATION
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Basis
+idx │ Name │ Range │ Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 2  │ mpfc_activation   │ [0, 1] │ Self-referential processing. mPFC activity.
-    │                   │        │ "This is MY music" signal.
+ 2 │ mpfc_activation │ [0, 1] │ Self-referential processing. mPFC activity.
+ │ │ │ "This is MY music" signal.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 3  │ hippocampus_activ │ [0, 1] │ Memory retrieval strength. Hippocampal
-    │                   │        │ episodic recall. Pattern completion.
+ 3 │ hippocampus_activ │ [0, 1] │ Memory retrieval strength. Hippocampal
+ │ │ │ episodic recall. Pattern completion.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 4  │ memory_vividness  │ [0, 1] │ Autobiographical clarity. Combined memory
-    │                   │        │ and self-reference quality.
+ 4 │ memory_vividness │ [0, 1] │ Autobiographical clarity. Combined memory
+ │ │ │ and self-reference quality.
 
 LAYER W — WELL-BEING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Basis
+idx │ Name │ Range │ Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 5  │ nostalgia_intens  │ [0, 1] │ Nostalgic feeling strength.
-    │                   │        │ Self-selected boost: × 1.2.
+ 5 │ nostalgia_intens │ [0, 1] │ Nostalgic feeling strength.
+ │ │ │ Self-selected boost: × 1.2.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 6  │ wellbeing_enhance │[-1, 1] │ Mood improvement from nostalgia.
-    │                   │        │ β ≈ 0.7 × nostalgia × duration.
+ 6 │ wellbeing_enhance │[-1, 1] │ Mood improvement from nostalgia.
+ │ │ │ β ≈ 0.7 × nostalgia × duration.
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Basis
+idx │ Name │ Range │ Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 7  │ nostalgia_correl  │ [0, 1] │ R³ warmth × AED — spectral nostalgia cue.
+ 7 │ nostalgia_correl │ [0, 1] │ R³ warmth × affective-dynamics — spectral nostalgia cue.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 8  │ memory_reward_lnk │ [0, 1] │ Memory × C0P — reward from retrieval.
+ 8 │ memory_reward_lnk │ [0, 1] │ Memory × cognitive-projection — reward from retrieval.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Basis
+idx │ Name │ Range │ Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 9  │ wellbeing_pred    │ [0, 1] │ 5-30s ahead mood improvement prediction.
+ 9 │ wellbeing_pred │ [0, 1] │ 5-30s ahead mood improvement prediction.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
-10  │ vividness_pred    │ [0, 1] │ 2-5s ahead memory vividness prediction.
+10 │ vividness_pred │ [0, 1] │ 2-5s ahead memory vividness prediction.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 11D per frame at 172.27 Hz
@@ -270,14 +270,14 @@ TOTAL: 11D per frame at 172.27 Hz
 | R³ idx | Name | NEMAC Role |
 |--------|------|-----------|
 | 22 | distribution_entropy | **Low entropy = predictable = familiar** |
-|    |                      | Familiar music triggers nostalgia (Pearce 2005) |
+| | | Familiar music triggers nostalgia (Pearce 2005) |
 
 **Group E: Interactions (8 of 24D)** — Memory integration
 
 | R³ idx | Name | NEMAC Role |
 |--------|------|-----------|
 | 25:33 | x_l0l5 (8D) | Energy × Consonance → memory-affect binding |
-|        |              | Captures how spectral quality triggers memory |
+| | | Captures how spectral quality triggers memory |
 
 ### 5.2 R³ v2 Feature Dependencies ([49:128]) — NEW
 
@@ -295,13 +295,13 @@ TOTAL: 11D per frame at 172.27 Hz
 ```
 R³ DEMAND FOR NEMAC: 14D of 49D
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Group A: Consonance        2D   → pleasantness for nostalgia
-Group B: Energy            1D   → emotional intensity
-Group C: Timbre            2D   → familiarity cues
-Group D: Change            1D   → predictability (familiar=low)
-Group E: Interactions      8D   → memory-affect binding
+Group A: Consonance 2D → pleasantness for nostalgia
+Group B: Energy 1D → emotional intensity
+Group C: Timbre 2D → familiarity cues
+Group D: Change 1D → predictability (familiar=low)
+Group E: Interactions 8D → memory-affect binding
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-TOTAL:                    14D
+TOTAL: 14D
 ```
 
 ---
@@ -310,25 +310,22 @@ TOTAL:                    14D
 
 ### 6.1 Mechanism-Level Demand
 
-NEMAC uses all three mesolimbic mechanisms: **AED + CPD + C0P**.
+NEMAC uses all three mesolimbic mechanisms: **H³ direct**.
 
 ```
 H³ DEMAND FOR NEMAC
 ━━━━━━━━━━━━━━━━━━━
 
-Mechanism │ Horizons              │ H-Law       │ Morphs Used              │ Tuples
+Mechanism │ Horizons │ H-Law │ Morphs Used │ Tuples
 ──────────┼───────────────────────┼─────────────┼──────────────────────────┼───────
-AED       │ H6 (200ms)            │ bidirection │ M0(value), M8(velocity), │ 6
-          │ H16 (1000ms)          │             │ M20(entropy)             │
+ │ H16 (1000ms) │ │ M20(entropy) │
 ──────────┼───────────────────────┼─────────────┼──────────────────────────┼───────
-CPD       │ H7 (250ms)            │ bidirection │ M0(value), M18(trend)    │ 4
-          │ H15 (800ms)           │             │                          │
+ │ H15 (800ms) │ │ │
 ──────────┼───────────────────────┼─────────────┼──────────────────────────┼───────
-C0P       │ H11 (500ms)           │ forward     │ M1(mean), M2(std),       │ 3
-          │                       │             │ M8(velocity)             │
+ │ │ │ M8(velocity) │
 ──────────┼───────────────────────┼─────────────┼──────────────────────────┼───────
-TOTAL     │ 5 horizons            │             │                          │ 13
-          │                       │             │              13/2304 = 0.56%
+TOTAL │ 5 horizons │ │ │ 13
+ │ │ │ 13/2304 = 0.56%
 ```
 
 ### 6.2 Temporal Layer Mapping
@@ -343,28 +340,21 @@ TOTAL     │ 5 horizons            │             │                         
 
 ```
 NOSTALGIA TRIGGER:
-  AED.arousal_dynamics via H6(200ms) + M0(value)
-  → Instant affective response to familiar music
-  → High value + low entropy = "I know this" signal
+ → Instant affective response to familiar music
+ → High value + low entropy = "I know this" signal
 
 MEMORY INTEGRATION:
-  AED.expectancy_affect via H16(1000ms) + M20(entropy)
-  → Low entropy = highly predictable (familiar) music
-  → Familiar → strong memory activation
+ → Low entropy = highly predictable (familiar) music
+ → Familiar → strong memory activation
 
 CHILLS DETECTION:
-  CPD.trigger_features via H7(250ms) + M0(value)
-  → Peak emotional moments during nostalgic listening
-  CPD.buildup_tracking via H15(800ms) + M18(trend)
-  → Building nostalgia trend → chills approaching
+ → Peak emotional moments during nostalgic listening
+ → Building nostalgia trend → chills approaching
 
 MEMORY-REWARD LINK:
-  C0P.feature_aggregation via H11(500ms) + M1(mean)
-  → Average reward signal from memory retrieval
-  C0P.feature_aggregation via H11(500ms) + M2(std)
-  → Reward variability (high std = rich memory content)
-  C0P.cognitive_state via H11(500ms) + M8(velocity)
-  → Rate of memory-reward coupling
+ → Average reward signal from memory retrieval
+ → Reward variability (high std = rich memory content)
+ → Rate of memory-reward coupling
 ```
 
 ### 6.4 R³ v2 Projected Expansion
@@ -377,119 +367,65 @@ No significant direct v2 expansion projected for NEMAC. As a pathway-dependent A
 
 ## 7. Mechanism Computation
 
-### 7.1 AED Binding (Primary: Nostalgia-Emotion Coupling)
-
-```python
-# AED reads: arousal_dynamics[0:10], expectancy_affect[10:20]
-# Horizons: H6(200ms) and H16(1000ms), bidirectional
-
-# Familiarity detection
-familiarity_fast = AED.arousal_dynamics[0:4].mean()   # H6: instant recognition
-familiarity_slow = AED.expectancy_affect[10:14].mean()  # H16: 1s context
-
-# Affective warmth from AED
-warmth_signal = sigmoid(0.4 * familiarity_fast + 0.6 * familiarity_slow)
-# Coefficients: |0.4| + |0.6| = 1.0
-# Slow context dominates — nostalgia builds over time
-
-# Entropy of prediction (low = familiar)
-pred_entropy = AED.arousal_dynamics[6]  # M20(entropy) at H16
-familiarity_score = 1.0 - pred_entropy  # Inverted: low entropy = high familiarity
-```
-
-### 7.2 CPD Binding (Secondary: Nostalgic Chills Detection)
-
-```python
-# CPD reads: trigger_features[0:10], buildup_tracking[10:20]
-# Horizons: H7(250ms) and H15(800ms), bidirectional
-
-# Chills trigger at peak nostalgic moments
-chills_trigger = CPD.trigger_features[0:4].mean()     # H7: instant peak
-chills_buildup = CPD.buildup_tracking[14:18].mean()    # H15: 800ms buildup
-
-# Chills intensity (multiplicative — needs both trigger and buildup)
-chills_raw = sigmoid(chills_trigger * chills_buildup * 3.0)
-```
-
-### 7.3 C0P Binding (Tertiary: Memory-Reward Projection)
-
-```python
-# C0P reads: feature_aggregation[0:10], cognitive_state[10:20], unit_projection[20:30]
-# Horizon: H11(500ms), forward only
-
-# Memory-reward link via C0P
-memory_reward_mean = C0P.feature_aggregation[1]  # M1: average reward from memory
-memory_reward_std = C0P.feature_aggregation[2]   # M2: reward variability
-memory_velocity = C0P.cognitive_state[18]          # M8: reward change rate
-
-# Self-reference (mPFC estimate)
-self_reference = sigmoid(0.5 * memory_reward_mean + 0.5 * familiarity_score)
-# |0.5| + |0.5| = 1.0
-
-# Memory retrieval (hippocampus estimate)
-memory_retrieval = sigmoid(0.5 * memory_reward_std + 0.5 * warmth_signal)
-# |0.5| + |0.5| = 1.0
-```
-
 ### 7.4 NEMAC Output Computation
 
 ```python
-def compute_nemac(R3, H3, AED, CPD, C0P, is_self_selected=True):
-    """
-    NEMAC: 11D output per frame.
+def compute_nemac(R3, H3, is_self_selected=True):
+ """
+ NEMAC: 11D output per frame.
 
-    All deterministic. Zero learned parameters.
-    Coefficients from Sakakibara 2025, Barrett 2010.
-    """
-    # --- Core signals ---
-    warmth = compute_warmth(AED, R3)           # [0,1]
-    familiarity = compute_familiarity(AED)      # [0,1]
-    chills = compute_chills(CPD)                # [0,1]
-    memory_reward = compute_memory_reward(C0P)  # [0,1]
+ All deterministic. Zero learned parameters.
+ Coefficients from Sakakibara 2025, Barrett 2010.
+ """
+ # --- Core signals ---
+ warmth = compute_warmth(h3, R3) # [0,1]
+ familiarity = compute_familiarity() # [0,1]
+ chills = compute_chills() # [0,1]
+ memory_reward = compute_memory_reward() # [0,1]
 
-    # Self-selected boost
-    boost = 1.2 if is_self_selected else 1.0
+ # Self-selected boost
+ boost = 1.2 if is_self_selected else 1.0
 
-    # --- Neural activations ---
-    mpfc = sigmoid(0.5 * memory_reward + 0.5 * familiarity)
-    # |0.5| + |0.5| = 1.0
-    hippocampus = sigmoid(0.5 * warmth + 0.5 * familiarity)
-    # |0.5| + |0.5| = 1.0
-    vividness = tanh(mpfc * hippocampus * 2.0)
+ # --- Neural activations ---
+ mpfc = sigmoid(0.5 * memory_reward + 0.5 * familiarity)
+ # |0.5| + |0.5| = 1.0
+ hippocampus = sigmoid(0.5 * warmth + 0.5 * familiarity)
+ # |0.5| + |0.5| = 1.0
+ vividness = tanh(mpfc * hippocampus * 2.0)
 
-    # --- Layer E: Explicit Features ---
-    f05 = sigmoid(chills * warmth * vividness * 3.0)  # Chills intensity
-    f11 = clamp(0.6 * mpfc + 0.4 * hippocampus, 0, 1)  # Nostalgia
-    # |0.6| + |0.4| = 1.0
+ # --- Layer E: Explicit Features ---
+ f05 = sigmoid(chills * warmth * vividness * 3.0) # Chills intensity
+ f11 = clamp(0.6 * mpfc + 0.4 * hippocampus, 0, 1) # Nostalgia
+ # |0.6| + |0.4| = 1.0
 
-    # --- Layer M: Memory Integration ---
-    mpfc_out = mpfc
-    hipp_out = hippocampus
-    vivid_out = vividness
+ # --- Layer M: Memory Integration ---
+ mpfc_out = mpfc
+ hipp_out = hippocampus
+ vivid_out = vividness
 
-    # --- Layer W: Well-being ---
-    nostalgia_intensity = clamp(f11 * boost, 0, 1)
-    wellbeing = tanh(0.7 * nostalgia_intensity)
+ # --- Layer W: Well-being ---
+ nostalgia_intensity = clamp(f11 * boost, 0, 1)
+ wellbeing = tanh(0.7 * nostalgia_intensity)
 
-    # --- Layer P: Present Processing ---
-    nostalgia_correl = sigmoid(
-        R3.sensory_pleasantness[4] * warmth * 2.0
-    )
-    memory_reward_link = sigmoid(
-        familiarity * C0P.unit_projection[20:24].mean() * 2.0
-    )
+ # --- Layer P: Present Processing ---
+ nostalgia_correl = sigmoid(
+ R3.sensory_pleasantness[4] * warmth * 2.0
+ )
+ memory_reward_link = sigmoid(
+ familiarity * unit_projection[20:24].mean() * 2.0
+ )
 
-    # --- Layer F: Future Predictions ---
-    wellbeing_pred = sigmoid(nostalgia_intensity * 0.7)
-    vividness_pred = sigmoid(hippocampus + 0.3 * CPD.buildup_tracking[14:18].mean())
+ # --- Layer F: Future Predictions ---
+ wellbeing_pred = sigmoid(nostalgia_intensity * 0.7)
+ vividness_pred = sigmoid(hippocampus + 0.3 * buildup_tracking[14:18].mean())
 
-    return stack([
-        f05, f11,                                    # E: 2D
-        mpfc_out, hipp_out, vivid_out,               # M: 3D
-        nostalgia_intensity, wellbeing,              # W: 2D
-        nostalgia_correl, memory_reward_link,         # P: 2D
-        wellbeing_pred, vividness_pred               # F: 2D
-    ])  # Total: 11D
+ return stack([
+ f05, f11, # E: 2D
+ mpfc_out, hipp_out, vivid_out, # M: 3D
+ nostalgia_intensity, wellbeing, # W: 2D
+ nostalgia_correl, memory_reward_link, # P: 2D
+ wellbeing_pred, vividness_pred # F: 2D
+ ]) # Total: 11D
 ```
 
 ---
@@ -503,20 +439,20 @@ NEMAC INTERACTIONS WITHIN ARU
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 NEMAC ──► SRP (Striatal Reward Pathway)
-     │     └── NEMAC.nostalgia boosts SRP.wanting (anticipatory DA)
-     │         Self-selected music = enhanced SRP reward
-     │
-     ├──► AAC (Autonomic-Affective Coupling)
-     │     └── NEMAC.chills triggers ANS cascade
-     │         (piloerection, SCR↑, HR deceleration)
-     │
-     ├──► PUPF (Prediction-Uncertainty-Pleasure)
-     │     └── NEMAC.familiarity → PUPF low uncertainty (H↓)
-     │         Familiar music shifts Goldilocks zone
-     │
-     └──► TAR (Therapeutic Affective Resonance)
-           └── NEMAC provides nostalgia mechanism for therapy
-               Self-selected music: d=0.88 advantage for interventions
+ │ └── NEMAC.nostalgia boosts SRP.wanting (anticipatory DA)
+ │ Self-selected music = enhanced SRP reward
+ │
+ ├──► AAC (Autonomic-Affective Coupling)
+ │ └── NEMAC.chills triggers ANS cascade
+ │ (piloerection, SCR↑, HR deceleration)
+ │
+ ├──► PUPF (Prediction-Uncertainty-Pleasure)
+ │ └── NEMAC.familiarity → PUPF low uncertainty (H↓)
+ │ Familiar music shifts Goldilocks zone
+ │
+ └──► TAR (Therapeutic Affective Resonance)
+ └── NEMAC provides nostalgia mechanism for therapy
+ Self-selected music: d=0.88 advantage for interventions
 ```
 
 ### 8.2 Cross-Unit
@@ -563,16 +499,13 @@ NEMAC ──► SRP (Striatal Reward Pathway)
 |--------|-------------|-------------|--------|
 | Output dimensions | 11D | 11D | Same |
 | Input space | S⁰ 25D (L5, L6, L9, X) | R³ 14D | Remapped to R³ groups |
-| Temporal | HC⁰ AED+C0P (9 tuples) | H³ → AED+CPD+C0P (13 tuples) | Added CPD for chills |
+| Temporal | HC⁰ (9 tuples) | H³ (13 tuples) | Added peak-detection for chills |
 | H⁰ tuples | 9/2304 = 0.39% | 13/2304 = 0.56% | Slight increase |
 
 ### 11.2 Mechanism Migration
 
 | Legacy Mechanism | MI Mechanism | Rationale |
 |-----------------|-------------|-----------|
-| AED [96:104] | AED (30D) | Preserved — nostalgia-emotion coupling |
-| C0P [120:128] | C0P (30D) | Preserved — memory-reward projection |
-| — | CPD (30D) | **Added** — chills detection at nostalgic peaks |
 
 ### 11.3 S⁰ → R³ Index Mapping
 
@@ -612,7 +545,7 @@ NEMAC ──► SRP (Striatal Reward Pathway)
 | Version | Date | Changes |
 |---------|------|---------|
 | 1.0.0 | 2026-02-04 | Legacy D0 model specification (11D) |
-| 2.0.0 | 2026-02-12 | MI R³/H³ architecture: added CPD for chills, R³ mapping, mechanism binding |
+| 2.0.0 | 2026-02-12 | MI R³/H³ architecture: added peak-detection for chills, R³ mapping, mechanism binding |
 | 2.1.0 | 2026-02-13 | Beta upgrade: +2 papers (Sakakibara Y. 2025 N-BMI, Scarratt 2025 familiarity fMRI) |
 
 ---

@@ -21,28 +21,28 @@ The **Period Entrainment Optimization Model** (PEOM) describes how motor systems
 PERIOD ENTRAINMENT OPTIMIZATION
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-AUDITORY RHYTHM                          MOTOR SYSTEM
-─────────────                            ────────────
+AUDITORY RHYTHM MOTOR SYSTEM
+───────────── ────────────
 
 Sound Period (T) ─────────────────► Target Period
-     │                                   (external)
-     │
-     ▼
+ │ (external)
+ │
+ ▼
 ┌──────────────────────────────────────────────────────────────────┐
-│              CEREBELLUM + SMA + MOTOR CORTEX                     │
-│                                                                  │
-│   Period Locking         Velocity Optimization   CV Reduction    │
-│   ════════════           ════════════════════    ════════════    │
-│   Motor_Period → T       Smooth v(t) profile    CV_ent < CV_sp  │
-│   ENTRAINED              OPTIMIZED              REDUCED          │
-│                                                                  │
+│ CEREBELLUM + SMA + MOTOR CORTEX │
+│ │
+│ Period Locking Velocity Optimization CV Reduction │
+│ ════════════ ════════════════════ ════════════ │
+│ Motor_Period → T Smooth v(t) profile CV_ent < CV_sp │
+│ ENTRAINED OPTIMIZED REDUCED │
+│ │
 └──────────────────────────────────────────────────────────────────┘
-     │
-     ▼
+ │
+ ▼
 ┌──────────────────────────────────────────────────────────────────┐
-│                    KINEMATIC OUTPUT                               │
-│   Position x(t), Velocity v(t) = dx/dt, Acceleration a(t)       │
-│   All optimized by fixed period T                                │
+│ KINEMATIC OUTPUT │
+│ Position x(t), Velocity v(t) = dx/dt, Acceleration a(t) │
+│ All optimized by fixed period T │
 └──────────────────────────────────────────────────────────────────┘
 
 KEY MECHANISM: dP/dt = α · (T - P(t))
@@ -68,83 +68,81 @@ PEOM establishes the foundational period entrainment mechanism for the Motor Pla
 
 ## 2. Neural Circuit: Complete Anatomy
 
-### 2.1 Information Flow Architecture (EAR → BRAIN → BEP+TMH → PEOM)
+### 2.1 Information Flow Architecture (EAR → BRAIN → PEOM)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    PEOM COMPUTATION ARCHITECTURE                             ║
+║ PEOM COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins x 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
-║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ CHANGE   │ │ X-INT  │ │        ║
-║  │  │ 7D [0:7]  │ │ 5D[7:12]│ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
-║  │  │           │ │         │ │ [12:21] │ │ [21:25]  │ │ [25:49]│ │        ║
-║  │  │roughness  │ │amplitude│ │warmth   │ │spec_chg  │ │x_l0l5  │ │        ║
-║  │  │sethares   │ │loudness │ │tristim. │ │enrg_chg  │ │x_l4l5  │ │        ║
-║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                         PEOM reads: ~14D                        │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                                                                  │        ║
-║  │  ┌── BEP Horizons ─────────────┐ ┌── TMH Horizons ──────────┐  │        ║
-║  │  │ H3 (100ms alpha)            │ │ H4 (125ms theta)          │  │        ║
-║  │  │ H8 (500ms delta)            │ │ H16 (1000ms beat)         │  │        ║
-║  │  │ H16 (1000ms beat)           │ │                            │  │        ║
-║  │  │                             │ │ Interval memory             │  │        ║
-║  │  │ Beat/period tracking         │ │ Sequence integration       │  │        ║
-║  │  │ Motor phase locking          │ │ Hierarchical timing        │  │        ║
-║  │  └─────────────────────────────┘ └────────────────────────────┘  │        ║
-║  │                         PEOM demand: ~15 of 2304 tuples          │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Sensorimotor Circuit ═══════  ║
-║                               │                                              ║
-║                       ┌───────┴───────┐                                      ║
-║                       ▼               ▼                                      ║
-║  ┌─────────────────┐  ┌─────────────────┐                                   ║
-║  │  BEP (30D)      │  │  TMH (30D)      │                                   ║
-║  │                 │  │                 │                                    ║
-║  │ Beat Entr[0:10] │  │ Short-term      │                                   ║
-║  │ Motor Coup      │  │ Memory  [0:10]  │                                   ║
-║  │         [10:20] │  │ Sequence        │                                   ║
-║  │ Groove  [20:30] │  │ Integ  [10:20]  │                                   ║
-║  │                 │  │ Hierarch        │                                   ║
-║  │                 │  │ Struct  [20:30] │                                   ║
-║  └────────┬────────┘  └────────┬────────┘                                   ║
-║           │                    │                                              ║
-║           └────────┬───────────┘                                             ║
-║                    ▼                                                          ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    PEOM MODEL (11D Output)                       │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f01_period_entrainment,                    │        ║
-║  │                       f02_velocity_optimization,                 │        ║
-║  │                       f03_variability_reduction                   │        ║
-║  │  Layer M (Math):      motor_period, velocity,                    │        ║
-║  │                       acceleration, cv_reduction                  │        ║
-║  │  Layer P (Present):   period_lock_strength,                      │        ║
-║  │                       kinematic_smoothness                        │        ║
-║  │  Layer F (Future):    next_beat_pred,                             │        ║
-║  │                       velocity_profile_pred                       │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins x 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ ENERGY │ │ TIMBRE │ │ CHANGE │ │ X-INT │ │ ║
+║ │ │ 7D [0:7] │ │ 5D[7:12]│ │ 9D │ │ 4D │ │ 24D │ │ ║
+║ │ │ │ │ │ │ [12:21] │ │ [21:25] │ │ [25:49]│ │ ║
+║ │ │roughness │ │amplitude│ │warmth │ │spec_chg │ │x_l0l5 │ │ ║
+║ │ │sethares │ │loudness │ │tristim. │ │enrg_chg │ │x_l4l5 │ │ ║
+║ │ └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │ ║
+║ │ PEOM reads: ~14D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ │ ║
+║ │ │ H3 (100ms alpha) │ │ H4 (125ms theta) │ │ ║
+║ │ │ H8 (500ms delta) │ │ H16 (1000ms beat) │ │ ║
+║ │ │ H16 (1000ms beat) │ │ │ │ ║
+║ │ │ │ │ Interval memory │ │ ║
+║ │ │ Beat/period tracking │ │ Sequence integration │ │ ║
+║ │ │ Motor phase locking │ │ Hierarchical timing │ │ ║
+║ │ └─────────────────────────────┘ └────────────────────────────┘ │ ║
+║ │ PEOM demand: ~15 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Sensorimotor Circuit ═══════ ║
+║ │ ║
+║ ┌───────┴───────┐ ║
+║ ▼ ▼ ║
+║ ┌─────────────────┐ ┌─────────────────┐ ║
+║ │ │ │ │ ║
+║ │ Beat Entr[0:10] │ │ Short-term │ ║
+║ │ Motor Coup │ │ Memory [0:10] │ ║
+║ │ [10:20] │ │ Sequence │ ║
+║ │ Groove [20:30] │ │ Integ [10:20] │ ║
+║ │ │ │ Hierarch │ ║
+║ │ │ │ Struct [20:30] │ ║
+║ └────────┬────────┘ └────────┬────────┘ ║
+║ │ │ ║
+║ └────────┬───────────┘ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ PEOM MODEL (11D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f01_period_entrainment, │ ║
+║ │ f02_velocity_optimization, │ ║
+║ │ f03_variability_reduction │ ║
+║ │ Layer M (Math): motor_period, velocity, │ ║
+║ │ acceleration, cv_reduction │ ║
+║ │ Layer P (Present): period_lock_strength, │ ║
+║ │ kinematic_smoothness │ ║
+║ │ Layer F (Future): next_beat_pred, │ ║
+║ │ velocity_profile_pred │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -158,28 +156,28 @@ PEOM establishes the foundational period entrainment mechanism for the Motor Pla
 |---|-------|--------|---|-------------|-------------|-------------|
 | 1 | **Thaut et al. 2015** | Review (EEG/Behavioral) | — | Period locking (not phase) defines entrainment; CTR optimizes velocity/acceleration | — | **Primary**: f01 period entrainment, f02 velocity optimization |
 | 2 | **Thaut et al. 1998b** | Behavioral | 12 | Motor period entrains to auditory period even during subliminal (2%) tempo changes; phase fluctuates but period locks precisely | — | **f01**: period vs phase distinction |
-| 3 | **Grahn & Brett 2007** | fMRI | 20 | Basal ganglia (putamen) and SMA respond to beat in rhythm; musicians also activate cerebellum & PMC | Z=5.67 (L putamen), Z=5.03 (L SMA), p<.001 FDR | **BEP beat entrainment**, brain regions |
+| 3 | **Grahn & Brett 2007** | fMRI | 20 | Basal ganglia (putamen) and SMA respond to beat in rhythm; musicians also activate cerebellum & PMC | Z=5.67 (L putamen), Z=5.03 (L SMA), p<.001 FDR | **beat-entrainment beat entrainment**, brain regions |
 | 4 | **Yamashita et al. 2025** | RCT (tDCS+tACS) | 16 | SMA+M1 gait-synchronized stimulation reduced stride time CV from 4.51→2.80 | **d=−1.10** (large), η²p=0.309, p=0.014 | **f03 variability reduction** (direct CV evidence) |
 | 5 | **Ross & Balasubramaniam 2022** | Review | — | Sensorimotor simulation supports subsecond beat timing; motor network engaged during perception without movement | — | **f01/f02**: covert motor entrainment, simulation theory |
-| 6 | **Fujioka et al. 2012** | MEG | 12 | Beta oscillations in SMA and auditory cortex modulated by rhythmic stimulus frequency; internalized timing | — | **BEP**: neural oscillation mechanism |
+| 6 | **Fujioka et al. 2012** | MEG | 12 | Beta oscillations in SMA and auditory cortex modulated by rhythmic stimulus frequency; internalized timing | — | **Beat-entrainment H³**: neural oscillation mechanism |
 | 7 | **Repp 2005** | Review | — | Sensorimotor synchronization: period correction vs phase correction as distinct mechanisms | — | **f01**: period vs phase correction |
 | 8 | **Sansare et al. 2025** | RCT (iTBS) | 40 | Cerebellar iTBS reduced postural sway for ≥30 min; balance improvement without direct M1 CBI change | p<.05 (sway reduction) | **Cerebellum**: motor timing/balance role |
-| 9 | **Nozaradan et al. 2011** | EEG (SSVEP) | 14 | Neural entrainment to beat and meter frequencies; beat-related peaks in frequency spectrum | — | **BEP**: frequency-tagged entrainment |
-| 10 | **Thaut et al. 2009b** | fMRI | 12 | Distinct cortico-cerebellar activations in rhythmic auditory-motor synchronization; cerebellum tracks interval timing | — | **TMH**: cerebellar timing circuits |
+| 9 | **Nozaradan et al. 2011** | EEG (SSVEP) | 14 | Neural entrainment to beat and meter frequencies; beat-related peaks in frequency spectrum | — | **Beat-entrainment H³**: frequency-tagged entrainment |
+| 10 | **Thaut et al. 2009b** | fMRI | 12 | Distinct cortico-cerebellar activations in rhythmic auditory-motor synchronization; cerebellum tracks interval timing | — | **Temporal-context H³**: cerebellar timing circuits |
 | 11 | **Grahn et al. 2011** | fMRI | 18 | Cerebellum activated in sensorimotor synchronization; audition primes vision for beat but not vice versa | — | **Cross-modal**: auditory-motor dominance |
-| 12 | **Tierney & Kraus 2013** | EEG (ABR) | 124 | Beat synchronization ability linked to neural response consistency in inferior colliculus | r=.37, p<.001 | **BEP**: subcortical rhythm encoding |
+| 12 | **Tierney & Kraus 2013** | EEG (ABR) | 124 | Beat synchronization ability linked to neural response consistency in inferior colliculus | r=.37, p<.001 | **Beat-entrainment H³**: subcortical rhythm encoding |
 
 ### 3.2 Effect Size Summary
 
 ```
-Primary Evidence (k=12):  Strong convergence across fMRI, EEG, MEG, TMS, behavioral, clinical
+Primary Evidence (k=12): Strong convergence across fMRI, EEG, MEG, TMS, behavioral, clinical
 Key Quantitative Findings:
-  Yamashita 2025:   CV reduction d = −1.10 (large), η²p = 0.309
-  Grahn & Brett 07: Putamen Z = 5.67 (p < .001 FDR), SMA Z = 5.03
-  Tierney & Kraus:   Beat-neural r = .37 (p < .001, N = 124)
-Heterogeneity:       Low (consistent motor-rhythm entrainment effects)
-Quality Assessment:  α-tier (RCT, fMRI, MEG, EEG, clinical replication)
-Replication:         Clinical validation across stroke, PD, TBI, CP, healthy aging
+ Yamashita 2025: CV reduction d = −1.10 (large), η²p = 0.309
+ Grahn & Brett 07: Putamen Z = 5.67 (p < .001 FDR), SMA Z = 5.03
+ Tierney & Kraus: Beat-neural r = .37 (p < .001, N = 124)
+Heterogeneity: Low (consistent motor-rhythm entrainment effects)
+Quality Assessment: α-tier (RCT, fMRI, MEG, EEG, clinical replication)
+Replication: Clinical validation across stroke, PD, TBI, CP, healthy aging
 ```
 
 ### 3.3 Evidence Audit Notes
@@ -219,19 +217,16 @@ Replication:         Clinical validation across stroke, PD, TBI, CP, healthy agi
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[10] spectral_flux ────────────┐
 R³[11] onset_strength ───────────┼──► Beat/period detection
-BEP.beat_entrainment[0:10] ──────┘   Period locking to auditory rhythm
 
 R³[7] amplitude ─────────────────┐
 R³[8] loudness ──────────────────┼──► Beat strength / motor drive
-BEP.motor_coupling[10:20] ───────┘   Kinematic optimization
 
 R³[25:33] x_l0l5 ───────────────┐
-TMH.sequence_integration[10:20] ─┼──► Continuous time reference (CTR)
-H³ beat periodicity tuples ──────┘   Period stability for motor output
+H³ beat periodicity tuples ──────┘ Period stability for motor output
 ```
 
 ---
@@ -240,7 +235,7 @@ H³ beat periodicity tuples ──────┘   Period stability for motor o
 
 ### 5.1 Demand Specification
 
-PEOM requires H³ features at BEP horizons for period/beat tracking and TMH horizons for interval timing and sequence memory. The demand reflects the multi-scale temporal integration required for period entrainment optimization.
+PEOM requires H³ features for period/beat tracking and for interval timing and sequence memory. The demand reflects the multi-scale temporal integration required for period entrainment optimization.
 
 | R³ Index | Feature | H | Morph | Law | Purpose |
 |----------|---------|---|-------|-----|---------|
@@ -264,7 +259,7 @@ PEOM requires H³ features at BEP horizons for period/beat tracking and TMH hori
 
 #### R³ v2 Projected Expansion
 
-PEOM projected v2 from G:Rhythm, aligned with BEP+TMH horizons.
+PEOM projected v2 from G:Rhythm, aligned with corresponding H³ horizons.
 
 | R³ Idx | Feature | Group | H | Morph | Law | Purpose |
 |:------:|---------|:-----:|:-:|-------|:---:|---------|
@@ -279,17 +274,6 @@ PEOM projected v2 from G:Rhythm, aligned with BEP+TMH horizons.
 **v2 projected**: 7 tuples
 **Total projected**: 22 tuples of 294,912 theoretical = 0.0075%
 
-### 5.2 BEP + TMH Mechanism Binding
-
-| Mechanism | Sub-section | Range | PEOM Role | Weight |
-|-----------|-------------|-------|-----------|--------|
-| **BEP** | Beat Entrainment | BEP[0:10] | Period locking to beat frequency | **1.0** (primary) |
-| **BEP** | Motor Coupling | BEP[10:20] | Sensorimotor synchronization | 0.9 |
-| **BEP** | Groove Processing | BEP[20:30] | Movement facilitation (secondary) | 0.5 |
-| **TMH** | Short-term Memory | TMH[0:10] | Period template storage | 0.7 |
-| **TMH** | Sequence Integration | TMH[10:20] | Interval timing / CTR computation | **1.0** (primary) |
-| **TMH** | Hierarchical Structure | TMH[20:30] | Tempo context / reference period | 0.7 |
-
 ---
 
 ## 6. Output Space: 11D Multi-Layer Representation
@@ -302,54 +286,49 @@ PEOM OUTPUT TENSOR: 11D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 0  │ f01_period_entrainment   │ [0, 1] │ Motor period lock to auditory period.
-    │                          │        │ f01 = σ(0.40 * beat_periodicity_1s
-    │                          │        │       + 0.35 * onset_periodicity_1s
-    │                          │        │       + 0.25 * mean(BEP.beat[0:10]))
+ 0 │ f01_period_entrainment │ [0, 1] │ Motor period lock to auditory period.
+ │ │ │ f01 = σ(0.40 * beat_periodicity_1s
+ │ │ │ + 0.35 * onset_periodicity_1s
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 1  │ f02_velocity_optimization│ [0, 1] │ Kinematic smoothness via fixed period.
-    │                          │        │ f02 = σ(0.35 * coupling_periodicity_1s
-    │                          │        │       + 0.35 * mean(TMH.seq[10:20])
-    │                          │        │       + 0.30 * mean(BEP.motor[10:20]))
+ 1 │ f02_velocity_optimization│ [0, 1] │ Kinematic smoothness via fixed period.
+ │ │ │ f02 = σ(0.35 * coupling_periodicity_1s
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 2  │ f03_variability_reduction│ [0, 1] │ CV reduction with rhythmic cueing.
-    │                          │        │ f03 = σ(0.35 * f01 * f02
-    │                          │        │       + 0.35 * mean(BEP.groove[20:30])
-    │                          │        │       + 0.30 * mean(TMH.hier[20:30]))
+ 2 │ f03_variability_reduction│ [0, 1] │ CV reduction with rhythmic cueing.
+ │ │ │ f03 = σ(0.35 * f01 * f02
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 3  │ motor_period             │ [0, 1] │ Entrained motor period (normalized).
-    │                          │        │ Motor_Period(t) → Auditory_Period(T)
+ 3 │ motor_period │ [0, 1] │ Entrained motor period (normalized).
+ │ │ │ Motor_Period(t) → Auditory_Period(T)
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 4  │ velocity                 │ [0, 1] │ Optimized velocity profile.
-    │                          │        │ v(t) = dx/dt with reduced jerk
+ 4 │ velocity │ [0, 1] │ Optimized velocity profile.
+ │ │ │ v(t) = dx/dt with reduced jerk
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 5  │ acceleration             │ [0, 1] │ Optimized acceleration profile.
-    │                          │        │ a(t) = d²x/dt² optimized by period
+ 5 │ acceleration │ [0, 1] │ Optimized acceleration profile.
+ │ │ │ a(t) = d²x/dt² optimized by period
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 6  │ cv_reduction             │ [0, 1] │ Coefficient of variation reduction.
-    │                          │        │ 1 - (CV_entrained / CV_self_paced)
+ 6 │ cv_reduction │ [0, 1] │ Coefficient of variation reduction.
+ │ │ │ 1 - (CV_entrained / CV_self_paced)
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 7  │ period_lock_strength     │ [0, 1] │ BEP period-locked neural activity.
+ 7 │ period_lock_strength │ [0, 1] │ beat-entrainment period-locked neural activity.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 8  │ kinematic_smoothness     │ [0, 1] │ TMH jerk-reduction metric.
+ 8 │ kinematic_smoothness │ [0, 1] │ temporal-context jerk-reduction metric.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 9  │ next_beat_pred_T         │ [0, 1] │ Next beat onset prediction (T ahead).
+ 9 │ next_beat_pred_T │ [0, 1] │ Next beat onset prediction (T ahead).
 ────┼──────────────────────────┼────────┼────────────────────────────────────
-10  │ velocity_profile_pred    │ [0, 1] │ Velocity profile 0.5T ahead.
+10 │ velocity_profile_pred │ [0, 1] │ Velocity profile 0.5T ahead.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 11D per frame at 172.27 Hz
@@ -365,23 +344,23 @@ TOTAL: 11D per frame at 172.27 Hz
 ```
 PRIMARY EQUATION:
 
-    dP/dt = α · (T - P(t))
+ dP/dt = α · (T - P(t))
 
-    where:
-      P(t) = current motor period
-      T = auditory period (target)
-      α = entrainment rate
+ where:
+ P(t) = current motor period
+ T = auditory period (target)
+ α = entrainment rate
 
 KINEMATICS (fixed period T):
 
-    Position: x(t)
-    Velocity: v(t) = dx/dt → SMOOTH (reduced jerk)
-    Acceleration: a(t) = d²x/dt² → OPTIMIZED
+ Position: x(t)
+ Velocity: v(t) = dx/dt → SMOOTH (reduced jerk)
+ Acceleration: a(t) = d²x/dt² → OPTIMIZED
 
 VARIABILITY REDUCTION:
 
-    CV_entrained < CV_self-paced
-    f03 = 1 - (CV_entrained / CV_self_paced)
+ CV_entrained < CV_self-paced
+ f03 = 1 - (CV_entrained / CV_self_paced)
 ```
 
 ### 7.2 Feature Formulas
@@ -391,25 +370,20 @@ VARIABILITY REDUCTION:
 
 # f01: Period Entrainment
 f01 = σ(0.40 * beat_periodicity_1s
-       + 0.35 * onset_periodicity_1s
-       + 0.25 * mean(BEP.beat_entrainment[0:10]))
+ + 0.35 * onset_periodicity_1s
 # coefficients: 0.40 + 0.35 + 0.25 = 1.0 ✓
 
 # f02: Velocity Optimization
 f02 = σ(0.35 * coupling_periodicity_1s
-       + 0.35 * mean(TMH.sequence_integration[10:20])
-       + 0.30 * mean(BEP.motor_coupling[10:20]))
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # f03: Variability Reduction
-f03 = σ(0.35 * f01 * f02                    # interaction term
-       + 0.35 * mean(BEP.groove[20:30])
-       + 0.30 * mean(TMH.hierarchical[20:30]))
+f03 = σ(0.35 * f01 * f02 # interaction term
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # Temporal dynamics
 dP/dt = τ⁻¹ · (T - P(t))
-    where τ = 4.0s (period integration window)
+ where τ = 4.0s (period integration window)
 ```
 
 ---
@@ -440,25 +414,23 @@ dP/dt = τ⁻¹ · (T - P(t))
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    PEOM INTERACTIONS                                         │
+│ PEOM INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (MPU):                                                         │
-│  PEOM.period_entrainment ────────► MSR (entrainment baseline)              │
-│  PEOM.velocity_optimization ─────► GSSM (gait optimization)               │
-│  PEOM.next_beat_pred ────────────► ASAP (beat prediction)                  │
-│  PEOM.cv_reduction ──────────────► SPMC (motor consistency)                │
-│                                                                             │
-│  CROSS-UNIT (MPU → STU):                                                   │
-│  PEOM.period_lock_strength ──────► STU (timing synchrony)                  │
-│  PEOM.motor_period ──────────────► STU (motor tempo reference)             │
-│                                                                             │
-│  UPSTREAM DEPENDENCIES:                                                     │
-│  BEP mechanism (30D) ────────────► PEOM (beat/motor processing)            │
-│  TMH mechanism (30D) ────────────► PEOM (temporal memory/sequence)         │
-│  R³ (~14D) ──────────────────────► PEOM (direct spectral features)         │
-│  H³ (15 tuples) ─────────────────► PEOM (temporal dynamics)                │
-│                                                                             │
+│ │
+│ INTRA-UNIT (MPU): │
+│ PEOM.period_entrainment ────────► MSR (entrainment baseline) │
+│ PEOM.velocity_optimization ─────► GSSM (gait optimization) │
+│ PEOM.next_beat_pred ────────────► ASAP (beat prediction) │
+│ PEOM.cv_reduction ──────────────► SPMC (motor consistency) │
+│ │
+│ CROSS-UNIT (MPU → STU): │
+│ PEOM.period_lock_strength ──────► STU (timing synchrony) │
+│ PEOM.motor_period ──────────────► STU (motor tempo reference) │
+│ │
+│ UPSTREAM DEPENDENCIES: │
+│ R³ (~14D) ──────────────────────► PEOM (direct spectral features) │
+│ H³ (15 tuples) ─────────────────► PEOM (temporal dynamics) │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -482,139 +454,110 @@ dP/dt = τ⁻¹ · (T - P(t))
 
 ```python
 class PEOM(BaseModel):
-    """Period Entrainment Optimization Model.
+ """Period Entrainment Optimization Model.
 
-    Output: 11D per frame.
-    Reads: BEP mechanism (30D), TMH mechanism (30D), R³ direct.
-    """
-    NAME = "PEOM"
-    UNIT = "MPU"
-    TIER = "α1"
-    OUTPUT_DIM = 11
-    MECHANISM_NAMES = ("BEP", "TMH")
+ Output: 11D per frame.
+ """
+ NAME = "PEOM"
+ UNIT = "MPU"
+ TIER = "α1"
+ OUTPUT_DIM = 11
+ TAU_DECAY = 4.0 # Period integration window (seconds)
+ ALPHA_ATTENTION = 0.90 # High motor attention
 
-    TAU_DECAY = 4.0        # Period integration window (seconds)
-    ALPHA_ATTENTION = 0.90  # High motor attention
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """15 tuples for PEOM computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ (10, 3, 0, 2), # spectral_flux, 100ms, value, bidi
+ (10, 3, 14, 2), # spectral_flux, 100ms, periodicity, bidi
+ (10, 16, 14, 2), # spectral_flux, 1000ms, periodicity, bidi
+ (11, 3, 0, 2), # onset_strength, 100ms, value, bidi
+ (11, 16, 14, 2), # onset_strength, 1000ms, periodicity, bidi
+ (7, 3, 0, 2), # amplitude, 100ms, value, bidi
+ (7, 3, 2, 2), # amplitude, 100ms, std, bidi
+ (7, 16, 1, 2), # amplitude, 1000ms, mean, bidi
+ (8, 8, 1, 0), # loudness, 500ms, mean, fwd
+ (21, 4, 8, 0), # spectral_change, 125ms, velocity, fwd
+ (21, 16, 1, 0), # spectral_change, 1000ms, mean, fwd
+ # ── Direct H³: motor-auditory coupling ──
+ (25, 3, 0, 2), # x_l0l5[0], 100ms, value, bidi
+ (25, 3, 14, 2), # x_l0l5[0], 100ms, periodicity, bidi
+ (25, 16, 14, 2), # x_l0l5[0], 1000ms, periodicity, bidi
+ (25, 16, 21, 2), # x_l0l5[0], 1000ms, zero_crossings, bidi
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """15 tuples for PEOM computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # ── BEP horizons: period/beat tracking ──
-            (10, 3, 0, 2),     # spectral_flux, 100ms, value, bidi
-            (10, 3, 14, 2),    # spectral_flux, 100ms, periodicity, bidi
-            (10, 16, 14, 2),   # spectral_flux, 1000ms, periodicity, bidi
-            (11, 3, 0, 2),     # onset_strength, 100ms, value, bidi
-            (11, 16, 14, 2),   # onset_strength, 1000ms, periodicity, bidi
-            (7, 3, 0, 2),      # amplitude, 100ms, value, bidi
-            (7, 3, 2, 2),      # amplitude, 100ms, std, bidi
-            (7, 16, 1, 2),     # amplitude, 1000ms, mean, bidi
-            # ── TMH horizons: interval timing ──
-            (8, 8, 1, 0),      # loudness, 500ms, mean, fwd
-            (21, 4, 8, 0),     # spectral_change, 125ms, velocity, fwd
-            (21, 16, 1, 0),    # spectral_change, 1000ms, mean, fwd
-            # ── Direct H³: motor-auditory coupling ──
-            (25, 3, 0, 2),     # x_l0l5[0], 100ms, value, bidi
-            (25, 3, 14, 2),    # x_l0l5[0], 100ms, periodicity, bidi
-            (25, 16, 14, 2),   # x_l0l5[0], 1000ms, periodicity, bidi
-            (25, 16, 21, 2),   # x_l0l5[0], 1000ms, zero_crossings, bidi
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute PEOM 11D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute PEOM 11D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"BEP": (B,T,30), "TMH": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,11) PEOM output
+ """
+ # R³ features
+ amplitude = r3[..., 7:8]
+ loudness = r3[..., 8:9]
+ spectral_flux = r3[..., 10:11]
+ onset_strength = r3[..., 11:12]
+ x_l0l5 = r3[..., 25:33] # (B, T, 8)
 
-        Returns:
-            (B,T,11) PEOM output
-        """
-        bep = mechanism_outputs["BEP"]    # (B, T, 30)
-        tmh = mechanism_outputs["TMH"]    # (B, T, 30)
+ # H³ direct features
+ beat_period_1s = h3_direct[(10, 16, 14, 2)].unsqueeze(-1)
+ onset_period_1s = h3_direct[(11, 16, 14, 2)].unsqueeze(-1)
+ coupling_period_1s = h3_direct[(25, 16, 14, 2)].unsqueeze(-1)
 
-        # R³ features
-        amplitude = r3[..., 7:8]
-        loudness = r3[..., 8:9]
-        spectral_flux = r3[..., 10:11]
-        onset_strength = r3[..., 11:12]
-        x_l0l5 = r3[..., 25:33]          # (B, T, 8)
+ # ═══ LAYER E: Explicit features ═══
 
-        # BEP sub-sections
-        bep_beat = bep[..., 0:10]         # beat entrainment
-        bep_motor = bep[..., 10:20]       # motor coupling
-        bep_groove = bep[..., 20:30]      # groove processing
+ # f01: Period Entrainment (coefficients sum = 1.0)
+ f01 = torch.sigmoid(
+ 0.40 * beat_period_1s
+ + 0.35 * onset_period_1s
+ )
 
-        # TMH sub-sections
-        tmh_short = tmh[..., 0:10]        # short-term memory
-        tmh_seq = tmh[..., 10:20]         # sequence integration
-        tmh_hier = tmh[..., 20:30]        # hierarchical structure
+ # f02: Velocity Optimization (coefficients sum = 1.0)
+ f02 = torch.sigmoid(
+ 0.35 * coupling_period_1s
+ )
 
-        # H³ direct features
-        beat_period_1s = h3_direct[(10, 16, 14, 2)].unsqueeze(-1)
-        onset_period_1s = h3_direct[(11, 16, 14, 2)].unsqueeze(-1)
-        coupling_period_1s = h3_direct[(25, 16, 14, 2)].unsqueeze(-1)
+ # f03: Variability Reduction (coefficients sum = 1.0)
+ f03 = torch.sigmoid(
+ 0.35 * (f01 * f02)
+ )
 
-        # ═══ LAYER E: Explicit features ═══
+ # ═══ LAYER M: Mathematical ═══
+ motor_period = torch.sigmoid(
+ )
+ velocity = torch.sigmoid(
+ )
+ acceleration = torch.sigmoid(
+ )
+ cv_reduction = f03
 
-        # f01: Period Entrainment (coefficients sum = 1.0)
-        f01 = torch.sigmoid(
-            0.40 * beat_period_1s
-            + 0.35 * onset_period_1s
-            + 0.25 * bep_beat.mean(-1, keepdim=True)
-        )
+ # ═══ LAYER P: Present ═══
+ kinematic_smoothness = torch.sigmoid(
+ + 0.5 * velocity
+ )
 
-        # f02: Velocity Optimization (coefficients sum = 1.0)
-        f02 = torch.sigmoid(
-            0.35 * coupling_period_1s
-            + 0.35 * tmh_seq.mean(-1, keepdim=True)
-            + 0.30 * bep_motor.mean(-1, keepdim=True)
-        )
+ # ═══ LAYER F: Future ═══
+ next_beat_pred = torch.sigmoid(
+ 0.5 * f01 + 0.5 * beat_period_1s
+ )
+ velocity_pred = torch.sigmoid(
+ 0.5 * f02 + 0.5 * coupling_period_1s
+ )
 
-        # f03: Variability Reduction (coefficients sum = 1.0)
-        f03 = torch.sigmoid(
-            0.35 * (f01 * f02)
-            + 0.35 * bep_groove.mean(-1, keepdim=True)
-            + 0.30 * tmh_hier.mean(-1, keepdim=True)
-        )
-
-        # ═══ LAYER M: Mathematical ═══
-        motor_period = torch.sigmoid(
-            0.5 * f01 + 0.3 * beat_period_1s + 0.2 * bep_beat.mean(-1, keepdim=True)
-        )
-        velocity = torch.sigmoid(
-            0.5 * f02 + 0.5 * tmh_seq.mean(-1, keepdim=True)
-        )
-        acceleration = torch.sigmoid(
-            0.5 * velocity + 0.5 * bep_motor.mean(-1, keepdim=True)
-        )
-        cv_reduction = f03
-
-        # ═══ LAYER P: Present ═══
-        period_lock_strength = bep_beat.mean(-1, keepdim=True)
-        kinematic_smoothness = torch.sigmoid(
-            0.5 * tmh_seq.mean(-1, keepdim=True)
-            + 0.5 * velocity
-        )
-
-        # ═══ LAYER F: Future ═══
-        next_beat_pred = torch.sigmoid(
-            0.5 * f01 + 0.5 * beat_period_1s
-        )
-        velocity_pred = torch.sigmoid(
-            0.5 * f02 + 0.5 * coupling_period_1s
-        )
-
-        return torch.cat([
-            f01, f02, f03,                                          # E: 3D
-            motor_period, velocity, acceleration, cv_reduction,     # M: 4D
-            period_lock_strength, kinematic_smoothness,             # P: 2D
-            next_beat_pred, velocity_pred,                          # F: 2D
-        ], dim=-1)  # (B, T, 11)
+ return torch.cat([
+ f01, f02, f03, # E: 3D
+ motor_period, velocity, acceleration, cv_reduction, # M: 4D
+ period_lock_strength, kinematic_smoothness, # P: 2D
+ next_beat_pred, velocity_pred, # F: 2D
+ ], dim=-1) # (B, T, 11)
 ```
 
 ---
@@ -630,8 +573,6 @@ class PEOM(BaseModel):
 | **Falsification Tests** | 5/5 testable | High validity |
 | **R³ Features Used** | ~14D of 49D | Energy + change + interactions |
 | **H³ Demand** | 15 tuples (0.65%) | Sparse, efficient |
-| **BEP Mechanism** | 30D (3 sub-sections) | Beat/motor processing |
-| **TMH Mechanism** | 30D (3 sub-sections) | Temporal memory/sequence |
 | **Output Dimensions** | **11D** | 4-layer structure |
 
 ---
@@ -660,21 +601,13 @@ class PEOM(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D) | R³ (49D) |
-| Temporal | HC⁰ mechanisms (NPL, PTM, ITM, GRV) | BEP (30D) + TMH (30D) mechanisms |
-| Period signal | S⁰.L9.Γ_mean[104] + HC⁰.NPL | R³.spectral_flux[10] + BEP.beat_entrainment |
-| Velocity signal | S⁰.L4.τ¹_T[15] + HC⁰.PTM | R³.spectral_change[21] + TMH.sequence_integration |
-| Variability | S⁰.L9.Γ_var[105] + HC⁰.GRV | R³.x_l0l5[25:33] + BEP.groove |
-| Timing | S⁰.L9.Γ_ent[116] + HC⁰.ITM | H³ periodicity tuples + TMH.hierarchical |
+| Period signal | S⁰.L9.Γ_mean[104] + HC⁰.NPL | R³.spectral_flux[10] |
+| Velocity signal | S⁰.L4.τ¹_T[15] + HC⁰.PTM | R³.spectral_change[21] |
+| Variability | S⁰.L9.Γ_var[105] + HC⁰.GRV | R³.x_l0l5[25:33] |
+| Timing | S⁰.L9.Γ_ent[116] + HC⁰.ITM | H³ periodicity tuples |
 | Demand format | HC⁰ index ranges | H³ 4-tuples (sparse) |
 | Total demand | 15/2304 = 0.65% | 15/2304 = 0.65% |
 | Output | 11D | 11D (same) |
-
-### Why BEP + TMH replaces HC⁰ mechanisms
-
-- **NPL → BEP.beat_entrainment** [0:10]: Neural phase locking for period tracking maps to BEP's beat entrainment monitoring.
-- **PTM → BEP.motor_coupling** [10:20]: Predictive timing maps to BEP's sensorimotor synchronization.
-- **GRV → BEP.groove_processing** [20:30]: Groove/movement facilitation maps to BEP's groove processing.
-- **ITM → TMH.sequence_integration** [10:20]: Interval timing maps to TMH's sequence integration for CTR computation.
 
 ---
 

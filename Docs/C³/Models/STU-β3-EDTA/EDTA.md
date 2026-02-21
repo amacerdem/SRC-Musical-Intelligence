@@ -21,19 +21,17 @@ The **Expertise-Dependent Tempo Accuracy** (EDTA) model describes how domain-spe
 THE THREE COMPONENTS OF EXPERTISE-DEPENDENT TEMPO ACCURACY
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-BEAT INDUCTION (Auditory Cortex)        METER EXTRACTION (Basal Ganglia)
-Brain region: Heschl's Gyrus, STG       Brain region: Putamen, SMA
-Mechanism: BEP.beat_induction           Mechanism: BEP.meter_extraction
-Input: Onset strength, spectral flux    Input: Periodic accent structure
-Function: "What is the beat?"           Function: "What is the tempo?"
-Evidence: d = 0.54 (expertise effect)   Evidence: DJs 120-139 BPM range
+BEAT INDUCTION (Auditory Cortex) METER EXTRACTION (Basal Ganglia)
+Brain region: Heschl's Gyrus, STG Brain region: Putamen, SMA
+Input: Onset strength, spectral flux Input: Periodic accent structure
+Function: "What is the beat?" Function: "What is the tempo?"
+Evidence: d = 0.54 (expertise effect) Evidence: DJs 120-139 BPM range
 
-            MOTOR ENTRAINMENT (Premotor Cortex)
-            Brain region: dPMC, SMA
-            Mechanism: BEP.motor_entrainment
-            Input: Beat + meter signal
-            Function: "Lock onto this tempo"
-            Evidence: Percussionists 100-139 BPM range
+ MOTOR ENTRAINMENT (Premotor Cortex)
+ Brain region: dPMC, SMA
+ Input: Beat + meter signal
+ Function: "Lock onto this tempo"
+ Evidence: Percussionists 100-139 BPM range
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 KEY INSIGHT: Tempo accuracy is NOT a general skill but is domain-
@@ -62,121 +60,120 @@ EDTA quantifies the domain-specific expertise modulation of sensorimotor timing:
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                 EDTA — COMPLETE CIRCUIT                                      ║
+║ EDTA — COMPLETE CIRCUIT ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  MUSICAL INPUT (rhythmic audio with beat structure)                          ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │        HESCHL'S GYRUS / SUPERIOR TEMPORAL GYRUS                    │    ║
-║  │        Beat induction: onset detection, periodicity                │    ║
-║  │        BEP.beat_induction at H6 (200ms)                            │    ║
-║  │        Function: Extract beat-level temporal regularity             │    ║
-║  └──────────────────────────┬──────────────────────────────────────────┘    ║
-║                              │  Beat signal → meter processing              ║
-║                              ▼                                               ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │        PUTAMEN / BASAL GANGLIA                                     │    ║
-║  │        Meter extraction: BPM estimation, accent pattern            │    ║
-║  │        BEP.meter_extraction at H11 (500ms, Poeppel present)        │    ║
-║  │        Function: Compute tempo and metrical structure               │    ║
-║  └──────────────────────────┬──────────────────────────────────────────┘    ║
-║                              │  Meter → motor synchronization               ║
-║                              ▼                                               ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │        DORSAL PREMOTOR CORTEX (dPMC) / SMA                         │    ║
-║  │        Motor entrainment: synchronization, tempo locking            │    ║
-║  │        BEP.motor_entrainment at H16 (1000ms, bar level)            │    ║
-║  │        Function: Lock motor output to extracted beat/meter          │    ║
-║  │        ★ Expertise-dependent — trained ranges show d = 0.54        │    ║
-║  └─────────────────────────────────────────────────────────────────────┘    ║
-║                                                                              ║
-║  EXPERTISE: Domain-specific training narrows timing variance in              ║
-║             trained BPM ranges (DJs: 120-139, Percussionists: 100-139)      ║
-║                                                                              ║
+║ ║
+║ MUSICAL INPUT (rhythmic audio with beat structure) ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ HESCHL'S GYRUS / SUPERIOR TEMPORAL GYRUS │ ║
+║ │ Beat induction: onset detection, periodicity │ ║
+║ │ beat_induction at H6 (200ms) │ ║
+║ │ Function: Extract beat-level temporal regularity │ ║
+║ └──────────────────────────┬──────────────────────────────────────────┘ ║
+║ │ Beat signal → meter processing ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ PUTAMEN / BASAL GANGLIA │ ║
+║ │ Meter extraction: BPM estimation, accent pattern │ ║
+║ │ meter_extraction at H11 (500ms, Poeppel present) │ ║
+║ │ Function: Compute tempo and metrical structure │ ║
+║ └──────────────────────────┬──────────────────────────────────────────┘ ║
+║ │ Meter → motor synchronization ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ DORSAL PREMOTOR CORTEX (dPMC) / SMA │ ║
+║ │ Motor entrainment: synchronization, tempo locking │ ║
+║ │ motor_entrainment at H16 (1000ms, bar level) │ ║
+║ │ Function: Lock motor output to extracted beat/meter │ ║
+║ │ ★ Expertise-dependent — trained ranges show d = 0.54 │ ║
+║ └─────────────────────────────────────────────────────────────────────┘ ║
+║ ║
+║ EXPERTISE: Domain-specific training narrows timing variance in ║
+║ trained BPM ranges (DJs: 120-139, Percussionists: 100-139) ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 CRITICAL EVIDENCE:
 ─────────────────
-Expertise effect:   d = 0.54 (musicians > non-musicians in trained ranges)
-DJ optimal range:   120-139 BPM (dance music specialization)
+Expertise effect: d = 0.54 (musicians > non-musicians in trained ranges)
+DJ optimal range: 120-139 BPM (dance music specialization)
 Percussionist range: 100-139 BPM (broader rhythmic specialization)
-Domain specificity:  Advantage does NOT transfer outside trained range
+Domain specificity: Advantage does NOT transfer outside trained range
 ```
 
-### 2.2 Information Flow Architecture (EAR → BRAIN → BEP → EDTA)
+### 2.2 Information Flow Architecture (EAR → BRAIN → EDTA)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    EDTA COMPUTATION ARCHITECTURE                             ║
+║ EDTA COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins × 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
-║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ CHANGE   │ │ X-INT  │ │        ║
-║  │  │ 7D [0:7]  │ │ 5D[7:12]│ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
-║  │  │           │ │         │ │ [12:21] │ │ [21:25]  │ │ [25:49]│ │        ║
-║  │  │           │ │amplitude│ │         │ │spec_chg  │ │        │ │        ║
-║  │  │           │ │loudness │ │         │ │energy_chg│ │        │ │        ║
-║  │  │           │ │centroid │ │         │ │pitch_chg │ │        │ │        ║
-║  │  │           │ │flux     │ │         │ │timbre_chg│ │        │ │        ║
-║  │  │           │ │onset    │ │         │ │          │ │        │ │        ║
-║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                         EDTA reads: 9D                           │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                                                                  │        ║
-║  │  ┌── Beat ───────┐ ┌── Psychological ─┐ ┌── Bar ────────────┐  │        ║
-║  │  │ 200ms (H6)    │ │ 500ms (H11)      │ │ 1000ms (H16)     │  │        ║
-║  │  │               │ │ Poeppel present   │ │                   │  │        ║
-║  │  │ Beat onset    │ │ Beat grouping     │ │ Meter/bar level   │  │        ║
-║  │  │ detection     │ │ tempo estimation  │ │ motor locking     │  │        ║
-║  │  └──────┬────────┘ └──────┬────────────┘ └──────┬────────────┘  │        ║
-║  │         │                 │                      │              │        ║
-║  │         └─────────────────┴──────────────────────┘              │        ║
-║  │                         EDTA demand: ~15 of 2304 tuples         │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Sensorimotor Circuit ═══════  ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌─────────────────┐                                                        ║
-║  │  BEP (30D)      │  Beat Entrainment Processing mechanism                ║
-║  │                 │                                                        ║
-║  │ Beat Ind [0:10]│  Beat strength, periodicity, onset regularity         ║
-║  │ Meter   [10:20]│  Tempo, syncopation, accent pattern, groove           ║
-║  │ Motor   [20:30]│  Movement urge, synchronization, coupling             ║
-║  └────────┬────────┘                                                        ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    EDTA MODEL (10D Output)                       │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f01_beat_accuracy, f02_tempo_precision,    │        ║
-║  │                       f03_expertise_effect                       │        ║
-║  │  Layer M (Math):      tempo_stability, domain_specificity        │        ║
-║  │  Layer P (Present):   beat_tracking, meter_state                 │        ║
-║  │  Layer F (Future):    tempo_prediction, entrainment_expect,      │        ║
-║  │                       accuracy_forecast                          │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins × 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ ENERGY │ │ TIMBRE │ │ CHANGE │ │ X-INT │ │ ║
+║ │ │ 7D [0:7] │ │ 5D[7:12]│ │ 9D │ │ 4D │ │ 24D │ │ ║
+║ │ │ │ │ │ │ [12:21] │ │ [21:25] │ │ [25:49]│ │ ║
+║ │ │ │ │amplitude│ │ │ │spec_chg │ │ │ │ ║
+║ │ │ │ │loudness │ │ │ │energy_chg│ │ │ │ ║
+║ │ │ │ │centroid │ │ │ │pitch_chg │ │ │ │ ║
+║ │ │ │ │flux │ │ │ │timbre_chg│ │ │ │ ║
+║ │ │ │ │onset │ │ │ │ │ │ │ │ ║
+║ │ └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │ ║
+║ │ EDTA reads: 9D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ │ ║
+║ │ ┌── Beat ───────┐ ┌── Psychological ─┐ ┌── Bar ────────────┐ │ ║
+║ │ │ 200ms (H6) │ │ 500ms (H11) │ │ 1000ms (H16) │ │ ║
+║ │ │ │ │ Poeppel present │ │ │ │ ║
+║ │ │ Beat onset │ │ Beat grouping │ │ Meter/bar level │ │ ║
+║ │ │ detection │ │ tempo estimation │ │ motor locking │ │ ║
+║ │ └──────┬────────┘ └──────┬────────────┘ └──────┬────────────┘ │ ║
+║ │ │ │ │ │ ║
+║ │ └─────────────────┴──────────────────────┘ │ ║
+║ │ EDTA demand: ~15 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Sensorimotor Circuit ═══════ ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────┐ ║
+║ │ │ ║
+║ │ Beat Ind [0:10]│ Beat strength, periodicity, onset regularity ║
+║ │ Meter [10:20]│ Tempo, syncopation, accent pattern, groove ║
+║ │ Motor [20:30]│ Movement urge, synchronization, coupling ║
+║ └────────┬────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ EDTA MODEL (10D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f01_beat_accuracy, f02_tempo_precision, │ ║
+║ │ f03_expertise_effect │ ║
+║ │ Layer M (Math): tempo_stability, domain_specificity │ ║
+║ │ Layer P (Present): beat_tracking, meter_state │ ║
+║ │ Layer F (Future): tempo_prediction, entrainment_expect, │ ║
+║ │ accuracy_forecast │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -192,12 +189,11 @@ Domain specificity:  Advantage does NOT transfer outside trained range
 | 2 | **Foster et al. 2021** | Behavioral (within-DJ comparison) | 10 DJs | DJs' 120-139 BPM accuracy (3.10%) approaches JND (2-3%), significantly better than their own 80-99 BPM (7.54%) | Within-DJ 120-139 vs. 80-99: p < 0.001; 120-139 vs. 100-119: p < 0.001 | **Domain specificity**: DJ training does NOT transfer outside trained range |
 | 3 | **Foster et al. 2021** | Behavioral (percussionist range) | 7 percussionists | Percussionists accurate at 100-119 BPM (5.14%) and 120-139 BPM (3.84%) vs. untrained (9.39%, 7.91%) | Perc vs. untrained at 100-119: p = 0.017; at 120-139: p = 0.018 | **Broader percussionist range**: 100-139 BPM (wider than DJ range) |
 | 4 | **Vigl, Koehler & Henning 2024** | Behavioral online (tempo tapping + adjusting, 19 songs, 53-169 BPM) | **403** (105 non-musicians, 137 amateurs, 161 professionals) | Musical expertise predicts tempo reproduction accuracy; expertise effect STRONGER for tapping (motor) than adjusting (perceptual+motor). Quadratic peak around 120 BPM | Expertise: Est. = 0.01, p = .047, r = .09; Method × expertise: p = .001, r = .04; Quadratic tempo: χ²(1) = 152.57, p < .001 | **Large-sample confirmation**: 120 BPM optimal, motor mediation of expertise. CONSTRAINS: small r = .09 effect in large sample |
-| 5 | **Grahn & Brett 2007** | fMRI (3T), rhythm discrimination | 27 (14 musicians, 13 non-musicians) | Putamen + SMA selectively respond to beat-inducing rhythms. Musicians show higher activation in pre-SMA/SMA, cerebellum, R premotor across all rhythms | L putamen t = 4.05, R putamen t = 3.65 (metric > complex); pre-SMA Z = 5.03 (-9, 6, 60); L putamen Z = 5.67 (-24, 6, -9) | **Neural substrate**: BEP.meter_extraction (putamen) + BEP.motor_entrainment (SMA). Musicians show elevated activation |
+| 5 | **Grahn & Brett 2007** | fMRI (3T), rhythm discrimination | 27 (14 musicians, 13 non-musicians) | Putamen + SMA selectively respond to beat-inducing rhythms. Musicians show higher activation in pre-SMA/SMA, cerebellum, R premotor across all rhythms | L putamen t = 4.05, R putamen t = 3.65 (metric > complex); pre-SMA Z = 5.03 (-9, 6, 60); L putamen Z = 5.67 (-24, 6, -9) | **Neural substrate**: meter_extraction (putamen) (SMA). Musicians show elevated activation |
 | 6 | **Hoddinott & Grahn 2024** | 7T fMRI, RSA + MVPA | 26 | SMA and putamen encode beat strength CONTINUOUSLY (C-Score model best fit). Basic features (tempo, onsets) NOT encoded in SMA/putamen patterns | L SMA: C-Score > Tempo t(25) = 3.63, p = .001; R SMA: C-Score > Onsets t(25) = 3.72, p = .001; L putamen beat-encoding t(25) = 2.57, p = .017 | **C-Score model**: SMA/putamen represent beat strength on a continuous scale, not categorical — refines EDTA's domain_specificity dimension |
-| 7 | **Dalla Bella, Janaqi, Benoit et al. 2024** | Behavioral (BAASTA battery), machine learning (SLF) | 79 | Motor measures dominate musician/nonmusician classification (84% variance vs. 50% perceptual). Combined perceptual-motor model best (92%) | Motor: F(74) = 97.1, d = 1.5; Combined: F(70) = 99.5, **d = 1.8**; Perceptual: d = 1.3 | **Motor primacy**: expertise-dependent accuracy is primarily motor, not perceptual. Supports BEP.motor_entrainment as expertise mediator |
+| 7 | **Dalla Bella, Janaqi, Benoit et al. 2024** | Behavioral (BAASTA battery), machine learning (SLF) | 79 | Motor measures dominate musician/nonmusician classification (84% variance vs. 50% perceptual). Combined perceptual-motor model best (92%) | Motor: F(74) = 97.1, d = 1.5; Combined: F(70) = 99.5, **d = 1.8**; Perceptual: d = 1.3 | **Motor primacy**: expertise-dependent accuracy is primarily motor, not perceptual. Supports motor_entrainment as expertise mediator |
 | 8 | **Marup, Moller & Vuust 2022** | Behavioral (multi-effector rhythm + beat) | 60 (3 expertise levels) | Musicians show higher precision across all effector combinations; bodily hierarchy invariant across expertise levels | General expertise improvement; hierarchy invariant | **Expertise generalization**: precision improves uniformly, not just at specific tempi. CONSTRAINS pure domain-specificity claim |
 | 9 | **Cinelyte, Cannon, Patel & Mullensiefen 2022** | Behavioral (BDAT, covert pulse continuation) | >200 (2 studies) | Musical experience predicts covert beat continuation better than CA-BAT score; internal pulse maintenance is more experience-dependent than beat alignment | Musical experience > CA-BAT as predictor | **Covert beat**: internal tempo maintenance (without external cues) is more expertise-dependent than overt beat detection |
-| 10 | **Ross & Balasubramaniam 2022** | Review (entrainment, simulation, prediction) | — | Motor/sensorimotor systems mediate tempo and beat perception through entrainment, simulation, and prediction mechanisms | Theoretical framework | **Framework**: entrainment + motor simulation supports EDTA's BEP mechanism architecture |
 | 11 | **Okada, Takeya & Tanaka 2022** | Electrophysiology (primate cerebellar nuclei) | Primates | Cerebellar circuits form internal models of rhythmic structure; predictive motor control for timing | Neuronal firing patterns in deep cerebellar nuclei | **Cerebellar timing**: sub-second precision mechanism supporting tempo accuracy calibration |
 | 12 | **Liao et al. 2024** | fMRI | Percussionists | Percussionists leverage specialized neural network for musical rhythm (NMR) and executive control during performance | Network-level specialization | **Percussionist expertise**: specialized neural systems for temporal precision in trained musicians |
 
@@ -215,14 +211,14 @@ The v2.0.0 doc cited d = 0.54 as the expertise effect size, attributed to an uns
 TEMPO ACCURACY AS A FUNCTION OF BPM RANGE AND TRAINING
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Group               Optimal BPM   Accuracy     Effect
-                    Range         (low σ)      Size
+Group Optimal BPM Accuracy Effect
+ Range (low σ) Size
 ────────────────────────────────────────────────────────
-DJs                 120-139       High         d = 0.54
-Percussionists      100-139       High         d = 0.54
-Non-musicians       --            Baseline     --
-DJs at 60-99        --            Baseline     n.s.
-Percussionists 140+ --            Baseline     n.s.
+DJs 120-139 High d = 0.54
+Percussionists 100-139 High d = 0.54
+Non-musicians -- Baseline --
+DJs at 60-99 -- Baseline n.s.
+Percussionists 140+ -- Baseline n.s.
 
 Key: Domain-specific training NARROWS timing variance
 only within the trained BPM range. Outside the trained
@@ -236,45 +232,45 @@ specialization at specific tempo ranges.
 
 ```
 PRIMARY STUDY (Foster et al. 2021):
-  Group main effect:                F(3, 36.02) = 5.67, p = 0.003
-  Group × tempo range:              F(9, 1389.55) = 2.70, p < 0.001
-  DJ 120-139 BPM error:             3.10% (approaches JND of 2-3%)
-  Untrained 120-139 BPM error:      7.91%
-  DJ advantage at 120-139 vs. 80-99: p < 0.001 (within-DJ specificity)
-  Percussionist 100-119 advantage:   5.14% vs. 9.39%, p = 0.017
-  DJ advantage ABSENT at 80-99 BPM:  n.s. (domain specificity confirmed)
+ Group main effect: F(3, 36.02) = 5.67, p = 0.003
+ Group × tempo range: F(9, 1389.55) = 2.70, p < 0.001
+ DJ 120-139 BPM error: 3.10% (approaches JND of 2-3%)
+ Untrained 120-139 BPM error: 7.91%
+ DJ advantage at 120-139 vs. 80-99: p < 0.001 (within-DJ specificity)
+ Percussionist 100-119 advantage: 5.14% vs. 9.39%, p = 0.017
+ DJ advantage ABSENT at 80-99 BPM: n.s. (domain specificity confirmed)
 
 LARGE-SAMPLE REPLICATION (Vigl et al. 2024, N=403):
-  Musical expertise:                 Est. = 0.01, p = .047, r = .09
-  Method × expertise:                p = .001, r = .04
-  Quadratic tempo peak:              χ²(1) = 152.57, p < .001 (peak ~120 BPM)
-  Tapping accuracy:                  M = 0.76, SD = 0.14
-  Adjusting accuracy:                M = 0.87, SD = 0.09
-  NOTE: r = .09 in large sample is SMALLER than d = 0.54
+ Musical expertise: Est. = 0.01, p = .047, r = .09
+ Method × expertise: p = .001, r = .04
+ Quadratic tempo peak: χ²(1) = 152.57, p < .001 (peak ~120 BPM)
+ Tapping accuracy: M = 0.76, SD = 0.14
+ Adjusting accuracy: M = 0.87, SD = 0.09
+ NOTE: r = .09 in large sample is SMALLER than d = 0.54
 
 NEURAL SUBSTRATE (Grahn & Brett 2007):
-  L putamen beat-specific:           t = 4.05 (metric > complex), p < .001
-  R putamen beat-specific:           t = 3.65, p < .001
-  Pre-SMA activation:               Z = 5.03 (-9, 6, 60)
-  Musicians > non-musicians:         pre-SMA, cerebellum, R dPMC (all rhythms)
+ L putamen beat-specific: t = 4.05 (metric > complex), p < .001
+ R putamen beat-specific: t = 3.65, p < .001
+ Pre-SMA activation: Z = 5.03 (-9, 6, 60)
+ Musicians > non-musicians: pre-SMA, cerebellum, R dPMC (all rhythms)
 
 CONTINUOUS BEAT ENCODING (Hoddinott & Grahn 2024):
-  C-Score > Tempo (L SMA):          t(25) = 3.63, p = .001
-  C-Score > Onsets (R SMA):          t(25) = 3.72, p = .001
-  L putamen beat encoding:           t(25) = 2.57, p = .017
+ C-Score > Tempo (L SMA): t(25) = 3.63, p = .001
+ C-Score > Onsets (R SMA): t(25) = 3.72, p = .001
+ L putamen beat encoding: t(25) = 2.57, p = .017
 
 MOTOR CLASSIFICATION (Dalla Bella et al. 2024):
-  Motor model:                       F(74) = 97.1, d = 1.5 (84% variance)
-  Combined perceptual-motor:         F(70) = 99.5, d = 1.8 (92% variance)
-  Perceptual-only:                   d = 1.3 (50% variance)
+ Motor model: F(74) = 97.1, d = 1.5 (84% variance)
+ Combined perceptual-motor: F(70) = 99.5, d = 1.8 (92% variance)
+ Perceptual-only: d = 1.3 (50% variance)
 
 d = 0.54 STATUS: UNVERIFIED — not found in Foster 2021 or any identified
 paper. May derive from Cameron 2014 (code reference, not in collection).
 Retained for backward compatibility.
 
-Quality Assessment:  β-tier (behavioral + fMRI, 12 papers, 5 methods)
-Replication:         Partial — Vigl 2024 confirms 120 BPM peak and expertise
-                     effect in N=403, but r = .09 is smaller than d = 0.54
+Quality Assessment: β-tier (behavioral + fMRI, 12 papers, 5 methods)
+Replication: Partial — Vigl 2024 confirms 120 BPM peak and expertise
+ effect in N=403, but r = .09 is smaller than d = 0.54
 ```
 
 ---
@@ -310,34 +306,34 @@ Replication:         Partial — Vigl 2024 confirms 120 BPM peak and expertise
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[10] spectral_flux ─────────┐
 R³[11] onset_strength ────────┼──► Beat Induction (onset detection)
-R³[7] amplitude ──────────────┘   BEP.beat_induction at H6 (200ms)
-                                   Math: beat_str = σ(0.5·flux + 0.5·onset)
+R³[7] amplitude ──────────────┘ beat_induction at H6 (200ms)
+ Math: beat_str = σ(0.5·flux + 0.5·onset)
 
 R³[8] loudness ────────────────┐
 R³[22] energy_change ──────────┼──► Meter Extraction (BPM estimation)
-R³[9] spectral_centroid ───────┘   BEP.meter_extraction at H11 (500ms)
-                                   Math: tempo = periodicity(E(t), τ=500ms)
+R³[9] spectral_centroid ───────┘ meter_extraction at H11 (500ms)
+ Math: tempo = periodicity(E(t), τ=500ms)
 
 R³[21] spectral_change ───────┐
 R³[23] pitch_change ───────────┼──► Motor Entrainment (tempo locking)
-R³[24] timbre_change ──────────┘   BEP.motor_entrainment at H16 (1000ms)
-                                   Math: lock = σ(0.54·beat·meter·expertise)
+R³[24] timbre_change ──────────┘ motor_entrainment at H16 (1000ms)
+ Math: lock = σ(0.54·beat·meter·expertise)
 
 ── R³ v2 (Phase 3E) ──────────────────────────────────────────────────
 R³[65] tempo_estimate ────────┐
 R³[73] tempo_stability ───────┼──► Entrainment target + reliability
-R³[69] metricality_index ─────┘   Multi-level hierarchical entrainment
-                                   Math: entrain = σ(tempo·stability·metric)
+R³[69] metricality_index ─────┘ Multi-level hierarchical entrainment
+ Math: entrain = σ(tempo·stability·metric)
 
 Expertise Factor ───────────────── Domain-Specific Accuracy
-                                   DJs: boost at 120-139 BPM
-                                   Percussionists: boost at 100-139 BPM
-                                   Math: acc = σ(d·tempo_precision·range_match)
-                                   d = 0.54
+ DJs: boost at 120-139 BPM
+ Percussionists: boost at 100-139 BPM
+ Math: acc = σ(d·tempo_precision·range_match)
+ d = 0.54
 ```
 
 ---
@@ -346,7 +342,7 @@ Expertise Factor ───────────────── Domain-Spec
 
 ### 5.1 Demand Specification
 
-EDTA requires H³ features at three BEP horizons: H6 (200ms), H11 (500ms), H16 (1000ms).
+EDTA requires H³ features at three horizons: H6 (200ms), H11 (500ms), H16 (1000ms).
 These correspond to beat → psychological present → bar-level timescales.
 
 | R³ Index | Feature | H | Morph | Law | Purpose |
@@ -371,7 +367,7 @@ These correspond to beat → psychological present → bar-level timescales.
 
 #### R³ v2 Projected Expansion
 
-EDTA projected v2 features from G:Rhythm, aligned with BEP horizons.
+EDTA projected v2 features from G:Rhythm, aligned with corresponding H³ horizons.
 
 | R³ Idx | Feature | Group | H | Morph | Law | Purpose |
 |:------:|---------|:-----:|:-:|-------|:---:|---------|
@@ -385,18 +381,6 @@ EDTA projected v2 features from G:Rhythm, aligned with BEP horizons.
 **v2 projected**: 6 tuples
 **Total projected**: 21 tuples of 294,912 theoretical = 0.0071%
 
-### 5.2 BEP Mechanism Binding
-
-EDTA reads from the **BEP** (Beat Entrainment Processing) mechanism only:
-
-| BEP Sub-section | Range | EDTA Role | Weight |
-|-----------------|-------|-----------|--------|
-| **Beat Induction** | BEP[0:10] | Onset detection, beat strength, periodicity | **1.0** (primary) |
-| **Meter Extraction** | BEP[10:20] | Tempo estimation, BPM precision, accent structure | **1.0** (primary) |
-| **Motor Entrainment** | BEP[20:30] | Synchronization, expertise-modulated motor locking | **0.8** |
-
-EDTA does NOT read from TMH — expertise-dependent tempo accuracy is about beat-level precision, not hierarchical context encoding.
-
 ---
 
 ## 6. Output Space: 10D Multi-Layer Representation
@@ -409,72 +393,70 @@ EDTA OUTPUT TENSOR: 10D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 0  │ f01_beat_accuracy │ [0, 1] │ Beat onset detection accuracy.
-    │                   │        │ Precision of beat induction from onsets.
-    │                   │        │ f01 = σ(0.50 · flux_val · onset_val ·
-    │                   │        │         mean(BEP.beat_induction[0:10]))
-    │                   │        │ |w| = 0.50
+ 0 │ f01_beat_accuracy │ [0, 1] │ Beat onset detection accuracy.
+ │ │ │ Precision of beat induction from onsets.
+ │ │ │ f01 = σ(0.50 · flux_val · onset_val ·
+ │ │ │ |w| = 0.50
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 1  │ f02_tempo_precis  │ [0, 1] │ Tempo estimation precision.
-    │                   │        │ Inverse of timing variance in BPM range.
-    │                   │        │ f02 = σ(0.45 · loud_periodicity ·
-    │                   │        │         (1 - energy_std) ·
-    │                   │        │         mean(BEP.meter_extraction[10:20]))
-    │                   │        │ |w| = 0.45
+ 1 │ f02_tempo_precis │ [0, 1] │ Tempo estimation precision.
+ │ │ │ Inverse of timing variance in BPM range.
+ │ │ │ f02 = σ(0.45 · loud_periodicity ·
+ │ │ │ (1 - energy_std) ·
+ │ │ │ |w| = 0.45
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 2  │ f03_expertise_eff │ [0, 1] │ Domain-specific expertise effect (d=0.54).
-    │                   │        │ Modulates accuracy in trained BPM ranges.
-    │                   │        │ f03 = σ(0.54 · f01 · f02 ·
-    │                   │        │         motor_stability)
-    │                   │        │ |w| = 0.54
+ 2 │ f03_expertise_eff │ [0, 1] │ Domain-specific expertise effect (d=0.54).
+ │ │ │ Modulates accuracy in trained BPM ranges.
+ │ │ │ f03 = σ(0.54 · f01 · f02 ·
+ │ │ │ motor_stability)
+ │ │ │ |w| = 0.54
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 3  │ tempo_stability   │ [0, 1] │ Temporal stability of estimated tempo.
-    │                   │        │ Low variance = high stability.
-    │                   │        │ stability = 1 - σ_tempo / (σ_tempo + 1)
+ 3 │ tempo_stability │ [0, 1] │ Temporal stability of estimated tempo.
+ │ │ │ Low variance = high stability.
+ │ │ │ stability = 1 - σ_tempo / (σ_tempo + 1)
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 4  │ domain_specificity│ [0, 1] │ Domain match strength.
-    │                   │        │ How well current tempo matches trained range.
-    │                   │        │ specificity = f03 · periodicity_bar
+ 4 │ domain_specificity│ [0, 1] │ Domain match strength.
+ │ │ │ How well current tempo matches trained range.
+ │ │ │ specificity = f03 · periodicity_bar
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 5  │ beat_tracking     │ [0, 1] │ Current beat tracking state.
-    │                   │        │ BEP.beat_induction aggregation.
+ 5 │ beat_tracking │ [0, 1] │ Current beat tracking state.
+ │ │ │ beat_induction aggregation.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 6  │ meter_state       │ [0, 1] │ Current metrical state.
-    │                   │        │ BEP.meter_extraction aggregation.
+ 6 │ meter_state │ [0, 1] │ Current metrical state.
+ │ │ │ meter_extraction aggregation.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 7  │ tempo_prediction  │ [0, 1] │ Predicted tempo trajectory.
-    │                   │        │ H³ trend-based next-beat expectation.
-    │                   │        │ tempo_pred = σ(0.40 · pitch_trend +
-    │                   │        │              0.30 · periodicity_bar +
-    │                   │        │              0.30 · meter_state)
-    │                   │        │ |w| sum = 1.00
+ 7 │ tempo_prediction │ [0, 1] │ Predicted tempo trajectory.
+ │ │ │ H³ trend-based next-beat expectation.
+ │ │ │ tempo_pred = σ(0.40 · pitch_trend +
+ │ │ │ 0.30 · periodicity_bar +
+ │ │ │ 0.30 · meter_state)
+ │ │ │ |w| sum = 1.00
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 8  │ entrainment_expct │ [0, 1] │ Entrainment confidence for next bar.
-    │                   │        │ Periodicity + smoothness at bar level.
-    │                   │        │ entrain = σ(0.50 · smoothness +
-    │                   │        │             0.50 · bar_periodicity)
-    │                   │        │ |w| sum = 1.00
+ 8 │ entrainment_expct │ [0, 1] │ Entrainment confidence for next bar.
+ │ │ │ Periodicity + smoothness at bar level.
+ │ │ │ entrain = σ(0.50 · smoothness +
+ │ │ │ 0.50 · bar_periodicity)
+ │ │ │ |w| sum = 1.00
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 9  │ accuracy_forecast │ [0, 1] │ Predicted accuracy for upcoming tempo.
-    │                   │        │ Motor entrainment × expertise proxy.
-    │                   │        │ acc_fc = σ(0.50 · f03 +
-    │                   │        │           0.30 · tempo_prediction +
-    │                   │        │           0.20 · entrainment_expct)
-    │                   │        │ |w| sum = 1.00
+ 9 │ accuracy_forecast │ [0, 1] │ Predicted accuracy for upcoming tempo.
+ │ │ │ Motor entrainment × expertise proxy.
+ │ │ │ acc_fc = σ(0.50 · f03 +
+ │ │ │ 0.30 · tempo_prediction +
+ │ │ │ 0.20 · entrainment_expct)
+ │ │ │ |w| sum = 1.00
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 10D per frame at 172.27 Hz
@@ -490,39 +472,37 @@ TOTAL: 10D per frame at 172.27 Hz
 ```
 Expertise-Dependent Tempo Accuracy:
 
-    Tempo_Accuracy(BPM, expertise) = f(BEP, training_range)
+ Tempo_Accuracy(BPM, expertise) = f(beat_h3, training_range)
 
-    For DJs:
-      Accuracy_high   when BPM ∈ [120, 139]  (d = 0.54)
-      Accuracy_baseline when BPM ∉ [120, 139]
+ For DJs:
+ Accuracy_high when BPM ∈ [120, 139] (d = 0.54)
+ Accuracy_baseline when BPM ∉ [120, 139]
 
-    For Percussionists:
-      Accuracy_high   when BPM ∈ [100, 139]  (d = 0.54)
-      Accuracy_baseline when BPM ∉ [100, 139]
+ For Percussionists:
+ Accuracy_high when BPM ∈ [100, 139] (d = 0.54)
+ Accuracy_baseline when BPM ∉ [100, 139]
 
-    General Model:
-      Accuracy(BPM) = α · Beat_Induction + β · Meter_Precision
-                      + d · Expertise_Match + ε
-      where α: beat detection weight (0.50)
-            β: meter precision weight (0.45)
-            d: expertise effect (0.54)
-            ε: individual variability
+ General Model:
+ Accuracy(BPM) = α · Beat_Induction + β · Meter_Precision
+ + d · Expertise_Match + ε
+ where α: beat detection weight (0.50)
+ β: meter precision weight (0.45)
+ d: expertise effect (0.54)
+ ε: individual variability
 ```
 
 ### 7.2 Feature Formulas
 
 ```python
 # f01: Beat Accuracy (onset detection precision)
-flux_val = h3[(10, 6, 0, 0)]          # spectral_flux value at H6
-onset_val = h3[(11, 6, 0, 0)]         # onset_strength value at H6
+flux_val = h3[(10, 6, 0, 0)] # spectral_flux value at H6
+onset_val = h3[(11, 6, 0, 0)] # onset_strength value at H6
 f01 = σ(0.50 · flux_val · onset_val
-         · mean(BEP.beat_induction[0:10]))
 
 # f02: Tempo Precision (inverse of timing variance)
-loud_period = h3[(8, 11, 14, 0)]      # loudness periodicity at H11
-energy_std = h3[(22, 11, 3, 0)]       # energy_change std at H11
+loud_period = h3[(8, 11, 14, 0)] # loudness periodicity at H11
+energy_std = h3[(22, 11, 3, 0)] # energy_change std at H11
 f02 = σ(0.45 · loud_period · (1 - energy_std)
-         · mean(BEP.meter_extraction[10:20]))
 
 # f03: Expertise Effect (d = 0.54, domain-specific)
 motor_stability = h3[(24, 16, 19, 0)] # timbre_change stability at H16
@@ -537,7 +517,7 @@ f03 = σ(0.54 · f01 · f02 · motor_stability)
 
 | Region | MNI Coordinates | Evidence | Source | EDTA Function |
 |--------|-----------------|----------|--------|---------------|
-| **Left Putamen** | (-24, 6, -9) | **Direct** (fMRI, Z = 5.67) | Grahn & Brett 2007; beat-specific t = 4.05 | BEP.meter_extraction: beat-based timing |
+| **Left Putamen** | (-24, 6, -9) | **Direct** (fMRI, Z = 5.67) | Grahn & Brett 2007; beat-specific t = 4.05 | meter_extraction: beat-based timing |
 | **Right Putamen** | (21, 6, -6) | **Direct** (fMRI, Z = 5.08) | Grahn & Brett 2007; beat-specific t = 3.65; Hoddinott 2024 RSA t = 2.74 | Beat strength encoding (C-Score model) |
 | **Pre-SMA / SMA** | (-9, 6, 60) to (3, 6, 66) | **Direct** (fMRI, Z = 5.03/4.97) | Grahn & Brett 2007; Hoddinott 2024 L-SMA t = 3.74 (condition-wise) | Motor entrainment, continuous beat representation |
 | **Left Premotor** | (-54, 0, 51) | **Direct** (fMRI, Z = 5.30) | Grahn & Brett 2007 | Rhythm production, expertise-modulated |
@@ -556,22 +536,20 @@ f03 = σ(0.54 · f01 · f02 · motor_stability)
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    EDTA INTERACTIONS                                         │
+│ EDTA INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (STU):                                                         │
-│  AMSC.groove_response ──────► EDTA (motor baseline for tempo accuracy)    │
-│  EDTA.tempo_stability ──────► HGSIC (tempo input for groove integration)  │
-│  EDTA.beat_tracking ────────► ETAM (beat signal for multi-scale entrain)  │
-│  EDTA.entrainment_expct ────► OMS (entrainment for motor synchronization)  │
-│                                                                             │
-│  CROSS-UNIT (P2: STU internal):                                            │
-│  BEP.beat_induction ↔ BEP.motor_entrainment (r = 0.70)                   │
-│  Beat strength → expertise-modulated motor tempo locking                   │
-│                                                                             │
-│  CROSS-UNIT (P5: STU → ARU):                                              │
-│  EDTA.tempo_prediction ──► ARU.AED (tempo dynamics → emotional arousal)   │
-│                                                                             │
+│ │
+│ INTRA-UNIT (STU): │
+│ AMSC.groove_response ──────► EDTA (motor baseline for tempo accuracy) │
+│ EDTA.tempo_stability ──────► HGSIC (tempo input for groove integration) │
+│ EDTA.beat_tracking ────────► ETAM (beat signal for multi-scale entrain) │
+│ EDTA.entrainment_expct ────► OMS (entrainment for motor synchronization) │
+│ │
+│ CROSS-UNIT (P2: STU internal): │
+│ Beat strength → expertise-modulated motor tempo locking │
+│ │
+│ CROSS-UNIT (P5: STU → ARU): │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -599,120 +577,105 @@ f03 = σ(0.54 · f01 · f02 · motor_stability)
 
 ```python
 class EDTA(BaseModel):
-    """Expertise-Dependent Tempo Accuracy.
+ """Expertise-Dependent Tempo Accuracy.
 
-    Output: 10D per frame.
-    Reads: BEP mechanism (30D).
-    """
-    NAME = "EDTA"
-    UNIT = "STU"
-    TIER = "β3"
-    OUTPUT_DIM = 10
-    MECHANISM_NAMES = ("BEP",)        # Primary mechanism
+ Output: 10D per frame.
+ """
+ NAME = "EDTA"
+ UNIT = "STU"
+ TIER = "β3"
+ OUTPUT_DIM = 10
+ BEAT_WEIGHT = 0.50 # Beat induction weight
+ METER_WEIGHT = 0.45 # Meter precision weight
+ EXPERTISE_D = 0.54 # Expertise effect size
 
-    BEAT_WEIGHT = 0.50    # Beat induction weight
-    METER_WEIGHT = 0.45   # Meter precision weight
-    EXPERTISE_D = 0.54    # Expertise effect size
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """15 tuples for EDTA computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ # Beat induction (H6 = 200ms)
+ (10, 6, 0, 0), # spectral_flux, value, forward
+ (10, 6, 14, 0), # spectral_flux, periodicity, forward
+ (11, 6, 0, 0), # onset_strength, value, forward
+ (11, 6, 17, 0), # onset_strength, peaks, forward
+ (7, 6, 4, 0), # amplitude, max, forward
+ # Meter extraction (H11 = 500ms, Poeppel present)
+ (8, 11, 1, 0), # loudness, mean, forward
+ (8, 11, 14, 0), # loudness, periodicity, forward
+ (22, 11, 8, 0), # energy_change, velocity, forward
+ (22, 11, 3, 0), # energy_change, std, forward
+ (9, 11, 1, 0), # spectral_centroid, mean, forward
+ # Motor entrainment (H16 = 1000ms, bar level)
+ (21, 16, 14, 2), # spectral_change, periodicity, bidirectional
+ (21, 16, 15, 2), # spectral_change, smoothness, bidirectional
+ (23, 16, 18, 0), # pitch_change, trend, forward
+ (24, 16, 19, 0), # timbre_change, stability, forward
+ (22, 16, 14, 2), # energy_change, periodicity, bidirectional
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """15 tuples for EDTA computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # Beat induction (H6 = 200ms)
-            (10, 6, 0, 0),    # spectral_flux, value, forward
-            (10, 6, 14, 0),   # spectral_flux, periodicity, forward
-            (11, 6, 0, 0),    # onset_strength, value, forward
-            (11, 6, 17, 0),   # onset_strength, peaks, forward
-            (7, 6, 4, 0),     # amplitude, max, forward
-            # Meter extraction (H11 = 500ms, Poeppel present)
-            (8, 11, 1, 0),    # loudness, mean, forward
-            (8, 11, 14, 0),   # loudness, periodicity, forward
-            (22, 11, 8, 0),   # energy_change, velocity, forward
-            (22, 11, 3, 0),   # energy_change, std, forward
-            (9, 11, 1, 0),    # spectral_centroid, mean, forward
-            # Motor entrainment (H16 = 1000ms, bar level)
-            (21, 16, 14, 2),  # spectral_change, periodicity, bidirectional
-            (21, 16, 15, 2),  # spectral_change, smoothness, bidirectional
-            (23, 16, 18, 0),  # pitch_change, trend, forward
-            (24, 16, 19, 0),  # timbre_change, stability, forward
-            (22, 16, 14, 2),  # energy_change, periodicity, bidirectional
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute EDTA 10D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute EDTA 10D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"BEP": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,10) EDTA output
+ """
+ # === LAYER E: Explicit features ===
+ flux_val = h3_direct[(10, 6, 0, 0)].unsqueeze(-1)
+ onset_val = h3_direct[(11, 6, 0, 0)].unsqueeze(-1)
+ f01 = torch.sigmoid(self.BEAT_WEIGHT * (
+ flux_val * onset_val
+ ))
 
-        Returns:
-            (B,T,10) EDTA output
-        """
-        bep = mechanism_outputs["BEP"]    # (B, T, 30)
+ loud_period = h3_direct[(8, 11, 14, 0)].unsqueeze(-1)
+ energy_std = h3_direct[(22, 11, 3, 0)].unsqueeze(-1)
+ f02 = torch.sigmoid(self.METER_WEIGHT * (
+ loud_period * (1 - energy_std)
+ ))
 
-        # BEP sub-sections
-        bep_beat = bep[..., 0:10]         # beat induction
-        bep_meter = bep[..., 10:20]       # meter extraction
-        bep_motor = bep[..., 20:30]       # motor entrainment
+ motor_stability = h3_direct[(24, 16, 19, 0)].unsqueeze(-1)
+ f03 = torch.sigmoid(self.EXPERTISE_D * (
+ f01 * f02 * motor_stability
+ ))
 
-        # === LAYER E: Explicit features ===
-        flux_val = h3_direct[(10, 6, 0, 0)].unsqueeze(-1)
-        onset_val = h3_direct[(11, 6, 0, 0)].unsqueeze(-1)
-        f01 = torch.sigmoid(self.BEAT_WEIGHT * (
-            flux_val * onset_val
-            * bep_beat.mean(-1, keepdim=True)
-        ))
+ # === LAYER M: Mathematical ===
+ energy_vel = h3_direct[(22, 11, 8, 0)].unsqueeze(-1)
+ tempo_stability = 1 - torch.sigmoid(energy_vel)
 
-        loud_period = h3_direct[(8, 11, 14, 0)].unsqueeze(-1)
-        energy_std = h3_direct[(22, 11, 3, 0)].unsqueeze(-1)
-        f02 = torch.sigmoid(self.METER_WEIGHT * (
-            loud_period * (1 - energy_std)
-            * bep_meter.mean(-1, keepdim=True)
-        ))
+ bar_period = h3_direct[(22, 16, 14, 2)].unsqueeze(-1)
+ domain_specificity = f03 * bar_period
 
-        motor_stability = h3_direct[(24, 16, 19, 0)].unsqueeze(-1)
-        f03 = torch.sigmoid(self.EXPERTISE_D * (
-            f01 * f02 * motor_stability
-        ))
+ # === LAYER P: Present ===
 
-        # === LAYER M: Mathematical ===
-        energy_vel = h3_direct[(22, 11, 8, 0)].unsqueeze(-1)
-        tempo_stability = 1 - torch.sigmoid(energy_vel)
+ # === LAYER F: Future ===
+ pitch_trend = h3_direct[(23, 16, 18, 0)].unsqueeze(-1)
+ tempo_prediction = torch.sigmoid(
+ 0.40 * pitch_trend + 0.30 * bar_period + 0.30 * meter_state
+ )
 
-        bar_period = h3_direct[(22, 16, 14, 2)].unsqueeze(-1)
-        domain_specificity = f03 * bar_period
+ smoothness = h3_direct[(21, 16, 15, 2)].unsqueeze(-1)
+ spec_period = h3_direct[(21, 16, 14, 2)].unsqueeze(-1)
+ entrainment_expct = torch.sigmoid(
+ 0.50 * smoothness + 0.50 * spec_period
+ )
 
-        # === LAYER P: Present ===
-        beat_tracking = bep_beat.mean(-1, keepdim=True)
-        meter_state = bep_meter.mean(-1, keepdim=True)
+ accuracy_forecast = torch.sigmoid(
+ 0.50 * f03 + 0.30 * tempo_prediction
+ + 0.20 * entrainment_expct
+ )
 
-        # === LAYER F: Future ===
-        pitch_trend = h3_direct[(23, 16, 18, 0)].unsqueeze(-1)
-        tempo_prediction = torch.sigmoid(
-            0.40 * pitch_trend + 0.30 * bar_period + 0.30 * meter_state
-        )
-
-        smoothness = h3_direct[(21, 16, 15, 2)].unsqueeze(-1)
-        spec_period = h3_direct[(21, 16, 14, 2)].unsqueeze(-1)
-        entrainment_expct = torch.sigmoid(
-            0.50 * smoothness + 0.50 * spec_period
-        )
-
-        accuracy_forecast = torch.sigmoid(
-            0.50 * f03 + 0.30 * tempo_prediction
-            + 0.20 * entrainment_expct
-        )
-
-        return torch.cat([
-            f01, f02, f03,                                     # E: 3D
-            tempo_stability, domain_specificity,               # M: 2D
-            beat_tracking, meter_state,                        # P: 2D
-            tempo_prediction, entrainment_expct, accuracy_forecast,  # F: 3D
-        ], dim=-1)  # (B, T, 10)
+ return torch.cat([
+ f01, f02, f03, # E: 3D
+ tempo_stability, domain_specificity, # M: 2D
+ beat_tracking, meter_state, # P: 2D
+ tempo_prediction, entrainment_expct, accuracy_forecast, # F: 3D
+ ], dim=-1) # (B, T, 10)
 ```
 
 ---
@@ -727,7 +690,6 @@ class EDTA(BaseModel):
 | **Falsification Tests** | **7/9 confirmed, 1 constrains, 1 testable** | Strong validity |
 | **R³ Features Used** | 9D of 49D | Energy + Change |
 | **H³ Demand** | 15 tuples (0.65%) | Sparse, efficient |
-| **BEP Mechanism** | 30D (3 sub-sections) | Full coverage |
 | **Output Dimensions** | **10D** | 4-layer structure |
 
 ---
@@ -761,26 +723,13 @@ class EDTA(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D): L0, L4, L5, L6, L9, X_L4L5 | R³ (49D): Energy, Change |
-| Temporal | HC⁰ mechanisms (PTM, ITM, GRV, HRM) | BEP mechanism (30D) |
-| Beat detection | S⁰.L5.spectral_flux[45] + HC⁰.ITM | R³.spectral_flux[10] + BEP.beat_induction |
-| Tempo estimation | S⁰.L9.mean_T[104] + S⁰.L9.std_T[108] + HC⁰.PTM | R³.loudness[8] periodicity + BEP.meter_extraction |
-| Groove coupling | S⁰.L5 × HC⁰.GRV | R³.Change + BEP.motor_entrainment |
+| Beat detection | S⁰.L5.spectral_flux[45] + HC⁰.ITM | R³.spectral_flux[10] |
+| Tempo estimation | S⁰.L9.mean_T[104] + S⁰.L9.std_T[108] + HC⁰.PTM | R³.loudness[8] periodicity |
+| Groove coupling | S⁰.L5 × HC⁰.GRV | R³.Change |
 | Memory replay | HC⁰.HRM (hippocampal replay) | Removed — not core to tempo accuracy |
 | Demand format | HC⁰ index ranges | H³ 4-tuples (sparse) |
 | Total demand | 15/2304 = 0.65% | 15/2304 = 0.65% (comparable) |
 | Output dimensions | 11D | **10D** (catalog-aligned, removed redundant feature) |
-
-### Why BEP replaces HC⁰ mechanisms
-
-The D0 pipeline used 4 separate HC⁰ mechanisms (PTM, ITM, GRV, HRM). In MI, these are unified into the BEP mechanism with 3 sub-sections:
-- **PTM → BEP.beat_induction** [0:10]: Predictive timing → beat-level onset detection and periodicity
-- **ITM → BEP.meter_extraction** [10:20]: Interval timing → BPM estimation and metrical structure
-- **GRV → BEP.motor_entrainment** [20:30]: Groove processing → motor synchronization and expertise modulation
-- **HRM removed**: Hippocampal replay was tertiary (weight 0.6) in D0 and not core to tempo accuracy; removed for parsimony
-
-### Output dimension reduction (11D → 10D)
-
-The legacy 11D included a redundant `dj_accuracy` / `perc_accuracy` split that is now unified into `f03_expertise_effect` (domain-specific expertise modulation). The 10D output is more efficient and avoids hardcoding specific musician types.
 
 ---
 
@@ -790,7 +739,6 @@ The legacy 11D included a redundant `dj_accuracy` / `perc_accuracy` split that i
 **Confidence**: **70-90%**
 
 ### Code Note (Phase 5)
-- `mi_beta/brain/units/stu/models/edta.py`: `MECHANISM_NAMES = ("BEP",)` matches doc ✓
 - Code `FULL_NAME = "Expertise-Dependent Tempo Adaptation"` but doc uses "Expertise-Dependent Tempo Accuracy" — minor naming inconsistency
 - Code citations reference Cameron 2014 and Repp 2005; doc now identifies **Foster et al. 2021** as the primary paper (Cameron 2014 not found in collection)
 - Code `OUTPUT_DIM = 10` matches doc ✓

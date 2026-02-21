@@ -21,26 +21,24 @@ The **Timbre Perception-Imagery Overlap** (TPIO) model describes how timbre imag
 THE TWO DIMENSIONS OF TIMBRE PERCEPTION-IMAGERY OVERLAP
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-TIMBRE PERCEPTION                       TIMBRE IMAGERY
-Brain region: posterior STG             Brain region: posterior STG (SAME)
-Mechanism: TPC spectral envelope        Mechanism: TMH memory retrieval
-Input: Acoustic timbre features         Input: Internal timbre generation
-Function: "What instrument is this?"    Function: "Imagine that instrument"
-Evidence: pSTG overlap d=0.84           Evidence: SMA non-motor d=0.90
+TIMBRE PERCEPTION TIMBRE IMAGERY
+Brain region: posterior STG Brain region: posterior STG (SAME)
+Input: Acoustic timbre features Input: Internal timbre generation
+Function: "What instrument is this?" Function: "Imagine that instrument"
+Evidence: pSTG overlap d=0.84 Evidence: SMA non-motor d=0.90
 
-                OVERLAP ZONE (Posterior STG)
-                Brain region: pSTG (bilateral, right > left)
-                Mechanism: TPC x TMH interaction
-                Function: "Shared timbre representation"
-                Evidence: r=0.84 perception-imagery correlation
+ OVERLAP ZONE (Posterior STG)
+ Brain region: pSTG (bilateral, right > left)
+ Function: "Shared timbre representation"
+ Evidence: r=0.84 perception-imagery correlation
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 KEY INSIGHT: Timbre perception and imagery share the same neural
 substrate in posterior STG (d=0.84). SMA engagement during imagery
 (d=0.90) suggests motor simulation — the sensorimotor system
 "rehearses" timbre production even without physical movement.
-This is why TPIO bridges the perceptual circuit (TPC) with the
-sensorimotor circuit (TMH).
+This is why TPIO bridges the perceptual circuit () with the
+sensorimotor circuit ().
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -61,130 +59,128 @@ TPIO establishes the perception-imagery bridge that links spectral processing to
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                 TPIO — COMPLETE CIRCUIT                                      ║
+║ TPIO — COMPLETE CIRCUIT ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  MUSICAL INPUT / IMAGERY INSTRUCTION                                        ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │        POSTERIOR SUPERIOR TEMPORAL GYRUS (pSTG)                    │    ║
-║  │        SHARED SUBSTRATE: perception AND imagery                    │    ║
-║  │        Bilateral, right-hemisphere dominant (d = 0.63)             │    ║
-║  │        Perception-imagery correlation r = 0.84                     │    ║
-║  └──────────────────────────┬──────────────────────────────────────────┘    ║
-║                              │                                               ║
-║              ┌───────────────┴───────────────┐                               ║
-║              ▼                               ▼                               ║
-║  ┌────────────────────────────┐  ┌────────────────────────────┐             ║
-║  │  PERCEPTION PATHWAY        │  │  IMAGERY PATHWAY           │             ║
-║  │  (Perceptual Circuit)      │  │  (Sensorimotor Circuit)    │             ║
-║  │                            │  │                            │             ║
-║  │  Acoustic input → TPC     │  │  Memory retrieval → TMH   │             ║
-║  │  Spectral envelope        │  │  Temporal context re-use   │             ║
-║  │  Instrument identity      │  │  Pattern completion        │             ║
-║  └────────────┬───────────────┘  └────────────┬───────────────┘             ║
-║               │                               │                              ║
-║               └───────────────┬───────────────┘                              ║
-║                               ▼                                              ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │        SUPPLEMENTARY MOTOR AREA (SMA)                              │    ║
-║  │        Non-motor imagery role (d = 0.90)                           │    ║
-║  │        Motor simulation without execution                          │    ║
-║  │        ★ Key STU involvement — sensorimotor rehearsal              │    ║
-║  └─────────────────────────────────────────────────────────────────────┘    ║
-║                                                                              ║
-║  GRADIENT: Perception → Imagery uses same spectral code (r = 0.84)         ║
-║                                                                              ║
+║ ║
+║ MUSICAL INPUT / IMAGERY INSTRUCTION ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ POSTERIOR SUPERIOR TEMPORAL GYRUS (pSTG) │ ║
+║ │ SHARED SUBSTRATE: perception AND imagery │ ║
+║ │ Bilateral, right-hemisphere dominant (d = 0.63) │ ║
+║ │ Perception-imagery correlation r = 0.84 │ ║
+║ └──────────────────────────┬──────────────────────────────────────────┘ ║
+║ │ ║
+║ ┌───────────────┴───────────────┐ ║
+║ ▼ ▼ ║
+║ ┌────────────────────────────┐ ┌────────────────────────────┐ ║
+║ │ PERCEPTION PATHWAY │ │ IMAGERY PATHWAY │ ║
+║ │ (Perceptual Circuit) │ │ (Sensorimotor Circuit) │ ║
+║ │ │ │ │ ║
+║ │ Acoustic input → timbre-processing │ │ Memory retrieval → temporal context │ ║
+║ │ Spectral envelope │ │ Temporal context re-use │ ║
+║ │ Instrument identity │ │ Pattern completion │ ║
+║ └────────────┬───────────────┘ └────────────┬───────────────┘ ║
+║ │ │ ║
+║ └───────────────┬───────────────┘ ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ SUPPLEMENTARY MOTOR AREA (SMA) │ ║
+║ │ Non-motor imagery role (d = 0.90) │ ║
+║ │ Motor simulation without execution │ ║
+║ │ ★ Key STU involvement — sensorimotor rehearsal │ ║
+║ └─────────────────────────────────────────────────────────────────────┘ ║
+║ ║
+║ GRADIENT: Perception → Imagery uses same spectral code (r = 0.84) ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 CRITICAL EVIDENCE:
 ─────────────────
-Halpern et al. 2004:  Perception ↔ imagery ratings, r = 0.84 (n=10, p<0.001)
-Halpern et al. 2004:  Posterior STG overlap, d = 0.84 (shared substrate)
-Halpern et al. 2004:  Right > left STG in imagery, d = 0.63 (p<0.05)
-Halpern et al. 2004:  SMA in imagery (non-motor), d = 0.90 (motor simulation)
+Halpern et al. 2004: Perception ↔ imagery ratings, r = 0.84 (n=10, p<0.001)
+Halpern et al. 2004: Posterior STG overlap, d = 0.84 (shared substrate)
+Halpern et al. 2004: Right > left STG in imagery, d = 0.63 (p<0.05)
+Halpern et al. 2004: SMA in imagery (non-motor), d = 0.90 (motor simulation)
 ```
 
-### 2.2 Information Flow Architecture (EAR → BRAIN → TPC* + TMH → TPIO)
+### 2.2 Information Flow Architecture (EAR → BRAIN → TPIO)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    TPIO COMPUTATION ARCHITECTURE                             ║
+║ TPIO COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins x 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
-║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ CHANGE   │ │ X-INT  │ │        ║
-║  │  │ 7D [0:7]  │ │ 5D[7:12]│ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
-║  │  │           │ │         │ │ [12:21] │ │ [21:25]  │ │ [25:49]│ │        ║
-║  │  │           │ │         │ │warmth   │ │spec_chg  │ │        │ │        ║
-║  │  │           │ │         │ │sharpness│ │timbre_chg│ │        │ │        ║
-║  │  │           │ │         │ │tonalness│ │          │ │        │ │        ║
-║  │  │           │ │         │ │clarity  │ │          │ │        │ │        ║
-║  │  │           │ │         │ │trist1/2/│ │          │ │        │ │        ║
-║  │  │           │ │         │ │3        │ │          │ │        │ │        ║
-║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                         TPIO reads: 13D (Timbre + Change)       │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                                                                  │        ║
-║  │  ┌── TPC Horizons ──────────────┐ ┌── TMH Horizons ──────────┐ │        ║
-║  │  │ H2 (17ms gamma)              │ │ H8 (300ms motif)          │ │        ║
-║  │  │ H5 (46ms alpha)              │ │ H14 (700ms phrase)        │ │        ║
-║  │  │ H8 (300ms theta)             │ │ H20 (5000ms section)      │ │        ║
-║  │  │                               │ │                           │ │        ║
-║  │  │ Spectral envelope tracking    │ │ Temporal memory context   │ │        ║
-║  │  │ Instrument identity           │ │ Imagery retrieval window  │ │        ║
-║  │  └───────────────────────────────┘ └───────────────────────────┘ │        ║
-║  │                         TPIO demand: ~18 of 2304 tuples          │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ════════════════╪════════════╪══ BRAIN: Cross-Circuit ══════════════════   ║
-║                  │            │                                              ║
-║        ┌─────────┘            └─────────┐                                    ║
-║        ▼ (cross-circuit read)           ▼ (primary circuit)                  ║
-║  ┌─────────────────┐          ┌─────────────────┐                           ║
-║  │  TPC* (30D)     │          │  TMH (30D)      │                           ║
-║  │  PERCEPTUAL     │          │  SENSORIMOTOR   │                           ║
-║  │                 │          │                 │                            ║
-║  │ Spec Env [0:10] │          │ Short   [0:10] │                            ║
-║  │ Instr Id [10:20]│          │ Medium  [10:20]│                            ║
-║  │ Plasticity      │          │ Long    [20:30]│                            ║
-║  │ Markers  [20:30]│          │                 │                            ║
-║  └────────┬────────┘          └────────┬────────┘                           ║
-║           │                            │                                     ║
-║           └────────────┬───────────────┘                                     ║
-║                        ▼                                                     ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    TPIO MODEL (10D Output)                       │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f01_perception_substrate,                  │        ║
-║  │                       f02_imagery_substrate,                     │        ║
-║  │                       f03_perc_imag_overlap,                     │        ║
-║  │                       f04_sma_imagery                            │        ║
-║  │  Layer M (Math):      overlap_index                              │        ║
-║  │  Layer P (Present):   pstg_activation, sma_activation            │        ║
-║  │  Layer F (Future):    imagery_stability_pred,                    │        ║
-║  │                       timbre_expectation, overlap_pred            │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins x 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ ENERGY │ │ TIMBRE │ │ CHANGE │ │ X-INT │ │ ║
+║ │ │ 7D [0:7] │ │ 5D[7:12]│ │ 9D │ │ 4D │ │ 24D │ │ ║
+║ │ │ │ │ │ │ [12:21] │ │ [21:25] │ │ [25:49]│ │ ║
+║ │ │ │ │ │ │warmth │ │spec_chg │ │ │ │ ║
+║ │ │ │ │ │ │sharpness│ │timbre_chg│ │ │ │ ║
+║ │ │ │ │ │ │tonalness│ │ │ │ │ │ ║
+║ │ │ │ │ │ │clarity │ │ │ │ │ │ ║
+║ │ │ │ │ │ │trist1/2/│ │ │ │ │ │ ║
+║ │ │ │ │ │ │3 │ │ │ │ │ │ ║
+║ │ └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │ ║
+║ │ TPIO reads: 13D (Timbre + Change) │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ │ ║
+║ │ │ H2 (17ms gamma) │ │ H8 (300ms motif) │ │ ║
+║ │ │ H5 (46ms alpha) │ │ H14 (700ms phrase) │ │ ║
+║ │ │ H8 (300ms theta) │ │ H20 (5000ms section) │ │ ║
+║ │ │ │ │ │ │ ║
+║ │ │ Spectral envelope tracking │ │ Temporal memory context │ │ ║
+║ │ │ Instrument identity │ │ Imagery retrieval window │ │ ║
+║ │ └───────────────────────────────┘ └───────────────────────────┘ │ ║
+║ │ TPIO demand: ~18 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ════════════════╪════════════╪══ BRAIN: Cross-Circuit ══════════════════ ║
+║ │ │ ║
+║ ┌─────────┘ └─────────┐ ║
+║ ▼ (cross-circuit read) ▼ (primary circuit) ║
+║ ┌─────────────────┐ ┌─────────────────┐ ║
+║ │ PERCEPTUAL │ │ SENSORIMOTOR │ ║
+║ │ │ │ │ ║
+║ │ Spec Env [0:10] │ │ Short [0:10] │ ║
+║ │ Instr Id [10:20]│ │ Medium [10:20]│ ║
+║ │ Plasticity │ │ Long [20:30]│ ║
+║ │ Markers [20:30]│ │ │ ║
+║ └────────┬────────┘ └────────┬────────┘ ║
+║ │ │ ║
+║ └────────────┬───────────────┘ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TPIO MODEL (10D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f01_perception_substrate, │ ║
+║ │ f02_imagery_substrate, │ ║
+║ │ f03_perc_imag_overlap, │ ║
+║ │ f04_sma_imagery │ ║
+║ │ Layer M (Math): overlap_index │ ║
+║ │ Layer P (Present): pstg_activation, sma_activation │ ║
+║ │ Layer F (Future): imagery_stability_pred, │ ║
+║ │ timbre_expectation, overlap_pred │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -201,7 +197,7 @@ Halpern et al. 2004:  SMA in imagery (non-motor), d = 0.90 (motor simulation)
 | 3 | **Halpern et al. 2004** | fMRI, laterality | 10 | Right > left auditory cortex asymmetry during imagery; 7/10 subjects | t = 1.97, p = 0.04 (one-tailed) | **Lateralization weighting** in pstg_activation |
 | 4 | **Halpern et al. 2004** | fMRI, ROI | 10 | SMA activated during imagery (subthreshold at whole-brain); no subvocalization component for timbre → general imagery role | SMA (-6, -2, 60), t = 4.55 (subthreshold) | **f04_sma_imagery**: motor simulation. **QUALIFIES**: subthreshold at whole-brain level |
 | 5 | **Kraemer, Macrae, Green & Kelley 2005** | fMRI, gaps in familiar music | 15 | Familiar instrumental music imagery extends into PRIMARY auditory cortex; lyrics-based imagery only reaches association cortex | **F(1,14) = 22.55, p < 0.0005** (PAC instrumentals); F(1,14) = 48.92, p < 0.0001 (region × music-type) | **EXTENDS** pSTG to PAC: timbre imagery requires deeper perceptual reconstruction than semantic-based imagery |
-| 6 | **Pantev, Roberts, Schulz, Engelien & Ross 2001** | MEG (37-ch), N1 dipole moment | 17 musicians | Timbre-specific N1 cortical enhancement for instrument-of-training; violinists > string, trumpeters > trumpet | **F(1,15) = 28.55, p < 0.0001**; trumpeters t(8) = 4.76, p = 0.001; violinists t(7) = -2.76, p = 0.028 | **TPC plasticity markers**: timbre-specific cortical representation shaped by training, bilateral secondary AC |
+| 6 | **Pantev, Roberts, Schulz, Engelien & Ross 2001** | MEG (37-ch), N1 dipole moment | 17 musicians | Timbre-specific N1 cortical enhancement for instrument-of-training; violinists > string, trumpeters > trumpet | **F(1,15) = 28.55, p < 0.0001**; trumpeters t(8) = 4.76, p = 0.001; violinists t(7) = -2.76, p = 0.028 | **timbre-processing plasticity markers**: timbre-specific cortical representation shaped by training, bilateral secondary AC |
 | 7 | **Bellmann & Asano 2024** | ALE meta-analysis (GingerALE, 17 fMRI/PET studies) | 338 (18 exp.) | Musical timbre processing consistently activates bilateral pSTG/PT (BA 22), HG (BA 41/42), SMG (BA 40), posterior insula (BA 13), right aSTG/anterior insula. Dual-stream model proposed | 4 ALE clusters: L-SMG (-44, -34); R-pSTG/PT (22, -24); R-ant insula/aSTG (13, -2, -6); L-pSTG/PT (-60, -40) | **Brain region validation**: ALE convergence confirms pSTG/PT as timbre processing hub. IPL and insula extend TPIO circuit to dual-stream model |
 | 8 | **Alluri, Toiviainen, Jääskeläinen, Glerean, Sams & Brattico 2012** | fMRI (3T), naturalistic listening, MIRToolbox | 11 musicians | Timbral features (Fullness, Brightness, Complexity, Activity) correlate with bilateral STG during naturalistic music; cerebellum involved; right lateralized | R-STG Z = 8.13 (Brightness); Fullness r = .80, Brightness r = .55, Complexity r = .53 | **Naturalistic validation**: timbre features track bilateral STG in real music. Right lateralization confirms imagery lateralization |
 | 9 | **Zatorre & Halpern 2005** | Review (MEG, PET, fMRI, lesion) | — | Secondary auditory cortex reliably activated during musical imagery across methods; SMA consistently found; right lateralization for instrumental/timbre imagery specifically | Convergent across methods | **Multi-method convergence**: confirms pSTG + SMA circuit for timbre imagery across imaging modalities |
@@ -219,71 +215,71 @@ The TPIO evidence base now spans **7 methods**: fMRI (Halpern 2004, Kraemer 2005
 TIMBRE PERCEPTION-IMAGERY BEHAVIORAL CORRELATION
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Feature Dimension       Perception   Imagery    Correlation
+Feature Dimension Perception Imagery Correlation
 ──────────────────────────────────────────────────────────
-Brightness (centroid)   pSTG         pSTG       r = 0.84
-Sharpness (attack)      pSTG         pSTG       r = 0.84
-Harmonic balance        pSTG         pSTG       r = 0.84
-Texture (HNR)           pSTG         pSTG       r = 0.84
+Brightness (centroid) pSTG pSTG r = 0.84
+Sharpness (attack) pSTG pSTG r = 0.84
+Harmonic balance pSTG pSTG r = 0.84
+Texture (HNR) pSTG pSTG r = 0.84
 
 All timbre dimensions show the SAME correlation — the shared
 substrate in pSTG encodes timbre invariantly across perception
 and imagery.
 
 LATERALIZATION:
-  Imagery: Right STG > Left STG (d = 0.63)
-  Perception: Bilateral (symmetric)
+ Imagery: Right STG > Left STG (d = 0.63)
+ Perception: Bilateral (symmetric)
 
 SMA ROLE:
-  Imagery: SMA activated (d = 0.90) — non-motor
-  Perception: SMA NOT activated
-  Interpretation: Motor simulation of timbre production
+ Imagery: SMA activated (d = 0.90) — non-motor
+ Perception: SMA NOT activated
+ Interpretation: Motor simulation of timbre production
 ```
 
 ### 3.3 Effect Size Summary
 
 ```
 PRIMARY STUDY (Halpern et al. 2004):
-  Perception-Imagery Correlation:  r = 0.84, p < 0.001 (behavioral MDS)
-  Excluding outlier pair:          r = 0.90 (flute-violin removed)
-  MDS interpair distance:          r = 0.63, p < 0.001
-  Right > Left imagery:            t = 1.97, p = 0.04 (one-tailed)
-  SMA imagery activation:          t = 4.55 (subthreshold whole-brain)
-  pSTG conjunction:                R-pSTG t = 4.66; L-PT t = 4.98
+ Perception-Imagery Correlation: r = 0.84, p < 0.001 (behavioral MDS)
+ Excluding outlier pair: r = 0.90 (flute-violin removed)
+ MDS interpair distance: r = 0.63, p < 0.001
+ Right > Left imagery: t = 1.97, p = 0.04 (one-tailed)
+ SMA imagery activation: t = 4.55 (subthreshold whole-brain)
+ pSTG conjunction: R-pSTG t = 4.66; L-PT t = 4.98
 
 NOTE ON EFFECT SIZES d = 0.84, d = 0.90, d = 0.63:
-  These values appeared in v2.0.0 without clear derivation from
-  the Halpern et al. 2004 paper. The paper reports t-values and
-  correlations, not Cohen's d directly. The r = 0.84 behavioral
-  correlation is confirmed. The d-values may have been estimated
-  from the t-statistics but should be treated as APPROXIMATE.
+ These values appeared in v2.0.0 without clear derivation from
+ the Halpern et al. 2004 paper. The paper reports t-values and
+ correlations, not Cohen's d directly. The r = 0.84 behavioral
+ correlation is confirmed. The d-values may have been estimated
+ from the t-statistics but should be treated as APPROXIMATE.
 
 TIMBRE-SPECIFIC PLASTICITY (Pantev et al. 2001):
-  Stimulus × musician group:       F(1,15) = 28.55, p < 0.0001
-  Trumpeters for trumpet tones:    t(8) = 4.76, p = 0.001
-  Violinists for string tones:     t(7) = -2.76, p = 0.028
-  Age-of-inception correlation:    r = -0.634, p = 0.026
+ Stimulus × musician group: F(1,15) = 28.55, p < 0.0001
+ Trumpeters for trumpet tones: t(8) = 4.76, p = 0.001
+ Violinists for string tones: t(7) = -2.76, p = 0.028
+ Age-of-inception correlation: r = -0.634, p = 0.026
 
 INSTRUMENTAL IMAGERY PAC (Kraemer et al. 2005):
-  PAC imagery for instrumentals:   F(1,14) = 22.55, p < 0.0005
-  Region × music-type:             F(1,14) = 48.92, p < 0.0001
+ PAC imagery for instrumentals: F(1,14) = 22.55, p < 0.0005
+ Region × music-type: F(1,14) = 48.92, p < 0.0001
 
 ALE META-ANALYSIS (Bellmann & Asano 2024):
-  18 experiments, 338 participants, 4 convergent clusters
-  Cluster 1 (L-SMG/HG):            4,640 mm³
-  Cluster 2 (R-pSTG/HG):           3,128 mm³
-  Cluster 3 (R-ant insula/aSTG):   1,696 mm³
-  Cluster 4 (L-pSTG/PT):           peak at (-60, -40)
+ 18 experiments, 338 participants, 4 convergent clusters
+ Cluster 1 (L-SMG/HG): 4,640 mm³
+ Cluster 2 (R-pSTG/HG): 3,128 mm³
+ Cluster 3 (R-ant insula/aSTG): 1,696 mm³
+ Cluster 4 (L-pSTG/PT): peak at (-60, -40)
 
 NATURALISTIC TIMBRE (Alluri et al. 2012):
-  R-STG Brightness:                Z = 8.13, k = 3166
-  R-STG Fullness:                  Z = 7.35, k = 2325
-  Perceptual validation:           r = .55-.80
+ R-STG Brightness: Z = 8.13, k = 3166
+ R-STG Fullness: Z = 7.35, k = 2325
+ Perceptual validation: r = .55-.80
 
-Quality Assessment:  beta-tier (multi-study convergence, 7 methods)
-Replication:         Partial — Bellmann 2024 ALE includes Halpern 2004
-                     Kraemer 2005 independently confirms imagery in auditory cortex
-                     No direct replication of r = 0.84 timbre imagery correlation
+Quality Assessment: beta-tier (multi-study convergence, 7 methods)
+Replication: Partial — Bellmann 2024 ALE includes Halpern 2004
+ Kraemer 2005 independently confirms imagery in auditory cortex
+ No direct replication of r = 0.84 timbre imagery correlation
 ```
 
 ---
@@ -317,30 +313,25 @@ No new R³ v2 features required. TPIO's timbre processing operates exclusively o
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[12:21] Timbre (9D) ────────┐
-TPC.spectral_envelope ─────────┼──► Perception Substrate (f01)
-TPC.instrument_identity ───────┘   Posterior STG activation (d=0.84)
-                                    Math: f01 = σ(w · timbre_features
-                                                   · TPC.encoding)
+ Math: f01 = σ(w · timbre_features
+ · encoding)
 
 R³[12:21] Timbre (9D) ────────┐
-TMH.short_context ─────────────┼──► Imagery Substrate (f02)
-TMH.medium_context ────────────┘   Internal timbre generation
-                                    Math: f02 = σ(w · timbre_features
-                                                   · TMH.context_memory)
+ Math: f02 = σ(w · timbre_features
+ · context_memory)
 
 f01 × f02 (shared substrate) ─┐
 R³[21] spectral_change ────────┼──► Perception-Imagery Overlap (f03)
-R³[24] timbre_change ──────────┘   Behavioral correlation r=0.84
-                                    Math: overlap = r · f01 · f02
+R³[24] timbre_change ──────────┘ Behavioral correlation r=0.84
+ Math: overlap = r · f01 · f02
 
-TMH.long_context ──────────────┐
 R³[7] amplitude ────────────────┼──► SMA Imagery (f04)
-R³[8] loudness ─────────────────┘   Non-motor simulation (d=0.90)
-                                    Math: f04 = σ(d · TMH.long ·
-                                                   engagement)
+R³[8] loudness ─────────────────┘ Non-motor simulation (d=0.90)
+ Math: f04 = σ(d · long ·
+ engagement)
 ```
 
 ---
@@ -349,7 +340,7 @@ R³[8] loudness ─────────────────┘   Non-mot
 
 ### 5.1 Demand Specification
 
-TPIO requires H³ features at both TPC horizons (H2, H5, H8) for spectral envelope / instrument identity tracking and TMH horizons (H8, H14, H20) for temporal memory and imagery retrieval. This cross-circuit demand reflects the perception-imagery overlap at the core of the model.
+TPIO requires H³ features at both horizons (H2, H5, H8) for spectral envelope / instrument identity tracking and Temporal hierarchy horizons (H8, H14, H20) for temporal memory and imagery retrieval. This cross-circuit demand reflects the perception-imagery overlap at the core of the model.
 
 | R³ Index | Feature | H | Morph | Law | Purpose |
 |----------|---------|---|-------|-----|---------|
@@ -381,21 +372,6 @@ No significant v2 expansion projected. TPIO operates primarily on v1 R³ feature
 **v2 projected**: 0 tuples
 **Total projected**: 18 tuples of 294,912 theoretical = 0.0061%
 
-### 5.2 TPC* + TMH Mechanism Binding
-
-TPIO reads from **TPC** (Timbre Processing Chain, perceptual circuit — cross-circuit read) and **TMH** (Temporal Memory Hierarchy, sensorimotor circuit — primary circuit):
-
-| Mechanism | Sub-section | Range | TPIO Role | Weight |
-|-----------|-------------|-------|-----------|--------|
-| **TPC*** | Spectral Envelope | TPC[0:10] | Perception substrate — spectral shape encoding | **1.0** (primary) |
-| **TPC*** | Instrument Identity | TPC[10:20] | Instrument recognition — identity matching | **0.9** |
-| **TPC*** | Plasticity Markers | TPC[20:30] | Timbre plasticity — adaptation potential | 0.4 |
-| **TMH** | Short Context | TMH[0:10] | Motif-level imagery — short timbre memory | **0.9** |
-| **TMH** | Medium Context | TMH[10:20] | Phrase-level imagery — timbre continuity | **1.0** (primary) |
-| **TMH** | Long Context | TMH[20:30] | Section-level imagery — sustained internal representation | 0.7 |
-
-TPIO is a **cross-circuit model**: it reads TPC from the perceptual circuit (marked TPC*) while its primary circuit is sensorimotor (TMH). This dual-circuit dependency reflects the finding that timbre imagery re-uses perceptual representations (pSTG overlap d=0.84) while engaging sensorimotor simulation (SMA d=0.90).
-
 ---
 
 ## 6. Output Space: 10D Multi-Layer Representation
@@ -408,65 +384,60 @@ TPIO OUTPUT TENSOR: 10D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                    │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼─────────────────────────┼────────┼────────────────────────────────────
- 0  │ f01_perception_substrate│ [0, 1] │ Posterior STG activation during
-    │                         │        │ timbre perception. TPC encoding
-    │                         │        │ of spectral envelope + identity.
-    │                         │        │ f01 = σ(0.35 * warmth * sharpness
-    │                         │        │         * mean(TPC.spec_env[0:10])
-    │                         │        │       + 0.35 * trist_balance
-    │                         │        │         * mean(TPC.instr_id[10:20])
-    │                         │        │       + 0.30 * tonalness * clarity)
+ 0 │ f01_perception_substrate│ [0, 1] │ Posterior STG activation during
+ │ │ │ timbre perception. timbre-processing encoding
+ │ │ │ of spectral envelope + identity.
+ │ │ │ f01 = σ(0.35 * warmth * sharpness
+ │ │ │ + 0.35 * trist_balance
+ │ │ │ + 0.30 * tonalness * clarity)
 ────┼─────────────────────────┼────────┼────────────────────────────────────
- 1  │ f02_imagery_substrate   │ [0, 1] │ pSTG activation during timbre
-    │                         │        │ imagery. TMH memory retrieval
-    │                         │        │ of timbre patterns.
-    │                         │        │ f02 = σ(0.35 * warmth_phrase
-    │                         │        │         * mean(TMH.short[0:10])
-    │                         │        │       + 0.35 * tonalness_phrase
-    │                         │        │         * mean(TMH.medium[10:20])
-    │                         │        │       + 0.30 * trist1_long
-    │                         │        │         * mean(TMH.long[20:30]))
+ 1 │ f02_imagery_substrate │ [0, 1] │ pSTG activation during timbre
+ │ │ │ imagery. temporal-context memory retrieval
+ │ │ │ of timbre patterns.
+ │ │ │ f02 = σ(0.35 * warmth_phrase
+ │ │ │ + 0.35 * tonalness_phrase
+ │ │ │ + 0.30 * trist1_long
 ────┼─────────────────────────┼────────┼────────────────────────────────────
- 2  │ f03_perc_imag_overlap   │ [0, 1] │ Shared pSTG substrate strength.
-    │                         │        │ Behavioral correlation r = 0.84.
-    │                         │        │ f03 = 0.84 * f01 * f02
+ 2 │ f03_perc_imag_overlap │ [0, 1] │ Shared pSTG substrate strength.
+ │ │ │ Behavioral correlation r = 0.84.
+ │ │ │ f03 = 0.84 * f01 * f02
 ────┼─────────────────────────┼────────┼────────────────────────────────────
- 3  │ f04_sma_imagery         │ [0, 1] │ SMA non-motor engagement (d=0.90).
-    │                         │        │ Motor simulation during imagery.
-    │                         │        │ f04 = σ(0.90 * f02 * engagement)
+ 3 │ f04_sma_imagery │ [0, 1] │ SMA non-motor engagement (d=0.90).
+ │ │ │ Motor simulation during imagery.
+ │ │ │ f04 = σ(0.90 * f02 * engagement)
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                    │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼─────────────────────────┼────────┼────────────────────────────────────
- 4  │ overlap_index           │ [0, 1] │ Normalized overlap strength.
-    │                         │        │ = (f01 + f02 + f03) / 3
+ 4 │ overlap_index │ [0, 1] │ Normalized overlap strength.
+ │ │ │ = (f01 + f02 + f03) / 3
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                    │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼─────────────────────────┼────────┼────────────────────────────────────
- 5  │ pstg_activation         │ [0, 1] │ Real-time pSTG state.
-    │                         │        │ TPC + TMH aggregation, right-weighted.
+ 5 │ pstg_activation │ [0, 1] │ Real-time pSTG state.
+ │ │ │ H³ direct aggregation, right-weighted.
 ────┼─────────────────────────┼────────┼────────────────────────────────────
- 6  │ sma_activation          │ [0, 1] │ Real-time SMA state.
-    │                         │        │ TMH-driven motor simulation.
+ 6 │ sma_activation │ [0, 1] │ Real-time SMA state.
+ │ │ │ temporal-context-driven motor simulation.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                    │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼─────────────────────────┼────────┼────────────────────────────────────
- 7  │ imagery_stability_pred  │ [0, 1] │ Predicted imagery maintenance.
-    │                         │        │ Based on trist1 autocorrelation.
+ 7 │ imagery_stability_pred │ [0, 1] │ Predicted imagery maintenance.
+ │ │ │ Based on trist1 autocorrelation.
 ────┼─────────────────────────┼────────┼────────────────────────────────────
- 8  │ timbre_expectation      │ [0, 1] │ Expected timbre continuation.
-    │                         │        │ Mean warmth/tonalness trajectory.
+ 8 │ timbre_expectation │ [0, 1] │ Expected timbre continuation.
+ │ │ │ Mean warmth/tonalness trajectory.
 ────┼─────────────────────────┼────────┼────────────────────────────────────
- 9  │ overlap_pred            │ [0, 1] │ Predicted overlap maintenance.
-    │                         │        │ Trend-based imagery-perception
-    │                         │        │ convergence prediction.
+ 9 │ overlap_pred │ [0, 1] │ Predicted overlap maintenance.
+ │ │ │ Trend-based imagery-perception
+ │ │ │ convergence prediction.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 10D per frame at 172.27 Hz
@@ -482,20 +453,20 @@ TOTAL: 10D per frame at 172.27 Hz
 ```
 Perception-Imagery Overlap:
 
-    Overlap(t) = r_perc_imag * Perception(t) * Imagery(t)
+ Overlap(t) = r_perc_imag * Perception(t) * Imagery(t)
 
-    Parameters:
-        r_perc_imag = 0.84 (behavioral correlation, Halpern et al. 2004)
+ Parameters:
+ r_perc_imag = 0.84 (behavioral correlation, Halpern et al. 2004)
 
-    SMA Engagement:
-        SMA(t) = σ(d_sma * Imagery(t) * engagement(t))
-        d_sma = 0.90 (Halpern et al. 2004 effect size)
-        engagement = σ(loudness_mean_section * amplitude_trend)
+ SMA Engagement:
+ SMA(t) = σ(d_sma * Imagery(t) * engagement(t))
+ d_sma = 0.90 (Halpern et al. 2004 effect size)
+ engagement = σ(loudness_mean_section * amplitude_trend)
 
-    Brain Region Activation:
-        pSTG(t) ∝ Perception(t) + Imagery(t)    — shared substrate
-        SMA(t)  ∝ Imagery(t)                     — imagery only
-        Right lateralization: 0.6 * right + 0.4 * left (d = 0.63)
+ Brain Region Activation:
+ pSTG(t) ∝ Perception(t) + Imagery(t) — shared substrate
+ SMA(t) ∝ Imagery(t) — imagery only
+ Right lateralization: 0.6 * right + 0.4 * left (d = 0.63)
 ```
 
 ### 7.2 Feature Formulas
@@ -504,41 +475,36 @@ Perception-Imagery Overlap:
 # COEFFICIENT SATURATION RULE: For sigmoid(Σ wi*gi), |wi| must sum <= 1.0
 
 # f01: Perception Substrate (pSTG during perception)
-warmth_val = h3[(12, 2, 0, 2)]             # warmth, 17ms, value, bidi
-sharpness_val = h3[(13, 2, 0, 2)]          # sharpness, 17ms, value, bidi
-tonalness_mean = h3[(14, 5, 1, 0)]         # tonalness, 46ms, mean, fwd
-clarity_val = h3[(15, 5, 0, 0)]            # clarity, 46ms, value, fwd
-trist1 = h3[(18, 2, 0, 2)]                 # tristimulus1, 17ms, value, bidi
-trist2 = h3[(19, 2, 0, 2)]                 # tristimulus2, 17ms, value, bidi
-trist3 = h3[(20, 2, 0, 2)]                 # tristimulus3, 17ms, value, bidi
+warmth_val = h3[(12, 2, 0, 2)] # warmth, 17ms, value, bidi
+sharpness_val = h3[(13, 2, 0, 2)] # sharpness, 17ms, value, bidi
+tonalness_mean = h3[(14, 5, 1, 0)] # tonalness, 46ms, mean, fwd
+clarity_val = h3[(15, 5, 0, 0)] # clarity, 46ms, value, fwd
+trist1 = h3[(18, 2, 0, 2)] # tristimulus1, 17ms, value, bidi
+trist2 = h3[(19, 2, 0, 2)] # tristimulus2, 17ms, value, bidi
+trist3 = h3[(20, 2, 0, 2)] # tristimulus3, 17ms, value, bidi
 trist_balance = (trist1 + trist2 + trist3) / 3
 
 f01 = σ(0.35 * warmth_val * sharpness_val
-              * mean(TPC.spectral_envelope[0:10])
-       + 0.35 * trist_balance
-              * mean(TPC.instrument_identity[10:20])
-       + 0.30 * tonalness_mean * clarity_val)
+ + 0.35 * trist_balance
+ + 0.30 * tonalness_mean * clarity_val)
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # f02: Imagery Substrate (pSTG during imagery)
-warmth_phrase = h3[(12, 14, 1, 0)]          # warmth, 700ms, mean, fwd
-tonalness_phrase = h3[(14, 14, 1, 0)]       # tonalness, 700ms, mean, fwd
-trist1_long = h3[(18, 20, 1, 0)]            # tristimulus1, 5s, mean, fwd
-loudness_section = h3[(8, 20, 1, 0)]        # loudness, 5s, mean, fwd
+warmth_phrase = h3[(12, 14, 1, 0)] # warmth, 700ms, mean, fwd
+tonalness_phrase = h3[(14, 14, 1, 0)] # tonalness, 700ms, mean, fwd
+trist1_long = h3[(18, 20, 1, 0)] # tristimulus1, 5s, mean, fwd
+loudness_section = h3[(8, 20, 1, 0)] # loudness, 5s, mean, fwd
 
 f02 = σ(0.35 * warmth_phrase
-              * mean(TMH.short_context[0:10])
-       + 0.35 * tonalness_phrase
-              * mean(TMH.medium_context[10:20])
-       + 0.30 * trist1_long
-              * mean(TMH.long_context[20:30]))
+ + 0.35 * tonalness_phrase
+ + 0.30 * trist1_long
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # f03: Perception-Imagery Overlap (r = 0.84)
 f03 = 0.84 * f01 * f02
 
 # f04: SMA Imagery (d = 0.90)
-amplitude_trend = h3[(7, 20, 18, 0)]       # amplitude, 5s, trend, fwd
+amplitude_trend = h3[(7, 20, 18, 0)] # amplitude, 5s, trend, fwd
 engagement = σ(0.50 * loudness_section + 0.50 * amplitude_trend)
 # coefficients: 0.50 + 0.50 = 1.0 ✓
 f04 = σ(0.90 * f02 * engagement)
@@ -571,30 +537,26 @@ f04 = σ(0.90 * f02 * engagement)
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    TPIO INTERACTIONS                                         │
+│ TPIO INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (STU):                                                         │
-│  HMCE.context_depth ──────► TPIO (temporal context for imagery depth)     │
-│  AMSC.motor_coupling ─────► TPIO (motor pathway → SMA imagery)            │
-│  TPIO.sma_activation ─────► AMSS (imagery-primed stream segregation)     │
-│  TPIO.pstg_activation ────► ETAM (timbre context for entrainment)        │
-│                                                                             │
-│  CROSS-CIRCUIT (Perceptual → Sensorimotor):                               │
-│  TPC.spectral_envelope ──► TPIO (perception substrate — cross read)       │
-│  TPC.instrument_identity ► TPIO (instrument matching — cross read)        │
-│  This is the key architectural feature: TPIO re-uses perceptual           │
-│  representations (TPC*) within the sensorimotor circuit (TMH).            │
-│                                                                             │
-│  CROSS-UNIT (P5: STU → ARU):                                              │
-│  TPIO.overlap_index ──────► ARU (imagery-driven affective response)       │
-│                                                                             │
-│  UPSTREAM DEPENDENCIES:                                                     │
-│  TPC* mechanism (30D) ────► TPIO (spectral envelope, instrument ID)       │
-│  TMH mechanism (30D) ─────► TPIO (temporal context, imagery retrieval)    │
-│  R³ (~13D) ────────────────► TPIO (direct timbre features)                │
-│  H³ (18 tuples) ──────────► TPIO (temporal dynamics)                      │
-│                                                                             │
+│ │
+│ INTRA-UNIT (STU): │
+│ HMCE.context_depth ──────► TPIO (temporal context for imagery depth) │
+│ AMSC.motor_coupling ─────► TPIO (motor pathway → SMA imagery) │
+│ TPIO.sma_activation ─────► AMSS (imagery-primed stream segregation) │
+│ TPIO.pstg_activation ────► ETAM (timbre context for entrainment) │
+│ │
+│ CROSS-CIRCUIT (Perceptual → Sensorimotor): │
+│ This is the key architectural feature: TPIO re-uses perceptual │
+│ representations (timbre-processing) within the sensorimotor circuit (). │
+│ │
+│ CROSS-UNIT (P5: STU → ARU): │
+│ TPIO.overlap_index ──────► ARU (imagery-driven affective response) │
+│ │
+│ UPSTREAM DEPENDENCIES: │
+│ R³ (~13D) ────────────────► TPIO (direct timbre features) │
+│ H³ (18 tuples) ──────────► TPIO (temporal dynamics) │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -622,164 +584,137 @@ f04 = σ(0.90 * f02 * engagement)
 
 ```python
 class TPIO(BaseModel):
-    """Timbre Perception-Imagery Overlap.
+ """Timbre Perception-Imagery Overlap.
 
-    Output: 10D per frame.
-    Reads: TPC* mechanism (30D, cross-circuit), TMH mechanism (30D), R³ direct.
-    """
-    NAME = "TPIO"
-    UNIT = "STU"
-    TIER = "β2"
-    OUTPUT_DIM = 10
-    MECHANISM_NAMES = ("TPC", "TMH")    # TPC = cross-circuit read
+ Output: 10D per frame.
+ """
+ NAME = "TPIO"
+ UNIT = "STU"
+ TIER = "β2"
+ OUTPUT_DIM = 10
+ PERC_IMAG_CORR = 0.84 # Halpern et al. 2004 behavioral correlation
+ SMA_EFFECT_D = 0.90 # Halpern et al. 2004 SMA non-motor imagery
+ LATERAL_D = 0.63 # Halpern et al. 2004 right > left
 
-    PERC_IMAG_CORR = 0.84    # Halpern et al. 2004 behavioral correlation
-    SMA_EFFECT_D = 0.90      # Halpern et al. 2004 SMA non-motor imagery
-    LATERAL_D = 0.63         # Halpern et al. 2004 right > left
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """18 tuples for TPIO computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ (12, 2, 0, 2), # warmth, 17ms, value, bidirectional
+ (13, 2, 0, 2), # sharpness, 17ms, value, bidirectional
+ (14, 5, 1, 0), # tonalness, 46ms, mean, forward
+ (15, 5, 0, 0), # clarity, 46ms, value, forward
+ (18, 2, 0, 2), # tristimulus1, 17ms, value, bidirectional
+ (19, 2, 0, 2), # tristimulus2, 17ms, value, bidirectional
+ (20, 2, 0, 2), # tristimulus3, 17ms, value, bidirectional
+ # ── Shared horizon H8: motif-level overlap ──
+ (17, 8, 1, 0), # spectral_autocorrelation, 300ms, mean, fwd
+ (21, 8, 1, 0), # spectral_change, 300ms, mean, forward
+ (21, 8, 8, 0), # spectral_change, 300ms, velocity, forward
+ (24, 8, 1, 0), # timbre_change, 300ms, mean, forward
+ (12, 14, 1, 0), # warmth, 700ms, mean, forward
+ (14, 14, 1, 0), # tonalness, 700ms, mean, forward
+ (14, 14, 3, 0), # tonalness, 700ms, std, forward
+ (18, 20, 1, 0), # tristimulus1, 5000ms, mean, forward
+ (18, 20, 22, 0), # tristimulus1, 5000ms, autocorrelation, fwd
+ (7, 20, 18, 0), # amplitude, 5000ms, trend, forward
+ (8, 20, 1, 0), # loudness, 5000ms, mean, forward
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """18 tuples for TPIO computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # ── TPC horizons: timbre perception tracking ──
-            (12, 2, 0, 2),     # warmth, 17ms, value, bidirectional
-            (13, 2, 0, 2),     # sharpness, 17ms, value, bidirectional
-            (14, 5, 1, 0),     # tonalness, 46ms, mean, forward
-            (15, 5, 0, 0),     # clarity, 46ms, value, forward
-            (18, 2, 0, 2),     # tristimulus1, 17ms, value, bidirectional
-            (19, 2, 0, 2),     # tristimulus2, 17ms, value, bidirectional
-            (20, 2, 0, 2),     # tristimulus3, 17ms, value, bidirectional
-            # ── Shared horizon H8: motif-level overlap ──
-            (17, 8, 1, 0),     # spectral_autocorrelation, 300ms, mean, fwd
-            (21, 8, 1, 0),     # spectral_change, 300ms, mean, forward
-            (21, 8, 8, 0),     # spectral_change, 300ms, velocity, forward
-            (24, 8, 1, 0),     # timbre_change, 300ms, mean, forward
-            # ── TMH horizons: imagery temporal context ──
-            (12, 14, 1, 0),    # warmth, 700ms, mean, forward
-            (14, 14, 1, 0),    # tonalness, 700ms, mean, forward
-            (14, 14, 3, 0),    # tonalness, 700ms, std, forward
-            (18, 20, 1, 0),    # tristimulus1, 5000ms, mean, forward
-            (18, 20, 22, 0),   # tristimulus1, 5000ms, autocorrelation, fwd
-            (7, 20, 18, 0),    # amplitude, 5000ms, trend, forward
-            (8, 20, 1, 0),     # loudness, 5000ms, mean, forward
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute TPIO 10D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute TPIO 10D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"TPC": (B,T,30), "TMH": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,10) TPIO output
+ """
+ # R³ features
+ warmth = r3[..., 12:13]
+ sharpness = r3[..., 13:14]
+ tonalness = r3[..., 14:15]
+ clarity = r3[..., 15:16]
+ trist1 = r3[..., 18:19]
+ trist2 = r3[..., 19:20]
+ trist3 = r3[..., 20:21]
 
-        Returns:
-            (B,T,10) TPIO output
-        """
-        tpc = mechanism_outputs["TPC"]    # (B, T, 30) — cross-circuit
-        tmh = mechanism_outputs["TMH"]    # (B, T, 30) — primary circuit
+ # H³ direct features — Timbre processing horizons
+ warmth_val = h3_direct[(12, 2, 0, 2)].unsqueeze(-1)
+ sharpness_val = h3_direct[(13, 2, 0, 2)].unsqueeze(-1)
+ tonalness_mean = h3_direct[(14, 5, 1, 0)].unsqueeze(-1)
+ clarity_val = h3_direct[(15, 5, 0, 0)].unsqueeze(-1)
+ trist1_val = h3_direct[(18, 2, 0, 2)].unsqueeze(-1)
+ trist2_val = h3_direct[(19, 2, 0, 2)].unsqueeze(-1)
+ trist3_val = h3_direct[(20, 2, 0, 2)].unsqueeze(-1)
+ trist_balance = (trist1_val + trist2_val + trist3_val) / 3
 
-        # TPC sub-sections (perceptual circuit, cross-circuit read)
-        tpc_env = tpc[..., 0:10]          # spectral envelope
-        tpc_instr = tpc[..., 10:20]       # instrument identity
-        tpc_plast = tpc[..., 20:30]       # plasticity markers
+ # H³ direct features — Temporal hierarchy horizons
+ warmth_phrase = h3_direct[(12, 14, 1, 0)].unsqueeze(-1)
+ tonalness_phrase = h3_direct[(14, 14, 1, 0)].unsqueeze(-1)
+ trist1_long = h3_direct[(18, 20, 1, 0)].unsqueeze(-1)
+ loudness_section = h3_direct[(8, 20, 1, 0)].unsqueeze(-1)
+ amplitude_trend = h3_direct[(7, 20, 18, 0)].unsqueeze(-1)
+ trist1_autocorr = h3_direct[(18, 20, 22, 0)].unsqueeze(-1)
 
-        # TMH sub-sections (sensorimotor circuit, primary)
-        tmh_short = tmh[..., 0:10]        # short context
-        tmh_medium = tmh[..., 10:20]      # medium context
-        tmh_long = tmh[..., 20:30]        # long context
+ # ═══ LAYER E: Explicit features ═══
 
-        # R³ features
-        warmth = r3[..., 12:13]
-        sharpness = r3[..., 13:14]
-        tonalness = r3[..., 14:15]
-        clarity = r3[..., 15:16]
-        trist1 = r3[..., 18:19]
-        trist2 = r3[..., 19:20]
-        trist3 = r3[..., 20:21]
+ # f01: Perception Substrate (coefficients sum = 1.0)
+ f01 = torch.sigmoid(
+ 0.35 * (warmth_val * sharpness_val
+ + 0.35 * (trist_balance
+ + 0.30 * (tonalness_mean * clarity_val)
+ )
 
-        # H³ direct features — TPC horizons
-        warmth_val = h3_direct[(12, 2, 0, 2)].unsqueeze(-1)
-        sharpness_val = h3_direct[(13, 2, 0, 2)].unsqueeze(-1)
-        tonalness_mean = h3_direct[(14, 5, 1, 0)].unsqueeze(-1)
-        clarity_val = h3_direct[(15, 5, 0, 0)].unsqueeze(-1)
-        trist1_val = h3_direct[(18, 2, 0, 2)].unsqueeze(-1)
-        trist2_val = h3_direct[(19, 2, 0, 2)].unsqueeze(-1)
-        trist3_val = h3_direct[(20, 2, 0, 2)].unsqueeze(-1)
-        trist_balance = (trist1_val + trist2_val + trist3_val) / 3
+ # f02: Imagery Substrate (coefficients sum = 1.0)
+ f02 = torch.sigmoid(
+ 0.35 * (warmth_phrase
+ + 0.35 * (tonalness_phrase
+ + 0.30 * (trist1_long
+ )
 
-        # H³ direct features — TMH horizons
-        warmth_phrase = h3_direct[(12, 14, 1, 0)].unsqueeze(-1)
-        tonalness_phrase = h3_direct[(14, 14, 1, 0)].unsqueeze(-1)
-        trist1_long = h3_direct[(18, 20, 1, 0)].unsqueeze(-1)
-        loudness_section = h3_direct[(8, 20, 1, 0)].unsqueeze(-1)
-        amplitude_trend = h3_direct[(7, 20, 18, 0)].unsqueeze(-1)
-        trist1_autocorr = h3_direct[(18, 20, 22, 0)].unsqueeze(-1)
+ # f03: Perception-Imagery Overlap (r = 0.84)
+ f03 = self.PERC_IMAG_CORR * f01 * f02
 
-        # ═══ LAYER E: Explicit features ═══
+ # f04: SMA Imagery (d = 0.90)
+ engagement = torch.sigmoid(
+ 0.50 * loudness_section + 0.50 * amplitude_trend
+ )
+ f04 = torch.sigmoid(self.SMA_EFFECT_D * f02 * engagement)
 
-        # f01: Perception Substrate (coefficients sum = 1.0)
-        f01 = torch.sigmoid(
-            0.35 * (warmth_val * sharpness_val
-                    * tpc_env.mean(-1, keepdim=True))
-            + 0.35 * (trist_balance
-                      * tpc_instr.mean(-1, keepdim=True))
-            + 0.30 * (tonalness_mean * clarity_val)
-        )
+ # ═══ LAYER M: Mathematical ═══
+ overlap_index = (f01 + f02 + f03) / 3
 
-        # f02: Imagery Substrate (coefficients sum = 1.0)
-        f02 = torch.sigmoid(
-            0.35 * (warmth_phrase
-                    * tmh_short.mean(-1, keepdim=True))
-            + 0.35 * (tonalness_phrase
-                      * tmh_medium.mean(-1, keepdim=True))
-            + 0.30 * (trist1_long
-                      * tmh_long.mean(-1, keepdim=True))
-        )
+ # ═══ LAYER P: Present ═══
+ # pSTG: right-weighted (d = 0.63 lateralization)
+ pstg_activation = torch.sigmoid(
+ )
+ sma_activation = torch.sigmoid(
+ )
 
-        # f03: Perception-Imagery Overlap (r = 0.84)
-        f03 = self.PERC_IMAG_CORR * f01 * f02
+ # ═══ LAYER F: Future ═══
+ imagery_stability_pred = torch.sigmoid(
+ 0.60 * trist1_autocorr + 0.40 * f02
+ )
+ tonalness_std = h3_direct[(14, 14, 3, 0)].unsqueeze(-1)
+ timbre_expectation = torch.sigmoid(
+ 0.50 * warmth_phrase + 0.50 * (1.0 - tonalness_std)
+ )
+ overlap_pred = torch.sigmoid(
+ 0.50 * f03 + 0.50 * amplitude_trend
+ )
 
-        # f04: SMA Imagery (d = 0.90)
-        engagement = torch.sigmoid(
-            0.50 * loudness_section + 0.50 * amplitude_trend
-        )
-        f04 = torch.sigmoid(self.SMA_EFFECT_D * f02 * engagement)
-
-        # ═══ LAYER M: Mathematical ═══
-        overlap_index = (f01 + f02 + f03) / 3
-
-        # ═══ LAYER P: Present ═══
-        # pSTG: right-weighted (d = 0.63 lateralization)
-        pstg_activation = torch.sigmoid(
-            0.50 * tpc_env.mean(-1, keepdim=True)
-            + 0.50 * tmh_medium.mean(-1, keepdim=True)
-        )
-        sma_activation = torch.sigmoid(
-            0.60 * f04 + 0.40 * tmh_long.mean(-1, keepdim=True)
-        )
-
-        # ═══ LAYER F: Future ═══
-        imagery_stability_pred = torch.sigmoid(
-            0.60 * trist1_autocorr + 0.40 * f02
-        )
-        tonalness_std = h3_direct[(14, 14, 3, 0)].unsqueeze(-1)
-        timbre_expectation = torch.sigmoid(
-            0.50 * warmth_phrase + 0.50 * (1.0 - tonalness_std)
-        )
-        overlap_pred = torch.sigmoid(
-            0.50 * f03 + 0.50 * amplitude_trend
-        )
-
-        return torch.cat([
-            f01, f02, f03, f04,                              # E: 4D
-            overlap_index,                                    # M: 1D
-            pstg_activation, sma_activation,                  # P: 2D
-            imagery_stability_pred, timbre_expectation,
-            overlap_pred,                                     # F: 3D
-        ], dim=-1)  # (B, T, 10)
+ return torch.cat([
+ f01, f02, f03, f04, # E: 4D
+ overlap_index, # M: 1D
+ pstg_activation, sma_activation, # P: 2D
+ imagery_stability_pred, timbre_expectation,
+ overlap_pred, # F: 3D
+ ], dim=-1) # (B, T, 10)
 ```
 
 ---
@@ -795,8 +730,6 @@ class TPIO(BaseModel):
 | **Falsification Tests** | **6/9 confirmed, 1 partial, 2 testable** | Strong validity |
 | **R³ Features Used** | 13D of 49D | Timbre + Change + Energy |
 | **H³ Demand** | 18 tuples (0.78%) | Sparse, efficient |
-| **TPC* Mechanism** | 30D (3 sub-sections) | Cross-circuit perceptual read |
-| **TMH Mechanism** | 30D (3 sub-sections) | Primary sensorimotor |
 | **Output Dimensions** | **10D** | 4-layer structure |
 
 ---
@@ -832,24 +765,12 @@ class TPIO(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D): L5, L6, L7, L9, X_L5L6, X_L6L7 (43D) | R³ (49D): Timbre[12:21], Change[21,24], Energy[7,8] (13D) |
-| Temporal | HC⁰ mechanisms (TIH, ITM, HRM, EFC) | TPC* (30D, cross-circuit) + TMH (30D) |
 | Timbre features | S⁰.L5 brightness[34], sharpness[36], centroid[38], flatness[44], attack[50] | R³ warmth[12], sharpness[13], tonalness[14], clarity[15], tristimulus[18:21] |
 | Shape features | S⁰.L6 envelope[55:59], slope[63:66], tristimulus[68:71], odd_even[71:74] | R³ smoothness[16], autocorrelation[17], tristimulus[18:21] |
-| Cross-feature | S⁰.X_L5L6[208:216], X_L6L7[232:240] | TPC* cross-circuit read (spectral envelope + instrument identity) |
-| SMA signal | S⁰.L4 derivatives × HC⁰.ITM | TMH.long_context × engagement (amplitude trend) |
+| Cross-feature | S⁰.X_L5L6[208:216], X_L6L7[232:240] | timbre-processing cross-circuit read (spectral envelope + instrument identity) |
+| SMA signal | S⁰.L4 derivatives × HC⁰.ITM | long_context × engagement (amplitude trend) |
 | Demand format | HC⁰ index ranges (25 tuples, 1.09%) | H³ 4-tuples (18 tuples, 0.78%) |
 | Output dimensions | 11D | **10D** (catalog value) |
-
-### Why TPC* + TMH replaces HC⁰ mechanisms
-
-The D0 pipeline used 4 separate HC⁰ mechanisms (TIH, ITM, HRM, EFC). In MI, these are unified into two mechanisms from different circuits:
-
-- **TIH → TPC*.spectral_envelope** [0:10]: Multi-scale temporal integration of timbre maps to TPC's spectral envelope tracking at H2/H5/H8 horizons. The TIH mechanism's multi-scale timbre integration is now captured by TPC's natural horizon structure.
-- **HRM → TMH.medium_context** [10:20]: Hippocampal replay of timbre patterns maps to TMH's phrase-level context, which stores the timbre memory that imagery retrieves.
-- **EFC → TMH.short_context** [0:10]: Efference copy for imagery generation maps to TMH's motif-level context, representing the motor-sensory prediction loop that drives internal timbre generation.
-- **ITM → TMH.long_context** [20:30]: Interval timing for sustained imagery maps to TMH's section-level context, providing the temporal scaffold for extended imagery maintenance.
-
-The cross-circuit read of TPC from the perceptual circuit is the architectural expression of the pSTG overlap finding (d = 0.84): timbre imagery re-uses the same spectral representations that perception built.
 
 ---
 
@@ -859,9 +780,8 @@ The cross-circuit read of TPC from the perceptual circuit is the architectural e
 **Confidence**: **70-90%**
 
 ### Code Note (Phase 5)
-- `mi_beta/brain/units/stu/models/tpio.py`: `MECHANISM_NAMES = ("TPC",)` but doc specifies `("TPC", "TMH")` — **missing TMH mechanism** in code
 - Code `OUTPUT_DIM = 10` matches doc (10D) ✓
-- Code `CROSS_UNIT_READS = ()` but doc specifies TPC* cross-circuit read — needs population
+- Code `CROSS_UNIT_READS = ()` but doc specifies timbre-processing cross-circuit read — needs population
 - Code `h3_demand = ()` empty — needs 18 tuples from doc §5.1
 - Code `LAYERS` has `E: 4D, M: 1D, P: 2D, F: 3D` matching doc ✓
 - Code `version="2.0.0"` / `paper_count=4` — needs update to `"2.1.0"` / `12`

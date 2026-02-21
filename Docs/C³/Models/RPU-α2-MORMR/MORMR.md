@@ -22,31 +22,31 @@ The **μ-Opioid Receptor Music Reward** (MORMR) model describes the endogenous o
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 PLEASURABLE MUSIC
-      │
-      ▼
+ │
+ ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│              ENDOGENOUS OPIOID RELEASE                           │
-│                                                                  │
-│   [11C]carfentanil binding (BPND) in:                          │
-│                                                                  │
-│   • Ventral Striatum (NAcc)     ↑ Music > Baseline             │
-│   • Orbitofrontal Cortex        ↑ Music > Baseline             │
-│   • Amygdala                    ↑ Music > Baseline             │
-│   • Thalamus                    ↑ Music > Baseline             │
-│   • Temporal Pole               ↑ Music > Baseline             │
-│                                                                  │
+│ ENDOGENOUS OPIOID RELEASE │
+│ │
+│ [11C]carfentanil binding (BPND) in: │
+│ │
+│ • Ventral Striatum (NAcc) ↑ Music > Baseline │
+│ • Orbitofrontal Cortex ↑ Music > Baseline │
+│ • Amygdala ↑ Music > Baseline │
+│ • Thalamus ↑ Music > Baseline │
+│ • Temporal Pole ↑ Music > Baseline │
+│ │
 └─────────────────────────┬───────────────────────────────────────┘
-                          │
-                          ▼
+ │
+ ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│         CHILLS CORRELATION                                       │
-│                                                                  │
-│   Number of chills ↔ NAcc BPND: r = -0.52                       │
-│   (more chills = more opioid release = less radiotracer)        │
-│                                                                  │
-│   INDIVIDUAL DIFFERENCES:                                        │
-│   Baseline MOR ↔ pleasure-BOLD coupling: d = 1.16               │
-│                                                                  │
+│ CHILLS CORRELATION │
+│ │
+│ Number of chills ↔ NAcc BPND: r = -0.52 │
+│ (more chills = more opioid release = less radiotracer) │
+│ │
+│ INDIVIDUAL DIFFERENCES: │
+│ Baseline MOR ↔ pleasure-BOLD coupling: d = 1.16 │
+│ │
 └─────────────────────────────────────────────────────────────────┘
 
 EFFECT SIZE: d = 4.8 (very large, Putkinen 2025)
@@ -70,77 +70,75 @@ MORMR extends the RPU's reward framework beyond dopamine to the opioid system:
 
 ## 2. Neural Circuit: Complete Anatomy
 
-### 2.1 Information Flow Architecture (EAR → BRAIN → AED+CPD+C0P → MORMR)
+### 2.1 Information Flow Architecture (EAR → BRAIN → MORMR)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    MORMR COMPUTATION ARCHITECTURE                            ║
+║ MORMR COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins x 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
-║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ CHANGE   │ │ X-INT  │ │        ║
-║  │  │ 7D [0:7]  │ │ 5D[7:12]│ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
-║  │  │           │ │         │ │ [12:21] │ │ [21:25]  │ │ [25:49]│ │        ║
-║  │  │roughness  │ │amplitude│ │warmth   │ │spec_chg  │ │x_l0l5  │ │        ║
-║  │  │pleasant.  │ │loudness │ │bright.  │ │enrg_chg  │ │x_l4l5  │ │        ║
-║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                         MORMR reads: ~14D                        │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                                                                  │        ║
-║  │  ┌── AED Horizons ─────────────┐ ┌── CPD Horizons ──────────┐  │        ║
-║  │  │ H3 (100ms alpha)            │ │ H8 (500ms delta)          │  │        ║
-║  │  │ H8 (500ms delta)            │ │ H16 (1000ms beat)         │  │        ║
-║  │  │ H16 (1000ms beat)           │ │                            │  │        ║
-║  │  │                             │ │ Peak/chills detection      │  │        ║
-║  │  │ Pleasure evaluation         │ │ Opioid persistence         │  │        ║
-║  │  └─────────────────────────────┘ └────────────────────────────┘  │        ║
-║  │                         MORMR demand: ~15 of 2304 tuples         │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Opioid Circuit ════════       ║
-║                               │                                              ║
-║                       ┌───────┴───────┐                                      ║
-║                       ▼               ▼                                      ║
-║  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐              ║
-║  │  AED (30D)      │  │  CPD (30D)      │  │  C0P (30D)      │              ║
-║  │                 │  │                 │  │                 │              ║
-║  │ Valence  [0:10] │  │ Anticip. [0:10] │  │ Tension  [0:10] │              ║
-║  │ Arousal  [10:20]│  │ Peak Exp [10:20]│  │ Expect.  [10:20]│              ║
-║  │ Emotion  [20:30]│  │ Resolut. [20:30]│  │ Approach [20:30]│              ║
-║  └────────┬────────┘  └────────┬────────┘  └────────┬────────┘              ║
-║           │                    │                    │                        ║
-║           └────────────┬───────┴────────────────────┘                        ║
-║                        ▼                                                     ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    MORMR MODEL (7D Output)                       │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f01_opioid_release,                        │        ║
-║  │                       f02_chills_count,                           │        ║
-║  │                       f03_nacc_binding,                           │        ║
-║  │                       f04_reward_sensitivity                      │        ║
-║  │  Layer M (Math):      opioid_tone                                 │        ║
-║  │  Layer P (Present):   current_opioid_state                        │        ║
-║  │  Layer F (Future):    chills_onset_pred                           │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins x 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ ENERGY │ │ TIMBRE │ │ CHANGE │ │ X-INT │ │ ║
+║ │ │ 7D [0:7] │ │ 5D[7:12]│ │ 9D │ │ 4D │ │ 24D │ │ ║
+║ │ │ │ │ │ │ [12:21] │ │ [21:25] │ │ [25:49]│ │ ║
+║ │ │roughness │ │amplitude│ │warmth │ │spec_chg │ │x_l0l5 │ │ ║
+║ │ │pleasant. │ │loudness │ │bright. │ │enrg_chg │ │x_l4l5 │ │ ║
+║ │ └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │ ║
+║ │ MORMR reads: ~14D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ │ ║
+║ │ │ H3 (100ms alpha) │ │ H8 (500ms delta) │ │ ║
+║ │ │ H8 (500ms delta) │ │ H16 (1000ms beat) │ │ ║
+║ │ │ H16 (1000ms beat) │ │ │ │ ║
+║ │ │ │ │ Peak/chills detection │ │ ║
+║ │ │ Pleasure evaluation │ │ Opioid persistence │ │ ║
+║ │ └─────────────────────────────┘ └────────────────────────────┘ │ ║
+║ │ MORMR demand: ~15 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Opioid Circuit ════════ ║
+║ │ ║
+║ ┌───────┴───────┐ ║
+║ ▼ ▼ ║
+║ ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐ ║
+║ │ │ │ │ │ │ ║
+║ │ Valence [0:10] │ │ Anticip. [0:10] │ │ Tension [0:10] │ ║
+║ │ Arousal [10:20]│ │ Peak Exp [10:20]│ │ Expect. [10:20]│ ║
+║ │ Emotion [20:30]│ │ Resolut. [20:30]│ │ Approach [20:30]│ ║
+║ └────────┬────────┘ └────────┬────────┘ └────────┬────────┘ ║
+║ │ │ │ ║
+║ └────────────┬───────┴────────────────────┘ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ MORMR MODEL (7D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f01_opioid_release, │ ║
+║ │ f02_chills_count, │ ║
+║ │ f03_nacc_binding, │ ║
+║ │ f04_reward_sensitivity │ ║
+║ │ Layer M (Math): opioid_tone │ ║
+║ │ Layer P (Present): current_opioid_state │ ║
+║ │ Layer F (Future): chills_onset_pred │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -162,12 +160,12 @@ MORMR extends the RPU's reward framework beyond dopamine to the opioid system:
 ### 3.2 Effect Size Summary
 
 ```
-Primary Evidence (k=6):  3 independent studies (1 PET-MOR, 1 PET-DA, 1 behavioral)
+Primary Evidence (k=6): 3 independent studies (1 PET-MOR, 1 PET-DA, 1 behavioral)
 Cross-modal convergence: PET [11C]carfentanil (opioid), PET [11C]raclopride (DA), behavioral
-Quality Assessment:      α-tier (direct PET opioid measurement)
-Key correlations:        r = -0.52 (chills–NAcc MOR), r = 0.84 (NAcc DA–pleasure)
-Replication:             First direct PET evidence of opioid mediation in music
-                         Individual differences in music reward confirmed by Mas-Herrero 2014
+Quality Assessment: α-tier (direct PET opioid measurement)
+Key correlations: r = -0.52 (chills–NAcc MOR), r = 0.84 (NAcc DA–pleasure)
+Replication: First direct PET evidence of opioid mediation in music
+ Individual differences in music reward confirmed by Mas-Herrero 2014
 ```
 
 ---
@@ -202,23 +200,19 @@ Replication:             First direct PET evidence of opioid mediation in music
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[0] roughness (inverse) ──────┐
 R³[4] sensory_pleasantness ─────┼──► Consonance / pleasure quality
-AED.valence_tracking[0:10] ─────┘   Low roughness → high MOR release
 
 R³[8] loudness ─────────────────┐
 R³[7] amplitude ────────────────┼──► Peak pleasure magnitude
-CPD.peak_experience[10:20] ─────┘   Intensity → chills threshold
 
 R³[41:49] x_l5l7 ──────────────┐
-C0P.tension_release[0:10] ──────┼──► Pleasure-structure integration
-H³ value/entropy tuples ────────┘   Perceptual × Crossband = musical beauty
+H³ value/entropy tuples ────────┘ Perceptual × Crossband = musical beauty
 
 R³[33:41] x_l4l5 ──────────────┐
-CPD.resolution[20:30] ──────────┼──► Sustained opioid response
-H³ mean/trend tuples ───────────┘   Derivatives × Perceptual = duration
+H³ mean/trend tuples ───────────┘ Derivatives × Perceptual = duration
 ```
 
 ---
@@ -227,7 +221,7 @@ H³ mean/trend tuples ───────────┘   Derivatives × Perc
 
 ### 5.1 Demand Specification
 
-MORMR requires H³ features at multiple horizons for pleasure evaluation (AED), peak/chills detection (CPD), and reward integration (C0P). The demand reflects opioid response dynamics (slower than dopamine).
+MORMR requires H³ features at multiple horizons for pleasure evaluation (), peak/chills detection (), and reward integration (). The demand reflects opioid response dynamics (slower than dopamine).
 
 | R³ Index | Feature | H | Morph | Law | Purpose |
 |----------|---------|---|-------|-----|---------|
@@ -251,7 +245,7 @@ MORMR requires H³ features at multiple horizons for pleasure evaluation (AED), 
 
 #### R³ v2 Projected Expansion
 
-Minor v2 expansion. MORMR projected v2 feature from H:Harmony, aligned with AED+CPD+C0P horizons.
+Minor v2 expansion. MORMR projected v2 feature from H:Harmony, aligned with H³ direct+Cognitive polarity horizons.
 
 | R³ Idx | Feature | Group | H | Morph | Law | Purpose |
 |:------:|---------|:-----:|:-:|-------|:---:|---------|
@@ -260,20 +254,6 @@ Minor v2 expansion. MORMR projected v2 feature from H:Harmony, aligned with AED+
 
 **v2 projected**: 2 tuples
 **Total projected**: 17 tuples of 294,912 theoretical = 0.0058%
-
-### 5.2 AED + CPD + C0P Mechanism Binding
-
-| Mechanism | Sub-section | Range | MORMR Role | Weight |
-|-----------|-------------|-------|------------|--------|
-| **AED** | Valence Tracking | AED[0:10] | Pleasure evaluation (MOR release) | **1.0** (primary) |
-| **AED** | Arousal Dynamics | AED[10:20] | Intensity for chills threshold | 0.9 |
-| **AED** | Emotional Trajectory | AED[20:30] | Prolonged opioid response | 0.7 |
-| **CPD** | Anticipation | CPD[0:10] | Pre-chills arousal detection | 0.8 |
-| **CPD** | Peak Experience | CPD[10:20] | Chills/peak identification | **0.9** |
-| **CPD** | Resolution | CPD[20:30] | Opioid persistence tracking | 0.5 |
-| **C0P** | Tension-Release | C0P[0:10] | Harmonic reward memory | 0.7 |
-| **C0P** | Expectation-Surprise | C0P[10:20] | Reward sensitivity modulation | 0.8 |
-| **C0P** | Approach-Avoidance | C0P[20:30] | Music-reward integration | 0.6 |
 
 ---
 
@@ -287,48 +267,43 @@ MORMR OUTPUT TENSOR: 7D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 0  │ f01_opioid_release       │ [0, 1] │ Endogenous opioid proxy.
-    │                          │        │ f01 = σ(0.35 * mean_pleasantness_1s
-    │                          │        │       + 0.30 * mean(AED.valence[0:10])
-    │                          │        │       + 0.20 * (1 - mean_roughness_1s)
-    │                          │        │       + 0.15 * mean_warmth_500ms)
+ 0 │ f01_opioid_release │ [0, 1] │ Endogenous opioid proxy.
+ │ │ │ f01 = σ(0.35 * mean_pleasantness_1s
+ │ │ │ + 0.20 * (1 - mean_roughness_1s)
+ │ │ │ + 0.15 * mean_warmth_500ms)
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 1  │ f02_chills_count         │ [0, 1] │ Chills frequency proxy.
-    │                          │        │ f02 = σ(0.35 * mean(CPD.peak[10:20])
-    │                          │        │       + 0.30 * mean(AED.arousal[10:20])
-    │                          │        │       + 0.20 * amplitude_500ms
-    │                          │        │       + 0.15 * beauty_coupling_500ms)
+ 1 │ f02_chills_count │ [0, 1] │ Chills frequency proxy.
+ │ │ │ + 0.20 * amplitude_500ms
+ │ │ │ + 0.15 * beauty_coupling_500ms)
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 2  │ f03_nacc_binding         │ [0, 1] │ NAcc opioid activity proxy.
-    │                          │        │ f03 = σ(0.40 * f01
-    │                          │        │       + 0.30 * mean(C0P.expect[10:20])
-    │                          │        │       + 0.30 * pleasantness_velocity_1s)
+ 2 │ f03_nacc_binding │ [0, 1] │ NAcc opioid activity proxy.
+ │ │ │ f03 = σ(0.40 * f01
+ │ │ │ + 0.30 * pleasantness_velocity_1s)
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 3  │ f04_reward_sensitivity   │ [0, 1] │ Individual music reward sensitivity.
-    │                          │        │ f04 = σ(0.40 * f01 * f02
-    │                          │        │       + 0.30 * mean(C0P.approach[20:30])
-    │                          │        │       + 0.30 * beauty_entropy_1s)
+ 3 │ f04_reward_sensitivity │ [0, 1] │ Individual music reward sensitivity.
+ │ │ │ f04 = σ(0.40 * f01 * f02
+ │ │ │ + 0.30 * beauty_entropy_1s)
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 4  │ opioid_tone              │ [0, 1] │ Overall opioid system tone.
-    │                          │        │ Weighted average of f01 and f02.
+ 4 │ opioid_tone │ [0, 1] │ Overall opioid system tone.
+ │ │ │ Weighted average of f01 and f02.
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 5  │ current_opioid_state     │ [0, 1] │ Real-time MOR activity.
+ 5 │ current_opioid_state │ [0, 1] │ Real-time MOR activity.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 6  │ chills_onset_pred        │ [0, 1] │ Chills onset prediction (2-5s).
+ 6 │ chills_onset_pred │ [0, 1] │ Chills onset prediction (2-5s).
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 7D per frame at 172.27 Hz
@@ -345,15 +320,15 @@ TOTAL: 7D per frame at 172.27 Hz
 MOR_Release(t) = β · Pleasure(t) · (1 - Habituation(t))
 
 Chills Correlation:
-    Chills_Count ↔ NAcc_BPND: r = -0.52
-    (negative: more chills = more opioid release = less radiotracer)
+ Chills_Count ↔ NAcc_BPND: r = -0.52
+ (negative: more chills = more opioid release = less radiotracer)
 
 Individual Sensitivity:
-    Sensitivity = α · Baseline_MOR + β · Music_Exposure
+ Sensitivity = α · Baseline_MOR + β · Music_Exposure
 
 Parameters:
-    β = 4.8  (effect size from Putkinen 2025)
-    τ_decay = 5.0s  (opioid response persistence)
+ β = 4.8 (effect size from Putkinen 2025)
+ τ_decay = 5.0s (opioid response persistence)
 ```
 
 ### 7.2 Feature Formulas
@@ -363,28 +338,23 @@ Parameters:
 
 # f01: Opioid Release
 f01 = σ(0.35 * mean_pleasantness_1s
-       + 0.30 * mean(AED.valence_tracking[0:10])
-       + 0.20 * (1.0 - mean_roughness_1s)
-       + 0.15 * mean_warmth_500ms)
+ + 0.20 * (1.0 - mean_roughness_1s)
+ + 0.15 * mean_warmth_500ms)
 # coefficients: 0.35 + 0.30 + 0.20 + 0.15 = 1.0 ✓
 
 # f02: Chills Count
-f02 = σ(0.35 * mean(CPD.peak_experience[10:20])
-       + 0.30 * mean(AED.arousal_dynamics[10:20])
-       + 0.20 * amplitude_500ms
-       + 0.15 * beauty_coupling_500ms)
+ + 0.20 * amplitude_500ms
+ + 0.15 * beauty_coupling_500ms)
 # coefficients: 0.35 + 0.30 + 0.20 + 0.15 = 1.0 ✓
 
 # f03: NAcc Binding
 f03 = σ(0.40 * f01
-       + 0.30 * mean(C0P.expectation_surprise[10:20])
-       + 0.30 * pleasantness_velocity_1s)
+ + 0.30 * pleasantness_velocity_1s)
 # coefficients: 0.40 + 0.30 + 0.30 = 1.0 ✓
 
 # f04: Reward Sensitivity
 f04 = σ(0.40 * f01 * f02
-       + 0.30 * mean(C0P.approach_avoidance[20:30])
-       + 0.30 * beauty_entropy_1s)
+ + 0.30 * beauty_entropy_1s)
 # coefficients: 0.40 + 0.30 + 0.30 = 1.0 ✓
 
 # Opioid tone
@@ -413,26 +383,23 @@ opioid_tone = σ(0.5 * f01 + 0.5 * f02)
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    MORMR INTERACTIONS                                        │
+│ MORMR INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (RPU):                                                         │
-│  MORMR.opioid_release ───────► MCCN (opioid → chills network)            │
-│  MORMR.chills_count ─────────► DAED (chills → DA release coupling)       │
-│  MORMR.reward_sensitivity ───► IUCP (sensitivity → complexity pref)       │
-│  MORMR.nacc_binding ─────────► RPEM (NAcc → prediction error)            │
-│                                                                             │
-│  CROSS-UNIT (RPU → ARU):                                                   │
-│  MORMR.opioid_release ──────► ARU.pleasure (opioid → hedonic tone)       │
-│  MORMR.chills_onset_pred ────► ARU.arousal (chills → autonomic)          │
-│                                                                             │
-│  UPSTREAM DEPENDENCIES:                                                     │
-│  AED mechanism (30D) ──────────► MORMR (pleasure evaluation)              │
-│  CPD mechanism (30D) ──────────► MORMR (chills/peak detection)            │
-│  C0P mechanism (30D) ──────────► MORMR (reward integration)               │
-│  R³ (~14D) ─────────────────────► MORMR (direct spectral features)       │
-│  H³ (15 tuples) ────────────────► MORMR (temporal dynamics)              │
-│                                                                             │
+│ │
+│ INTRA-UNIT (RPU): │
+│ MORMR.opioid_release ───────► MCCN (opioid → chills network) │
+│ MORMR.chills_count ─────────► DAED (chills → DA release coupling) │
+│ MORMR.reward_sensitivity ───► IUCP (sensitivity → complexity pref) │
+│ MORMR.nacc_binding ─────────► RPEM (NAcc → prediction error) │
+│ │
+│ CROSS-UNIT (RPU → ARU): │
+│ MORMR.opioid_release ──────► ARU.pleasure (opioid → hedonic tone) │
+│ MORMR.chills_onset_pred ────► ARU.arousal (chills → autonomic) │
+│ │
+│ UPSTREAM DEPENDENCIES: │
+│ R³ (~14D) ─────────────────────► MORMR (direct spectral features) │
+│ H³ (15 tuples) ────────────────► MORMR (temporal dynamics) │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -456,128 +423,104 @@ opioid_tone = σ(0.5 * f01 + 0.5 * f02)
 
 ```python
 class MORMR(BaseModel):
-    """μ-Opioid Receptor Music Reward Model.
+ """μ-Opioid Receptor Music Reward Model.
 
-    Output: 7D per frame.
-    Reads: AED mechanism (30D), CPD mechanism (30D), C0P mechanism (30D), R³ direct.
-    """
-    NAME = "MORMR"
-    UNIT = "RPU"
-    TIER = "α2"
-    OUTPUT_DIM = 7
-    MECHANISM_NAMES = ("AED", "CPD", "C0P")
+ Output: 7D per frame.
+ """
+ NAME = "MORMR"
+ UNIT = "RPU"
+ TIER = "α2"
+ OUTPUT_DIM = 7
+ BETA_OPIOID = 4.8 # Effect size (Putkinen 2025)
+ CHILLS_THRESHOLD = 0.75 # Chills detection threshold
+ TAU_DECAY = 5.0 # Opioid response persistence (seconds)
 
-    BETA_OPIOID = 4.8       # Effect size (Putkinen 2025)
-    CHILLS_THRESHOLD = 0.75  # Chills detection threshold
-    TAU_DECAY = 5.0          # Opioid response persistence (seconds)
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """15 tuples for MORMR computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ (8, 3, 0, 2), # loudness, 100ms, value, bidi
+ (8, 8, 1, 2), # loudness, 500ms, mean, bidi
+ (8, 16, 1, 2), # loudness, 1000ms, mean, bidi
+ (4, 3, 0, 2), # sensory_pleasantness, 100ms, value, bidi
+ (4, 16, 1, 2), # sensory_pleasantness, 1000ms, mean, bidi
+ (4, 16, 8, 0), # sensory_pleasantness, 1000ms, velocity, fwd
+ (0, 3, 0, 2), # roughness, 100ms, value, bidi
+ (0, 16, 1, 2), # roughness, 1000ms, mean, bidi
+ (7, 8, 0, 2), # amplitude, 500ms, value, bidi
+ (12, 8, 1, 2), # warmth, 500ms, mean, bidi
+ (22, 8, 8, 0), # energy_change, 500ms, velocity, fwd
+ (33, 8, 1, 2), # x_l4l5[0], 500ms, mean, bidi
+ (33, 16, 18, 0), # x_l4l5[0], 1000ms, trend, fwd
+ (41, 8, 0, 2), # x_l5l7[0], 500ms, value, bidi
+ (41, 16, 20, 2), # x_l5l7[0], 1000ms, entropy, bidi
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """15 tuples for MORMR computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # ── AED horizons: pleasure evaluation ──
-            (8, 3, 0, 2),      # loudness, 100ms, value, bidi
-            (8, 8, 1, 2),      # loudness, 500ms, mean, bidi
-            (8, 16, 1, 2),     # loudness, 1000ms, mean, bidi
-            (4, 3, 0, 2),      # sensory_pleasantness, 100ms, value, bidi
-            (4, 16, 1, 2),     # sensory_pleasantness, 1000ms, mean, bidi
-            (4, 16, 8, 0),     # sensory_pleasantness, 1000ms, velocity, fwd
-            (0, 3, 0, 2),      # roughness, 100ms, value, bidi
-            (0, 16, 1, 2),     # roughness, 1000ms, mean, bidi
-            # ── CPD horizons: chills/peak detection ──
-            (7, 8, 0, 2),      # amplitude, 500ms, value, bidi
-            (12, 8, 1, 2),     # warmth, 500ms, mean, bidi
-            (22, 8, 8, 0),     # energy_change, 500ms, velocity, fwd
-            # ── C0P horizons: reward integration ──
-            (33, 8, 1, 2),     # x_l4l5[0], 500ms, mean, bidi
-            (33, 16, 18, 0),   # x_l4l5[0], 1000ms, trend, fwd
-            (41, 8, 0, 2),     # x_l5l7[0], 500ms, value, bidi
-            (41, 16, 20, 2),   # x_l5l7[0], 1000ms, entropy, bidi
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute MORMR 7D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute MORMR 7D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"AED": (B,T,30), "CPD": (B,T,30), "C0P": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,7) MORMR output
+ """
+ # Mechanism sub-sections
+ # H³ direct features
+ mean_pleasantness_1s = h3_direct[(4, 16, 1, 2)].unsqueeze(-1)
+ mean_roughness_1s = h3_direct[(0, 16, 1, 2)].unsqueeze(-1)
+ mean_warmth_500ms = h3_direct[(12, 8, 1, 2)].unsqueeze(-1)
+ amplitude_500ms = h3_direct[(7, 8, 0, 2)].unsqueeze(-1)
+ beauty_coupling_500ms = h3_direct[(41, 8, 0, 2)].unsqueeze(-1)
+ pleasantness_velocity_1s = h3_direct[(4, 16, 8, 0)].unsqueeze(-1)
+ beauty_entropy_1s = h3_direct[(41, 16, 20, 2)].unsqueeze(-1)
 
-        Returns:
-            (B,T,7) MORMR output
-        """
-        aed = mechanism_outputs["AED"]    # (B, T, 30)
-        cpd = mechanism_outputs["CPD"]    # (B, T, 30)
-        c0p = mechanism_outputs["C0P"]    # (B, T, 30)
+ # ═══ LAYER E: Explicit features ═══
 
-        # Mechanism sub-sections
-        aed_valence = aed[..., 0:10]
-        aed_arousal = aed[..., 10:20]
-        cpd_peak = cpd[..., 10:20]
-        c0p_expect = c0p[..., 10:20]
-        c0p_approach = c0p[..., 20:30]
+ # f01: Opioid Release (coefficients sum = 1.0)
+ f01 = torch.sigmoid(
+ 0.35 * mean_pleasantness_1s
+ + 0.20 * (1.0 - mean_roughness_1s)
+ + 0.15 * mean_warmth_500ms
+ )
 
-        # H³ direct features
-        mean_pleasantness_1s = h3_direct[(4, 16, 1, 2)].unsqueeze(-1)
-        mean_roughness_1s = h3_direct[(0, 16, 1, 2)].unsqueeze(-1)
-        mean_warmth_500ms = h3_direct[(12, 8, 1, 2)].unsqueeze(-1)
-        amplitude_500ms = h3_direct[(7, 8, 0, 2)].unsqueeze(-1)
-        beauty_coupling_500ms = h3_direct[(41, 8, 0, 2)].unsqueeze(-1)
-        pleasantness_velocity_1s = h3_direct[(4, 16, 8, 0)].unsqueeze(-1)
-        beauty_entropy_1s = h3_direct[(41, 16, 20, 2)].unsqueeze(-1)
+ # f02: Chills Count (coefficients sum = 1.0)
+ f02 = torch.sigmoid(
+ + 0.20 * amplitude_500ms
+ + 0.15 * beauty_coupling_500ms
+ )
 
-        # ═══ LAYER E: Explicit features ═══
+ # f03: NAcc Binding (coefficients sum = 1.0)
+ f03 = torch.sigmoid(
+ 0.40 * f01
+ + 0.30 * pleasantness_velocity_1s
+ )
 
-        # f01: Opioid Release (coefficients sum = 1.0)
-        f01 = torch.sigmoid(
-            0.35 * mean_pleasantness_1s
-            + 0.30 * aed_valence.mean(-1, keepdim=True)
-            + 0.20 * (1.0 - mean_roughness_1s)
-            + 0.15 * mean_warmth_500ms
-        )
+ # f04: Reward Sensitivity (coefficients sum = 1.0)
+ f04 = torch.sigmoid(
+ 0.40 * (f01 * f02)
+ + 0.30 * beauty_entropy_1s
+ )
 
-        # f02: Chills Count (coefficients sum = 1.0)
-        f02 = torch.sigmoid(
-            0.35 * cpd_peak.mean(-1, keepdim=True)
-            + 0.30 * aed_arousal.mean(-1, keepdim=True)
-            + 0.20 * amplitude_500ms
-            + 0.15 * beauty_coupling_500ms
-        )
+ # ═══ LAYER M: Mathematical ═══
+ opioid_tone = torch.sigmoid(0.5 * f01 + 0.5 * f02)
 
-        # f03: NAcc Binding (coefficients sum = 1.0)
-        f03 = torch.sigmoid(
-            0.40 * f01
-            + 0.30 * c0p_expect.mean(-1, keepdim=True)
-            + 0.30 * pleasantness_velocity_1s
-        )
+ # ═══ LAYER P: Present ═══
 
-        # f04: Reward Sensitivity (coefficients sum = 1.0)
-        f04 = torch.sigmoid(
-            0.40 * (f01 * f02)
-            + 0.30 * c0p_approach.mean(-1, keepdim=True)
-            + 0.30 * beauty_entropy_1s
-        )
+ # ═══ LAYER F: Future ═══
+ chills_onset_pred = torch.sigmoid(
+ )
 
-        # ═══ LAYER M: Mathematical ═══
-        opioid_tone = torch.sigmoid(0.5 * f01 + 0.5 * f02)
-
-        # ═══ LAYER P: Present ═══
-        current_opioid_state = aed_valence.mean(-1, keepdim=True)
-
-        # ═══ LAYER F: Future ═══
-        chills_onset_pred = torch.sigmoid(
-            0.5 * f02 + 0.5 * cpd_peak.mean(-1, keepdim=True)
-        )
-
-        return torch.cat([
-            f01, f02, f03, f04,            # E: 4D
-            opioid_tone,                    # M: 1D
-            current_opioid_state,           # P: 1D
-            chills_onset_pred,              # F: 1D
-        ], dim=-1)  # (B, T, 7)
+ return torch.cat([
+ f01, f02, f03, f04, # E: 4D
+ opioid_tone, # M: 1D
+ current_opioid_state, # P: 1D
+ chills_onset_pred, # F: 1D
+ ], dim=-1) # (B, T, 7)
 ```
 
 ---
@@ -593,9 +536,6 @@ class MORMR(BaseModel):
 | **Falsification Tests** | 2/5 confirmed | High validity |
 | **R³ Features Used** | ~14D of 49D | Consonance + energy + timbre + interactions |
 | **H³ Demand** | 15 tuples (0.65%) | Sparse, efficient |
-| **AED Mechanism** | 30D (3 sub-sections) | Pleasure evaluation |
-| **CPD Mechanism** | 30D (3 sub-sections) | Chills/peak detection |
-| **C0P Mechanism** | 30D (3 sub-sections) | Reward integration |
 | **Output Dimensions** | **7D** | 4-layer structure |
 
 ---
@@ -615,21 +555,13 @@ class MORMR(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D) | R³ (49D) |
-| Temporal | HC⁰ mechanisms (HRM, AED, ASA, C0P) | AED (30D) + CPD (30D) + C0P (30D) mechanisms |
-| Pleasure signal | S⁰.L5.roughness[30] + S⁰.L5.loudness[35] + HC⁰.AED | R³.sensory_pleasantness[4] + R³.roughness[0] + AED.valence |
-| Chills signal | S⁰.L5.rms[47] + HC⁰.ASA | R³.amplitude[7] + CPD.peak_experience |
-| NAcc binding | HC⁰.C0P + S⁰.X_L5L6[208:216] | C0P.expectation_surprise + R³.x_l5l7[41:49] |
-| Reward memory | HC⁰.HRM[64:72] | C0P.tension_release (harmonic reward memory) |
+| Pleasure signal | S⁰.L5.roughness[30] + S⁰.L5.loudness[35] + HC⁰ affect | R³.sensory_pleasantness[4] + R³.roughness[0] |
+| Chills signal | S⁰.L5.rms[47] + HC⁰ scene | R³.amplitude[7] |
+| NAcc binding | HC⁰ cognitive + S⁰.X_L5L6[208:216] | expectation_surprise + R³.x_l5l7[41:49] |
+| Reward memory | HC⁰.HRM[64:72] | tension_release (harmonic reward memory) |
 | Demand format | HC⁰ index ranges (15 tuples) | H³ 4-tuples (15 tuples, sparse) |
 | Total demand | 15/2304 = 0.65% | 15/2304 = 0.65% |
 | Output | 7D | 7D (same) |
-
-### Why AED + CPD + C0P replaces HC⁰ mechanisms
-
-- **AED → AED.valence_tracking** [0:10]: Affective entrainment maps directly to AED's pleasure evaluation.
-- **ASA → CPD.peak_experience** [10:20]: Auditory scene chills detection maps to CPD's peak identification.
-- **HRM → C0P.tension_release** [0:10]: Hippocampal replay/reward memory maps to C0P's harmonic reward encoding.
-- **C0P → C0P.expectation_surprise** [10:20]: C⁰ projection maps to C0P's reward integration.
 
 ---
 

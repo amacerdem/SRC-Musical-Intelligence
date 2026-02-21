@@ -21,27 +21,27 @@ The **Context-Dependent Mismatch Response** (CDMR) model describes how musical e
 CONTEXT-DEPENDENT MISMATCH RESPONSE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-PARADIGM TYPE                 MUSICIAN vs NON-MUSICIAN
-─────────────                 ────────────────────────
+PARADIGM TYPE MUSICIAN vs NON-MUSICIAN
+───────────── ────────────────────────
 
 ┌─────────────────────────────────────────────────────────────────┐
-│ CLASSIC ODDBALL                                                  │
-│ (simple deviance)                                                │
-│                                                                  │
-│         Musicians = Non-musicians                                │
-│         (no difference)                                          │
+│ CLASSIC ODDBALL │
+│ (simple deviance) │
+│ │
+│ Musicians = Non-musicians │
+│ (no difference) │
 └─────────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────────┐
-│ COMPLEX MELODIC                                                  │
-│ (multiple deviant features)                                      │
-│                                                                  │
-│         Musicians > Non-musicians                                │
-│         (greater subadditivity)                                  │
-│                                                                  │
-│   SUBADDITIVITY:                                                 │
-│   Response to combined deviants < Σ(individual responses)       │
-│   = Integrated processing                                        │
+│ COMPLEX MELODIC │
+│ (multiple deviant features) │
+│ │
+│ Musicians > Non-musicians │
+│ (greater subadditivity) │
+│ │
+│ SUBADDITIVITY: │
+│ Response to combined deviants < Σ(individual responses) │
+│ = Integrated processing │
 └─────────────────────────────────────────────────────────────────┘
 
 INTERPRETATION:
@@ -67,83 +67,81 @@ CDMR establishes the context-dependent integration component of the Novelty Dete
 
 ## 2. Neural Circuit: Complete Anatomy
 
-### 2.1 Information Flow Architecture (EAR → BRAIN → PPC+ASA → CDMR)
+### 2.1 Information Flow Architecture (EAR → BRAIN → CDMR)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    CDMR COMPUTATION ARCHITECTURE                             ║
+║ CDMR COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins x 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
-║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ CHANGE   │ │ X-INT  │ │        ║
-║  │  │ 7D [0:7]  │ │ 5D[7:12]│ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
-║  │  │           │ │         │ │ [12:21] │ │ [21:25]  │ │ [25:49]│ │        ║
-║  │  │roughness  │ │amplitude│ │warmth   │ │spec_chg  │ │x_l0l5  │ │        ║
-║  │  │sethares   │ │loudness │ │tristim. │ │enrg_chg  │ │x_l4l5  │ │        ║
-║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                         CDMR reads: ~16D                        │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                                                                  │        ║
-║  │  ┌── PPC Horizons ─────────────┐ ┌── ASA Horizons ──────────┐  │        ║
-║  │  │ H0 (25ms gamma)            │ │ H3 (100ms alpha)          │  │        ║
-║  │  │ H3 (100ms alpha)           │ │                            │  │        ║
-║  │  │ H4 (125ms theta)           │ │ Attentional gating         │  │        ║
-║  │  │ H16 (1000ms beat)          │ │ Salience weighting         │  │        ║
-║  │  │                             │ │                            │  │        ║
-║  │  │ Pitch extraction            │ │                            │  │        ║
-║  │  │ Contour tracking            │ │                            │  │        ║
-║  │  └─────────────────────────────┘ └────────────────────────────┘  │        ║
-║  │                         CDMR demand: ~16 of 2304 tuples         │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Salience Circuit ════════     ║
-║                               │                                              ║
-║                       ┌───────┴───────┐                                      ║
-║                       ▼               ▼                                      ║
-║  ┌─────────────────┐  ┌─────────────────┐                                   ║
-║  │  PPC (30D)      │  │  ASA (30D)      │                                   ║
-║  │                 │  │                 │                                    ║
-║  │ Pitch Ext[0:10] │  │ Scene An [0:10] │                                   ║
-║  │ Interval        │  │ Attention       │                                   ║
-║  │ Anal    [10:20] │  │ Gating  [10:20] │                                   ║
-║  │ Contour [20:30] │  │ Salience        │                                   ║
-║  │                 │  │ Weight  [20:30] │                                   ║
-║  └────────┬────────┘  └────────┬────────┘                                   ║
-║           │                    │                                              ║
-║           └────────┬───────────┘                                             ║
-║                    ▼                                                          ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    CDMR MODEL (11D Output)                      │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f01_mismatch_amplitude,                    │        ║
-║  │                       f02_context_modulation,                    │        ║
-║  │                       f03_subadditivity_index,                   │        ║
-║  │                       f04_expertise_effect                       │        ║
-║  │  Layer M (Math):      melodic_expectation,                      │        ║
-║  │                       deviance_history                           │        ║
-║  │  Layer P (Present):   mismatch_signal, context_state,           │        ║
-║  │                       binding_state                              │        ║
-║  │  Layer F (Future):    next_deviance, context_continuation        │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins x 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ ENERGY │ │ TIMBRE │ │ CHANGE │ │ X-INT │ │ ║
+║ │ │ 7D [0:7] │ │ 5D[7:12]│ │ 9D │ │ 4D │ │ 24D │ │ ║
+║ │ │ │ │ │ │ [12:21] │ │ [21:25] │ │ [25:49]│ │ ║
+║ │ │roughness │ │amplitude│ │warmth │ │spec_chg │ │x_l0l5 │ │ ║
+║ │ │sethares │ │loudness │ │tristim. │ │enrg_chg │ │x_l4l5 │ │ ║
+║ │ └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │ ║
+║ │ CDMR reads: ~16D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ │ ║
+║ │ │ H0 (25ms gamma) │ │ H3 (100ms alpha) │ │ ║
+║ │ │ H3 (100ms alpha) │ │ │ │ ║
+║ │ │ H4 (125ms theta) │ │ Attentional gating │ │ ║
+║ │ │ H16 (1000ms beat) │ │ Salience weighting │ │ ║
+║ │ │ │ │ │ │ ║
+║ │ │ Pitch extraction │ │ │ │ ║
+║ │ │ Contour tracking │ │ │ │ ║
+║ │ └─────────────────────────────┘ └────────────────────────────┘ │ ║
+║ │ CDMR demand: ~16 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Salience Circuit ════════ ║
+║ │ ║
+║ ┌───────┴───────┐ ║
+║ ▼ ▼ ║
+║ ┌─────────────────┐ ┌─────────────────┐ ║
+║ │ │ │ │ ║
+║ │ Pitch Ext[0:10] │ │ Scene An [0:10] │ ║
+║ │ Interval │ │ Attention │ ║
+║ │ Anal [10:20] │ │ Gating [10:20] │ ║
+║ │ Contour [20:30] │ │ Salience │ ║
+║ │ │ │ Weight [20:30] │ ║
+║ └────────┬────────┘ └────────┬────────┘ ║
+║ │ │ ║
+║ └────────┬───────────┘ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ CDMR MODEL (11D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f01_mismatch_amplitude, │ ║
+║ │ f02_context_modulation, │ ║
+║ │ f03_subadditivity_index, │ ║
+║ │ f04_expertise_effect │ ║
+║ │ Layer M (Math): melodic_expectation, │ ║
+║ │ deviance_history │ ║
+║ │ Layer P (Present): mismatch_signal, context_state, │ ║
+║ │ binding_state │ ║
+║ │ Layer F (Future): next_deviance, context_continuation │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -170,17 +168,17 @@ CDMR establishes the context-dependent integration component of the Novelty Dete
 
 ```
 Primary Evidence (k=3 empirical + 4 reviews):
-  Rupp/Hansen 2022:      Subadditivity in musicians only in melodic (not oddball) paradigm (MEG)
-  Crespo-Bojorque 2018:  Context × expertise: F(1,15)=4.95 (MMN peak), F(1,15)=155.03 (latency)
-                         Musicians: MMN in BOTH consonant + dissonant contexts
-                         Non-musicians: MMN ONLY in consonant context
-  Wagner 2018:           Asymmetric MMN: −0.34μV (p=0.003) for major third, null for fifth
-Heterogeneity:           Low — all studies converge on context-dependent expertise effects
-Quality Assessment:      β-tier (EEG/MEG, adult musician cohorts, converging pattern)
-Replication:             Context-dependency pattern replicated across 3 independent labs
-                         (Heidelberg MEG, Barcelona EEG, Halle EEG)
-Reviews:                 Tervaniemi 2022 (paradigm development), Koelsch (ERAN vs MMN),
-                         Fong 2020 (predictive coding)
+ Rupp/Hansen 2022: Subadditivity in musicians only in melodic (not oddball) paradigm (MEG)
+ Crespo-Bojorque 2018: Context × expertise: F(1,15)=4.95 (MMN peak), F(1,15)=155.03 (latency)
+ Musicians: MMN in BOTH consonant + dissonant contexts
+ Non-musicians: MMN ONLY in consonant context
+ Wagner 2018: Asymmetric MMN: −0.34μV (p=0.003) for major third, null for fifth
+Heterogeneity: Low — all studies converge on context-dependent expertise effects
+Quality Assessment: β-tier (EEG/MEG, adult musician cohorts, converging pattern)
+Replication: Context-dependency pattern replicated across 3 independent labs
+ (Heidelberg MEG, Barcelona EEG, Halle EEG)
+Reviews: Tervaniemi 2022 (paradigm development), Koelsch (ERAN vs MMN),
+ Fong 2020 (predictive coding)
 ```
 
 ---
@@ -215,19 +213,16 @@ Reviews:                 Tervaniemi 2022 (paradigm development), Koelsch (ERAN v
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[10] spectral_flux ──────────┐
 R³[11] onset_strength ─────────┼──► Deviance detection signal
-PPC.pitch_extraction[0:10] ────┘   Mismatch amplitude (f01)
 
 R³[23] pitch_change ───────────┐
 R³[21] spectral_change ────────┼──► Melodic context complexity
-PPC.contour_tracking[20:30] ───┘   Context modulation (f02)
 
 R³[41:49] x_l5l6 ─────────────┐
-ASA.salience_weighting[20:30] ─┼──► Multi-feature integration
-H³ binding variability ────────┘   Subadditivity index (f03)
+H³ binding variability ────────┘ Subadditivity index (f03)
 ```
 
 ---
@@ -236,7 +231,7 @@ H³ binding variability ────────┘   Subadditivity index (f03)
 
 ### 5.1 Demand Specification
 
-CDMR requires H³ features at PPC horizons for pitch/contour deviance detection and ASA horizons for attention-gated context integration. The demand reflects the multi-scale temporal windows needed for context-dependent mismatch processing.
+CDMR requires H³ features for pitch/contour deviance detection and for attention-gated context integration. The demand reflects the multi-scale temporal windows needed for context-dependent mismatch processing.
 
 | R³ Index | Feature | H | Morph | Law | Purpose |
 |----------|---------|---|-------|-----|---------|
@@ -261,7 +256,7 @@ CDMR requires H³ features at PPC horizons for pitch/contour deviance detection 
 
 #### R³ v2 Projected Expansion
 
-CDMR projected v2 from H:Harmony and I:Information, aligned with PPC/ASA horizons.
+CDMR projected v2 from H:Harmony and I:Information, aligned with corresponding H³ horizons.
 
 | R³ Idx | Feature | Group | H | Morph | Law | Purpose |
 |:------:|---------|:-----:|:-:|-------|:---:|---------|
@@ -277,17 +272,6 @@ CDMR projected v2 from H:Harmony and I:Information, aligned with PPC/ASA horizon
 **v2 projected**: 8 tuples
 **Total projected**: 24 tuples of 294,912 theoretical = 0.0081%
 
-### 5.2 PPC + ASA Mechanism Binding
-
-| Mechanism | Sub-section | Range | CDMR Role | Weight |
-|-----------|-------------|-------|-----------|--------|
-| **PPC** | Pitch Extraction | PPC[0:10] | Mismatch detection (pitch deviants) | **1.0** (primary) |
-| **PPC** | Interval Analysis | PPC[10:20] | Melodic context complexity | 0.8 |
-| **PPC** | Contour Tracking | PPC[20:30] | Context-dependent contour | 0.9 |
-| **ASA** | Scene Analysis | ASA[0:10] | Auditory scene segmentation | 0.6 |
-| **ASA** | Attention Gating | ASA[10:20] | Deviance-directed attention | 0.7 |
-| **ASA** | Salience Weighting | ASA[20:30] | Multi-feature binding salience | **0.9** |
-
 ---
 
 ## 6. Output Space: 11D Multi-Layer Representation
@@ -300,54 +284,51 @@ CDMR OUTPUT TENSOR: 11D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 0  │ f01_mismatch_amplitude   │ [0, 1] │ Deviance response magnitude.
-    │                          │        │ f01 = σ(0.35 * flux_25ms
-    │                          │        │       + 0.35 * onset_25ms
-    │                          │        │       + 0.30 * mean(PPC.pitch[0:10]))
+ 0 │ f01_mismatch_amplitude │ [0, 1] │ Deviance response magnitude.
+ │ │ │ f01 = σ(0.35 * flux_25ms
+ │ │ │ + 0.35 * onset_25ms
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 1  │ f02_context_modulation   │ [0, 1] │ Context-dependent enhancement.
-    │                          │        │ f02 = σ(0.35 * pitch_change_100ms
-    │                          │        │       + 0.35 * mean_pitch_change_1s
-    │                          │        │       + 0.30 * mean(PPC.contour[20:30]))
+ 1 │ f02_context_modulation │ [0, 1] │ Context-dependent enhancement.
+ │ │ │ f02 = σ(0.35 * pitch_change_100ms
+ │ │ │ + 0.35 * mean_pitch_change_1s
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 2  │ f03_subadditivity_index  │ [0, 1] │ Integration vs summation.
-    │                          │        │ f03 = σ(0.35 * binding_100ms
-    │                          │        │       + 0.35 * binding_variability
-    │                          │        │       + 0.30 * mean(ASA.sal[20:30]))
+ 2 │ f03_subadditivity_index │ [0, 1] │ Integration vs summation.
+ │ │ │ f03 = σ(0.35 * binding_100ms
+ │ │ │ + 0.35 * binding_variability
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 3  │ f04_expertise_effect     │ [-1,1] │ Expertise-context interaction.
-    │                          │        │ f04 = (f01_complex - f01_simple)
-    │                          │        │       * expertise_indicator
+ 3 │ f04_expertise_effect │ [-1,1] │ Expertise-context interaction.
+ │ │ │ f04 = (f01_complex - f01_simple)
+ │ │ │ * expertise_indicator
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS (Context Memory)
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 4  │ melodic_expectation      │ [0, 1] │ Pattern expectation state.
-    │                          │        │ EMA of f02 over context window
+ 4 │ melodic_expectation │ [0, 1] │ Pattern expectation state.
+ │ │ │ EMA of f02 over context window
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 5  │ deviance_history         │ [0, 1] │ Recent deviance memory.
-    │                          │        │ EMA of f01 with τ=0.4s decay
+ 5 │ deviance_history │ [0, 1] │ Recent deviance memory.
+ │ │ │ EMA of f01 with τ=0.4s decay
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 6  │ mismatch_signal          │ [0, 1] │ Current expectation violation.
+ 6 │ mismatch_signal │ [0, 1] │ Current expectation violation.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 7  │ context_state            │ [0, 1] │ Current context integration.
+ 7 │ context_state │ [0, 1] │ Current context integration.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 8  │ binding_state            │ [0, 1] │ Multi-feature integration.
+ 8 │ binding_state │ [0, 1] │ Multi-feature integration.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 9  │ next_deviance            │ [0, 1] │ Attention allocation prediction.
+ 9 │ next_deviance │ [0, 1] │ Attention allocation prediction.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
-10  │ context_continuation     │ [0, 1] │ Pattern expectation update.
+10 │ context_continuation │ [0, 1] │ Pattern expectation update.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 11D per frame at 172.27 Hz
@@ -364,9 +345,9 @@ TOTAL: 11D per frame at 172.27 Hz
 CDMR(t) = MismatchAmplitude(t) · ContextModulation(t) · SubadditivityGating(t)
 
 Parameters:
-    MismatchAmplitude = spectral_flux + onset_strength (R³ deviance)
-    ContextModulation = pitch_change complexity (melodic context)
-    SubadditivityGating = combined < Σ(individual) for experts
+ MismatchAmplitude = spectral_flux + onset_strength (R³ deviance)
+ ContextModulation = pitch_change complexity (melodic context)
+ SubadditivityGating = combined < Σ(individual) for experts
 ```
 
 ### 7.2 Feature Formulas
@@ -376,20 +357,17 @@ Parameters:
 
 # f01: Mismatch Amplitude
 f01 = σ(0.35 * flux_25ms
-       + 0.35 * onset_25ms
-       + 0.30 * mean(PPC.pitch_extraction[0:10]))
+ + 0.35 * onset_25ms
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # f02: Context Modulation
 f02 = σ(0.35 * pitch_change_100ms
-       + 0.35 * mean_pitch_change_1s
-       + 0.30 * mean(PPC.contour_tracking[20:30]))
+ + 0.35 * mean_pitch_change_1s
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # f03: Subadditivity Index
 f03 = σ(0.35 * binding_100ms
-       + 0.35 * binding_variability_100ms
-       + 0.30 * mean(ASA.salience_weighting[20:30]))
+ + 0.35 * binding_variability_100ms
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # f04: Expertise Effect (context interaction)
@@ -398,7 +376,7 @@ f04 = clamp((f01_complex - f01_simple) * expertise_indicator, -1, 1)
 
 # Temporal dynamics
 dMismatch/dt = τ⁻¹ · (Current_Deviance - Mismatch_Memory)
-    where τ = 0.4s (mismatch decay, Rupp 2022)
+ where τ = 0.4s (mismatch decay, Rupp 2022)
 ```
 
 ---
@@ -423,24 +401,22 @@ dMismatch/dt = τ⁻¹ · (Current_Deviance - Mismatch_Memory)
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    CDMR INTERACTIONS                                         │
+│ CDMR INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (NDU):                                                         │
-│  MPG.melodic_context ─────────► CDMR (context modulates mismatch)         │
-│  CDMR.expertise_effect ───────► EDNR (expertise effects link)             │
-│  CDMR.subadditivity ─────────► SLEE (integration relates to stat learn)   │
-│                                                                             │
-│  CROSS-UNIT (NDU → ARU):                                                   │
-│  CDMR.mismatch_signal ───────► ARU (affective evaluation of deviance)    │
-│  CDMR.context_state ─────────► IMU (memory integration)                  │
-│                                                                             │
-│  UPSTREAM DEPENDENCIES:                                                     │
-│  PPC mechanism (30D) ────────► CDMR (pitch/contour deviance)             │
-│  ASA mechanism (30D) ────────► CDMR (attention/salience binding)         │
-│  R³ (~16D) ──────────────────► CDMR (direct spectral features)           │
-│  H³ (16 tuples) ─────────────► CDMR (temporal dynamics)                  │
-│                                                                             │
+│ │
+│ INTRA-UNIT (NDU): │
+│ MPG.melodic_context ─────────► CDMR (context modulates mismatch) │
+│ CDMR.expertise_effect ───────► EDNR (expertise effects link) │
+│ CDMR.subadditivity ─────────► SLEE (integration relates to stat learn) │
+│ │
+│ CROSS-UNIT (NDU → ARU): │
+│ CDMR.mismatch_signal ───────► ARU (affective evaluation of deviance) │
+│ CDMR.context_state ─────────► IMU (memory integration) │
+│ │
+│ UPSTREAM DEPENDENCIES: │
+│ R³ (~16D) ──────────────────► CDMR (direct spectral features) │
+│ H³ (16 tuples) ─────────────► CDMR (temporal dynamics) │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -464,143 +440,114 @@ dMismatch/dt = τ⁻¹ · (Current_Deviance - Mismatch_Memory)
 
 ```python
 class CDMR(BaseModel):
-    """Context-Dependent Mismatch Response Model.
+ """Context-Dependent Mismatch Response Model.
 
-    Output: 11D per frame.
-    Reads: PPC mechanism (30D), ASA mechanism (30D), R³ direct.
-    """
-    NAME = "CDMR"
-    UNIT = "NDU"
-    TIER = "β2"
-    OUTPUT_DIM = 11
-    MECHANISM_NAMES = ("PPC", "ASA")
+ Output: 11D per frame.
+ """
+ NAME = "CDMR"
+ UNIT = "NDU"
+ TIER = "β2"
+ OUTPUT_DIM = 11
+ TAU_DECAY = 0.4 # Mismatch decay (seconds)
+ CONTEXT_THRESHOLD = 0.6 # Melodic complexity threshold
+ RTI_WINDOW = 2.5 # Melodic context window (seconds)
 
-    TAU_DECAY = 0.4          # Mismatch decay (seconds)
-    CONTEXT_THRESHOLD = 0.6  # Melodic complexity threshold
-    RTI_WINDOW = 2.5         # Melodic context window (seconds)
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """16 tuples for CDMR computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ (10, 0, 0, 2), # spectral_flux, 25ms, value, bidi
+ (10, 3, 2, 2), # spectral_flux, 100ms, std, bidi
+ (10, 16, 1, 2), # spectral_flux, 1000ms, mean, bidi
+ (11, 0, 0, 2), # onset_strength, 25ms, value, bidi
+ (11, 3, 8, 0), # onset_strength, 100ms, velocity, fwd
+ (23, 3, 0, 2), # pitch_change, 100ms, value, bidi
+ (23, 4, 2, 2), # pitch_change, 125ms, std, bidi
+ (23, 16, 1, 2), # pitch_change, 1000ms, mean, bidi
+ (21, 3, 0, 2), # spectral_change, 100ms, value, bidi
+ (21, 4, 18, 0), # spectral_change, 125ms, trend, fwd
+ (13, 3, 0, 2), # brightness, 100ms, value, bidi
+ (13, 3, 20, 2), # brightness, 100ms, entropy, bidi
+ (41, 3, 0, 2), # x_l5l6[0], 100ms, value, bidi
+ (41, 3, 2, 2), # x_l5l6[0], 100ms, std, bidi
+ (41, 16, 16, 2), # x_l5l6[0], 1000ms, curvature, bidi
+ (33, 3, 0, 2), # x_l4l5[0], 100ms, value, bidi
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """16 tuples for CDMR computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # ── PPC horizons: mismatch detection ──
-            (10, 0, 0, 2),     # spectral_flux, 25ms, value, bidi
-            (10, 3, 2, 2),     # spectral_flux, 100ms, std, bidi
-            (10, 16, 1, 2),    # spectral_flux, 1000ms, mean, bidi
-            (11, 0, 0, 2),     # onset_strength, 25ms, value, bidi
-            (11, 3, 8, 0),     # onset_strength, 100ms, velocity, fwd
-            # ── PPC horizons: context tracking ──
-            (23, 3, 0, 2),     # pitch_change, 100ms, value, bidi
-            (23, 4, 2, 2),     # pitch_change, 125ms, std, bidi
-            (23, 16, 1, 2),    # pitch_change, 1000ms, mean, bidi
-            (21, 3, 0, 2),     # spectral_change, 100ms, value, bidi
-            (21, 4, 18, 0),    # spectral_change, 125ms, trend, fwd
-            # ── ASA horizons: binding + salience ──
-            (13, 3, 0, 2),     # brightness, 100ms, value, bidi
-            (13, 3, 20, 2),    # brightness, 100ms, entropy, bidi
-            (41, 3, 0, 2),     # x_l5l6[0], 100ms, value, bidi
-            (41, 3, 2, 2),     # x_l5l6[0], 100ms, std, bidi
-            (41, 16, 16, 2),   # x_l5l6[0], 1000ms, curvature, bidi
-            (33, 3, 0, 2),     # x_l4l5[0], 100ms, value, bidi
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute CDMR 11D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute CDMR 11D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"PPC": (B,T,30), "ASA": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,11) CDMR output
+ """
+ # R³ features
+ spectral_flux = r3[..., 10:11]
+ onset_strength = r3[..., 11:12]
+ brightness = r3[..., 13:14]
+ pitch_change = r3[..., 23:24]
+ x_l4l5 = r3[..., 33:41] # (B, T, 8)
+ x_l5l6 = r3[..., 41:49] # (B, T, 8)
 
-        Returns:
-            (B,T,11) CDMR output
-        """
-        ppc = mechanism_outputs["PPC"]    # (B, T, 30)
-        asa = mechanism_outputs["ASA"]    # (B, T, 30)
+ # H³ direct features
+ flux_25ms = h3_direct[(10, 0, 0, 2)].unsqueeze(-1)
+ onset_25ms = h3_direct[(11, 0, 0, 2)].unsqueeze(-1)
+ pitch_change_100ms = h3_direct[(23, 3, 0, 2)].unsqueeze(-1)
+ mean_pitch_change_1s = h3_direct[(23, 16, 1, 2)].unsqueeze(-1)
+ binding_100ms = h3_direct[(41, 3, 0, 2)].unsqueeze(-1)
+ binding_variability = h3_direct[(41, 3, 2, 2)].unsqueeze(-1)
 
-        # R³ features
-        spectral_flux = r3[..., 10:11]
-        onset_strength = r3[..., 11:12]
-        brightness = r3[..., 13:14]
-        pitch_change = r3[..., 23:24]
-        x_l4l5 = r3[..., 33:41]          # (B, T, 8)
-        x_l5l6 = r3[..., 41:49]          # (B, T, 8)
+ # ═══ LAYER E: Explicit features ═══
 
-        # PPC sub-sections
-        ppc_pitch = ppc[..., 0:10]       # pitch extraction
-        ppc_interval = ppc[..., 10:20]   # interval analysis
-        ppc_contour = ppc[..., 20:30]    # contour tracking
+ # f01: Mismatch Amplitude (coefficients sum = 1.0)
+ f01 = torch.sigmoid(
+ 0.35 * flux_25ms
+ + 0.35 * onset_25ms
+ )
 
-        # ASA sub-sections
-        asa_scene = asa[..., 0:10]       # scene analysis
-        asa_attn = asa[..., 10:20]       # attention gating
-        asa_salience = asa[..., 20:30]   # salience weighting
+ # f02: Context Modulation (coefficients sum = 1.0)
+ f02 = torch.sigmoid(
+ 0.35 * pitch_change_100ms
+ + 0.35 * mean_pitch_change_1s
+ )
 
-        # H³ direct features
-        flux_25ms = h3_direct[(10, 0, 0, 2)].unsqueeze(-1)
-        onset_25ms = h3_direct[(11, 0, 0, 2)].unsqueeze(-1)
-        pitch_change_100ms = h3_direct[(23, 3, 0, 2)].unsqueeze(-1)
-        mean_pitch_change_1s = h3_direct[(23, 16, 1, 2)].unsqueeze(-1)
-        binding_100ms = h3_direct[(41, 3, 0, 2)].unsqueeze(-1)
-        binding_variability = h3_direct[(41, 3, 2, 2)].unsqueeze(-1)
+ # f03: Subadditivity Index (coefficients sum = 1.0)
+ f03 = torch.sigmoid(
+ 0.35 * binding_100ms
+ + 0.35 * binding_variability
+ )
 
-        # ═══ LAYER E: Explicit features ═══
+ # f04: Expertise Effect (context interaction)
+ # At runtime: multiplied by expertise_indicator
+ f04 = f01 * f02 # base interaction, scaled by expertise externally
 
-        # f01: Mismatch Amplitude (coefficients sum = 1.0)
-        f01 = torch.sigmoid(
-            0.35 * flux_25ms
-            + 0.35 * onset_25ms
-            + 0.30 * ppc_pitch.mean(-1, keepdim=True)
-        )
+ # ═══ LAYER M: Context Memory ═══
+ melodic_expectation = torch.sigmoid(
+ )
+ deviance_history = torch.sigmoid(
+ )
 
-        # f02: Context Modulation (coefficients sum = 1.0)
-        f02 = torch.sigmoid(
-            0.35 * pitch_change_100ms
-            + 0.35 * mean_pitch_change_1s
-            + 0.30 * ppc_contour.mean(-1, keepdim=True)
-        )
+ # ═══ LAYER P: Present ═══
 
-        # f03: Subadditivity Index (coefficients sum = 1.0)
-        f03 = torch.sigmoid(
-            0.35 * binding_100ms
-            + 0.35 * binding_variability
-            + 0.30 * asa_salience.mean(-1, keepdim=True)
-        )
+ # ═══ LAYER F: Future ═══
+ next_deviance = torch.sigmoid(
+ )
+ context_continuation = torch.sigmoid(
+ 0.50 * f02 + 0.50 * melodic_expectation
+ )
 
-        # f04: Expertise Effect (context interaction)
-        # At runtime: multiplied by expertise_indicator
-        f04 = f01 * f02  # base interaction, scaled by expertise externally
-
-        # ═══ LAYER M: Context Memory ═══
-        melodic_expectation = torch.sigmoid(
-            0.50 * f02 + 0.50 * ppc_contour.mean(-1, keepdim=True)
-        )
-        deviance_history = torch.sigmoid(
-            0.50 * f01 + 0.50 * ppc_pitch.mean(-1, keepdim=True)
-        )
-
-        # ═══ LAYER P: Present ═══
-        mismatch_signal = ppc_pitch.mean(-1, keepdim=True)
-        context_state = ppc_interval.mean(-1, keepdim=True)
-        binding_state = asa_salience.mean(-1, keepdim=True)
-
-        # ═══ LAYER F: Future ═══
-        next_deviance = torch.sigmoid(
-            0.50 * f01 + 0.50 * asa_attn.mean(-1, keepdim=True)
-        )
-        context_continuation = torch.sigmoid(
-            0.50 * f02 + 0.50 * melodic_expectation
-        )
-
-        return torch.cat([
-            f01, f02, f03, f04,                                  # E: 4D
-            melodic_expectation, deviance_history,               # M: 2D
-            mismatch_signal, context_state, binding_state,       # P: 3D
-            next_deviance, context_continuation,                 # F: 2D
-        ], dim=-1)  # (B, T, 11)
+ return torch.cat([
+ f01, f02, f03, f04, # E: 4D
+ melodic_expectation, deviance_history, # M: 2D
+ mismatch_signal, context_state, binding_state, # P: 3D
+ next_deviance, context_continuation, # F: 2D
+ ], dim=-1) # (B, T, 11)
 ```
 
 ---
@@ -616,8 +563,6 @@ class CDMR(BaseModel):
 | **Falsification Tests** | 3/5 confirmed | Moderate-high validity |
 | **R³ Features Used** | ~16D of 49D | Energy + timbre + change + interactions |
 | **H³ Demand** | 16 tuples (0.69%) | Sparse, efficient |
-| **PPC Mechanism** | 30D (3 sub-sections) | Pitch/contour deviance |
-| **ASA Mechanism** | 30D (3 sub-sections) | Attention/salience binding |
 | **Output Dimensions** | **11D** | 4-layer structure |
 
 ---
@@ -641,21 +586,13 @@ class CDMR(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D) | R³ (49D) |
-| Temporal | HC⁰ mechanisms (TIH, ATT, EFC, BND) | PPC (30D) + ASA (30D) mechanisms |
-| Deviance signal | S⁰.L5.spectral_kurtosis[41] + HC⁰.EFC | R³.spectral_flux[10] + PPC.pitch_extraction |
-| Context signal | S⁰.L4.velocity_F[16] + HC⁰.TIH | R³.pitch_change[23] + PPC.contour_tracking |
-| Binding | S⁰.X_L5L6[208:216] + HC⁰.BND | R³.x_l5l6[41:49] + ASA.salience_weighting |
-| Attention | S⁰.L5.brightness[34] + HC⁰.ATT | R³.brightness[13] + ASA.attention_gating |
+| Deviance signal | S⁰.L5.spectral_kurtosis[41] + HC⁰.EFC | R³.spectral_flux[10] |
+| Context signal | S⁰.L4.velocity_F[16] + HC⁰.TIH | R³.pitch_change[23] |
+| Binding | S⁰.X_L5L6[208:216] + HC⁰.BND | R³.x_l5l6[41:49] |
+| Attention | S⁰.L5.brightness[34] + HC⁰.ATT | R³.brightness[13] |
 | Demand format | HC⁰ index ranges | H³ 4-tuples (sparse) |
 | Total demand | 29/2304 = 1.26% | 16/2304 = 0.69% |
 | Output | 11D | 11D (same) |
-
-### Why PPC + ASA replaces HC⁰ mechanisms
-
-- **EFC → PPC.pitch_extraction** [0:10]: Efference copy prediction error maps to PPC's pitch deviance detection.
-- **TIH → PPC.contour_tracking** [20:30]: Temporal integration hierarchy maps to PPC's melodic context tracking.
-- **BND → ASA.salience_weighting** [20:30]: Temporal binding mechanism maps to ASA's multi-feature binding salience.
-- **ATT → ASA.attention_gating** [10:20]: Attentional entrainment maps to ASA's deviance-directed attention.
 
 ---
 
@@ -666,7 +603,6 @@ class CDMR(BaseModel):
 | Aspect | Doc (CDMR.md) | Code (cdmr.py) | Severity |
 |--------|--------------|----------------|----------|
 | **OUTPUT_DIM** | 11D (4E+2M+3P+2F) | 10D (4E+2M+2P+2F) | HIGH — Layer P missing binding_state |
-| **MECHANISM_NAMES** | ("PPC", "ASA") | ("ASA", "TMH") | HIGH — TMH instead of PPC |
 | **h3_demand** | 16 tuples specified | () empty tuple | HIGH — no temporal demand in code |
 | **Layer M dim names** | melodic_expectation, deviance_history | melodic_context, deviance_history | LOW — name mismatch |
 | **Layer P dims** | mismatch_signal, context_state, binding_state (3D) | mismatch_signal, context_modulation_state (2D) | MEDIUM — missing binding_state |

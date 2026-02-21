@@ -21,32 +21,32 @@ The **Information Content Emotion Model** (ICEM) describes how computational Inf
 INFORMATION CONTENT EMOTION MODEL
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  MUSIC STIMULUS
-       │
-       ▼
-  ┌─────────────────────────────────────────────────────────────────┐
-  │         INFORMATION CONTENT (IC) COMPUTATION                     │
-  │         (IDyOM statistical model)                                │
-  │                                                                  │
-  │   IC = -log₂(P(event|context))                                  │
-  │                                                                  │
-  │   Low IC ◄─────────────────────────────────► High IC            │
-  │   (expected)                                (unexpected)         │
-  └─────────────────────────┬───────────────────────────────────────┘
-                            │
-          ┌─────────────────┴─────────────────┐
-          ▼                                   ▼
-  ┌─────────────────┐                ┌─────────────────┐
-  │   IC TROUGH     │                │    IC PEAK      │
-  │   (expected)    │                │   (unexpected)  │
-  └────────┬────────┘                └────────┬────────┘
-           │                                  │
-           ▼                                  ▼
-  • Lower arousal                   • Higher arousal ↑
-  • Higher valence ↑                • Lower valence ↓
-  • Stable HR                       • HR deceleration ↓
-  • Lower SCR                       • SCR increase ↑
-                                    • Resp rate increase ↑
+ MUSIC STIMULUS
+ │
+ ▼
+ ┌─────────────────────────────────────────────────────────────────┐
+ │ INFORMATION CONTENT (IC) COMPUTATION │
+ │ (IDyOM statistical model) │
+ │ │
+ │ IC = -log₂(P(event|context)) │
+ │ │
+ │ Low IC ◄─────────────────────────────────► High IC │
+ │ (expected) (unexpected) │
+ └─────────────────────────┬───────────────────────────────────────┘
+ │
+ ┌─────────────────┴─────────────────┐
+ ▼ ▼
+ ┌─────────────────┐ ┌─────────────────┐
+ │ IC TROUGH │ │ IC PEAK │
+ │ (expected) │ │ (unexpected) │
+ └────────┬────────┘ └────────┬────────┘
+ │ │
+ ▼ ▼
+ • Lower arousal • Higher arousal ↑
+ • Higher valence ↑ • Lower valence ↓
+ • Stable HR • HR deceleration ↓
+ • Lower SCR • SCR increase ↑
+ • Resp rate increase ↑
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 KEY INSIGHT: Computational Information Content peaks predict
@@ -67,77 +67,75 @@ ICEM links prediction computations to emotional/physiological responses:
 
 ## 2. Neural Circuit: Complete Anatomy
 
-### 2.1 Information Flow Architecture (EAR → BRAIN → PPC+TPC+MEM → ICEM)
+### 2.1 Information Flow Architecture (EAR → BRAIN → ICEM)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    ICEM COMPUTATION ARCHITECTURE                            ║
+║ ICEM COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins x 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
-║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ CHANGE   │ │ X-INT  │ │        ║
-║  │  │ 7D [0:7]  │ │ 5D[7:12]│ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
-║  │  │           │ │         │ │ [12:21] │ │ [21:25]  │ │ [25:49]│ │        ║
-║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                         ICEM reads: ~18D                        │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                                                                  │        ║
-║  │  ┌── MEM Horizons ───────────────┐ ┌── TPC Horizons ──────────┐  │        ║
-║  │  │ H3 (100ms alpha)             │ │ H4 (125ms theta)          │  │        ║
-║  │  │ H8 (500ms delta)             │ │ H16 (1000ms beat)         │  │        ║
-║  │  │                               │ │                            │  │        ║
-║  │  │ IC computation                │ │ Emotional response         │  │        ║
-║  │  │ Surprise detection            │ │ Affective integration      │  │        ║
-║  │  └───────────────────────────────┘ └────────────────────────────┘  │        ║
-║  │                         ICEM demand: ~15 of 2304 tuples           │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Imagery Circuit ═══════════   ║
-║                               │                                              ║
-║                       ┌───────┴───────┐───────┐                              ║
-║                       ▼               ▼       ▼                              ║
-║  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐              ║
-║  │  PPC (30D)      │  │  TPC (30D)      │  │  MEM (30D)      │              ║
-║  │                 │  │                 │  │                 │              ║
-║  │ Pitch Ext[0:10] │  │ Spec Shp [0:10] │  │ Work Mem [0:10] │              ║
-║  │ Interval        │  │ Temporal        │  │ Long-Term       │              ║
-║  │ Analysis[10:20] │  │ Envelope[10:20] │  │ Memory  [10:20] │              ║
-║  │ Contour  [20:30]│  │ Source Id[20:30] │  │ Pred Buf[20:30] │              ║
-║  └────────┬────────┘  └────────┬────────┘  └────────┬────────┘              ║
-║           │                    │                    │                         ║
-║           └────────────┬───────┴────────────────────┘                        ║
-║                        ▼                                                     ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    ICEM MODEL (13D Output)                       │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f01_information_content,                   │        ║
-║  │                       f02_arousal_response,                      │        ║
-║  │                       f03_valence_response,                      │        ║
-║  │                       f04_defense_cascade                        │        ║
-║  │  Layer M (Math):      ic_value, arousal_pred, valence_pred,      │        ║
-║  │                       scr_pred, hr_pred                          │        ║
-║  │  Layer P (Present):   surprise_signal, emotional_evaluation      │        ║
-║  │  Layer F (Future):    arousal_change_1_3s, valence_shift_2_5s    │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins x 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ ENERGY │ │ TIMBRE │ │ CHANGE │ │ X-INT │ │ ║
+║ │ │ 7D [0:7] │ │ 5D[7:12]│ │ 9D │ │ 4D │ │ 24D │ │ ║
+║ │ │ │ │ │ │ [12:21] │ │ [21:25] │ │ [25:49]│ │ ║
+║ │ └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │ ║
+║ │ ICEM reads: ~18D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ │ ║
+║ │ │ H3 (100ms alpha) │ │ H4 (125ms theta) │ │ ║
+║ │ │ H8 (500ms delta) │ │ H16 (1000ms beat) │ │ ║
+║ │ │ │ │ │ │ ║
+║ │ │ IC computation │ │ Emotional response │ │ ║
+║ │ │ Surprise detection │ │ Affective integration │ │ ║
+║ │ └───────────────────────────────┘ └────────────────────────────┘ │ ║
+║ │ ICEM demand: ~15 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Imagery Circuit ═══════════ ║
+║ │ ║
+║ ┌───────┴───────┐───────┐ ║
+║ ▼ ▼ ▼ ║
+║ ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐ ║
+║ │ │ │ │ │ │ ║
+║ │ Pitch Ext[0:10] │ │ Spec Shp [0:10] │ │ Work Mem [0:10] │ ║
+║ │ Interval │ │ Temporal │ │ Long-Term │ ║
+║ │ Analysis[10:20] │ │ Envelope[10:20] │ │ Memory [10:20] │ ║
+║ │ Contour [20:30]│ │ Source Id[20:30] │ │ Pred Buf[20:30] │ ║
+║ └────────┬────────┘ └────────┬────────┘ └────────┬────────┘ ║
+║ │ │ │ ║
+║ └────────────┬───────┴────────────────────┘ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ ICEM MODEL (13D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f01_information_content, │ ║
+║ │ f02_arousal_response, │ ║
+║ │ f03_valence_response, │ ║
+║ │ f04_defense_cascade │ ║
+║ │ Layer M (Math): ic_value, arousal_pred, valence_pred, │ ║
+║ │ scr_pred, hr_pred │ ║
+║ │ Layer P (Present): surprise_signal, emotional_evaluation │ ║
+║ │ Layer F (Future): arousal_change_1_3s, valence_shift_2_5s │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -165,13 +163,13 @@ ICEM links prediction computations to emotional/physiological responses:
 ### 3.2 Effect Size Summary
 
 ```
-Primary Evidence (k=12):  11 empirical + 1 theoretical
-Heterogeneity:           Consistent across psychophysiology, fMRI, PET, EEG modalities
-Quality Assessment:      α-tier (direct measurement across multiple modalities)
-Replication:             IC-emotion link replicated across Egermann 2013, Cheung 2019,
-                         Gold 2019, Gold 2023; dopamine pathway confirmed by Salimpoor 2011
-Key convergence:         IC/surprise → emotional response mediated by auditory cortex,
-                         amygdala, hippocampus; reward via VS/NAc; inverted-U for pleasure
+Primary Evidence (k=12): 11 empirical + 1 theoretical
+Heterogeneity: Consistent across psychophysiology, fMRI, PET, EEG modalities
+Quality Assessment: α-tier (direct measurement across multiple modalities)
+Replication: IC-emotion link replicated across Egermann 2013, Cheung 2019,
+ Gold 2019, Gold 2023; dopamine pathway confirmed by Salimpoor 2011
+Key convergence: IC/surprise → emotional response mediated by auditory cortex,
+ amygdala, hippocampus; reward via VS/NAc; inverted-U for pleasure
 ```
 
 ---
@@ -208,19 +206,16 @@ Key convergence:         IC/surprise → emotional response mediated by auditory
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[21] spectral_change ─────────┐
 R³[22] energy_change ───────────┼──► Information Content (IC)
-MEM.working_memory[0:10] ───────┘   IC = -log₂(P(event|context))
 
 R³[33:41] x_l4l5 ──────────────┐
-TPC.source_identity[20:30] ─────┼──► Arousal response
-H³ arousal velocity tuples ─────┘   High IC → Arousal ↑, SCR ↑
+H³ arousal velocity tuples ─────┘ High IC → Arousal ↑, SCR ↑
 
 R³[41:49] x_l5l7 ──────────────┐
-MEM.long_term_memory[10:20] ────┼──► Valence response
-H³ valence entropy tuples ──────┘   High IC → Valence ↓, HR ↓
+H³ valence entropy tuples ──────┘ High IC → Valence ↓, HR ↓
 ```
 
 ---
@@ -253,7 +248,7 @@ ICEM requires H³ features for surprise computation (rapid change detection) and
 
 #### R³ v2 Projected Expansion
 
-ICEM projected v2 from I:Information, aligned with PPC+TPC+MEM horizons.
+ICEM projected v2 from I:Information, aligned with H³ direct+Memory horizons.
 
 | R³ Idx | Feature | Group | H | Morph | Law | Purpose |
 |:------:|---------|:-----:|:-:|-------|:---:|---------|
@@ -267,20 +262,6 @@ ICEM projected v2 from I:Information, aligned with PPC+TPC+MEM horizons.
 **v2 projected**: 6 tuples
 **Total projected**: 21 tuples of 294,912 theoretical = 0.0071%
 
-### 5.2 PPC + TPC + MEM Mechanism Binding
-
-| Mechanism | Sub-section | Range | ICEM Role | Weight |
-|-----------|-------------|-------|-----------|--------|
-| **PPC** | Pitch Extraction | PPC[0:10] | Melodic expectation | 0.7 |
-| **PPC** | Interval Analysis | PPC[10:20] | Interval IC computation | 0.6 |
-| **PPC** | Contour Tracking | PPC[20:30] | Contour IC basis | 0.5 |
-| **TPC** | Spectral Shape | TPC[0:10] | Timbral context | 0.6 |
-| **TPC** | Temporal Envelope | TPC[10:20] | Temporal salience | 0.7 |
-| **TPC** | Source Identity | TPC[20:30] | Affective response pathway | **1.0** (primary) |
-| **MEM** | Working Memory | MEM[0:10] | Statistical model (IDyOM proxy) | **1.0** (primary) |
-| **MEM** | Long-Term Memory | MEM[10:20] | Musical context memory | **1.0** (primary) |
-| **MEM** | Prediction Buffer | MEM[20:30] | IC computation buffer | 0.8 |
-
 ---
 
 ## 6. Output Space: 13D Multi-Layer Representation
@@ -293,56 +274,53 @@ ICEM OUTPUT TENSOR: 13D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 0  │ f01_information_content  │ [0, 1] │ Event unexpectedness (IC proxy).
-    │                          │        │ f01 = σ(0.35 * change_entropy_100ms
-    │                          │        │       + 0.35 * mean(MEM.wm[0:10])
-    │                          │        │       + 0.30 * energy_velocity_100ms)
+ 0 │ f01_information_content │ [0, 1] │ Event unexpectedness (IC proxy).
+ │ │ │ f01 = σ(0.35 * change_entropy_100ms
+ │ │ │ + 0.30 * energy_velocity_100ms)
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 1  │ f02_arousal_response     │ [0, 1] │ Physiological activation.
-    │                          │        │ f02 = σ(0.40 * f01
-    │                          │        │       + 0.30 * arousal_pathway_vel
-    │                          │        │       + 0.30 * mean(TPC.src[20:30]))
+ 1 │ f02_arousal_response │ [0, 1] │ Physiological activation.
+ │ │ │ f02 = σ(0.40 * f01
+ │ │ │ + 0.30 * arousal_pathway_vel
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 2  │ f03_valence_response     │ [0, 1] │ Emotional valence change.
-    │                          │        │ f03 = σ(0.40 * (1 - f01)
-    │                          │        │       + 0.30 * valence_mean_1s
-    │                          │        │       + 0.30 * mean(MEM.ltm[10:20]))
+ 2 │ f03_valence_response │ [0, 1] │ Emotional valence change.
+ │ │ │ f03 = σ(0.40 * (1 - f01)
+ │ │ │ + 0.30 * valence_mean_1s
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 3  │ f04_defense_cascade      │ [0, 1] │ Threat appraisal activation.
-    │                          │        │ f04 = σ(0.50 * f01 * f02
-    │                          │        │       + 0.50 * loudness_velocity_1s)
+ 3 │ f04_defense_cascade │ [0, 1] │ Threat appraisal activation.
+ │ │ │ f04 = σ(0.50 * f01 * f02
+ │ │ │ + 0.50 * loudness_velocity_1s)
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 4  │ ic_value                 │ [0, 1] │ IC = -log₂(P(event|context)).
+ 4 │ ic_value │ [0, 1] │ IC = -log₂(P(event|context)).
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 5  │ arousal_pred             │ [0, 1] │ Arousal = α·IC + β.
+ 5 │ arousal_pred │ [0, 1] │ Arousal = α·IC + β.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 6  │ valence_pred             │ [0, 1] │ Valence = -γ·IC + δ.
+ 6 │ valence_pred │ [0, 1] │ Valence = -γ·IC + δ.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 7  │ scr_pred                 │ [0, 1] │ SCR = ε·IC + ζ.
+ 7 │ scr_pred │ [0, 1] │ SCR = ε·IC + ζ.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 8  │ hr_pred                  │ [0, 1] │ HR = -η·IC + θ.
+ 8 │ hr_pred │ [0, 1] │ HR = -η·IC + θ.
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 9  │ surprise_signal          │ [0, 1] │ MEM IC computation result.
+ 9 │ surprise_signal │ [0, 1] │ memory IC computation result.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
-10  │ emotional_evaluation     │ [0, 1] │ TPC valence change assessment.
+10 │ emotional_evaluation │ [0, 1] │ timbre-processing valence change assessment.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
-11  │ arousal_change_1_3s      │ [0, 1] │ SCR response prediction.
+11 │ arousal_change_1_3s │ [0, 1] │ SCR response prediction.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
-12  │ valence_shift_2_5s       │ [0, 1] │ Subjective feeling prediction.
+12 │ valence_shift_2_5s │ [0, 1] │ Subjective feeling prediction.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 13D per frame at 172.27 Hz
@@ -373,25 +351,22 @@ Defense Cascade: High IC → Orienting → Threat appraisal
 
 # f01: Information Content
 f01 = σ(0.35 * change_entropy_100ms
-       + 0.35 * mean(MEM.working_memory[0:10])
-       + 0.30 * energy_velocity_100ms)
+ + 0.30 * energy_velocity_100ms)
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # f02: Arousal Response
 f02 = σ(0.40 * f01
-       + 0.30 * arousal_pathway_velocity
-       + 0.30 * mean(TPC.source_identity[20:30]))
+ + 0.30 * arousal_pathway_velocity
 # coefficients: 0.40 + 0.30 + 0.30 = 1.0 ✓
 
 # f03: Valence Response (inverse of IC)
 f03 = σ(0.40 * (1 - f01)
-       + 0.30 * valence_mean_1s
-       + 0.30 * mean(MEM.long_term_memory[10:20]))
+ + 0.30 * valence_mean_1s
 # coefficients: 0.40 + 0.30 + 0.30 = 1.0 ✓
 
 # f04: Defense Cascade
 f04 = σ(0.50 * f01 * f02
-       + 0.50 * loudness_velocity_1s)
+ + 0.50 * loudness_velocity_1s)
 # coefficients: 0.50 + 0.50 = 1.0 ✓
 ```
 
@@ -427,27 +402,24 @@ f04 = σ(0.50 * f01 * f02
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    ICEM INTERACTIONS                                         │
+│ ICEM INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (PCU):                                                         │
-│  HTP.hierarchy_gradient ──────► ICEM (prediction level for IC)             │
-│  SPH.prediction_error ────────► ICEM (error magnitude input)               │
-│  ICEM.information_content ────► PWUP (IC for precision weighting)          │
-│  ICEM.arousal_response ───────► UDP (arousal for reward computation)       │
-│                                                                             │
-│  CROSS-UNIT (PCU → ARU):                                                   │
-│  ICEM.arousal_response ───────► ARU (emotional arousal signal)             │
-│  ICEM.valence_response ───────► ARU (valence modulation)                   │
-│  ICEM.defense_cascade ────────► ARU (threat appraisal)                     │
-│                                                                             │
-│  UPSTREAM DEPENDENCIES:                                                     │
-│  PPC mechanism (30D) ─────────► ICEM (pitch expectation)                   │
-│  TPC mechanism (30D) ─────────► ICEM (affective response)                  │
-│  MEM mechanism (30D) ─────────► ICEM (statistical context)                 │
-│  R³ (~18D) ───────────────────► ICEM (direct spectral features)            │
-│  H³ (15 tuples) ──────────────► ICEM (temporal dynamics)                   │
-│                                                                             │
+│ │
+│ INTRA-UNIT (PCU): │
+│ HTP.hierarchy_gradient ──────► ICEM (prediction level for IC) │
+│ SPH.prediction_error ────────► ICEM (error magnitude input) │
+│ ICEM.information_content ────► PWUP (IC for precision weighting) │
+│ ICEM.arousal_response ───────► UDP (arousal for reward computation) │
+│ │
+│ CROSS-UNIT (PCU → ARU): │
+│ ICEM.arousal_response ───────► ARU (emotional arousal signal) │
+│ ICEM.valence_response ───────► ARU (valence modulation) │
+│ ICEM.defense_cascade ────────► ARU (threat appraisal) │
+│ │
+│ UPSTREAM DEPENDENCIES: │
+│ R³ (~18D) ───────────────────► ICEM (direct spectral features) │
+│ H³ (15 tuples) ──────────────► ICEM (temporal dynamics) │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -473,119 +445,98 @@ f04 = σ(0.50 * f01 * f02
 
 ```python
 class ICEM(BaseModel):
-    """Information Content Emotion Model.
+ """Information Content Emotion Model.
 
-    Output: 13D per frame.
-    Reads: PPC mechanism (30D), TPC mechanism (30D), MEM mechanism (30D), R³ direct.
-    """
-    NAME = "ICEM"
-    UNIT = "PCU"
-    TIER = "α3"
-    OUTPUT_DIM = 13
-    MECHANISM_NAMES = ("PPC", "TPC", "MEM")
+ Output: 13D per frame.
+ """
+ NAME = "ICEM"
+ UNIT = "PCU"
+ TIER = "α3"
+ OUTPUT_DIM = 13
+ TAU_DECAY = 2.0 # s (emotional response persistence)
 
-    TAU_DECAY = 2.0        # s (emotional response persistence)
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """15 tuples for ICEM computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ (21, 3, 0, 2), # spectral_change, 100ms, value, bidi
+ (21, 3, 2, 2), # spectral_change, 100ms, std, bidi
+ (21, 3, 20, 2), # spectral_change, 100ms, entropy, bidi
+ (22, 3, 8, 0), # energy_change, 100ms, velocity, fwd
+ (10, 3, 0, 2), # spectral_flux, 100ms, value, bidi
+ (10, 8, 1, 0), # spectral_flux, 500ms, mean, fwd
+ (8, 3, 0, 2), # loudness, 100ms, value, bidi
+ (8, 16, 8, 2), # loudness, 1000ms, velocity, bidi
+ (4, 3, 0, 2), # sensory_pleasantness, 100ms, value, bidi
+ (4, 8, 2, 0), # sensory_pleasantness, 500ms, std, fwd
+ (33, 4, 8, 0), # x_l4l5[0], 125ms, velocity, fwd
+ (33, 16, 1, 2), # x_l4l5[0], 1000ms, mean, bidi
+ # ── Valence pathway ──
+ (41, 8, 0, 0), # x_l5l7[0], 500ms, value, fwd
+ (41, 16, 1, 0), # x_l5l7[0], 1000ms, mean, fwd
+ (41, 16, 20, 0), # x_l5l7[0], 1000ms, entropy, fwd
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """15 tuples for ICEM computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # ── MEM horizons: IC computation ──
-            (21, 3, 0, 2),     # spectral_change, 100ms, value, bidi
-            (21, 3, 2, 2),     # spectral_change, 100ms, std, bidi
-            (21, 3, 20, 2),    # spectral_change, 100ms, entropy, bidi
-            (22, 3, 8, 0),     # energy_change, 100ms, velocity, fwd
-            (10, 3, 0, 2),     # spectral_flux, 100ms, value, bidi
-            (10, 8, 1, 0),     # spectral_flux, 500ms, mean, fwd
-            (8, 3, 0, 2),      # loudness, 100ms, value, bidi
-            (8, 16, 8, 2),     # loudness, 1000ms, velocity, bidi
-            # ── TPC horizons: emotional response ──
-            (4, 3, 0, 2),      # sensory_pleasantness, 100ms, value, bidi
-            (4, 8, 2, 0),      # sensory_pleasantness, 500ms, std, fwd
-            (33, 4, 8, 0),     # x_l4l5[0], 125ms, velocity, fwd
-            (33, 16, 1, 2),    # x_l4l5[0], 1000ms, mean, bidi
-            # ── Valence pathway ──
-            (41, 8, 0, 0),     # x_l5l7[0], 500ms, value, fwd
-            (41, 16, 1, 0),    # x_l5l7[0], 1000ms, mean, fwd
-            (41, 16, 20, 0),   # x_l5l7[0], 1000ms, entropy, fwd
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute ICEM 13D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute ICEM 13D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"PPC": (B,T,30), "TPC": (B,T,30), "MEM": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,13) ICEM output
+ """
+ # Mechanism sub-sections
+ # H³ direct features
+ change_entropy_100ms = h3_direct[(21, 3, 20, 2)].unsqueeze(-1)
+ energy_vel_100ms = h3_direct[(22, 3, 8, 0)].unsqueeze(-1)
+ arousal_vel = h3_direct[(33, 4, 8, 0)].unsqueeze(-1)
+ loudness_vel_1s = h3_direct[(8, 16, 8, 2)].unsqueeze(-1)
+ valence_mean_1s = h3_direct[(41, 16, 1, 0)].unsqueeze(-1)
 
-        Returns:
-            (B,T,13) ICEM output
-        """
-        ppc = mechanism_outputs["PPC"]    # (B, T, 30)
-        tpc = mechanism_outputs["TPC"]    # (B, T, 30)
-        mem = mechanism_outputs["MEM"]    # (B, T, 30)
+ # ═══ LAYER E: Explicit features ═══
+ f01 = torch.sigmoid(
+ 0.35 * change_entropy_100ms
+ + 0.30 * energy_vel_100ms
+ )
+ f02 = torch.sigmoid(
+ 0.40 * f01
+ + 0.30 * arousal_vel
+ )
+ f03 = torch.sigmoid(
+ 0.40 * (1 - f01)
+ + 0.30 * valence_mean_1s
+ )
+ f04 = torch.sigmoid(
+ 0.50 * f01 * f02
+ + 0.50 * loudness_vel_1s
+ )
 
-        # Mechanism sub-sections
-        tpc_src = tpc[..., 20:30]
-        mem_wm = mem[..., 0:10]
-        mem_ltm = mem[..., 10:20]
-        mem_pred = mem[..., 20:30]
+ # ═══ LAYER M: Mathematical ═══
+ ic_value = f01
+ arousal_pred = torch.sigmoid(0.5 * f01 + 0.5 * f02)
+ valence_pred = f03
+ scr_pred = torch.sigmoid(0.5 * f02 + 0.5 * f04)
+ hr_pred = torch.sigmoid(0.5 * (1 - f01) + 0.5 * f03)
 
-        # H³ direct features
-        change_entropy_100ms = h3_direct[(21, 3, 20, 2)].unsqueeze(-1)
-        energy_vel_100ms = h3_direct[(22, 3, 8, 0)].unsqueeze(-1)
-        arousal_vel = h3_direct[(33, 4, 8, 0)].unsqueeze(-1)
-        loudness_vel_1s = h3_direct[(8, 16, 8, 2)].unsqueeze(-1)
-        valence_mean_1s = h3_direct[(41, 16, 1, 0)].unsqueeze(-1)
+ # ═══ LAYER P: Present ═══
+ emotional_eval = torch.sigmoid(
+ )
 
-        # ═══ LAYER E: Explicit features ═══
-        f01 = torch.sigmoid(
-            0.35 * change_entropy_100ms
-            + 0.35 * mem_wm.mean(-1, keepdim=True)
-            + 0.30 * energy_vel_100ms
-        )
-        f02 = torch.sigmoid(
-            0.40 * f01
-            + 0.30 * arousal_vel
-            + 0.30 * tpc_src.mean(-1, keepdim=True)
-        )
-        f03 = torch.sigmoid(
-            0.40 * (1 - f01)
-            + 0.30 * valence_mean_1s
-            + 0.30 * mem_ltm.mean(-1, keepdim=True)
-        )
-        f04 = torch.sigmoid(
-            0.50 * f01 * f02
-            + 0.50 * loudness_vel_1s
-        )
+ # ═══ LAYER F: Future ═══
+ arousal_change = torch.sigmoid(0.5 * f02 + 0.5 * f04)
+ valence_shift = torch.sigmoid(0.5 * f03 + 0.5 * valence_mean_1s)
 
-        # ═══ LAYER M: Mathematical ═══
-        ic_value = f01
-        arousal_pred = torch.sigmoid(0.5 * f01 + 0.5 * f02)
-        valence_pred = f03
-        scr_pred = torch.sigmoid(0.5 * f02 + 0.5 * f04)
-        hr_pred = torch.sigmoid(0.5 * (1 - f01) + 0.5 * f03)
-
-        # ═══ LAYER P: Present ═══
-        surprise = mem_wm.mean(-1, keepdim=True)
-        emotional_eval = torch.sigmoid(
-            0.5 * tpc_src.mean(-1, keepdim=True)
-            + 0.5 * mem_ltm.mean(-1, keepdim=True)
-        )
-
-        # ═══ LAYER F: Future ═══
-        arousal_change = torch.sigmoid(0.5 * f02 + 0.5 * f04)
-        valence_shift = torch.sigmoid(0.5 * f03 + 0.5 * valence_mean_1s)
-
-        return torch.cat([
-            f01, f02, f03, f04,                                    # E: 4D
-            ic_value, arousal_pred, valence_pred, scr_pred, hr_pred, # M: 5D
-            surprise, emotional_eval,                              # P: 2D
-            arousal_change, valence_shift,                         # F: 2D
-        ], dim=-1)  # (B, T, 13)
+ return torch.cat([
+ f01, f02, f03, f04, # E: 4D
+ ic_value, arousal_pred, valence_pred, scr_pred, hr_pred, # M: 5D
+ surprise, emotional_eval, # P: 2D
+ arousal_change, valence_shift, # F: 2D
+ ], dim=-1) # (B, T, 13)
 ```
 
 ---
@@ -600,9 +551,6 @@ class ICEM(BaseModel):
 | **Falsification Tests** | 7/7 testable, 4 confirmed | High validity |
 | **R³ Features Used** | ~18D of 49D | Consonance + energy + timbre + change + interactions |
 | **H³ Demand** | 15 tuples (0.65%) | Sparse, efficient |
-| **PPC Mechanism** | 30D (3 sub-sections) | Pitch expectation |
-| **TPC Mechanism** | 30D (3 sub-sections) | Affective response |
-| **MEM Mechanism** | 30D (3 sub-sections) | Statistical context |
 | **Output Dimensions** | **13D** | 4-layer structure |
 
 ---
@@ -640,22 +588,14 @@ class ICEM(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D) | R³ (49D) |
-| Temporal | HC⁰ mechanisms (ATT, EFC, AED, ASA) | PPC (30D) + TPC (30D) + MEM (30D) mechanisms |
-| IC signal | S⁰.L9.entropy[116:120] + S⁰.L9.kurtosis[120:124] | R³[21] spectral_change + R³[22] energy_change + MEM.working_memory |
-| Arousal pathway | S⁰.X_L4L5[192:200] + HC⁰.AED | R³[33:41] x_l4l5 + TPC.source_identity[20:30] |
-| Valence pathway | S⁰.X_L5L9[224:232] + HC⁰.EFC | R³[41:49] x_l5l7 + MEM.long_term_memory[10:20] |
-| Attention | HC⁰.ATT | MEM.working_memory[0:10] |
-| Scene analysis | HC⁰.ASA | PPC (pitch context) |
+| IC signal | S⁰.L9.entropy[116:120] + S⁰.L9.kurtosis[120:124] | R³[21] spectral_change + R³[22] energy_change |
+| Arousal pathway | S⁰.X_L4L5[192:200] + HC⁰ affect | R³[33:41] x_l4l5 |
+| Valence pathway | S⁰.X_L5L9[224:232] + HC⁰.EFC | R³[41:49] x_l5l7 |
+| Attention | HC⁰.ATT | working_memory[0:10] |
+| Scene analysis | HC⁰ scene | pitch processing (pitch context) |
 | Demand format | HC⁰ index ranges | H³ 4-tuples (sparse) |
 | Total demand | 15/2304 = 0.65% | 15/2304 = 0.65% |
 | Output | 13D | 13D (same) |
-
-### Why PPC + TPC + MEM replaces HC⁰ mechanisms
-
-- **ATT → MEM.working_memory** [0:10]: Attentional entrainment for IC computation maps to MEM's working memory context.
-- **EFC → MEM.long_term_memory** [10:20]: Efference copy (statistical prediction) maps to MEM's long-term statistical model.
-- **AED → TPC.source_identity** [20:30]: Affective entrainment dynamics maps to TPC's source-level emotional processing.
-- **ASA → PPC.pitch_extraction** [0:10]: Auditory scene analysis for event detection maps to PPC's pitch/onset extraction.
 
 ---
 

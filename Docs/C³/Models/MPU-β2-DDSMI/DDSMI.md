@@ -21,28 +21,28 @@ The **Dyadic Dance Social Motor Integration** (DDSMI) model describes how dance 
 DYADIC DANCE SOCIAL MOTOR INTEGRATION
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-        FOUR SIMULTANEOUS PROCESSES
-        ═══════════════════════════
+ FOUR SIMULTANEOUS PROCESSES
+ ═══════════════════════════
 
-┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐
-│  AUDITORY   │  │ SELF-MOTOR  │  │  PARTNER    │  │   SOCIAL    │
-│  Music      │  │ Movement    │  │  Visual     │  │   Coord.    │
-│  Perception │  │ Control     │  │  Perception │  │  F=249.75   │
-│  (mTRF aud) │  │ (mTRF mot)  │  │  (mTRF vis) │  │  (mTRF soc) │
-└──────┬──────┘  └──────┬──────┘  └──────┬──────┘  └──────┬──────┘
-       │                │                │                │
-       └────────────────┴────────────────┴────────────────┘
-                              │
-                              ▼
+┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐
+│ AUDITORY │ │ SELF-MOTOR │ │ PARTNER │ │ SOCIAL │
+│ Music │ │ Movement │ │ Visual │ │ Coord. │
+│ Perception │ │ Control │ │ Perception │ │ F=249.75 │
+│ (mTRF aud) │ │ (mTRF mot) │ │ (mTRF vis) │ │ (mTRF soc) │
+└──────┬──────┘ └──────┬──────┘ └──────┬──────┘ └──────┬──────┘
+ │ │ │ │
+ └────────────────┴────────────────┴────────────────┘
+ │
+ ▼
 ┌──────────────────────────────────────────────────────────────────┐
-│              NEURAL INTEGRATION                                   │
-│                                                                  │
-│   Music Tracking ↓         Social Coordination ↑                 │
-│   with visual contact      with visual contact                   │
-│   F(1,57) = 7.48           F(1,57) = 249.75                     │
-│                                                                  │
-│   RESOURCE COMPETITION: Visual contact shifts resources          │
-│   from auditory to social processing                             │
+│ NEURAL INTEGRATION │
+│ │
+│ Music Tracking ↓ Social Coordination ↑ │
+│ with visual contact with visual contact │
+│ F(1,57) = 7.48 F(1,57) = 249.75 │
+│ │
+│ RESOURCE COMPETITION: Visual contact shifts resources │
+│ from auditory to social processing │
 └──────────────────────────────────────────────────────────────────┘
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -64,65 +64,64 @@ DDSMI bridges motor planning with social interaction in the Motor Planning Unit:
 
 ## 2. Neural Circuit: Complete Anatomy
 
-### 2.1 Information Flow Architecture (EAR → BRAIN → BEP+TMH → DDSMI)
+### 2.1 Information Flow Architecture (EAR → BRAIN → DDSMI)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    DDSMI COMPUTATION ARCHITECTURE                            ║
+║ DDSMI COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins x 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                         DDSMI reads: ~20D                        │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                         DDSMI demand: ~11 of 2304 tuples         │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Sensorimotor Circuit ═══════  ║
-║                               │                                              ║
-║                       ┌───────┴───────┐                                      ║
-║                       ▼               ▼                                      ║
-║  ┌─────────────────┐  ┌─────────────────┐                                   ║
-║  │  BEP (30D)      │  │  TMH (30D)      │                                   ║
-║  │                 │  │                 │                                    ║
-║  │ Beat Entr[0:10] │  │ Short-term      │                                   ║
-║  │ Motor Coup      │  │ Memory  [0:10]  │                                   ║
-║  │         [10:20] │  │ Sequence        │                                   ║
-║  │ Groove  [20:30] │  │ Integ  [10:20]  │                                   ║
-║  │                 │  │ Hierarch        │                                   ║
-║  │                 │  │ Struct  [20:30] │                                   ║
-║  └────────┬────────┘  └────────┬────────┘                                   ║
-║           │                    │                                              ║
-║           └────────┬───────────┘                                             ║
-║                    ▼                                                          ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    DDSMI MODEL (11D Output)                      │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f13_social_coordination,                   │        ║
-║  │                       f14_music_tracking,                        │        ║
-║  │                       f15_visual_modulation                       │        ║
-║  │  Layer M (Math):      mTRF_social, mTRF_auditory,               │        ║
-║  │                       mTRF_balance                                │        ║
-║  │  Layer P (Present):   partner_sync, music_entrainment            │        ║
-║  │  Layer F (Future):    coordination_pred,                          │        ║
-║  │                       music_pred, social_pred                     │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins x 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ DDSMI reads: ~20D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ DDSMI demand: ~11 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Sensorimotor Circuit ═══════ ║
+║ │ ║
+║ ┌───────┴───────┐ ║
+║ ▼ ▼ ║
+║ ┌─────────────────┐ ┌─────────────────┐ ║
+║ │ │ │ │ ║
+║ │ Beat Entr[0:10] │ │ Short-term │ ║
+║ │ Motor Coup │ │ Memory [0:10] │ ║
+║ │ [10:20] │ │ Sequence │ ║
+║ │ Groove [20:30] │ │ Integ [10:20] │ ║
+║ │ │ │ Hierarch │ ║
+║ │ │ │ Struct [20:30] │ ║
+║ └────────┬────────┘ └────────┬────────┘ ║
+║ │ │ ║
+║ └────────┬───────────┘ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ DDSMI MODEL (11D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f13_social_coordination, │ ║
+║ │ f14_music_tracking, │ ║
+║ │ f15_visual_modulation │ ║
+║ │ Layer M (Math): mTRF_social, mTRF_auditory, │ ║
+║ │ mTRF_balance │ ║
+║ │ Layer P (Present): partner_sync, music_entrainment │ ║
+║ │ Layer F (Future): coordination_pred, │ ║
+║ │ music_pred, social_pred │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -138,7 +137,7 @@ DDSMI bridges motor planning with social interaction in the Motor Planning Unit:
 | 2 | **Bigand et al. 2025** | Dual-EEG + mTRF | 70 | Visual contact reduces music tracking but increases social coordination (resource competition) | F(1,57)=7.48 p=.033 (music↓); interaction F(1,57)=50.10 p<.001 | **f15 visual modulation**: resource shift |
 | 3 | **Bigand et al. 2025** | Dual-EEG + mTRF | 70 | Self-movement tracking unaffected by visual contact or music presence | All ps>.224 | **Null finding**: self-motor is autonomous |
 | 4 | **Kohler et al. 2025** | fMRI + MVPA | 36 (18 dyads) | Joint piano: self-produced actions in left M1, other-produced in right PMC | Classification accuracy > chance (all p<.05) | **Brain regions**: M1/PMC lateralization for self/other |
-| 5 | **Wohltjen et al. 2023** | Behavioral + pupillometry | 198 (99 dyads) | Beat entrainment predicts social synchrony; pupillary synchrony as stable individual difference | d=1.37 (entrainment→social sync); d=1.06 (pupil sync) | **BEP→social**: beat entrainment enables social coordination |
+| 5 | **Wohltjen et al. 2023** | Behavioral + pupillometry | 198 (99 dyads) | Beat entrainment predicts social synchrony; pupillary synchrony as stable individual difference | d=1.37 (entrainment→social sync); d=1.06 (pupil sync) | **beat→social**: beat entrainment enables social coordination |
 | 6 | **Yoneta et al. 2022** | MEG hyperscanning | ~20 dyads | Leader/follower roles modulate inter-brain coupling in cooperative music | Significant role×coupling interaction | **Social role**: leadership dynamics in dyadic interaction |
 | 7 | **Sabharwal et al. 2024** | EEG hyperscanning | 60 (30 dyads) | Leadership dynamics in dyadic music: Granger Causality directional coupling | GC direction predicts leader/follower | **Partner sync**: directional coupling index |
 | 8 | **Leahy et al. 2025** | Systematic review | 7 studies | Environmental factors (music, visual contact) modulate inter-brain coupling in social interaction | Narrative synthesis | **Context modulation**: music + visual as coupling modulators |
@@ -150,19 +149,19 @@ DDSMI bridges motor planning with social interaction in the Motor Planning Unit:
 ### 3.2 Effect Size Summary
 
 ```
-Primary Evidence (k=8):  Strong convergent evidence for 4-process model
-Heterogeneity:           Moderate (EEG, fMRI, MEG, behavioral, review methods)
-Quality Assessment:      β-tier (dual-EEG mTRF primary; fMRI MVPA, MEG hyperscanning supporting)
+Primary Evidence (k=8): Strong convergent evidence for 4-process model
+Heterogeneity: Moderate (EEG, fMRI, MEG, behavioral, review methods)
+Quality Assessment: β-tier (dual-EEG mTRF primary; fMRI MVPA, MEG hyperscanning supporting)
 Effect Magnitudes:
-  Social coord. + visual contact:   F(1,57) = 249.75, p < .001
-  Partner visual + visual contact:  F(1,57) = 83.23, p < .001
-  Visual×Music interaction:         F(1,57) = 50.10, p < .001
-  Music + music presence:           F(1,57) = 30.22, p < .001
-  Music ↓ with visual contact:      F(1,57) = 7.48, p = .033
-  Self-movement:                    All ps > .224 (null)
-  Beat→social synchrony:            d = 1.37 (Wohltjen 2023)
-  Self/other MVPA:                  Above chance classification (Kohler 2025)
-Causal Evidence:         No (correlational EEG, fMRI; no TMS/lesion)
+ Social coord. + visual contact: F(1,57) = 249.75, p < .001
+ Partner visual + visual contact: F(1,57) = 83.23, p < .001
+ Visual×Music interaction: F(1,57) = 50.10, p < .001
+ Music + music presence: F(1,57) = 30.22, p < .001
+ Music ↓ with visual contact: F(1,57) = 7.48, p = .033
+ Self-movement: All ps > .224 (null)
+ Beat→social synchrony: d = 1.37 (Wohltjen 2023)
+ Self/other MVPA: Above chance classification (Kohler 2025)
+Causal Evidence: No (correlational EEG, fMRI; no TMS/lesion)
 ```
 
 ---
@@ -194,19 +193,13 @@ Causal Evidence:         No (correlational EEG, fMRI; no TMS/lesion)
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[25:33] x_l0l5 ───────────────┐
-BEP.beat_entrainment[0:10] ─────┼──► Music tracking (mTRF auditory)
-BEP.groove[20:30] ──────────────┘   Auditory entrainment for dance
 
 R³[33:41] x_l4l5 ───────────────┐
-BEP.motor_coupling[10:20] ──────┼──► Social coordination (mTRF social)
-TMH.sequence_integration[10:20] ─┘   Partner movement tracking
 
 R³[10] spectral_flux ────────────┐
-TMH.short_term[0:10] ───────────┼──► Visual modulation
-TMH.hierarchical[20:30] ────────┘   Resource competition (music vs social)
 ```
 
 ---
@@ -215,7 +208,7 @@ TMH.hierarchical[20:30] ────────┘   Resource competition (musi
 
 ### 5.1 Demand Specification
 
-DDSMI requires H³ features at BEP horizons for music-motor tracking and TMH horizons for social coordination memory. The demand reflects the multi-process temporal integration needed for dyadic dance.
+DDSMI requires H³ features for music-motor tracking and for social coordination memory. The demand reflects the multi-process temporal integration needed for dyadic dance.
 
 | R³ Index | Feature | H | Morph | Law | Purpose |
 |----------|---------|---|-------|-----|---------|
@@ -235,7 +228,7 @@ DDSMI requires H³ features at BEP horizons for music-motor tracking and TMH hor
 
 #### R³ v2 Projected Expansion
 
-DDSMI projected v2 from G:Rhythm, aligned with BEP+TMH horizons.
+DDSMI projected v2 from G:Rhythm, aligned with corresponding H³ horizons.
 
 | R³ Idx | Feature | Group | H | Morph | Law | Purpose |
 |:------:|---------|:-----:|:-:|-------|:---:|---------|
@@ -245,17 +238,6 @@ DDSMI projected v2 from G:Rhythm, aligned with BEP+TMH horizons.
 
 **v2 projected**: 3 tuples
 **Total projected**: 14 tuples of 294,912 theoretical = 0.0047%
-
-### 5.2 BEP + TMH Mechanism Binding
-
-| Mechanism | Sub-section | Range | DDSMI Role | Weight |
-|-----------|-------------|-------|------------|--------|
-| **BEP** | Beat Entrainment | BEP[0:10] | Music tracking (mTRF auditory) | 0.7 |
-| **BEP** | Motor Coupling | BEP[10:20] | Partner synchronization | **1.0** (primary) |
-| **BEP** | Groove Processing | BEP[20:30] | Dance groove / movement drive | **1.0** (primary) |
-| **TMH** | Short-term Memory | TMH[0:10] | Visual modulation / attention shift | 0.7 |
-| **TMH** | Sequence Integration | TMH[10:20] | Social coordination sequence | **1.0** (primary) |
-| **TMH** | Hierarchical Structure | TMH[20:30] | Multi-process hierarchy | 0.5 |
 
 ---
 
@@ -269,50 +251,45 @@ DDSMI OUTPUT TENSOR: 11D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 0  │ f13_social_coordination  │ [0, 1] │ Partner tracking (d=1.63).
-    │                          │        │ f13 = σ(0.40 * social_period_1s
-    │                          │        │       + 0.30 * mean(BEP.motor[10:20])
-    │                          │        │       + 0.30 * mean(TMH.seq[10:20]))
+ 0 │ f13_social_coordination │ [0, 1] │ Partner tracking (d=1.63).
+ │ │ │ f13 = σ(0.40 * social_period_1s
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 1  │ f14_music_tracking       │ [0, 1] │ Auditory entrainment (mTRF).
-    │                          │        │ f14 = σ(0.40 * music_period_1s
-    │                          │        │       + 0.30 * mean(BEP.beat[0:10])
-    │                          │        │       + 0.30 * mean(BEP.groove[20:30]))
+ 1 │ f14_music_tracking │ [0, 1] │ Auditory entrainment (mTRF).
+ │ │ │ f14 = σ(0.40 * music_period_1s
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 2  │ f15_visual_modulation    │ [0, 1] │ Contact reduces music tracking.
-    │                          │        │ f15 = σ(0.35 * loudness_entropy
-    │                          │        │       + 0.35 * mean(TMH.short[0:10])
-    │                          │        │       + 0.30 * (f13 - f14))
+ 2 │ f15_visual_modulation │ [0, 1] │ Contact reduces music tracking.
+ │ │ │ f15 = σ(0.35 * loudness_entropy
+ │ │ │ + 0.30 * (f13 - f14))
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 3  │ mTRF_social              │ [0, 1] │ Social coordination mTRF weight.
+ 3 │ mTRF_social │ [0, 1] │ Social coordination mTRF weight.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 4  │ mTRF_auditory            │ [0, 1] │ Auditory tracking mTRF weight.
+ 4 │ mTRF_auditory │ [0, 1] │ Auditory tracking mTRF weight.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 5  │ mTRF_balance             │ [0, 1] │ Social/auditory resource balance.
+ 5 │ mTRF_balance │ [0, 1] │ Social/auditory resource balance.
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 6  │ partner_sync             │ [0, 1] │ BEP partner synchronization level.
+ 6 │ partner_sync │ [0, 1] │ beat-entrainment partner synchronization level.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 7  │ music_entrainment        │ [0, 1] │ BEP music entrainment level.
+ 7 │ music_entrainment │ [0, 1] │ beat-entrainment music entrainment level.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 8  │ coordination_pred        │ [0, 1] │ Social coordination prediction.
+ 8 │ coordination_pred │ [0, 1] │ Social coordination prediction.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 9  │ music_pred               │ [0, 1] │ Music tracking prediction.
+ 9 │ music_pred │ [0, 1] │ Music tracking prediction.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
-10  │ social_pred              │ [0, 1] │ Social process prediction.
+10 │ social_pred │ [0, 1] │ Social process prediction.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 11D per frame at 172.27 Hz
@@ -328,16 +305,16 @@ TOTAL: 11D per frame at 172.27 Hz
 ```
 PRIMARY EQUATIONS:
 
-    mTRF_total = mTRF_auditory + mTRF_motor + mTRF_visual + mTRF_social
+ mTRF_total = mTRF_auditory + mTRF_motor + mTRF_visual + mTRF_social
 
 VISUAL CONTACT MODULATION:
 
-    With contact:    mTRF_social ↑ F(1,57)=249.75, mTRF_auditory ↓ F(1,57)=7.48
-    Without contact: mTRF_auditory ↑, mTRF_social ↓
+ With contact: mTRF_social ↑ F(1,57)=249.75, mTRF_auditory ↓ F(1,57)=7.48
+ Without contact: mTRF_auditory ↑, mTRF_social ↓
 
 RESOURCE COMPETITION:
 
-    mTRF_balance = mTRF_social / (mTRF_social + mTRF_auditory)
+ mTRF_balance = mTRF_social / (mTRF_social + mTRF_auditory)
 ```
 
 ### 7.2 Feature Formulas
@@ -347,20 +324,15 @@ RESOURCE COMPETITION:
 
 # f13: Social Coordination
 f13 = σ(0.40 * social_period_1s
-       + 0.30 * mean(BEP.motor_coupling[10:20])
-       + 0.30 * mean(TMH.sequence_integration[10:20]))
 # coefficients: 0.40 + 0.30 + 0.30 = 1.0 ✓
 
 # f14: Music Tracking
 f14 = σ(0.40 * music_period_1s
-       + 0.30 * mean(BEP.beat_entrainment[0:10])
-       + 0.30 * mean(BEP.groove[20:30]))
 # coefficients: 0.40 + 0.30 + 0.30 = 1.0 ✓
 
 # f15: Visual Modulation
 f15 = σ(0.35 * loudness_entropy
-       + 0.35 * mean(TMH.short_term[0:10])
-       + 0.30 * (f13 - f14))
+ + 0.30 * (f13 - f14))
 # |coefficients|: 0.35 + 0.35 + 0.30 = 1.0 ✓
 ```
 
@@ -391,24 +363,22 @@ f15 = σ(0.35 * loudness_entropy
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    DDSMI INTERACTIONS                                         │
+│ DDSMI INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (MPU):                                                         │
-│  DDSMI.social_coordination ──────► VRMSME (multi-modal coordination)       │
-│  DDSMI.music_tracking ───────────► PEOM (dance tempo entrainment)          │
-│  DDSMI.visual_modulation ────────► ASAP (attention modulation)             │
-│                                                                             │
-│  CROSS-UNIT (MPU → ARU):                                                   │
-│  DDSMI.partner_sync ────────────► ARU (social reward signal)               │
-│  DDSMI.mTRF_balance ───────────► ARU (engagement marker)                  │
-│                                                                             │
-│  UPSTREAM DEPENDENCIES:                                                     │
-│  BEP mechanism (30D) ────────────► DDSMI (beat/motor processing)           │
-│  TMH mechanism (30D) ────────────► DDSMI (temporal memory/sequence)        │
-│  R³ (~20D) ──────────────────────► DDSMI (direct spectral features)        │
-│  H³ (11 tuples) ─────────────────► DDSMI (temporal dynamics)               │
-│                                                                             │
+│ │
+│ INTRA-UNIT (MPU): │
+│ DDSMI.social_coordination ──────► VRMSME (multi-modal coordination) │
+│ DDSMI.music_tracking ───────────► PEOM (dance tempo entrainment) │
+│ DDSMI.visual_modulation ────────► ASAP (attention modulation) │
+│ │
+│ CROSS-UNIT (MPU → ARU): │
+│ DDSMI.partner_sync ────────────► ARU (social reward signal) │
+│ DDSMI.mTRF_balance ───────────► ARU (engagement marker) │
+│ │
+│ UPSTREAM DEPENDENCIES: │
+│ R³ (~20D) ──────────────────────► DDSMI (direct spectral features) │
+│ H³ (11 tuples) ─────────────────► DDSMI (temporal dynamics) │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -432,104 +402,80 @@ f15 = σ(0.35 * loudness_entropy
 
 ```python
 class DDSMI(BaseModel):
-    """Dyadic Dance Social Motor Integration Model.
+ """Dyadic Dance Social Motor Integration Model.
 
-    Output: 11D per frame.
-    Reads: BEP mechanism (30D), TMH mechanism (30D), R³ direct.
-    """
-    NAME = "DDSMI"
-    UNIT = "MPU"
-    TIER = "β2"
-    OUTPUT_DIM = 11
-    MECHANISM_NAMES = ("BEP", "TMH")
+ Output: 11D per frame.
+ """
+ NAME = "DDSMI"
+ UNIT = "MPU"
+ TIER = "β2"
+ OUTPUT_DIM = 11
+ TAU_DECAY = 5.0 # Social coordination window (seconds)
 
-    TAU_DECAY = 5.0  # Social coordination window (seconds)
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """11 tuples for DDSMI computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ (10, 3, 0, 2), # spectral_flux, 100ms, value, bidi
+ (10, 16, 14, 2), # spectral_flux, 1000ms, periodicity, bidi
+ (25, 3, 0, 2), # x_l0l5[0], 100ms, value, bidi
+ (25, 3, 14, 2), # x_l0l5[0], 100ms, periodicity, bidi
+ (25, 8, 14, 2), # x_l0l5[0], 500ms, periodicity, bidi
+ (25, 16, 14, 2), # x_l0l5[0], 1000ms, periodicity, bidi
+ (33, 3, 0, 2), # x_l4l5[0], 100ms, value, bidi
+ (33, 3, 2, 2), # x_l4l5[0], 100ms, std, bidi
+ (33, 8, 14, 2), # x_l4l5[0], 500ms, periodicity, bidi
+ (33, 16, 14, 2), # x_l4l5[0], 1000ms, periodicity, bidi
+ (8, 3, 20, 2), # loudness, 100ms, entropy, bidi
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """11 tuples for DDSMI computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # ── BEP horizons: music tracking ──
-            (10, 3, 0, 2),     # spectral_flux, 100ms, value, bidi
-            (10, 16, 14, 2),   # spectral_flux, 1000ms, periodicity, bidi
-            (25, 3, 0, 2),     # x_l0l5[0], 100ms, value, bidi
-            (25, 3, 14, 2),    # x_l0l5[0], 100ms, periodicity, bidi
-            (25, 8, 14, 2),    # x_l0l5[0], 500ms, periodicity, bidi
-            (25, 16, 14, 2),   # x_l0l5[0], 1000ms, periodicity, bidi
-            # ── TMH horizons: social coordination ──
-            (33, 3, 0, 2),     # x_l4l5[0], 100ms, value, bidi
-            (33, 3, 2, 2),     # x_l4l5[0], 100ms, std, bidi
-            (33, 8, 14, 2),    # x_l4l5[0], 500ms, periodicity, bidi
-            (33, 16, 14, 2),   # x_l4l5[0], 1000ms, periodicity, bidi
-            (8, 3, 20, 2),     # loudness, 100ms, entropy, bidi
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute DDSMI 11D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute DDSMI 11D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"BEP": (B,T,30), "TMH": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,11) DDSMI output
+ """
+ # H³ direct features
+ social_period_1s = h3_direct[(33, 16, 14, 2)].unsqueeze(-1)
+ music_period_1s = h3_direct[(25, 16, 14, 2)].unsqueeze(-1)
+ loudness_entropy = h3_direct[(8, 3, 20, 2)].unsqueeze(-1)
 
-        Returns:
-            (B,T,11) DDSMI output
-        """
-        bep = mechanism_outputs["BEP"]
-        tmh = mechanism_outputs["TMH"]
+ # ═══ LAYER E ═══
+ f13 = torch.sigmoid(
+ 0.40 * social_period_1s
+ )
+ f14 = torch.sigmoid(
+ 0.40 * music_period_1s
+ )
+ f15 = torch.sigmoid(
+ 0.35 * loudness_entropy
+ + 0.30 * (f13 - f14)
+ )
 
-        bep_beat = bep[..., 0:10]
-        bep_motor = bep[..., 10:20]
-        bep_groove = bep[..., 20:30]
-        tmh_short = tmh[..., 0:10]
-        tmh_seq = tmh[..., 10:20]
-        tmh_hier = tmh[..., 20:30]
+ # ═══ LAYER M ═══
+ mTRF_social = f13
+ mTRF_auditory = f14
+ mTRF_balance = torch.sigmoid(0.5 * f13 + 0.5 * (1 - f14))
 
-        # H³ direct features
-        social_period_1s = h3_direct[(33, 16, 14, 2)].unsqueeze(-1)
-        music_period_1s = h3_direct[(25, 16, 14, 2)].unsqueeze(-1)
-        loudness_entropy = h3_direct[(8, 3, 20, 2)].unsqueeze(-1)
+ # ═══ LAYER P ═══
 
-        # ═══ LAYER E ═══
-        f13 = torch.sigmoid(
-            0.40 * social_period_1s
-            + 0.30 * bep_motor.mean(-1, keepdim=True)
-            + 0.30 * tmh_seq.mean(-1, keepdim=True)
-        )
-        f14 = torch.sigmoid(
-            0.40 * music_period_1s
-            + 0.30 * bep_beat.mean(-1, keepdim=True)
-            + 0.30 * bep_groove.mean(-1, keepdim=True)
-        )
-        f15 = torch.sigmoid(
-            0.35 * loudness_entropy
-            + 0.35 * tmh_short.mean(-1, keepdim=True)
-            + 0.30 * (f13 - f14)
-        )
+ # ═══ LAYER F ═══
+ coordination_pred = torch.sigmoid(0.5 * f13 + 0.5 * social_period_1s)
+ music_pred = torch.sigmoid(0.5 * f14 + 0.5 * music_period_1s)
 
-        # ═══ LAYER M ═══
-        mTRF_social = f13
-        mTRF_auditory = f14
-        mTRF_balance = torch.sigmoid(0.5 * f13 + 0.5 * (1 - f14))
-
-        # ═══ LAYER P ═══
-        partner_sync = bep_motor.mean(-1, keepdim=True)
-        music_entrainment = bep_beat.mean(-1, keepdim=True)
-
-        # ═══ LAYER F ═══
-        coordination_pred = torch.sigmoid(0.5 * f13 + 0.5 * social_period_1s)
-        music_pred = torch.sigmoid(0.5 * f14 + 0.5 * music_period_1s)
-        social_pred = torch.sigmoid(0.5 * f15 + 0.5 * tmh_hier.mean(-1, keepdim=True))
-
-        return torch.cat([
-            f13, f14, f15,                                    # E: 3D
-            mTRF_social, mTRF_auditory, mTRF_balance,        # M: 3D
-            partner_sync, music_entrainment,                   # P: 2D
-            coordination_pred, music_pred, social_pred,        # F: 3D
-        ], dim=-1)  # (B, T, 11)
+ return torch.cat([
+ f13, f14, f15, # E: 3D
+ mTRF_social, mTRF_auditory, mTRF_balance, # M: 3D
+ partner_sync, music_entrainment, # P: 2D
+ coordination_pred, music_pred, social_pred, # F: 3D
+ ], dim=-1) # (B, T, 11)
 ```
 
 ---
@@ -546,8 +492,6 @@ class DDSMI(BaseModel):
 | **Falsification Tests** | 3/5 testable (visual contact, music presence tested; solo not yet) | High validity |
 | **R³ Features Used** | ~20D of 49D | Energy + change + interactions |
 | **H³ Demand** | 11 tuples (0.48%) | Sparse, efficient |
-| **BEP Mechanism** | 30D (3 sub-sections) | Beat/motor processing |
-| **TMH Mechanism** | 30D (3 sub-sections) | Temporal memory/sequence |
 | **Output Dimensions** | **11D** | 4-layer structure |
 
 ---
@@ -572,19 +516,12 @@ class DDSMI(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D) | R³ (49D) |
-| Temporal | HC⁰ mechanisms (ATT, NPL, GRV) | BEP (30D) + TMH (30D) mechanisms |
-| Social signal | S⁰.X_L4L5[192:200] + HC⁰.NPL | R³.x_l4l5[33:41] + BEP.motor_coupling |
-| Music signal | S⁰.X_L0L4[128:136] + HC⁰.GRV | R³.x_l0l5[25:33] + BEP.beat_entrainment |
-| Visual modulation | S⁰.L9.Γ_mean[104] + HC⁰.ATT | H³ entropy tuples + TMH.short_term |
+| Social signal | S⁰.X_L4L5[192:200] + HC⁰.NPL | R³.x_l4l5[33:41] |
+| Music signal | S⁰.X_L0L4[128:136] + HC⁰.GRV | R³.x_l0l5[25:33] |
+| Visual modulation | S⁰.L9.Γ_mean[104] + HC⁰.ATT | H³ entropy tuples |
 | Demand format | HC⁰ index ranges | H³ 4-tuples (sparse) |
 | Total demand | 11/2304 = 0.48% | 11/2304 = 0.48% |
 | Output | 11D | 11D (same) |
-
-### Why BEP + TMH replaces HC⁰ mechanisms
-
-- **NPL → BEP.motor_coupling** [10:20]: Neural phase locking for partner synchronization maps to BEP's motor coupling.
-- **GRV → BEP.groove_processing** [20:30] + **BEP.beat_entrainment** [0:10]: Groove processing for dance engagement maps to BEP's groove and beat sections.
-- **ATT → TMH.short_term** [0:10]: Attentional entrainment (visual modulation) maps to TMH's short-term memory for attention gating.
 
 ---
 
@@ -596,7 +533,6 @@ class DDSMI(BaseModel):
 |---|-------|----------------|-----------------|----------|
 | 1 | FULL_NAME | "Dyadic Dance Social Motor Integration" | "Dynamic Dual-Stream Motor Integration" | HIGH |
 | 2 | OUTPUT_DIM | 11 | 10 | HIGH |
-| 3 | MECHANISM_NAMES | ("BEP", "TMH") | ("BEP",) — missing TMH | HIGH |
 | 4 | h3_demand | 11 tuples (see Section 5.1) | () empty tuple | HIGH |
 | 5 | Layer E dim names | f13_social_coordination, f14_music_tracking, f15_visual_modulation | f13_music_tracking, f14_self_movement, f15_social_coordination | MEDIUM |
 | 6 | Layer M dimensions | 3D (mTRF_social, mTRF_auditory, mTRF_balance) | 2D (multi_stream_binding_fn, partner_sync_index) | HIGH |

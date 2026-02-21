@@ -21,20 +21,20 @@ The **Oscillatory Intelligence Integration** (OII) models how musical aptitude a
 OSCILLATORY INTELLIGENCE: INTEGRATION vs SEGREGATION
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-SLOW OSCILLATIONS (Theta/Alpha)         FAST OSCILLATIONS (Gamma)
-Function: INTEGRATION                   Function: SEGREGATION
-Binding: Distant brain regions          Binding: Local circuits
-Scale: Large (frontal-temporal)         Scale: Small (cortical column)
+SLOW OSCILLATIONS (Theta/Alpha) FAST OSCILLATIONS (Gamma)
+Function: INTEGRATION Function: SEGREGATION
+Binding: Distant brain regions Binding: Local circuits
+Scale: Large (frontal-temporal) Scale: Small (cortical column)
 
-HIGH Gf individuals:                    HIGH Gf individuals:
-  Stronger theta/alpha degree             Lower gamma degree
-  Lower slow segregation                  Higher gamma segregation
-  = EFFICIENT INTEGRATION                 = EFFICIENT LOCAL PROCESSING
+HIGH Gf individuals: HIGH Gf individuals:
+ Stronger theta/alpha degree Lower gamma degree
+ Lower slow segregation Higher gamma segregation
+ = EFFICIENT INTEGRATION = EFFICIENT LOCAL PROCESSING
 
-AVERAGE Gf individuals:                 AVERAGE Gf individuals:
-  Weaker theta/alpha degree               Stronger gamma degree
-  Higher slow segregation                 Lower gamma segregation
-  = DIFFUSE INTEGRATION                   = DIFFUSE LOCAL PROCESSING
+AVERAGE Gf individuals: AVERAGE Gf individuals:
+ Weaker theta/alpha degree Stronger gamma degree
+ Higher slow segregation Lower gamma segregation
+ = DIFFUSE INTEGRATION = DIFFUSE LOCAL PROCESSING
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 KEY FINDING: Musical aptitude correlates with oscillatory patterns
@@ -50,7 +50,7 @@ Though OII involves oscillatory dynamics (STU territory) and spectral processing
 
 1. **Hippocampal binding**: Theta oscillations originating from hippocampus bind distributed cortical representations into unified percepts — this is a mnemonic operation.
 
-2. **Syntactic templates**: Efficient mode switching requires stored templates of harmonic progressions and structural expectations against which current input is compared — SYN mechanism territory.
+2. **Syntactic templates**: Efficient mode switching requires stored templates of harmonic progressions and structural expectations against which current input is compared — synthesis mechanism territory.
 
 3. **Encoding efficiency**: High Gf individuals encode musical patterns more efficiently because they switch between integration (binding) and segregation (detail extraction) adaptively — an encoding optimization.
 
@@ -64,147 +64,145 @@ Though OII involves oscillatory dynamics (STU territory) and spectral processing
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                 OII — COMPLETE CIRCUIT                                       ║
+║ OII — COMPLETE CIRCUIT ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │                    AUDITORY CORTEX (STG/A1)                        │    ║
-║  │                                                                     │    ║
-║  │  Spectrotemporal encoding → oscillatory frequency analysis          │    ║
-║  │  Alpha-band gating (8-12 Hz) filters incoming spectral input       │    ║
-║  │  Gamma-band (30-100 Hz) supports local feature extraction          │    ║
-║  └──────┬──────────────────────────────────────────────────────────────┘    ║
-║         │                                                                    ║
-║         ▼                                                                    ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │              FRONTAL CORTEX (Theta Hub)                             │    ║
-║  │                                                                     │    ║
-║  │  ┌─────────────────────┐  ┌───────────────────────┐                │    ║
-║  │  │    mPFC              │  │      DLPFC            │                │    ║
-║  │  │                     │  │                       │                │    ║
-║  │  │  • Theta generation │  │  • Working memory     │                │    ║
-║  │  │  • Long-range       │  │  • Mode switching     │                │    ║
-║  │  │    integration      │  │  • Executive control  │                │    ║
-║  │  │  • Top-down         │  │  • Integration-       │                │    ║
-║  │  │    prediction       │  │    segregation balance│                │    ║
-║  │  └─────────────────────┘  └───────────────────────┘                │    ║
-║  └──────┬──────────────────────────────────────────────────────────────┘    ║
-║         │                                                                    ║
-║         ▼                                                                    ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │              TEMPORAL CORTEX (Alpha/Gamma Hub)                      │    ║
-║  │                                                                     │    ║
-║  │  ┌─────────────────────┐  ┌───────────────────────┐                │    ║
-║  │  │    STG              │  │      MTG              │                │    ║
-║  │  │                     │  │                       │                │    ║
-║  │  │  • Alpha gating     │  │  • Gamma-band local   │                │    ║
-║  │  │  • Spectral         │  │    processing         │                │    ║
-║  │  │    integration      │  │  • Fine detail        │                │    ║
-║  │  │                     │  │    extraction         │                │    ║
-║  │  └─────────────────────┘  └───────────────────────┘                │    ║
-║  └──────┬──────────────────────────────────────────────────────────────┘    ║
-║         │                                                                    ║
-║         ▼                                                                    ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │              HIPPOCAMPUS (Theta-Gamma Coupling Hub)                  │    ║
-║  │                                                                     │    ║
-║  │  • Theta-gamma cross-frequency coupling                             │    ║
-║  │  • Sequential item encoding in gamma nested within theta            │    ║
-║  │  • Pattern binding across cortical sources                          │    ║
-║  │  • Integration-segregation coordination                             │    ║
-║  └─────────────────────────────────────────────────────────────────────┘    ║
-║                                                                              ║
-║  CRITICAL EVIDENCE:                                                          ║
-║  ─────────────────                                                          ║
-║  Gf connectivity study:  DTI/MEG, d = 2.99 (very large), n=66+38           ║
-║  Theta integration:      Frontal theta → temporal alpha coherence           ║
-║  Gamma segregation:      Local gamma power → efficient detail extraction    ║
-║  Mode switching:         Gf ∝ integration/segregation switching speed       ║
+║ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ AUDITORY CORTEX (STG/A1) │ ║
+║ │ │ ║
+║ │ Spectrotemporal encoding → oscillatory frequency analysis │ ║
+║ │ Alpha-band gating (8-12 Hz) filters incoming spectral input │ ║
+║ │ Gamma-band (30-100 Hz) supports local feature extraction │ ║
+║ └──────┬──────────────────────────────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ FRONTAL CORTEX (Theta Hub) │ ║
+║ │ │ ║
+║ │ ┌─────────────────────┐ ┌───────────────────────┐ │ ║
+║ │ │ mPFC │ │ DLPFC │ │ ║
+║ │ │ │ │ │ │ ║
+║ │ │ • Theta generation │ │ • Working memory │ │ ║
+║ │ │ • Long-range │ │ • Mode switching │ │ ║
+║ │ │ integration │ │ • Executive control │ │ ║
+║ │ │ • Top-down │ │ • Integration- │ │ ║
+║ │ │ prediction │ │ segregation balance│ │ ║
+║ │ └─────────────────────┘ └───────────────────────┘ │ ║
+║ └──────┬──────────────────────────────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL CORTEX (Alpha/Gamma Hub) │ ║
+║ │ │ ║
+║ │ ┌─────────────────────┐ ┌───────────────────────┐ │ ║
+║ │ │ STG │ │ MTG │ │ ║
+║ │ │ │ │ │ │ ║
+║ │ │ • Alpha gating │ │ • Gamma-band local │ │ ║
+║ │ │ • Spectral │ │ processing │ │ ║
+║ │ │ integration │ │ • Fine detail │ │ ║
+║ │ │ │ │ extraction │ │ ║
+║ │ └─────────────────────┘ └───────────────────────┘ │ ║
+║ └──────┬──────────────────────────────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ HIPPOCAMPUS (Theta-Gamma Coupling Hub) │ ║
+║ │ │ ║
+║ │ • Theta-gamma cross-frequency coupling │ ║
+║ │ • Sequential item encoding in gamma nested within theta │ ║
+║ │ • Pattern binding across cortical sources │ ║
+║ │ • Integration-segregation coordination │ ║
+║ └─────────────────────────────────────────────────────────────────────┘ ║
+║ ║
+║ CRITICAL EVIDENCE: ║
+║ ───────────────── ║
+║ Gf connectivity study: DTI/MEG, d = 2.99 (very large), n=66+38 ║
+║ Theta integration: Frontal theta → temporal alpha coherence ║
+║ Gamma segregation: Local gamma power → efficient detail extraction ║
+║ Mode switching: Gf ∝ integration/segregation switching speed ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
-### 2.2 Information Flow Architecture (EAR → BRAIN → SYN + MEM → OII)
+### 2.2 Information Flow Architecture (EAR → BRAIN → H³ direct → OII)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    OII COMPUTATION ARCHITECTURE                              ║
+║ OII COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins × 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
-║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ CHANGE   │ │ X-INT  │ │        ║
-║  │  │ 7D [0:7]  │ │ 5D[7:12]│ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
-║  │  │           │ │         │ │ [12:21] │ │ [21:25]  │ │ [25:49]│ │        ║
-║  │  │roughness  │ │amplitude│ │warmth   │ │flux      │ │x_l0l5  │ │        ║
-║  │  │sethares   │ │loudness │ │tristim. │ │entropy   │ │x_l4l5  │ │        ║
-║  │  │pleasant.  │ │onset    │ │tonalness│ │concent.  │ │x_l5l7  │ │        ║
-║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                         OII reads: 38D                            │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                                                                  │        ║
-║  │  SYN Horizons:             MEM Horizons:                         │        ║
-║  │  ┌── Chord ───┐            ┌── Encoding ──┐                     │        ║
-║  │  │ 400ms (H10)│            │ 1s (H16)     │                     │        ║
-║  │  │ Harmonic   │            │ Working mem  │                     │        ║
-║  │  │ state      │            │ binding      │                     │        ║
-║  │  └──────┬─────┘            └──────┬───────┘                     │        ║
-║  │  ┌── Progr. ──┐            ┌── Consolid. ─┐                     │        ║
-║  │  │ 700ms (H14)│            │ 5s (H20)     │                     │        ║
-║  │  │ Prediction │            │ Hippocampal  │                     │        ║
-║  │  │ error      │            │ binding      │                     │        ║
-║  │  └──────┬─────┘            └──────┬───────┘                     │        ║
-║  │  ┌── Phrase ──┐            ┌── Retrieval ─┐                     │        ║
-║  │  │ 2s (H18)   │            │ 36s (H24)    │                     │        ║
-║  │  │ Structural │            │ Long-term    │                     │        ║
-║  │  │ closure    │            │ episodic     │                     │        ║
-║  │  └──────┬─────┘            └──────┬───────┘                     │        ║
-║  │         └──────────┬──────────────┘                              │        ║
-║  │                    OII demand: ~24 of 2304 tuples                │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Mnemonic Circuit ═════════    ║
-║                               │                                              ║
-║  ┌────────────────────────────┼─────────────────────────────────┐           ║
-║  │                            ▼                                   │           ║
-║  │  ┌─────────────────┐  ┌─────────────────┐                    │           ║
-║  │  │  SYN (30D)      │  │  MEM (30D)      │                    │           ║
-║  │  │                 │  │                 │                    │           ║
-║  │  │ Syntax   [0:10] │  │ Encoding  [0:10]│                    │           ║
-║  │  │ Predict [10:20] │  │ Familiar [10:20]│                    │           ║
-║  │  │ Struct  [20:30] │  │ Retrieval[20:30]│                    │           ║
-║  │  └────────┬────────┘  └────────┬────────┘                    │           ║
-║  │           └──────────┬─────────┘                              │           ║
-║  │                      ▼                                        │           ║
-║  │  ┌──────────────────────────────────────────────────────────┐│           ║
-║  │  │                    OII MODEL (10D Output)                ││           ║
-║  │  │                                                          ││           ║
-║  │  │  Layer E (Episodic):   f16_slow_integration,            ││           ║
-║  │  │                        f17_fast_segregation,             ││           ║
-║  │  │                        f18_mode_switching                ││           ║
-║  │  │  Layer M (Math):       gf_proxy, switching_efficiency   ││           ║
-║  │  │  Layer P (Present):    integration_state, segregation_st││           ║
-║  │  │  Layer F (Future):     integration_pred, segregation_pred│           ║
-║  │  │                        (reserved)                        ││           ║
-║  │  └──────────────────────────────────────────────────────────┘│           ║
-║  └──────────────────────────────────────────────────────────────┘           ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins × 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ ENERGY │ │ TIMBRE │ │ CHANGE │ │ X-INT │ │ ║
+║ │ │ 7D [0:7] │ │ 5D[7:12]│ │ 9D │ │ 4D │ │ 24D │ │ ║
+║ │ │ │ │ │ │ [12:21] │ │ [21:25] │ │ [25:49]│ │ ║
+║ │ │roughness │ │amplitude│ │warmth │ │flux │ │x_l0l5 │ │ ║
+║ │ │sethares │ │loudness │ │tristim. │ │entropy │ │x_l4l5 │ │ ║
+║ │ │pleasant. │ │onset │ │tonalness│ │concent. │ │x_l5l7 │ │ ║
+║ │ └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │ ║
+║ │ OII reads: 38D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ │ ║
+║ │ ┌── Chord ───┐ ┌── Encoding ──┐ │ ║
+║ │ │ 400ms (H10)│ │ 1s (H16) │ │ ║
+║ │ │ Harmonic │ │ Working mem │ │ ║
+║ │ │ state │ │ binding │ │ ║
+║ │ └──────┬─────┘ └──────┬───────┘ │ ║
+║ │ ┌── Progr. ──┐ ┌── Consolid. ─┐ │ ║
+║ │ │ 700ms (H14)│ │ 5s (H20) │ │ ║
+║ │ │ Prediction │ │ Hippocampal │ │ ║
+║ │ │ error │ │ binding │ │ ║
+║ │ └──────┬─────┘ └──────┬───────┘ │ ║
+║ │ ┌── Phrase ──┐ ┌── Retrieval ─┐ │ ║
+║ │ │ 2s (H18) │ │ 36s (H24) │ │ ║
+║ │ │ Structural │ │ Long-term │ │ ║
+║ │ │ closure │ │ episodic │ │ ║
+║ │ └──────┬─────┘ └──────┬───────┘ │ ║
+║ │ └──────────┬──────────────┘ │ ║
+║ │ OII demand: ~24 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Mnemonic Circuit ═════════ ║
+║ │ ║
+║ ┌────────────────────────────┼─────────────────────────────────┐ ║
+║ │ ▼ │ ║
+║ │ ┌─────────────────┐ ┌─────────────────┐ │ ║
+║ │ │ │ │ │ │ ║
+║ │ │ Syntax [0:10] │ │ Encoding [0:10]│ │ ║
+║ │ │ Predict [10:20] │ │ Familiar [10:20]│ │ ║
+║ │ │ Struct [20:30] │ │ Retrieval[20:30]│ │ ║
+║ │ └────────┬────────┘ └────────┬────────┘ │ ║
+║ │ └──────────┬─────────┘ │ ║
+║ │ ▼ │ ║
+║ │ ┌──────────────────────────────────────────────────────────┐│ ║
+║ │ │ OII MODEL (10D Output) ││ ║
+║ │ │ ││ ║
+║ │ │ Layer E (Episodic): f16_slow_integration, ││ ║
+║ │ │ f17_fast_segregation, ││ ║
+║ │ │ f18_mode_switching ││ ║
+║ │ │ Layer M (Math): gf_proxy, switching_efficiency ││ ║
+║ │ │ Layer P (Present): integration_state, segregation_st││ ║
+║ │ │ Layer F (Future): integration_pred, segregation_pred│ ║
+║ │ │ (reserved) ││ ║
+║ │ └──────────────────────────────────────────────────────────┘│ ║
+║ └──────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -216,14 +214,14 @@ Though OII involves oscillatory dynamics (STU territory) and spectral processing
 
 | # | Study | Method | N | Key Finding | Effect Size | MI Relevance |
 |---|-------|--------|---|-------------|-------------|-------------|
-| 1 | **Bruzzone et al. (2022)** — *Dissociated brain functional connectivity of fast versus slow frequencies underlying individual differences in fluid intelligence: a DTI and MEG study.* Scientific Reports, 12:4746. | DTI + MEG (resting-state), graph theory (degree, modularity, segregation coefficient), WAIS-IV Gf | 66 (MEG), 67 (DTI); high Gf N=38, avg Gf N=31 | High Gf individuals show stronger degree & lower segregation in theta/alpha bands (long-range integration); opposite in gamma (higher local segregation). Structural DTI confirms: high Gf = stronger long-range white matter connectivity. | Theta degree: p<0.001; Alpha degree: p<0.001; Gamma degree: p<0.001 (reversed); DTI degree: p=0.007; Gf group separation: t(55)=11.08, p<1e-7 | **Primary evidence for integration-segregation model.** Theta/alpha integration efficiency maps to SYN.harmonic_syntax; gamma segregation efficiency maps to local processing. Gf proxy directly supported. |
+| 1 | **Bruzzone et al. (2022)** — *Dissociated brain functional connectivity of fast versus slow frequencies underlying individual differences in fluid intelligence: a DTI and MEG study.* Scientific Reports, 12:4746. | DTI + MEG (resting-state), graph theory (degree, modularity, segregation coefficient), WAIS-IV Gf | 66 (MEG), 67 (DTI); high Gf N=38, avg Gf N=31 | High Gf individuals show stronger degree & lower segregation in theta/alpha bands (long-range integration); opposite in gamma (higher local segregation). Structural DTI confirms: high Gf = stronger long-range white matter connectivity. | Theta degree: p<0.001; Alpha degree: p<0.001; Gamma degree: p<0.001 (reversed); DTI degree: p=0.007; Gf group separation: t(55)=11.08, p<1e-7 | **Primary evidence for integration-segregation model.** Theta/alpha integration efficiency maps to harmonic_syntax; gamma segregation efficiency maps to local processing. Gf proxy directly supported. |
 | 2 | **Samiee et al. (2022)** — *Cross-Frequency Brain Network Dynamics Support Pitch Change Detection.* J. Neuroscience, 42(18):3823-3835. | MEG (275-ch), source-level PAC (delta-beta), directed connectivity (PTE), functional connectivity (coherence) | 16 (8 amusics, 8 controls) | Delta(2-4 Hz)-to-beta(15-35 Hz) PAC in rAud and rIFG. Bottom-up delta from auditory to IFG/motor cortex. Top-down beta from motor to auditory/IFG. Amusia: elevated PAC (F(1)=11.1, p<0.001 in rAud) and depressed delta connectivity. | PAC group effect rAud: F(1)=11.1, p<0.001; rIFG: F(1)=43.95, p<0.0001; Coherence: delta>beta F(1)=49.7, p<0.0001; PTE Mot→Aud beta: t(15)=6.48, p<0.001 | **Cross-frequency coupling for pitch processing.** Delta-beta PAC = mode switching mechanism. Directed connectivity = integration (bottom-up delta) vs segregation (top-down beta). Amusia as model of impaired oscillatory intelligence. |
 | 3 | **Borderie et al. (2024)** — *Cross-frequency coupling in cortico-hippocampal networks supports the maintenance of sequential auditory information in short-term memory.* PLOS Biology, 22(3):e3002512. | iEEG (intracranial SEEG), theta-gamma PAC, machine learning decoding | Drug-resistant epilepsy patients (iEEG) | Theta-gamma PAC in STS, IFG, ITG, and hippocampus supports auditory STM retention. PAC strength decodes correct vs incorrect trials via machine learning. PAC positively correlated with individual STM performance. Gamma bursts restricted to specific theta phases corresponding to higher neural excitability. | PAC decoding: ML accuracy significant; PAC-STM correlation: positive (individual differences) | **Direct evidence for hippocampal theta-gamma coupling in auditory memory.** Confirms cross-frequency coupling as memory encoding mechanism. STS + IFG + hippocampus pathway matches OII circuit. Sequential item encoding via nested gamma in theta. |
 | 4 | **Dobri et al. (2023)** — *Synchrony in auditory 40-Hz gamma oscillations increases in older age and correlates with hearing abilities and cortical GABA levels.* Imaging Neuroscience, 1:imag_a_00035. | MEG, 40-Hz ASSR, MR spectroscopy (GABA) | Young + older adults | 40-Hz gamma ASSR amplitude increases in older adults; correlates with hearing loss in noise condition; correlates with left auditory cortex GABA concentration in quiet condition. Gamma synchrony has detrimental effect on auditory processing when excessive. | ASSR amplitude increase in aging: significant; GABA correlation: significant (left auditory cortex) | **Gamma-band local processing and aging.** Supports OII segregation model: excessive gamma synchrony impairs feature binding. GABA-mediated inhibition controls gamma synchrony — links to mode switching efficiency. |
 | 5 | **Ding et al. (2025)** — *Entrainment of rhythmic tonal sequences on neural oscillations and the impact on subjective emotion.* Scientific Reports. | EEG (64-ch), ITPC, EPS, SAM emotional ratings | 31 (37 recruited) | All 12 presenting rates (1-12 Hz) significantly entrain neural oscillations. 6 Hz boundary: below decreases valence/increases dominance; above increases valence/decreases dominance. ITPC modulation intensity correlates with emotional changes for >6 Hz sequences. | ITPC: F(11,330)=4.81, p<0.001, eta2=0.14; EPS: F(11,330)=14.10, p<0.001, eta2=0.32; Dominance interaction: eta2=0.08 | **Entrainment rate and emotion.** 6 Hz boundary aligns with theta-alpha transition, supporting OII's integration-segregation switching model. Frontocentral entrainment maps to DLPFC mode switching hub. |
 | 6 | **Fries (2015)** — *Rhythms for Cognition: Communication through Coherence.* Neuron, 88(1):220-235. | Review + CTC framework | — (Review) | Gamma (30-80 Hz): local computation. Beta (15-30 Hz): feedback/maintenance. Theta (4-8 Hz): long-range coordination. Alpha (8-12 Hz): inhibition/gating. Phase coherence gates information flow. | Framework; replicated across modalities | **Theoretical foundation for OII frequency-band assignment.** Gamma = segregation, theta = integration, alpha = gating. Directly supports OII layer structure. |
 | 7 | **Gnanateja et al. (2022)** — *On the Role of Neural Oscillations Across Timescales in Speech and Music Processing.* Frontiers in Computational Neuroscience, 16:872093. | Review (clinician-scientist targeted) | — (Review) | Delta: words/syntax/prosody. Theta: syllabic rate. Alpha: attention. Beta: auditory-motor coupling. Gamma: phonetic features. Theta-gamma coupling for hierarchical parsing. Music shares oscillatory processing with speech. | Framework; cited >100 papers | **Oscillatory frequency bands in music processing.** Confirms theta-gamma coupling framework extends to music. Supports OII's multi-band integration model. |
-| 8 | **Hovsepyan et al. (2020)** — *Combining predictive coding and neural oscillations enables online syllable recognition in natural speech.* Nature Communications, 11:3117. | Computational model (Precoss) | — (Computational) | Theta-gamma coupling + predictive coding enables online syllable segmentation. Recognition best when theta resets align with syllable onsets. Model demonstrates that oscillatory parsing + prediction synergize. | Model performance: theta-gamma coupling improves recognition accuracy | **Computational validation of theta-gamma-prediction integration.** Supports OII's SYN.prediction_error + theta-gamma coupling architecture. Mode switching = prediction-driven oscillatory reset. |
+| 8 | **Hovsepyan et al. (2020)** — *Combining predictive coding and neural oscillations enables online syllable recognition in natural speech.* Nature Communications, 11:3117. | Computational model (Precoss) | — (Computational) | Theta-gamma coupling + predictive coding enables online syllable segmentation. Recognition best when theta resets align with syllable onsets. Model demonstrates that oscillatory parsing + prediction synergize. | Model performance: theta-gamma coupling improves recognition accuracy | **Computational validation of theta-gamma-prediction integration.** Supports OII's prediction_error + theta-gamma coupling architecture. Mode switching = prediction-driven oscillatory reset. |
 | 9 | **Biau et al. (2025)** — *Neocortical and Hippocampal Theta Oscillations Track Audiovisual Integration and Replay of Speech Memories.* J. Neuroscience, 45(21):e1797242025. | MEG (275-ch), time-frequency, pattern reinstatement | 23 | Theta oscillations in neocortex and hippocampus track audiovisual synchrony during encoding. Theta asynchrony during encoding reduces theta reinstatement accuracy during memory recall. Phase-modulated plasticity: theta phase determines LTP/LTD in hippocampus. | Theta power: synchronous > asynchronous; Reinstatement: synchronous > asynchronous | **Theta as binding mechanism in hippocampal memory.** Confirms hippocampal theta mediates integration across modalities and supports memory encoding. Directly supports OII hippocampal theta-gamma coupling hub. |
 | 10 | **Cabral et al. (2022)** — *Metastable oscillatory modes emerge from synchronization in the brain spacetime connectome.* Communications Physics, 5:184. | Computational model (delay-coupled damped oscillators), MEG validation | 89 (MEG validation) | Metastable oscillatory modes (MOMs) at sub-gamma frequencies emerge from delay-coupled local gamma oscillations in the connectome. Frequency, duration, scale controlled by global coupling parameters. Matches MEG power spectra. | Model fits MEG spectra from N=89 | **Computational basis for integration-segregation dynamics.** Metastable modes = transient integration/segregation states. Global coupling strength controls mode switching — parallels OII switching_efficiency parameter. |
 | 11 | **Yuan et al. (2025)** — *Decoding Auditory Working Memory Load From EEG Alpha Oscillations.* Psychophysiology, 62:e70210. | EEG, MVPA decoding, temporal generalization | ~40 | Auditory WM load decoded from alpha-band oscillation patterns. Alpha patterns change dynamically during maintenance (dynamic coding). No CDA equivalent for auditory WM (vision-specific). | MVPA decoding: significant above chance; Dynamic coding: temporal generalization reveals changing patterns | **Alpha oscillations encode auditory WM load.** Supports OII alpha gating model: alpha power modulates sensory input gating. Dynamic coding = mode switching over time. |
@@ -240,13 +238,12 @@ Phase 1: LOCAL FEATURE EXTRACTION (continuous, <100ms)
 Gamma oscillations (30-100 Hz) in auditory cortex.
 Fine spectral and temporal features extracted.
 R³ input: Consonance [0:7], Timbre [12:21], Change [21:25]
-SYN.harmonic_syntax tracks ongoing harmonic state.
 
 Phase 2: INTEGRATION BINDING (200-400ms, H10 window)
 ────────────────────────────────────────────────────
 Theta oscillations (4-8 Hz) from frontal cortex.
 Distributed features bound into unified percept.
-SYN.prediction_error computes deviation from template.
+prediction_error computes deviation from template.
 Harmonic syntax expectation evaluated.
 
 Phase 3: MODE SWITCHING (400-700ms, H14 window)
@@ -254,61 +251,58 @@ Phase 3: MODE SWITCHING (400-700ms, H14 window)
 Alpha oscillations (8-12 Hz) gate cortical input.
 DLPFC coordinates integration vs segregation balance.
 High Gf = faster, more adaptive switching.
-SYN.structural_expect tracks closure/continuation.
 
 Phase 4: PATTERN ENCODING (1-5s, H16-H20 window)
 ────────────────────────────────────────────────
 Hippocampal theta-gamma coupling.
 Sequential musical items encoded in gamma cycles
 nested within theta oscillations.
-MEM.encoding_state tracks binding success.
-MEM.familiarity_proxy detects known patterns.
+familiarity_proxy detects known patterns.
 
 Phase 5: CONSOLIDATION (5-36s, H20-H24 window)
 ──────────────────────────────────────────────
 Hippocampal-cortical dialogue.
 Short-term representations consolidated.
 Integration history updates Gf-dependent baseline.
-MEM.retrieval_dynamics tracks recall readiness.
 ```
 
 ### 3.3 Effect Size Summary
 
 ```
 PRIMARY EVIDENCE (Bruzzone et al. 2022):
-  N = 66 (MEG), 67 (DTI); Gf groups: high N=38, average N=31
-  Gf group separation:     t(55) = 11.08, p < 1e-7 (very large)
-  Theta degree:            p < 0.001 (high Gf > average Gf)
-  Alpha degree:            p < 0.001 (high Gf > average Gf)
-  Gamma degree:            p < 0.001 (average Gf > high Gf, reversed)
-  DTI structural degree:   p = 0.007 (high Gf > average Gf)
-  Segregation coefficient: p < 0.001 (theta, alpha, DTI); p = 0.003 (gamma, reversed)
+ N = 66 (MEG), 67 (DTI); Gf groups: high N=38, average N=31
+ Gf group separation: t(55) = 11.08, p < 1e-7 (very large)
+ Theta degree: p < 0.001 (high Gf > average Gf)
+ Alpha degree: p < 0.001 (high Gf > average Gf)
+ Gamma degree: p < 0.001 (average Gf > high Gf, reversed)
+ DTI structural degree: p = 0.007 (high Gf > average Gf)
+ Segregation coefficient: p < 0.001 (theta, alpha, DTI); p = 0.003 (gamma, reversed)
 
 CROSS-FREQUENCY COUPLING (Borderie et al. 2024):
-  Method: iEEG (intracranial), theta-gamma PAC
-  Regions: STS, IFG, ITG, hippocampus
-  ML decoding: correct vs incorrect trials from PAC strength
-  PAC-STM correlation: positive (individual differences)
+ Method: iEEG (intracranial), theta-gamma PAC
+ Regions: STS, IFG, ITG, hippocampus
+ ML decoding: correct vs incorrect trials from PAC strength
+ PAC-STM correlation: positive (individual differences)
 
 PITCH PROCESSING (Samiee et al. 2022):
-  N = 16 (8 amusics, 8 controls)
-  PAC group effect rAud:   F(1) = 11.1, p < 0.001
-  PAC group effect rIFG:   F(1) = 43.95, p < 0.0001
-  Delta coherence:         F(1) = 49.7, p < 0.0001
+ N = 16 (8 amusics, 8 controls)
+ PAC group effect rAud: F(1) = 11.1, p < 0.001
+ PAC group effect rIFG: F(1) = 43.95, p < 0.0001
+ Delta coherence: F(1) = 49.7, p < 0.0001
 
 ENTRAINMENT (Ding et al. 2025):
-  N = 31; EEG 64-ch
-  ITPC: F(11,330) = 4.81, p < 0.001, eta2 = 0.14
-  EPS:  F(11,330) = 14.10, p < 0.001, eta2 = 0.32
+ N = 31; EEG 64-ch
+ ITPC: F(11,330) = 4.81, p < 0.001, eta2 = 0.14
+ EPS: F(11,330) = 14.10, p < 0.001, eta2 = 0.32
 
-Papers:               12 (5 original research, 3 computational/review, 4 supporting)
-Total N (original):   ~220 across empirical studies
-Quality Assessment:   beta-tier — well-replicated across modalities (MEG, DTI, iEEG, EEG)
-                      Cross-frequency coupling confirmed in hippocampus (intracranial)
-                      Integration-segregation model replicated (Bruzzone + Cabral + Fries)
-Key limitation:       No single study combines music + Gf + oscillatory connectivity.
-                      Bruzzone 2022 uses resting-state (not music). Music-specific
-                      oscillatory intelligence awaits direct investigation.
+Papers: 12 (5 original research, 3 computational/review, 4 supporting)
+Total N (original): ~220 across empirical studies
+Quality Assessment: beta-tier — well-replicated across modalities (MEG, DTI, iEEG, EEG)
+ Cross-frequency coupling confirmed in hippocampus (intracranial)
+ Integration-segregation model replicated (Bruzzone + Cabral + Fries)
+Key limitation: No single study combines music + Gf + oscillatory connectivity.
+ Bruzzone 2022 uses resting-state (not music). Music-specific
+ oscillatory intelligence awaits direct investigation.
 ```
 
 ---
@@ -353,28 +347,28 @@ Key limitation:       No single study combines music + Gf + oscillatory connecti
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[3] stumpf_fusion ──────────────► Theta integration binding success
 R³[5] periodicity ─────────────────► Oscillatory regularity
-                                     Math: integration = σ(0.3·fusion + 0.2·period.)
+ Math: integration = σ(0.3·fusion + 0.2·period.)
 
 R³[11] onset_strength ────────────► Gamma burst trigger → mode switch
 R³[21] spectral_flux ──────────────► Integration-segregation transition
-                                     Math: switch = σ(0.25·onset + 0.25·flux)
+ Math: switch = σ(0.25·onset + 0.25·flux)
 
 R³[22] entropy ────────────────────► Integration demand
-                                     Low entropy → integration mode (theta)
-                                     High entropy → segregation mode (gamma)
+ Low entropy → integration mode (theta)
+ High entropy → segregation mode (gamma)
 
 R³[25:33] x_l0l5 ─────────────────► Binding quality
-                                     Energy-consonance coupling = theta success
+ Energy-consonance coupling = theta success
 
 R³[33:41] x_l4l5 ─────────────────► Mode switching cost
-                                     Derivative-consonance = transition difficulty
+ Derivative-consonance = transition difficulty
 
 R³[41:49] x_l5l7 ─────────────────► Slow integration quality
-                                     Consonance-timbre = theta-alpha coherence
+ Consonance-timbre = theta-alpha coherence
 ```
 
 ---
@@ -383,7 +377,7 @@ R³[41:49] x_l5l7 ─────────────────► Slow in
 
 ### 5.1 Demand Specification
 
-OII requires H³ features at both SYN horizons (H10, H14, H18) and MEM horizons (H16, H20, H24).
+OII requires H³ features at both horizons (H10, H14, H18) and Memory horizons (H16, H20, H24).
 
 | R³ Index | Feature | H | Morph | Law | Purpose |
 |----------|---------|---|-------|-----|---------|
@@ -421,26 +415,6 @@ No significant v2 expansion projected. OII's oscillatory integration-segregation
 **v2 projected**: 0 tuples
 **Total projected**: 24 tuples of 294,912 theoretical = 0.0081%
 
-### 5.2 Mechanism Binding
-
-OII reads from two mechanisms in the mnemonic circuit:
-
-**SYN** (Syntactic Processing, 30D) — H10/H14/H18:
-
-| SYN Sub-section | Range | OII Role | Weight |
-|-----------------|-------|----------|--------|
-| **Harmonic Syntax** | SYN[0:10] | Integration state: theta-mediated binding of harmonic structure | **1.0** (primary) |
-| **Prediction Error** | SYN[10:20] | Mode switching trigger: error signals drive gamma → theta transitions | 0.8 |
-| **Structural Expectation** | SYN[20:30] | Closure/continuation: determines integration vs. segregation demand | 0.7 |
-
-**MEM** (Memory Encoding & Retrieval, 30D) — H16/H20/H24:
-
-| MEM Sub-section | Range | OII Role | Weight |
-|-----------------|-------|----------|--------|
-| **Encoding State** | MEM[0:10] | Binding success: how well current input is encoded | 0.8 |
-| **Familiarity Proxy** | MEM[10:20] | Pattern recognition: familiar = theta-dominant; novel = gamma-dominant | 0.7 |
-| **Retrieval Dynamics** | MEM[20:30] | Recall readiness: integrated representation strength | 0.6 |
-
 ---
 
 ## 6. Output Space: 10D Multi-Layer Representation
@@ -454,60 +428,59 @@ Manifold range: IMU OII [306:316]
 
 LAYER E — EPISODIC OSCILLATORY FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼─────────────────────┼────────┼────────────────────────────────────────────
- 0  │ f16_slow_integration│ [0, 1] │ Theta/alpha integration strength.
-    │                     │        │ Frontal theta → temporal alpha coherence.
-    │                     │        │ f16 = σ(0.30·SYN.syntax.mean + 0.20·fusion_h10)
-    │                     │        │ |w| sum = 0.50
+ 0 │ f16_slow_integration│ [0, 1] │ Theta/alpha integration strength.
+ │ │ │ Frontal theta → temporal alpha coherence.
+ │ │ │ f16 = σ(0.30·syntax.mean + 0.20·fusion_h10)
+ │ │ │ |w| sum = 0.50
 ────┼─────────────────────┼────────┼────────────────────────────────────────────
- 1  │ f17_fast_segregation│ [0, 1] │ Gamma-band local processing efficiency.
-    │                     │        │ Temporal cortex gamma segregation.
-    │                     │        │ f17 = σ(0.25·roughness + 0.25·onset_h10)
-    │                     │        │ |w| sum = 0.50
+ 1 │ f17_fast_segregation│ [0, 1] │ Gamma-band local processing efficiency.
+ │ │ │ Temporal cortex gamma segregation.
+ │ │ │ f17 = σ(0.25·roughness + 0.25·onset_h10)
+ │ │ │ |w| sum = 0.50
 ────┼─────────────────────┼────────┼────────────────────────────────────────────
- 2  │ f18_mode_switching  │ [0, 1] │ Integration-segregation switch efficiency.
-    │                     │        │ DLPFC-mediated mode coordination.
-    │                     │        │ f18 = σ(0.20·SYN.predict_err.mean
-    │                     │        │       + 0.15·flux_h10
-    │                     │        │       + 0.15·MEM.encoding.mean)
-    │                     │        │ |w| sum = 0.50
+ 2 │ f18_mode_switching │ [0, 1] │ Integration-segregation switch efficiency.
+ │ │ │ DLPFC-mediated mode coordination.
+ │ │ │ f18 = σ(0.20·predict_err.mean
+ │ │ │ + 0.15·flux_h10
+ │ │ │ + 0.15·encoding.mean)
+ │ │ │ |w| sum = 0.50
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼─────────────────────┼────────┼────────────────────────────────────────────
- 3  │ gf_proxy            │ [0, 1] │ Fluid intelligence proxy.
-    │                     │        │ f(slow_integration × (1 - fast_segregation)
-    │                     │        │   + fast_segregation × (1 - slow_integration))
-    │                     │        │ Gf = balanced switching, not dominance.
+ 3 │ gf_proxy │ [0, 1] │ Fluid intelligence proxy.
+ │ │ │ f(slow_integration × (1 - fast_segregation)
+ │ │ │ + fast_segregation × (1 - slow_integration))
+ │ │ │ Gf = balanced switching, not dominance.
 ────┼─────────────────────┼────────┼────────────────────────────────────────────
- 4  │ switching_efficiency│ [0, 1] │ Mode switching efficiency metric.
-    │                     │        │ |d(integration)/dt| × |d(segregation)/dt|
-    │                     │        │ Fast complementary transitions = high Gf.
+ 4 │ switching_efficiency│ [0, 1] │ Mode switching efficiency metric.
+ │ │ │ |d(integration)/dt| × |d(segregation)/dt|
+ │ │ │ Fast complementary transitions = high Gf.
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼─────────────────────┼────────┼────────────────────────────────────────────
- 5  │ integration_state   │ [0, 1] │ Current theta/alpha integration level.
-    │                     │        │ SYN.harmonic_syntax aggregation.
+ 5 │ integration_state │ [0, 1] │ Current theta/alpha integration level.
+ │ │ │ harmonic_syntax aggregation.
 ────┼─────────────────────┼────────┼────────────────────────────────────────────
- 6  │ segregation_state   │ [0, 1] │ Current gamma segregation level.
-    │                     │        │ High roughness + high onset = segregation.
+ 6 │ segregation_state │ [0, 1] │ Current gamma segregation level.
+ │ │ │ High roughness + high onset = segregation.
 ────┼─────────────────────┼────────┼────────────────────────────────────────────
- 7  │ encoding_quality    │ [0, 1] │ Pattern encoding success (integration result).
-    │                     │        │ MEM.encoding_state × SYN.syntax integration.
+ 7 │ encoding_quality │ [0, 1] │ Pattern encoding success (integration result).
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼─────────────────────┼────────┼────────────────────────────────────────────
- 8  │ integration_pred    │ [0, 1] │ Integration mode prediction (1-2s ahead).
-    │                     │        │ SYN.structural_expect trajectory.
+ 8 │ integration_pred │ [0, 1] │ Integration mode prediction (1-2s ahead).
+ │ │ │ structural_expect trajectory.
 ────┼─────────────────────┼────────┼────────────────────────────────────────────
- 9  │ segregation_pred    │ [0, 1] │ Segregation mode prediction (0.5-1s ahead).
-    │                     │        │ MEM.encoding × entropy trajectory.
+ 9 │ segregation_pred │ [0, 1] │ Segregation mode prediction (0.5-1s ahead).
+ │ │ │ encoding × entropy trajectory.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
@@ -522,12 +495,12 @@ idx │ Name                │ Range  │ Neuroscience Basis
 Oscillatory Intelligence = f(Integration, Segregation, Switching)
 
 where:
-  Integration   = theta/alpha long-range binding (SYN-derived)
-  Segregation   = gamma local processing (R³-derived)
-  Switching     = mode transition efficiency (SYN × MEM interaction)
+ Integration = theta/alpha long-range binding (synthesis-derived)
+ Segregation = gamma local processing (R³-derived)
+ Switching = mode transition efficiency (synthesis × memory-encoding interaction)
 
 Gf_proxy = Integration × (1 - Segregation) + Segregation × (1 - Integration)
-         = XOR-like: high when modes are complementary, low when both active/inactive
+ = XOR-like: high when modes are complementary, low when both active/inactive
 
 Key insight: High Gf is NOT high integration OR high segregation alone,
 but efficient SWITCHING between them.
@@ -541,23 +514,20 @@ All formulas use `g()` notation where `g(x)` is the MORPH_SCALE mapped value in 
 # ═══ LAYER E: Episodic Oscillatory Features ═══
 
 # f16: Slow Integration — theta/alpha binding strength
-# SYN.syntax provides harmonic binding state; stumpf_fusion at H10 gives binding quality
+# syntax provides harmonic binding state; stumpf_fusion at H10 gives binding quality
 # |w| = 0.30 + 0.20 = 0.50 <= 1.0
-f16 = sigmoid(0.30 * g(mean(SYN.harmonic_syntax[0:10]))
-            + 0.20 * g(H3[stumpf_fusion, H10, M1, L2]))
+ + 0.20 * g(H3[stumpf_fusion, H10, M1, L2]))
 
 # f17: Fast Segregation — gamma local processing efficiency
 # Roughness drives gamma demand; onset_strength at H10 gives gamma burst detection
 # |w| = 0.25 + 0.25 = 0.50 <= 1.0
 f17 = sigmoid(0.25 * g(R3.roughness[0])
-            + 0.25 * g(H3[onset_strength, H10, M0, L2]))
+ + 0.25 * g(H3[onset_strength, H10, M0, L2]))
 
 # f18: Mode Switching — integration-segregation transition efficiency
-# SYN.prediction_error drives switch need; flux triggers transition; MEM.encoding tracks result
+# prediction_error drives switch need; flux triggers transition; encoding tracks result
 # |w| = 0.20 + 0.15 + 0.15 = 0.50 <= 1.0
-f18 = sigmoid(0.20 * g(mean(SYN.prediction_error[10:20]))
-            + 0.15 * g(H3[spectral_flux, H10, M0, L2])
-            + 0.15 * g(mean(MEM.encoding_state[0:10])))
+ + 0.15 * g(H3[spectral_flux, H10, M0, L2])
 
 # ═══ LAYER M: Mathematical Model Outputs ═══
 
@@ -568,39 +538,35 @@ gf_proxy = f16 * (1.0 - f17) + f17 * (1.0 - f16)
 
 # switching_efficiency: How fast and cleanly modes transition
 # Uses H14 velocity morphs for dynamic assessment
-onset_vel = H3[onset_strength, H14, M8, L0]     # mode switch rate
-entropy_stability = H3[entropy, H18, M19, L0]    # pattern stability
+onset_vel = H3[onset_strength, H14, M8, L0] # mode switch rate
+entropy_stability = H3[entropy, H18, M19, L0] # pattern stability
 switching_efficiency = sigmoid(0.25 * g(onset_vel)
-                             + 0.25 * g(entropy_stability))
+ + 0.25 * g(entropy_stability))
 # |w| = 0.25 + 0.25 = 0.50 <= 1.0
 
 # ═══ LAYER P: Present Processing ═══
 
-# integration_state: Current theta/alpha level (from SYN harmonic syntax)
-integration_state = sigmoid(0.30 * g(mean(SYN.harmonic_syntax[0:10]))
-                          + 0.20 * g(H3[tonalness, H16, M0, L2]))
+# integration_state: Current theta/alpha level (from synthesis H³ harmonic syntax)
+ + 0.20 * g(H3[tonalness, H16, M0, L2]))
 # |w| = 0.30 + 0.20 = 0.50 <= 1.0
 
 # segregation_state: Current gamma level
 segregation_state = sigmoid(0.25 * g(R3.roughness[0])
-                          + 0.25 * g(R3.entropy[22]))
+ + 0.25 * g(R3.entropy[22]))
 # |w| = 0.25 + 0.25 = 0.50 <= 1.0
 
 # encoding_quality: Pattern encoding success (integration × memory binding)
-encoding_quality = sigmoid(0.25 * g(mean(MEM.encoding_state[0:10]))
-                         + 0.25 * g(mean(SYN.harmonic_syntax[0:10])))
 # |w| = 0.25 + 0.25 = 0.50 <= 1.0
 
 # ═══ LAYER F: Future Predictions ═══
 
-# integration_pred: Predicted integration state (SYN.structural_expect trajectory)
-integration_pred = sigmoid(0.25 * g(mean(SYN.structural_expect[20:30]))
-                         + 0.20 * g(H3[stumpf_fusion, H18, M1, L0]))
+# integration_pred: Predicted integration state (structural_expect trajectory)
+ + 0.20 * g(H3[stumpf_fusion, H18, M1, L0]))
 # |w| = 0.25 + 0.20 = 0.45 <= 1.0
 
 # segregation_pred: Predicted segregation state (entropy + onset trajectory)
 segregation_pred = sigmoid(0.20 * g(H3[entropy, H14, M1, L0])
-                         + 0.20 * g(H3[onset_strength, H14, M8, L0]))
+ + 0.20 * g(H3[onset_strength, H14, M8, L0]))
 # |w| = 0.20 + 0.20 = 0.40 <= 1.0
 ```
 
@@ -633,29 +599,27 @@ segregation_pred = sigmoid(0.20 * g(H3[entropy, H14, M1, L0])
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    OII INTERACTIONS                                         │
+│ OII INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (IMU):                                                         │
-│  OII ──────► PMIM (Predictive Memory Integration Model)                   │
-│       │      └── Integration-segregation state feeds prediction error      │
-│       │                                                                     │
-│       ├─────► MEAMN (Music-Evoked Autobiographical Memory Network)        │
-│       │      └── Encoding quality modulates memory binding success         │
-│       │                                                                     │
-│       ├─────► HCMC (Hippocampal-Cortical Memory Circuit)                  │
-│       │      └── Theta-gamma coupling drives hippocampal encoding          │
-│       │                                                                     │
-│       ├─────► PNH (Pythagorean Neural Hierarchy)                          │
-│       │      └── Harmonic syntax state supports interval encoding          │
-│       │                                                                     │
-│       └─────► MSPBA (Musical Syntax Processing in Broca's Area)           │
-│              └── Prediction error feeds syntactic violation detection       │
-│                                                                             │
-│  SHARED MECHANISMS:                                                         │
-│  SYN ◄──────── PNH, PMIM, MSPBA, TPRD, CMAPCC                           │
-│  MEM ◄──────── MEAMN, MMP, HCMC, RASN, RIRI, VRIAP, DMMS, CSSL, CDEM   │
-│                                                                             │
+│ │
+│ INTRA-UNIT (IMU): │
+│ OII ──────► PMIM (Predictive Memory Integration Model) │
+│ │ └── Integration-segregation state feeds prediction error │
+│ │ │
+│ ├─────► MEAMN (Music-Evoked Autobiographical Memory Network) │
+│ │ └── Encoding quality modulates memory binding success │
+│ │ │
+│ ├─────► HCMC (Hippocampal-Cortical Memory Circuit) │
+│ │ └── Theta-gamma coupling drives hippocampal encoding │
+│ │ │
+│ ├─────► PNH (Pythagorean Neural Hierarchy) │
+│ │ └── Harmonic syntax state supports interval encoding │
+│ │ │
+│ └─────► MSPBA (Musical Syntax Processing in Broca's Area) │
+│ └── Prediction error feeds syntactic violation detection │
+│ │
+│ SHARED MECHANISMS: │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -691,176 +655,153 @@ OII reads from the unified Brain (26D) for shared state:
 
 ```python
 class OII(BaseModel):
-    """Oscillatory Intelligence Integration.
+ """Oscillatory Intelligence Integration.
 
-    Output: 10D per frame.
-    Reads: SYN mechanism (30D), MEM mechanism (30D), R³ direct.
-    Zero learned parameters.
-    """
-    NAME = "OII"
-    UNIT = "IMU"
-    TIER = "β3"
-    OUTPUT_DIM = 10
-    MECHANISM_NAMES = ("SYN", "MEM")
+ Output: 10D per frame.
+ Zero learned parameters.
+ """
+ NAME = "OII"
+ UNIT = "IMU"
+ TIER = "β3"
+ OUTPUT_DIM = 10
+ # All coefficient |w| sums <= 1.0 per sigmoid call
+ W_SYN_SYNTAX = 0.30 # slow integration: synthesis harmonic syntax weight
+ W_FUSION = 0.20 # slow integration: stumpf fusion weight
+ W_ROUGHNESS = 0.25 # fast segregation: roughness weight
+ W_ONSET = 0.25 # fast segregation: onset strength weight
+ W_PRED_ERR = 0.20 # mode switching: synthesis prediction error weight
+ W_FLUX = 0.15 # mode switching: spectral flux weight
+ W_MEM_ENC = 0.15 # mode switching: memory-encoding encoding weight
+ W_ONSET_VEL = 0.25 # switching efficiency: onset velocity
+ W_ENT_STAB = 0.25 # switching efficiency: entropy stability
+ W_TONALNESS = 0.20 # integration state: tonalness weight
+ W_ENTROPY_P = 0.25 # segregation state: entropy weight
+ W_STRUCT = 0.25 # integration pred: structural expect weight
+ W_FUSION_P = 0.20 # integration pred: fusion trajectory weight
+ W_ENT_PRED = 0.20 # segregation pred: entropy trajectory
+ W_ONS_PRED = 0.20 # segregation pred: onset trajectory
 
-    # All coefficient |w| sums <= 1.0 per sigmoid call
-    W_SYN_SYNTAX = 0.30       # slow integration: SYN harmonic syntax weight
-    W_FUSION = 0.20           # slow integration: stumpf fusion weight
-    W_ROUGHNESS = 0.25        # fast segregation: roughness weight
-    W_ONSET = 0.25            # fast segregation: onset strength weight
-    W_PRED_ERR = 0.20         # mode switching: SYN prediction error weight
-    W_FLUX = 0.15             # mode switching: spectral flux weight
-    W_MEM_ENC = 0.15          # mode switching: MEM encoding weight
-    W_ONSET_VEL = 0.25        # switching efficiency: onset velocity
-    W_ENT_STAB = 0.25         # switching efficiency: entropy stability
-    W_TONALNESS = 0.20        # integration state: tonalness weight
-    W_ENTROPY_P = 0.25        # segregation state: entropy weight
-    W_STRUCT = 0.25           # integration pred: structural expect weight
-    W_FUSION_P = 0.20         # integration pred: fusion trajectory weight
-    W_ENT_PRED = 0.20         # segregation pred: entropy trajectory
-    W_ONS_PRED = 0.20         # segregation pred: onset trajectory
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """24 tuples for OII computation."""
+ return [
+ # Synthesis horizons (H10, H14, H18)
+ # (r3_idx, horizon, morph, law)
+ (3, 10, 1, 2), # stumpf_fusion, 400ms, mean, bidirectional
+ (3, 14, 1, 0), # stumpf_fusion, 700ms, mean, forward
+ (3, 18, 1, 0), # stumpf_fusion, 2s, mean, forward
+ (5, 10, 0, 2), # periodicity, 400ms, value, bidirectional
+ (5, 14, 14, 0), # periodicity, 700ms, periodicity, forward
+ (22, 10, 0, 2), # entropy, 400ms, value, bidirectional
+ (22, 14, 1, 0), # entropy, 700ms, mean, forward
+ (22, 18, 19, 0), # entropy, 2s, stability, forward
+ (11, 10, 0, 2), # onset_strength, 400ms, value, bidirectional
+ (11, 14, 8, 0), # onset_strength, 700ms, velocity, forward
+ (21, 10, 0, 2), # spectral_flux, 400ms, value, bidirectional
+ (21, 18, 1, 0), # spectral_flux, 2s, mean, forward
+ (15, 10, 0, 2), # spectral_centroid, 400ms, value, bidirectional
+ (15, 18, 3, 0), # spectral_centroid, 2s, std, forward
+ # Memory horizons (H16, H20, H24)
+ (10, 16, 0, 2), # loudness, 1s, value, bidirectional
+ (10, 20, 1, 0), # loudness, 5s, mean, forward
+ (14, 16, 0, 2), # tonalness, 1s, value, bidirectional
+ (14, 20, 1, 0), # tonalness, 5s, mean, forward
+ (4, 16, 0, 2), # sensory_pleasantness, 1s, value, bidirectional
+ (4, 20, 18, 0), # sensory_pleasantness, 5s, trend, forward
+ (0, 16, 0, 2), # roughness, 1s, value, bidirectional
+ (0, 24, 1, 0), # roughness, 36s, mean, forward
+ (7, 16, 8, 0), # amplitude, 1s, velocity, forward
+ (7, 20, 4, 0), # amplitude, 5s, max, forward
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """24 tuples for OII computation."""
-        return [
-            # SYN horizons (H10, H14, H18)
-            # (r3_idx, horizon, morph, law)
-            (3, 10, 1, 2),     # stumpf_fusion, 400ms, mean, bidirectional
-            (3, 14, 1, 0),     # stumpf_fusion, 700ms, mean, forward
-            (3, 18, 1, 0),     # stumpf_fusion, 2s, mean, forward
-            (5, 10, 0, 2),     # periodicity, 400ms, value, bidirectional
-            (5, 14, 14, 0),    # periodicity, 700ms, periodicity, forward
-            (22, 10, 0, 2),    # entropy, 400ms, value, bidirectional
-            (22, 14, 1, 0),    # entropy, 700ms, mean, forward
-            (22, 18, 19, 0),   # entropy, 2s, stability, forward
-            (11, 10, 0, 2),    # onset_strength, 400ms, value, bidirectional
-            (11, 14, 8, 0),    # onset_strength, 700ms, velocity, forward
-            (21, 10, 0, 2),    # spectral_flux, 400ms, value, bidirectional
-            (21, 18, 1, 0),    # spectral_flux, 2s, mean, forward
-            (15, 10, 0, 2),    # spectral_centroid, 400ms, value, bidirectional
-            (15, 18, 3, 0),    # spectral_centroid, 2s, std, forward
-            # MEM horizons (H16, H20, H24)
-            (10, 16, 0, 2),    # loudness, 1s, value, bidirectional
-            (10, 20, 1, 0),    # loudness, 5s, mean, forward
-            (14, 16, 0, 2),    # tonalness, 1s, value, bidirectional
-            (14, 20, 1, 0),    # tonalness, 5s, mean, forward
-            (4, 16, 0, 2),     # sensory_pleasantness, 1s, value, bidirectional
-            (4, 20, 18, 0),    # sensory_pleasantness, 5s, trend, forward
-            (0, 16, 0, 2),     # roughness, 1s, value, bidirectional
-            (0, 24, 1, 0),     # roughness, 36s, mean, forward
-            (7, 16, 8, 0),     # amplitude, 1s, velocity, forward
-            (7, 20, 4, 0),     # amplitude, 5s, max, forward
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute OII 10D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute OII 10D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"SYN": (B,T,30), "MEM": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,10) OII output
+ """
+ # R³ features
+ roughness = r3[..., 0:1] # [0, 1]
+ onset_str = r3[..., 11:12] # [0, 1]
+ entropy = r3[..., 22:23] # [0, 1]
 
-        Returns:
-            (B,T,10) OII output
-        """
-        syn = mechanism_outputs["SYN"]    # (B, T, 30)
-        mem = mechanism_outputs["MEM"]    # (B, T, 30)
+ # H³ direct reads
+ fusion_h10 = h3_direct[(3, 10, 1, 2)] # stumpf mean at 400ms
+ onset_h10 = h3_direct[(11, 10, 0, 2)] # onset value at 400ms
+ flux_h10 = h3_direct[(21, 10, 0, 2)] # flux value at 400ms
+ onset_vel_h14 = h3_direct[(11, 14, 8, 0)] # onset velocity at 700ms
+ ent_stab_h18 = h3_direct[(22, 18, 19, 0)] # entropy stability at 2s
+ tonalness_h16 = h3_direct[(14, 16, 0, 2)] # tonalness at 1s
+ fusion_h18 = h3_direct[(3, 18, 1, 0)] # fusion mean at 2s
+ ent_h14 = h3_direct[(22, 14, 1, 0)] # entropy mean at 700ms
 
-        # SYN sub-sections
-        syn_syntax = syn[..., 0:10]       # harmonic syntax
-        syn_predict = syn[..., 10:20]     # prediction error
-        syn_struct = syn[..., 20:30]      # structural expectation
+ # ═══ LAYER E: Episodic Features ═══
+ # f16: Slow Integration — |w| = 0.30 + 0.20 = 0.50
+ f16 = torch.sigmoid(
+ + self.W_FUSION * fusion_h10.unsqueeze(-1)
+ )
 
-        # MEM sub-sections
-        mem_encoding = mem[..., 0:10]     # encoding state
+ # f17: Fast Segregation — |w| = 0.25 + 0.25 = 0.50
+ f17 = torch.sigmoid(
+ self.W_ROUGHNESS * roughness
+ + self.W_ONSET * onset_h10.unsqueeze(-1)
+ )
 
-        # R³ features
-        roughness = r3[..., 0:1]          # [0, 1]
-        onset_str = r3[..., 11:12]        # [0, 1]
-        entropy = r3[..., 22:23]          # [0, 1]
+ # f18: Mode Switching — |w| = 0.20 + 0.15 + 0.15 = 0.50
+ f18 = torch.sigmoid(
+ + self.W_FLUX * flux_h10.unsqueeze(-1)
+ )
 
-        # H³ direct reads
-        fusion_h10 = h3_direct[(3, 10, 1, 2)]    # stumpf mean at 400ms
-        onset_h10 = h3_direct[(11, 10, 0, 2)]    # onset value at 400ms
-        flux_h10 = h3_direct[(21, 10, 0, 2)]     # flux value at 400ms
-        onset_vel_h14 = h3_direct[(11, 14, 8, 0)] # onset velocity at 700ms
-        ent_stab_h18 = h3_direct[(22, 18, 19, 0)] # entropy stability at 2s
-        tonalness_h16 = h3_direct[(14, 16, 0, 2)] # tonalness at 1s
-        struct_mean = syn_struct.mean(-1, keepdim=True)
-        fusion_h18 = h3_direct[(3, 18, 1, 0)]    # fusion mean at 2s
-        ent_h14 = h3_direct[(22, 14, 1, 0)]      # entropy mean at 700ms
+ # ═══ LAYER M: Mathematical ═══
+ # gf_proxy: XOR-like balanced switching
+ gf_proxy = (f16 * (1.0 - f17) + f17 * (1.0 - f16)).clamp(0, 1)
 
-        # ═══ LAYER E: Episodic Features ═══
-        # f16: Slow Integration — |w| = 0.30 + 0.20 = 0.50
-        f16 = torch.sigmoid(
-            self.W_SYN_SYNTAX * syn_syntax.mean(-1, keepdim=True)
-            + self.W_FUSION * fusion_h10.unsqueeze(-1)
-        )
+ # switching_efficiency — |w| = 0.25 + 0.25 = 0.50
+ switch_eff = torch.sigmoid(
+ self.W_ONSET_VEL * onset_vel_h14.unsqueeze(-1)
+ + self.W_ENT_STAB * ent_stab_h18.unsqueeze(-1)
+ )
 
-        # f17: Fast Segregation — |w| = 0.25 + 0.25 = 0.50
-        f17 = torch.sigmoid(
-            self.W_ROUGHNESS * roughness
-            + self.W_ONSET * onset_h10.unsqueeze(-1)
-        )
+ # ═══ LAYER P: Present ═══
+ # integration_state — |w| = 0.30 + 0.20 = 0.50
+ integ_state = torch.sigmoid(
+ + self.W_TONALNESS * tonalness_h16.unsqueeze(-1)
+ )
 
-        # f18: Mode Switching — |w| = 0.20 + 0.15 + 0.15 = 0.50
-        f18 = torch.sigmoid(
-            self.W_PRED_ERR * syn_predict.mean(-1, keepdim=True)
-            + self.W_FLUX * flux_h10.unsqueeze(-1)
-            + self.W_MEM_ENC * mem_encoding.mean(-1, keepdim=True)
-        )
+ # segregation_state — |w| = 0.25 + 0.25 = 0.50
+ seg_state = torch.sigmoid(
+ self.W_ROUGHNESS * roughness
+ + self.W_ENTROPY_P * entropy
+ )
 
-        # ═══ LAYER M: Mathematical ═══
-        # gf_proxy: XOR-like balanced switching
-        gf_proxy = (f16 * (1.0 - f17) + f17 * (1.0 - f16)).clamp(0, 1)
+ # encoding_quality — |w| = 0.25 + 0.25 = 0.50
+ enc_qual = torch.sigmoid(
+ )
 
-        # switching_efficiency — |w| = 0.25 + 0.25 = 0.50
-        switch_eff = torch.sigmoid(
-            self.W_ONSET_VEL * onset_vel_h14.unsqueeze(-1)
-            + self.W_ENT_STAB * ent_stab_h18.unsqueeze(-1)
-        )
+ # ═══ LAYER F: Future ═══
+ # integration_pred — |w| = 0.25 + 0.20 = 0.45
+ integ_pred = torch.sigmoid(
+ + self.W_FUSION_P * fusion_h18.unsqueeze(-1)
+ )
 
-        # ═══ LAYER P: Present ═══
-        # integration_state — |w| = 0.30 + 0.20 = 0.50
-        integ_state = torch.sigmoid(
-            self.W_SYN_SYNTAX * syn_syntax.mean(-1, keepdim=True)
-            + self.W_TONALNESS * tonalness_h16.unsqueeze(-1)
-        )
+ # segregation_pred — |w| = 0.20 + 0.20 = 0.40
+ seg_pred = torch.sigmoid(
+ self.W_ENT_PRED * ent_h14.unsqueeze(-1)
+ + self.W_ONS_PRED * onset_vel_h14.unsqueeze(-1)
+ )
 
-        # segregation_state — |w| = 0.25 + 0.25 = 0.50
-        seg_state = torch.sigmoid(
-            self.W_ROUGHNESS * roughness
-            + self.W_ENTROPY_P * entropy
-        )
-
-        # encoding_quality — |w| = 0.25 + 0.25 = 0.50
-        enc_qual = torch.sigmoid(
-            0.25 * mem_encoding.mean(-1, keepdim=True)
-            + 0.25 * syn_syntax.mean(-1, keepdim=True)
-        )
-
-        # ═══ LAYER F: Future ═══
-        # integration_pred — |w| = 0.25 + 0.20 = 0.45
-        integ_pred = torch.sigmoid(
-            self.W_STRUCT * syn_struct.mean(-1, keepdim=True)
-            + self.W_FUSION_P * fusion_h18.unsqueeze(-1)
-        )
-
-        # segregation_pred — |w| = 0.20 + 0.20 = 0.40
-        seg_pred = torch.sigmoid(
-            self.W_ENT_PRED * ent_h14.unsqueeze(-1)
-            + self.W_ONS_PRED * onset_vel_h14.unsqueeze(-1)
-        )
-
-        return torch.cat([
-            f16, f17, f18,                           # E: 3D
-            gf_proxy, switch_eff,                     # M: 2D
-            integ_state, seg_state, enc_qual,         # P: 3D
-            integ_pred, seg_pred,                     # F: 2D
-        ], dim=-1)  # (B, T, 10)
+ return torch.cat([
+ f16, f17, f18, # E: 3D
+ gf_proxy, switch_eff, # M: 2D
+ integ_state, seg_state, enc_qual, # P: 3D
+ integ_pred, seg_pred, # F: 2D
+ ], dim=-1) # (B, T, 10)
 ```
 
 ---
@@ -880,11 +821,7 @@ class OII(BaseModel):
 | **Falsification Tests** | 0/6 confirmed (all testable) | Awaiting validation |
 | **R³ Features Used** | 38D of 49D | Comprehensive |
 | **H³ Demand** | 24 tuples (1.04%) | Sparse, efficient |
-| **SYN Mechanism** | 30D (3 sub-sections) | Integration/syntax/prediction |
-| **MEM Mechanism** | 30D (3 sub-sections) | Encoding/familiarity/retrieval |
 | **Output Dimensions** | **10D** | 4-layer structure (E3/M2/P3/F2) |
-| **Doc-code mismatches** | 7 noted | MECHANISM_NAMES, LAYERS, h3_demand, brain_regions, dimension_names, citations, paper_count |
-
 ---
 
 ## 13. Scientific References
@@ -923,28 +860,16 @@ class OII(BaseModel):
 - Cross-frequency coupling: now supported by intracranial iEEG evidence (Borderie 2024) not just inferred
 - Entrainment: added Ding 2025 (N=31, ITPC eta2=0.14, EPS eta2=0.32) with 6 Hz theta-alpha boundary
 - References: 6 → 15 (12 in catalog + 3 classic textbook)
-- Doc-code mismatches: 7 documented (MECHANISM_NAMES, LAYERS, h3_demand, brain_regions, dimension_names, citations, paper_count)
-
 | Aspect | D0 (v1.0.0) | MI (v2.0.0→v2.1.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D) | R³ (49D) |
-| Temporal | HC⁰ mechanisms (OSC, TIH, BND) | SYN (30D) + MEM (30D) mechanisms |
-| Slow integration | S⁰.L9.mean × HC⁰.OSC | R³.stumpf × SYN.harmonic_syntax |
+| Slow integration | S⁰.L9.mean × HC⁰.OSC | R³.stumpf |
 | Fast segregation | S⁰.L4.velocity × HC⁰.TIH | R³.roughness × H³.onset_strength |
-| Mode switching | S⁰.L3.coherence × HC⁰.BND | SYN.prediction_error × MEM.encoding |
+| Mode switching | S⁰.L3.coherence × HC⁰.BND | prediction_error |
 | Output dims | 11D | **10D** (removed reserved dim) |
 | Demand format | HC⁰ index ranges (39 tuples) | H³ 4-tuples (24 tuples, sparse) |
 | Total demand | 39/2304 = 1.69% | 24/2304 = 1.04% |
 | Coefficient rule | No constraint | **|w_i| sum <= 1.0 per sigmoid** |
-
-### Why SYN + MEM replaces HC⁰ mechanisms
-
-The D0 pipeline used 3 separate HC⁰ mechanisms (OSC, TIH, BND). In MI, these map to two mnemonic-circuit mechanisms:
-
-- **OSC → SYN.harmonic_syntax** [0:10]: Neural oscillation coupling maps to harmonic syntax state — theta/alpha integration of harmonic structure.
-- **TIH → SYN.prediction_error** [10:20] + **SYN.structural_expect** [20:30]: Temporal integration hierarchy maps to prediction error (surprise-driven mode switch) and structural expectation (closure detection).
-- **BND → MEM.encoding_state** [0:10]: Temporal binding maps to encoding state — binding success in hippocampal theta-gamma coupling.
-- **MEM.familiarity_proxy** [10:20] + **MEM.retrieval_dynamics** [20:30]: New in v2.0.0 — familiarity and retrieval support encoding quality assessment and long-term consolidation tracking.
 
 ---
 
@@ -954,4 +879,3 @@ The D0 pipeline used 3 separate HC⁰ mechanisms (OSC, TIH, BND). In MI, these m
 **Evidence Tier**: **beta (Integrative) — 70-90% confidence**
 **Version**: **2.1.0** (2026-02-13)
 **Papers**: **12** (5 original + 3 review/computational + 4 supporting)
-**Doc-code mismatches**: 7 (MECHANISM_NAMES, LAYERS, h3_demand, brain_regions, dimension_names, citations, paper_count)

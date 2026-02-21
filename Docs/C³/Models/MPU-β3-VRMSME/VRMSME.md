@@ -21,32 +21,32 @@ The **VR Music Stimulation Motor Enhancement** (VRMSME) model demonstrates that 
 VR MUSIC STIMULATION MOTOR ENHANCEMENT
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-       THREE VR CONDITIONS
-       ════════════════════
+ THREE VR CONDITIONS
+ ════════════════════
 
-┌─────────────┐  ┌─────────────┐  ┌─────────────┐
-│    VRMS     │  │    VRAO     │  │    VRMI     │
-│ VR Music    │  │ VR Action   │  │ VR Motor    │
-│ Stimulation │  │ Observation │  │ Imagery     │
-│ (STRONGEST) │  │             │  │             │
-└──────┬──────┘  └──────┬──────┘  └──────┬──────┘
-       │                │                │
-       └────────────────┴────────────────┘
-                        │
-                        ▼
+┌─────────────┐ ┌─────────────┐ ┌─────────────┐
+│ VRMS │ │ VRAO │ │ VRMI │
+│ VR Music │ │ VR Action │ │ VR Motor │
+│ Stimulation │ │ Observation │ │ Imagery │
+│ (STRONGEST) │ │ │ │ │
+└──────┬──────┘ └──────┬──────┘ └──────┬──────┘
+ │ │ │
+ └────────────────┴────────────────┘
+ │
+ ▼
 ┌──────────────────────────────────────────────────────────────────┐
-│              SENSORIMOTOR NETWORK                                │
-│                                                                  │
-│   VRMS > VRAO/VRMI in:                                          │
-│   ═══════════════════                                           │
-│   S1 (somatosensory), PM (premotor),                            │
-│   SMA (supplementary motor), M1 (primary motor)                 │
-│                                                                  │
-│   VRMS > VRMI in:                                               │
-│   bilateral M1 activation                                        │
-│                                                                  │
-│   VRMS shows strongest:                                          │
-│   PM-DLPFC-M1 interaction                                       │
+│ SENSORIMOTOR NETWORK │
+│ │
+│ VRMS > VRAO/VRMI in: │
+│ ═══════════════════ │
+│ S1 (somatosensory), PM (premotor), │
+│ SMA (supplementary motor), M1 (primary motor) │
+│ │
+│ VRMS > VRMI in: │
+│ bilateral M1 activation │
+│ │
+│ VRMS shows strongest: │
+│ PM-DLPFC-M1 interaction │
 └──────────────────────────────────────────────────────────────────┘
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -69,65 +69,64 @@ VRMSME bridges motor planning with multi-modal VR enhancement in the Motor Plann
 
 ## 2. Neural Circuit: Complete Anatomy
 
-### 2.1 Information Flow Architecture (EAR → BRAIN → BEP+TMH → VRMSME)
+### 2.1 Information Flow Architecture (EAR → BRAIN → VRMSME)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    VRMSME COMPUTATION ARCHITECTURE                          ║
+║ VRMSME COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins x 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                         VRMSME reads: ~20D                       │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                         VRMSME demand: ~12 of 2304 tuples        │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Sensorimotor Circuit ═══════  ║
-║                               │                                              ║
-║                       ┌───────┴───────┐                                      ║
-║                       ▼               ▼                                      ║
-║  ┌─────────────────┐  ┌─────────────────┐                                   ║
-║  │  BEP (30D)      │  │  TMH (30D)      │                                   ║
-║  │                 │  │                 │                                    ║
-║  │ Beat Entr[0:10] │  │ Short-term      │                                   ║
-║  │ Motor Coup      │  │ Memory  [0:10]  │                                   ║
-║  │         [10:20] │  │ Sequence        │                                   ║
-║  │ Groove  [20:30] │  │ Integ  [10:20]  │                                   ║
-║  │                 │  │ Hierarch        │                                   ║
-║  │                 │  │ Struct  [20:30] │                                   ║
-║  └────────┬────────┘  └────────┬────────┘                                   ║
-║           │                    │                                              ║
-║           └────────┬───────────┘                                             ║
-║                    ▼                                                          ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    VRMSME MODEL (11D Output)                     │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f16_music_enhancement,                     │        ║
-║  │                       f17_bilateral_activation,                   │        ║
-║  │                       f18_network_connectivity                    │        ║
-║  │  Layer M (Math):      vrms_advantage, bilateral_index,           │        ║
-║  │                       connectivity_strength                       │        ║
-║  │  Layer P (Present):   motor_drive, sensorimotor_sync             │        ║
-║  │  Layer F (Future):    enhancement_pred, connectivity_pred,       │        ║
-║  │                       bilateral_pred                              │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins x 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ VRMSME reads: ~20D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ VRMSME demand: ~12 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Sensorimotor Circuit ═══════ ║
+║ │ ║
+║ ┌───────┴───────┐ ║
+║ ▼ ▼ ║
+║ ┌─────────────────┐ ┌─────────────────┐ ║
+║ │ │ │ │ ║
+║ │ Beat Entr[0:10] │ │ Short-term │ ║
+║ │ Motor Coup │ │ Memory [0:10] │ ║
+║ │ [10:20] │ │ Sequence │ ║
+║ │ Groove [20:30] │ │ Integ [10:20] │ ║
+║ │ │ │ Hierarch │ ║
+║ │ │ │ Struct [20:30] │ ║
+║ └────────┬────────┘ └────────┬────────┘ ║
+║ │ │ ║
+║ └────────┬───────────┘ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ VRMSME MODEL (11D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f16_music_enhancement, │ ║
+║ │ f17_bilateral_activation, │ ║
+║ │ f18_network_connectivity │ ║
+║ │ Layer M (Math): vrms_advantage, bilateral_index, │ ║
+║ │ connectivity_strength │ ║
+║ │ Layer P (Present): motor_drive, sensorimotor_sync │ ║
+║ │ Layer F (Future): enhancement_pred, connectivity_pred, │ ║
+║ │ bilateral_pred │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -142,7 +141,7 @@ VRMSME bridges motor planning with multi-modal VR enhancement in the Motor Plann
 | 1 | **Liang et al. 2025** | fNIRS (24ch) | 50 | VRMS > VRAO in bilateral PM&SMA connectivity (HBT homologous) | RS1, LPMSMA, RPMSMA p<.01 FDR | **Primary**: f16, f17 music enhancement |
 | 2 | **Liang et al. 2025** | fNIRS | 50 | VRMS > VRMI in bilateral M1 activation (HBT) | RM1, LM1 p<.05 | **f17 bilateral activation** |
 | 3 | **Liang et al. 2025** | fNIRS | 50 | VRMS shows strongest PM-DLPFC-M1 heterogeneous FC | RDLPFC-LPMSMA, RPMSMA-RM1 p<.01 FDR | **f18 network connectivity** |
-| 4 | **Li et al. 2025** | EMG + motion capture | 24 | High-groove music increases hip-ankle coordination 28.7% and muscle synergy complexity | HG 29.8% vs LG 23.2% p=.020; median synergies HG=7 vs LG=6 p=.039 | **BEP→motor**: groove drives motor reorganization |
+| 4 | **Li et al. 2025** | EMG + motion capture | 24 | High-groove music increases hip-ankle coordination 28.7% and muscle synergy complexity | HG 29.8% vs LG 23.2% p=.020; median synergies HG=7 vs LG=6 p=.039 | **beat→motor**: groove drives motor reorganization |
 | 5 | **Blasi et al. 2025** | Systematic review (20 RCTs) | 718 | Music/dance interventions produce structural + functional neuroplasticity in motor, language, and memory areas | FA/QA increases; functional connectivity changes | **Context**: rehab neuroplasticity evidence |
 | 6 | **Thaut et al. 2015** | Review | — | Auditory rhythm entrains motor via reticulospinal pathways; mCBGT circuit for beat perception | — | **Theory**: rhythmic entrainment foundations |
 | 7 | **Sarasso et al. 2019** | ERP + fMRI | 18 | Appreciated musical intervals enhance N1/P2 and inhibit motor cortex bilaterally | Enhanced N1/P2; bilateral M1 deactivation for beauty | **Motor modulation**: music→motor cortex interaction |
@@ -154,17 +153,17 @@ VRMSME bridges motor planning with multi-modal VR enhancement in the Motor Plann
 ### 3.2 Effect Size Summary
 
 ```
-Primary Evidence (k=7):  Strong convergent evidence for VRMS motor enhancement
-Heterogeneity:           High (fNIRS, EMG, systematic review, ERP/fMRI methods)
-Quality Assessment:      β-tier (fNIRS primary N=50, active comparator; supporting EMG, review)
+Primary Evidence (k=7): Strong convergent evidence for VRMS motor enhancement
+Heterogeneity: High (fNIRS, EMG, systematic review, ERP/fMRI methods)
+Quality Assessment: β-tier (fNIRS primary N=50, active comparator; supporting EMG, review)
 Effect Magnitudes:
-  VRMS > VRAO (homologous HBT):   RS1, LPMSMA, RPMSMA p < .01 FDR; LFPA p < .05 FDR
-  VRMS > VRMI (HBT activation):   RM1, LM1 p < .05
-  VRMS > VRAO (heterogeneous HBT): 14 ROI pairs p < .05 FDR, 6 pairs p < .01 FDR
-  High-groove motor:                28.7% hip-ankle coordination increase (p = .020)
-  Groove synergy:                   Median 7 vs 6 synergies (p = .039)
-Causal Evidence:         No (within-subjects fNIRS; no TMS/lesion)
-Replication:             Consistent across HBO and HBT signals, multiple ROIs
+ VRMS > VRAO (homologous HBT): RS1, LPMSMA, RPMSMA p < .01 FDR; LFPA p < .05 FDR
+ VRMS > VRMI (HBT activation): RM1, LM1 p < .05
+ VRMS > VRAO (heterogeneous HBT): 14 ROI pairs p < .05 FDR, 6 pairs p < .01 FDR
+ High-groove motor: 28.7% hip-ankle coordination increase (p = .020)
+ Groove synergy: Median 7 vs 6 synergies (p = .039)
+Causal Evidence: No (within-subjects fNIRS; no TMS/lesion)
+Replication: Consistent across HBO and HBT signals, multiple ROIs
 ```
 
 ---
@@ -197,19 +196,14 @@ Replication:             Consistent across HBO and HBT signals, multiple ROIs
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[25:33] x_l0l5 ───────────────┐
-BEP.beat_entrainment[0:10] ─────┼──► Multi-modal motor entrainment
-BEP.groove[20:30] ──────────────┘   VR + audio + motor synchronization
 
 R³[33:41] x_l4l5 ───────────────┐
-BEP.motor_coupling[10:20] ──────┼──► Sensorimotor network connectivity
-TMH.sequence_integration[10:20] ┘   PM-DLPFC-M1 interaction
 
 R³[7] amplitude ─────────────────┐
 R³[8] loudness ──────────────────┼──► Motor activation drive
-TMH.short_term[0:10] ───────────┘   Music intensity → movement intensity
 ```
 
 ---
@@ -218,7 +212,7 @@ TMH.short_term[0:10] ───────────┘   Music intensity → 
 
 ### 5.1 Demand Specification
 
-VRMSME requires H³ features at BEP horizons for multi-modal entrainment and TMH horizons for sensorimotor integration memory. The demand reflects the multi-scale temporal binding needed for VR music stimulation effects.
+VRMSME requires H³ features for multi-modal entrainment and for sensorimotor integration memory. The demand reflects the multi-scale temporal binding needed for VR music stimulation effects.
 
 | R³ Index | Feature | H | Morph | Law | Purpose |
 |----------|---------|---|-------|-----|---------|
@@ -244,17 +238,6 @@ No significant v2 expansion projected. VRMSME's primary inputs remain energy-bas
 **v2 projected**: 0 tuples
 **Total projected**: 12 tuples of 294,912 theoretical = 0.0041%
 
-### 5.2 BEP + TMH Mechanism Binding
-
-| Mechanism | Sub-section | Range | VRMSME Role | Weight |
-|-----------|-------------|-------|-------------|--------|
-| **BEP** | Beat Entrainment | BEP[0:10] | VR music beat tracking | 0.7 |
-| **BEP** | Motor Coupling | BEP[10:20] | Multi-modal motor synchronization | **1.0** (primary) |
-| **BEP** | Groove Processing | BEP[20:30] | VR rhythmic engagement / drive | **1.0** (primary) |
-| **TMH** | Short-term Memory | TMH[0:10] | Motor intensity tracking | 0.7 |
-| **TMH** | Sequence Integration | TMH[10:20] | PM-DLPFC-M1 sequence binding | **1.0** (primary) |
-| **TMH** | Hierarchical Structure | TMH[20:30] | Network hierarchy / connectivity | 0.5 |
-
 ---
 
 ## 6. Output Space: 11D Multi-Layer Representation
@@ -267,50 +250,46 @@ VRMSME OUTPUT TENSOR: 11D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 0  │ f16_music_enhancement    │ [0, 1] │ VRMS > VRAO/VRMI motor enhancement.
-    │                          │        │ f16 = σ(0.40 * coupling_period_1s
-    │                          │        │       + 0.30 * mean(BEP.groove[20:30])
-    │                          │        │       + 0.30 * mean(BEP.motor[10:20]))
+ 0 │ f16_music_enhancement │ [0, 1] │ VRMS > VRAO/VRMI motor enhancement.
+ │ │ │ f16 = σ(0.40 * coupling_period_1s
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 1  │ f17_bilateral_activation │ [0, 1] │ Bilateral S1/PM/SMA/M1 activation.
-    │                          │        │ f17 = σ(0.40 * sensorimotor_period_1s
-    │                          │        │       + 0.30 * mean(TMH.seq[10:20])
-    │                          │        │       + 0.30 * sensorimotor_100ms)
+ 1 │ f17_bilateral_activation │ [0, 1] │ Bilateral S1/PM/SMA/M1 activation.
+ │ │ │ f17 = σ(0.40 * sensorimotor_period_1s
+ │ │ │ + 0.30 * sensorimotor_100ms)
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 2  │ f18_network_connectivity │ [0, 1] │ PM-DLPFC-M1 interaction strength.
-    │                          │        │ f18 = σ(0.35 * f16 * f17
-    │                          │        │       + 0.35 * loudness_entropy
-    │                          │        │       + 0.30 * mean(TMH.hier[20:30]))
+ 2 │ f18_network_connectivity │ [0, 1] │ PM-DLPFC-M1 interaction strength.
+ │ │ │ f18 = σ(0.35 * f16 * f17
+ │ │ │ + 0.35 * loudness_entropy
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 3  │ vrms_advantage           │ [0, 1] │ VRMS superiority over VRAO/VRMI.
+ 3 │ vrms_advantage │ [0, 1] │ VRMS superiority over VRAO/VRMI.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 4  │ bilateral_index          │ [0, 1] │ Bilateral activation balance.
+ 4 │ bilateral_index │ [0, 1] │ Bilateral activation balance.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 5  │ connectivity_strength    │ [0, 1] │ Network connectivity magnitude.
+ 5 │ connectivity_strength │ [0, 1] │ Network connectivity magnitude.
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 6  │ motor_drive              │ [0, 1] │ BEP music-driven motor activation.
+ 6 │ motor_drive │ [0, 1] │ beat-entrainment music-driven motor activation.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 7  │ sensorimotor_sync        │ [0, 1] │ TMH sensorimotor synchronization.
+ 7 │ sensorimotor_sync │ [0, 1] │ temporal-context sensorimotor synchronization.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 8  │ enhancement_pred         │ [0, 1] │ Motor enhancement prediction.
+ 8 │ enhancement_pred │ [0, 1] │ Motor enhancement prediction.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 9  │ connectivity_pred        │ [0, 1] │ Network connectivity prediction.
+ 9 │ connectivity_pred │ [0, 1] │ Network connectivity prediction.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
-10  │ bilateral_pred           │ [0, 1] │ Bilateral activation prediction.
+10 │ bilateral_pred │ [0, 1] │ Bilateral activation prediction.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 11D per frame at 172.27 Hz
@@ -326,15 +305,15 @@ TOTAL: 11D per frame at 172.27 Hz
 ```
 PRIMARY EQUATIONS:
 
-    VRMS_Advantage = Connectivity(VRMS) - max(Connectivity(VRAO), Connectivity(VRMI))
+ VRMS_Advantage = Connectivity(VRMS) - max(Connectivity(VRAO), Connectivity(VRMI))
 
 MULTI-MODAL INTEGRATION:
 
-    Network_Connectivity = f(Music_Entrainment, Motor_Coupling, Sensorimotor_Binding)
+ Network_Connectivity = f(Music_Entrainment, Motor_Coupling, Sensorimotor_Binding)
 
 BILATERAL ACTIVATION:
 
-    Bilateral_Index = mean(Left_M1, Right_M1) * Music_Enhancement
+ Bilateral_Index = mean(Left_M1, Right_M1) * Music_Enhancement
 ```
 
 ### 7.2 Feature Formulas
@@ -344,20 +323,16 @@ BILATERAL ACTIVATION:
 
 # f16: Music Enhancement
 f16 = σ(0.40 * coupling_period_1s
-       + 0.30 * mean(BEP.groove[20:30])
-       + 0.30 * mean(BEP.motor_coupling[10:20]))
 # coefficients: 0.40 + 0.30 + 0.30 = 1.0 ✓
 
 # f17: Bilateral Activation
 f17 = σ(0.40 * sensorimotor_period_1s
-       + 0.30 * mean(TMH.sequence_integration[10:20])
-       + 0.30 * sensorimotor_100ms)
+ + 0.30 * sensorimotor_100ms)
 # coefficients: 0.40 + 0.30 + 0.30 = 1.0 ✓
 
 # f18: Network Connectivity
-f18 = σ(0.35 * f16 * f17                     # interaction term
-       + 0.35 * loudness_entropy
-       + 0.30 * mean(TMH.hierarchical[20:30]))
+f18 = σ(0.35 * f16 * f17 # interaction term
+ + 0.35 * loudness_entropy
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 ```
 
@@ -386,24 +361,22 @@ f18 = σ(0.35 * f16 * f17                     # interaction term
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    VRMSME INTERACTIONS                                        │
+│ VRMSME INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (MPU):                                                         │
-│  VRMSME.music_enhancement ──────► SPMC (enhanced motor circuit)            │
-│  VRMSME.bilateral_activation ───► DDSMI (bilateral for social motor)       │
-│  VRMSME.network_connectivity ───► ASAP (connectivity for prediction)       │
-│                                                                             │
-│  CROSS-UNIT (MPU → ARU):                                                   │
-│  VRMSME.motor_drive ────────────► ARU (music-driven reward signal)         │
-│  VRMSME.vrms_advantage ────────► ARU (VR engagement marker)               │
-│                                                                             │
-│  UPSTREAM DEPENDENCIES:                                                     │
-│  BEP mechanism (30D) ────────────► VRMSME (beat/motor processing)          │
-│  TMH mechanism (30D) ────────────► VRMSME (temporal memory/sequence)       │
-│  R³ (~20D) ──────────────────────► VRMSME (direct spectral features)       │
-│  H³ (12 tuples) ─────────────────► VRMSME (temporal dynamics)              │
-│                                                                             │
+│ │
+│ INTRA-UNIT (MPU): │
+│ VRMSME.music_enhancement ──────► SPMC (enhanced motor circuit) │
+│ VRMSME.bilateral_activation ───► DDSMI (bilateral for social motor) │
+│ VRMSME.network_connectivity ───► ASAP (connectivity for prediction) │
+│ │
+│ CROSS-UNIT (MPU → ARU): │
+│ VRMSME.motor_drive ────────────► ARU (music-driven reward signal) │
+│ VRMSME.vrms_advantage ────────► ARU (VR engagement marker) │
+│ │
+│ UPSTREAM DEPENDENCIES: │
+│ R³ (~20D) ──────────────────────► VRMSME (direct spectral features) │
+│ H³ (12 tuples) ─────────────────► VRMSME (temporal dynamics) │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -427,123 +400,97 @@ f18 = σ(0.35 * f16 * f17                     # interaction term
 
 ```python
 class VRMSME(BaseModel):
-    """VR Music Stimulation Motor Enhancement Model.
+ """VR Music Stimulation Motor Enhancement Model.
 
-    Output: 11D per frame.
-    Reads: BEP mechanism (30D), TMH mechanism (30D), R³ direct.
-    """
-    NAME = "VRMSME"
-    UNIT = "MPU"
-    TIER = "β3"
-    OUTPUT_DIM = 11
-    MECHANISM_NAMES = ("BEP", "TMH")
+ Output: 11D per frame.
+ """
+ NAME = "VRMSME"
+ UNIT = "MPU"
+ TIER = "β3"
+ OUTPUT_DIM = 11
+ TAU_DECAY = 5.0 # VR integration window (seconds)
 
-    TAU_DECAY = 5.0  # VR integration window (seconds)
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """12 tuples for VRMSME computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ (10, 3, 0, 2), # spectral_flux, 100ms, value, bidi
+ (10, 16, 14, 2), # spectral_flux, 1000ms, periodicity, bidi
+ (11, 3, 0, 2), # onset_strength, 100ms, value, bidi
+ (11, 16, 14, 2), # onset_strength, 1000ms, periodicity, bidi
+ (25, 3, 0, 2), # x_l0l5[0], 100ms, value, bidi
+ (25, 3, 14, 2), # x_l0l5[0], 100ms, periodicity, bidi
+ (25, 16, 14, 2), # x_l0l5[0], 1000ms, periodicity, bidi
+ (33, 3, 0, 2), # x_l4l5[0], 100ms, value, bidi
+ (33, 3, 2, 2), # x_l4l5[0], 100ms, std, bidi
+ (33, 8, 14, 2), # x_l4l5[0], 500ms, periodicity, bidi
+ (33, 16, 14, 2), # x_l4l5[0], 1000ms, periodicity, bidi
+ (8, 3, 20, 2), # loudness, 100ms, entropy, bidi
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """12 tuples for VRMSME computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # ── BEP horizons: multi-modal entrainment ──
-            (10, 3, 0, 2),     # spectral_flux, 100ms, value, bidi
-            (10, 16, 14, 2),   # spectral_flux, 1000ms, periodicity, bidi
-            (11, 3, 0, 2),     # onset_strength, 100ms, value, bidi
-            (11, 16, 14, 2),   # onset_strength, 1000ms, periodicity, bidi
-            (25, 3, 0, 2),     # x_l0l5[0], 100ms, value, bidi
-            (25, 3, 14, 2),    # x_l0l5[0], 100ms, periodicity, bidi
-            (25, 16, 14, 2),   # x_l0l5[0], 1000ms, periodicity, bidi
-            # ── TMH horizons: sensorimotor integration ──
-            (33, 3, 0, 2),     # x_l4l5[0], 100ms, value, bidi
-            (33, 3, 2, 2),     # x_l4l5[0], 100ms, std, bidi
-            (33, 8, 14, 2),    # x_l4l5[0], 500ms, periodicity, bidi
-            (33, 16, 14, 2),   # x_l4l5[0], 1000ms, periodicity, bidi
-            (8, 3, 20, 2),     # loudness, 100ms, entropy, bidi
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute VRMSME 11D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute VRMSME 11D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"BEP": (B,T,30), "TMH": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,11) VRMSME output
+ """
+ # H³ direct features
+ coupling_period_1s = h3_direct[(25, 16, 14, 2)].unsqueeze(-1)
+ sensorimotor_period_1s = h3_direct[(33, 16, 14, 2)].unsqueeze(-1)
+ sensorimotor_100ms = h3_direct[(33, 3, 0, 2)].unsqueeze(-1)
+ loudness_entropy = h3_direct[(8, 3, 20, 2)].unsqueeze(-1)
 
-        Returns:
-            (B,T,11) VRMSME output
-        """
-        bep = mechanism_outputs["BEP"]    # (B, T, 30)
-        tmh = mechanism_outputs["TMH"]    # (B, T, 30)
+ # ═══ LAYER E: Explicit features ═══
 
-        # BEP sub-sections
-        bep_beat = bep[..., 0:10]
-        bep_motor = bep[..., 10:20]
-        bep_groove = bep[..., 20:30]
+ # f16: Music Enhancement (coefficients sum = 1.0)
+ f16 = torch.sigmoid(
+ 0.40 * coupling_period_1s
+ )
 
-        # TMH sub-sections
-        tmh_short = tmh[..., 0:10]
-        tmh_seq = tmh[..., 10:20]
-        tmh_hier = tmh[..., 20:30]
+ # f17: Bilateral Activation (coefficients sum = 1.0)
+ f17 = torch.sigmoid(
+ 0.40 * sensorimotor_period_1s
+ + 0.30 * sensorimotor_100ms
+ )
 
-        # H³ direct features
-        coupling_period_1s = h3_direct[(25, 16, 14, 2)].unsqueeze(-1)
-        sensorimotor_period_1s = h3_direct[(33, 16, 14, 2)].unsqueeze(-1)
-        sensorimotor_100ms = h3_direct[(33, 3, 0, 2)].unsqueeze(-1)
-        loudness_entropy = h3_direct[(8, 3, 20, 2)].unsqueeze(-1)
+ # f18: Network Connectivity (coefficients sum = 1.0)
+ f18 = torch.sigmoid(
+ 0.35 * (f16 * f17)
+ + 0.35 * loudness_entropy
+ )
 
-        # ═══ LAYER E: Explicit features ═══
+ # ═══ LAYER M: Mathematical ═══
+ vrms_advantage = f16
+ bilateral_index = f17
+ connectivity_strength = torch.sigmoid(
+ 0.5 * f16 + 0.5 * f18
+ )
 
-        # f16: Music Enhancement (coefficients sum = 1.0)
-        f16 = torch.sigmoid(
-            0.40 * coupling_period_1s
-            + 0.30 * bep_groove.mean(-1, keepdim=True)
-            + 0.30 * bep_motor.mean(-1, keepdim=True)
-        )
+ # ═══ LAYER P: Present ═══
 
-        # f17: Bilateral Activation (coefficients sum = 1.0)
-        f17 = torch.sigmoid(
-            0.40 * sensorimotor_period_1s
-            + 0.30 * tmh_seq.mean(-1, keepdim=True)
-            + 0.30 * sensorimotor_100ms
-        )
+ # ═══ LAYER F: Future ═══
+ enhancement_pred = torch.sigmoid(
+ 0.5 * f16 + 0.5 * coupling_period_1s
+ )
+ connectivity_pred = torch.sigmoid(
+ 0.5 * f18 + 0.5 * sensorimotor_period_1s
+ )
+ bilateral_pred = torch.sigmoid(
+ )
 
-        # f18: Network Connectivity (coefficients sum = 1.0)
-        f18 = torch.sigmoid(
-            0.35 * (f16 * f17)
-            + 0.35 * loudness_entropy
-            + 0.30 * tmh_hier.mean(-1, keepdim=True)
-        )
-
-        # ═══ LAYER M: Mathematical ═══
-        vrms_advantage = f16
-        bilateral_index = f17
-        connectivity_strength = torch.sigmoid(
-            0.5 * f16 + 0.5 * f18
-        )
-
-        # ═══ LAYER P: Present ═══
-        motor_drive = bep_groove.mean(-1, keepdim=True)
-        sensorimotor_sync = tmh_seq.mean(-1, keepdim=True)
-
-        # ═══ LAYER F: Future ═══
-        enhancement_pred = torch.sigmoid(
-            0.5 * f16 + 0.5 * coupling_period_1s
-        )
-        connectivity_pred = torch.sigmoid(
-            0.5 * f18 + 0.5 * sensorimotor_period_1s
-        )
-        bilateral_pred = torch.sigmoid(
-            0.5 * f17 + 0.5 * tmh_seq.mean(-1, keepdim=True)
-        )
-
-        return torch.cat([
-            f16, f17, f18,                                          # E: 3D
-            vrms_advantage, bilateral_index, connectivity_strength, # M: 3D
-            motor_drive, sensorimotor_sync,                         # P: 2D
-            enhancement_pred, connectivity_pred, bilateral_pred,    # F: 3D
-        ], dim=-1)  # (B, T, 11)
+ return torch.cat([
+ f16, f17, f18, # E: 3D
+ vrms_advantage, bilateral_index, connectivity_strength, # M: 3D
+ motor_drive, sensorimotor_sync, # P: 2D
+ enhancement_pred, connectivity_pred, bilateral_pred, # F: 3D
+ ], dim=-1) # (B, T, 11)
 ```
 
 ---
@@ -560,8 +507,6 @@ class VRMSME(BaseModel):
 | **Falsification Tests** | 1/5 confirmed (VRMS>VRAO/VRMI) | Moderate validity |
 | **R³ Features Used** | ~20D of 49D | Energy + change + interactions |
 | **H³ Demand** | 12 tuples (0.52%) | Sparse, efficient |
-| **BEP Mechanism** | 30D (3 sub-sections) | Beat/motor processing |
-| **TMH Mechanism** | 30D (3 sub-sections) | Temporal memory/sequence |
 | **Output Dimensions** | **11D** | 4-layer structure |
 
 ---
@@ -585,19 +530,12 @@ class VRMSME(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D) | R³ (49D) |
-| Temporal | HC⁰ mechanisms (NPL, GRV, EFC) | BEP (30D) + TMH (30D) mechanisms |
-| Multi-modal signal | S⁰.X_L0L4[128:136] + HC⁰.GRV | R³.x_l0l5[25:33] + BEP.groove |
-| Sensorimotor signal | S⁰.X_L4L5[192:200] + HC⁰.NPL | R³.x_l4l5[33:41] + TMH.sequence_integration |
-| Motor intensity | S⁰.Λ_rms[47] + HC⁰.EFC | R³.amplitude[7] + TMH.short_term |
+| Multi-modal signal | S⁰.X_L0L4[128:136] + HC⁰.GRV | R³.x_l0l5[25:33] |
+| Sensorimotor signal | S⁰.X_L4L5[192:200] + HC⁰.NPL | R³.x_l4l5[33:41] |
+| Motor intensity | S⁰.Λ_rms[47] + HC⁰.EFC | R³.amplitude[7] |
 | Demand format | HC⁰ index ranges | H³ 4-tuples (sparse) |
 | Total demand | 12/2304 = 0.52% | 12/2304 = 0.52% |
 | Output | 11D | 11D (same) |
-
-### Why BEP + TMH replaces HC⁰ mechanisms
-
-- **NPL → BEP.motor_coupling** [10:20]: Neural phase locking for multi-modal motor synchronization maps to BEP's motor coupling.
-- **GRV → BEP.groove_processing** [20:30] + **BEP.beat_entrainment** [0:10]: Groove processing for VR rhythmic engagement maps to BEP's groove and beat sections.
-- **EFC → TMH.short_term** [0:10] + **TMH.sequence_integration** [10:20]: Efference copy mechanism for sensorimotor binding maps to TMH's short-term memory and sequence integration.
 
 ---
 
@@ -609,7 +547,6 @@ class VRMSME(BaseModel):
 |---|-------|-----------------|-------------------|----------|
 | 1 | FULL_NAME | "VR Music Stimulation Motor Enhancement" | "VR Motor Skill Music Enhancement" | HIGH |
 | 2 | OUTPUT_DIM | 11 | 10 | HIGH |
-| 3 | MECHANISM_NAMES | ("BEP", "TMH") | ("BEP",) — missing TMH | HIGH |
 | 4 | h3_demand | 12 tuples (see Section 5.1) | () empty tuple | HIGH |
 | 5 | Layer E dim names | f16_music_enhancement, f17_bilateral_activation, f18_network_connectivity | f16_vr_music_enhancement, f17_sensorimotor_connectivity, f18_multimodal_integration | MEDIUM |
 | 6 | Layer M dimensions | 3D (vrms_advantage, bilateral_index, connectivity_strength) | 2D (connectivity_gain_fn, vr_ao_mi_comparison) | HIGH |

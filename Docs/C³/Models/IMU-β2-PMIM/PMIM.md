@@ -21,20 +21,20 @@ The **Predictive Memory Integration Model** (PMIM) models how the brain continuo
 THE DUAL PREDICTION ERROR SYSTEM IN MUSIC
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-ERAN (Long-Term Syntax)                MMN (Short-Term Echoic)
-Brain region: IFG (Broca's area)       Brain region: STG + IFG
-Timescale: Phrase/key (seconds)        Timescale: Echoic memory (~10s)
-Template: Learned harmonic rules       Template: Recent auditory regularity
-Trigger: Syntax rule violation         Trigger: Deviance from local pattern
-Function: "Wrong chord in context"     Function: "That sound was different"
-Evidence: Koelsch 2000, 2009, 2014     Evidence: Garrido 2009, Fong 2020
+ERAN (Long-Term Syntax) MMN (Short-Term Echoic)
+Brain region: IFG (Broca's area) Brain region: STG + IFG
+Timescale: Phrase/key (seconds) Timescale: Echoic memory (~10s)
+Template: Learned harmonic rules Template: Recent auditory regularity
+Trigger: Syntax rule violation Trigger: Deviance from local pattern
+Function: "Wrong chord in context" Function: "That sound was different"
+Evidence: Koelsch 2000, 2009, 2014 Evidence: Garrido 2009, Fong 2020
 
-              SHARED PREDICTIVE PROCESS
-              Brain region: IFG (bilateral)
-              Mechanism: Hierarchical predictive coding
-              Function: Compare prediction vs. input
-              Output: Prediction error signal
-              Evidence: Friston 2005, Vuust 2009
+ SHARED PREDICTIVE PROCESS
+ Brain region: IFG (bilateral)
+ Mechanism: Hierarchical predictive coding
+ Function: Compare prediction vs. input
+ Output: Prediction error signal
+ Evidence: Friston 2005, Vuust 2009
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Both ERAN and MMN share inferior fronto-lateral cortex generators.
@@ -63,146 +63,145 @@ Though PMIM involves spectral prediction (partially SPU territory), its core cla
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                 PMIM — COMPLETE CIRCUIT                                      ║
+║ PMIM — COMPLETE CIRCUIT ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │                    AUDITORY CORTEX (STG/A1)                        │    ║
-║  │                                                                     │    ║
-║  │  Core (A1)      Belt           Parabelt                             │    ║
-║  │  Spectrotemporal Feature       Pattern recognition                  │    ║
-║  │  encoding        extraction    Harmonic syntax + contour            │    ║
-║  └──────┬──────────────┬──────────────────┬────────────────────────────┘    ║
-║         │              │                  │                                  ║
-║         ▼              ▼                  ▼                                  ║
-║  ┌──────────────────────────────────────────────────────────┐              ║
-║  │              DUAL PREDICTION SYSTEM                       │              ║
-║  │                                                           │              ║
-║  │  ┌─────────────────────┐  ┌───────────────────────┐      │              ║
-║  │  │    MMN SYSTEM        │  │    ERAN SYSTEM        │      │              ║
-║  │  │                     │  │                       │      │              ║
-║  │  │  • Short-term       │  │  • Long-term          │      │              ║
-║  │  │    echoic memory    │  │    stored syntax rules │      │              ║
-║  │  │  • On-line regularity│  │  • Implicit harmonic  │      │              ║
-║  │  │    extraction        │  │    knowledge          │      │              ║
-║  │  │  • ~10s window       │  │  • Key/phrase scope   │      │              ║
-║  │  │  • STG generators    │  │  • IFG generators     │      │              ║
-║  │  └──────────┬──────────┘  └──────────┬────────────┘      │              ║
-║  │             │                        │                    │              ║
-║  │             └────────────┬───────────┘                    │              ║
-║  │                          ▼                                │              ║
-║  │  ┌─────────────────────────────────────────────────┐     │              ║
-║  │  │    SHARED PREDICTIVE PROCESS (IFG bilateral)     │     │              ║
-║  │  │                                                  │     │              ║
-║  │  │  • Compare prediction with input                 │     │              ║
-║  │  │  • Generate prediction error (PE)                │     │              ║
-║  │  │  • Weight PE by precision (certainty)            │     │              ║
-║  │  │  • Route PE to memory updating                   │     │              ║
-║  │  └──────────────────────┬──────────────────────────┘     │              ║
-║  └──────────────────────────┼────────────────────────────────┘              ║
-║                             │                                                ║
-║                             ▼                                                ║
-║  ┌─────────────────────────────────────────────────────────┐                ║
-║  │                    MEMORY UPDATING HUB                   │                ║
-║  │                                                         │                ║
-║  │  ┌─────────────────────┐  ┌───────────────────────┐    │                ║
-║  │  │    HIPPOCAMPUS      │  │         mPFC          │    │                ║
-║  │  │                     │  │                       │    │                ║
-║  │  │  • Error-driven     │  │  • Schema updating    │    │                ║
-║  │  │    encoding         │  │  • Rule refinement    │    │                ║
-║  │  │  • Rapid binding    │  │  • Context weighting  │    │                ║
-║  │  │    of novel events  │  │                       │    │                ║
-║  │  └─────────────────────┘  └───────────────────────┘    │                ║
-║  │                                                         │                ║
-║  └──────────────────────────┬──────────────────────────────┘                ║
-║                             │                                                ║
-║                             ▼                                                ║
-║              PREDICTION ERROR → MEMORY UPDATE → MODEL REFINEMENT            ║
-║                                                                              ║
+║ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ AUDITORY CORTEX (STG/A1) │ ║
+║ │ │ ║
+║ │ Core (A1) Belt Parabelt │ ║
+║ │ Spectrotemporal Feature Pattern recognition │ ║
+║ │ encoding extraction Harmonic syntax + contour │ ║
+║ └──────┬──────────────┬──────────────────┬────────────────────────────┘ ║
+║ │ │ │ ║
+║ ▼ ▼ ▼ ║
+║ ┌──────────────────────────────────────────────────────────┐ ║
+║ │ DUAL PREDICTION SYSTEM │ ║
+║ │ │ ║
+║ │ ┌─────────────────────┐ ┌───────────────────────┐ │ ║
+║ │ │ MMN SYSTEM │ │ ERAN SYSTEM │ │ ║
+║ │ │ │ │ │ │ ║
+║ │ │ • Short-term │ │ • Long-term │ │ ║
+║ │ │ echoic memory │ │ stored syntax rules │ │ ║
+║ │ │ • On-line regularity│ │ • Implicit harmonic │ │ ║
+║ │ │ extraction │ │ knowledge │ │ ║
+║ │ │ • ~10s window │ │ • Key/phrase scope │ │ ║
+║ │ │ • STG generators │ │ • IFG generators │ │ ║
+║ │ └──────────┬──────────┘ └──────────┬────────────┘ │ ║
+║ │ │ │ │ ║
+║ │ └────────────┬───────────┘ │ ║
+║ │ ▼ │ ║
+║ │ ┌─────────────────────────────────────────────────┐ │ ║
+║ │ │ SHARED PREDICTIVE PROCESS (IFG bilateral) │ │ ║
+║ │ │ │ │ ║
+║ │ │ • Compare prediction with input │ │ ║
+║ │ │ • Generate prediction error (PE) │ │ ║
+║ │ │ • Weight PE by precision (certainty) │ │ ║
+║ │ │ • Route PE to memory updating │ │ ║
+║ │ └──────────────────────┬──────────────────────────┘ │ ║
+║ └──────────────────────────┼────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────┐ ║
+║ │ MEMORY UPDATING HUB │ ║
+║ │ │ ║
+║ │ ┌─────────────────────┐ ┌───────────────────────┐ │ ║
+║ │ │ HIPPOCAMPUS │ │ mPFC │ │ ║
+║ │ │ │ │ │ │ ║
+║ │ │ • Error-driven │ │ • Schema updating │ │ ║
+║ │ │ encoding │ │ • Rule refinement │ │ ║
+║ │ │ • Rapid binding │ │ • Context weighting │ │ ║
+║ │ │ of novel events │ │ │ │ ║
+║ │ └─────────────────────┘ └───────────────────────┘ │ ║
+║ │ │ ║
+║ └──────────────────────────┬──────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ PREDICTION ERROR → MEMORY UPDATE → MODEL REFINEMENT ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 CRITICAL EVIDENCE:
 ─────────────────
-Koelsch 2009:          ERAN modified by short/long-term experience
-Koelsch 2009:          ERAN and MMN share predictive processes (differ in memory basis)
-Koelsch 2009:          ERAN emerges ~2.5 years; MMN from fetus
-Koelsch 2014:          Hierarchical predictive coding for music syntax
-Cheung 2019:           Uncertainty x surprise interaction in hippocampus/amygdala (N=79)
-Bonetti 2024:          Hierarchical PE: auditory cortex → hippocampus → ACC (N=83)
+Koelsch 2009: ERAN modified by short/long-term experience
+Koelsch 2009: ERAN and MMN share predictive processes (differ in memory basis)
+Koelsch 2009: ERAN emerges ~2.5 years; MMN from fetus
+Koelsch 2014: Hierarchical predictive coding for music syntax
+Cheung 2019: Uncertainty x surprise interaction in hippocampus/amygdala (N=79)
+Bonetti 2024: Hierarchical PE: auditory cortex → hippocampus → ACC (N=83)
 ```
 
-### 2.2 Information Flow Architecture (EAR → BRAIN → SYN → PMIM)
+### 2.2 Information Flow Architecture (EAR → BRAIN → PMIM)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    PMIM COMPUTATION ARCHITECTURE                            ║
+║ PMIM COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins × 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  PMIM reads primarily:                                           │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
-║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ CHANGE   │ │ X-INT  │ │        ║
-║  │  │ 7D [0:7]  │ │ 5D[7:12]│ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
-║  │  │           │ │         │ │ [12:21] │ │ [21:25]  │ │ [25:49]│ │        ║
-║  │  │roughness★ │ │loudness │ │tonalness│ │flux    ★ │ │x_l0l5★ │ │        ║
-║  │  │sethares ★ │ │onset    │ │         │ │entropy ★ │ │x_l4l5★ │ │        ║
-║  │  │stumpf   ★ │ │         │ │         │ │         │ │x_l5l7  │ │        ║
-║  │  │pleasant.★ │ │         │ │         │ │         │ │        │ │        ║
-║  │  │inharm.  ★ │ │         │ │         │ │         │ │        │ │        ║
-║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                         PMIM reads: 33D                          │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed features                    │        ║
-║  │                                                                  │        ║
-║  │  ┌── Chord ─────┐ ┌── Progression ──┐ ┌── Phrase ──────────┐   │        ║
-║  │  │ 400ms (H10)  │ │ 700ms (H14)     │ │ 2s (H18)          │   │        ║
-║  │  │              │ │                  │ │                    │   │        ║
-║  │  │ Single chord │ │ 2-4 chord        │ │ Harmonic arc       │   │        ║
-║  │  │ prediction   │ │ progression     │ │ expectation        │   │        ║
-║  │  │ window       │ │ prediction       │ │ window             │   │        ║
-║  │  └──────────────┘ └─────────────────┘ └────────────────────┘   │        ║
-║  │                         PMIM demand: ~18 of 2304 tuples        │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Mnemonic Circuit ═════════    ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌─────────────────┐                                                        ║
-║  │  SYN (30D)      │  Syntactic Processing mechanism                        ║
-║  │                 │                                                        ║
-║  │ Harmony  [0:10] │  chord function, progression regularity, key stability ║
-║  │ PredErr [10:20] │  ERAN amplitude, MMN proxy, surprise magnitude         ║
-║  │ Struct  [20:30] │  cadence expectation, resolution probability, closure  ║
-║  └────────┬────────┘                                                        ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    PMIM MODEL (11D Output)                       │        ║
-║  │                                                                  │        ║
-║  │  Layer P (Prediction): f13_eran, f14_mmn, f15_pred_error         │        ║
-║  │  Layer M (Math):       hierarchical_pe, model_precision          │        ║
-║  │  Layer S (State):      syntax_state, deviance_state,             │        ║
-║  │                        memory_update                             │        ║
-║  │  Layer F (Future):     eran_forecast_fc, mmn_forecast_fc,        │        ║
-║  │                        model_update_fc                           │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins × 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ PMIM reads primarily: │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ ENERGY │ │ TIMBRE │ │ CHANGE │ │ X-INT │ │ ║
+║ │ │ 7D [0:7] │ │ 5D[7:12]│ │ 9D │ │ 4D │ │ 24D │ │ ║
+║ │ │ │ │ │ │ [12:21] │ │ [21:25] │ │ [25:49]│ │ ║
+║ │ │roughness★ │ │loudness │ │tonalness│ │flux ★ │ │x_l0l5★ │ │ ║
+║ │ │sethares ★ │ │onset │ │ │ │entropy ★ │ │x_l4l5★ │ │ ║
+║ │ │stumpf ★ │ │ │ │ │ │ │ │x_l5l7 │ │ ║
+║ │ │pleasant.★ │ │ │ │ │ │ │ │ │ │ ║
+║ │ │inharm. ★ │ │ │ │ │ │ │ │ │ │ ║
+║ │ └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │ ║
+║ │ PMIM reads: 33D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed features │ ║
+║ │ │ ║
+║ │ ┌── Chord ─────┐ ┌── Progression ──┐ ┌── Phrase ──────────┐ │ ║
+║ │ │ 400ms (H10) │ │ 700ms (H14) │ │ 2s (H18) │ │ ║
+║ │ │ │ │ │ │ │ │ ║
+║ │ │ Single chord │ │ 2-4 chord │ │ Harmonic arc │ │ ║
+║ │ │ prediction │ │ progression │ │ expectation │ │ ║
+║ │ │ window │ │ prediction │ │ window │ │ ║
+║ │ └──────────────┘ └─────────────────┘ └────────────────────┘ │ ║
+║ │ PMIM demand: ~18 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Mnemonic Circuit ═════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────┐ ║
+║ │ │ ║
+║ │ Harmony [0:10] │ chord function, progression regularity, key stability ║
+║ │ PredErr [10:20] │ ERAN amplitude, MMN proxy, surprise magnitude ║
+║ │ Struct [20:30] │ cadence expectation, resolution probability, closure ║
+║ └────────┬────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ PMIM MODEL (11D Output) │ ║
+║ │ │ ║
+║ │ Layer P (Prediction): f13_eran, f14_mmn, f15_pred_error │ ║
+║ │ Layer M (Math): hierarchical_pe, model_precision │ ║
+║ │ Layer S (State): syntax_state, deviance_state, │ ║
+║ │ memory_update │ ║
+║ │ Layer F (Future): eran_forecast_fc, mmn_forecast_fc, │ ║
+║ │ model_update_fc │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -214,10 +213,10 @@ Bonetti 2024:          Hierarchical PE: auditory cortex → hippocampus → ACC 
 
 | # | Study | Method | N | Key Finding | Effect Size | MI Relevance |
 |---|-------|--------|---|-------------|-------------|-------------|
-| 1 | **Koelsch et al. (2000)** | EEG | 24 | ERAN elicited by harmonically irregular Neapolitan sixth chords; peak 150-180ms, right-frontal maximum; larger at 5th vs 3rd position | p < 0.001 | **SYN.pred_error: syntax violation signal; position-dependent amplitude confirms rule-based prediction** |
+| 1 | **Koelsch et al. (2000)** | EEG | 24 | ERAN elicited by harmonically irregular Neapolitan sixth chords; peak 150-180ms, right-frontal maximum; larger at 5th vs 3rd position | p < 0.001 | **syntax violation signal; position-dependent amplitude confirms rule-based prediction** |
 | 2 | **Koelsch (2009)** | Review | — | ERAN reflects music-syntactic processing based on long-term memory representations; main generators in inferior BA 44 (bilateral); ERAN modified by short- and long-term experience; ERAN and MMN share predictive processes but differ in memory basis (on-line vs stored rules); both emerge in early childhood (ERAN from ~2.5 years; MMN from fetus) | review | **Dual-system architecture: ERAN (long-term stored rules) + MMN (on-line regularity extraction); shared IFG generators; experience-dependent plasticity** |
 | 3 | **Koelsch (2014)** | Review | — | Hierarchical predictive coding framework for music syntax processing in IFG; brain correlates of music-evoked emotions | — | **Theoretical framework: precision-weighted PE in music** |
-| 4 | **Vuust et al. (2009)** | MEG | 20 | Musicians show enhanced MMN for musical deviants (pitch, timbre, rhythm, intensity, location) | p < 0.01 | **SYN.pred_error: expertise-dependent prediction precision** |
+| 4 | **Vuust et al. (2009)** | MEG | 20 | Musicians show enhanced MMN for musical deviants (pitch, timbre, rhythm, intensity, location) | p < 0.01 | **expertise-dependent prediction precision** |
 | 5 | **Garrido et al. (2009)** | DCM/fMRI | 16 | Dynamic causal modeling shows hierarchical predictive coding explains MMN generation; forward connections carry PE, backward connections carry predictions | p < 0.01 | **Hierarchical PE model architecture: forward PE + backward predictions** |
 | 6 | **Cheung et al. (2019)** | fMRI + behavioral | 79 (39+40) | Uncertainty and surprise jointly predict musical pleasure via nonlinear interaction; IDyOM model quantified 80,000 chord predictions; low-uncertainty/high-surprise and high-uncertainty/low-surprise both pleasurable (saddle-shaped function) | interaction beta = -0.124, p < 0.001; amygdala/hippocampus beta = -0.140, corrected p = 0.002 | **Precision-weighted PE: uncertainty modulates surprise effect; amygdala/hippocampus encode uncertainty x surprise interaction; auditory cortex reflects PE** |
 | 7 | **Bonetti et al. (2024)** | MEG | 83 | Hierarchical brain network for auditory memory recognition: auditory cortex → hippocampus → anterior/medial cingulate gyrus (feedforward PE); cingulate gyrus assumes top hierarchy at sequence end; alpha/beta power stronger for variations, gamma for memorised | p < 0.001 | **Hierarchical PE propagation pathway: A1 → HIP → ACC/MCC; conscious prediction error in memory recognition task** |
@@ -247,7 +246,7 @@ Phase 2: SHORT-TERM PREDICTION (400ms-700ms, H10→H14)
 ──────────────────────────────────────────────────────
 MMN system compares current input against echoic trace.
 Deviance detection: any feature that departs from local regularity.
-SYN.pred_error activates on deviant events.
+pred_error activates on deviant events.
 Math: MMN_proxy ~ |flux| × (1 - entropy_stability)
 
 Phase 3: LONG-TERM PREDICTION (700ms-2s, H14→H18)
@@ -281,17 +280,17 @@ Methods: EEG, MEG, fMRI, DCM, behavioral, psychophysiology
 Sample sizes: 15-83 per study; total N > 450 across empirical studies
 
 Key quantitative findings:
-  - ERAN: peak 150-250ms, right-frontal, amplitude modulated by
-    syntactic irregularity degree (Koelsch 2000, 2009)
-  - Uncertainty x surprise interaction: beta = -0.124 (p < 0.001) on
-    pleasure; amygdala/hippocampus beta = -0.140 (p = 0.002) (Cheung 2019)
-  - Hierarchical PE propagation: A1 → HIP → ACC/MCC confirmed
-    with MEG N=83 (Bonetti 2024)
-  - Inverted-U complexity preference: quadratic IC and entropy
-    effects on liking (Gold 2019, N=70)
-  - Musical training enhances ERAN amplitude (Koelsch 2009)
-  - MMN sensitive to harmonic interval structure (Wagner 2018)
-  - PE processing modulated by serotonergic state (Harding 2025)
+ - ERAN: peak 150-250ms, right-frontal, amplitude modulated by
+ syntactic irregularity degree (Koelsch 2000, 2009)
+ - Uncertainty x surprise interaction: beta = -0.124 (p < 0.001) on
+ pleasure; amygdala/hippocampus beta = -0.140 (p = 0.002) (Cheung 2019)
+ - Hierarchical PE propagation: A1 → HIP → ACC/MCC confirmed
+ with MEG N=83 (Bonetti 2024)
+ - Inverted-U complexity preference: quadratic IC and entropy
+ effects on liking (Gold 2019, N=70)
+ - Musical training enhances ERAN amplitude (Koelsch 2009)
+ - MMN sensitive to harmonic interval structure (Wagner 2018)
+ - PE processing modulated by serotonergic state (Harding 2025)
 ```
 
 ---
@@ -333,39 +332,38 @@ Key quantitative findings:
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
-R³[21] spectral_flux ──────────►   Change detection (MMN basis)
-                                   Fast changes → prediction violation
-                                   Math: MMN_proxy ∝ |flux|
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
+R³[21] spectral_flux ──────────► Change detection (MMN basis)
+ Fast changes → prediction violation
+ Math: MMN_proxy ∝ |flux|
 
-R³[22] entropy ────────────────►   Syntactic unpredictability (ERAN basis)
-                                   High entropy → expectation violation
-                                   Math: ERAN_proxy ∝ entropy × surprise
+R³[22] entropy ────────────────► Syntactic unpredictability (ERAN basis)
+ High entropy → expectation violation
+ Math: ERAN_proxy ∝ entropy × surprise
 
-R³[25:33] x_l0l5 ─────────────►   Sensory-level prediction error
-                                   Energy × Consonance = low-level MMN
-                                   Standard-deviant comparison substrate
+R³[25:33] x_l0l5 ─────────────► Sensory-level prediction error
+ Energy × Consonance = low-level MMN
+ Standard-deviant comparison substrate
 
-R³[33:41] x_l4l5 ─────────────►   Mid-level prediction coupling
-                                   Derivatives × Consonance = rate-of-change
-                                   in harmonic context → intermediate PE
+R³[33:41] x_l4l5 ─────────────► Mid-level prediction coupling
+ Derivatives × Consonance = rate-of-change
+ in harmonic context → intermediate PE
 
-R³[41:49] x_l5l7 ─────────────►   High-level syntactic prediction
-                                   Consonance × Timbre = ERAN syntax model
-                                   Familiar harmonic progressions
+R³[41:49] x_l5l7 ─────────────► High-level syntactic prediction
+ Consonance × Timbre = ERAN syntax model
+ Familiar harmonic progressions
 
-R³[0:5] consonance group ──────►   Prediction stability proxy
-                                   High consonance = confirmed predictions
-                                   Low consonance = violated expectations
+R³[0:5] consonance group ──────► Prediction stability proxy
+ High consonance = confirmed predictions
+ Low consonance = violated expectations
 ```
 
 ### 4.3 Dual-System Mapping (MMN vs ERAN)
 
-| System | Timescale | R³ Basis | SYN Sub-section | Neural Marker |
 |--------|-----------|----------|-----------------|---------------|
-| **MMN** (short-term) | ~10s echoic | flux[21], x_l0l5[25:33] | SYN.pred_error[10:20] | Deviant detection |
-| **ERAN** (long-term) | Syntax rules | entropy[22], x_l5l7[41:49] | SYN.harmony[0:10] | Rule violation |
+| **MMN** (short-term) | ~10s echoic | flux[21], x_l0l5[25:33] | pred_error[10:20] | Deviant detection |
+| **ERAN** (long-term) | Syntax rules | entropy[22], x_l5l7[41:49] | harmony[0:10] | Rule violation |
 
 ---
 
@@ -373,7 +371,7 @@ R³[0:5] consonance group ──────►   Prediction stability proxy
 
 ### 5.1 Demand Specification
 
-PMIM requires H³ features at three SYN horizons: H10 (400ms), H14 (700ms), H18 (2s).
+PMIM requires H³ features at three horizons: H10 (400ms), H14 (700ms), H18 (2s).
 
 | R³ Index | Feature | H | Morph | Law | Purpose |
 |----------|---------|---|-------|-----|---------|
@@ -400,7 +398,7 @@ PMIM requires H³ features at three SYN horizons: H10 (400ms), H14 (700ms), H18 
 
 #### R³ v2 Projected Expansion
 
-PMIM projected v2 from I (Information) and H (Harmony) groups, aligned with SYN horizons (H10, H14, H18).
+PMIM projected v2 from I (Information) and H (Harmony) groups, aligned with corresponding H³ horizons (H10, H14, H18).
 
 | R³ Idx | Feature | Group | H | Morph | Law | Purpose |
 |:------:|---------|:-----:|:-:|-------|:---:|---------|
@@ -416,16 +414,6 @@ PMIM projected v2 from I (Information) and H (Harmony) groups, aligned with SYN 
 **v2 projected**: 8 tuples
 **Total projected**: 26 tuples of 294,912 theoretical = 0.0088%
 
-### 5.2 SYN Mechanism Binding
-
-PMIM reads from the **SYN** (Syntactic Processing) mechanism:
-
-| SYN Sub-section | Range | PMIM Role | Weight |
-|-----------------|-------|-----------|--------|
-| **Harmonic Syntax** | SYN[0:10] | Chord function, key stability, rule state | 0.8 |
-| **Prediction Error** | SYN[10:20] | ERAN amplitude, MMN proxy, surprise magnitude | **1.0** (primary) |
-| **Structural Expectation** | SYN[20:30] | Cadence expectation, resolution probability | 0.7 |
-
 ---
 
 ## 6. Output Space: 11D Multi-Layer Representation
@@ -439,65 +427,63 @@ Manifold range: IMU PMIM [295:306]
 
 LAYER P — PREDICTION FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 0  │ f13_eran          │ [0, 1] │ ERAN response: long-term syntax violation.
-    │                   │        │ IFG (Broca's area) activation.
-    │                   │        │ f13 = σ(α · entropy · SYN.harmony.mean
-    │                   │        │        · x_l5l7.mean)
-    │                   │        │ α = 0.30 (syntax weight)
+ 0 │ f13_eran │ [0, 1] │ ERAN response: long-term syntax violation.
+ │ │ │ IFG (Broca's area) activation.
+ │ │ │ f13 = σ(α · entropy · harmony.mean
+ │ │ │ · x_l5l7.mean)
+ │ │ │ α = 0.30 (syntax weight)
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 1  │ f14_mmn           │ [0, 1] │ MMN response: short-term deviance detection.
-    │                   │        │ STG + IFG echoic mismatch.
-    │                   │        │ f14 = σ(β · flux · SYN.pred_error.mean
-    │                   │        │        · x_l0l5.mean)
-    │                   │        │ β = 0.30 (deviance weight)
+ 1 │ f14_mmn │ [0, 1] │ MMN response: short-term deviance detection.
+ │ │ │ STG + IFG echoic mismatch.
+ │ │ │ f14 = σ(β · flux · pred_error.mean
+ │ │ │ · x_l0l5.mean)
+ │ │ │ β = 0.30 (deviance weight)
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 2  │ f15_pred_error    │ [0, 1] │ Combined prediction error signal.
-    │                   │        │ IFG shared generator output.
-    │                   │        │ f15 = σ(γ · SYN.pred_error.mean
-    │                   │        │        · (roughness + inharmonicity) / 2)
-    │                   │        │ γ = 0.40 (error weight)
+ 2 │ f15_pred_error │ [0, 1] │ Combined prediction error signal.
+ │ │ │ IFG shared generator output.
+ │ │ │ f15 = σ(γ · pred_error.mean
+ │ │ │ · (roughness + inharmonicity) / 2)
+ │ │ │ γ = 0.40 (error weight)
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 3  │ hierarchical_pe   │ [0, 1] │ Hierarchical prediction error.
-    │                   │        │ Precision-weighted combination of ERAN + MMN.
-    │                   │        │ PE = SYN.pred_error.mean · SYN.harmony.mean
-    │                   │        │    + entropy · (1 - stumpf_fusion)
+ 3 │ hierarchical_pe │ [0, 1] │ Hierarchical prediction error.
+ │ │ │ Precision-weighted combination of ERAN + MMN.
+ │ │ │ + entropy · (1 - stumpf_fusion)
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 4  │ model_precision   │ [0, 1] │ Prediction model certainty.
-    │                   │        │ High precision = confident predictions.
-    │                   │        │ σ(stumpf_fusion · pleasantness · tonalness)
+ 4 │ model_precision │ [0, 1] │ Prediction model certainty.
+ │ │ │ High precision = confident predictions.
+ │ │ │ σ(stumpf_fusion · pleasantness · tonalness)
 
 LAYER S — PRESENT STATE
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 5  │ syntax_state      │ [0, 1] │ Current harmonic syntax processing state.
-    │                   │        │ SYN.harmony.mean() — tonal context.
+ 5 │ syntax_state │ [0, 1] │ Current harmonic syntax processing state.
+ │ │ │ harmony.mean() — tonal context.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 6  │ deviance_state    │ [0, 1] │ Current deviance detection activation.
-    │                   │        │ SYN.pred_error.mean() — IFG signal.
+ 6 │ deviance_state │ [0, 1] │ Current deviance detection activation.
+ │ │ │ pred_error.mean() — IFG signal.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 7  │ memory_update     │ [0, 1] │ Memory updating rate.
-    │                   │        │ SYN.pred_error.mean × (1 - SYN.struct_expect.mean).
-    │                   │        │ High PE + low expectation = strong updating.
+ 7 │ memory_update │ [0, 1] │ Memory updating rate.
+ │ │ │ High PE + low expectation = strong updating.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 8  │ eran_forecast_fc  │ [0, 1] │ ERAN prediction (1-2s ahead).
-    │                   │        │ Based on SYN.harmony trajectory + entropy trend.
+ 8 │ eran_forecast_fc │ [0, 1] │ ERAN prediction (1-2s ahead).
+ │ │ │ Based on harmony trajectory + entropy trend.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 9  │ mmn_forecast_fc   │ [0, 1] │ MMN prediction (0.5-1s ahead).
-    │                   │        │ Based on SYN.pred_error trajectory + flux trend.
+ 9 │ mmn_forecast_fc │ [0, 1] │ MMN prediction (0.5-1s ahead).
+ │ │ │ Based on pred_error trajectory + flux trend.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
-10  │ model_update_fc   │ [0, 1] │ Model refinement forecast (2-5s ahead).
-    │                   │        │ Based on SYN.struct_expect trajectory.
+10 │ model_update_fc │ [0, 1] │ Model refinement forecast (2-5s ahead).
+ │ │ │ Based on struct_expect trajectory.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
@@ -513,20 +499,20 @@ PREDICTIVE MEMORY INTEGRATION
 
 The brain maintains two parallel prediction systems for music:
 
-  ERAN_response = f(Stored_Rules, Current_Input, Context)
-  MMN_response  = f(Echoic_Trace, Current_Input, Regularity)
+ ERAN_response = f(Stored_Rules, Current_Input, Context)
+ MMN_response = f(Echoic_Trace, Current_Input, Regularity)
 
 Combined prediction error:
-  PE_total = w_eran · ERAN + w_mmn · MMN
-  where w_eran + w_mmn ≤ 1.0
+ PE_total = w_eran · ERAN + w_mmn · MMN
+ where w_eran + w_mmn ≤ 1.0
 
 Precision weighting (inverse uncertainty):
-  PE_weighted = PE_total · Precision(model)
-  Precision = σ(stumpf_fusion · pleasantness · tonalness)
+ PE_weighted = PE_total · Precision(model)
+ Precision = σ(stumpf_fusion · pleasantness · tonalness)
 
 Memory update rule:
-  dModel/dt = η · PE_weighted · (1 - Expectation_Confidence)
-  where η = learning rate (implicit), PE drives updating
+ dModel/dt = η · PE_weighted · (1 - Expectation_Confidence)
+ where η = learning rate (implicit), PE drives updating
 ```
 
 ### 7.2 Feature Formulas
@@ -537,21 +523,17 @@ All coefficients in sigmoid arguments satisfy |w_i| sum <= 1.0.
 # f13: ERAN Response (long-term syntax violation)
 # Inputs are all [0,1]. Products are [0,1]. Coefficient α = 0.30.
 # Inside sigmoid: 0.30 * (entropy * harmony_mean * x_l5l7_mean) — max = 0.30
-f13 = σ(0.30 · R³.entropy[22] · mean(SYN.harmony[0:10]) · mean(R³.x_l5l7[41:49]))
 
 # f14: MMN Response (short-term deviance)
 # Inside sigmoid: 0.30 * (flux * pred_error_mean * x_l0l5_mean) — max = 0.30
-f14 = σ(0.30 · R³.spectral_flux[21] · mean(SYN.pred_error[10:20]) · mean(R³.x_l0l5[25:33]))
 
 # f15: Combined Prediction Error
 # Inside sigmoid: 0.40 * (pred_error_mean * avg_dissonance) — max = 0.40
-f15 = σ(0.40 · mean(SYN.pred_error[10:20]) · (R³.roughness[0] + R³.inharmonicity[5]) / 2)
 
 # hierarchical_pe: Precision-weighted combined PE
 hierarchical_pe = clamp(
-    mean(SYN.pred_error[10:20]) · mean(SYN.harmony[0:10])
-    + R³.entropy[22] · (1 - R³.stumpf_fusion[3]),
-    0, 1
+ + R³.entropy[22] · (1 - R³.stumpf_fusion[3]),
+ 0, 1
 )
 
 # model_precision: How confident is the current prediction model
@@ -564,17 +546,17 @@ model_precision = σ(R³.stumpf_fusion[3] · R³.sensory_pleasantness[4] · R³.
 SIGMOID COEFFICIENT AUDIT (|w_i| must sum ≤ 1.0)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-f13_eran:       α = 0.30, applied to product of 3 terms in [0,1]
-                Max argument: 0.30 × 1.0 = 0.30   ✓ (≤ 1.0)
+f13_eran: α = 0.30, applied to product of 3 terms in [0,1]
+ Max argument: 0.30 × 1.0 = 0.30 ✓ (≤ 1.0)
 
-f14_mmn:        β = 0.30, applied to product of 3 terms in [0,1]
-                Max argument: 0.30 × 1.0 = 0.30   ✓ (≤ 1.0)
+f14_mmn: β = 0.30, applied to product of 3 terms in [0,1]
+ Max argument: 0.30 × 1.0 = 0.30 ✓ (≤ 1.0)
 
 f15_pred_error: γ = 0.40, applied to product of 2 terms in [0,1]
-                Max argument: 0.40 × 1.0 = 0.40   ✓ (≤ 1.0)
+ Max argument: 0.40 × 1.0 = 0.40 ✓ (≤ 1.0)
 
 model_precision: No explicit coefficient, product of 3 [0,1] terms
-                Max argument: 1.0 × 1.0 × 1.0 = 1.0   ✓ (≤ 1.0)
+ Max argument: 1.0 × 1.0 × 1.0 = 1.0 ✓ (≤ 1.0)
 
 All formulas verified: no sigmoid saturation risk.
 ```
@@ -597,23 +579,23 @@ All formulas verified: no sigmoid saturation risk.
 ### 8.2 Shared Generator Architecture
 
 ```
-ERAN GENERATOR:                     MMN GENERATOR:
-──────────────                      ──────────────
+ERAN GENERATOR: MMN GENERATOR:
+────────────── ──────────────
 
-IFG (bilateral) ████████            STG ████████████
-  Syntax rule comparison              Echoic trace comparison
-  Long-term stored rules              Short-term regularity
+IFG (bilateral) ████████ STG ████████████
+ Syntax rule comparison Echoic trace comparison
+ Long-term stored rules Short-term regularity
 
-         ↘                     ↙
+ ↘ ↙
 
-      SHARED INFERIOR FRONTO-LATERAL
-      CORTEX GENERATOR
-      ───────────────────────────
+ SHARED INFERIOR FRONTO-LATERAL
+ CORTEX GENERATOR
+ ───────────────────────────
 
-      Both ERAN and MMN converge here.
-      This is the key insight of PMIM:
-      prediction error processing
-      is domain-general in IFG.
+ Both ERAN and MMN converge here.
+ This is the key insight of PMIM:
+ prediction error processing
+ is domain-general in IFG.
 ```
 
 ---
@@ -624,30 +606,30 @@ IFG (bilateral) ████████            STG ████████
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    PMIM INTERACTIONS                                        │
+│ PMIM INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  UPSTREAM (feeds into PMIM):                                               │
-│  PNH.ratio_enc ─────────────► PMIM (ratio templates for prediction)       │
-│  MEAMN.memory_state ─────────► PMIM (familiarity modulates precision)     │
-│                                                                             │
-│  CROSS-UNIT (IMU → ARU):                                                  │
-│  PMIM.f15_pred_error ────────► ARU.SRP (surprise → reward pathway)       │
-│  PMIM.f13_eran ──────────────► ARU.AAC (syntax violation → arousal)      │
-│                                                                             │
-│  INTRA-UNIT (IMU):                                                         │
-│  PMIM ──────► MSPBA (Musical Syntax Processing in Broca's Area)           │
-│       │        └── Shares IFG substrate; PMIM provides PE signal           │
-│       │                                                                      │
-│       ├─────► OII (Oscillatory Intelligence Integration)                  │
-│       │        └── Prediction error drives oscillatory reset               │
-│       │                                                                      │
-│       ├─────► TPRD (Tonotopy-Pitch Representation Dissociation)           │
-│       │        └── Prediction error in primary vs nonprimary cortex       │
-│       │                                                                      │
-│       └─────► MEAMN (Memory retrieval feeds predictive processing)        │
-│                └── Bidirectional: PMIM PE enhances memory encoding         │
-│                                                                             │
+│ │
+│ UPSTREAM (feeds into PMIM): │
+│ PNH.ratio_enc ─────────────► PMIM (ratio templates for prediction) │
+│ MEAMN.memory_state ─────────► PMIM (familiarity modulates precision) │
+│ │
+│ CROSS-UNIT (IMU → ARU): │
+│ PMIM.f15_pred_error ────────► ARU.SRP (surprise → reward pathway) │
+│ PMIM.f13_eran ──────────────► ARU.AAC (syntax violation → arousal) │
+│ │
+│ INTRA-UNIT (IMU): │
+│ PMIM ──────► MSPBA (Musical Syntax Processing in Broca's Area) │
+│ │ └── Shares IFG substrate; PMIM provides PE signal │
+│ │ │
+│ ├─────► OII (Oscillatory Intelligence Integration) │
+│ │ └── Prediction error drives oscillatory reset │
+│ │ │
+│ ├─────► TPRD (Tonotopy-Pitch Representation Dissociation) │
+│ │ └── Prediction error in primary vs nonprimary cortex │
+│ │ │
+│ └─────► MEAMN (Memory retrieval feeds predictive processing) │
+│ └── Bidirectional: PMIM PE enhances memory encoding │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -683,144 +665,125 @@ PMIM reads from the unified Brain (26D) for shared state:
 
 ```python
 class PMIM(BaseModel):
-    """Predictive Memory Integration Model.
+ """Predictive Memory Integration Model.
 
-    Output: 11D per frame.
-    Reads: SYN mechanism (30D, primary).
-    Zero learned parameters — all deterministic.
-    """
-    NAME = "PMIM"
-    UNIT = "IMU"
-    TIER = "β2"
-    OUTPUT_DIM = 11
-    MECHANISM_NAMES = ("SYN",)        # Primary mechanism
+ Output: 11D per frame.
+ Reads: R³ + H³ direct.
+ Zero learned parameters — all deterministic.
+ """
+ NAME = "PMIM"
+ UNIT = "IMU"
+ TIER = "β2"
+ OUTPUT_DIM = 11
+ ALPHA = 0.30 # Syntax weight (ERAN response)
+ BETA = 0.30 # Deviance weight (MMN response)
+ GAMMA = 0.40 # Error weight (combined PE)
 
-    ALPHA = 0.30   # Syntax weight (ERAN response)
-    BETA = 0.30    # Deviance weight (MMN response)
-    GAMMA = 0.40   # Error weight (combined PE)
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """18 tuples for PMIM computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ (0, 10, 0, 2), # roughness, 400ms, value, bidirectional
+ (0, 14, 1, 0), # roughness, 700ms, mean, forward
+ (0, 18, 18, 0), # roughness, 2s, trend, forward
+ (5, 10, 0, 2), # inharmonicity, 400ms, value, bidirectional
+ (5, 14, 8, 0), # inharmonicity, 700ms, velocity, forward
+ (22, 10, 0, 2), # entropy, 400ms, value, bidirectional
+ (22, 14, 1, 0), # entropy, 700ms, mean, forward
+ (22, 18, 13, 0), # entropy, 2s, entropy, forward
+ (21, 10, 0, 2), # flux, 400ms, value, bidirectional
+ (21, 14, 8, 0), # flux, 700ms, velocity, forward
+ (3, 10, 0, 2), # stumpf_fusion, 400ms, value, bidirectional
+ (3, 14, 14, 0), # stumpf_fusion, 700ms, periodicity, forward
+ (4, 10, 0, 2), # pleasantness, 400ms, value, bidirectional
+ (4, 18, 19, 0), # pleasantness, 2s, stability, forward
+ (10, 10, 0, 2), # loudness, 400ms, value, bidirectional
+ (14, 10, 0, 2), # tonalness, 400ms, value, bidirectional
+ (14, 14, 18, 0), # tonalness, 700ms, trend, forward
+ (11, 10, 0, 2), # onset_strength, 400ms, value, bidirectional
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """18 tuples for PMIM computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            (0, 10, 0, 2),     # roughness, 400ms, value, bidirectional
-            (0, 14, 1, 0),     # roughness, 700ms, mean, forward
-            (0, 18, 18, 0),    # roughness, 2s, trend, forward
-            (5, 10, 0, 2),     # inharmonicity, 400ms, value, bidirectional
-            (5, 14, 8, 0),     # inharmonicity, 700ms, velocity, forward
-            (22, 10, 0, 2),    # entropy, 400ms, value, bidirectional
-            (22, 14, 1, 0),    # entropy, 700ms, mean, forward
-            (22, 18, 13, 0),   # entropy, 2s, entropy, forward
-            (21, 10, 0, 2),    # flux, 400ms, value, bidirectional
-            (21, 14, 8, 0),    # flux, 700ms, velocity, forward
-            (3, 10, 0, 2),     # stumpf_fusion, 400ms, value, bidirectional
-            (3, 14, 14, 0),    # stumpf_fusion, 700ms, periodicity, forward
-            (4, 10, 0, 2),     # pleasantness, 400ms, value, bidirectional
-            (4, 18, 19, 0),    # pleasantness, 2s, stability, forward
-            (10, 10, 0, 2),    # loudness, 400ms, value, bidirectional
-            (14, 10, 0, 2),    # tonalness, 400ms, value, bidirectional
-            (14, 14, 18, 0),   # tonalness, 700ms, trend, forward
-            (11, 10, 0, 2),    # onset_strength, 400ms, value, bidirectional
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute PMIM 11D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute PMIM 11D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
+ r3: (B,T,49) raw R3 features
 
-        Args:
-            mechanism_outputs: {"SYN": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
-            r3: (B,T,49) raw R3 features
+ Returns:
+ (B,T,11) PMIM output
+ """
+ # R3 features
+ roughness = r3[..., 0:1] # [0, 1]
+ stumpf = r3[..., 3:4] # [0, 1]
+ pleasantness = r3[..., 4:5] # [0, 1]
+ inharmonicity = r3[..., 5:6] # [0, 1]
+ flux = r3[..., 21:22] # [0, 1]
+ entropy = r3[..., 22:23] # [0, 1]
+ tonalness = r3[..., 14:15] # [0, 1]
+ x_l0l5 = r3[..., 25:33] # (B, T, 8)
+ x_l5l7 = r3[..., 41:49] # (B, T, 8)
 
-        Returns:
-            (B,T,11) PMIM output
-        """
-        syn = mechanism_outputs["SYN"]    # (B, T, 30)
+ # === LAYER P: Prediction features ===
+ # f13: ERAN — long-term syntax violation
+ # σ(0.30 * entropy * harmony_mean * x_l5l7_mean)
+ # max argument = 0.30 (all inputs [0,1])
+ f13 = torch.sigmoid(self.ALPHA * (
+ entropy
+ * x_l5l7.mean(-1, keepdim=True)
+ ))
 
-        # R3 features
-        roughness = r3[..., 0:1]          # [0, 1]
-        stumpf = r3[..., 3:4]             # [0, 1]
-        pleasantness = r3[..., 4:5]       # [0, 1]
-        inharmonicity = r3[..., 5:6]      # [0, 1]
-        flux = r3[..., 21:22]             # [0, 1]
-        entropy = r3[..., 22:23]          # [0, 1]
-        tonalness = r3[..., 14:15]        # [0, 1]
-        x_l0l5 = r3[..., 25:33]          # (B, T, 8)
-        x_l5l7 = r3[..., 41:49]          # (B, T, 8)
+ # f14: MMN — short-term deviance
+ # σ(0.30 * flux * pred_error_mean * x_l0l5_mean)
+ # max argument = 0.30
+ f14 = torch.sigmoid(self.BETA * (
+ flux
+ * x_l0l5.mean(-1, keepdim=True)
+ ))
 
-        # SYN sub-sections
-        syn_harmony = syn[..., 0:10]      # harmonic syntax
-        syn_pred_err = syn[..., 10:20]    # prediction error
-        syn_struct = syn[..., 20:30]      # structural expectation
+ # f15: Combined prediction error
+ # σ(0.40 * pred_error_mean * avg_dissonance)
+ # max argument = 0.40
+ f15 = torch.sigmoid(self.GAMMA * (
+ * (roughness + inharmonicity) / 2.0
+ ))
 
-        # === LAYER P: Prediction features ===
-        # f13: ERAN — long-term syntax violation
-        # σ(0.30 * entropy * harmony_mean * x_l5l7_mean)
-        # max argument = 0.30 (all inputs [0,1])
-        f13 = torch.sigmoid(self.ALPHA * (
-            entropy
-            * syn_harmony.mean(-1, keepdim=True)
-            * x_l5l7.mean(-1, keepdim=True)
-        ))
+ # === LAYER M: Mathematical ===
+ # hierarchical_pe: precision-weighted combined PE
+ hierarchical_pe = (
+ + entropy * (1.0 - stumpf)
+ ).clamp(0, 1)
 
-        # f14: MMN — short-term deviance
-        # σ(0.30 * flux * pred_error_mean * x_l0l5_mean)
-        # max argument = 0.30
-        f14 = torch.sigmoid(self.BETA * (
-            flux
-            * syn_pred_err.mean(-1, keepdim=True)
-            * x_l0l5.mean(-1, keepdim=True)
-        ))
+ # model_precision: prediction model certainty
+ model_precision = torch.sigmoid(
+ stumpf * pleasantness * tonalness
+ )
 
-        # f15: Combined prediction error
-        # σ(0.40 * pred_error_mean * avg_dissonance)
-        # max argument = 0.40
-        f15 = torch.sigmoid(self.GAMMA * (
-            syn_pred_err.mean(-1, keepdim=True)
-            * (roughness + inharmonicity) / 2.0
-        ))
+ # === LAYER S: Present state ===
+ memory_update = (
+ )
 
-        # === LAYER M: Mathematical ===
-        # hierarchical_pe: precision-weighted combined PE
-        hierarchical_pe = (
-            syn_pred_err.mean(-1, keepdim=True)
-            * syn_harmony.mean(-1, keepdim=True)
-            + entropy * (1.0 - stumpf)
-        ).clamp(0, 1)
+ # === LAYER F: Future ===
+ eran_forecast_fc = self._predict_future(
+ syn_harmony, h3_direct, window_h=18
+ )
+ mmn_forecast_fc = self._predict_future(
+ syn_pred_err, h3_direct, window_h=14
+ )
+ model_update_fc = self._predict_future(
+ syn_struct, h3_direct, window_h=18
+ )
 
-        # model_precision: prediction model certainty
-        model_precision = torch.sigmoid(
-            stumpf * pleasantness * tonalness
-        )
-
-        # === LAYER S: Present state ===
-        syntax_state = syn_harmony.mean(-1, keepdim=True)
-        deviance_state = syn_pred_err.mean(-1, keepdim=True)
-        memory_update = (
-            syn_pred_err.mean(-1, keepdim=True)
-            * (1.0 - syn_struct.mean(-1, keepdim=True))
-        )
-
-        # === LAYER F: Future ===
-        eran_forecast_fc = self._predict_future(
-            syn_harmony, h3_direct, window_h=18
-        )
-        mmn_forecast_fc = self._predict_future(
-            syn_pred_err, h3_direct, window_h=14
-        )
-        model_update_fc = self._predict_future(
-            syn_struct, h3_direct, window_h=18
-        )
-
-        return torch.cat([
-            f13, f14, f15,                              # P: 3D
-            hierarchical_pe, model_precision,           # M: 2D
-            syntax_state, deviance_state, memory_update, # S: 3D
-            eran_forecast_fc, mmn_forecast_fc,           # F: 3D
-            model_update_fc,
-        ], dim=-1)  # (B, T, 11)
+ return torch.cat([
+ f13, f14, f15, # P: 3D
+ hierarchical_pe, model_precision, # M: 2D
+ syntax_state, deviance_state, memory_update, # S: 3D
+ eran_forecast_fc, mmn_forecast_fc, # F: 3D
+ model_update_fc,
+ ], dim=-1) # (B, T, 11)
 ```
 
 ---
@@ -837,7 +800,6 @@ class PMIM(BaseModel):
 | **Falsification Tests** | 7/7 confirmed | All criteria met |
 | **R³ Features Used** | 33D of 49D | Comprehensive |
 | **H³ Demand** | 18 tuples (0.78%) | Sparse, efficient |
-| **SYN Mechanism** | 30D (3 sub-sections) | Full coverage |
 | **Output Dimensions** | **11D** | 4-layer structure (P/M/S/F) |
 | **Manifold Range** | IMU PMIM [295:306] | 11D contiguous |
 
@@ -870,31 +832,13 @@ class PMIM(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D) | R³ (49D) |
-| Temporal | HC⁰ mechanisms (HRM, EFC, BND) | SYN mechanism (30D) |
-| ERAN basis | S⁰.X_L5L9[224:232] + S⁰.L9.entropy[116] x HC⁰.HRM | R³.entropy[22] x R³.x_l5l7[41:49] x SYN.harmony |
-| MMN basis | S⁰.X_L0L1[128:136] + S⁰.L4.velocity[15:19] x HC⁰.BND | R³.flux[21] x R³.x_l0l5[25:33] x SYN.pred_error |
-| Prediction error | S⁰.L4.velocity + S⁰.L9.kurtosis x HC⁰.EFC | R³.roughness + R³.inharmonicity x SYN.pred_error |
+| ERAN basis | S⁰.X_L5L9[224:232] + S⁰.L9.entropy[116] x HC⁰.HRM | R³.entropy[22] x R³.x_l5l7[41:49] x harmony |
+| MMN basis | S⁰.X_L0L1[128:136] + S⁰.L4.velocity[15:19] x HC⁰.BND | R³.flux[21] x R³.x_l0l5[25:33] x pred_error |
+| Prediction error | S⁰.L4.velocity + S⁰.L9.kurtosis x HC⁰.EFC | R³.roughness + R³.inharmonicity x pred_error |
 | Demand format | HC⁰ index ranges (15/2304 = 0.65%) | H³ 4-tuples (18/2304 = 0.78%) |
 | Output dims | 11D | 11D (same) |
 | Feature naming | imu.f13, imu.f14, imu.f15 | f13_eran, f14_mmn, f15_pred_error |
 | Coefficient rule | Not enforced | sigmoid(Σ w_i·g_i): |w_i| sum <= 1.0 |
-
-### Why SYN replaces HC⁰ mechanisms
-
-The D0 pipeline used 3 HC⁰ mechanisms (HRM, EFC, BND). In MI, these are unified into the SYN mechanism with 3 sub-sections:
-- **HRM → SYN.harmonic_syntax** [0:10]: Hippocampal replay of stored rules = harmonic syntax state (ERAN template)
-- **EFC → SYN.prediction_error** [10:20]: Efference copy comparison = prediction error signal (shared PE)
-- **BND → SYN.structural_expectation** [20:30]: Temporal binding = structural expectation (cadence/closure)
-
-### Key Design Decisions
-
-1. **Zero learned parameters**: All formulas are deterministic — the model serves as a teacher for MI-Core neural training.
-
-2. **Sigmoid safety**: All coefficients verified to prevent saturation. Products of [0,1] terms reduce magnitude naturally; explicit coefficients (0.30, 0.30, 0.40) provide additional headroom.
-
-3. **SYN-only dependency**: Unlike D0 which used 3 separate HC⁰ mechanisms, PMIM reads from a single SYN mechanism. This simplifies the dependency graph while maintaining the same dual-system semantics through SYN sub-sections.
-
-4. **Consonance backbone**: R³[0:7] consonance features are the primary input, consistent with the SYN mechanism specification ("Consonance R3[0:7] — the backbone of harmonic analysis").
 
 ---
 
@@ -905,7 +849,6 @@ The following mismatches exist between this document and `mi_beta/brain/units/im
 | Aspect | Doc (v2.1.0) | Code (v2.0.0) |
 |--------|-------------|---------------|
 | **FULL_NAME** | Predictive Memory Integration Model | Predictive Memory Integration Matrix |
-| **MECHANISM_NAMES** | `("SYN",)` | `("MEM", "TMH")` |
 | **LAYERS** | P/M/S/F (f13_eran, f14_mmn, ...) | E/M/P/F (f01_prediction_error, f02_memory_update, ...) |
 | **h3_demand** | 18 tuples | Empty tuple `()` |
 | **brain_regions** | 6 regions (IFG bilateral, STG, HIP, mPFC, amygdala, ACC) | 3 regions (IFG right-only, STG, HIP) |

@@ -21,17 +21,15 @@ The **Hierarchical Musical Context Encoding** (HMCE) model describes how neural 
 THE FOUR LEVELS OF HIERARCHICAL CONTEXT ENCODING
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-SHORT CONTEXT (10–50 notes)            MEDIUM CONTEXT (50–100 notes)
-Brain region: pmHG (A1)                Brain region: Superior Temporal Gyrus
-Mechanism: TMH.short_context           Mechanism: TMH.medium_context
-Function: "What just happened?"        Function: "What phrase is this?"
-Transformer layer: 1–4                 Transformer layer: 5–9
+SHORT CONTEXT (10–50 notes) MEDIUM CONTEXT (50–100 notes)
+Brain region: pmHG (A1) Brain region: Superior Temporal Gyrus
+Function: "What just happened?" Function: "What phrase is this?"
+Transformer layer: 1–4 Transformer layer: 5–9
 
-LONG CONTEXT (100–200 notes)           EXTENDED CONTEXT (300+ notes)
-Brain region: Middle Temporal Gyrus    Brain region: Temporal Pole / Frontal
-Mechanism: TMH.long_context            Mechanism: TMH.long_context (extended)
-Function: "What section is this?"      Function: "Where in the piece?"
-Transformer layer: 10–12              Transformer layer: 13 (final)
+LONG CONTEXT (100–200 notes) EXTENDED CONTEXT (300+ notes)
+Brain region: Middle Temporal Gyrus Brain region: Temporal Pole / Frontal
+Function: "What section is this?" Function: "Where in the piece?"
+Transformer layer: 10–12 Transformer layer: 13 (final)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 KEY INSIGHT: Cortical distance from pmHG correlates with context
@@ -57,126 +55,125 @@ HMCE establishes the hierarchical temporal structure that all other STU models d
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                 HMCE — COMPLETE CIRCUIT                                      ║
+║ HMCE — COMPLETE CIRCUIT ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  MUSICAL INPUT (complex, multi-note sequences)                               ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │        POSTEROMEDIAL HESCHL'S GYRUS (pmHG / A1)                    │    ║
-║  │        Short context: 10–50 notes, Layers 1–4                      │    ║
-║  │        Decay τ = 1s                                                 │    ║
-║  └──────────────────────────┬──────────────────────────────────────────┘    ║
-║                              │  Increasing cortical distance                 ║
-║                              ▼                                               ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │        SUPERIOR TEMPORAL GYRUS (STG)                                │    ║
-║  │        Medium context: 50–100 notes, Layers 5–9                    │    ║
-║  │        Decay τ = 5s                                                 │    ║
-║  └──────────────────────────┬──────────────────────────────────────────┘    ║
-║                              │                                               ║
-║                              ▼                                               ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │        MIDDLE TEMPORAL GYRUS (MTG)                                  │    ║
-║  │        Long context: 100–200 notes, Layers 10–12                   │    ║
-║  │        Decay τ = 15s                                                │    ║
-║  └──────────────────────────┬──────────────────────────────────────────┘    ║
-║                              │                                               ║
-║                              ▼                                               ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │        TEMPORAL POLE / FRONTAL REGIONS                              │    ║
-║  │        Extended context: 300+ notes, Layer 13                       │    ║
-║  │        Decay τ = 30s+                                               │    ║
-║  │        ★ Musicians only — expertise-dependent (d = 0.32)            │    ║
-║  └─────────────────────────────────────────────────────────────────────┘    ║
-║                                                                              ║
-║  GRADIENT: Distance from pmHG ↔ Context depth: r = 0.99, p < 0.044        ║
-║                                                                              ║
+║ ║
+║ MUSICAL INPUT (complex, multi-note sequences) ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ POSTEROMEDIAL HESCHL'S GYRUS (pmHG / A1) │ ║
+║ │ Short context: 10–50 notes, Layers 1–4 │ ║
+║ │ Decay τ = 1s │ ║
+║ └──────────────────────────┬──────────────────────────────────────────┘ ║
+║ │ Increasing cortical distance ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ SUPERIOR TEMPORAL GYRUS (STG) │ ║
+║ │ Medium context: 50–100 notes, Layers 5–9 │ ║
+║ │ Decay τ = 5s │ ║
+║ └──────────────────────────┬──────────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ MIDDLE TEMPORAL GYRUS (MTG) │ ║
+║ │ Long context: 100–200 notes, Layers 10–12 │ ║
+║ │ Decay τ = 15s │ ║
+║ └──────────────────────────┬──────────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL POLE / FRONTAL REGIONS │ ║
+║ │ Extended context: 300+ notes, Layer 13 │ ║
+║ │ Decay τ = 30s+ │ ║
+║ │ ★ Musicians only — expertise-dependent (d = 0.32) │ ║
+║ └─────────────────────────────────────────────────────────────────────┘ ║
+║ ║
+║ GRADIENT: Distance from pmHG ↔ Context depth: r = 0.99, p < 0.044 ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 CRITICAL EVIDENCE:
 ─────────────────
-Mischler 2025:     r = 0.32 (electrode-level, p=1.5e-05); r = 0.99 (n=6 sites)
-Mischler 2025:     Musicians > non-musicians (layers 7–13), d = 0.32 (p=3.8e-8)
-Norman-Haignere:   β = 0.064 oct/mm, 74→274ms (F=20.56, p<0.001, 18 patients)
-Bellier 2023:      STG anterior→posterior gradient, r² = 0.429 (29 patients)
-Bonetti 2024:      Hierarchical AC→hipp→cingulate, BOR = 2.91e-07 (N=83)
+Mischler 2025: r = 0.32 (electrode-level, p=1.5e-05); r = 0.99 (n=6 sites)
+Mischler 2025: Musicians > non-musicians (layers 7–13), d = 0.32 (p=3.8e-8)
+Norman-Haignere: β = 0.064 oct/mm, 74→274ms (F=20.56, p<0.001, 18 patients)
+Bellier 2023: STG anterior→posterior gradient, r² = 0.429 (29 patients)
+Bonetti 2024: Hierarchical AC→hipp→cingulate, BOR = 2.91e-07 (N=83)
 ```
 
-### 2.2 Information Flow Architecture (EAR → BRAIN → TMH → HMCE)
+### 2.2 Information Flow Architecture (EAR → BRAIN → HMCE)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    HMCE COMPUTATION ARCHITECTURE                             ║
+║ HMCE COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins × 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
-║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ CHANGE   │ │ X-INT  │ │        ║
-║  │  │ 7D [0:7]  │ │ 5D[7:12]│ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
-║  │  │           │ │         │ │ [12:21] │ │ [21:25]  │ │ [25:49]│ │        ║
-║  │  │           │ │amplitude│ │         │ │spec_chg  │ │x_l0l5  │ │        ║
-║  │  │           │ │loudness │ │         │ │energy_chg│ │x_l4l5  │ │        ║
-║  │  │           │ │centroid │ │         │ │pitch_chg │ │x_l5l7  │ │        ║
-║  │  │           │ │flux     │ │         │ │timbre_chg│ │        │ │        ║
-║  │  │           │ │onset    │ │         │ │          │ │        │ │        ║
-║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                         HMCE reads: 25D                          │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                                                                  │        ║
-║  │  ┌── Syllable ────┐ ┌── Beat ──────────┐ ┌── Section ────────┐ │        ║
-║  │  │ 300ms (H8)     │ │ 700ms (H14)      │ │ 5000ms (H20)     │ │        ║
-║  │  │                │ │                   │ │                    │ │        ║
-║  │  │ Short context  │ │ Medium context    │ │ Long context       │ │        ║
-║  │  │ (10–50 notes)  │ │ (50–100 notes)   │ │ (100–300+ notes)  │ │        ║
-║  │  └──────┬─────────┘ └──────┬────────────┘ └──────┬─────────────┘ │        ║
-║  │         │                  │                     │               │        ║
-║  │         └──────────────────┴─────────────────────┘               │        ║
-║  │                         HMCE demand: ~18 of 2304 tuples          │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Sensorimotor Circuit ═══════  ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌─────────────────┐                                                        ║
-║  │  TMH (30D)      │  Temporal Memory Hierarchy mechanism                   ║
-║  │                 │                                                        ║
-║  │ Short   [0:10] │  Motif features, onset patterns, local prediction      ║
-║  │ Medium  [10:20]│  Phrase boundaries, cadence detection, progression     ║
-║  │ Long    [20:30]│  Formal structure, return detection, global prediction ║
-║  └────────┬────────┘                                                        ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    HMCE MODEL (13D Output)                       │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f01_short_context, f02_medium_context,     │        ║
-║  │                       f03_long_context, f04_gradient,            │        ║
-║  │                       f05_expertise                              │        ║
-║  │  Layer M (Math):      context_depth, gradient_index              │        ║
-║  │  Layer P (Present):   a1_encoding, stg_encoding, mtg_encoding   │        ║
-║  │  Layer F (Future):    context_prediction, phrase_expect,         │        ║
-║  │                       structure_predict                          │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins × 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ ENERGY │ │ TIMBRE │ │ CHANGE │ │ X-INT │ │ ║
+║ │ │ 7D [0:7] │ │ 5D[7:12]│ │ 9D │ │ 4D │ │ 24D │ │ ║
+║ │ │ │ │ │ │ [12:21] │ │ [21:25] │ │ [25:49]│ │ ║
+║ │ │ │ │amplitude│ │ │ │spec_chg │ │x_l0l5 │ │ ║
+║ │ │ │ │loudness │ │ │ │energy_chg│ │x_l4l5 │ │ ║
+║ │ │ │ │centroid │ │ │ │pitch_chg │ │x_l5l7 │ │ ║
+║ │ │ │ │flux │ │ │ │timbre_chg│ │ │ │ ║
+║ │ │ │ │onset │ │ │ │ │ │ │ │ ║
+║ │ └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │ ║
+║ │ HMCE reads: 25D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ │ ║
+║ │ ┌── Syllable ────┐ ┌── Beat ──────────┐ ┌── Section ────────┐ │ ║
+║ │ │ 300ms (H8) │ │ 700ms (H14) │ │ 5000ms (H20) │ │ ║
+║ │ │ │ │ │ │ │ │ ║
+║ │ │ Short context │ │ Medium context │ │ Long context │ │ ║
+║ │ │ (10–50 notes) │ │ (50–100 notes) │ │ (100–300+ notes) │ │ ║
+║ │ └──────┬─────────┘ └──────┬────────────┘ └──────┬─────────────┘ │ ║
+║ │ │ │ │ │ ║
+║ │ └──────────────────┴─────────────────────┘ │ ║
+║ │ HMCE demand: ~18 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Sensorimotor Circuit ═══════ ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────┐ ║
+║ │ │ ║
+║ │ Short [0:10] │ Motif features, onset patterns, local prediction ║
+║ │ Medium [10:20]│ Phrase boundaries, cadence detection, progression ║
+║ │ Long [20:30]│ Formal structure, return detection, global prediction ║
+║ └────────┬────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ HMCE MODEL (13D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f01_short_context, f02_medium_context, │ ║
+║ │ f03_long_context, f04_gradient, │ ║
+║ │ f05_expertise │ ║
+║ │ Layer M (Math): context_depth, gradient_index │ ║
+║ │ Layer P (Present): a1_encoding, stg_encoding, mtg_encoding │ ║
+║ │ Layer F (Future): context_prediction, phrase_expect, │ ║
+║ │ structure_predict │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -190,7 +187,7 @@ Bonetti 2024:      Hierarchical AC→hipp→cingulate, BOR = 2.91e-07 (N=83)
 |---|-------|--------|---|-------------|-------------|-------------|
 | 1 | **Mischler 2025** | ECoG + EEG | 6 iEEG + 20 EEG | Distance from pmHG ↔ context encoding depth | r = 0.99 (n=6 sites, p<0.044); r = 0.32 (electrode-level, p=1.5e-05); LME p=0.004 | **Primary**: f04_gradient — see §3.2 for r=0.99 qualification |
 | 2 | **Mischler 2025** | ECoG + behavioral | 20 | Musicians > non-musicians in layers 7–13 | d = 0.32, p = 3.8e-08 | **f05_expertise**: musician advantage |
-| 3 | **Mischler 2025** | ECoG + behavioral | 20 | Musicians integrate 300+ notes context; non-musicians plateau ~100 | Wilcoxon p = 0.0002–3.8e-08 across layers | **TMH.long_context**: extended window |
+| 3 | **Mischler 2025** | ECoG + behavioral | 20 | Musicians integrate 300+ notes context; non-musicians plateau ~100 | Wilcoxon p = 0.0002–3.8e-08 across layers | **long_context**: extended window |
 | 4 | **Norman-Haignere 2022** | iEEG (ECoG + depth) | 18 patients, 190 electrodes | Integration windows increase continuously with PAC distance: 74ms (primary) → 136ms (intermediate) → 274ms (non-primary STG) | β = 0.064 oct/mm, F(1,20.85) = 20.56, p < 0.001 | **Key independent validation**: continuous spectrotemporal → category gradient from PAC outward |
 | 5 | **Bonetti 2024** | MEG (306-ch) | 83 | Hierarchical feedforward AC → hippocampus → cingulate; musical expertise modulates later (contextual) tones, not early (sensory) | r = 0.286–0.459 (expertise × context, FDR); BOR = 2.91e-07 | **Convergent hierarchy**: expertise effect on late contextual tones parallels HMCE |
 | 6 | **Bellier 2023** | iEEG (ECoG) | 29 patients, 2668 electrodes | First music reconstruction from brain recordings; anterior-posterior STG organization; right hemisphere dominance | F(3,346) = 25.09, p < 0.001 (STG highest); r² = 0.429 (nonlinear decoding) | **STG gradient**: posterior=onset, anterior=sustained parallels HMCE |
@@ -209,21 +206,21 @@ Bonetti 2024:      Hierarchical AC→hipp→cingulate, BOR = 2.91e-07 (N=83)
 ```
 METHOD CONVERGENCE FOR HIERARCHICAL CONTEXT GRADIENT
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Method          Studies            Key Metric
+Method Studies Key Metric
 ────────────────────────────────────────────────────────────────────
-iEEG / ECoG     Mischler 2025      r=0.32 (electrode), r=0.99 (site)
-                Norman-Haignere     β=0.064 oct/mm, 74→274ms
-                Bellier 2023        F=25.09, anterior→posterior STG
-                Potes 2012          r=0.49, 110ms STG→motor lag
-                Foo 2016            χ²=8.6, anterior=dissonance
-MEG             Bonetti 2024        BOR=2.91e-07, expertise×context
-                Wöhrle 2024         η²p=0.101, context accumulation
-                Kim 2021            F=12.37, IFG vs STG dissociation
-                Golesorkhi 2021     d=-0.66 to -2.03, core-periphery
-EEG source      Briley 2013         F=29.87, within-HG gradient
-fMRI            Fedorenko 2012      intact>scrambled bilateral temporal
-Single-unit     Ye 2025             r=0.93, 3-tiered thalamocortical
-                Sabat 2025          15→150ms, invariant (CONSTRAINS)
+iEEG / ECoG Mischler 2025 r=0.32 (electrode), r=0.99 (site)
+ Norman-Haignere β=0.064 oct/mm, 74→274ms
+ Bellier 2023 F=25.09, anterior→posterior STG
+ Potes 2012 r=0.49, 110ms STG→motor lag
+ Foo 2016 χ²=8.6, anterior=dissonance
+MEG Bonetti 2024 BOR=2.91e-07, expertise×context
+ Wöhrle 2024 η²p=0.101, context accumulation
+ Kim 2021 F=12.37, IFG vs STG dissociation
+ Golesorkhi 2021 d=-0.66 to -2.03, core-periphery
+EEG source Briley 2013 F=29.87, within-HG gradient
+fMRI Fedorenko 2012 intact>scrambled bilateral temporal
+Single-unit Ye 2025 r=0.93, 3-tiered thalamocortical
+ Sabat 2025 15→150ms, invariant (CONSTRAINS)
 ────────────────────────────────────────────────────────────────────
 8 methods, 15 papers, 6 species/paradigms → STRONG convergence
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -235,65 +232,65 @@ Single-unit     Ye 2025             r=0.93, 3-tiered thalamocortical
 CONTEXT DEPTH AS A FUNCTION OF CORTICAL DISTANCE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Region              Distance   Context     Transformer   Decay
-                    from pmHG  (notes)     Layers        τ
+Region Distance Context Transformer Decay
+ from pmHG (notes) Layers τ
 ────────────────────────────────────────────────────────────────
-pmHG (A1)           0mm        10–50       1–4           1s
-STG                 ~10mm      50–100      5–9           5s
-MTG                 ~20mm      100–200     10–12         15s
-Temporal Pole       ~40mm      300+        13            30s+
+pmHG (A1) 0mm 10–50 1–4 1s
+STG ~10mm 50–100 5–9 5s
+MTG ~20mm 100–200 10–12 15s
+Temporal Pole ~40mm 300+ 13 30s+
 
 GRADIENT STATISTICS (Mischler 2025):
-  Site-level:      r = 0.99 (p < 0.044, n = 6 electrode site groups)
-  Electrode-level: r = 0.32 (p = 1.5e-05, all electrodes)
-  LME model:       p = 0.004 (context distance), p = 0.044 (layers)
+ Site-level: r = 0.99 (p < 0.044, n = 6 electrode site groups)
+ Electrode-level: r = 0.32 (p = 1.5e-05, all electrodes)
+ LME model: p = 0.004 (context distance), p = 0.044 (layers)
 
 ⚠ QUALIFICATION: The r = 0.99 is from only 6 grouped electrode
-  sites (4 df). The electrode-level r = 0.32 (p = 1.5e-05) is
-  more statistically robust. The LME model is the most rigorous
-  test and confirms the gradient at p = 0.004. Both measures
-  support the gradient; r = 0.99 should not be cited alone.
+ sites (4 df). The electrode-level r = 0.32 (p = 1.5e-05) is
+ more statistically robust. The LME model is the most rigorous
+ test and confirms the gradient at p = 0.004. Both measures
+ support the gradient; r = 0.99 should not be cited alone.
 
 INDEPENDENT REPLICATION:
-  Norman-Haignere 2022: β = 0.064 octaves/mm distance-integration
-    gradient (F = 20.56, p < 0.001, iEEG, 18 patients, 190 elec.)
-    Integration windows: 74ms → 136ms → 274ms from PAC outward
-    Functional transition: spectrotemporal → category-level encoding
-  Golesorkhi 2021: Temporal ACW hierarchy, d = −0.66 to −2.03
-    (core-periphery, MEG, 89 participants from HCP)
-  Bellier 2023: anterior-posterior STG organization for music
-    (F = 25.09, iEEG, 29 patients, 2668 electrodes)
+ Norman-Haignere 2022: β = 0.064 octaves/mm distance-integration
+ gradient (F = 20.56, p < 0.001, iEEG, 18 patients, 190 elec.)
+ Integration windows: 74ms → 136ms → 274ms from PAC outward
+ Functional transition: spectrotemporal → category-level encoding
+ Golesorkhi 2021: Temporal ACW hierarchy, d = −0.66 to −2.03
+ (core-periphery, MEG, 89 participants from HCP)
+ Bellier 2023: anterior-posterior STG organization for music
+ (F = 25.09, iEEG, 29 patients, 2668 electrodes)
 
 CONSTRAINT (Sabat 2025):
-  Integration windows in ferret auditory cortex (15→150ms) are
-  INVARIANT to stimulus context. This suggests the basic gradient
-  is hardwired. Expertise effects (d = 0.32) may operate through
-  attentional modulation or top-down feedback rather than
-  expanding integration windows per se.
+ Integration windows in ferret auditory cortex (15→150ms) are
+ INVARIANT to stimulus context. This suggests the basic gradient
+ is hardwired. Expertise effects (d = 0.32) may operate through
+ attentional modulation or top-down feedback rather than
+ expanding integration windows per se.
 ```
 
 ### 3.3 Effect Size Summary
 
 ```
 PRIMARY GRADIENT:
-  Site-level:       r = 0.99 (Mischler 2025, ECoG, n=6 sites)
-  Electrode-level:  r = 0.32 (Mischler 2025, p=1.5e-05)
-  Integration β:    0.064 oct/mm (Norman-Haignere 2022, iEEG)
-  Temporal ACW:     d = −0.66 to −2.03 (Golesorkhi 2021, MEG)
+ Site-level: r = 0.99 (Mischler 2025, ECoG, n=6 sites)
+ Electrode-level: r = 0.32 (Mischler 2025, p=1.5e-05)
+ Integration β: 0.064 oct/mm (Norman-Haignere 2022, iEEG)
+ Temporal ACW: d = −0.66 to −2.03 (Golesorkhi 2021, MEG)
 EXPERTISE EFFECT:
-  Musicians > non:  d = 0.32 (Mischler 2025, layers 7-13)
-  Expertise×context: r = 0.286–0.459 (Bonetti 2024, FDR corrected)
-  Aptitude×N1m:     η²p = 0.095 (Wöhrle 2024, AMMA interaction)
+ Musicians > non: d = 0.32 (Mischler 2025, layers 7-13)
+ Expertise×context: r = 0.286–0.459 (Bonetti 2024, FDR corrected)
+ Aptitude×N1m: η²p = 0.095 (Wöhrle 2024, AMMA interaction)
 AUDITORY CORTEX:
-  STG high gamma:   r = 0.43–0.58 (Potes 2012, music intensity)
-  STG→motor lag:    110ms (Potes 2012, r=0.70 at τ=110ms)
-  Within-HG shift:  7–8mm (Briley 2013, medial→anterolateral)
-  STG A-P gradient: χ² = 8.6, p = 0.003 (Foo 2016, dissonance)
+ STG high gamma: r = 0.43–0.58 (Potes 2012, music intensity)
+ STG→motor lag: 110ms (Potes 2012, r=0.70 at τ=110ms)
+ Within-HG shift: 7–8mm (Briley 2013, medial→anterolateral)
+ STG A-P gradient: χ² = 8.6, p = 0.003 (Foo 2016, dissonance)
 
-Quality Assessment:   α-tier (direct neural measurement via ECoG/iEEG)
-Replication:          INDEPENDENTLY REPLICATED by Norman-Haignere 2022
-                      (different lab, method, larger sample, same gradient)
-Methods:              8 methods, 15 papers, N > 400 total participants
+Quality Assessment: α-tier (direct neural measurement via ECoG/iEEG)
+Replication: INDEPENDENTLY REPLICATED by Norman-Haignere 2022
+ (different lab, method, larger sample, same gradient)
+Methods: 8 methods, 15 papers, N > 400 total participants
 ```
 
 ---
@@ -330,32 +327,32 @@ Methods:              8 methods, 15 papers, N > 400 total participants
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[21:25] Change (4D) ─────────┐
 R³[10] spectral_flux ──────────┼──► Short Context (10–50 notes)
-R³[11] onset_strength ─────────┘   TMH.short_context at H8 (300ms)
-                                    Math: C_short = Σ Δ(t)·w₁(t−τ), τ₁=1s
+R³[11] onset_strength ─────────┘ short_context at H8 (300ms)
+ Math: C_short = Σ Δ(t)·w₁(t−τ), τ₁=1s
 
 R³[7] amplitude ────────────────┐
 R³[8] loudness ─────────────────┼──► Medium Context (50–100 notes)
-R³[22] energy_change ───────────┘   TMH.medium_context at H14 (700ms)
-                                    Math: C_med = Σ E(t)·w₂(t−τ), τ₂=5s
+R³[22] energy_change ───────────┘ medium_context at H14 (700ms)
+ Math: C_med = Σ E(t)·w₂(t−τ), τ₂=5s
 
 R³[25:33] x_l0l5 (8D) ────────┐
 R³[33:41] x_l4l5 (8D) ────────┼──► Long Context (100–300+ notes)
-                                    TMH.long_context at H20 (5000ms)
-                                    Math: C_long = Σ X(t)·w₃(t−τ), τ₃=15s
+ long_context at H20 (5000ms)
+ Math: C_long = Σ X(t)·w₃(t−τ), τ₃=15s
 
 Expertise Factor ───────────────── Extended Context (300+, musicians only)
-                                    Expertise modulates long-context
-                                    Math: C_ext = C_long · (1 + d·expert)
-                                    d = 0.32 (Mischler 2025)
+ Expertise modulates long-context
+ Math: C_ext = C_long · (1 + d·expert)
+ d = 0.32 (Mischler 2025)
 
 R³[65] tempo_estimate ─────────┐
 R³[68] syncopation_index ──────┼──► Metrical Context (v2)
-R³[69] metricality_index ──────┘   Hierarchical rhythm encoding
-                                    maps to TMH context levels
+R³[69] metricality_index ──────┘ Hierarchical rhythm encoding
+ maps to temporal-context context levels
 ```
 
 ---
@@ -364,7 +361,7 @@ R³[69] metricality_index ──────┘   Hierarchical rhythm encoding
 
 ### 5.1 Demand Specification
 
-HMCE requires H³ features at three TMH horizons: H8 (300ms), H14 (700ms), H20 (5000ms).
+HMCE requires H³ features at three horizons: H8 (300ms), H14 (700ms), H20 (5000ms).
 These correspond to motif → phrase → section timescales.
 
 | R³ Index | Feature | H | Morph | Law | Purpose |
@@ -392,7 +389,7 @@ These correspond to motif → phrase → section timescales.
 
 #### R³ v2 Projected Expansion
 
-HMCE projected v2 features from G:Rhythm, aligned with TMH horizons.
+HMCE projected v2 features from G:Rhythm, aligned with corresponding H³ horizons.
 
 | R³ Idx | Feature | Group | H | Morph | Law | Purpose |
 |:------:|---------|:-----:|:-:|-------|:---:|---------|
@@ -406,18 +403,6 @@ HMCE projected v2 features from G:Rhythm, aligned with TMH horizons.
 **v2 projected**: 6 tuples
 **Total projected**: 24 tuples of 294,912 theoretical = 0.0081%
 
-### 5.2 TMH Mechanism Binding
-
-HMCE reads from the **TMH** (Temporal Memory Hierarchy) mechanism:
-
-| TMH Sub-section | Range | HMCE Role | Weight |
-|-----------------|-------|-----------|--------|
-| **Short Context** | TMH[0:10] | Motif-level encoding (pmHG, 10–50 notes) | **1.0** (primary) |
-| **Medium Context** | TMH[10:20] | Phrase-level encoding (STG, 50–100 notes) | **1.0** (primary) |
-| **Long Context** | TMH[20:30] | Section-level encoding (MTG, 100–300+ notes) | **1.0** (primary) |
-
-HMCE does NOT read from BEP — hierarchical context encoding is about memory and temporal structure, not beat entrainment.
-
 ---
 
 ## 6. Output Space: 13D Multi-Layer Representation
@@ -430,69 +415,69 @@ HMCE OUTPUT TENSOR: 13D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 0  │ f01_short_context │ [0, 1] │ Short context encoding (pmHG, 10–50 notes).
-    │                   │        │ Layer 1–4 transformer correspondence.
-    │                   │        │ f01 = σ(α · flux_mean · onset ·
-    │                   │        │         TMH.short_context)
-    │                   │        │ α = 0.90
+ 0 │ f01_short_context │ [0, 1] │ Short context encoding (pmHG, 10–50 notes).
+ │ │ │ Layer 1–4 transformer correspondence.
+ │ │ │ f01 = σ(α · flux_mean · onset ·
+ │ │ │ short_context)
+ │ │ │ α = 0.90
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 1  │ f02_medium_context│ [0, 1] │ Medium context encoding (STG, 50–100 notes).
-    │                   │        │ Layer 5–9 transformer correspondence.
-    │                   │        │ f02 = σ(β · energy_mean · loudness_mean ·
-    │                   │        │         TMH.medium_context)
-    │                   │        │ β = 0.85
+ 1 │ f02_medium_context│ [0, 1] │ Medium context encoding (STG, 50–100 notes).
+ │ │ │ Layer 5–9 transformer correspondence.
+ │ │ │ f02 = σ(β · energy_mean · loudness_mean ·
+ │ │ │ medium_context)
+ │ │ │ β = 0.85
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 2  │ f03_long_context  │ [0, 1] │ Long context encoding (MTG, 100–200 notes).
-    │                   │        │ Layer 10–12 transformer correspondence.
-    │                   │        │ f03 = σ(γ · x_coupling · autocorr ·
-    │                   │        │         TMH.long_context)
-    │                   │        │ γ = 0.80
+ 2 │ f03_long_context │ [0, 1] │ Long context encoding (MTG, 100–200 notes).
+ │ │ │ Layer 10–12 transformer correspondence.
+ │ │ │ f03 = σ(γ · x_coupling · autocorr ·
+ │ │ │ long_context)
+ │ │ │ γ = 0.80
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 3  │ f04_gradient      │ [0, 1] │ Anatomical gradient strength (r = 0.99).
-    │                   │        │ f04 = 0.99 · (f01 + f02 + f03) / 3
+ 3 │ f04_gradient │ [0, 1] │ Anatomical gradient strength (r = 0.99).
+ │ │ │ f04 = 0.99 · (f01 + f02 + f03) / 3
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 4  │ f05_expertise     │ [0, 1] │ Musician advantage proxy (d = 0.32).
-    │                   │        │ Modulates extended context encoding.
-    │                   │        │ f05 = σ(0.32 · f03 · stability_long)
+ 4 │ f05_expertise │ [0, 1] │ Musician advantage proxy (d = 0.32).
+ │ │ │ Modulates extended context encoding.
+ │ │ │ f05 = σ(0.32 · f03 · stability_long)
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 5  │ context_depth     │ [0, 1] │ Effective context integration depth.
-    │                   │        │ Weighted sum across scales.
-    │                   │        │ depth = (1·f01 + 2·f02 + 3·f03) / 6
+ 5 │ context_depth │ [0, 1] │ Effective context integration depth.
+ │ │ │ Weighted sum across scales.
+ │ │ │ depth = (1·f01 + 2·f02 + 3·f03) / 6
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 6  │ gradient_index    │ [0, 1] │ Normalized distance from A1.
-    │                   │        │ Maps transformer layer correspondence.
+ 6 │ gradient_index │ [0, 1] │ Normalized distance from A1.
+ │ │ │ Maps transformer layer correspondence.
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 7  │ a1_encoding       │ [0, 1] │ Primary auditory cortex current state.
-    │                   │        │ TMH.short_context aggregation.
+ 7 │ a1_encoding │ [0, 1] │ Primary auditory cortex current state.
+ │ │ │ short_context aggregation.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 8  │ stg_encoding      │ [0, 1] │ Superior temporal gyrus current state.
-    │                   │        │ TMH.medium_context aggregation.
+ 8 │ stg_encoding │ [0, 1] │ Superior temporal gyrus current state.
+ │ │ │ medium_context aggregation.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 9  │ mtg_encoding      │ [0, 1] │ Middle temporal gyrus current state.
-    │                   │        │ TMH.long_context aggregation.
+ 9 │ mtg_encoding │ [0, 1] │ Middle temporal gyrus current state.
+ │ │ │ long_context aggregation.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
-10  │ context_prediction│ [0, 1] │ Next context level prediction.
-    │                   │        │ H³ trend-based expectation.
+10 │ context_prediction│ [0, 1] │ Next context level prediction.
+ │ │ │ H³ trend-based expectation.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
-11  │ phrase_expect     │ [0, 1] │ Phrase boundary expectation.
-    │                   │        │ Entropy-driven boundary detection.
+11 │ phrase_expect │ [0, 1] │ Phrase boundary expectation.
+ │ │ │ Entropy-driven boundary detection.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
-12  │ structure_predict │ [0, 1] │ Long-range structural prediction.
-    │                   │        │ Autocorrelation-based section return.
+12 │ structure_predict │ [0, 1] │ Long-range structural prediction.
+ │ │ │ Autocorrelation-based section return.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 13D per frame at 172.27 Hz
@@ -508,45 +493,42 @@ TOTAL: 13D per frame at 172.27 Hz
 ```
 Context Encoding:
 
-    Context_Encoding(region) = f(Distance_from_pmHG)
+ Context_Encoding(region) = f(Distance_from_pmHG)
 
-    Transformer_Layer_Correspondence(region) ∝ Distance_from_pmHG
+ Transformer_Layer_Correspondence(region) ∝ Distance_from_pmHG
 
-    For Musicians:
-      Prediction_Accuracy(layer) ↑ continuously to layer 13
-      Context_Integration ≈ 300 notes
+ For Musicians:
+ Prediction_Accuracy(layer) ↑ continuously to layer 13
+ Context_Integration ≈ 300 notes
 
-    For Non-Musicians:
-      Prediction_Accuracy(layer) plateaus at layer 10–11
-      Context_Integration ≈ 100 notes
+ For Non-Musicians:
+ Prediction_Accuracy(layer) plateaus at layer 10–11
+ Context_Integration ≈ 100 notes
 
-    Hierarchical Encoding:
-      Context_Depth(region) = α · Distance + β · Expertise + ε
-      where α: gradient coefficient (0.99 correlation)
-            β: expertise modulation (d = 0.32)
-            ε: individual variability
+ Hierarchical Encoding:
+ Context_Depth(region) = α · Distance + β · Expertise + ε
+ where α: gradient coefficient (0.99 correlation)
+ β: expertise modulation (d = 0.32)
+ ε: individual variability
 ```
 
 ### 7.2 Feature Formulas
 
 ```python
 # f01: Short Context Encoding (pmHG, 10–50 notes)
-flux_mean = h3[(10, 8, 1, 0)]        # spectral_flux mean at H8
-onset_val = h3[(11, 8, 0, 0)]        # onset_strength value at H8
+flux_mean = h3[(10, 8, 1, 0)] # spectral_flux mean at H8
+onset_val = h3[(11, 8, 0, 0)] # onset_strength value at H8
 f01 = σ(0.90 · flux_mean · onset_val
-         · mean(TMH.short_context[0:10]))
 
 # f02: Medium Context Encoding (STG, 50–100 notes)
-energy_mean = h3[(22, 14, 1, 0)]     # energy_change mean at H14
-loudness_mean = h3[(8, 14, 1, 0)]    # loudness mean at H14
+energy_mean = h3[(22, 14, 1, 0)] # energy_change mean at H14
+loudness_mean = h3[(8, 14, 1, 0)] # loudness mean at H14
 f02 = σ(0.85 · energy_mean · loudness_mean
-         · mean(TMH.medium_context[10:20]))
 
 # f03: Long Context Encoding (MTG, 100–300+ notes)
-x_coupling = h3[(25, 20, 1, 0)]      # x_l0l5 mean at H20
-autocorr = h3[(33, 20, 22, 0)]       # x_l4l5 autocorrelation at H20
+x_coupling = h3[(25, 20, 1, 0)] # x_l0l5 mean at H20
+autocorr = h3[(33, 20, 22, 0)] # x_l4l5 autocorrelation at H20
 f03 = σ(0.80 · x_coupling · autocorr
-         · mean(TMH.long_context[20:30]))
 
 # f04: Anatomical Gradient (r = 0.99)
 f04 = 0.99 · (f01 + f02 + f03) / 3
@@ -582,21 +564,21 @@ f05 = σ(0.32 · f03 · stability_long)
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    HMCE INTERACTIONS                                         │
+│ HMCE INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (STU):                                                         │
-│  HMCE.context_depth ──────► AMSC (context → motor coupling timescale)     │
-│  HMCE.a1_encoding ────────► MDNS (short context for TRF decoding)         │
-│  HMCE.structure_predict ──► AMSS (structure for stream segregation)        │
-│                                                                             │
-│  CROSS-UNIT (P4: STU internal):                                            │
-│  TMH.context_depth ↔ HMCE.encoding_complexity (r = 0.99)                  │
-│  Longer temporal context → higher cortical encoding                        │
-│                                                                             │
-│  CROSS-UNIT (P5: STU → ARU):                                              │
-│  HMCE.context_depth ──► ARU (context-dependent emotional processing)      │
-│                                                                             │
+│ │
+│ INTRA-UNIT (STU): │
+│ HMCE.context_depth ──────► AMSC (context → motor coupling timescale) │
+│ HMCE.a1_encoding ────────► MDNS (short context for TRF decoding) │
+│ HMCE.structure_predict ──► AMSS (structure for stream segregation) │
+│ │
+│ CROSS-UNIT (P4: STU internal): │
+│ context_depth ↔ HMCE.encoding_complexity (r = 0.99) │
+│ Longer temporal context → higher cortical encoding │
+│ │
+│ CROSS-UNIT (P5: STU → ARU): │
+│ HMCE.context_depth ──► ARU (context-dependent emotional processing) │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -621,127 +603,108 @@ f05 = σ(0.32 · f03 · stability_long)
 
 ```python
 class HMCE(BaseModel):
-    """Hierarchical Musical Context Encoding.
+ """Hierarchical Musical Context Encoding.
 
-    Output: 13D per frame.
-    Reads: TMH mechanism (30D), R³ direct.
-    """
-    NAME = "HMCE"
-    UNIT = "STU"
-    TIER = "α1"
-    OUTPUT_DIM = 13
-    MECHANISM_NAMES = ("TMH",)        # Primary mechanism
+ Output: 13D per frame.
+ """
+ NAME = "HMCE"
+ UNIT = "STU"
+ TIER = "α1"
+ OUTPUT_DIM = 13
+ ALPHA = 0.90 # Short context weight
+ BETA = 0.85 # Medium context weight
+ GAMMA = 0.80 # Long context weight
+ GRADIENT_CORR = 0.99 # Mischler 2025 correlation
+ EXPERTISE_D = 0.32 # Mischler 2025 musician advantage
 
-    ALPHA = 0.90   # Short context weight
-    BETA = 0.85    # Medium context weight
-    GAMMA = 0.80   # Long context weight
-    GRADIENT_CORR = 0.99  # Mischler 2025 correlation
-    EXPERTISE_D = 0.32    # Mischler 2025 musician advantage
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """18 tuples for HMCE computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ # Short context (H8 = 300ms)
+ (10, 8, 0, 0), # spectral_flux, value, forward
+ (10, 8, 1, 0), # spectral_flux, mean, forward
+ (11, 8, 0, 0), # onset_strength, value, forward
+ (21, 8, 1, 0), # spectral_change, mean, forward
+ (21, 8, 8, 0), # spectral_change, velocity, forward
+ # Medium context (H14 = 700ms)
+ (22, 14, 1, 0), # energy_change, mean, forward
+ (22, 14, 13, 0), # energy_change, entropy, forward
+ (23, 14, 1, 0), # pitch_change, mean, forward
+ (23, 14, 3, 0), # pitch_change, std, forward
+ (7, 14, 18, 0), # amplitude, trend, forward
+ (8, 14, 1, 0), # loudness, mean, forward
+ # Long context (H20 = 5000ms)
+ (25, 20, 1, 0), # x_l0l5[0], mean, forward
+ (25, 20, 13, 0), # x_l0l5[0], entropy, forward
+ (33, 20, 1, 0), # x_l4l5[0], mean, forward
+ (33, 20, 22, 0), # x_l4l5[0], autocorrelation, forward
+ (33, 20, 19, 0), # x_l4l5[0], stability, forward
+ (25, 20, 22, 0), # x_l0l5[0], autocorrelation, forward
+ (8, 20, 18, 0), # loudness, trend, forward
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """18 tuples for HMCE computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # Short context (H8 = 300ms)
-            (10, 8, 0, 0),    # spectral_flux, value, forward
-            (10, 8, 1, 0),    # spectral_flux, mean, forward
-            (11, 8, 0, 0),    # onset_strength, value, forward
-            (21, 8, 1, 0),    # spectral_change, mean, forward
-            (21, 8, 8, 0),    # spectral_change, velocity, forward
-            # Medium context (H14 = 700ms)
-            (22, 14, 1, 0),   # energy_change, mean, forward
-            (22, 14, 13, 0),  # energy_change, entropy, forward
-            (23, 14, 1, 0),   # pitch_change, mean, forward
-            (23, 14, 3, 0),   # pitch_change, std, forward
-            (7, 14, 18, 0),   # amplitude, trend, forward
-            (8, 14, 1, 0),    # loudness, mean, forward
-            # Long context (H20 = 5000ms)
-            (25, 20, 1, 0),   # x_l0l5[0], mean, forward
-            (25, 20, 13, 0),  # x_l0l5[0], entropy, forward
-            (33, 20, 1, 0),   # x_l4l5[0], mean, forward
-            (33, 20, 22, 0),  # x_l4l5[0], autocorrelation, forward
-            (33, 20, 19, 0),  # x_l4l5[0], stability, forward
-            (25, 20, 22, 0),  # x_l0l5[0], autocorrelation, forward
-            (8, 20, 18, 0),   # loudness, trend, forward
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute HMCE 13D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute HMCE 13D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) → (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"TMH": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) → (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,13) HMCE output
+ """
+ # ═══ LAYER E: Explicit features ═══
+ flux_mean = h3_direct[(10, 8, 1, 0)].unsqueeze(-1)
+ onset_val = h3_direct[(11, 8, 0, 0)].unsqueeze(-1)
+ f01 = torch.sigmoid(self.ALPHA * (
+ flux_mean * onset_val
+ ))
 
-        Returns:
-            (B,T,13) HMCE output
-        """
-        tmh = mechanism_outputs["TMH"]    # (B, T, 30)
+ energy_mean = h3_direct[(22, 14, 1, 0)].unsqueeze(-1)
+ loudness_mean = h3_direct[(8, 14, 1, 0)].unsqueeze(-1)
+ f02 = torch.sigmoid(self.BETA * (
+ energy_mean * loudness_mean
+ ))
 
-        # TMH sub-sections
-        tmh_short = tmh[..., 0:10]        # short context
-        tmh_medium = tmh[..., 10:20]      # medium context
-        tmh_long = tmh[..., 20:30]        # long context
+ x_coupling = h3_direct[(25, 20, 1, 0)].unsqueeze(-1)
+ autocorr = h3_direct[(33, 20, 22, 0)].unsqueeze(-1)
+ f03 = torch.sigmoid(self.GAMMA * (
+ x_coupling * autocorr
+ ))
 
-        # ═══ LAYER E: Explicit features ═══
-        flux_mean = h3_direct[(10, 8, 1, 0)].unsqueeze(-1)
-        onset_val = h3_direct[(11, 8, 0, 0)].unsqueeze(-1)
-        f01 = torch.sigmoid(self.ALPHA * (
-            flux_mean * onset_val
-            * tmh_short.mean(-1, keepdim=True)
-        ))
+ f04 = self.GRADIENT_CORR * (f01 + f02 + f03) / 3
 
-        energy_mean = h3_direct[(22, 14, 1, 0)].unsqueeze(-1)
-        loudness_mean = h3_direct[(8, 14, 1, 0)].unsqueeze(-1)
-        f02 = torch.sigmoid(self.BETA * (
-            energy_mean * loudness_mean
-            * tmh_medium.mean(-1, keepdim=True)
-        ))
+ stability_long = h3_direct[(33, 20, 19, 0)].unsqueeze(-1)
+ f05 = torch.sigmoid(self.EXPERTISE_D * f03 * stability_long)
 
-        x_coupling = h3_direct[(25, 20, 1, 0)].unsqueeze(-1)
-        autocorr = h3_direct[(33, 20, 22, 0)].unsqueeze(-1)
-        f03 = torch.sigmoid(self.GAMMA * (
-            x_coupling * autocorr
-            * tmh_long.mean(-1, keepdim=True)
-        ))
+ # ═══ LAYER M: Mathematical ═══
+ context_depth = (1 * f01 + 2 * f02 + 3 * f03) / 6
+ gradient_index = f04
 
-        f04 = self.GRADIENT_CORR * (f01 + f02 + f03) / 3
+ # ═══ LAYER P: Present ═══
 
-        stability_long = h3_direct[(33, 20, 19, 0)].unsqueeze(-1)
-        f05 = torch.sigmoid(self.EXPERTISE_D * f03 * stability_long)
+ # ═══ LAYER F: Future ═══
+ amplitude_trend = h3_direct[(7, 14, 18, 0)].unsqueeze(-1)
+ context_prediction = torch.sigmoid(
+ 0.5 * f03 + 0.3 * f02 + 0.2 * amplitude_trend
+ )
+ entropy_energy = h3_direct[(22, 14, 13, 0)].unsqueeze(-1)
+ phrase_expect = torch.sigmoid(
+ )
+ long_autocorr = h3_direct[(25, 20, 22, 0)].unsqueeze(-1)
+ structure_predict = torch.sigmoid(
+ )
 
-        # ═══ LAYER M: Mathematical ═══
-        context_depth = (1 * f01 + 2 * f02 + 3 * f03) / 6
-        gradient_index = f04
-
-        # ═══ LAYER P: Present ═══
-        a1_encoding = tmh_short.mean(-1, keepdim=True)
-        stg_encoding = tmh_medium.mean(-1, keepdim=True)
-        mtg_encoding = tmh_long.mean(-1, keepdim=True)
-
-        # ═══ LAYER F: Future ═══
-        amplitude_trend = h3_direct[(7, 14, 18, 0)].unsqueeze(-1)
-        context_prediction = torch.sigmoid(
-            0.5 * f03 + 0.3 * f02 + 0.2 * amplitude_trend
-        )
-        entropy_energy = h3_direct[(22, 14, 13, 0)].unsqueeze(-1)
-        phrase_expect = torch.sigmoid(
-            0.6 * entropy_energy + 0.4 * tmh_medium.mean(-1, keepdim=True)
-        )
-        long_autocorr = h3_direct[(25, 20, 22, 0)].unsqueeze(-1)
-        structure_predict = torch.sigmoid(
-            0.7 * long_autocorr + 0.3 * tmh_long.mean(-1, keepdim=True)
-        )
-
-        return torch.cat([
-            f01, f02, f03, f04, f05,                        # E: 5D
-            context_depth, gradient_index,                   # M: 2D
-            a1_encoding, stg_encoding, mtg_encoding,         # P: 3D
-            context_prediction, phrase_expect, structure_predict,  # F: 3D
-        ], dim=-1)  # (B, T, 13)
+ return torch.cat([
+ f01, f02, f03, f04, f05, # E: 5D
+ context_depth, gradient_index, # M: 2D
+ a1_encoding, stg_encoding, mtg_encoding, # P: 3D
+ context_prediction, phrase_expect, structure_predict, # F: 3D
+ ], dim=-1) # (B, T, 13)
 ```
 
 ---
@@ -759,7 +722,6 @@ class HMCE(BaseModel):
 | **Falsification Tests** | 2/4 confirmed | High validity |
 | **R³ Features Used** | 25D of 49D | Energy + Change + Interactions |
 | **H³ Demand** | 18 tuples (0.78%) | Sparse, efficient |
-| **TMH Mechanism** | 30D (3 sub-sections) | Full coverage |
 | **Output Dimensions** | **13D** | 4-layer structure |
 
 ---
@@ -791,20 +753,12 @@ class HMCE(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D): L0, L4, L5, L6, L9, X_L4L5, X_L5L9 | R³ (49D): Energy, Change, Interactions |
-| Temporal | HC⁰ mechanisms (TIH, HRM, SGM, EFC) | TMH mechanism (30D) |
-| Context hierarchy | L4 derivatives (velocity→jerk) | TMH 3 sub-sections (short/medium/long) |
+| Context hierarchy | L4 derivatives (velocity→jerk) | H³ direct features |
 | Statistics | S⁰.L9 (mean, entropy, kurtosis) | H³ morphs (M1, M3, M13, M22) |
 | Cross-feature | X_L4L5[192:200], X_L5L9[224:232] | R³.x_l0l5[25:33], x_l4l5[33:41] |
 | Demand format | HC⁰ index ranges | H³ 4-tuples (sparse) |
 | Total demand | 31/2304 = 1.35% | 18/2304 = 0.78% |
 | Output dimensions | 12D | **13D** (added f05_expertise) |
-
-### Why TMH replaces HC⁰ mechanisms
-
-The D0 pipeline used 4 separate HC⁰ mechanisms (TIH, HRM, SGM, EFC). In MI, these are unified into the TMH mechanism with 3 sub-sections:
-- **TIH → TMH.short_context** [0:10]: Multi-scale temporal integration → motif features
-- **SGM → TMH.medium_context** [10:20]: Striatal gradient segmentation → phrase boundaries
-- **HRM + EFC → TMH.long_context** [20:30]: Hippocampal replay + efference copy → structural prediction
 
 ---
 
@@ -812,4 +766,3 @@ The D0 pipeline used 4 separate HC⁰ mechanisms (TIH, HRM, SGM, EFC). In MI, th
 **Output Dimensions**: **13D**
 **Evidence Tier**: **α (Mechanistic)** — strengthened by multi-method convergence (8 methods, 15 papers)
 **Confidence**: **>90%** — gradient independently replicated; expertise mechanism nuanced by Sabat 2025
-**Code note**: mi_beta has `MECHANISM_NAMES = ("BEP", "TMH")` but doc specifies TMH only; BEP should be removed from code in Phase 5

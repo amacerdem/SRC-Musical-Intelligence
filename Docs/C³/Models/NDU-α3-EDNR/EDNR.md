@@ -21,18 +21,18 @@ The **Expertise-Dependent Network Reorganization** (EDNR) model describes how mu
 EXPERTISE-DEPENDENT NETWORK REORGANIZATION
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-   NON-MUSICIANS                           MUSICIANS
-   ─────────────                           ────────
+ NON-MUSICIANS MUSICIANS
+ ───────────── ────────
 
-   ┌───────────────────┐                 ┌───────────────────┐
-   │ Network A  ○──────┼──────○ Net B   │ Network A  ●      │ Net B ●
-   │     ○      ○──────┼─────○          │     ●──●   ●──●   │      ●──●
-   │     ○──────┼──────┼──────○         │     ●      ●      │      ●
-   └───────────────────┘                 └───────────────────┘
+ ┌───────────────────┐ ┌───────────────────┐
+ │ Network A ○──────┼──────○ Net B │ Network A ● │ Net B ●
+ │ ○ ○──────┼─────○ │ ●──● ●──● │ ●──●
+ │ ○──────┼──────┼──────○ │ ● ● │ ●
+ └───────────────────┘ └───────────────────┘
 
-   HIGH BETWEEN-NETWORK                   LOW BETWEEN-NETWORK
-   LOW WITHIN-NETWORK                     HIGH WITHIN-NETWORK
-   (192 edges: NM > M)                    (106 edges: M > NM)
+ HIGH BETWEEN-NETWORK LOW BETWEEN-NETWORK
+ LOW WITHIN-NETWORK HIGH WITHIN-NETWORK
+ (192 edges: NM > M) (106 edges: M > NM)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 KEY INSIGHT: Musical expertise leads to reorganization of cortical
@@ -53,53 +53,52 @@ EDNR establishes the expertise-dependent plasticity mechanism for the Novelty De
 
 ## 2. Neural Circuit: Complete Anatomy
 
-### 2.1 Information Flow Architecture (EAR → BRAIN → PPC+ASA → EDNR)
+### 2.1 Information Flow Architecture (EAR → BRAIN → EDNR)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    EDNR COMPUTATION ARCHITECTURE                             ║
+║ EDNR COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins x 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                         EDNR reads: ~16D                         │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                         EDNR demand: ~16 of 2304 tuples          │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Salience Circuit ════════     ║
-║                               │                                              ║
-║                       ┌───────┴───────┐                                      ║
-║                       ▼               ▼                                      ║
-║  ┌─────────────────┐  ┌─────────────────┐                                   ║
-║  │  PPC (30D)      │  │  ASA (30D)      │                                   ║
-║  └────────┬────────┘  └────────┬────────┘                                   ║
-║           └────────┬───────────┘                                             ║
-║                    ▼                                                          ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    EDNR MODEL (10D Output)                       │        ║
-║  │                                                                  │        ║
-║  │  Layer E: f01_within_conn, f02_between_conn,                     │        ║
-║  │           f03_compartmentalization, f04_expertise_signature       │        ║
-║  │  Layer M: network_architecture, compartmentalization_idx         │        ║
-║  │  Layer P: current_compartm, network_isolation                    │        ║
-║  │  Layer F: optimal_config_pred, processing_efficiency             │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins x 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ EDNR reads: ~16D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ EDNR demand: ~16 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Salience Circuit ════════ ║
+║ │ ║
+║ ┌───────┴───────┐ ║
+║ ▼ ▼ ║
+║ ┌─────────────────┐ ┌─────────────────┐ ║
+║ └────────┬────────┘ └────────┬────────┘ ║
+║ └────────┬───────────┘ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ EDNR MODEL (10D Output) │ ║
+║ │ │ ║
+║ │ Layer E: f01_within_conn, f02_between_conn, │ ║
+║ │ f03_compartmentalization, f04_expertise_signature │ ║
+║ │ Layer M: network_architecture, compartmentalization_idx │ ║
+║ │ Layer P: current_compartm, network_isolation │ ║
+║ │ Layer F: optimal_config_pred, processing_efficiency │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -127,18 +126,18 @@ EDNR establishes the expertise-dependent plasticity mechanism for the Novelty De
 ### 3.2 Effect Size Summary
 
 ```
-Primary Evidence (k=8):  Consistent with compartmentalization hypothesis
+Primary Evidence (k=8): Consistent with compartmentalization hypothesis
 Key Effect Sizes:
-  - Paraskevopoulos 2022: Hedges' g = −1.09 (behavioral), 192 vs 106 edges (network)
-  - Leipold et al. 2021:  pFWE<0.05 (interhemispheric PT FC+SC), n=153
-  - Papadaki et al. 2023:  Cohen's d = 0.70 (network strength + efficiency)
-  - Møller et al. 2021:    FA cluster p<0.001 (left IFOF), CT correlation FDR<10%
-  - Kleber et al. 2025:    CC thickness ↔ onset age (survives FDR)
-  - Porfyri et al. 2025:   η² = 0.168 (Group × Time interaction)
-Heterogeneity:           Low — all studies converge on expertise→network specialization
-Quality Assessment:      α-tier (MEG, rsfMRI, DTI, DWI, n=153 in largest study)
-Replication:             Leipold n=153 replicates in both AP and non-AP musician groups
-Null finding:            Cui 2025 — 1 year training does NOT change WM characteristics
+ - Paraskevopoulos 2022: Hedges' g = −1.09 (behavioral), 192 vs 106 edges (network)
+ - Leipold et al. 2021: pFWE<0.05 (interhemispheric PT FC+SC), n=153
+ - Papadaki et al. 2023: Cohen's d = 0.70 (network strength + efficiency)
+ - Møller et al. 2021: FA cluster p<0.001 (left IFOF), CT correlation FDR<10%
+ - Kleber et al. 2025: CC thickness ↔ onset age (survives FDR)
+ - Porfyri et al. 2025: η² = 0.168 (Group × Time interaction)
+Heterogeneity: Low — all studies converge on expertise→network specialization
+Quality Assessment: α-tier (MEG, rsfMRI, DTI, DWI, n=153 in largest study)
+Replication: Leipold n=153 replicates in both AP and non-AP musician groups
+Null finding: Cui 2025 — 1 year training does NOT change WM characteristics
 ```
 
 ---
@@ -170,19 +169,16 @@ Null finding:            Cui 2025 — 1 year training does NOT change WM charact
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[25:33] x_l0l5 ───────────────┐
-PPC.pitch_extraction[0:10] ─────┼──► Within-network connectivity
-H³ value/std tuples ────────────┘   Intra-network binding strength
+H³ value/std tuples ────────────┘ Intra-network binding strength
 
 R³[33:41] x_l4l5 ───────────────┐
-ASA.scene_analysis[0:10] ───────┼──► Between-network connectivity
-H³ entropy tuples ──────────────┘   Inter-network coupling
+H³ entropy tuples ──────────────┘ Inter-network coupling
 
 R³[14] tonalness ────────────────┐
-ASA.attention_gating[10:20] ─────┼──► Expertise signature
-H³ trend tuples ────────────────┘   Processing complexity
+H³ trend tuples ────────────────┘ Processing complexity
 ```
 
 ---
@@ -216,7 +212,7 @@ EDNR requires H³ features at longer timescales to capture network reorganizatio
 
 #### R³ v2 Projected Expansion
 
-EDNR projected v2 from H:Harmony, aligned with ASA horizons.
+EDNR projected v2 from H:Harmony, aligned with corresponding H³ horizons.
 
 | R³ Idx | Feature | Group | H | Morph | Law | Purpose |
 |:------:|---------|:-----:|:-:|-------|:---:|---------|
@@ -227,17 +223,6 @@ EDNR projected v2 from H:Harmony, aligned with ASA horizons.
 
 **v2 projected**: 4 tuples
 **Total projected**: 20 tuples of 294,912 theoretical = 0.0068%
-
-### 5.2 PPC + ASA Mechanism Binding
-
-| Mechanism | Sub-section | Range | EDNR Role | Weight |
-|-----------|-------------|-------|-----------|--------|
-| **PPC** | Pitch Extraction | PPC[0:10] | Within-network efficiency | 0.7 |
-| **PPC** | Interval Analysis | PPC[10:20] | Network precision | 0.6 |
-| **PPC** | Contour Tracking | PPC[20:30] | Processing specialization | 0.5 |
-| **ASA** | Scene Analysis | ASA[0:10] | Between-network measurement | **1.0** (primary) |
-| **ASA** | Attention Gating | ASA[10:20] | Network boundary maintenance | **0.9** |
-| **ASA** | Salience Weighting | ASA[20:30] | Expertise-driven weighting | 0.8 |
 
 ---
 
@@ -251,49 +236,46 @@ EDNR OUTPUT TENSOR: 10D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range    │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼──────────┼──────────────────────────────────
- 0  │ f01_within_connectivity  │ [0, 1]   │ Intra-network coupling strength.
-    │                          │          │ f01 = σ(0.35 * within_mean_1s
-    │                          │          │       + 0.35 * mean(PPC.pitch[0:10])
-    │                          │          │       + 0.30 * within_periodicity_1s)
+ 0 │ f01_within_connectivity │ [0, 1] │ Intra-network coupling strength.
+ │ │ │ f01 = σ(0.35 * within_mean_1s
+ │ │ │ + 0.30 * within_periodicity_1s)
 ────┼──────────────────────────┼──────────┼──────────────────────────────────
- 1  │ f02_between_connectivity │ [0, 1]   │ Inter-network coupling (inverse).
-    │                          │          │ f02 = σ(0.35 * cross_mean_1s
-    │                          │          │       + 0.35 * mean(ASA.scene[0:10])
-    │                          │          │       + 0.30 * cross_entropy_1s)
+ 1 │ f02_between_connectivity │ [0, 1] │ Inter-network coupling (inverse).
+ │ │ │ f02 = σ(0.35 * cross_mean_1s
+ │ │ │ + 0.30 * cross_entropy_1s)
 ────┼──────────────────────────┼──────────┼──────────────────────────────────
- 2  │ f03_compartmentalization │ [0.5,3+] │ Within/between ratio.
-    │                          │          │ f03 = f01 / (f02 + ε)
+ 2 │ f03_compartmentalization │ [0.5,3+] │ Within/between ratio.
+ │ │ │ f03 = f01 / (f02 + ε)
 ────┼──────────────────────────┼──────────┼──────────────────────────────────
- 3  │ f04_expertise_signature  │ [0, 1]   │ Expertise-specific pattern.
-    │                          │          │ f04 = σ(0.35 * tonalness_mean_1s
-    │                          │          │       + 0.35 * pleasantness_mean_1s
-    │                          │          │       + 0.30 * mean(ASA.attn[10:20]))
+ 3 │ f04_expertise_signature │ [0, 1] │ Expertise-specific pattern.
+ │ │ │ f04 = σ(0.35 * tonalness_mean_1s
+ │ │ │ + 0.35 * pleasantness_mean_1s
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range    │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼──────────┼──────────────────────────────────
- 4  │ network_architecture     │ [0, 1]   │ Connectivity strength measure.
+ 4 │ network_architecture │ [0, 1] │ Connectivity strength measure.
 ────┼──────────────────────────┼──────────┼──────────────────────────────────
- 5  │ compartmentalization_idx │ [0.5,3+] │ CI_musician vs nonmusician.
+ 5 │ compartmentalization_idx │ [0.5,3+] │ CI_musician vs nonmusician.
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range    │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼──────────┼──────────────────────────────────
- 6  │ current_compartm         │ [0, 1]   │ Real-time network state.
+ 6 │ current_compartm │ [0, 1] │ Real-time network state.
 ────┼──────────────────────────┼──────────┼──────────────────────────────────
- 7  │ network_isolation        │ [0, 1]   │ Boundary maintenance.
+ 7 │ network_isolation │ [0, 1] │ Boundary maintenance.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range    │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼──────────┼──────────────────────────────────
- 8  │ optimal_config_pred      │ [0, 1]   │ XTI network topology prediction.
+ 8 │ optimal_config_pred │ [0, 1] │ XTI network topology prediction.
 ────┼──────────────────────────┼──────────┼──────────────────────────────────
- 9  │ processing_efficiency    │ [0, 1]   │ 0.5-1s task performance.
+ 9 │ processing_efficiency │ [0, 1] │ 0.5-1s task performance.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 10D per frame at 172.27 Hz
@@ -313,7 +295,7 @@ Between_Connectivity(expertise) = -γ·Years_Training - δ·Practice_Hours
 Compartmentalization_Index = Within / Between
 
 Plasticity Model:
-    dCI/dt = λ·(Training_Intensity) · (1 - CI/CI_max)
+ dCI/dt = λ·(Training_Intensity) · (1 - CI/CI_max)
 ```
 
 ### 7.2 Feature Formulas
@@ -323,14 +305,12 @@ Plasticity Model:
 
 # f01: Within Connectivity
 f01 = σ(0.35 * within_mean_1s
-       + 0.35 * mean(PPC.pitch_extraction[0:10])
-       + 0.30 * within_periodicity_1s)
+ + 0.30 * within_periodicity_1s)
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # f02: Between Connectivity
 f02 = σ(0.35 * cross_mean_1s
-       + 0.35 * mean(ASA.scene_analysis[0:10])
-       + 0.30 * cross_entropy_1s)
+ + 0.30 * cross_entropy_1s)
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # f03: Compartmentalization Index
@@ -338,8 +318,7 @@ f03 = f01 / (f02 + ε)
 
 # f04: Expertise Signature
 f04 = σ(0.35 * tonalness_mean_1s
-       + 0.35 * pleasantness_mean_1s
-       + 0.30 * mean(ASA.attention_gating[10:20]))
+ + 0.35 * pleasantness_mean_1s
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 ```
 
@@ -374,20 +353,18 @@ f04 = σ(0.35 * tonalness_mean_1s
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    EDNR INTERACTIONS                                         │
+│ EDNR INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (NDU):                                                         │
-│  EDNR.compartmentalization ──► SDD (expertise modulates multilinks)       │
-│  EDNR.expertise_signature ───► SLEE (correlates with accuracy)            │
-│  EDNR.within_connectivity ───► ECT (basis for trade-off hypothesis)       │
-│                                                                             │
-│  UPSTREAM DEPENDENCIES:                                                     │
-│  PPC mechanism (30D) ────────► EDNR (within-network efficiency)           │
-│  ASA mechanism (30D) ────────► EDNR (between-network measurement)        │
-│  R³ (~16D) ──────────────────► EDNR (direct spectral features)           │
-│  H³ (16 tuples) ─────────────► EDNR (temporal dynamics)                  │
-│                                                                             │
+│ │
+│ INTRA-UNIT (NDU): │
+│ EDNR.compartmentalization ──► SDD (expertise modulates multilinks) │
+│ EDNR.expertise_signature ───► SLEE (correlates with accuracy) │
+│ EDNR.within_connectivity ───► ECT (basis for trade-off hypothesis) │
+│ │
+│ UPSTREAM DEPENDENCIES: │
+│ R³ (~16D) ──────────────────► EDNR (direct spectral features) │
+│ H³ (16 tuples) ─────────────► EDNR (temporal dynamics) │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -410,97 +387,81 @@ f04 = σ(0.35 * tonalness_mean_1s
 
 ```python
 class EDNR(BaseModel):
-    """Expertise-Dependent Network Reorganization Model.
+ """Expertise-Dependent Network Reorganization Model.
 
-    Output: 10D per frame.
-    Reads: PPC mechanism (30D), ASA mechanism (30D), R³ direct.
-    """
-    NAME = "EDNR"
-    UNIT = "NDU"
-    TIER = "α3"
-    OUTPUT_DIM = 10
-    MECHANISM_NAMES = ("PPC", "ASA")
+ Output: 10D per frame.
+ """
+ NAME = "EDNR"
+ UNIT = "NDU"
+ TIER = "α3"
+ OUTPUT_DIM = 10
+ TAU_DECAY = 2.0 # Network state persistence
+ XTI_WINDOW = 8.0 # seconds
+ EXPERT_THRESHOLD = 10 # years
 
-    TAU_DECAY = 2.0             # Network state persistence
-    XTI_WINDOW = 8.0            # seconds
-    EXPERT_THRESHOLD = 10       # years
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """16 tuples for EDNR computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ # ── Within-network coupling ──
+ (25, 3, 0, 2), # x_l0l5[0], 100ms, value, bidi
+ (25, 3, 2, 2), # x_l0l5[0], 100ms, std, bidi
+ (25, 16, 1, 2), # x_l0l5[0], 1000ms, mean, bidi
+ (25, 16, 14, 2), # x_l0l5[0], 1000ms, periodicity, bidi
+ # ── Cross-network coupling ──
+ (33, 3, 0, 2), # x_l4l5[0], 100ms, value, bidi
+ (33, 3, 2, 2), # x_l4l5[0], 100ms, std, bidi
+ (33, 16, 1, 2), # x_l4l5[0], 1000ms, mean, bidi
+ (33, 16, 20, 2), # x_l4l5[0], 1000ms, entropy, bidi
+ # ── Expertise signature ──
+ (14, 3, 0, 2), # tonalness, 100ms, value, bidi
+ (14, 16, 1, 2), # tonalness, 1000ms, mean, bidi
+ (16, 3, 0, 2), # spectral_flatness, 100ms, value, bidi
+ (16, 16, 2, 2), # spectral_flatness, 1000ms, std, bidi
+ (8, 3, 0, 2), # loudness, 100ms, value, bidi
+ (8, 16, 20, 2), # loudness, 1000ms, entropy, bidi
+ (4, 3, 0, 2), # sensory_pleasantness, 100ms, value, bidi
+ (4, 16, 1, 2), # sensory_pleasantness, 1000ms, mean, bidi
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """16 tuples for EDNR computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # ── Within-network coupling ──
-            (25, 3, 0, 2),     # x_l0l5[0], 100ms, value, bidi
-            (25, 3, 2, 2),     # x_l0l5[0], 100ms, std, bidi
-            (25, 16, 1, 2),    # x_l0l5[0], 1000ms, mean, bidi
-            (25, 16, 14, 2),   # x_l0l5[0], 1000ms, periodicity, bidi
-            # ── Cross-network coupling ──
-            (33, 3, 0, 2),     # x_l4l5[0], 100ms, value, bidi
-            (33, 3, 2, 2),     # x_l4l5[0], 100ms, std, bidi
-            (33, 16, 1, 2),    # x_l4l5[0], 1000ms, mean, bidi
-            (33, 16, 20, 2),   # x_l4l5[0], 1000ms, entropy, bidi
-            # ── Expertise signature ──
-            (14, 3, 0, 2),     # tonalness, 100ms, value, bidi
-            (14, 16, 1, 2),    # tonalness, 1000ms, mean, bidi
-            (16, 3, 0, 2),     # spectral_flatness, 100ms, value, bidi
-            (16, 16, 2, 2),    # spectral_flatness, 1000ms, std, bidi
-            (8, 3, 0, 2),      # loudness, 100ms, value, bidi
-            (8, 16, 20, 2),    # loudness, 1000ms, entropy, bidi
-            (4, 3, 0, 2),      # sensory_pleasantness, 100ms, value, bidi
-            (4, 16, 1, 2),     # sensory_pleasantness, 1000ms, mean, bidi
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ within_mean_1s = h3_direct[(25, 16, 1, 2)].unsqueeze(-1)
+ within_period_1s = h3_direct[(25, 16, 14, 2)].unsqueeze(-1)
+ cross_mean_1s = h3_direct[(33, 16, 1, 2)].unsqueeze(-1)
+ cross_entropy_1s = h3_direct[(33, 16, 20, 2)].unsqueeze(-1)
+ tonalness_mean_1s = h3_direct[(14, 16, 1, 2)].unsqueeze(-1)
+ pleasantness_mean_1s = h3_direct[(4, 16, 1, 2)].unsqueeze(-1)
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        ppc = mechanism_outputs["PPC"]
-        asa = mechanism_outputs["ASA"]
+ # ═══ LAYER E ═══
+ f01 = torch.sigmoid(
+ 0.35 * within_mean_1s
+ + 0.30 * within_period_1s)
+ f02 = torch.sigmoid(
+ 0.35 * cross_mean_1s
+ + 0.30 * cross_entropy_1s)
+ f03 = f01 / (f02 + 1e-6)
+ f04 = torch.sigmoid(
+ 0.35 * tonalness_mean_1s
+ + 0.35 * pleasantness_mean_1s
 
-        ppc_pitch = ppc[..., 0:10]
-        asa_scene = asa[..., 0:10]
-        asa_attn = asa[..., 10:20]
-        asa_salience = asa[..., 20:30]
+ # ═══ LAYER M ═══
+ network_arch = torch.sigmoid(0.50 * f01 + 0.50 * f02)
+ comp_index = f03
 
-        within_mean_1s = h3_direct[(25, 16, 1, 2)].unsqueeze(-1)
-        within_period_1s = h3_direct[(25, 16, 14, 2)].unsqueeze(-1)
-        cross_mean_1s = h3_direct[(33, 16, 1, 2)].unsqueeze(-1)
-        cross_entropy_1s = h3_direct[(33, 16, 20, 2)].unsqueeze(-1)
-        tonalness_mean_1s = h3_direct[(14, 16, 1, 2)].unsqueeze(-1)
-        pleasantness_mean_1s = h3_direct[(4, 16, 1, 2)].unsqueeze(-1)
+ # ═══ LAYER P ═══
+ current_comp = torch.sigmoid(0.50 * f03.clamp(0, 3) / 3.0 + 0.50 * within_mean_1s)
 
-        # ═══ LAYER E ═══
-        f01 = torch.sigmoid(
-            0.35 * within_mean_1s
-            + 0.35 * ppc_pitch.mean(-1, keepdim=True)
-            + 0.30 * within_period_1s)
-        f02 = torch.sigmoid(
-            0.35 * cross_mean_1s
-            + 0.35 * asa_scene.mean(-1, keepdim=True)
-            + 0.30 * cross_entropy_1s)
-        f03 = f01 / (f02 + 1e-6)
-        f04 = torch.sigmoid(
-            0.35 * tonalness_mean_1s
-            + 0.35 * pleasantness_mean_1s
-            + 0.30 * asa_attn.mean(-1, keepdim=True))
+ # ═══ LAYER F ═══
+ optimal_config = torch.sigmoid(0.50 * f01 + 0.50 * f04)
 
-        # ═══ LAYER M ═══
-        network_arch = torch.sigmoid(0.50 * f01 + 0.50 * f02)
-        comp_index = f03
-
-        # ═══ LAYER P ═══
-        current_comp = torch.sigmoid(0.50 * f03.clamp(0, 3) / 3.0 + 0.50 * within_mean_1s)
-        network_isolation = torch.sigmoid(0.50 * (1 - f02) + 0.50 * asa_salience.mean(-1, keepdim=True))
-
-        # ═══ LAYER F ═══
-        optimal_config = torch.sigmoid(0.50 * f01 + 0.50 * f04)
-        processing_eff = torch.sigmoid(0.50 * f01 + 0.50 * ppc_pitch.mean(-1, keepdim=True))
-
-        return torch.cat([
-            f01, f02, f03, f04,                              # E: 4D
-            network_arch, comp_index,                        # M: 2D
-            current_comp, network_isolation,                 # P: 2D
-            optimal_config, processing_eff,                  # F: 2D
-        ], dim=-1)  # (B, T, 10)
+ return torch.cat([
+ f01, f02, f03, f04, # E: 4D
+ network_arch, comp_index, # M: 2D
+ current_comp, network_isolation, # P: 2D
+ optimal_config, processing_eff, # F: 2D
+ ], dim=-1) # (B, T, 10)
 ```
 
 ---
@@ -517,8 +478,6 @@ class EDNR(BaseModel):
 | **Null Finding** | 1-year training does not change WM (Cui 2025) | Slow structural plasticity constraint |
 | **R³ Features Used** | ~16D of 49D | Consonance + timbre + interactions |
 | **H³ Demand** | 16 tuples (0.69%) | Sparse, efficient |
-| **PPC Mechanism** | 30D (3 sub-sections) | Within-network efficiency |
-| **ASA Mechanism** | 30D (3 sub-sections) | Between-network measurement |
 | **Output Dimensions** | **10D** | 4-layer structure |
 
 ---
@@ -543,20 +502,12 @@ class EDNR(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D) | R³ (49D) |
-| Temporal | HC⁰ mechanisms (TIH, SGM, EFC, BND) | PPC (30D) + ASA (30D) mechanisms |
-| Within-network | S⁰.L7.coherence[80:104] + HC⁰.BND | R³.x_l0l5[25:33] + PPC.pitch_extraction |
-| Between-network | S⁰.L7.coherence[80:104] + HC⁰.SGM | R³.x_l4l5[33:41] + ASA.scene_analysis |
-| Expertise | S⁰.L9.entropy[104:128] + HC⁰.EFC | R³.tonalness[14] + ASA.attention_gating |
+| Within-network | S⁰.L7.coherence[80:104] + HC⁰.BND | R³.x_l0l5[25:33] |
+| Between-network | S⁰.L7.coherence[80:104] + HC⁰.SGM | R³.x_l4l5[33:41] |
+| Expertise | S⁰.L9.entropy[104:128] + HC⁰.EFC | R³.tonalness[14] |
 | Demand format | HC⁰ index ranges | H³ 4-tuples (sparse) |
 | Total demand | 37/2304 = 1.61% | 16/2304 = 0.69% |
 | Output | 10D | 10D (same) |
-
-### Why PPC + ASA replaces HC⁰ mechanisms
-
-- **BND → PPC.pitch_extraction** [0:10]: Within-network binding maps to PPC's pitch extraction for intra-network efficiency.
-- **SGM → ASA.scene_analysis** [0:10]: Boundary maintenance maps to ASA's scene analysis for network isolation.
-- **EFC → ASA.attention_gating** [10:20]: Expertise predictions map to ASA's attention for expertise signature.
-- **TIH → PPC.contour_tracking** [20:30]: Multi-scale integration maps to PPC's contour tracking for specialization.
 
 ---
 
@@ -568,7 +519,6 @@ class EDNR(BaseModel):
 |-------|---------------|-----------------|-----------------|
 | **FULL_NAME** | "Expertise-Dependent Network Reorganization" | "Expectation-Dependent Novelty Response" | Code needs rename to match doc |
 | **OUTPUT_DIM** | 10D (4+2+2+2) | 11D (4+2+2+3) | Code has 3 Layer-F dims, doc has 2; reconcile in Phase 5 |
-| **MECHANISM_NAMES** | ("PPC", "ASA") | ("ASA",) | Code missing PPC mechanism |
 | **h3_demand** | 16 tuples (see §5) | () empty | Code needs 16 tuples populated |
 | **brain_regions** | 14 regions (see §8) | 3 regions (STG, IFG, ACC) | Code needs expansion (Phase 5) |
 | **citations** | 8 papers (see §13) | 3 (Herholz 2012, Pantev 2015, Munte 2002) | Code needs update (Phase 5) |

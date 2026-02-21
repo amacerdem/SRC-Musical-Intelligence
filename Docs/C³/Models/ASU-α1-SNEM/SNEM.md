@@ -21,29 +21,29 @@ The **Selective Neural Entrainment Model** (SNEM) describes how the brain select
 SELECTIVE NEURAL ENTRAINMENT
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-ACOUSTIC INPUT                           NEURAL RESPONSE
-─────────────                            ───────────────
+ACOUSTIC INPUT NEURAL RESPONSE
+───────────── ───────────────
 
 Sound Envelope ────────────────────► Acoustic Spectrum
-     │                                   (objective)
-     │
-     ▼
+ │ (objective)
+ │
+ ▼
 ┌──────────────────────────────────────────────────────────────────┐
-│              AUDITORY CORTEX + FRONTOCENTRAL                     │
-│                                                                  │
-│   Beat-Related         Meter-Related         Unrelated           │
-│   Frequencies          Frequencies           Frequencies         │
-│   ════════════         ════════════          ════════════        │
-│   SS-EP ↑↑↑            SS-EP ↑↑              SS-EP ↓             │
-│   ENHANCED             ENHANCED              SUPPRESSED          │
-│                                                                  │
+│ AUDITORY CORTEX + FRONTOCENTRAL │
+│ │
+│ Beat-Related Meter-Related Unrelated │
+│ Frequencies Frequencies Frequencies │
+│ ════════════ ════════════ ════════════ │
+│ SS-EP ↑↑↑ SS-EP ↑↑ SS-EP ↓ │
+│ ENHANCED ENHANCED SUPPRESSED │
+│ │
 └──────────────────────────────────────────────────────────────────┘
-     │
-     ▼
+ │
+ ▼
 ┌──────────────────────────────────────────────────────────────────┐
-│                    SMA / PREMOTOR CORTEX                         │
-│   Sensorimotor synchronization                                   │
-│   Motor preparation for beat tracking                            │
+│ SMA / PREMOTOR CORTEX │
+│ Sensorimotor synchronization │
+│ Motor preparation for beat tracking │
 └──────────────────────────────────────────────────────────────────┘
 
 OPTIMAL RANGE: ~2 Hz (tempo ~120 BPM)
@@ -69,84 +69,82 @@ SNEM establishes the foundational entrainment mechanism for the Auditory Salienc
 
 ## 2. Neural Circuit: Complete Anatomy
 
-### 2.1 Information Flow Architecture (EAR → BRAIN → ASA+BEP → SNEM)
+### 2.1 Information Flow Architecture (EAR → BRAIN → SNEM)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    SNEM COMPUTATION ARCHITECTURE                             ║
+║ SNEM COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins x 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
-║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ CHANGE   │ │ X-INT  │ │        ║
-║  │  │ 7D [0:7]  │ │ 5D[7:12]│ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
-║  │  │           │ │         │ │ [12:21] │ │ [21:25]  │ │ [25:49]│ │        ║
-║  │  │roughness  │ │amplitude│ │warmth   │ │spec_chg  │ │x_l0l5  │ │        ║
-║  │  │sethares   │ │loudness │ │tristim. │ │enrg_chg  │ │x_l4l5  │ │        ║
-║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                         SNEM reads: ~15D                         │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                                                                  │        ║
-║  │  ┌── BEP Horizons ─────────────┐ ┌── ASA Horizons ──────────┐  │        ║
-║  │  │ H0 (25ms gamma)            │ │ H3 (100ms alpha)          │  │        ║
-║  │  │ H1 (50ms gamma)            │ │                            │  │        ║
-║  │  │ H3 (100ms alpha)           │ │ Attentional gating         │  │        ║
-║  │  │ H4 (125ms theta)           │ │ Scene analysis              │  │        ║
-║  │  │ H16 (1000ms beat)          │ │                            │  │        ║
-║  │  │                             │ │                            │  │        ║
-║  │  │ Beat/meter tracking         │ │                            │  │        ║
-║  │  │ Oscillation encoding        │ │                            │  │        ║
-║  │  └─────────────────────────────┘ └────────────────────────────┘  │        ║
-║  │                         SNEM demand: ~18 of 2304 tuples          │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Salience Circuit ════════     ║
-║                               │                                              ║
-║                       ┌───────┴───────┐                                      ║
-║                       ▼               ▼                                      ║
-║  ┌─────────────────┐  ┌─────────────────┐                                   ║
-║  │  BEP (30D)      │  │  ASA (30D)      │                                   ║
-║  │                 │  │                 │                                    ║
-║  │ Beat Entr[0:10] │  │ Scene An [0:10] │                                   ║
-║  │ Motor Coup      │  │ Attention       │                                   ║
-║  │         [10:20] │  │ Gating  [10:20] │                                   ║
-║  │ Groove  [20:30] │  │ Salience        │                                   ║
-║  │                 │  │ Weight  [20:30] │                                   ║
-║  └────────┬────────┘  └────────┬────────┘                                   ║
-║           │                    │                                              ║
-║           └────────┬───────────┘                                             ║
-║                    ▼                                                          ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    SNEM MODEL (12D Output)                       │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f01_beat_entrainment,                      │        ║
-║  │                       f02_meter_entrainment,                     │        ║
-║  │                       f03_selective_enhancement                   │        ║
-║  │  Layer M (Math):      ssep_enhancement,                          │        ║
-║  │                       enhancement_index, beat_salience            │        ║
-║  │  Layer P (Present):   beat_locked, entrainment_strength,         │        ║
-║  │                       selective_gain                               │        ║
-║  │  Layer F (Future):    beat_onset_pred, meter_position_pred,      │        ║
-║  │                       enhancement_pred                            │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins x 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ ENERGY │ │ TIMBRE │ │ CHANGE │ │ X-INT │ │ ║
+║ │ │ 7D [0:7] │ │ 5D[7:12]│ │ 9D │ │ 4D │ │ 24D │ │ ║
+║ │ │ │ │ │ │ [12:21] │ │ [21:25] │ │ [25:49]│ │ ║
+║ │ │roughness │ │amplitude│ │warmth │ │spec_chg │ │x_l0l5 │ │ ║
+║ │ │sethares │ │loudness │ │tristim. │ │enrg_chg │ │x_l4l5 │ │ ║
+║ │ └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │ ║
+║ │ SNEM reads: ~15D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ │ ║
+║ │ │ H0 (25ms gamma) │ │ H3 (100ms alpha) │ │ ║
+║ │ │ H1 (50ms gamma) │ │ │ │ ║
+║ │ │ H3 (100ms alpha) │ │ Attentional gating │ │ ║
+║ │ │ H4 (125ms theta) │ │ Scene analysis │ │ ║
+║ │ │ H16 (1000ms beat) │ │ │ │ ║
+║ │ │ │ │ │ │ ║
+║ │ │ Beat/meter tracking │ │ │ │ ║
+║ │ │ Oscillation encoding │ │ │ │ ║
+║ │ └─────────────────────────────┘ └────────────────────────────┘ │ ║
+║ │ SNEM demand: ~18 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Salience Circuit ════════ ║
+║ │ ║
+║ ┌───────┴───────┐ ║
+║ ▼ ▼ ║
+║ ┌─────────────────┐ ┌─────────────────┐ ║
+║ │ │ │ │ ║
+║ │ Beat Entr[0:10] │ │ Scene An [0:10] │ ║
+║ │ Motor Coup │ │ Attention │ ║
+║ │ [10:20] │ │ Gating [10:20] │ ║
+║ │ Groove [20:30] │ │ Salience │ ║
+║ │ │ │ Weight [20:30] │ ║
+║ └────────┬────────┘ └────────┬────────┘ ║
+║ │ │ ║
+║ └────────┬───────────┘ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SNEM MODEL (12D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f01_beat_entrainment, │ ║
+║ │ f02_meter_entrainment, │ ║
+║ │ f03_selective_enhancement │ ║
+║ │ Layer M (Math): ssep_enhancement, │ ║
+║ │ enhancement_index, beat_salience │ ║
+║ │ Layer P (Present): beat_locked, entrainment_strength, │ ║
+║ │ selective_gain │ ║
+║ │ Layer F (Future): beat_onset_pred, meter_position_pred, │ ║
+║ │ enhancement_pred │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -175,14 +173,14 @@ SNEM establishes the foundational entrainment mechanism for the Auditory Salienc
 
 ```
 Primary Evidence (k=12): 12 papers with converging evidence for selective entrainment
-Heterogeneity:           Low (consistent across EEG, fMRI, behavioral methods)
-Quality Assessment:      α-tier (direct EEG/fMRI measurement, replicated)
-Replication:             Robust — Nozaradan series, Ding et al. 2025 (1-12 Hz),
-                         neonatal studies, electronic music entrainment
-Key Effect Sizes:        ITPC η²=0.14, EPS η²=0.32 (Ding 2025)
-                         r=0.65 MMN correlation (Bridwell 2017)
-                         PLV=0.76 frontal-parietal (Yang 2025)
-Optimal Frequency:       ~1.65-2.0 Hz confirmed by multiple studies
+Heterogeneity: Low (consistent across EEG, fMRI, behavioral methods)
+Quality Assessment: α-tier (direct EEG/fMRI measurement, replicated)
+Replication: Robust — Nozaradan series, Ding et al. 2025 (1-12 Hz),
+ neonatal studies, electronic music entrainment
+Key Effect Sizes: ITPC η²=0.14, EPS η²=0.32 (Ding 2025)
+ r=0.65 MMN correlation (Bridwell 2017)
+ PLV=0.76 frontal-parietal (Yang 2025)
+Optimal Frequency: ~1.65-2.0 Hz confirmed by multiple studies
 ```
 
 ---
@@ -215,19 +213,16 @@ Optimal Frequency:       ~1.65-2.0 Hz confirmed by multiple studies
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[10] spectral_flux ────────────┐
 R³[11] onset_strength ───────────┼──► Beat/onset detection
-BEP.beat_entrainment[0:10] ──────┘   SS-EP at beat frequency
 
 R³[7] amplitude ─────────────────┐
 R³[8] loudness ──────────────────┼──► Beat strength / perceptual loudness
-BEP.motor_coupling[10:20] ───────┘   Motor preparation drive
 
 R³[25:33] x_l0l5 ───────────────┐
-ASA.attention_gating[10:20] ─────┼──► Attentional entrainment
-H³ beat periodicity tuples ──────┘   Selective frequency enhancement
+H³ beat periodicity tuples ──────┘ Selective frequency enhancement
 ```
 
 ---
@@ -236,7 +231,7 @@ H³ beat periodicity tuples ──────┘   Selective frequency enhancem
 
 ### 5.1 Demand Specification
 
-SNEM requires H³ features at BEP horizons for beat/meter tracking and ASA horizons for attentional gating. The demand reflects the multi-scale temporal integration required for selective entrainment.
+SNEM requires H³ features for beat/meter tracking and for attentional gating. The demand reflects the multi-scale temporal integration required for selective entrainment.
 
 | R³ Index | Feature | H | Morph | Law | Purpose |
 |----------|---------|---|-------|-----|---------|
@@ -273,17 +268,6 @@ Minor v2 expansion for SNEM from G[65:75].
 **v2 projected**: 2 tuples
 **Total projected**: 20 tuples of 294,912 theoretical = 0.0068%
 
-### 5.2 BEP + ASA Mechanism Binding
-
-| Mechanism | Sub-section | Range | SNEM Role | Weight |
-|-----------|-------------|-------|-----------|--------|
-| **BEP** | Beat Entrainment | BEP[0:10] | Beat frequency SS-EP tracking | **1.0** (primary) |
-| **BEP** | Motor Coupling | BEP[10:20] | Sensorimotor synchronization | 0.9 |
-| **BEP** | Groove Processing | BEP[20:30] | Rhythmic engagement (secondary) | 0.5 |
-| **ASA** | Scene Analysis | ASA[0:10] | Auditory scene segmentation | 0.6 |
-| **ASA** | Attention Gating | ASA[10:20] | Selective frequency enhancement | **0.8** |
-| **ASA** | Salience Weighting | ASA[20:30] | Beat-related salience weight | 0.7 |
-
 ---
 
 ## 6. Output Space: 12D Multi-Layer Representation
@@ -296,55 +280,52 @@ SNEM OUTPUT TENSOR: 12D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 0  │ f01_beat_entrainment     │ [0, 1] │ SS-EP enhancement at beat frequency.
-    │                          │        │ f01 = σ(0.40 * beat_periodicity_1s
-    │                          │        │       + 0.35 * onset_periodicity_1s
-    │                          │        │       + 0.25 * mean(BEP.beat[0:10]))
+ 0 │ f01_beat_entrainment │ [0, 1] │ SS-EP enhancement at beat frequency.
+ │ │ │ f01 = σ(0.40 * beat_periodicity_1s
+ │ │ │ + 0.35 * onset_periodicity_1s
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 1  │ f02_meter_entrainment    │ [0, 1] │ SS-EP enhancement at meter frequency.
-    │                          │        │ f02 = σ(0.40 * coupling_periodicity_1s
-    │                          │        │       + 0.30 * coupling_periodicity_100ms
-    │                          │        │       + 0.30 * mean(BEP.motor[10:20]))
+ 1 │ f02_meter_entrainment │ [0, 1] │ SS-EP enhancement at meter frequency.
+ │ │ │ f02 = σ(0.40 * coupling_periodicity_1s
+ │ │ │ + 0.30 * coupling_periodicity_100ms
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 2  │ f03_selective_enhancement│ [0, 1] │ Selective gain for beat frequencies.
-    │                          │        │ f03 = σ(0.35 * f01 * f02
-    │                          │        │       + 0.35 * mean(ASA.attn[10:20])
-    │                          │        │       + 0.30 * loudness_entropy)
+ 2 │ f03_selective_enhancement│ [0, 1] │ Selective gain for beat frequencies.
+ │ │ │ f03 = σ(0.35 * f01 * f02
+ │ │ │ + 0.30 * loudness_entropy)
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 3  │ ssep_enhancement         │ [0, 1] │ Raw SS-EP enhancement level.
-    │                          │        │ α·BeatSal + β·MeterSal - γ·Envelope
+ 3 │ ssep_enhancement │ [0, 1] │ Raw SS-EP enhancement level.
+ │ │ │ α·BeatSal + β·MeterSal - γ·Envelope
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 4  │ enhancement_index        │ [0, 1] │ Normalized enhancement ratio.
-    │                          │        │ (SS-EP_beat - envelope) / envelope
+ 4 │ enhancement_index │ [0, 1] │ Normalized enhancement ratio.
+ │ │ │ (SS-EP_beat - envelope) / envelope
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 5  │ beat_salience            │ [0, 1] │ Perceptual beat salience.
-    │                          │        │ Gaussian around optimal 2Hz.
+ 5 │ beat_salience │ [0, 1] │ Perceptual beat salience.
+ │ │ │ Gaussian around optimal 2Hz.
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 6  │ beat_locked_activity     │ [0, 1] │ BEP beat-locked neural activity.
+ 6 │ beat_locked_activity │ [0, 1] │ beat-entrainment beat-locked neural activity.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 7  │ entrainment_strength     │ [0, 1] │ BEP oscillation entrainment.
+ 7 │ entrainment_strength │ [0, 1] │ beat-entrainment oscillation entrainment.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 8  │ selective_gain           │ [0, 1] │ ASA attentional gain for beat.
+ 8 │ selective_gain │ [0, 1] │ auditory-scene attentional gain for beat.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 9  │ beat_onset_pred_0.5s     │ [0, 1] │ Next beat onset prediction.
+ 9 │ beat_onset_pred_0.5s │ [0, 1] │ Next beat onset prediction.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
-10  │ meter_position_pred      │ [0, 1] │ Meter hierarchy position.
+10 │ meter_position_pred │ [0, 1] │ Meter hierarchy position.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
-11  │ enhancement_pred_0.75s   │ [0, 1] │ SS-EP magnitude prediction.
+11 │ enhancement_pred_0.75s │ [0, 1] │ SS-EP magnitude prediction.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 12D per frame at 172.27 Hz
@@ -361,9 +342,9 @@ TOTAL: 12D per frame at 172.27 Hz
 SS-EP_enhancement(f) = α·BeatSalience(f) + β·MeterSalience(f) - γ·Envelope(f)
 
 Parameters:
-    α = 1.0  (beat salience weight)
-    β = 0.8  (meter salience weight)
-    γ = 0.5  (envelope subtraction weight)
+ α = 1.0 (beat salience weight)
+ β = 0.8 (meter salience weight)
+ γ = 0.5 (envelope subtraction weight)
 
 BeatSalience(f) = exp(-(f - f_beat)² / (2σ_beat²))
 MeterSalience(f) = Σᵢ wᵢ · exp(-(f - f_meter_i)² / (2σ_meter²))
@@ -378,25 +359,22 @@ Enhancement_Index = (SS-EP_beat - SS-EP_envelope) / (SS-EP_envelope + ε)
 
 # f01: Beat Entrainment
 f01 = σ(0.40 * beat_periodicity_1s
-       + 0.35 * onset_periodicity_1s
-       + 0.25 * mean(BEP.beat_entrainment[0:10]))
+ + 0.35 * onset_periodicity_1s
 # coefficients: 0.40 + 0.35 + 0.25 = 1.0 ✓
 
 # f02: Meter Entrainment
 f02 = σ(0.40 * coupling_periodicity_1s
-       + 0.30 * coupling_periodicity_100ms
-       + 0.30 * mean(BEP.motor_coupling[10:20]))
+ + 0.30 * coupling_periodicity_100ms
 # coefficients: 0.40 + 0.30 + 0.30 = 1.0 ✓
 
 # f03: Selective Enhancement
-f03 = σ(0.35 * f01 * f02                    # interaction term
-       + 0.35 * mean(ASA.attention_gating[10:20])
-       + 0.30 * loudness_entropy)
+f03 = σ(0.35 * f01 * f02 # interaction term
+ + 0.30 * loudness_entropy)
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # Temporal dynamics
 dSS-EP/dt = τ⁻¹ · (Target_Enhancement - Current_SS-EP)
-    where τ = 2.5s (integration window)
+ where τ = 2.5s (integration window)
 ```
 
 ---
@@ -421,25 +399,23 @@ dSS-EP/dt = τ⁻¹ · (Target_Enhancement - Current_SS-EP)
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    SNEM INTERACTIONS                                         │
+│ SNEM INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (ASU):                                                         │
-│  SNEM.beat_entrainment ────────► BARM (entrainment baseline)              │
-│  SNEM.selective_gain ──────────► STANM (temporal attention)                │
-│  SNEM.entrainment_strength ────► PWSM (stability for precision)           │
-│  SNEM.beat_salience ───────────► DGTP (beat processing → speech)          │
-│                                                                             │
-│  CROSS-UNIT (ASU → STU):                                                   │
-│  SNEM.beat_locked ─────────────► STU.HMCE (beat for motor sync)           │
-│  SNEM.meter_position_pred ─────► STU.AMSC (metrical hierarchy)            │
-│                                                                             │
-│  UPSTREAM DEPENDENCIES:                                                     │
-│  BEP mechanism (30D) ──────────► SNEM (beat/motor processing)             │
-│  ASA mechanism (30D) ──────────► SNEM (attention/salience)                 │
-│  R³ (~15D) ─────────────────────► SNEM (direct spectral features)         │
-│  H³ (18 tuples) ────────────────► SNEM (temporal dynamics)                │
-│                                                                             │
+│ │
+│ INTRA-UNIT (ASU): │
+│ SNEM.beat_entrainment ────────► BARM (entrainment baseline) │
+│ SNEM.selective_gain ──────────► STANM (temporal attention) │
+│ SNEM.entrainment_strength ────► PWSM (stability for precision) │
+│ SNEM.beat_salience ───────────► DGTP (beat processing → speech) │
+│ │
+│ CROSS-UNIT (ASU → STU): │
+│ SNEM.beat_locked ─────────────► STU.HMCE (beat for motor sync) │
+│ SNEM.meter_position_pred ─────► STU.AMSC (metrical hierarchy) │
+│ │
+│ UPSTREAM DEPENDENCIES: │
+│ R³ (~15D) ─────────────────────► SNEM (direct spectral features) │
+│ H³ (18 tuples) ────────────────► SNEM (temporal dynamics) │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -463,150 +439,124 @@ dSS-EP/dt = τ⁻¹ · (Target_Enhancement - Current_SS-EP)
 
 ```python
 class SNEM(BaseModel):
-    """Selective Neural Entrainment Model.
+ """Selective Neural Entrainment Model.
 
-    Output: 12D per frame.
-    Reads: BEP mechanism (30D), ASA mechanism (30D), R³ direct.
-    """
-    NAME = "SNEM"
-    UNIT = "ASU"
-    TIER = "α1"
-    OUTPUT_DIM = 12
-    MECHANISM_NAMES = ("BEP", "ASA")
+ Output: 12D per frame.
+ """
+ NAME = "SNEM"
+ UNIT = "ASU"
+ TIER = "α1"
+ OUTPUT_DIM = 12
+ ALPHA_BEAT = 1.0 # Beat salience weight
+ BETA_METER = 0.8 # Meter salience weight
+ GAMMA_ENVELOPE = 0.5 # Envelope subtraction
+ TAU_DECAY = 2.5 # Integration window (seconds)
+ OPTIMAL_FREQ = 2.0 # Hz (~120 BPM)
 
-    ALPHA_BEAT = 1.0       # Beat salience weight
-    BETA_METER = 0.8       # Meter salience weight
-    GAMMA_ENVELOPE = 0.5   # Envelope subtraction
-    TAU_DECAY = 2.5        # Integration window (seconds)
-    OPTIMAL_FREQ = 2.0     # Hz (~120 BPM)
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """18 tuples for SNEM computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ (10, 0, 0, 2), # spectral_flux, 25ms, value, bidi
+ (10, 1, 1, 2), # spectral_flux, 50ms, mean, bidi
+ (10, 3, 0, 2), # spectral_flux, 100ms, value, bidi
+ (10, 4, 14, 2), # spectral_flux, 125ms, periodicity, bidi
+ (10, 16, 14, 2), # spectral_flux, 1000ms, periodicity, bidi
+ (11, 0, 0, 2), # onset_strength, 25ms, value, bidi
+ (11, 3, 1, 2), # onset_strength, 100ms, mean, bidi
+ (11, 16, 14, 2), # onset_strength, 1000ms, periodicity, bidi
+ (7, 3, 0, 2), # amplitude, 100ms, value, bidi
+ (7, 3, 2, 2), # amplitude, 100ms, std, bidi
+ (7, 16, 1, 2), # amplitude, 1000ms, mean, bidi
+ (8, 3, 0, 2), # loudness, 100ms, value, bidi
+ (8, 3, 20, 2), # loudness, 100ms, entropy, bidi
+ (21, 4, 8, 0), # spectral_change, 125ms, velocity, fwd
+ # ── Direct H³: motor-auditory coupling ──
+ (25, 3, 0, 2), # x_l0l5[0], 100ms, value, bidi
+ (25, 3, 14, 2), # x_l0l5[0], 100ms, periodicity, bidi
+ (25, 16, 14, 2), # x_l0l5[0], 1000ms, periodicity, bidi
+ (25, 16, 21, 2), # x_l0l5[0], 1000ms, zero_crossings, bidi
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """18 tuples for SNEM computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # ── BEP horizons: beat/meter tracking ──
-            (10, 0, 0, 2),     # spectral_flux, 25ms, value, bidi
-            (10, 1, 1, 2),     # spectral_flux, 50ms, mean, bidi
-            (10, 3, 0, 2),     # spectral_flux, 100ms, value, bidi
-            (10, 4, 14, 2),    # spectral_flux, 125ms, periodicity, bidi
-            (10, 16, 14, 2),   # spectral_flux, 1000ms, periodicity, bidi
-            (11, 0, 0, 2),     # onset_strength, 25ms, value, bidi
-            (11, 3, 1, 2),     # onset_strength, 100ms, mean, bidi
-            (11, 16, 14, 2),   # onset_strength, 1000ms, periodicity, bidi
-            (7, 3, 0, 2),      # amplitude, 100ms, value, bidi
-            (7, 3, 2, 2),      # amplitude, 100ms, std, bidi
-            (7, 16, 1, 2),     # amplitude, 1000ms, mean, bidi
-            # ── ASA horizons: attentional gating ──
-            (8, 3, 0, 2),      # loudness, 100ms, value, bidi
-            (8, 3, 20, 2),     # loudness, 100ms, entropy, bidi
-            (21, 4, 8, 0),     # spectral_change, 125ms, velocity, fwd
-            # ── Direct H³: motor-auditory coupling ──
-            (25, 3, 0, 2),     # x_l0l5[0], 100ms, value, bidi
-            (25, 3, 14, 2),    # x_l0l5[0], 100ms, periodicity, bidi
-            (25, 16, 14, 2),   # x_l0l5[0], 1000ms, periodicity, bidi
-            (25, 16, 21, 2),   # x_l0l5[0], 1000ms, zero_crossings, bidi
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute SNEM 12D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute SNEM 12D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"BEP": (B,T,30), "ASA": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,12) SNEM output
+ """
+ # R³ features
+ amplitude = r3[..., 7:8]
+ loudness = r3[..., 8:9]
+ spectral_flux = r3[..., 10:11]
+ onset_strength = r3[..., 11:12]
+ x_l0l5 = r3[..., 25:33] # (B, T, 8)
 
-        Returns:
-            (B,T,12) SNEM output
-        """
-        bep = mechanism_outputs["BEP"]    # (B, T, 30)
-        asa = mechanism_outputs["ASA"]    # (B, T, 30)
+ # H³ direct features
+ beat_period_1s = h3_direct[(10, 16, 14, 2)].unsqueeze(-1)
+ onset_period_1s = h3_direct[(11, 16, 14, 2)].unsqueeze(-1)
+ coupling_period_1s = h3_direct[(25, 16, 14, 2)].unsqueeze(-1)
+ coupling_period_100ms = h3_direct[(25, 3, 14, 2)].unsqueeze(-1)
+ loudness_entropy = h3_direct[(8, 3, 20, 2)].unsqueeze(-1)
 
-        # R³ features
-        amplitude = r3[..., 7:8]
-        loudness = r3[..., 8:9]
-        spectral_flux = r3[..., 10:11]
-        onset_strength = r3[..., 11:12]
-        x_l0l5 = r3[..., 25:33]          # (B, T, 8)
+ # ═══ LAYER E: Explicit features ═══
 
-        # BEP sub-sections
-        bep_beat = bep[..., 0:10]         # beat entrainment
-        bep_motor = bep[..., 10:20]       # motor coupling
-        bep_groove = bep[..., 20:30]      # groove processing
+ # f01: Beat Entrainment (coefficients sum = 1.0)
+ f01 = torch.sigmoid(
+ 0.40 * beat_period_1s
+ + 0.35 * onset_period_1s
+ )
 
-        # ASA sub-sections
-        asa_scene = asa[..., 0:10]        # scene analysis
-        asa_attn = asa[..., 10:20]        # attention gating
-        asa_salience = asa[..., 20:30]    # salience weighting
+ # f02: Meter Entrainment (coefficients sum = 1.0)
+ f02 = torch.sigmoid(
+ 0.40 * coupling_period_1s
+ + 0.30 * coupling_period_100ms
+ )
 
-        # H³ direct features
-        beat_period_1s = h3_direct[(10, 16, 14, 2)].unsqueeze(-1)
-        onset_period_1s = h3_direct[(11, 16, 14, 2)].unsqueeze(-1)
-        coupling_period_1s = h3_direct[(25, 16, 14, 2)].unsqueeze(-1)
-        coupling_period_100ms = h3_direct[(25, 3, 14, 2)].unsqueeze(-1)
-        loudness_entropy = h3_direct[(8, 3, 20, 2)].unsqueeze(-1)
+ # f03: Selective Enhancement (coefficients sum = 1.0)
+ f03 = torch.sigmoid(
+ 0.35 * (f01 * f02)
+ + 0.30 * loudness_entropy
+ )
 
-        # ═══ LAYER E: Explicit features ═══
+ # ═══ LAYER M: Mathematical ═══
+ ssep_enhancement = torch.sigmoid(
+ 0.5 * f01 + 0.3 * f02 + 0.2 * f03
+ )
+ enhancement_index = torch.sigmoid(
+ 0.6 * beat_period_1s + 0.4 * onset_period_1s
+ )
+ beat_salience = torch.sigmoid(
+ )
 
-        # f01: Beat Entrainment (coefficients sum = 1.0)
-        f01 = torch.sigmoid(
-            0.40 * beat_period_1s
-            + 0.35 * onset_period_1s
-            + 0.25 * bep_beat.mean(-1, keepdim=True)
-        )
+ # ═══ LAYER P: Present ═══
+ entrainment_strength = torch.sigmoid(
+ + 0.5 * coupling_period_100ms
+ )
 
-        # f02: Meter Entrainment (coefficients sum = 1.0)
-        f02 = torch.sigmoid(
-            0.40 * coupling_period_1s
-            + 0.30 * coupling_period_100ms
-            + 0.30 * bep_motor.mean(-1, keepdim=True)
-        )
+ # ═══ LAYER F: Future ═══
+ beat_onset_pred = torch.sigmoid(
+ 0.5 * f01 + 0.5 * beat_period_1s
+ )
+ meter_position_pred = torch.sigmoid(
+ 0.5 * f02 + 0.5 * coupling_period_1s
+ )
+ enhancement_pred = torch.sigmoid(
+ 0.5 * ssep_enhancement + 0.5 * f03
+ )
 
-        # f03: Selective Enhancement (coefficients sum = 1.0)
-        f03 = torch.sigmoid(
-            0.35 * (f01 * f02)
-            + 0.35 * asa_attn.mean(-1, keepdim=True)
-            + 0.30 * loudness_entropy
-        )
-
-        # ═══ LAYER M: Mathematical ═══
-        ssep_enhancement = torch.sigmoid(
-            0.5 * f01 + 0.3 * f02 + 0.2 * f03
-        )
-        enhancement_index = torch.sigmoid(
-            0.6 * beat_period_1s + 0.4 * onset_period_1s
-        )
-        beat_salience = torch.sigmoid(
-            0.5 * f01 + 0.5 * bep_beat.mean(-1, keepdim=True)
-        )
-
-        # ═══ LAYER P: Present ═══
-        beat_locked = bep_beat.mean(-1, keepdim=True)
-        entrainment_strength = torch.sigmoid(
-            0.5 * bep_motor.mean(-1, keepdim=True)
-            + 0.5 * coupling_period_100ms
-        )
-        selective_gain = asa_attn.mean(-1, keepdim=True)
-
-        # ═══ LAYER F: Future ═══
-        beat_onset_pred = torch.sigmoid(
-            0.5 * f01 + 0.5 * beat_period_1s
-        )
-        meter_position_pred = torch.sigmoid(
-            0.5 * f02 + 0.5 * coupling_period_1s
-        )
-        enhancement_pred = torch.sigmoid(
-            0.5 * ssep_enhancement + 0.5 * f03
-        )
-
-        return torch.cat([
-            f01, f02, f03,                                          # E: 3D
-            ssep_enhancement, enhancement_index, beat_salience,     # M: 3D
-            beat_locked, entrainment_strength, selective_gain,      # P: 3D
-            beat_onset_pred, meter_position_pred, enhancement_pred, # F: 3D
-        ], dim=-1)  # (B, T, 12)
+ return torch.cat([
+ f01, f02, f03, # E: 3D
+ ssep_enhancement, enhancement_index, beat_salience, # M: 3D
+ beat_locked, entrainment_strength, selective_gain, # P: 3D
+ beat_onset_pred, meter_position_pred, enhancement_pred, # F: 3D
+ ], dim=-1) # (B, T, 12)
 ```
 
 ---
@@ -621,8 +571,6 @@ class SNEM(BaseModel):
 | **Falsification Tests** | 3/5 confirmed | High validity |
 | **R³ Features Used** | ~15D of 49D | Energy + change + interactions |
 | **H³ Demand** | 18 tuples (0.78%) | Sparse, efficient |
-| **BEP Mechanism** | 30D (3 sub-sections) | Beat/motor processing |
-| **ASA Mechanism** | 30D (3 sub-sections) | Attention/salience |
 | **Output Dimensions** | **12D** | 4-layer structure |
 
 ---
@@ -662,19 +610,12 @@ class SNEM(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D) | R³ (49D) |
-| Temporal | HC⁰ mechanisms (OSC, NPL, ATT) | BEP (30D) + ASA (30D) mechanisms |
-| Beat signal | S⁰.L4.velocity_T[15] + HC⁰.OSC | R³.spectral_flux[10] + BEP.beat_entrainment |
-| Meter signal | S⁰.L9.mean_T[104] + HC⁰.NPL | R³.x_l0l5[25:33] + BEP.motor_coupling |
-| Attention | S⁰.L5.spectral_flux[45] + HC⁰.ATT | R³.loudness[8] + ASA.attention_gating |
+| Beat signal | S⁰.L4.velocity_T[15] + HC⁰.OSC | R³.spectral_flux[10] |
+| Meter signal | S⁰.L9.mean_T[104] + HC⁰.NPL | R³.x_l0l5[25:33] |
+| Attention | S⁰.L5.spectral_flux[45] + HC⁰.ATT | R³.loudness[8] |
 | Demand format | HC⁰ index ranges | H³ 4-tuples (sparse) |
 | Total demand | 22/2304 = 0.95% | 18/2304 = 0.78% |
 | Output | 12D | 12D (same) |
-
-### Why BEP + ASA replaces HC⁰ mechanisms
-
-- **OSC → BEP.beat_entrainment** [0:10]: Oscillatory band tracking maps to BEP's beat frequency monitoring.
-- **NPL → BEP.motor_coupling** [10:20]: Neural phase locking maps to BEP's sensorimotor synchronization.
-- **ATT → ASA.attention_gating** [10:20]: Attentional entrainment maps to ASA's auditory scene attention.
 
 ---
 

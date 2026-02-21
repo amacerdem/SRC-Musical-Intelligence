@@ -21,29 +21,29 @@ The **Spectrotemporal Attention Network Model** (STANM) describes how attention 
 SPECTROTEMPORAL ATTENTION NETWORK MODEL
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-                       ATTENTION GOAL
-                            │
-        ┌───────────────────┴───────────────────┐
-        ▼                                       ▼
-  SPEECH (Temporal)                       MELODY (Spectral)
-        │                                       │
-        ▼                                       ▼
-  ┌─────────────────┐                   ┌─────────────────┐
-  │ L + R Fronto-   │                   │   R Auditory    │
-  │ Temporo-Parietal│                   │    Regions      │
-  │ Network         │                   │                 │
-  └────────┬────────┘                   └────────┬────────┘
-           │                                     │
-  ┌────────┴────────┐                   ┌────────┴────────┐
-  ▼                 ▼                   ▼                 ▼
-Temporal         Spectral           Temporal         Spectral
-Degradation      Degradation        Degradation      Degradation
-   │                │                   │                │
-   ▼                ▼                   ▼                ▼
-Local↑           Local↑             Local↑           Local↑
-Clustering       Clustering         Clustering       Clustering
+ ATTENTION GOAL
+ │
+ ┌───────────────────┴───────────────────┐
+ ▼ ▼
+ SPEECH (Temporal) MELODY (Spectral)
+ │ │
+ ▼ ▼
+ ┌─────────────────┐ ┌─────────────────┐
+ │ L + R Fronto- │ │ R Auditory │
+ │ Temporo-Parietal│ │ Regions │
+ │ Network │ │ │
+ └────────┬────────┘ └────────┬────────┘
+ │ │
+ ┌────────┴────────┐ ┌────────┴────────┐
+ ▼ ▼ ▼ ▼
+Temporal Spectral Temporal Spectral
+Degradation Degradation Degradation Degradation
+ │ │ │ │
+ ▼ ▼ ▼ ▼
+Local↑ Local↑ Local↑ Local↑
+Clustering Clustering Clustering Clustering
 
-  LATERALIZATION depends on: ATTENTION × ACOUSTIC CUES
+ LATERALIZATION depends on: ATTENTION × ACOUSTIC CUES
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 KEY INSIGHT: Attention modulates network topology for spectral vs
@@ -64,59 +64,58 @@ STANM bridges attention and network topology into salience processing:
 
 ## 2. Neural Circuit: Complete Anatomy
 
-### 2.1 Information Flow Architecture (EAR → BRAIN → ASA+BEP → STANM)
+### 2.1 Information Flow Architecture (EAR → BRAIN → STANM)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    STANM COMPUTATION ARCHITECTURE                            ║
+║ STANM COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins x 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                         STANM reads: ~14D                        │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                         STANM demand: ~16 of 2304 tuples         │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Salience Circuit ════════     ║
-║                               │                                              ║
-║                       ┌───────┴───────┐                                      ║
-║                       ▼               ▼                                      ║
-║  ┌─────────────────┐  ┌─────────────────┐                                   ║
-║  │  BEP (30D)      │  │  ASA (30D)      │                                   ║
-║  │ Beat Entr[0:10] │  │ Scene An [0:10] │                                   ║
-║  │ Motor Coup      │  │ Attention       │                                   ║
-║  │         [10:20] │  │ Gating  [10:20] │                                   ║
-║  │ Groove  [20:30] │  │ Salience        │                                   ║
-║  │                 │  │ Weight  [20:30] │                                   ║
-║  └────────┬────────┘  └────────┬────────┘                                   ║
-║           │                    │                                              ║
-║           └────────┬───────────┘                                             ║
-║                    ▼                                                          ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    STANM MODEL (11D Output)                      │        ║
-║  │                                                                  │        ║
-║  │  Layer E: f13_temporal_attn, f14_spectral_attn, f15_network_top │        ║
-║  │  Layer M: network_topology, local_clustering, lateralization     │        ║
-║  │  Layer P: temporal_alloc, spectral_alloc                         │        ║
-║  │  Layer F: network_pred, lateral_pred, compensation_pred          │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins x 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ STANM reads: ~14D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ STANM demand: ~16 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Salience Circuit ════════ ║
+║ │ ║
+║ ┌───────┴───────┐ ║
+║ ▼ ▼ ║
+║ ┌─────────────────┐ ┌─────────────────┐ ║
+║ │ Beat Entr[0:10] │ │ Scene An [0:10] │ ║
+║ │ Motor Coup │ │ Attention │ ║
+║ │ [10:20] │ │ Gating [10:20] │ ║
+║ │ Groove [20:30] │ │ Salience │ ║
+║ │ │ │ Weight [20:30] │ ║
+║ └────────┬────────┘ └────────┬────────┘ ║
+║ │ │ ║
+║ └────────┬───────────┘ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ STANM MODEL (11D Output) │ ║
+║ │ │ ║
+║ │ Layer E: f13_temporal_attn, f14_spectral_attn, f15_network_top │ ║
+║ │ Layer M: network_topology, local_clustering, lateralization │ ║
+║ │ Layer P: temporal_alloc, spectral_alloc │ ║
+║ │ Layer F: network_pred, lateral_pred, compensation_pred │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -145,15 +144,15 @@ STANM bridges attention and network topology into salience processing:
 
 ```
 Primary Evidence (k=12): 12 papers across fMRI, MEG, iEEG, EEG, DWI, computational
-Heterogeneity:           Low (consistent: spectrotemporal dissociation, right-spectral/left-temporal)
-Quality Assessment:      β-tier (multi-modal convergence with network-level analysis)
-Replication:             Robust — Haiduk 2024 (topology), Zatorre 2022 (lateralization),
-                         Leipold 2021 (n=153 network metrics), Norman-Haignere 2022 (iEEG)
-Key Effect Sizes:        η²p = 0.526 speech-in-noise lateralization (Jin 2024)
-                         T = 6.852 spectral×temporal interaction (Kim 2019)
-                         F = 104.71 integration hierarchy (Norman-Haignere 2022)
-                         BF = 317 attention-speech tracking (Har-shai Yahav 2025)
-Sample Range:            n = 11-153 (median ~20)
+Heterogeneity: Low (consistent: spectrotemporal dissociation, right-spectral/left-temporal)
+Quality Assessment: β-tier (multi-modal convergence with network-level analysis)
+Replication: Robust — Haiduk 2024 (topology), Zatorre 2022 (lateralization),
+ Leipold 2021 (n=153 network metrics), Norman-Haignere 2022 (iEEG)
+Key Effect Sizes: η²p = 0.526 speech-in-noise lateralization (Jin 2024)
+ T = 6.852 spectral×temporal interaction (Kim 2019)
+ F = 104.71 integration hierarchy (Norman-Haignere 2022)
+ BF = 317 attention-speech tracking (Har-shai Yahav 2025)
+Sample Range: n = 11-153 (median ~20)
 ```
 
 ---
@@ -185,19 +184,16 @@ Sample Range:            n = 11-153 (median ~20)
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[10] spectral_flux ──────────┐
 R³[21] spectral_change ────────┼──► Temporal attention allocation
-BEP.beat_entrainment[0:10] ───┘   Tempo/rhythm processing network
 
 R³[14] tonalness ──────────────┐
 R³[12] warmth ─────────────────┼──► Spectral attention allocation
-ASA.scene_analysis[0:10] ─────┘   Melody/harmonic processing network
 
 R³[25:33] x_l0l5 ─────────────┐
-ASA.attention_gating[10:20] ───┼──► Network topology modulation
-H³ periodicity/entropy tuples ┘   Lateralization & clustering
+H³ periodicity/entropy tuples ┘ Lateralization & clustering
 ```
 
 ---
@@ -206,7 +202,7 @@ H³ periodicity/entropy tuples ┘   Lateralization & clustering
 
 ### 5.1 Demand Specification
 
-STANM requires H³ features at multiple horizons for attention-dependent network reconfiguration. The demand covers both BEP horizons for temporal tracking and ASA horizons for attentional gating and network topology assessment.
+STANM requires H³ features at multiple horizons for attention-dependent network reconfiguration. The demand covers both Beat entrainment horizons for temporal tracking and for attentional gating and network topology assessment.
 
 | R³ Index | Feature | H | Morph | Law | Purpose |
 |----------|---------|---|-------|-----|---------|
@@ -240,17 +236,6 @@ Minor v2 expansion for STANM from J[94:114].
 **v2 projected**: 1 tuples
 **Total projected**: 17 tuples of 294,912 theoretical = 0.0058%
 
-### 5.2 BEP + ASA Mechanism Binding
-
-| Mechanism | Sub-section | Range | STANM Role | Weight |
-|-----------|-------------|-------|------------|--------|
-| **BEP** | Beat Entrainment | BEP[0:10] | Temporal structure tracking | 0.6 |
-| **BEP** | Motor Coupling | BEP[10:20] | Sensorimotor network engagement | 0.5 |
-| **BEP** | Groove Processing | BEP[20:30] | Rhythmic attention (secondary) | 0.3 |
-| **ASA** | Scene Analysis | ASA[0:10] | Spectral scene segmentation | 0.7 |
-| **ASA** | Attention Gating | ASA[10:20] | Goal-directed attention allocation | **1.0** (primary) |
-| **ASA** | Salience Weighting | ASA[20:30] | Salience-driven topology | 0.8 |
-
 ---
 
 ## 6. Output Space: 11D Multi-Layer Representation
@@ -263,53 +248,50 @@ STANM OUTPUT TENSOR: 11D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 0  │ f13_temporal_attention    │ [0, 1] │ Speech-directed network activation.
-    │                          │        │ f13 = σ(0.35 * temporal_periodicity
-    │                          │        │       + 0.35 * mean(ASA.attn[10:20])
-    │                          │        │       + 0.30 * tempo_velocity)
+ 0 │ f13_temporal_attention │ [0, 1] │ Speech-directed network activation.
+ │ │ │ f13 = σ(0.35 * temporal_periodicity
+ │ │ │ + 0.30 * tempo_velocity)
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 1  │ f14_spectral_attention   │ [0, 1] │ Melody-directed network activation.
-    │                          │        │ f14 = σ(0.35 * tonalness_mean_1s
-    │                          │        │       + 0.35 * mean(ASA.scene[0:10])
-    │                          │        │       + 0.30 * tonalness_value)
+ 1 │ f14_spectral_attention │ [0, 1] │ Melody-directed network activation.
+ │ │ │ f14 = σ(0.35 * tonalness_mean_1s
+ │ │ │ + 0.30 * tonalness_value)
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 2  │ f15_network_topology     │ [0, 1] │ Local clustering modulation.
-    │                          │        │ f15 = σ(0.35 * energy_variability
-    │                          │        │       + 0.35 * mean(ASA.salience[20:30])
-    │                          │        │       + 0.30 * coupling_entropy)
+ 2 │ f15_network_topology │ [0, 1] │ Local clustering modulation.
+ │ │ │ f15 = σ(0.35 * energy_variability
+ │ │ │ + 0.30 * coupling_entropy)
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 3  │ network_topology         │ [0, 1] │ Full network configuration.
-    │                          │        │ f(Attention, Degradation)
+ 3 │ network_topology │ [0, 1] │ Full network configuration.
+ │ │ │ f(Attention, Degradation)
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 4  │ local_clustering         │ [0, 1] │ Local clustering coefficient.
-    │                          │        │ α·Degradation + β·Attention_Match
+ 4 │ local_clustering │ [0, 1] │ Local clustering coefficient.
+ │ │ │ α·Degradation + β·Attention_Match
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 5  │ lateralization           │[-1, 1] │ L/R hemisphere balance.
-    │                          │        │ g(Attention × Acoustic_Cues)
+ 5 │ lateralization │[-1, 1] │ L/R hemisphere balance.
+ │ │ │ g(Attention × Acoustic_Cues)
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 6  │ temporal_alloc           │ [0, 1] │ ASA attention × temporal features.
+ 6 │ temporal_alloc │ [0, 1] │ auditory-scene attention × temporal features.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 7  │ spectral_alloc           │ [0, 1] │ ASA attention × spectral features.
+ 7 │ spectral_alloc │ [0, 1] │ auditory-scene attention × spectral features.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 8  │ network_state_pred_1.5s  │ [0, 1] │ Local clustering 1-2s ahead.
+ 8 │ network_state_pred_1.5s │ [0, 1] │ Local clustering 1-2s ahead.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 9  │ lateral_pred_0.75s       │[-1, 1] │ Hemisphere engagement 0.5-1s ahead.
+ 9 │ lateral_pred_0.75s │[-1, 1] │ Hemisphere engagement 0.5-1s ahead.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
-10  │ compensation_pred_2s     │ [0, 1] │ Processing efficiency 1-3s ahead.
+10 │ compensation_pred_2s │ [0, 1] │ Processing efficiency 1-3s ahead.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 11D per frame at 172.27 Hz
@@ -328,15 +310,15 @@ Network_Topology = f(Attention, Degradation)
 Local_Clustering(ROI) = α·Degradation + β·Attention_Match + ε
 
 Parameters:
-    Degradation = signal quality reduction [0-1]
-    Attention_Match = 1 if attention goal matches acoustic cue
-    α = Degradation effect on clustering (positive)
-    β = Attention match effect (positive)
-    ε = Baseline clustering + noise
+ Degradation = signal quality reduction [0-1]
+ Attention_Match = 1 if attention goal matches acoustic cue
+ α = Degradation effect on clustering (positive)
+ β = Attention match effect (positive)
+ ε = Baseline clustering + noise
 
 Lateralization = g(Attention × Acoustic_Cues)
-    Speech attention → bilateral fronto-temporo-parietal
-    Melody attention → right auditory dominant
+ Speech attention → bilateral fronto-temporo-parietal
+ Melody attention → right auditory dominant
 ```
 
 ### 7.2 Feature Formulas
@@ -346,25 +328,22 @@ Lateralization = g(Attention × Acoustic_Cues)
 
 # f13: Temporal Attention
 f13 = σ(0.35 * temporal_periodicity_1s
-       + 0.35 * mean(ASA.attention_gating[10:20])
-       + 0.30 * tempo_velocity_500ms)
+ + 0.30 * tempo_velocity_500ms)
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # f14: Spectral Attention
 f14 = σ(0.35 * tonalness_mean_1s
-       + 0.35 * mean(ASA.scene_analysis[0:10])
-       + 0.30 * tonalness_value_100ms)
+ + 0.30 * tonalness_value_100ms)
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # f15: Network Topology
 f15 = σ(0.35 * energy_variability_500ms
-       + 0.35 * mean(ASA.salience_weighting[20:30])
-       + 0.30 * coupling_entropy_100ms)
+ + 0.30 * coupling_entropy_100ms)
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # Temporal dynamics
 dTopology/dt = τ⁻¹ · (Target_Config - Current_Config)
-    where τ = 3.0s (attention integration window)
+ where τ = 3.0s (attention integration window)
 ```
 
 ---
@@ -392,24 +371,22 @@ dTopology/dt = τ⁻¹ · (Target_Config - Current_Config)
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    STANM INTERACTIONS                                        │
+│ STANM INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (ASU):                                                         │
-│  STANM.temporal_attention ──────► SNEM (modulates entrainment focus)       │
-│  STANM.lateralization ──────────► SDL (lateralization information)          │
-│  STANM.network_topology ────────► CSG (salience processing topology)       │
-│  STANM.spectral_attention ──────► AACM (attention modulation)              │
-│                                                                             │
-│  CROSS-UNIT (ASU → STU):                                                   │
-│  STANM.temporal_alloc ──────────► STU (temporal attention resources)        │
-│                                                                             │
-│  UPSTREAM DEPENDENCIES:                                                     │
-│  BEP mechanism (30D) ──────────► STANM (beat/temporal tracking)            │
-│  ASA mechanism (30D) ──────────► STANM (attention/salience, primary)       │
-│  R³ (~14D) ─────────────────────► STANM (direct spectral features)         │
-│  H³ (16 tuples) ────────────────► STANM (temporal dynamics)                │
-│                                                                             │
+│ │
+│ INTRA-UNIT (ASU): │
+│ STANM.temporal_attention ──────► SNEM (modulates entrainment focus) │
+│ STANM.lateralization ──────────► SDL (lateralization information) │
+│ STANM.network_topology ────────► CSG (salience processing topology) │
+│ STANM.spectral_attention ──────► AACM (attention modulation) │
+│ │
+│ CROSS-UNIT (ASU → STU): │
+│ STANM.temporal_alloc ──────────► STU (temporal attention resources) │
+│ │
+│ UPSTREAM DEPENDENCIES: │
+│ R³ (~14D) ─────────────────────► STANM (direct spectral features) │
+│ H³ (16 tuples) ────────────────► STANM (temporal dynamics) │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -433,142 +410,122 @@ dTopology/dt = τ⁻¹ · (Target_Config - Current_Config)
 
 ```python
 class STANM(BaseModel):
-    """Spectrotemporal Attention Network Model.
+ """Spectrotemporal Attention Network Model.
 
-    Output: 11D per frame.
-    Reads: BEP mechanism (30D), ASA mechanism (30D), R³ direct.
-    """
-    NAME = "STANM"
-    UNIT = "ASU"
-    TIER = "β2"
-    OUTPUT_DIM = 11
-    MECHANISM_NAMES = ("BEP", "ASA")
+ Output: 11D per frame.
+ """
+ NAME = "STANM"
+ UNIT = "ASU"
+ TIER = "β2"
+ OUTPUT_DIM = 11
+ ALPHA_DEGRADATION = 0.6 # Degradation effect on clustering
+ BETA_ATTENTION = 0.4 # Attention match effect
+ TAU_DECAY = 3.0 # Attention integration window (seconds)
+ ALPHA_ATTENTION = 0.80 # High goal-directed attention
 
-    ALPHA_DEGRADATION = 0.6   # Degradation effect on clustering
-    BETA_ATTENTION = 0.4      # Attention match effect
-    TAU_DECAY = 3.0           # Attention integration window (seconds)
-    ALPHA_ATTENTION = 0.80    # High goal-directed attention
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """16 tuples for STANM computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ # ── Temporal attention horizons ──
+ (10, 0, 0, 2), # spectral_flux, 25ms, value, bidi
+ (10, 3, 1, 2), # spectral_flux, 100ms, mean, bidi
+ (10, 4, 14, 2), # spectral_flux, 125ms, periodicity, bidi
+ (10, 16, 14, 2), # spectral_flux, 1000ms, periodicity, bidi
+ # ── Spectral attention horizons ──
+ (14, 3, 0, 2), # tonalness, 100ms, value, bidi
+ (14, 16, 1, 2), # tonalness, 1000ms, mean, bidi
+ # ── Tempo/energy dynamics ──
+ (21, 1, 8, 0), # spectral_change, 50ms, velocity, fwd
+ (21, 8, 8, 0), # spectral_change, 500ms, velocity, fwd
+ (22, 8, 2, 0), # energy_change, 500ms, std, fwd
+ # ── Network integration ──
+ (25, 3, 0, 2), # x_l0l5[0], 100ms, value, bidi
+ (25, 3, 20, 2), # x_l0l5[0], 100ms, entropy, bidi
+ (25, 16, 1, 2), # x_l0l5[0], 1000ms, mean, bidi
+ (25, 16, 14, 2), # x_l0l5[0], 1000ms, periodicity, bidi
+ # ── Loudness / engagement ──
+ (8, 3, 0, 2), # loudness, 100ms, value, bidi
+ (8, 3, 20, 2), # loudness, 100ms, entropy, bidi
+ (8, 16, 1, 2), # loudness, 1000ms, mean, bidi
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """16 tuples for STANM computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # ── Temporal attention horizons ──
-            (10, 0, 0, 2),     # spectral_flux, 25ms, value, bidi
-            (10, 3, 1, 2),     # spectral_flux, 100ms, mean, bidi
-            (10, 4, 14, 2),    # spectral_flux, 125ms, periodicity, bidi
-            (10, 16, 14, 2),   # spectral_flux, 1000ms, periodicity, bidi
-            # ── Spectral attention horizons ──
-            (14, 3, 0, 2),     # tonalness, 100ms, value, bidi
-            (14, 16, 1, 2),    # tonalness, 1000ms, mean, bidi
-            # ── Tempo/energy dynamics ──
-            (21, 1, 8, 0),     # spectral_change, 50ms, velocity, fwd
-            (21, 8, 8, 0),     # spectral_change, 500ms, velocity, fwd
-            (22, 8, 2, 0),     # energy_change, 500ms, std, fwd
-            # ── Network integration ──
-            (25, 3, 0, 2),     # x_l0l5[0], 100ms, value, bidi
-            (25, 3, 20, 2),    # x_l0l5[0], 100ms, entropy, bidi
-            (25, 16, 1, 2),    # x_l0l5[0], 1000ms, mean, bidi
-            (25, 16, 14, 2),   # x_l0l5[0], 1000ms, periodicity, bidi
-            # ── Loudness / engagement ──
-            (8, 3, 0, 2),      # loudness, 100ms, value, bidi
-            (8, 3, 20, 2),     # loudness, 100ms, entropy, bidi
-            (8, 16, 1, 2),     # loudness, 1000ms, mean, bidi
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute STANM 11D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute STANM 11D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"BEP": (B,T,30), "ASA": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,11) STANM output
+ """
+ # H³ direct features
+ temporal_period_1s = h3_direct[(10, 16, 14, 2)].unsqueeze(-1)
+ tempo_velocity_500ms = h3_direct[(21, 8, 8, 0)].unsqueeze(-1)
+ tonalness_value = h3_direct[(14, 3, 0, 2)].unsqueeze(-1)
+ tonalness_mean_1s = h3_direct[(14, 16, 1, 2)].unsqueeze(-1)
+ energy_var_500ms = h3_direct[(22, 8, 2, 0)].unsqueeze(-1)
+ coupling_entropy = h3_direct[(25, 3, 20, 2)].unsqueeze(-1)
+ coupling_mean_1s = h3_direct[(25, 16, 1, 2)].unsqueeze(-1)
 
-        Returns:
-            (B,T,11) STANM output
-        """
-        bep = mechanism_outputs["BEP"]    # (B, T, 30)
-        asa = mechanism_outputs["ASA"]    # (B, T, 30)
+ # ═══ LAYER E: Explicit features ═══
 
-        # ASA sub-sections
-        asa_scene = asa[..., 0:10]        # scene analysis
-        asa_attn = asa[..., 10:20]        # attention gating
-        asa_salience = asa[..., 20:30]    # salience weighting
+ # f13: Temporal Attention (coefficients sum = 1.0)
+ f13 = torch.sigmoid(
+ 0.35 * temporal_period_1s
+ + 0.30 * tempo_velocity_500ms
+ )
 
-        # BEP sub-sections
-        bep_beat = bep[..., 0:10]         # beat entrainment
+ # f14: Spectral Attention (coefficients sum = 1.0)
+ f14 = torch.sigmoid(
+ 0.35 * tonalness_mean_1s
+ + 0.30 * tonalness_value
+ )
 
-        # H³ direct features
-        temporal_period_1s = h3_direct[(10, 16, 14, 2)].unsqueeze(-1)
-        tempo_velocity_500ms = h3_direct[(21, 8, 8, 0)].unsqueeze(-1)
-        tonalness_value = h3_direct[(14, 3, 0, 2)].unsqueeze(-1)
-        tonalness_mean_1s = h3_direct[(14, 16, 1, 2)].unsqueeze(-1)
-        energy_var_500ms = h3_direct[(22, 8, 2, 0)].unsqueeze(-1)
-        coupling_entropy = h3_direct[(25, 3, 20, 2)].unsqueeze(-1)
-        coupling_mean_1s = h3_direct[(25, 16, 1, 2)].unsqueeze(-1)
+ # f15: Network Topology (coefficients sum = 1.0)
+ f15 = torch.sigmoid(
+ 0.35 * energy_var_500ms
+ + 0.30 * coupling_entropy
+ )
 
-        # ═══ LAYER E: Explicit features ═══
+ # ═══ LAYER M: Mathematical ═══
+ network_topology = torch.sigmoid(
+ 0.4 * f13 + 0.4 * f14 + 0.2 * f15
+ )
+ local_clustering = torch.sigmoid(
+ 0.5 * f15 + 0.5 * energy_var_500ms
+ )
+ lateralization = torch.tanh(
+ 0.5 * (f14 - f13)
+ ) # f14 > f13 → right (+), f13 > f14 → bilateral (0)
 
-        # f13: Temporal Attention (coefficients sum = 1.0)
-        f13 = torch.sigmoid(
-            0.35 * temporal_period_1s
-            + 0.35 * asa_attn.mean(-1, keepdim=True)
-            + 0.30 * tempo_velocity_500ms
-        )
+ # ═══ LAYER P: Present ═══
+ temporal_alloc = torch.sigmoid(
+ + 0.5 * temporal_period_1s
+ )
+ spectral_alloc = torch.sigmoid(
+ + 0.5 * tonalness_mean_1s
+ )
 
-        # f14: Spectral Attention (coefficients sum = 1.0)
-        f14 = torch.sigmoid(
-            0.35 * tonalness_mean_1s
-            + 0.35 * asa_scene.mean(-1, keepdim=True)
-            + 0.30 * tonalness_value
-        )
+ # ═══ LAYER F: Future ═══
+ network_pred = torch.sigmoid(
+ 0.5 * local_clustering + 0.5 * f15
+ )
+ lateral_pred = lateralization # lateralization trajectory
+ compensation_pred = torch.sigmoid(
+ 0.5 * local_clustering + 0.5 * coupling_mean_1s
+ )
 
-        # f15: Network Topology (coefficients sum = 1.0)
-        f15 = torch.sigmoid(
-            0.35 * energy_var_500ms
-            + 0.35 * asa_salience.mean(-1, keepdim=True)
-            + 0.30 * coupling_entropy
-        )
-
-        # ═══ LAYER M: Mathematical ═══
-        network_topology = torch.sigmoid(
-            0.4 * f13 + 0.4 * f14 + 0.2 * f15
-        )
-        local_clustering = torch.sigmoid(
-            0.5 * f15 + 0.5 * energy_var_500ms
-        )
-        lateralization = torch.tanh(
-            0.5 * (f14 - f13)
-        )  # f14 > f13 → right (+), f13 > f14 → bilateral (0)
-
-        # ═══ LAYER P: Present ═══
-        temporal_alloc = torch.sigmoid(
-            0.5 * asa_attn.mean(-1, keepdim=True)
-            + 0.5 * temporal_period_1s
-        )
-        spectral_alloc = torch.sigmoid(
-            0.5 * asa_scene.mean(-1, keepdim=True)
-            + 0.5 * tonalness_mean_1s
-        )
-
-        # ═══ LAYER F: Future ═══
-        network_pred = torch.sigmoid(
-            0.5 * local_clustering + 0.5 * f15
-        )
-        lateral_pred = lateralization  # lateralization trajectory
-        compensation_pred = torch.sigmoid(
-            0.5 * local_clustering + 0.5 * coupling_mean_1s
-        )
-
-        return torch.cat([
-            f13, f14, f15,                                      # E: 3D
-            network_topology, local_clustering, lateralization,  # M: 3D
-            temporal_alloc, spectral_alloc,                      # P: 2D
-            network_pred, lateral_pred, compensation_pred,       # F: 3D
-        ], dim=-1)  # (B, T, 11)
+ return torch.cat([
+ f13, f14, f15, # E: 3D
+ network_topology, local_clustering, lateralization, # M: 3D
+ temporal_alloc, spectral_alloc, # P: 2D
+ network_pred, lateral_pred, compensation_pred, # F: 3D
+ ], dim=-1) # (B, T, 11)
 ```
 
 ---
@@ -584,8 +541,6 @@ class STANM(BaseModel):
 | **Falsification Tests** | 4/5 confirmed | High validity |
 | **R³ Features Used** | ~14D of 49D | Energy + timbre + change + interactions |
 | **H³ Demand** | 16 tuples (0.69%) | Sparse, efficient |
-| **BEP Mechanism** | 30D (3 sub-sections) | Temporal tracking |
-| **ASA Mechanism** | 30D (3 sub-sections) | Attention/salience (primary) |
 | **Output Dimensions** | **11D** | 4-layer structure |
 
 ---
@@ -625,21 +580,14 @@ class STANM(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) | MI (v2.1.0) |
 |--------|-------------|-------------|-------------|
 | Input space | S⁰ (256D) | R³ (49D) | R³ (49D) — same |
-| Temporal | HC⁰ mechanisms (OSC, TIH, ATT) | BEP (30D) + ASA (30D) mechanisms | BEP + ASA — same |
-| Temporal attention | S⁰.L9.mean_T[104] + HC⁰.ATT | R³.spectral_flux[10] + ASA.attention_gating | Same — verified |
-| Spectral attention | S⁰.L5.spectral_centroid[38] + HC⁰.OSC | R³.tonalness[14] + ASA.scene_analysis | Same — verified |
-| Network topology | S⁰.X_L1L5[136:144] + HC⁰.TIH | R³.x_l0l5[25:33] + ASA.salience_weighting | Same — verified |
+| Temporal attention | S⁰.L9.mean_T[104] + HC⁰.ATT | R³.spectral_flux[10] | Same — verified |
+| Spectral attention | S⁰.L5.spectral_centroid[38] + HC⁰.OSC | R³.tonalness[14] | Same — verified |
+| Network topology | S⁰.X_L1L5[136:144] + HC⁰.TIH | R³.x_l0l5[25:33] | Same — verified |
 | Demand format | HC⁰ index ranges | H³ 4-tuples (sparse) | 16 tuples — same |
 | Total demand | 37/2304 = 1.61% | 16/2304 = 0.69% | 16/2304 = 0.69% |
 | Output | 11D | 11D (same) | 11D — same |
 | Papers | 1 | 4 | **12** (+8 new) |
 | Brain regions | 2 | 3 | **8** (+5 new: L/R AC, PT, vmPFC, premotor) |
-
-### Why BEP + ASA replaces HC⁰ mechanisms
-
-- **OSC → BEP.beat_entrainment** [0:10]: Oscillatory band tracking maps to BEP's temporal structure monitoring.
-- **TIH → ASA.salience_weighting** [20:30] + H³ entropy tuples: Temporal integration hierarchy maps to ASA's salience-driven topology assessment.
-- **ATT → ASA.attention_gating** [10:20]: Attentional entrainment maps to ASA's goal-directed attention allocation.
 
 ---
 

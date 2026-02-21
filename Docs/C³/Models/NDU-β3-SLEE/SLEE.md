@@ -22,24 +22,24 @@ STATISTICAL LEARNING EXPERTISE ENHANCEMENT
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 MUSICAL TRAINING
-      │
-      ▼
+ │
+ ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│              NETWORK REORGANIZATION                              │
-│                                                                  │
-│   • Within-network connectivity ↑                               │
-│   • Between-network connectivity ↓                              │
-│   • Compartmentalization ↑                                      │
+│ NETWORK REORGANIZATION │
+│ │
+│ • Within-network connectivity ↑ │
+│ • Between-network connectivity ↓ │
+│ • Compartmentalization ↑ │
 └──────────────────────────┬──────────────────────────────────────┘
-                           │
-                           ▼
+ │
+ ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│           BEHAVIORAL PERFORMANCE                                 │
-│                                                                  │
-│   Musicians > Non-musicians in statistical learning             │
-│   (identification of multisensory irregularities)               │
-│                                                                  │
-│   Effect size: d = -1.09 (large)                                │
+│ BEHAVIORAL PERFORMANCE │
+│ │
+│ Musicians > Non-musicians in statistical learning │
+│ (identification of multisensory irregularities) │
+│ │
+│ Effect size: d = -1.09 (large) │
 └─────────────────────────────────────────────────────────────────┘
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -61,86 +61,84 @@ SLEE establishes the statistical learning expertise component of the Novelty Det
 
 ## 2. Neural Circuit: Complete Anatomy
 
-### 2.1 Information Flow Architecture (EAR → BRAIN → PPC+ASA → SLEE)
+### 2.1 Information Flow Architecture (EAR → BRAIN → SLEE)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    SLEE COMPUTATION ARCHITECTURE                             ║
+║ SLEE COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins x 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
-║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ CHANGE   │ │ X-INT  │ │        ║
-║  │  │ 7D [0:7]  │ │ 5D[7:12]│ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
-║  │  │           │ │         │ │ [12:21] │ │ [21:25]  │ │ [25:49]│ │        ║
-║  │  │roughness  │ │amplitude│ │warmth   │ │spec_chg  │ │x_l0l5  │ │        ║
-║  │  │sethares   │ │loudness │ │tristim. │ │enrg_chg  │ │x_l4l5  │ │        ║
-║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                         SLEE reads: ~18D                        │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                                                                  │        ║
-║  │  ┌── PPC Horizons ─────────────┐ ┌── ASA Horizons ──────────┐  │        ║
-║  │  │ H0 (25ms gamma)            │ │ H3 (100ms alpha)          │  │        ║
-║  │  │ H3 (100ms alpha)           │ │ H8 (500ms delta)          │  │        ║
-║  │  │ H4 (125ms theta)           │ │ H16 (1000ms beat)         │  │        ║
-║  │  │ H16 (1000ms beat)          │ │                            │  │        ║
-║  │  │                             │ │ Attention gating           │  │        ║
-║  │  │ Pitch extraction            │ │ Scene analysis              │  │        ║
-║  │  │ Pattern segmentation        │ │ Salience weighting          │  │        ║
-║  │  └─────────────────────────────┘ └────────────────────────────┘  │        ║
-║  │                         SLEE demand: ~18 of 2304 tuples         │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Salience Circuit ════════     ║
-║                               │                                              ║
-║                       ┌───────┴───────┐                                      ║
-║                       ▼               ▼                                      ║
-║  ┌─────────────────┐  ┌─────────────────┐                                   ║
-║  │  PPC (30D)      │  │  ASA (30D)      │                                   ║
-║  │                 │  │                 │                                    ║
-║  │ Pitch Ext[0:10] │  │ Scene An [0:10] │                                   ║
-║  │ Interval        │  │ Attention       │                                   ║
-║  │ Anal    [10:20] │  │ Gating  [10:20] │                                   ║
-║  │ Contour [20:30] │  │ Salience        │                                   ║
-║  │                 │  │ Weight  [20:30] │                                   ║
-║  └────────┬────────┘  └────────┬────────┘                                   ║
-║           │                    │                                              ║
-║           └────────┬───────────┘                                             ║
-║                    ▼                                                          ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    SLEE MODEL (13D Output)                      │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f01_statistical_model,                     │        ║
-║  │                       f02_detection_accuracy,                    │        ║
-║  │                       f03_multisensory_integration,              │        ║
-║  │                       f04_expertise_advantage                    │        ║
-║  │  Layer M (Math):      exposure_model, pattern_memory,           │        ║
-║  │                       expertise_state                            │        ║
-║  │  Layer P (Present):   expectation_formation,                    │        ║
-║  │                       cross_modal_binding,                       │        ║
-║  │                       pattern_segmentation                       │        ║
-║  │  Layer F (Future):    next_probability,                         │        ║
-║  │                       regularity_continuation,                   │        ║
-║  │                       detection_predict                          │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins x 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ ENERGY │ │ TIMBRE │ │ CHANGE │ │ X-INT │ │ ║
+║ │ │ 7D [0:7] │ │ 5D[7:12]│ │ 9D │ │ 4D │ │ 24D │ │ ║
+║ │ │ │ │ │ │ [12:21] │ │ [21:25] │ │ [25:49]│ │ ║
+║ │ │roughness │ │amplitude│ │warmth │ │spec_chg │ │x_l0l5 │ │ ║
+║ │ │sethares │ │loudness │ │tristim. │ │enrg_chg │ │x_l4l5 │ │ ║
+║ │ └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │ ║
+║ │ SLEE reads: ~18D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ │ ║
+║ │ │ H0 (25ms gamma) │ │ H3 (100ms alpha) │ │ ║
+║ │ │ H3 (100ms alpha) │ │ H8 (500ms delta) │ │ ║
+║ │ │ H4 (125ms theta) │ │ H16 (1000ms beat) │ │ ║
+║ │ │ H16 (1000ms beat) │ │ │ │ ║
+║ │ │ │ │ Attention gating │ │ ║
+║ │ │ Pitch extraction │ │ Scene analysis │ │ ║
+║ │ │ Pattern segmentation │ │ Salience weighting │ │ ║
+║ │ └─────────────────────────────┘ └────────────────────────────┘ │ ║
+║ │ SLEE demand: ~18 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Salience Circuit ════════ ║
+║ │ ║
+║ ┌───────┴───────┐ ║
+║ ▼ ▼ ║
+║ ┌─────────────────┐ ┌─────────────────┐ ║
+║ │ │ │ │ ║
+║ │ Pitch Ext[0:10] │ │ Scene An [0:10] │ ║
+║ │ Interval │ │ Attention │ ║
+║ │ Anal [10:20] │ │ Gating [10:20] │ ║
+║ │ Contour [20:30] │ │ Salience │ ║
+║ │ │ │ Weight [20:30] │ ║
+║ └────────┬────────┘ └────────┬────────┘ ║
+║ │ │ ║
+║ └────────┬───────────┘ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SLEE MODEL (13D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f01_statistical_model, │ ║
+║ │ f02_detection_accuracy, │ ║
+║ │ f03_multisensory_integration, │ ║
+║ │ f04_expertise_advantage │ ║
+║ │ Layer M (Math): exposure_model, pattern_memory, │ ║
+║ │ expertise_state │ ║
+║ │ Layer P (Present): expectation_formation, │ ║
+║ │ cross_modal_binding, │ ║
+║ │ pattern_segmentation │ ║
+║ │ Layer F (Future): next_probability, │ ║
+║ │ regularity_continuation, │ ║
+║ │ detection_predict │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -159,9 +157,7 @@ SLEE establishes the statistical learning expertise component of the Novelty Det
 | 5 | **Porfyri et al. 2025** | EEG+GC | 30 | Left MFG, IFS, and insula show greatest effective connectivity reorganization; top-down feedback mechanism | Significant GC changes post-training | Brain region verification (MFG, IFS, insula) |
 | 6 | **Bridwell 2017** | EEG 24ch | 13 | Cortical sensitivity to guitar note patterns at 4Hz; musical pattern → 45% amplitude reduction vs random | T=2.63, p=0.022 (pattern effect); r=0.65, p=0.015 (MMN correlation) | f01 statistical model; pattern-MMN link |
 | 7 | **Doelling & Poeppel 2015** | MEG | 34 (17M,17NM) | Musicians show enhanced cortical entrainment at all tempi (1-8 Hz); years of training correlate with PLV | Enhanced PLV across all tempi; training-PLV correlation | f04 expertise advantage; entrainment basis |
-| 8 | **Sarasso et al. 2021** | EEG+behav | 60+20 | Memorization enhanced for preferred chords; MMN responses larger for more appreciated intervals; N1-aesthetic correlation | d=0.474 (memorization); N1~AJ trial-by-trial correlation | pattern_memory; MEM mechanism support |
 | 9 | **Criscuolo et al. 2022** | ALE meta | 3005 (84 studies) | Musicians show higher volume/activity in auditory, sensorimotor, interoceptive, limbic areas; lower in parietal | 58 studies in coordinate meta-analysis | Brain region verification; expertise network |
-| 10 | **Billig et al. 2022** | Review | — | Hippocampus binds acoustic features, anticipates melodic continuations, supports statistical learning of sequences | Pathway anatomy + lesion evidence | MEM mechanism; pattern_memory; exposure_model |
 | 11 | **Carbajal & Malmierca 2018** | Review | — | Predictive coding hierarchy: SSA → MMN → deviance detection; repetition suppression vs prediction error decomposition | Framework paper | f01 statistical model; predictive coding basis |
 | 12 | **Fong et al. 2020** | Review | — | MMN as prediction error under Bayesian framework; hierarchical processing with higher-order priors | MMN peaks 150-250ms post-deviance | f02 detection accuracy; predictive framework |
 
@@ -169,23 +165,23 @@ SLEE establishes the statistical learning expertise component of the Novelty Det
 
 ```
 Primary Evidence (k=5 empirical + 3 reviews):
-    Paraskevopoulos 2022:  Hedges' g = −1.09 (large), t(23)=−2.815
-                           Network: 192 vs 106 inter-network edges (p<0.001 FDR)
-    Porfyri et al. 2025:  F(1,28)=4.635, p=0.042, η²=0.168 (medium-large)
-                           Multisensory > unisensory training in AV detection
-    Bridwell 2017:         r=0.65 (large, MMN-pattern correlation, p=0.015)
-                           45% amplitude reduction for patterned vs random
-    Doelling & Poeppel 2015: Enhanced PLV in musicians at all tempi (1-8 Hz)
-                           Years of training ~ entrainment strength
-    Sarasso et al. 2021:  d=0.474 (medium, preferred memorization advantage)
-                           N1~aesthetic judgment trial-by-trial correlation
+ Paraskevopoulos 2022: Hedges' g = −1.09 (large), t(23)=−2.815
+ Network: 192 vs 106 inter-network edges (p<0.001 FDR)
+ Porfyri et al. 2025: F(1,28)=4.635, p=0.042, η²=0.168 (medium-large)
+ Multisensory > unisensory training in AV detection
+ Bridwell 2017: r=0.65 (large, MMN-pattern correlation, p=0.015)
+ 45% amplitude reduction for patterned vs random
+ Doelling & Poeppel 2015: Enhanced PLV in musicians at all tempi (1-8 Hz)
+ Years of training ~ entrainment strength
+ Sarasso et al. 2021: d=0.474 (medium, preferred memorization advantage)
+ N1~aesthetic judgment trial-by-trial correlation
 
-Heterogeneity:           Moderate — consistent expertise advantage direction,
-                         variable paradigms (statistical learning vs entrainment
-                         vs memorization)
-Quality Assessment:      β-tier (MEG+EEG+behavioral, cross-sectional + longitudinal)
-Largest Sample:          n=3005 (meta-analysis), n=60 (single empirical)
-Replication:             Expertise effect replicated across 4 independent labs
+Heterogeneity: Moderate — consistent expertise advantage direction,
+ variable paradigms (statistical learning vs entrainment
+ vs memorization)
+Quality Assessment: β-tier (MEG+EEG+behavioral, cross-sectional + longitudinal)
+Largest Sample: n=3005 (meta-analysis), n=60 (single empirical)
+Replication: Expertise effect replicated across 4 independent labs
 ```
 
 ---
@@ -222,19 +218,16 @@ Replication:             Expertise effect replicated across 4 independent labs
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[7] amplitude ───────────────┐
 R³[8] loudness ────────────────┼──► Statistical distribution model
-PPC.pitch_extraction[0:10] ────┘   Distribution encoding (f01)
 
 R³[10] spectral_flux ──────────┐
 R³[21] spectral_change ────────┼──► Irregularity identification
-ASA.attention_gating[10:20] ───┘   Detection accuracy (f02)
 
 R³[41:49] x_l5l6 ─────────────┐
-ASA.salience_weighting[20:30] ─┼──► Cross-modal binding
-H³ coherence features ─────────┘   Multisensory integration (f03)
+H³ coherence features ─────────┘ Multisensory integration (f03)
 ```
 
 ---
@@ -243,7 +236,7 @@ H³ coherence features ─────────┘   Multisensory integration
 
 ### 5.1 Demand Specification
 
-SLEE requires H³ features at PPC horizons for statistical pattern extraction and ASA horizons for cross-modal integration and irregularity detection. The demand reflects the long-term statistical learning timescales.
+SLEE requires H³ features for statistical pattern extraction and for cross-modal integration and irregularity detection. The demand reflects the long-term statistical learning timescales.
 
 | R³ Index | Feature | H | Morph | Law | Purpose |
 |----------|---------|---|-------|-----|---------|
@@ -270,7 +263,7 @@ SLEE requires H³ features at PPC horizons for statistical pattern extraction an
 
 #### R³ v2 Projected Expansion
 
-SLEE projected v2 from H:Harmony and I:Information, aligned with PPC/ASA horizons.
+SLEE projected v2 from H:Harmony and I:Information, aligned with corresponding H³ horizons.
 
 | R³ Idx | Feature | Group | H | Morph | Law | Purpose |
 |:------:|---------|:-----:|:-:|-------|:---:|---------|
@@ -284,17 +277,6 @@ SLEE projected v2 from H:Harmony and I:Information, aligned with PPC/ASA horizon
 **v2 projected**: 6 tuples
 **Total projected**: 24 tuples of 294,912 theoretical = 0.0081%
 
-### 5.2 PPC + ASA Mechanism Binding
-
-| Mechanism | Sub-section | Range | SLEE Role | Weight |
-|-----------|-------------|-------|-----------|--------|
-| **PPC** | Pitch Extraction | PPC[0:10] | Statistical distribution encoding | **1.0** (primary) |
-| **PPC** | Interval Analysis | PPC[10:20] | Sequential dependency tracking | 0.8 |
-| **PPC** | Contour Tracking | PPC[20:30] | Pattern segmentation | 0.7 |
-| **ASA** | Scene Analysis | ASA[0:10] | Pattern boundary detection | 0.7 |
-| **ASA** | Attention Gating | ASA[10:20] | Irregularity-directed attention | **0.9** |
-| **ASA** | Salience Weighting | ASA[20:30] | Cross-modal binding strength | 0.8 |
-
 ---
 
 ## 6. Output Space: 13D Multi-Layer Representation
@@ -307,59 +289,56 @@ SLEE OUTPUT TENSOR: 13D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 0  │ f01_statistical_model    │ [0, 1] │ Internal distribution representation.
-    │                          │        │ f01 = σ(0.35 * loudness_mean_100ms
-    │                          │        │       + 0.35 * amplitude_entropy_100ms
-    │                          │        │       + 0.30 * mean(PPC.pitch[0:10]))
+ 0 │ f01_statistical_model │ [0, 1] │ Internal distribution representation.
+ │ │ │ f01 = σ(0.35 * loudness_mean_100ms
+ │ │ │ + 0.35 * amplitude_entropy_100ms
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 1  │ f02_detection_accuracy   │ [0, 1] │ Irregularity identification rate.
-    │                          │        │ f02 = σ(0.35 * flux_std_100ms
-    │                          │        │       + 0.35 * flux_mean_1s
-    │                          │        │       + 0.30 * mean(ASA.attn[10:20]))
+ 1 │ f02_detection_accuracy │ [0, 1] │ Irregularity identification rate.
+ │ │ │ f02 = σ(0.35 * flux_std_100ms
+ │ │ │ + 0.35 * flux_mean_1s
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 2  │ f03_multisensory_integ   │ [0, 1] │ Cross-modal binding strength.
-    │                          │        │ f03 = σ(0.35 * binding_100ms
-    │                          │        │       + 0.35 * mean_binding_1s
-    │                          │        │       + 0.30 * mean(ASA.sal[20:30]))
+ 2 │ f03_multisensory_integ │ [0, 1] │ Cross-modal binding strength.
+ │ │ │ f03 = σ(0.35 * binding_100ms
+ │ │ │ + 0.35 * mean_binding_1s
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 3  │ f04_expertise_advantage  │ [-1,1] │ Expert enhancement index.
-    │                          │        │ f04 = (f02_musician - f02_nonmusician)
-    │                          │        │ d = -1.09 (Paraskevopoulos 2022)
+ 3 │ f04_expertise_advantage │ [-1,1] │ Expert enhancement index.
+ │ │ │ f04 = (f02_musician - f02_nonmusician)
+ │ │ │ d = -1.09 (Paraskevopoulos 2022)
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS (Learning Dynamics)
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 4  │ exposure_model           │ [0, 1] │ Statistical model building.
-    │                          │        │ EMA of f01 over session timescale
+ 4 │ exposure_model │ [0, 1] │ Statistical model building.
+ │ │ │ EMA of f01 over session timescale
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 5  │ pattern_memory           │ [0, 1] │ Pattern accumulation.
-    │                          │        │ EMA of pitch_stability with τ=3s
+ 5 │ pattern_memory │ [0, 1] │ Pattern accumulation.
+ │ │ │ EMA of pitch_stability with τ=3s
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 6  │ expertise_state          │ [0, 1] │ Long-term expertise consolidation.
-    │                          │        │ pattern_trend_1s (training proxy)
+ 6 │ expertise_state │ [0, 1] │ Long-term expertise consolidation.
+ │ │ │ pattern_trend_1s (training proxy)
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 7  │ expectation_formation    │ [0, 1] │ Current distribution model state.
+ 7 │ expectation_formation │ [0, 1] │ Current distribution model state.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 8  │ cross_modal_binding      │ [0, 1] │ Current multisensory integration.
+ 8 │ cross_modal_binding │ [0, 1] │ Current multisensory integration.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 9  │ pattern_segmentation     │ [0, 1] │ Current boundary detection.
+ 9 │ pattern_segmentation │ [0, 1] │ Current boundary detection.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
-10  │ next_probability         │ [0, 1] │ Decision preparation prediction.
+10 │ next_probability │ [0, 1] │ Decision preparation prediction.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
-11  │ regularity_continuation  │ [0, 1] │ Model updating prediction.
+11 │ regularity_continuation │ [0, 1] │ Model updating prediction.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
-12  │ detection_predict        │ [0, 1] │ Behavioral output prediction.
+12 │ detection_predict │ [0, 1] │ Behavioral output prediction.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 13D per frame at 172.27 Hz
@@ -376,9 +355,9 @@ TOTAL: 13D per frame at 172.27 Hz
 StatisticalLearning(t) = DistributionModel(t) · DetectionGating(t) · ExpertiseBoost(t)
 
 Parameters:
-    DistributionModel = distribution_strength · model_fidelity
-    DetectionGating = irregularity_threshold · attention_sensitivity
-    ExpertiseBoost = d=-1.09 effect size (Paraskevopoulos 2022)
+ DistributionModel = distribution_strength · model_fidelity
+ DetectionGating = irregularity_threshold · attention_sensitivity
+ ExpertiseBoost = d=-1.09 effect size (Paraskevopoulos 2022)
 ```
 
 ### 7.2 Feature Formulas
@@ -388,20 +367,17 @@ Parameters:
 
 # f01: Statistical Model
 f01 = σ(0.35 * loudness_mean_100ms
-       + 0.35 * amplitude_entropy_100ms
-       + 0.30 * mean(PPC.pitch_extraction[0:10]))
+ + 0.35 * amplitude_entropy_100ms
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # f02: Detection Accuracy
 f02 = σ(0.35 * flux_std_100ms
-       + 0.35 * flux_mean_1s
-       + 0.30 * mean(ASA.attention_gating[10:20]))
+ + 0.35 * flux_mean_1s
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # f03: Multisensory Integration
 f03 = σ(0.35 * binding_100ms
-       + 0.35 * mean_binding_1s
-       + 0.30 * mean(ASA.salience_weighting[20:30]))
+ + 0.35 * mean_binding_1s
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # f04: Expertise Advantage
@@ -411,7 +387,7 @@ f04 = clamp(f02 * expertise_indicator, -1, 1)
 
 # Temporal dynamics
 dModel/dt = τ⁻¹ · (Current_Distribution - Statistical_Model)
-    where τ = 3.0s (statistical model persistence)
+ where τ = 3.0s (statistical model persistence)
 ```
 
 ---
@@ -439,24 +415,22 @@ dModel/dt = τ⁻¹ · (Current_Distribution - Statistical_Model)
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    SLEE INTERACTIONS                                         │
+│ SLEE INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (NDU):                                                         │
-│  SLEE.expertise_advantage ────► EDNR (behavioral evidence for network)    │
-│  SLEE.statistical_model ─────► SDD (statistical learning → deviance)      │
-│  SLEE.detection_accuracy ────► ECT (behavioral benefit despite trade-off) │
-│                                                                             │
-│  CROSS-UNIT (NDU → IMU):                                                   │
-│  SLEE.pattern_memory ────────► IMU (statistical patterns to memory)       │
-│  SLEE.exposure_model ────────► IMU (learning dynamics)                    │
-│                                                                             │
-│  UPSTREAM DEPENDENCIES:                                                     │
-│  PPC mechanism (30D) ────────► SLEE (pitch/pattern extraction)            │
-│  ASA mechanism (30D) ────────► SLEE (attention/salience binding)          │
-│  R³ (~18D) ──────────────────► SLEE (direct spectral features)            │
-│  H³ (18 tuples) ─────────────► SLEE (temporal dynamics)                   │
-│                                                                             │
+│ │
+│ INTRA-UNIT (NDU): │
+│ SLEE.expertise_advantage ────► EDNR (behavioral evidence for network) │
+│ SLEE.statistical_model ─────► SDD (statistical learning → deviance) │
+│ SLEE.detection_accuracy ────► ECT (behavioral benefit despite trade-off) │
+│ │
+│ CROSS-UNIT (NDU → IMU): │
+│ SLEE.pattern_memory ────────► IMU (statistical patterns to memory) │
+│ SLEE.exposure_model ────────► IMU (learning dynamics) │
+│ │
+│ UPSTREAM DEPENDENCIES: │
+│ R³ (~18D) ──────────────────► SLEE (direct spectral features) │
+│ H³ (18 tuples) ─────────────► SLEE (temporal dynamics) │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -480,153 +454,125 @@ dModel/dt = τ⁻¹ · (Current_Distribution - Statistical_Model)
 
 ```python
 class SLEE(BaseModel):
-    """Statistical Learning Expertise Enhancement Model.
+ """Statistical Learning Expertise Enhancement Model.
 
-    Output: 13D per frame.
-    Reads: PPC mechanism (30D), ASA mechanism (30D), R³ direct.
-    """
-    NAME = "SLEE"
-    UNIT = "NDU"
-    TIER = "β3"
-    OUTPUT_DIM = 13
-    MECHANISM_NAMES = ("PPC", "ASA")
+ Output: 13D per frame.
+ """
+ NAME = "SLEE"
+ UNIT = "NDU"
+ TIER = "β3"
+ OUTPUT_DIM = 13
+ TAU_DECAY = 3.0 # Statistical model persistence (seconds)
+ REGULARITY_SENSITIVITY = 0.75
+ LTI_WINDOW = 30.0 # Learning accumulation (seconds)
+ EXPERT_EFFECT_SIZE = -1.09 # d from Paraskevopoulos 2022
 
-    TAU_DECAY = 3.0             # Statistical model persistence (seconds)
-    REGULARITY_SENSITIVITY = 0.75
-    LTI_WINDOW = 30.0           # Learning accumulation (seconds)
-    EXPERT_EFFECT_SIZE = -1.09  # d from Paraskevopoulos 2022
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """18 tuples for SLEE computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ (10, 0, 0, 2), # spectral_flux, 25ms, value, bidi
+ (10, 3, 2, 2), # spectral_flux, 100ms, std, bidi
+ (10, 16, 1, 2), # spectral_flux, 1000ms, mean, bidi
+ (7, 3, 0, 2), # amplitude, 100ms, value, bidi
+ (7, 3, 20, 2), # amplitude, 100ms, entropy, bidi
+ (8, 3, 1, 2), # loudness, 100ms, mean, bidi
+ (8, 8, 5, 0), # loudness, 500ms, range, fwd
+ (21, 3, 0, 2), # spectral_change, 100ms, value, bidi
+ (21, 4, 18, 0), # spectral_change, 125ms, trend, fwd
+ (23, 3, 0, 2), # pitch_change, 100ms, value, bidi
+ (23, 16, 1, 2), # pitch_change, 1000ms, mean, bidi
+ (24, 3, 0, 2), # pitch_stability, 100ms, value, bidi
+ (24, 16, 2, 2), # pitch_stability, 1000ms, std, bidi
+ (41, 3, 0, 2), # x_l5l6[0], 100ms, value, bidi
+ (41, 3, 2, 2), # x_l5l6[0], 100ms, std, bidi
+ (41, 16, 1, 2), # x_l5l6[0], 1000ms, mean, bidi
+ (33, 3, 0, 2), # x_l4l5[0], 100ms, value, bidi
+ (33, 16, 18, 0), # x_l4l5[0], 1000ms, trend, fwd
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """18 tuples for SLEE computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # ── PPC horizons: statistical pattern extraction ──
-            (10, 0, 0, 2),     # spectral_flux, 25ms, value, bidi
-            (10, 3, 2, 2),     # spectral_flux, 100ms, std, bidi
-            (10, 16, 1, 2),    # spectral_flux, 1000ms, mean, bidi
-            (7, 3, 0, 2),      # amplitude, 100ms, value, bidi
-            (7, 3, 20, 2),     # amplitude, 100ms, entropy, bidi
-            (8, 3, 1, 2),      # loudness, 100ms, mean, bidi
-            (8, 8, 5, 0),      # loudness, 500ms, range, fwd
-            (21, 3, 0, 2),     # spectral_change, 100ms, value, bidi
-            (21, 4, 18, 0),    # spectral_change, 125ms, trend, fwd
-            (23, 3, 0, 2),     # pitch_change, 100ms, value, bidi
-            (23, 16, 1, 2),    # pitch_change, 1000ms, mean, bidi
-            (24, 3, 0, 2),     # pitch_stability, 100ms, value, bidi
-            (24, 16, 2, 2),    # pitch_stability, 1000ms, std, bidi
-            # ── ASA horizons: cross-modal binding ──
-            (41, 3, 0, 2),     # x_l5l6[0], 100ms, value, bidi
-            (41, 3, 2, 2),     # x_l5l6[0], 100ms, std, bidi
-            (41, 16, 1, 2),    # x_l5l6[0], 1000ms, mean, bidi
-            (33, 3, 0, 2),     # x_l4l5[0], 100ms, value, bidi
-            (33, 16, 18, 0),   # x_l4l5[0], 1000ms, trend, fwd
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute SLEE 13D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute SLEE 13D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"PPC": (B,T,30), "ASA": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,13) SLEE output
+ """
+ # R³ features
+ amplitude = r3[..., 7:8]
+ loudness = r3[..., 8:9]
+ spectral_flux = r3[..., 10:11]
+ pitch_change = r3[..., 23:24]
+ pitch_stability = r3[..., 24:25]
+ x_l4l5 = r3[..., 33:41] # (B, T, 8)
+ x_l5l6 = r3[..., 41:49] # (B, T, 8)
 
-        Returns:
-            (B,T,13) SLEE output
-        """
-        ppc = mechanism_outputs["PPC"]    # (B, T, 30)
-        asa = mechanism_outputs["ASA"]    # (B, T, 30)
+ # H³ direct features
+ loudness_mean_100ms = h3_direct[(8, 3, 1, 2)].unsqueeze(-1)
+ amplitude_entropy_100ms = h3_direct[(7, 3, 20, 2)].unsqueeze(-1)
+ flux_std_100ms = h3_direct[(10, 3, 2, 2)].unsqueeze(-1)
+ flux_mean_1s = h3_direct[(10, 16, 1, 2)].unsqueeze(-1)
+ binding_100ms = h3_direct[(41, 3, 0, 2)].unsqueeze(-1)
+ mean_binding_1s = h3_direct[(41, 16, 1, 2)].unsqueeze(-1)
+ pattern_trend_1s = h3_direct[(33, 16, 18, 0)].unsqueeze(-1)
 
-        # R³ features
-        amplitude = r3[..., 7:8]
-        loudness = r3[..., 8:9]
-        spectral_flux = r3[..., 10:11]
-        pitch_change = r3[..., 23:24]
-        pitch_stability = r3[..., 24:25]
-        x_l4l5 = r3[..., 33:41]          # (B, T, 8)
-        x_l5l6 = r3[..., 41:49]          # (B, T, 8)
+ # ═══ LAYER E: Explicit features ═══
 
-        # PPC sub-sections
-        ppc_pitch = ppc[..., 0:10]       # pitch extraction
-        ppc_interval = ppc[..., 10:20]   # interval analysis
-        ppc_contour = ppc[..., 20:30]    # contour tracking
+ # f01: Statistical Model (coefficients sum = 1.0)
+ f01 = torch.sigmoid(
+ 0.35 * loudness_mean_100ms
+ + 0.35 * amplitude_entropy_100ms
+ )
 
-        # ASA sub-sections
-        asa_scene = asa[..., 0:10]       # scene analysis
-        asa_attn = asa[..., 10:20]       # attention gating
-        asa_salience = asa[..., 20:30]   # salience weighting
+ # f02: Detection Accuracy (coefficients sum = 1.0)
+ f02 = torch.sigmoid(
+ 0.35 * flux_std_100ms
+ + 0.35 * flux_mean_1s
+ )
 
-        # H³ direct features
-        loudness_mean_100ms = h3_direct[(8, 3, 1, 2)].unsqueeze(-1)
-        amplitude_entropy_100ms = h3_direct[(7, 3, 20, 2)].unsqueeze(-1)
-        flux_std_100ms = h3_direct[(10, 3, 2, 2)].unsqueeze(-1)
-        flux_mean_1s = h3_direct[(10, 16, 1, 2)].unsqueeze(-1)
-        binding_100ms = h3_direct[(41, 3, 0, 2)].unsqueeze(-1)
-        mean_binding_1s = h3_direct[(41, 16, 1, 2)].unsqueeze(-1)
-        pattern_trend_1s = h3_direct[(33, 16, 18, 0)].unsqueeze(-1)
+ # f03: Multisensory Integration (coefficients sum = 1.0)
+ f03 = torch.sigmoid(
+ 0.35 * binding_100ms
+ + 0.35 * mean_binding_1s
+ )
 
-        # ═══ LAYER E: Explicit features ═══
+ # f04: Expertise Advantage
+ # At runtime: multiplied by expertise_indicator
+ f04 = f02 # base accuracy, scaled by expertise externally
 
-        # f01: Statistical Model (coefficients sum = 1.0)
-        f01 = torch.sigmoid(
-            0.35 * loudness_mean_100ms
-            + 0.35 * amplitude_entropy_100ms
-            + 0.30 * ppc_pitch.mean(-1, keepdim=True)
-        )
+ # ═══ LAYER M: Learning Dynamics ═══
+ exposure_model = torch.sigmoid(
+ )
+ pattern_memory = torch.sigmoid(
+ )
+ expertise_state = pattern_trend_1s
 
-        # f02: Detection Accuracy (coefficients sum = 1.0)
-        f02 = torch.sigmoid(
-            0.35 * flux_std_100ms
-            + 0.35 * flux_mean_1s
-            + 0.30 * asa_attn.mean(-1, keepdim=True)
-        )
+ # ═══ LAYER P: Present ═══
 
-        # f03: Multisensory Integration (coefficients sum = 1.0)
-        f03 = torch.sigmoid(
-            0.35 * binding_100ms
-            + 0.35 * mean_binding_1s
-            + 0.30 * asa_salience.mean(-1, keepdim=True)
-        )
+ # ═══ LAYER F: Future ═══
+ next_probability = torch.sigmoid(
+ 0.50 * f01 + 0.50 * f02
+ )
+ regularity_continuation = torch.sigmoid(
+ 0.50 * f01 + 0.50 * exposure_model
+ )
+ detection_predict = torch.sigmoid(
+ )
 
-        # f04: Expertise Advantage
-        # At runtime: multiplied by expertise_indicator
-        f04 = f02  # base accuracy, scaled by expertise externally
-
-        # ═══ LAYER M: Learning Dynamics ═══
-        exposure_model = torch.sigmoid(
-            0.50 * f01 + 0.50 * ppc_pitch.mean(-1, keepdim=True)
-        )
-        pattern_memory = torch.sigmoid(
-            0.50 * f01 + 0.50 * ppc_contour.mean(-1, keepdim=True)
-        )
-        expertise_state = pattern_trend_1s
-
-        # ═══ LAYER P: Present ═══
-        expectation_formation = ppc_interval.mean(-1, keepdim=True)
-        cross_modal_binding = asa_salience.mean(-1, keepdim=True)
-        pattern_segmentation = asa_scene.mean(-1, keepdim=True)
-
-        # ═══ LAYER F: Future ═══
-        next_probability = torch.sigmoid(
-            0.50 * f01 + 0.50 * f02
-        )
-        regularity_continuation = torch.sigmoid(
-            0.50 * f01 + 0.50 * exposure_model
-        )
-        detection_predict = torch.sigmoid(
-            0.50 * f02 + 0.50 * asa_attn.mean(-1, keepdim=True)
-        )
-
-        return torch.cat([
-            f01, f02, f03, f04,                                        # E: 4D
-            exposure_model, pattern_memory, expertise_state,           # M: 3D
-            expectation_formation, cross_modal_binding,
-            pattern_segmentation,                                      # P: 3D
-            next_probability, regularity_continuation,
-            detection_predict,                                         # F: 3D
-        ], dim=-1)  # (B, T, 13)
+ return torch.cat([
+ f01, f02, f03, f04, # E: 4D
+ exposure_model, pattern_memory, expertise_state, # M: 3D
+ expectation_formation, cross_modal_binding,
+ pattern_segmentation, # P: 3D
+ next_probability, regularity_continuation,
+ detection_predict, # F: 3D
+ ], dim=-1) # (B, T, 13)
 ```
 
 ---
@@ -643,8 +589,6 @@ class SLEE(BaseModel):
 | **Falsification Tests** | 1/5 confirmed | Moderate validity |
 | **R³ Features Used** | ~18D of 49D | Energy + timbre + change + interactions |
 | **H³ Demand** | 18 tuples (0.78%) | Sparse, efficient |
-| **PPC Mechanism** | 30D (3 sub-sections) | Statistical pattern extraction |
-| **ASA Mechanism** | 30D (3 sub-sections) | Attention/salience binding |
 | **Output Dimensions** | **13D** | 4-layer structure |
 
 ---
@@ -669,21 +613,13 @@ class SLEE(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D) | R³ (49D) |
-| Temporal | HC⁰ mechanisms (ATT, SGM, EFC, BND) | PPC (30D) + ASA (30D) mechanisms |
-| Statistical model | S⁰.L9.mean[104] + HC⁰.EFC | R³.loudness[8] + PPC.pitch_extraction |
-| Detection | S⁰.L5.spectral_kurtosis[41] + HC⁰.ATT | R³.spectral_flux[10] + ASA.attention_gating |
-| Cross-modal | S⁰.L7.crossband[80:104] + HC⁰.BND | R³.x_l5l6[41:49] + ASA.salience_weighting |
-| Pattern memory | S⁰.L4.velocity_T[15] + HC⁰.SGM | R³.pitch_stability[24] + PPC.contour_tracking |
+| Statistical model | S⁰.L9.mean[104] + HC⁰.EFC | R³.loudness[8] |
+| Detection | S⁰.L5.spectral_kurtosis[41] + HC⁰.ATT | R³.spectral_flux[10] |
+| Cross-modal | S⁰.L7.crossband[80:104] + HC⁰.BND | R³.x_l5l6[41:49] |
+| Pattern memory | S⁰.L4.velocity_T[15] + HC⁰.SGM | R³.pitch_stability[24] |
 | Demand format | HC⁰ index ranges | H³ 4-tuples (sparse) |
 | Total demand | 22/2304 = 0.95% | 18/2304 = 0.78% |
 | Output | 13D | 13D (same) |
-
-### Why PPC + ASA replaces HC⁰ mechanisms
-
-- **EFC → PPC.pitch_extraction** [0:10]: Statistical regularity learning maps to PPC's distribution encoding.
-- **SGM → PPC.contour_tracking** [20:30]: Striatal gradient memory maps to PPC's pattern segmentation.
-- **ATT → ASA.attention_gating** [10:20]: Irregularity attention maps to ASA's irregularity-directed gating.
-- **BND → ASA.salience_weighting** [20:30]: Multisensory integration maps to ASA's cross-modal binding salience.
 
 ---
 
@@ -695,7 +631,6 @@ class SLEE(BaseModel):
 |---|-------|---------------|----------------|----------|
 | 1 | FULL_NAME | "Statistical Learning Expertise Enhancement" | "Statistical Learning Expectation Engine" | Medium — rename needed |
 | 2 | OUTPUT_DIM | 13 (4E+3M+3P+3F) | 10 (4E+2M+2P+2F) | High — 3 dimensions missing |
-| 3 | MECHANISM_NAMES | ("PPC", "ASA") | ("ASA", "MEM") | High — PPC missing, MEM not in doc |
 | 4 | h3_demand | 18 tuples (0.78% of 2304) | () empty tuple | High — entire H³ demand missing |
 | 5 | Layer M dims | 3: exposure_model, pattern_memory, expertise_state | 2: exposure_history, pattern_accumulation | Medium — expertise_state missing, names differ |
 | 6 | Layer P dims | 3: expectation_formation, cross_modal_binding, pattern_segmentation | 2: expectation_formation, cross_modal_binding | Medium — pattern_segmentation missing |

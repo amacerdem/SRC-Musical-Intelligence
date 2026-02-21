@@ -23,27 +23,27 @@ THERAPEUTIC MUSIC INTERVENTION MODEL
 
 CONDITION-SPECIFIC ACOUSTIC PRESCRIPTIONS:
 
-  ANXIETY (Amygdala ↓, PNS ↑):
-    Tempo: 60-80 BPM ───► Cardiac entrainment ───► PNS ↑
-    Harmony: Consonant ──► Reward circuit ────────► Amygdala ↓
-    Dynamics: Soft (p) ──► Low arousal ───────────► Cortisol ↓
+ ANXIETY (Amygdala ↓, PNS ↑):
+ Tempo: 60-80 BPM ───► Cardiac entrainment ───► PNS ↑
+ Harmony: Consonant ──► Reward circuit ────────► Amygdala ↓
+ Dynamics: Soft (p) ──► Low arousal ───────────► Cortisol ↓
 
-  DEPRESSION (Striatum ↑):
-    Tempo: 80-120 BPM ──► Moderate activation ───► Dopamine ↑
-    Mode: Major ─────────► Positive valence ──────► Hedonic ↑
-    Energy: Moderate ────► Engagement ────────────► Anhedonia ↓
+ DEPRESSION (Striatum ↑):
+ Tempo: 80-120 BPM ──► Moderate activation ───► Dopamine ↑
+ Mode: Major ─────────► Positive valence ──────► Hedonic ↑
+ Energy: Moderate ────► Engagement ────────────► Anhedonia ↓
 
-  STRESS (Cortisol ↓):
-    Familiarity: High ───► Safety signal ─────────► HPA ↓
-    Structure: Simple ───► Predictability ────────► Uncertainty ↓
-    Duration: 15-30 min ─► Cumulative dose ───────► Cortisol ↓
+ STRESS (Cortisol ↓):
+ Familiarity: High ───► Safety signal ─────────► HPA ↓
+ Structure: Simple ───► Predictability ────────► Uncertainty ↓
+ Duration: 15-30 min ─► Cumulative dose ───────► Cortisol ↓
 
 DOSE-RESPONSE:
-  Effect ↑       ████████████  ← Optimal (20-45 min)
-        │    █████            █████
-        │ ██                        ████████
-        └──────────────────────────────────────► Duration
-        0     15     30     45     60     90 min
+ Effect ↑ ████████████ ← Optimal (20-45 min)
+ │ █████ █████
+ │ ██ ████████
+ └──────────────────────────────────────► Duration
+ 0 15 30 45 60 90 min
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Kheirkhah 2025: Music + ketamine + mindfulness, d = 0.88.
@@ -68,48 +68,45 @@ TAR is the **clinical application model** — it leverages all ARU reward/affect
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    TAR — THERAPEUTIC PATHWAYS                                ║
+║ TAR — THERAPEUTIC PATHWAYS ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║                    THERAPEUTIC MUSIC INPUT                                   ║
-║                    (designed acoustic features)                              ║
-║                           │                                                  ║
-║                           ▼                                                  ║
-║                    ┌─────────────────┐                                      ║
-║                    │ AUDITORY CORTEX  │                                      ║
-║                    │ (A1 → STG)      │                                      ║
-║                    └────────┬────────┘                                      ║
-║                             │                                                ║
-║         ┌───────────────────┼───────────────────┐                           ║
-║         ▼                   ▼                   ▼                           ║
-║  ┌──────────────┐   ┌──────────────┐   ┌──────────────┐                    ║
-║  │  AMYGDALA    │   │  STRIATUM    │   │  PFC         │                    ║
-║  │  (anxiety ↓) │   │ (depression↓)│   │ (regulation) │                    ║
-║  ├──────────────┤   ├──────────────┤   ├──────────────┤                    ║
-║  │ Low tempo    │   │ Major mode   │   │ Familiarity  │                    ║
-║  │ Consonance   │   │ Mod. tempo   │   │ Structure    │                    ║
-║  │ Soft dynamics│   │ Pos. valence │   │ Predictable  │                    ║
-║  └──────┬───────┘   └──────┬───────┘   └──────┬───────┘                    ║
-║         ▼                  ▼                   ▼                            ║
-║  ┌──────────────────────────────────────────────────┐                      ║
-║  │   AUTONOMIC PATHWAY        REWARD PATHWAY        │                      ║
-║  │   PNS ↑ → HR ↓            DA ↑ → Hedonic ↑      │                      ║
-║  │   Cortisol ↓               Motivation ↑          │                      ║
-║  └──────────────────────────────────────────────────┘                      ║
-║                           │                                                  ║
-║                           ▼                                                  ║
-║                    THERAPEUTIC OUTCOME                                       ║
-║                    (symptom modulation)                                      ║
-║                                                                              ║
-║  THREE MECHANISMS — FULL MESOLIMBIC CIRCUIT:                                ║
-║  AED: Affect dynamics tracking (mood state over time)                       ║
-║  CPD: Peak/chills detection (therapeutic peaks, breakthroughs)              ║
-║  C0P: Cognitive projection (outcome prediction, dose estimation)            ║
-║                                                                              ║
-║  EVIDENCE (limited — γ tier):                                               ║
-║  Kheirkhah 2025: Music + ketamine + mindfulness, d=0.88                    ║
-║  Ehrlich 2019: BCI emotion modulation, 3/5 success rate                    ║
-║  Koelsch 2014: Music-evoked emotions and brain correlates (review)         ║
+║ ║
+║ THERAPEUTIC MUSIC INPUT ║
+║ (designed acoustic features) ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────┐ ║
+║ │ AUDITORY CORTEX │ ║
+║ │ (A1 → STG) │ ║
+║ └────────┬────────┘ ║
+║ │ ║
+║ ┌───────────────────┼───────────────────┐ ║
+║ ▼ ▼ ▼ ║
+║ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐ ║
+║ │ AMYGDALA │ │ STRIATUM │ │ PFC │ ║
+║ │ (anxiety ↓) │ │ (depression↓)│ │ (regulation) │ ║
+║ ├──────────────┤ ├──────────────┤ ├──────────────┤ ║
+║ │ Low tempo │ │ Major mode │ │ Familiarity │ ║
+║ │ Consonance │ │ Mod. tempo │ │ Structure │ ║
+║ │ Soft dynamics│ │ Pos. valence │ │ Predictable │ ║
+║ └──────┬───────┘ └──────┬───────┘ └──────┬───────┘ ║
+║ ▼ ▼ ▼ ║
+║ ┌──────────────────────────────────────────────────┐ ║
+║ │ AUTONOMIC PATHWAY REWARD PATHWAY │ ║
+║ │ PNS ↑ → HR ↓ DA ↑ → Hedonic ↑ │ ║
+║ │ Cortisol ↓ Motivation ↑ │ ║
+║ └──────────────────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ THERAPEUTIC OUTCOME ║
+║ (symptom modulation) ║
+║ ║
+║ THREE MECHANISMS — FULL MESOLIMBIC CIRCUIT: ║
+║ ║
+║ EVIDENCE (limited — γ tier): ║
+║ Kheirkhah 2025: Music + ketamine + mindfulness, d=0.88 ║
+║ Ehrlich 2019: BCI emotion modulation, 3/5 success rate ║
+║ Koelsch 2014: Music-evoked emotions and brain correlates (review) ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -136,36 +133,36 @@ TAR is the **clinical application model** — it leverages all ARU reward/affect
 ΔSymptom = α × Music_dose × Pathway_activation × Individual_response + ε
 
 where:
-  ΔSymptom = change in clinical measure (negative = improvement)
-  Music_dose = duration × intensity × specificity
-  Pathway_activation = targeted neural pathway engagement [0, 1]
-  Individual_response = person-specific factor [0.5, 2.0]
-  α = therapeutic gain coefficient ≈ 0.5-1.0
+ ΔSymptom = change in clinical measure (negative = improvement)
+ Music_dose = duration × intensity × specificity
+ Pathway_activation = targeted neural pathway engagement [0, 1]
+ Individual_response = person-specific factor [0.5, 2.0]
+ α = therapeutic gain coefficient ≈ 0.5-1.0
 ```
 
 **Condition-specific prescriptions**:
 ```
 Anxiety:
-  ΔAnxiety = -α_anx × tempo_factor × consonance × (1 - arousal)
-  tempo_factor = clamp((80 - tempo) / 20, 0, 1)   ← peak at 60 BPM
+ ΔAnxiety = -α_anx × tempo_factor × consonance × (1 - arousal)
+ tempo_factor = clamp((80 - tempo) / 20, 0, 1) ← peak at 60 BPM
 
 Depression:
-  ΔDepression = -α_dep × valence × energy_factor
-  energy_factor = exp(-((tempo - 100) / 20)²)       ← peak at 100 BPM
+ ΔDepression = -α_dep × valence × energy_factor
+ energy_factor = exp(-((tempo - 100) / 20)²) ← peak at 100 BPM
 
 Stress:
-  ΔStress = -α_str × familiarity × predictability × relaxation
-  relaxation = sigmoid(consonance + warmth - arousal)
+ ΔStress = -α_str × familiarity × predictability × relaxation
+ relaxation = sigmoid(consonance + warmth - arousal)
 ```
 
 **Dose-response curve**:
 ```
 Effect(t) = E_max × (1 - exp(-t / τ_onset)) × exp(-max(0, t - t_peak) / τ_decay)
 
-  τ_onset ≈ 10 min (effect builds)
-  t_peak ≈ 30 min (maximum effect)
-  τ_decay ≈ 60 min (effect wanes)
-  E_max = α × pathway_activation × individual_response
+ τ_onset ≈ 10 min (effect builds)
+ t_peak ≈ 30 min (maximum effect)
+ τ_decay ≈ 60 min (effect wanes)
+ E_max = α × pathway_activation × individual_response
 ```
 
 ### 3.3 Limitation
@@ -184,61 +181,61 @@ TAR OUTPUT TENSOR: 10D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Basis
+idx │ Name │ Range │ Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 0  │ f14_therapeutic   │ [0, 1] │ Overall therapeutic efficacy estimate.
-    │                   │        │ Weighted combination of anxiety/depression
-    │                   │        │ reduction signals.
+ 0 │ f14_therapeutic │ [0, 1] │ Overall therapeutic efficacy estimate.
+ │ │ │ Weighted combination of anxiety/depression
+ │ │ │ reduction signals.
 
 LAYER T — THERAPEUTIC TARGETS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Basis
+idx │ Name │ Range │ Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 1  │ arousal_mod_tgt   │ [0, 1] │ Arousal modulation potential.
-    │                   │        │ Tempo/energy → ANS entrainment.
-    │                   │        │ Low = calming, High = activating.
+ 1 │ arousal_mod_tgt │ [0, 1] │ Arousal modulation potential.
+ │ │ │ Tempo/energy → ANS entrainment.
+ │ │ │ Low = calming, High = activating.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 2  │ valence_mod_tgt   │ [0, 1] │ Valence modulation potential.
-    │                   │        │ Consonance/mode → reward circuit.
+ 2 │ valence_mod_tgt │ [0, 1] │ Valence modulation potential.
+ │ │ │ Consonance/mode → reward circuit.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 3  │ anxiety_reduction │ [0, 1] │ Anxiolytic potential.
-    │                   │        │ Low tempo × high consonance × soft dynamics.
-    │                   │        │ Targets: Amygdala ↓, PNS ↑.
+ 3 │ anxiety_reduction │ [0, 1] │ Anxiolytic potential.
+ │ │ │ Low tempo × high consonance × soft dynamics.
+ │ │ │ Targets: Amygdala ↓, PNS ↑.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 4  │ depression_improv │ [0, 1] │ Antidepressant potential.
-    │                   │        │ Positive valence × moderate energy.
-    │                   │        │ Targets: Striatum ↑, DA ↑.
+ 4 │ depression_improv │ [0, 1] │ Antidepressant potential.
+ │ │ │ Positive valence × moderate energy.
+ │ │ │ Targets: Striatum ↑, DA ↑.
 
 LAYER I — INTERVENTION PARAMETERS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Basis
+idx │ Name │ Range │ Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 5  │ rec_tempo_norm    │ [0, 1] │ Recommended tempo (normalized).
-    │                   │        │ 0.0=60 BPM (anxiolytic),
-    │                   │        │ 0.5=90 BPM (moderate),
-    │                   │        │ 1.0=120 BPM (activating).
+ 5 │ rec_tempo_norm │ [0, 1] │ Recommended tempo (normalized).
+ │ │ │ 0.0=60 BPM (anxiolytic),
+ │ │ │ 0.5=90 BPM (moderate),
+ │ │ │ 1.0=120 BPM (activating).
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 6  │ rec_consonance    │ [0, 1] │ Recommended consonance level.
-    │                   │        │ Typically ≥ 0.7 for all therapeutic targets.
+ 6 │ rec_consonance │ [0, 1] │ Recommended consonance level.
+ │ │ │ Typically ≥ 0.7 for all therapeutic targets.
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Basis
+idx │ Name │ Range │ Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 7  │ therapeutic_reward│ [0, 1] │ Real-time therapeutic reward signal.
-    │                   │        │ Reward pathway activation via C0P.
-    │                   │        │ Tracks whether music is "working".
+ 7 │ therapeutic_reward│ [0, 1] │ Real-time therapeutic reward signal.
+ │ │ │ Reward pathway activation via cognitive-projection H³.
+ │ │ │ Tracks whether music is "working".
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Basis
+idx │ Name │ Range │ Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 8  │ mood_improv_pred  │ [0, 1] │ Predicted mood improvement (10-30 min).
-    │                   │        │ Based on dose-response model trajectory.
+ 8 │ mood_improv_pred │ [0, 1] │ Predicted mood improvement (10-30 min).
+ │ │ │ Based on dose-response model trajectory.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 9  │ stress_reduc_pred │ [0, 1] │ Predicted stress/cortisol reduction
-    │                   │        │ (5-15 min). Based on autonomic pathway
-    │                   │        │ activation and relaxation response.
+ 9 │ stress_reduc_pred │ [0, 1] │ Predicted stress/cortisol reduction
+ │ │ │ (5-15 min). Based on autonomic pathway
+ │ │ │ activation and relaxation response.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 10D per frame at 172.27 Hz
@@ -303,13 +300,13 @@ TOTAL: 10D per frame at 172.27 Hz
 ```
 R³ DEMAND FOR TAR: 17D of 49D
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Group A: Consonance        3D   → valence/reward pathway
-Group B: Energy            4D   → arousal/tempo pathway
-Group C: Timbre            1D   → comfort/safety signal
-Group D: Change            1D   → predictability
-Group E: Interactions      8D   → therapeutic engagement
+Group A: Consonance 3D → valence/reward pathway
+Group B: Energy 4D → arousal/tempo pathway
+Group C: Timbre 1D → comfort/safety signal
+Group D: Change 1D → predictability
+Group E: Interactions 8D → therapeutic engagement
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-TOTAL:                    17D
+TOTAL: 17D
 ```
 
 ---
@@ -318,26 +315,23 @@ TOTAL:                    17D
 
 ### 6.1 Mechanism-Level Demand
 
-TAR uses all three mesolimbic mechanisms: **AED + CPD + C0P**.
+TAR uses all three mesolimbic mechanisms: **H³ direct**.
 
 ```
 H³ DEMAND FOR TAR
 ━━━━━━━━━━━━━━━━━
 
-Mechanism │ Horizons              │ H-Law       │ Morphs Used              │ Tuples
+Mechanism │ Horizons │ H-Law │ Morphs Used │ Tuples
 ──────────┼───────────────────────┼─────────────┼──────────────────────────┼───────
-AED       │ H6 (200ms)            │ bidirection │ M0(value), M8(velocity), │ 6
-          │ H16 (1000ms)          │             │ M20(entropy)             │
+ │ H16 (1000ms) │ │ M20(entropy) │
 ──────────┼───────────────────────┼─────────────┼──────────────────────────┼───────
-CPD       │ H7 (250ms)            │ bidirection │ M0(value), M4(max),      │ 12
-          │ H12 (525ms)           │             │ M8(velocity), M18(trend) │
-          │ H15 (800ms)           │             │                          │
+ │ H12 (525ms) │ │ M8(velocity), M18(trend) │
+ │ H15 (800ms) │ │ │
 ──────────┼───────────────────────┼─────────────┼──────────────────────────┼───────
-C0P       │ H11 (500ms)           │ forward     │ M1(mean), M2(std),       │ 3
-          │                       │             │ M8(velocity)             │
+ │ │ │ M8(velocity) │
 ──────────┼───────────────────────┼─────────────┼──────────────────────────┼───────
-TOTAL     │ 6 horizons            │             │                          │ 21
-          │                       │             │              21/2304 = 0.91%
+TOTAL │ 6 horizons │ │ │ 21
+ │ │ │ 21/2304 = 0.91%
 ```
 
 ### 6.2 Temporal Mapping
@@ -346,48 +340,33 @@ TOTAL     │ 6 horizons            │             │                         
 TIME AXIS → TAR PROCESSING
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-0ms     200ms    250ms    500ms    525ms    800ms    1000ms
+0ms 200ms 250ms 500ms 525ms 800ms 1000ms
 │────────│────────│────────│────────│────────│────────│
-│ AED H6 │CPD H7  │        │CPD H12 │        │AED H16 │
-│(affect)│(trigger)        │(build) │        │(context│
-│        │        │C0P H11 │        │CPD H15 │        │
-│        │        │(project)│       │(peak)  │        │
+│(affect)│(trigger) │(build) │ │(context│
+│ │ │(project)│ │(peak) │ │
 
-AED:  Mood state tracking (fast and slow)
-CPD:  Therapeutic peak detection (breakthrough moments)
-C0P:  Outcome projection (cognitive integration of therapeutic effect)
 
 THERAPEUTIC TIMESCALE MAPPING:
-  H6  (200ms) : Beat-level affect response
-  H7  (250ms) : Chills/peak trigger detection
-  H11 (500ms) : Cognitive therapeutic assessment
-  H12 (525ms) : Buildup tracking toward therapeutic peak
-  H15 (800ms) : Peak/breakthrough moment response
-  H16 (1000ms): Sustained mood state integration
+ H6 (200ms) : Beat-level affect response
+ H7 (250ms) : Chills/peak trigger detection
+ H11 (500ms) : Cognitive therapeutic assessment
+ H12 (525ms) : Buildup tracking toward therapeutic peak
+ H15 (800ms) : Peak/breakthrough moment response
+ H16 (1000ms): Sustained mood state integration
 ```
 
 ### 6.3 Key H³ Reads
 
 ```
-MOOD STATE (AED):
-  AED.arousal_dynamics via H6(200ms) + M0(value)
-  → Current emotional state (instant affect)
-  AED.expectancy_affect via H16(1000ms) + M20(entropy)
-  → Affective predictability (low entropy = stable mood)
+ → Current emotional state (instant affect)
+ → Affective predictability (low entropy = stable mood)
 
-THERAPEUTIC PEAKS (CPD):
-  CPD.trigger_features via H7(250ms) + M0(value)
-  → Peak trigger presence (therapeutic breakthrough)
-  CPD.buildup_tracking via H12(525ms) + M18(trend)
-  → Therapeutic buildup trajectory (approaching breakthrough?)
-  CPD.peak_response via H15(800ms) + M4(max)
-  → Maximum therapeutic response magnitude
+ → Peak trigger presence (therapeutic breakthrough)
+ → Therapeutic buildup trajectory (approaching breakthrough?)
+ → Maximum therapeutic response magnitude
 
-OUTCOME PROJECTION (C0P):
-  C0P.cognitive_state via H11(500ms) + M1(mean)
-  → Average therapeutic state estimate
-  C0P.cognitive_state via H11(500ms) + M2(std)
-  → Therapeutic response variability
+ → Average therapeutic state estimate
+ → Therapeutic response variability
 ```
 
 ### 6.4 R³ v2 Projected Expansion
@@ -400,163 +379,110 @@ No significant direct v2 expansion projected for TAR. As a pathway-dependent ARU
 
 ## 7. Mechanism Computation
 
-### 7.1 AED Binding
-
-```python
-# AED reads: arousal_dynamics[0:10], expectancy_affect[10:20]
-# Horizons: H6(200ms) and H16(1000ms), bidirectional
-
-# Mood state tracking
-mood_fast = AED.arousal_dynamics[0:4].mean()      # H6: instant affect
-mood_slow = AED.expectancy_affect[10:14].mean()   # H16: 1s context
-mood_velocity = AED.arousal_dynamics[4]            # M8(velocity)
-mood_entropy = AED.arousal_dynamics[6]             # M20(entropy)
-
-# Mood stability (low entropy + low velocity = stable)
-mood_stability = sigmoid(
-    0.5 * (1.0 - mood_entropy) + 0.5 * (1.0 - abs(mood_velocity))
-)  # |0.5| + |0.5| = 1.0 ✓
-```
-
-### 7.2 CPD Binding
-
-```python
-# CPD reads: trigger_features[0:10], buildup_tracking[10:20], peak_response[20:30]
-# Horizons: H7(250ms), H12(525ms), H15(800ms), bidirectional
-
-# Therapeutic peak detection
-trigger_value = CPD.trigger_features[0]            # M0(value)
-buildup_trend = CPD.buildup_tracking[4]            # M18(trend)
-peak_max = CPD.peak_response[2]                    # M4(max)
-peak_velocity = CPD.peak_response[4]               # M8(velocity)
-
-# Therapeutic breakthrough = strong trigger × positive trend × high peak
-breakthrough = sigmoid(
-    0.3 * trigger_value + 0.3 * buildup_trend + 0.4 * peak_max
-)  # |0.3| + |0.3| + |0.4| = 1.0 ✓
-```
-
-### 7.3 C0P Binding
-
-```python
-# C0P reads: cognitive_state[10:20]
-# Horizon: H11(500ms), forward only
-
-c0p_mean = C0P.cognitive_state[10]      # M1(mean): therapeutic state
-c0p_std = C0P.cognitive_state[11]       # M2(std): response variability
-c0p_velocity = C0P.cognitive_state[12]  # M8(velocity): improvement rate
-```
-
 ### 7.4 TAR Output Computation
 
 ```python
-def compute_tar(R3, H3, AED, CPD, C0P):
-    """
-    TAR: 10D output per frame.
+def compute_tar(R3, H3):
+ """
+ TAR: 10D output per frame.
 
-    All deterministic. Zero learned parameters.
-    Based on therapeutic music intervention principles.
-    """
-    # --- R³ features ---
-    roughness = R3[0]
-    pleasantness = R3[4]
-    harmonicity = R3[5]
-    amplitude = R3[7]
-    velocity_A = R3[8]
-    loudness = R3[10]
-    onset_strength = R3[11]
-    warmth = R3[16]
-    spectral_flux = R3[21]
-    x_l4l5 = R3[33:41]        # 8D
+ All deterministic. Zero learned parameters.
+ Based on therapeutic music intervention principles.
+ """
+ # --- R³ features ---
+ roughness = R3[0]
+ pleasantness = R3[4]
+ harmonicity = R3[5]
+ amplitude = R3[7]
+ velocity_A = R3[8]
+ loudness = R3[10]
+ onset_strength = R3[11]
+ warmth = R3[16]
+ spectral_flux = R3[21]
+ x_l4l5 = R3[33:41] # 8D
 
-    # --- Derived therapeutic signals ---
-    consonance = 0.5 * pleasantness + 0.5 * harmonicity   # [0, 1]
-    # |0.5| + |0.5| = 1.0 ✓
-    arousal = loudness                                      # [0, 1]
-    energy = 0.5 * amplitude + 0.5 * onset_strength        # [0, 1]
-    # |0.5| + |0.5| = 1.0 ✓
-    valence = pleasantness - roughness                     # [-1, 1]
-    tempo_proxy = sigmoid(2.0 * velocity_A)                # [0, 1]
-    predictability = 1.0 - spectral_flux                   # [0, 1]
+ # --- Derived therapeutic signals ---
+ consonance = 0.5 * pleasantness + 0.5 * harmonicity # [0, 1]
+ # |0.5| + |0.5| = 1.0 ✓
+ arousal = loudness # [0, 1]
+ energy = 0.5 * amplitude + 0.5 * onset_strength # [0, 1]
+ # |0.5| + |0.5| = 1.0 ✓
+ valence = pleasantness - roughness # [-1, 1]
+ tempo_proxy = sigmoid(2.0 * velocity_A) # [0, 1]
+ predictability = 1.0 - spectral_flux # [0, 1]
 
-    # --- AED signals ---
-    mood_fast, mood_slow, mood_stability = compute_mood(AED)
+ mood_fast, mood_slow, mood_stability = compute_mood()
 
-    # --- CPD signals ---
-    breakthrough = compute_breakthrough(CPD)
+ breakthrough = compute_breakthrough()
 
-    # --- C0P signals ---
-    c0p_mean, c0p_std, c0p_velocity = extract_c0p(C0P)
+ c0p_mean, c0p_std, c0p_velocity = extract_c0p()
 
-    # === LAYER E ===
-    # f14: Therapeutic efficacy (weighted anxiety + depression reduction)
-    anxiety_sig = compute_anxiety_reduction(tempo_proxy, consonance, arousal, warmth)
-    depression_sig = compute_depression_improvement(valence, energy, c0p_mean)
-    f14 = 0.5 * anxiety_sig + 0.5 * depression_sig
-    # |0.5| + |0.5| = 1.0 ✓
+ # === LAYER E ===
+ # f14: Therapeutic efficacy (weighted anxiety + depression reduction)
+ anxiety_sig = compute_anxiety_reduction(tempo_proxy, consonance, arousal, warmth)
+ depression_sig = compute_depression_improvement(valence, energy, c0p_mean)
+ f14 = 0.5 * anxiety_sig + 0.5 * depression_sig
+ # |0.5| + |0.5| = 1.0 ✓
 
-    # === LAYER T ===
-    # Arousal modulation target (what arousal change this music provides)
-    arousal_mod = sigmoid(
-        0.4 * tempo_proxy + 0.3 * energy + 0.3 * mood_fast
-    )  # |0.4| + |0.3| + |0.3| = 1.0 ✓
+ # === LAYER T ===
+ # Arousal modulation target (what arousal change this music provides)
+ arousal_mod = sigmoid(
+ 0.4 * tempo_proxy + 0.3 * energy + 0.3 * mood_fast
+ ) # |0.4| + |0.3| + |0.3| = 1.0 ✓
 
-    # Valence modulation target
-    valence_mod = sigmoid(
-        0.4 * consonance + 0.3 * (valence + 1) / 2 + 0.3 * mood_slow
-    )  # |0.4| + |0.3| + |0.3| = 1.0 ✓
+ # Valence modulation target
+ valence_mod = sigmoid(
+ 0.4 * consonance + 0.3 * (valence + 1) / 2 + 0.3 * mood_slow
+ ) # |0.4| + |0.3| + |0.3| = 1.0 ✓
 
-    # Anxiety reduction potential
-    # Low tempo × high consonance × soft dynamics → high anxiety reduction
-    tempo_factor = clamp(1.0 - tempo_proxy, 0, 1)  # Low tempo → high
-    anxiety_reduction = sigmoid(
-        0.3 * tempo_factor + 0.3 * consonance + 0.2 * warmth + 0.2 * (1.0 - arousal)
-    )  # |0.3| + |0.3| + |0.2| + |0.2| = 1.0 ✓
+ # Anxiety reduction potential
+ # Low tempo × high consonance × soft dynamics → high anxiety reduction
+ tempo_factor = clamp(1.0 - tempo_proxy, 0, 1) # Low tempo → high
+ anxiety_reduction = sigmoid(
+ 0.3 * tempo_factor + 0.3 * consonance + 0.2 * warmth + 0.2 * (1.0 - arousal)
+ ) # |0.3| + |0.3| + |0.2| + |0.2| = 1.0 ✓
 
-    # Depression improvement potential
-    # Positive valence × moderate energy × reward activation
-    energy_factor = exp(-((tempo_proxy - 0.5) * 3.0)**2)  # Peak at moderate tempo
-    depression_improvement = sigmoid(
-        0.3 * (valence + 1) / 2 + 0.3 * energy_factor + 0.4 * c0p_mean
-    )  # |0.3| + |0.3| + |0.4| = 1.0 ✓
+ # Depression improvement potential
+ # Positive valence × moderate energy × reward activation
+ energy_factor = exp(-((tempo_proxy - 0.5) * 3.0)**2) # Peak at moderate tempo
+ depression_improvement = sigmoid(
+ ) # |0.3| + |0.3| + |0.4| = 1.0 ✓
 
-    # === LAYER I ===
-    # Recommended tempo (normalized 0=60BPM, 0.5=90BPM, 1.0=120BPM)
-    # Based on current mood state: depressed → moderate tempo, anxious → slow
-    rec_tempo = sigmoid(
-        0.5 * (1.0 - anxiety_reduction) + 0.5 * depression_improvement
-    )  # |0.5| + |0.5| = 1.0 ✓
+ # === LAYER I ===
+ # Recommended tempo (normalized 0=60BPM, 0.5=90BPM, 1.0=120BPM)
+ # Based on current mood state: depressed → moderate tempo, anxious → slow
+ rec_tempo = sigmoid(
+ 0.5 * (1.0 - anxiety_reduction) + 0.5 * depression_improvement
+ ) # |0.5| + |0.5| = 1.0 ✓
 
-    # Recommended consonance (high for all therapeutic conditions)
-    rec_consonance = clamp(
-        0.7 + 0.3 * mood_stability, 0, 1
-    )  # Minimum 0.7, up to 1.0
+ # Recommended consonance (high for all therapeutic conditions)
+ rec_consonance = clamp(
+ 0.7 + 0.3 * mood_stability, 0, 1
+ ) # Minimum 0.7, up to 1.0
 
-    # === LAYER P ===
-    # Therapeutic reward signal (is the music "working"?)
-    therapeutic_reward = sigmoid(
-        0.3 * breakthrough + 0.3 * c0p_mean + 0.4 * mood_stability
-    )  # |0.3| + |0.3| + |0.4| = 1.0 ✓
+ # === LAYER P ===
+ # Therapeutic reward signal (is the music "working"?)
+ therapeutic_reward = sigmoid(
+ ) # |0.3| + |0.3| + |0.4| = 1.0 ✓
 
-    # === LAYER F ===
-    # Mood improvement prediction (10-30 min, dose-response)
-    mood_pred = sigmoid(
-        0.4 * f14 + 0.3 * therapeutic_reward + 0.3 * c0p_velocity
-    )  # |0.4| + |0.3| + |0.3| = 1.0 ✓
+ # === LAYER F ===
+ # Mood improvement prediction (10-30 min, dose-response)
+ mood_pred = sigmoid(
+ ) # |0.4| + |0.3| + |0.3| = 1.0 ✓
 
-    # Stress reduction prediction (5-15 min, autonomic pathway)
-    stress_pred = sigmoid(
-        0.4 * anxiety_reduction + 0.3 * predictability + 0.3 * warmth
-    )  # |0.4| + |0.3| + |0.3| = 1.0 ✓
+ # Stress reduction prediction (5-15 min, autonomic pathway)
+ stress_pred = sigmoid(
+ 0.4 * anxiety_reduction + 0.3 * predictability + 0.3 * warmth
+ ) # |0.4| + |0.3| + |0.3| = 1.0 ✓
 
-    return stack([
-        f14,                                            # E: 1D
-        arousal_mod, valence_mod,                       # T: 4D
-        anxiety_reduction, depression_improvement,
-        rec_tempo, rec_consonance,                      # I: 2D
-        therapeutic_reward,                             # P: 1D
-        mood_pred, stress_pred                          # F: 2D
-    ])  # Total: 10D
+ return stack([
+ f14, # E: 1D
+ arousal_mod, valence_mod, # T: 4D
+ anxiety_reduction, depression_improvement,
+ rec_tempo, rec_consonance, # I: 2D
+ therapeutic_reward, # P: 1D
+ mood_pred, stress_pred # F: 2D
+ ]) # Total: 10D
 ```
 
 ---
@@ -570,25 +496,25 @@ TAR INTERACTIONS WITHIN ARU
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 TAR ◄────── SRP (Striatal Reward Pathway)
-    │        └── TAR leverages SRP reward activation for depression treatment
-    │
+ │ └── TAR leverages SRP reward activation for depression treatment
+ │
 TAR ◄────── AAC (Autonomic-Affective Coupling)
-    │        └── TAR uses AAC autonomic pathway for anxiety/stress treatment
-    │
+ │ └── TAR uses AAC autonomic pathway for anxiety/stress treatment
+ │
 TAR ◄────── CLAM (Closed-Loop Modulation)
-    │        └── TAR can use CLAM for real-time therapeutic dose adaptation
-    │
+ │ └── TAR can use CLAM for real-time therapeutic dose adaptation
+ │
 TAR ◄────── NEMAC (Nostalgia Circuit)
-    │        └── TAR uses NEMAC for personalized therapy (nostalgia-based)
-    │
+ │ └── TAR uses NEMAC for personalized therapy (nostalgia-based)
+ │
 TAR ◄────── PUPF (Prediction-Uncertainty-Pleasure)
-    │        └── TAR uses PUPF predictability for stress reduction
-    │
+ │ └── TAR uses PUPF predictability for stress reduction
+ │
 TAR ◄────── DAP (Developmental Plasticity)
-             └── TAR considers developmental history for individual response
+ └── TAR considers developmental history for individual response
 
 Note: TAR is an INTEGRATIVE model — it draws from ALL other ARU mechanisms.
-      It is the "clinical prescription" layer of the ARU circuit.
+ It is the "clinical prescription" layer of the ARU circuit.
 ```
 
 ### 8.2 Cross-Unit Dependencies
@@ -598,13 +524,13 @@ TAR CROSS-UNIT RELATIONSHIPS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 SPU ──► TAR
-  └── SPU features drive acoustic parameter recommendations
+ └── SPU features drive acoustic parameter recommendations
 
 STU ──► TAR
-  └── STU timing provides tempo assessment for therapeutic prescription
+ └── STU timing provides tempo assessment for therapeutic prescription
 
 IMU ──► TAR
-  └── IMU familiarity/memory modulates therapeutic response magnitude
+ └── IMU familiarity/memory modulates therapeutic response magnitude
 ```
 
 ---
@@ -640,7 +566,7 @@ IMU ──► TAR
 |--------|-------------|-------------|--------|
 | Output dimensions | 10D | 10D | **Same** (structure reorganized) |
 | Input space | S⁰ 17D | R³ 17D | Remapped to R³ groups |
-| Temporal | HC⁰ AED+CPD+C0P (21 tuples) | H³ → AED+CPD+C0P (21 tuples) | Same mechanisms |
+| Temporal | HC⁰ (21 tuples) | H³ (21 tuples) | Same |
 | H⁰ tuples | 21/2304 = 0.91% | 21/2304 = 0.91% | Same density |
 
 ### 11.2 S⁰ → R³ Feature Mapping

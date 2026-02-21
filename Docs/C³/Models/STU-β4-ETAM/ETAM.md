@@ -21,20 +21,18 @@ The **Entrainment, Tempo & Attention Modulation** (ETAM) model describes how att
 THE THREE DELAY WINDOWS OF ATTENTION-MODULATED ENVELOPE TRACKING
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-EARLY WINDOW (150-220ms)              MIDDLE WINDOW (320-360ms)
-Brain region: STG, Heschl's Gyrus     Brain region: MTG, IFG
-Mechanism: BEP.beat_induction         Mechanism: BEP.meter_extraction
-Input: Envelope onset, intensity      Input: Spectral flux, stream tracking
-Function: "Initial attentional        Function: "Track attended instrument
-           selection"                             envelope"
-Evidence: d=0.6 (Hausfeld 2021)       Evidence: Bassoon-specific (Hausfeld)
+EARLY WINDOW (150-220ms) MIDDLE WINDOW (320-360ms)
+Brain region: STG, Heschl's Gyrus Brain region: MTG, IFG
+Input: Envelope onset, intensity Input: Spectral flux, stream tracking
+Function: "Initial attentional Function: "Track attended instrument
+ selection" envelope"
+Evidence: d=0.6 (Hausfeld 2021) Evidence: Bassoon-specific (Hausfeld)
 
-              LATE WINDOW (410-450ms)
-              Brain region: IFG, temporal pole
-              Mechanism: TMH.short_context + BEP.motor_entrainment
-              Input: Cross-band energy, phase coherence
-              Function: "Deep stream segregation, instrument separation"
-              Evidence: Bassoon > Cello multi-window (Hausfeld 2021)
+ LATE WINDOW (410-450ms)
+ Brain region: IFG, temporal pole
+ Input: Cross-band energy, phase coherence
+ Function: "Deep stream segregation, instrument separation"
+ Evidence: Bassoon > Cello multi-window (Hausfeld 2021)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 KEY INSIGHT: Attention modulates cortical envelope tracking at
@@ -42,8 +40,6 @@ THREE delay windows, not one. The attended stream (bassoon) shows
 enhancement at all three windows (d=0.6), while the less-attended
 stream (cello) shows enhancement only at the early window.
 This hierarchy: EARLY (beat) → MIDDLE (meter) → LATE (context)
-maps to BEP.beat_induction → BEP.meter_extraction →
-BEP.motor_entrainment + TMH.short_context.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -64,129 +60,127 @@ ETAM integrates beat entrainment with attention-modulated temporal processing, b
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                 ETAM — COMPLETE CIRCUIT                                      ║
+║ ETAM — COMPLETE CIRCUIT ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  POLYPHONIC MUSIC (multiple simultaneous instruments)                        ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │        HESCHL'S GYRUS / STG (Primary auditory cortex)             │    ║
-║  │        Early envelope tracking: 150-220 ms delay                  │    ║
-║  │        Attention effect: d = 0.6 (attended > unattended)          │    ║
-║  │                                                                     │    ║
-║  │    Attended stream → enhanced cortical tracking (bassoon+cello)   │    ║
-║  │    Unattended stream → reduced tracking                            │    ║
-║  └──────────────────────────┬──────────────────────────────────────────┘    ║
-║                              │  Hierarchical temporal processing            ║
-║                              ▼                                               ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │        MIDDLE TEMPORAL GYRUS (MTG) / IFG                           │    ║
-║  │        Middle tracking: 320-360 ms delay                          │    ║
-║  │        Instrument-specific: Bassoon (spectrally rich) > Cello     │    ║
-║  │                                                                     │    ║
-║  │    Bassoon: 3 windows (early + middle + late)                     │    ║
-║  │    Cello:   1 window (early only)                                 │    ║
-║  └──────────────────────────┬──────────────────────────────────────────┘    ║
-║                              │                                               ║
-║                              ▼                                               ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │        IFG / TEMPORAL POLE                                         │    ║
-║  │        Late deep segregation: 410-450 ms delay                    │    ║
-║  │        ★ Bassoon-specific — spectral richness enables deeper      │    ║
-║  │          stream separation via sustained attention                  │    ║
-║  └─────────────────────────────────────────────────────────────────────┘    ║
-║                                                                              ║
-║  HIERARCHY: STG/HG (early) → MTG/IFG (middle) → IFG/TP (late)             ║
-║  ASYMMETRY: Bassoon = 3 windows, Cello = 1 window                          ║
-║                                                                              ║
+║ ║
+║ POLYPHONIC MUSIC (multiple simultaneous instruments) ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ HESCHL'S GYRUS / STG (Primary auditory cortex) │ ║
+║ │ Early envelope tracking: 150-220 ms delay │ ║
+║ │ Attention effect: d = 0.6 (attended > unattended) │ ║
+║ │ │ ║
+║ │ Attended stream → enhanced cortical tracking (bassoon+cello) │ ║
+║ │ Unattended stream → reduced tracking │ ║
+║ └──────────────────────────┬──────────────────────────────────────────┘ ║
+║ │ Hierarchical temporal processing ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ MIDDLE TEMPORAL GYRUS (MTG) / IFG │ ║
+║ │ Middle tracking: 320-360 ms delay │ ║
+║ │ Instrument-specific: Bassoon (spectrally rich) > Cello │ ║
+║ │ │ ║
+║ │ Bassoon: 3 windows (early + middle + late) │ ║
+║ │ Cello: 1 window (early only) │ ║
+║ └──────────────────────────┬──────────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ IFG / TEMPORAL POLE │ ║
+║ │ Late deep segregation: 410-450 ms delay │ ║
+║ │ ★ Bassoon-specific — spectral richness enables deeper │ ║
+║ │ stream separation via sustained attention │ ║
+║ └─────────────────────────────────────────────────────────────────────┘ ║
+║ ║
+║ HIERARCHY: STG/HG (early) → MTG/IFG (middle) → IFG/TP (late) ║
+║ ASYMMETRY: Bassoon = 3 windows, Cello = 1 window ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 CRITICAL EVIDENCE:
 ─────────────────
-Hausfeld 2021:  Attended > unattended envelope tracking, d=0.6 (EEG)
-Hausfeld 2021:  Three delay windows: 150-220ms, 320-360ms, 410-450ms
-Hausfeld 2021:  Bassoon (spectrally rich): 3 windows of enhancement
-Hausfeld 2021:  Cello (less spectrally rich): 1 window of enhancement
-Hausfeld 2021:  Instrument asymmetry reflects spectral complexity
+Hausfeld 2021: Attended > unattended envelope tracking, d=0.6 (EEG)
+Hausfeld 2021: Three delay windows: 150-220ms, 320-360ms, 410-450ms
+Hausfeld 2021: Bassoon (spectrally rich): 3 windows of enhancement
+Hausfeld 2021: Cello (less spectrally rich): 1 window of enhancement
+Hausfeld 2021: Instrument asymmetry reflects spectral complexity
 ```
 
-### 2.2 Information Flow Architecture (EAR → BRAIN → BEP+TMH → ETAM)
+### 2.2 Information Flow Architecture (EAR → BRAIN → ETAM)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    ETAM COMPUTATION ARCHITECTURE                             ║
+║ ETAM COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins × 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
-║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ CHANGE   │ │ X-INT  │ │        ║
-║  │  │ 7D [0:7]  │ │ 5D[7:12]│ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
-║  │  │           │ │         │ │ [12:21] │ │ [21:25]  │ │ [25:49]│ │        ║
-║  │  │           │ │amplitude│ │         │ │spec_chg  │ │x_l0l5  │ │        ║
-║  │  │           │ │loudness │ │         │ │energy_chg│ │x_l4l5  │ │        ║
-║  │  │           │ │centroid │ │         │ │pitch_chg │ │x_l5l7  │ │        ║
-║  │  │           │ │flux     │ │         │ │timbre_chg│ │        │ │        ║
-║  │  │           │ │onset    │ │         │ │          │ │        │ │        ║
-║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                         ETAM reads: 33D                         │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                                                                  │        ║
-║  │  ┌── BEP Horizons ─────────────┐ ┌── TMH Horizons ───────────┐ │        ║
-║  │  │ H6  (200ms, syllable/beat)  │ │ H8  (300ms, syllable)     │ │        ║
-║  │  │ H11 (500ms, motor)          │ │ H14 (700ms, beat)         │ │        ║
-║  │  │ H16 (1000ms, bar)           │ │ H20 (5000ms, section)     │ │        ║
-║  │  │                              │ │                            │ │        ║
-║  │  │ Beat-level entrainment      │ │ Context-level memory       │ │        ║
-║  │  │ Meter extraction            │ │ Tempo tracking             │ │        ║
-║  │  │ Motor entrainment           │ │ Attention modulation       │ │        ║
-║  │  └──────────────────────────────┘ └────────────────────────────┘ │        ║
-║  │                         ETAM demand: ~20 of 2304 tuples         │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Sensorimotor Circuit ═══════  ║
-║                               │                                              ║
-║                       ┌───────┴───────┐                                      ║
-║                       ▼               ▼                                      ║
-║  ┌─────────────────┐  ┌─────────────────┐                                   ║
-║  │  BEP (30D)      │  │  TMH (30D)      │                                   ║
-║  │  (primary)      │  │  (secondary)    │                                   ║
-║  │                 │  │                 │                                    ║
-║  │ Beat Ind [0:10] │  │ Short   [0:10] │  Attention context                ║
-║  │ Meter    [10:20]│  │ Medium  [10:20]│  Tempo tracking                   ║
-║  │ Motor    [20:30]│  │ Long    [20:30]│  Long-range modulation            ║
-║  └────────┬────────┘  └────────┬────────┘                                   ║
-║           │                    │                                              ║
-║           └─────────┬──────────┘                                             ║
-║                     ▼                                                        ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    ETAM MODEL (11D Output)                       │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f01_early_window, f02_middle_window,       │        ║
-║  │                       f03_late_window, f04_instrument_asymmetry  │        ║
-║  │  Layer M (Math):      attention_gain, entrainment_index          │        ║
-║  │  Layer P (Present):   envelope_tracking, stream_separation       │        ║
-║  │  Layer F (Future):    tracking_prediction, attention_sustain,    │        ║
-║  │                       segregation_predict                        │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins × 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ ENERGY │ │ TIMBRE │ │ CHANGE │ │ X-INT │ │ ║
+║ │ │ 7D [0:7] │ │ 5D[7:12]│ │ 9D │ │ 4D │ │ 24D │ │ ║
+║ │ │ │ │ │ │ [12:21] │ │ [21:25] │ │ [25:49]│ │ ║
+║ │ │ │ │amplitude│ │ │ │spec_chg │ │x_l0l5 │ │ ║
+║ │ │ │ │loudness │ │ │ │energy_chg│ │x_l4l5 │ │ ║
+║ │ │ │ │centroid │ │ │ │pitch_chg │ │x_l5l7 │ │ ║
+║ │ │ │ │flux │ │ │ │timbre_chg│ │ │ │ ║
+║ │ │ │ │onset │ │ │ │ │ │ │ │ ║
+║ │ └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │ ║
+║ │ ETAM reads: 33D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ │ ║
+║ │ │ H6 (200ms, syllable/beat) │ │ H8 (300ms, syllable) │ │ ║
+║ │ │ H11 (500ms, motor) │ │ H14 (700ms, beat) │ │ ║
+║ │ │ H16 (1000ms, bar) │ │ H20 (5000ms, section) │ │ ║
+║ │ │ │ │ │ │ ║
+║ │ │ Beat-level entrainment │ │ Context-level memory │ │ ║
+║ │ │ Meter extraction │ │ Tempo tracking │ │ ║
+║ │ │ Motor entrainment │ │ Attention modulation │ │ ║
+║ │ └──────────────────────────────┘ └────────────────────────────┘ │ ║
+║ │ ETAM demand: ~20 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Sensorimotor Circuit ═══════ ║
+║ │ ║
+║ ┌───────┴───────┐ ║
+║ ▼ ▼ ║
+║ ┌─────────────────┐ ┌─────────────────┐ ║
+║ │ (primary) │ │ (secondary) │ ║
+║ │ │ │ │ ║
+║ │ Beat Ind [0:10] │ │ Short [0:10] │ Attention context ║
+║ │ Meter [10:20]│ │ Medium [10:20]│ Tempo tracking ║
+║ │ Motor [20:30]│ │ Long [20:30]│ Long-range modulation ║
+║ └────────┬────────┘ └────────┬────────┘ ║
+║ │ │ ║
+║ └─────────┬──────────┘ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ ETAM MODEL (11D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f01_early_window, f02_middle_window, │ ║
+║ │ f03_late_window, f04_instrument_asymmetry │ ║
+║ │ Layer M (Math): attention_gain, entrainment_index │ ║
+║ │ Layer P (Present): envelope_tracking, stream_separation │ ║
+║ │ Layer F (Future): tracking_prediction, attention_sustain, │ ║
+║ │ segregation_predict │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -199,9 +193,9 @@ Hausfeld 2021:  Instrument asymmetry reflects spectral complexity
 | # | Study | Method | N | Key Finding | Effect Size | MI Relevance |
 |---|-------|--------|---|-------------|-------------|-------------|
 | 1 | **Hausfeld 2021** | EEG 63-ch, polyphonic | 14 | Attended > unattended envelope tracking at 3 delay windows | d = 0.60-0.68 | **Primary coefficient**: f01-f03 delay windows |
-| 2 | **Hausfeld 2021** | EEG 63-ch, polyphonic | 14 | Three hierarchical delay windows: 150-220ms, 320-360ms, 410-450ms | Significant | **TMH+BEP hierarchy**: early/middle/late mapping |
+| 2 | **Hausfeld 2021** | EEG 63-ch, polyphonic | 14 | Three hierarchical delay windows: 150-220ms, 320-360ms, 410-450ms | Significant | **H³ direct hierarchy**: early/middle/late mapping |
 | 3 | **Hausfeld 2021** | EEG 63-ch, polyphonic | 14 | Bassoon (spectrally rich) shows 3 windows; cello shows 1 window | Instrument × attention interaction | **f04_instrument_asymmetry**: spectral richness modulation |
-| 4 | **Hausfeld 2021** | EEG 63-ch, polyphonic | 14 | Instrument spectral richness modulates attention window depth | Significant | **BEP × TMH interaction**: richer spectra = deeper processing |
+| 4 | **Hausfeld 2021** | EEG 63-ch, polyphonic | 14 | Instrument spectral richness modulates attention window depth | Significant | **beat × temporal-context interaction**: richer spectra = deeper processing |
 | 5 | **Doelling & Poeppel 2015** | MEG, musical rhythm | 34 | Delta-theta (0.5-4 Hz) tracks musical rhythm; musicians show enhanced entrainment at ALL tempi | Musicians > non-musicians at all tempi | **Entrainment frequency band**: optimal 2-4 Hz, delta-theta carrier |
 | 6 | **Pesnot Lerousseau et al. 2021** | sEEG + MEG | 16 (sEEG) + 15 (MEG) | High-gamma entrainment persistent (28-35% of sources) but low-frequency does NOT persist beyond stimulation | Low-freq: 1/40 sources persistent; high-gamma: 28-35% persistent | **CONSTRAINS**: Dynamic attending theory — low-freq entrainment is NOT self-sustaining |
 | 7 | **Lenoir et al. 2025** | EEG, beat periodization | 45 | Acoustic-specific beat periodization: strong for auditory beats, NOT for tactile | d = 1.648 (auditory); d = -0.393 n.s. (tactile) | **Modality specificity**: Entrainment is acoustic-specific, not supramodal |
@@ -241,22 +235,22 @@ Noboa et al. 2025 (EEG N=30) found that stronger neural entrainment (SS-EPs) pre
 ATTENTION-MODULATED ENVELOPE TRACKING: DELAY WINDOW HIERARCHY
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Window          Delay         Brain Region      Instruments     MI Mechanism
+Window Delay Brain Region Instruments MI Mechanism
 ─────────────────────────────────────────────────────────────────────────────
-EARLY           150-220ms     STG, Heschl's     Bassoon+Cello   BEP.beat_induction
-MIDDLE          320-360ms     MTG, IFG          Bassoon only    BEP.meter_extraction
-LATE            410-450ms     IFG, TP           Bassoon only    BEP.motor_entrainment
-                                                                 + TMH.short_context
+EARLY 150-220ms STG, Heschl's Bassoon+Cello beat_induction
+MIDDLE 320-360ms MTG, IFG Bassoon only meter_extraction
+LATE 410-450ms IFG, TP Bassoon only motor_entrainment
+
 
 INSTRUMENT ASYMMETRY:
-  Bassoon (spectrally rich):  |████████████████████████████| 3 windows
-  Cello (less rich):          |█████████|                    1 window
+ Bassoon (spectrally rich): |████████████████████████████| 3 windows
+ Cello (less rich): |█████████| 1 window
 
 INTERPRETATION:
-  Spectrally rich instruments provide more cues for attention-driven
-  stream segregation, enabling deeper hierarchical processing.
-  The 3 windows map to: initial selection → stream tracking →
-  deep segregation.
+ Spectrally rich instruments provide more cues for attention-driven
+ stream segregation, enabling deeper hierarchical processing.
+ The 3 windows map to: initial selection → stream tracking →
+ deep segregation.
 ```
 
 ### 3.3 Effect Size Summary
@@ -265,36 +259,36 @@ INTERPRETATION:
 PRIMARY EFFECT SIZES:
 ─────────────────────────────────────────────────────────────────────
 Hausfeld 2021 (EEG 63-ch, N=14):
-  Attended > unattended envelope tracking:  d = 0.60-0.68
-  Three delay windows: 150-220ms, 320-360ms, 410-450ms
-  Bassoon = 3 windows, Cello = 1 window (instrument × attention)
+ Attended > unattended envelope tracking: d = 0.60-0.68
+ Three delay windows: 150-220ms, 320-360ms, 410-450ms
+ Bassoon = 3 windows, Cello = 1 window (instrument × attention)
 
 Doelling & Poeppel 2015 (MEG, N=34):
-  Musicians > non-musicians at ALL tempi (delta-theta entrainment)
-  Optimal entrainment: 2-4 Hz
+ Musicians > non-musicians at ALL tempi (delta-theta entrainment)
+ Optimal entrainment: 2-4 Hz
 
 Pesnot Lerousseau et al. 2021 (sEEG N=16, MEG N=15):
-  High-gamma persistent: 28-35% of auditory sources
-  Low-frequency persistent: 1/40 sources ONLY → CONSTRAINS dynamic attending
+ High-gamma persistent: 28-35% of auditory sources
+ Low-frequency persistent: 1/40 sources ONLY → CONSTRAINS dynamic attending
 
 Lenoir et al. 2025 (EEG, N=45):
-  Acoustic beat periodization: d = 1.648 (large)
-  Tactile beat periodization: d = -0.393 (n.s.) → modality-specific
+ Acoustic beat periodization: d = 1.648 (large)
+ Tactile beat periodization: d = -0.393 (n.s.) → modality-specific
 
 Aparicio-Terrés et al. 2025 (EEG, N=19):
-  Tempo modulates entrainment: β = -0.106, p = 0.001 (slower = stronger)
-  Musical training predicts: β = 0.0128, p = 0.018
+ Tempo modulates entrainment: β = -0.106, p = 0.001 (slower = stronger)
+ Musical training predicts: β = 0.0128, p = 0.018
 
 Noboa et al. 2025 (EEG, N=30):
-  SS-EP rhythm effect: F(1,29) = 9.094
-  SS-EP frequency effect: F(1,29) = 148.618
-  Entrainment predicts tapping: R² = 0.316
-  COUNTERINTUITIVE: stronger entrainment → worse tapping
+ SS-EP rhythm effect: F(1,29) = 9.094
+ SS-EP frequency effect: F(1,29) = 148.618
+ Entrainment predicts tapping: R² = 0.316
+ COUNTERINTUITIVE: stronger entrainment → worse tapping
 
 REPLICATION STATUS:
-  Hausfeld AC finding replicated by Wikman 2025 (fMRI, attended > unattended)
-  Basinski 2025 stream segregation supports polyphonic parsing (F(2,170)=31.38)
-  Entrainment frequency range confirmed: 0.5-8 Hz (Large 2023 review)
+ Hausfeld AC finding replicated by Wikman 2025 (fMRI, attended > unattended)
+ Basinski 2025 stream segregation supports polyphonic parsing (F(2,170)=31.38)
+ Entrainment frequency range confirmed: 0.5-8 Hz (Large 2023 review)
 
 QUALITY ASSESSMENT: β-tier (12 papers, 7 methods, multiple constraints identified)
 ```
@@ -336,39 +330,39 @@ QUALITY ASSESSMENT: β-tier (12 papers, 7 methods, multiple constraints identifi
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[7] amplitude ────────────────┐
 R³[8] loudness ─────────────────┼──► Early Window (150-220ms)
-R³[11] onset_strength ──────────┘   BEP.beat_induction at H6
-                                    Math: f01 = σ(0.60 · amp · loud
-                                               · onset · BEP.beat[0:10])
+R³[11] onset_strength ──────────┘ beat_induction at H6
+ Math: f01 = σ(0.60 · amp · loud
+ · onset · beat[0:10])
 
 R³[10] spectral_flux ──────────┐
 R³[21] spectral_change ────────┤
 R³[22] energy_change ──────────┼──► Middle Window (320-360ms)
-R³[9] centroid_energy ─────────┘   BEP.meter_extraction at H11
-                                    Math: f02 = σ(0.50 · flux · spec_chg
-                                               · BEP.meter[10:20])
+R³[9] centroid_energy ─────────┘ meter_extraction at H11
+ Math: f02 = σ(0.50 · flux · spec_chg
+ · meter[10:20])
 
 R³[25:33] x_l0l5 (8D) ────────┐
 R³[33:41] x_l4l5 (8D) ────────┼──► Late Window (410-450ms)
-R³[41:49] x_l5l7 (8D) ────────┘   BEP.motor_entrainment + TMH.short
-                                    Math: f03 = σ(0.45 · x_coupling
-                                               · BEP.motor[20:30]
-                                               · TMH.short[0:10])
+R³[41:49] x_l5l7 (8D) ────────┘ motor_entrainment
+ Math: f03 = σ(0.45 · x_coupling
+ · motor[20:30]
+ · short[0:10])
 
 R³[24] timbre_change ──────────┐
 R³[21:25] Change (4D) ─────────┼──► Instrument Asymmetry
-                                    Spectral richness modulation
-                                    Bassoon: 3 windows, Cello: 1 window
+ Spectral richness modulation
+ Bassoon: 3 windows, Cello: 1 window
 
 ── R³ v2 (Phase 3E) ──────────────────────────────────────────────────
 R³[68] syncopation_index ─────┐
 R³[71] groove_index ───────────┼──► Entrainment adaptation to groove
-R³[89] rhythmic_info_content ──┤   Rhythmic complexity + surprise
-R³[116] modulation_2Hz ────────┘   Beat-rate modulation energy
-                                    Math: groove_mod = σ(sync·groove·ric·mod2)
+R³[89] rhythmic_info_content ──┤ Rhythmic complexity + surprise
+R³[116] modulation_2Hz ────────┘ Beat-rate modulation energy
+ Math: groove_mod = σ(sync·groove·ric·mod2)
 ```
 
 ---
@@ -377,7 +371,7 @@ R³[116] modulation_2Hz ────────┘   Beat-rate modulation energ
 
 ### 5.1 Demand Specification
 
-ETAM requires H³ features at both BEP horizons (H6, H11, H16) for beat entrainment and TMH horizons (H8, H14, H20) for temporal context. This dual-mechanism demand reflects the entrainment-attention interaction at the core of the model.
+ETAM requires H³ features at both horizons (H6, H11, H16) for beat entrainment and Temporal hierarchy horizons (H8, H14, H20) for temporal context. This dual-scale demand reflects the entrainment-attention interaction at the core of the model.
 
 | R³ Index | Feature | H | Morph | Law | Purpose |
 |----------|---------|---|-------|-----|---------|
@@ -406,7 +400,7 @@ ETAM requires H³ features at both BEP horizons (H6, H11, H16) for beat entrainm
 
 #### R³ v2 Projected Expansion
 
-ETAM projected v2 features from G:Rhythm, I:Interaction, and K:Modulation, aligned with BEP+TMH horizons.
+ETAM projected v2 features from G:Rhythm, I:Interaction, and K:Modulation, aligned with corresponding H³ horizons.
 
 | R³ Idx | Feature | Group | H | Morph | Law | Purpose |
 |:------:|---------|:-----:|:-:|-------|:---:|---------|
@@ -422,21 +416,6 @@ ETAM projected v2 features from G:Rhythm, I:Interaction, and K:Modulation, align
 **v2 projected**: 8 tuples
 **Total projected**: 28 tuples of 294,912 theoretical = 0.0095%
 
-### 5.2 BEP + TMH Mechanism Binding
-
-ETAM reads from both the **BEP** (Beat Entrainment Pathway) and **TMH** (Temporal Memory Hierarchy) mechanisms:
-
-| Mechanism | Sub-section | Range | ETAM Role | Weight |
-|-----------|-------------|-------|-----------|--------|
-| **BEP** | Beat Induction | BEP[0:10] | Early window (150-220ms): initial attention selection | **1.0** (primary) |
-| **BEP** | Meter Extraction | BEP[10:20] | Middle window (320-360ms): stream tracking | **0.9** |
-| **BEP** | Motor Entrainment | BEP[20:30] | Late window (410-450ms): deep segregation | **0.8** |
-| **TMH** | Short Context | TMH[0:10] | Late window modulation: attention-context binding | **0.7** |
-| **TMH** | Medium Context | TMH[10:20] | Tempo stability context for attention sustain | **0.5** (secondary) |
-| **TMH** | Long Context | TMH[20:30] | Long-range attention modulation (structural) | **0.3** (tertiary) |
-
-ETAM is the first STU β-tier model to read from all three BEP sub-sections, reflecting the full hierarchy of attention-modulated delay windows.
-
 ---
 
 ## 6. Output Space: 11D Multi-Layer Representation
@@ -449,72 +428,68 @@ ETAM OUTPUT TENSOR: 11D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                    │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼─────────────────────────┼────────┼────────────────────────────────────
- 0  │ f01_early_window        │ [0, 1] │ Early attention window (150-220ms).
-    │                         │        │ STG/Heschl's envelope tracking.
-    │                         │        │ Both instruments (bassoon+cello).
-    │                         │        │ f01 = σ(0.35 * amp_val * loud_val
-    │                         │        │       + 0.35 * onset_val
-    │                         │        │         * mean(BEP.beat_ind[0:10])
-    │                         │        │       + 0.30 * amp_peak)
+ 0 │ f01_early_window │ [0, 1] │ Early attention window (150-220ms).
+ │ │ │ STG/Heschl's envelope tracking.
+ │ │ │ Both instruments (bassoon+cello).
+ │ │ │ f01 = σ(0.35 * amp_val * loud_val
+ │ │ │ + 0.35 * onset_val
+ │ │ │ + 0.30 * amp_peak)
 ────┼─────────────────────────┼────────┼────────────────────────────────────
- 1  │ f02_middle_window       │ [0, 1] │ Middle attention window (320-360ms).
-    │                         │        │ MTG/IFG stream tracking.
-    │                         │        │ Bassoon-specific enhancement.
-    │                         │        │ f02 = σ(0.40 * flux_val
-    │                         │        │         * mean(BEP.meter[10:20])
-    │                         │        │       + 0.30 * spec_chg_mean
-    │                         │        │       + 0.30 * energy_vel)
+ 1 │ f02_middle_window │ [0, 1] │ Middle attention window (320-360ms).
+ │ │ │ MTG/IFG stream tracking.
+ │ │ │ Bassoon-specific enhancement.
+ │ │ │ f02 = σ(0.40 * flux_val
+ │ │ │ + 0.30 * spec_chg_mean
+ │ │ │ + 0.30 * energy_vel)
 ────┼─────────────────────────┼────────┼────────────────────────────────────
- 2  │ f03_late_window         │ [0, 1] │ Late attention window (410-450ms).
-    │                         │        │ IFG/temporal pole deep segregation.
-    │                         │        │ Bassoon-specific, spectral richness.
-    │                         │        │ f03 = σ(0.35 * x_coupling_bar
-    │                         │        │         * mean(BEP.motor[20:30])
-    │                         │        │       + 0.35 * x_l5l7_mean
-    │                         │        │         * mean(TMH.short[0:10])
-    │                         │        │       + 0.30 * stream_entropy)
+ 2 │ f03_late_window │ [0, 1] │ Late attention window (410-450ms).
+ │ │ │ IFG/temporal pole deep segregation.
+ │ │ │ Bassoon-specific, spectral richness.
+ │ │ │ f03 = σ(0.35 * x_coupling_bar
+ │ │ │ + 0.35 * x_l5l7_mean
+ │ │ │ + 0.30 * stream_entropy)
 ────┼─────────────────────────┼────────┼────────────────────────────────────
- 3  │ f04_instrument_asymmetry│ [0, 1] │ Instrument-dependent asymmetry.
-    │                         │        │ Bassoon (3 windows) vs cello (1).
-    │                         │        │ Spectral richness modulation.
-    │                         │        │ f04 = σ(0.50 * timbre_var
-    │                         │        │       + 0.50 * (f02 * f03))
+ 3 │ f04_instrument_asymmetry│ [0, 1] │ Instrument-dependent asymmetry.
+ │ │ │ Bassoon (3 windows) vs cello (1).
+ │ │ │ Spectral richness modulation.
+ │ │ │ f04 = σ(0.50 * timbre_var
+ │ │ │ + 0.50 * (f02 * f03))
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                    │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼─────────────────────────┼────────┼────────────────────────────────────
- 4  │ attention_gain          │ [0, 1] │ Attention-modulated tracking gain.
-    │                         │        │ Weighted sum across 3 windows.
-    │                         │        │ gain = 0.60*(f01+f02+f03)/3
+ 4 │ attention_gain │ [0, 1] │ Attention-modulated tracking gain.
+ │ │ │ Weighted sum across 3 windows.
+ │ │ │ gain = 0.60*(f01+f02+f03)/3
 ────┼─────────────────────────┼────────┼────────────────────────────────────
- 5  │ entrainment_index       │ [0, 1] │ Beat entrainment strength.
-    │                         │        │ BEP periodicity × envelope regularity.
+ 5 │ entrainment_index │ [0, 1] │ Beat entrainment strength.
+ │ │ │ beat-entrainment periodicity × envelope regularity.
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                    │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼─────────────────────────┼────────┼────────────────────────────────────
- 6  │ envelope_tracking       │ [0, 1] │ Real-time envelope-neural coupling.
-    │                         │        │ Attended stream tracking quality.
+ 6 │ envelope_tracking │ [0, 1] │ Real-time envelope-neural coupling.
+ │ │ │ Attended stream tracking quality.
 ────┼─────────────────────────┼────────┼────────────────────────────────────
- 7  │ stream_separation       │ [0, 1] │ Polyphonic stream separation state.
-    │                         │        │ Cross-band energy x attention.
+ 7 │ stream_separation │ [0, 1] │ Polyphonic stream separation state.
+ │ │ │ Cross-band energy x attention.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                    │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼─────────────────────────┼────────┼────────────────────────────────────
- 8  │ tracking_prediction     │ [0, 1] │ Predicted tracking quality at next
-    │                         │        │ beat cycle. BEP-trend based.
+ 8 │ tracking_prediction │ [0, 1] │ Predicted tracking quality at next
+ │ │ │ beat cycle. beat-trend based.
 ────┼─────────────────────────┼────────┼────────────────────────────────────
- 9  │ attention_sustain       │ [0, 1] │ Predicted attention sustainability.
-    │                         │        │ TMH context-driven endurance.
+ 9 │ attention_sustain │ [0, 1] │ Predicted attention sustainability.
+ │ │ │ temporal-context context-driven endurance.
 ────┼─────────────────────────┼────────┼────────────────────────────────────
-10  │ segregation_predict     │ [0, 1] │ Predicted stream segregation depth.
-    │                         │        │ Multi-window enhancement prediction.
+10 │ segregation_predict │ [0, 1] │ Predicted stream segregation depth.
+ │ │ │ Multi-window enhancement prediction.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 11D per frame at 172.27 Hz
@@ -530,24 +505,24 @@ TOTAL: 11D per frame at 172.27 Hz
 ```
 Envelope Tracking with Attention:
 
-    Tracking(t, instrument) = Σ_w Attention(w) · Envelope(t - Δ_w)
+ Tracking(t, instrument) = Σ_w Attention(w) · Envelope(t - Δ_w)
 
-    where w ∈ {early, middle, late}
-          Δ_early  = 150-220ms
-          Δ_middle = 320-360ms
-          Δ_late   = 410-450ms
+ where w ∈ {early, middle, late}
+ Δ_early = 150-220ms
+ Δ_middle = 320-360ms
+ Δ_late = 410-450ms
 
 Attention Gain:
-    Gain_attended = d · Gain_baseline
-    d = 0.6 (Hausfeld 2021)
+ Gain_attended = d · Gain_baseline
+ d = 0.6 (Hausfeld 2021)
 
 Instrument Asymmetry:
-    N_windows(bassoon)  = 3  (early + middle + late)
-    N_windows(cello)    = 1  (early only)
-    Asymmetry = spectral_richness · (f02 · f03)
+ N_windows(bassoon) = 3 (early + middle + late)
+ N_windows(cello) = 1 (early only)
+ Asymmetry = spectral_richness · (f02 · f03)
 
-    Spectrally rich instruments provide more cues for
-    hierarchical attention-driven stream separation.
+ Spectrally rich instruments provide more cues for
+ hierarchical attention-driven stream separation.
 ```
 
 ### 7.2 Feature Formulas
@@ -556,35 +531,31 @@ Instrument Asymmetry:
 # COEFFICIENT SATURATION RULE: For sigmoid(Σ wi*gi), |wi| must sum <= 1.0
 
 # f01: Early Window (150-220ms, STG/Heschl's, d=0.6)
-amp_val = h3[(7, 6, 0, 2)]           # amplitude value at H6
-amp_peak = h3[(7, 6, 4, 2)]          # amplitude max at H6
-loud_val = h3[(8, 6, 0, 0)]          # loudness value at H6
-onset_val = h3[(11, 6, 0, 0)]        # onset_strength value at H6
+amp_val = h3[(7, 6, 0, 2)] # amplitude value at H6
+amp_peak = h3[(7, 6, 4, 2)] # amplitude max at H6
+loud_val = h3[(8, 6, 0, 0)] # loudness value at H6
+onset_val = h3[(11, 6, 0, 0)] # onset_strength value at H6
 f01 = σ(0.35 * amp_val * loud_val
-       + 0.35 * onset_val * mean(BEP.beat_induction[0:10])
-       + 0.30 * amp_peak)
+ + 0.30 * amp_peak)
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # f02: Middle Window (320-360ms, MTG/IFG, bassoon-specific)
-flux_val = h3[(10, 11, 0, 0)]        # spectral_flux value at H11
-spec_chg_mean = h3[(21, 8, 1, 0)]    # spectral_change mean at H8
-energy_vel = h3[(22, 11, 8, 0)]      # energy_change velocity at H11
-f02 = σ(0.40 * flux_val * mean(BEP.meter_extraction[10:20])
-       + 0.30 * spec_chg_mean
-       + 0.30 * energy_vel)
+flux_val = h3[(10, 11, 0, 0)] # spectral_flux value at H11
+spec_chg_mean = h3[(21, 8, 1, 0)] # spectral_change mean at H8
+energy_vel = h3[(22, 11, 8, 0)] # energy_change velocity at H11
+ + 0.30 * spec_chg_mean
+ + 0.30 * energy_vel)
 # coefficients: 0.40 + 0.30 + 0.30 = 1.0 ✓
 
 # f03: Late Window (410-450ms, IFG/TP, bassoon-specific)
-x_coupling_bar = h3[(25, 16, 0, 2)]  # x_l0l5 value at H16
-x_l5l7_mean = h3[(41, 14, 1, 0)]     # x_l5l7 mean at H14
-stream_entropy = h3[(41, 14, 13, 0)]  # x_l5l7 entropy at H14
-f03 = σ(0.35 * x_coupling_bar * mean(BEP.motor_entrainment[20:30])
-       + 0.35 * x_l5l7_mean * mean(TMH.short_context[0:10])
-       + 0.30 * stream_entropy)
+x_coupling_bar = h3[(25, 16, 0, 2)] # x_l0l5 value at H16
+x_l5l7_mean = h3[(41, 14, 1, 0)] # x_l5l7 mean at H14
+stream_entropy = h3[(41, 14, 13, 0)] # x_l5l7 entropy at H14
+ + 0.30 * stream_entropy)
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # f04: Instrument Asymmetry (spectral richness modulation)
-timbre_var = h3[(24, 14, 3, 0)]      # timbre_change std at H14
+timbre_var = h3[(24, 14, 3, 0)] # timbre_change std at H14
 f04 = σ(0.50 * timbre_var + 0.50 * (f02 * f03))
 # coefficients: 0.50 + 0.50 = 1.0 ✓
 ```
@@ -605,7 +576,6 @@ f04 = σ(0.50 * timbre_var + 0.50 * (f02 * f03))
 | 6 | **Temporal Pole (TP)** | ±38, 12, -28 | EEG (Hausfeld 2021) | Late window (410-450ms) — deep stream segregation |
 | 7 | **Supplementary Motor Area (SMA)** | 0, -6, 62 | MEG (Doelling & Poeppel 2015) | Beat-level motor entrainment, musician enhancement |
 | 8 | **Primary Auditory Cortex (A1)** | ±42, -22, 7 | sEEG (Pesnot Lerousseau 2021) | High-gamma entrainment persistence (28-35% of sources) |
-| 9 | **Putamen** | ±14, 8, 4 | Implied by beat processing | Beat-based timing for entrainment (via BEP mechanism) |
 | 10 | **Cerebellum** | 20, -62, -26 | Review (Large 2023) | Sub-second timing precision for entrainment calibration |
 
 ---
@@ -616,29 +586,27 @@ f04 = σ(0.50 * timbre_var + 0.50 * (f02 * f03))
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    ETAM INTERACTIONS                                         │
+│ ETAM INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (STU):                                                         │
-│  HMCE.context_depth ──────► ETAM (context for attention window depth)      │
-│  AMSC.auditory_activatn ──► ETAM (auditory gamma → envelope tracking)     │
-│  ETAM.envelope_tracking ──► MDNS (attention-filtered stream for decoding) │
-│  ETAM.stream_separation ──► AMSS (separated streams for selection)        │
-│                                                                             │
-│  CROSS-UNIT (P4: STU internal):                                            │
-│  BEP.beat_induction ↔ TMH.short_context (entrainment × attention)         │
-│  Beat strength modulates attention-driven envelope tracking depth          │
-│                                                                             │
-│  CROSS-UNIT (P5: STU → ARU):                                              │
-│  ETAM.attention_gain ──► ARU (attention-modulated arousal)                │
-│  Stronger envelope tracking → enhanced emotional engagement               │
-│                                                                             │
-│  UPSTREAM DEPENDENCIES:                                                     │
-│  BEP mechanism (30D) ────────► ETAM (beat/meter/motor entrainment)        │
-│  TMH mechanism (30D) ────────► ETAM (temporal context hierarchy)          │
-│  R³ (~33D) ──────────────────► ETAM (direct spectral features)            │
-│  H³ (20 tuples) ─────────────► ETAM (temporal dynamics)                   │
-│                                                                             │
+│ │
+│ INTRA-UNIT (STU): │
+│ HMCE.context_depth ──────► ETAM (context for attention window depth) │
+│ AMSC.auditory_activatn ──► ETAM (auditory gamma → envelope tracking) │
+│ ETAM.envelope_tracking ──► MDNS (attention-filtered stream for decoding) │
+│ ETAM.stream_separation ──► AMSS (separated streams for selection) │
+│ │
+│ CROSS-UNIT (P4: STU internal): │
+│ beat_induction ↔ short_context (entrainment × attention) │
+│ Beat strength modulates attention-driven envelope tracking depth │
+│ │
+│ CROSS-UNIT (P5: STU → ARU): │
+│ ETAM.attention_gain ──► ARU (attention-modulated arousal) │
+│ Stronger envelope tracking → enhanced emotional engagement │
+│ │
+│ UPSTREAM DEPENDENCIES: │
+│ R³ (~33D) ──────────────────► ETAM (direct spectral features) │
+│ H³ (20 tuples) ─────────────► ETAM (temporal dynamics) │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -666,180 +634,156 @@ f04 = σ(0.50 * timbre_var + 0.50 * (f02 * f03))
 
 ```python
 class ETAM(BaseModel):
-    """Entrainment, Tempo & Attention Modulation.
+ """Entrainment, Tempo & Attention Modulation.
 
-    Output: 11D per frame.
-    Reads: BEP mechanism (30D, primary), TMH mechanism (30D, secondary), R³ direct.
-    """
-    NAME = "ETAM"
-    UNIT = "STU"
-    TIER = "β4"
-    OUTPUT_DIM = 11
-    MECHANISM_NAMES = ("BEP", "TMH")    # Both sensorimotor mechanisms
+ Output: 11D per frame.
+ Reads: R³ + H³ direct.
+ """
+ NAME = "ETAM"
+ UNIT = "STU"
+ TIER = "β4"
+ OUTPUT_DIM = 11
+ ATTENTION_D = 0.60 # Hausfeld 2021 effect size
+ EARLY_DELAY = 0.185 # 150-220ms center (seconds)
+ MIDDLE_DELAY = 0.340 # 320-360ms center (seconds)
+ LATE_DELAY = 0.430 # 410-450ms center (seconds)
 
-    ATTENTION_D = 0.60    # Hausfeld 2021 effect size
-    EARLY_DELAY = 0.185   # 150-220ms center (seconds)
-    MIDDLE_DELAY = 0.340  # 320-360ms center (seconds)
-    LATE_DELAY = 0.430    # 410-450ms center (seconds)
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """20 tuples for ETAM computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ # Early window (H6 = 200ms)
+ (7, 6, 0, 2), # amplitude, value, bidirectional
+ (7, 6, 4, 2), # amplitude, max, bidirectional
+ (8, 6, 0, 0), # loudness, value, forward
+ (11, 6, 0, 0), # onset_strength, value, forward
+ # Middle window (H11 = 500ms)
+ (10, 11, 0, 0), # spectral_flux, value, forward
+ (10, 11, 17, 0), # spectral_flux, peaks, forward
+ (22, 11, 8, 0), # energy_change, velocity, forward
+ (22, 11, 14, 2), # energy_change, periodicity, bidirectional
+ # Bar level (H16 = 1000ms)
+ (25, 16, 0, 2), # x_l0l5[0], value, bidirectional
+ (25, 16, 14, 2), # x_l0l5[0], periodicity, bidirectional
+ (33, 16, 0, 2), # x_l4l5[0], value, bidirectional
+ (33, 16, 18, 0), # x_l4l5[0], trend, forward
+ # Syllable context (H8 = 300ms)
+ (21, 8, 1, 0), # spectral_change, mean, forward
+ (21, 8, 3, 0), # spectral_change, std, forward
+ (24, 8, 0, 0), # timbre_change, value, forward
+ # Beat context (H14 = 700ms)
+ (41, 14, 1, 0), # x_l5l7[0], mean, forward
+ (41, 14, 13, 0), # x_l5l7[0], entropy, forward
+ (24, 14, 3, 0), # timbre_change, std, forward
+ (8, 14, 1, 0), # loudness, mean, forward
+ # Section context (H20 = 5000ms)
+ (8, 20, 18, 0), # loudness, trend, forward
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """20 tuples for ETAM computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # ── BEP horizons: beat entrainment ──
-            # Early window (H6 = 200ms)
-            (7, 6, 0, 2),     # amplitude, value, bidirectional
-            (7, 6, 4, 2),     # amplitude, max, bidirectional
-            (8, 6, 0, 0),     # loudness, value, forward
-            (11, 6, 0, 0),    # onset_strength, value, forward
-            # Middle window (H11 = 500ms)
-            (10, 11, 0, 0),   # spectral_flux, value, forward
-            (10, 11, 17, 0),  # spectral_flux, peaks, forward
-            (22, 11, 8, 0),   # energy_change, velocity, forward
-            (22, 11, 14, 2),  # energy_change, periodicity, bidirectional
-            # Bar level (H16 = 1000ms)
-            (25, 16, 0, 2),   # x_l0l5[0], value, bidirectional
-            (25, 16, 14, 2),  # x_l0l5[0], periodicity, bidirectional
-            (33, 16, 0, 2),   # x_l4l5[0], value, bidirectional
-            (33, 16, 18, 0),  # x_l4l5[0], trend, forward
-            # ── TMH horizons: temporal context ──
-            # Syllable context (H8 = 300ms)
-            (21, 8, 1, 0),    # spectral_change, mean, forward
-            (21, 8, 3, 0),    # spectral_change, std, forward
-            (24, 8, 0, 0),    # timbre_change, value, forward
-            # Beat context (H14 = 700ms)
-            (41, 14, 1, 0),   # x_l5l7[0], mean, forward
-            (41, 14, 13, 0),  # x_l5l7[0], entropy, forward
-            (24, 14, 3, 0),   # timbre_change, std, forward
-            (8, 14, 1, 0),    # loudness, mean, forward
-            # Section context (H20 = 5000ms)
-            (8, 20, 18, 0),   # loudness, trend, forward
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute ETAM 11D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute ETAM 11D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) → (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"BEP": (B,T,30), "TMH": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) → (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,11) ETAM output
+ """
+ # H³ features — Early window
+ amp_val = h3_direct[(7, 6, 0, 2)].unsqueeze(-1)
+ amp_peak = h3_direct[(7, 6, 4, 2)].unsqueeze(-1)
+ loud_val = h3_direct[(8, 6, 0, 0)].unsqueeze(-1)
+ onset_val = h3_direct[(11, 6, 0, 0)].unsqueeze(-1)
 
-        Returns:
-            (B,T,11) ETAM output
-        """
-        bep = mechanism_outputs["BEP"]    # (B, T, 30)
-        tmh = mechanism_outputs["TMH"]    # (B, T, 30)
+ # H³ features — Middle window
+ flux_val = h3_direct[(10, 11, 0, 0)].unsqueeze(-1)
+ spec_chg_mean = h3_direct[(21, 8, 1, 0)].unsqueeze(-1)
+ energy_vel = h3_direct[(22, 11, 8, 0)].unsqueeze(-1)
 
-        # BEP sub-sections
-        bep_beat = bep[..., 0:10]         # beat induction
-        bep_meter = bep[..., 10:20]       # meter extraction
-        bep_motor = bep[..., 20:30]       # motor entrainment
+ # H³ features — Late window
+ x_coupling_bar = h3_direct[(25, 16, 0, 2)].unsqueeze(-1)
+ x_l5l7_mean = h3_direct[(41, 14, 1, 0)].unsqueeze(-1)
+ stream_entropy = h3_direct[(41, 14, 13, 0)].unsqueeze(-1)
 
-        # TMH sub-sections
-        tmh_short = tmh[..., 0:10]        # short context
-        tmh_medium = tmh[..., 10:20]      # medium context
+ # H³ features — Instrument asymmetry
+ timbre_var = h3_direct[(24, 14, 3, 0)].unsqueeze(-1)
 
-        # H³ features — Early window
-        amp_val = h3_direct[(7, 6, 0, 2)].unsqueeze(-1)
-        amp_peak = h3_direct[(7, 6, 4, 2)].unsqueeze(-1)
-        loud_val = h3_direct[(8, 6, 0, 0)].unsqueeze(-1)
-        onset_val = h3_direct[(11, 6, 0, 0)].unsqueeze(-1)
+ # ═══ LAYER E: Explicit features ═══
 
-        # H³ features — Middle window
-        flux_val = h3_direct[(10, 11, 0, 0)].unsqueeze(-1)
-        spec_chg_mean = h3_direct[(21, 8, 1, 0)].unsqueeze(-1)
-        energy_vel = h3_direct[(22, 11, 8, 0)].unsqueeze(-1)
+ # f01: Early Window (coefficients sum = 1.0)
+ f01 = torch.sigmoid(
+ 0.35 * (amp_val * loud_val)
+ + 0.35 * (onset_val
+ + 0.30 * amp_peak
+ )
 
-        # H³ features — Late window
-        x_coupling_bar = h3_direct[(25, 16, 0, 2)].unsqueeze(-1)
-        x_l5l7_mean = h3_direct[(41, 14, 1, 0)].unsqueeze(-1)
-        stream_entropy = h3_direct[(41, 14, 13, 0)].unsqueeze(-1)
+ # f02: Middle Window (coefficients sum = 1.0)
+ f02 = torch.sigmoid(
+ 0.40 * (flux_val
+ + 0.30 * spec_chg_mean
+ + 0.30 * energy_vel
+ )
 
-        # H³ features — Instrument asymmetry
-        timbre_var = h3_direct[(24, 14, 3, 0)].unsqueeze(-1)
+ # f03: Late Window (coefficients sum = 1.0)
+ f03 = torch.sigmoid(
+ 0.35 * (x_coupling_bar
+ + 0.35 * (x_l5l7_mean
+ + 0.30 * stream_entropy
+ )
 
-        # ═══ LAYER E: Explicit features ═══
+ # f04: Instrument Asymmetry (coefficients sum = 1.0)
+ f04 = torch.sigmoid(
+ 0.50 * timbre_var
+ + 0.50 * (f02 * f03)
+ )
 
-        # f01: Early Window (coefficients sum = 1.0)
-        f01 = torch.sigmoid(
-            0.35 * (amp_val * loud_val)
-            + 0.35 * (onset_val
-                      * bep_beat.mean(-1, keepdim=True))
-            + 0.30 * amp_peak
-        )
+ # ═══ LAYER M: Mathematical ═══
+ attention_gain = self.ATTENTION_D * (f01 + f02 + f03) / 3
 
-        # f02: Middle Window (coefficients sum = 1.0)
-        f02 = torch.sigmoid(
-            0.40 * (flux_val
-                    * bep_meter.mean(-1, keepdim=True))
-            + 0.30 * spec_chg_mean
-            + 0.30 * energy_vel
-        )
+ energy_period = h3_direct[(22, 11, 14, 2)].unsqueeze(-1)
+ bar_period = h3_direct[(25, 16, 14, 2)].unsqueeze(-1)
+ entrainment_index = torch.sigmoid(
+ 0.5 * energy_period + 0.5 * bar_period
+ )
 
-        # f03: Late Window (coefficients sum = 1.0)
-        f03 = torch.sigmoid(
-            0.35 * (x_coupling_bar
-                    * bep_motor.mean(-1, keepdim=True))
-            + 0.35 * (x_l5l7_mean
-                      * tmh_short.mean(-1, keepdim=True))
-            + 0.30 * stream_entropy
-        )
+ # ═══ LAYER P: Present ═══
+ envelope_tracking = torch.sigmoid(
+ + 0.2 * loud_val
+ )
 
-        # f04: Instrument Asymmetry (coefficients sum = 1.0)
-        f04 = torch.sigmoid(
-            0.50 * timbre_var
-            + 0.50 * (f02 * f03)
-        )
+ x_dyn_bar = h3_direct[(33, 16, 0, 2)].unsqueeze(-1)
+ stream_separation = torch.sigmoid(
+ 0.4 * f03 + 0.3 * f04 + 0.3 * x_dyn_bar
+ )
 
-        # ═══ LAYER M: Mathematical ═══
-        attention_gain = self.ATTENTION_D * (f01 + f02 + f03) / 3
+ # ═══ LAYER F: Future ═══
+ groove_trend = h3_direct[(33, 16, 18, 0)].unsqueeze(-1)
+ tracking_prediction = torch.sigmoid(
+ 0.5 * f01 + 0.3 * groove_trend
+ )
 
-        energy_period = h3_direct[(22, 11, 14, 2)].unsqueeze(-1)
-        bar_period = h3_direct[(25, 16, 14, 2)].unsqueeze(-1)
-        entrainment_index = torch.sigmoid(
-            0.5 * energy_period + 0.5 * bar_period
-        )
+ loud_mean_beat = h3_direct[(8, 14, 1, 0)].unsqueeze(-1)
+ loud_trend_long = h3_direct[(8, 20, 18, 0)].unsqueeze(-1)
+ attention_sustain = torch.sigmoid(
+ + 0.3 * loud_mean_beat
+ + 0.3 * loud_trend_long
+ )
 
-        # ═══ LAYER P: Present ═══
-        envelope_tracking = torch.sigmoid(
-            0.5 * f01 + 0.3 * bep_beat.mean(-1, keepdim=True)
-            + 0.2 * loud_val
-        )
+ segregation_predict = torch.sigmoid(
+ 0.4 * f03 + 0.3 * f04 + 0.3 * stream_entropy
+ )
 
-        x_dyn_bar = h3_direct[(33, 16, 0, 2)].unsqueeze(-1)
-        stream_separation = torch.sigmoid(
-            0.4 * f03 + 0.3 * f04 + 0.3 * x_dyn_bar
-        )
-
-        # ═══ LAYER F: Future ═══
-        groove_trend = h3_direct[(33, 16, 18, 0)].unsqueeze(-1)
-        tracking_prediction = torch.sigmoid(
-            0.5 * f01 + 0.3 * groove_trend
-            + 0.2 * bep_beat.mean(-1, keepdim=True)
-        )
-
-        loud_mean_beat = h3_direct[(8, 14, 1, 0)].unsqueeze(-1)
-        loud_trend_long = h3_direct[(8, 20, 18, 0)].unsqueeze(-1)
-        attention_sustain = torch.sigmoid(
-            0.4 * tmh_medium.mean(-1, keepdim=True)
-            + 0.3 * loud_mean_beat
-            + 0.3 * loud_trend_long
-        )
-
-        segregation_predict = torch.sigmoid(
-            0.4 * f03 + 0.3 * f04 + 0.3 * stream_entropy
-        )
-
-        return torch.cat([
-            f01, f02, f03, f04,                              # E: 4D
-            attention_gain, entrainment_index,                # M: 2D
-            envelope_tracking, stream_separation,             # P: 2D
-            tracking_prediction, attention_sustain,
-            segregation_predict,                              # F: 3D
-        ], dim=-1)  # (B, T, 11)
+ return torch.cat([
+ f01, f02, f03, f04, # E: 4D
+ attention_gain, entrainment_index, # M: 2D
+ envelope_tracking, stream_separation, # P: 2D
+ tracking_prediction, attention_sustain,
+ segregation_predict, # F: 3D
+ ], dim=-1) # (B, T, 11)
 ```
 
 ---
@@ -855,8 +799,6 @@ class ETAM(BaseModel):
 | **Falsification Tests** | 6/9 confirmed, 2 constrain | Instrument asymmetry, musician enhancement, tempo modulation, modality specificity confirmed; persistence and entrainment-behavior dissociation CONSTRAIN |
 | **R³ Features Used** | 33D of 49D | Energy + Change + Interactions (all 3) |
 | **H³ Demand** | 20 tuples (0.87%) | Sparse, efficient |
-| **BEP Mechanism** | 30D (3 sub-sections) | Full coverage — all 3 windows |
-| **TMH Mechanism** | 30D (3 sub-sections) | Context support — attention modulation |
 | **Output Dimensions** | **11D** | 4-layer structure |
 
 ---
@@ -902,25 +844,16 @@ class ETAM(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D): L0, L4, L5, L6, L7, X_L5L7 | R³ (49D): Energy, Change, Interactions |
-| Temporal | HC⁰ mechanisms (TIH, ATT, NPL, SGM) | BEP (30D, primary) + TMH (30D, secondary) |
-| Early window | S⁰.L0.amplitude[2] + HC⁰.ATT | R³.amplitude[7] + BEP.beat_induction |
-| Middle window | S⁰.L5.spectral_flux[45] + HC⁰.TIH | R³.spectral_flux[10] + BEP.meter_extraction |
-| Late window | S⁰.L7.crossband[80:88] + HC⁰.SGM | R³.x_l0l5[25:33] + BEP.motor_entrainment + TMH |
-| Attention signal | S⁰.L4.velocity_A[17] × HC⁰.ATT | R³.energy_change[22] × BEP + TMH |
+| Temporal | HC⁰ mechanisms (TIH, ATT, NPL, SGM) | H³ direct (beat + temporal) |
+| Early window | S⁰.L0.amplitude[2] + HC⁰.ATT | R³.amplitude[7] |
+| Middle window | S⁰.L5.spectral_flux[45] + HC⁰.TIH | R³.spectral_flux[10] |
+| Late window | S⁰.L7.crossband[80:88] + HC⁰.SGM | R³.x_l0l5[25:33] + temporal-context |
+| Attention signal | S⁰.L4.velocity_A[17] × HC⁰.ATT | R³.energy_change[22] × H³ direct |
 | Phase coherence | S⁰.L7.phase[96:104] × HC⁰.NPL | R³.x_l5l7[41:49] (cross-band coupling) |
 | Instrument asymmetry | S⁰.L5.sharpness[36] × HC⁰.NPL | R³.timbre_change[24] (spectral richness) |
 | Demand format | HC⁰ index ranges | H³ 4-tuples (sparse) |
 | Total demand | 30/2304 = 1.30% | 20/2304 = 0.87% |
 | Output | 11D | 11D (same) |
-
-### Why BEP+TMH replaces HC⁰ mechanisms
-
-The D0 pipeline used 4 separate HC⁰ mechanisms (TIH, ATT, NPL, SGM). In MI, these are unified into two sensorimotor mechanisms:
-
-- **ATT → BEP.beat_induction** [0:10]: Attentional entrainment for initial selection maps to beat-level tracking. The ATT mechanism captured attention-modulated gain, which in MI is achieved by BEP.beat_induction's intensity-tracking at the beat timescale.
-- **TIH → BEP.meter_extraction** [10:20]: Temporal integration hierarchy for multi-window processing maps to meter-level stream tracking. TIH's multi-scale integration is captured by BEP's meter sub-section at H11.
-- **NPL → BEP.motor_entrainment** [20:30]: Neural phase-locking for deep segregation maps to motor entrainment. NPL's phase coherence is replaced by BEP's motor coupling at H16, which captures the late-window deep segregation.
-- **SGM → TMH.short_context** [0:10] + **TMH.medium_context** [10:20]: Striatal gradient memory for long-range attention modulation maps to TMH's hierarchical context. SGM's structural memory is unified into TMH's temporal memory hierarchy.
 
 ---
 
@@ -934,7 +867,6 @@ The D0 pipeline used 4 separate HC⁰ mechanisms (TIH, ATT, NPL, SGM). In MI, th
 ## Code Note (Phase 5)
 
 The `mi_beta/brain/units/stu/models/etam.py` implementation has:
-- `MECHANISM_NAMES = ("BEP",)` — doc specifies `("BEP", "TMH")`. **Missing TMH mechanism**.
 - `h3_demand = ()` — empty, should be populated with the 20 tuples from §5.1.
 - `version = "2.0.0"` — needs update to `"2.1.0"`.
 - `paper_count = 4` — should be `12`.

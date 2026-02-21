@@ -21,11 +21,11 @@ The **Piano Training Grey Matter Plasticity** (PTGMP) model describes how piano 
 PIANO TRAINING GREY MATTER PLASTICITY — THREE PATHWAYS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-EXECUTIVE PLANNING                     MOTOR COORDINATION
-Brain region: DLPFC (bilateral)        Brain region: Cerebellum (right)
-Effect: GMV increase d=0.34            Effect: GMV increase d=0.34
-Function: Audio-motor planning         Function: Timing/coordination
-R³ basis: Energy × Interactions        R³ basis: Change × Interactions
+EXECUTIVE PLANNING MOTOR COORDINATION
+Brain region: DLPFC (bilateral) Brain region: Cerebellum (right)
+Effect: GMV increase d=0.34 Effect: GMV increase d=0.34
+Function: Audio-motor planning Function: Timing/coordination
+R³ basis: Energy × Interactions R³ basis: Change × Interactions
 
 CREATIVE FLEXIBILITY
 Brain region: Frontal cortex
@@ -57,126 +57,125 @@ PTGMP provides evidence that sensorimotor timing circuits remain plastic in late
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                 PTGMP — COMPLETE CIRCUIT                                     ║
+║ PTGMP — COMPLETE CIRCUIT ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  MUSICAL INPUT (piano performance — keystroke sequences)                     ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │        DORSOLATERAL PREFRONTAL CORTEX (DLPFC, bilateral)            │    ║
-║  │        Executive planning for audio-motor sequences                  │    ║
-║  │        GMV increase: d = 0.34                                        │    ║
-║  │        Function: Sequence planning, working memory for music         │    ║
-║  └──────────────────────────┬──────────────────────────────────────────┘    ║
-║                              │  Motor command relay                         ║
-║                              ▼                                               ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │        CEREBELLUM (right hemisphere)                                │    ║
-║  │        Motor coordination and timing precision                      │    ║
-║  │        GMV increase: d = 0.34                                        │    ║
-║  │        Function: Keystroke timing, error correction, smoothness     │    ║
-║  └──────────────────────────┬──────────────────────────────────────────┘    ║
-║                              │  Feedback loop                               ║
-║                              ▼                                               ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │        FRONTAL CORTEX                                               │    ║
-║  │        Creative motor-perceptual integration                        │    ║
-║  │        Theta power increase: d = 0.27                                │    ║
-║  │        Function: Improvisation, novel sequence generation           │    ║
-║  └─────────────────────────────────────────────────────────────────────┘    ║
-║                                                                              ║
-║  PLASTICITY: Late-life structural neuroplasticity — older adults show       ║
-║  comparable GMV increases to younger learners after piano training.          ║
-║                                                                              ║
+║ ║
+║ MUSICAL INPUT (piano performance — keystroke sequences) ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ DORSOLATERAL PREFRONTAL CORTEX (DLPFC, bilateral) │ ║
+║ │ Executive planning for audio-motor sequences │ ║
+║ │ GMV increase: d = 0.34 │ ║
+║ │ Function: Sequence planning, working memory for music │ ║
+║ └──────────────────────────┬──────────────────────────────────────────┘ ║
+║ │ Motor command relay ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ CEREBELLUM (right hemisphere) │ ║
+║ │ Motor coordination and timing precision │ ║
+║ │ GMV increase: d = 0.34 │ ║
+║ │ Function: Keystroke timing, error correction, smoothness │ ║
+║ └──────────────────────────┬──────────────────────────────────────────┘ ║
+║ │ Feedback loop ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ FRONTAL CORTEX │ ║
+║ │ Creative motor-perceptual integration │ ║
+║ │ Theta power increase: d = 0.27 │ ║
+║ │ Function: Improvisation, novel sequence generation │ ║
+║ └─────────────────────────────────────────────────────────────────────┘ ║
+║ ║
+║ PLASTICITY: Late-life structural neuroplasticity — older adults show ║
+║ comparable GMV increases to younger learners after piano training. ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 CRITICAL EVIDENCE:
 ─────────────────
-DLPFC bilateral GMV increase:    d = 0.34 (VBM, piano training RCTs)
-Cerebellum GMV increase:         d = 0.34 (VBM) | L cerebellum p<0.0001 (Espinosa 2025)
-Frontal theta power increase:    d = 0.27 (EEG, improvisation)
-Systematic review:               6 RCTs, N=555, confirms pattern BUT 4/6 high bias risk
-ALE meta-analysis:               k=84, N=3005, musicians: higher sensorimotor (Criscuolo 2022)
+DLPFC bilateral GMV increase: d = 0.34 (VBM, piano training RCTs)
+Cerebellum GMV increase: d = 0.34 (VBM) | L cerebellum p<0.0001 (Espinosa 2025)
+Frontal theta power increase: d = 0.27 (EEG, improvisation)
+Systematic review: 6 RCTs, N=555, confirms pattern BUT 4/6 high bias risk
+ALE meta-analysis: k=84, N=3005, musicians: higher sensorimotor (Criscuolo 2022)
 CONSTRAINT: Espinosa 2025 VBM (N=61) found L cerebellum + auditory GM in active
-  players but NO DLPFC — DLPFC finding may be training-specific, not expertise-related
+ players but NO DLPFC — DLPFC finding may be training-specific, not expertise-related
 Improvisation: Bilateral BA45 (Broca's) activation (Tachibana 2024, N=20)
-  + ECN+NMR+limbic+memory systems (Liao 2024, N=25 percussionists)
+ + ECN+NMR+limbic+memory systems (Liao 2024, N=25 percussionists)
 ```
 
-### 2.2 Information Flow Architecture (EAR → BRAIN → TMH → PTGMP)
+### 2.2 Information Flow Architecture (EAR → BRAIN → PTGMP)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    PTGMP COMPUTATION ARCHITECTURE                            ║
+║ PTGMP COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins × 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
-║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ CHANGE   │ │ X-INT  │ │        ║
-║  │  │ 7D [0:7]  │ │ 5D[7:12]│ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
-║  │  │           │ │         │ │ [12:21] │ │ [21:25]  │ │ [25:49]│ │        ║
-║  │  │           │ │amplitude│ │         │ │spec_chg  │ │x_l0l5  │ │        ║
-║  │  │           │ │loudness │ │         │ │energy_chg│ │x_l4l5  │ │        ║
-║  │  │           │ │centroid │ │         │ │pitch_chg │ │x_l5l7  │ │        ║
-║  │  │           │ │flux     │ │         │ │timbre_chg│ │        │ │        ║
-║  │  │           │ │onset    │ │         │ │          │ │        │ │        ║
-║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                       PTGMP reads: 33D                          │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                                                                  │        ║
-║  │  ┌── Syllable ────┐ ┌── Beat ──────────┐ ┌── Section ────────┐ │        ║
-║  │  │ 300ms (H8)     │ │ 700ms (H14)      │ │ 5000ms (H20)     │ │        ║
-║  │  │                │ │                   │ │                    │ │        ║
-║  │  │ Short context  │ │ Medium context    │ │ Long context       │ │        ║
-║  │  │ Keystroke-     │ │ Phrase-level      │ │ Practice session-  │ │        ║
-║  │  │ level timing   │ │ motor planning    │ │ level adaptation   │ │        ║
-║  │  └──────┬─────────┘ └──────┬────────────┘ └──────┬─────────────┘ │        ║
-║  │         │                  │                     │               │        ║
-║  │         └──────────────────┴─────────────────────┘               │        ║
-║  │                       PTGMP demand: ~16 of 2304 tuples           │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Sensorimotor Circuit ═══════  ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌─────────────────┐                                                        ║
-║  │  TMH (30D)      │  Temporal Memory Hierarchy mechanism                   ║
-║  │                 │                                                        ║
-║  │ Short   [0:10] │  Keystroke timing, onset patterns, local motor cue     ║
-║  │ Medium  [10:20]│  Phrase-level planning, motor sequence coordination    ║
-║  │ Long    [20:30]│  Practice adaptation, skill consolidation signal       ║
-║  └────────┬────────┘                                                        ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    PTGMP MODEL (10D Output)                      │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f01_dlpfc_plasticity, f02_cerebellar_plast,│        ║
-║  │                       f03_frontal_theta                          │        ║
-║  │  Layer M (Math):      plasticity_index, age_resilience           │        ║
-║  │  Layer P (Present):   motor_coordination, audio_motor_binding    │        ║
-║  │  Layer F (Future):    skill_trajectory, timing_improvement,      │        ║
-║  │                       adaptation_rate                            │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins × 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ ENERGY │ │ TIMBRE │ │ CHANGE │ │ X-INT │ │ ║
+║ │ │ 7D [0:7] │ │ 5D[7:12]│ │ 9D │ │ 4D │ │ 24D │ │ ║
+║ │ │ │ │ │ │ [12:21] │ │ [21:25] │ │ [25:49]│ │ ║
+║ │ │ │ │amplitude│ │ │ │spec_chg │ │x_l0l5 │ │ ║
+║ │ │ │ │loudness │ │ │ │energy_chg│ │x_l4l5 │ │ ║
+║ │ │ │ │centroid │ │ │ │pitch_chg │ │x_l5l7 │ │ ║
+║ │ │ │ │flux │ │ │ │timbre_chg│ │ │ │ ║
+║ │ │ │ │onset │ │ │ │ │ │ │ │ ║
+║ │ └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │ ║
+║ │ PTGMP reads: 33D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ │ ║
+║ │ ┌── Syllable ────┐ ┌── Beat ──────────┐ ┌── Section ────────┐ │ ║
+║ │ │ 300ms (H8) │ │ 700ms (H14) │ │ 5000ms (H20) │ │ ║
+║ │ │ │ │ │ │ │ │ ║
+║ │ │ Short context │ │ Medium context │ │ Long context │ │ ║
+║ │ │ Keystroke- │ │ Phrase-level │ │ Practice session- │ │ ║
+║ │ │ level timing │ │ motor planning │ │ level adaptation │ │ ║
+║ │ └──────┬─────────┘ └──────┬────────────┘ └──────┬─────────────┘ │ ║
+║ │ │ │ │ │ ║
+║ │ └──────────────────┴─────────────────────┘ │ ║
+║ │ PTGMP demand: ~16 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Sensorimotor Circuit ═══════ ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────┐ ║
+║ │ │ ║
+║ │ Short [0:10] │ Keystroke timing, onset patterns, local motor cue ║
+║ │ Medium [10:20]│ Phrase-level planning, motor sequence coordination ║
+║ │ Long [20:30]│ Practice adaptation, skill consolidation signal ║
+║ └────────┬────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ PTGMP MODEL (10D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f01_dlpfc_plasticity, f02_cerebellar_plast,│ ║
+║ │ f03_frontal_theta │ ║
+║ │ Layer M (Math): plasticity_index, age_resilience │ ║
+║ │ Layer P (Present): motor_coordination, audio_motor_binding │ ║
+║ │ Layer F (Future): skill_trajectory, timing_improvement, │ ║
+║ │ adaptation_rate │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -219,11 +218,11 @@ Espinosa et al. (2025) VBM of active vs. former vs. naive older adults (N=61) fo
 STRUCTURAL NEUROPLASTICITY FROM PIANO TRAINING
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Region              Function            Effect Size   Evidence
+Region Function Effect Size Evidence
 ────────────────────────────────────────────────────────────────
-DLPFC (bilateral)   Executive planning  d = 0.34      VBM (GMV)
-Cerebellum (right)  Motor coordination  d = 0.34      VBM (GMV)
-Frontal cortex      Improvisation       d = 0.27      EEG (theta)
+DLPFC (bilateral) Executive planning d = 0.34 VBM (GMV)
+Cerebellum (right) Motor coordination d = 0.34 VBM (GMV)
+Frontal cortex Improvisation d = 0.27 EEG (theta)
 
 Key Finding: Older adults show grey matter volume increases
 comparable to younger trainees. Late-life plasticity is driven
@@ -239,32 +238,32 @@ replication, and older-adult specificity.
 ```
 PIANO TRAINING RCT EFFECTS (from Espinosa 2025 systematic review):
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Measure                  Effect      Source
+Measure Effect Source
 ─────────────────────────────────────────────────────────────────
-DLPFC bilateral GMV      d = 0.34    VBM (piano training RCTs)
-Cerebellum GMV           d = 0.34    VBM (piano training RCTs)
-Frontal theta power      d = 0.27    EEG (improvisation)
+DLPFC bilateral GMV d = 0.34 VBM (piano training RCTs)
+Cerebellum GMV d = 0.34 VBM (piano training RCTs)
+Frontal theta power d = 0.27 EEG (improvisation)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 CROSS-SECTIONAL EVIDENCE (Espinosa 2025 VBM, N=61):
-  Active players vs naive: L cerebellum + auditory GM (p < 0.0001)
-  BUT: NO DLPFC difference, NO neuropsych correlation
-  Former players = naive (benefits do NOT persist)
+ Active players vs naive: L cerebellum + auditory GM (p < 0.0001)
+ BUT: NO DLPFC difference, NO neuropsych correlation
+ Former players = naive (benefits do NOT persist)
 
 META-ANALYTIC (Criscuolo 2022 ALE, k=84, N=3005):
-  Musicians: ↑ auditory, sensorimotor, interoceptive, limbic
-  Musicians: ↓ parietal regions
+ Musicians: ↑ auditory, sensorimotor, interoceptive, limbic
+ Musicians: ↓ parietal regions
 
 IMPROVISATION EVIDENCE:
-  Bilateral BA45 activation (Tachibana 2024, N=20)
-  ECN + NMR + limbic + memory activation (Liao 2024, N=25)
+ Bilateral BA45 activation (Tachibana 2024, N=20)
+ ECN + NMR + limbic + memory activation (Liao 2024, N=25)
 
 Quality Assessment: γ-tier (speculative)
-  Strengths: Systematic review confirms GMV+theta pattern from
-  6 RCTs (N=555); cross-sectional L cerebellum confirmed
-  Weakness: 4/6 RCTs high risk of bias, 3 overlapping cohorts,
-  DLPFC finding NOT replicated cross-sectionally, former players
-  lose benefits, no cognitive-neural correlation robust
+ Strengths: Systematic review confirms GMV+theta pattern from
+ 6 RCTs (N=555); cross-sectional L cerebellum confirmed
+ Weakness: 4/6 RCTs high risk of bias, 3 overlapping cohorts,
+ DLPFC finding NOT replicated cross-sectionally, former players
+ lose benefits, no cognitive-neural correlation robust
 ```
 
 ---
@@ -301,26 +300,26 @@ Quality Assessment: γ-tier (speculative)
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[10] spectral_flux ─────────┐
 R³[11] onset_strength ────────┼──► Motor Timing Precision
-R³[21:25] Change (4D) ────────┘   TMH.short_context at H8 (300ms)
-                                    Cerebellar timing coordination
+R³[21:25] Change (4D) ────────┘ short_context at H8 (300ms)
+ Cerebellar timing coordination
 
 R³[7] amplitude ────────────────┐
 R³[8] loudness ─────────────────┼──► Audio-Motor Planning
-R³[22] energy_change ───────────┘   TMH.medium_context at H14 (700ms)
-                                    DLPFC executive sequence planning
+R³[22] energy_change ───────────┘ medium_context at H14 (700ms)
+ DLPFC executive sequence planning
 
 R³[25:33] x_l0l5 (8D) ────────┐
 R³[33:41] x_l4l5 (8D) ────────┼──► Long-Range Skill Consolidation
-R³[41:49] x_l5l7 (8D) ────────┘   TMH.long_context at H20 (5000ms)
-                                    Practice-level adaptation signal
+R³[41:49] x_l5l7 (8D) ────────┘ long_context at H20 (5000ms)
+ Practice-level adaptation signal
 
 Plasticity Factor ─────────────── Age-Resilient Plasticity
-                                    d = 0.34 DLPFC, d = 0.34 cerebellum
-                                    Older adults maintain capacity
+ d = 0.34 DLPFC, d = 0.34 cerebellum
+ Older adults maintain capacity
 
 ── R³ v2 (Phase 6) ──────────────────────────────────────────────
 R³[73] tempo_stability ────────── Temporal prediction → motor planning
@@ -332,7 +331,7 @@ R³[73] tempo_stability ────────── Temporal prediction → m
 
 ### 5.1 Demand Specification
 
-PTGMP requires H³ features at three TMH horizons: H8 (300ms), H14 (700ms), H20 (5000ms).
+PTGMP requires H³ features at three horizons: H8 (300ms), H14 (700ms), H20 (5000ms).
 These correspond to keystroke → phrase → practice-session timescales.
 
 | R³ Index | Feature | H | Morph | Law | Purpose |
@@ -358,7 +357,7 @@ These correspond to keystroke → phrase → practice-session timescales.
 
 #### R³ v2 Projected Expansion
 
-Minor v2 expansion. PTGMP projected v2 feature from G:Rhythm, aligned with TMH horizons.
+Minor v2 expansion. PTGMP projected v2 feature from G:Rhythm, aligned with corresponding H³ horizons.
 
 | R³ Idx | Feature | Group | H | Morph | Law | Purpose |
 |:------:|---------|:-----:|:-:|-------|:---:|---------|
@@ -367,18 +366,6 @@ Minor v2 expansion. PTGMP projected v2 feature from G:Rhythm, aligned with TMH h
 
 **v2 projected**: 2 tuples
 **Total projected**: 18 tuples of 294,912 theoretical = 0.0061%
-
-### 5.2 TMH Mechanism Binding
-
-PTGMP reads from the **TMH** (Temporal Memory Hierarchy) mechanism:
-
-| TMH Sub-section | Range | PTGMP Role | Weight |
-|-----------------|-------|-----------|--------|
-| **Short Context** | TMH[0:10] | Keystroke-level motor timing (cerebellum, onset precision) | **1.0** (primary) |
-| **Medium Context** | TMH[10:20] | Phrase-level motor planning (DLPFC, sequence coordination) | **1.0** (primary) |
-| **Long Context** | TMH[20:30] | Practice-session adaptation (plasticity consolidation) | **1.0** (primary) |
-
-PTGMP does NOT read from BEP — grey matter plasticity is about structural adaptation from motor-learning demands, not beat entrainment.
 
 ---
 
@@ -393,59 +380,59 @@ Manifold range: STU PTGMP [229:239]
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼─────────────────────┼────────┼────────────────────────────────────────────
- 0  │ f01_dlpfc_plasticity│ [0, 1] │ DLPFC bilateral GMV increase proxy (d=0.34).
-    │                     │        │ Audio-motor planning complexity.
-    │                     │        │ f01 = σ(0.35 · amp_trend ·
-    │                     │        │         x_l4l5_mean · TMH.medium)
+ 0 │ f01_dlpfc_plasticity│ [0, 1] │ DLPFC bilateral GMV increase proxy (d=0.34).
+ │ │ │ Audio-motor planning complexity.
+ │ │ │ f01 = σ(0.35 · amp_trend ·
+ │ │ │ x_l4l5_mean · medium)
 ────┼─────────────────────┼────────┼────────────────────────────────────────────
- 1  │ f02_cerebellar_plast│ [0, 1] │ Cerebellum right hemisphere GMV proxy (d=0.34).
-    │                     │        │ Motor coordination and timing precision.
-    │                     │        │ f02 = σ(0.30 · flux_mean · onset_val ·
-    │                     │        │         TMH.short)
+ 1 │ f02_cerebellar_plast│ [0, 1] │ Cerebellum right hemisphere GMV proxy (d=0.34).
+ │ │ │ Motor coordination and timing precision.
+ │ │ │ f02 = σ(0.30 · flux_mean · onset_val ·
+ │ │ │ short)
 ────┼─────────────────────┼────────┼────────────────────────────────────────────
- 2  │ f03_frontal_theta   │ [0, 1] │ Frontal theta power increase proxy (d=0.27).
-    │                     │        │ Creative motor-perceptual integration.
-    │                     │        │ f03 = σ(0.30 · energy_change_std ·
-    │                     │        │         pitch_change_mean · TMH.medium)
+ 2 │ f03_frontal_theta │ [0, 1] │ Frontal theta power increase proxy (d=0.27).
+ │ │ │ Creative motor-perceptual integration.
+ │ │ │ f03 = σ(0.30 · energy_change_std ·
+ │ │ │ pitch_change_mean · medium)
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼─────────────────────┼────────┼────────────────────────────────────────────
- 3  │ plasticity_index    │ [0, 1] │ Overall structural plasticity signal.
-    │                     │        │ Weighted sum of region-specific effects.
-    │                     │        │ plast = (0.34·f01 + 0.34·f02 + 0.27·f03) /
-    │                     │        │         (0.34 + 0.34 + 0.27)
+ 3 │ plasticity_index │ [0, 1] │ Overall structural plasticity signal.
+ │ │ │ Weighted sum of region-specific effects.
+ │ │ │ plast = (0.34·f01 + 0.34·f02 + 0.27·f03) /
+ │ │ │ (0.34 + 0.34 + 0.27)
 ────┼─────────────────────┼────────┼────────────────────────────────────────────
- 4  │ age_resilience      │ [0, 1] │ Late-life plasticity preservation factor.
-    │                     │        │ Stability of long-range motor coupling.
-    │                     │        │ age_r = σ(0.50 · stability_loud ·
-    │                     │        │           stability_coupling)
+ 4 │ age_resilience │ [0, 1] │ Late-life plasticity preservation factor.
+ │ │ │ Stability of long-range motor coupling.
+ │ │ │ age_r = σ(0.50 · stability_loud ·
+ │ │ │ stability_coupling)
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼─────────────────────┼────────┼────────────────────────────────────────────
- 5  │ motor_coordination  │ [0, 1] │ Current cerebellar motor state.
-    │                     │        │ TMH.short_context aggregation.
+ 5 │ motor_coordination │ [0, 1] │ Current cerebellar motor state.
+ │ │ │ short_context aggregation.
 ────┼─────────────────────┼────────┼────────────────────────────────────────────
- 6  │ audio_motor_binding │ [0, 1] │ Current DLPFC audio-motor integration state.
-    │                     │        │ TMH.medium_context aggregation.
+ 6 │ audio_motor_binding │ [0, 1] │ Current DLPFC audio-motor integration state.
+ │ │ │ medium_context aggregation.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼─────────────────────┼────────┼────────────────────────────────────────────
- 7  │ skill_trajectory    │ [0, 1] │ Predicted motor improvement direction.
-    │                     │        │ Long-range coupling trend.
+ 7 │ skill_trajectory │ [0, 1] │ Predicted motor improvement direction.
+ │ │ │ Long-range coupling trend.
 ────┼─────────────────────┼────────┼────────────────────────────────────────────
- 8  │ timing_improvement  │ [0, 1] │ Predicted timing precision improvement.
-    │                     │        │ Autocorrelation-based repetition learning.
+ 8 │ timing_improvement │ [0, 1] │ Predicted timing precision improvement.
+ │ │ │ Autocorrelation-based repetition learning.
 ────┼─────────────────────┼────────┼────────────────────────────────────────────
- 9  │ adaptation_rate     │ [0, 1] │ Rate of practice-level adaptation.
-    │                     │        │ TMH.long_context trend-based estimate.
+ 9 │ adaptation_rate │ [0, 1] │ Rate of practice-level adaptation.
+ │ │ │ long_context trend-based estimate.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 10D per frame at 172.27 Hz
@@ -462,23 +449,23 @@ Manifold range: STU PTGMP [229:239]
 ```
 Plasticity Encoding:
 
-    GMV_Change(region) = f(Training_Intensity, Audio_Motor_Demand)
+ GMV_Change(region) = f(Training_Intensity, Audio_Motor_Demand)
 
-    For DLPFC (bilateral):
-      Plasticity ∝ Audio-motor planning complexity
-      d = 0.34 (grey matter volume increase)
+ For DLPFC (bilateral):
+ Plasticity ∝ Audio-motor planning complexity
+ d = 0.34 (grey matter volume increase)
 
-    For Cerebellum (right):
-      Plasticity ∝ Motor timing precision demand
-      d = 0.34 (grey matter volume increase)
+ For Cerebellum (right):
+ Plasticity ∝ Motor timing precision demand
+ d = 0.34 (grey matter volume increase)
 
-    For Frontal Cortex:
-      Theta_Power ∝ Improvisation / creative flexibility
-      d = 0.27 (theta band power increase)
+ For Frontal Cortex:
+ Theta_Power ∝ Improvisation / creative flexibility
+ d = 0.27 (theta band power increase)
 
-    Age Resilience:
-      Plasticity(older) ≈ Plasticity(younger)
-      Late-life structural neuroplasticity maintained
+ Age Resilience:
+ Plasticity(older) ≈ Plasticity(younger)
+ Late-life structural neuroplasticity maintained
 ```
 
 ### 7.2 Feature Formulas
@@ -490,24 +477,21 @@ Plasticity Encoding:
 # which keeps effective input in reasonable range.
 
 # f01: DLPFC Plasticity (bilateral, d=0.34)
-amp_trend = h3[(7, 14, 18, 0)]        # amplitude trend at H14
-x_l4l5_mean = h3[(33, 20, 1, 0)]      # x_l4l5 mean at H20
+amp_trend = h3[(7, 14, 18, 0)] # amplitude trend at H14
+x_l4l5_mean = h3[(33, 20, 1, 0)] # x_l4l5 mean at H20
 f01 = σ(0.35 · amp_trend · x_l4l5_mean
-         · mean(TMH.medium_context[10:20]))
-# |0.35| ≤ 1.0 ✓  (multiplicative terms bounded [0,1])
+# |0.35| ≤ 1.0 ✓ (multiplicative terms bounded [0,1])
 
 # f02: Cerebellar Plasticity (right, d=0.34)
-flux_mean = h3[(10, 8, 1, 0)]         # spectral_flux mean at H8
-onset_val = h3[(11, 8, 0, 0)]         # onset_strength value at H8
+flux_mean = h3[(10, 8, 1, 0)] # spectral_flux mean at H8
+onset_val = h3[(11, 8, 0, 0)] # onset_strength value at H8
 f02 = σ(0.30 · flux_mean · onset_val
-         · mean(TMH.short_context[0:10]))
 # |0.30| ≤ 1.0 ✓
 
 # f03: Frontal Theta (d=0.27)
-energy_std = h3[(22, 14, 3, 0)]       # energy_change std at H14
-pitch_mean = h3[(23, 14, 1, 0)]       # pitch_change mean at H14
+energy_std = h3[(22, 14, 3, 0)] # energy_change std at H14
+pitch_mean = h3[(23, 14, 1, 0)] # pitch_change mean at H14
 f03 = σ(0.30 · energy_std · pitch_mean
-         · mean(TMH.medium_context[10:20]))
 # |0.30| ≤ 1.0 ✓
 
 # f04: Plasticity Index (effect-size weighted average)
@@ -515,10 +499,10 @@ f04 = (0.34 · f01 + 0.34 · f02 + 0.27 · f03) / (0.34 + 0.34 + 0.27)
 # Weighted by reported effect sizes → [0, 1]
 
 # f05: Age Resilience
-stability_loud = h3[(8, 14, 19, 0)]   # loudness stability at H14
+stability_loud = h3[(8, 14, 19, 0)] # loudness stability at H14
 stability_coupling = h3[(25, 20, 19, 0)] # x_l0l5 stability at H20
 f05 = σ(0.50 · stability_loud · stability_coupling)
-# |0.50| ≤ 1.0 ✓  (multiplicative → effective range compressed)
+# |0.50| ≤ 1.0 ✓ (multiplicative → effective range compressed)
 ```
 
 ---
@@ -548,24 +532,24 @@ f05 = σ(0.50 · stability_loud · stability_coupling)
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    PTGMP INTERACTIONS                                        │
+│ PTGMP INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (STU):                                                         │
-│  PTGMP.motor_coordination ──► AMSC (cerebellar → auditory-motor coupling)  │
-│  PTGMP.audio_motor_binding ──► TPIO (DLPFC → timing precision)            │
-│  PTGMP.skill_trajectory ────► HMCE (plasticity → context depth growth)    │
-│                                                                             │
-│  CROSS-UNIT (P4: STU internal):                                            │
-│  TMH.short_context ↔ PTGMP.cerebellar_plast (timing → plasticity)        │
-│  TMH.medium_context ↔ PTGMP.dlpfc_plasticity (planning → plasticity)     │
-│                                                                             │
-│  CROSS-UNIT (P5: STU → IMU):                                              │
-│  PTGMP.plasticity_index ──► IMU (structural plasticity → memory encoding) │
-│                                                                             │
-│  CROSS-UNIT (P5: STU → ARU):                                              │
-│  PTGMP.frontal_theta ──► ARU (improvisation → affective engagement)       │
-│                                                                             │
+│ │
+│ INTRA-UNIT (STU): │
+│ PTGMP.motor_coordination ──► AMSC (cerebellar → auditory-motor coupling) │
+│ PTGMP.audio_motor_binding ──► TPIO (DLPFC → timing precision) │
+│ PTGMP.skill_trajectory ────► HMCE (plasticity → context depth growth) │
+│ │
+│ CROSS-UNIT (P4: STU internal): │
+│ short_context ↔ PTGMP.cerebellar_plast (timing → plasticity) │
+│ medium_context ↔ PTGMP.dlpfc_plasticity (planning → plasticity) │
+│ │
+│ CROSS-UNIT (P5: STU → IMU): │
+│ PTGMP.plasticity_index ──► IMU (structural plasticity → memory encoding) │
+│ │
+│ CROSS-UNIT (P5: STU → ARU): │
+│ PTGMP.frontal_theta ──► ARU (improvisation → affective engagement) │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -593,152 +577,133 @@ f05 = σ(0.50 · stability_loud · stability_coupling)
 
 ```python
 class PTGMP(BaseModel):
-    """Piano Training Grey Matter Plasticity.
+ """Piano Training Grey Matter Plasticity.
 
-    Output: 10D per frame.
-    Reads: TMH mechanism (30D), R³ direct.
-    Zero learned parameters — all deterministic.
-    """
-    NAME = "PTGMP"
-    UNIT = "STU"
-    TIER = "γ4"
-    OUTPUT_DIM = 10
-    MECHANISM_NAMES = ("TMH",)        # Primary mechanism
+ Output: 10D per frame.
+ Zero learned parameters — all deterministic.
+ """
+ NAME = "PTGMP"
+ UNIT = "STU"
+ TIER = "γ4"
+ OUTPUT_DIM = 10
+ # Effect sizes from literature
+ DLPFC_D = 0.34 # DLPFC bilateral GMV increase
+ CEREB_D = 0.34 # Cerebellum right GMV increase
+ THETA_D = 0.27 # Frontal theta power increase
 
-    # Effect sizes from literature
-    DLPFC_D = 0.34     # DLPFC bilateral GMV increase
-    CEREB_D = 0.34     # Cerebellum right GMV increase
-    THETA_D = 0.27     # Frontal theta power increase
+ # Sigmoid coefficients — |wᵢ| ≤ 1.0 rule enforced
+ ALPHA = 0.35 # DLPFC plasticity weight
+ BETA = 0.30 # Cerebellar plasticity weight
+ GAMMA = 0.30 # Frontal theta weight
+ DELTA = 0.50 # Age resilience weight
 
-    # Sigmoid coefficients — |wᵢ| ≤ 1.0 rule enforced
-    ALPHA = 0.35   # DLPFC plasticity weight
-    BETA = 0.30    # Cerebellar plasticity weight
-    GAMMA = 0.30   # Frontal theta weight
-    DELTA = 0.50   # Age resilience weight
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """16 tuples for PTGMP computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ # Short context (H8 = 300ms) — cerebellar timing
+ (10, 8, 0, 0), # spectral_flux, value, forward
+ (10, 8, 1, 0), # spectral_flux, mean, forward
+ (11, 8, 0, 0), # onset_strength, value, forward
+ (21, 8, 1, 0), # spectral_change, mean, forward
+ # Medium context (H14 = 700ms) — DLPFC planning
+ (22, 14, 1, 0), # energy_change, mean, forward
+ (22, 14, 3, 0), # energy_change, std, forward
+ (23, 14, 1, 0), # pitch_change, mean, forward
+ (7, 14, 18, 0), # amplitude, trend, forward
+ (8, 14, 1, 0), # loudness, mean, forward
+ (8, 14, 19, 0), # loudness, stability, forward
+ # Long context (H20 = 5000ms) — plasticity consolidation
+ (25, 20, 1, 0), # x_l0l5[0], mean, forward
+ (25, 20, 19, 0), # x_l0l5[0], stability, forward
+ (33, 20, 1, 0), # x_l4l5[0], mean, forward
+ (33, 20, 22, 0), # x_l4l5[0], autocorrelation, forward
+ (41, 20, 1, 0), # x_l5l7[0], mean, forward
+ (41, 20, 18, 0), # x_l5l7[0], trend, forward
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """16 tuples for PTGMP computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # Short context (H8 = 300ms) — cerebellar timing
-            (10, 8, 0, 0),    # spectral_flux, value, forward
-            (10, 8, 1, 0),    # spectral_flux, mean, forward
-            (11, 8, 0, 0),    # onset_strength, value, forward
-            (21, 8, 1, 0),    # spectral_change, mean, forward
-            # Medium context (H14 = 700ms) — DLPFC planning
-            (22, 14, 1, 0),   # energy_change, mean, forward
-            (22, 14, 3, 0),   # energy_change, std, forward
-            (23, 14, 1, 0),   # pitch_change, mean, forward
-            (7, 14, 18, 0),   # amplitude, trend, forward
-            (8, 14, 1, 0),    # loudness, mean, forward
-            (8, 14, 19, 0),   # loudness, stability, forward
-            # Long context (H20 = 5000ms) — plasticity consolidation
-            (25, 20, 1, 0),   # x_l0l5[0], mean, forward
-            (25, 20, 19, 0),  # x_l0l5[0], stability, forward
-            (33, 20, 1, 0),   # x_l4l5[0], mean, forward
-            (33, 20, 22, 0),  # x_l4l5[0], autocorrelation, forward
-            (41, 20, 1, 0),   # x_l5l7[0], mean, forward
-            (41, 20, 18, 0),  # x_l5l7[0], trend, forward
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute PTGMP 10D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute PTGMP 10D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"TMH": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,10) PTGMP output
+ """
+ # ═══ LAYER E: Explicit features ═══
 
-        Returns:
-            (B,T,10) PTGMP output
-        """
-        tmh = mechanism_outputs["TMH"]    # (B, T, 30)
+ # f01: DLPFC Plasticity (bilateral, d=0.34)
+ amp_trend = h3_direct[(7, 14, 18, 0)].unsqueeze(-1)
+ x_l4l5_mean = h3_direct[(33, 20, 1, 0)].unsqueeze(-1)
+ f01 = torch.sigmoid(self.ALPHA * (
+ amp_trend * x_l4l5_mean
+ ))
 
-        # TMH sub-sections
-        tmh_short = tmh[..., 0:10]        # short context
-        tmh_medium = tmh[..., 10:20]      # medium context
-        tmh_long = tmh[..., 20:30]        # long context
+ # f02: Cerebellar Plasticity (right, d=0.34)
+ flux_mean = h3_direct[(10, 8, 1, 0)].unsqueeze(-1)
+ onset_val = h3_direct[(11, 8, 0, 0)].unsqueeze(-1)
+ f02 = torch.sigmoid(self.BETA * (
+ flux_mean * onset_val
+ ))
 
-        # ═══ LAYER E: Explicit features ═══
+ # f03: Frontal Theta (d=0.27)
+ energy_std = h3_direct[(22, 14, 3, 0)].unsqueeze(-1)
+ pitch_mean = h3_direct[(23, 14, 1, 0)].unsqueeze(-1)
+ f03 = torch.sigmoid(self.GAMMA * (
+ energy_std * pitch_mean
+ ))
 
-        # f01: DLPFC Plasticity (bilateral, d=0.34)
-        amp_trend = h3_direct[(7, 14, 18, 0)].unsqueeze(-1)
-        x_l4l5_mean = h3_direct[(33, 20, 1, 0)].unsqueeze(-1)
-        f01 = torch.sigmoid(self.ALPHA * (
-            amp_trend * x_l4l5_mean
-            * tmh_medium.mean(-1, keepdim=True)
-        ))
+ # ═══ LAYER M: Mathematical ═══
 
-        # f02: Cerebellar Plasticity (right, d=0.34)
-        flux_mean = h3_direct[(10, 8, 1, 0)].unsqueeze(-1)
-        onset_val = h3_direct[(11, 8, 0, 0)].unsqueeze(-1)
-        f02 = torch.sigmoid(self.BETA * (
-            flux_mean * onset_val
-            * tmh_short.mean(-1, keepdim=True)
-        ))
+ # Plasticity index — effect-size weighted
+ total_d = self.DLPFC_D + self.CEREB_D + self.THETA_D
+ plasticity_index = (
+ self.DLPFC_D * f01
+ + self.CEREB_D * f02
+ + self.THETA_D * f03
+ ) / total_d
 
-        # f03: Frontal Theta (d=0.27)
-        energy_std = h3_direct[(22, 14, 3, 0)].unsqueeze(-1)
-        pitch_mean = h3_direct[(23, 14, 1, 0)].unsqueeze(-1)
-        f03 = torch.sigmoid(self.GAMMA * (
-            energy_std * pitch_mean
-            * tmh_medium.mean(-1, keepdim=True)
-        ))
+ # Age resilience — stability-based
+ stability_loud = h3_direct[(8, 14, 19, 0)].unsqueeze(-1)
+ stability_coupling = h3_direct[(25, 20, 19, 0)].unsqueeze(-1)
+ age_resilience = torch.sigmoid(self.DELTA * (
+ stability_loud * stability_coupling
+ ))
 
-        # ═══ LAYER M: Mathematical ═══
+ # ═══ LAYER P: Present ═══
 
-        # Plasticity index — effect-size weighted
-        total_d = self.DLPFC_D + self.CEREB_D + self.THETA_D
-        plasticity_index = (
-            self.DLPFC_D * f01
-            + self.CEREB_D * f02
-            + self.THETA_D * f03
-        ) / total_d
+ # ═══ LAYER F: Future ═══
 
-        # Age resilience — stability-based
-        stability_loud = h3_direct[(8, 14, 19, 0)].unsqueeze(-1)
-        stability_coupling = h3_direct[(25, 20, 19, 0)].unsqueeze(-1)
-        age_resilience = torch.sigmoid(self.DELTA * (
-            stability_loud * stability_coupling
-        ))
+ # Skill trajectory — long-range trend
+ x_l5l7_trend = h3_direct[(41, 20, 18, 0)].unsqueeze(-1)
+ skill_trajectory = torch.sigmoid(
+ )
+ # |0.6| + |0.4| = 1.0 ≤ 1.0 ✓
 
-        # ═══ LAYER P: Present ═══
-        motor_coordination = tmh_short.mean(-1, keepdim=True)
-        audio_motor_binding = tmh_medium.mean(-1, keepdim=True)
+ # Timing improvement — repetition learning
+ x_l4l5_autocorr = h3_direct[(33, 20, 22, 0)].unsqueeze(-1)
+ timing_improvement = torch.sigmoid(
+ )
+ # |0.5| + |0.5| = 1.0 ≤ 1.0 ✓
 
-        # ═══ LAYER F: Future ═══
+ # Adaptation rate — long context trend
+ x_l0l5_mean = h3_direct[(25, 20, 1, 0)].unsqueeze(-1)
+ adaptation_rate = torch.sigmoid(
+ + 0.3 * plasticity_index
+ )
+ # |0.4| + |0.3| + |0.3| = 1.0 ≤ 1.0 ✓
 
-        # Skill trajectory — long-range trend
-        x_l5l7_trend = h3_direct[(41, 20, 18, 0)].unsqueeze(-1)
-        skill_trajectory = torch.sigmoid(
-            0.6 * x_l5l7_trend + 0.4 * tmh_long.mean(-1, keepdim=True)
-        )
-        # |0.6| + |0.4| = 1.0 ≤ 1.0 ✓
-
-        # Timing improvement — repetition learning
-        x_l4l5_autocorr = h3_direct[(33, 20, 22, 0)].unsqueeze(-1)
-        timing_improvement = torch.sigmoid(
-            0.5 * x_l4l5_autocorr + 0.5 * tmh_short.mean(-1, keepdim=True)
-        )
-        # |0.5| + |0.5| = 1.0 ≤ 1.0 ✓
-
-        # Adaptation rate — long context trend
-        x_l0l5_mean = h3_direct[(25, 20, 1, 0)].unsqueeze(-1)
-        adaptation_rate = torch.sigmoid(
-            0.4 * x_l0l5_mean + 0.3 * tmh_long.mean(-1, keepdim=True)
-            + 0.3 * plasticity_index
-        )
-        # |0.4| + |0.3| + |0.3| = 1.0 ≤ 1.0 ✓
-
-        return torch.cat([
-            f01, f02, f03,                                    # E: 3D
-            plasticity_index, age_resilience,                  # M: 2D
-            motor_coordination, audio_motor_binding,           # P: 2D
-            skill_trajectory, timing_improvement, adaptation_rate,  # F: 3D
-        ], dim=-1)  # (B, T, 10)
+ return torch.cat([
+ f01, f02, f03, # E: 3D
+ plasticity_index, age_resilience, # M: 2D
+ motor_coordination, audio_motor_binding, # P: 2D
+ skill_trajectory, timing_improvement, adaptation_rate, # F: 3D
+ ], dim=-1) # (B, T, 10)
 ```
 
 ---
@@ -753,7 +718,6 @@ class PTGMP(BaseModel):
 | **Falsification Tests** | 9 total: 5 confirmed, 1 disconfirmed, 1 weakly confirmed, 2 testable | Moderate validity |
 | **R³ Features Used** | 33D of 49D | Energy + Change + Interactions |
 | **H³ Demand** | 16 tuples (0.69%) | Sparse, efficient |
-| **TMH Mechanism** | 30D (3 sub-sections) | Full coverage |
 | **Output Dimensions** | **10D** | 4-layer structure (E3 + M2 + P2 + F3) |
 
 ---
@@ -793,7 +757,6 @@ class PTGMP(BaseModel):
 ### Code Note (Phase 5)
 
 The current `mi_beta` code (`ptgmp.py`) has several mismatches with this document:
-- **MECHANISM_NAMES**: code has `("BEP",)` — doc specifies `("TMH",)` (TMH is correct)
 - **Citations**: code has Guo 2021 + Sluming 2002 — doc adds Espinosa 2025 (×2), Criscuolo 2022, Liu 2025, Liao 2024, Tachibana 2024
 - **Dimension names**: code uses `f01_gm_volume_change, f02_plasticity_index` etc. — doc uses `f01_dlpfc_plasticity, f02_cerebellar_plast, f03_frontal_theta`
 - **Brain regions**: code has dlPFC (-44,30,28) + CB (20,-62,-26) — doc has 10 regions with corrected MNI
@@ -810,31 +773,15 @@ These mismatches will be resolved in Phase 5 (code alignment).
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D): L0, L4, L5, L6, L9, X_L0L1, X_L4L5 | R³ (49D): Energy, Change, Interactions |
-| Temporal | HC⁰ mechanisms (OSC, ITM, GRV, HRM) | TMH mechanism (30D) |
-| Oscillation coupling | OSC[0:56] (gamma/alpha_beta/syllable) | TMH.short_context[0:10] + H³ tuples |
-| Motor timing | ITM[216:244] (interval timing) | TMH.short_context + TMH.medium_context |
-| Groove | GRV[244:272] (motor coordination) | TMH.medium_context + R³ Change features |
-| Memory replay | HRM[272:302] (hippocampal) | TMH.long_context[20:30] |
+| Oscillation coupling | OSC[0:56] (gamma/alpha_beta/syllable) | short_context[0:10] + H³ tuples |
+| Motor timing | ITM[216:244] (interval timing) | short_context |
+| Groove | GRV[244:272] (motor coordination) | medium_context + R³ Change features |
+| Memory replay | HRM[272:302] (hippocampal) | long_context[20:30] |
 | Statistics | S⁰.L9 (mean, std) | H³ morphs (M0, M1, M3, M18, M19, M22) |
 | Cross-feature | X_L0L1[128:136], X_L4L5[192:200] | R³.x_l0l5[25:33], x_l4l5[33:41], x_l5l7[41:49] |
 | Demand format | HC⁰ index ranges | H³ 4-tuples (sparse) |
 | Total demand | 32/2304 = 1.39% | 16/2304 = 0.69% |
 | Output dimensions | 12D | **10D** (catalog spec, streamlined) |
-
-### Why TMH replaces HC⁰ mechanisms
-
-The D0 pipeline used 4 separate HC⁰ mechanisms (OSC, ITM, GRV, HRM). In MI, these are unified into the TMH mechanism with 3 sub-sections:
-- **OSC + ITM → TMH.short_context** [0:10]: Neural oscillation coupling + interval timing → keystroke-level motor timing features
-- **GRV → TMH.medium_context** [10:20]: Groove motor coordination → phrase-level planning and audio-motor integration
-- **HRM → TMH.long_context** [20:30]: Hippocampal replay → practice-session adaptation and skill consolidation
-
-### Output reduction: 12D → 10D
-
-The legacy 12D output included redundant features that duplicated TMH sub-section means. The MI 10D output consolidates:
-- Layer E: 4D → 3D (merged separate DLPFC left/right into bilateral)
-- Layer M: 2D → 2D (unchanged)
-- Layer P: 3D → 2D (merged motor sub-features)
-- Layer F: 3D → 3D (unchanged)
 
 ---
 

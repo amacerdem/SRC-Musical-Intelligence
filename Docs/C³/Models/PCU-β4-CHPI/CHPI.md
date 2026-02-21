@@ -21,35 +21,35 @@ The **Cross-Modal Harmonic Predictive Integration** (CHPI) model describes how t
 CROSS-MODAL HARMONIC PREDICTIVE INTEGRATION
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-VISUAL STREAM                MOTOR STREAM              AUDITORY STREAM
-(Notation/Instrument)        (Fingering/Bowing)         (Harmonic Sound)
-──────────────────          ────────────────           ─────────────────
-Score reading               Motor programs              Pitch processing
-Hand position cues          Action-perception           Harmonic series
-Gesture anticipation        coupling                    Chord recognition
+VISUAL STREAM MOTOR STREAM AUDITORY STREAM
+(Notation/Instrument) (Fingering/Bowing) (Harmonic Sound)
+────────────────── ──────────────── ─────────────────
+Score reading Motor programs Pitch processing
+Hand position cues Action-perception Harmonic series
+Gesture anticipation coupling Chord recognition
 
-    │                           │                           │
-    ▼                           ▼                           ▼
-┌─────────┐              ┌──────────┐              ┌──────────────┐
-│  STS    │              │  PMC/SMA │              │  A1 → Belt   │
-│ (visual │              │  (motor  │              │  → STG       │
-│  integ) │              │  planning│              │  (hierarchy) │
-└────┬────┘              └─────┬────┘              └──────┬───────┘
-     │                         │                          │
-     └─────────┬───────────────┴──────────────────────────┘
-               ▼
-     ┌──────────────────────────────────────────────────────┐
-     │          CROSS-MODAL INTEGRATION HUB                  │
-     │     IFG + STS + Hippocampus + Auditory Cortex        │
-     │                                                       │
-     │  Visual lead time: ~200-500ms ahead of sound          │
-     │  Motor lead time:  ~150-300ms ahead of sound          │
-     │  Auditory alone:   ~50-150ms ahead (statistical)      │
-     │                                                       │
-     │  COMBINED: Enhanced harmonic prediction accuracy      │
-     │  through cross-modal convergence and voice-leading    │
-     │  geometry (Neo-Riemannian parsimony)                  │
-     └──────────────────────────────────────────────────────┘
+ │ │ │
+ ▼ ▼ ▼
+┌─────────┐ ┌──────────┐ ┌──────────────┐
+│ STS │ │ PMC/SMA │ │ A1 → Belt │
+│ (visual │ │ (motor │ │ → STG │
+│ integ) │ │ planning│ │ (hierarchy) │
+└────┬────┘ └─────┬────┘ └──────┬───────┘
+ │ │ │
+ └─────────┬───────────────┴──────────────────────────┘
+ ▼
+ ┌──────────────────────────────────────────────────────┐
+ │ CROSS-MODAL INTEGRATION HUB │
+ │ IFG + STS + Hippocampus + Auditory Cortex │
+ │ │
+ │ Visual lead time: ~200-500ms ahead of sound │
+ │ Motor lead time: ~150-300ms ahead of sound │
+ │ Auditory alone: ~50-150ms ahead (statistical) │
+ │ │
+ │ COMBINED: Enhanced harmonic prediction accuracy │
+ │ through cross-modal convergence and voice-leading │
+ │ geometry (Neo-Riemannian parsimony) │
+ └──────────────────────────────────────────────────────┘
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 KEY INSIGHT: Harmonic prediction accuracy is significantly enhanced
@@ -78,82 +78,80 @@ CHPI integrates cross-modal information into the harmonic prediction pipeline:
 
 ## 2. Neural Circuit: Complete Anatomy
 
-### 2.1 Information Flow Architecture (EAR → BRAIN → PPC+TPC+MEM → CHPI)
+### 2.1 Information Flow Architecture (EAR → BRAIN → CHPI)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    CHPI COMPUTATION ARCHITECTURE                            ║
+║ CHPI COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins x 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
-║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ CHANGE   │ │ X-INT  │ │        ║
-║  │  │ 7D [0:7]  │ │ 5D[7:12]│ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
-║  │  │           │ │         │ │ [12:21] │ │ [21:25]  │ │ [25:49]│ │        ║
-║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                         CHPI reads: ~22D                        │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                                                                  │        ║
-║  │  ┌── PPC Horizons ───────────────┐ ┌── MEM Horizons ──────────┐  │        ║
-║  │  │ H0 (25ms gamma)              │ │ H8 (500ms delta)          │  │        ║
-║  │  │ H1 (50ms gamma)              │ │ H16 (1000ms beat)         │  │        ║
-║  │  │ H3 (100ms alpha)             │ │                            │  │        ║
-║  │  │ H4 (125ms theta)             │ │ Long-term harmonic         │  │        ║
-║  │  │                               │ │ template storage           │  │        ║
-║  │  │ Pitch/chord tracking          │ │                            │  │        ║
-║  │  │ Voice-leading computation     │ │                            │  │        ║
-║  │  └───────────────────────────────┘ └────────────────────────────┘  │        ║
-║  │                         CHPI demand: ~20 of 2304 tuples           │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Imagery Circuit ═══════════   ║
-║                               │                                              ║
-║                       ┌───────┴───────┐───────┐                              ║
-║                       ▼               ▼       ▼                              ║
-║  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐              ║
-║  │  PPC (30D)      │  │  TPC (30D)      │  │  MEM (30D)      │              ║
-║  │                 │  │                 │  │                 │              ║
-║  │ Pitch Ext[0:10] │  │ Spec Shp [0:10] │  │ Work Mem [0:10] │              ║
-║  │ Interval        │  │ Temporal        │  │ Long-Term       │              ║
-║  │ Analysis[10:20] │  │ Envelope[10:20] │  │ Memory  [10:20] │              ║
-║  │ Contour  [20:30]│  │ Source Id[20:30] │  │ Pred Buf[20:30] │              ║
-║  └────────┬────────┘  └────────┬────────┘  └────────┬────────┘              ║
-║           │                    │                    │                         ║
-║           └────────────┬───────┴────────────────────┘                        ║
-║                        ▼                                                     ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    CHPI MODEL (11D Output)                       │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f01_crossmodal_prediction_gain,            │        ║
-║  │                       f02_voiceleading_parsimony,                │        ║
-║  │                       f03_visual_motor_lead,                     │        ║
-║  │                       f04_harmonic_surprise_modulation           │        ║
-║  │  Layer P (Present):   harmonic_context_strength,                 │        ║
-║  │                       crossmodal_convergence,                    │        ║
-║  │                       voiceleading_smoothness                    │        ║
-║  │  Layer F (Future):    next_chord_prediction,                     │        ║
-║  │                       crossmodal_anticipation,                   │        ║
-║  │                       harmonic_trajectory,                       │        ║
-║  │                       integration_confidence                     │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins x 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ ENERGY │ │ TIMBRE │ │ CHANGE │ │ X-INT │ │ ║
+║ │ │ 7D [0:7] │ │ 5D[7:12]│ │ 9D │ │ 4D │ │ 24D │ │ ║
+║ │ │ │ │ │ │ [12:21] │ │ [21:25] │ │ [25:49]│ │ ║
+║ │ └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │ ║
+║ │ CHPI reads: ~22D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ │ ║
+║ │ │ H0 (25ms gamma) │ │ H8 (500ms delta) │ │ ║
+║ │ │ H1 (50ms gamma) │ │ H16 (1000ms beat) │ │ ║
+║ │ │ H3 (100ms alpha) │ │ │ │ ║
+║ │ │ H4 (125ms theta) │ │ Long-term harmonic │ │ ║
+║ │ │ │ │ template storage │ │ ║
+║ │ │ Pitch/chord tracking │ │ │ │ ║
+║ │ │ Voice-leading computation │ │ │ │ ║
+║ │ └───────────────────────────────┘ └────────────────────────────┘ │ ║
+║ │ CHPI demand: ~20 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Imagery Circuit ═══════════ ║
+║ │ ║
+║ ┌───────┴───────┐───────┐ ║
+║ ▼ ▼ ▼ ║
+║ ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐ ║
+║ │ │ │ │ │ │ ║
+║ │ Pitch Ext[0:10] │ │ Spec Shp [0:10] │ │ Work Mem [0:10] │ ║
+║ │ Interval │ │ Temporal │ │ Long-Term │ ║
+║ │ Analysis[10:20] │ │ Envelope[10:20] │ │ Memory [10:20] │ ║
+║ │ Contour [20:30]│ │ Source Id[20:30] │ │ Pred Buf[20:30] │ ║
+║ └────────┬────────┘ └────────┬────────┘ └────────┬────────┘ ║
+║ │ │ │ ║
+║ └────────────┬───────┴────────────────────┘ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ CHPI MODEL (11D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f01_crossmodal_prediction_gain, │ ║
+║ │ f02_voiceleading_parsimony, │ ║
+║ │ f03_visual_motor_lead, │ ║
+║ │ f04_harmonic_surprise_modulation │ ║
+║ │ Layer P (Present): harmonic_context_strength, │ ║
+║ │ crossmodal_convergence, │ ║
+║ │ voiceleading_smoothness │ ║
+║ │ Layer F (Future): next_chord_prediction, │ ║
+║ │ crossmodal_anticipation, │ ║
+║ │ harmonic_trajectory, │ ║
+║ │ integration_confidence │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -187,17 +185,17 @@ CHPI integrates cross-modal information into the harmonic prediction pipeline:
 ### 3.2 Effect Size Summary
 
 ```
-Primary Effects:      p < 0.001 (IFOF-BCG correlation, Moller 2021)
-                      p < 0.001 (STG connectivity for ambiguity, Kim 2021)
-                      p = 0.000246 (uncertainty x surprise interaction, Cheung 2019)
-                      p = 0.003 (MMN for harmonic intervals, Wagner 2018)
-                      p = 8.3e-7, eta_p^2 = 0.49 (hierarchical prediction, de Vries & Wurm 2023)
-                      p < 0.001 FDR (musician network compartmentalization, Paraskevopoulos 2022)
-Heterogeneity:        Multi-study convergence (DTI, fMRI, MEG, EEG, behavioral, computational)
-Quality Assessment:   β-tier (cross-domain synthesis from 18 studies across 6+ modalities)
-Replication:          Cheung 2019 replicated by Gold 2023 (uncertainty x surprise)
-                      Paraskevopoulos 2015 supported by Paraskevopoulos 2022 (musician AV networks)
-                      Cross-modal superiority: Takagi 2025, Porfyri et al. 2025 (independent paradigms)
+Primary Effects: p < 0.001 (IFOF-BCG correlation, Moller 2021)
+ p < 0.001 (STG connectivity for ambiguity, Kim 2021)
+ p = 0.000246 (uncertainty x surprise interaction, Cheung 2019)
+ p = 0.003 (MMN for harmonic intervals, Wagner 2018)
+ p = 8.3e-7, eta_p^2 = 0.49 (hierarchical prediction, de Vries & Wurm 2023)
+ p < 0.001 FDR (musician network compartmentalization, Paraskevopoulos 2022)
+Heterogeneity: Multi-study convergence (DTI, fMRI, MEG, EEG, behavioral, computational)
+Quality Assessment: β-tier (cross-domain synthesis from 18 studies across 6+ modalities)
+Replication: Cheung 2019 replicated by Gold 2023 (uncertainty x surprise)
+ Paraskevopoulos 2015 supported by Paraskevopoulos 2022 (musician AV networks)
+ Cross-modal superiority: Takagi 2025, Porfyri et al. 2025 (independent paradigms)
 ```
 
 ---
@@ -239,27 +237,22 @@ Replication:          Cheung 2019 replicated by Gold 2023 (uncertainty x surpris
 ### 4.3 Physical -> Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[0] roughness ───────────────┐
 R³[4] sensory_pleasantness ────┼──► Harmonic context (chord quality)
-R³[5] periodicity ─────────────┤   High periodicity → strong tonal center
-R³[14] tonalness ──────────────┘   Low roughness → consonant chord
-PPC.interval_analysis[10:20] ──┘
+R³[5] periodicity ─────────────┤ High periodicity → strong tonal center
+R³[14] tonalness ──────────────┘ Low roughness → consonant chord
 
 R³[6] harmonic_change ─────────┐
 R³[21] spectral_change ────────┼──► Voice-leading computation
-R³[23] roughness_change ───────┤   Minimal pitch movement → parsimony
-TPC.temporal_envelope[10:20] ──┘   Tymoczko geometric distance proxy
+R³[23] roughness_change ───────┤ Minimal pitch movement → parsimony
 
 R³[25:33] x_l0l5 ─────────────┐
 R³[33:41] x_l4l5 ─────────────┼──► Cross-modal integration
-MEM.working_memory[0:10] ─────┤   Visual-motor lead enhances prediction
-PPC.contour_tracking[20:30] ──┘   IFOF pathway (Moller 2021, p < 0.001)
 
 R³[18:21] tristimulus ─────────┐
-MEM.long_term_memory[10:20] ───┼──► Harmonic template matching
-H³ entropy tuples ─────────────┘   Neo-Riemannian PLR transformation lookup
+H³ entropy tuples ─────────────┘ Neo-Riemannian PLR transformation lookup
 ```
 
 ---
@@ -297,7 +290,7 @@ CHPI requires H³ features for harmonic event detection (fast chord boundaries),
 
 #### R³ v2 Projected Expansion
 
-CHPI projected v2 from F:Pitch, H:Harmony, and I:Information, aligned with PPC+TPC+MEM horizons.
+CHPI projected v2 from F:Pitch, H:Harmony, and I:Information, aligned with H³ direct+Memory horizons.
 
 | R³ Idx | Feature | Group | H | Morph | Law | Purpose |
 |:------:|---------|:-----:|:-:|-------|:---:|---------|
@@ -314,20 +307,6 @@ CHPI projected v2 from F:Pitch, H:Harmony, and I:Information, aligned with PPC+T
 **v2 projected**: 9 tuples
 **Total projected**: 29 tuples of 294,912 theoretical = 0.0098%
 
-### 5.2 PPC + TPC + MEM Mechanism Binding
-
-| Mechanism | Sub-section | Range | CHPI Role | Weight |
-|-----------|-------------|-------|-----------|--------|
-| **PPC** | Pitch Extraction | PPC[0:10] | Fundamental frequency for chord identification | **1.0** (primary) |
-| **PPC** | Interval Analysis | PPC[10:20] | Voice-leading interval computation | **1.0** (primary) |
-| **PPC** | Contour Tracking | PPC[20:30] | Cross-modal anticipatory contour | 0.8 |
-| **TPC** | Spectral Shape | TPC[0:10] | Timbre-based chord quality recognition | 0.7 |
-| **TPC** | Temporal Envelope | TPC[10:20] | Temporal dynamics of chord transitions | **0.9** |
-| **TPC** | Source Identity | TPC[20:30] | Instrument-specific cross-modal binding | 0.8 |
-| **MEM** | Working Memory | MEM[0:10] | Cross-modal integration buffer | **1.0** (primary) |
-| **MEM** | Long-Term Memory | MEM[10:20] | Harmonic template library (Neo-Riemannian) | **1.0** (primary) |
-| **MEM** | Prediction Buffer | MEM[20:30] | Multi-stream prediction convergence | **0.9** |
-
 ---
 
 ## 6. Output Space: 11D Multi-Layer Representation
@@ -340,58 +319,53 @@ CHPI OUTPUT TENSOR: 11D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                          │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────────────────┼────────┼────────────────────────────────
- 0  │ f01_crossmodal_prediction_gain│ [0, 1] │ Enhancement of harmonic prediction
-    │                               │        │ accuracy from cross-modal convergence.
-    │                               │        │ f01 = σ(0.35 * crossmodal_coupling_500ms
-    │                               │        │       + 0.35 * mean(MEM.wm[0:10])
-    │                               │        │       + 0.30 * mean(PPC.contour[20:30]))
+ 0 │ f01_crossmodal_prediction_gain│ [0, 1] │ Enhancement of harmonic prediction
+ │ │ │ accuracy from cross-modal convergence.
+ │ │ │ f01 = σ(0.35 * crossmodal_coupling_500ms
 ────┼───────────────────────────────┼────────┼────────────────────────────────
- 1  │ f02_voiceleading_parsimony    │ [0, 1] │ Voice-leading smoothness via minimal
-    │                               │        │ pitch movement (Neo-Riemannian).
-    │                               │        │ f02 = σ(0.40 * (1 - voiceleading_vel)
-    │                               │        │       + 0.30 * mean(PPC.interval[10:20])
-    │                               │        │       + 0.30 * (1 - tension_velocity))
+ 1 │ f02_voiceleading_parsimony │ [0, 1] │ Voice-leading smoothness via minimal
+ │ │ │ pitch movement (Neo-Riemannian).
+ │ │ │ f02 = σ(0.40 * (1 - voiceleading_vel)
+ │ │ │ + 0.30 * (1 - tension_velocity))
 ────┼───────────────────────────────┼────────┼────────────────────────────────
- 2  │ f03_visual_motor_lead         │ [0, 1] │ Temporal advantage of visual/motor
-    │                               │        │ streams over purely auditory prediction.
-    │                               │        │ f03 = σ(0.40 * midlevel_coupling_vel
-    │                               │        │       + 0.30 * crossmodal_coupling_100ms
-    │                               │        │       + 0.30 * mean(TPC.source[20:30]))
+ 2 │ f03_visual_motor_lead │ [0, 1] │ Temporal advantage of visual/motor
+ │ │ │ streams over purely auditory prediction.
+ │ │ │ f03 = σ(0.40 * midlevel_coupling_vel
+ │ │ │ + 0.30 * crossmodal_coupling_100ms
 ────┼───────────────────────────────┼────────┼────────────────────────────────
- 3  │ f04_harmonic_surprise_mod     │ [0, 1] │ Modulation of harmonic surprise by
-    │                               │        │ cross-modal context (uncertainty x
-    │                               │        │ surprise interaction, Cheung 2019).
-    │                               │        │ f04 = σ(0.35 * consonance_entropy_1s
-    │                               │        │       + 0.35 * harm_change_max_100ms
-    │                               │        │       + 0.30 * mean(MEM.pred[20:30]))
+ 3 │ f04_harmonic_surprise_mod │ [0, 1] │ Modulation of harmonic surprise by
+ │ │ │ cross-modal context (uncertainty x
+ │ │ │ surprise interaction, Cheung 2019).
+ │ │ │ f04 = σ(0.35 * consonance_entropy_1s
+ │ │ │ + 0.35 * harm_change_max_100ms
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                          │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────────────────┼────────┼────────────────────────────────
- 4  │ harmonic_context_strength     │ [0, 1] │ PPC/MEM tonal center stability.
-    │                               │        │ Tonalness + periodicity trend.
+ 4 │ harmonic_context_strength │ [0, 1] │ pitch-processing/memory-encoding tonal center stability.
+ │ │ │ Tonalness + periodicity trend.
 ────┼───────────────────────────────┼────────┼────────────────────────────────
- 5  │ crossmodal_convergence        │ [0, 1] │ Degree of multi-stream alignment.
-    │                               │        │ x_l0l5 + x_l4l5 coupling strength.
+ 5 │ crossmodal_convergence │ [0, 1] │ Degree of multi-stream alignment.
+ │ │ │ x_l0l5 + x_l4l5 coupling strength.
 ────┼───────────────────────────────┼────────┼────────────────────────────────
- 6  │ voiceleading_smoothness       │ [0, 1] │ Current voice-leading parsimony.
-    │                               │        │ Low spectral_change = smooth.
+ 6 │ voiceleading_smoothness │ [0, 1] │ Current voice-leading parsimony.
+ │ │ │ Low spectral_change = smooth.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                          │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────────────────┼────────┼────────────────────────────────
- 7  │ next_chord_prediction         │ [0, 1] │ Confidence in upcoming harmonic event.
-    │                               │        │ Combines all streams.
+ 7 │ next_chord_prediction │ [0, 1] │ Confidence in upcoming harmonic event.
+ │ │ │ Combines all streams.
 ────┼───────────────────────────────┼────────┼────────────────────────────────
- 8  │ crossmodal_anticipation       │ [0, 1] │ Visual/motor advance prediction signal.
+ 8 │ crossmodal_anticipation │ [0, 1] │ Visual/motor advance prediction signal.
 ────┼───────────────────────────────┼────────┼────────────────────────────────
- 9  │ harmonic_trajectory           │ [0, 1] │ Predicted voice-leading direction.
+ 9 │ harmonic_trajectory │ [0, 1] │ Predicted voice-leading direction.
 ────┼───────────────────────────────┼────────┼────────────────────────────────
-10  │ integration_confidence        │ [0, 1] │ Reliability of cross-modal integration.
+10 │ integration_confidence │ [0, 1] │ Reliability of cross-modal integration.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 11D per frame at 172.27 Hz
@@ -408,18 +382,18 @@ TOTAL: 11D per frame at 172.27 Hz
 Cross-Modal Gain = (Accuracy_multimodal - Accuracy_unimodal) / Accuracy_unimodal
 
 Voice-Leading Parsimony = 1 - (Σ|pitch_movement_i| / max_pitch_range)
-    where i indexes each voice in the chord
-    Geometric basis: distance in Tymoczko's chord space
+ where i indexes each voice in the chord
+ Geometric basis: distance in Tymoczko's chord space
 
 Harmonic Surprise Modulation:
-    Surprise_modulated = Surprise_raw × (1 - CrossModal_Context)
-    When visual/motor context is strong, surprise is attenuated
-    When context is weak, surprise passes through unmodulated
+ Surprise_modulated = Surprise_raw × (1 - CrossModal_Context)
+ When visual/motor context is strong, surprise is attenuated
+ When context is weak, surprise passes through unmodulated
 
 Uncertainty × Surprise Interaction (Cheung 2019):
-    Pleasure = β₁·Uncertainty + β₂·Surprise + β₃·(Uncertainty × Surprise)
-    High uncertainty + low surprise → high pleasure (confirmation)
-    Low uncertainty + high surprise → high pleasure (violation)
+ Pleasure = β₁·Uncertainty + β₂·Surprise + β₃·(Uncertainty × Surprise)
+ High uncertainty + low surprise → high pleasure (confirmation)
+ Low uncertainty + high surprise → high pleasure (violation)
 ```
 
 ### 7.2 Feature Formulas
@@ -429,31 +403,26 @@ Uncertainty × Surprise Interaction (Cheung 2019):
 
 # f01: Cross-Modal Prediction Gain
 f01 = σ(0.35 * crossmodal_coupling_500ms
-       + 0.35 * mean(MEM.working_memory[0:10])
-       + 0.30 * mean(PPC.contour_tracking[20:30]))
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # f02: Voice-Leading Parsimony
 f02 = σ(0.40 * (1 - voiceleading_velocity_100ms)
-       + 0.30 * mean(PPC.interval_analysis[10:20])
-       + 0.30 * (1 - tension_velocity_100ms))
+ + 0.30 * (1 - tension_velocity_100ms))
 # coefficients: 0.40 + 0.30 + 0.30 = 1.0 ✓
 
 # f03: Visual-Motor Lead
 f03 = σ(0.40 * midlevel_coupling_velocity_125ms
-       + 0.30 * crossmodal_coupling_100ms
-       + 0.30 * mean(TPC.source_identity[20:30]))
+ + 0.30 * crossmodal_coupling_100ms
 # coefficients: 0.40 + 0.30 + 0.30 = 1.0 ✓
 
 # f04: Harmonic Surprise Modulation
 f04 = σ(0.35 * consonance_entropy_1s
-       + 0.35 * harmonic_change_max_100ms
-       + 0.30 * mean(MEM.prediction_buffer[20:30]))
+ + 0.35 * harmonic_change_max_100ms
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # Voice-leading parsimony decay
 dParsimony/dt = -τ⁻¹ · (Parsimony - VoiceLeading_Target)
-    where τ = 0.5s (chord transition timescale)
+ where τ = 0.5s (chord transition timescale)
 ```
 
 ---
@@ -484,33 +453,30 @@ dParsimony/dt = -τ⁻¹ · (Parsimony - VoiceLeading_Target)
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    CHPI INTERACTIONS                                         │
+│ CHPI INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (PCU):                                                         │
-│  HTP.hierarchy_gradient ──────► CHPI (hierarchy sets prediction levels)    │
-│  PWUP.tonal_precision ────────► CHPI (precision modulates cross-modal PE)  │
-│  ICEM.information_content ────► CHPI (raw IC for surprise computation)     │
-│  CHPI.harmonic_surprise_mod ──► UDP (modulated surprise for reward)        │
-│  CHPI.voiceleading_parsimony ─► PSH (parsimony for silencing threshold)   │
-│  CHPI.crossmodal_pred_gain ───► IGFE (cross-modal enhancement baseline)   │
-│  WMED.entrainment_strength ───► CHPI (beat-level timing for chord onsets) │
-│                                                                             │
-│  CROSS-UNIT (PCU → STU):                                                   │
-│  CHPI.visual_motor_lead ──────► STU (motor prediction for timing)         │
-│  CHPI.next_chord_prediction ──► STU.HMCE (harmonic prediction for motor)  │
-│                                                                             │
-│  CROSS-UNIT (PCU → ARU):                                                   │
-│  CHPI.harmonic_surprise_mod ──► ARU (surprise modulation for reward)      │
-│  CHPI.integration_confidence ─► ARU (confidence for aesthetic judgment)    │
-│                                                                             │
-│  UPSTREAM DEPENDENCIES:                                                     │
-│  PPC mechanism (30D) ─────────► CHPI (pitch/interval/contour processing)  │
-│  TPC mechanism (30D) ─────────► CHPI (timbre/temporal/source processing)  │
-│  MEM mechanism (30D) ─────────► CHPI (WM/LTM/prediction convergence)     │
-│  R³ (~22D) ───────────────────► CHPI (direct spectral features)           │
-│  H³ (20 tuples) ──────────────► CHPI (temporal dynamics)                  │
-│                                                                             │
+│ │
+│ INTRA-UNIT (PCU): │
+│ HTP.hierarchy_gradient ──────► CHPI (hierarchy sets prediction levels) │
+│ PWUP.tonal_precision ────────► CHPI (precision modulates cross-modal PE) │
+│ ICEM.information_content ────► CHPI (raw IC for surprise computation) │
+│ CHPI.harmonic_surprise_mod ──► UDP (modulated surprise for reward) │
+│ CHPI.voiceleading_parsimony ─► PSH (parsimony for silencing threshold) │
+│ CHPI.crossmodal_pred_gain ───► IGFE (cross-modal enhancement baseline) │
+│ WMED.entrainment_strength ───► CHPI (beat-level timing for chord onsets) │
+│ │
+│ CROSS-UNIT (PCU → STU): │
+│ CHPI.visual_motor_lead ──────► STU (motor prediction for timing) │
+│ CHPI.next_chord_prediction ──► STU.HMCE (harmonic prediction for motor) │
+│ │
+│ CROSS-UNIT (PCU → ARU): │
+│ CHPI.harmonic_surprise_mod ──► ARU (surprise modulation for reward) │
+│ CHPI.integration_confidence ─► ARU (confidence for aesthetic judgment) │
+│ │
+│ UPSTREAM DEPENDENCIES: │
+│ R³ (~22D) ───────────────────► CHPI (direct spectral features) │
+│ H³ (20 tuples) ──────────────► CHPI (temporal dynamics) │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -537,173 +503,148 @@ dParsimony/dt = -τ⁻¹ · (Parsimony - VoiceLeading_Target)
 
 ```python
 class CHPI(BaseModel):
-    """Cross-Modal Harmonic Predictive Integration Model.
+ """Cross-Modal Harmonic Predictive Integration Model.
 
-    Output: 11D per frame.
-    Reads: PPC mechanism (30D), TPC mechanism (30D), MEM mechanism (30D), R³ direct.
-    """
-    NAME = "CHPI"
-    UNIT = "PCU"
-    TIER = "β4"
-    OUTPUT_DIM = 11
-    MECHANISM_NAMES = ("PPC", "TPC", "MEM")
+ Output: 11D per frame.
+ """
+ NAME = "CHPI"
+ UNIT = "PCU"
+ TIER = "β4"
+ OUTPUT_DIM = 11
+ TAU_DECAY = 0.5 # s (chord transition timescale)
+ VISUAL_LEAD_MS = 300.0 # ms (typical visual anticipation)
+ MOTOR_LEAD_MS = 200.0 # ms (typical motor anticipation)
+ PARSIMONY_THRESHOLD = 0.6 # Voice-leading smoothness threshold
 
-    TAU_DECAY = 0.5                # s (chord transition timescale)
-    VISUAL_LEAD_MS = 300.0         # ms (typical visual anticipation)
-    MOTOR_LEAD_MS = 200.0          # ms (typical motor anticipation)
-    PARSIMONY_THRESHOLD = 0.6      # Voice-leading smoothness threshold
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """20 tuples for CHPI computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ # ── Harmonic event detection: fast ──
+ (6, 0, 0, 2), # harmonic_change, 25ms, value, bidi
+ (6, 3, 0, 2), # harmonic_change, 100ms, value, bidi
+ (6, 3, 4, 2), # harmonic_change, 100ms, max, bidi
+ (10, 1, 0, 2), # spectral_flux, 50ms, value, bidi
+ (10, 3, 14, 2), # spectral_flux, 100ms, periodicity, bidi
+ # ── Harmonic context: tension/consonance ──
+ (0, 3, 0, 2), # roughness, 100ms, value, bidi
+ (0, 8, 1, 0), # roughness, 500ms, mean, fwd
+ (4, 3, 0, 2), # sensory_pleasantness, 100ms, value, bidi
+ (4, 16, 1, 0), # sensory_pleasantness, 1000ms, mean, fwd
+ (4, 16, 20, 0), # sensory_pleasantness, 1000ms, entropy, fwd
+ # ── Voice-leading computation ──
+ (21, 3, 8, 0), # spectral_change, 100ms, velocity, fwd
+ (21, 4, 0, 0), # spectral_change, 125ms, value, fwd
+ (23, 3, 8, 2), # roughness_change, 100ms, velocity, bidi
+ # ── Cross-modal integration ──
+ (25, 3, 0, 2), # x_l0l5[0], 100ms, value, bidi
+ (25, 8, 1, 0), # x_l0l5[0], 500ms, mean, fwd
+ (33, 4, 8, 0), # x_l4l5[0], 125ms, velocity, fwd
+ (33, 8, 0, 0), # x_l4l5[0], 500ms, value, fwd
+ # ── Tonal context ──
+ (14, 8, 1, 0), # tonalness, 500ms, mean, fwd
+ (14, 16, 1, 0), # tonalness, 1000ms, mean, fwd
+ (5, 16, 18, 0), # periodicity, 1000ms, trend, fwd
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """20 tuples for CHPI computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # ── Harmonic event detection: fast ──
-            (6, 0, 0, 2),      # harmonic_change, 25ms, value, bidi
-            (6, 3, 0, 2),      # harmonic_change, 100ms, value, bidi
-            (6, 3, 4, 2),      # harmonic_change, 100ms, max, bidi
-            (10, 1, 0, 2),     # spectral_flux, 50ms, value, bidi
-            (10, 3, 14, 2),    # spectral_flux, 100ms, periodicity, bidi
-            # ── Harmonic context: tension/consonance ──
-            (0, 3, 0, 2),      # roughness, 100ms, value, bidi
-            (0, 8, 1, 0),      # roughness, 500ms, mean, fwd
-            (4, 3, 0, 2),      # sensory_pleasantness, 100ms, value, bidi
-            (4, 16, 1, 0),     # sensory_pleasantness, 1000ms, mean, fwd
-            (4, 16, 20, 0),    # sensory_pleasantness, 1000ms, entropy, fwd
-            # ── Voice-leading computation ──
-            (21, 3, 8, 0),     # spectral_change, 100ms, velocity, fwd
-            (21, 4, 0, 0),     # spectral_change, 125ms, value, fwd
-            (23, 3, 8, 2),     # roughness_change, 100ms, velocity, bidi
-            # ── Cross-modal integration ──
-            (25, 3, 0, 2),     # x_l0l5[0], 100ms, value, bidi
-            (25, 8, 1, 0),     # x_l0l5[0], 500ms, mean, fwd
-            (33, 4, 8, 0),     # x_l4l5[0], 125ms, velocity, fwd
-            (33, 8, 0, 0),     # x_l4l5[0], 500ms, value, fwd
-            # ── Tonal context ──
-            (14, 8, 1, 0),     # tonalness, 500ms, mean, fwd
-            (14, 16, 1, 0),    # tonalness, 1000ms, mean, fwd
-            (5, 16, 18, 0),    # periodicity, 1000ms, trend, fwd
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute CHPI 11D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute CHPI 11D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"PPC": (B,T,30), "TPC": (B,T,30), "MEM": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,11) CHPI output
+ """
+ # R³ features
+ roughness = r3[..., 0:1]
+ sensory_pleas = r3[..., 4:5]
+ periodicity = r3[..., 5:6]
+ harmonic_change = r3[..., 6:7]
+ spectral_centroid = r3[..., 9:10]
+ spectral_flux = r3[..., 10:11]
+ tonalness = r3[..., 14:15]
+ tristimulus = r3[..., 18:21] # (B, T, 3)
+ spectral_change = r3[..., 21:22]
+ roughness_change = r3[..., 23:24]
+ x_l0l5 = r3[..., 25:33] # (B, T, 8)
+ x_l4l5 = r3[..., 33:41] # (B, T, 8)
 
-        Returns:
-            (B,T,11) CHPI output
-        """
-        ppc = mechanism_outputs["PPC"]    # (B, T, 30)
-        tpc = mechanism_outputs["TPC"]    # (B, T, 30)
-        mem = mechanism_outputs["MEM"]    # (B, T, 30)
+ # Mechanism sub-sections
+ # H³ direct features
+ harm_change_max_100ms = h3_direct[(6, 3, 4, 2)].unsqueeze(-1)
+ consonance_entropy_1s = h3_direct[(4, 16, 20, 0)].unsqueeze(-1)
+ voiceleading_vel_100ms = h3_direct[(21, 3, 8, 0)].unsqueeze(-1)
+ tension_vel_100ms = h3_direct[(23, 3, 8, 2)].unsqueeze(-1)
+ crossmodal_coupling_100ms = h3_direct[(25, 3, 0, 2)].unsqueeze(-1)
+ crossmodal_coupling_500ms = h3_direct[(25, 8, 1, 0)].unsqueeze(-1)
+ midlevel_coupling_vel = h3_direct[(33, 4, 8, 0)].unsqueeze(-1)
+ midlevel_coupling_500ms = h3_direct[(33, 8, 0, 0)].unsqueeze(-1)
+ tonalness_mean_500ms = h3_direct[(14, 8, 1, 0)].unsqueeze(-1)
+ tonalness_mean_1s = h3_direct[(14, 16, 1, 0)].unsqueeze(-1)
+ periodicity_trend_1s = h3_direct[(5, 16, 18, 0)].unsqueeze(-1)
 
-        # R³ features
-        roughness = r3[..., 0:1]
-        sensory_pleas = r3[..., 4:5]
-        periodicity = r3[..., 5:6]
-        harmonic_change = r3[..., 6:7]
-        spectral_centroid = r3[..., 9:10]
-        spectral_flux = r3[..., 10:11]
-        tonalness = r3[..., 14:15]
-        tristimulus = r3[..., 18:21]          # (B, T, 3)
-        spectral_change = r3[..., 21:22]
-        roughness_change = r3[..., 23:24]
-        x_l0l5 = r3[..., 25:33]              # (B, T, 8)
-        x_l4l5 = r3[..., 33:41]              # (B, T, 8)
+ # ═══ LAYER E: Explicit features ═══
 
-        # Mechanism sub-sections
-        ppc_pitch = ppc[..., 0:10]            # pitch extraction
-        ppc_interval = ppc[..., 10:20]        # interval analysis
-        ppc_contour = ppc[..., 20:30]         # contour tracking
-        tpc_shape = tpc[..., 0:10]            # spectral shape
-        tpc_env = tpc[..., 10:20]             # temporal envelope
-        tpc_source = tpc[..., 20:30]          # source identity
-        mem_wm = mem[..., 0:10]               # working memory
-        mem_ltm = mem[..., 10:20]             # long-term memory
-        mem_pred = mem[..., 20:30]            # prediction buffer
+ # f01: Cross-Modal Prediction Gain (coefficients sum = 1.0)
+ f01 = torch.sigmoid(
+ 0.35 * crossmodal_coupling_500ms
+ )
 
-        # H³ direct features
-        harm_change_max_100ms = h3_direct[(6, 3, 4, 2)].unsqueeze(-1)
-        consonance_entropy_1s = h3_direct[(4, 16, 20, 0)].unsqueeze(-1)
-        voiceleading_vel_100ms = h3_direct[(21, 3, 8, 0)].unsqueeze(-1)
-        tension_vel_100ms = h3_direct[(23, 3, 8, 2)].unsqueeze(-1)
-        crossmodal_coupling_100ms = h3_direct[(25, 3, 0, 2)].unsqueeze(-1)
-        crossmodal_coupling_500ms = h3_direct[(25, 8, 1, 0)].unsqueeze(-1)
-        midlevel_coupling_vel = h3_direct[(33, 4, 8, 0)].unsqueeze(-1)
-        midlevel_coupling_500ms = h3_direct[(33, 8, 0, 0)].unsqueeze(-1)
-        tonalness_mean_500ms = h3_direct[(14, 8, 1, 0)].unsqueeze(-1)
-        tonalness_mean_1s = h3_direct[(14, 16, 1, 0)].unsqueeze(-1)
-        periodicity_trend_1s = h3_direct[(5, 16, 18, 0)].unsqueeze(-1)
+ # f02: Voice-Leading Parsimony (coefficients sum = 1.0)
+ f02 = torch.sigmoid(
+ 0.40 * (1 - voiceleading_vel_100ms)
+ + 0.30 * (1 - tension_vel_100ms)
+ )
 
-        # ═══ LAYER E: Explicit features ═══
+ # f03: Visual-Motor Lead (coefficients sum = 1.0)
+ f03 = torch.sigmoid(
+ 0.40 * midlevel_coupling_vel
+ + 0.30 * crossmodal_coupling_100ms
+ )
 
-        # f01: Cross-Modal Prediction Gain (coefficients sum = 1.0)
-        f01 = torch.sigmoid(
-            0.35 * crossmodal_coupling_500ms
-            + 0.35 * mem_wm.mean(-1, keepdim=True)
-            + 0.30 * ppc_contour.mean(-1, keepdim=True)
-        )
+ # f04: Harmonic Surprise Modulation (coefficients sum = 1.0)
+ f04 = torch.sigmoid(
+ 0.35 * consonance_entropy_1s
+ + 0.35 * harm_change_max_100ms
+ )
 
-        # f02: Voice-Leading Parsimony (coefficients sum = 1.0)
-        f02 = torch.sigmoid(
-            0.40 * (1 - voiceleading_vel_100ms)
-            + 0.30 * ppc_interval.mean(-1, keepdim=True)
-            + 0.30 * (1 - tension_vel_100ms)
-        )
+ # ═══ LAYER P: Present ═══
+ harmonic_ctx = torch.sigmoid(
+ 0.50 * tonalness_mean_1s
+ + 0.50 * periodicity_trend_1s
+ )
+ crossmodal_conv = torch.sigmoid(
+ 0.50 * crossmodal_coupling_100ms
+ + 0.50 * midlevel_coupling_500ms
+ )
+ vl_smooth = torch.sigmoid(
+ 0.50 * (1 - voiceleading_vel_100ms)
+ )
 
-        # f03: Visual-Motor Lead (coefficients sum = 1.0)
-        f03 = torch.sigmoid(
-            0.40 * midlevel_coupling_vel
-            + 0.30 * crossmodal_coupling_100ms
-            + 0.30 * tpc_source.mean(-1, keepdim=True)
-        )
+ # ═══ LAYER F: Future ═══
+ next_chord = torch.sigmoid(
+ 0.35 * f01 + 0.35 * f02 + 0.30 * harmonic_ctx
+ )
+ crossmodal_antic = torch.sigmoid(
+ 0.50 * f03 + 0.50 * crossmodal_coupling_500ms
+ )
+ harm_trajectory = torch.sigmoid(
+ )
+ integ_confidence = torch.sigmoid(
+ 0.35 * f01 + 0.35 * harmonic_ctx + 0.30 * (1 - f04)
+ )
 
-        # f04: Harmonic Surprise Modulation (coefficients sum = 1.0)
-        f04 = torch.sigmoid(
-            0.35 * consonance_entropy_1s
-            + 0.35 * harm_change_max_100ms
-            + 0.30 * mem_pred.mean(-1, keepdim=True)
-        )
-
-        # ═══ LAYER P: Present ═══
-        harmonic_ctx = torch.sigmoid(
-            0.50 * tonalness_mean_1s
-            + 0.50 * periodicity_trend_1s
-        )
-        crossmodal_conv = torch.sigmoid(
-            0.50 * crossmodal_coupling_100ms
-            + 0.50 * midlevel_coupling_500ms
-        )
-        vl_smooth = torch.sigmoid(
-            0.50 * (1 - voiceleading_vel_100ms)
-            + 0.50 * ppc_interval.mean(-1, keepdim=True)
-        )
-
-        # ═══ LAYER F: Future ═══
-        next_chord = torch.sigmoid(
-            0.35 * f01 + 0.35 * f02 + 0.30 * harmonic_ctx
-        )
-        crossmodal_antic = torch.sigmoid(
-            0.50 * f03 + 0.50 * crossmodal_coupling_500ms
-        )
-        harm_trajectory = torch.sigmoid(
-            0.50 * f02 + 0.50 * mem_ltm.mean(-1, keepdim=True)
-        )
-        integ_confidence = torch.sigmoid(
-            0.35 * f01 + 0.35 * harmonic_ctx + 0.30 * (1 - f04)
-        )
-
-        return torch.cat([
-            f01, f02, f03, f04,                                    # E: 4D
-            harmonic_ctx, crossmodal_conv, vl_smooth,              # P: 3D
-            next_chord, crossmodal_antic, harm_trajectory,         # F: 4D
-            integ_confidence,
-        ], dim=-1)  # (B, T, 11)
+ return torch.cat([
+ f01, f02, f03, f04, # E: 4D
+ harmonic_ctx, crossmodal_conv, vl_smooth, # P: 3D
+ next_chord, crossmodal_antic, harm_trajectory, # F: 4D
+ integ_confidence,
+ ], dim=-1) # (B, T, 11)
 ```
 
 ---
@@ -718,9 +659,6 @@ class CHPI(BaseModel):
 | **Falsification Tests** | 8/8 testable, 5 confirmed/supported | High validity |
 | **R³ Features Used** | ~22D of 49D | Consonance + energy + timbre + change + interactions |
 | **H³ Demand** | 20 tuples (0.87%) | Sparse, efficient |
-| **PPC Mechanism** | 30D (3 sub-sections) | Pitch/interval/contour for harmonic processing |
-| **TPC Mechanism** | 30D (3 sub-sections) | Timbre/temporal/source for chord quality |
-| **MEM Mechanism** | 30D (3 sub-sections) | WM/LTM/prediction for cross-modal convergence |
 | **Output Dimensions** | **11D** | 3-layer structure (E/P/F, no M layer) |
 
 ---
@@ -785,7 +723,6 @@ class CHPI(BaseModel):
 | **Status** | New model (no D0 predecessor) |
 | **Rationale** | Fills gap in PCU β-tier for cross-modal harmonic prediction -- no previous model addressed how visual/motor streams enhance harmonic anticipation through predictive coding |
 | **Key Innovation** | Integrates Neo-Riemannian voice-leading geometry (R³ literature) with cross-modal neuroscience (C³ literature) into a unified predictive coding framework |
-| **Input space** | R³ (49D) direct + PPC (30D) + TPC (30D) + MEM (30D) mechanisms |
 | **Demand format** | H³ 4-tuples (sparse) |
 | **Total demand** | 20/2304 = 0.87% |
 | **Output** | 11D (consistent with PCU β models) |

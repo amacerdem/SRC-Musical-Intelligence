@@ -21,18 +21,17 @@ The **Auditory-Motor Stream Coupling** (AMSC) model describes how music listenin
 THE THREE COMPONENTS OF AUDITORY-MOTOR COUPLING
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-AUDITORY GAMMA (pSTG)                  MOTOR GAMMA (Premotor)
-Brain region: Posterior STG            Brain region: Dorsal Precentral Gyrus
-Mechanism: BEP.beat_induction          Mechanism: BEP.motor_entrainment
-Input: Sound intensity                 Input: Auditory gamma (delayed 110ms)
-Function: "How loud is this now?"      Function: "Move to this rhythm"
-Evidence: r = 0.49 (Potes 2012)        Evidence: r = 0.70 (cross-correlation)
+AUDITORY GAMMA (pSTG) MOTOR GAMMA (Premotor)
+Brain region: Posterior STG Brain region: Dorsal Precentral Gyrus
+Input: Sound intensity Input: Auditory gamma (delayed 110ms)
+Function: "How loud is this now?" Function: "Move to this rhythm"
+Evidence: r = 0.49 (Potes 2012) Evidence: r = 0.70 (cross-correlation)
 
-              COUPLING DELAY (Bridge)
-              Pathway: Dorsal auditory stream
-              Latency: 110 ms (auditory → motor)
-              Function: "Sound drives movement"
-              Evidence: r = 0.70, ECoG direct recording
+ COUPLING DELAY (Bridge)
+ Pathway: Dorsal auditory stream
+ Latency: 110 ms (auditory → motor)
+ Function: "Sound drives movement"
+ Evidence: r = 0.70, ECoG direct recording
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 KEY INSIGHT: Music listening AUTOMATICALLY engages the motor system.
@@ -60,117 +59,116 @@ AMSC establishes the direct neural pathway from auditory perception to motor res
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                 AMSC — COMPLETE CIRCUIT                                      ║
+║ AMSC — COMPLETE CIRCUIT ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  MUSIC INPUT (continuous sound with dynamic intensity)                       ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │        POSTERIOR SUPERIOR TEMPORAL GYRUS (pSTG)                     │    ║
-║  │        Auditory cortex — high-gamma (70–170 Hz)                    │    ║
-║  │                                                                     │    ║
-║  │   High-gamma ↔ Sound intensity: r = 0.49 (Potes 2012, n=8)       │    ║
-║  │   Direct intensity-tracking in auditory cortex                     │    ║
-║  └──────────────────────────┬──────────────────────────────────────────┘    ║
-║                              │                                               ║
-║                              │  110 ms delay (dorsal auditory stream)        ║
-║                              │  Cross-correlation: r = 0.70                  ║
-║                              │                                               ║
-║                              ▼                                               ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │        DORSAL PRECENTRAL GYRUS (Premotor / Motor Cortex)           │    ║
-║  │        Motor gamma — correlated with sound intensity                │    ║
-║  │                                                                     │    ║
-║  │   Motor_Gamma(t) = 0.70 · Auditory_Gamma(t − 110ms)              │    ║
-║  └─────────────────────────────────────────────────────────────────────┘    ║
-║                                                                              ║
-║  DORSAL AUDITORY PATHWAY: pSTG → Premotor cortex                           ║
-║  (dual-stream model: ventral = "what", dorsal = "how/where")               ║
-║                                                                              ║
+║ ║
+║ MUSIC INPUT (continuous sound with dynamic intensity) ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ POSTERIOR SUPERIOR TEMPORAL GYRUS (pSTG) │ ║
+║ │ Auditory cortex — high-gamma (70–170 Hz) │ ║
+║ │ │ ║
+║ │ High-gamma ↔ Sound intensity: r = 0.49 (Potes 2012, n=8) │ ║
+║ │ Direct intensity-tracking in auditory cortex │ ║
+║ └──────────────────────────┬──────────────────────────────────────────┘ ║
+║ │ ║
+║ │ 110 ms delay (dorsal auditory stream) ║
+║ │ Cross-correlation: r = 0.70 ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ DORSAL PRECENTRAL GYRUS (Premotor / Motor Cortex) │ ║
+║ │ Motor gamma — correlated with sound intensity │ ║
+║ │ │ ║
+║ │ Motor_Gamma(t) = 0.70 · Auditory_Gamma(t − 110ms) │ ║
+║ └─────────────────────────────────────────────────────────────────────┘ ║
+║ ║
+║ DORSAL AUDITORY PATHWAY: pSTG → Premotor cortex ║
+║ (dual-stream model: ventral = "what", dorsal = "how/where") ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 CRITICAL EVIDENCE:
 ─────────────────
-Potes 2012 (ECoG):  pSTG gamma ↔ sound intensity, r = 0.49 (n=8)
-Potes 2012 (ECoG):  Auditory → motor delay 110ms, r = 0.70 (n=4)
+Potes 2012 (ECoG): pSTG gamma ↔ sound intensity, r = 0.49 (n=8)
+Potes 2012 (ECoG): Auditory → motor delay 110ms, r = 0.70 (n=4)
 ```
 
-### 2.2 Information Flow Architecture (EAR → BRAIN → BEP+TMH → AMSC)
+### 2.2 Information Flow Architecture (EAR → BRAIN → AMSC)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    AMSC COMPUTATION ARCHITECTURE                             ║
+║ AMSC COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins × 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
-║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ CHANGE   │ │ X-INT  │ │        ║
-║  │  │ 7D [0:7]  │ │ 5D[7:12]│ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
-║  │  │           │ │         │ │ [12:21] │ │ [21:25]  │ │ [25:49]│ │        ║
-║  │  │           │ │amplitude│ │tonalness│ │energy_chg│ │x_l0l5  │ │        ║
-║  │  │           │ │loudness │ │         │ │timbre_chg│ │x_l4l5  │ │        ║
-║  │  │           │ │centroid │ │         │ │          │ │        │ │        ║
-║  │  │           │ │flux     │ │         │ │          │ │        │ │        ║
-║  │  │           │ │onset    │ │         │ │          │ │        │ │        ║
-║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                         AMSC reads: 27D                          │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                                                                  │        ║
-║  │  ┌── Syllable ────┐ ┌── Motor ────────┐ ┌── Bar ─────────────┐ │        ║
-║  │  │ 200ms (H6)     │ │ 500ms (H11)     │ │ 1000ms (H16)      │ │        ║
-║  │  │                │ │                  │ │                     │ │        ║
-║  │  │ Beat-level     │ │ Motor prep      │ │ Bar-level meter     │ │        ║
-║  │  │ (intensity)    │ │ (110ms delay)    │ │ (groove tracking)  │ │        ║
-║  │  └──────┬─────────┘ └──────┬───────────┘ └──────┬──────────────┘ │        ║
-║  │         │                  │                     │               │        ║
-║  │         └──────────────────┴─────────────────────┘               │        ║
-║  │                         AMSC demand: ~16 of 2304 tuples          │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Sensorimotor Circuit ═══════  ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌─────────────────┐  ┌─────────────────┐                                   ║
-║  │  BEP (30D)      │  │  TMH (30D)      │                                   ║
-║  │  (primary)      │  │  (secondary)    │                                   ║
-║  │                 │  │                 │                                   ║
-║  │ Beat Ind [0:10] │  │ Short   [0:10] │  Context for coupling             ║
-║  │ Meter    [10:20]│  │ Medium  [10:20]│  Timescale selection              ║
-║  │ Motor    [20:30]│  │ Long    [20:30]│  Structural modulation            ║
-║  └────────┬────────┘  └────────┬────────┘                                   ║
-║           │                    │                                             ║
-║           └─────────┬──────────┘                                             ║
-║                     ▼                                                        ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    AMSC MODEL (12D Output)                       │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f01_auditory_gamma, f02_motor_gamma,       │        ║
-║  │                       f03_coupling_delay, f04_intensity_corr     │        ║
-║  │  Layer M (Math):      gamma_power, coupling_strength             │        ║
-║  │  Layer P (Present):   auditory_activation, motor_preparation,    │        ║
-║  │                       onset_trigger                              │        ║
-║  │  Layer F (Future):    motor_prediction, movement_timing,         │        ║
-║  │                       groove_response                            │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins × 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ ENERGY │ │ TIMBRE │ │ CHANGE │ │ X-INT │ │ ║
+║ │ │ 7D [0:7] │ │ 5D[7:12]│ │ 9D │ │ 4D │ │ 24D │ │ ║
+║ │ │ │ │ │ │ [12:21] │ │ [21:25] │ │ [25:49]│ │ ║
+║ │ │ │ │amplitude│ │tonalness│ │energy_chg│ │x_l0l5 │ │ ║
+║ │ │ │ │loudness │ │ │ │timbre_chg│ │x_l4l5 │ │ ║
+║ │ │ │ │centroid │ │ │ │ │ │ │ │ ║
+║ │ │ │ │flux │ │ │ │ │ │ │ │ ║
+║ │ │ │ │onset │ │ │ │ │ │ │ │ ║
+║ │ └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │ ║
+║ │ AMSC reads: 27D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ │ ║
+║ │ ┌── Syllable ────┐ ┌── Motor ────────┐ ┌── Bar ─────────────┐ │ ║
+║ │ │ 200ms (H6) │ │ 500ms (H11) │ │ 1000ms (H16) │ │ ║
+║ │ │ │ │ │ │ │ │ ║
+║ │ │ Beat-level │ │ Motor prep │ │ Bar-level meter │ │ ║
+║ │ │ (intensity) │ │ (110ms delay) │ │ (groove tracking) │ │ ║
+║ │ └──────┬─────────┘ └──────┬───────────┘ └──────┬──────────────┘ │ ║
+║ │ │ │ │ │ ║
+║ │ └──────────────────┴─────────────────────┘ │ ║
+║ │ AMSC demand: ~16 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Sensorimotor Circuit ═══════ ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────┐ ┌─────────────────┐ ║
+║ │ (primary) │ │ (secondary) │ ║
+║ │ │ │ │ ║
+║ │ Beat Ind [0:10] │ │ Short [0:10] │ Context for coupling ║
+║ │ Meter [10:20]│ │ Medium [10:20]│ Timescale selection ║
+║ │ Motor [20:30]│ │ Long [20:30]│ Structural modulation ║
+║ └────────┬────────┘ └────────┬────────┘ ║
+║ │ │ ║
+║ └─────────┬──────────┘ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ AMSC MODEL (12D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f01_auditory_gamma, f02_motor_gamma, │ ║
+║ │ f03_coupling_delay, f04_intensity_corr │ ║
+║ │ Layer M (Math): gamma_power, coupling_strength │ ║
+║ │ Layer P (Present): auditory_activation, motor_preparation, │ ║
+║ │ onset_trigger │ ║
+║ │ Layer F (Future): motor_prediction, movement_timing, │ ║
+║ │ groove_response │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -200,15 +198,15 @@ Potes 2012 (ECoG):  Auditory → motor delay 110ms, r = 0.70 (n=4)
 ```
 METHOD CONVERGENCE FOR AUDITORY-MOTOR COUPLING
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Method          Studies                    Key Metric
+Method Studies Key Metric
 ────────────────────────────────────────────────────────────────────
-ECoG / iEEG     Potes 2012, Sturm 2014     r=0.49, τ=110ms
-                Bellier 2023               F=7.48, right > left
-fMRI + RSA      Hoddinott 2024, Grahn 2007 SMA + putamen RSA
-                Harrison 2025              sensorimotor + temporal
-TMS (causal)    Lazzari 2025               RIGHT dPMC necessary
-EEG             Edagawa 2017               Beta PSI frontal-temporal
-Cross-species   Ito 2022                   Rat-human r=0.31-0.37
+ECoG / iEEG Potes 2012, Sturm 2014 r=0.49, τ=110ms
+ Bellier 2023 F=7.48, right > left
+fMRI + RSA Hoddinott 2024, Grahn 2007 SMA + putamen RSA
+ Harrison 2025 sensorimotor + temporal
+TMS (causal) Lazzari 2025 RIGHT dPMC necessary
+EEG Edagawa 2017 Beta PSI frontal-temporal
+Cross-species Ito 2022 Rat-human r=0.31-0.37
 ────────────────────────────────────────────────────────────────────
 6 methods, 12 papers, cross-species validated → STRONG convergence
 CAUSAL EVIDENCE: Lazzari TMS → right dPMC is necessary
@@ -224,45 +222,45 @@ COUPLING EQUATION:
 Motor_Gamma(t) = β · Auditory_Gamma(t − Δ) + ε
 
 where:
-  Δ = 110ms (auditory-motor delay)
-  β = 0.70 (coupling strength, from r coefficient)
-  ε = individual variability
+ Δ = 110ms (auditory-motor delay)
+ β = 0.70 (coupling strength, from r coefficient)
+ ε = individual variability
 
 GAMMA-INTENSITY COUPLING:
 
-  Auditory_Gamma(t) = α · Sound_Intensity(t) + γ
+ Auditory_Gamma(t) = α · Sound_Intensity(t) + γ
 
 where:
-  α = 0.49 (from pSTG correlation)
-  γ = baseline gamma activity
+ α = 0.49 (from pSTG correlation)
+ γ = baseline gamma activity
 
 INTEGRATED MODEL:
 
-  Motor_Gamma(t) = β · (α · Sound_Intensity(t − Δ) + γ) + ε
-                 = 0.70 · (0.49 · Intensity(t − 110ms) + γ) + ε
+ Motor_Gamma(t) = β · (α · Sound_Intensity(t − Δ) + γ) + ε
+ = 0.70 · (0.49 · Intensity(t − 110ms) + γ) + ε
 ```
 
 ### 3.3 Effect Size Summary
 
 ```
 AUDITORY-MOTOR COUPLING:
-  pSTG gamma ↔ intensity:    r = 0.43–0.58 (Potes 2012, ECoG, N=8)
-  Auditory → motor coupling: r = 0.70 at τ=110ms (Potes 2012, N=4)
-  Right > left STG:          F = 7.48, p = 0.0065 (Bellier 2023, N=29)
+ pSTG gamma ↔ intensity: r = 0.43–0.58 (Potes 2012, ECoG, N=8)
+ Auditory → motor coupling: r = 0.70 at τ=110ms (Potes 2012, N=4)
+ Right > left STG: F = 7.48, p = 0.0065 (Bellier 2023, N=29)
 MOTOR SYSTEM:
-  SMA + putamen beat RSA:    Significant dissimilarity (Hoddinott 2024)
-  Right dPMC causal:         TMS disrupts beat perception (Lazzari 2025)
-  Basal ganglia beat:        fMRI activation (Grahn & Brett 2007)
+ SMA + putamen beat RSA: Significant dissimilarity (Hoddinott 2024)
+ Right dPMC causal: TMS disrupts beat perception (Lazzari 2025)
+ Basal ganglia beat: fMRI activation (Grahn & Brett 2007)
 CROSS-SPECIES:
-  Rat-human entrainment:     r = 0.31–0.37 (Ito 2022, p < 0.001)
-  Optimal tempo:             120–140 BPM conserved across species
+ Rat-human entrainment: r = 0.31–0.37 (Ito 2022, p < 0.001)
+ Optimal tempo: 120–140 BPM conserved across species
 BETA SYNCHRONIZATION:
-  Frontal-temporal PSI:      Increased at late learning (Edagawa 2017)
-  Temporal-cerebellar PSI:   Increased at late learning (Edagawa 2017)
+ Frontal-temporal PSI: Increased at late learning (Edagawa 2017)
+ Temporal-cerebellar PSI: Increased at late learning (Edagawa 2017)
 
-Quality Assessment:    α-tier (ECoG direct + TMS causal + cross-species)
-Pathway:               Dorsal auditory stream (pSTG → right dPMC)
-                       + Cortico-striatal loop (SMA → putamen)
+Quality Assessment: α-tier (ECoG direct + TMS causal + cross-species)
+Pathway: Dorsal auditory stream (pSTG → right dPMC)
+ + Cortico-striatal loop (SMA → putamen)
 ```
 
 ---
@@ -299,29 +297,29 @@ Pathway:               Dorsal auditory stream (pSTG → right dPMC)
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[7] amplitude ────────────────┐
 R³[8] loudness ─────────────────┼──► pSTG Gamma Activity (auditory)
-R³[14] tonalness ───────────────┘   Math: γ_pSTG(t) = 0.49 · I(t) + β
-                                    BEP.beat_induction at H6
+R³[14] tonalness ───────────────┘ Math: γ_pSTG(t) = 0.49 · I(t) + β
+ beat_induction at H6
 
 R³[22] energy_change ───────────┐
 R³[25:33] x_l0l5 (8D) ─────────┼──► Motor Cortex Gamma (110ms delay)
-                                    Math: γ_motor(t) = 0.70 · γ_pSTG(t−110ms)
-                                    BEP.motor_entrainment at H11
+ Math: γ_motor(t) = 0.70 · γ_pSTG(t−110ms)
+ motor_entrainment at H11
 
 R³[10] spectral_flux ──────────┐
 R³[11] onset_strength ─────────┼──► Onset Detection → Motor Trigger
-                                    BEP.meter_extraction at H6
+ meter_extraction at H6
 
 R³[33:41] x_l4l5 (8D) ─────────── Dynamics Coupling
-                                    TMH.short_context for timescale context
+ short_context for timescale context
 
 R³[66] beat_strength ──────────┐
 R³[68] syncopation_index ──────┼──► Motor Entrainment Modulation (v2)
-R³[69] metricality_index ──────┘   Beat-driven auditory-motor coupling
-                                    strength and precision
+R³[69] metricality_index ──────┘ Beat-driven auditory-motor coupling
+ strength and precision
 ```
 
 ---
@@ -330,7 +328,7 @@ R³[69] metricality_index ──────┘   Beat-driven auditory-motor cou
 
 ### 5.1 Demand Specification
 
-AMSC requires H³ features at three BEP horizons: H6 (200ms), H11 (500ms), H16 (1000ms).
+AMSC requires H³ features at three horizons: H6 (200ms), H11 (500ms), H16 (1000ms).
 These correspond to beat → motor preparation → bar-level timescales.
 
 | R³ Index | Feature | H | Morph | Law | Purpose |
@@ -356,7 +354,7 @@ These correspond to beat → motor preparation → bar-level timescales.
 
 #### R³ v2 Projected Expansion
 
-AMSC projected v2 features from G:Rhythm, aligned with BEP horizons.
+AMSC projected v2 features from G:Rhythm, aligned with corresponding H³ horizons.
 
 | R³ Idx | Feature | Group | H | Morph | Law | Purpose |
 |:------:|---------|:-----:|:-:|-------|:---:|---------|
@@ -370,17 +368,6 @@ AMSC projected v2 features from G:Rhythm, aligned with BEP horizons.
 **v2 projected**: 6 tuples
 **Total projected**: 22 tuples of 294,912 theoretical = 0.0075%
 
-### 5.2 Mechanism Bindings
-
-AMSC reads from **BEP** (primary) and **TMH** (secondary):
-
-| Mechanism | Sub-section | Range | AMSC Role | Weight |
-|-----------|-------------|-------|-----------|--------|
-| **BEP** | Beat Induction | BEP[0:10] | Intensity tracking, gamma proxy | **1.0** (primary) |
-| **BEP** | Meter Extraction | BEP[10:20] | Beat-level temporal structure | **0.8** |
-| **BEP** | Motor Entrainment | BEP[20:30] | Motor coupling, groove response | **1.0** (primary) |
-| **TMH** | Short Context | TMH[0:10] | Temporal context for coupling | **0.5** (secondary) |
-
 ---
 
 ## 6. Output Space: 12D Multi-Layer Representation
@@ -393,64 +380,64 @@ AMSC OUTPUT TENSOR: 12D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 0  │ f01_auditory_gamma│ [0, 1] │ pSTG high-gamma activity (70–170 Hz).
-    │                   │        │ Tracks sound intensity at r = 0.49.
-    │                   │        │ f01 = σ(α · amplitude · loudness ·
-    │                   │        │         tonalness · BEP.beat_induction)
-    │                   │        │ α = 0.49
+ 0 │ f01_auditory_gamma│ [0, 1] │ pSTG high-gamma activity (70–170 Hz).
+ │ │ │ Tracks sound intensity at r = 0.49.
+ │ │ │ f01 = σ(α · amplitude · loudness ·
+ │ │ │ tonalness · beat_induction)
+ │ │ │ α = 0.49
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 1  │ f02_motor_gamma   │ [0, 1] │ Motor cortex gamma coupling.
-    │                   │        │ Premotor response delayed 110ms from pSTG.
-    │                   │        │ f02 = σ(β · f01 · energy_change ·
-    │                   │        │         BEP.motor_entrainment)
-    │                   │        │ β = 0.70
+ 1 │ f02_motor_gamma │ [0, 1] │ Motor cortex gamma coupling.
+ │ │ │ Premotor response delayed 110ms from pSTG.
+ │ │ │ f02 = σ(β · f01 · energy_change ·
+ │ │ │ motor_entrainment)
+ │ │ │ β = 0.70
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 2  │ f03_coupling_delay│ [0, 1] │ Auditory-motor coupling delay strength.
-    │                   │        │ Models the r = 0.70 cross-correlation at
-    │                   │        │ 110ms latency.
-    │                   │        │ f03 = 0.70 · (f01 · x_coupling_smooth)
+ 2 │ f03_coupling_delay│ [0, 1] │ Auditory-motor coupling delay strength.
+ │ │ │ Models the r = 0.70 cross-correlation at
+ │ │ │ 110ms latency.
+ │ │ │ f03 = 0.70 · (f01 · x_coupling_smooth)
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 3  │ f04_intensity_corr│ [0, 1] │ Sound intensity → gamma correlation proxy.
-    │                   │        │ Continuous intensity-tracking strength.
-    │                   │        │ f04 = 0.49 · (f01 + f02) / 2
+ 3 │ f04_intensity_corr│ [0, 1] │ Sound intensity → gamma correlation proxy.
+ │ │ │ Continuous intensity-tracking strength.
+ │ │ │ f04 = 0.49 · (f01 + f02) / 2
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 4  │ gamma_power       │ [0, 1] │ High-gamma band power proxy.
-    │                   │        │ Mean BEP.beat_induction[0:10].
+ 4 │ gamma_power │ [0, 1] │ High-gamma band power proxy.
+ │ │ │ Mean beat_induction[0:10].
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 5  │ coupling_strength │ [0, 1] │ Cross-correlation strength at 110ms.
-    │                   │        │ x_l0l5 coupling × periodicity.
+ 5 │ coupling_strength │ [0, 1] │ Cross-correlation strength at 110ms.
+ │ │ │ x_l0l5 coupling × periodicity.
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 6  │ auditory_activatn │ [0, 1] │ pSTG current activation state.
-    │                   │        │ Intensity × beat-level BEP.
+ 6 │ auditory_activatn │ [0, 1] │ pSTG current activation state.
+ │ │ │ Intensity × beat-level H³.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 7  │ motor_preparation │ [0, 1] │ Premotor preparation state.
-    │                   │        │ Motor entrainment × context.
+ 7 │ motor_preparation │ [0, 1] │ Premotor preparation state.
+ │ │ │ Motor entrainment × context.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 8  │ onset_trigger     │ [0, 1] │ Motor trigger from onset detection.
-    │                   │        │ spectral_flux × onset_strength at H6.
+ 8 │ onset_trigger │ [0, 1] │ Motor trigger from onset detection.
+ │ │ │ spectral_flux × onset_strength at H6.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 9  │ motor_prediction  │ [0, 1] │ Predicted motor activation (110ms ahead).
-    │                   │        │ BEP.motor_entrainment × groove trend.
+ 9 │ motor_prediction │ [0, 1] │ Predicted motor activation (110ms ahead).
+ │ │ │ motor_entrainment × groove trend.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
-10  │ movement_timing   │ [0, 1] │ Beat-interval motor prediction.
-    │                   │        │ BEP.meter × periodicity at H16.
+10 │ movement_timing │ [0, 1] │ Beat-interval motor prediction.
+ │ │ │ meter × periodicity at H16.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
-11  │ groove_response   │ [0, 1] │ Groove-driven motor engagement.
-    │                   │        │ Smoothness × trend at bar level.
+11 │ groove_response │ [0, 1] │ Groove-driven motor engagement.
+ │ │ │ Smoothness × trend at bar level.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 12D per frame at 172.27 Hz
@@ -465,19 +452,17 @@ TOTAL: 12D per frame at 172.27 Hz
 
 ```python
 # f01: Auditory Gamma (pSTG, r = 0.49)
-amp_val = h3[(7, 6, 0, 2)]           # amplitude value at H6
-loud_val = h3[(8, 6, 0, 0)]          # loudness value at H6
-tonal_val = h3[(14, 6, 0, 2)]        # tonalness value at H6
+amp_val = h3[(7, 6, 0, 2)] # amplitude value at H6
+loud_val = h3[(8, 6, 0, 0)] # loudness value at H6
+tonal_val = h3[(14, 6, 0, 2)] # tonalness value at H6
 f01 = σ(0.49 · amp_val · loud_val · tonal_val
-         · mean(BEP.beat_induction[0:10]))
 
 # f02: Motor Gamma (premotor, r = 0.70, 110ms delay)
-energy_vel = h3[(22, 6, 8, 0)]       # energy_change velocity at H6
+energy_vel = h3[(22, 6, 8, 0)] # energy_change velocity at H6
 f02 = σ(0.70 · f01 · energy_vel
-         · mean(BEP.motor_entrainment[20:30]))
 
 # f03: Coupling Delay Strength
-x_smooth = h3[(25, 11, 15, 0)]       # x_l0l5 smoothness at H11
+x_smooth = h3[(25, 11, 15, 0)] # x_l0l5 smoothness at H11
 f03 = 0.70 · f01 · x_smooth
 
 # f04: Intensity Correlation
@@ -508,22 +493,20 @@ f04 = 0.49 · (f01 + f02) / 2
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    AMSC INTERACTIONS                                         │
+│ AMSC INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (STU):                                                         │
-│  HMCE.context_depth ──────► AMSC (context determines coupling timescale)  │
-│  AMSC.motor_preparation ──► MDNS (motor coupling for melody decoding)     │
-│  AMSC.groove_response ────► EDTA (motor baseline for tempo accuracy)      │
-│  AMSC.auditory_activatn ──► HGSIC (gamma for groove state integration)   │
-│                                                                             │
-│  CROSS-UNIT (P2: STU internal):                                            │
-│  BEP.beat_induction ↔ BEP.motor_entrainment (r = 0.70)                   │
-│  Beat strength → automatic motor cortex activation                        │
-│                                                                             │
-│  CROSS-UNIT (P5: STU → ARU):                                              │
-│  AMSC.motor_preparation ──► ARU.AED (motor coupling → arousal)            │
-│                                                                             │
+│ │
+│ INTRA-UNIT (STU): │
+│ HMCE.context_depth ──────► AMSC (context determines coupling timescale) │
+│ AMSC.motor_preparation ──► MDNS (motor coupling for melody decoding) │
+│ AMSC.groove_response ────► EDTA (motor baseline for tempo accuracy) │
+│ AMSC.auditory_activatn ──► HGSIC (gamma for groove state integration) │
+│ │
+│ CROSS-UNIT (P2: STU internal): │
+│ Beat strength → automatic motor cortex activation │
+│ │
+│ CROSS-UNIT (P5: STU → ARU): │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -549,129 +532,108 @@ f04 = 0.49 · (f01 + f02) / 2
 
 ```python
 class AMSC(BaseModel):
-    """Auditory-Motor Stream Coupling.
+ """Auditory-Motor Stream Coupling.
 
-    Output: 12D per frame.
-    Reads: BEP mechanism (30D, primary), TMH mechanism (30D, secondary).
-    """
-    NAME = "AMSC"
-    UNIT = "STU"
-    TIER = "α2"
-    OUTPUT_DIM = 12
-    MECHANISM_NAMES = ("BEP", "TMH")
+ Output: 12D per frame.
+ Reads: R³ + H³ direct.
+ """
+ NAME = "AMSC"
+ UNIT = "STU"
+ TIER = "α2"
+ OUTPUT_DIM = 12
+ AUDITORY_CORR = 0.49 # pSTG gamma ↔ intensity (Potes 2012)
+ MOTOR_COUPLING = 0.70 # auditory → motor (Potes 2012)
 
-    AUDITORY_CORR = 0.49   # pSTG gamma ↔ intensity (Potes 2012)
-    MOTOR_COUPLING = 0.70  # auditory → motor (Potes 2012)
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """16 tuples for AMSC computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ # Beat level (H6 = 200ms)
+ (7, 6, 0, 2), # amplitude, value, bidirectional
+ (7, 6, 4, 2), # amplitude, max, bidirectional
+ (8, 6, 0, 0), # loudness, value, forward
+ (10, 6, 0, 0), # spectral_flux, value, forward
+ (10, 6, 17, 0), # spectral_flux, peaks, forward
+ (11, 6, 0, 0), # onset_strength, value, forward
+ (22, 6, 8, 0), # energy_change, velocity, forward
+ (14, 6, 0, 2), # tonalness, value, bidirectional
+ # Motor window (H11 = 500ms)
+ (8, 11, 1, 0), # loudness, mean, forward
+ (22, 11, 14, 2), # energy_change, periodicity, bidirectional
+ (25, 11, 0, 2), # x_l0l5[0], value, bidirectional
+ (25, 11, 15, 0), # x_l0l5[0], smoothness, forward
+ (33, 11, 0, 2), # x_l4l5[0], value, bidirectional
+ # Bar level (H16 = 1000ms)
+ (33, 16, 14, 2), # x_l4l5[0], periodicity, bidirectional
+ (33, 16, 18, 0), # x_l4l5[0], trend, forward
+ (7, 16, 15, 0), # amplitude, smoothness, forward
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """16 tuples for AMSC computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # Beat level (H6 = 200ms)
-            (7, 6, 0, 2),     # amplitude, value, bidirectional
-            (7, 6, 4, 2),     # amplitude, max, bidirectional
-            (8, 6, 0, 0),     # loudness, value, forward
-            (10, 6, 0, 0),    # spectral_flux, value, forward
-            (10, 6, 17, 0),   # spectral_flux, peaks, forward
-            (11, 6, 0, 0),    # onset_strength, value, forward
-            (22, 6, 8, 0),    # energy_change, velocity, forward
-            (14, 6, 0, 2),    # tonalness, value, bidirectional
-            # Motor window (H11 = 500ms)
-            (8, 11, 1, 0),    # loudness, mean, forward
-            (22, 11, 14, 2),  # energy_change, periodicity, bidirectional
-            (25, 11, 0, 2),   # x_l0l5[0], value, bidirectional
-            (25, 11, 15, 0),  # x_l0l5[0], smoothness, forward
-            (33, 11, 0, 2),   # x_l4l5[0], value, bidirectional
-            # Bar level (H16 = 1000ms)
-            (33, 16, 14, 2),  # x_l4l5[0], periodicity, bidirectional
-            (33, 16, 18, 0),  # x_l4l5[0], trend, forward
-            (7, 16, 15, 0),   # amplitude, smoothness, forward
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute AMSC 12D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute AMSC 12D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) → (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"BEP": (B,T,30), "TMH": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) → (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,12) AMSC output
+ """
+ # H³ features
+ amp_val = h3_direct[(7, 6, 0, 2)].unsqueeze(-1)
+ loud_val = h3_direct[(8, 6, 0, 0)].unsqueeze(-1)
+ tonal_val = h3_direct[(14, 6, 0, 2)].unsqueeze(-1)
+ energy_vel = h3_direct[(22, 6, 8, 0)].unsqueeze(-1)
+ x_smooth = h3_direct[(25, 11, 15, 0)].unsqueeze(-1)
 
-        Returns:
-            (B,T,12) AMSC output
-        """
-        bep = mechanism_outputs["BEP"]    # (B, T, 30)
-        tmh = mechanism_outputs["TMH"]    # (B, T, 30)
+ # ═══ LAYER E: Explicit features ═══
+ f01 = torch.sigmoid(self.AUDITORY_CORR * (
+ amp_val * loud_val * tonal_val
+ ))
+ f02 = torch.sigmoid(self.MOTOR_COUPLING * (
+ f01 * energy_vel
+ ))
+ f03 = self.MOTOR_COUPLING * f01 * x_smooth
+ f04 = self.AUDITORY_CORR * (f01 + f02) / 2
 
-        # BEP sub-sections
-        bep_beat = bep[..., 0:10]         # beat induction
-        bep_meter = bep[..., 10:20]       # meter extraction
-        bep_motor = bep[..., 20:30]       # motor entrainment
+ # ═══ LAYER M: Mathematical ═══
+ x_coupling = h3_direct[(25, 11, 0, 2)].unsqueeze(-1)
+ periodicity = h3_direct[(22, 11, 14, 2)].unsqueeze(-1)
+ coupling_strength = torch.sigmoid(x_coupling * periodicity)
 
-        # TMH sub-sections
-        tmh_short = tmh[..., 0:10]        # short context
+ # ═══ LAYER P: Present ═══
+ auditory_activation = torch.sigmoid(
+ )
+ motor_preparation = torch.sigmoid(
+ + 0.2 * f02
+ )
+ flux_val = h3_direct[(10, 6, 0, 0)].unsqueeze(-1)
+ onset_val = h3_direct[(11, 6, 0, 0)].unsqueeze(-1)
+ onset_trigger = torch.sigmoid(flux_val * onset_val)
 
-        # H³ features
-        amp_val = h3_direct[(7, 6, 0, 2)].unsqueeze(-1)
-        loud_val = h3_direct[(8, 6, 0, 0)].unsqueeze(-1)
-        tonal_val = h3_direct[(14, 6, 0, 2)].unsqueeze(-1)
-        energy_vel = h3_direct[(22, 6, 8, 0)].unsqueeze(-1)
-        x_smooth = h3_direct[(25, 11, 15, 0)].unsqueeze(-1)
+ # ═══ LAYER F: Future ═══
+ groove_trend = h3_direct[(33, 16, 18, 0)].unsqueeze(-1)
+ motor_prediction = torch.sigmoid(
+ 0.6 * f02 + 0.4 * groove_trend
+ )
+ bar_period = h3_direct[(33, 16, 14, 2)].unsqueeze(-1)
+ movement_timing = torch.sigmoid(
+ + 0.5 * bar_period
+ )
+ amp_smooth = h3_direct[(7, 16, 15, 0)].unsqueeze(-1)
+ groove_response = torch.sigmoid(
+ 0.5 * amp_smooth + 0.3 * groove_trend + 0.2 * f02
+ )
 
-        # ═══ LAYER E: Explicit features ═══
-        f01 = torch.sigmoid(self.AUDITORY_CORR * (
-            amp_val * loud_val * tonal_val
-            * bep_beat.mean(-1, keepdim=True)
-        ))
-        f02 = torch.sigmoid(self.MOTOR_COUPLING * (
-            f01 * energy_vel
-            * bep_motor.mean(-1, keepdim=True)
-        ))
-        f03 = self.MOTOR_COUPLING * f01 * x_smooth
-        f04 = self.AUDITORY_CORR * (f01 + f02) / 2
-
-        # ═══ LAYER M: Mathematical ═══
-        gamma_power = bep_beat.mean(-1, keepdim=True)
-        x_coupling = h3_direct[(25, 11, 0, 2)].unsqueeze(-1)
-        periodicity = h3_direct[(22, 11, 14, 2)].unsqueeze(-1)
-        coupling_strength = torch.sigmoid(x_coupling * periodicity)
-
-        # ═══ LAYER P: Present ═══
-        auditory_activation = torch.sigmoid(
-            0.6 * amp_val * loud_val + 0.4 * bep_beat.mean(-1, keepdim=True)
-        )
-        motor_preparation = torch.sigmoid(
-            0.5 * bep_motor.mean(-1, keepdim=True)
-            + 0.3 * tmh_short.mean(-1, keepdim=True)
-            + 0.2 * f02
-        )
-        flux_val = h3_direct[(10, 6, 0, 0)].unsqueeze(-1)
-        onset_val = h3_direct[(11, 6, 0, 0)].unsqueeze(-1)
-        onset_trigger = torch.sigmoid(flux_val * onset_val)
-
-        # ═══ LAYER F: Future ═══
-        groove_trend = h3_direct[(33, 16, 18, 0)].unsqueeze(-1)
-        motor_prediction = torch.sigmoid(
-            0.6 * f02 + 0.4 * groove_trend
-        )
-        bar_period = h3_direct[(33, 16, 14, 2)].unsqueeze(-1)
-        movement_timing = torch.sigmoid(
-            0.5 * bep_meter.mean(-1, keepdim=True)
-            + 0.5 * bar_period
-        )
-        amp_smooth = h3_direct[(7, 16, 15, 0)].unsqueeze(-1)
-        groove_response = torch.sigmoid(
-            0.5 * amp_smooth + 0.3 * groove_trend + 0.2 * f02
-        )
-
-        return torch.cat([
-            f01, f02, f03, f04,                             # E: 4D
-            gamma_power, coupling_strength,                  # M: 2D
-            auditory_activation, motor_preparation, onset_trigger,  # P: 3D
-            motor_prediction, movement_timing, groove_response,    # F: 3D
-        ], dim=-1)  # (B, T, 12)
+ return torch.cat([
+ f01, f02, f03, f04, # E: 4D
+ gamma_power, coupling_strength, # M: 2D
+ auditory_activation, motor_preparation, onset_trigger, # P: 3D
+ motor_prediction, movement_timing, groove_response, # F: 3D
+ ], dim=-1) # (B, T, 12)
 ```
 
 ---
@@ -689,8 +651,6 @@ class AMSC(BaseModel):
 | **Falsification Tests** | 3/7 confirmed | Lazzari (dPMC), Sturm (gamma), Ito (cross-species) |
 | **R³ Features Used** | 27D of 49D | Energy + Timbre + Change + Interactions |
 | **H³ Demand** | 16 tuples (0.69%) | Sparse, efficient |
-| **BEP Mechanism** | 30D (3 sub-sections) | Full coverage |
-| **TMH Mechanism** | 30D (secondary) | Context support |
 | **Output Dimensions** | **12D** | 4-layer structure |
 | **Code note** | Layer E names differ (code: 3D, doc: 4D) — reconcile in Phase 5 | |
 
@@ -720,23 +680,13 @@ class AMSC(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D): L0, L4, L5, L6, L7, X_L0L4, X_L4L5 | R³ (49D): Energy, Timbre, Change, Interactions |
-| Temporal | HC⁰ mechanisms (OSC, NPL, ITM, GRV) | BEP mechanism (30D, primary) + TMH (30D, secondary) |
-| Intensity signal | S⁰.L0.amplitude[2] + HC⁰.OSC | R³.amplitude[7] + BEP.beat_induction |
-| Motor coupling | S⁰.L7.crossband × HC⁰.NPL | R³.x_l0l5[25:33] × BEP.motor_entrainment |
-| Gamma proxy | S⁰.L7[80:104] (crossband ratios) | R³.tonalness[14] + BEP features |
-| Onset detection | S⁰.L5.attack_time[50] × HC⁰.ITM | R³.onset_strength[11] × BEP.meter_extraction |
-| Groove | S⁰.L5 × HC⁰.GRV | R³.Change + BEP.motor_entrainment |
+| Intensity signal | S⁰.L0.amplitude[2] + HC⁰.OSC | R³.amplitude[7] |
+| Motor coupling | S⁰.L7.crossband × HC⁰.NPL | R³.x_l0l5[25:33] |
+| Gamma proxy | S⁰.L7[80:104] (crossband ratios) | R³.tonalness[14] + beat-entrainment features |
+| Onset detection | S⁰.L5.attack_time[50] × HC⁰.ITM | R³.onset_strength[11] |
+| Groove | S⁰.L5 × HC⁰.GRV | R³.Change |
 | Demand format | HC⁰ index ranges | H³ 4-tuples (sparse) |
 | Total demand | 30/2304 = 1.30% | 16/2304 = 0.69% |
-
-### Why BEP+TMH replace HC⁰ mechanisms
-
-The D0 pipeline used 4 separate HC⁰ mechanisms (OSC, NPL, ITM, GRV). In MI, these are unified into two sensorimotor mechanisms:
-- **OSC → BEP.beat_induction** [0:10]: Oscillatory gamma → beat-level intensity tracking
-- **NPL → BEP.beat_induction** [0:10]: Phase-locking → auditory coupling
-- **GRV → BEP.motor_entrainment** [20:30]: Groove → motor engagement
-- **ITM → BEP.meter_extraction** [10:20]: Interval timing → beat-interval prediction
-- **TMH** provides hierarchical context that D0's HC⁰ mechanisms handled separately
 
 ---
 

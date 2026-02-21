@@ -21,18 +21,17 @@ The **Tempo Memory Reproduction Method** (TMRM) model describes how tempo memory
 THE THREE COMPONENTS OF TEMPO MEMORY REPRODUCTION
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-SENSORY REPRODUCTION (Adjusting)       MOTOR REPRODUCTION (Tapping)
-Method: Tempo slider / dial            Method: Finger/hand tapping
-Brain region: SMA + Auditory Cortex    Brain region: Cerebellum + Premotor
-Mechanism: BEP.beat_induction          Mechanism: BEP.motor_entrainment
-Advantage: d = 2.76 over tapping       Baseline: motor-only reproduction
-Function: "Match what I hear"          Function: "Produce the beat"
+SENSORY REPRODUCTION (Adjusting) MOTOR REPRODUCTION (Tapping)
+Method: Tempo slider / dial Method: Finger/hand tapping
+Brain region: SMA + Auditory Cortex Brain region: Cerebellum + Premotor
+Advantage: d = 2.76 over tapping Baseline: motor-only reproduction
+Function: "Match what I hear" Function: "Produce the beat"
 
-              OPTIMAL TEMPO (Internal Reference)
-              Value: 120 BPM (500 ms IOI)
-              Shape: Quadratic optimum
-              Function: "Internal tempo template"
-              Evidence: d = 0.58 (quadratic fit)
+ OPTIMAL TEMPO (Internal Reference)
+ Value: 120 BPM (500 ms IOI)
+ Shape: Quadratic optimum
+ Function: "Internal tempo template"
+ Evidence: d = 0.58 (quadratic fit)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 KEY INSIGHT: Sensory support during recall (adjusting) dramatically
@@ -60,122 +59,121 @@ TMRM reveals the method-dependent nature of tempo memory retrieval:
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                 TMRM — COMPLETE CIRCUIT                                      ║
+║ TMRM — COMPLETE CIRCUIT ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  MUSICAL INPUT (rhythmic, tempo-bearing sequences)                           ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │        SUPPLEMENTARY MOTOR AREA (SMA)                               │    ║
-║  │        Internal tempo representation, beat anticipation             │    ║
-║  │        Optimal: 120 BPM (500 ms IOI)                               │    ║
-║  │        ★ Adjusting method: sensory feedback loop via SMA            │    ║
-║  └──────────────────────────┬──────────────────────────────────────────┘    ║
-║                              │                                               ║
-║                    ┌─────────┴──────────┐                                    ║
-║                    ▼                    ▼                                     ║
-║  ┌──────────────────────┐   ┌──────────────────────┐                        ║
-║  │  AUDITORY CORTEX     │   │  CEREBELLUM          │                        ║
-║  │  Sensory pathway     │   │  Motor pathway       │                        ║
-║  │  Adjusting method    │   │  Tapping method      │                        ║
-║  │  d = 2.76 advantage  │   │  Baseline accuracy   │                        ║
-║  │  (tempo slider)      │   │  (finger tapping)    │                        ║
-║  └──────────┬───────────┘   └──────────┬───────────┘                        ║
-║             │                          │                                     ║
-║             └──────────┬───────────────┘                                     ║
-║                        ▼                                                     ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │        PREMOTOR CORTEX                                              │    ║
-║  │        Motor planning, reproduction execution                       │    ║
-║  │        Expertise effect: d = 0.59 (musicians > non-musicians)       │    ║
-║  └─────────────────────────────────────────────────────────────────────┘    ║
-║                                                                              ║
-║  DISSOCIATION: Adjusting (sensory) vs Tapping (motor), d = 2.76           ║
-║  OPTIMAL: 120 BPM quadratic peak (d = 0.58)                               ║
-║  EXPERTISE: Musicians > non-musicians (d = 0.59)                           ║
-║                                                                              ║
+║ ║
+║ MUSICAL INPUT (rhythmic, tempo-bearing sequences) ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ SUPPLEMENTARY MOTOR AREA (SMA) │ ║
+║ │ Internal tempo representation, beat anticipation │ ║
+║ │ Optimal: 120 BPM (500 ms IOI) │ ║
+║ │ ★ Adjusting method: sensory feedback loop via SMA │ ║
+║ └──────────────────────────┬──────────────────────────────────────────┘ ║
+║ │ ║
+║ ┌─────────┴──────────┐ ║
+║ ▼ ▼ ║
+║ ┌──────────────────────┐ ┌──────────────────────┐ ║
+║ │ AUDITORY CORTEX │ │ CEREBELLUM │ ║
+║ │ Sensory pathway │ │ Motor pathway │ ║
+║ │ Adjusting method │ │ Tapping method │ ║
+║ │ d = 2.76 advantage │ │ Baseline accuracy │ ║
+║ │ (tempo slider) │ │ (finger tapping) │ ║
+║ └──────────┬───────────┘ └──────────┬───────────┘ ║
+║ │ │ ║
+║ └──────────┬───────────────┘ ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ PREMOTOR CORTEX │ ║
+║ │ Motor planning, reproduction execution │ ║
+║ │ Expertise effect: d = 0.59 (musicians > non-musicians) │ ║
+║ └─────────────────────────────────────────────────────────────────────┘ ║
+║ ║
+║ DISSOCIATION: Adjusting (sensory) vs Tapping (motor), d = 2.76 ║
+║ OPTIMAL: 120 BPM quadratic peak (d = 0.58) ║
+║ EXPERTISE: Musicians > non-musicians (d = 0.59) ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 CRITICAL EVIDENCE:
 ─────────────────
-Levitin & Cook 1996:  Adjusting > tapping, d = 2.76 (n = 46)
-Levitin & Cook 1996:  120 BPM optimal tempo, quadratic (d = 0.58)
-Drake & Botte 1993:   Expertise improves tempo precision, d = 0.59
+Levitin & Cook 1996: Adjusting > tapping, d = 2.76 (n = 46)
+Levitin & Cook 1996: 120 BPM optimal tempo, quadratic (d = 0.58)
+Drake & Botte 1993: Expertise improves tempo precision, d = 0.59
 ```
 
-### 2.2 Information Flow Architecture (EAR → BRAIN → BEP → TMRM)
+### 2.2 Information Flow Architecture (EAR → BRAIN → TMRM)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    TMRM COMPUTATION ARCHITECTURE                             ║
+║ TMRM COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins × 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
-║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ CHANGE   │ │ X-INT  │ │        ║
-║  │  │ 7D [0:7]  │ │ 5D[7:12]│ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
-║  │  │           │ │         │ │ [12:21] │ │ [21:25]  │ │ [25:49]│ │        ║
-║  │  │           │ │amplitude│ │         │ │spec_chg  │ │        │ │        ║
-║  │  │           │ │loudness │ │         │ │energy_chg│ │        │ │        ║
-║  │  │           │ │centroid │ │         │ │pitch_chg │ │        │ │        ║
-║  │  │           │ │flux     │ │         │ │timbre_chg│ │        │ │        ║
-║  │  │           │ │onset    │ │         │ │          │ │        │ │        ║
-║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                         TMRM reads: 9D                          │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                                                                  │        ║
-║  │  ┌── Beat ────────┐ ┌── Psy Present ──┐ ┌── Bar ─────────────┐ │        ║
-║  │  │ 200ms (H6)     │ │ 500ms (H11)     │ │ 1000ms (H16)      │ │        ║
-║  │  │                │ │                  │ │                    │ │        ║
-║  │  │ Single beat    │ │ Psychological    │ │ Bar-level meter   │ │        ║
-║  │  │ (120–300 BPM)  │ │ present window   │ │ integration       │ │        ║
-║  │  └──────┬─────────┘ └──────┬───────────┘ └──────┬─────────────┘ │        ║
-║  │         │                  │                     │               │        ║
-║  │         └──────────────────┴─────────────────────┘               │        ║
-║  │                         TMRM demand: 15 of 2304 tuples          │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Sensorimotor Circuit ═══════  ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌─────────────────┐                                                        ║
-║  │  BEP (30D)      │  Beat Entrainment Processing mechanism                ║
-║  │                 │                                                        ║
-║  │ Beat Ind [0:10]│  Beat strength, tempo, phase, regularity              ║
-║  │ Meter    [10:20]│  Meter, syncopation, accent pattern, groove          ║
-║  │ Motor    [20:30]│  Movement urge, sync precision, coupling             ║
-║  └────────┬────────┘                                                        ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    TMRM MODEL (10D Output)                       │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f01_adjusting_advantage,                   │        ║
-║  │                       f02_optimal_tempo, f03_expertise_accuracy  │        ║
-║  │  Layer M (Math):      method_dissociation, tempo_deviation       │        ║
-║  │  Layer P (Present):   sensory_state, motor_state                 │        ║
-║  │  Layer F (Future):    tempo_prediction, method_confidence,       │        ║
-║  │                       reproduction_accuracy                      │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins × 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ ENERGY │ │ TIMBRE │ │ CHANGE │ │ X-INT │ │ ║
+║ │ │ 7D [0:7] │ │ 5D[7:12]│ │ 9D │ │ 4D │ │ 24D │ │ ║
+║ │ │ │ │ │ │ [12:21] │ │ [21:25] │ │ [25:49]│ │ ║
+║ │ │ │ │amplitude│ │ │ │spec_chg │ │ │ │ ║
+║ │ │ │ │loudness │ │ │ │energy_chg│ │ │ │ ║
+║ │ │ │ │centroid │ │ │ │pitch_chg │ │ │ │ ║
+║ │ │ │ │flux │ │ │ │timbre_chg│ │ │ │ ║
+║ │ │ │ │onset │ │ │ │ │ │ │ │ ║
+║ │ └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │ ║
+║ │ TMRM reads: 9D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ │ ║
+║ │ ┌── Beat ────────┐ ┌── Psy Present ──┐ ┌── Bar ─────────────┐ │ ║
+║ │ │ 200ms (H6) │ │ 500ms (H11) │ │ 1000ms (H16) │ │ ║
+║ │ │ │ │ │ │ │ │ ║
+║ │ │ Single beat │ │ Psychological │ │ Bar-level meter │ │ ║
+║ │ │ (120–300 BPM) │ │ present window │ │ integration │ │ ║
+║ │ └──────┬─────────┘ └──────┬───────────┘ └──────┬─────────────┘ │ ║
+║ │ │ │ │ │ ║
+║ │ └──────────────────┴─────────────────────┘ │ ║
+║ │ TMRM demand: 15 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Sensorimotor Circuit ═══════ ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────┐ ║
+║ │ │ ║
+║ │ Beat Ind [0:10]│ Beat strength, tempo, phase, regularity ║
+║ │ Meter [10:20]│ Meter, syncopation, accent pattern, groove ║
+║ │ Motor [20:30]│ Movement urge, sync precision, coupling ║
+║ └────────┬────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TMRM MODEL (10D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f01_adjusting_advantage, │ ║
+║ │ f02_optimal_tempo, f03_expertise_accuracy │ ║
+║ │ Layer M (Math): method_dissociation, tempo_deviation │ ║
+║ │ Layer P (Present): sensory_state, motor_state │ ║
+║ │ Layer F (Future): tempo_prediction, method_confidence, │ ║
+║ │ reproduction_accuracy │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -218,29 +216,29 @@ Vigl et al. 2024 dissolved the nonmusician/musician dichotomy by testing 105 non
 TEMPO REPRODUCTION ACCURACY BY METHOD
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Method         Mechanism      Accuracy     Effect vs Tapping
+Method Mechanism Accuracy Effect vs Tapping
 ───────────────────────────────────────────────────────────────
-Adjusting      Sensory        Higher       d = 2.76 (huge)
-Tapping        Motor          Lower        baseline
+Adjusting Sensory Higher d = 2.76 (huge)
+Tapping Motor Lower baseline
 
 The sensory support advantage (d = 2.76) is among the largest
 effect sizes in music cognition, suggesting fundamentally
 different neural pathways:
 
 Adjusting: SMA + Auditory Cortex → Sensory feedback loop
-   - Listener matches perceived tempo against internal template
-   - Continuous perceptual comparison
-   - Exploits beat induction from BEP
+ - Listener matches perceived tempo against internal template
+ - Continuous perceptual comparison
+ - Exploits beat induction from beat-entrainment H³
 
 Tapping: Cerebellum + Premotor → Motor-only reproduction
-   - Relies on interval timing without sensory correction
-   - Discrete motor output, no perceptual feedback
-   - Exploits motor entrainment from BEP
+ - Relies on interval timing without sensory correction
+ - Discrete motor output, no perceptual feedback
+ - Exploits motor entrainment from beat-entrainment H³
 
 Optimal tempo: 120 BPM (500 ms IOI)
-   - Quadratic accuracy peak (d = 0.58)
-   - Aligns with preferred spontaneous motor tempo
-   - Within BEP H11 (500 ms) psychological present window
+ - Quadratic accuracy peak (d = 0.58)
+ - Aligns with preferred spontaneous motor tempo
+ - Within H11 (500 ms) psychological present window
 ```
 
 ### 3.3 Effect Size Summary
@@ -248,32 +246,32 @@ Optimal tempo: 120 BPM (500 ms IOI)
 ```
 UPDATED EFFECT SIZES (Vigl et al. 2024, N = 403):
 ──────────────────────────────────────────────────────────────────────
-Adjusting > Tapping:   r = −.26 (d ≈ 0.54) — SMALLER than originally claimed d = 2.76
-                       Mean tapping accuracy M = 0.76 (SD = 0.14)
-                       Mean adjusting accuracy M = 0.87 (SD = 0.09)
-Optimal Tempo:         χ²(1) = 152.57, p < .001; r = −.14 (quadratic peak 120–125 BPM)
-                       ROBUST — largest effect in Vigl 2024 model
-Expertise Effect:      r = .09 (p = .047, d ≈ 0.18) — SMALLER than originally claimed d = 0.59
-                       Method × Expertise: r = .04 (p = .001)
-Model variance:        Marginal R²/Conditional R² = 0.112/0.264
+Adjusting > Tapping: r = −.26 (d ≈ 0.54) — SMALLER than originally claimed d = 2.76
+ Mean tapping accuracy M = 0.76 (SD = 0.14)
+ Mean adjusting accuracy M = 0.87 (SD = 0.09)
+Optimal Tempo: χ²(1) = 152.57, p < .001; r = −.14 (quadratic peak 120–125 BPM)
+ ROBUST — largest effect in Vigl 2024 model
+Expertise Effect: r = .09 (p = .047, d ≈ 0.18) — SMALLER than originally claimed d = 0.59
+ Method × Expertise: r = .04 (p = .001)
+Model variance: Marginal R²/Conditional R² = 0.112/0.264
 
 CONVERGING EVIDENCE:
 ──────────────────────────────────────────────────────────────────────
-Foster 2021:           DJ 120-139 BPM error 3.10% vs untrained 7.91% (p < .001)
-                       Group × tempo: F(9,1389.55) = 2.70, p < .001
-Grahn & Brett 2007:   Putamen Z = 5.67, SMA Z = 5.03 (beat > non-beat)
-Dalla Bella 2024:     Musician classification d = 1.8 (perceptual-motor interaction)
-                       Motor model alone: d = 1.5; perceptual: d = 1.3
-Okada 2022:           3 cerebellar neuron types, PI t = 3.36
+Foster 2021: DJ 120-139 BPM error 3.10% vs untrained 7.91% (p < .001)
+ Group × tempo: F(9,1389.55) = 2.70, p < .001
+Grahn & Brett 2007: Putamen Z = 5.67, SMA Z = 5.03 (beat > non-beat)
+Dalla Bella 2024: Musician classification d = 1.8 (perceptual-motor interaction)
+ Motor model alone: d = 1.5; perceptual: d = 1.3
+Okada 2022: 3 cerebellar neuron types, PI t = 3.36
 
 ORIGINAL CLAIMS vs REPLICATED EVIDENCE:
 ──────────────────────────────────────────────────────────────────────
-Levitin & Cook 1996:   d = 2.76 claimed → Vigl 2024 replicates at d ≈ 0.54 (DEFLATED)
-Drake & Botte 1993:    d = 0.59 claimed → Vigl 2024 replicates at d ≈ 0.18 (DEFLATED)
-120 BPM optimum:       d = 0.58 claimed → Vigl 2024 CONFIRMS (χ² = 152.57)
+Levitin & Cook 1996: d = 2.76 claimed → Vigl 2024 replicates at d ≈ 0.54 (DEFLATED)
+Drake & Botte 1993: d = 0.59 claimed → Vigl 2024 replicates at d ≈ 0.18 (DEFLATED)
+120 BPM optimum: d = 0.58 claimed → Vigl 2024 CONFIRMS (χ² = 152.57)
 
-Quality Assessment:    γ-tier (primarily behavioral, 2 fMRI studies for brain regions)
-Replication:           STRONG for 120 BPM; MODERATE for method effect; WEAK for expertise
+Quality Assessment: γ-tier (primarily behavioral, 2 fMRI studies for brain regions)
+Replication: STRONG for 120 BPM; MODERATE for method effect; WEAK for expertise
 ```
 
 ---
@@ -308,36 +306,36 @@ Replication:           STRONG for 120 BPM; MODERATE for method effect; WEAK for 
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[8] loudness ─────────────────┐
 R³[10] spectral_flux ───────────┼──► Sensory Pathway (Adjusting Method)
-R³[11] onset_strength ──────────┘   BEP.beat_induction at H6 (200ms)
-                                    Math: S_adjust = σ(w · loud · flux · onset
-                                                        · BEP.beat_induction)
-                                    d = 2.76 advantage over motor
+R³[11] onset_strength ──────────┘ beat_induction at H6 (200ms)
+ Math: S_adjust = σ(w · loud · flux · onset
+ · beat_induction)
+ d = 2.76 advantage over motor
 
 R³[7] amplitude ────────────────┐
 R³[22] energy_change ───────────┼──► Motor Pathway (Tapping Method)
-R³[21] spectral_change ─────────┘   BEP.motor_entrainment at H11 (500ms)
-                                    Math: M_tap = σ(w · amp · energy_chg
-                                                     · BEP.motor_entrainment)
-                                    Baseline reproduction
+R³[21] spectral_change ─────────┘ motor_entrainment at H11 (500ms)
+ Math: M_tap = σ(w · amp · energy_chg
+ · motor_entrainment)
+ Baseline reproduction
 
 R³[8] loudness ─────────────────┐
 R³[9] spectral_centroid ────────┼──► Optimal Tempo Reference (120 BPM)
-                                    BEP.meter_extraction at H16 (1000ms)
-                                    Math: T_opt = 1 − (tempo − 120)² / k
-                                    Quadratic peak at 500 ms IOI
+ meter_extraction at H16 (1000ms)
+ Math: T_opt = 1 − (tempo − 120)² / k
+ Quadratic peak at 500 ms IOI
 
 R³[23] pitch_change ────────────┐
 R³[24] timbre_change ───────────┼──► Expertise Modulation
-                                    Finer feature discrimination
-                                    d = 0.59 expertise effect
+ Finer feature discrimination
+ d = 0.59 expertise effect
 
 R³[65] tempo_estimate ──────────┐
 R³[73] tempo_stability ─────────┼──► Tempo Memory Calibration (v2)
-                                    Direct tempo grid + stability signal
+ Direct tempo grid + stability signal
 ```
 
 ---
@@ -346,7 +344,7 @@ R³[73] tempo_stability ─────────┼──► Tempo Memory Cal
 
 ### 5.1 Demand Specification
 
-TMRM requires H³ features at three BEP horizons: H6 (200ms beat), H11 (500ms psychological present), H16 (1000ms bar).
+TMRM requires H³ features at three horizons: H6 (200ms beat), H11 (500ms psychological present), H16 (1000ms bar).
 These correspond to single-beat → tempo reference → bar-level timescales.
 
 | R³ Index | Feature | H | Morph | Law | Purpose |
@@ -371,7 +369,7 @@ These correspond to single-beat → tempo reference → bar-level timescales.
 
 #### R³ v2 Projected Expansion
 
-TMRM projected v2 features from G:Rhythm, aligned with BEP horizons.
+TMRM projected v2 features from G:Rhythm, aligned with corresponding H³ horizons.
 
 | R³ Idx | Feature | Group | H | Morph | Law | Purpose |
 |:------:|---------|:-----:|:-:|-------|:---:|---------|
@@ -382,18 +380,6 @@ TMRM projected v2 features from G:Rhythm, aligned with BEP horizons.
 
 **v2 projected**: 4 tuples
 **Total projected**: 19 tuples of 294,912 theoretical = 0.0064%
-
-### 5.2 BEP Mechanism Binding
-
-TMRM reads from the **BEP** (Beat Entrainment Processing) mechanism:
-
-| BEP Sub-section | Range | TMRM Role | Weight |
-|-----------------|-------|-----------|--------|
-| **Beat Induction** | BEP[0:10] | Sensory pathway — beat strength, tempo extraction | **1.0** (primary) |
-| **Meter Extraction** | BEP[10:20] | Optimal tempo — meter, groove, accent pattern | **0.8** |
-| **Motor Entrainment** | BEP[20:30] | Motor pathway — tapping reproduction baseline | **0.7** |
-
-TMRM does NOT read from TMH — tempo memory reproduction is about beat-level entrainment and motor synchronization, not hierarchical context encoding.
 
 ---
 
@@ -408,62 +394,62 @@ Manifold range: STU TMRM [199:209]
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼─────────────────────┼────────┼────────────────────────────────────────────
- 0  │ f01_adjusting_adv   │ [0, 1] │ Sensory support advantage (d = 2.76).
-    │                     │        │ Adjusting > tapping for tempo accuracy.
-    │                     │        │ f01 = σ(0.35 · loud_peak · flux_period
-    │                     │        │         · BEP.beat_induction_mean)
-    │                     │        │ Coefficients: |0.35| ≤ 1.0 ✓
+ 0 │ f01_adjusting_adv │ [0, 1] │ Sensory support advantage (d = 2.76).
+ │ │ │ Adjusting > tapping for tempo accuracy.
+ │ │ │ f01 = σ(0.35 · loud_peak · flux_period
+ │ │ │ · beat_induction_mean)
+ │ │ │ Coefficients: |0.35| ≤ 1.0 ✓
 ────┼─────────────────────┼────────┼────────────────────────────────────────────
- 1  │ f02_optimal_tempo   │ [0, 1] │ 120 BPM quadratic optimum (d = 0.58).
-    │                     │        │ Internal reference at 500 ms IOI.
-    │                     │        │ f02 = σ(0.30 · period_loud · period_flux
-    │                     │        │         · BEP.meter_extraction_mean)
-    │                     │        │ Coefficients: |0.30| ≤ 1.0 ✓
+ 1 │ f02_optimal_tempo │ [0, 1] │ 120 BPM quadratic optimum (d = 0.58).
+ │ │ │ Internal reference at 500 ms IOI.
+ │ │ │ f02 = σ(0.30 · period_loud · period_flux
+ │ │ │ · meter_extraction_mean)
+ │ │ │ Coefficients: |0.30| ≤ 1.0 ✓
 ────┼─────────────────────┼────────┼────────────────────────────────────────────
- 2  │ f03_expertise_acc   │ [0, 1] │ Musicians > non-musicians (d = 0.59).
-    │                     │        │ Expertise enhances reproduction precision.
-    │                     │        │ f03 = σ(0.30 · smooth_energy · f01 · f02)
-    │                     │        │ Coefficients: |0.30| ≤ 1.0 ✓
+ 2 │ f03_expertise_acc │ [0, 1] │ Musicians > non-musicians (d = 0.59).
+ │ │ │ Expertise enhances reproduction precision.
+ │ │ │ f03 = σ(0.30 · smooth_energy · f01 · f02)
+ │ │ │ Coefficients: |0.30| ≤ 1.0 ✓
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼─────────────────────┼────────┼────────────────────────────────────────────
- 3  │ method_dissociation │ [0, 1] │ Adjusting − tapping pathway difference.
-    │                     │        │ High = sensory dominates, low = motor.
-    │                     │        │ dissoc = σ(f01 − motor_state)
+ 3 │ method_dissociation │ [0, 1] │ Adjusting − tapping pathway difference.
+ │ │ │ High = sensory dominates, low = motor.
+ │ │ │ dissoc = σ(f01 − motor_state)
 ────┼─────────────────────┼────────┼────────────────────────────────────────────
- 4  │ tempo_deviation     │ [0, 1] │ Distance from optimal 120 BPM.
-    │                     │        │ 0 = at optimum, 1 = far from 120 BPM.
-    │                     │        │ dev = 1 − f02
+ 4 │ tempo_deviation │ [0, 1] │ Distance from optimal 120 BPM.
+ │ │ │ 0 = at optimum, 1 = far from 120 BPM.
+ │ │ │ dev = 1 − f02
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼─────────────────────┼────────┼────────────────────────────────────────────
- 5  │ sensory_state       │ [0, 1] │ Sensory pathway activation (SMA + auditory).
-    │                     │        │ BEP.beat_induction aggregation.
+ 5 │ sensory_state │ [0, 1] │ Sensory pathway activation (SMA + auditory).
+ │ │ │ beat_induction aggregation.
 ────┼─────────────────────┼────────┼────────────────────────────────────────────
- 6  │ motor_state         │ [0, 1] │ Motor pathway activation (cerebellum + premotor).
-    │                     │        │ BEP.motor_entrainment aggregation.
+ 6 │ motor_state │ [0, 1] │ Motor pathway activation (cerebellum + premotor).
+ │ │ │ motor_entrainment aggregation.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼─────────────────────┼────────┼────────────────────────────────────────────
- 7  │ tempo_prediction    │ [0, 1] │ Predicted next-beat tempo stability.
-    │                     │        │ Periodicity + trend-based expectation.
+ 7 │ tempo_prediction │ [0, 1] │ Predicted next-beat tempo stability.
+ │ │ │ Periodicity + trend-based expectation.
 ────┼─────────────────────┼────────┼────────────────────────────────────────────
- 8  │ method_confidence   │ [0, 1] │ Confidence in current reproduction method.
-    │                     │        │ Smoothness × regularity at bar level.
+ 8 │ method_confidence │ [0, 1] │ Confidence in current reproduction method.
+ │ │ │ Smoothness × regularity at bar level.
 ────┼─────────────────────┼────────┼────────────────────────────────────────────
- 9  │ reproduction_acc    │ [0, 1] │ Expected reproduction accuracy.
-    │                     │        │ Combines sensory + motor + expertise.
-    │                     │        │ acc = σ(0.40 · f01 + 0.30 · f02
-    │                     │        │         + 0.30 · f03)
-    │                     │        │ Coefficients: |0.40+0.30+0.30| = 1.0 ✓
+ 9 │ reproduction_acc │ [0, 1] │ Expected reproduction accuracy.
+ │ │ │ Combines sensory + motor + expertise.
+ │ │ │ acc = σ(0.40 · f01 + 0.30 · f02
+ │ │ │ + 0.30 · f03)
+ │ │ │ Coefficients: |0.40+0.30+0.30| = 1.0 ✓
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 10D per frame at 172.27 Hz
@@ -479,45 +465,43 @@ TOTAL: 10D per frame at 172.27 Hz
 ```
 Tempo Memory Reproduction:
 
-    Adjusting (sensory):
-      Accuracy_adjust = f(sensory_feedback, internal_template)
-      Brain: SMA + Auditory Cortex
-      Advantage: d = 2.76 over tapping
+ Adjusting (sensory):
+ Accuracy_adjust = f(sensory_feedback, internal_template)
+ Brain: SMA + Auditory Cortex
+ Advantage: d = 2.76 over tapping
 
-    Tapping (motor):
-      Accuracy_tap = f(motor_timing, interval_reproduction)
-      Brain: Cerebellum + Premotor Cortex
-      Baseline accuracy
+ Tapping (motor):
+ Accuracy_tap = f(motor_timing, interval_reproduction)
+ Brain: Cerebellum + Premotor Cortex
+ Baseline accuracy
 
-    Optimal Tempo:
-      Accuracy(BPM) = A_max · exp(−(BPM − 120)² / (2σ²))
-      Peak at 120 BPM (500 ms IOI), σ ≈ 40 BPM
-      d = 0.58 quadratic fit
+ Optimal Tempo:
+ Accuracy(BPM) = A_max · exp(−(BPM − 120)² / (2σ²))
+ Peak at 120 BPM (500 ms IOI), σ ≈ 40 BPM
+ d = 0.58 quadratic fit
 
-    Expertise Modulation:
-      Accuracy_expert = Accuracy_base · (1 + d_exp · expertise)
-      d_exp = 0.59 (Drake & Botte 1993)
+ Expertise Modulation:
+ Accuracy_expert = Accuracy_base · (1 + d_exp · expertise)
+ d_exp = 0.59 (Drake & Botte 1993)
 ```
 
 ### 7.2 Feature Formulas
 
 ```python
 # f01: Adjusting Advantage (sensory support, d = 2.76)
-loud_peak = h3[(8, 6, 4, 0)]         # loudness max at H6
-flux_period = h3[(10, 11, 14, 0)]    # spectral_flux periodicity at H11
+loud_peak = h3[(8, 6, 4, 0)] # loudness max at H6
+flux_period = h3[(10, 11, 14, 0)] # spectral_flux periodicity at H11
 f01 = σ(0.35 · loud_peak · flux_period
-         · mean(BEP.beat_induction[0:10]))
 # Coefficient check: |0.35| ≤ 1.0 ✓
 
 # f02: Optimal Tempo (120 BPM quadratic peak, d = 0.58)
-period_loud = h3[(8, 11, 14, 0)]     # loudness periodicity at H11
-period_flux = h3[(10, 6, 17, 0)]     # spectral_flux peaks at H6
+period_loud = h3[(8, 11, 14, 0)] # loudness periodicity at H11
+period_flux = h3[(10, 6, 17, 0)] # spectral_flux peaks at H6
 f02 = σ(0.30 · period_loud · period_flux
-         · mean(BEP.meter_extraction[10:20]))
 # Coefficient check: |0.30| ≤ 1.0 ✓
 
 # f03: Expertise Accuracy (d = 0.59)
-smooth_energy = h3[(22, 16, 15, 0)]  # energy_change smoothness at H16
+smooth_energy = h3[(22, 16, 15, 0)] # energy_change smoothness at H16
 f03 = σ(0.30 · smooth_energy · f01 · f02)
 # Coefficient check: |0.30| ≤ 1.0 ✓
 ```
@@ -549,23 +533,21 @@ f03 = σ(0.30 · smooth_energy · f01 · f02)
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    TMRM INTERACTIONS                                         │
+│ TMRM INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (STU):                                                         │
-│  TMRM.sensory_state ────────► AMSC (sensory pathway feeds motor coupling) │
-│  TMRM.motor_state ──────────► EDTA (motor baseline for tempo accuracy)    │
-│  TMRM.optimal_tempo ────────► HGSIC (tempo reference for groove zone)     │
-│  TMRM.reproduction_acc ─────► OMS (motor accuracy for oscillatory sync)   │
-│                                                                             │
-│  CROSS-UNIT (P2: STU internal):                                            │
-│  BEP.beat_induction ↔ BEP.motor_entrainment (r = 0.70)                   │
-│  Sensory → motor pathway via dorsal auditory stream                       │
-│                                                                             │
-│  CROSS-UNIT (P5: STU → ARU):                                              │
-│  TMRM.tempo_prediction ──► ARU.AED (tempo stability → arousal)            │
-│  Fast tempo + high regularity → sympathetic arousal activation            │
-│                                                                             │
+│ │
+│ INTRA-UNIT (STU): │
+│ TMRM.sensory_state ────────► AMSC (sensory pathway feeds motor coupling) │
+│ TMRM.motor_state ──────────► EDTA (motor baseline for tempo accuracy) │
+│ TMRM.optimal_tempo ────────► HGSIC (tempo reference for groove zone) │
+│ TMRM.reproduction_acc ─────► OMS (motor accuracy for oscillatory sync) │
+│ │
+│ CROSS-UNIT (P2: STU internal): │
+│ Sensory → motor pathway via dorsal auditory stream │
+│ │
+│ CROSS-UNIT (P5: STU → ARU): │
+│ Fast tempo + high regularity → sympathetic arousal activation │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -593,149 +575,134 @@ f03 = σ(0.30 · smooth_energy · f01 · f02)
 
 ```python
 class TMRM(BaseModel):
-    """Tempo Memory Reproduction Method.
+ """Tempo Memory Reproduction Method.
 
-    Output: 10D per frame.
-    Reads: BEP mechanism (30D).
-    Zero learned parameters — 100% deterministic.
-    """
-    NAME = "TMRM"
-    UNIT = "STU"
-    TIER = "γ1"
-    OUTPUT_DIM = 10
-    MECHANISM_NAMES = ("BEP",)        # Primary mechanism
+ Output: 10D per frame.
+ Zero learned parameters — 100% deterministic.
+ """
+ NAME = "TMRM"
+ UNIT = "STU"
+ TIER = "γ1"
+ OUTPUT_DIM = 10
+ ADJUSTING_COEFF = 0.35 # Sensory pathway weight
+ OPTIMAL_COEFF = 0.30 # Optimal tempo weight
+ EXPERTISE_COEFF = 0.30 # Expertise modulation weight
+ ADJUSTING_D = 2.76 # Levitin & Cook 1996 sensory advantage
+ OPTIMAL_BPM = 120 # Optimal tempo (500ms IOI)
+ OPTIMAL_D = 0.58 # Quadratic peak effect
+ EXPERTISE_D = 0.59 # Drake & Botte 1993 expertise effect
+ ACC_W_SENSORY = 0.40 # Reproduction accuracy: sensory weight
+ ACC_W_TEMPO = 0.30 # Reproduction accuracy: tempo weight
+ ACC_W_EXPERT = 0.30 # Reproduction accuracy: expertise weight
 
-    ADJUSTING_COEFF = 0.35    # Sensory pathway weight
-    OPTIMAL_COEFF = 0.30      # Optimal tempo weight
-    EXPERTISE_COEFF = 0.30    # Expertise modulation weight
-    ADJUSTING_D = 2.76        # Levitin & Cook 1996 sensory advantage
-    OPTIMAL_BPM = 120         # Optimal tempo (500ms IOI)
-    OPTIMAL_D = 0.58          # Quadratic peak effect
-    EXPERTISE_D = 0.59        # Drake & Botte 1993 expertise effect
-    ACC_W_SENSORY = 0.40      # Reproduction accuracy: sensory weight
-    ACC_W_TEMPO = 0.30        # Reproduction accuracy: tempo weight
-    ACC_W_EXPERT = 0.30       # Reproduction accuracy: expertise weight
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """15 tuples for TMRM computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ # Beat level (H6 = 200ms)
+ (8, 6, 4, 0), # loudness, max, forward
+ (10, 6, 17, 0), # spectral_flux, peaks, forward
+ (11, 6, 4, 0), # onset_strength, max, forward
+ # Psychological present (H11 = 500ms)
+ (8, 11, 14, 0), # loudness, periodicity, forward
+ (8, 11, 15, 0), # loudness, smoothness, forward
+ (10, 11, 14, 0), # spectral_flux, periodicity, forward
+ (22, 11, 8, 0), # energy_change, velocity, forward
+ (22, 11, 14, 0), # energy_change, periodicity, forward
+ (7, 11, 4, 0), # amplitude, max, forward
+ # Bar level (H16 = 1000ms)
+ (7, 16, 18, 0), # amplitude, trend, forward
+ (8, 16, 14, 0), # loudness, periodicity, forward
+ (8, 16, 18, 0), # loudness, trend, forward
+ (21, 16, 8, 0), # spectral_change, velocity, forward
+ (22, 16, 15, 0), # energy_change, smoothness, forward
+ (11, 16, 17, 0), # onset_strength, peaks, forward
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """15 tuples for TMRM computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # Beat level (H6 = 200ms)
-            (8, 6, 4, 0),      # loudness, max, forward
-            (10, 6, 17, 0),    # spectral_flux, peaks, forward
-            (11, 6, 4, 0),     # onset_strength, max, forward
-            # Psychological present (H11 = 500ms)
-            (8, 11, 14, 0),    # loudness, periodicity, forward
-            (8, 11, 15, 0),    # loudness, smoothness, forward
-            (10, 11, 14, 0),   # spectral_flux, periodicity, forward
-            (22, 11, 8, 0),    # energy_change, velocity, forward
-            (22, 11, 14, 0),   # energy_change, periodicity, forward
-            (7, 11, 4, 0),     # amplitude, max, forward
-            # Bar level (H16 = 1000ms)
-            (7, 16, 18, 0),    # amplitude, trend, forward
-            (8, 16, 14, 0),    # loudness, periodicity, forward
-            (8, 16, 18, 0),    # loudness, trend, forward
-            (21, 16, 8, 0),    # spectral_change, velocity, forward
-            (22, 16, 15, 0),   # energy_change, smoothness, forward
-            (11, 16, 17, 0),   # onset_strength, peaks, forward
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute TMRM 10D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute TMRM 10D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) → (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"BEP": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) → (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,10) TMRM output
+ """
+ # ═══ LAYER E: Explicit features ═══
 
-        Returns:
-            (B,T,10) TMRM output
-        """
-        bep = mechanism_outputs["BEP"]    # (B, T, 30)
+ # f01: Adjusting Advantage (d = 2.76)
+ loud_peak = h3_direct[(8, 6, 4, 0)].unsqueeze(-1)
+ flux_period = h3_direct[(10, 11, 14, 0)].unsqueeze(-1)
+ f01 = torch.sigmoid(self.ADJUSTING_COEFF * (
+ loud_peak * flux_period
+ ))
 
-        # BEP sub-sections
-        bep_beat = bep[..., 0:10]         # beat induction
-        bep_meter = bep[..., 10:20]       # meter extraction
-        bep_motor = bep[..., 20:30]       # motor entrainment
+ # f02: Optimal Tempo (120 BPM, d = 0.58)
+ period_loud = h3_direct[(8, 11, 14, 0)].unsqueeze(-1)
+ period_flux = h3_direct[(10, 6, 17, 0)].unsqueeze(-1)
+ f02 = torch.sigmoid(self.OPTIMAL_COEFF * (
+ period_loud * period_flux
+ ))
 
-        # ═══ LAYER E: Explicit features ═══
+ # f03: Expertise Accuracy (d = 0.59)
+ smooth_energy = h3_direct[(22, 16, 15, 0)].unsqueeze(-1)
+ f03 = torch.sigmoid(self.EXPERTISE_COEFF * (
+ smooth_energy * f01 * f02
+ ))
 
-        # f01: Adjusting Advantage (d = 2.76)
-        loud_peak = h3_direct[(8, 6, 4, 0)].unsqueeze(-1)
-        flux_period = h3_direct[(10, 11, 14, 0)].unsqueeze(-1)
-        f01 = torch.sigmoid(self.ADJUSTING_COEFF * (
-            loud_peak * flux_period
-            * bep_beat.mean(-1, keepdim=True)
-        ))
+ # ═══ LAYER M: Mathematical ═══
 
-        # f02: Optimal Tempo (120 BPM, d = 0.58)
-        period_loud = h3_direct[(8, 11, 14, 0)].unsqueeze(-1)
-        period_flux = h3_direct[(10, 6, 17, 0)].unsqueeze(-1)
-        f02 = torch.sigmoid(self.OPTIMAL_COEFF * (
-            period_loud * period_flux
-            * bep_meter.mean(-1, keepdim=True)
-        ))
+ # Motor state (needed before method_dissociation)
+ amp_max = h3_direct[(7, 11, 4, 0)].unsqueeze(-1)
+ energy_vel = h3_direct[(22, 11, 8, 0)].unsqueeze(-1)
+ motor_state = torch.sigmoid(
+ 0.50 * amp_max * energy_vel
+ )
+ # Coefficient check: |0.50| ≤ 1.0 ✓
 
-        # f03: Expertise Accuracy (d = 0.59)
-        smooth_energy = h3_direct[(22, 16, 15, 0)].unsqueeze(-1)
-        f03 = torch.sigmoid(self.EXPERTISE_COEFF * (
-            smooth_energy * f01 * f02
-        ))
+ method_dissociation = torch.sigmoid(f01 - motor_state)
+ tempo_deviation = 1.0 - f02
 
-        # ═══ LAYER M: Mathematical ═══
+ # ═══ LAYER P: Present ═══
 
-        # Motor state (needed before method_dissociation)
-        amp_max = h3_direct[(7, 11, 4, 0)].unsqueeze(-1)
-        energy_vel = h3_direct[(22, 11, 8, 0)].unsqueeze(-1)
-        motor_state = torch.sigmoid(
-            0.50 * amp_max * energy_vel
-            * bep_motor.mean(-1, keepdim=True)
-        )
-        # Coefficient check: |0.50| ≤ 1.0 ✓
 
-        method_dissociation = torch.sigmoid(f01 - motor_state)
-        tempo_deviation = 1.0 - f02
+ # ═══ LAYER F: Future ═══
 
-        # ═══ LAYER P: Present ═══
+ # Tempo prediction from periodicity + trend
+ amp_trend = h3_direct[(7, 16, 18, 0)].unsqueeze(-1)
+ loud_bar_period = h3_direct[(8, 16, 14, 0)].unsqueeze(-1)
+ tempo_prediction = torch.sigmoid(
+ 0.50 * loud_bar_period + 0.50 * amp_trend
+ )
+ # Coefficient check: |0.50 + 0.50| = 1.0 ✓
 
-        sensory_state = bep_beat.mean(-1, keepdim=True)
+ # Method confidence from smoothness × regularity
+ loud_smooth = h3_direct[(8, 11, 15, 0)].unsqueeze(-1)
+ loud_trend = h3_direct[(8, 16, 18, 0)].unsqueeze(-1)
+ method_confidence = torch.sigmoid(
+ 0.50 * loud_smooth + 0.50 * loud_trend
+ )
+ # Coefficient check: |0.50 + 0.50| = 1.0 ✓
 
-        # ═══ LAYER F: Future ═══
+ # Reproduction accuracy
+ reproduction_acc = torch.sigmoid(
+ self.ACC_W_SENSORY * f01
+ + self.ACC_W_TEMPO * f02
+ + self.ACC_W_EXPERT * f03
+ )
+ # Coefficient check: |0.40 + 0.30 + 0.30| = 1.0 ✓
 
-        # Tempo prediction from periodicity + trend
-        amp_trend = h3_direct[(7, 16, 18, 0)].unsqueeze(-1)
-        loud_bar_period = h3_direct[(8, 16, 14, 0)].unsqueeze(-1)
-        tempo_prediction = torch.sigmoid(
-            0.50 * loud_bar_period + 0.50 * amp_trend
-        )
-        # Coefficient check: |0.50 + 0.50| = 1.0 ✓
-
-        # Method confidence from smoothness × regularity
-        loud_smooth = h3_direct[(8, 11, 15, 0)].unsqueeze(-1)
-        loud_trend = h3_direct[(8, 16, 18, 0)].unsqueeze(-1)
-        method_confidence = torch.sigmoid(
-            0.50 * loud_smooth + 0.50 * loud_trend
-        )
-        # Coefficient check: |0.50 + 0.50| = 1.0 ✓
-
-        # Reproduction accuracy
-        reproduction_acc = torch.sigmoid(
-            self.ACC_W_SENSORY * f01
-            + self.ACC_W_TEMPO * f02
-            + self.ACC_W_EXPERT * f03
-        )
-        # Coefficient check: |0.40 + 0.30 + 0.30| = 1.0 ✓
-
-        return torch.cat([
-            f01, f02, f03,                                  # E: 3D
-            method_dissociation, tempo_deviation,            # M: 2D
-            sensory_state, motor_state,                      # P: 2D
-            tempo_prediction, method_confidence,
-            reproduction_acc,                                # F: 3D
-        ], dim=-1)  # (B, T, 10)
+ return torch.cat([
+ f01, f02, f03, # E: 3D
+ method_dissociation, tempo_deviation, # M: 2D
+ sensory_state, motor_state, # P: 2D
+ tempo_prediction, method_confidence,
+ reproduction_acc, # F: 3D
+ ], dim=-1) # (B, T, 10)
 ```
 
 ---
@@ -750,7 +717,6 @@ class TMRM(BaseModel):
 | **Falsification Tests** | 7/9 confirmed | 7 confirmed, 2 testable |
 | **R³ Features Used** | 9D of 49D | Energy + Change |
 | **H³ Demand** | 15 tuples (0.65%) | Sparse, efficient |
-| **BEP Mechanism** | 30D (3 sub-sections) | Full coverage |
 | **Output Dimensions** | **10D** | 4-layer structure |
 
 ---
@@ -782,7 +748,6 @@ class TMRM(BaseModel):
 
 Doc-code mismatches to resolve:
 - Code `FULL_NAME = "Tempo Memory Reproduction Matrix"` vs doc "Tempo Memory Reproduction Method"
-- Code `MECHANISM_NAMES = ("BEP", "TMH")` vs doc specifies `("BEP",)` only
 - Code cites `Leow 2014 + Collier 2004` vs doc cites `Levitin & Cook 1996 + Drake & Botte 1993` (both sets now superseded by Vigl 2024)
 - Code `version="2.0.0"`, `paper_count=3` → needs update to `"2.1.0"`, `paper_count=12`
 
@@ -795,29 +760,13 @@ Doc-code mismatches to resolve:
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D): L0, L4, L5, L6, L9, X_L4L5 | R³ (49D): Energy, Change |
-| Temporal | HC⁰ mechanisms (PTM, ITM, GRV, HRM) | BEP mechanism (30D) |
-| Beat detection | S⁰.L5.spectral_flux[45] × HC⁰.PTM | R³.spectral_flux[10] × BEP.beat_induction |
-| Tempo reference | S⁰.L9.mean_T[104] × HC⁰.ITM | R³.loudness[8] periodicity × BEP.meter_extraction |
-| Groove pathway | S⁰.L5 × HC⁰.GRV | R³.Change + BEP.motor_entrainment |
-| Memory replay | S⁰.L9 × HC⁰.HRM | Removed (BEP subsumes tempo memory) |
+| Beat detection | S⁰.L5.spectral_flux[45] × HC⁰.PTM | R³.spectral_flux[10] |
+| Tempo reference | S⁰.L9.mean_T[104] × HC⁰.ITM | R³.loudness[8] periodicity |
+| Groove pathway | S⁰.L5 × HC⁰.GRV | R³.Change |
+| Memory replay | S⁰.L9 × HC⁰.HRM | Removed (beat-entrainment subsumes tempo memory) |
 | Demand format | HC⁰ index ranges (15/2304 = 0.65%) | H³ 4-tuples (15/2304 = 0.65%) |
 | Output dimensions | 12D | **10D** (catalog-specified) |
 | Method dissociation | Implicit in X_L4L5 interactions | Explicit via sensory_state vs motor_state |
-
-### Why BEP replaces HC⁰ mechanisms
-
-The D0 pipeline used 4 separate HC⁰ mechanisms (PTM, ITM, GRV, HRM). In MI, these are unified into the BEP mechanism with 3 sub-sections:
-- **PTM → BEP.beat_induction** [0:10]: Predictive timing → beat strength, tempo detection
-- **ITM → BEP.meter_extraction** [10:20]: Interval timing → meter, accent patterns, optimal tempo zone
-- **GRV → BEP.motor_entrainment** [20:30]: Groove processing → motor synchronization, tapping pathway
-- **HRM** (Hippocampal Replay): Subsumed by BEP's inherent periodicity tracking — tempo memory is maintained through ongoing beat entrainment rather than episodic replay
-
-### Key Output Changes
-
-D0 had 12D output with separate features for replay and memory. MI reduces to 10D by:
-1. Removing explicit replay features (HRM subsumed by BEP periodicity)
-2. Consolidating tempo memory into `f02_optimal_tempo` (BEP.meter_extraction periodicity)
-3. Adding `reproduction_acc` as an integrated accuracy prediction
 
 ---
 

@@ -21,33 +21,33 @@ The **Spatiotemporal Prediction Hierarchy** (SPH) model describes how auditory m
 SPATIOTEMPORAL PREDICTION HIERARCHY
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-                   MEMORISED SEQUENCE (M)
-  ┌──────────────────────────────────────────────────────────────────┐
-  │                                                                  │
-  │   Heschl's Gyrus ◄────────────────► Hippocampus                 │
-  │        │                   FEEDBACK      ▲                       │
-  │        │ FEEDFORWARD                     │                       │
-  │        ▼                                 │                       │
-  │   Cingulate Gyrus ◄──────────────────────┘                      │
-  │                                                                  │
-  │   Response: POSITIVE components, ~350 ms                        │
-  │   Oscillations: GAMMA (>30 Hz) enhanced                         │
-  └──────────────────────────────────────────────────────────────────┘
+ MEMORISED SEQUENCE (M)
+ ┌──────────────────────────────────────────────────────────────────┐
+ │ │
+ │ Heschl's Gyrus ◄────────────────► Hippocampus │
+ │ │ FEEDBACK ▲ │
+ │ │ FEEDFORWARD │ │
+ │ ▼ │ │
+ │ Cingulate Gyrus ◄──────────────────────┘ │
+ │ │
+ │ Response: POSITIVE components, ~350 ms │
+ │ Oscillations: GAMMA (>30 Hz) enhanced │
+ └──────────────────────────────────────────────────────────────────┘
 
-                   VARIED SEQUENCE (N = Prediction Error)
-  ┌──────────────────────────────────────────────────────────────────┐
-  │                                                                  │
-  │   Auditory Cortex (N100 ~150 ms)                                │
-  │        │                                                        │
-  │        │ PROPAGATES                                             │
-  │        ▼                                                        │
-  │   Hippocampus + Cingulate (~250 ms)                            │
-  │                                                                  │
-  │   Response: NEGATIVE components, ~250 ms (FASTER)               │
-  │   Oscillations: ALPHA/BETA (2-20 Hz) enhanced                   │
-  └──────────────────────────────────────────────────────────────────┘
+ VARIED SEQUENCE (N = Prediction Error)
+ ┌──────────────────────────────────────────────────────────────────┐
+ │ │
+ │ Auditory Cortex (N100 ~150 ms) │
+ │ │ │
+ │ │ PROPAGATES │
+ │ ▼ │
+ │ Hippocampus + Cingulate (~250 ms) │
+ │ │
+ │ Response: NEGATIVE components, ~250 ms (FASTER) │
+ │ Oscillations: ALPHA/BETA (2-20 Hz) enhanced │
+ └──────────────────────────────────────────────────────────────────┘
 
-  FINAL TONE: Cingulate assumes TOP position (decision/evaluation)
+ FINAL TONE: Cingulate assumes TOP position (decision/evaluation)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 KEY INSIGHT: Auditory memory recognition uses distinct oscillatory
@@ -68,79 +68,77 @@ SPH extends HTP's hierarchical timing to spatiotemporal memory recognition:
 
 ## 2. Neural Circuit: Complete Anatomy
 
-### 2.1 Information Flow Architecture (EAR → BRAIN → PPC+TPC+MEM → SPH)
+### 2.1 Information Flow Architecture (EAR → BRAIN → SPH)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    SPH COMPUTATION ARCHITECTURE                             ║
+║ SPH COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins x 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
-║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ CHANGE   │ │ X-INT  │ │        ║
-║  │  │ 7D [0:7]  │ │ 5D[7:12]│ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
-║  │  │           │ │         │ │ [12:21] │ │ [21:25]  │ │ [25:49]│ │        ║
-║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                         SPH reads: ~22D                         │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                                                                  │        ║
-║  │  ┌── PPC Horizons ───────────────┐ ┌── MEM Horizons ──────────┐  │        ║
-║  │  │ H0 (25ms gamma)              │ │ H8 (500ms delta)          │  │        ║
-║  │  │ H3 (100ms alpha)             │ │ H16 (1000ms beat)         │  │        ║
-║  │  │ H4 (125ms theta)             │ │                            │  │        ║
-║  │  │                               │ │ Memory match/mismatch     │  │        ║
-║  │  │ Gamma/alpha-beta tracking     │ │ Hierarchy position        │  │        ║
-║  │  └───────────────────────────────┘ └────────────────────────────┘  │        ║
-║  │                         SPH demand: ~16 of 2304 tuples            │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Imagery Circuit ═══════════   ║
-║                               │                                              ║
-║                       ┌───────┴───────┐───────┐                              ║
-║                       ▼               ▼       ▼                              ║
-║  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐              ║
-║  │  PPC (30D)      │  │  TPC (30D)      │  │  MEM (30D)      │              ║
-║  │                 │  │                 │  │                 │              ║
-║  │ Pitch Ext[0:10] │  │ Spec Shp [0:10] │  │ Work Mem [0:10] │              ║
-║  │ Interval        │  │ Temporal        │  │ Long-Term       │              ║
-║  │ Analysis[10:20] │  │ Envelope[10:20] │  │ Memory  [10:20] │              ║
-║  │ Contour  [20:30]│  │ Source Id[20:30] │  │ Pred Buf[20:30] │              ║
-║  └────────┬────────┘  └────────┬────────┘  └────────┬────────┘              ║
-║           │                    │                    │                         ║
-║           └────────────┬───────┴────────────────────┘                        ║
-║                        ▼                                                     ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    SPH MODEL (14D Output)                        │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f01_gamma_match,                           │        ║
-║  │                       f02_alpha_beta_error,                      │        ║
-║  │                       f03_hierarchy_position,                    │        ║
-║  │                       f04_feedforward_feedback                   │        ║
-║  │  Layer M (Math):      match_response, varied_response,           │        ║
-║  │                       gamma_power, alpha_beta_power              │        ║
-║  │  Layer P (Present):   memory_match, prediction_error,            │        ║
-║  │                       deviation_detection                        │        ║
-║  │  Layer F (Future):    next_tone_pred, sequence_completion_pred,  │        ║
-║  │                       decision_evaluation_pred                   │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins x 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ ENERGY │ │ TIMBRE │ │ CHANGE │ │ X-INT │ │ ║
+║ │ │ 7D [0:7] │ │ 5D[7:12]│ │ 9D │ │ 4D │ │ 24D │ │ ║
+║ │ │ │ │ │ │ [12:21] │ │ [21:25] │ │ [25:49]│ │ ║
+║ │ └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │ ║
+║ │ SPH reads: ~22D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ │ ║
+║ │ │ H0 (25ms gamma) │ │ H8 (500ms delta) │ │ ║
+║ │ │ H3 (100ms alpha) │ │ H16 (1000ms beat) │ │ ║
+║ │ │ H4 (125ms theta) │ │ │ │ ║
+║ │ │ │ │ Memory match/mismatch │ │ ║
+║ │ │ Gamma/alpha-beta tracking │ │ Hierarchy position │ │ ║
+║ │ └───────────────────────────────┘ └────────────────────────────┘ │ ║
+║ │ SPH demand: ~16 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Imagery Circuit ═══════════ ║
+║ │ ║
+║ ┌───────┴───────┐───────┐ ║
+║ ▼ ▼ ▼ ║
+║ ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐ ║
+║ │ │ │ │ │ │ ║
+║ │ Pitch Ext[0:10] │ │ Spec Shp [0:10] │ │ Work Mem [0:10] │ ║
+║ │ Interval │ │ Temporal │ │ Long-Term │ ║
+║ │ Analysis[10:20] │ │ Envelope[10:20] │ │ Memory [10:20] │ ║
+║ │ Contour [20:30]│ │ Source Id[20:30] │ │ Pred Buf[20:30] │ ║
+║ └────────┬────────┘ └────────┬────────┘ └────────┬────────┘ ║
+║ │ │ │ ║
+║ └────────────┬───────┴────────────────────┘ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPH MODEL (14D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f01_gamma_match, │ ║
+║ │ f02_alpha_beta_error, │ ║
+║ │ f03_hierarchy_position, │ ║
+║ │ f04_feedforward_feedback │ ║
+║ │ Layer M (Math): match_response, varied_response, │ ║
+║ │ gamma_power, alpha_beta_power │ ║
+║ │ Layer P (Present): memory_match, prediction_error, │ ║
+║ │ deviation_detection │ ║
+║ │ Layer F (Future): next_tone_pred, sequence_completion_pred, │ ║
+║ │ decision_evaluation_pred │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -158,30 +156,30 @@ SPH extends HTP's hierarchical timing to spatiotemporal memory recognition:
 | 4 | **Bonetti et al. 2024** | MEG + DCM | 83 | Alpha/beta power: N > M; Gamma power: M > N | d = 0.29 | Bilateral auditory cortex, cingulate | **Oscillatory signatures** |
 | 5 | **Bonetti et al. 2024** | MEG + DCM | 83 | Final tone: cingulate assumes top position in hierarchy | d = 0.34 | MC (MNI: -6, -38, 32), ACC (MNI: 2, 18, -16) | **f03 hierarchy position** |
 | 6 | **Fernandez-Rubio et al. 2022** | MEG | 71 | Tonal recognition engages hippocampus + cingulate; atonal engages auditory cortex | F(3,280)=6.87, p=.002 | Hippocampus, cingulate gyrus, parahippocampal gyrus, Heschl's gyrus, STG | **f01 gamma match (tonal), Layer P memory_match** |
-| 7 | **Fernandez-Rubio et al. 2022** | MEG | 71 | Slow band (0.1-1 Hz) linked to global sequence recognition; fast band (2-8 Hz) to local tone processing | p < .001 cluster | Left hippocampus, middle/anterior cingulate, STG, insula | **Oscillatory hierarchy, TPC mapping** |
+| 7 | **Fernandez-Rubio et al. 2022** | MEG | 71 | Slow band (0.1-1 Hz) linked to global sequence recognition; fast band (2-8 Hz) to local tone processing | p < .001 cluster | Left hippocampus, middle/anterior cingulate, STG, insula | **Oscillatory hierarchy, timbre-processing mapping** |
 | 8 | **Golesorkhi et al. 2021** | MEG (HCP) | 89 | Intrinsic neural timescales follow core-periphery hierarchy; longer ACW in transmodal core vs. sensory periphery | d = 0.66-1.63 | Core: DMN, FPN, cingulo-opercular; Periphery: auditory, visual, somatomotor | **f03 hierarchy position, temporal hierarchy** |
-| 9 | **Norman-Haignere et al. 2022** | iEEG | 18 (190 electrodes) | Auditory cortex integrates hierarchically across 50-400ms timescales; short integration in HG, long in STG | F(1,20.85)=20.56, p<.001 | Heschl's gyrus (HG/TE1.1), STG | **Multiscale temporal integration, PPC horizons** |
+| 9 | **Norman-Haignere et al. 2022** | iEEG | 18 (190 electrodes) | Auditory cortex integrates hierarchically across 50-400ms timescales; short integration in HG, long in STG | F(1,20.85)=20.56, p<.001 | Heschl's gyrus (HG/TE1.1), STG | **Multiscale temporal integration, Pitch processing horizons** |
 | 10 | **Sabat et al. 2025** | Single-neuron (ferret) | 541 neurons | Neurons integrate within constrained, context-invariant temporal windows (~15-150ms); windows increase primary→non-primary | Primary: ~15ms; Non-primary: ~150ms | Primary auditory cortex (A1), non-primary auditory cortex | **Fixed integration windows supporting hierarchical computation** |
-| 11 | **Norman-Haignere et al. 2024** | iEEG | 18 | Temporal integration in human auditory cortex predominantly yoked to absolute time, not structure duration (~5% structure yoking) | Structure-yoking ~0.05 | HG, STG, non-primary auditory cortex | **Time-yoked integration constraint on PPC/TPC** |
+| 11 | **Norman-Haignere et al. 2024** | iEEG | 18 | Temporal integration in human auditory cortex predominantly yoked to absolute time, not structure duration (~5% structure yoking) | Structure-yoking ~0.05 | HG, STG, non-primary auditory cortex | **Time-yoked integration constraint on pitch-processing/timbre-processing* |
 | 12 | **de Vries & Wurm 2023** | MEG (source-reconstructed) | 21 | Predictive neural representations: high-level features predicted ~500ms ahead, low-level ~110ms ahead | F(2)=19.9, p=8.3e-7, eta_p2=0.49 | Visual cortex, action observation network | **Hierarchical prediction timescale, Layer F** |
 | 13 | **Carbajal & Malmierca 2018** | Review (cellular recordings) | Review | SSA and MMN are micro/macroscopic manifestations of deviance detection; prediction error increases IC→MGB→AC | SSA index varies by region | IC, MGB (thalamus), auditory cortex (AC) | **f02 alpha-beta error, subcortical prediction hierarchy** |
 | 14 | **Fong et al. 2020** | Review (EEG/MEG) | Review | MMN under predictive coding: prediction error propagates upward; frontal cortex, STG, thalamus, hippocampus generate MMN | MMN peak 150-250ms | STG, frontal cortex, thalamus, hippocampus | **f02 prediction error, predictive coding framework** |
-| 15 | **Rimmele et al. 2021** | MEG | 19 | Cortical delta oscillations (0.5-2 Hz) underpin prosodic chunking at phrase-level timescale | p < .001 (chunk rate effect) | STG, MTG, IFG, precentral gyrus, SMG | **MEM horizons (delta-band phrase chunking)** |
+| 15 | **Rimmele et al. 2021** | MEG | 19 | Cortical delta oscillations (0.5-2 Hz) underpin prosodic chunking at phrase-level timescale | p < .001 (chunk rate effect) | STG, MTG, IFG, precentral gyrus, SMG | **Memory horizons (delta-band phrase chunking)** |
 | 16 | **Millidge, Seth & Buckley 2022** | Computational review | Review | Predictive coding: hierarchical layers minimize prediction errors; feedforward PE, feedback predictions; precision weighting | N/A (theoretical) | Cortical hierarchy (general) | **Theoretical basis for f04 feedforward-feedback, predictive coding framework** |
 
 ### 3.2 Effect Size Summary
 
 ```
-Mean Effect (empirical):  d = 0.24 (Bonetti) to d = 1.63 (Golesorkhi core-periphery)
-Papers:                   11 (5 empirical MEG/iEEG, 2 empirical iEEG/single-neuron, 1 empirical MEG, 3 reviews)
-Heterogeneity:            Moderate — effect sizes range widely by measure type
-Quality Assessment:       alpha-tier (direct neural measurement: MEG, iEEG, DCM, single-neuron)
-Replication:              Feedforward-feedback hierarchy confirmed across Bonetti 2024 and
-                          Fernandez-Rubio 2022 (independent MEG samples, N=83 + N=71)
-                          Temporal hierarchy gradient confirmed across Norman-Haignere 2022 (iEEG)
-                          and Golesorkhi 2021 (MEG, HCP dataset)
-                          Predictive coding framework supported by Carbajal & Malmierca 2018,
-                          Fong et al. 2020, and Millidge et al. 2022 reviews
+Mean Effect (empirical): d = 0.24 (Bonetti) to d = 1.63 (Golesorkhi core-periphery)
+Papers: 11 (5 empirical MEG/iEEG, 2 empirical iEEG/single-neuron, 1 empirical MEG, 3 reviews)
+Heterogeneity: Moderate — effect sizes range widely by measure type
+Quality Assessment: alpha-tier (direct neural measurement: MEG, iEEG, DCM, single-neuron)
+Replication: Feedforward-feedback hierarchy confirmed across Bonetti 2024 and
+ Fernandez-Rubio 2022 (independent MEG samples, N=83 + N=71)
+ Temporal hierarchy gradient confirmed across Norman-Haignere 2022 (iEEG)
+ and Golesorkhi 2021 (MEG, HCP dataset)
+ Predictive coding framework supported by Carbajal & Malmierca 2018,
+ Fong et al. 2020, and Millidge et al. 2022 reviews
 ```
 
 ---
@@ -216,19 +214,15 @@ Replication:              Feedforward-feedback hierarchy confirmed across Bonett
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[4] sensory_pleasantness ─────┐
 R³[25:33] x_l0l5 ──────────────┼──► Memory match (MEMORISED response)
-MEM.long_term_memory[10:20] ────┘   Gamma activation, ~350ms
 
 R³[10] spectral_flux ───────────┐
 R³[21] spectral_change ─────────┼──► Prediction error (VARIED response)
-MEM.working_memory[0:10] ───────┘   Alpha-beta activation, ~250ms
 
 R³[41:49] x_l5l7 ──────────────┐
-MEM.prediction_buffer[20:30] ───┼──► Hierarchy position tracking
-PPC.contour_tracking[20:30] ────┘   Cingulate top at final tone
 ```
 
 ---
@@ -262,7 +256,7 @@ SPH requires H³ features for oscillatory tracking (gamma vs alpha-beta), memory
 
 #### R³ v2 Projected Expansion
 
-SPH projected v2 from F:Pitch, aligned with PPC+TPC+MEM horizons.
+SPH projected v2 from F:Pitch, aligned with H³ direct+Memory horizons.
 
 | R³ Idx | Feature | Group | H | Morph | Law | Purpose |
 |:------:|---------|:-----:|:-:|-------|:---:|---------|
@@ -274,20 +268,6 @@ SPH projected v2 from F:Pitch, aligned with PPC+TPC+MEM horizons.
 
 **v2 projected**: 5 tuples
 **Total projected**: 21 tuples of 294,912 theoretical = 0.0071%
-
-### 5.2 PPC + TPC + MEM Mechanism Binding
-
-| Mechanism | Sub-section | Range | SPH Role | Weight |
-|-----------|-------------|-------|----------|--------|
-| **PPC** | Pitch Extraction | PPC[0:10] | Tone identification | 0.8 |
-| **PPC** | Interval Analysis | PPC[10:20] | Sequence element encoding | 0.7 |
-| **PPC** | Contour Tracking | PPC[20:30] | Sequence pattern matching | **0.9** |
-| **TPC** | Spectral Shape | TPC[0:10] | Gamma power proxy (>30 Hz) | **1.0** (primary) |
-| **TPC** | Temporal Envelope | TPC[10:20] | Alpha-beta proxy (2-20 Hz) | **1.0** (primary) |
-| **TPC** | Source Identity | TPC[20:30] | Oscillatory signature | 0.7 |
-| **MEM** | Working Memory | MEM[0:10] | Match/mismatch detection | **1.0** (primary) |
-| **MEM** | Long-Term Memory | MEM[10:20] | Memorized sequence storage | **1.0** (primary) |
-| **MEM** | Prediction Buffer | MEM[20:30] | Hierarchy boundary tracking | 0.8 |
 
 ---
 
@@ -301,57 +281,52 @@ SPH OUTPUT TENSOR: 14D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range    │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼──────────┼────────────────────────────────────
- 0  │ f01_gamma_match          │ [0, 1]   │ Gamma power match activation.
-    │                          │          │ f01 = σ(0.40 * mean(TPC.shape[0:10])
-    │                          │          │       + 0.35 * mean(MEM.ltm[10:20])
-    │                          │          │       + 0.25 * consonance_mean_1s)
+ 0 │ f01_gamma_match │ [0, 1] │ Gamma power match activation.
+ │ │ │ + 0.25 * consonance_mean_1s)
 ────┼──────────────────────────┼──────────┼────────────────────────────────────
- 1  │ f02_alpha_beta_error     │ [0, 1]   │ Alpha-beta prediction error.
-    │                          │          │ f02 = σ(0.40 * mean(TPC.env[10:20])
-    │                          │          │       + 0.35 * mean(MEM.wm[0:10])
-    │                          │          │       + 0.25 * deviation_std_100ms)
+ 1 │ f02_alpha_beta_error │ [0, 1] │ Alpha-beta prediction error.
+ │ │ │ + 0.25 * deviation_std_100ms)
 ────┼──────────────────────────┼──────────┼────────────────────────────────────
- 2  │ f03_hierarchy_position   │ [0, 1]   │ Network hierarchy state.
-    │                          │          │ f03 = σ(0.50 * mean(MEM.pred[20:30])
-    │                          │          │       + 0.50 * x_l5l7_mean_1s)
+ 2 │ f03_hierarchy_position │ [0, 1] │ Network hierarchy state.
+ │ │ │ + 0.50 * x_l5l7_mean_1s)
 ────┼──────────────────────────┼──────────┼────────────────────────────────────
- 3  │ f04_feedforward_feedback │ [-1, 1]  │ Directional information flow.
-    │                          │          │ f04 = tanh(0.50 * feedforward
-    │                          │          │           - 0.50 * feedback)
+ 3 │ f04_feedforward_feedback │ [-1, 1] │ Directional information flow.
+ │ │ │ f04 = tanh(0.50 * feedforward
+ │ │ │ - 0.50 * feedback)
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 4  │ match_response           │ [0, 1] │ Confirmed prediction timing (~350ms).
+ 4 │ match_response │ [0, 1] │ Confirmed prediction timing (~350ms).
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 5  │ varied_response          │ [0, 1] │ Prediction error timing (~250ms).
+ 5 │ varied_response │ [0, 1] │ Prediction error timing (~250ms).
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 6  │ gamma_power              │ [0, 1] │ Matched sequence oscillatory signature.
+ 6 │ gamma_power │ [0, 1] │ Matched sequence oscillatory signature.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 7  │ alpha_beta_power         │ [0, 1] │ Varied sequence oscillatory signature.
+ 7 │ alpha_beta_power │ [0, 1] │ Varied sequence oscillatory signature.
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 8  │ memory_match             │ [0, 1] │ MEM positive memory match.
+ 8 │ memory_match │ [0, 1] │ memory-encoding positive memory match.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 9  │ prediction_error         │ [0, 1] │ MEM negative prediction error.
+ 9 │ prediction_error │ [0, 1] │ memory-encoding negative prediction error.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
-10  │ deviation_detection      │ [0, 1] │ Error magnitude at deviation tone.
+10 │ deviation_detection │ [0, 1] │ Error magnitude at deviation tone.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
-11  │ next_tone_pred_350ms     │ [0, 1] │ Heschl→Hippocampus retrieval.
+11 │ next_tone_pred_350ms │ [0, 1] │ Heschl→Hippocampus retrieval.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
-12  │ sequence_completion_2.5s │ [0, 1] │ Cingulate hierarchy boundary.
+12 │ sequence_completion_2.5s │ [0, 1] │ Cingulate hierarchy boundary.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
-13  │ decision_evaluation      │ [0, 1] │ Cingulate top position.
+13 │ decision_evaluation │ [0, 1] │ Cingulate top position.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 14D per frame at 172.27 Hz
@@ -366,18 +341,18 @@ TOTAL: 14D per frame at 172.27 Hz
 
 ```
 For MEMORISED (M):
-    Response_polarity = POSITIVE
-    Peak_latency ≈ 350 ms
-    Power_gamma > Power_alpha_beta
+ Response_polarity = POSITIVE
+ Peak_latency ≈ 350 ms
+ Power_gamma > Power_alpha_beta
 
 For VARIED (N):
-    Response_polarity = NEGATIVE
-    Peak_latency ≈ 250 ms (faster)
-    Power_alpha_beta > Power_gamma
+ Response_polarity = NEGATIVE
+ Peak_latency ≈ 250 ms (faster)
+ Power_alpha_beta > Power_gamma
 
 Hierarchy Position:
-    Tones 2-4: Hippocampus ≈ Cingulate (mid-hierarchy)
-    Tone 5 (final): Cingulate > Hippocampus (top of hierarchy)
+ Tones 2-4: Hippocampus ≈ Cingulate (mid-hierarchy)
+ Tone 5 (final): Cingulate > Hippocampus (top of hierarchy)
 ```
 
 ### 7.2 Feature Formulas
@@ -386,20 +361,15 @@ Hierarchy Position:
 # COEFFICIENT SATURATION RULE: For sigmoid(Σ wi*gi), |wi| must sum <= 1.0
 
 # f01: Gamma Match
-f01 = σ(0.40 * mean(TPC.spectral_shape[0:10])
-       + 0.35 * mean(MEM.long_term_memory[10:20])
-       + 0.25 * consonance_mean_1s)
+ + 0.25 * consonance_mean_1s)
 # coefficients: 0.40 + 0.35 + 0.25 = 1.0 ✓
 
 # f02: Alpha-Beta Error
-f02 = σ(0.40 * mean(TPC.temporal_envelope[10:20])
-       + 0.35 * mean(MEM.working_memory[0:10])
-       + 0.25 * deviation_std_100ms)
+ + 0.25 * deviation_std_100ms)
 # coefficients: 0.40 + 0.35 + 0.25 = 1.0 ✓
 
 # f03: Hierarchy Position
-f03 = σ(0.50 * mean(MEM.prediction_buffer[20:30])
-       + 0.50 * x_l5l7_mean_1s)
+ + 0.50 * x_l5l7_mean_1s)
 # coefficients: 0.50 + 0.50 = 1.0 ✓
 
 # f04: Feedforward-Feedback
@@ -437,26 +407,23 @@ f04 = tanh(0.50 * x_l0l5_mean_1s - 0.50 * x_l5l7_entropy_1s)
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    SPH INTERACTIONS                                          │
+│ SPH INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (PCU):                                                         │
-│  HTP.hierarchy_gradient ──────► SPH (hierarchical timing input)            │
-│  SPH.gamma_match ─────────────► ICEM (match signal for IC computation)     │
-│  SPH.prediction_error ────────► PWUP (error for precision weighting)       │
-│  SPH.hierarchy_position ──────► PSH (hierarchy for silencing)              │
-│                                                                             │
-│  CROSS-UNIT (PCU → IMU):                                                   │
-│  SPH.memory_match ────────────► IMU (memory recognition signal)            │
-│  SPH.sequence_completion ─────► IMU (sequence boundary)                    │
-│                                                                             │
-│  UPSTREAM DEPENDENCIES:                                                     │
-│  PPC mechanism (30D) ─────────► SPH (pitch/sequence processing)            │
-│  TPC mechanism (30D) ─────────► SPH (oscillatory signatures)               │
-│  MEM mechanism (30D) ─────────► SPH (memory match/mismatch)                │
-│  R³ (~22D) ───────────────────► SPH (direct spectral features)             │
-│  H³ (16 tuples) ──────────────► SPH (temporal dynamics)                    │
-│                                                                             │
+│ │
+│ INTRA-UNIT (PCU): │
+│ HTP.hierarchy_gradient ──────► SPH (hierarchical timing input) │
+│ SPH.gamma_match ─────────────► ICEM (match signal for IC computation) │
+│ SPH.prediction_error ────────► PWUP (error for precision weighting) │
+│ SPH.hierarchy_position ──────► PSH (hierarchy for silencing) │
+│ │
+│ CROSS-UNIT (PCU → IMU): │
+│ SPH.memory_match ────────────► IMU (memory recognition signal) │
+│ SPH.sequence_completion ─────► IMU (sequence boundary) │
+│ │
+│ UPSTREAM DEPENDENCIES: │
+│ R³ (~22D) ───────────────────► SPH (direct spectral features) │
+│ H³ (16 tuples) ──────────────► SPH (temporal dynamics) │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -480,132 +447,100 @@ f04 = tanh(0.50 * x_l0l5_mean_1s - 0.50 * x_l5l7_entropy_1s)
 
 ```python
 class SPH(BaseModel):
-    """Spatiotemporal Prediction Hierarchy Model.
+ """Spatiotemporal Prediction Hierarchy Model.
 
-    Output: 14D per frame.
-    Reads: PPC mechanism (30D), TPC mechanism (30D), MEM mechanism (30D), R³ direct.
-    """
-    NAME = "SPH"
-    UNIT = "PCU"
-    TIER = "α2"
-    OUTPUT_DIM = 14
-    MECHANISM_NAMES = ("PPC", "TPC", "MEM")
+ Output: 14D per frame.
+ """
+ NAME = "SPH"
+ UNIT = "PCU"
+ TIER = "α2"
+ OUTPUT_DIM = 14
+ TAU_DECAY = 0.4 # s
+ SEQUENCE_DEPTH = 5 # tones
+ MATCH_LATENCY = 0.35 # 350ms
+ VARIED_LATENCY = 0.25 # 250ms
 
-    TAU_DECAY = 0.4        # s
-    SEQUENCE_DEPTH = 5     # tones
-    MATCH_LATENCY = 0.35   # 350ms
-    VARIED_LATENCY = 0.25  # 250ms
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """16 tuples for SPH computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ (10, 0, 0, 2), # spectral_flux, 25ms, value, bidi
+ (10, 3, 0, 2), # spectral_flux, 100ms, value, bidi
+ (10, 3, 14, 2), # spectral_flux, 100ms, periodicity, bidi
+ (7, 3, 0, 2), # amplitude, 100ms, value, bidi
+ (7, 3, 2, 2), # amplitude, 100ms, std, bidi
+ (4, 3, 0, 2), # sensory_pleasantness, 100ms, value, bidi
+ (4, 16, 1, 0), # sensory_pleasantness, 1000ms, mean, fwd
+ (21, 3, 0, 2), # spectral_change, 100ms, value, bidi
+ (21, 3, 2, 2), # spectral_change, 100ms, std, bidi
+ (22, 4, 8, 0), # energy_change, 125ms, velocity, fwd
+ (25, 3, 0, 2), # x_l0l5[0], 100ms, value, bidi
+ (25, 16, 1, 0), # x_l0l5[0], 1000ms, mean, fwd
+ (41, 3, 0, 2), # x_l5l7[0], 100ms, value, bidi
+ (41, 8, 1, 0), # x_l5l7[0], 500ms, mean, fwd
+ (41, 16, 1, 0), # x_l5l7[0], 1000ms, mean, fwd
+ (41, 16, 20, 0), # x_l5l7[0], 1000ms, entropy, fwd
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """16 tuples for SPH computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # ── PPC horizons: tone detection ──
-            (10, 0, 0, 2),     # spectral_flux, 25ms, value, bidi
-            (10, 3, 0, 2),     # spectral_flux, 100ms, value, bidi
-            (10, 3, 14, 2),    # spectral_flux, 100ms, periodicity, bidi
-            (7, 3, 0, 2),      # amplitude, 100ms, value, bidi
-            (7, 3, 2, 2),      # amplitude, 100ms, std, bidi
-            # ── TPC horizons: oscillatory signatures ──
-            (4, 3, 0, 2),      # sensory_pleasantness, 100ms, value, bidi
-            (4, 16, 1, 0),     # sensory_pleasantness, 1000ms, mean, fwd
-            (21, 3, 0, 2),     # spectral_change, 100ms, value, bidi
-            (21, 3, 2, 2),     # spectral_change, 100ms, std, bidi
-            (22, 4, 8, 0),     # energy_change, 125ms, velocity, fwd
-            # ── MEM horizons: memory/hierarchy ──
-            (25, 3, 0, 2),     # x_l0l5[0], 100ms, value, bidi
-            (25, 16, 1, 0),    # x_l0l5[0], 1000ms, mean, fwd
-            (41, 3, 0, 2),     # x_l5l7[0], 100ms, value, bidi
-            (41, 8, 1, 0),     # x_l5l7[0], 500ms, mean, fwd
-            (41, 16, 1, 0),    # x_l5l7[0], 1000ms, mean, fwd
-            (41, 16, 20, 0),   # x_l5l7[0], 1000ms, entropy, fwd
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute SPH 14D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute SPH 14D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"PPC": (B,T,30), "TPC": (B,T,30), "MEM": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,14) SPH output
+ """
+ # R³ features
+ sensory_pleas = r3[..., 4:5]
+ spectral_flux = r3[..., 10:11]
+ tristimulus = r3[..., 18:21]
+ spectral_change = r3[..., 21:22]
+ x_l0l5 = r3[..., 25:33]
+ x_l5l7 = r3[..., 41:49]
 
-        Returns:
-            (B,T,14) SPH output
-        """
-        ppc = mechanism_outputs["PPC"]    # (B, T, 30)
-        tpc = mechanism_outputs["TPC"]    # (B, T, 30)
-        mem = mechanism_outputs["MEM"]    # (B, T, 30)
+ # Mechanism sub-sections
+ # H³ direct features
+ consonance_mean_1s = h3_direct[(4, 16, 1, 0)].unsqueeze(-1)
+ deviation_std_100ms = h3_direct[(21, 3, 2, 2)].unsqueeze(-1)
+ x_l0l5_mean_1s = h3_direct[(25, 16, 1, 0)].unsqueeze(-1)
+ x_l5l7_mean_1s = h3_direct[(41, 16, 1, 0)].unsqueeze(-1)
+ x_l5l7_entropy_1s = h3_direct[(41, 16, 20, 0)].unsqueeze(-1)
 
-        # R³ features
-        sensory_pleas = r3[..., 4:5]
-        spectral_flux = r3[..., 10:11]
-        tristimulus = r3[..., 18:21]
-        spectral_change = r3[..., 21:22]
-        x_l0l5 = r3[..., 25:33]
-        x_l5l7 = r3[..., 41:49]
+ # ═══ LAYER E: Explicit features ═══
+ f01 = torch.sigmoid(
+ + 0.25 * consonance_mean_1s
+ )
+ f02 = torch.sigmoid(
+ + 0.25 * deviation_std_100ms
+ )
+ f03 = torch.sigmoid(
+ + 0.50 * x_l5l7_mean_1s
+ )
+ f04 = torch.tanh(
+ 0.50 * x_l0l5_mean_1s
+ - 0.50 * x_l5l7_entropy_1s
+ )
 
-        # Mechanism sub-sections
-        ppc_contour = ppc[..., 20:30]
-        tpc_shape = tpc[..., 0:10]
-        tpc_env = tpc[..., 10:20]
-        mem_wm = mem[..., 0:10]
-        mem_ltm = mem[..., 10:20]
-        mem_pred = mem[..., 20:30]
+ # ═══ LAYER M: Mathematical ═══
 
-        # H³ direct features
-        consonance_mean_1s = h3_direct[(4, 16, 1, 0)].unsqueeze(-1)
-        deviation_std_100ms = h3_direct[(21, 3, 2, 2)].unsqueeze(-1)
-        x_l0l5_mean_1s = h3_direct[(25, 16, 1, 0)].unsqueeze(-1)
-        x_l5l7_mean_1s = h3_direct[(41, 16, 1, 0)].unsqueeze(-1)
-        x_l5l7_entropy_1s = h3_direct[(41, 16, 20, 0)].unsqueeze(-1)
+ # ═══ LAYER P: Present ═══
+ deviation = torch.sigmoid(
+ )
 
-        # ═══ LAYER E: Explicit features ═══
-        f01 = torch.sigmoid(
-            0.40 * tpc_shape.mean(-1, keepdim=True)
-            + 0.35 * mem_ltm.mean(-1, keepdim=True)
-            + 0.25 * consonance_mean_1s
-        )
-        f02 = torch.sigmoid(
-            0.40 * tpc_env.mean(-1, keepdim=True)
-            + 0.35 * mem_wm.mean(-1, keepdim=True)
-            + 0.25 * deviation_std_100ms
-        )
-        f03 = torch.sigmoid(
-            0.50 * mem_pred.mean(-1, keepdim=True)
-            + 0.50 * x_l5l7_mean_1s
-        )
-        f04 = torch.tanh(
-            0.50 * x_l0l5_mean_1s
-            - 0.50 * x_l5l7_entropy_1s
-        )
+ # ═══ LAYER F: Future ═══
+ decision = torch.sigmoid(0.5 * f03 + 0.5 * x_l5l7_mean_1s)
 
-        # ═══ LAYER M: Mathematical ═══
-        match_resp = torch.sigmoid(0.5 * f01 + 0.5 * tpc_shape.mean(-1, keepdim=True))
-        varied_resp = torch.sigmoid(0.5 * f02 + 0.5 * tpc_env.mean(-1, keepdim=True))
-        gamma_pow = tpc_shape.mean(-1, keepdim=True)
-        alpha_beta_pow = tpc_env.mean(-1, keepdim=True)
-
-        # ═══ LAYER P: Present ═══
-        memory_match = torch.sigmoid(0.5 * f01 + 0.5 * mem_ltm.mean(-1, keepdim=True))
-        pred_error = torch.sigmoid(0.5 * f02 + 0.5 * mem_wm.mean(-1, keepdim=True))
-        deviation = torch.sigmoid(
-            0.5 * deviation_std_100ms + 0.5 * mem_wm.mean(-1, keepdim=True)
-        )
-
-        # ═══ LAYER F: Future ═══
-        next_tone = torch.sigmoid(0.5 * f01 + 0.5 * mem_ltm.mean(-1, keepdim=True))
-        seq_comp = torch.sigmoid(0.5 * f03 + 0.5 * mem_pred.mean(-1, keepdim=True))
-        decision = torch.sigmoid(0.5 * f03 + 0.5 * x_l5l7_mean_1s)
-
-        return torch.cat([
-            f01, f02, f03, f04,                                    # E: 4D
-            match_resp, varied_resp, gamma_pow, alpha_beta_pow,    # M: 4D
-            memory_match, pred_error, deviation,                   # P: 3D
-            next_tone, seq_comp, decision,                         # F: 3D
-        ], dim=-1)  # (B, T, 14)
+ return torch.cat([
+ f01, f02, f03, f04, # E: 4D
+ match_resp, varied_resp, gamma_pow, alpha_beta_pow, # M: 4D
+ memory_match, pred_error, deviation, # P: 3D
+ next_tone, seq_comp, decision, # F: 3D
+ ], dim=-1) # (B, T, 14)
 ```
 
 ---
@@ -622,9 +557,6 @@ class SPH(BaseModel):
 | **Falsification Tests** | 5/5 testable, 2 confirmed | High validity |
 | **R³ Features Used** | ~22D of 49D | Consonance + energy + timbre + change + interactions |
 | **H³ Demand** | 16 tuples (0.69%) | Sparse, efficient |
-| **PPC Mechanism** | 30D (3 sub-sections) | Pitch/sequence processing |
-| **TPC Mechanism** | 30D (3 sub-sections) | Oscillatory signatures |
-| **MEM Mechanism** | 30D (3 sub-sections) | Memory/hierarchy |
 | **Output Dimensions** | **14D** | 4-layer structure |
 
 ---
@@ -652,21 +584,13 @@ class SPH(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D) | R³ (49D) |
-| Temporal | HC⁰ mechanisms (OSC, HRM, SGM, EFC) | PPC (30D) + TPC (30D) + MEM (30D) mechanisms |
-| Gamma signal | S⁰.L7.crossband[80:88] + HC⁰.OSC | R³ consonance + TPC.spectral_shape[0:10] |
-| Alpha-beta | S⁰.L7.crossband[88:96] + HC⁰.OSC | R³ change + TPC.temporal_envelope[10:20] |
-| Memory match | S⁰.L3.coherence[14] + HC⁰.HRM | R³[4] sensory_pleasantness + MEM.long_term_memory |
-| Hierarchy | S⁰.X_L5L9[224:232] + HC⁰.SGM | R³[41:49] x_l5l7 + MEM.prediction_buffer |
+| Gamma signal | S⁰.L7.crossband[80:88] + HC⁰.OSC | R³ consonance |
+| Alpha-beta | S⁰.L7.crossband[88:96] + HC⁰.OSC | R³ change |
+| Memory match | S⁰.L3.coherence[14] + HC⁰.HRM | R³[4] sensory_pleasantness |
+| Hierarchy | S⁰.X_L5L9[224:232] + HC⁰.SGM | R³[41:49] x_l5l7 |
 | Demand format | HC⁰ index ranges | H³ 4-tuples (sparse) |
 | Total demand | 35/2304 = 1.52% | 16/2304 = 0.69% |
 | Output | 14D | 14D (same) |
-
-### Why PPC + TPC + MEM replaces HC⁰ mechanisms
-
-- **OSC → TPC.spectral_shape** [0:10] + **TPC.temporal_envelope** [10:20]: Oscillatory band tracking (gamma vs alpha-beta) maps to TPC's spectral and temporal sub-sections.
-- **HRM → MEM.long_term_memory** [10:20]: Hippocampal replay for memory storage maps to MEM's long-term memory sub-section.
-- **SGM → MEM.prediction_buffer** [20:30]: Sequential grouping and boundary detection maps to MEM's prediction buffer.
-- **EFC → MEM.working_memory** [0:10]: Expectation formation/error computation maps to MEM's working memory for match/mismatch.
 
 ---
 

@@ -25,22 +25,22 @@ The **Striatal Reward Pathway** (SRP) models how the human brain generates music
 THE THREE FACES OF MUSICAL REWARD
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-WANTING (Incentive Salience)          LIKING (Hedonic Impact)
-Neurotransmitter: DOPAMINE            Neurotransmitter: μ-OPIOID + DA
-Brain region: Caudate nucleus         Brain region: NAcc shell hotspots
-                (dorsal striatum)                    (ventral striatum)
-Timing: BEFORE the event              Timing: AT the event
-Duration: 2-30s ramp                  Duration: 1-5s burst
-Function: "I want more of this"       Function: "This feels good"
-Can exist WITHOUT liking              Can exist WITHOUT wanting
+WANTING (Incentive Salience) LIKING (Hedonic Impact)
+Neurotransmitter: DOPAMINE Neurotransmitter: μ-OPIOID + DA
+Brain region: Caudate nucleus Brain region: NAcc shell hotspots
+ (dorsal striatum) (ventral striatum)
+Timing: BEFORE the event Timing: AT the event
+Duration: 2-30s ramp Duration: 1-5s burst
+Function: "I want more of this" Function: "This feels good"
+Can exist WITHOUT liking Can exist WITHOUT wanting
 
-                    LEARNING (Prediction Error)
-                    Neurotransmitter: DOPAMINE (phasic)
-                    Brain region: VTA → NAcc/Caudate
-                    Timing: ~50-110ms after event
-                    Duration: <200ms burst
-                    Function: "That was better/worse than expected"
-                    Updates future predictions
+ LEARNING (Prediction Error)
+ Neurotransmitter: DOPAMINE (phasic)
+ Brain region: VTA → NAcc/Caudate
+ Timing: ~50-110ms after event
+ Duration: <200ms burst
+ Function: "That was better/worse than expected"
+ Updates future predictions
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Berridge & Robinson (1993, 2003, 2016): These are DISSOCIABLE systems.
@@ -55,24 +55,24 @@ You can "learn" without either wanting or liking (mere exposure).
 Dopamine in the striatum during music listening is **NOT simply "pleasure"**. Deep research reveals it is a **composite signal** encoding:
 
 1. **Reward Prediction Error** (Schultz 1997, 2016): δ(t) = R(t) + γV(t+1) - V(t)
-   - Positive RPE → "better than expected" → phasic DA burst (14-30 Hz, <200ms)
-   - Zero RPE → "exactly as predicted" → no change from baseline (~5 Hz tonic)
-   - Negative RPE → "worse than expected" → DA dip below baseline
+ - Positive RPE → "better than expected" → phasic DA burst (14-30 Hz, <200ms)
+ - Zero RPE → "exactly as predicted" → no change from baseline (~5 Hz tonic)
+ - Negative RPE → "worse than expected" → DA dip below baseline
 
 2. **Incentive Salience** (Berridge 2007): Motivational "wanting" signal
-   - Computed **de novo** at moment of cue encounter: Wanting = f(learned_association, current_state)
-   - DA-dependent: levodopa ↑ wanting, risperidone ↓ wanting (Ferreri 2019)
-   - Can motivate approach behavior even without hedonic pleasure
+ - Computed **de novo** at moment of cue encounter: Wanting = f(learned_association, current_state)
+ - DA-dependent: levodopa ↑ wanting, risperidone ↓ wanting (Ferreri 2019)
+ - Can motivate approach behavior even without hedonic pleasure
 
 3. **Anticipatory Value** (Howe et al. 2013): Ramping proximity signal
-   - Gradual, quasi-hyperbolic DA increase as expected reward approaches
-   - Scales with both **distance** and **magnitude** of expected reward
-   - NOT linear — accelerates toward the target
+ - Gradual, quasi-hyperbolic DA increase as expected reward approaches
+ - Scales with both **distance** and **magnitude** of expected reward
+ - NOT linear — accelerates toward the target
 
 4. **Possibly Direct Hedonic Modulation** (unique to abstract rewards like music)
-   - Ferreri et al. (2019): Levodopa increased subjective pleasure ratings (Z=1.968, P<0.049)
-   - For music (unlike food/drugs), DA may directly modulate hedonic experience
-   - This challenges a strict wanting/liking dissociation for abstract cognitive rewards
+ - Ferreri et al. (2019): Levodopa increased subjective pleasure ratings (Z=1.968, P<0.049)
+ - For music (unlike food/drugs), DA may directly modulate hedonic experience
+ - This challenges a strict wanting/liking dissociation for abstract cognitive rewards
 
 The **pure hedonic "liking"** component is primarily mediated by the **μ-opioid system**:
 - Nummenmaa et al. (2025): PET showed [¹¹C]carfentanil binding (μ-opioid activation) in ventral striatum and OFC during pleasurable music
@@ -87,89 +87,89 @@ The **pure hedonic "liking"** component is primarily mediated by the **μ-opioid
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                 STRIATAL REWARD PATHWAY — COMPLETE CIRCUIT                   ║
+║ STRIATAL REWARD PATHWAY — COMPLETE CIRCUIT ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │                    AUDITORY CORTEX (STG/STS)                        │    ║
-║  │                                                                     │    ║
-║  │  Core (A1)      Belt           Parabelt                             │    ║
-║  │  BA 41          BA 42, 52      Anterior/posterior STG               │    ║
-║  │  Spectrotemporal Feature extraction Pattern recognition             │    ║
-║  └──────┬──────────────┬──────────────────┬────────────────────────────┘    ║
-║         │              │                  │                                  ║
-║         │   ┌──────────┘                  │                                  ║
-║         │   │                             │                                  ║
-║         ▼   ▼                             ▼                                  ║
-║  ┌──────────────────┐          ┌────────────────────┐                       ║
-║  │   FRONTAL CORTEX │          │     AMYGDALA       │                       ║
-║  │                  │          │                    │                       ║
-║  │  IFG (BA 44/45): │          │  Superficial:      │                       ║
-║  │  Musical syntax,  │          │  Pleasant/unpleas. │                       ║
-║  │  expectation      │          │  evaluation        │                       ║
-║  │                  │          │                    │                       ║
-║  │  dlPFC:          │          │  Laterobasal:      │                       ║
-║  │  Working memory,  │          │  Salience,         │                       ║
-║  │  prediction       │          │  uncertainty×      │                       ║
-║  │                  │          │  surprise           │                       ║
-║  │  vmPFC/OFC:      │          │  (Cheung 2019)     │                       ║
-║  │  Reward value,    │          │                    │                       ║
-║  │  evaluation       │          └─────────┬──────────┘                       ║
-║  └────────┬─────────┘                     │                                  ║
-║           │                               │                                  ║
-║           │  ┌────────────────────────────┘                                  ║
-║           │  │                                                               ║
-║           ▼  ▼                                                               ║
-║  ┌─────────────────────────────────────────────────────────┐                ║
-║  │                    S T R I A T U M                       │                ║
-║  │                                                         │                ║
-║  │  ┌─────────────────────┐  ┌───────────────────────┐    │                ║
-║  │  │  CAUDATE NUCLEUS    │  │  NUCLEUS ACCUMBENS    │    │                ║
-║  │  │  (Dorsal Striatum)  │  │  (Ventral Striatum)   │    │                ║
-║  │  │                     │  │                       │    │                ║
-║  │  │  ANTICIPATION       │  │  CONSUMMATION         │    │                ║
-║  │  │                     │  │                       │    │                ║
-║  │  │  • Receives:        │  │  • Receives:          │    │                ║
-║  │  │    PFC predictions  │  │    VTA DA burst       │    │                ║
-║  │  │    Auditory patterns│  │    Auditory cortex    │    │                ║
-║  │  │                     │  │    connectivity        │    │                ║
-║  │  │  • Computes:        │  │                       │    │                ║
-║  │  │    Proximity to     │  │  • Computes:          │    │                ║
-║  │  │    expected reward  │  │    Hedonic evaluation  │    │                ║
-║  │  │    (ramping DA)     │  │    (phasic DA + opioid)│    │                ║
-║  │  │                     │  │                       │    │                ║
-║  │  │  • Output:          │  │  • Output:            │    │                ║
-║  │  │    WANTING signal   │  │    LIKING signal      │    │                ║
-║  │  │    (r=0.71)         │  │    (r=0.84)           │    │                ║
-║  │  └─────────────────────┘  └───────────────────────┘    │                ║
-║  │                                                         │                ║
-║  └──────────────────────────┬──────────────────────────────┘                ║
-║                             │                                                ║
-║                             │  ◄───── VTA (Ventral Tegmental Area)          ║
-║                             │         Source of DA neurons                    ║
-║                             │         Menon & Levitin 2005:                  ║
-║                             │         VTA↔NAcc connectivity during           ║
-║                             │         pleasant music listening               ║
-║                             │                                                ║
-║                             ▼                                                ║
-║  ┌─────────────────────────────────────────────────────────┐                ║
-║  │                  HIPPOCAMPUS                             │                ║
-║  │                                                         │                ║
-║  │  Uniquely activated by music (not money, not sex)       │                ║
-║  │  (Koelsch 2014 meta-analysis)                           │                ║
-║  │                                                         │                ║
-║  │  Functions: Memory encoding, contextual association,    │                ║
-║  │  familiarity signal, nostalgia pathway                  │                ║
-║  └─────────────────────────────────────────────────────────┘                ║
-║                                                                              ║
+║ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ AUDITORY CORTEX (STG/STS) │ ║
+║ │ │ ║
+║ │ Core (A1) Belt Parabelt │ ║
+║ │ BA 41 BA 42, 52 Anterior/posterior STG │ ║
+║ │ Spectrotemporal Feature extraction Pattern recognition │ ║
+║ └──────┬──────────────┬──────────────────┬────────────────────────────┘ ║
+║ │ │ │ ║
+║ │ ┌──────────┘ │ ║
+║ │ │ │ ║
+║ ▼ ▼ ▼ ║
+║ ┌──────────────────┐ ┌────────────────────┐ ║
+║ │ FRONTAL CORTEX │ │ AMYGDALA │ ║
+║ │ │ │ │ ║
+║ │ IFG (BA 44/45): │ │ Superficial: │ ║
+║ │ Musical syntax, │ │ Pleasant/unpleas. │ ║
+║ │ expectation │ │ evaluation │ ║
+║ │ │ │ │ ║
+║ │ dlPFC: │ │ Laterobasal: │ ║
+║ │ Working memory, │ │ Salience, │ ║
+║ │ prediction │ │ uncertainty× │ ║
+║ │ │ │ surprise │ ║
+║ │ vmPFC/OFC: │ │ (Cheung 2019) │ ║
+║ │ Reward value, │ │ │ ║
+║ │ evaluation │ └─────────┬──────────┘ ║
+║ └────────┬─────────┘ │ ║
+║ │ │ ║
+║ │ ┌────────────────────────────┘ ║
+║ │ │ ║
+║ ▼ ▼ ║
+║ ┌─────────────────────────────────────────────────────────┐ ║
+║ │ S T R I A T U M │ ║
+║ │ │ ║
+║ │ ┌─────────────────────┐ ┌───────────────────────┐ │ ║
+║ │ │ CAUDATE NUCLEUS │ │ NUCLEUS ACCUMBENS │ │ ║
+║ │ │ (Dorsal Striatum) │ │ (Ventral Striatum) │ │ ║
+║ │ │ │ │ │ │ ║
+║ │ │ ANTICIPATION │ │ CONSUMMATION │ │ ║
+║ │ │ │ │ │ │ ║
+║ │ │ • Receives: │ │ • Receives: │ │ ║
+║ │ │ PFC predictions │ │ VTA DA burst │ │ ║
+║ │ │ Auditory patterns│ │ Auditory cortex │ │ ║
+║ │ │ │ │ connectivity │ │ ║
+║ │ │ • Computes: │ │ │ │ ║
+║ │ │ Proximity to │ │ • Computes: │ │ ║
+║ │ │ expected reward │ │ Hedonic evaluation │ │ ║
+║ │ │ (ramping DA) │ │ (phasic DA + opioid)│ │ ║
+║ │ │ │ │ │ │ ║
+║ │ │ • Output: │ │ • Output: │ │ ║
+║ │ │ WANTING signal │ │ LIKING signal │ │ ║
+║ │ │ (r=0.71) │ │ (r=0.84) │ │ ║
+║ │ └─────────────────────┘ └───────────────────────┘ │ ║
+║ │ │ ║
+║ └──────────────────────────┬──────────────────────────────┘ ║
+║ │ ║
+║ │ ◄───── VTA (Ventral Tegmental Area) ║
+║ │ Source of DA neurons ║
+║ │ Menon & Levitin 2005: ║
+║ │ VTA↔NAcc connectivity during ║
+║ │ pleasant music listening ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────┐ ║
+║ │ HIPPOCAMPUS │ ║
+║ │ │ ║
+║ │ Uniquely activated by music (not money, not sex) │ ║
+║ │ (Koelsch 2014 meta-analysis) │ ║
+║ │ │ ║
+║ │ Functions: Memory encoding, contextual association, │ ║
+║ │ familiarity signal, nostalgia pathway │ ║
+║ └─────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 CRITICAL EVIDENCE:
 ─────────────────
-Salimpoor 2013:  NAcc-STG connectivity PREDICTS reward value (Science)
+Salimpoor 2013: NAcc-STG connectivity PREDICTS reward value (Science)
 Martinez-Molina 2016: Musical anhedonia = NAcc-STG DISCONNECTION (PNAS)
 Mas-Herrero 2021: dlPFC TMS causally modulates NAcc reward (d=0.81)
-Loui 2017:       NAcc-STG white matter tract integrity ↔ pleasure (r=0.61)
+Loui 2017: NAcc-STG white matter tract integrity ↔ pleasure (r=0.61)
 
 The auditory cortex → NAcc connection is THE critical link for music reward.
 ```
@@ -178,81 +178,80 @@ The auditory cortex → NAcc connection is THE critical link for music reward.
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    SRP COMPUTATION ARCHITECTURE                              ║
+║ SRP COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins × 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
-║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ SURPRISE │ │ X-INT  │ │        ║
-║  │  │ 7D        │ │ 5D      │ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
-║  │  │           │ │         │ │         │ │          │ │        │ │        ║
-║  │  │roughness  │ │ampli.   │ │warmth   │ │flux      │ │L0×L5   │ │        ║
-║  │  │sethares   │ │vel_A    │ │sharpness│ │entropy   │ │L4×L5   │ │        ║
-║  │  │helmholtz  │ │acc_A    │ │tonalness│ │flatness  │ │L5×L7   │ │        ║
-║  │  │stumpf     │ │loudness │ │clarity  │ │concent.  │ │        │ │        ║
-║  │  │pleasant.  │ │onset    │ │smooth.  │ │          │ │        │ │        ║
-║  │  │inharm.    │ │         │ │autocorr.│ │          │ │        │ │        ║
-║  │  │harm_dev   │ │         │ │trist1-3 │ │          │ │        │ │        ║
-║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                         SRP Demand: 49D                            │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                                                                  │        ║
-║  │  ┌── Beat ────┐ ┌── Phrase ──┐ ┌── Section ──┐ ┌── Struct. ──┐ │        ║
-║  │  │ 200ms-1s   │ │ 2s-5s      │ │ 15s-36s     │ │ 200s-414s  │ │        ║
-║  │  │ H6-H16     │ │ H18-H20    │ │ H22-H24     │ │ H26-H28    │ │        ║
-║  │  │            │ │            │ │             │ │            │ │        ║
-║  │  │ Huron P+R  │ │ Huron T    │ │ Salimpoor   │ │ Narrative  │ │        ║
-║  │  │ (at event) │ │ (buildup)  │ │ (anticipn.) │ │ (arc)      │ │        ║
-║  │  └──────┬─────┘ └──────┬─────┘ └──────┬──────┘ └──────┬─────┘ │        ║
-║  │         │              │              │               │        │        ║
-║  │         └──────────────┴──────────────┴───────────────┘        │        ║
-║  │                         SRP Demand: ~124 of 2304 tuples         │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Mesolimbic Circuit ════════    ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐                ║
-║  │  AED (30D)      │ │  CPD (30D)      │ │  C0P (30D)      │                ║
-║  │  Affective      │ │  Chills & Peak  │ │  Cognitive       │                ║
-║  │  Entrainment    │ │  Detection      │ │  Projection      │                ║
-║  │                 │ │                 │ │                 │                ║
-║  │ Arousal [0:10]  │ │ Trigger [0:10]  │ │ Aggreg. [0:10]  │                ║
-║  │ Expect. [10:20] │ │ Buildup [10:20] │ │ Cognit. [10:20] │                ║
-║  │ Motor   [20:30] │ │ Peak    [20:30] │ │ Project.[20:30] │                ║
-║  └────────┬────────┘ └────────┬────────┘ └────────┬────────┘                ║
-║           │                   │                   │                          ║
-║           └───────────────────┼───────────────────┘                          ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    SRP MODEL (19D Output)                        │        ║
-║  │                                                                  │        ║
-║  │  Layer N (Neurochemical):  da_caudate, da_nacc, opioid_proxy    │        ║
-║  │  Layer C (Circuit):        vta_drive, stg_nacc, pred_error      │        ║
-║  │  Layer P (Psychological):  wanting, liking, pleasure            │        ║
-║  │  Layer T (Temporal/ITPRA): tension, pred_match, reaction, appr. │        ║
-║  │  Layer M (Musical):        harm_tension, dyn_intensity, peak    │        ║
-║  │  Layer F (Forecast):       reward_fc, chills_prox, resol_exp    │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins × 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ ENERGY │ │ TIMBRE │ │ SURPRISE │ │ X-INT │ │ ║
+║ │ │ 7D │ │ 5D │ │ 9D │ │ 4D │ │ 24D │ │ ║
+║ │ │ │ │ │ │ │ │ │ │ │ │ ║
+║ │ │roughness │ │ampli. │ │warmth │ │flux │ │L0×L5 │ │ ║
+║ │ │sethares │ │vel_A │ │sharpness│ │entropy │ │L4×L5 │ │ ║
+║ │ │helmholtz │ │acc_A │ │tonalness│ │flatness │ │L5×L7 │ │ ║
+║ │ │stumpf │ │loudness │ │clarity │ │concent. │ │ │ │ ║
+║ │ │pleasant. │ │onset │ │smooth. │ │ │ │ │ │ ║
+║ │ │inharm. │ │ │ │autocorr.│ │ │ │ │ │ ║
+║ │ │harm_dev │ │ │ │trist1-3 │ │ │ │ │ │ ║
+║ │ └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │ ║
+║ │ SRP Demand: 49D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ │ ║
+║ │ ┌── Beat ────┐ ┌── Phrase ──┐ ┌── Section ──┐ ┌── Struct. ──┐ │ ║
+║ │ │ 200ms-1s │ │ 2s-5s │ │ 15s-36s │ │ 200s-414s │ │ ║
+║ │ │ H6-H16 │ │ H18-H20 │ │ H22-H24 │ │ H26-H28 │ │ ║
+║ │ │ │ │ │ │ │ │ │ │ ║
+║ │ │ Huron P+R │ │ Huron T │ │ Salimpoor │ │ Narrative │ │ ║
+║ │ │ (at event) │ │ (buildup) │ │ (anticipn.) │ │ (arc) │ │ ║
+║ │ └──────┬─────┘ └──────┬─────┘ └──────┬──────┘ └──────┬─────┘ │ ║
+║ │ │ │ │ │ │ ║
+║ │ └──────────────┴──────────────┴───────────────┘ │ ║
+║ │ SRP Demand: ~124 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Mesolimbic Circuit ════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐ ║
+║ │ Affective │ │ Chills & Peak │ │ Cognitive │ ║
+║ │ Entrainment │ │ Detection │ │ Projection │ ║
+║ │ │ │ │ │ │ ║
+║ │ Arousal [0:10] │ │ Trigger [0:10] │ │ Aggreg. [0:10] │ ║
+║ │ Expect. [10:20] │ │ Buildup [10:20] │ │ Cognit. [10:20] │ ║
+║ │ Motor [20:30] │ │ Peak [20:30] │ │ Project.[20:30] │ ║
+║ └────────┬────────┘ └────────┬────────┘ └────────┬────────┘ ║
+║ │ │ │ ║
+║ └───────────────────┼───────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SRP MODEL (19D Output) │ ║
+║ │ │ ║
+║ │ Layer N (Neurochemical): da_caudate, da_nacc, opioid_proxy │ ║
+║ │ Layer C (Circuit): vta_drive, stg_nacc, pred_error │ ║
+║ │ Layer P (Psychological): wanting, liking, pleasure │ ║
+║ │ Layer T (Temporal/ITPRA): tension, pred_match, reaction, appr. │ ║
+║ │ Layer M (Musical): harm_tension, dyn_intensity, peak │ ║
+║ │ Layer F (Forecast): reward_fc, chills_prox, resol_exp │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -305,53 +304,53 @@ Prediction confidence modulates caudate signal strength.
 Phase 3: ANTICIPATION BUILDUP (~2-30s before peak)
 ───────────────────────────────────────────────────
 As musical structure signals approaching climax:
-  - Caudate DA ramps up quasi-hyperbolically (Howe 2013)
-  - NOT linear — accelerates toward expected reward
-  - Scales with: proximity × expected magnitude × prediction confidence
-  - Huron "Tension" (T) response engaged
-  - Huron "Imagination" (I) response for longer timescales
+ - Caudate DA ramps up quasi-hyperbolically (Howe 2013)
+ - NOT linear — accelerates toward expected reward
+ - Scales with: proximity × expected magnitude × prediction confidence
+ - Huron "Tension" (T) response engaged
+ - Huron "Imagination" (I) response for longer timescales
 
 Phase 4: EVENT — PREDICTION ERROR (~50-110ms after musical event)
 ─────────────────────────────────────────────────────────────────
 At the critical musical moment:
-  - Two-component Schultz DA response:
-    Component 1 (40-120ms): Unselective detection, sensory intensity
-    Component 2 (evolves): Value-coded RPE = R(t) + γV(t+1) - V(t)
+ - Two-component Schultz DA response:
+ Component 1 (40-120ms): Unselective detection, sensory intensity
+ Component 2 (evolves): Value-coded RPE = R(t) + γV(t+1) - V(t)
 
-  - If better than expected: phasic burst (14-30 Hz, <200ms)
-  - If exactly as expected: no change from baseline (~5 Hz)
-  - If worse than expected: dip below baseline (contrast enhancement)
+ - If better than expected: phasic burst (14-30 Hz, <200ms)
+ - If exactly as expected: no change from baseline (~5 Hz)
+ - If worse than expected: dip below baseline (contrast enhancement)
 
-  - For deceptive cadences / violated expectations:
-    DA dip → then delayed resolution → ENHANCED burst
-    (This is why delayed resolutions are so rewarding)
+ - For deceptive cadences / violated expectations:
+ DA dip → then delayed resolution → ENHANCED burst
+ (This is why delayed resolutions are so rewarding)
 
 Phase 5: PEAK PLEASURE (0-5 seconds)
 ─────────────────────────────────────
-  - NAcc DA release peaks during experience (Salimpoor 2011)
-  - μ-opioid release in NAcc hedonic hotspots (Nummenmaa 2025)
-  - STG→NAcc connectivity at maximum (Mas-Herrero 2021: R²=0.40)
-  - Convergence of DA + opioid → crosses ANS threshold:
-    → Skin conductance ↑ (Ferreri 2019: t(25)=-2.26, P=0.033)
-    → Heart rate ↑
-    → Piloerection (~50% of chill episodes)
-    → Pupil dilation
-  - This convergence = CHILLS/FRISSON
+ - NAcc DA release peaks during experience (Salimpoor 2011)
+ - μ-opioid release in NAcc hedonic hotspots (Nummenmaa 2025)
+ - STG→NAcc connectivity at maximum (Mas-Herrero 2021: R²=0.40)
+ - Convergence of DA + opioid → crosses ANS threshold:
+ → Skin conductance ↑ (Ferreri 2019: t(25)=-2.26, P=0.033)
+ → Heart rate ↑
+ → Piloerection (~50% of chill episodes)
+ → Pupil dilation
+ - This convergence = CHILLS/FRISSON
 
 Phase 6: APPRAISAL (0.5-2s after peak)
 ───────────────────────────────────────
-  - Huron "Appraisal" (A) response: conscious evaluation
-  - OFC value judgment, vmPFC integration
-  - Hippocampal encoding for future anticipation
-  - Prediction model updated (learning)
+ - Huron "Appraisal" (A) response: conscious evaluation
+ - OFC value judgment, vmPFC integration
+ - Hippocampal encoding for future anticipation
+ - Prediction model updated (learning)
 
 Phase 7: RESET
 ──────────────
-  - Caudate activity drops to baseline at peak arrival
-  - NAcc activity gradually declines over seconds
-  - Neuronal refractory period: 1-3ms (negligible)
-  - BEHAVIORAL refractory: ~10-30s between chills (Grewe 2009)
-    (Not neural exhaustion — time needed to build new predictions)
+ - Caudate activity drops to baseline at peak arrival
+ - NAcc activity gradually declines over seconds
+ - Neuronal refractory period: 1-3ms (negligible)
+ - BEHAVIORAL refractory: ~10-30s between chills (Grewe 2009)
+ (Not neural exhaustion — time needed to build new predictions)
 ```
 
 ### 3.3 Dopamine Dynamics: Quantitative Parameters
@@ -396,27 +395,27 @@ Musical pleasure is NOT simply "high surprise = good". It follows a **2D nonline
 PLEASURE AS f(UNCERTAINTY, SURPRISE)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-                    HIGH SURPRISE
-                         │
-                    ╱────┼────╲
-                   ╱ MAXIMUM  ╲
-                  ╱  PLEASURE  ╲
-    LOW          ╱      │       ╲          HIGH
-    UNCERTAINTY ─┼──────┼───────┼── UNCERTAINTY
-                  ╲     │      ╱
-                   ╲ MAXIMUM  ╱
-                    ╲PLEASURE╱
-                     ╲──┼──╱
-                         │
-                    LOW SURPRISE
+ HIGH SURPRISE
+ │
+ ╱────┼────╲
+ ╱ MAXIMUM ╲
+ ╱ PLEASURE ╲
+ LOW ╱ │ ╲ HIGH
+ UNCERTAINTY ─┼──────┼───────┼── UNCERTAINTY
+ ╲ │ ╱
+ ╲ MAXIMUM ╱
+ ╲PLEASURE╱
+ ╲──┼──╱
+ │
+ LOW SURPRISE
 
 Peak pleasure at two sweet spots:
-  (1) Low uncertainty + High surprise = "I thought I knew, but WOW"
-  (2) High uncertainty + Low surprise = "I was confused, but it resolved"
+ (1) Low uncertainty + High surprise = "I thought I knew, but WOW"
+ (2) High uncertainty + Low surprise = "I was confused, but it resolved"
 
 Brain mapping (Cheung 2019):
-  Uncertainty × Surprise interaction: Amygdala, Hippocampus, Auditory cortex
-  Uncertainty alone: NAcc, Caudate, pre-SMA
+ Uncertainty × Surprise interaction: Amygdala, Hippocampus, Auditory cortex
+ Uncertainty alone: NAcc, Caudate, pre-SMA
 ```
 
 ### 3.6 Huron's ITPRA: Five Temporal Response Systems
@@ -456,94 +455,94 @@ SRP OUTPUT TENSOR: 19D PER FRAME (172.27 Hz)
 
 LAYER N — NEUROCHEMICAL SIGNALS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 0  │ da_caudate        │ [0, 1] │ Dorsal striatal DA. Ramps quasi-hyperbolically
-    │                   │        │ toward expected reward. Salimpoor 2011 (r=0.71),
-    │                   │        │ Howe 2013 (proximity signal). Peaks BEFORE event.
+ 0 │ da_caudate │ [0, 1] │ Dorsal striatal DA. Ramps quasi-hyperbolically
+ │ │ │ toward expected reward. Salimpoor 2011 (r=0.71),
+ │ │ │ Howe 2013 (proximity signal). Peaks BEFORE event.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 1  │ da_nacc           │ [0, 1] │ Ventral striatal DA. Phasic burst at peak moment.
-    │                   │        │ Salimpoor 2011 (r=0.84). 1-5s duration.
-    │                   │        │ STG→NAcc connectivity drives this (Salimpoor 2013).
+ 1 │ da_nacc │ [0, 1] │ Ventral striatal DA. Phasic burst at peak moment.
+ │ │ │ Salimpoor 2011 (r=0.84). 1-5s duration.
+ │ │ │ STG→NAcc connectivity drives this (Salimpoor 2013).
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 2  │ opioid_proxy      │ [0, 1] │ μ-opioid receptor activation in NAcc shell.
-    │                   │        │ Nummenmaa 2025: [¹¹C]carfentanil PET.
-    │                   │        │ Hedonic "liking" component. Proxied via
-    │                   │        │ consonance resolution + spectral smoothness.
+ 2 │ opioid_proxy │ [0, 1] │ μ-opioid receptor activation in NAcc shell.
+ │ │ │ Nummenmaa 2025: [¹¹C]carfentanil PET.
+ │ │ │ Hedonic "liking" component. Proxied via
+ │ │ │ consonance resolution + spectral smoothness.
 
 LAYER C — CIRCUIT ACTIVATION
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 3  │ vta_drive         │ [0, 1] │ VTA → Striatum pathway activation.
-    │                   │        │ Menon & Levitin 2005. Source of DA.
+ 3 │ vta_drive │ [0, 1] │ VTA → Striatum pathway activation.
+ │ │ │ Menon & Levitin 2005. Source of DA.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 4  │ stg_nacc_coupling │ [0, 1] │ Auditory cortex ↔ NAcc functional connectivity.
-    │                   │        │ Salimpoor 2013: predicts reward value.
-    │                   │        │ Martinez-Molina 2016: absent in anhedonia.
+ 4 │ stg_nacc_coupling │ [0, 1] │ Auditory cortex ↔ NAcc functional connectivity.
+ │ │ │ Salimpoor 2013: predicts reward value.
+ │ │ │ Martinez-Molina 2016: absent in anhedonia.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 5  │ prediction_error  │[-1, 1] │ Schultz RPE: δ = R + γV(t+1) - V(t).
-    │                   │        │ +1 = max positive surprise (better than expected).
-    │                   │        │ -1 = max negative surprise (worse than expected).
-    │                   │        │ 0 = exactly as predicted.
+ 5 │ prediction_error │[-1, 1] │ Schultz RPE: δ = R + γV(t+1) - V(t).
+ │ │ │ +1 = max positive surprise (better than expected).
+ │ │ │ -1 = max negative surprise (worse than expected).
+ │ │ │ 0 = exactly as predicted.
 
 LAYER P — PSYCHOLOGICAL STATES (Berridge Framework)
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 6  │ wanting           │ [0, 1] │ Berridge incentive salience. DA-dependent.
-    │                   │        │ f(da_caudate). Ramps BEFORE event.
-    │                   │        │ Ferreri 2019: levodopa ↑, risperidone ↓.
+ 6 │ wanting │ [0, 1] │ Berridge incentive salience. DA-dependent.
+ │ │ │ f(da_caudate). Ramps BEFORE event.
+ │ │ │ Ferreri 2019: levodopa ↑, risperidone ↓.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 7  │ liking            │ [0, 1] │ Berridge hedonic impact. Opioid + DA.
-    │                   │        │ f(opioid_proxy, da_nacc). Peaks AT event.
-    │                   │        │ Mallik 2017: naltrexone ↓ emotional intensity.
+ 7 │ liking │ [0, 1] │ Berridge hedonic impact. Opioid + DA.
+ │ │ │ f(opioid_proxy, da_nacc). Peaks AT event.
+ │ │ │ Mallik 2017: naltrexone ↓ emotional intensity.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 8  │ pleasure          │ [0, 1] │ Composite subjective pleasure P(t).
-    │                   │        │ P = 0.84·da_nacc + 0.71·da_caudate
-    │                   │        │ (Salimpoor 2011 coefficients)
+ 8 │ pleasure │ [0, 1] │ Composite subjective pleasure P(t).
+ │ │ │ P = 0.84·da_nacc + 0.71·da_caudate
+ │ │ │ (Salimpoor 2011 coefficients)
 
 LAYER T — TEMPORAL RESPONSE (Huron ITPRA)
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 9  │ tension           │ [0, 1] │ Huron T: preparatory arousal before event.
-    │                   │        │ Scales with uncertainty × significance.
+ 9 │ tension │ [0, 1] │ Huron T: preparatory arousal before event.
+ │ │ │ Scales with uncertainty × significance.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
-10  │ prediction_match  │[-1, 1] │ Huron P: +1 = confirmed, -1 = violated.
-    │                   │        │ Phasic at event boundaries.
+10 │ prediction_match │[-1, 1] │ Huron P: +1 = confirmed, -1 = violated.
+ │ │ │ Phasic at event boundaries.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
-11  │ reaction          │ [0, 1] │ Huron R: reflexive brainstem response.
-    │                   │        │ ~150ms after event. Startle/orienting.
+11 │ reaction │ [0, 1] │ Huron R: reflexive brainstem response.
+ │ │ │ ~150ms after event. Startle/orienting.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
-12  │ appraisal         │[-1, 1] │ Huron A: conscious evaluation 0.5-2s after.
-    │                   │        │ +1 = positive, -1 = negative reappraisal.
+12 │ appraisal │[-1, 1] │ Huron A: conscious evaluation 0.5-2s after.
+ │ │ │ +1 = positive, -1 = negative reappraisal.
 
 LAYER M — MUSICAL MEANING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Musical Basis
+idx │ Name │ Range │ Musical Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
-13  │ harmonic_tension  │ [0, 1] │ Tonal distance from tonic. High = dominant/
-    │                   │        │ applied chord. Low = tonic, resolved.
+13 │ harmonic_tension │ [0, 1] │ Tonal distance from tonic. High = dominant/
+ │ │ │ applied chord. Low = tonic, resolved.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
-14  │ dynamic_intensity │ [0, 1] │ Energy trajectory (crescendo/decrescendo).
-    │                   │        │ Correlates with arousal.
+14 │ dynamic_intensity │ [0, 1] │ Energy trajectory (crescendo/decrescendo).
+ │ │ │ Correlates with arousal.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
-15  │ peak_detection    │ [0, 1] │ Chill trigger detection. Sloboda 1991 features:
-    │                   │        │ appoggiaturas, crescendos, harmonic changes.
+15 │ peak_detection │ [0, 1] │ Chill trigger detection. Sloboda 1991 features:
+ │ │ │ appoggiaturas, crescendos, harmonic changes.
 
 LAYER F — FORECAST (Predictive Signals)
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Basis
+idx │ Name │ Range │ Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
-16  │ reward_forecast   │ [0, 1] │ Expected reward in 2-8s. Based on current
-    │                   │        │ buildup trajectory + harmonic tension.
+16 │ reward_forecast │ [0, 1] │ Expected reward in 2-8s. Based on current
+ │ │ │ buildup trajectory + harmonic tension.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
-17  │ chills_proximity  │ [0, 1] │ Estimated proximity to chills event.
-    │                   │        │ Respects refractory (~10-30s, Grewe 2009).
+17 │ chills_proximity │ [0, 1] │ Estimated proximity to chills event.
+ │ │ │ Respects refractory (~10-30s, Grewe 2009).
 ────┼───────────────────┼────────┼────────────────────────────────────────────
-18  │ resolution_expect │ [0, 1] │ Expected harmonic resolution in 0.5-2s.
-    │                   │        │ High when dominant → tonic anticipated.
+18 │ resolution_expect │ [0, 1] │ Expected harmonic resolution in 0.5-2s.
+ │ │ │ High when dominant → tonic anticipated.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 19D per frame at 172.27 Hz
@@ -628,13 +627,13 @@ TOTAL: 19D per frame at 172.27 Hz
 ```
 TOTAL EAR DIMENSIONS FOR SRP: 49D
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Group A: Consonance        7D   → opioid_proxy, liking
-Group B: Energy            5D   → dynamic_intensity, tension, wanting
-Group C: Timbre            9D   → opioid_proxy, liking
-Group D: Change            4D   → prediction_error, reaction
-Group E: Interactions     24D   → cross-feature coupling
+Group A: Consonance 7D → opioid_proxy, liking
+Group B: Energy 5D → dynamic_intensity, tension, wanting
+Group C: Timbre 9D → opioid_proxy, liking
+Group D: Change 4D → prediction_error, reaction
+Group E: Interactions 24D → cross-feature coupling
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-TOTAL:                    49D
+TOTAL: 49D
 ```
 
 ---
@@ -652,14 +651,14 @@ H³ answers: "What has been happening? What's the trajectory?"
 
 RELATIONSHIP:
 ━━━━━━━━━━━━
-     R³(t-N) ─────┐
-     R³(t-N+1) ───┤
-     R³(t-N+2) ───┤
-     ...           ├──► H³(t) = 24 morphs × 3 h-laws computed
-     R³(t-1) ─────┤    over attention-weighted R³ window
-     R³(t) ───────┘
-                        Attention: A(dt) = exp(-3|dt|/H)
-                        where H = horizon window size in frames
+ R³(t-N) ─────┐
+ R³(t-N+1) ───┤
+ R³(t-N+2) ───┤
+ ... ├──► H³(t) = 24 morphs × 3 h-laws computed
+ R³(t-1) ─────┤ over attention-weighted R³ window
+ R³(t) ───────┘
+ Attention: A(dt) = exp(-3|dt|/H)
+ where H = horizon window size in frames
 
 H³ takes R³ features, windows them across time,
 and computes morphological features that reduce both temporal
@@ -667,7 +666,7 @@ and feature dimensions to a single scalar per (horizon, morph, law).
 
 Total H³ dimensions: 32 horizons × 24 morphs × 3 laws = 2304D
 SRP uses: ~124 specific (h, m, l) tuples (5.4%)
-         See Road-map/03-H3-TEMPORAL.md for exact demand tree.
+ See Road-map/03-H3-TEMPORAL.md for exact demand tree.
 ```
 
 ### 6.2 Temporal Layers (Nested, Overlapping, Simultaneous)
@@ -686,79 +685,76 @@ TEMPORAL CONTEXT LAYERS (Nested, Overlapping)
 
 Layer 1: IMMEDIATE (Beat-level, 200ms-1s)
 ┌─────────────────────────────────────────────────────────────┐
-│  H6 (200ms, 34 frames)    H7 (250ms, 43 frames)            │
-│  H11 (500ms, 86 frames)   H12 (525ms, 90 frames)           │
-│  H15 (800ms, 138 frames)  H16 (1000ms, 172 frames)         │
-│                                                              │
-│  Captures: Note attacks, beat cycles,                        │
-│  immediate consonance/dissonance, onset detection             │
-│  Huron ITPRA: Prediction (P) + Reaction (R) responses        │
-│                                                              │
-│  Feeds: AED (arousal, expectancy), CPD (triggers, peaks),    │
-│         C0P (cognitive state)                                 │
-│  Maps to: prediction_error, reaction, peak_detection         │
+│ H6 (200ms, 34 frames) H7 (250ms, 43 frames) │
+│ H11 (500ms, 86 frames) H12 (525ms, 90 frames) │
+│ H15 (800ms, 138 frames) H16 (1000ms, 172 frames) │
+│ │
+│ Captures: Note attacks, beat cycles, │
+│ immediate consonance/dissonance, onset detection │
+│ Huron ITPRA: Prediction (P) + Reaction (R) responses │
+│ │
+│ Maps to: prediction_error, reaction, peak_detection │
 └─────────────────────────────────────────────────────────────┘
 
 Layer 2: PHRASE (2-8 seconds)
 ┌─────────────────────────────────────────────────────────────┐
-│  H18 (2s, 344 frames)   H19 (3s, 517 frames)               │
-│  H20 (5s, 862 frames)                                       │
-│                                                              │
-│  Captures: Melodic phrase arcs,                              │
-│  harmonic progressions (I-IV-V-I ~ 4s at 60bpm),            │
-│  Huron "Tension" (T) response,                               │
-│  groove establishment, short buildup patterns                 │
-│                                                              │
-│  Feeds: CPD (buildup tracking), AED (motor-affective)        │
-│  Maps to: tension, harmonic_tension, dynamic_intensity       │
-│                                                              │
-│  SRP demands phrase-level context (Layers 1 + 2).           │
+│ H18 (2s, 344 frames) H19 (3s, 517 frames) │
+│ H20 (5s, 862 frames) │
+│ │
+│ Captures: Melodic phrase arcs, │
+│ harmonic progressions (I-IV-V-I ~ 4s at 60bpm), │
+│ Huron "Tension" (T) response, │
+│ groove establishment, short buildup patterns │
+│ │
+│ Maps to: tension, harmonic_tension, dynamic_intensity │
+│ │
+│ SRP demands phrase-level context (Layers 1 + 2). │
 └─────────────────────────────────────────────────────────────┘
 
 Layer 3: SECTION (15-60 seconds)
 ┌─────────────────────────────────────────────────────────────┐
-│  H22 (15s, 2585 frames)  H23 (25s, 4309 frames)            │
-│  H24 (36s, 6202 frames)                                     │
-│                                                              │
-│  Captures: Verse→Chorus transitions,                         │
-│  Salimpoor's "anticipation phase" (15-30s caudate ramp),     │
-│  section-level tension-resolution arcs,                      │
-│  Huron "Imagination" (I) response                            │
-│                                                              │
-│  THIS IS THE SALIMPOOR WINDOW                                │
-│  Feeds: da_caudate ramp, wanting, reward_forecast            │
-│                                                              │
-│  Section-level context for Salimpoor anticipation window.     │
+│ H22 (15s, 2585 frames) H23 (25s, 4309 frames) │
+│ H24 (36s, 6202 frames) │
+│ │
+│ Captures: Verse→Chorus transitions, │
+│ Salimpoor's "anticipation phase" (15-30s caudate ramp), │
+│ section-level tension-resolution arcs, │
+│ Huron "Imagination" (I) response │
+│ │
+│ THIS IS THE SALIMPOOR WINDOW │
+│ Feeds: da_caudate ramp, wanting, reward_forecast │
+│ │
+│ Section-level context for Salimpoor anticipation window. │
 └─────────────────────────────────────────────────────────────┘
 
 Layer 4: STRUCTURAL (2-7 minutes) — OPTIONAL for v1
 ┌─────────────────────────────────────────────────────────────┐
-│  H26 (200s, 34454 frames)  H28 (414s, 71343 frames)        │
-│                                                              │
-│  Captures: Movement-level narrative,                         │
-│  development→recapitulation (sonata),                        │
-│  build→drop (EDM), overall emotional arc                     │
-│                                                              │
-│  Nice-to-have for symphonic/long-form music validation       │
+│ H26 (200s, 34454 frames) H28 (414s, 71343 frames) │
+│ │
+│ Captures: Movement-level narrative, │
+│ development→recapitulation (sonata), │
+│ build→drop (EDM), overall emotional arc │
+│ │
+│ Nice-to-have for symphonic/long-form music validation │
 └─────────────────────────────────────────────────────────────┘
 
 SIMULTANEOUS PROCESSING AT EVERY FRAME:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Frame t:  R³(t)         "what am I hearing now?"              5.8ms
-          ↕
-Layer 1:  H³(t, H12)   "how has this beat evolved?"          525ms
-          ↕
-Layer 2:  H³(t, H20)   "where is this phrase going?"         5s
-          ↕
-Layer 3:  H³(t, H24)   "is the chorus approaching?"          36s
-          ↕
-Layer 4:  H³(t, H28)   "where am I in the piece?"            7min
+Frame t: R³(t) "what am I hearing now?" 5.8ms
+ ↕
+Layer 1: H³(t, H12) "how has this beat evolved?" 525ms
+ ↕
+Layer 2: H³(t, H20) "where is this phrase going?" 5s
+ ↕
+Layer 3: H³(t, H24) "is the chorus approaching?" 36s
+ ↕
+Layer 4: H³(t, H28) "where am I in the piece?" 7min
 
 Each layer feeds different SRP mechanisms:
-  Layer 1 → prediction_error, reaction, peak_detection
-  Layer 2 → tension, harmonic_tension, dynamic_intensity
-  Layer 3 → da_caudate (wanting ramp), reward_forecast
-  Layer 4 → overall pleasure trajectory (narrative arc)
+ Layer 1 → prediction_error, reaction, peak_detection
+ Layer 2 → tension, harmonic_tension, dynamic_intensity
+ Layer 3 → da_caudate (wanting ramp), reward_forecast
+ Layer 4 → overall pleasure trajectory (narrative arc)
 ```
 
 ### 6.3 H³ Morphs Relevant to SRP
@@ -794,23 +790,20 @@ Each layer feeds different SRP mechanisms:
 H³ DEMAND SUMMARY FOR SRP
 ━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Mechanism │ Horizons            │ Unique (M,L) pairs │ Total H³ scalars
+Mechanism │ Horizons │ Unique (M,L) pairs │ Total H³ scalars
 ──────────┼─────────────────────┼────────────────────┼──────────────────
-AED       │ H6 (200ms),         │ 21 pairs           │ 21 × 2 = 42
-          │ H16 (1000ms)        │ (averaged)         │
+ │ H16 (1000ms) │ (averaged) │
 ──────────┼─────────────────────┼────────────────────┼──────────────────
-CPD       │ H7 (250ms),         │ 20 pairs           │ 20 × 3 = 60
-          │ H12 (525ms),        │ (averaged)         │
-          │ H15 (800ms)         │                    │
+ │ H12 (525ms), │ (averaged) │
+ │ H15 (800ms) │ │
 ──────────┼─────────────────────┼────────────────────┼──────────────────
-C0P       │ H11 (500ms)         │ 16 pairs           │ 16 × 1 = 16
-          │ (single)            │                    │
+ │ (single) │ │
 ──────────┼─────────────────────┼────────────────────┼──────────────────
-SRP Direct│ H18 (2000ms)        │ 6 pairs            │ 6 × 1 = 6
-          │                     │                    │
+SRP Direct│ H18 (2000ms) │ 6 pairs │ 6 × 1 = 6
+ │ │ │
 ──────────┼─────────────────────┼────────────────────┼──────────────────
-TOTAL     │ 7 horizons          │ ~57 unique pairs   │ 124 H³ scalars
-          │ (of 32 possible)    │ (22 of 24 morphs)  │ (5.4% of 2304)
+TOTAL │ 7 horizons │ ~57 unique pairs │ 124 H³ scalars
+ │ (of 32 possible) │ (22 of 24 morphs) │ (5.4% of 2304)
 ```
 
 ### 6.5 R³ v2 Projected Expansion
@@ -827,216 +820,53 @@ No significant direct v2 expansion projected for SRP. As a pathway-dependent ARU
 
 Each mechanism receives H³ values indexed as `_idx(morph, law) = morph * 3 + law` into a 72D vector (24 morphs × 3 laws) averaged across the mechanism's horizons.
 
-#### AED — Affective Entrainment Dynamics (30D)
-
-**Horizons**: H6 (200ms), H16 (1000ms) — bidirectional
-**Scientific basis**: Huron 2006 (ITPRA), Meyer 1956, Koelsch 2019, Janata 2012
-
-```
-AROUSAL DYNAMICS [0:10]
-  D0  arousal_level          = σ(h0[M4,L2])     # ANS activation proxy
-  D1  arousal_change         = tanh(h0[M8,L2])   # Rate of arousal change
-  D2  arousal_peak           = σ(h0[M4,L0])      # Proximity to peak
-  D3  autonomic_activation   = σ(h0[M5,L2])      # Range → ANS drive
-  D4  skin_conductance_proxy = σ(h0[M9,L2])      # Acceleration → SCR
-  D5  heart_rate_change      = tanh(h0[M8,L0])   # Forward velocity → HR
-  D6  respiratory_coupling   = σ(h0[M14,L2])     # Periodicity → breath
-  D7  pupil_dilation_proxy   = σ(h0[M10,L2])     # Jerk → pupil
-  D8  arousal_habituation    = σ(h0[M19,L2])     # Stability → habituation
-  D9  arousal_recovery       = σ(h0[M9,L1])      # Backward accel → recovery
-
-EXPECTANCY AFFECT [10:20] — Implements ITPRA
-  D10 expectation_strength   = σ(h0[M18,L0])     # Forward trend
-  D11 violation_magnitude    = σ(h0[M10,L2])     # Jerk = surprise
-  D12 prediction_pleasure    = σ(h0[M22,L2])     # Regularity → confirmed
-  D13 surprise_valence       = tanh(h0[M18,L0]-h0[M18,L1])  # Fwd-Bwd trend
-  D14 tension_level          = σ(h0[M9,L0])      # Forward acceleration
-  D15 resolution_satisfaction= σ(h0[M19,L1])     # Backward stability
-  D16 suspense               = σ(h0[M20,L2])     # Entropy → uncertainty
-  D17 curiosity_drive        = σ(h0[M20,L0])     # Forward entropy
-  D18 contrastive_valence    = tanh(h0[M8,L2])   # Velocity direction
-  D19 aesthetic_flow          = σ(h0[M19,L2])     # Stability = flow
-
-MOTOR-AFFECTIVE COUPLING [20:30] — Groove/embodiment
-  D20 entrainment_strength   = σ(h0[M14,L2])     # Periodicity → sync
-  D21 movement_urge          = σ(h0[M8,L2])      # Velocity → move
-  D22 groove_pleasure        = σ(h0[M15,L2])     # Smoothness → groove
-  D23 body_arousal           = σ(h0[M4,L2])      # Max → bodily activation
-  D24 synchrony_reward       = σ(h0[M22,L2])     # Regularity → sync reward
-  D25 social_bonding         = σ(h0[M23,L2])     # Symmetry → social
-  D26 motor_fluency          = σ(h0[M19,L2])     # Stability → fluency
-  D27 embodiment_depth       = σ(h0[M1,L2])      # Mean → baseline level
-  D28 rhythmic_pleasure      = σ(h0[M17,L2])     # Shape period → rhythm
-  D29 motor_affect_coupling  = σ(h0[M15,L0])     # Forward smoothness
-```
-
-#### CPD — Chills & Peak Detection (30D)
-
-**Horizons**: H7 (250ms), H12 (525ms), H15 (800ms) — bidirectional
-**Scientific basis**: Sloboda 1991, Salimpoor 2011, Lehne & Koelsch 2015, Guhn 2007
-
-```
-TRIGGER FEATURES [0:10] — Chill-inducing acoustic features
-  D0  melodic_tension        = σ(h0[M10,L0])     # Jerk → melodic surprise
-  D1  harmonic_surprise      = σ(h0[M11,L2])     # Snap → harmonic change
-  D2  dynamic_swell          = σ(h0[M8,L0])      # Velocity → crescendo
-  D3  timbral_change         = σ(h0[M16,L0])     # Curvature → timbre shift
-  D4  registral_shift        = σ(h0[M5,L0])      # Range → register change
-  D5  textural_expansion     = σ(h0[M21,L0])     # Complexity → texture
-  D6  rhythmic_deviation     = σ(h0[M10,L2])     # Jerk → rhythmic surprise
-  D7  vocal_entry            = σ(h0[M0,L0])      # Value → new element entry
-  D8  trigger_density        = σ(h0[M21,L2])     # Complexity → density
-  D9  trigger_novelty        = σ(h0[M20,L2])     # Entropy → novelty
-
-BUILDUP TRACKING [10:20] — Tension accumulation
-  D10 tension_accumulation   = σ(h0[M18,L0])     # Forward trend → buildup
-  D11 buildup_rate           = σ(h0[M8,L0])      # Velocity → buildup speed
-  D12 buildup_duration       = σ(h0[M5,L0])      # Range → how long building
-  D13 harmonic_tension_acc   = σ(h0[M9,L2])      # Acceleration → harmonic
-  D14 dynamic_gradient       = σ(h0[M18,L2])     # Bidi trend → dynamics
-  D15 textural_density_growth= σ(h0[M21,L0])     # Complexity growth
-  D16 anticipatory_da        = σ(h0[M4,L0])      # Forward max → DA proxy
-  D17 climax_proximity       = σ(h0[M4,L2])      # Bidi max → near climax
-  D18 suspension_count       = σ(h0[M10,L0])     # Jerk count → suspensions
-  D19 buildup_momentum       = σ(h0[M8,L2])      # Bidi velocity → momentum
-
-PEAK RESPONSE [20:30] — Peak experience encoding
-  D20 chill_intensity        = σ(h0[M4,L2])      # Bidi max → intensity
-  D21 goosebump_proxy        = σ(h0[M9,L2])      # Acceleration → ANS
-  D22 dopamine_release       = σ(h0[M4,L0])      # Forward max → DA burst
-  D23 emotional_peak         = σ(h0[M5,L2])      # Range → emotional range
-  D24 tears_proxy            = σ(h0[M18,L1])     # Backward trend → tears
-  D25 spine_shiver           = σ(h0[M11,L2])     # Snap → spine response
-  D26 pleasure_valence       = σ(h0[M22,L2])     # Regularity → pleasant
-  D27 awe_wonder             = σ(h0[M20,L2])     # Entropy → awe
-  D28 peak_duration          = σ(h0[M5,L0])      # Forward range → duration
-  D29 afterglow              = σ(h0[M19,L1])     # Backward stability → glow
-```
-
-#### C0P — Cognitive Projection (30D)
-
-**Horizons**: H11 (500ms) — forward only
-**Scientific basis**: Baars 1988 (Global Workspace), Tononi 2004, Koelsch 2014, Raichle 2001
-
-```
-FEATURE AGGREGATION [0:10] — Information compression
-  D0  oscillatory_summary    = σ(h0[M1,L2])      # Mean → oscillatory
-  D1  timing_summary         = σ(h0[M14,L2])     # Periodicity → timing
-  D2  memory_summary         = σ(h0[M19,L2])     # Stability → memory
-  D3  affective_summary      = σ(h0[M4,L2])      # Max → affect
-  D4  cross_layer_coherence  = σ(h0[M22,L2])     # Regularity → coherence
-  D5  information_rate       = σ(h0[M8,L2])      # Velocity → info rate
-  D6  processing_load        = σ(h0[M21,L2])     # Complexity → load
-  D7  feature_salience       = σ(h0[M5,L2])      # Range → salience
-  D8  integration_quality    = σ(h0[M23,L2])     # Symmetry → quality
-  D9  state_complexity       = σ(h0[M20,L2])     # Entropy → complexity
-
-COGNITIVE STATE [10:20] — Default Mode / Task Positive
-  D10 attention_mode         = σ(h0[M4,L2])      # Max → attention
-  D11 prediction_mode        = σ(h0[M18,L0])     # Forward trend → predict
-  D12 memory_mode            = σ(h0[M19,L1])     # Backward stability → mem
-  D13 emotional_mode         = σ(h0[M1,L2])      # Mean → emotional base
-  D14 engagement_level       = σ(h0[M8,L2])      # Velocity → engagement
-  D15 consciousness_level    = σ(h0[M5,L2])      # Range → awareness
-  D16 processing_efficiency  = σ(h0[M22,L2])     # Regularity → efficiency
-  D17 meta_cognitive_state   = σ(h0[M20,L2])     # Entropy → meta-cognition
-  D18 default_mode_activity  = σ(h0[M19,L1])     # Bwd stability → DMN
-  D19 task_positive_activity = σ(h0[M4,L0])      # Fwd max → TPN
-
-UNIT PROJECTION [20:30] — To 9 cognitive units
-  D20 spu_projection         = σ(h0[M5,L2])      # Range → SPU
-  D21 stu_projection         = σ(h0[M14,L2])     # Periodicity → STU
-  D22 imu_projection         = σ(h0[M19,L2])     # Stability → IMU
-  D23 aru_projection         = σ(h0[M1,L2])      # Mean → ARU
-  D24 asu_projection         = σ(h0[M10,L2])     # Jerk → ASU
-  D25 mpu_projection         = σ(h0[M8,L0])      # Velocity → MPU
-  D26 pcu_projection         = σ(h0[M16,L2])     # Curvature → PCU
-  D27 rpu_projection         = σ(h0[M4,L2])      # Max → RPU
-  D28 ndu_projection         = σ(h0[M20,L2])     # Entropy → NDU
-  D29 projection_confidence  = σ(h0[M22,L2])     # Regularity → confidence
-```
-
 ### 7.2 SRP Final Computation (Mechanisms → 19D)
 
-The SRP model reads from AED, CPD, C0P mechanisms using sub-section means:
 
 ```python
 # ─── INPUT SLICING ───────────────────────────────────────────────────
-# AED (30D)
-aed_arousal     = mean(AED[0:8])       # Arousal dynamics
-aed_expectancy  = mean(AED[8:16])      # Expectancy affect
-aed_dynamics    = mean(AED[16:24])     # Motor-affective coupling
-aed_regulation  = mean(AED[24:28])     # Regulation
-aed_integration = mean(AED[28:30])     # Integration summary
-
-# CPD (30D)
-cpd_buildup     = mean(CPD[0:10])      # Trigger + buildup features
-cpd_climax      = mean(CPD[10:18])     # Climax proximity
-cpd_release     = mean(CPD[18:24])     # Peak response (DA release)
-cpd_trajectory  = mean(CPD[24:28])     # Trajectory
-cpd_intensity   = mean(CPD[28:30])     # Intensity summary
-
-# C0P (30D)
-c0p_cognitive   = mean(C0P[0:10])      # Feature aggregation
-c0p_processing  = mean(C0P[10:18])     # Cognitive state
-c0p_integration = mean(C0P[18:24])     # Integration
-c0p_gate        = mean(C0P[24:28])     # Output gate
-c0p_summary     = mean(C0P[28:30])     # Summary
-
 # ─── LAYER N: NEUROCHEMICAL ─────────────────────────────────────────
-BETA_1 = 0.84    # Salimpoor 2011: NAcc-BP ↔ pleasure, r=0.84
-BETA_2 = 0.71    # Salimpoor 2011: Caudate-BP ↔ chills, r=0.71
+BETA_1 = 0.84 # Salimpoor 2011: NAcc-BP ↔ pleasure, r=0.84
+BETA_2 = 0.71 # Salimpoor 2011: Caudate-BP ↔ chills, r=0.71
 
-da_caudate    = σ(0.5 * c0p_processing + 0.3 * cpd_climax + 0.2 * aed_expectancy)
-da_nacc       = σ(0.6 * c0p_cognitive + 0.3 * cpd_release + 0.1 * aed_arousal)
-opioid_proxy  = σ(0.4 * consonance_mean + 0.3 * resolution_signal + 0.3 * smoothness)
+opioid_proxy = σ(0.4 * consonance_mean + 0.3 * resolution_signal + 0.3 * smoothness)
 # where:
-#   consonance_mean = mean(R³[0:7]) → H³(H18, M0, L2) — phrase-level consonance
-#   resolution_signal = AED[D15] (resolution_satisfaction)
-#   smoothness = R³[16] (spectral_smoothness) → H³(H18, M15, L2)
+# consonance_mean = mean(R³[0:7]) → H³(H18, M0, L2) — phrase-level consonance
+# smoothness = R³[16] (spectral_smoothness) → H³(H18, M15, L2)
 
 # ─── LAYER C: CIRCUIT ───────────────────────────────────────────────
-vta_drive         = σ(0.5 * da_caudate + 0.5 * da_nacc)
-stg_nacc_coupling = σ(0.6 * aed_arousal + 0.4 * dynamic_intensity)
-prediction_error  = tanh(AED[D13])  # surprise_valence: fwd_trend - bwd_trend
+vta_drive = σ(0.5 * da_caudate + 0.5 * da_nacc)
 
 # ─── LAYER P: PSYCHOLOGICAL ─────────────────────────────────────────
-wanting  = σ(BETA_2 * da_caudate)          # r=0.71 Salimpoor
-liking   = σ(BETA_1 * da_nacc)            # r=0.84 Salimpoor
+wanting = σ(BETA_2 * da_caudate) # r=0.71 Salimpoor
+liking = σ(BETA_1 * da_nacc) # r=0.84 Salimpoor
 pleasure = clamp(BETA_1 * da_nacc + BETA_2 * da_caudate, 0, 1)
 
 # ─── LAYER T: TEMPORAL (ITPRA) ──────────────────────────────────────
-tension          = σ(0.5 * cpd_buildup + 0.3 * harmonic_tension + 0.2 * AED[D14])
-prediction_match = tanh(AED[D12] - AED[D11])  # prediction_pleasure - violation
-reaction         = σ(0.5 * CPD[D0] + 0.5 * AED[D1])  # trigger + arousal_change
-appraisal        = σ(0.4 * pleasure + 0.3 * prediction_match + 0.3 * opioid_proxy)
+appraisal = σ(0.4 * pleasure + 0.3 * prediction_match + 0.3 * opioid_proxy)
 
 # ─── LAYER M: MUSICAL ───────────────────────────────────────────────
-harmonic_tension  = σ(0.5 * roughness_trend + 0.3 * inv_consonance + 0.2 * entropy)
+harmonic_tension = σ(0.5 * roughness_trend + 0.3 * inv_consonance + 0.2 * entropy)
 # where:
-#   roughness_trend = R³[0] (roughness) → H³(H18, M18, L0) — forward trend
-#   inv_consonance  = 1 - consonance_mean
-#   entropy         = R³[22] (distribution_entropy) → H³(H18, M0, L2)
+# roughness_trend = R³[0] (roughness) → H³(H18, M18, L0) — forward trend
+# inv_consonance = 1 - consonance_mean
+# entropy = R³[22] (distribution_entropy) → H³(H18, M0, L2)
 dynamic_intensity = σ(0.7 * energy_velocity + 0.3 * energy_acceleration)
 # where:
-#   energy_velocity     = R³[7] (amplitude) → H³(H18, M8, L0) — forward rate
-#   energy_acceleration = R³[7] (amplitude) → H³(H18, M11, L0) — forward accel
-peak_detection    = σ(0.5 * cpd_buildup + 0.5 * cpd_release)
+# energy_velocity = R³[7] (amplitude) → H³(H18, M8, L0) — forward rate
+# energy_acceleration = R³[7] (amplitude) → H³(H18, M11, L0) — forward accel
 
 # ─── LAYER F: FORECAST ──────────────────────────────────────────────
-reward_forecast   = σ(0.6 * da_caudate + 0.4 * cpd_climax)
-chills_proximity  = σ(0.5 * da_nacc + 0.3 * cpd_release + 0.2 * aed_expectancy)
-resolution_expect = σ(0.6 * c0p_integration + 0.4 * aed_expectancy)
 
 # ─── OUTPUT ASSEMBLY ─────────────────────────────────────────────────
 output = [
-    da_caudate, da_nacc, opioid_proxy,           # Layer N (3D)
-    vta_drive, stg_nacc_coupling, prediction_error, # Layer C (3D)
-    wanting, liking, pleasure,                     # Layer P (3D)
-    tension, prediction_match, reaction, appraisal, # Layer T (4D)
-    harmonic_tension, dynamic_intensity, peak_detection, # Layer M (3D)
-    reward_forecast, chills_proximity, resolution_expect  # Layer F (3D)
-]  # Total: 19D
+ da_caudate, da_nacc, opioid_proxy, # Layer N (3D)
+ vta_drive, stg_nacc_coupling, prediction_error, # Layer C (3D)
+ wanting, liking, pleasure, # Layer P (3D)
+ tension, prediction_match, reaction, appraisal, # Layer T (4D)
+ harmonic_tension, dynamic_intensity, peak_detection, # Layer M (3D)
+ reward_forecast, chills_proximity, resolution_expect # Layer F (3D)
+] # Total: 19D
 ```
 
 ---
@@ -1066,29 +896,29 @@ When the composer experiences goosebumps/chills at a specific moment:
 EXPECTED SRP SIGNATURE FOR CHILLS:
 
 -30s ─────────── -15s ────────── -5s ────── 0s (CHILL) ── +2s ── +10s
-  │                │               │          │              │       │
-  │  da_caudate:   │    RAMP ──────────►     │   DROP ──────────────│
-  │                │   (Howe quasi-hyperbolic) │                     │
-  │                │               │          │              │       │
-  │  wanting:      │   FOLLOWS ────────►     │   DROP ──────────────│
-  │                │   da_caudate             │                     │
-  │                │               │          │              │       │
-  │  tension:      │      BUILD ──────►     │   DROPS ─────────────│
-  │                │               │          │              │       │
-  │  da_nacc:      │               │  RAMP ─►│ SPIKE ──────► decay │
-  │                │               │          │              │       │
-  │  liking:       │               │          │ SPIKE ──────► decay │
-  │                │               │          │              │       │
-  │  opioid:       │               │  RISES ─│ PEAK ───────► decay │
-  │                │               │          │              │       │
-  │  pleasure:     │        BROAD ────────────── PEAK ──────► decay │
-  │                │               │          │              │       │
-  │  pred_error:   │               │          │ SPIKE (+1) ──► ~0   │
-  │                │               │          │              │       │
-  │  peak_det:     │               │          │ ████ SPIKE ██│       │
-  │                │               │          │              │       │
-  │  appraisal:    │               │          │    RISES ───── HIGH │
-  │                │               │          │    (0.5-2s delay)   │
+ │ │ │ │ │ │
+ │ da_caudate: │ RAMP ──────────► │ DROP ──────────────│
+ │ │ (Howe quasi-hyperbolic) │ │
+ │ │ │ │ │ │
+ │ wanting: │ FOLLOWS ────────► │ DROP ──────────────│
+ │ │ da_caudate │ │
+ │ │ │ │ │ │
+ │ tension: │ BUILD ──────► │ DROPS ─────────────│
+ │ │ │ │ │ │
+ │ da_nacc: │ │ RAMP ─►│ SPIKE ──────► decay │
+ │ │ │ │ │ │
+ │ liking: │ │ │ SPIKE ──────► decay │
+ │ │ │ │ │ │
+ │ opioid: │ │ RISES ─│ PEAK ───────► decay │
+ │ │ │ │ │ │
+ │ pleasure: │ BROAD ────────────── PEAK ──────► decay │
+ │ │ │ │ │ │
+ │ pred_error: │ │ │ SPIKE (+1) ──► ~0 │
+ │ │ │ │ │ │
+ │ peak_det: │ │ │ ████ SPIKE ██│ │
+ │ │ │ │ │ │
+ │ appraisal: │ │ │ RISES ───── HIGH │
+ │ │ │ │ (0.5-2s delay) │
 ```
 
 ### 8.3 Validation Criteria

@@ -21,43 +21,43 @@ The **Sensory Dissonance Early Detection** (SDED) models how roughness is detect
 SENSORY DISSONANCE EARLY DETECTION — CONVERGENT EVIDENCE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-EARLY DETECTION (Pre-attentive)            BRAINSTEM ENCODING (Universal)
-Brain: Early Auditory Cortex               Brain: Auditory Brainstem / A1
-Mechanism: Roughness → MMN                 Mechanism: FFR phase-locking
-Input: Spectral interference patterns      Input: Harmonic ratios of dyads
-Evidence: Crespo-Bojorque 2018             Evidence: Bidelman 2013 review,
-  Early MMN 152-258ms, UNIVERSAL             Fishman 2001 (intracranial A1)
-  across expertise levels                    phase-locked to roughness
+EARLY DETECTION (Pre-attentive) BRAINSTEM ENCODING (Universal)
+Brain: Early Auditory Cortex Brain: Auditory Brainstem / A1
+Mechanism: Roughness → MMN Mechanism: FFR phase-locking
+Input: Spectral interference patterns Input: Harmonic ratios of dyads
+Evidence: Crespo-Bojorque 2018 Evidence: Bidelman 2013 review,
+ Early MMN 152-258ms, UNIVERSAL Fishman 2001 (intracranial A1)
+ across expertise levels phase-locked to roughness
 
-         CORTICAL DISSONANCE PROCESSING (Right STG)
-         Brain: Superior Temporal Gyrus (ECoG)
-         Mechanism: High-gamma 70-150 Hz sensitivity
-         Evidence: Foo 2016 — right STG dissonance sites,
-           75-200ms, positive roughness-gamma correlation
+ CORTICAL DISSONANCE PROCESSING (Right STG)
+ Brain: Superior Temporal Gyrus (ECoG)
+ Mechanism: High-gamma 70-150 Hz sensitivity
+ Evidence: Foo 2016 — right STG dissonance sites,
+ 75-200ms, positive roughness-gamma correlation
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 KEY INSIGHT: Roughness detection at neural level is UNIVERSAL:
 - Early MMN (152-258ms) for consonance changes occurs in BOTH
-  musicians and non-musicians (Crespo-Bojorque 2018, N=32)
+ musicians and non-musicians (Crespo-Bojorque 2018, N=32)
 - Late MMN (232-314ms) for dissonance changes ONLY in musicians
 - A1 phase-locked oscillatory activity correlates with perceived
-  dissonance (Fishman 2001, intracranial monkey+human)
+ dissonance (Fishman 2001, intracranial monkey+human)
 - Brainstem FFR encodes consonance hierarchy matching Western
-  music theory WITHOUT training (Bidelman 2013 review)
+ music theory WITHOUT training (Bidelman 2013 review)
 This convergence proves pre-attentive sensory encoding is innate.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ┌─────────────────────────────────────────────────────────────────┐
-│ ⚠ CRITICAL CORRECTION (v2.1.0):                                │
-│ v2.0.0 cited "Tervaniemi, Makkonen & Nie (2022),               │
-│ Neuropsychologia 167, 108152" with d=-1.09 but this paper      │
-│ was NOT FOUND in the literature collection. The citation is     │
-│ UNVERIFIABLE and has been REMOVED.                              │
-│                                                                 │
-│ Replaced with verified evidence: Crespo-Bojorque 2018 (N=32,   │
-│ early universal MMN), Fishman 2001 (intracranial A1),           │
-│ Foo 2016 (ECoG, N=8), Bidelman 2013 (brainstem review),        │
-│ Wagner 2018 (asymmetric MMN -0.34µV, N=15).                    │
+│ ⚠ CRITICAL CORRECTION (v2.1.0): │
+│ v2.0.0 cited "Tervaniemi, Makkonen & Nie (2022), │
+│ Neuropsychologia 167, 108152" with d=-1.09 but this paper │
+│ was NOT FOUND in the literature collection. The citation is │
+│ UNVERIFIABLE and has been REMOVED. │
+│ │
+│ Replaced with verified evidence: Crespo-Bojorque 2018 (N=32, │
+│ early universal MMN), Fishman 2001 (intracranial A1), │
+│ Foo 2016 (ECoG, N=8), Bidelman 2013 (brainstem review), │
+│ Wagner 2018 (asymmetric MMN -0.34µV, N=15). │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
@@ -77,138 +77,137 @@ SDED sits at the speculative end of the SPU model hierarchy, addressing the univ
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                 SDED — COMPLETE CIRCUIT                                      ║
+║ SDED — COMPLETE CIRCUIT ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  MUSICAL STIMULUS (Consonant → Dissonant)                                   ║
-║                                                                              ║
-║  Standard    Standard    Standard    DEVIANT     Standard                    ║
-║    │           │           │           │           │                         ║
-║    ▼           ▼           ▼           ▼           ▼                         ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │                    AUDITORY BRAINSTEM                                │    ║
-║  │               (Roughness encoding — universal)                      │    ║
-║  │                                                                      │    ║
-║  │    Roughness encoded at cochlear/brainstem level                    │    ║
-║  │    Spectral interference → beating → roughness percept              │    ║
-║  │    Independent of musical training or expertise                     │    ║
-║  └──────────────────────────┬──────────────────────────────────────────┘    ║
-║                              │                                               ║
-║                              ▼                                               ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │                    EARLY AUDITORY CORTEX                             │    ║
-║  │               (Pre-attentive detection — MMN)                       │    ║
-║  │                                                                      │    ║
-║  │    MMN (Mismatch Negativity):                                       │    ║
-║  │      Consonant deviant → early MMN (152-258ms, UNIVERSAL)          │    ║
-║  │      Dissonant deviant → late MMN (232-314ms, MUSICIANS ONLY)      │    ║
-║  │      Early detection is UNIVERSAL (Crespo-Bojorque 2018)           │    ║
-║  └──────────────────────────┬──────────────────────────────────────────┘    ║
-║                              │                                               ║
-║                              ▼                                               ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │                    PLANUM TEMPORALE                                  │    ║
-║  │               (Spectral processing — expertise-modulated)           │    ║
-║  │                                                                      │    ║
-║  │    Behavioral discrimination:                                       │    ║
-║  │      Musicians > Non-musicians (accuracy, reaction time)            │    ║
-║  │      Same sensory signal, enhanced behavioral readout               │    ║
-║  └─────────────────────────────────────────────────────────────────────┘    ║
-║                                                                              ║
+║ ║
+║ MUSICAL STIMULUS (Consonant → Dissonant) ║
+║ ║
+║ Standard Standard Standard DEVIANT Standard ║
+║ │ │ │ │ │ ║
+║ ▼ ▼ ▼ ▼ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ AUDITORY BRAINSTEM │ ║
+║ │ (Roughness encoding — universal) │ ║
+║ │ │ ║
+║ │ Roughness encoded at cochlear/brainstem level │ ║
+║ │ Spectral interference → beating → roughness percept │ ║
+║ │ Independent of musical training or expertise │ ║
+║ └──────────────────────────┬──────────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ EARLY AUDITORY CORTEX │ ║
+║ │ (Pre-attentive detection — MMN) │ ║
+║ │ │ ║
+║ │ MMN (Mismatch Negativity): │ ║
+║ │ Consonant deviant → early MMN (152-258ms, UNIVERSAL) │ ║
+║ │ Dissonant deviant → late MMN (232-314ms, MUSICIANS ONLY) │ ║
+║ │ Early detection is UNIVERSAL (Crespo-Bojorque 2018) │ ║
+║ └──────────────────────────┬──────────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ PLANUM TEMPORALE │ ║
+║ │ (Spectral processing — expertise-modulated) │ ║
+║ │ │ ║
+║ │ Behavioral discrimination: │ ║
+║ │ Musicians > Non-musicians (accuracy, reaction time) │ ║
+║ │ Same sensory signal, enhanced behavioral readout │ ║
+║ └─────────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 CRITICAL EVIDENCE (12 papers, 7 methods):
 ─────────────────────────────────────────
-Crespo-Bojorque et al. 2018:  Early MMN (152-258ms) for consonance changes
-                               UNIVERSAL across expertise (N=32)
-                               Late MMN (232-314ms) ONLY in musicians
-Fishman et al. 2001:          A1 phase-locked oscillatory activity
-                               correlates with perceived dissonance
-                               (intracranial monkey+human)
-Foo et al. 2016:              Right STG high-gamma (70-150Hz) dissonance
-                               sensitivity, 75-200ms (ECoG, N=8)
-Bidelman 2013:                Brainstem FFR encodes consonance hierarchy
-                               matching Western theory WITHOUT training
-Wagner et al. 2018:           Asymmetric MMN: -0.34µV for major 3rd
-                               deviant (non-musicians, pre-attentive)
-Tabas et al. 2019:            POR ~36ms slower for dissonant dyads (MEG)
+Crespo-Bojorque et al. 2018: Early MMN (152-258ms) for consonance changes
+ UNIVERSAL across expertise (N=32)
+ Late MMN (232-314ms) ONLY in musicians
+Fishman et al. 2001: A1 phase-locked oscillatory activity
+ correlates with perceived dissonance
+ (intracranial monkey+human)
+Foo et al. 2016: Right STG high-gamma (70-150Hz) dissonance
+ sensitivity, 75-200ms (ECoG, N=8)
+Bidelman 2013: Brainstem FFR encodes consonance hierarchy
+ matching Western theory WITHOUT training
+Wagner et al. 2018: Asymmetric MMN: -0.34µV for major 3rd
+ deviant (non-musicians, pre-attentive)
+Tabas et al. 2019: POR ~36ms slower for dissonant dyads (MEG)
 ```
 
-### 2.2 Information Flow Architecture (EAR → BRAIN → PPC → SDED)
+### 2.2 Information Flow Architecture (EAR → BRAIN → SDED)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    SDED COMPUTATION ARCHITECTURE                             ║
+║ SDED COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins × 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
-║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ CHANGE   │ │ X-INT  │ │        ║
-║  │  │ 7D [0:7]  │ │ 5D[7:12]│ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
-║  │  │           │ │         │ │ [12:21] │ │ [21:25]  │ │ [25:49]│ │        ║
-║  │  │roughness  │ │         │ │tonalness│ │          │ │x_l5l7  │ │        ║
-║  │  │sethares   │ │         │ │tristim. │ │          │ │        │ │        ║
-║  │  │helmholtz  │ │         │ │         │ │          │ │        │ │        ║
-║  │  │stumpf     │ │         │ │         │ │          │ │        │ │        ║
-║  │  │inharm.    │ │         │ │         │ │          │ │        │ │        ║
-║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                        SDED reads: ~14D                          │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                                                                  │        ║
-║  │  ┌── Gamma ────┐ ┌── Alpha-Beta ─┐ ┌── Syllable ──────────┐   │        ║
-║  │  │ 25ms (H0)   │ │ 100ms (H3)    │ │ 200ms (H6)           │   │        ║
-║  │  │              │ │               │ │                       │   │        ║
-║  │  │ Instant      │ │ Sustained     │ │ (not used by SDED)   │   │        ║
-║  │  │ roughness    │ │ roughness     │ │                       │   │        ║
-║  │  │ detection    │ │ encoding      │ │                       │   │        ║
-║  │  └──────┬───────┘ └──────┬────────┘ └─────────────────────┘   │        ║
-║  │         │               │                                      │        ║
-║  │         └───────────────┘                                      │        ║
-║  │                        SDED demand: ~9 of 2304 tuples          │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Perceptual Circuit ═══════    ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌─────────────────┐                                                        ║
-║  │  PPC (30D)      │  Pitch Processing Chain mechanism                      ║
-║  │                 │                                                        ║
-║  │ Pitch Sal [0:10]│  Roughness deviation detection                        ║
-║  │ Consonance[10:20]│ Dissonance encoding, early sensory signal            ║
-║  │ Chroma   [20:30]│  (not used by SDED)                                   ║
-║  └────────┬────────┘                                                        ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    SDED MODEL (10D Output)                       │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f01_early_detection, f02_mmn_dissonance,  │        ║
-║  │                       f03_behavioral_accuracy                    │        ║
-║  │  Layer M (Math):      detection_function                         │        ║
-║  │  Layer P (Present):   roughness_detection, deviation_detection,  │        ║
-║  │                       behavioral_response                        │        ║
-║  │  Layer F (Future):    dissonance_detection_pred,                 │        ║
-║  │                       behavioral_accuracy_pred,                  │        ║
-║  │                       training_effect_pred                       │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins × 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ ENERGY │ │ TIMBRE │ │ CHANGE │ │ X-INT │ │ ║
+║ │ │ 7D [0:7] │ │ 5D[7:12]│ │ 9D │ │ 4D │ │ 24D │ │ ║
+║ │ │ │ │ │ │ [12:21] │ │ [21:25] │ │ [25:49]│ │ ║
+║ │ │roughness │ │ │ │tonalness│ │ │ │x_l5l7 │ │ ║
+║ │ │sethares │ │ │ │tristim. │ │ │ │ │ │ ║
+║ │ │helmholtz │ │ │ │ │ │ │ │ │ │ ║
+║ │ │stumpf │ │ │ │ │ │ │ │ │ │ ║
+║ │ │inharm. │ │ │ │ │ │ │ │ │ │ ║
+║ │ └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │ ║
+║ │ SDED reads: ~14D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ │ ║
+║ │ ┌── Gamma ────┐ ┌── Alpha-Beta ─┐ ┌── Syllable ──────────┐ │ ║
+║ │ │ 25ms (H0) │ │ 100ms (H3) │ │ 200ms (H6) │ │ ║
+║ │ │ │ │ │ │ │ │ ║
+║ │ │ Instant │ │ Sustained │ │ (not used by SDED) │ │ ║
+║ │ │ roughness │ │ roughness │ │ │ │ ║
+║ │ │ detection │ │ encoding │ │ │ │ ║
+║ │ └──────┬───────┘ └──────┬────────┘ └─────────────────────┘ │ ║
+║ │ │ │ │ ║
+║ │ └───────────────┘ │ ║
+║ │ SDED demand: ~9 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Perceptual Circuit ═══════ ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────┐ ║
+║ │ │ ║
+║ │ Pitch Sal [0:10]│ Roughness deviation detection ║
+║ │ Consonance[10:20]│ Dissonance encoding, early sensory signal ║
+║ │ Chroma [20:30]│ (not used by SDED) ║
+║ └────────┬────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SDED MODEL (10D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f01_early_detection, f02_mmn_dissonance, │ ║
+║ │ f03_behavioral_accuracy │ ║
+║ │ Layer M (Math): detection_function │ ║
+║ │ Layer P (Present): roughness_detection, deviation_detection, │ ║
+║ │ behavioral_response │ ║
+║ │ Layer F (Future): dissonance_detection_pred, │ ║
+║ │ behavioral_accuracy_pred, │ ║
+║ │ training_effect_pred │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -239,69 +238,69 @@ Tabas et al. 2019:            POR ~36ms slower for dissonant dyads (MEG)
 ROUGHNESS DETECTION: EARLY vs LATE, UNIVERSAL vs TRAINED
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-                    Early MMN        Late MMN          Behavioral
-                    (152-258ms)      (232-314ms)       Discrimination
+ Early MMN Late MMN Behavioral
+ (152-258ms) (232-314ms) Discrimination
 ──────────────────────────────────────────────────────────────────
-Musicians           PRESENT          PRESENT           HIGH
-Non-musicians       PRESENT          ABSENT            MODERATE
+Musicians PRESENT PRESENT HIGH
+Non-musicians PRESENT ABSENT MODERATE
 ──────────────────────────────────────────────────────────────────
-Difference          NONE             SIGNIFICANT       SIGNIFICANT
-                    (universal)      (M only)          (M > NM)
+Difference NONE SIGNIFICANT SIGNIFICANT
+ (universal) (M only) (M > NM)
 
 Source: Crespo-Bojorque, Monte-Ordoña & Toro (2018), N=32
 
 This dissociation means:
-  1. Roughness DETECTION is hardwired (brainstem/early cortex)
-     Fishman 2001: A1 oscillatory activity ∝ dissonance (innate)
-     Bidelman 2013: FFR consonance hierarchy without training
-  2. Early MMN for consonance changes is UNIVERSAL
-  3. Late MMN for dissonance changes requires TRAINING
-  4. Behavioral accuracy enhances with expertise
-  5. BCH consonance hierarchy is biologically universal
+ 1. Roughness DETECTION is hardwired (brainstem/early cortex)
+ Fishman 2001: A1 oscillatory activity ∝ dissonance (innate)
+ Bidelman 2013: FFR consonance hierarchy without training
+ 2. Early MMN for consonance changes is UNIVERSAL
+ 3. Late MMN for dissonance changes requires TRAINING
+ 4. Behavioral accuracy enhances with expertise
+ 5. BCH consonance hierarchy is biologically universal
 
 Additional pre-attentive evidence (non-musicians):
-  Wagner 2018: MMN -0.34µV for harmonic interval deviants (N=15)
-  Foo 2016: Right STG gamma 70-150Hz for dissonance (N=8)
-  Tabas 2019: POR 36ms slower for dissonant dyads (MEG)
+ Wagner 2018: MMN -0.34µV for harmonic interval deviants (N=15)
+ Foo 2016: Right STG gamma 70-150Hz for dissonance (N=8)
+ Tabas 2019: POR 36ms slower for dissonant dyads (MEG)
 ```
 
 ### 3.3 Effect Size Summary
 
 ```
 ┌────────────────────────────────────────────────────────────────┐
-│ ⚠ NOTE: v2.0.0 reported d = -1.09 from "Tervaniemi,           │
-│ Makkonen & Nie (2022), Neuropsychologia 167, 108152"           │
-│ but this paper was NOT FOUND in the literature collection.     │
-│ The citation is UNVERIFIABLE and has been REMOVED.             │
+│ ⚠ NOTE: v2.0.0 reported d = -1.09 from "Tervaniemi, │
+│ Makkonen & Nie (2022), Neuropsychologia 167, 108152" │
+│ but this paper was NOT FOUND in the literature collection. │
+│ The citation is UNVERIFIABLE and has been REMOVED. │
 └────────────────────────────────────────────────────────────────┘
 
 MULTI-METHOD CONVERGENCE TABLE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Method          Study                N       Key Effect
+Method Study N Key Effect
 ──────────────────────────────────────────────────────────────────
-EEG (MMN)       Crespo-Bojorque 2018 32      Early MMN universal, late MMN M-only
-EEG (MMN)       Wagner 2018          15      -0.34µV major 3rd, 173ms, p=0.003
-EEG (ERP)       Sarasso 2019         44      N1/P2 ∝ consonance (80-194ms)
-Intracranial    Fishman 2001         2+monkey Phase-locked oscillation ∝ dissonance
-ECoG            Foo 2016             8       R STG gamma 70-150Hz, 75-200ms
-MEG             Tabas 2019           —       POR Δ~36ms (consonant < dissonant)
-MEG             Wöhrle 2024          30      N1m modulated by dissonance context
-fMRI            Bravo 2017           —       R HG enhanced for intermediate diss.
-Review (FFR)    Bidelman 2013        —       Brainstem consonance hierarchy innate
-Review (FFR)    Cousineau 2015       ~14     NPS ∝ consonance (synthetic only)
-Review (MMN)    Yu et al. 2015       —       MMN 100-200ms, supratemporal source
-Computational   Trulla 2018          —       Recurrence ∝ just intonation ratios
+EEG (MMN) Crespo-Bojorque 2018 32 Early MMN universal, late MMN M-only
+EEG (MMN) Wagner 2018 15 -0.34µV major 3rd, 173ms, p=0.003
+EEG (ERP) Sarasso 2019 44 N1/P2 ∝ consonance (80-194ms)
+Intracranial Fishman 2001 2+monkey Phase-locked oscillation ∝ dissonance
+ECoG Foo 2016 8 R STG gamma 70-150Hz, 75-200ms
+MEG Tabas 2019 — POR Δ~36ms (consonant < dissonant)
+MEG Wöhrle 2024 30 N1m modulated by dissonance context
+fMRI Bravo 2017 — R HG enhanced for intermediate diss.
+Review (FFR) Bidelman 2013 — Brainstem consonance hierarchy innate
+Review (FFR) Cousineau 2015 ~14 NPS ∝ consonance (synthetic only)
+Review (MMN) Yu et al. 2015 — MMN 100-200ms, supratemporal source
+Computational Trulla 2018 — Recurrence ∝ just intonation ratios
 
 Methods: 7 (EEG-MMN, EEG-ERP, intracranial, ECoG, MEG, fMRI, computational)
 Total unique participants: >175 (excluding reviews/computational)
 
-Quality Assessment:   γ-tier (convergent multi-method evidence,
-                      but no single large-N study demonstrating
-                      full neural-behavioral dissociation)
-Cross-cultural:       Bidelman 2013 notes infant and animal evidence
-                      for innate consonance processing
-Confidence:           <70% — individual studies limited N
+Quality Assessment: γ-tier (convergent multi-method evidence,
+ but no single large-N study demonstrating
+ full neural-behavioral dissociation)
+Cross-cultural: Bidelman 2013 notes infant and animal evidence
+ for innate consonance processing
+Confidence: <70% — individual studies limited N
 ```
 
 ---
@@ -336,27 +335,26 @@ Confidence:           <70% — individual studies limited N
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[0] roughness ────────────────┐
 R³[1] sethares_dissonance ──────┼──► Early Detection Signal
-R³[2] helmholtz_kang (inverse) ─┘   Math: D = σ(w₁·R + w₂·S + w₃·(1-H))
-                                     where R=roughness, S=sethares,
-                                     H=helmholtz (inverted for dissonance)
+R³[2] helmholtz_kang (inverse) ─┘ Math: D = σ(w₁·R + w₂·S + w₃·(1-H))
+ where R=roughness, S=sethares,
+ H=helmholtz (inverted for dissonance)
 
 R³[0] roughness (instant) ─────┐
 R³[0] roughness (mean 100ms) ──┼──► MMN Dissonance Signal
-PPC.pitch_salience ────────────┘    Math: |roughness - roughness_mean|
-                                     Deviance from standard triggers MMN
+ Deviance from standard triggers MMN
 
 R³[14] tonalness ──────────────┐
 R³[18:21] tristimulus ─────────┼──► Spectral Clarity Index
-R³[5] inharmonicity (inverse) ─┘    Determines signal-to-noise of
-                                     roughness encoding
+R³[5] inharmonicity (inverse) ─┘ Determines signal-to-noise of
+ roughness encoding
 
 R³[41:46] x_l5l7 ─────────────── Cross-Band Roughness Coupling
-                                     Roughness effects across
-                                     frequency bands
+ Roughness effects across
+ frequency bands
 ```
 
 ---
@@ -365,7 +363,7 @@ R³[41:46] x_l5l7 ─────────────── Cross-Band Rough
 
 ### 5.1 Demand Specification
 
-SDED requires H³ features at two PPC horizons: H0 (25ms) and H3 (100ms).
+SDED requires H³ features at two horizons: H0 (25ms) and H3 (100ms).
 These correspond to brainstem detection timescales (gamma instant detection and alpha-beta sustained encoding). H6 (200ms) is not needed — SDED focuses on the earliest, most rapid detection.
 
 | R³ Index | Feature | H | Morph | Law | Purpose |
@@ -393,18 +391,6 @@ Minor v2 expansion for SDED from F[49:65].
 **v2 projected**: 1 tuples
 **Total projected**: 10 tuples of 294,912 theoretical = 0.0034%
 
-### 5.2 PPC Mechanism Binding
-
-SDED reads from the **PPC** (Pitch Processing Chain) mechanism:
-
-| PPC Sub-section | Range | SDED Role | Weight |
-|-----------------|-------|-----------|--------|
-| **Pitch Salience** | PPC[0:10] | Roughness deviance detection via MMN | **0.8** |
-| **Consonance Encoding** | PPC[10:20] | Dissonance encoding, early sensory signal | **1.0** (primary) |
-| **Chroma Processing** | PPC[20:30] | Not used by SDED | 0.0 |
-
-SDED does NOT read from Chroma Processing — early dissonance detection operates on raw spectral roughness before octave-equivalent grouping.
-
 ---
 
 ## 6. Output Space: 10D Multi-Layer Representation
@@ -417,58 +403,56 @@ SDED OUTPUT TENSOR: 10D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                    │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼─────────────────────────┼────────┼────────────────────────────────────────
- 0  │ f01_early_detection     │ [0, 1] │ Pre-attentive roughness detection.
-    │                         │        │ Universal across expertise levels.
-    │                         │        │ f01 = σ(0.40 · roughness · mean(PPC.cons)
-    │                         │        │      + 0.30 · sethares
-    │                         │        │      + 0.30 · (1 - helmholtz))
+ 0 │ f01_early_detection │ [0, 1] │ Pre-attentive roughness detection.
+ │ │ │ Universal across expertise levels.
+ │ │ │ + 0.30 · sethares
+ │ │ │ + 0.30 · (1 - helmholtz))
 ────┼─────────────────────────┼────────┼────────────────────────────────────────
- 1  │ f02_mmn_dissonance      │ [0, 1] │ Mismatch Negativity amplitude for
-    │                         │        │ dissonant deviants. Expertise-independent.
-    │                         │        │ f02 = σ(0.50 · f01 · mean(PPC.pitch_sal)
-    │                         │        │      + 0.50 · |roughness - roughness_mean|)
+ 1 │ f02_mmn_dissonance │ [0, 1] │ Mismatch Negativity amplitude for
+ │ │ │ dissonant deviants. Expertise-independent.
+ │ │ │ + 0.50 · |roughness - roughness_mean|)
 ────┼─────────────────────────┼────────┼────────────────────────────────────────
- 2  │ f03_behavioral_accuracy │ [0, 1] │ Behavioral dissonance discrimination.
-    │                         │        │ Same neural signal as f02, but behavioral
-    │                         │        │ response varies with expertise.
-    │                         │        │ f03 = f02 (baseline, no expertise mod)
+ 2 │ f03_behavioral_accuracy │ [0, 1] │ Behavioral dissonance discrimination.
+ │ │ │ Same neural signal as f02, but behavioral
+ │ │ │ response varies with expertise.
+ │ │ │ f03 = f02 (baseline, no expertise mod)
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                    │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼─────────────────────────┼────────┼────────────────────────────────────────
- 3  │ detection_function      │ [0, 1] │ Combined detection function.
-    │                         │        │ Integrates roughness encoding with
-    │                         │        │ deviance magnitude for early detection.
+ 3 │ detection_function │ [0, 1] │ Combined detection function.
+ │ │ │ Integrates roughness encoding with
+ │ │ │ deviance magnitude for early detection.
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                    │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼─────────────────────────┼────────┼────────────────────────────────────────
- 4  │ roughness_detection     │ [0, 1] │ Current roughness at sensory level.
-    │                         │        │ Direct R³ roughness via PPC encoding.
+ 4 │ roughness_detection │ [0, 1] │ Current roughness at sensory level.
+ │ │ │ Direct R³ roughness via pitch-processing H³ encoding.
 ────┼─────────────────────────┼────────┼────────────────────────────────────────
- 5  │ deviation_detection     │ [0, 1] │ Roughness deviation from context.
-    │                         │        │ |roughness_instant - roughness_mean|
+ 5 │ deviation_detection │ [0, 1] │ Roughness deviation from context.
+ │ │ │ |roughness_instant - roughness_mean|
 ────┼─────────────────────────┼────────┼────────────────────────────────────────
- 6  │ behavioral_response     │ [0, 1] │ Behavioral response strength.
-    │                         │        │ PPC-modulated detection signal.
+ 6 │ behavioral_response │ [0, 1] │ Behavioral response strength.
+ │ │ │ pitch-modulated detection signal.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                       │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼────────────────────────────┼────────┼─────────────────────────────────────
- 7  │ dissonance_detection_pred  │ [0, 1] │ Predicted dissonance detection.
-    │                            │        │ Next-frame roughness expectation.
+ 7 │ dissonance_detection_pred │ [0, 1] │ Predicted dissonance detection.
+ │ │ │ Next-frame roughness expectation.
 ────┼────────────────────────────┼────────┼─────────────────────────────────────
- 8  │ behavioral_accuracy_pred   │ [0, 1] │ Predicted behavioral accuracy.
-    │                            │        │ Behavioral readout from f01/f02.
+ 8 │ behavioral_accuracy_pred │ [0, 1] │ Predicted behavioral accuracy.
+ │ │ │ Behavioral readout from f01/f02.
 ────┼────────────────────────────┼────────┼─────────────────────────────────────
- 9  │ training_effect_pred       │ [0, 1] │ Training effect prediction.
-    │                            │        │ Modeled dissociation: neural stays
-    │                            │        │ constant, behavioral improves.
+ 9 │ training_effect_pred │ [0, 1] │ Training effect prediction.
+ │ │ │ Modeled dissociation: neural stays
+ │ │ │ constant, behavioral improves.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 10D per frame at 172.27 Hz
@@ -483,29 +467,29 @@ TOTAL: 10D per frame at 172.27 Hz
 
 ```
 Roughness Detection (Pre-attentive, Universal):
-  The brainstem encodes roughness (spectral interference) regardless
-  of musical training. Early MMN (152-258ms) for consonance changes
-  is universal (Crespo-Bojorque 2018, N=32). A1 phase-locked
-  oscillatory activity ∝ dissonance (Fishman 2001, intracranial).
+ The brainstem encodes roughness (spectral interference) regardless
+ of musical training. Early MMN (152-258ms) for consonance changes
+ is universal (Crespo-Bojorque 2018, N=32). A1 phase-locked
+ oscillatory activity ∝ dissonance (Fishman 2001, intracranial).
 
-  Detection(t) = σ(w₁ · roughness(t) · consonance_enc
-                 + w₂ · sethares(t)
-                 + w₃ · (1 - helmholtz(t)))
+ Detection(t) = σ(w₁ · roughness(t) · consonance_enc
+ + w₂ · sethares(t)
+ + w₃ · (1 - helmholtz(t)))
 
-  where w₁=0.40, w₂=0.30, w₃=0.30 (sum = 1.0)
+ where w₁=0.40, w₂=0.30, w₃=0.30 (sum = 1.0)
 
 MMN Dissonance (Deviance-based):
-  MMN fires when current roughness deviates from context.
+ MMN fires when current roughness deviates from context.
 
-  MMN(t) = σ(0.50 · Detection(t) · pitch_salience(t)
-           + 0.50 · |roughness(t) - roughness_mean(t)|)
+ MMN(t) = σ(0.50 · Detection(t) · pitch_salience(t)
+ + 0.50 · |roughness(t) - roughness_mean(t)|)
 
-  roughness_mean = H³ tuple (0, 3, 1, 2): 100ms bidirectional mean
+ roughness_mean = H³ tuple (0, 3, 1, 2): 100ms bidirectional mean
 
 Neural-Behavioral Dissociation:
-  Neural:     MMN_musicians = MMN_non-musicians
-  Behavioral: Accuracy_musicians > Accuracy_non-musicians
-  Baseline:   Behavioral = MMN (without expertise modulation)
+ Neural: MMN_musicians = MMN_non-musicians
+ Behavioral: Accuracy_musicians > Accuracy_non-musicians
+ Baseline: Behavioral = MMN (without expertise modulation)
 ```
 
 ### 7.2 Feature Formulas
@@ -513,15 +497,13 @@ Neural-Behavioral Dissociation:
 ```python
 # f01: Early Detection (pre-attentive, universal)
 # Roughness detected at brainstem regardless of expertise
-f01 = sigma(0.40 * roughness * mean(PPC.consonance_encoding[10:20])
-          + 0.30 * sethares
-          + 0.30 * (1 - helmholtz))
+ + 0.30 * sethares
+ + 0.30 * (1 - helmholtz))
 # Coefficient sum: 0.40 + 0.30 + 0.30 = 1.0
 
 # f02: MMN Dissonance (neural, expertise-independent)
 # Mismatch negativity triggered by roughness deviance
-f02 = sigma(0.50 * f01 * mean(PPC.pitch_salience[0:10])
-          + 0.50 * abs(roughness - roughness_mean))
+ + 0.50 * abs(roughness - roughness_mean))
 # Coefficient sum: 0.50 + 0.50 = 1.0
 
 # f03: Behavioral Accuracy (expertise-dependent)
@@ -564,24 +546,24 @@ matched monkey A1 recordings.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    SDED INTERACTIONS                                         │
+│ SDED INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (SPU):                                                         │
-│  BCH.consonance_signal ──────► SDED (early roughness baseline)             │
-│  SDNPS.roughness_correlation ► SDED (confirms roughness as primary)        │
-│  ESME.expertise_enhancement ─► SDED (dissociation: neural=universal,       │
-│                                       behavioral=trained)                   │
-│  SDED.f01_early_detection ──► PSCL (roughness signal for pitch context)    │
-│  SDED.roughness_detection ──► STAI (dissonance input for aesthetics)       │
-│                                                                             │
-│  CROSS-UNIT (P1: SPU → ARU):                                              │
-│  SDED.f01_early_detection ──► ARU.SRP (roughness → displeasure proxy)     │
-│  SDED.deviation_detection ──► ARU.AAC (dissonance surprise → arousal)     │
-│                                                                             │
-│  CROSS-UNIT (P2: SPU → STU):                                              │
-│  SDED.roughness_detection ──► STU.AMSC (roughness affects timing)         │
-│                                                                             │
+│ │
+│ INTRA-UNIT (SPU): │
+│ BCH.consonance_signal ──────► SDED (early roughness baseline) │
+│ SDNPS.roughness_correlation ► SDED (confirms roughness as primary) │
+│ ESME.expertise_enhancement ─► SDED (dissociation: neural=universal, │
+│ behavioral=trained) │
+│ SDED.f01_early_detection ──► PSCL (roughness signal for pitch context) │
+│ SDED.roughness_detection ──► STAI (dissonance input for aesthetics) │
+│ │
+│ CROSS-UNIT (P1: SPU → ARU): │
+│ SDED.f01_early_detection ──► ARU.SRP (roughness → displeasure proxy) │
+│ SDED.deviation_detection ──► ARU.AAC (dissonance surprise → arousal) │
+│ │
+│ CROSS-UNIT (P2: SPU → STU): │
+│ SDED.roughness_detection ──► STU.AMSC (roughness affects timing) │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -607,128 +589,113 @@ matched monkey A1 recordings.
 
 ```python
 class SDED(BaseModel):
-    """Sensory Dissonance Early Detection.
+ """Sensory Dissonance Early Detection.
 
-    Output: 10D per frame.
-    Reads: PPC mechanism (30D), R³ direct.
-    """
-    NAME = "SDED"
-    UNIT = "SPU"
-    TIER = "γ3"
-    OUTPUT_DIM = 10
-    MECHANISM_NAMES = ("PPC",)        # Primary mechanism
+ Output: 10D per frame.
+ """
+ NAME = "SDED"
+ UNIT = "SPU"
+ TIER = "γ3"
+ OUTPUT_DIM = 10
+ W1 = 0.40 # Roughness x pitch-processing weight
+ W2 = 0.30 # Sethares weight
+ W3 = 0.30 # Inverse helmholtz weight
+ MMN_DEV = 0.50 # Deviance weight
+ MMN_DET = 0.50 # Detection weight
 
-    W1 = 0.40   # Roughness x PPC weight
-    W2 = 0.30   # Sethares weight
-    W3 = 0.30   # Inverse helmholtz weight
-    MMN_DEV = 0.50  # Deviance weight
-    MMN_DET = 0.50  # Detection weight
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """9 tuples for SDED computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ (0, 0, 0, 2), # roughness, 25ms, value, bidirectional
+ (0, 3, 1, 2), # roughness, 100ms, mean, bidirectional
+ (1, 0, 0, 2), # sethares, 25ms, value, bidirectional
+ (2, 0, 0, 2), # helmholtz_kang, 25ms, value, bidirectional
+ (2, 3, 1, 2), # helmholtz_kang, 100ms, mean, bidirectional
+ (5, 0, 0, 2), # inharmonicity, 25ms, value, bidirectional
+ (14, 3, 1, 0), # tonalness, 100ms, mean, forward
+ (18, 0, 0, 2), # tristimulus1, 25ms, value, bidirectional
+ (41, 3, 0, 2), # x_l5l7[0], 100ms, value, bidirectional
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """9 tuples for SDED computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            (0, 0, 0, 2),    # roughness, 25ms, value, bidirectional
-            (0, 3, 1, 2),    # roughness, 100ms, mean, bidirectional
-            (1, 0, 0, 2),    # sethares, 25ms, value, bidirectional
-            (2, 0, 0, 2),    # helmholtz_kang, 25ms, value, bidirectional
-            (2, 3, 1, 2),    # helmholtz_kang, 100ms, mean, bidirectional
-            (5, 0, 0, 2),    # inharmonicity, 25ms, value, bidirectional
-            (14, 3, 1, 0),   # tonalness, 100ms, mean, forward
-            (18, 0, 0, 2),   # tristimulus1, 25ms, value, bidirectional
-            (41, 3, 0, 2),   # x_l5l7[0], 100ms, value, bidirectional
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute SDED 10D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute SDED 10D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"PPC": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,10) SDED output
+ """
+ # R³ features
+ roughness = r3[..., 0:1]
+ sethares = r3[..., 1:2]
+ helmholtz = r3[..., 2:3]
+ stumpf = r3[..., 3:4]
+ inharmonicity = r3[..., 5:6]
+ tonalness = r3[..., 14:15]
+ trist1 = r3[..., 18:19]
+ trist2 = r3[..., 19:20]
+ trist3 = r3[..., 20:21]
+ x_l5l7 = r3[..., 41:46] # (B, T, 5)
 
-        Returns:
-            (B,T,10) SDED output
-        """
-        ppc = mechanism_outputs["PPC"]    # (B, T, 30)
+ # H³ temporal features
+ roughness_mean = h3_direct[(0, 3, 1, 2)] # 100ms mean
+ helmholtz_mean = h3_direct[(2, 3, 1, 2)] # 100ms mean
 
-        # R³ features
-        roughness = r3[..., 0:1]
-        sethares = r3[..., 1:2]
-        helmholtz = r3[..., 2:3]
-        stumpf = r3[..., 3:4]
-        inharmonicity = r3[..., 5:6]
-        tonalness = r3[..., 14:15]
-        trist1 = r3[..., 18:19]
-        trist2 = r3[..., 19:20]
-        trist3 = r3[..., 20:21]
-        x_l5l7 = r3[..., 41:46]          # (B, T, 5)
+ # ═══ LAYER E: Explicit features ═══
+ # f01: Early Detection (pre-attentive, universal)
+ f01 = torch.sigmoid(
+ + self.W2 * sethares
+ + self.W3 * (1.0 - helmholtz)
+ )
 
-        # PPC sub-sections
-        ppc_pitch = ppc[..., 0:10]        # pitch salience
-        ppc_cons = ppc[..., 10:20]        # consonance encoding
+ # f02: MMN Dissonance (neural, expertise-independent)
+ roughness_deviation = torch.abs(
+ roughness - roughness_mean.unsqueeze(-1)
+ )
+ f02 = torch.sigmoid(
+ + self.MMN_DEV * roughness_deviation
+ )
 
-        # H³ temporal features
-        roughness_mean = h3_direct[(0, 3, 1, 2)]  # 100ms mean
-        helmholtz_mean = h3_direct[(2, 3, 1, 2)]  # 100ms mean
+ # f03: Behavioral Accuracy (baseline = neural signal)
+ f03 = f02
 
-        # ═══ LAYER E: Explicit features ═══
-        # f01: Early Detection (pre-attentive, universal)
-        f01 = torch.sigmoid(
-            self.W1 * roughness * ppc_cons.mean(-1, keepdim=True)
-            + self.W2 * sethares
-            + self.W3 * (1.0 - helmholtz)
-        )
+ # ═══ LAYER M: Mathematical ═══
+ detection_function = torch.sigmoid(
+ 0.5 * f01 + 0.3 * f02
+ )
 
-        # f02: MMN Dissonance (neural, expertise-independent)
-        roughness_deviation = torch.abs(
-            roughness - roughness_mean.unsqueeze(-1)
-        )
-        f02 = torch.sigmoid(
-            self.MMN_DET * f01 * ppc_pitch.mean(-1, keepdim=True)
-            + self.MMN_DEV * roughness_deviation
-        )
+ # ═══ LAYER P: Present ═══
+ roughness_detection = torch.sigmoid(
+ )
+ deviation_detection = roughness_deviation
+ behavioral_response = torch.sigmoid(
+ )
 
-        # f03: Behavioral Accuracy (baseline = neural signal)
-        f03 = f02
+ # ═══ LAYER F: Future ═══
+ dissonance_detection_pred = torch.sigmoid(
+ 0.6 * f01 + 0.4 * helmholtz_mean.unsqueeze(-1)
+ )
+ behavioral_accuracy_pred = torch.sigmoid(
+ 0.5 * f01 + 0.5 * f02
+ )
+ training_effect_pred = torch.sigmoid(
+ 0.7 * f02 + 0.3 * detection_function
+ )
 
-        # ═══ LAYER M: Mathematical ═══
-        detection_function = torch.sigmoid(
-            0.5 * f01 + 0.3 * f02
-            + 0.2 * ppc_cons.mean(-1, keepdim=True)
-        )
-
-        # ═══ LAYER P: Present ═══
-        roughness_detection = torch.sigmoid(
-            roughness * ppc_cons.mean(-1, keepdim=True)
-        )
-        deviation_detection = roughness_deviation
-        behavioral_response = torch.sigmoid(
-            0.6 * f02 + 0.4 * ppc_pitch.mean(-1, keepdim=True)
-        )
-
-        # ═══ LAYER F: Future ═══
-        dissonance_detection_pred = torch.sigmoid(
-            0.6 * f01 + 0.4 * helmholtz_mean.unsqueeze(-1)
-        )
-        behavioral_accuracy_pred = torch.sigmoid(
-            0.5 * f01 + 0.5 * f02
-        )
-        training_effect_pred = torch.sigmoid(
-            0.7 * f02 + 0.3 * detection_function
-        )
-
-        return torch.cat([
-            f01, f02, f03,                                      # E: 3D
-            detection_function,                                  # M: 1D
-            roughness_detection, deviation_detection,
-            behavioral_response,                                 # P: 3D
-            dissonance_detection_pred, behavioral_accuracy_pred,
-            training_effect_pred,                                # F: 3D
-        ], dim=-1)  # (B, T, 10)
+ return torch.cat([
+ f01, f02, f03, # E: 3D
+ detection_function, # M: 1D
+ roughness_detection, deviation_detection,
+ behavioral_response, # P: 3D
+ dissonance_detection_pred, behavioral_accuracy_pred,
+ training_effect_pred, # F: 3D
+ ], dim=-1) # (B, T, 10)
 ```
 
 ---
@@ -745,7 +712,6 @@ class SDED(BaseModel):
 | **Falsification Tests** | 3/6 supported | Crespo-Bojorque 2018 supports early universal + late expertise |
 | **R³ Features Used** | ~14D of 49D | Focused on consonance/roughness |
 | **H³ Demand** | 9 tuples (0.39%) | Sparse, efficient |
-| **PPC Mechanism** | 30D (2 sub-sections used) | Pitch + Consonance |
 | **Output Dimensions** | **10D** | 4-layer structure |
 
 ---
@@ -774,24 +740,13 @@ class SDED(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D) | R³ (49D) |
-| Temporal | HC⁰ mechanisms (OSC, ATT, NPL, EFC) | PPC mechanism (30D) |
-| Early detection | S⁰.roughness[30] + HC⁰.OSC | R³.roughness[0] + PPC.consonance_encoding |
-| Consonance (inverse) | S⁰.helmholtz_kang[32] + HC⁰.ATT | R³.helmholtz_kang[2] + PPC.pitch_salience |
+| Early detection | S⁰.roughness[30] + HC⁰.OSC | R³.roughness[0] |
+| Consonance (inverse) | S⁰.helmholtz_kang[32] + HC⁰.ATT | R³.helmholtz_kang[2] |
 | Spectral features | S⁰.spectral_contrast[53], kurtosis[107] | R³.tonalness[14], tristimulus[18:21] |
-| Cross-band | S⁰.X_L5L6[208:216] + HC⁰.EFC | R³.x_l5l7[41:46] + PPC |
+| Cross-band | S⁰.X_L5L6[208:216] + HC⁰.EFC | R³.x_l5l7[41:46] + pitch processing |
 | Output dimensions | 11D | 10D (merged neural-behavior dissociation into formula) |
 | Demand format | HC⁰ index ranges | H³ 4-tuples (sparse) |
 | Total demand | 25/2304 = 1.09% | 9/2304 = 0.39% |
-
-### Why PPC replaces HC⁰ mechanisms
-
-The D0 pipeline used 4 separate HC⁰ mechanisms (OSC, ATT, NPL, EFC). In MI, these are unified into the PPC mechanism with 2 relevant sub-sections:
-- **OSC + NPL → PPC.pitch_salience** [0:10]: Phase-locking + detection = roughness deviation
-- **ATT + EFC → PPC.consonance_encoding** [10:20]: Attention + encoding = dissonance signal
-
-### Why 11D → 10D
-
-The legacy v1.0.0 had a separate `f04_neural_behavioral_dissociation` dimension. In MI v2.0.0, the dissociation is modeled implicitly: `f02_mmn_dissonance` represents the universal neural signal, and `f03_behavioral_accuracy` equals `f02` at baseline. Expertise modulation (making `f03 != f02`) is handled at the system level by ESME, not as a separate SDED output dimension.
 
 ---
 

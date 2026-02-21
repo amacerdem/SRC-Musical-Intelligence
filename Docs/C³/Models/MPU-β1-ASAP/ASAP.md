@@ -21,32 +21,32 @@ The **Action Simulation for Auditory Prediction** (ASAP) model proposes that bea
 ACTION SIMULATION FOR AUDITORY PREDICTION
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-AUDITORY INPUT                           MOTOR SYSTEM
-─────────────                            ────────────
+AUDITORY INPUT MOTOR SYSTEM
+───────────── ────────────
 
 Sound Sequence ───────────────────► Auditory Analysis
-     │                                   (what)
-     │
-     ▼
+ │ (what)
+ │
+ ▼
 ┌──────────────────────────────────────────────────────────────────┐
-│              DORSAL AUDITORY PATHWAY (PARIETAL)                   │
-│                                                                  │
-│   Motor → Auditory          Auditory → Motor                     │
-│   (prediction)              (update)                             │
-│   ════════════════          ═══════════════                      │
-│   "WHEN" signal             Error correction                     │
-│   Temporal prediction       Phase adjustment                     │
-│                                                                  │
-│             BIDIRECTIONAL COUPLING                                │
-│             ══════════════════════                                │
-│             Continuous action simulation                          │
+│ DORSAL AUDITORY PATHWAY (PARIETAL) │
+│ │
+│ Motor → Auditory Auditory → Motor │
+│ (prediction) (update) │
+│ ════════════════ ═══════════════ │
+│ "WHEN" signal Error correction │
+│ Temporal prediction Phase adjustment │
+│ │
+│ BIDIRECTIONAL COUPLING │
+│ ══════════════════════ │
+│ Continuous action simulation │
 └──────────────────────────────────────────────────────────────────┘
-     │
-     ▼
+ │
+ ▼
 ┌──────────────────────────────────────────────────────────────────┐
-│                    BEAT PERCEPTION OUTPUT                         │
-│   Motor simulation → temporal prediction → beat percept          │
-│   "When" prediction accuracy determines beat salience            │
+│ BEAT PERCEPTION OUTPUT │
+│ Motor simulation → temporal prediction → beat percept │
+│ "When" prediction accuracy determines beat salience │
 └──────────────────────────────────────────────────────────────────┘
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -69,80 +69,78 @@ ASAP bridges motor planning with auditory prediction in the Motor Planning Unit:
 
 ## 2. Neural Circuit: Complete Anatomy
 
-### 2.1 Information Flow Architecture (EAR → BRAIN → BEP+TMH → ASAP)
+### 2.1 Information Flow Architecture (EAR → BRAIN → ASAP)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    ASAP COMPUTATION ARCHITECTURE                             ║
+║ ASAP COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins x 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
-║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ CHANGE   │ │ X-INT  │ │        ║
-║  │  │ 7D [0:7]  │ │ 5D[7:12]│ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
-║  │  │           │ │         │ │ [12:21] │ │ [21:25]  │ │ [25:49]│ │        ║
-║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                         ASAP reads: ~18D                        │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                                                                  │        ║
-║  │  ┌── BEP Horizons ─────────────┐ ┌── TMH Horizons ──────────┐  │        ║
-║  │  │ H3 (100ms alpha)            │ │ H4 (125ms theta)          │  │        ║
-║  │  │ H16 (1000ms beat)           │ │ H16 (1000ms beat)         │  │        ║
-║  │  │                             │ │                            │  │        ║
-║  │  │ Beat prediction              │ │ Interval memory            │  │        ║
-║  │  │ Action simulation            │ │ Sequence prediction        │  │        ║
-║  │  └─────────────────────────────┘ └────────────────────────────┘  │        ║
-║  │                         ASAP demand: ~9 of 2304 tuples           │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Sensorimotor Circuit ═══════  ║
-║                               │                                              ║
-║                       ┌───────┴───────┐                                      ║
-║                       ▼               ▼                                      ║
-║  ┌─────────────────┐  ┌─────────────────┐                                   ║
-║  │  BEP (30D)      │  │  TMH (30D)      │                                   ║
-║  │                 │  │                 │                                    ║
-║  │ Beat Entr[0:10] │  │ Short-term      │                                   ║
-║  │ Motor Coup      │  │ Memory  [0:10]  │                                   ║
-║  │         [10:20] │  │ Sequence        │                                   ║
-║  │ Groove  [20:30] │  │ Integ  [10:20]  │                                   ║
-║  │                 │  │ Hierarch        │                                   ║
-║  │                 │  │ Struct  [20:30] │                                   ║
-║  └────────┬────────┘  └────────┬────────┘                                   ║
-║           │                    │                                              ║
-║           └────────┬───────────┘                                             ║
-║                    ▼                                                          ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    ASAP MODEL (11D Output)                       │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f10_beat_prediction,                       │        ║
-║  │                       f11_motor_simulation,                      │        ║
-║  │                       f12_dorsal_stream                           │        ║
-║  │  Layer M (Math):      prediction_accuracy,                       │        ║
-║  │                       simulation_strength, coupling_index         │        ║
-║  │  Layer P (Present):   motor_to_auditory,                         │        ║
-║  │                       auditory_to_motor                           │        ║
-║  │  Layer F (Future):    beat_when_pred,                             │        ║
-║  │                       simulation_pred                             │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins x 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ ENERGY │ │ TIMBRE │ │ CHANGE │ │ X-INT │ │ ║
+║ │ │ 7D [0:7] │ │ 5D[7:12]│ │ 9D │ │ 4D │ │ 24D │ │ ║
+║ │ │ │ │ │ │ [12:21] │ │ [21:25] │ │ [25:49]│ │ ║
+║ │ └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │ ║
+║ │ ASAP reads: ~18D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ │ ║
+║ │ │ H3 (100ms alpha) │ │ H4 (125ms theta) │ │ ║
+║ │ │ H16 (1000ms beat) │ │ H16 (1000ms beat) │ │ ║
+║ │ │ │ │ │ │ ║
+║ │ │ Beat prediction │ │ Interval memory │ │ ║
+║ │ │ Action simulation │ │ Sequence prediction │ │ ║
+║ │ └─────────────────────────────┘ └────────────────────────────┘ │ ║
+║ │ ASAP demand: ~9 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Sensorimotor Circuit ═══════ ║
+║ │ ║
+║ ┌───────┴───────┐ ║
+║ ▼ ▼ ║
+║ ┌─────────────────┐ ┌─────────────────┐ ║
+║ │ │ │ │ ║
+║ │ Beat Entr[0:10] │ │ Short-term │ ║
+║ │ Motor Coup │ │ Memory [0:10] │ ║
+║ │ [10:20] │ │ Sequence │ ║
+║ │ Groove [20:30] │ │ Integ [10:20] │ ║
+║ │ │ │ Hierarch │ ║
+║ │ │ │ Struct [20:30] │ ║
+║ └────────┬────────┘ └────────┬────────┘ ║
+║ │ │ ║
+║ └────────┬───────────┘ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ ASAP MODEL (11D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f10_beat_prediction, │ ║
+║ │ f11_motor_simulation, │ ║
+║ │ f12_dorsal_stream │ ║
+║ │ Layer M (Math): prediction_accuracy, │ ║
+║ │ simulation_strength, coupling_index │ ║
+║ │ Layer P (Present): motor_to_auditory, │ ║
+║ │ auditory_to_motor │ ║
+║ │ Layer F (Future): beat_when_pred, │ ║
+║ │ simulation_pred │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -170,18 +168,18 @@ ASAP bridges motor planning with auditory prediction in the Motor Planning Unit:
 ### 3.2 Effect Size Summary
 
 ```
-Primary Evidence (k=8):  2 reviews + 1 theory + 1 fMRI + 1 TMS + 1 EEG + 2 behavioral
+Primary Evidence (k=8): 2 reviews + 1 theory + 1 fMRI + 1 TMS + 1 EEG + 2 behavioral
 ────────────────────────────────────────────────────────────────────────────────────────
-Grahn & Brett 2007:      F(2,38)=20.67 p<.001 (reproduction); Z=5.67 L putamen (fMRI)
-                         Beat-specific putamen: Z=4.47 (L), Z=4.31 (R)
-                         Beat-specific SMA: ROI significant (metric simple > complex)
-Ross et al. 2018:        cTBS double dissociation (parietal=beat; cerebellum=interval)
-Noboa et al. 2025:       SS-EPs > noise at beat frequencies (1.25, 2.50, 5 Hz), FDR-corrected
-Barchet et al. 2024:     Slow tapping predicts music perception (β=0.31)
+Grahn & Brett 2007: F(2,38)=20.67 p<.001 (reproduction); Z=5.67 L putamen (fMRI)
+ Beat-specific putamen: Z=4.47 (L), Z=4.31 (R)
+ Beat-specific SMA: ROI significant (metric simple > complex)
+Ross et al. 2018: cTBS double dissociation (parietal=beat; cerebellum=interval)
+Noboa et al. 2025: SS-EPs > noise at beat frequencies (1.25, 2.50, 5 Hz), FDR-corrected
+Barchet et al. 2024: Slow tapping predicts music perception (β=0.31)
 ────────────────────────────────────────────────────────────────────────────────────────
-Quality Assessment:      β-tier (integrative model with causal TMS support)
-Replication:             Consistent across fMRI, TMS, EEG, and behavioral studies
-Causal Evidence:         YES — TMS double dissociation (Ross 2018, Grube 2010b)
+Quality Assessment: β-tier (integrative model with causal TMS support)
+Replication: Consistent across fMRI, TMS, EEG, and behavioral studies
+Causal Evidence: YES — TMS double dissociation (Ross 2018, Grube 2010b)
 ```
 
 ---
@@ -214,19 +212,14 @@ Causal Evidence:         YES — TMS double dissociation (Ross 2018, Grube 2010b
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[10] spectral_flux ────────────┐
 R³[11] onset_strength ───────────┼──► Beat salience / "when" detection
-BEP.beat_entrainment[0:10] ──────┘   Temporal prediction target
 
 R³[25:33] x_l0l5 ───────────────┐
-BEP.motor_coupling[10:20] ──────┼──► Motor-to-auditory simulation
-TMH.short_term[0:10] ───────────┘   Continuous action simulation
 
 R³[33:41] x_l4l5 ───────────────┐
-TMH.sequence_integration[10:20] ─┼──► Dorsal stream prediction
-TMH.hierarchical[20:30] ────────┘   "When" not "what" prediction
 ```
 
 ---
@@ -235,7 +228,7 @@ TMH.hierarchical[20:30] ────────┘   "When" not "what" predicti
 
 ### 5.1 Demand Specification
 
-ASAP requires H³ features at BEP horizons for beat prediction and TMH horizons for interval memory. The demand reflects the forward-looking temporal integration required for action simulation.
+ASAP requires H³ features for beat prediction and for interval memory. The demand reflects the forward-looking temporal integration required for action simulation.
 
 | R³ Index | Feature | H | Morph | Law | Purpose |
 |----------|---------|---|-------|-----|---------|
@@ -253,7 +246,7 @@ ASAP requires H³ features at BEP horizons for beat prediction and TMH horizons 
 
 #### R³ v2 Projected Expansion
 
-ASAP projected v2 from G:Rhythm, aligned with BEP+TMH horizons.
+ASAP projected v2 from G:Rhythm, aligned with corresponding H³ horizons.
 
 | R³ Idx | Feature | Group | H | Morph | Law | Purpose |
 |:------:|---------|:-----:|:-:|-------|:---:|---------|
@@ -267,17 +260,6 @@ ASAP projected v2 from G:Rhythm, aligned with BEP+TMH horizons.
 **v2 projected**: 6 tuples
 **Total projected**: 15 tuples of 294,912 theoretical = 0.0051%
 
-### 5.2 BEP + TMH Mechanism Binding
-
-| Mechanism | Sub-section | Range | ASAP Role | Weight |
-|-----------|-------------|-------|-----------|--------|
-| **BEP** | Beat Entrainment | BEP[0:10] | Beat prediction target | **1.0** (primary) |
-| **BEP** | Motor Coupling | BEP[10:20] | Motor-to-auditory simulation | **1.0** (primary) |
-| **BEP** | Groove Processing | BEP[20:30] | Rhythmic engagement (secondary) | 0.5 |
-| **TMH** | Short-term Memory | TMH[0:10] | Efference copy / prediction error | 0.7 |
-| **TMH** | Sequence Integration | TMH[10:20] | Dorsal stream sequence prediction | **1.0** (primary) |
-| **TMH** | Hierarchical Structure | TMH[20:30] | "When" hierarchical prediction | 0.7 |
-
 ---
 
 ## 6. Output Space: 11D Multi-Layer Representation
@@ -290,50 +272,46 @@ ASAP OUTPUT TENSOR: 11D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 0  │ f10_beat_prediction      │ [0, 1] │ "When" not "what" prediction.
-    │                          │        │ f10 = σ(0.40 * beat_periodicity_1s
-    │                          │        │       + 0.35 * onset_periodicity_1s
-    │                          │        │       + 0.25 * mean(TMH.seq[10:20]))
+ 0 │ f10_beat_prediction │ [0, 1] │ "When" not "what" prediction.
+ │ │ │ f10 = σ(0.40 * beat_periodicity_1s
+ │ │ │ + 0.35 * onset_periodicity_1s
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 1  │ f11_motor_simulation     │ [0, 1] │ Continuous action simulation.
-    │                          │        │ f11 = σ(0.40 * mean(BEP.motor[10:20])
-    │                          │        │       + 0.35 * coupling_100ms
-    │                          │        │       + 0.25 * mean(TMH.short[0:10]))
+ 1 │ f11_motor_simulation │ [0, 1] │ Continuous action simulation.
+ │ │ │ + 0.35 * coupling_100ms
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 2  │ f12_dorsal_stream        │ [0, 1] │ Parietal auditory-motor pathway.
-    │                          │        │ f12 = σ(0.35 * dorsal_periodicity_1s
-    │                          │        │       + 0.35 * mean(TMH.hier[20:30])
-    │                          │        │       + 0.30 * f10 * f11)
+ 2 │ f12_dorsal_stream │ [0, 1] │ Parietal auditory-motor pathway.
+ │ │ │ f12 = σ(0.35 * dorsal_periodicity_1s
+ │ │ │ + 0.30 * f10 * f11)
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 3  │ prediction_accuracy      │ [0, 1] │ Temporal prediction error (inverse).
+ 3 │ prediction_accuracy │ [0, 1] │ Temporal prediction error (inverse).
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 4  │ simulation_strength      │ [0, 1] │ Motor simulation amplitude.
+ 4 │ simulation_strength │ [0, 1] │ Motor simulation amplitude.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 5  │ coupling_index           │ [0, 1] │ Bidirectional coupling strength.
+ 5 │ coupling_index │ [0, 1] │ Bidirectional coupling strength.
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 6  │ motor_to_auditory        │ [0, 1] │ BEP motor→auditory prediction signal.
+ 6 │ motor_to_auditory │ [0, 1] │ beat-entrainment motor→auditory prediction signal.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 7  │ auditory_to_motor        │ [0, 1] │ TMH auditory→motor update signal.
+ 7 │ auditory_to_motor │ [0, 1] │ temporal-context auditory→motor update signal.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 8  │ dorsal_activity          │ [0, 1] │ Dorsal pathway activation level.
+ 8 │ dorsal_activity │ [0, 1] │ Dorsal pathway activation level.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 9  │ beat_when_pred_0.5s      │ [0, 1] │ Next beat "when" prediction.
+ 9 │ beat_when_pred_0.5s │ [0, 1] │ Next beat "when" prediction.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
-10  │ simulation_pred          │ [0, 1] │ Motor simulation continuation.
+10 │ simulation_pred │ [0, 1] │ Motor simulation continuation.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 11D per frame at 172.27 Hz
@@ -349,17 +327,17 @@ TOTAL: 11D per frame at 172.27 Hz
 ```
 PRIMARY EQUATION:
 
-    Beat_Percept = f(Motor_Simulation, Auditory_Input, Dorsal_Coupling)
+ Beat_Percept = f(Motor_Simulation, Auditory_Input, Dorsal_Coupling)
 
 BIDIRECTIONAL COUPLING:
 
-    Motor → Auditory: prediction signal (forward model)
-    Auditory → Motor: error correction (inverse model)
+ Motor → Auditory: prediction signal (forward model)
+ Auditory → Motor: error correction (inverse model)
 
 PREDICTION:
 
-    Temporal_Prediction = Motor_Period × Phase_Estimate
-    Prediction_Error = |Actual_Onset - Predicted_Onset|
+ Temporal_Prediction = Motor_Period × Phase_Estimate
+ Prediction_Error = |Actual_Onset - Predicted_Onset|
 ```
 
 ### 7.2 Feature Formulas
@@ -369,20 +347,16 @@ PREDICTION:
 
 # f10: Beat Prediction
 f10 = σ(0.40 * beat_periodicity_1s
-       + 0.35 * onset_periodicity_1s
-       + 0.25 * mean(TMH.sequence_integration[10:20]))
+ + 0.35 * onset_periodicity_1s
 # coefficients: 0.40 + 0.35 + 0.25 = 1.0 ✓
 
 # f11: Motor Simulation
-f11 = σ(0.40 * mean(BEP.motor_coupling[10:20])
-       + 0.35 * coupling_100ms
-       + 0.25 * mean(TMH.short_term[0:10]))
+ + 0.35 * coupling_100ms
 # coefficients: 0.40 + 0.35 + 0.25 = 1.0 ✓
 
 # f12: Dorsal Stream
 f12 = σ(0.35 * dorsal_periodicity_1s
-       + 0.35 * mean(TMH.hierarchical[20:30])
-       + 0.30 * f10 * f11)
+ + 0.30 * f10 * f11)
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 ```
 
@@ -412,24 +386,22 @@ f12 = σ(0.35 * dorsal_periodicity_1s
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    ASAP INTERACTIONS                                          │
+│ ASAP INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (MPU):                                                         │
-│  ASAP.beat_prediction ───────────► PEOM (prediction for entrainment)       │
-│  ASAP.motor_simulation ──────────► SPMC (simulation for motor circuit)     │
-│  ASAP.dorsal_stream ─────────────► DDSMI (pathway for social motor)        │
-│                                                                             │
-│  CROSS-UNIT (MPU → STU):                                                   │
-│  ASAP.beat_when_pred ────────────► STU (temporal prediction signal)         │
-│  ASAP.coupling_index ───────────► STU (motor-auditory coupling)            │
-│                                                                             │
-│  UPSTREAM DEPENDENCIES:                                                     │
-│  BEP mechanism (30D) ────────────► ASAP (beat/motor processing)            │
-│  TMH mechanism (30D) ────────────► ASAP (temporal memory/sequence)         │
-│  R³ (~18D) ──────────────────────► ASAP (direct spectral features)         │
-│  H³ (9 tuples) ──────────────────► ASAP (temporal dynamics)                │
-│                                                                             │
+│ │
+│ INTRA-UNIT (MPU): │
+│ ASAP.beat_prediction ───────────► PEOM (prediction for entrainment) │
+│ ASAP.motor_simulation ──────────► SPMC (simulation for motor circuit) │
+│ ASAP.dorsal_stream ─────────────► DDSMI (pathway for social motor) │
+│ │
+│ CROSS-UNIT (MPU → STU): │
+│ ASAP.beat_when_pred ────────────► STU (temporal prediction signal) │
+│ ASAP.coupling_index ───────────► STU (motor-auditory coupling) │
+│ │
+│ UPSTREAM DEPENDENCIES: │
+│ R³ (~18D) ──────────────────────► ASAP (direct spectral features) │
+│ H³ (9 tuples) ──────────────────► ASAP (temporal dynamics) │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -453,113 +425,87 @@ f12 = σ(0.35 * dorsal_periodicity_1s
 
 ```python
 class ASAP(BaseModel):
-    """Action Simulation for Auditory Prediction Model.
+ """Action Simulation for Auditory Prediction Model.
 
-    Output: 11D per frame.
-    Reads: BEP mechanism (30D), TMH mechanism (30D), R³ direct.
-    """
-    NAME = "ASAP"
-    UNIT = "MPU"
-    TIER = "β1"
-    OUTPUT_DIM = 11
-    MECHANISM_NAMES = ("BEP", "TMH")
+ Output: 11D per frame.
+ """
+ NAME = "ASAP"
+ UNIT = "MPU"
+ TIER = "β1"
+ OUTPUT_DIM = 11
+ TAU_DECAY = 2.5 # Beat prediction window (seconds)
+ ALPHA_ATTENTION = 0.85 # High beat attention
 
-    TAU_DECAY = 2.5        # Beat prediction window (seconds)
-    ALPHA_ATTENTION = 0.85  # High beat attention
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """9 tuples for ASAP computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ (10, 3, 0, 0), # spectral_flux, 100ms, value, fwd
+ (10, 16, 14, 0), # spectral_flux, 1000ms, periodicity, fwd
+ (11, 16, 14, 0), # onset_strength, 1000ms, periodicity, fwd
+ (21, 4, 8, 0), # spectral_change, 125ms, velocity, fwd
+ (21, 16, 1, 0), # spectral_change, 1000ms, mean, fwd
+ (25, 3, 0, 0), # x_l0l5[0], 100ms, value, fwd
+ (25, 16, 14, 0), # x_l0l5[0], 1000ms, periodicity, fwd
+ (33, 3, 8, 0), # x_l4l5[0], 100ms, velocity, fwd
+ (33, 16, 14, 0), # x_l4l5[0], 1000ms, periodicity, fwd
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """9 tuples for ASAP computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # ── BEP horizons: beat prediction ──
-            (10, 3, 0, 0),     # spectral_flux, 100ms, value, fwd
-            (10, 16, 14, 0),   # spectral_flux, 1000ms, periodicity, fwd
-            (11, 16, 14, 0),   # onset_strength, 1000ms, periodicity, fwd
-            (21, 4, 8, 0),     # spectral_change, 125ms, velocity, fwd
-            (21, 16, 1, 0),    # spectral_change, 1000ms, mean, fwd
-            # ── TMH horizons: action simulation ──
-            (25, 3, 0, 0),     # x_l0l5[0], 100ms, value, fwd
-            (25, 16, 14, 0),   # x_l0l5[0], 1000ms, periodicity, fwd
-            (33, 3, 8, 0),     # x_l4l5[0], 100ms, velocity, fwd
-            (33, 16, 14, 0),   # x_l4l5[0], 1000ms, periodicity, fwd
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute ASAP 11D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute ASAP 11D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"BEP": (B,T,30), "TMH": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,11) ASAP output
+ """
+ # H³ direct features
+ beat_period_1s = h3_direct[(10, 16, 14, 0)].unsqueeze(-1)
+ onset_period_1s = h3_direct[(11, 16, 14, 0)].unsqueeze(-1)
+ coupling_100ms = h3_direct[(25, 3, 0, 0)].unsqueeze(-1)
+ dorsal_period_1s = h3_direct[(33, 16, 14, 0)].unsqueeze(-1)
 
-        Returns:
-            (B,T,11) ASAP output
-        """
-        bep = mechanism_outputs["BEP"]    # (B, T, 30)
-        tmh = mechanism_outputs["TMH"]    # (B, T, 30)
+ # ═══ LAYER E: Explicit features ═══
+ f10 = torch.sigmoid(
+ 0.40 * beat_period_1s
+ + 0.35 * onset_period_1s
+ )
+ f11 = torch.sigmoid(
+ + 0.35 * coupling_100ms
+ )
+ f12 = torch.sigmoid(
+ 0.35 * dorsal_period_1s
+ + 0.30 * (f10 * f11)
+ )
 
-        # BEP sub-sections
-        bep_beat = bep[..., 0:10]
-        bep_motor = bep[..., 10:20]
-        bep_groove = bep[..., 20:30]
+ # ═══ LAYER M: Mathematical ═══
+ prediction_accuracy = f10
+ simulation_strength = f11
+ coupling_index = torch.sigmoid(
+ 0.5 * f11 + 0.5 * f12
+ )
 
-        # TMH sub-sections
-        tmh_short = tmh[..., 0:10]
-        tmh_seq = tmh[..., 10:20]
-        tmh_hier = tmh[..., 20:30]
+ # ═══ LAYER P: Present ═══
+ dorsal_activity = f12
 
-        # H³ direct features
-        beat_period_1s = h3_direct[(10, 16, 14, 0)].unsqueeze(-1)
-        onset_period_1s = h3_direct[(11, 16, 14, 0)].unsqueeze(-1)
-        coupling_100ms = h3_direct[(25, 3, 0, 0)].unsqueeze(-1)
-        dorsal_period_1s = h3_direct[(33, 16, 14, 0)].unsqueeze(-1)
+ # ═══ LAYER F: Future ═══
+ beat_when_pred = torch.sigmoid(
+ 0.5 * f10 + 0.5 * beat_period_1s
+ )
+ simulation_pred = torch.sigmoid(
+ )
 
-        # ═══ LAYER E: Explicit features ═══
-        f10 = torch.sigmoid(
-            0.40 * beat_period_1s
-            + 0.35 * onset_period_1s
-            + 0.25 * tmh_seq.mean(-1, keepdim=True)
-        )
-        f11 = torch.sigmoid(
-            0.40 * bep_motor.mean(-1, keepdim=True)
-            + 0.35 * coupling_100ms
-            + 0.25 * tmh_short.mean(-1, keepdim=True)
-        )
-        f12 = torch.sigmoid(
-            0.35 * dorsal_period_1s
-            + 0.35 * tmh_hier.mean(-1, keepdim=True)
-            + 0.30 * (f10 * f11)
-        )
-
-        # ═══ LAYER M: Mathematical ═══
-        prediction_accuracy = f10
-        simulation_strength = f11
-        coupling_index = torch.sigmoid(
-            0.5 * f11 + 0.5 * f12
-        )
-
-        # ═══ LAYER P: Present ═══
-        motor_to_auditory = bep_motor.mean(-1, keepdim=True)
-        auditory_to_motor = tmh_short.mean(-1, keepdim=True)
-        dorsal_activity = f12
-
-        # ═══ LAYER F: Future ═══
-        beat_when_pred = torch.sigmoid(
-            0.5 * f10 + 0.5 * beat_period_1s
-        )
-        simulation_pred = torch.sigmoid(
-            0.5 * f11 + 0.5 * bep_motor.mean(-1, keepdim=True)
-        )
-
-        return torch.cat([
-            f10, f11, f12,                                        # E: 3D
-            prediction_accuracy, simulation_strength, coupling_index, # M: 3D
-            motor_to_auditory, auditory_to_motor, dorsal_activity, # P: 3D
-            beat_when_pred, simulation_pred,                        # F: 2D
-        ], dim=-1)  # (B, T, 11)
+ return torch.cat([
+ f10, f11, f12, # E: 3D
+ prediction_accuracy, simulation_strength, coupling_index, # M: 3D
+ motor_to_auditory, auditory_to_motor, dorsal_activity, # P: 3D
+ beat_when_pred, simulation_pred, # F: 2D
+ ], dim=-1) # (B, T, 11)
 ```
 
 ---
@@ -576,8 +522,6 @@ class ASAP(BaseModel):
 | **Falsification Tests** | 3/5 tested (motor disruption ✓, dorsal lesion ✓, imaging ✓) | Strong validity |
 | **R³ Features Used** | ~18D of 49D | Energy + change + interactions |
 | **H³ Demand** | 9 tuples (0.39%) | Sparse, efficient |
-| **BEP Mechanism** | 30D (3 sub-sections) | Beat/motor processing |
-| **TMH Mechanism** | 30D (3 sub-sections) | Temporal memory/sequence |
 | **Output Dimensions** | **11D** | 4-layer structure |
 
 ---
@@ -602,19 +546,12 @@ class ASAP(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D) | R³ (49D) |
-| Temporal | HC⁰ mechanisms (PTM, ITM, EFC) | BEP (30D) + TMH (30D) mechanisms |
-| Beat prediction | S⁰.L9.Γ_mean[104] + HC⁰.ITM | R³.spectral_flux[10] + TMH.sequence_integration |
-| Motor simulation | S⁰.X_L0L4[128:136] + HC⁰.PTM | R³.x_l0l5[25:33] + BEP.motor_coupling |
-| Dorsal stream | S⁰.X_L4L5[192:200] + HC⁰.EFC | R³.x_l4l5[33:41] + TMH.hierarchical |
+| Beat prediction | S⁰.L9.Γ_mean[104] + HC⁰.ITM | R³.spectral_flux[10] |
+| Motor simulation | S⁰.X_L0L4[128:136] + HC⁰.PTM | R³.x_l0l5[25:33] |
+| Dorsal stream | S⁰.X_L4L5[192:200] + HC⁰.EFC | R³.x_l4l5[33:41] |
 | Demand format | HC⁰ index ranges | H³ 4-tuples (sparse) |
 | Total demand | 9/2304 = 0.39% | 9/2304 = 0.39% |
 | Output | 11D | 11D (same) |
-
-### Why BEP + TMH replaces HC⁰ mechanisms
-
-- **PTM → BEP.motor_coupling** [10:20]: Predictive timing for motor simulation maps to BEP's motor coupling.
-- **ITM → TMH.sequence_integration** [10:20]: Interval timing for "when" prediction maps to TMH's sequence integration.
-- **EFC → TMH.short_term** [0:10] + **TMH.hierarchical** [20:30]: Efference copy mechanism maps to TMH's short-term memory (prediction error) and hierarchical structure (dorsal pathway prediction).
 
 ---
 
@@ -626,7 +563,6 @@ class ASAP(BaseModel):
 |---|-------|---------------|----------------|--------|
 | 1 | FULL_NAME | "Action Simulation for Auditory Prediction" | "Anticipatory Sequence Action Planning" | Code wrong |
 | 2 | OUTPUT_DIM | 11 | 10 | Code wrong |
-| 3 | MECHANISM_NAMES | ("BEP", "TMH") | ("BEP",) | Code missing TMH |
 | 4 | h3_demand | 9 tuples | () empty | Code missing |
 | 5 | CROSS_UNIT_READS | none specified | () | OK |
 | 6 | Layer E features | f10_beat_prediction, f11_motor_simulation, f12_dorsal_stream | f10_motor_auditory_coupling, f11_dorsal_stream_activity, f12_action_simulation_strength | Names differ |

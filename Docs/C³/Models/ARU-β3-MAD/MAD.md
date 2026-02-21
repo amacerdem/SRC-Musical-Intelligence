@@ -21,35 +21,35 @@ The **Musical Anhedonia Disconnection** (MAD) model describes how specific music
 THE DOUBLE DISSOCIATION
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-NORMAL BRAIN                        MUSICAL ANHEDONIA
-────────────                        ─────────────────
+NORMAL BRAIN MUSICAL ANHEDONIA
+──────────── ─────────────────
 
-   A1/STG                              A1/STG
-     ║ (intact)                          ║ (intact)
-     ║                                   ║
-     ▼                                   ╳ (DISCONNECTED)
-   NAcc                                NAcc
-     ║                                   ║
-     ▼                                   ▼
-  PLEASURE                           NO PLEASURE
-  (to music)                         (to music)
+ A1/STG A1/STG
+ ║ (intact) ║ (intact)
+ ║ ║
+ ▼ ╳ (DISCONNECTED)
+ NAcc NAcc
+ ║ ║
+ ▼ ▼
+ PLEASURE NO PLEASURE
+ (to music) (to music)
 
-   Money                               Money
-     ║                                   ║
-     ▼                                   ▼
-   NAcc                                NAcc
-     ║                                   ║
-     ▼                                   ▼
-  PLEASURE ✓                          PLEASURE ✓
-  (preserved)                         (preserved)
+ Money Money
+ ║ ║
+ ▼ ▼
+ NAcc NAcc
+ ║ ║
+ ▼ ▼
+ PLEASURE ✓ PLEASURE ✓
+ (preserved) (preserved)
 
 KEY: Musical anhedonia = auditory processing INTACT + reward DISCONNECTED
-     General reward = INTACT (not depression, not deafness)
+ General reward = INTACT (not depression, not deafness)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Loui et al. (2017):  BMRQ anhedonics vs controls, d = −5.89.
+Loui et al. (2017): BMRQ anhedonics vs controls, d = −5.89.
 Martinez-Molina (2016): NAcc-STG tract ↔ reward, r = 0.61.
-                        Sound-specific items: 90.9% anhedonic.
+ Sound-specific items: 90.9% anhedonic.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -69,48 +69,48 @@ MAD provides the **lesion-model validation** of the entire ARU framework:
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    MAD — DISCONNECTION PATHWAY                              ║
+║ MAD — DISCONNECTION PATHWAY ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  MUSICAL INPUT (perceived normally)                                         ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────────────────────────────┐                               ║
-║  │  AUDITORY CORTEX (A1/STG)   ✅ INTACT    │                               ║
-║  │  Normal spectrotemporal processing       │                               ║
-║  │  Normal feature extraction → R³          │                               ║
-║  │  Music is heard and analyzed normally     │                               ║
-║  └──────┬───────────────────────┬───────────┘                               ║
-║         │                       │                                            ║
-║         ▼                       ▼                                            ║
-║  ┌──────────────────┐   ┌──────────────────┐                               ║
-║  │  IFG (Language)  │   │  UNCINATE        │                               ║
-║  │  Arcuate fasci-  │   │  FASCICULUS      │                               ║
-║  │  culus: INTACT    │   │   ╳ LOW FA       │                               ║
-║  │                  │   │  Disconnected    │                               ║
-║  └──────────────────┘   └────────┬─────────┘                               ║
-║                                  │ ╳                                         ║
-║                                  ▼                                           ║
-║  ┌──────────────────────────────────────────┐                               ║
-║  │  NAcc (Nucleus Accumbens)                │                               ║
-║  │                                          │                               ║
-║  │  Music signal: ABSENT (disconnected)     │                               ║
-║  │  Money signal: PRESENT (other pathways)  │                               ║
-║  │  Food signal:  PRESENT (other pathways)  │                               ║
-║  └──────────────────────────────────────────┘                               ║
-║                                                                              ║
-║  DIAGNOSTIC FORMULA:                                                        ║
-║  ─────────────────                                                          ║
-║  f10 = 1 − σ(k × (FA_STG_NAcc − threshold))                               ║
-║  threshold = 0.3 (anhedonia cutoff)                                         ║
-║  k = 10 (sigmoid steepness)                                                 ║
-║                                                                              ║
-║  CRITICAL EVIDENCE:                                                         ║
-║  ─────────────────                                                          ║
-║  Loui 2017: BMRQ d = −5.89 (extremely large deficit)                       ║
-║  Martinez-Molina 2016: FA ↔ reward r = 0.61                                ║
-║  Martinez-Molina 2016: 90.9% sound-specific anhedonia                      ║
-║  Mas-Herrero 2014: Dissociation music vs monetary reward                   ║
+║ ║
+║ MUSICAL INPUT (perceived normally) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────┐ ║
+║ │ AUDITORY CORTEX (A1/STG) ✅ INTACT │ ║
+║ │ Normal spectrotemporal processing │ ║
+║ │ Normal feature extraction → R³ │ ║
+║ │ Music is heard and analyzed normally │ ║
+║ └──────┬───────────────────────┬───────────┘ ║
+║ │ │ ║
+║ ▼ ▼ ║
+║ ┌──────────────────┐ ┌──────────────────┐ ║
+║ │ IFG (Language) │ │ UNCINATE │ ║
+║ │ Arcuate fasci- │ │ FASCICULUS │ ║
+║ │ culus: INTACT │ │ ╳ LOW FA │ ║
+║ │ │ │ Disconnected │ ║
+║ └──────────────────┘ └────────┬─────────┘ ║
+║ │ ╳ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────┐ ║
+║ │ NAcc (Nucleus Accumbens) │ ║
+║ │ │ ║
+║ │ Music signal: ABSENT (disconnected) │ ║
+║ │ Money signal: PRESENT (other pathways) │ ║
+║ │ Food signal: PRESENT (other pathways) │ ║
+║ └──────────────────────────────────────────┘ ║
+║ ║
+║ DIAGNOSTIC FORMULA: ║
+║ ───────────────── ║
+║ f10 = 1 − σ(k × (FA_STG_NAcc − threshold)) ║
+║ threshold = 0.3 (anhedonia cutoff) ║
+║ k = 10 (sigmoid steepness) ║
+║ ║
+║ CRITICAL EVIDENCE: ║
+║ ───────────────── ║
+║ Loui 2017: BMRQ d = −5.89 (extremely large deficit) ║
+║ Martinez-Molina 2016: FA ↔ reward r = 0.61 ║
+║ Martinez-Molina 2016: 90.9% sound-specific anhedonia ║
+║ Mas-Herrero 2014: Dissociation music vs monetary reward ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -137,25 +137,25 @@ SELECTIVE DISCONNECTION MATHEMATICS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Dissociation Index:
-  DI = R_general − R_music
-  Positive DI = musical anhedonia (general > music hedonic capacity)
+ DI = R_general − R_music
+ Positive DI = musical anhedonia (general > music hedonic capacity)
 
 Connectivity-Reward Relationship:
-  R_music = β × FA_STG_NAcc + ε
-  where β ≈ 0.61 (Martinez-Molina 2016), FA = fractional anisotropy
+ R_music = β × FA_STG_NAcc + ε
+ where β ≈ 0.61 (Martinez-Molina 2016), FA = fractional anisotropy
 
 Diagnostic Criteria:
-  Musical Anhedonia confirmed when:
-    DI > 0.5 AND R_general > 0.7
+ Musical Anhedonia confirmed when:
+ DI > 0.5 AND R_general > 0.7
 
-  Anhedonia marker:
-    f10 = 1 − σ(10 × (FA_STG_NAcc − 0.3))
-    FA < 0.3 → f10 ≈ 1.0 (anhedonic)
-    FA > 0.3 → f10 ≈ 0.0 (normal)
+ Anhedonia marker:
+ f10 = 1 − σ(10 × (FA_STG_NAcc − 0.3))
+ FA < 0.3 → f10 ≈ 1.0 (anhedonic)
+ FA > 0.3 → f10 ≈ 0.0 (normal)
 
 NAcc Activation Model:
-  NAcc_music(t)   = f(Audio(t)) × Connectivity_STG_NAcc   ← impaired
-  NAcc_general(t) = g(Stimulus(t)) × Connectivity_VTA_NAcc ← preserved
+ NAcc_music(t) = f(Audio(t)) × Connectivity_STG_NAcc ← impaired
+ NAcc_general(t) = g(Stimulus(t)) × Connectivity_VTA_NAcc ← preserved
 ```
 
 ---
@@ -170,56 +170,56 @@ MAD OUTPUT TENSOR: 11D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 0  │ f10_anhedonia     │ [0, 1] │ Auditory-reward disconnection probability.
-    │                   │        │ 1 − σ(10 × (FA − 0.3)). Loui 2017: d=−5.89.
+ 0 │ f10_anhedonia │ [0, 1] │ Auditory-reward disconnection probability.
+ │ │ │ 1 − σ(10 × (FA − 0.3)). Loui 2017: d=−5.89.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 1  │ dissociation_idx  │ [0, 1] │ Music vs general hedonic dissociation.
-    │                   │        │ DI = R_general − R_music. DI > 0.5 = anhedonic.
+ 1 │ dissociation_idx │ [0, 1] │ Music vs general hedonic dissociation.
+ │ │ │ DI = R_general − R_music. DI > 0.5 = anhedonic.
 
 LAYER D — DISCONNECTION MARKERS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Basis
+idx │ Name │ Range │ Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 2  │ stg_nacc_connect  │ [0, 1] │ White matter tract integrity (FA).
-    │                   │        │ Martinez-Molina 2016: FA ↔ reward r = 0.61.
+ 2 │ stg_nacc_connect │ [0, 1] │ White matter tract integrity (FA).
+ │ │ │ Martinez-Molina 2016: FA ↔ reward r = 0.61.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 3  │ nacc_music_resp   │ [0, 1] │ Music-specific NAcc activation.
-    │                   │        │ IMPAIRED in anhedonia (d = 3.6-7.0 deficit).
+ 3 │ nacc_music_resp │ [0, 1] │ Music-specific NAcc activation.
+ │ │ │ IMPAIRED in anhedonia (d = 3.6-7.0 deficit).
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 4  │ nacc_general_resp │ [0, 1] │ Non-music NAcc activation.
-    │                   │        │ PRESERVED in anhedonia (double dissociation).
+ 4 │ nacc_general_resp │ [0, 1] │ Non-music NAcc activation.
+ │ │ │ PRESERVED in anhedonia (double dissociation).
 
 LAYER A — ANHEDONIA ASSESSMENT
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Basis
+idx │ Name │ Range │ Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 5  │ bmrq_estimate     │ [0, 1] │ Barcelona Music Reward Questionnaire proxy.
-    │                   │        │ Estimated from acoustic response patterns.
+ 5 │ bmrq_estimate │ [0, 1] │ Barcelona Music Reward Questionnaire proxy.
+ │ │ │ Estimated from acoustic response patterns.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 6  │ sound_specificity │ [0, 1] │ Sound-specific anhedonia index.
-    │                   │        │ Martinez-Molina 2016: 90.9% items sound-specific.
+ 6 │ sound_specificity │ [0, 1] │ Sound-specific anhedonia index.
+ │ │ │ Martinez-Molina 2016: 90.9% items sound-specific.
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Basis
+idx │ Name │ Range │ Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 7  │ impaired_reward   │ [0, 1] │ C0P disrupted reward signal.
-    │                   │        │ Music reward × connectivity (attenuated).
+ 7 │ impaired_reward │ [0, 1] │ cognitive-projection disrupted reward signal.
+ │ │ │ Music reward × connectivity (attenuated).
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 8  │ preserved_auditory│ [0, 1] │ Intact auditory processing signal.
-    │                   │        │ R³ spectral features fully functional.
+ 8 │ preserved_auditory│ [0, 1] │ Intact auditory processing signal.
+ │ │ │ R³ spectral features fully functional.
 
 LAYER F — FUTURE / DIAGNOSTIC
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Basis
+idx │ Name │ Range │ Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 9  │ recovery_potential│ [0, 1] │ Reward pathway recovery potential.
-    │                   │        │ Based on residual connectivity and plasticity.
+ 9 │ recovery_potential│ [0, 1] │ Reward pathway recovery potential.
+ │ │ │ Based on residual connectivity and plasticity.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
-10  │ anhedonia_prob    │ [0, 1] │ Overall disconnection likelihood.
-    │                   │        │ Weighted combination of all markers.
+10 │ anhedonia_prob │ [0, 1] │ Overall disconnection likelihood.
+ │ │ │ Weighted combination of all markers.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 11D per frame at 172.27 Hz
@@ -268,8 +268,8 @@ TOTAL: 11D per frame at 172.27 Hz
 | R³ idx | Name | MAD Role |
 |--------|------|----------|
 | 33:41 | x_l4l5 (8D) | **Dynamics × Consonance — the disrupted link** |
-|        |              | This interaction represents auditory→reward coupling |
-|        |              | In anhedonia: x_l4l5 features present but reward ABSENT |
+| | | This interaction represents auditory→reward coupling |
+| | | In anhedonia: x_l4l5 features present but reward ABSENT |
 
 ### 5.2 R³ v2 Feature Dependencies ([49:128]) — NEW
 
@@ -286,13 +286,13 @@ TOTAL: 11D per frame at 172.27 Hz
 ```
 R³ DEMAND FOR MAD: 17D of 49D
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Group A: Consonance        3D   → preserved auditory valence
-Group B: Energy            2D   → preserved auditory arousal
-Group C: Timbre            2D   → preserved spectral analysis
-Group D: Change            2D   → preserved change detection
-Group E: Interactions      8D   → DISCONNECTED pathway (core deficit)
+Group A: Consonance 3D → preserved auditory valence
+Group B: Energy 2D → preserved auditory arousal
+Group C: Timbre 2D → preserved spectral analysis
+Group D: Change 2D → preserved change detection
+Group E: Interactions 8D → DISCONNECTED pathway (core deficit)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-TOTAL:                    17D
+TOTAL: 17D
 ```
 
 ---
@@ -301,22 +301,20 @@ TOTAL:                    17D
 
 ### 6.1 Mechanism-Level Demand
 
-MAD uses two mesolimbic mechanisms: **AED + C0P** (no CPD).
+MAD uses H³ direct features (no peak-detection mechanism).
 
 ```
 H³ DEMAND FOR MAD
 ━━━━━━━━━━━━━━━━━
 
-Mechanism │ Horizons              │ H-Law       │ Morphs Used              │ Tuples
+Mechanism │ Horizons │ H-Law │ Morphs Used │ Tuples
 ──────────┼───────────────────────┼─────────────┼──────────────────────────┼───────
-AED       │ H6 (200ms)            │ bidirection │ M0(value), M8(velocity), │ 6
-          │ H16 (1000ms)          │             │ M20(entropy)             │
+ │ H16 (1000ms) │ │ M20(entropy) │
 ──────────┼───────────────────────┼─────────────┼──────────────────────────┼───────
-C0P       │ H11 (500ms)           │ forward     │ M1(mean), M2(std),       │ 3
-          │                       │             │ M8(velocity)             │
+ │ │ │ M8(velocity) │
 ──────────┼───────────────────────┼─────────────┼──────────────────────────┼───────
-TOTAL     │ 3 horizons            │             │                          │ 9
-          │                       │             │               9/2304 = 0.39%
+TOTAL │ 3 horizons │ │ │ 9
+ │ │ │ 9/2304 = 0.39%
 ```
 
 ### 6.2 Temporal Layer Mapping
@@ -331,27 +329,23 @@ TOTAL     │ 3 horizons            │             │                         
 
 ```
 PRESERVED AUDITORY RESPONSE:
-  AED.arousal_dynamics via H6(200ms) + M0(value)
-  → Normal auditory arousal response to music
-  → This signal is INTACT in musical anhedonia
-  → Used to confirm preserved hearing
+ → Normal auditory arousal response to music
+ → This signal is INTACT in musical anhedonia
+ → Used to confirm preserved hearing
 
 IMPAIRED REWARD PROJECTION:
-  C0P.unit_projection via H11(500ms) + M1(mean)
-  → Reward signal projected from auditory cortex to NAcc
-  → In anhedonia: C0P output ATTENUATED by connectivity deficit
-  → Low C0P.mean + normal AED.value = anhedonia signature
+ → Reward signal projected from auditory cortex to NAcc
+ → In anhedonia: cognitive-projection output ATTENUATED by connectivity deficit
+ → Low mean + normal value = anhedonia signature
 
 CONNECTIVITY ESTIMATE:
-  C0P.feature_aggregation via H11(500ms) + M2(std)
-  → Variability of reward signal
-  → Low std in anhedonia (consistently absent, not fluctuating)
-  → High std in normal (reward fluctuates with music)
+ → Variability of reward signal
+ → Low std in anhedonia (consistently absent, not fluctuating)
+ → High std in normal (reward fluctuates with music)
 
 AFFECT ENTROPY:
-  AED.expectancy_affect via H16(1000ms) + M20(entropy)
-  → In anhedonia: affect entropy LOW (no reward-driven variability)
-  → Normal: affect entropy MODERATE (reward modulates affect)
+ → In anhedonia: affect entropy LOW (no reward-driven variability)
+ → Normal: affect entropy MODERATE (reward modulates affect)
 ```
 
 ### 6.4 R³ v2 Projected Expansion
@@ -364,99 +358,64 @@ No significant direct v2 expansion projected for MAD. As a pathway-dependent ARU
 
 ## 7. Mechanism Computation
 
-### 7.1 AED Binding (Primary: Preserved Auditory Processing)
-
-```python
-# AED reads: arousal_dynamics[0:10], expectancy_affect[10:20]
-# Horizons: H6(200ms) and H16(1000ms), bidirectional
-
-# Auditory response (preserved in anhedonia)
-auditory_arousal = AED.arousal_dynamics[0:4].mean()   # H6: instant response
-auditory_affect = AED.expectancy_affect[10:14].mean()  # H16: 1s affect
-
-# Affect entropy (reduced in anhedonia)
-affect_entropy = AED.arousal_dynamics[6]  # M20(entropy) at H16
-# Normal: entropy MODERATE (reward adds variability)
-# Anhedonia: entropy LOW (flat affect to music)
-```
-
-### 7.2 C0P Binding (Secondary: Disrupted Reward Projection)
-
-```python
-# C0P reads: feature_aggregation[0:10], cognitive_state[10:20], unit_projection[20:30]
-# Horizon: H11(500ms), forward only
-
-# Reward projection (IMPAIRED in anhedonia)
-reward_mean = C0P.feature_aggregation[1]  # M1(mean): average reward signal
-reward_std = C0P.feature_aggregation[2]   # M2(std): reward variability
-reward_velocity = C0P.cognitive_state[18]  # M8(velocity): reward change rate
-
-# Connectivity estimate from reward signal properties
-# Low mean + low std + low velocity = disconnected
-connectivity_estimate = sigmoid(
-    0.4 * reward_mean + 0.3 * reward_std + 0.3 * reward_velocity
-)
-# Coefficients: |0.4| + |0.3| + |0.3| = 1.0
-```
-
 ### 7.3 MAD Output Computation
 
 ```python
-def compute_mad(R3, H3, AED, C0P):
-    """
-    MAD: 11D output per frame.
+def compute_mad(R3, H3):
+ """
+ MAD: 11D output per frame.
 
-    All deterministic. Zero learned parameters.
-    Coefficients from Loui 2017, Martinez-Molina 2016.
-    """
-    # --- Preserved Auditory ---
-    auditory = compute_auditory_response(AED, R3)  # [0,1] normal
-    affect_entropy = compute_affect_entropy(AED)    # [0,1]
+ All deterministic. Zero learned parameters.
+ Coefficients from Loui 2017, Martinez-Molina 2016.
+ """
+ # --- Preserved Auditory ---
+ auditory = compute_auditory_response(h3, R3) # [0,1] normal
+ affect_entropy = compute_affect_entropy() # [0,1]
 
-    # --- Impaired Reward ---
-    reward_signal = compute_reward_projection(C0P)  # [0,1] low in anhedonia
-    connectivity = compute_connectivity(C0P)        # [0,1] FA estimate
+ # --- Impaired Reward ---
+ reward_signal = compute_reward_projection() # [0,1] low in anhedonia
+ connectivity = compute_connectivity() # [0,1] FA estimate
 
-    # --- Layer E: Explicit Features ---
-    f10 = 1.0 - sigmoid(10.0 * (connectivity - 0.3))  # Anhedonia marker
-    music_reward = sigmoid(
-        0.5 * R3.sensory_pleasantness[4] * reward_signal +
-        0.5 * auditory * connectivity
-    )  # |0.5| + |0.5| = 1.0
-    general_reward = sigmoid(reward_signal * 2.0)  # Preserved
-    dissociation = clamp(general_reward - music_reward, 0, 1)
+ # --- Layer E: Explicit Features ---
+ f10 = 1.0 - sigmoid(10.0 * (connectivity - 0.3)) # Anhedonia marker
+ music_reward = sigmoid(
+ 0.5 * R3.sensory_pleasantness[4] * reward_signal +
+ 0.5 * auditory * connectivity
+ ) # |0.5| + |0.5| = 1.0
+ general_reward = sigmoid(reward_signal * 2.0) # Preserved
+ dissociation = clamp(general_reward - music_reward, 0, 1)
 
-    # --- Layer D: Disconnection ---
-    stg_nacc = connectivity
-    nacc_music = music_reward
-    nacc_general = general_reward
+ # --- Layer D: Disconnection ---
+ stg_nacc = connectivity
+ nacc_music = music_reward
+ nacc_general = general_reward
 
-    # --- Layer A: Anhedonia Assessment ---
-    bmrq = 1.0 - f10  # Low BMRQ ↔ high anhedonia
-    # Sound specificity: music features disconnected, other modalities intact
-    sound_spec = sigmoid(
-        0.5 * dissociation + 0.5 * (1.0 - affect_entropy)
-    )  # |0.5| + |0.5| = 1.0
+ # --- Layer A: Anhedonia Assessment ---
+ bmrq = 1.0 - f10 # Low BMRQ ↔ high anhedonia
+ # Sound specificity: music features disconnected, other modalities intact
+ sound_spec = sigmoid(
+ 0.5 * dissociation + 0.5 * (1.0 - affect_entropy)
+ ) # |0.5| + |0.5| = 1.0
 
-    # --- Layer P: Present Processing ---
-    impaired_reward = reward_signal * connectivity  # Attenuated
-    preserved_auditory = sigmoid(
-        0.5 * auditory + 0.5 * R3.loudness[10]
-    )  # |0.5| + |0.5| = 1.0
+ # --- Layer P: Present Processing ---
+ impaired_reward = reward_signal * connectivity # Attenuated
+ preserved_auditory = sigmoid(
+ 0.5 * auditory + 0.5 * R3.loudness[10]
+ ) # |0.5| + |0.5| = 1.0
 
-    # --- Layer F: Future / Diagnostic ---
-    recovery = connectivity * affect_entropy  # Some connectivity + variability → potential
-    anhedonia_prob = sigmoid(
-        0.4 * f10 + 0.3 * dissociation + 0.3 * (1.0 - connectivity)
-    )  # |0.4| + |0.3| + |0.3| = 1.0
+ # --- Layer F: Future / Diagnostic ---
+ recovery = connectivity * affect_entropy # Some connectivity + variability → potential
+ anhedonia_prob = sigmoid(
+ 0.4 * f10 + 0.3 * dissociation + 0.3 * (1.0 - connectivity)
+ ) # |0.4| + |0.3| + |0.3| = 1.0
 
-    return stack([
-        f10, dissociation,                          # E: 2D
-        stg_nacc, nacc_music, nacc_general,         # D: 3D
-        bmrq, sound_spec,                           # A: 2D
-        impaired_reward, preserved_auditory,         # P: 2D
-        recovery, anhedonia_prob                     # F: 2D
-    ])  # Total: 11D
+ return stack([
+ f10, dissociation, # E: 2D
+ stg_nacc, nacc_music, nacc_general, # D: 3D
+ bmrq, sound_spec, # A: 2D
+ impaired_reward, preserved_auditory, # P: 2D
+ recovery, anhedonia_prob # F: 2D
+ ]) # Total: 11D
 ```
 
 ---
@@ -470,20 +429,20 @@ MAD INTERACTIONS WITHIN ARU
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 MAD ──► SRP (Striatal Reward Pathway)
-    │     └── MAD explains selective SRP failure:
-    │         STG-NAcc disconnect → absent SRP.wanting + SRP.liking
-    │
-    ├──► AAC (Autonomic-Affective Coupling)
-    │     └── MAD predicts ABSENT ANS response to music
-    │         (no chills, no SCR, no HR deceleration)
-    │
-    ├──► NEMAC (Nostalgia Circuit)
-    │     └── MAD explains absent nostalgic response:
-    │         memory intact but no reward coupling
-    │
-    └──► PUPF (Prediction-Uncertainty-Pleasure)
-          └── MAD: PUPF.prediction_error intact but pleasure
-              response ABSENT (H×S computed, P(H,S) not felt)
+ │ └── MAD explains selective SRP failure:
+ │ STG-NAcc disconnect → absent SRP.wanting + SRP.liking
+ │
+ ├──► AAC (Autonomic-Affective Coupling)
+ │ └── MAD predicts ABSENT ANS response to music
+ │ (no chills, no SCR, no HR deceleration)
+ │
+ ├──► NEMAC (Nostalgia Circuit)
+ │ └── MAD explains absent nostalgic response:
+ │ memory intact but no reward coupling
+ │
+ └──► PUPF (Prediction-Uncertainty-Pleasure)
+ └── MAD: PUPF.prediction_error intact but pleasure
+ response ABSENT (H×S computed, P(H,S) not felt)
 
 Note: MAD represents ABSENCE of normal ARU function.
 ```
@@ -531,8 +490,8 @@ Note: MAD represents ABSENCE of normal ARU function.
 |--------|-------------|-------------|--------|
 | Output dimensions | 9D | 11D | **+2D** (dissociation_idx, sound_specificity) |
 | Input space | S⁰ 31D (L5, L6, L9, X) | R³ 17D | Remapped to R³ groups |
-| Temporal | HC⁰ AED+ASA+C0P | H³ → AED+C0P | ASA removed (not needed) |
-| H⁰ tuples | 12/2304 = 0.52% | 9/2304 = 0.39% | Reduced (no ASA) |
+| Temporal | HC⁰ | H³ | auditory-scene removed (not needed) |
+| H⁰ tuples | 12/2304 = 0.52% | 9/2304 = 0.39% | Reduced (no peak-detection mechanism) |
 
 ### 11.2 S⁰ → R³ Index Mapping
 
@@ -572,7 +531,7 @@ Note: MAD represents ABSENCE of normal ARU function.
 | Version | Date | Changes |
 |---------|------|---------|
 | 1.0.0 | 2026-02-04 | Legacy D0 model specification (9D) |
-| 2.0.0 | 2026-02-12 | MI R³/H³ architecture: +2D (dissociation_idx, sound_specificity), AED+C0P binding, R³ mapping |
+| 2.0.0 | 2026-02-12 | MI R³/H³ architecture: +2D (dissociation_idx, sound_specificity), H³ direct binding, R³ mapping |
 | 2.1.0 | 2026-02-13 | Beta upgrade: +2 papers (Jin 2025 amusia-reward, Putkinen 2025 μ-opioid music pleasure) |
 
 ---

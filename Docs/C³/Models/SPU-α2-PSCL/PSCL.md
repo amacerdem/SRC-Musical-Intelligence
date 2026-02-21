@@ -21,19 +21,19 @@ The **Pitch Salience Cortical Localization** (PSCL) model describes how pitch sa
 THE THREE COMPONENTS OF PITCH SALIENCE CORTICAL PROCESSING
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-SALIENCE REPRESENTATION               HG LOCALIZATION
-Brain region: Anterolateral HG        Brain region: Non-primary AC
-Mechanism: Graded fMRI activation     Mechanism: Pitch-selective neurons
-Input: Spectral pitch cues            Input: Brainstem NPS signal
+SALIENCE REPRESENTATION HG LOCALIZATION
+Brain region: Anterolateral HG Brain region: Non-primary AC
+Mechanism: Graded fMRI activation Mechanism: Pitch-selective neurons
+Input: Spectral pitch cues Input: Brainstem NPS signal
 Function: "How strong is this pitch?" Function: "WHERE is pitch processed?"
-Evidence: n = 6 (Penagos 2004)        Evidence: fMRI (Penagos 2004)
+Evidence: n = 6 (Penagos 2004) Evidence: fMRI (Penagos 2004)
 
-              SALIENCE HIERARCHY (Functional)
-              Ordering: Strong > Weak > Noise
-              Mechanism: Parametric with periodicity
-              Control: Matched temporal regularity
-              Function: "Pitch salience ≠ temporal regularity"
-              Evidence: Controlled IRN paradigm
+ SALIENCE HIERARCHY (Functional)
+ Ordering: Strong > Weak > Noise
+ Mechanism: Parametric with periodicity
+ Control: Matched temporal regularity
+ Function: "Pitch salience ≠ temporal regularity"
+ Evidence: Controlled IRN paradigm
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 KEY INSIGHT: Pitch salience is NOT represented in primary auditory
@@ -72,142 +72,141 @@ PSCL occupies the middle of the SPU hierarchy:
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                 PSCL — COMPLETE CIRCUIT                                      ║
+║ PSCL — COMPLETE CIRCUIT ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  STIMULUS (Varying Pitch Salience)                                           ║
-║                                                                              ║
-║  Strong IRN    Weak IRN    Noise                                             ║
-║    │             │           │                                                ║
-║    ▼             ▼           ▼                                                ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │              SUBCORTICAL (Brainstem) — via BCH                      │    ║
-║  │                                                                      │    ║
-║  │  Cochlear Nucleus → Inferior Colliculus → FFR                       │    ║
-║  │  NO pitch salience differences at this level (only NPS)             │    ║
-║  └──────────────────────────┬──────────────────────────────────────────┘    ║
-║                              │                                               ║
-║                              ▼                                               ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │              PRIMARY AUDITORY CORTEX (A1)                            │    ║
-║  │                                                                      │    ║
-║  │  Tonotopic processing only — NO salience differences                │    ║
-║  └──────────────────────────┬──────────────────────────────────────────┘    ║
-║                              │                                               ║
-║                              ▼                                               ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │          ANTEROLATERAL HESCHL'S GYRUS                                │    ║
-║  │              (Non-primary auditory cortex)                            │    ║
-║  │                                                                      │    ║
-║  │    ┌─────────────────────────────────────────────────────────┐      │    ║
-║  │    │                                                         │      │    ║
-║  │    │    Strong pitch    >    Weak pitch    >    Noise       │      │    ║
-║  │    │    salience             salience                        │      │    ║
-║  │    │                                                         │      │    ║
-║  │    └─────────────────────────────────────────────────────────┘      │    ║
-║  │                                                                      │    ║
-║  │    PITCH SALIENCE CORRELATE (fMRI activation)                       │    ║
-║  │    Matched for temporal regularity → pure salience signal           │    ║
-║  │    MNI: ±52, -16, 8 (approximate)                                   │    ║
-║  └─────────────────────────────────────────────────────────────────────┘    ║
-║                                                                              ║
+║ ║
+║ STIMULUS (Varying Pitch Salience) ║
+║ ║
+║ Strong IRN Weak IRN Noise ║
+║ │ │ │ ║
+║ ▼ ▼ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ SUBCORTICAL (Brainstem) — via BCH │ ║
+║ │ │ ║
+║ │ Cochlear Nucleus → Inferior Colliculus → FFR │ ║
+║ │ NO pitch salience differences at this level (only NPS) │ ║
+║ └──────────────────────────┬──────────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ PRIMARY AUDITORY CORTEX (A1) │ ║
+║ │ │ ║
+║ │ Tonotopic processing only — NO salience differences │ ║
+║ └──────────────────────────┬──────────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ ANTEROLATERAL HESCHL'S GYRUS │ ║
+║ │ (Non-primary auditory cortex) │ ║
+║ │ │ ║
+║ │ ┌─────────────────────────────────────────────────────────┐ │ ║
+║ │ │ │ │ ║
+║ │ │ Strong pitch > Weak pitch > Noise │ │ ║
+║ │ │ salience salience │ │ ║
+║ │ │ │ │ ║
+║ │ └─────────────────────────────────────────────────────────┘ │ ║
+║ │ │ ║
+║ │ PITCH SALIENCE CORRELATE (fMRI activation) │ ║
+║ │ Matched for temporal regularity → pure salience signal │ ║
+║ │ MNI: ±52, -16, 8 (approximate) │ ║
+║ └─────────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 CRITICAL EVIDENCE (6 methods converge on anterolateral HG):
 ─────────────────────────────────────────────────────────────
-Penagos 2004:       fMRI, N=6. Pitch salience in anterolateral HG; NOT in
-                    subcortical or primary AC. Matched temporal regularity.
-                    Talairach: R(48,-11,3), L(-55,-5,3).
-Briley 2013:        EEG, N=15/12/8. Pitch chroma mapping in alHG. IRN sources
-                    7mm more lateral/anterior than pure-tone sources.
-                    F(1,28)=29.865, p<0.001 (chroma effect).
-Tabas 2019:         MEG, N=37. POR latency 36ms earlier for consonant than
-                    dissonant in alHG. p<.0001. Computational model matches.
-Allen 2022:         7T fMRI, N=10. Pitch-tuned voxels concentrated anterolateral
-                    to HG. Pitch selectivity ≠ pitch sensitivity.
-Schonwiesner 2008:  Intracranial, N=1. Double dissociation: lateral HG = pitch,
-                    medial HG = sound onset. Direct depth electrode evidence.
-Fishman 2001:       Intracranial, N=3(monkey)+2(human). Phase-locked activity
-                    in HG for dissonance. HG vs PT dissociation. F>8.5, p<10⁻⁵.
-Foo 2016:           ECoG, N=8. Dissonant-sensitive sites anterior in right STG.
-                    Chi²(1)=8.6, p=0.003 (spatial organization).
-Bravo 2017:         fMRI, N=12. Right HG (48,-10,7) upregulated for low-salience
-                    (ambiguous) stimuli. t=4.22, p=.033 FWE.
+Penagos 2004: fMRI, N=6. Pitch salience in anterolateral HG; NOT in
+ subcortical or primary AC. Matched temporal regularity.
+ Talairach: R(48,-11,3), L(-55,-5,3).
+Briley 2013: EEG, N=15/12/8. Pitch chroma mapping in alHG. IRN sources
+ 7mm more lateral/anterior than pure-tone sources.
+ F(1,28)=29.865, p<0.001 (chroma effect).
+Tabas 2019: MEG, N=37. POR latency 36ms earlier for consonant than
+ dissonant in alHG. p<.0001. Computational model matches.
+Allen 2022: 7T fMRI, N=10. Pitch-tuned voxels concentrated anterolateral
+ to HG. Pitch selectivity ≠ pitch sensitivity.
+Schonwiesner 2008: Intracranial, N=1. Double dissociation: lateral HG = pitch,
+ medial HG = sound onset. Direct depth electrode evidence.
+Fishman 2001: Intracranial, N=3(monkey)+2(human). Phase-locked activity
+ in HG for dissonance. HG vs PT dissociation. F>8.5, p<10⁻⁵.
+Foo 2016: ECoG, N=8. Dissonant-sensitive sites anterior in right STG.
+ Chi²(1)=8.6, p=0.003 (spatial organization).
+Bravo 2017: fMRI, N=12. Right HG (48,-10,7) upregulated for low-salience
+ (ambiguous) stimuli. t=4.22, p=.033 FWE.
 ```
 
-### 2.2 Information Flow Architecture (EAR → BRAIN → PPC/TPC → PSCL)
+### 2.2 Information Flow Architecture (EAR → BRAIN → PSCL)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    PSCL COMPUTATION ARCHITECTURE                             ║
+║ PSCL COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins × 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
-║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ CHANGE   │ │ X-INT  │ │        ║
-║  │  │ 7D [0:7]  │ │ 5D[7:12]│ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
-║  │  │           │ │         │ │ [12:21] │ │ [21:25]  │ │ [25:49]│ │        ║
-║  │  │pleasant.  │ │amplitude│ │tonalness│ │entropy   │ │x_l0l5  │ │        ║
-║  │  │inharm.    │ │         │ │clarity  │ │flatness  │ │x_l5l7  │ │        ║
-║  │  │           │ │         │ │smooth.  │ │concent.  │ │        │ │        ║
-║  │  │           │ │         │ │tristim. │ │          │ │        │ │        ║
-║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                         PSCL reads: 27D                           │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                                                                  │        ║
-║  │  ┌── Alpha-Beta ─┐ ┌── Syllable ──┐                             │        ║
-║  │  │ 100ms (H3)    │ │ 200ms (H6)   │                             │        ║
-║  │  │               │ │              │                              │        ║
-║  │  │ Auditory proc │ │ Cortical     │                              │        ║
-║  │  │ window        │ │ evaluation   │                              │        ║
-║  │  └──────┬────────┘ └──────┬───────┘                              │        ║
-║  │         └────────────────┘                                       │        ║
-║  │                         PSCL demand: ~14 of 2304 tuples          │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Perceptual Circuit ═══════    ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌─────────────────┐ ┌─────────────────┐                                    ║
-║  │  PPC (30D)      │ │  TPC (30D)      │                                    ║
-║  │  Pitch Process. │ │  Timbre Process. │                                    ║
-║  │                 │ │                 │                                    ║
-║  │ Pitch Sal [0:10]│ │ Spec.Env [0:10] │                                    ║
-║  │ Conson.  [10:20]│ │ Instr.ID [10:20]│                                    ║
-║  │ Chroma   [20:30]│ │ Plastic. [20:30]│                                    ║
-║  └────────┬────────┘ └────────┬────────┘                                    ║
-║           │                   │                                              ║
-║           └─────────┬─────────┘                                              ║
-║                     ▼                                                        ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    PSCL MODEL (12D Output)                       │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f01_salience, f02_hg_activation,           │        ║
-║  │                       f03_gradient, f04_regularity               │        ║
-║  │  Layer M (Math):      salience_t, hg_response                    │        ║
-║  │  Layer P (Present):   template_match, periodicity_check,         │        ║
-║  │                       clarity_index                              │        ║
-║  │  Layer F (Future):    pitch_continuation, salience_change,       │        ║
-║  │                       melody_tracking                            │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins × 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ ENERGY │ │ TIMBRE │ │ CHANGE │ │ X-INT │ │ ║
+║ │ │ 7D [0:7] │ │ 5D[7:12]│ │ 9D │ │ 4D │ │ 24D │ │ ║
+║ │ │ │ │ │ │ [12:21] │ │ [21:25] │ │ [25:49]│ │ ║
+║ │ │pleasant. │ │amplitude│ │tonalness│ │entropy │ │x_l0l5 │ │ ║
+║ │ │inharm. │ │ │ │clarity │ │flatness │ │x_l5l7 │ │ ║
+║ │ │ │ │ │ │smooth. │ │concent. │ │ │ │ ║
+║ │ │ │ │ │ │tristim. │ │ │ │ │ │ ║
+║ │ └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │ ║
+║ │ PSCL reads: 27D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ │ ║
+║ │ ┌── Alpha-Beta ─┐ ┌── Syllable ──┐ │ ║
+║ │ │ 100ms (H3) │ │ 200ms (H6) │ │ ║
+║ │ │ │ │ │ │ ║
+║ │ │ Auditory proc │ │ Cortical │ │ ║
+║ │ │ window │ │ evaluation │ │ ║
+║ │ └──────┬────────┘ └──────┬───────┘ │ ║
+║ │ └────────────────┘ │ ║
+║ │ PSCL demand: ~14 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Perceptual Circuit ═══════ ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────┐ ┌─────────────────┐ ║
+║ │ Pitch Process. │ │ Timbre Process. │ ║
+║ │ │ │ │ ║
+║ │ Pitch Sal [0:10]│ │ Spec.Env [0:10] │ ║
+║ │ Conson. [10:20]│ │ Instr.ID [10:20]│ ║
+║ │ Chroma [20:30]│ │ Plastic. [20:30]│ ║
+║ └────────┬────────┘ └────────┬────────┘ ║
+║ │ │ ║
+║ └─────────┬─────────┘ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ PSCL MODEL (12D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f01_salience, f02_hg_activation, │ ║
+║ │ f03_gradient, f04_regularity │ ║
+║ │ Layer M (Math): salience_t, hg_response │ ║
+║ │ Layer P (Present): template_match, periodicity_check, │ ║
+║ │ clarity_index │ ║
+║ │ Layer F (Future): pitch_continuation, salience_change, │ ║
+║ │ melody_tracking │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -240,18 +239,18 @@ Bravo 2017:         fMRI, N=12. Right HG (48,-10,7) upregulated for low-salience
 PITCH SALIENCE HIERARCHY (Cortical Evidence)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Stimulus Type     Salience    HG Activation    Primary AC
+Stimulus Type Salience HG Activation Primary AC
 ─────────────────────────────────────────────────────────
-Strong pitch      HIGH        HIGH             No effect
-  (high IRN depth)
-Weak pitch        MEDIUM      MEDIUM           No effect
-  (low IRN depth)
-Noise             NONE        NONE             No effect
-  (no periodicity)
+Strong pitch HIGH HIGH No effect
+ (high IRN depth)
+Weak pitch MEDIUM MEDIUM No effect
+ (low IRN depth)
+Noise NONE NONE No effect
+ (no periodicity)
 
 KEY: Anterolateral HG responds parametrically with pitch salience.
-     Primary AC does NOT differentiate these conditions.
-     Temporal regularity is matched → not a confound.
+ Primary AC does NOT differentiate these conditions.
+ Temporal regularity is matched → not a confound.
 ```
 
 ### 3.3 Effect Size Summary
@@ -259,45 +258,45 @@ KEY: Anterolateral HG responds parametrically with pitch salience.
 ```
 MULTI-METHOD CONVERGENCE (6 independent methods):
 ─────────────────────────────────────────────────────────────────
-Method          │ Papers   │ Total N  │ Key Effect Sizes
+Method │ Papers │ Total N │ Key Effect Sizes
 ────────────────┼──────────┼──────────┼──────────────────────────
-fMRI (3T)       │ 2        │ 18       │ p<.01 (Penagos); p=.033 FWE (Bravo)
-fMRI (7T)       │ 1        │ 10       │ r=0.79 (pitch CF); p<.01 (outside HG)
-MEG             │ 2        │ 67       │ p<.0001 (Tabas POR); η²p=.101 (Wöhrle)
-EEG             │ 1        │ 35       │ F(1,28)=29.865, p<.001 (chroma)
-ECoG            │ 1        │ 8        │ χ²=8.6, p=.003 (spatial)
-Intracranial    │ 2        │ 6        │ F>8.5, p<10⁻⁵ (Fishman); double
-                │          │          │ dissociation (Schonwiesner)
+fMRI (3T) │ 2 │ 18 │ p<.01 (Penagos); p=.033 FWE (Bravo)
+fMRI (7T) │ 1 │ 10 │ r=0.79 (pitch CF); p<.01 (outside HG)
+MEG │ 2 │ 67 │ p<.0001 (Tabas POR); η²p=.101 (Wöhrle)
+EEG │ 1 │ 35 │ F(1,28)=29.865, p<.001 (chroma)
+ECoG │ 1 │ 8 │ χ²=8.6, p=.003 (spatial)
+Intracranial │ 2 │ 6 │ F>8.5, p<10⁻⁵ (Fishman); double
+ │ │ │ dissociation (Schonwiesner)
 
 CONVERGENT FINDING:
-  Anterolateral HG is the primary cortical pitch salience hub.
-  Confirmed by fMRI, MEG, EEG, ECoG, intracranial depth electrodes.
-  Bilateral processing (no significant lateralization: Allen p=0.58).
+ Anterolateral HG is the primary cortical pitch salience hub.
+ Confirmed by fMRI, MEG, EEG, ECoG, intracranial depth electrodes.
+ Bilateral processing (no significant lateralization: Allen p=0.58).
 
 IMPORTANT QUALIFICATION (Allen et al. 2022):
 ┌─────────────────────────────────────────────────────────────────┐
-│ "Pitch sensitivity" (Penagos 2004 — graded response to pitch   │
-│ salience) is DISTINCT from "pitch selectivity" (Allen 2022 —   │
-│ tuning to specific F0 values). Selectivity is broadly           │
-│ distributed (~18% pitch-only voxels outside HG). The PSCL      │
-│ model targets sensitivity (salience magnitude in alHG), not    │
-│ selectivity. The model retains α-tier because the convergent    │
-│ evidence across 6 methods is overwhelming for the salience      │
+│ "Pitch sensitivity" (Penagos 2004 — graded response to pitch │
+│ salience) is DISTINCT from "pitch selectivity" (Allen 2022 — │
+│ tuning to specific F0 values). Selectivity is broadly │
+│ distributed (~18% pitch-only voxels outside HG). The PSCL │
+│ model targets sensitivity (salience magnitude in alHG), not │
+│ selectivity. The model retains α-tier because the convergent │
+│ evidence across 6 methods is overwhelming for the salience │
 │ claim; the distributed selectivity finding adds nuance but does │
-│ not contradict the focal salience finding.                       │
+│ not contradict the focal salience finding. │
 └─────────────────────────────────────────────────────────────────┘
 
 COORDINATE CONVERGENCE (Talairach):
-  Penagos 2004:  R(48,-11,3)   L(-55,-5,3)    — fMRI
-  Briley 2013:   R(43,-6,18)   L(-49,-21,17)  — EEG source
-  Bravo 2017:    MNI(48,-10,7) — fMRI (right HG only)
-  Note: 5-15mm spread across studies reflects method variance
-        (fMRI vs EEG dipole), individual anatomy, and stimuli.
+ Penagos 2004: R(48,-11,3) L(-55,-5,3) — fMRI
+ Briley 2013: R(43,-6,18) L(-49,-21,17) — EEG source
+ Bravo 2017: MNI(48,-10,7) — fMRI (right HG only)
+ Note: 5-15mm spread across studies reflects method variance
+ (fMRI vs EEG dipole), individual anatomy, and stimuli.
 
-Quality:           α-tier (multi-method convergence, matched confounds)
-Replication:       6+ independent labs, 3+ paradigms (IRN, dyads, chords)
-Specificity:       Anterolateral HG (non-primary AC), not subcortical
-                   or primary AC (which is tonotopic only)
+Quality: α-tier (multi-method convergence, matched confounds)
+Replication: 6+ independent labs, 3+ paradigms (IRN, dyads, chords)
+Specificity: Anterolateral HG (non-primary AC), not subcortical
+ or primary AC (which is tonotopic only)
 ```
 
 ---
@@ -338,23 +337,23 @@ Specificity:       Anterolateral HG (non-primary AC), not subcortical
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[14] tonalness ────────────────┐
 R³[17] spectral_autocorrelation ─┼──► Pitch Salience (f01)
-R³[24] spectral_concentration ───┘   Cortical pitch strength
-                                      Math: salience ∝ tonalness × autocorr
+R³[24] spectral_concentration ───┘ Cortical pitch strength
+ Math: salience ∝ tonalness × autocorr
 
 R³[18:21] tristimulus1-3 ────────┐
 R³[5] inharmonicity (inverse) ───┼──► HG Activation (f02)
-R³[16] spectral_smoothness ──────┘   Anterolateral HG response
+R³[16] spectral_smoothness ──────┘ Anterolateral HG response
 
 R³[22] entropy (inverse) ───────┐
 R³[23] spectral_flatness (inv.) ┼──► Salience Gradient (f03)
-R³[4] sensory_pleasantness ─────┘   Strong > Weak > Noise
+R³[4] sensory_pleasantness ─────┘ Strong > Weak > Noise
 
 R³[25:33] x_l0l5 ───────────────── Temporal Regularity (f04)
-                                     Energy-consonance coupling = periodicity
+ Energy-consonance coupling = periodicity
 ```
 
 ---
@@ -363,7 +362,7 @@ R³[25:33] x_l0l5 ───────────────── Temporal R
 
 ### 5.1 Demand Specification
 
-PSCL requires H³ features at PPC/TPC horizons: H3 (100ms), H6 (200ms).
+PSCL requires H³ features at pitch-processing/Timbre processing horizons: H3 (100ms), H6 (200ms).
 These correspond to cortical auditory processing timescales.
 
 | R³ Index | Feature | H | Morph | Law | Purpose |
@@ -387,7 +386,7 @@ These correspond to cortical auditory processing timescales.
 
 #### R³ v2 Projected Expansion
 
-PSCL is projected to consume R³ v2 features from F[49:65], aligned with PPC/TPC horizons.
+PSCL is projected to consume R³ v2 features from F[49:65], aligned with corresponding H³ horizons.
 
 | R³ Idx | Feature | Group | H | Morph | Law | Purpose |
 |:------:|---------|:-----:|:-:|-------|:---:|---------|
@@ -404,17 +403,6 @@ PSCL is projected to consume R³ v2 features from F[49:65], aligned with PPC/TPC
 **v2 projected**: 9 tuples
 **Total projected**: 23 tuples of 294,912 theoretical = 0.0078%
 
-### 5.2 Mechanism Binding
-
-PSCL reads from both **PPC** (primary) and **TPC** (secondary):
-
-| Mechanism | Sub-section | Range | PSCL Role | Weight |
-|-----------|-------------|-------|-----------|--------|
-| **PPC** | Pitch Salience | PPC[0:10] | Cortical pitch strength | **1.0** (primary) |
-| **PPC** | Consonance Encoding | PPC[10:20] | Harmonic template for salience | 0.7 |
-| **TPC** | Spectral Envelope | TPC[0:10] | Spectral shape → salience clarity | 0.5 |
-| **TPC** | Plasticity Markers | TPC[20:30] | Training-dependent salience enhancement | 0.3 |
-
 ---
 
 ## 6. Output Space: 12D Multi-Layer Representation
@@ -427,65 +415,65 @@ PSCL OUTPUT TENSOR: 12D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 0  │ f01_salience      │ [0, 1] │ Pitch Salience. Perceptual pitch strength.
-    │                   │        │ Cortical representation in anterolateral HG.
-    │                   │        │ f01 = σ(α · tonalness · autocorr
-    │                   │        │         · PPC.pitch_salience · concentration)
-    │                   │        │ α = 0.85
+ 0 │ f01_salience │ [0, 1] │ Pitch Salience. Perceptual pitch strength.
+ │ │ │ Cortical representation in anterolateral HG.
+ │ │ │ f01 = σ(α · tonalness · autocorr
+ │ │ │ · pitch_salience · concentration)
+ │ │ │ α = 0.85
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 1  │ f02_hg_activation │ [0, 1] │ Anterolateral HG response. Non-primary AC.
-    │                   │        │ Correlates with pitch salience.
-    │                   │        │ f02 = σ(β · (1-inharmonicity) · trist_F0
-    │                   │        │         · PPC.pitch_salience · smoothness)
-    │                   │        │ β = 0.80
+ 1 │ f02_hg_activation │ [0, 1] │ Anterolateral HG response. Non-primary AC.
+ │ │ │ Correlates with pitch salience.
+ │ │ │ f02 = σ(β · (1-inharmonicity) · trist_F0
+ │ │ │ · pitch_salience · smoothness)
+ │ │ │ β = 0.80
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 2  │ f03_gradient      │ [0, 1] │ Salience Gradient. Strong > Weak > Noise.
-    │                   │        │ Rank-normalized salience hierarchy.
-    │                   │        │ f03 = σ(γ · (1-entropy) · (1-flatness)
-    │                   │        │         · pleasantness · PPC.consonance)
-    │                   │        │ γ = 0.75
+ 2 │ f03_gradient │ [0, 1] │ Salience Gradient. Strong > Weak > Noise.
+ │ │ │ Rank-normalized salience hierarchy.
+ │ │ │ f03 = σ(γ · (1-entropy) · (1-flatness)
+ │ │ │ · pleasantness · consonance)
+ │ │ │ γ = 0.75
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 3  │ f04_regularity    │ [0, 1] │ Temporal Regularity. Matched control var.
-    │                   │        │ Ensures salience ≠ regularity.
-    │                   │        │ f04 = σ(mean(x_l0l5) · TPC.spectral_env)
+ 3 │ f04_regularity │ [0, 1] │ Temporal Regularity. Matched control var.
+ │ │ │ Ensures salience ≠ regularity.
+ │ │ │ f04 = σ(mean(x_l0l5) · spectral_env)
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 4  │ salience_t        │ [0, 1] │ Pitch salience at time t.
-    │                   │        │ Salience(t) = f(periodicity, harmonicity)
+ 4 │ salience_t │ [0, 1] │ Pitch salience at time t.
+ │ │ │ Salience(t) = f(periodicity, harmonicity)
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 5  │ hg_response       │ [0, 1] │ HG activation level.
-    │                   │        │ HG_activation ∝ Salience(stimulus)
+ 5 │ hg_response │ [0, 1] │ HG activation level.
+ │ │ │ HG_activation ∝ Salience(stimulus)
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 6  │ template_match    │ [0, 1] │ Pitch template matching strength.
-    │                   │        │ PPC.consonance_encoding aggregation.
+ 6 │ template_match │ [0, 1] │ Pitch template matching strength.
+ │ │ │ consonance_encoding aggregation.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 7  │ periodicity_check │ [0, 1] │ Periodicity measure.
-    │                   │        │ PPC.pitch_salience periodicity component.
+ 7 │ periodicity_check │ [0, 1] │ Periodicity measure.
+ │ │ │ pitch_salience periodicity component.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 8  │ clarity_index     │ [0, 1] │ Pitch clarity index.
-    │                   │        │ TPC.spectral_envelope clarity component.
+ 8 │ clarity_index │ [0, 1] │ Pitch clarity index.
+ │ │ │ spectral_envelope clarity component.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 9  │ pitch_continuation│ [0, 1] │ Pitch continuation prediction (100-200ms).
-    │                   │        │ PPC template-based forward prediction.
+ 9 │ pitch_continuation│ [0, 1] │ Pitch continuation prediction (100-200ms).
+ │ │ │ pitch-processing template-based forward prediction.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
-10  │ salience_change   │ [0, 1] │ Salience change prediction (continuous).
-    │                   │        │ Attention allocation to pitch changes.
+10 │ salience_change │ [0, 1] │ Salience change prediction (continuous).
+ │ │ │ Attention allocation to pitch changes.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
-11  │ melody_tracking   │ [0, 1] │ Melody tracking propagation (2-5s).
-    │                   │        │ Higher cortical propagation.
+11 │ melody_tracking │ [0, 1] │ Melody tracking propagation (2-5s).
+ │ │ │ Higher cortical propagation.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 12D per frame at 172.27 Hz
@@ -502,15 +490,15 @@ TOTAL: 12D per frame at 172.27 Hz
 Salience(t) = f(periodicity, harmonicity, spectral_focus)
 
 Salience Hierarchy:
-  Strong pitch > Weak pitch > Noise
+ Strong pitch > Weak pitch > Noise
 
 Cortical Localization:
-  HG_activation ∝ Salience(stimulus)
-  Region: Anterolateral Heschl's gyrus (non-primary AC)
+ HG_activation ∝ Salience(stimulus)
+ Region: Anterolateral Heschl's gyrus (non-primary AC)
 
 Control for Confounds:
-  Temporal_regularity = constant (matched across conditions)
-  Ensures pitch salience effect is independent of temporal structure
+ Temporal_regularity = constant (matched across conditions)
+ Ensures pitch salience effect is independent of temporal structure
 ```
 
 ### 7.2 Feature Formulas
@@ -518,18 +506,14 @@ Control for Confounds:
 ```python
 # f01: Pitch Salience
 f01 = σ(0.85 · R³.tonalness[14] · R³.spectral_autocorrelation[17]
-         · mean(PPC.pitch_salience[0:10]) · R³.spectral_concentration[24])
 
 # f02: HG Activation
 f02 = σ(0.80 · (1 - R³.inharmonicity[5]) · R³.tristimulus1[18]
-         · mean(PPC.pitch_salience[0:10]) · R³.spectral_smoothness[16])
 
 # f03: Salience Gradient (Strong > Weak > Noise)
 f03 = σ(0.75 · (1 - R³.entropy[22]) · (1 - R³.spectral_flatness[23])
-         · R³.sensory_pleasantness[4] · mean(PPC.consonance_encoding[10:20]))
 
 # f04: Temporal Regularity
-f04 = σ(mean(R³.x_l0l5[25:33]) · mean(TPC.spectral_envelope[0:10]))
 ```
 
 ---
@@ -567,22 +551,22 @@ f04 = σ(mean(R³.x_l0l5[25:33]) · mean(TPC.spectral_envelope[0:10]))
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    PSCL INTERACTIONS                                        │
+│ PSCL INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  UPSTREAM (INTRA-UNIT):                                                    │
-│  BCH.f01_nps ──────────────────► PSCL (brainstem NPS feeds cortical)      │
-│                                                                             │
-│  DOWNSTREAM (INTRA-UNIT):                                                  │
-│  PSCL.f01_salience ────────────► PCCR (salience feeds chroma tuning)      │
-│  PSCL.f03_gradient ────────────► STAI (salience hierarchy feeds aesthetics)│
-│                                                                             │
-│  CROSS-UNIT (P1: SPU → ARU):                                              │
-│  PSCL.f01_salience ────────────► ARU.SRP (pitch salience → reward)        │
-│                                                                             │
-│  CROSS-UNIT (P2: SPU → STU):                                              │
-│  PSCL.melody_tracking ─────────► STU.HMCE (melody → temporal encoding)    │
-│                                                                             │
+│ │
+│ UPSTREAM (INTRA-UNIT): │
+│ BCH.f01_nps ──────────────────► PSCL (brainstem NPS feeds cortical) │
+│ │
+│ DOWNSTREAM (INTRA-UNIT): │
+│ PSCL.f01_salience ────────────► PCCR (salience feeds chroma tuning) │
+│ PSCL.f03_gradient ────────────► STAI (salience hierarchy feeds aesthetics)│
+│ │
+│ CROSS-UNIT (P1: SPU → ARU): │
+│ PSCL.f01_salience ────────────► ARU.SRP (pitch salience → reward) │
+│ │
+│ CROSS-UNIT (P2: SPU → STU): │
+│ PSCL.melody_tracking ─────────► STU.HMCE (melody → temporal encoding) │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -605,124 +589,104 @@ f04 = σ(mean(R³.x_l0l5[25:33]) · mean(TPC.spectral_envelope[0:10]))
 
 ```python
 class PSCL(BaseModel):
-    """Pitch Salience Cortical Localization.
+ """Pitch Salience Cortical Localization.
 
-    Output: 12D per frame.
-    Reads: PPC mechanism (30D), TPC mechanism (30D), R³ direct.
-    """
-    NAME = "PSCL"
-    UNIT = "SPU"
-    TIER = "α2"
-    OUTPUT_DIM = 12
-    MECHANISM_NAMES = ("PPC", "TPC")
+ Output: 12D per frame.
+ """
+ NAME = "PSCL"
+ UNIT = "SPU"
+ TIER = "α2"
+ OUTPUT_DIM = 12
+ ALPHA = 0.85 # Salience weight
+ BETA = 0.80 # HG activation weight
+ GAMMA = 0.75 # Gradient weight
 
-    ALPHA = 0.85   # Salience weight
-    BETA = 0.80    # HG activation weight
-    GAMMA = 0.75   # Gradient weight
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """14 tuples for PSCL computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ (14, 3, 0, 2), # tonalness, 100ms, value, bidirectional
+ (14, 6, 1, 0), # tonalness, 200ms, mean, forward
+ (15, 3, 0, 2), # clarity, 100ms, value, bidirectional
+ (16, 3, 0, 2), # spectral_smoothness, 100ms, value, bidi
+ (5, 3, 0, 2), # inharmonicity, 100ms, value, bidirectional
+ (18, 3, 0, 2), # tristimulus1, 100ms, value, bidirectional
+ (18, 6, 1, 0), # tristimulus1, 200ms, mean, forward
+ (22, 3, 0, 2), # entropy, 100ms, value, bidirectional
+ (22, 6, 1, 0), # entropy, 200ms, mean, forward
+ (24, 3, 0, 2), # concentration, 100ms, value, bidirectional
+ (4, 3, 0, 2), # pleasantness, 100ms, value, bidirectional
+ (25, 3, 0, 2), # x_l0l5[0], 100ms, value, bidirectional
+ (25, 6, 14, 2), # x_l0l5[0], 200ms, periodicity, bidirectional
+ (41, 3, 0, 2), # x_l5l7[0], 100ms, value, bidirectional
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """14 tuples for PSCL computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            (14, 3, 0, 2),   # tonalness, 100ms, value, bidirectional
-            (14, 6, 1, 0),   # tonalness, 200ms, mean, forward
-            (15, 3, 0, 2),   # clarity, 100ms, value, bidirectional
-            (16, 3, 0, 2),   # spectral_smoothness, 100ms, value, bidi
-            (5, 3, 0, 2),    # inharmonicity, 100ms, value, bidirectional
-            (18, 3, 0, 2),   # tristimulus1, 100ms, value, bidirectional
-            (18, 6, 1, 0),   # tristimulus1, 200ms, mean, forward
-            (22, 3, 0, 2),   # entropy, 100ms, value, bidirectional
-            (22, 6, 1, 0),   # entropy, 200ms, mean, forward
-            (24, 3, 0, 2),   # concentration, 100ms, value, bidirectional
-            (4, 3, 0, 2),    # pleasantness, 100ms, value, bidirectional
-            (25, 3, 0, 2),   # x_l0l5[0], 100ms, value, bidirectional
-            (25, 6, 14, 2),  # x_l0l5[0], 200ms, periodicity, bidirectional
-            (41, 3, 0, 2),   # x_l5l7[0], 100ms, value, bidirectional
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute PSCL 12D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute PSCL 12D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) → (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"PPC": (B,T,30), "TPC": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) → (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,12) PSCL output
+ """
+ # R³ features
+ pleasantness = r3[..., 4:5]
+ inharmonicity = r3[..., 5:6]
+ tonalness = r3[..., 14:15]
+ clarity = r3[..., 15:16]
+ smoothness = r3[..., 16:17]
+ autocorr = r3[..., 17:18]
+ trist1 = r3[..., 18:19]
+ entropy = r3[..., 22:23]
+ flatness = r3[..., 23:24]
+ concentration = r3[..., 24:25]
+ x_l0l5 = r3[..., 25:33] # (B, T, 8)
+ x_l5l7 = r3[..., 41:49] # (B, T, 8)
 
-        Returns:
-            (B,T,12) PSCL output
-        """
-        ppc = mechanism_outputs["PPC"]    # (B, T, 30)
-        tpc = mechanism_outputs["TPC"]    # (B, T, 30)
+ # Mechanism sub-sections
+ # ═══ LAYER E: Explicit features ═══
+ f01 = torch.sigmoid(self.ALPHA * (
+ tonalness * autocorr * concentration
+ ))
+ f02 = torch.sigmoid(self.BETA * (
+ (1.0 - inharmonicity) * trist1 * smoothness
+ ))
+ f03 = torch.sigmoid(self.GAMMA * (
+ (1.0 - entropy) * (1.0 - flatness) * pleasantness
+ ))
+ f04 = torch.sigmoid(
+ x_l0l5.mean(-1, keepdim=True)
+ )
 
-        # R³ features
-        pleasantness = r3[..., 4:5]
-        inharmonicity = r3[..., 5:6]
-        tonalness = r3[..., 14:15]
-        clarity = r3[..., 15:16]
-        smoothness = r3[..., 16:17]
-        autocorr = r3[..., 17:18]
-        trist1 = r3[..., 18:19]
-        entropy = r3[..., 22:23]
-        flatness = r3[..., 23:24]
-        concentration = r3[..., 24:25]
-        x_l0l5 = r3[..., 25:33]         # (B, T, 8)
-        x_l5l7 = r3[..., 41:49]         # (B, T, 8)
+ # ═══ LAYER M: Mathematical ═══
+ salience_t = f01
+ hg_response = f02
 
-        # Mechanism sub-sections
-        ppc_pitch = ppc[..., 0:10]
-        ppc_cons = ppc[..., 10:20]
-        tpc_spec = tpc[..., 0:10]
-        tpc_plast = tpc[..., 20:30]
+ # ═══ LAYER P: Present ═══
 
-        # ═══ LAYER E: Explicit features ═══
-        f01 = torch.sigmoid(self.ALPHA * (
-            tonalness * autocorr * concentration
-            * ppc_pitch.mean(-1, keepdim=True)
-        ))
-        f02 = torch.sigmoid(self.BETA * (
-            (1.0 - inharmonicity) * trist1 * smoothness
-            * ppc_pitch.mean(-1, keepdim=True)
-        ))
-        f03 = torch.sigmoid(self.GAMMA * (
-            (1.0 - entropy) * (1.0 - flatness) * pleasantness
-            * ppc_cons.mean(-1, keepdim=True)
-        ))
-        f04 = torch.sigmoid(
-            x_l0l5.mean(-1, keepdim=True)
-            * tpc_spec.mean(-1, keepdim=True)
-        )
+ # ═══ LAYER F: Future ═══
+ pitch_continuation = torch.sigmoid(
+ 0.6 * f01 + 0.4 * template_match
+ )
+ salience_change = torch.sigmoid(
+ 0.5 * h3_direct[(14, 6, 1, 0)] # tonalness trend
+ + 0.5 * h3_direct[(22, 6, 1, 0)] # entropy trend
+ ).unsqueeze(-1)
+ melody_tracking = torch.sigmoid(
+ 0.5 * f01 + 0.3 * x_l5l7.mean(-1, keepdim=True)
+ )
 
-        # ═══ LAYER M: Mathematical ═══
-        salience_t = f01
-        hg_response = f02
-
-        # ═══ LAYER P: Present ═══
-        template_match = ppc_cons.mean(-1, keepdim=True)
-        periodicity_check = ppc_pitch.mean(-1, keepdim=True)
-        clarity_index = tpc_spec.mean(-1, keepdim=True)
-
-        # ═══ LAYER F: Future ═══
-        pitch_continuation = torch.sigmoid(
-            0.6 * f01 + 0.4 * template_match
-        )
-        salience_change = torch.sigmoid(
-            0.5 * h3_direct[(14, 6, 1, 0)]  # tonalness trend
-            + 0.5 * h3_direct[(22, 6, 1, 0)]  # entropy trend
-        ).unsqueeze(-1)
-        melody_tracking = torch.sigmoid(
-            0.5 * f01 + 0.3 * x_l5l7.mean(-1, keepdim=True)
-            + 0.2 * tpc_plast.mean(-1, keepdim=True)
-        )
-
-        return torch.cat([
-            f01, f02, f03, f04,                                  # E: 4D
-            salience_t, hg_response,                             # M: 2D
-            template_match, periodicity_check, clarity_index,    # P: 3D
-            pitch_continuation, salience_change, melody_tracking, # F: 3D
-        ], dim=-1)  # (B, T, 12)
+ return torch.cat([
+ f01, f02, f03, f04, # E: 4D
+ salience_t, hg_response, # M: 2D
+ template_match, periodicity_check, clarity_index, # P: 3D
+ pitch_continuation, salience_change, melody_tracking, # F: 3D
+ ], dim=-1) # (B, T, 12)
 ```
 
 ---
@@ -737,7 +701,7 @@ class PSCL(BaseModel):
 | **Falsification Tests** | 2/4 confirmed | High validity |
 | **R³ Features Used** | 27D of 49D | Focused on salience |
 | **H³ Demand** | 14 tuples (0.61%) | Sparse, efficient |
-| **Mechanisms** | PPC (primary) + TPC (secondary) | Dual mechanism |
+| **H³ Direct** | Relay + H³ |
 | **Output Dimensions** | **12D** | 4-layer structure |
 | **Key Qualification** | Pitch sensitivity (focal, alHG) ≠ pitch selectivity (distributed) | Allen et al. 2022 |
 | **Coordinate Convergence** | alHG bilateral, 5-15mm spread across methods | Penagos/Briley/Bravo |
@@ -778,21 +742,13 @@ class PSCL(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D) | R³ (49D) |
-| Temporal | HC⁰ mechanisms (OSC, TIH, ATT, HRM) | PPC + TPC mechanisms |
-| Pitch salience | S⁰.L5.spectral_centroid[38] × HC⁰.HRM | R³.tonalness[14] × PPC.pitch_salience |
-| HG activation | S⁰.L6.tristimulus × HC⁰.OSC | R³.tristimulus × PPC.pitch_salience |
-| Salience gradient | S⁰.L5.entropy × HC⁰.OSC | R³.entropy × PPC.consonance |
-| Regularity | S⁰.X_L0L5 × HC⁰.TIH | R³.x_l0l5 × TPC.spectral_envelope |
+| Pitch salience | S⁰.L5.spectral_centroid[38] × HC⁰.HRM | R³.tonalness[14] |
+| HG activation | S⁰.L6.tristimulus × HC⁰.OSC | R³.tristimulus |
+| Salience gradient | S⁰.L5.entropy × HC⁰.OSC | R³.entropy |
+| Regularity | S⁰.X_L0L5 × HC⁰.TIH | R³.x_l0l5 |
 | Output dims | 11D | **12D** (added hg_response in Layer M) |
 | Demand format | HC⁰ index ranges | H³ 4-tuples (sparse) |
 | Total demand | 40/2304 = 1.74% | 14/2304 = 0.61% |
-
-### Why PPC + TPC replace HC⁰ mechanisms
-
-- **HRM → PPC.pitch_salience** [0:10]: Hippocampal pitch templates → cortical pitch salience
-- **OSC → PPC.consonance_encoding** [10:20]: Phase-locking → consonance processing
-- **ATT → TPC.plasticity_markers** [20:30]: Attention gating → plasticity
-- **TIH → TPC.spectral_envelope** [0:10]: Temporal integration → spectral shape
 
 ---
 

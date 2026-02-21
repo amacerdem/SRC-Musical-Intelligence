@@ -21,26 +21,26 @@ The **Reward Prediction Error in Music** (RPEM) model describes how the ventral 
 REWARD PREDICTION ERROR IN MUSIC
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-                    SURPRISE (IC)
-                Low ◄───────────► High
+ SURPRISE (IC)
+ Low ◄───────────► High
 
-          ┌────────────────────────────────────────────┐
-LIKING    │                                            │
-          │        VS BOLD RESPONSE                    │
-High      │      o───────────────●                    │
-  │       │                     ↗                      │
-  │       │                   ↗                        │
-  │       │                 ↗                          │
-  │       │               ↗   RPE CROSSOVER            │
-  │       │             ↗                              │
-  ▼       │           ↗                                │
-Low       │      ●───────────────o                    │
-          │                     ↘                      │
-          └────────────────────────────────────────────┘
+ ┌────────────────────────────────────────────┐
+LIKING │ │
+ │ VS BOLD RESPONSE │
+High │ o───────────────● │
+ │ │ ↗ │
+ │ │ ↗ │
+ │ │ ↗ │
+ │ │ ↗ RPE CROSSOVER │
+ │ │ ↗ │
+ ▼ │ ↗ │
+Low │ ●───────────────o │
+ │ ↘ │
+ └────────────────────────────────────────────┘
 
 RPE PATTERN:
-  • Surprise × Liked    = POSITIVE RPE → VS ↑
-  • Surprise × Disliked = NEGATIVE RPE → VS ↓
+ • Surprise × Liked = POSITIVE RPE → VS ↑
+ • Surprise × Disliked = NEGATIVE RPE → VS ↓
 
 EFFECT SIZE: d = 1.07 (Gold 2023, fMRI)
 
@@ -64,74 +64,72 @@ RPEM provides the learning signal for the Reward Processing Unit:
 
 ## 2. Neural Circuit: Complete Anatomy
 
-### 2.1 Information Flow Architecture (EAR → BRAIN → AED+CPD+C0P → RPEM)
+### 2.1 Information Flow Architecture (EAR → BRAIN → RPEM)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    RPEM COMPUTATION ARCHITECTURE                             ║
+║ RPEM COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins x 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
-║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ CHANGE   │ │ X-INT  │ │        ║
-║  │  │ 7D [0:7]  │ │ 5D[7:12]│ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
-║  │  │           │ │         │ │ [12:21] │ │ [21:25]  │ │ [25:49]│ │        ║
-║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                         RPEM reads: ~12D                         │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                                                                  │        ║
-║  │  ┌── C0P Horizons ─────────────┐ ┌── AED Horizons ──────────┐  │        ║
-║  │  │ H3 (100ms alpha)            │ │ H3 (100ms alpha)          │  │        ║
-║  │  │ H4 (125ms theta)            │ │ H16 (1000ms beat)         │  │        ║
-║  │  │ H8 (500ms delta)            │ │                            │  │        ║
-║  │  │                             │ │ Liking evaluation          │  │        ║
-║  │  │ Prediction/surprise         │ │ Valence signal             │  │        ║
-║  │  └─────────────────────────────┘ └────────────────────────────┘  │        ║
-║  │                         RPEM demand: ~16 of 2304 tuples          │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Striatal RPE ══════════       ║
-║                               │                                              ║
-║                       ┌───────┴───────┐                                      ║
-║                       ▼               ▼                                      ║
-║  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐              ║
-║  │  AED (30D)      │  │  CPD (30D)      │  │  C0P (30D)      │              ║
-║  │                 │  │                 │  │                 │              ║
-║  │ Valence  [0:10] │  │ Anticip. [0:10] │  │ Tension  [0:10] │              ║
-║  │ Arousal  [10:20]│  │ Peak Exp [10:20]│  │ Expect.  [10:20]│              ║
-║  │ Emotion  [20:30]│  │ Resolut. [20:30]│  │ Approach [20:30]│              ║
-║  └────────┬────────┘  └────────┬────────┘  └────────┬────────┘              ║
-║           │                    │                    │                        ║
-║           └────────────┬───────┴────────────────────┘                        ║
-║                        ▼                                                     ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    RPEM MODEL (8D Output)                        │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f01_surprise_signal,                       │        ║
-║  │                       f02_liking_signal,                          │        ║
-║  │                       f03_positive_rpe,                           │        ║
-║  │                       f04_negative_rpe                            │        ║
-║  │  Layer M (Math):      rpe_magnitude, vs_response                  │        ║
-║  │  Layer P (Present):   current_rpe, vs_activation_state            │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins x 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ ENERGY │ │ TIMBRE │ │ CHANGE │ │ X-INT │ │ ║
+║ │ │ 7D [0:7] │ │ 5D[7:12]│ │ 9D │ │ 4D │ │ 24D │ │ ║
+║ │ │ │ │ │ │ [12:21] │ │ [21:25] │ │ [25:49]│ │ ║
+║ │ └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │ ║
+║ │ RPEM reads: ~12D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ │ ║
+║ │ │ H3 (100ms alpha) │ │ H3 (100ms alpha) │ │ ║
+║ │ │ H4 (125ms theta) │ │ H16 (1000ms beat) │ │ ║
+║ │ │ H8 (500ms delta) │ │ │ │ ║
+║ │ │ │ │ Liking evaluation │ │ ║
+║ │ │ Prediction/surprise │ │ Valence signal │ │ ║
+║ │ └─────────────────────────────┘ └────────────────────────────┘ │ ║
+║ │ RPEM demand: ~16 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Striatal RPE ══════════ ║
+║ │ ║
+║ ┌───────┴───────┐ ║
+║ ▼ ▼ ║
+║ ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐ ║
+║ │ │ │ │ │ │ ║
+║ │ Valence [0:10] │ │ Anticip. [0:10] │ │ Tension [0:10] │ ║
+║ │ Arousal [10:20]│ │ Peak Exp [10:20]│ │ Expect. [10:20]│ ║
+║ │ Emotion [20:30]│ │ Resolut. [20:30]│ │ Approach [20:30]│ ║
+║ └────────┬────────┘ └────────┬────────┘ └────────┬────────┘ ║
+║ │ │ │ ║
+║ └────────────┬───────┴────────────────────┘ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ RPEM MODEL (8D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f01_surprise_signal, │ ║
+║ │ f02_liking_signal, │ ║
+║ │ f03_positive_rpe, │ ║
+║ │ f04_negative_rpe │ ║
+║ │ Layer M (Math): rpe_magnitude, vs_response │ ║
+║ │ Layer P (Present): current_rpe, vs_activation_state │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -153,13 +151,13 @@ RPEM provides the learning signal for the Reward Processing Unit:
 ### 3.2 Effect Size Summary
 
 ```
-Primary Evidence (k=5):  4 independent studies (3 fMRI, 1 PET)
+Primary Evidence (k=5): 4 independent studies (3 fMRI, 1 PET)
 Cross-modal convergence: fMRI BOLD (3 studies), PET DA (1 study)
-Quality Assessment:      α-tier (direct VS measurement, RPE crossover confirmed)
-Key finding:             d = 1.07 RPE crossover in VS (Gold 2023a PNAS)
-Replication:             Cheung 2019 confirms NAcc prediction signals
-                         Gold 2023b Frontiers confirms VS-pleasure link
-                         Salimpoor 2011 provides DA substrate
+Quality Assessment: α-tier (direct VS measurement, RPE crossover confirmed)
+Key finding: d = 1.07 RPE crossover in VS (Gold 2023a PNAS)
+Replication: Cheung 2019 confirms NAcc prediction signals
+ Gold 2023b Frontiers confirms VS-pleasure link
+ Salimpoor 2011 provides DA substrate
 ```
 
 ---
@@ -194,23 +192,19 @@ Replication:             Cheung 2019 confirms NAcc prediction signals
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[21] spectral_change ─────────┐
 R³[24] concentration_change ────┼──► Information content (IC/surprise)
-C0P.expectation_surprise[10:20] ┘   Higher entropy → higher surprise
 
 R³[4] sensory_pleasantness ─────┐
 R³[0] roughness (inverse) ──────┼──► Liking signal (real-time valence)
-AED.valence_tracking[0:10] ─────┘   Consonance → positive valence
 
 R³[33:41] x_l4l5 ──────────────┐
-CPD.anticipation[0:10] ─────────┼──► Reward Prediction Error
-H³ velocity/entropy tuples ─────┘   Derivatives × Perceptual = RPE signal
+H³ velocity/entropy tuples ─────┘ Derivatives × Perceptual = RPE signal
 
 R³[8] loudness ─────────────────┐
 R³[10] spectral_flux ───────────┼──► Salience for RPE weighting
-C0P.approach_avoidance[20:30] ──┘   Louder events → larger RPE impact
 ```
 
 ---
@@ -219,7 +213,7 @@ C0P.approach_avoidance[20:30] ──┘   Louder events → larger RPE impact
 
 ### 5.1 Demand Specification
 
-RPEM requires H³ features at C0P horizons for prediction/surprise computation, AED horizons for liking evaluation, and CPD horizons for context assessment. The demand reflects the fast RPE computation timescale.
+RPEM requires H³ features for prediction/surprise computation, Affective dynamics horizons for liking evaluation, and for context assessment. The demand reflects the fast RPE computation timescale.
 
 | R³ Index | Feature | H | Morph | Law | Purpose |
 |----------|---------|---|-------|-----|---------|
@@ -244,7 +238,7 @@ RPEM requires H³ features at C0P horizons for prediction/surprise computation, 
 
 #### R³ v2 Projected Expansion
 
-RPEM projected v2 from I:Information, aligned with AED+CPD+C0P horizons.
+RPEM projected v2 from I:Information, aligned with H³ direct+Cognitive polarity horizons.
 
 | R³ Idx | Feature | Group | H | Morph | Law | Purpose |
 |:------:|---------|:-----:|:-:|-------|:---:|---------|
@@ -260,20 +254,6 @@ RPEM projected v2 from I:Information, aligned with AED+CPD+C0P horizons.
 **v2 projected**: 8 tuples
 **Total projected**: 24 tuples of 294,912 theoretical = 0.0081%
 
-### 5.2 AED + CPD + C0P Mechanism Binding
-
-| Mechanism | Sub-section | Range | RPEM Role | Weight |
-|-----------|-------------|-------|-----------|--------|
-| **AED** | Valence Tracking | AED[0:10] | Liking signal (reward valence) | **1.0** (primary) |
-| **AED** | Arousal Dynamics | AED[10:20] | Salience weighting | 0.7 |
-| **AED** | Emotional Trajectory | AED[20:30] | Reward context | 0.5 |
-| **CPD** | Anticipation | CPD[0:10] | Expectation baseline | 0.8 |
-| **CPD** | Peak Experience | CPD[10:20] | Positive RPE amplification | 0.7 |
-| **CPD** | Resolution | CPD[20:30] | Post-RPE learning | 0.5 |
-| **C0P** | Tension-Release | C0P[0:10] | Prediction generation | 0.8 |
-| **C0P** | Expectation-Surprise | C0P[10:20] | Surprise detection (IC) | **1.0** (primary) |
-| **C0P** | Approach-Avoidance | C0P[20:30] | RPE sign (approach = positive) | 0.9 |
-
 ---
 
 ## 6. Output Space: 8D Multi-Layer Representation
@@ -286,44 +266,41 @@ RPEM OUTPUT TENSOR: 8D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 0  │ f01_surprise_signal      │ [0, 1] │ Information content (IC).
-    │                          │        │ f01 = σ(0.35 * spectral_entropy_125ms
-    │                          │        │       + 0.30 * mean(C0P.expect[10:20])
-    │                          │        │       + 0.20 * spectral_change_100ms
-    │                          │        │       + 0.15 * concentration_100ms)
+ 0 │ f01_surprise_signal │ [0, 1] │ Information content (IC).
+ │ │ │ f01 = σ(0.35 * spectral_entropy_125ms
+ │ │ │ + 0.20 * spectral_change_100ms
+ │ │ │ + 0.15 * concentration_100ms)
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 1  │ f02_liking_signal        │ [0, 1] │ Real-time reward valence.
-    │                          │        │ f02 = σ(0.40 * mean(AED.valence[0:10])
-    │                          │        │       + 0.35 * mean_pleasantness_1s
-    │                          │        │       + 0.25 * (1 - roughness_100ms))
+ 1 │ f02_liking_signal │ [0, 1] │ Real-time reward valence.
+ │ │ │ + 0.35 * mean_pleasantness_1s
+ │ │ │ + 0.25 * (1 - roughness_100ms))
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 2  │ f03_positive_rpe         │ [0, 1] │ Surprise x Liked → VS activation.
-    │                          │        │ f03 = σ(0.50 * f01 * f02
-    │                          │        │       + 0.30 * mean(CPD.peak[10:20])
-    │                          │        │       + 0.20 * rpe_coupling_100ms)
+ 2 │ f03_positive_rpe │ [0, 1] │ Surprise x Liked → VS activation.
+ │ │ │ f03 = σ(0.50 * f01 * f02
+ │ │ │ + 0.20 * rpe_coupling_100ms)
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 3  │ f04_negative_rpe         │ [0, 1] │ Surprise x Disliked → VS deactivation.
-    │                          │        │ f04 = σ(0.50 * f01 * (1 - f02)
-    │                          │        │       + 0.30 * roughness_velocity_100ms
-    │                          │        │       + 0.20 * prediction_entropy_1s)
+ 3 │ f04_negative_rpe │ [0, 1] │ Surprise x Disliked → VS deactivation.
+ │ │ │ f04 = σ(0.50 * f01 * (1 - f02)
+ │ │ │ + 0.30 * roughness_velocity_100ms
+ │ │ │ + 0.20 * prediction_entropy_1s)
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 4  │ rpe_magnitude            │ [0, 1] │ |RPE| = max(f03, f04).
+ 4 │ rpe_magnitude │ [0, 1] │ |RPE| = max(f03, f04).
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 5  │ vs_response              │ [0, 1] │ VS BOLD proxy: f03 - f04 + 0.5.
+ 5 │ vs_response │ [0, 1] │ VS BOLD proxy: f03 - f04 + 0.5.
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 6  │ current_rpe              │ [0, 1] │ Signed RPE (f03 - f04 + 0.5).
+ 6 │ current_rpe │ [0, 1] │ Signed RPE (f03 - f04 + 0.5).
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 7  │ vs_activation_state      │ [0, 1] │ Current striatal activation.
+ 7 │ vs_activation_state │ [0, 1] │ Current striatal activation.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 8D per frame at 172.27 Hz
@@ -338,17 +315,17 @@ TOTAL: 8D per frame at 172.27 Hz
 
 ```
 RPE(t) = Reward(t) - Expected_Reward(t)
-       = Liking(t) - Prediction(t)
+ = Liking(t) - Prediction(t)
 
 VS_Response = β1·IC + β2·Liking + β3·(IC × Liking)
 
-  where IC × Liking crossover:
-    High IC × High Liking → Positive RPE → VS ↑
-    High IC × Low Liking  → Negative RPE → VS ↓
+ where IC × Liking crossover:
+ High IC × High Liking → Positive RPE → VS ↑
+ High IC × Low Liking → Negative RPE → VS ↓
 
 Parameters:
-    d = 1.07  (VS crossover effect, Gold 2023)
-    τ_decay = 1.0s  (RPE signal decay)
+ d = 1.07 (VS crossover effect, Gold 2023)
+ τ_decay = 1.0s (RPE signal decay)
 ```
 
 ### 7.2 Feature Formulas
@@ -358,27 +335,24 @@ Parameters:
 
 # f01: Surprise Signal (IC)
 f01 = σ(0.35 * spectral_entropy_125ms
-       + 0.30 * mean(C0P.expectation_surprise[10:20])
-       + 0.20 * spectral_change_100ms
-       + 0.15 * concentration_100ms)
+ + 0.20 * spectral_change_100ms
+ + 0.15 * concentration_100ms)
 # coefficients: 0.35 + 0.30 + 0.20 + 0.15 = 1.0 ✓
 
 # f02: Liking Signal
-f02 = σ(0.40 * mean(AED.valence_tracking[0:10])
-       + 0.35 * mean_pleasantness_1s
-       + 0.25 * (1.0 - roughness_100ms))
+ + 0.35 * mean_pleasantness_1s
+ + 0.25 * (1.0 - roughness_100ms))
 # coefficients: 0.40 + 0.35 + 0.25 = 1.0 ✓
 
 # f03: Positive RPE (Surprise × Liked)
 f03 = σ(0.50 * f01 * f02
-       + 0.30 * mean(CPD.peak_experience[10:20])
-       + 0.20 * rpe_coupling_100ms)
+ + 0.20 * rpe_coupling_100ms)
 # coefficients: 0.50 + 0.30 + 0.20 = 1.0 ✓
 
 # f04: Negative RPE (Surprise × Disliked)
 f04 = σ(0.50 * f01 * (1.0 - f02)
-       + 0.30 * roughness_velocity_100ms
-       + 0.20 * prediction_entropy_1s)
+ + 0.30 * roughness_velocity_100ms
+ + 0.20 * prediction_entropy_1s)
 # coefficients: 0.50 + 0.30 + 0.20 = 1.0 ✓
 ```
 
@@ -401,27 +375,24 @@ f04 = σ(0.50 * f01 * (1.0 - f02)
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    RPEM INTERACTIONS                                         │
+│ RPEM INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (RPU):                                                         │
-│  RPEM.positive_rpe ──────────► DAED (positive RPE → caudate learning)     │
-│  RPEM.negative_rpe ──────────► DAED (negative RPE → caudate suppression)  │
-│  RPEM.surprise_signal ───────► MORMR (surprise → chills prediction)       │
-│  RPEM.liking_signal ─────────► IUCP (liking → complexity preference)      │
-│  RPEM.vs_response ───────────► MCCN (VS → cortical chills network)        │
-│                                                                             │
-│  CROSS-UNIT (RPU → IMU):                                                   │
-│  RPEM.rpe_magnitude ─────────► IMU.prediction_update (RPE → memory)       │
-│  RPEM.current_rpe ───────────► IMU.error_signal (learning signal)          │
-│                                                                             │
-│  UPSTREAM DEPENDENCIES:                                                     │
-│  AED mechanism (30D) ──────────► RPEM (liking evaluation)                 │
-│  CPD mechanism (30D) ──────────► RPEM (context/peak assessment)            │
-│  C0P mechanism (30D) ──────────► RPEM (prediction/surprise)                │
-│  R³ (~12D) ─────────────────────► RPEM (direct spectral features)         │
-│  H³ (16 tuples) ────────────────► RPEM (temporal dynamics)                │
-│                                                                             │
+│ │
+│ INTRA-UNIT (RPU): │
+│ RPEM.positive_rpe ──────────► DAED (positive RPE → caudate learning) │
+│ RPEM.negative_rpe ──────────► DAED (negative RPE → caudate suppression) │
+│ RPEM.surprise_signal ───────► MORMR (surprise → chills prediction) │
+│ RPEM.liking_signal ─────────► IUCP (liking → complexity preference) │
+│ RPEM.vs_response ───────────► MCCN (VS → cortical chills network) │
+│ │
+│ CROSS-UNIT (RPU → IMU): │
+│ RPEM.rpe_magnitude ─────────► IMU.prediction_update (RPE → memory) │
+│ RPEM.current_rpe ───────────► IMU.error_signal (learning signal) │
+│ │
+│ UPSTREAM DEPENDENCIES: │
+│ R³ (~12D) ─────────────────────► RPEM (direct spectral features) │
+│ H³ (16 tuples) ────────────────► RPEM (temporal dynamics) │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -445,125 +416,107 @@ f04 = σ(0.50 * f01 * (1.0 - f02)
 
 ```python
 class RPEM(BaseModel):
-    """Reward Prediction Error in Music Model.
+ """Reward Prediction Error in Music Model.
 
-    Output: 8D per frame.
-    Reads: AED mechanism (30D), CPD mechanism (30D), C0P mechanism (30D), R³ direct.
-    """
-    NAME = "RPEM"
-    UNIT = "RPU"
-    TIER = "α3"
-    OUTPUT_DIM = 8
-    MECHANISM_NAMES = ("AED", "CPD", "C0P")
+ Output: 8D per frame.
+ """
+ NAME = "RPEM"
+ UNIT = "RPU"
+ TIER = "α3"
+ OUTPUT_DIM = 8
+ TAU_DECAY = 1.0 # RPE signal decay (seconds)
+ ALPHA_ATTENTION = 0.92 # Attention weight for prediction errors
 
-    TAU_DECAY = 1.0          # RPE signal decay (seconds)
-    ALPHA_ATTENTION = 0.92   # Attention weight for prediction errors
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """16 tuples for RPEM computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ (21, 3, 0, 2), # spectral_change, 100ms, value, bidi
+ (21, 4, 20, 0), # spectral_change, 125ms, entropy, fwd
+ (21, 8, 8, 0), # spectral_change, 500ms, velocity, fwd
+ (24, 3, 0, 2), # concentration_change, 100ms, value, bidi
+ (4, 3, 0, 2), # sensory_pleasantness, 100ms, value, bidi
+ (4, 16, 1, 2), # sensory_pleasantness, 1000ms, mean, bidi
+ (0, 3, 0, 2), # roughness, 100ms, value, bidi
+ (0, 3, 8, 0), # roughness, 100ms, velocity, fwd
+ (8, 3, 0, 2), # loudness, 100ms, value, bidi
+ (10, 3, 0, 2), # spectral_flux, 100ms, value, bidi
+ (10, 4, 0, 2), # spectral_flux, 125ms, value, bidi
+ (10, 8, 2, 2), # spectral_flux, 500ms, std, bidi
+ # ── RPE coupling ──
+ (33, 3, 0, 2), # x_l4l5[0], 100ms, value, bidi
+ (33, 8, 8, 0), # x_l4l5[0], 500ms, velocity, fwd
+ (25, 8, 1, 2), # x_l0l5[0], 500ms, mean, bidi
+ (25, 16, 20, 2), # x_l0l5[0], 1000ms, entropy, bidi
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """16 tuples for RPEM computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # ── C0P horizons: prediction/surprise ──
-            (21, 3, 0, 2),     # spectral_change, 100ms, value, bidi
-            (21, 4, 20, 0),    # spectral_change, 125ms, entropy, fwd
-            (21, 8, 8, 0),     # spectral_change, 500ms, velocity, fwd
-            (24, 3, 0, 2),     # concentration_change, 100ms, value, bidi
-            # ── AED horizons: liking evaluation ──
-            (4, 3, 0, 2),      # sensory_pleasantness, 100ms, value, bidi
-            (4, 16, 1, 2),     # sensory_pleasantness, 1000ms, mean, bidi
-            (0, 3, 0, 2),      # roughness, 100ms, value, bidi
-            (0, 3, 8, 0),      # roughness, 100ms, velocity, fwd
-            # ── CPD horizons: context assessment ──
-            (8, 3, 0, 2),      # loudness, 100ms, value, bidi
-            (10, 3, 0, 2),     # spectral_flux, 100ms, value, bidi
-            (10, 4, 0, 2),     # spectral_flux, 125ms, value, bidi
-            (10, 8, 2, 2),     # spectral_flux, 500ms, std, bidi
-            # ── RPE coupling ──
-            (33, 3, 0, 2),     # x_l4l5[0], 100ms, value, bidi
-            (33, 8, 8, 0),     # x_l4l5[0], 500ms, velocity, fwd
-            (25, 8, 1, 2),     # x_l0l5[0], 500ms, mean, bidi
-            (25, 16, 20, 2),   # x_l0l5[0], 1000ms, entropy, bidi
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute RPEM 8D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute RPEM 8D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"AED": (B,T,30), "CPD": (B,T,30), "C0P": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,8) RPEM output
+ """
+ # Mechanism sub-sections
+ # H³ direct features
+ spectral_entropy_125ms = h3_direct[(21, 4, 20, 0)].unsqueeze(-1)
+ spectral_change_100ms = h3_direct[(21, 3, 0, 2)].unsqueeze(-1)
+ concentration_100ms = h3_direct[(24, 3, 0, 2)].unsqueeze(-1)
+ mean_pleasantness_1s = h3_direct[(4, 16, 1, 2)].unsqueeze(-1)
+ roughness_100ms = h3_direct[(0, 3, 0, 2)].unsqueeze(-1)
+ roughness_velocity_100ms = h3_direct[(0, 3, 8, 0)].unsqueeze(-1)
+ rpe_coupling_100ms = h3_direct[(33, 3, 0, 2)].unsqueeze(-1)
+ prediction_entropy_1s = h3_direct[(25, 16, 20, 2)].unsqueeze(-1)
 
-        Returns:
-            (B,T,8) RPEM output
-        """
-        aed = mechanism_outputs["AED"]    # (B, T, 30)
-        cpd = mechanism_outputs["CPD"]    # (B, T, 30)
-        c0p = mechanism_outputs["C0P"]    # (B, T, 30)
+ # ═══ LAYER E: Explicit features ═══
 
-        # Mechanism sub-sections
-        aed_valence = aed[..., 0:10]
-        cpd_peak = cpd[..., 10:20]
-        c0p_expect = c0p[..., 10:20]
+ # f01: Surprise Signal (coefficients sum = 1.0)
+ f01 = torch.sigmoid(
+ 0.35 * spectral_entropy_125ms
+ + 0.20 * spectral_change_100ms
+ + 0.15 * concentration_100ms
+ )
 
-        # H³ direct features
-        spectral_entropy_125ms = h3_direct[(21, 4, 20, 0)].unsqueeze(-1)
-        spectral_change_100ms = h3_direct[(21, 3, 0, 2)].unsqueeze(-1)
-        concentration_100ms = h3_direct[(24, 3, 0, 2)].unsqueeze(-1)
-        mean_pleasantness_1s = h3_direct[(4, 16, 1, 2)].unsqueeze(-1)
-        roughness_100ms = h3_direct[(0, 3, 0, 2)].unsqueeze(-1)
-        roughness_velocity_100ms = h3_direct[(0, 3, 8, 0)].unsqueeze(-1)
-        rpe_coupling_100ms = h3_direct[(33, 3, 0, 2)].unsqueeze(-1)
-        prediction_entropy_1s = h3_direct[(25, 16, 20, 2)].unsqueeze(-1)
+ # f02: Liking Signal (coefficients sum = 1.0)
+ f02 = torch.sigmoid(
+ + 0.35 * mean_pleasantness_1s
+ + 0.25 * (1.0 - roughness_100ms)
+ )
 
-        # ═══ LAYER E: Explicit features ═══
+ # f03: Positive RPE (coefficients sum = 1.0)
+ f03 = torch.sigmoid(
+ 0.50 * (f01 * f02)
+ + 0.20 * rpe_coupling_100ms
+ )
 
-        # f01: Surprise Signal (coefficients sum = 1.0)
-        f01 = torch.sigmoid(
-            0.35 * spectral_entropy_125ms
-            + 0.30 * c0p_expect.mean(-1, keepdim=True)
-            + 0.20 * spectral_change_100ms
-            + 0.15 * concentration_100ms
-        )
+ # f04: Negative RPE (coefficients sum = 1.0)
+ f04 = torch.sigmoid(
+ 0.50 * (f01 * (1.0 - f02))
+ + 0.30 * roughness_velocity_100ms
+ + 0.20 * prediction_entropy_1s
+ )
 
-        # f02: Liking Signal (coefficients sum = 1.0)
-        f02 = torch.sigmoid(
-            0.40 * aed_valence.mean(-1, keepdim=True)
-            + 0.35 * mean_pleasantness_1s
-            + 0.25 * (1.0 - roughness_100ms)
-        )
+ # ═══ LAYER M: Mathematical ═══
+ rpe_magnitude = torch.max(f03, f04)
+ vs_response = torch.clamp(f03 - f04 + 0.5, 0.0, 1.0)
 
-        # f03: Positive RPE (coefficients sum = 1.0)
-        f03 = torch.sigmoid(
-            0.50 * (f01 * f02)
-            + 0.30 * cpd_peak.mean(-1, keepdim=True)
-            + 0.20 * rpe_coupling_100ms
-        )
+ # ═══ LAYER P: Present ═══
+ current_rpe = torch.clamp(f03 - f04 + 0.5, 0.0, 1.0)
+ vs_activation_state = torch.sigmoid(
+ 0.5 * current_rpe + 0.5 * rpe_magnitude
+ )
 
-        # f04: Negative RPE (coefficients sum = 1.0)
-        f04 = torch.sigmoid(
-            0.50 * (f01 * (1.0 - f02))
-            + 0.30 * roughness_velocity_100ms
-            + 0.20 * prediction_entropy_1s
-        )
-
-        # ═══ LAYER M: Mathematical ═══
-        rpe_magnitude = torch.max(f03, f04)
-        vs_response = torch.clamp(f03 - f04 + 0.5, 0.0, 1.0)
-
-        # ═══ LAYER P: Present ═══
-        current_rpe = torch.clamp(f03 - f04 + 0.5, 0.0, 1.0)
-        vs_activation_state = torch.sigmoid(
-            0.5 * current_rpe + 0.5 * rpe_magnitude
-        )
-
-        return torch.cat([
-            f01, f02, f03, f04,                    # E: 4D
-            rpe_magnitude, vs_response,            # M: 2D
-            current_rpe, vs_activation_state,      # P: 2D
-        ], dim=-1)  # (B, T, 8)
+ return torch.cat([
+ f01, f02, f03, f04, # E: 4D
+ rpe_magnitude, vs_response, # M: 2D
+ current_rpe, vs_activation_state, # P: 2D
+ ], dim=-1) # (B, T, 8)
 ```
 
 ---
@@ -578,9 +531,6 @@ class RPEM(BaseModel):
 | **Falsification Tests** | 2/5 confirmed | High validity |
 | **R³ Features Used** | ~12D of 49D | Consonance + energy + change + interactions |
 | **H³ Demand** | 16 tuples (0.69%) | Sparse, efficient |
-| **AED Mechanism** | 30D (3 sub-sections) | Liking evaluation |
-| **CPD Mechanism** | 30D (3 sub-sections) | Context/peak assessment |
-| **C0P Mechanism** | 30D (3 sub-sections) | Prediction/surprise |
 | **Output Dimensions** | **8D** | 4-layer structure |
 
 ---
@@ -601,21 +551,13 @@ class RPEM(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D) | R³ (49D) |
-| Temporal | HC⁰ mechanisms (EFC, AED, ASA, CPD) | AED (30D) + CPD (30D) + C0P (30D) mechanisms |
-| Surprise signal | S⁰.L9.entropy_T[116] + HC⁰.EFC | R³.spectral_change[21] + C0P.expectation_surprise |
-| Liking signal | S⁰.L5.roughness[30] + HC⁰.AED | R³.sensory_pleasantness[4] + AED.valence_tracking |
-| RPE computation | S⁰.X_L4L5[192:200] + HC⁰.CPD | R³.x_l4l5[33:41] + CPD.peak_experience |
-| Prediction model | HC⁰.EFC[80:88] | C0P.expectation_surprise[10:20] |
+| Surprise signal | S⁰.L9.entropy_T[116] + HC⁰.EFC | R³.spectral_change[21] |
+| Liking signal | S⁰.L5.roughness[30] + HC⁰ affect | R³.sensory_pleasantness[4] |
+| RPE computation | S⁰.X_L4L5[192:200] + HC⁰ peak | R³.x_l4l5[33:41] |
+| Prediction model | HC⁰.EFC[80:88] | expectation_surprise[10:20] |
 | Demand format | HC⁰ index ranges (24 tuples) | H³ 4-tuples (16 tuples, sparse) |
 | Total demand | 24/2304 = 1.04% | 16/2304 = 0.69% |
 | Output | 8D | 8D (same) |
-
-### Why AED + CPD + C0P replaces HC⁰ mechanisms
-
-- **EFC → C0P.expectation_surprise** [10:20]: Efference copy prediction maps to C0P's expectation-surprise detection.
-- **AED → AED.valence_tracking** [0:10]: Affective entrainment maps to AED's liking evaluation.
-- **ASA → CPD.anticipation** [0:10]: Auditory scene analysis maps to CPD's context assessment.
-- **CPD → CPD.peak_experience** [10:20]: Chills/peak detection maps to CPD's positive RPE amplification.
 
 ---
 

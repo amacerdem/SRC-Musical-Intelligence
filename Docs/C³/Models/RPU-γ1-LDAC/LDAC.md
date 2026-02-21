@@ -21,27 +21,27 @@ The **Liking-Dependent Auditory Cortex** (LDAC) model describes how auditory cor
 LIKING-DEPENDENT AUDITORY CORTEX
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-ACOUSTIC INPUT                           NEURAL RESPONSE
-─────────────                            ───────────────
+ACOUSTIC INPUT NEURAL RESPONSE
+───────────── ───────────────
 
 Musical Features ──────────────────► Auditory Processing
-     │                                   (R STG tracking)
-     │
-     ▼
+ │ (R STG tracking)
+ │
+ ▼
 ┌──────────────────────────────────────────────────────────────────┐
-│               LIKING-DEPENDENT MODULATION                        │
-│                                                                  │
-│   R STG                    IC × LIKING INTERACTION               │
-│   ═════                    ═══════════════════════                │
-│   Tracks moment-           High IC + Disliked → LOWEST STG      │
-│   to-moment liking         High IC + Liked → Normal STG         │
-│   (t(23)=2.56, p=0.018)   (t(23)=2.92, p=0.008)               │
-│                                                                  │
-│   Sensory Processing                                             │
-│   ═══════════════════                                            │
-│   Pleasure gates sensory gain                                    │
-│   Liked music → enhanced cortical response                       │
-│                                                                  │
+│ LIKING-DEPENDENT MODULATION │
+│ │
+│ R STG IC × LIKING INTERACTION │
+│ ═════ ═══════════════════════ │
+│ Tracks moment- High IC + Disliked → LOWEST STG │
+│ to-moment liking High IC + Liked → Normal STG │
+│ (t(23)=2.56, p=0.018) (t(23)=2.92, p=0.008) │
+│ │
+│ Sensory Processing │
+│ ═══════════════════ │
+│ Pleasure gates sensory gain │
+│ Liked music → enhanced cortical response │
+│ │
 └──────────────────────────────────────────────────────────────────┘
 
 LIKING: R STG continuously modulated by pleasure
@@ -72,74 +72,72 @@ LDAC provides the sensory-reward gating mechanism for the Reward Processing Unit
 
 ## 2. Neural Circuit: Complete Anatomy
 
-### 2.1 Information Flow Architecture (EAR → BRAIN → AED+CPD+C0P → LDAC)
+### 2.1 Information Flow Architecture (EAR → BRAIN → LDAC)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    LDAC COMPUTATION ARCHITECTURE                             ║
+║ LDAC COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins x 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
-║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ CHANGE   │ │ X-INT  │ │        ║
-║  │  │ 7D [0:7]  │ │ 5D[7:12]│ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
-║  │  │           │ │         │ │ [12:21] │ │ [21:25]  │ │ [25:49]│ │        ║
-║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                         LDAC reads: ~13D                        │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                                                                  │        ║
-║  │  ┌── AED Horizons ──────────────┐ ┌── C0P Horizons ──────────┐  │        ║
-║  │  │ H3 (100ms alpha)             │ │ H2 (75ms alpha)           │  │        ║
-║  │  │ H8 (500ms delta)             │ │ H8 (500ms delta)          │  │        ║
-║  │  │ H16 (1000ms beat)            │ │                            │  │        ║
-║  │  │                              │ │ IC computation              │  │        ║
-║  │  │ Continuous liking tracking   │ │ Surprise detection          │  │        ║
-║  │  └──────────────────────────────┘ └────────────────────────────┘  │        ║
-║  │                         LDAC demand: ~12 of 2304 tuples          │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Sensory-Reward Gate ═════     ║
-║                               │                                              ║
-║                       ┌───────┴───────┐                                      ║
-║                       ▼               ▼                                      ║
-║  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐              ║
-║  │  AED (30D)      │  │  CPD (30D)      │  │  C0P (30D)      │              ║
-║  │                 │  │                 │  │                 │              ║
-║  │ Valence  [0:10] │  │ Anticip. [0:10] │  │ Tension  [0:10] │              ║
-║  │ Arousal  [10:20]│  │ Peak Exp [10:20]│  │ Expect.  [10:20]│              ║
-║  │ Emotion  [20:30]│  │ Resolut. [20:30]│  │ Approach [20:30]│              ║
-║  └────────┬────────┘  └────────┬────────┘  └────────┬────────┘              ║
-║           │                    │                    │                        ║
-║           └────────────┬───────┴────────────────────┘                        ║
-║                        ▼                                                     ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    LDAC MODEL (6D Output)                        │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f01_stg_liking_coupling,                   │        ║
-║  │                       f02_pleasure_gating,                        │        ║
-║  │                       f03_ic_liking_interaction,                   │        ║
-║  │                       f04_moment_to_moment                        │        ║
-║  │  Layer P (Present):   stg_modulation_state                        │        ║
-║  │  Layer F (Future):    sensory_gating_pred                         │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins x 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ ENERGY │ │ TIMBRE │ │ CHANGE │ │ X-INT │ │ ║
+║ │ │ 7D [0:7] │ │ 5D[7:12]│ │ 9D │ │ 4D │ │ 24D │ │ ║
+║ │ │ │ │ │ │ [12:21] │ │ [21:25] │ │ [25:49]│ │ ║
+║ │ └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │ ║
+║ │ LDAC reads: ~13D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ │ ║
+║ │ │ H3 (100ms alpha) │ │ H2 (75ms alpha) │ │ ║
+║ │ │ H8 (500ms delta) │ │ H8 (500ms delta) │ │ ║
+║ │ │ H16 (1000ms beat) │ │ │ │ ║
+║ │ │ │ │ IC computation │ │ ║
+║ │ │ Continuous liking tracking │ │ Surprise detection │ │ ║
+║ │ └──────────────────────────────┘ └────────────────────────────┘ │ ║
+║ │ LDAC demand: ~12 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Sensory-Reward Gate ═════ ║
+║ │ ║
+║ ┌───────┴───────┐ ║
+║ ▼ ▼ ║
+║ ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐ ║
+║ │ │ │ │ │ │ ║
+║ │ Valence [0:10] │ │ Anticip. [0:10] │ │ Tension [0:10] │ ║
+║ │ Arousal [10:20]│ │ Peak Exp [10:20]│ │ Expect. [10:20]│ ║
+║ │ Emotion [20:30]│ │ Resolut. [20:30]│ │ Approach [20:30]│ ║
+║ └────────┬────────┘ └────────┬────────┘ └────────┬────────┘ ║
+║ │ │ │ ║
+║ └────────────┬───────┴────────────────────┘ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ LDAC MODEL (6D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f01_stg_liking_coupling, │ ║
+║ │ f02_pleasure_gating, │ ║
+║ │ f03_ic_liking_interaction, │ ║
+║ │ f04_moment_to_moment │ ║
+║ │ Layer P (Present): stg_modulation_state │ ║
+║ │ Layer F (Future): sensory_gating_pred │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -161,16 +159,16 @@ LDAC provides the sensory-reward gating mechanism for the Reward Processing Unit
 ### 3.2 Effect Size Summary
 
 ```
-Primary Evidence (k=6):  6 papers across 4 independent labs
-Heterogeneity:           Low-moderate (consistent STG-liking coupling across methods)
-Quality Assessment:      γ-tier with strengthened convergence:
-                         - Gold 2023a: fMRI, N=24, moderate effects (t ~ 2.5-2.9)
-                         - Cheung 2019: fMRI, N=40, strong bilateral AC effects
-                         - Martinez-Molina 2016: fMRI+PPI, N=45, group-level connectivity
-                         - Gold 2019b: behavioral N=43+27, replicated quadratic effects
-                         - Mori & Zatorre 2024: fMRI+ML, N=49, cross-validated prediction
-Replication:             IC x liking/pleasure interaction in auditory cortex replicated
-                         across melodic (Gold) and harmonic (Cheung) domains
+Primary Evidence (k=6): 6 papers across 4 independent labs
+Heterogeneity: Low-moderate (consistent STG-liking coupling across methods)
+Quality Assessment: γ-tier with strengthened convergence:
+ - Gold 2023a: fMRI, N=24, moderate effects (t ~ 2.5-2.9)
+ - Cheung 2019: fMRI, N=40, strong bilateral AC effects
+ - Martinez-Molina 2016: fMRI+PPI, N=45, group-level connectivity
+ - Gold 2019b: behavioral N=43+27, replicated quadratic effects
+ - Mori & Zatorre 2024: fMRI+ML, N=49, cross-validated prediction
+Replication: IC x liking/pleasure interaction in auditory cortex replicated
+ across melodic (Gold) and harmonic (Cheung) domains
 ```
 
 ---
@@ -204,19 +202,16 @@ Replication:             IC x liking/pleasure interaction in auditory cortex rep
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[4] sensory_pleasantness ────┐
-AED.valence_tracking[0:10] ────┼──► STG liking coupling
-H³ mean/trend tuples ──────────┘   Moment-to-moment pleasure tracking
+H³ mean/trend tuples ──────────┘ Moment-to-moment pleasure tracking
 
 R³[21] spectral_change ────────┐
 R³[4] sensory_pleasantness ────┼──► IC × Liking interaction
-C0P.expectation_surprise[10:20]┘   High IC + disliked → suppression
 
 R³[8] loudness ─────────────────┐
 R³[10] spectral_flux ───────────┼──► Sensory gating
-AED.arousal_dynamics[10:20] ────┘   Pleasure-modulated gain control
 
 R³[25:33] x_l0l5 ──────────────────► Auditory cortex gating proxy
 ```
@@ -248,7 +243,7 @@ LDAC requires H³ features at short-to-mid timescales for continuous liking trac
 
 #### R³ v2 Projected Expansion
 
-LDAC projected v2 from H:Harmony + I:Information, aligned with AED+C0P horizons.
+LDAC projected v2 from H:Harmony + I:Information, aligned with corresponding H³ horizons.
 
 | R³ Idx | Feature | Group | H | Morph | Law | Purpose |
 |:------:|---------|:-----:|:-:|-------|:---:|---------|
@@ -264,20 +259,6 @@ LDAC projected v2 from H:Harmony + I:Information, aligned with AED+C0P horizons.
 **v2 projected**: 8 tuples
 **Total projected**: 20 tuples of 294,912 theoretical = 0.0068%
 
-### 5.2 AED + CPD + C0P Mechanism Binding
-
-| Mechanism | Sub-section | Range | LDAC Role | Weight |
-|-----------|-------------|-------|-----------|--------|
-| **AED** | Valence Tracking | AED[0:10] | Moment-to-moment liking | **1.0** (primary) |
-| **AED** | Arousal Dynamics | AED[10:20] | Arousal-dependent gating | **0.8** |
-| **AED** | Emotional Trajectory | AED[20:30] | Emotional context | 0.5 |
-| **CPD** | Anticipation | CPD[0:10] | Anticipatory gating | 0.5 |
-| **CPD** | Peak Experience | CPD[10:20] | Peak-related STG modulation | 0.6 |
-| **CPD** | Resolution | CPD[20:30] | Post-peak sensory return | 0.4 |
-| **C0P** | Tension-Release | C0P[0:10] | Tension gating | 0.5 |
-| **C0P** | Expectation-Surprise | C0P[10:20] | IC computation | **0.8** (secondary) |
-| **C0P** | Approach-Avoidance | C0P[20:30] | Sensory approach/avoid | 0.7 |
-
 ---
 
 ## 6. Output Space: 6D Multi-Layer Representation
@@ -290,39 +271,36 @@ LDAC OUTPUT TENSOR: 6D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 0  │ f01_stg_liking_coupling  │ [0, 1] │ R STG tracks moment-to-moment liking.
-    │                          │        │ f01 = σ(0.35 * pleasantness_100ms
-    │                          │        │       + 0.35 * mean(AED.valence[0:10])
-    │                          │        │       + 0.30 * mean_pleasantness_500ms)
+ 0 │ f01_stg_liking_coupling │ [0, 1] │ R STG tracks moment-to-moment liking.
+ │ │ │ f01 = σ(0.35 * pleasantness_100ms
+ │ │ │ + 0.30 * mean_pleasantness_500ms)
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 1  │ f02_pleasure_gating      │ [0, 1] │ Pleasure gates sensory gain.
-    │                          │        │ f02 = σ(0.35 * f01
-    │                          │        │       + 0.35 * mean(AED.arousal[10:20])
-    │                          │        │       + 0.30 * loudness_100ms)
+ 1 │ f02_pleasure_gating │ [0, 1] │ Pleasure gates sensory gain.
+ │ │ │ f02 = σ(0.35 * f01
+ │ │ │ + 0.30 * loudness_100ms)
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 2  │ f03_ic_liking_interact   │ [0, 1] │ IC × Liking interaction.
-    │                          │        │ f03 = σ(0.35 * ic_75ms * (1 - f01)
-    │                          │        │       + 0.35 * mean(C0P.expect[10:20])
-    │                          │        │       + 0.30 * ic_entropy_1s)
+ 2 │ f03_ic_liking_interact │ [0, 1] │ IC × Liking interaction.
+ │ │ │ f03 = σ(0.35 * ic_75ms * (1 - f01)
+ │ │ │ + 0.30 * ic_entropy_1s)
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 3  │ f04_moment_to_moment     │ [0, 1] │ Continuous tracking signal.
-    │                          │        │ f04 = σ(0.40 * f01
-    │                          │        │       + 0.30 * f02
-    │                          │        │       + 0.30 * spectral_flux_100ms)
+ 3 │ f04_moment_to_moment │ [0, 1] │ Continuous tracking signal.
+ │ │ │ f04 = σ(0.40 * f01
+ │ │ │ + 0.30 * f02
+ │ │ │ + 0.30 * spectral_flux_100ms)
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 4  │ stg_modulation_state     │ [0, 1] │ Current STG modulation level.
+ 4 │ stg_modulation_state │ [0, 1] │ Current STG modulation level.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 5  │ sensory_gating_pred      │ [0, 1] │ Predicted sensory gating state.
+ 5 │ sensory_gating_pred │ [0, 1] │ Predicted sensory gating state.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 6D per frame at 172.27 Hz
@@ -339,17 +317,17 @@ TOTAL: 6D per frame at 172.27 Hz
 STG_Modulation = α·Liking + β·IC_interaction + γ·Arousal_gating
 
 Parameters:
-    α = 1.0  (liking coupling weight)
-    β = 0.8  (IC interaction weight)
-    γ = 0.5  (arousal gating weight)
+ α = 1.0 (liking coupling weight)
+ β = 0.8 (IC interaction weight)
+ γ = 0.5 (arousal gating weight)
 
 IC_Liking_Interaction:
-    High IC + Disliked → Lowest STG (suppression, t(23)=2.92, p=0.008)
-    High IC + Liked → Normal STG
-    Low IC → Liking-independent
-    Also observed for uncertainty x surprise in bilateral AC (Cheung 2019)
+ High IC + Disliked → Lowest STG (suppression, t(23)=2.92, p=0.008)
+ High IC + Liked → Normal STG
+ Low IC → Liking-independent
+ Also observed for uncertainty x surprise in bilateral AC (Cheung 2019)
 
-τ_decay = 0.5s  (rapid continuous tracking, Gold 2023a)
+τ_decay = 0.5s (rapid continuous tracking, Gold 2023a)
 ```
 
 ### 7.2 Feature Formulas
@@ -359,31 +337,28 @@ IC_Liking_Interaction:
 
 # f01: STG Liking Coupling
 f01 = σ(0.35 * pleasantness_100ms
-       + 0.35 * mean(AED.valence_tracking[0:10])
-       + 0.30 * mean_pleasantness_500ms)
+ + 0.30 * mean_pleasantness_500ms)
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # f02: Pleasure Gating
 f02 = σ(0.35 * f01
-       + 0.35 * mean(AED.arousal_dynamics[10:20])
-       + 0.30 * loudness_100ms)
+ + 0.30 * loudness_100ms)
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # f03: IC × Liking Interaction (high IC + disliked → high f03 = suppression)
-f03 = σ(0.35 * ic_75ms * (1.0 - f01)        # IC × inverse liking
-       + 0.35 * mean(C0P.expectation_surprise[10:20])
-       + 0.30 * ic_entropy_1s)
+f03 = σ(0.35 * ic_75ms * (1.0 - f01) # IC × inverse liking
+ + 0.30 * ic_entropy_1s)
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # f04: Moment-to-Moment Tracking
 f04 = σ(0.40 * f01
-       + 0.30 * f02
-       + 0.30 * spectral_flux_100ms)
+ + 0.30 * f02
+ + 0.30 * spectral_flux_100ms)
 # coefficients: 0.40 + 0.30 + 0.30 = 1.0 ✓
 
 # Temporal dynamics
 dSTG/dt = τ⁻¹ · (Target_Modulation - Current_STG)
-    where τ = 0.5s (rapid tracking, Gold 2023a continuous joystick data)
+ where τ = 0.5s (rapid tracking, Gold 2023a continuous joystick data)
 ```
 
 ---
@@ -417,25 +392,22 @@ dSTG/dt = τ⁻¹ · (Target_Modulation - Current_STG)
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    LDAC INTERACTIONS                                         │
+│ LDAC INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (RPU):                                                         │
-│  LDAC.stg_liking_coupling ────► RPEM (liking → RPE modulation)            │
-│  LDAC.ic_liking_interaction ──► IUCP (IC×liking → preference surface)     │
-│  LDAC.pleasure_gating ────────► MORMR (gating → opioid modulation)       │
-│  LDAC.moment_to_moment ──────► DAED (tracking → DA anticipation)         │
-│                                                                             │
-│  CROSS-UNIT (RPU → ASU):                                                   │
-│  LDAC.stg_modulation ────────► ASU.sensory_gain (auditory processing)     │
-│                                                                             │
-│  UPSTREAM DEPENDENCIES:                                                     │
-│  AED mechanism (30D) ──────────► LDAC (valence/arousal evaluation)        │
-│  CPD mechanism (30D) ──────────► LDAC (peak-related modulation)           │
-│  C0P mechanism (30D) ──────────► LDAC (IC/expectation computation)        │
-│  R³ (~13D) ─────────────────────► LDAC (direct spectral features)        │
-│  H³ (12 tuples) ────────────────► LDAC (temporal dynamics)               │
-│                                                                             │
+│ │
+│ INTRA-UNIT (RPU): │
+│ LDAC.stg_liking_coupling ────► RPEM (liking → RPE modulation) │
+│ LDAC.ic_liking_interaction ──► IUCP (IC×liking → preference surface) │
+│ LDAC.pleasure_gating ────────► MORMR (gating → opioid modulation) │
+│ LDAC.moment_to_moment ──────► DAED (tracking → DA anticipation) │
+│ │
+│ CROSS-UNIT (RPU → ASU): │
+│ LDAC.stg_modulation ────────► ASU.sensory_gain (auditory processing) │
+│ │
+│ UPSTREAM DEPENDENCIES: │
+│ R³ (~13D) ─────────────────────► LDAC (direct spectral features) │
+│ H³ (12 tuples) ────────────────► LDAC (temporal dynamics) │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -459,118 +431,101 @@ dSTG/dt = τ⁻¹ · (Target_Modulation - Current_STG)
 
 ```python
 class LDAC(BaseModel):
-    """Liking-Dependent Auditory Cortex Model.
+ """Liking-Dependent Auditory Cortex Model.
 
-    Output: 6D per frame.
-    Reads: AED mechanism (30D), CPD mechanism (30D), C0P mechanism (30D), R³ direct.
-    """
-    NAME = "LDAC"
-    UNIT = "RPU"
-    TIER = "γ1"
-    OUTPUT_DIM = 6
-    MECHANISM_NAMES = ("AED", "CPD", "C0P")
+ Output: 6D per frame.
+ """
+ NAME = "LDAC"
+ UNIT = "RPU"
+ TIER = "γ1"
+ OUTPUT_DIM = 6
+ TAU_DECAY = 0.5 # Rapid continuous tracking (Gold 2023a)
 
-    TAU_DECAY = 0.5           # Rapid continuous tracking (Gold 2023a)
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """12 tuples for LDAC computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ (4, 3, 0, 2), # sensory_pleasantness, 100ms, value, bidi
+ (4, 8, 1, 2), # sensory_pleasantness, 500ms, mean, bidi
+ (4, 16, 2, 2), # sensory_pleasantness, 1000ms, std, bidi
+ # ── Sensory features ──
+ (8, 3, 0, 2), # loudness, 100ms, value, bidi
+ (8, 16, 1, 2), # loudness, 1000ms, mean, bidi
+ (21, 2, 0, 0), # spectral_change, 75ms, value, fwd
+ (21, 8, 8, 0), # spectral_change, 500ms, velocity, fwd
+ (21, 16, 20, 2), # spectral_change, 1000ms, entropy, bidi
+ # ── Spectral flux / deviation ──
+ (10, 3, 0, 2), # spectral_flux, 100ms, value, bidi
+ (10, 8, 2, 2), # spectral_flux, 500ms, std, bidi
+ # ── Auditory gating ──
+ (25, 3, 0, 2), # x_l0l5[0], 100ms, value, bidi
+ (25, 16, 20, 2), # x_l0l5[0], 1000ms, entropy, bidi
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """12 tuples for LDAC computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # ── AED horizons: liking tracking ──
-            (4, 3, 0, 2),     # sensory_pleasantness, 100ms, value, bidi
-            (4, 8, 1, 2),     # sensory_pleasantness, 500ms, mean, bidi
-            (4, 16, 2, 2),    # sensory_pleasantness, 1000ms, std, bidi
-            # ── Sensory features ──
-            (8, 3, 0, 2),     # loudness, 100ms, value, bidi
-            (8, 16, 1, 2),    # loudness, 1000ms, mean, bidi
-            # ── C0P horizons: IC computation ──
-            (21, 2, 0, 0),    # spectral_change, 75ms, value, fwd
-            (21, 8, 8, 0),    # spectral_change, 500ms, velocity, fwd
-            (21, 16, 20, 2),  # spectral_change, 1000ms, entropy, bidi
-            # ── Spectral flux / deviation ──
-            (10, 3, 0, 2),    # spectral_flux, 100ms, value, bidi
-            (10, 8, 2, 2),    # spectral_flux, 500ms, std, bidi
-            # ── Auditory gating ──
-            (25, 3, 0, 2),    # x_l0l5[0], 100ms, value, bidi
-            (25, 16, 20, 2),  # x_l0l5[0], 1000ms, entropy, bidi
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute LDAC 6D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute LDAC 6D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"AED": (B,T,30), "CPD": (B,T,30), "C0P": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,6) LDAC output
+ """
+ # Mechanism sub-sections
+ # H³ direct features
+ pleasantness_100ms = h3_direct[(4, 3, 0, 2)].unsqueeze(-1)
+ mean_pleasantness_500ms = h3_direct[(4, 8, 1, 2)].unsqueeze(-1)
+ loudness_100ms = h3_direct[(8, 3, 0, 2)].unsqueeze(-1)
+ ic_75ms = h3_direct[(21, 2, 0, 0)].unsqueeze(-1)
+ ic_entropy_1s = h3_direct[(21, 16, 20, 2)].unsqueeze(-1)
+ spectral_flux_100ms = h3_direct[(10, 3, 0, 2)].unsqueeze(-1)
 
-        Returns:
-            (B,T,6) LDAC output
-        """
-        aed = mechanism_outputs["AED"]    # (B, T, 30)
-        cpd = mechanism_outputs["CPD"]    # (B, T, 30)
-        c0p = mechanism_outputs["C0P"]    # (B, T, 30)
+ # ═══ LAYER E: Explicit features ═══
 
-        # Mechanism sub-sections
-        aed_valence = aed[..., 0:10]
-        aed_arousal = aed[..., 10:20]
-        c0p_expect = c0p[..., 10:20]
+ # f01: STG Liking Coupling (coefficients sum = 1.0)
+ f01 = torch.sigmoid(
+ 0.35 * pleasantness_100ms
+ + 0.30 * mean_pleasantness_500ms
+ )
 
-        # H³ direct features
-        pleasantness_100ms = h3_direct[(4, 3, 0, 2)].unsqueeze(-1)
-        mean_pleasantness_500ms = h3_direct[(4, 8, 1, 2)].unsqueeze(-1)
-        loudness_100ms = h3_direct[(8, 3, 0, 2)].unsqueeze(-1)
-        ic_75ms = h3_direct[(21, 2, 0, 0)].unsqueeze(-1)
-        ic_entropy_1s = h3_direct[(21, 16, 20, 2)].unsqueeze(-1)
-        spectral_flux_100ms = h3_direct[(10, 3, 0, 2)].unsqueeze(-1)
+ # f02: Pleasure Gating (coefficients sum = 1.0)
+ f02 = torch.sigmoid(
+ 0.35 * f01
+ + 0.30 * loudness_100ms
+ )
 
-        # ═══ LAYER E: Explicit features ═══
+ # f03: IC × Liking Interaction (coefficients sum = 1.0)
+ f03 = torch.sigmoid(
+ 0.35 * (ic_75ms * (1.0 - f01))
+ + 0.30 * ic_entropy_1s
+ )
 
-        # f01: STG Liking Coupling (coefficients sum = 1.0)
-        f01 = torch.sigmoid(
-            0.35 * pleasantness_100ms
-            + 0.35 * aed_valence.mean(-1, keepdim=True)
-            + 0.30 * mean_pleasantness_500ms
-        )
+ # f04: Moment-to-Moment (coefficients sum = 1.0)
+ f04 = torch.sigmoid(
+ 0.40 * f01
+ + 0.30 * f02
+ + 0.30 * spectral_flux_100ms
+ )
 
-        # f02: Pleasure Gating (coefficients sum = 1.0)
-        f02 = torch.sigmoid(
-            0.35 * f01
-            + 0.35 * aed_arousal.mean(-1, keepdim=True)
-            + 0.30 * loudness_100ms
-        )
+ # ═══ LAYER P: Present ═══
+ stg_modulation = torch.sigmoid(
+ 0.5 * f04 + 0.5 * f02
+ )
 
-        # f03: IC × Liking Interaction (coefficients sum = 1.0)
-        f03 = torch.sigmoid(
-            0.35 * (ic_75ms * (1.0 - f01))
-            + 0.35 * c0p_expect.mean(-1, keepdim=True)
-            + 0.30 * ic_entropy_1s
-        )
+ # ═══ LAYER F: Future ═══
+ sensory_gating_pred = torch.sigmoid(
+ 0.5 * f01 + 0.5 * f03
+ )
 
-        # f04: Moment-to-Moment (coefficients sum = 1.0)
-        f04 = torch.sigmoid(
-            0.40 * f01
-            + 0.30 * f02
-            + 0.30 * spectral_flux_100ms
-        )
-
-        # ═══ LAYER P: Present ═══
-        stg_modulation = torch.sigmoid(
-            0.5 * f04 + 0.5 * f02
-        )
-
-        # ═══ LAYER F: Future ═══
-        sensory_gating_pred = torch.sigmoid(
-            0.5 * f01 + 0.5 * f03
-        )
-
-        return torch.cat([
-            f01, f02, f03, f04,            # E: 4D
-            stg_modulation,                # P: 1D
-            sensory_gating_pred,           # F: 1D
-        ], dim=-1)  # (B, T, 6)
+ return torch.cat([
+ f01, f02, f03, f04, # E: 4D
+ stg_modulation, # P: 1D
+ sensory_gating_pred, # F: 1D
+ ], dim=-1) # (B, T, 6)
 ```
 
 ---
@@ -587,9 +542,6 @@ class LDAC(BaseModel):
 | **Brain Regions** | R STG, bilateral AC, NAcc/VS, amygdala/hippocampus | 5 regions across studies |
 | **R³ Features Used** | ~13D of 49D | Consonance + energy + timbre + change + interactions |
 | **H³ Demand** | 12 tuples (0.52%) | Sparse, efficient |
-| **AED Mechanism** | 30D (3 sub-sections) | Valence/arousal evaluation |
-| **CPD Mechanism** | 30D (3 sub-sections) | Peak-related modulation |
-| **C0P Mechanism** | 30D (3 sub-sections) | IC/expectation computation |
 | **Output Dimensions** | **6D** (doc) / **10D** (code) | 3-layer (doc) / 4-layer (code) -- see mismatch log |
 
 ### 12.1 Doc-Code Mismatch Summary
@@ -601,7 +553,6 @@ The following discrepancies exist between this document and `mi_beta/brain/units
 | FULL_NAME | Liking-Dependent Auditory Cortex | Listener-Dependent Aesthetic Computation | Doc name is authoritative |
 | OUTPUT_DIM | 6 | 10 | Code has extra Layer M (2D) + extra P/F dims |
 | LAYERS | E(4D) + P(1D) + F(1D) = 6D | E(4D) + M(2D) + P(2D) + F(2D) = 10D | Code adds Layer M and expands P/F |
-| MECHANISM_NAMES | ("AED", "CPD", "C0P") | ("AED",) | Code only reads AED |
 | h3_demand | 12 tuples | () empty | Code has no H3 demand |
 | brain_regions MNI | R STG (62,-25,12) | R-STG (60,-20,4), OFC (28,34,-12) | MNI coords differ |
 | citations | Gold 2023a + 5 others | Gold 2023 only (d=1.22) | Code lacks updated citations |
@@ -627,21 +578,13 @@ The following discrepancies exist between this document and `mi_beta/brain/units
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D) | R³ (49D) |
-| Temporal | HC⁰ mechanisms (ATT, EFC, AED, ASA) | AED (30D) + CPD (30D) + C0P (30D) mechanisms |
-| Liking signal | S⁰.L5.loudness[35] + S⁰.L5.centroid[38] + HC⁰.AED | R³.sensory_pleasantness[4] + AED.valence_tracking |
-| IC signal | S⁰.L9.entropy_T[116] + HC⁰.EFC | R³.spectral_change[21] + C0P.expectation_surprise |
-| Sensory gating | S⁰.L0[0:4] + S⁰.X_L0L1[128:136] + HC⁰.ATT | R³.x_l0l5[25:33] + AED.arousal_dynamics |
-| Deviation | S⁰.L5.spectral_flux[45] + HC⁰.ASA | R³.spectral_flux[10] + H³ std tuples |
+| Liking signal | S⁰.L5.loudness[35] + S⁰.L5.centroid[38] + HC⁰ affect | R³.sensory_pleasantness[4] |
+| IC signal | S⁰.L9.entropy_T[116] + HC⁰.EFC | R³.spectral_change[21] |
+| Sensory gating | S⁰.L0[0:4] + S⁰.X_L0L1[128:136] + HC⁰.ATT | R³.x_l0l5[25:33] |
+| Deviation | S⁰.L5.spectral_flux[45] + HC⁰ scene | R³.spectral_flux[10] + H³ std tuples |
 | Demand format | HC⁰ index ranges (15 tuples) | H³ 4-tuples (12 tuples, sparse) |
 | Total demand | 15/2304 = 0.65% | 12/2304 = 0.52% |
 | Output | 6D | 6D (same) |
-
-### Why AED + CPD + C0P replaces HC⁰ mechanisms
-
-- **ATT → AED.arousal_dynamics** [10:20]: Attentional entrainment maps to AED's arousal-dependent sensory gating.
-- **EFC → C0P.expectation_surprise** [10:20]: Efference copy prediction maps to C0P's IC computation for surprise.
-- **AED → AED.valence_tracking** [0:10]: Affective entrainment remains as AED valence for liking tracking.
-- **ASA → CPD.peak_experience** [10:20]: Auditory scene analysis maps to CPD's peak-related STG modulation.
 
 ---
 

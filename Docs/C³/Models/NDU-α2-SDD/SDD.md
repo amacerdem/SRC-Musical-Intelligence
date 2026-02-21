@@ -21,26 +21,26 @@ The **Supramodal Deviance Detection** (SDD) model describes a domain-general mec
 SUPRAMODAL DEVIANCE DETECTION
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-              ┌───────────────────────────────────────────┐
-              │        SUPRAMODAL HUB                     │
-              │   (IFG: BA44, BA45, area 47m)            │
-              └──────────────────┬────────────────────────┘
-                                 │
-       ┌─────────────────────────┴─────────────────────────┐
-       │                         │                         │
-       ▼                         ▼                         ▼
-   ┌────────────┐          ┌────────────┐          ┌────────────┐
-   │  AUDITORY  │          │   VISUAL   │          │   TACTILE  │
-   │  DEVIANCE  │◄────────►│  DEVIANCE  │◄────────►│  DEVIANCE  │
-   │  NETWORK   │  MULTI-  │  NETWORK   │  MULTI-  │  NETWORK   │
-   │            │  LINKS   │            │  LINKS   │            │
-   └────────────┘          └────────────┘          └────────────┘
+ ┌───────────────────────────────────────────┐
+ │ SUPRAMODAL HUB │
+ │ (IFG: BA44, BA45, area 47m) │
+ └──────────────────┬────────────────────────┘
+ │
+ ┌─────────────────────────┴─────────────────────────┐
+ │ │ │
+ ▼ ▼ ▼
+ ┌────────────┐ ┌────────────┐ ┌────────────┐
+ │ AUDITORY │ │ VISUAL │ │ TACTILE │
+ │ DEVIANCE │◄────────►│ DEVIANCE │◄────────►│ DEVIANCE │
+ │ NETWORK │ MULTI- │ NETWORK │ MULTI- │ NETWORK │
+ │ │ LINKS │ │ LINKS │ │
+ └────────────┘ └────────────┘ └────────────┘
 
-   KEY FINDING:
-   Deviance networks > Standard networks in between-network correlation
+ KEY FINDING:
+ Deviance networks > Standard networks in between-network correlation
 
-   NON-MUSICIANS: 47 multilinks
-   MUSICIANS: 15 multilinks (more compartmentalized)
+ NON-MUSICIANS: 47 multilinks
+ MUSICIANS: 15 multilinks (more compartmentalized)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 KEY INSIGHT: A supramodal mechanism supports identification of
@@ -61,66 +61,65 @@ SDD establishes the cross-modal deviance detection mechanism for the Novelty Det
 
 ## 2. Neural Circuit: Complete Anatomy
 
-### 2.1 Information Flow Architecture (EAR → BRAIN → PPC+ASA → SDD)
+### 2.1 Information Flow Architecture (EAR → BRAIN → SDD)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    SDD COMPUTATION ARCHITECTURE                              ║
+║ SDD COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins x 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                         SDD reads: ~16D                          │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                         SDD demand: ~18 of 2304 tuples           │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Salience Circuit ════════     ║
-║                               │                                              ║
-║                       ┌───────┴───────┐                                      ║
-║                       ▼               ▼                                      ║
-║  ┌─────────────────┐  ┌─────────────────┐                                   ║
-║  │  PPC (30D)      │  │  ASA (30D)      │                                   ║
-║  │                 │  │                 │                                    ║
-║  │ Pitch Ext[0:10] │  │ Scene An [0:10] │                                   ║
-║  │ Interval        │  │ Attention       │                                   ║
-║  │ Anal    [10:20] │  │ Gating  [10:20] │                                   ║
-║  │ Contour [20:30] │  │ Salience        │                                   ║
-║  │                 │  │ Weight  [20:30] │                                   ║
-║  └────────┬────────┘  └────────┬────────┘                                   ║
-║           │                    │                                              ║
-║           └────────┬───────────┘                                             ║
-║                    ▼                                                          ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    SDD MODEL (11D Output)                        │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f01_deviance_magnitude,                    │        ║
-║  │                       f02_multilink_count,                       │        ║
-║  │                       f03_supramodal_index,                      │        ║
-║  │                       f04_ifg_hub_activation                     │        ║
-║  │  Layer M (Math):      multilinks_function,                       │        ║
-║  │                       supramodal_ratio                           │        ║
-║  │  Layer P (Present):   deviance_signal, multilink_activation,     │        ║
-║  │                       ifg_state                                  │        ║
-║  │  Layer F (Future):    expectation_update,                        │        ║
-║  │                       attention_reorienting                      │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins x 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ SDD reads: ~16D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ SDD demand: ~18 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Salience Circuit ════════ ║
+║ │ ║
+║ ┌───────┴───────┐ ║
+║ ▼ ▼ ║
+║ ┌─────────────────┐ ┌─────────────────┐ ║
+║ │ │ │ │ ║
+║ │ Pitch Ext[0:10] │ │ Scene An [0:10] │ ║
+║ │ Interval │ │ Attention │ ║
+║ │ Anal [10:20] │ │ Gating [10:20] │ ║
+║ │ Contour [20:30] │ │ Salience │ ║
+║ │ │ │ Weight [20:30] │ ║
+║ └────────┬────────┘ └────────┬────────┘ ║
+║ │ │ ║
+║ └────────┬───────────┘ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SDD MODEL (11D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f01_deviance_magnitude, │ ║
+║ │ f02_multilink_count, │ ║
+║ │ f03_supramodal_index, │ ║
+║ │ f04_ifg_hub_activation │ ║
+║ │ Layer M (Math): multilinks_function, │ ║
+║ │ supramodal_ratio │ ║
+║ │ Layer P (Present): deviance_signal, multilink_activation, │ ║
+║ │ ifg_state │ ║
+║ │ Layer F (Future): expectation_update, │ ║
+║ │ attention_reorienting │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -144,16 +143,16 @@ SDD establishes the cross-modal deviance detection mechanism for the Novelty Det
 ### 3.2 Effect Size Summary
 
 ```
-Primary Evidence (k=8):  Converging across MEG, EEG, fMRI, review
-Heterogeneity:           Low (consistent supramodal/IFG findings across labs)
-Quality Assessment:      α-tier (direct MEG/EEG network analysis, replication)
+Primary Evidence (k=8): Converging across MEG, EEG, fMRI, review
+Heterogeneity: Low (consistent supramodal/IFG findings across labs)
+Quality Assessment: α-tier (direct MEG/EEG network analysis, replication)
 Key Effect Sizes:
-  - Multilinks: 47 vs 15 (non-musicians vs musicians) — Paraskevopoulos 2022
-  - Behavioral SL advantage: Hedges' g = −1.09 — Paraskevopoulos 2022
-  - Multisensory training: η² = 0.168 — Porfyri et al. 2025
-  - IFG syntactic irregularity: F(2,36) = 6.526, p = 0.024 — Kim et al. 2021
-  - SSA/MMN convergence: IC → MGB → AC — Carbajal & Malmierca 2018
-Replication:             Paraskevopoulos 2022 → Porfyri et al. 2025 (same group, EEG confirmation)
+ - Multilinks: 47 vs 15 (non-musicians vs musicians) — Paraskevopoulos 2022
+ - Behavioral SL advantage: Hedges' g = −1.09 — Paraskevopoulos 2022
+ - Multisensory training: η² = 0.168 — Porfyri et al. 2025
+ - IFG syntactic irregularity: F(2,36) = 6.526, p = 0.024 — Kim et al. 2021
+ - SSA/MMN convergence: IC → MGB → AC — Carbajal & Malmierca 2018
+Replication: Paraskevopoulos 2022 → Porfyri et al. 2025 (same group, EEG confirmation)
 ```
 
 ---
@@ -187,19 +186,16 @@ Replication:             Paraskevopoulos 2022 → Porfyri et al. 2025 (same grou
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[10] spectral_flux ────────────┐
 R³[21] spectral_change ──────────┼──► Deviance detection
-ASA.attention_gating[10:20] ─────┘   Statistical irregularity signal
 
 R³[25:33] x_l0l5 ───────────────┐
 R³[41:49] x_l5l7 ───────────────┼──► Cross-modal multilink activation
-PPC.interval_analysis[10:20] ────┘   Edge-to-edge correlation
 
 R³[0] roughness ─────────────────┐
-ASA.salience_weighting[20:30] ───┼──► IFG hub engagement
-H³ entropy tuples ──────────────┘   Supramodal integration
+H³ entropy tuples ──────────────┘ Supramodal integration
 ```
 
 ---
@@ -235,7 +231,7 @@ SDD requires H³ features for deviance tracking at fast timescales and cross-mod
 
 #### R³ v2 Projected Expansion
 
-SDD projected v2 from H:Harmony and I:Information, aligned with PPC/ASA horizons.
+SDD projected v2 from H:Harmony and I:Information, aligned with corresponding H³ horizons.
 
 | R³ Idx | Feature | Group | H | Morph | Law | Purpose |
 |:------:|---------|:-----:|:-:|-------|:---:|---------|
@@ -251,17 +247,6 @@ SDD projected v2 from H:Harmony and I:Information, aligned with PPC/ASA horizons
 **v2 projected**: 8 tuples
 **Total projected**: 26 tuples of 294,912 theoretical = 0.0088%
 
-### 5.2 PPC + ASA Mechanism Binding
-
-| Mechanism | Sub-section | Range | SDD Role | Weight |
-|-----------|-------------|-------|----------|--------|
-| **PPC** | Pitch Extraction | PPC[0:10] | Deviance magnitude encoding | 0.7 |
-| **PPC** | Interval Analysis | PPC[10:20] | Cross-network edge correlation | 0.8 |
-| **PPC** | Contour Tracking | PPC[20:30] | Deviance context (from MPG) | 0.5 |
-| **ASA** | Scene Analysis | ASA[0:10] | Cross-modal scene segmentation | 0.6 |
-| **ASA** | Attention Gating | ASA[10:20] | Deviance-directed attention | **1.0** (primary) |
-| **ASA** | Salience Weighting | ASA[20:30] | IFG hub salience weighting | **0.9** |
-
 ---
 
 ## 6. Output Space: 11D Multi-Layer Representation
@@ -274,53 +259,50 @@ SDD OUTPUT TENSOR: 11D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 0  │ f01_deviance_magnitude   │ [0, 1] │ Statistical irregularity strength.
-    │                          │        │ f01 = σ(0.35 * change_entropy_1s
-    │                          │        │       + 0.35 * mean(ASA.attn[10:20])
-    │                          │        │       + 0.30 * roughness_entropy)
+ 0 │ f01_deviance_magnitude │ [0, 1] │ Statistical irregularity strength.
+ │ │ │ f01 = σ(0.35 * change_entropy_1s
+ │ │ │ + 0.30 * roughness_entropy)
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 1  │ f02_multilink_count      │ [0, 1] │ Cross-network edge correlations.
-    │                          │        │ f02 = σ(0.35 * coupling_std_100ms
-    │                          │        │       + 0.35 * integration_100ms
-    │                          │        │       + 0.30 * mean(PPC.intv[10:20]))
+ 1 │ f02_multilink_count │ [0, 1] │ Cross-network edge correlations.
+ │ │ │ f02 = σ(0.35 * coupling_std_100ms
+ │ │ │ + 0.35 * integration_100ms
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 2  │ f03_supramodal_index     │ [0, 1] │ Cross-modal integration ratio.
-    │                          │        │ f03 = σ(0.40 * f01 * f02
-    │                          │        │       + 0.30 * integration_period_1s
-    │                          │        │       + 0.30 * loudness_entropy)
+ 2 │ f03_supramodal_index │ [0, 1] │ Cross-modal integration ratio.
+ │ │ │ f03 = σ(0.40 * f01 * f02
+ │ │ │ + 0.30 * integration_period_1s
+ │ │ │ + 0.30 * loudness_entropy)
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 3  │ f04_ifg_hub_activation   │ [0, 1] │ Central hub engagement.
-    │                          │        │ f04 = σ(0.35 * f01
-    │                          │        │       + 0.35 * f02
-    │                          │        │       + 0.30 * mean(ASA.sal[20:30]))
+ 3 │ f04_ifg_hub_activation │ [0, 1] │ Central hub engagement.
+ │ │ │ f04 = σ(0.35 * f01
+ │ │ │ + 0.35 * f02
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 4  │ multilinks_function      │ [0, 1] │ Edge correlation measure.
+ 4 │ multilinks_function │ [0, 1] │ Edge correlation measure.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 5  │ supramodal_ratio         │ [0, 1] │ Deviance/standard ratio.
+ 5 │ supramodal_ratio │ [0, 1] │ Deviance/standard ratio.
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 6  │ deviance_signal          │ [0, 1] │ Current irregularity detection.
+ 6 │ deviance_signal │ [0, 1] │ Current irregularity detection.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 7  │ multilink_activation     │ [0, 1] │ Current cross-modal binding.
+ 7 │ multilink_activation │ [0, 1] │ Current cross-modal binding.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 8  │ ifg_state                │ [0, 1] │ Current integration state.
+ 8 │ ifg_state │ [0, 1] │ Current integration state.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 9  │ expectation_update       │ [0, 1] │ 300ms ahead learning.
+ 9 │ expectation_update │ [0, 1] │ 300ms ahead learning.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
-10  │ attention_reorienting    │ [0, 1] │ 100-200ms frontal allocation.
+10 │ attention_reorienting │ [0, 1] │ 100-200ms frontal allocation.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 11D per frame at 172.27 Hz
@@ -341,7 +323,7 @@ Supramodal_Index = Deviance_Multilinks / Standard_Multilinks
 Expected: Supramodal_Index > 1.0 (stronger correlation for deviance)
 
 Expertise Effect:
-    Multilinks_nonmusician > Multilinks_musician (compartmentalization)
+ Multilinks_nonmusician > Multilinks_musician (compartmentalization)
 ```
 
 ### 7.2 Feature Formulas
@@ -351,26 +333,23 @@ Expertise Effect:
 
 # f01: Deviance Magnitude
 f01 = σ(0.35 * change_entropy_1s
-       + 0.35 * mean(ASA.attention_gating[10:20])
-       + 0.30 * roughness_entropy)
+ + 0.30 * roughness_entropy)
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # f02: Multilink Count
 f02 = σ(0.35 * coupling_std_100ms
-       + 0.35 * integration_100ms
-       + 0.30 * mean(PPC.interval_analysis[10:20]))
+ + 0.35 * integration_100ms
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # f03: Supramodal Index
 f03 = σ(0.40 * f01 * f02
-       + 0.30 * integration_periodicity_1s
-       + 0.30 * loudness_entropy)
+ + 0.30 * integration_periodicity_1s
+ + 0.30 * loudness_entropy)
 # coefficients: 0.40 + 0.30 + 0.30 = 1.0 ✓
 
 # f04: IFG Hub Activation
 f04 = σ(0.35 * f01
-       + 0.35 * f02
-       + 0.30 * mean(ASA.salience_weighting[20:30]))
+ + 0.35 * f02
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 ```
 
@@ -402,21 +381,19 @@ f04 = σ(0.35 * f01
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    SDD INTERACTIONS                                          │
+│ SDD INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (NDU):                                                         │
-│  MPG.gradient_ratio ─────────► SDD (melodic gradient context)             │
-│  SDD.deviance_signal ────────► CDMR (deviance for mismatch)              │
-│  SDD.multilink_count ────────► EDNR (multilinks modulated by expertise)  │
-│  SDD.supramodal_index ──────► SLEE (statistical learning link)           │
-│                                                                             │
-│  UPSTREAM DEPENDENCIES:                                                     │
-│  PPC mechanism (30D) ────────► SDD (pitch/interval deviance)             │
-│  ASA mechanism (30D) ────────► SDD (attention/salience)                  │
-│  R³ (~16D) ──────────────────► SDD (direct spectral features)            │
-│  H³ (18 tuples) ─────────────► SDD (temporal dynamics)                   │
-│                                                                             │
+│ │
+│ INTRA-UNIT (NDU): │
+│ MPG.gradient_ratio ─────────► SDD (melodic gradient context) │
+│ SDD.deviance_signal ────────► CDMR (deviance for mismatch) │
+│ SDD.multilink_count ────────► EDNR (multilinks modulated by expertise) │
+│ SDD.supramodal_index ──────► SLEE (statistical learning link) │
+│ │
+│ UPSTREAM DEPENDENCIES: │
+│ R³ (~16D) ──────────────────► SDD (direct spectral features) │
+│ H³ (18 tuples) ─────────────► SDD (temporal dynamics) │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -439,130 +416,108 @@ f04 = σ(0.35 * f01
 
 ```python
 class SDD(BaseModel):
-    """Supramodal Deviance Detection Model.
+ """Supramodal Deviance Detection Model.
 
-    Output: 11D per frame.
-    Reads: PPC mechanism (30D), ASA mechanism (30D), R³ direct.
-    """
-    NAME = "SDD"
-    UNIT = "NDU"
-    TIER = "α2"
-    OUTPUT_DIM = 11
-    MECHANISM_NAMES = ("PPC", "ASA")
+ Output: 11D per frame.
+ """
+ NAME = "SDD"
+ UNIT = "NDU"
+ TIER = "α2"
+ OUTPUT_DIM = 11
+ MULTILINK_THRESHOLD = 0.6 # Edge correlation threshold
+ TAU_DECAY = 0.5 # Prediction error decay
+ RTI_WINDOW = 2.5 # seconds
 
-    MULTILINK_THRESHOLD = 0.6   # Edge correlation threshold
-    TAU_DECAY = 0.5             # Prediction error decay
-    RTI_WINDOW = 2.5            # seconds
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """18 tuples for SDD computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ # ── Deviance detection (fast) ──
+ (10, 0, 0, 2), # spectral_flux, 25ms, value, bidi
+ (10, 1, 1, 2), # spectral_flux, 50ms, mean, bidi
+ (10, 3, 2, 2), # spectral_flux, 100ms, std, bidi
+ (21, 3, 0, 2), # spectral_change, 100ms, value, bidi
+ (21, 4, 8, 0), # spectral_change, 125ms, velocity, fwd
+ (21, 16, 20, 2), # spectral_change, 1000ms, entropy, bidi
+ (22, 3, 0, 2), # energy_change, 100ms, value, bidi
+ (22, 3, 2, 2), # energy_change, 100ms, std, bidi
+ # ── Cross-modal integration ──
+ (0, 3, 0, 2), # roughness, 100ms, value, bidi
+ (0, 3, 20, 2), # roughness, 100ms, entropy, bidi
+ (7, 3, 0, 2), # amplitude, 100ms, value, bidi
+ (8, 3, 0, 2), # loudness, 100ms, value, bidi
+ (25, 3, 0, 2), # x_l0l5[0], 100ms, value, bidi
+ (25, 3, 2, 2), # x_l0l5[0], 100ms, std, bidi
+ (41, 3, 0, 2), # x_l5l7[0], 100ms, value, bidi
+ (41, 16, 14, 2), # x_l5l7[0], 1000ms, periodicity, bidi
+ (8, 3, 20, 2), # loudness, 100ms, entropy, bidi
+ (10, 16, 14, 2), # spectral_flux, 1000ms, periodicity, bidi
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """18 tuples for SDD computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # ── Deviance detection (fast) ──
-            (10, 0, 0, 2),     # spectral_flux, 25ms, value, bidi
-            (10, 1, 1, 2),     # spectral_flux, 50ms, mean, bidi
-            (10, 3, 2, 2),     # spectral_flux, 100ms, std, bidi
-            (21, 3, 0, 2),     # spectral_change, 100ms, value, bidi
-            (21, 4, 8, 0),     # spectral_change, 125ms, velocity, fwd
-            (21, 16, 20, 2),   # spectral_change, 1000ms, entropy, bidi
-            (22, 3, 0, 2),     # energy_change, 100ms, value, bidi
-            (22, 3, 2, 2),     # energy_change, 100ms, std, bidi
-            # ── Cross-modal integration ──
-            (0, 3, 0, 2),      # roughness, 100ms, value, bidi
-            (0, 3, 20, 2),     # roughness, 100ms, entropy, bidi
-            (7, 3, 0, 2),      # amplitude, 100ms, value, bidi
-            (8, 3, 0, 2),      # loudness, 100ms, value, bidi
-            (25, 3, 0, 2),     # x_l0l5[0], 100ms, value, bidi
-            (25, 3, 2, 2),     # x_l0l5[0], 100ms, std, bidi
-            (41, 3, 0, 2),     # x_l5l7[0], 100ms, value, bidi
-            (41, 16, 14, 2),   # x_l5l7[0], 1000ms, periodicity, bidi
-            (8, 3, 20, 2),     # loudness, 100ms, entropy, bidi
-            (10, 16, 14, 2),   # spectral_flux, 1000ms, periodicity, bidi
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute SDD 11D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute SDD 11D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"PPC": (B,T,30), "ASA": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,11) SDD output
+ """
+ # H³ direct features
+ change_entropy_1s = h3_direct[(21, 16, 20, 2)].unsqueeze(-1)
+ roughness_entropy = h3_direct[(0, 3, 20, 2)].unsqueeze(-1)
+ coupling_std_100ms = h3_direct[(25, 3, 2, 2)].unsqueeze(-1)
+ integration_100ms = h3_direct[(41, 3, 0, 2)].unsqueeze(-1)
+ integration_period_1s = h3_direct[(41, 16, 14, 2)].unsqueeze(-1)
+ loudness_entropy = h3_direct[(8, 3, 20, 2)].unsqueeze(-1)
 
-        Returns:
-            (B,T,11) SDD output
-        """
-        ppc = mechanism_outputs["PPC"]    # (B, T, 30)
-        asa = mechanism_outputs["ASA"]    # (B, T, 30)
+ # ═══ LAYER E: Explicit features ═══
+ f01 = torch.sigmoid(
+ 0.35 * change_entropy_1s
+ + 0.30 * roughness_entropy
+ )
+ f02 = torch.sigmoid(
+ 0.35 * coupling_std_100ms
+ + 0.35 * integration_100ms
+ )
+ f03 = torch.sigmoid(
+ 0.40 * (f01 * f02)
+ + 0.30 * integration_period_1s
+ + 0.30 * loudness_entropy
+ )
+ f04 = torch.sigmoid(
+ 0.35 * f01 + 0.35 * f02
+ )
 
-        # PPC sub-sections
-        ppc_pitch = ppc[..., 0:10]
-        ppc_interval = ppc[..., 10:20]
-        ppc_contour = ppc[..., 20:30]
+ # ═══ LAYER M: Mathematical ═══
+ multilinks_func = torch.sigmoid(
+ 0.50 * f02 + 0.50 * integration_100ms
+ )
+ supramodal_ratio = f03
 
-        # ASA sub-sections
-        asa_scene = asa[..., 0:10]
-        asa_attn = asa[..., 10:20]
-        asa_salience = asa[..., 20:30]
+ # ═══ LAYER P: Present ═══
+ deviance_signal = torch.sigmoid(
+ 0.50 * f01 + 0.50 * change_entropy_1s
+ )
+ multilink_activation = f02
+ ifg_state = f04
 
-        # H³ direct features
-        change_entropy_1s = h3_direct[(21, 16, 20, 2)].unsqueeze(-1)
-        roughness_entropy = h3_direct[(0, 3, 20, 2)].unsqueeze(-1)
-        coupling_std_100ms = h3_direct[(25, 3, 2, 2)].unsqueeze(-1)
-        integration_100ms = h3_direct[(41, 3, 0, 2)].unsqueeze(-1)
-        integration_period_1s = h3_direct[(41, 16, 14, 2)].unsqueeze(-1)
-        loudness_entropy = h3_direct[(8, 3, 20, 2)].unsqueeze(-1)
+ # ═══ LAYER F: Future ═══
+ expectation_update = torch.sigmoid(
+ )
+ attention_reorienting = torch.sigmoid(
+ )
 
-        # ═══ LAYER E: Explicit features ═══
-        f01 = torch.sigmoid(
-            0.35 * change_entropy_1s
-            + 0.35 * asa_attn.mean(-1, keepdim=True)
-            + 0.30 * roughness_entropy
-        )
-        f02 = torch.sigmoid(
-            0.35 * coupling_std_100ms
-            + 0.35 * integration_100ms
-            + 0.30 * ppc_interval.mean(-1, keepdim=True)
-        )
-        f03 = torch.sigmoid(
-            0.40 * (f01 * f02)
-            + 0.30 * integration_period_1s
-            + 0.30 * loudness_entropy
-        )
-        f04 = torch.sigmoid(
-            0.35 * f01 + 0.35 * f02
-            + 0.30 * asa_salience.mean(-1, keepdim=True)
-        )
-
-        # ═══ LAYER M: Mathematical ═══
-        multilinks_func = torch.sigmoid(
-            0.50 * f02 + 0.50 * integration_100ms
-        )
-        supramodal_ratio = f03
-
-        # ═══ LAYER P: Present ═══
-        deviance_signal = torch.sigmoid(
-            0.50 * f01 + 0.50 * change_entropy_1s
-        )
-        multilink_activation = f02
-        ifg_state = f04
-
-        # ═══ LAYER F: Future ═══
-        expectation_update = torch.sigmoid(
-            0.50 * f01 + 0.50 * asa_attn.mean(-1, keepdim=True)
-        )
-        attention_reorienting = torch.sigmoid(
-            0.50 * f04 + 0.50 * asa_salience.mean(-1, keepdim=True)
-        )
-
-        return torch.cat([
-            f01, f02, f03, f04,                                    # E: 4D
-            multilinks_func, supramodal_ratio,                     # M: 2D
-            deviance_signal, multilink_activation, ifg_state,      # P: 3D
-            expectation_update, attention_reorienting,             # F: 2D
-        ], dim=-1)  # (B, T, 11)
+ return torch.cat([
+ f01, f02, f03, f04, # E: 4D
+ multilinks_func, supramodal_ratio, # M: 2D
+ deviance_signal, multilink_activation, ifg_state, # P: 3D
+ expectation_update, attention_reorienting, # F: 2D
+ ], dim=-1) # (B, T, 11)
 ```
 
 ---
@@ -577,8 +532,6 @@ class SDD(BaseModel):
 | **Falsification Tests** | 1/4 confirmed | Moderate validity |
 | **R³ Features Used** | ~16D of 49D | Consonance + energy + change + interactions |
 | **H³ Demand** | 18 tuples (0.78%) | Sparse, efficient |
-| **PPC Mechanism** | 30D (3 sub-sections) | Pitch/interval deviance |
-| **ASA Mechanism** | 30D (3 sub-sections) | Attention/salience |
 | **Output Dimensions** | **11D** | 4-layer structure |
 
 ---
@@ -603,20 +556,12 @@ class SDD(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D) | R³ (49D) |
-| Temporal | HC⁰ mechanisms (OSC, ATT, EFC, BND) | PPC (30D) + ASA (30D) mechanisms |
-| Deviance signal | S⁰.L9.kurtosis[104:128] + HC⁰.EFC | R³.spectral_change[21] + ASA.attention_gating |
-| Multilink | S⁰.L7.band_correlation[80:104] + HC⁰.BND | R³.x_l0l5[25:33] + PPC.interval_analysis |
-| Hub activation | S⁰.L5.contrast[30:55] + HC⁰.ATT | R³.roughness[0] + ASA.salience_weighting |
+| Deviance signal | S⁰.L9.kurtosis[104:128] + HC⁰.EFC | R³.spectral_change[21] |
+| Multilink | S⁰.L7.band_correlation[80:104] + HC⁰.BND | R³.x_l0l5[25:33] |
+| Hub activation | S⁰.L5.contrast[30:55] + HC⁰.ATT | R³.roughness[0] |
 | Demand format | HC⁰ index ranges | H³ 4-tuples (sparse) |
 | Total demand | 27/2304 = 1.17% | 18/2304 = 0.78% |
 | Output | 11D | 11D (same) |
-
-### Why PPC + ASA replaces HC⁰ mechanisms
-
-- **OSC → PPC.pitch_extraction** [0:10]: Gamma-band deviance signal maps to PPC's pitch extraction for deviance encoding.
-- **ATT → ASA.attention_gating** [10:20]: Cross-modal attention maps to ASA's auditory scene attention.
-- **EFC → ASA.salience_weighting** [20:30]: Expectation comparison maps to ASA's salience for statistical learning.
-- **BND → PPC.interval_analysis** [10:20]: Cross-network binding maps to PPC's interval analysis for multilink computation.
 
 ---
 

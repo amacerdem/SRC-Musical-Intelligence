@@ -27,28 +27,28 @@ The **Valence-Mode Mapping** (VMM) model describes how musical mode (major/minor
 THE NEURAL DISSOCIATION: HAPPY vs SAD MUSIC
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-MAJOR MODE + CONSONANCE              MINOR MODE + DISSONANCE
-(bright, resolved, stable)            (dark, tense, ambiguous)
+MAJOR MODE + CONSONANCE MINOR MODE + DISSONANCE
+(bright, resolved, stable) (dark, tense, ambiguous)
 
-       ↓                                    ↓
+ ↓ ↓
 
-REWARD CIRCUIT                       LIMBIC-EMOTIONAL CIRCUIT
-• Ventral Striatum (NAcc)            • Hippocampus
-  t(15) = 4.58, MNI (8,4,-6)          t(15) = 4.88, MNI (20,-15,-20)
-  Mitterschiffthaler 2007              Mitterschiffthaler 2007
+REWARD CIRCUIT LIMBIC-EMOTIONAL CIRCUIT
+• Ventral Striatum (NAcc) • Hippocampus
+ t(15) = 4.58, MNI (8,4,-6) t(15) = 4.88, MNI (20,-15,-20)
+ Mitterschiffthaler 2007 Mitterschiffthaler 2007
 
-• Dorsal Striatum (Caudate)          • Amygdala
-  z = 3.80, MNI (-12,14,16)           t = 4.7, MNI (-19,-5,-14)
-  Mitterschiffthaler 2007              Koelsch 2006
+• Dorsal Striatum (Caudate) • Amygdala
+ z = 3.80, MNI (-12,14,16) t = 4.7, MNI (-19,-5,-14)
+ Mitterschiffthaler 2007 Koelsch 2006
 
-• ACC (BA32/24)                      • Parahippocampal Gyrus
-  z = 3.39, MNI (-10,38,14)           t = 5.7, MNI (-25,-26,-11)
-  Mitterschiffthaler 2007              Koelsch 2006
+• ACC (BA32/24) • Parahippocampal Gyrus
+ z = 3.39, MNI (-10,38,14) t = 5.7, MNI (-25,-26,-11)
+ Mitterschiffthaler 2007 Koelsch 2006
 
-       ↓                                    ↓
+ ↓ ↓
 
-POSITIVE VALENCE                     NEGATIVE VALENCE
-Joy, approach, activation            Sadness, contemplation, nostalgia
+POSITIVE VALENCE NEGATIVE VALENCE
+Joy, approach, activation Sadness, contemplation, nostalgia
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Mitterschiffthaler 2007: DOUBLE DISSOCIATION — happy and sad music
@@ -80,14 +80,13 @@ SRP models the **hedonic response**. These recruit partially separable neural sy
 ### 1.2 What VMM Adds to the MI Manifold
 
 ```
-Before VMM:                          After VMM:
-  Models: SRP (19D) + AAC (14D)       Models: SRP (19D) + AAC (14D) + VMM (12D) = 45D
-  Mechanisms: AED, CPD, C0P, ASA      Mechanisms: AED, CPD, C0P, ASA (unchanged)
-  H³ demand: ~140 tuples              H³ demand: ~147 tuples (+7 new)
-  Output: 33D per frame               Output: 45D per frame
+Before VMM: After VMM:
+ Models: SRP (19D) + AAC (14D) Models: SRP (19D) + AAC (14D) + VMM (12D) = 45D
+ (unchanged)
+ H³ demand: ~140 tuples H³ demand: ~147 tuples (+7 new)
+ Output: 33D per frame Output: 45D per frame
 ```
 
-VMM adds **no new mechanisms** — it reads from AED and C0P (both shared with SRP).
 The only new demand is 7 direct H³ reads at slower timescales (H19, H20, H22) that
 capture phrase-to-section-level harmonic context needed for mode detection.
 
@@ -99,67 +98,67 @@ capture phrase-to-section-level harmonic context needed for mode detection.
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║              VALENCE-MODE MAPPING — NEURAL DISSOCIATION CIRCUIT             ║
+║ VALENCE-MODE MAPPING — NEURAL DISSOCIATION CIRCUIT ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │                    AUDITORY CORTEX (STG/STS)                        │    ║
-║  │                                                                     │    ║
-║  │  Spectrotemporal features → Consonance detection →                  │    ║
-║  │  Mode classification → Brightness/warmth analysis                   │    ║
-║  │  Mitterschiffthaler 2007: STG z=4.96/4.54 bilateral                │    ║
-║  └──────┬──────────────────────┬───────────────────────────────────────┘    ║
-║         │                      │                                            ║
-║    CONSONANT/MAJOR         DISSONANT/MINOR                                  ║
-║         │                      │                                            ║
-║         ▼                      ▼                                            ║
-║  ┌──────────────────┐   ┌──────────────────┐                               ║
-║  │  REWARD CIRCUIT  │   │  LIMBIC CIRCUIT  │                               ║
-║  │                  │   │                  │                               ║
-║  │  VS (NAcc):      │   │  Hippocampus:    │                               ║
-║  │  Reward response │   │  Memory-emotion  │                               ║
-║  │  t=4.58/5.1      │   │  t=4.88/6.9      │                               ║
-║  │                  │   │                  │                               ║
-║  │  DS (Caudate):   │   │  Amygdala:       │                               ║
-║  │  Approach motiv  │   │  Emotional arsl  │                               ║
-║  │  z=3.80          │   │  t=4.7           │                               ║
-║  │                  │   │                  │                               ║
-║  │  ACC (BA32/24):  │   │  Temporal Pole:  │                               ║
-║  │  Reward eval     │   │  Semantic emotion│                               ║
-║  │  z=3.39/6.15     │   │  t=4.2           │                               ║
-║  └────────┬─────────┘   └────────┬─────────┘                               ║
-║           │                      │                                          ║
-║           │    ┌─────────────────┤                                          ║
-║           │    │                 │                                          ║
-║           │    ▼                 │                                          ║
-║           │  ┌──────────────┐   │                                          ║
-║           │  │     PHG      │   │                                          ║
-║           │  │  Context for │   │                                          ║
-║           │  │  BOTH paths  │   │                                          ║
-║           │  │  t=5.7/z=3.31│   │                                          ║
-║           │  └──────────────┘   │                                          ║
-║           │                     │                                          ║
-║           ▼                     ▼                                          ║
-║  ┌──────────────────────────────────────────┐                              ║
-║  │            VALENCE OUTPUT                 │                              ║
-║  │                                           │                              ║
-║  │  V(t) = tanh(α·Happy - α·Sad)           │                              ║
-║  │                                           │                              ║
-║  │  +1.0 ──── HAPPY (major, consonant)      │                              ║
-║  │   0.0 ──── NEUTRAL (ambiguous)           │                              ║
-║  │  -1.0 ──── SAD (minor, dissonant)        │                              ║
-║  └──────────────────────────────────────────┘                              ║
-║                                                                              ║
-║  CRITICAL EVIDENCE:                                                          ║
-║  ─────────────────                                                           ║
-║  Mitterschiffthaler 2007:  Double dissociation (n=16, fMRI)                 ║
-║  Koelsch 2006:            Consonance→VS (t=5.1), Dissonance→AMY (t=4.7)    ║
-║  Trost 2012:              Joy→L.VS (z=5.44), Nostalgia→R.HIP (z=5.62)      ║
-║  Fritz 2009:              Cross-cultural (Mafa, n=41), F(2,39)=15.48        ║
-║  Green 2008:              Minor→limbic BEYOND dissonance alone              ║
-║  Brattico 2011:           Perceived≠Felt emotion (separable circuits)       ║
-║  Carraturo 2025:          k=70 meta-analysis, consistent direction          ║
-║                                                                              ║
+║ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ AUDITORY CORTEX (STG/STS) │ ║
+║ │ │ ║
+║ │ Spectrotemporal features → Consonance detection → │ ║
+║ │ Mode classification → Brightness/warmth analysis │ ║
+║ │ Mitterschiffthaler 2007: STG z=4.96/4.54 bilateral │ ║
+║ └──────┬──────────────────────┬───────────────────────────────────────┘ ║
+║ │ │ ║
+║ CONSONANT/MAJOR DISSONANT/MINOR ║
+║ │ │ ║
+║ ▼ ▼ ║
+║ ┌──────────────────┐ ┌──────────────────┐ ║
+║ │ REWARD CIRCUIT │ │ LIMBIC CIRCUIT │ ║
+║ │ │ │ │ ║
+║ │ VS (NAcc): │ │ Hippocampus: │ ║
+║ │ Reward response │ │ Memory-emotion │ ║
+║ │ t=4.58/5.1 │ │ t=4.88/6.9 │ ║
+║ │ │ │ │ ║
+║ │ DS (Caudate): │ │ Amygdala: │ ║
+║ │ Approach motiv │ │ Emotional arsl │ ║
+║ │ z=3.80 │ │ t=4.7 │ ║
+║ │ │ │ │ ║
+║ │ ACC (BA32/24): │ │ Temporal Pole: │ ║
+║ │ Reward eval │ │ Semantic emotion│ ║
+║ │ z=3.39/6.15 │ │ t=4.2 │ ║
+║ └────────┬─────────┘ └────────┬─────────┘ ║
+║ │ │ ║
+║ │ ┌─────────────────┤ ║
+║ │ │ │ ║
+║ │ ▼ │ ║
+║ │ ┌──────────────┐ │ ║
+║ │ │ PHG │ │ ║
+║ │ │ Context for │ │ ║
+║ │ │ BOTH paths │ │ ║
+║ │ │ t=5.7/z=3.31│ │ ║
+║ │ └──────────────┘ │ ║
+║ │ │ ║
+║ ▼ ▼ ║
+║ ┌──────────────────────────────────────────┐ ║
+║ │ VALENCE OUTPUT │ ║
+║ │ │ ║
+║ │ V(t) = tanh(α·Happy - α·Sad) │ ║
+║ │ │ ║
+║ │ +1.0 ──── HAPPY (major, consonant) │ ║
+║ │ 0.0 ──── NEUTRAL (ambiguous) │ ║
+║ │ -1.0 ──── SAD (minor, dissonant) │ ║
+║ └──────────────────────────────────────────┘ ║
+║ ║
+║ CRITICAL EVIDENCE: ║
+║ ───────────────── ║
+║ Mitterschiffthaler 2007: Double dissociation (n=16, fMRI) ║
+║ Koelsch 2006: Consonance→VS (t=5.1), Dissonance→AMY (t=4.7) ║
+║ Trost 2012: Joy→L.VS (z=5.44), Nostalgia→R.HIP (z=5.62) ║
+║ Fritz 2009: Cross-cultural (Mafa, n=41), F(2,39)=15.48 ║
+║ Green 2008: Minor→limbic BEYOND dissonance alone ║
+║ Brattico 2011: Perceived≠Felt emotion (separable circuits) ║
+║ Carraturo 2025: k=70 meta-analysis, consistent direction ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -167,46 +166,45 @@ capture phrase-to-section-level harmonic context needed for mode detection.
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    VMM COMPUTATION ARCHITECTURE                              ║
+║ VMM COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║  ═════╪══════════════════════════ EAR ═══════════════════════════════        ║
-║       │                                                                      ║
-║  Cochlea → R³ (49D) → H³ (multi-scale)                                     ║
-║                              │                                               ║
-║  ═════════════════════════════╪═══════ BRAIN ════════════════════════        ║
-║                               │                                              ║
-║       ┌───────────────────────┼───────────────────────┐                     ║
-║       │                       │                       │                     ║
-║       ▼                       ▼                       ▼                     ║
-║  ┌─────────────┐     ┌─────────────┐     ┌─────────────────────────┐       ║
-║  │  AED (30D)  │     │  C0P (30D)  │     │  Direct H³ Reads (7)   │       ║
-║  │  Affective  │     │  Cognitive  │     │                         │       ║
-║  │  Entrainment│     │  Projection │     │  H19 (3s): consonance   │       ║
-║  │             │     │             │     │  H20 (5s): trajectory   │       ║
-║  │ H6+H16 avg │     │ H11 single  │     │  H22 (15s): mode/sect  │       ║
-║  │             │     │             │     │                         │       ║
-║  │ ═══ SHARED ═│     │ ═══ SHARED ═│     │  VMM-SPECIFIC reads    │       ║
-║  │ SRP + AAC   │     │ SRP only    │     │  (~7 new tuples)       │       ║
-║  └──────┬──────┘     └──────┬──────┘     └────────────┬────────────┘       ║
-║         │                   │                         │                     ║
-║         └───────────────────┼─────────────────────────┘                     ║
-║                             │                                               ║
-║                             ▼                                               ║
-║  ┌──────────────────────────────────────────────────────────────────┐       ║
-║  │                    VMM MODEL (12D Output)                        │       ║
-║  │                                                                  │       ║
-║  │  Layer V (Valence):  f03_valence, mode_signal,                  │       ║
-║  │                      consonance_valence (3D)                     │       ║
-║  │  Layer R (Regional): happy_pathway, sad_pathway,                │       ║
-║  │                      parahippocampal, reward_eval (4D)          │       ║
-║  │  Layer P (Perceived):perceived_happy, perceived_sad,            │       ║
-║  │                      emotion_certainty (3D)                      │       ║
-║  │  Layer F (Forecast): valence_forecast, mode_shift_prox (2D)     │       ║
-║  └──────────────────────────────────────────────────────────────────┘       ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ═════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ Cochlea → R³ (49D) → H³ (multi-scale) ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN ════════════════════════ ║
+║ │ ║
+║ ┌───────────────────────┼───────────────────────┐ ║
+║ │ │ │ ║
+║ ▼ ▼ ▼ ║
+║ ┌─────────────┐ ┌─────────────┐ ┌─────────────────────────┐ ║
+║ │ Affective │ │ Cognitive │ │ │ ║
+║ │ Entrainment│ │ Projection │ │ H19 (3s): consonance │ ║
+║ │ │ │ │ │ H20 (5s): trajectory │ ║
+║ │ H6+H16 avg │ │ H11 single │ │ H22 (15s): mode/sect │ ║
+║ │ │ │ │ │ │ ║
+║ │ ═══ SHARED ═│ │ ═══ SHARED ═│ │ VMM-SPECIFIC reads │ ║
+║ │ SRP + AAC │ │ SRP only │ │ (~7 new tuples) │ ║
+║ └──────┬──────┘ └──────┬──────┘ └────────────┬────────────┘ ║
+║ │ │ │ ║
+║ └───────────────────┼─────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ VMM MODEL (12D Output) │ ║
+║ │ │ ║
+║ │ Layer V (Valence): f03_valence, mode_signal, │ ║
+║ │ consonance_valence (3D) │ ║
+║ │ Layer R (Regional): happy_pathway, sad_pathway, │ ║
+║ │ parahippocampal, reward_eval (4D) │ ║
+║ │ Layer P (Perceived):perceived_happy, perceived_sad, │ ║
+║ │ emotion_certainty (3D) │ ║
+║ │ Layer F (Forecast): valence_forecast, mode_shift_prox (2D) │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -243,54 +241,54 @@ TEMPORAL DYNAMICS OF MODE-VALENCE PROCESSING
 
 Phase 1: SPECTRAL ANALYSIS (continuous, ~5.8ms per frame)
 ────────────────────────────────────────────────────────────
-  Auditory cortex extracts consonance, brightness, warmth
-  from spectrotemporal features. These are instantaneous.
+ Auditory cortex extracts consonance, brightness, warmth
+ from spectrotemporal features. These are instantaneous.
 
 Phase 2: MODE DETECTION (phrase-level, ~2-8s integration)
 ────────────────────────────────────────────────────────────
-  Mode (major/minor) requires HARMONIC CONTEXT — you cannot
-  determine mode from a single chord. Need at least 2-3
-  chords (~2s) for confident classification, 5-8s for
-  establishing a tonal center (Krumhansl & Kessler 1982).
+ Mode (major/minor) requires HARMONIC CONTEXT — you cannot
+ determine mode from a single chord. Need at least 2-3
+ chords (~2s) for confident classification, 5-8s for
+ establishing a tonal center (Krumhansl & Kessler 1982).
 
-  This is why VMM uses H19 (3s) and H22 (15s) direct reads
-  rather than the fast horizons used by SRP (H6-H16).
+ This is why VMM uses H19 (3s) and H22 (15s) direct reads
+ rather than the fast horizons used by SRP (H6-H16).
 
 Phase 3: PATHWAY ACTIVATION (500ms-2s after mode established)
 ──────────────────────────────────────────────────────────────
-  Once mode is classified:
-    Major → Striatum + ACC activate (reward circuit)
-    Minor → Hippocampus + Amygdala activate (limbic circuit)
+ Once mode is classified:
+ Major → Striatum + ACC activate (reward circuit)
+ Minor → Hippocampus + Amygdala activate (limbic circuit)
 
-  Activation is GRADED, not binary:
-    Pure major in root position → strongest happy pathway
-    Minor with chromatic borrowing → mixed activation
-    Atonal/ambiguous → both pathways moderate, low certainty
+ Activation is GRADED, not binary:
+ Pure major in root position → strongest happy pathway
+ Minor with chromatic borrowing → mixed activation
+ Atonal/ambiguous → both pathways moderate, low certainty
 
 Phase 4: PERCEIVED EMOTION CATEGORIZATION (~1-2s after)
 ────────────────────────────────────────────────────────
-  Cognitive labeling: "this sounds happy/sad/neutral"
-  Brattico 2011: perceived emotion engages bilateral IFG,
-  claustrum, and mode-specific networks.
-  This is FASTER than felt emotion (which may take 5-15s).
+ Cognitive labeling: "this sounds happy/sad/neutral"
+ Brattico 2011: perceived emotion engages bilateral IFG,
+ claustrum, and mode-specific networks.
+ This is FASTER than felt emotion (which may take 5-15s).
 
 Phase 5: MODULATION TRACKING (continuous)
 ──────────────────────────────────────────
-  Key changes / modulations shift mode_signal gradually.
-  VMM tracks mode_trajectory (H22, M18, L0) to anticipate
-  shifts. A skilled composer uses modulation to control
-  the listener's valence experience.
+ Key changes / modulations shift mode_signal gradually.
+ VMM tracks mode_trajectory (H22, M18, L0) to anticipate
+ shifts. A skilled composer uses modulation to control
+ the listener's valence experience.
 
 KEY TIMING DIFFERENCES FROM SRP:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  SRP operates at beat-to-phrase level (200ms-5s)
-    → DA ramp onset in seconds, peak in <5s
-  VMM operates at phrase-to-section level (3s-15s)
-    → Mode requires harmonic context (2-8s minimum)
-    → Valence shifts occur at key change boundaries
+ SRP operates at beat-to-phrase level (200ms-5s)
+ → DA ramp onset in seconds, peak in <5s
+ VMM operates at phrase-to-section level (3s-15s)
+ → Mode requires harmonic context (2-8s minimum)
+ → Valence shifts occur at key change boundaries
 
-  SRP responds to EVENTS (prediction errors)
-  VMM responds to CONTEXT (harmonic environment)
+ SRP responds to EVENTS (prediction errors)
+ VMM responds to CONTEXT (harmonic environment)
 ```
 
 ### 3.3 Cross-Cultural Validation
@@ -314,28 +312,28 @@ BRATTICO ET AL. 2011: THE CRITICAL DISSOCIATION
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 PERCEIVED SAD (cognitive categorization — VMM):
-  • Bilateral amygdala
-  • Parahippocampal gyrus
-  • Right claustrum
-  • Bilateral IFG
+ • Bilateral amygdala
+ • Parahippocampal gyrus
+ • Right claustrum
+ • Bilateral IFG
 
 PERCEIVED HAPPY (cognitive categorization — VMM):
-  • Right insula
-  • Right precentral/IFG
-  • Left ACC
-  • Left middle/superior frontal gyri
+ • Right insula
+ • Right precentral/IFG
+ • Left ACC
+ • Left middle/superior frontal gyri
 
 FELT EMOTION (hedonic experience — SRP):
-  • NAcc, VTA (reward circuit)
-  • OFC (value computation)
-  • Partially overlapping but SEPARABLE circuits
+ • NAcc, VTA (reward circuit)
+ • OFC (value computation)
+ • Partially overlapping but SEPARABLE circuits
 
 Why this matters for MI:
-  VMM = perceived emotion → "This music SOUNDS sad"
-  SRP = felt reward → "This music MAKES ME feel pleasure"
-  You can feel pleasure (SRP high) from music you perceive
-  as sad (VMM negative). This is the "paradox of sad music"
-  (Eerola & Peltola 2016, Sachs 2015).
+ VMM = perceived emotion → "This music SOUNDS sad"
+ SRP = felt reward → "This music MAKES ME feel pleasure"
+ You can feel pleasure (SRP high) from music you perceive
+ as sad (VMM negative). This is the "paradox of sad music"
+ (Eerola & Peltola 2016, Sachs 2015).
 ```
 
 ---
@@ -350,83 +348,83 @@ VMM OUTPUT TENSOR: 12D PER FRAME (172.27 Hz)
 
 LAYER V — VALENCE CORE (Primary valence dimensions)
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                 │ Range   │ Scientific Basis
+idx │ Name │ Range │ Scientific Basis
 ────┼──────────────────────┼─────────┼────────────────────────────────────────
- 0  │ f03_valence          │ [-1, 1] │ Bipolar emotional valence.
-    │                      │         │ tanh(α·happy_pathway - α·sad_pathway).
-    │                      │         │ +1 = maximum positive (happy, joyful).
-    │                      │         │ -1 = maximum negative (sad, somber).
-    │                      │         │ 0 = neutral or ambiguous.
-    │                      │         │ Mitterschiffthaler 2007: dissociation basis.
+ 0 │ f03_valence │ [-1, 1] │ Bipolar emotional valence.
+ │ │ │ tanh(α·happy_pathway - α·sad_pathway).
+ │ │ │ +1 = maximum positive (happy, joyful).
+ │ │ │ -1 = maximum negative (sad, somber).
+ │ │ │ 0 = neutral or ambiguous.
+ │ │ │ Mitterschiffthaler 2007: dissociation basis.
 ────┼──────────────────────┼─────────┼────────────────────────────────────────
- 1  │ mode_signal          │ [0, 1]  │ Major/minor mode detection.
-    │                      │         │ 1.0 = strong major. 0.0 = strong minor.
-    │                      │         │ 0.5 = ambiguous/atonal/modulating.
-    │                      │         │ Requires phrase-level context (H19/H22).
-    │                      │         │ Fritz 2009: cross-cultural mode detection.
+ 1 │ mode_signal │ [0, 1] │ Major/minor mode detection.
+ │ │ │ 1.0 = strong major. 0.0 = strong minor.
+ │ │ │ 0.5 = ambiguous/atonal/modulating.
+ │ │ │ Requires phrase-level context (H19/H22).
+ │ │ │ Fritz 2009: cross-cultural mode detection.
 ────┼──────────────────────┼─────────┼────────────────────────────────────────
- 2  │ consonance_valence   │ [0, 1]  │ Consonance-derived pleasantness.
-    │                      │         │ High = consonant, resolved, smooth.
-    │                      │         │ Low = dissonant, rough, tense.
-    │                      │         │ Koelsch 2006: consonant→VS (t=5.1).
+ 2 │ consonance_valence │ [0, 1] │ Consonance-derived pleasantness.
+ │ │ │ High = consonant, resolved, smooth.
+ │ │ │ Low = dissonant, rough, tense.
+ │ │ │ Koelsch 2006: consonant→VS (t=5.1).
 
 LAYER R — REGIONAL PATHWAYS (Neural circuit activation)
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                 │ Range   │ Scientific Basis
+idx │ Name │ Range │ Scientific Basis
 ────┼──────────────────────┼─────────┼────────────────────────────────────────
- 3  │ happy_pathway        │ [0, 1]  │ Striatal reward circuit composite.
-    │                      │         │ VS + DS activation for major/consonant music.
-    │                      │         │ Mitterschiffthaler 2007: VS t=4.58, DS z=3.80.
-    │                      │         │ Trost 2012: Joy → L.VS z=5.44.
+ 3 │ happy_pathway │ [0, 1] │ Striatal reward circuit composite.
+ │ │ │ VS + DS activation for major/consonant music.
+ │ │ │ Mitterschiffthaler 2007: VS t=4.58, DS z=3.80.
+ │ │ │ Trost 2012: Joy → L.VS z=5.44.
 ────┼──────────────────────┼─────────┼────────────────────────────────────────
- 4  │ sad_pathway          │ [0, 1]  │ Limbic-emotional circuit composite.
-    │                      │         │ HIP + AMY activation for minor/dissonant music.
-    │                      │         │ Mitterschiffthaler 2007: HIP t=4.88.
-    │                      │         │ Koelsch 2006: AMY t=4.7, HIP t=6.9.
+ 4 │ sad_pathway │ [0, 1] │ Limbic-emotional circuit composite.
+ │ │ │ HIP + AMY activation for minor/dissonant music.
+ │ │ │ Mitterschiffthaler 2007: HIP t=4.88.
+ │ │ │ Koelsch 2006: AMY t=4.7, HIP t=6.9.
 ────┼──────────────────────┼─────────┼────────────────────────────────────────
- 5  │ parahippocampal      │ [0, 1]  │ Context processing (BOTH pathways).
-    │                      │         │ Active for happy AND sad, stronger for
-    │                      │         │ contemplative/ambiguous music.
-    │                      │         │ Koelsch 2006: t=5.7 (unpleasant).
-    │                      │         │ Mitterschiffthaler 2007: z=3.31 (happy).
-    │                      │         │ Green 2008: minor > major (beyond dissonance).
+ 5 │ parahippocampal │ [0, 1] │ Context processing (BOTH pathways).
+ │ │ │ Active for happy AND sad, stronger for
+ │ │ │ contemplative/ambiguous music.
+ │ │ │ Koelsch 2006: t=5.7 (unpleasant).
+ │ │ │ Mitterschiffthaler 2007: z=3.31 (happy).
+ │ │ │ Green 2008: minor > major (beyond dissonance).
 ────┼──────────────────────┼─────────┼────────────────────────────────────────
- 6  │ reward_evaluation    │ [0, 1]  │ ACC reward evaluation + affect monitoring.
-    │                      │         │ Strongest for confirmed positive valence.
-    │                      │         │ Mitterschiffthaler 2007: z=3.39 (happy).
-    │                      │         │ Trost 2012: sgACC z=6.15 (nostalgia).
+ 6 │ reward_evaluation │ [0, 1] │ ACC reward evaluation + affect monitoring.
+ │ │ │ Strongest for confirmed positive valence.
+ │ │ │ Mitterschiffthaler 2007: z=3.39 (happy).
+ │ │ │ Trost 2012: sgACC z=6.15 (nostalgia).
 
 LAYER P — PERCEIVED EMOTION (Cognitive categorization — Brattico 2011)
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                 │ Range   │ Scientific Basis
+idx │ Name │ Range │ Scientific Basis
 ────┼──────────────────────┼─────────┼────────────────────────────────────────
- 7  │ perceived_happy      │ [0, 1]  │ Cognitive "this sounds happy".
-    │                      │         │ Major + consonant + bright → high.
-    │                      │         │ Fritz 2009: universal recognition.
-    │                      │         │ Brattico 2011: R.insula, L.ACC activation.
+ 7 │ perceived_happy │ [0, 1] │ Cognitive "this sounds happy".
+ │ │ │ Major + consonant + bright → high.
+ │ │ │ Fritz 2009: universal recognition.
+ │ │ │ Brattico 2011: R.insula, L.ACC activation.
 ────┼──────────────────────┼─────────┼────────────────────────────────────────
- 8  │ perceived_sad        │ [0, 1]  │ Cognitive "this sounds sad".
-    │                      │         │ Minor + less consonant + dark → high.
-    │                      │         │ Khalfa 2005: L.orbitofrontal activation.
-    │                      │         │ Brattico 2011: bilateral AMY, PHG.
+ 8 │ perceived_sad │ [0, 1] │ Cognitive "this sounds sad".
+ │ │ │ Minor + less consonant + dark → high.
+ │ │ │ Khalfa 2005: L.orbitofrontal activation.
+ │ │ │ Brattico 2011: bilateral AMY, PHG.
 ────┼──────────────────────┼─────────┼────────────────────────────────────────
- 9  │ emotion_certainty    │ [0, 1]  │ Categorization confidence.
-    │                      │         │ High = clear major/minor (stable mode).
-    │                      │         │ Low = modulating, atonal, ambiguous.
-    │                      │         │ Drops during key changes/modulation.
+ 9 │ emotion_certainty │ [0, 1] │ Categorization confidence.
+ │ │ │ High = clear major/minor (stable mode).
+ │ │ │ Low = modulating, atonal, ambiguous.
+ │ │ │ Drops during key changes/modulation.
 
 LAYER F — FORECAST (Predictive signals)
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                 │ Range   │ Scientific Basis
+idx │ Name │ Range │ Scientific Basis
 ────┼──────────────────────┼─────────┼────────────────────────────────────────
-10  │ valence_forecast     │ [-1, 1] │ Predicted valence 2-4s ahead.
-    │                      │         │ Based on harmonic trajectory + mode trend.
-    │                      │         │ Positive slope → approaching happy resolution.
-    │                      │         │ Negative slope → moving toward minor/sad.
+10 │ valence_forecast │ [-1, 1] │ Predicted valence 2-4s ahead.
+ │ │ │ Based on harmonic trajectory + mode trend.
+ │ │ │ Positive slope → approaching happy resolution.
+ │ │ │ Negative slope → moving toward minor/sad.
 ────┼──────────────────────┼─────────┼────────────────────────────────────────
-11  │ mode_shift_proximity │ [0, 1]  │ Expected key/mode change proximity.
-    │                      │         │ High when mode unstable + harmonic variance.
-    │                      │         │ Modulation detection for valence anticipation.
+11 │ mode_shift_proximity │ [0, 1] │ Expected key/mode change proximity.
+ │ │ │ High when mode unstable + harmonic variance.
+ │ │ │ Modulation detection for valence anticipation.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 12D per frame at 172.27 Hz
@@ -440,71 +438,27 @@ TOTAL: 12D per frame at 172.27 Hz
 ### 5.1 Shared Mechanism Architecture
 
 ```
-                 EAR (R³ + H³)
-                      │
-         ┌────────────┼────────────┐
-         │            │            │
-         ▼            ▼            ▼
-       AED(30D)    C0P(30D)    Direct H³
-       H6+H16     H11         H19+H20+H22
-         │            │            │
-    ┌────┤       ┌────┤            │
-    │    │       │    │            │
-    │    │       │    │            │
-    ▼    ▼       ▼    │            │
-   SRP  AAC     SRP   │            │
-   VMM  ───     VMM   │            │
- (reads)      (reads)  │            │
-                       │            │
-                       ▼            ▼
-                      VMM ◄────── VMM
-                    (reads)      (reads)
+ EAR (R³ + H³)
+ │
+ ┌────────────┼────────────┐
+ │ │ │
+ ▼ ▼ ▼
+ H6+H16 H11 H19+H20+H22
+ │ │ │
+ ┌────┤ ┌────┤ │
+ │ │ │ │ │
+ │ │ │ │ │
+ ▼ ▼ ▼ │ │
+ SRP AAC SRP │ │
+ VMM ─── VMM │ │
+ (reads) (reads) │ │
+ │ │
+ ▼ ▼
+ VMM ◄────── VMM
+ (reads) (reads)
 
 Mechanism sharing:
-  AED: SHARED between SRP (primary), AAC (primary), VMM (secondary, weight 0.8)
-  CPD: SHARED between SRP (primary), AAC (tertiary) — VMM does NOT use CPD
-  C0P: SHARED between SRP (primary), VMM (secondary, weight 0.6)
-  ASA: AAC ONLY — VMM does not use ASA
 ```
-
-### 5.2 Mechanism Weights
-
-| Mechanism | Role in VMM | Weight | What VMM reads from it |
-|-----------|-------------|--------|----------------------|
-| **AED** | Secondary | 0.8 | Arousal modulation, expectancy affect (how arousal modulates valence response) |
-| **C0P** | Tertiary | 0.6 | Cognitive evaluation, processing state (reward evaluation for happy pathway) |
-
-**Why these mechanisms and not others?**
-- **AED**: Arousal modulates how STRONGLY valence is experienced. High arousal amplifies both happy and sad pathways (Trost 2012). AED provides this gain signal.
-- **C0P**: The cognitive projection mechanism provides reward evaluation that feeds the happy pathway (VS/ACC activation requires cognitive evaluation, not just acoustic consonance).
-- **NOT CPD**: Chills/peaks are reward events (SRP territory), not valence events. You don't need a chill to feel happy or sad music.
-- **NOT ASA**: Auditory scene complexity affects arousal (AAC territory), not valence categorization.
-
-### 5.3 Demand Aggregation
-
-```
-DemandAggregator.from_models([SRP, AAC, VMM]) → set union
-
-SRP demand:  ~107 tuples  (AED:44 + CPD:60 + C0P:16 + 10 direct - overlaps)
-AAC demand:  ~50 tuples   (AED:44 + CPD:60 + ASA:11 + 8 direct - overlaps)
-VMM demand:  ~7 tuples    (AED + C0P already demanded by SRP, 7 new direct)
-Union:       ~147 tuples  (AED/CPD/C0P overlap deduplicated by set union)
-
-New H³ demand from VMM:
-  Mechanisms: 0 new tuples (AED and C0P already in SRP demand)
-  Direct:     ~7 new tuples (H19+H20+H22 reads at slower timescales)
-  Total new:  ~7 tuples added to the global demand
-```
-
-### 5.4 R³ v2 Feature Dependencies ([49:128]) — NEW
-
-| R³ Group | Index | Feature | VMM Role | Scientific Basis |
-|----------|-------|---------|----------|------------------|
-| **H: Harmony** | [76:81] | tonnetz (6D) | Tonal geometry for mood mapping — the tonnetz representation encodes harmonic relationships in a 6D toroidal space (fifths, minor thirds, major thirds), providing the geometric substrate for valence-mode mapping; major/minor mode distinction emerges from tonnetz position | Harte 2006 tonnetz features; Krumhansl & Kessler 1982 tonal hierarchy |
-
-**Rationale**: VMM models valence-mode mapping — how musical mode (major/minor) maps to emotional valence (happy/sad). The current approach uses consonance group features (roughness, pleasantness) as proxies for mode detection. The H:Harmony tonnetz [76:81] provides a direct 6D representation of harmonic space where major and minor modes occupy distinct geometric regions. This is superior to the indirect consonance-based approach because tonnetz captures the tonal relationships (perfect fifth, major/minor third cycles) that define musical mode. The happy/sad pathway dissociation in VMM maps directly to regions of tonnetz space.
-
-**Code impact** (Phase 6): `r3_indices` extended to include [76:81]. These feed the mode detection and valence-mode mapping computation — tonnetz position determines major/minor classification.
 
 ---
 
@@ -512,22 +466,9 @@ New H³ demand from VMM:
 
 ```python
 # ─── INPUT SLICING ───────────────────────────────────────────────────
-# AED (30D) — SHARED with SRP + AAC, weight 0.8
-aed_arousal     = mean(AED[0:8])       # Arousal dynamics (8D mean)
-aed_expectancy  = mean(AED[8:16])      # Expectancy affect (8D mean)
-aed_flow        = AED[D19]             # Direct: aesthetic_flow (stability)
-
-# C0P (30D) — SHARED with SRP, weight 0.6
-c0p_cognitive   = mean(C0P[0:10])      # Feature aggregation (10D mean)
-c0p_processing  = mean(C0P[10:18])     # Cognitive state (8D mean)
-c0p_integration = mean(C0P[18:24])     # Cross-feature integration (6D mean)
 ```
 
 **Why different sub-sections than SRP?**
-- SRP reads AED arousal + expectancy + motor-affective for **reward dynamics**
-- VMM reads AED arousal + expectancy + aesthetic_flow for **valence modulation**
-- SRP reads C0P cognitive + processing + gate for **reward computation**
-- VMM reads C0P cognitive + processing + integration for **valence evaluation**
 
 ### 6.1 R³ v2 Projected Expansion
 
@@ -541,33 +482,29 @@ No significant direct v2 expansion projected for VMM. As a pathway-dependent ARU
 
 ```python
 # ═══════════════════════════════════════════════════════════════════════
-# VMM COMPUTATION: AED(30D) + C0P(30D) + 7 H³ direct reads → 12D
 # ═══════════════════════════════════════════════════════════════════════
 
 # ─── DIRECT H³ READS (phrase-to-section timescales) ──────────────────
-consonance_state    = H³(H19, M0, L2)   # Att.-weighted consonance, 3s
-consonance_mean     = H³(H19, M1, L2)   # Mean consonance baseline, 3s
-consonance_var      = H³(H19, M2, L2)   # Consonance variability, 3s
-brightness_section  = H³(H22, M0, L2)   # Section-level brightness, 15s
-mode_trajectory     = H³(H22, M18, L0)  # Forward mode trend, 15s
-mode_stability      = H³(H22, M19, L2)  # Mode stability, 15s
-valence_velocity    = H³(H20, M8, L0)   # Rate of valence change, 5s
+consonance_state = H³(H19, M0, L2) # Att.-weighted consonance, 3s
+consonance_mean = H³(H19, M1, L2) # Mean consonance baseline, 3s
+consonance_var = H³(H19, M2, L2) # Consonance variability, 3s
+brightness_section = H³(H22, M0, L2) # Section-level brightness, 15s
+mode_trajectory = H³(H22, M18, L0) # Forward mode trend, 15s
+mode_stability = H³(H22, M19, L2) # Mode stability, 15s
+valence_velocity = H³(H20, M8, L0) # Rate of valence change, 5s
 
 # ─── MODE DETECTION ──────────────────────────────────────────────────
 # Mode requires phrase-level context (Krumhansl & Kessler 1982: 2-8s)
 mode_signal = σ(0.4 * brightness_section + 0.3 * consonance_state
-                + 0.3 * c0p_processing)
 # Major mode: brighter + more consonant + more cognitively "resolved"
 # Minor mode: darker + less consonant + more ambiguous
 # Fritz 2009: both Mafa and Germans rely on brightness + consonance
 
 # ─── LAYER V: VALENCE CORE (3D) ─────────────────────────────────────
-ALPHA_H = 0.50   # Happy pathway → valence weight
-ALPHA_S = 0.50   # Sad pathway → valence weight
+ALPHA_H = 0.50 # Happy pathway → valence weight
+ALPHA_S = 0.50 # Sad pathway → valence weight
 # Mitterschiffthaler 2007: Both pathways contribute equally to dissociation
 
-consonance_valence = σ(0.5 * consonance_state + 0.3 * c0p_cognitive
-                       + 0.2 * aed_flow)
 # Consonance-derived pleasantness
 # Koelsch 2006: consonant → VS (t=5.1), dissonant → AMY (t=4.7)
 
@@ -575,20 +512,16 @@ consonance_valence = σ(0.5 * consonance_state + 0.3 * c0p_cognitive
 
 # ─── LAYER R: REGIONAL PATHWAYS (4D) ────────────────────────────────
 happy_pathway = σ(0.5 * consonance_valence + 0.3 * mode_signal
-                  + 0.2 * c0p_cognitive)
 # Striatal reward circuit: consonance + major mode → VS/DS activation
 # Mitterschiffthaler 2007: Happy>Neutral → VS t(15)=4.58, DS z=3.80
 # Trost 2012: Joy → L.VS z=5.44
 
 sad_pathway = σ(0.4 * (1 - consonance_valence) + 0.3 * (1 - mode_signal)
-                + 0.3 * aed_arousal)
 # Limbic-emotional circuit: dissonance + minor → HIP/AMY activation
 # Mitterschiffthaler 2007: Sad>Neutral → HIP t(15)=4.88
 # Koelsch 2006: Unpleasant → AMY t=4.7, HIP t=6.9
 # Arousal modulates intensity (Trost 2012: arousal amplifies limbic)
 
-parahippocampal = σ(0.4 * aed_arousal + 0.3 * consonance_var
-                    + 0.3 * c0p_processing)
 # Context processing — active for BOTH happy and sad music
 # Higher when harmonic ambiguity is present (consonance_var high)
 # Koelsch 2006: PHG t=5.7 (unpleasant)
@@ -596,7 +529,6 @@ parahippocampal = σ(0.4 * aed_arousal + 0.3 * consonance_var
 # Green 2008: Minor > Major in PHG beyond dissonance alone
 
 reward_evaluation = σ(0.4 * happy_pathway + 0.3 * mode_signal
-                      + 0.2 * c0p_integration + 0.1 * aed_expectancy)
 # ACC reward evaluation — strongest for confirmed positive valence
 # c0p_integration: cross-feature coherence signals reward evaluation
 # Mitterschiffthaler 2007: ACC Happy>Neutral z=3.39
@@ -611,13 +543,12 @@ f03_valence = tanh(ALPHA_H * happy_pathway - ALPHA_S * sad_pathway)
 # Brattico 2011: Perceived emotion recruits distinct circuits from felt emotion
 
 perceived_happy = σ(0.5 * mode_signal + 0.3 * consonance_valence
-                    + 0.2 * brightness_section)
+ + 0.2 * brightness_section)
 # Cognitive categorization: "this sounds happy"
 # Fritz 2009: brightness + consonance → happy (cross-cultural)
 # Brattico 2011: perceived happy → R.insula, L.ACC
 
 perceived_sad = σ(0.5 * (1 - mode_signal) + 0.3 * (1 - consonance_valence)
-                  + 0.2 * aed_arousal)
 # Cognitive categorization: "this sounds sad"
 # Khalfa 2005: sad recognition → L.orbitofrontal/mid-dorsolateral
 # Brattico 2011: perceived sad → bilateral AMY, PHG
@@ -633,29 +564,29 @@ valence_forecast = tanh(0.6 * H³(H20, M18, L0) + 0.4 * mode_trajectory)
 # where: H³(H20, M18, L0) = forward trend at 5s horizon
 # Positive trend → approaching happy resolution
 # NOTE: H³(H20, M18, L0) was already read as valence_velocity (M8)
-#       but M18 (trend) is the linear regression slope, more stable
+# but M18 (trend) is the linear regression slope, more stable
 
 mode_shift_proximity = σ(0.5 * (1 - mode_stability) + 0.3 * consonance_var
-                         + 0.2 * abs(valence_velocity))
+ + 0.2 * abs(valence_velocity))
 # Expected key/mode change
 # High when: mode unstable + harmonic variance + rapid valence change
 # Valuable for VMM-SRP interaction: modulations create prediction errors
 
 # ─── OUTPUT ASSEMBLY ─────────────────────────────────────────────────
 output = [
-    f03_valence, mode_signal, consonance_valence,       # Layer V (3D)
-    happy_pathway, sad_pathway, parahippocampal,         # Layer R (4D)
-    reward_evaluation,
-    perceived_happy, perceived_sad, emotion_certainty,   # Layer P (3D)
-    valence_forecast, mode_shift_proximity               # Layer F (2D)
-]  # Total: 12D
+ f03_valence, mode_signal, consonance_valence, # Layer V (3D)
+ happy_pathway, sad_pathway, parahippocampal, # Layer R (4D)
+ reward_evaluation,
+ perceived_happy, perceived_sad, emotion_certainty, # Layer P (3D)
+ valence_forecast, mode_shift_proximity # Layer F (2D)
+] # Total: 12D
 ```
 
 ---
 
 ## 8. Direct H³ Reads
 
-VMM makes **7 direct H³ reads** at phrase-to-section timescales, in addition to mechanism sub-section means. These capture the **slower harmonic context** needed for mode detection — timescales NOT covered by AED (H6+H16) or C0P (H11).
+VMM makes **7 direct H³ reads** at phrase-to-section timescales. These capture the **slower harmonic context** needed for mode detection — timescales at longer timescales.
 
 | # | Horizon | Morph | Law | Tuple | Purpose |
 |---|---------|-------|-----|-------|---------|
@@ -719,25 +650,25 @@ When the music modulates from major to minor (e.g., a classical development sect
 EXPECTED VMM SIGNATURE FOR KEY CHANGE (MAJOR → MINOR):
 
 -8s ──────── -4s ──────── 0s (KEY CHANGE) ── +4s ──── +8s ──── +15s
-│               │            │                  │        │         │
-│  mode_signal: │   STABLE ──────►              │  DROPS ─────────►
-│  (major=1.0)  │   HIGH      │                 │  (minor=low)      │
-│               │            │                  │        │         │
-│  mode_shift:  │   LOW ─────►  RISES ─►       │  PEAK   │  DROPS │
-│               │            │ (instability)     │        │         │
-│               │            │                  │        │         │
-│  f03_valence: │   POSITIVE ────►              │  DROPS ─► NEGATIVE
-│               │            │                  │        │         │
-│  happy_path:  │   HIGH ────────►              │  DROPS ──────────│
-│               │            │                  │        │         │
-│  sad_path:    │   LOW ─────────►              │  RISES ──────────│
-│               │            │                  │        │         │
-│  certainty:   │   HIGH ────►    DIPS ──►     │  LOW ──► RECOVERS│
-│               │            │ (during trans.)   │        │ (+8-15s)│
-│               │            │                  │        │         │
-│  valence_fc:  │  DROPS ───►    LEADS ──►     │  (already shifted)│
-│               │  (predicted │    the actual    │        │         │
-│               │   ahead!)   │    change        │        │         │
+│ │ │ │ │ │
+│ mode_signal: │ STABLE ──────► │ DROPS ─────────►
+│ (major=1.0) │ HIGH │ │ (minor=low) │
+│ │ │ │ │ │
+│ mode_shift: │ LOW ─────► RISES ─► │ PEAK │ DROPS │
+│ │ │ (instability) │ │ │
+│ │ │ │ │ │
+│ f03_valence: │ POSITIVE ────► │ DROPS ─► NEGATIVE
+│ │ │ │ │ │
+│ happy_path: │ HIGH ────────► │ DROPS ──────────│
+│ │ │ │ │ │
+│ sad_path: │ LOW ─────────► │ RISES ──────────│
+│ │ │ │ │ │
+│ certainty: │ HIGH ────► DIPS ──► │ LOW ──► RECOVERS│
+│ │ │ (during trans.) │ │ (+8-15s)│
+│ │ │ │ │ │
+│ valence_fc: │ DROPS ───► LEADS ──► │ (already shifted)│
+│ │ (predicted │ the actual │ │ │
+│ │ ahead!) │ change │ │ │
 
 KEY OBSERVATIONS:
 1. mode_shift_proximity should RISE before the key change
@@ -774,36 +705,35 @@ SRP, AAC, and VMM are **three output facets** of the same neural processing casc
 SINGLE UPSTREAM CASCADE:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ACOUSTIC FEATURES (R³ → H³)
-         │
-         ├──────────────────────────────────────────┐
-         │                                          │
-    PREDICTION ERROR                         MODE/CONSONANCE
-    (AED/CPD mechanisms)                     (Direct H³ reads)
-         │                                          │
-         ├──────────────┐                          │
-         ▼              ▼                          ▼
-  ┌──────────┐   ┌──────────────┐         ┌──────────────┐
-  │   SRP    │   │ Hypothalamus │         │     VMM      │
-  │ (19D)    │   │              │         │ (12D)        │
-  │ wanting  │   │ Autonomic    │         │ valence      │
-  │ liking   │   │ efferent     │         │ mode         │
-  │ pleasure │   │ command      │         │ happy/sad    │
-  └──────────┘   └──────┬───────┘         │ perceived    │
-  REWARD                │                  │ emotion      │
-  FACET                 ▼                  └──────────────┘
-              ┌──────────────┐             VALENCE
-              │     AAC      │             FACET
-              │ (14D)        │
-              │ SCR, HR      │
-              │ CI           │
-              └──────────────┘
-              AROUSAL
-              FACET
+ │
+ ├──────────────────────────────────────────┐
+ │ │
+ PREDICTION ERROR MODE/CONSONANCE
+ │ │
+ ├──────────────┐ │
+ ▼ ▼ ▼
+ ┌──────────┐ ┌──────────────┐ ┌──────────────┐
+ │ SRP │ │ Hypothalamus │ │ VMM │
+ │ (19D) │ │ │ │ (12D) │
+ │ wanting │ │ Autonomic │ │ valence │
+ │ liking │ │ efferent │ │ mode │
+ │ pleasure │ │ command │ │ happy/sad │
+ └──────────┘ └──────┬───────┘ │ perceived │
+ REWARD │ │ emotion │
+ FACET ▼ └──────────────┘
+ ┌──────────────┐ VALENCE
+ │ AAC │ FACET
+ │ (14D) │
+ │ SCR, HR │
+ │ CI │
+ └──────────────┘
+ AROUSAL
+ FACET
 
 TEMPORAL DYNAMICS:
-  SRP:  Fast (200ms–5s) — responds to prediction EVENTS
-  AAC:  Fast (350ms–5s) — ANS response to arousal EVENTS
-  VMM:  Slow (3s–15s)   — responds to harmonic CONTEXT
+ SRP: Fast (200ms–5s) — responds to prediction EVENTS
+ AAC: Fast (350ms–5s) — ANS response to arousal EVENTS
+ VMM: Slow (3s–15s) — responds to harmonic CONTEXT
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -813,11 +743,11 @@ VMM enables the MI system to model why **sad music can be pleasurable** — one 
 
 ```
 SAD MUSIC THAT GIVES PLEASURE:
-  VMM.f03_valence:     NEGATIVE (the music sounds sad)
-  VMM.perceived_sad:   HIGH (cognitive: "this is sad music")
-  SRP.pleasure:        HIGH (hedonic: "this feels good")
-  SRP.da_nacc:         ELEVATED (DA release)
-  AAC.chills_intensity: POSSIBLE (chills from sad music)
+ VMM.f03_valence: NEGATIVE (the music sounds sad)
+ VMM.perceived_sad: HIGH (cognitive: "this is sad music")
+ SRP.pleasure: HIGH (hedonic: "this feels good")
+ SRP.da_nacc: ELEVATED (DA release)
+ AAC.chills_intensity: POSSIBLE (chills from sad music)
 
 This is NOT a contradiction — it's the expected output.
 The perceived-felt dissociation (Brattico 2011) means
@@ -832,11 +762,6 @@ the reward. Both are active simultaneously.
 The DemandAggregator computes shared mechanisms ONCE and all three models read:
 
 ```
-Shared:    AED → SRP + AAC + VMM     (3 readers)
-Shared:    CPD → SRP + AAC           (2 readers)
-Shared:    C0P → SRP + VMM           (2 readers)
-AAC only:  ASA → AAC                 (1 reader)
-No new:    VMM adds no new mechanisms
 
 Adding VMM: +7 H³ tuples, +0 mechanism tuples
 Computing VMM from already-computed mechanisms: negligible cost
@@ -902,6 +827,6 @@ Computing VMM from already-computed mechanisms: negligible cost
 
 ---
 
-*Mechanism specs: [AED.md](../../C³/Mechanisms/AED.md) · [C0P.md](../../C³/Mechanisms/C0P.md)*
+*Mechanism specs: [md](../../C³/Mechanisms/md) · [md](../../C³/Mechanisms/md)*
 *Sibling models: [ARU-α1-SRP](../ARU-α1-SRP/SRP.md) · [ARU-α2-AAC](../ARU-α2-AAC/AAC.md)*
 *Back to: [00-INDEX.md](../../General/00-INDEX.md) — Navigation hub*

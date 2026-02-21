@@ -21,23 +21,23 @@ The **Predictive Uncertainty-Pleasure Function** (PUPF) models how musical pleas
 THE GOLDILOCKS PRINCIPLE OF MUSICAL PLEASURE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-         HIGH SURPRISE
-              │
-         ╱────┼────╲
-        ╱ MAXIMUM   ╲       "I thought I knew, but WOW"
-       ╱  PLEASURE   ╲       Low H + High S → Sweet Spot 1
-LOW   ╱      │        ╲   HIGH
+ HIGH SURPRISE
+ │
+ ╱────┼────╲
+ ╱ MAXIMUM ╲ "I thought I knew, but WOW"
+ ╱ PLEASURE ╲ Low H + High S → Sweet Spot 1
+LOW ╱ │ ╲ HIGH
 UNCERT├──────┼─────────┤UNCERTAINTY
-       ╲     │       ╱
-        ╲ MAXIMUM   ╱       "I was confused, but it resolved"
-         ╲PLEASURE ╱        High H + Low S → Sweet Spot 2
-          ╲──┼──╱
-              │
-         LOW SURPRISE
+ ╲ │ ╱
+ ╲ MAXIMUM ╱ "I was confused, but it resolved"
+ ╲PLEASURE ╱ High H + Low S → Sweet Spot 2
+ ╲──┼──╱
+ │
+ LOW SURPRISE
 
 EXTREMES ARE BAD:
-  High H + High S = OVERWHELMING (too much information)
-  Low H  + Low S  = BORING       (too little information)
+ High H + High S = OVERWHELMING (too much information)
+ Low H + Low S = BORING (too little information)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Cheung et al. (2019): 80,000 chords analyzed.
@@ -64,64 +64,64 @@ PUPF provides the **information-theoretic complement** to SRP's neurochemical mo
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    PUPF — PREDICTION-PLEASURE PATHWAY                       ║
+║ PUPF — PREDICTION-PLEASURE PATHWAY ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  MUSICAL INPUT (continuous stream)                                          ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────────────────────────────┐                               ║
-║  │  AUDITORY CORTEX (A1/STG)                │                               ║
-║  │  Spectrotemporal pattern encoding        │                               ║
-║  │  Feature extraction → R³ spectral space  │                               ║
-║  └──────┬───────────────────────┬───────────┘                               ║
-║         │                       │                                            ║
-║         ▼                       ▼                                            ║
-║  ┌──────────────────┐   ┌──────────────────┐                               ║
-║  │  HIPPOCAMPUS     │   │  PFC (dlPFC)     │                               ║
-║  │                  │   │                  │                               ║
-║  │  Builds context  │   │  Generates       │                               ║
-║  │  model P(x|ctx)  │   │  predictions     │                               ║
-║  │                  │◄──┤  from context     │                               ║
-║  │  Stores prior    │   │                  │                               ║
-║  │  transitions     │   │  Estimates H     │                               ║
-║  └────────┬─────────┘   └────────┬─────────┘                               ║
-║           │                       │                                          ║
-║           │         ┌─────────────┘                                          ║
-║           ▼         ▼                                                        ║
-║  ┌──────────────────────────────────────────┐                               ║
-║  │  PREDICTION ENGINE                        │                               ║
-║  │                                           │                               ║
-║  │  H = Entropy of expectation distribution  │                               ║
-║  │  S = |observed - predicted| / σ_context   │                               ║
-║  └──────┬─────────────────────────┬─────────┘                               ║
-║         │                         │                                          ║
-║         ▼                         ▼                                          ║
-║  ┌──────────────────┐   ┌──────────────────┐                               ║
-║  │  AMYGDALA        │   │  NAcc / CAUDATE  │                               ║
-║  │  H×S interaction │   │  H alone:        │                               ║
-║  │  Surprise        │   │  Uncertainty     │                               ║
-║  │  detection       │   │  tracking        │                               ║
-║  │  Cheung 2019     │   │  Cheung 2019     │                               ║
-║  └────────┬─────────┘   └────────┬─────────┘                               ║
-║           │                       │                                          ║
-║           └───────────┬───────────┘                                          ║
-║                       ▼                                                      ║
-║  ┌──────────────────────────────────────────┐                               ║
-║  │  PLEASURE FUNCTION P(H, S)                │                               ║
-║  │                                           │                               ║
-║  │  P = α(1-H)S + βH(1-S) - γHS - δ(1-H)(1-S)                             ║
-║  │                                           │                               ║
-║  │  Goldilocks zone: σ(P - θ)                │                               ║
-║  │  Drives striatal dopamine via SRP         │                               ║
-║  └───────────────────────────────────────────┘                               ║
-║                                                                              ║
-║  CRITICAL EVIDENCE:                                                         ║
-║  ─────────────────                                                          ║
-║  Cheung 2019: H×S interaction → amygdala, hippocampus (d=3.8-4.16)         ║
-║  Cheung 2019: Striatal response to surprise (d=3.8-8.53)                    ║
-║  Egermann 2013: Information content → arousal↑, valence↓ (d=6.0)           ║
-║  Pearce 2005: IDyOM entropy correlates with expectation                     ║
+║ ║
+║ MUSICAL INPUT (continuous stream) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────┐ ║
+║ │ AUDITORY CORTEX (A1/STG) │ ║
+║ │ Spectrotemporal pattern encoding │ ║
+║ │ Feature extraction → R³ spectral space │ ║
+║ └──────┬───────────────────────┬───────────┘ ║
+║ │ │ ║
+║ ▼ ▼ ║
+║ ┌──────────────────┐ ┌──────────────────┐ ║
+║ │ HIPPOCAMPUS │ │ PFC (dlPFC) │ ║
+║ │ │ │ │ ║
+║ │ Builds context │ │ Generates │ ║
+║ │ model P(x|ctx) │ │ predictions │ ║
+║ │ │◄──┤ from context │ ║
+║ │ Stores prior │ │ │ ║
+║ │ transitions │ │ Estimates H │ ║
+║ └────────┬─────────┘ └────────┬─────────┘ ║
+║ │ │ ║
+║ │ ┌─────────────┘ ║
+║ ▼ ▼ ║
+║ ┌──────────────────────────────────────────┐ ║
+║ │ PREDICTION ENGINE │ ║
+║ │ │ ║
+║ │ H = Entropy of expectation distribution │ ║
+║ │ S = |observed - predicted| / σ_context │ ║
+║ └──────┬─────────────────────────┬─────────┘ ║
+║ │ │ ║
+║ ▼ ▼ ║
+║ ┌──────────────────┐ ┌──────────────────┐ ║
+║ │ AMYGDALA │ │ NAcc / CAUDATE │ ║
+║ │ H×S interaction │ │ H alone: │ ║
+║ │ Surprise │ │ Uncertainty │ ║
+║ │ detection │ │ tracking │ ║
+║ │ Cheung 2019 │ │ Cheung 2019 │ ║
+║ └────────┬─────────┘ └────────┬─────────┘ ║
+║ │ │ ║
+║ └───────────┬───────────┘ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────┐ ║
+║ │ PLEASURE FUNCTION P(H, S) │ ║
+║ │ │ ║
+║ │ P = α(1-H)S + βH(1-S) - γHS - δ(1-H)(1-S) ║
+║ │ │ ║
+║ │ Goldilocks zone: σ(P - θ) │ ║
+║ │ Drives striatal dopamine via SRP │ ║
+║ └───────────────────────────────────────────┘ ║
+║ ║
+║ CRITICAL EVIDENCE: ║
+║ ───────────────── ║
+║ Cheung 2019: H×S interaction → amygdala, hippocampus (d=3.8-4.16) ║
+║ Cheung 2019: Striatal response to surprise (d=3.8-8.53) ║
+║ Egermann 2013: Information content → arousal↑, valence↓ (d=6.0) ║
+║ Pearce 2005: IDyOM entropy correlates with expectation ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -153,20 +153,20 @@ PLEASURE-PREDICTION FUNCTION
 P(H, S) = α·(1−H)·S + β·H·(1−S) − γ·H·S − δ·(1−H)·(1−S)
 
 where:
-  H ∈ [0,1] = entropy of expectation distribution (uncertainty)
-  S ∈ [0,1] = prediction error magnitude (surprise)
-  α ≈ 0.6   = Low H × High S pleasure (surprising in predictable context)
-  β ≈ 0.4   = High H × Low S pleasure (expected in unpredictable context)
-  γ ≈ 0.3   = High H × High S penalty  (overwhelming)
-  δ ≈ 0.2   = Low H × Low S penalty    (boring)
+ H ∈ [0,1] = entropy of expectation distribution (uncertainty)
+ S ∈ [0,1] = prediction error magnitude (surprise)
+ α ≈ 0.6 = Low H × High S pleasure (surprising in predictable context)
+ β ≈ 0.4 = High H × Low S pleasure (expected in unpredictable context)
+ γ ≈ 0.3 = High H × High S penalty (overwhelming)
+ δ ≈ 0.2 = Low H × Low S penalty (boring)
 
 Goldilocks zone indicator:
-  Zone(H, S) = σ(P(H, S) − θ)     where θ ≈ 0.3
+ Zone(H, S) = σ(P(H, S) − θ) where θ ≈ 0.3
 
 Uncertainty dynamics:
-  dH/dt = λ·(H_context − H) + η·surprise_history
-  λ ≈ 0.2/s (adaptation rate)
-  η = surprise influence on future uncertainty
+ dH/dt = λ·(H_context − H) + η·surprise_history
+ λ ≈ 0.2/s (adaptation rate)
+ η = surprise influence on future uncertainty
 ```
 
 ---
@@ -181,64 +181,64 @@ PUPF OUTPUT TENSOR: 12D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 0  │ f07_prediction_err│ [0, 1] │ Surprise magnitude. |observed − predicted|/σ.
-    │                   │        │ Cheung 2019: striatal RPE (d=3.8-8.53).
-    │                   │        │ Amygdala salience detection.
+ 0 │ f07_prediction_err│ [0, 1] │ Surprise magnitude. |observed − predicted|/σ.
+ │ │ │ Cheung 2019: striatal RPE (d=3.8-8.53).
+ │ │ │ Amygdala salience detection.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 1  │ f08_uncertainty   │ [0, 1] │ Entropy of expectation distribution.
-    │                   │        │ H = −Σ p(xᵢ) log p(xᵢ) / log(n).
-    │                   │        │ Pearce 2005: IDyOM entropy → expectation.
+ 1 │ f08_uncertainty │ [0, 1] │ Entropy of expectation distribution.
+ │ │ │ H = −Σ p(xᵢ) log p(xᵢ) / log(n).
+ │ │ │ Pearce 2005: IDyOM entropy → expectation.
 
 LAYER U — UNCERTAINTY COMPONENTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Basis
+idx │ Name │ Range │ Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 2  │ entropy_H         │ [0, 1] │ Normalized Shannon entropy of context.
-    │                   │        │ High = unpredictable harmonic context.
+ 2 │ entropy_H │ [0, 1] │ Normalized Shannon entropy of context.
+ │ │ │ High = unpredictable harmonic context.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 3  │ surprise_S        │ [0, 1] │ Prediction error magnitude.
-    │                   │        │ |event − E[event]| / σ_distribution.
+ 3 │ surprise_S │ [0, 1] │ Prediction error magnitude.
+ │ │ │ |event − E[event]| / σ_distribution.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 4  │ HS_interaction    │ [0, 1] │ H × S product. Cheung 2019: this specific
-    │                   │        │ interaction drives amygdala + hippocampus.
+ 4 │ HS_interaction │ [0, 1] │ H × S product. Cheung 2019: this specific
+ │ │ │ interaction drives amygdala + hippocampus.
 
 LAYER G — GOLDILOCKS OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Basis
+idx │ Name │ Range │ Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 5  │ pleasure_P        │[-1, 1] │ P(H,S) = α(1-H)S + βH(1-S) − γHS − δ(1-H)(1-S).
-    │                   │        │ Positive = in Goldilocks zone.
+ 5 │ pleasure_P │[-1, 1] │ P(H,S) = α(1-H)S + βH(1-S) − γHS − δ(1-H)(1-S).
+ │ │ │ Positive = in Goldilocks zone.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 6  │ goldilocks_zone   │ [0, 1] │ σ(P − θ). Binary-ish: in/out of sweet spot.
-    │                   │        │ Feeds SRP wanting/liking modulation.
+ 6 │ goldilocks_zone │ [0, 1] │ σ(P − θ). Binary-ish: in/out of sweet spot.
+ │ │ │ Feeds SRP wanting/liking modulation.
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Basis
+idx │ Name │ Range │ Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 7  │ surprise_pleasure │[-1, 1] │ Surprise-pleasure coupling signal.
-    │                   │        │ S × C0P.unit_projection (reward pathway).
+ 7 │ surprise_pleasure │[-1, 1] │ Surprise-pleasure coupling signal.
+ │ │ │ S (reward pathway).
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 8  │ affective_outcome │[-1, 1] │ Net valence from prediction:
-    │                   │        │ positive if prediction confirmed in high-H,
-    │                   │        │ negative if overwhelmed.
+ 8 │ affective_outcome │[-1, 1] │ Net valence from prediction:
+ │ │ │ positive if prediction confirmed in high-H,
+ │ │ │ negative if overwhelmed.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 9  │ tempo_pred_error  │ [0, 1] │ Temporal prediction error (rhythm level).
-    │                   │        │ Deviation from expected beat timing.
+ 9 │ tempo_pred_error │ [0, 1] │ Temporal prediction error (rhythm level).
+ │ │ │ Deviation from expected beat timing.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Basis
+idx │ Name │ Range │ Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
-10  │ next_event_prob   │ [0, 1] │ Confidence in next event prediction.
-    │                   │        │ = 1 − H (high certainty → high probability).
-    │                   │        │ 0.5-1s ahead.
+10 │ next_event_prob │ [0, 1] │ Confidence in next event prediction.
+ │ │ │ = 1 − H (high certainty → high probability).
+ │ │ │ 0.5-1s ahead.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
-11  │ pleasure_forecast │ [0, 1] │ Predicted pleasure response 1-2s ahead.
-    │                   │        │ Based on current P(H,S) trajectory and
-    │                   │        │ Goldilocks zone position.
+11 │ pleasure_forecast │ [0, 1] │ Predicted pleasure response 1-2s ahead.
+ │ │ │ Based on current P(H,S) trajectory and
+ │ │ │ Goldilocks zone position.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 12D per frame at 172.27 Hz
@@ -307,13 +307,13 @@ TOTAL: 12D per frame at 172.27 Hz
 ```
 R³ DEMAND FOR PUPF: 27D of 49D
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Group A: Consonance        3D   → prediction context
-Group B: Energy            3D   → dynamic surprise
-Group C: Timbre            1D   → spectral predictability
-Group D: Change            4D   → H and S computation (CORE)
-Group E: Interactions     16D   → cross-feature surprise
+Group A: Consonance 3D → prediction context
+Group B: Energy 3D → dynamic surprise
+Group C: Timbre 1D → spectral predictability
+Group D: Change 4D → H and S computation (CORE)
+Group E: Interactions 16D → cross-feature surprise
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-TOTAL:                    27D
+TOTAL: 27D
 ```
 
 ---
@@ -322,26 +322,23 @@ TOTAL:                    27D
 
 ### 6.1 Mechanism-Level Demand
 
-PUPF uses all three mesolimbic mechanisms: **AED + CPD + C0P**.
+PUPF uses all three mesolimbic mechanisms: **H³ direct**.
 
 ```
 H³ DEMAND FOR PUPF
 ━━━━━━━━━━━━━━━━━━
 
-Mechanism │ Horizons              │ H-Law       │ Morphs Used              │ Tuples
+Mechanism │ Horizons │ H-Law │ Morphs Used │ Tuples
 ──────────┼───────────────────────┼─────────────┼──────────────────────────┼───────
-AED       │ H6 (200ms)            │ bidirection │ M0(value), M8(velocity), │ 6
-          │ H16 (1000ms)          │             │ M20(entropy)             │
+ │ H16 (1000ms) │ │ M20(entropy) │
 ──────────┼───────────────────────┼─────────────┼──────────────────────────┼───────
-CPD       │ H7 (250ms)            │ bidirection │ M0(value), M4(max),      │ 12
-          │ H12 (525ms)           │             │ M8(velocity), M18(trend) │
-          │ H15 (800ms)           │             │                          │
+ │ H12 (525ms) │ │ M8(velocity), M18(trend) │
+ │ H15 (800ms) │ │ │
 ──────────┼───────────────────────┼─────────────┼──────────────────────────┼───────
-C0P       │ H11 (500ms)           │ forward     │ M1(mean), M2(std),       │ 3
-          │                       │             │ M8(velocity)             │
+ │ │ │ M8(velocity) │
 ──────────┼───────────────────────┼─────────────┼──────────────────────────┼───────
-TOTAL     │ 6 horizons            │             │                          │ 21
-          │                       │             │              21/2304 = 0.91%
+TOTAL │ 6 horizons │ │ │ 21
+ │ │ │ 21/2304 = 0.91%
 ```
 
 ### 6.2 Temporal Layer Mapping
@@ -349,31 +346,27 @@ TOTAL     │ 6 horizons            │             │                         
 | H³ Layer | Horizons | PUPF Function |
 |----------|----------|---------------|
 | Beat (200ms-1s) | H6, H7, H11, H12, H15, H16 | Immediate surprise detection, beat-level uncertainty |
-| Phrase (2-5s) | — (via AED integration) | Context for H accumulation, phrase-level entropy |
+| Phrase (2-5s) | — (via affective-dynamics H³ integration) | Context for H accumulation, phrase-level entropy |
 | Section (15-36s) | — (via SRP interaction) | PUPF does not directly model section-level uncertainty |
 
 ### 6.3 Key H³ Reads
 
 ```
 UNCERTAINTY (H):
-  AED.arousal_dynamics via H16(1000ms) + M20(entropy)
-  → 1s window Shannon entropy of spectral change
-  → Normalized to [0,1] using H_max = log(n)
+ → 1s window Shannon entropy of spectral change
+ → Normalized to [0,1] using H_max = log(n)
 
 SURPRISE (S):
-  CPD.trigger_features via H7(250ms) + M0(value)
-  → Instantaneous prediction error at event
-  → Combined with R³.spectral_flux[21] for spectral surprise
+ → Instantaneous prediction error at event
+ → Combined with R³.spectral_flux[21] for spectral surprise
 
 PREDICTION CONFIDENCE:
-  C0P.cognitive_state via H11(500ms) + M2(std)
-  → Low std = high confidence in prediction
-  → Modulates S magnitude (confident wrong → bigger surprise)
+ → Low std = high confidence in prediction
+ → Modulates S magnitude (confident wrong → bigger surprise)
 
 TRAJECTORY:
-  CPD.buildup_tracking via H12(525ms) + M18(trend)
-  → Direction of uncertainty change over 525ms
-  → Rising uncertainty → approaching Goldilocks zone
+ → Direction of uncertainty change over 525ms
+ → Rising uncertainty → approaching Goldilocks zone
 ```
 
 ### 6.4 R³ v2 Projected Expansion
@@ -392,112 +385,61 @@ PUPF is projected to directly consume I:predictive_entropy [92], the one I-group
 
 ## 7. Mechanism Computation
 
-### 7.1 AED Binding (Primary: Uncertainty Estimation)
-
-```python
-# AED reads: arousal_dynamics[0:10], expectancy_affect[10:20]
-# Horizon: H6(200ms) and H16(1000ms), bidirectional
-
-# Entropy estimation from AED
-entropy_fast = AED.arousal_dynamics[0:4].mean()   # H6: 200ms local entropy
-entropy_slow = AED.expectancy_affect[10:14].mean() # H16: 1s context entropy
-
-# Uncertainty H
-H = sigmoid(0.4 * entropy_fast + 0.6 * entropy_slow)
-# Coefficients: |0.4| + |0.6| = 1.0 (no saturation)
-# Slow context dominates — uncertainty is a CONTEXTUAL property
-```
-
-### 7.2 CPD Binding (Secondary: Surprise Detection)
-
-```python
-# CPD reads: trigger_features[0:10], buildup_tracking[10:20], peak_response[20:30]
-# Horizons: H7(250ms), H12(525ms), H15(800ms), bidirectional
-
-# Surprise from CPD trigger detection
-trigger_instant = CPD.trigger_features[0:4].mean()    # H7: 250ms instant surprise
-trigger_buildup = CPD.buildup_tracking[10:14].mean()   # H12: 525ms buildup context
-trigger_context = CPD.peak_response[20:24].mean()      # H15: 800ms peak context
-
-# Surprise S
-S = sigmoid(0.5 * trigger_instant + 0.3 * trigger_buildup + 0.2 * trigger_context)
-# Coefficients: |0.5| + |0.3| + |0.2| = 1.0
-
-# Combine with R³ spectral surprise
-S_combined = 0.6 * S + 0.4 * sigmoid(R3.spectral_flux[21] * 3.0)
-```
-
-### 7.3 C0P Binding (Tertiary: Prediction Confidence)
-
-```python
-# C0P reads: feature_aggregation[0:10], cognitive_state[10:20], unit_projection[20:30]
-# Horizon: H11(500ms), forward only
-
-# Prediction confidence from C0P
-confidence = 1.0 - C0P.feature_aggregation[2]  # M2(std): low std = high confidence
-cognitive_focus = C0P.cognitive_state[10:14].mean()  # Task-positive state
-
-# Confidence modulates surprise magnitude
-S_modulated = S_combined * (0.5 + 0.5 * confidence)
-# High confidence + wrong prediction → BIGGER surprise (S amplified)
-# Low confidence + wrong prediction → smaller surprise (expected uncertainty)
-```
-
 ### 7.4 PUPF Output Computation
 
 ```python
-def compute_pupf(R3, H3, AED, CPD, C0P):
-    """
-    PUPF: 12D output per frame.
+def compute_pupf(R3, H3):
+ """
+ PUPF: 12D output per frame.
 
-    All deterministic. Zero learned parameters.
-    Coefficients from Cheung 2019, Egermann 2013, Singer 2023.
-    """
-    # --- Uncertainty and Surprise ---
-    H = compute_H(AED, R3)      # Entropy [0,1]
-    S = compute_S(CPD, C0P, R3)  # Surprise [0,1]
+ All deterministic. Zero learned parameters.
+ Coefficients from Cheung 2019, Egermann 2013, Singer 2023.
+ """
+ # --- Uncertainty and Surprise ---
+ H = compute_H(h3, R3) # Entropy [0,1]
+ S = compute_S(h3, R3) # Surprise [0,1]
 
-    # --- Goldilocks pleasure function ---
-    alpha, beta, gamma, delta = 0.6, 0.4, 0.3, 0.2
-    theta = 0.3
+ # --- Goldilocks pleasure function ---
+ alpha, beta, gamma, delta = 0.6, 0.4, 0.3, 0.2
+ theta = 0.3
 
-    P = (alpha * (1-H) * S +      # Low H, High S → pleasure
-         beta  * H * (1-S) -       # High H, Low S → pleasure
-         gamma * H * S -           # High H, High S → penalty
-         delta * (1-H) * (1-S))    # Low H, Low S → penalty
+ P = (alpha * (1-H) * S + # Low H, High S → pleasure
+ beta * H * (1-S) - # High H, Low S → pleasure
+ gamma * H * S - # High H, High S → penalty
+ delta * (1-H) * (1-S)) # Low H, Low S → penalty
 
-    zone = sigmoid(P - theta)
+ zone = sigmoid(P - theta)
 
-    # --- Layer E: Explicit Features ---
-    f07_prediction_error = S                    # Surprise magnitude
-    f08_uncertainty = H                          # Entropy level
+ # --- Layer E: Explicit Features ---
+ f07_prediction_error = S # Surprise magnitude
+ f08_uncertainty = H # Entropy level
 
-    # --- Layer U: Uncertainty Components ---
-    entropy_H = H
-    surprise_S = S
-    HS_interaction = H * S
+ # --- Layer U: Uncertainty Components ---
+ entropy_H = H
+ surprise_S = S
+ HS_interaction = H * S
 
-    # --- Layer G: Goldilocks ---
-    pleasure_P = P
-    goldilocks_zone = zone
+ # --- Layer G: Goldilocks ---
+ pleasure_P = P
+ goldilocks_zone = zone
 
-    # --- Layer P: Present Processing ---
-    surprise_pleasure = tanh(S * C0P.unit_projection[20:24].mean())
-    affective_outcome = tanh(P * AED.expectancy_affect[14:18].mean())
-    tempo_pred_error = sigmoid(abs(R3.velocity_A[8] - AED.arousal_dynamics[6]) * 2.0)
+ # --- Layer P: Present Processing ---
+ surprise_pleasure = tanh(S * unit_projection[20:24].mean())
+ affective_outcome = tanh(P * expectancy_affect[14:18].mean())
+ tempo_pred_error = sigmoid(abs(R3.velocity_A[8] - arousal_dynamics[6]) * 2.0)
 
-    # --- Layer F: Future Predictions ---
-    next_event_prob = 1.0 - H   # High certainty → high probability
-    pleasure_forecast = sigmoid(P + 0.5 * zone)  # Current zone → future pleasure
+ # --- Layer F: Future Predictions ---
+ next_event_prob = 1.0 - H # High certainty → high probability
+ pleasure_forecast = sigmoid(P + 0.5 * zone) # Current zone → future pleasure
 
-    return stack([
-        f07_prediction_error, f08_uncertainty,     # E: 2D
-        entropy_H, surprise_S, HS_interaction,     # U: 3D
-        pleasure_P, goldilocks_zone,               # G: 2D
-        surprise_pleasure, affective_outcome,      # P: 3D
-        tempo_pred_error,
-        next_event_prob, pleasure_forecast          # F: 2D
-    ])  # Total: 12D
+ return stack([
+ f07_prediction_error, f08_uncertainty, # E: 2D
+ entropy_H, surprise_S, HS_interaction, # U: 3D
+ pleasure_P, goldilocks_zone, # G: 2D
+ surprise_pleasure, affective_outcome, # P: 3D
+ tempo_pred_error,
+ next_event_prob, pleasure_forecast # F: 2D
+ ]) # Total: 12D
 ```
 
 ---
@@ -511,17 +453,17 @@ PUPF INTERACTIONS WITHIN ARU
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 PUPF ──► SRP (Striatal Reward Pathway)
-    │     └── PUPF.prediction_error → SRP.prediction_error (direct feed)
-    │     └── PUPF.goldilocks_zone → modulates SRP.wanting ramp gain
-    │
-    ├──► AAC (Autonomic-Affective Coupling)
-    │     └── PUPF.surprise_S → triggers ANS arousal (SCR, HR deceleration)
-    │
-    ├──► VMM (Valence-Mode Mapping)
-    │     └── PUPF.pleasure_P → modulates valence evaluation
-    │
-    └──► CLAM (Closed-Loop Modulation)
-          └── PUPF.entropy_H → guides uncertainty-aware generation
+ │ └── PUPF.prediction_error → SRP.prediction_error (direct feed)
+ │ └── PUPF.goldilocks_zone → modulates SRP.wanting ramp gain
+ │
+ ├──► AAC (Autonomic-Affective Coupling)
+ │ └── PUPF.surprise_S → triggers ANS arousal (SCR, HR deceleration)
+ │
+ ├──► VMM (Valence-Mode Mapping)
+ │ └── PUPF.pleasure_P → modulates valence evaluation
+ │
+ └──► CLAM (Closed-Loop Modulation)
+ └── PUPF.entropy_H → guides uncertainty-aware generation
 ```
 
 ### 8.2 Cross-Unit
@@ -569,7 +511,7 @@ PUPF ──► SRP (Striatal Reward Pathway)
 |--------|-------------|-------------|--------|
 | Output dimensions | 12D | 12D | Same |
 | Input space | S⁰ 21D (L4, L5, L6, L9, X) | R³ 27D | Remapped to R³ groups |
-| Temporal | HC⁰ AED+CPD+C0P [96:512] | H³ → AED+CPD+C0P (30D each) | Clean mechanism binding |
+| Temporal | HC⁰ [96:512] | H³ (30D each) | Clean mechanism binding |
 | H⁰ tuples | 21/2304 = 0.91% | 21/2304 = 0.91% | Same demand |
 
 ### 11.2 S⁰ → R³ Index Mapping

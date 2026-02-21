@@ -21,32 +21,32 @@ The **Individual Opioid Tone Music Sensitivity** (IOTMS) model describes how ind
 INDIVIDUAL OPIOID TONE MUSIC SENSITIVITY
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-INDIVIDUAL TRAIT                         MUSIC RESPONSE
-───────────────                          ──────────────
+INDIVIDUAL TRAIT MUSIC RESPONSE
+─────────────── ──────────────
 
 Baseline MOR ──────────────────────► MOR Availability
-(PET measured)                          (trait level)
-     │
-     ▼
+(PET measured) (trait level)
+ │
+ ▼
 ┌──────────────────────────────────────────────────────────────────┐
-│               OPIOID-REWARD COUPLING                             │
-│                                                                  │
-│   High MOR Baseline         Low MOR Baseline                    │
-│   ═════════════════         ═══════════════                     │
-│   Steep pleasure-BOLD       Shallow pleasure-BOLD               │
-│   High music reward         Low music reward                    │
-│   propensity                propensity                          │
-│                                                                  │
-│   MOR ↔ Pleasure-BOLD slope (d = 1.16, p < 0.05)               │
-│                                                                  │
+│ OPIOID-REWARD COUPLING │
+│ │
+│ High MOR Baseline Low MOR Baseline │
+│ ═════════════════ ═══════════════ │
+│ Steep pleasure-BOLD Shallow pleasure-BOLD │
+│ High music reward Low music reward │
+│ propensity propensity │
+│ │
+│ MOR ↔ Pleasure-BOLD slope (d = 1.16, p < 0.05) │
+│ │
 └──────────────────────────────────────────────────────────────────┘
-     │
-     ▼
+ │
+ ▼
 ┌──────────────────────────────────────────────────────────────────┐
-│                    REWARD SENSITIVITY                             │
-│   Individual MOR tone → pleasure response magnitude              │
-│   Trait-level modulation of music-induced reward                 │
-│   Not time-varying (stable individual difference)                │
+│ REWARD SENSITIVITY │
+│ Individual MOR tone → pleasure response magnitude │
+│ Trait-level modulation of music-induced reward │
+│ Not time-varying (stable individual difference) │
 └──────────────────────────────────────────────────────────────────┘
 
 TRAIT: Baseline MOR availability (PET-measured)
@@ -77,75 +77,73 @@ IOTMS provides the individual differences modulation for the Reward Processing U
 
 ## 2. Neural Circuit: Complete Anatomy
 
-### 2.1 Information Flow Architecture (EAR → BRAIN → AED+CPD+C0P → IOTMS)
+### 2.1 Information Flow Architecture (EAR → BRAIN → IOTMS)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    IOTMS COMPUTATION ARCHITECTURE                            ║
+║ IOTMS COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins x 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
-║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ CHANGE   │ │ X-INT  │ │        ║
-║  │  │ 7D [0:7]  │ │ 5D[7:12]│ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
-║  │  │           │ │         │ │ [12:21] │ │ [21:25]  │ │ [25:49]│ │        ║
-║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                         IOTMS reads: ~12D                       │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                                                                  │        ║
-║  │  ┌── AED Horizons ──────────────┐ ┌── C0P Horizons ──────────┐  │        ║
-║  │  │ H8 (500ms delta)             │ │ H8 (500ms delta)          │  │        ║
-║  │  │ H16 (1000ms beat)            │ │ H16 (1000ms beat)         │  │        ║
-║  │  │                              │ │                            │  │        ║
-║  │  │ Sustained pleasure tracking  │ │ Individual sensitivity     │  │        ║
-║  │  └──────────────────────────────┘ └────────────────────────────┘  │        ║
-║  │                         IOTMS demand: ~12 of 2304 tuples         │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Opioid-Reward Trait ════      ║
-║                               │                                              ║
-║                       ┌───────┴───────┐                                      ║
-║                       ▼               ▼                                      ║
-║  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐              ║
-║  │  AED (30D)      │  │  CPD (30D)      │  │  C0P (30D)      │              ║
-║  │                 │  │                 │  │                 │              ║
-║  │ Valence  [0:10] │  │ Anticip. [0:10] │  │ Tension  [0:10] │              ║
-║  │ Arousal  [10:20]│  │ Peak Exp [10:20]│  │ Expect.  [10:20]│              ║
-║  │ Emotion  [20:30]│  │ Resolut. [20:30]│  │ Approach [20:30]│              ║
-║  └────────┬────────┘  └────────┬────────┘  └────────┬────────┘              ║
-║           │                    │                    │                        ║
-║           └────────────┬───────┴────────────────────┘                        ║
-║                        ▼                                                     ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    IOTMS MODEL (5D Output)                       │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f01_mor_baseline_proxy,                    │        ║
-║  │                       f02_pleasure_bold_slope,                    │        ║
-║  │                       f03_reward_propensity,                      │        ║
-║  │                       f04_music_reward_index                      │        ║
-║  │  Layer P (Present):   individual_sensitivity_state                │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
-║  NOTE: IOTMS represents a stable individual trait, not a time-varying        ║
-║  signal. Output dimensions capture trait-modulated response properties.      ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins x 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ ENERGY │ │ TIMBRE │ │ CHANGE │ │ X-INT │ │ ║
+║ │ │ 7D [0:7] │ │ 5D[7:12]│ │ 9D │ │ 4D │ │ 24D │ │ ║
+║ │ │ │ │ │ │ [12:21] │ │ [21:25] │ │ [25:49]│ │ ║
+║ │ └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │ ║
+║ │ IOTMS reads: ~12D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ │ ║
+║ │ │ H8 (500ms delta) │ │ H8 (500ms delta) │ │ ║
+║ │ │ H16 (1000ms beat) │ │ H16 (1000ms beat) │ │ ║
+║ │ │ │ │ │ │ ║
+║ │ │ Sustained pleasure tracking │ │ Individual sensitivity │ │ ║
+║ │ └──────────────────────────────┘ └────────────────────────────┘ │ ║
+║ │ IOTMS demand: ~12 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Opioid-Reward Trait ════ ║
+║ │ ║
+║ ┌───────┴───────┐ ║
+║ ▼ ▼ ║
+║ ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐ ║
+║ │ │ │ │ │ │ ║
+║ │ Valence [0:10] │ │ Anticip. [0:10] │ │ Tension [0:10] │ ║
+║ │ Arousal [10:20]│ │ Peak Exp [10:20]│ │ Expect. [10:20]│ ║
+║ │ Emotion [20:30]│ │ Resolut. [20:30]│ │ Approach [20:30]│ ║
+║ └────────┬────────┘ └────────┬────────┘ └────────┬────────┘ ║
+║ │ │ │ ║
+║ └────────────┬───────┴────────────────────┘ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ IOTMS MODEL (5D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f01_mor_baseline_proxy, │ ║
+║ │ f02_pleasure_bold_slope, │ ║
+║ │ f03_reward_propensity, │ ║
+║ │ f04_music_reward_index │ ║
+║ │ Layer P (Present): individual_sensitivity_state │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
+║ NOTE: IOTMS represents a stable individual trait, not a time-varying ║
+║ signal. Output dimensions capture trait-modulated response properties. ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -166,16 +164,16 @@ IOTMS provides the individual differences modulation for the Reward Processing U
 ### 3.2 Effect Size Summary
 
 ```
-Primary Evidence (k=5):  1 PET-MOR + 1 PET-DA + 1 fMRI + 1 behavioral + 1 DTI
+Primary Evidence (k=5): 1 PET-MOR + 1 PET-DA + 1 fMRI + 1 behavioral + 1 DTI
 Cross-method convergence: PET (opioid + dopamine), fMRI, SCR/HR, DTI
 Key effects:
-  NAcc BPND vs chills:        r = -0.52, p < 0.05 (Putkinen 2025, MOR PET)
-  NAcc BP vs chills intensity: r = 0.84, p < 0.01 (Salimpoor 2011, DA PET)
-  BMRQ vs pleasure ratings:   R² = 0.40 (Martinez-Molina 2016, fMRI)
-  BMRQ vs SCR slope:          R² = 0.32 (Mas-Herrero 2014, behavioral)
-  Tracts → music reward:      R² = 0.38 (Loui 2017, DTI)
-Quality Assessment:      γ-tier (converging neurochemical + neural + behavioral + structural evidence)
-Replication:             Consistent with Mallik (2017) naltrexone blockade study
+ NAcc BPND vs chills: r = -0.52, p < 0.05 (Putkinen 2025, MOR PET)
+ NAcc BP vs chills intensity: r = 0.84, p < 0.01 (Salimpoor 2011, DA PET)
+ BMRQ vs pleasure ratings: R² = 0.40 (Martinez-Molina 2016, fMRI)
+ BMRQ vs SCR slope: R² = 0.32 (Mas-Herrero 2014, behavioral)
+ Tracts → music reward: R² = 0.38 (Loui 2017, DTI)
+Quality Assessment: γ-tier (converging neurochemical + neural + behavioral + structural evidence)
+Replication: Consistent with Mallik (2017) naltrexone blockade study
 ```
 
 ---
@@ -206,19 +204,16 @@ Replication:             Consistent with Mallik (2017) naltrexone blockade study
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[4] sensory_pleasantness ────┐
 R³[0] roughness (inverse) ─────┼──► MOR baseline proxy
-H³ sustained mean tuples ──────┘   Trait-level pleasure sensitivity
+H³ sustained mean tuples ──────┘ Trait-level pleasure sensitivity
 
 R³[8] loudness ─────────────────┐
-AED.valence_tracking[0:10] ─────┼──► Pleasure-BOLD slope
-C0P.approach_avoidance[20:30] ──┘   Pleasure response magnitude
 
 R³[33:41] x_l4l5 ──────────────┐
-AED.emotional_trajectory[20:30] ┼──► Sustained pleasure / reward
-H³ trend/mean tuples ───────────┘   Prolonged opioid response
+H³ trend/mean tuples ───────────┘ Prolonged opioid response
 
 R³[14:17] tristimulus ──────────────► Musical quality / harmonic richness
 ```
@@ -250,7 +245,7 @@ IOTMS primarily represents a stable trait, but uses H³ features at longer times
 
 #### R³ v2 Projected Expansion
 
-IOTMS projected v2 from G:Rhythm, aligned with AED+C0P horizons.
+IOTMS projected v2 from G:Rhythm, aligned with corresponding H³ horizons.
 
 | R³ Idx | Feature | Group | H | Morph | Law | Purpose |
 |:------:|---------|:-----:|:-:|-------|:---:|---------|
@@ -261,20 +256,6 @@ IOTMS projected v2 from G:Rhythm, aligned with AED+C0P horizons.
 
 **v2 projected**: 4 tuples
 **Total projected**: 16 tuples of 294,912 theoretical = 0.0054%
-
-### 5.2 AED + CPD + C0P Mechanism Binding
-
-| Mechanism | Sub-section | Range | IOTMS Role | Weight |
-|-----------|-------------|-------|-----------|--------|
-| **AED** | Valence Tracking | AED[0:10] | Pleasure response | **1.0** (primary) |
-| **AED** | Arousal Dynamics | AED[10:20] | Arousal modulation | 0.7 |
-| **AED** | Emotional Trajectory | AED[20:30] | Sustained reward | **0.8** |
-| **CPD** | Anticipation | CPD[0:10] | Reward anticipation | 0.5 |
-| **CPD** | Peak Experience | CPD[10:20] | Peak pleasure coupling | 0.6 |
-| **CPD** | Resolution | CPD[20:30] | Post-peak sustain | 0.5 |
-| **C0P** | Tension-Release | C0P[0:10] | Reward tension | 0.5 |
-| **C0P** | Expectation-Surprise | C0P[10:20] | Prediction modulation | 0.6 |
-| **C0P** | Approach-Avoidance | C0P[20:30] | Music approach | **0.8** (secondary) |
 
 ---
 
@@ -288,33 +269,30 @@ IOTMS OUTPUT TENSOR: 5D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 0  │ f01_mor_baseline_proxy   │ [0, 1] │ MOR availability proxy (trait).
-    │                          │        │ f01 = σ(0.35 * mean_pleasantness_1s
-    │                          │        │       + 0.35 * mean(AED.valence[0:10])
-    │                          │        │       + 0.30 * (1 - roughness_skew_1s))
+ 0 │ f01_mor_baseline_proxy │ [0, 1] │ MOR availability proxy (trait).
+ │ │ │ f01 = σ(0.35 * mean_pleasantness_1s
+ │ │ │ + 0.30 * (1 - roughness_skew_1s))
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 1  │ f02_pleasure_bold_slope  │ [0, 1] │ Pleasure-BOLD coupling slope.
-    │                          │        │ f02 = σ(0.40 * f01
-    │                          │        │       + 0.30 * mean(C0P.approach[20:30])
-    │                          │        │       + 0.30 * mean_loudness_1s)
+ 1 │ f02_pleasure_bold_slope │ [0, 1] │ Pleasure-BOLD coupling slope.
+ │ │ │ f02 = σ(0.40 * f01
+ │ │ │ + 0.30 * mean_loudness_1s)
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 2  │ f03_reward_propensity    │ [0, 1] │ Music reward propensity index.
-    │                          │        │ f03 = σ(0.35 * f02
-    │                          │        │       + 0.35 * sustained_coupling_1s
-    │                          │        │       + 0.30 * mean(AED.emotion[20:30]))
+ 2 │ f03_reward_propensity │ [0, 1] │ Music reward propensity index.
+ │ │ │ f03 = σ(0.35 * f02
+ │ │ │ + 0.35 * sustained_coupling_1s
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 3  │ f04_music_reward_index   │ [0, 1] │ Overall music reward sensitivity.
-    │                          │        │ f04 = σ(0.40 * f03
-    │                          │        │       + 0.30 * coupling_trend_1s
-    │                          │        │       + 0.30 * mean_tristimulus_1s)
+ 3 │ f04_music_reward_index │ [0, 1] │ Overall music reward sensitivity.
+ │ │ │ f04 = σ(0.40 * f03
+ │ │ │ + 0.30 * coupling_trend_1s
+ │ │ │ + 0.30 * mean_tristimulus_1s)
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 4  │ individual_sensitivity   │ [0, 1] │ Current individual sensitivity state.
+ 4 │ individual_sensitivity │ [0, 1] │ Current individual sensitivity state.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 5D per frame at 172.27 Hz
@@ -334,9 +312,9 @@ MOR_Proxy = f(sustained_pleasure, consonance, musical_quality)
 Pleasure_BOLD_Slope = α·MOR_Proxy + β·Approach + γ·Loudness
 
 Parameters:
-    α = 1.0  (MOR baseline weight)
-    β = 0.8  (approach behavior weight)
-    γ = 0.5  (loudness modulation weight)
+ α = 1.0 (MOR baseline weight)
+ β = 0.8 (approach behavior weight)
+ γ = 0.5 (loudness modulation weight)
 
 Reward_Propensity = MOR_Proxy × Sustained_Pleasure × Quality
 
@@ -351,26 +329,23 @@ Note: IOTMS is a stable individual difference, not time-varying.
 
 # f01: MOR Baseline Proxy (stable trait estimate)
 f01 = σ(0.35 * mean_pleasantness_1s
-       + 0.35 * mean(AED.valence_tracking[0:10])
-       + 0.30 * (1.0 - roughness_skew_1s))       # inverse roughness
+ + 0.30 * (1.0 - roughness_skew_1s)) # inverse roughness
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # f02: Pleasure-BOLD Slope
 f02 = σ(0.40 * f01
-       + 0.30 * mean(C0P.approach_avoidance[20:30])
-       + 0.30 * mean_loudness_1s)
+ + 0.30 * mean_loudness_1s)
 # coefficients: 0.40 + 0.30 + 0.30 = 1.0 ✓
 
 # f03: Reward Propensity
 f03 = σ(0.35 * f02
-       + 0.35 * sustained_coupling_1s
-       + 0.30 * mean(AED.emotional_trajectory[20:30]))
+ + 0.35 * sustained_coupling_1s
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # f04: Music Reward Index
 f04 = σ(0.40 * f03
-       + 0.30 * coupling_trend_1s
-       + 0.30 * mean_tristimulus_1s)
+ + 0.30 * coupling_trend_1s
+ + 0.30 * mean_tristimulus_1s)
 # coefficients: 0.40 + 0.30 + 0.30 = 1.0 ✓
 ```
 
@@ -399,25 +374,22 @@ f04 = σ(0.40 * f03
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    IOTMS INTERACTIONS                                        │
+│ IOTMS INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (RPU):                                                         │
-│  IOTMS.mor_baseline ──────────► MORMR (MOR → opioid release scaling)     │
-│  IOTMS.pleasure_bold_slope ───► DAED (slope → DA coupling strength)      │
-│  IOTMS.reward_propensity ─────► RPEM (propensity → RPE magnitude)        │
-│  IOTMS.music_reward_index ────► MCCN (index → chills susceptibility)     │
-│                                                                             │
-│  CROSS-UNIT (RPU → ARU):                                                   │
-│  IOTMS.individual_sensitivity ► ARU.affect_gain (individual modulation)   │
-│                                                                             │
-│  UPSTREAM DEPENDENCIES:                                                     │
-│  AED mechanism (30D) ──────────► IOTMS (valence/emotion evaluation)       │
-│  CPD mechanism (30D) ──────────► IOTMS (peak coupling)                    │
-│  C0P mechanism (30D) ──────────► IOTMS (approach behavior)                │
-│  R³ (~12D) ─────────────────────► IOTMS (direct spectral features)       │
-│  H³ (12 tuples) ────────────────► IOTMS (temporal dynamics)              │
-│                                                                             │
+│ │
+│ INTRA-UNIT (RPU): │
+│ IOTMS.mor_baseline ──────────► MORMR (MOR → opioid release scaling) │
+│ IOTMS.pleasure_bold_slope ───► DAED (slope → DA coupling strength) │
+│ IOTMS.reward_propensity ─────► RPEM (propensity → RPE magnitude) │
+│ IOTMS.music_reward_index ────► MCCN (index → chills susceptibility) │
+│ │
+│ CROSS-UNIT (RPU → ARU): │
+│ IOTMS.individual_sensitivity ► ARU.affect_gain (individual modulation) │
+│ │
+│ UPSTREAM DEPENDENCIES: │
+│ R³ (~12D) ─────────────────────► IOTMS (direct spectral features) │
+│ H³ (12 tuples) ────────────────► IOTMS (temporal dynamics) │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -443,113 +415,97 @@ f04 = σ(0.40 * f03
 
 ```python
 class IOTMS(BaseModel):
-    """Individual Opioid Tone Music Sensitivity Model.
+ """Individual Opioid Tone Music Sensitivity Model.
 
-    Output: 5D per frame.
-    Reads: AED mechanism (30D), CPD mechanism (30D), C0P mechanism (30D), R³ direct.
-    Note: Represents stable individual trait, not time-varying event signal.
-    """
-    NAME = "IOTMS"
-    UNIT = "RPU"
-    TIER = "γ2"
-    OUTPUT_DIM = 5
-    MECHANISM_NAMES = ("AED", "CPD", "C0P")
+ Output: 5D per frame.
+ Note: Represents stable individual trait, not time-varying event signal.
+ """
+ NAME = "IOTMS"
+ UNIT = "RPU"
+ TIER = "γ2"
+ OUTPUT_DIM = 5
+ # No τ_decay — trait-level, session-stable
 
-    # No τ_decay — trait-level, session-stable
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """12 tuples for IOTMS computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ (4, 8, 1, 2), # sensory_pleasantness, 500ms, mean, bidi
+ (4, 16, 1, 2), # sensory_pleasantness, 1000ms, mean, bidi
+ (4, 16, 2, 2), # sensory_pleasantness, 1000ms, std, bidi
+ # ── Roughness / consonance ──
+ (0, 8, 1, 2), # roughness, 500ms, mean, bidi
+ (0, 16, 6, 2), # roughness, 1000ms, skew, bidi
+ # ── Loudness ──
+ (8, 8, 1, 2), # loudness, 500ms, mean, bidi
+ (8, 16, 1, 2), # loudness, 1000ms, mean, bidi
+ # ── Sustained coupling ──
+ (33, 8, 1, 2), # x_l4l5[0], 500ms, mean, bidi
+ (33, 16, 1, 2), # x_l4l5[0], 1000ms, mean, bidi
+ (33, 16, 18, 2), # x_l4l5[0], 1000ms, trend, bidi
+ # ── Musical quality ──
+ (14, 16, 1, 2), # tristimulus1, 1000ms, mean, bidi
+ (14, 16, 2, 2), # tristimulus1, 1000ms, std, bidi
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """12 tuples for IOTMS computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # ── AED horizons: sustained pleasure ──
-            (4, 8, 1, 2),     # sensory_pleasantness, 500ms, mean, bidi
-            (4, 16, 1, 2),    # sensory_pleasantness, 1000ms, mean, bidi
-            (4, 16, 2, 2),    # sensory_pleasantness, 1000ms, std, bidi
-            # ── Roughness / consonance ──
-            (0, 8, 1, 2),     # roughness, 500ms, mean, bidi
-            (0, 16, 6, 2),    # roughness, 1000ms, skew, bidi
-            # ── Loudness ──
-            (8, 8, 1, 2),     # loudness, 500ms, mean, bidi
-            (8, 16, 1, 2),    # loudness, 1000ms, mean, bidi
-            # ── Sustained coupling ──
-            (33, 8, 1, 2),    # x_l4l5[0], 500ms, mean, bidi
-            (33, 16, 1, 2),   # x_l4l5[0], 1000ms, mean, bidi
-            (33, 16, 18, 2),  # x_l4l5[0], 1000ms, trend, bidi
-            # ── Musical quality ──
-            (14, 16, 1, 2),   # tristimulus1, 1000ms, mean, bidi
-            (14, 16, 2, 2),   # tristimulus1, 1000ms, std, bidi
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute IOTMS 5D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute IOTMS 5D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"AED": (B,T,30), "CPD": (B,T,30), "C0P": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,5) IOTMS output
+ """
+ # Mechanism sub-sections
+ # H³ direct features
+ mean_pleasantness_1s = h3_direct[(4, 16, 1, 2)].unsqueeze(-1)
+ roughness_skew_1s = h3_direct[(0, 16, 6, 2)].unsqueeze(-1)
+ mean_loudness_1s = h3_direct[(8, 16, 1, 2)].unsqueeze(-1)
+ sustained_coupling_1s = h3_direct[(33, 16, 1, 2)].unsqueeze(-1)
+ coupling_trend_1s = h3_direct[(33, 16, 18, 2)].unsqueeze(-1)
+ mean_tristimulus_1s = h3_direct[(14, 16, 1, 2)].unsqueeze(-1)
 
-        Returns:
-            (B,T,5) IOTMS output
-        """
-        aed = mechanism_outputs["AED"]    # (B, T, 30)
-        cpd = mechanism_outputs["CPD"]    # (B, T, 30)
-        c0p = mechanism_outputs["C0P"]    # (B, T, 30)
+ # ═══ LAYER E: Explicit features ═══
 
-        # Mechanism sub-sections
-        aed_valence = aed[..., 0:10]
-        aed_emotion = aed[..., 20:30]
-        c0p_approach = c0p[..., 20:30]
+ # f01: MOR Baseline Proxy (coefficients sum = 1.0)
+ f01 = torch.sigmoid(
+ 0.35 * mean_pleasantness_1s
+ + 0.30 * (1.0 - roughness_skew_1s)
+ )
 
-        # H³ direct features
-        mean_pleasantness_1s = h3_direct[(4, 16, 1, 2)].unsqueeze(-1)
-        roughness_skew_1s = h3_direct[(0, 16, 6, 2)].unsqueeze(-1)
-        mean_loudness_1s = h3_direct[(8, 16, 1, 2)].unsqueeze(-1)
-        sustained_coupling_1s = h3_direct[(33, 16, 1, 2)].unsqueeze(-1)
-        coupling_trend_1s = h3_direct[(33, 16, 18, 2)].unsqueeze(-1)
-        mean_tristimulus_1s = h3_direct[(14, 16, 1, 2)].unsqueeze(-1)
+ # f02: Pleasure-BOLD Slope (coefficients sum = 1.0)
+ f02 = torch.sigmoid(
+ 0.40 * f01
+ + 0.30 * mean_loudness_1s
+ )
 
-        # ═══ LAYER E: Explicit features ═══
+ # f03: Reward Propensity (coefficients sum = 1.0)
+ f03 = torch.sigmoid(
+ 0.35 * f02
+ + 0.35 * sustained_coupling_1s
+ )
 
-        # f01: MOR Baseline Proxy (coefficients sum = 1.0)
-        f01 = torch.sigmoid(
-            0.35 * mean_pleasantness_1s
-            + 0.35 * aed_valence.mean(-1, keepdim=True)
-            + 0.30 * (1.0 - roughness_skew_1s)
-        )
+ # f04: Music Reward Index (coefficients sum = 1.0)
+ f04 = torch.sigmoid(
+ 0.40 * f03
+ + 0.30 * coupling_trend_1s
+ + 0.30 * mean_tristimulus_1s
+ )
 
-        # f02: Pleasure-BOLD Slope (coefficients sum = 1.0)
-        f02 = torch.sigmoid(
-            0.40 * f01
-            + 0.30 * c0p_approach.mean(-1, keepdim=True)
-            + 0.30 * mean_loudness_1s
-        )
+ # ═══ LAYER P: Present ═══
+ individual_sensitivity = torch.sigmoid(
+ 0.5 * f01 + 0.5 * f03
+ )
 
-        # f03: Reward Propensity (coefficients sum = 1.0)
-        f03 = torch.sigmoid(
-            0.35 * f02
-            + 0.35 * sustained_coupling_1s
-            + 0.30 * aed_emotion.mean(-1, keepdim=True)
-        )
-
-        # f04: Music Reward Index (coefficients sum = 1.0)
-        f04 = torch.sigmoid(
-            0.40 * f03
-            + 0.30 * coupling_trend_1s
-            + 0.30 * mean_tristimulus_1s
-        )
-
-        # ═══ LAYER P: Present ═══
-        individual_sensitivity = torch.sigmoid(
-            0.5 * f01 + 0.5 * f03
-        )
-
-        return torch.cat([
-            f01, f02, f03, f04,            # E: 4D
-            individual_sensitivity,        # P: 1D
-        ], dim=-1)  # (B, T, 5)
+ return torch.cat([
+ f01, f02, f03, f04, # E: 4D
+ individual_sensitivity, # P: 1D
+ ], dim=-1) # (B, T, 5)
 ```
 
 ---
@@ -565,9 +521,6 @@ class IOTMS(BaseModel):
 | **Falsification Tests** | 5/7 confirmed | Strong convergent validity |
 | **R³ Features Used** | ~12D of 49D | Consonance + energy + timbre + interactions |
 | **H³ Demand** | 12 tuples (0.52%) | Sparse, efficient |
-| **AED Mechanism** | 30D (3 sub-sections) | Valence/emotion evaluation |
-| **CPD Mechanism** | 30D (3 sub-sections) | Peak coupling |
-| **C0P Mechanism** | 30D (3 sub-sections) | Approach behavior |
 | **Output Dimensions** | **5D** | 2-layer structure |
 
 ---
@@ -593,21 +546,13 @@ class IOTMS(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D) | R³ (49D) |
-| Temporal | HC⁰ mechanisms (HRM, AED, ASA, C0P) | AED (30D) + CPD (30D) + C0P (30D) mechanisms |
-| Pleasure signal | S⁰.L5.roughness[30] + S⁰.L5.loudness[35] + HC⁰.AED | R³.sensory_pleasantness[4] + AED.valence_tracking |
-| Quality signal | S⁰.L6[55:60] + S⁰.L7[80:88] + HC⁰.ASA | R³.tristimulus[14:17] + H³ mean/std tuples |
-| Sustained pleasure | S⁰.X_L4L5[192:200] + HC⁰.HRM | R³.x_l4l5[33:41] + AED.emotional_trajectory |
-| Individual diff | S⁰.X_L5L6[208:216] + HC⁰.C0P | R³.x_l4l5[33:41] + C0P.approach_avoidance |
+| Pleasure signal | S⁰.L5.roughness[30] + S⁰.L5.loudness[35] + HC⁰ affect | R³.sensory_pleasantness[4] |
+| Quality signal | S⁰.L6[55:60] + S⁰.L7[80:88] + HC⁰ scene | R³.tristimulus[14:17] + H³ mean/std tuples |
+| Sustained pleasure | S⁰.X_L4L5[192:200] + HC⁰.HRM | R³.x_l4l5[33:41] |
+| Individual diff | S⁰.X_L5L6[208:216] + HC⁰ cognitive | R³.x_l4l5[33:41] |
 | Demand format | HC⁰ index ranges (15 tuples) | H³ 4-tuples (12 tuples, sparse) |
 | Total demand | 15/2304 = 0.65% | 12/2304 = 0.52% |
 | Output | 5D | 5D (same) |
-
-### Why AED + CPD + C0P replaces HC⁰ mechanisms
-
-- **HRM → AED.emotional_trajectory** [20:30]: Hippocampal replay maps to AED's sustained emotional tracking for prolonged pleasure.
-- **AED → AED.valence_tracking** [0:10]: Affective entrainment remains as AED valence for pleasure measurement.
-- **ASA → CPD.peak_experience** [10:20]: Auditory scene analysis maps to CPD's peak pleasure coupling.
-- **C0P → C0P.approach_avoidance** [20:30]: C⁰ projection remains as C0P approach/avoidance for music approach behavior.
 
 ---
 

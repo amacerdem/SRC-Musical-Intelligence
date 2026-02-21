@@ -21,23 +21,23 @@ The **Context-Dependent Emotional Memory** (CDEM) models how musical emotional m
 THE THREE COMPONENTS OF CONTEXT-DEPENDENT EMOTIONAL MEMORY
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-CONTEXT MODULATION              AROUSAL SUPPRESSION
-Brain region: Hippocampus +     Brain region: Amygdala + ACC
-  anterior cingulate (ACC)
-Mechanism: Cross-modal binding  Mechanism: Visual context dampens
-Trigger: Multi-sensory context    arousal response to music
-Function: "This music in THIS   Function: "Music alone is more
-  context = unique memory"        arousing than music + video"
-Evidence: Sachs 2025 fMRI       Evidence: Mitterschiffthaler 2007
-  (N=39, 6.26s context shift)     (N=16, hippocampus/amygdala)
+CONTEXT MODULATION AROUSAL SUPPRESSION
+Brain region: Hippocampus + Brain region: Amygdala + ACC
+ anterior cingulate (ACC)
+Mechanism: Cross-modal binding Mechanism: Visual context dampens
+Trigger: Multi-sensory context arousal response to music
+Function: "This music in THIS Function: "Music alone is more
+ context = unique memory" arousing than music + video"
+Evidence: Sachs 2025 fMRI Evidence: Mitterschiffthaler 2007
+ (N=39, 6.26s context shift) (N=16, hippocampus/amygdala)
 
-              ENCODING STRENGTH (Formation)
-              Brain region: Hippocampus + mPFC
-              Mechanism: Context-dependent consolidation
-              Trigger: Emotional congruency x binding
-              Function: "Mood-congruent contexts strengthen
-                encoding of musical memories"
-              Evidence: Janata 2009, Cheung 2019
+ ENCODING STRENGTH (Formation)
+ Brain region: Hippocampus + mPFC
+ Mechanism: Context-dependent consolidation
+ Trigger: Emotional congruency x binding
+ Function: "Mood-congruent contexts strengthen
+ encoding of musical memories"
+ Evidence: Janata 2009, Cheung 2019
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Core claim: Musical emotional memories are context-dependent, with
@@ -67,136 +67,135 @@ Context modulates musical memory through several mechanisms:
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                 CDEM — COMPLETE CIRCUIT                                     ║
+║ CDEM — COMPLETE CIRCUIT ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │                    AUDITORY CORTEX (STG/A1)                        │    ║
-║  │                                                                     │    ║
-║  │  Core (A1)      Belt           Parabelt                             │    ║
-║  │  Spectrotemporal Feature       Pattern recognition                  │    ║
-║  │  encoding        extraction    Multi-modal convergence              │    ║
-║  └──────┬──────────────┬──────────────────┬────────────────────────────┘    ║
-║         │              │                  │                                  ║
-║         │     ┌────────┘                  │                                  ║
-║         │     │  CROSS-MODAL              │                                  ║
-║         │     │  INPUT                    │                                  ║
-║         │     ▼                           │                                  ║
-║  ┌──────┴──────────────┐          ┌───────┴────────────────┐                ║
-║  │   HIPPOCAMPUS       │          │   ANTERIOR CINGULATE   │                ║
-║  │                     │          │   (ACC)                │                ║
-║  │  • Context binding  │          │                        │                ║
-║  │  • Episodic         │          │  • Conflict monitoring │                ║
-║  │    encoding         │◄────────►│  • Context-dependent   │                ║
-║  │  • Pattern          │          │    attention            │                ║
-║  │    completion       │          │  • Arousal gating       │                ║
-║  └────────┬────────────┘          └─────────┬──────────────┘                ║
-║           │                                 │                                ║
-║           └──────────────┬─────────────────┘                                ║
-║                          │                                                   ║
-║                          ▼                                                   ║
-║  ┌──────────────────┐          ┌────────────────────┐                       ║
-║  │   mPFC            │          │     AMYGDALA       │                       ║
-║  │                   │          │                    │                       ║
-║  │  Self-referential │◄────────►│  Emotional         │                       ║
-║  │  context          │          │  tagging            │                       ║
-║  │  evaluation       │          │  (context-          │                       ║
-║  │                   │          │   modulated)        │                       ║
-║  └────────┬──────────┘          └─────────┬──────────┘                       ║
-║           │                               │                                  ║
-║           └──────────────┬───────────────┘                                  ║
-║                          │                                                   ║
-║                          ▼                                                   ║
-║              CONTEXT-DEPENDENT EMOTIONAL MEMORY                              ║
-║              Encoding x Context x Affect                                     ║
-║                                                                              ║
+║ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ AUDITORY CORTEX (STG/A1) │ ║
+║ │ │ ║
+║ │ Core (A1) Belt Parabelt │ ║
+║ │ Spectrotemporal Feature Pattern recognition │ ║
+║ │ encoding extraction Multi-modal convergence │ ║
+║ └──────┬──────────────┬──────────────────┬────────────────────────────┘ ║
+║ │ │ │ ║
+║ │ ┌────────┘ │ ║
+║ │ │ CROSS-MODAL │ ║
+║ │ │ INPUT │ ║
+║ │ ▼ │ ║
+║ ┌──────┴──────────────┐ ┌───────┴────────────────┐ ║
+║ │ HIPPOCAMPUS │ │ ANTERIOR CINGULATE │ ║
+║ │ │ │ (ACC) │ ║
+║ │ • Context binding │ │ │ ║
+║ │ • Episodic │ │ • Conflict monitoring │ ║
+║ │ encoding │◄────────►│ • Context-dependent │ ║
+║ │ • Pattern │ │ attention │ ║
+║ │ completion │ │ • Arousal gating │ ║
+║ └────────┬────────────┘ └─────────┬──────────────┘ ║
+║ │ │ ║
+║ └──────────────┬─────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ┌────────────────────┐ ║
+║ │ mPFC │ │ AMYGDALA │ ║
+║ │ │ │ │ ║
+║ │ Self-referential │◄────────►│ Emotional │ ║
+║ │ context │ │ tagging │ ║
+║ │ evaluation │ │ (context- │ ║
+║ │ │ │ modulated) │ ║
+║ └────────┬──────────┘ └─────────┬──────────┘ ║
+║ │ │ ║
+║ └──────────────┬───────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ CONTEXT-DEPENDENT EMOTIONAL MEMORY ║
+║ Encoding x Context x Affect ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 CRITICAL EVIDENCE:
 ─────────────────
-Sachs et al. 2025:       Context modulates emotion transitions (N=39, fMRI)
-                         Tempoparietal axis: same-valence 6.26s faster
+Sachs et al. 2025: Context modulates emotion transitions (N=39, fMRI)
+ Tempoparietal axis: same-valence 6.26s faster
 Mitterschiffthaler 2007: Happy→striatum+ACC; Sad→hippocampus/amygdala (N=16)
-Cheung et al. 2019:      Amygdala+hippocampus: uncertainty x surprise (N=40)
-Janata 2009:             dMPFC hub for music-memory-emotion binding (N=13)
-Billig et al. 2022:      Hippocampus binds auditory+context (review)
-Mori & Zatorre 2024:     Pre-listening auditory-reward FC predicts chills (N=49)
+Cheung et al. 2019: Amygdala+hippocampus: uncertainty x surprise (N=40)
+Janata 2009: dMPFC hub for music-memory-emotion binding (N=13)
+Billig et al. 2022: Hippocampus binds auditory+context (review)
+Mori & Zatorre 2024: Pre-listening auditory-reward FC predicts chills (N=49)
 ```
 
-### 2.2 Information Flow Architecture (EAR -> BRAIN -> MEM + AED* -> CDEM)
+### 2.2 Information Flow Architecture (EAR -> BRAIN -> H³ direct* -> CDEM)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    CDEM COMPUTATION ARCHITECTURE                            ║
+║ CDEM COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins x 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
-║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ CHANGE   │ │ X-INT  │ │        ║
-║  │  │ 7D [0:7]  │ │ 5D[7:12]│ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
-║  │  │           │ │         │ │ [12:21] │ │ [21:25]  │ │ [25:49]│ │        ║
-║  │  │roughness  │ │amplitude│ │warmth   │ │flux      │ │x_l0l5  │ │        ║
-║  │  │stumpf     │ │loudness │ │tonalness│ │entropy   │ │x_l4l5  │ │        ║
-║  │  │pleasant.  │ │onset    │ │         │ │concent.  │ │x_l5l7  │ │        ║
-║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                         CDEM reads: 31D                          │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                                                                  │        ║
-║  │  ┌── Encoding ──┐ ┌── Consolidation ─┐ ┌── Retrieval ──────┐   │        ║
-║  │  │ 1s (H16)     │ │ 5s (H20)         │ │ 36s (H24)        │   │        ║
-║  │  │              │ │                   │ │                   │   │        ║
-║  │  │ Working mem  │ │ Hippocampal       │ │ Long-term         │   │        ║
-║  │  │ context bind │ │ context window    │ │ context chunk     │   │        ║
-║  │  └──────┬───────┘ └──────┬────────────┘ └──────┬────────────┘   │        ║
-║  │         │               │                      │                │        ║
-║  │         └───────────────┴──────────────────────┘                │        ║
-║  │                         CDEM demand: ~18 of 2304 tuples         │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Mnemonic Circuit ═════════    ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌─────────────────┐  ┌──────────────────────────┐                          ║
-║  │  MEM (30D)      │  │  AED* (30D)              │                          ║
-║  │  [Mnemonic]     │  │  [Mesolimbic, cross-cir.] │                          ║
-║  │                 │  │                           │                          ║
-║  │ Encoding  [0:10]│  │ Arousal    [0:10]         │                          ║
-║  │ Familiar [10:20]│  │ Expectancy [10:20]        │                          ║
-║  │ Retrieval[20:30]│  │ Motor-Aff. [20:30]        │                          ║
-║  └────────┬────────┘  └──────────┬────────────────┘                          ║
-║           │                      │                                           ║
-║           └──────────┬──────────┘                                           ║
-║                      │                                                       ║
-║                      ▼                                                       ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    CDEM MODEL (10D Output)                       │        ║
-║  │                    Manifold [398:408]                             │        ║
-║  │                                                                  │        ║
-║  │  Layer C (Context):  f43_ctx_mod, f44_arousal_supp,              │        ║
-║  │                      f45_encoding_str                            │        ║
-║  │  Layer M (Math):     congruency_index, context_recall_prob       │        ║
-║  │  Layer P (Present):  binding_state, arousal_gate                 │        ║
-║  │  Layer F (Future):   encoding_strength_fc, retrieval_context_fc, │        ║
-║  │                      mood_congruency_fc                          │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins x 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ ENERGY │ │ TIMBRE │ │ CHANGE │ │ X-INT │ │ ║
+║ │ │ 7D [0:7] │ │ 5D[7:12]│ │ 9D │ │ 4D │ │ 24D │ │ ║
+║ │ │ │ │ │ │ [12:21] │ │ [21:25] │ │ [25:49]│ │ ║
+║ │ │roughness │ │amplitude│ │warmth │ │flux │ │x_l0l5 │ │ ║
+║ │ │stumpf │ │loudness │ │tonalness│ │entropy │ │x_l4l5 │ │ ║
+║ │ │pleasant. │ │onset │ │ │ │concent. │ │x_l5l7 │ │ ║
+║ │ └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │ ║
+║ │ CDEM reads: 31D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ │ ║
+║ │ ┌── Encoding ──┐ ┌── Consolidation ─┐ ┌── Retrieval ──────┐ │ ║
+║ │ │ 1s (H16) │ │ 5s (H20) │ │ 36s (H24) │ │ ║
+║ │ │ │ │ │ │ │ │ ║
+║ │ │ Working mem │ │ Hippocampal │ │ Long-term │ │ ║
+║ │ │ context bind │ │ context window │ │ context chunk │ │ ║
+║ │ └──────┬───────┘ └──────┬────────────┘ └──────┬────────────┘ │ ║
+║ │ │ │ │ │ ║
+║ │ └───────────────┴──────────────────────┘ │ ║
+║ │ CDEM demand: ~18 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Mnemonic Circuit ═════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────┐ ┌──────────────────────────┐ ║
+║ │ [Mnemonic] │ │ [Mesolimbic, cross-cir.] │ ║
+║ │ │ │ │ ║
+║ │ Encoding [0:10]│ │ Arousal [0:10] │ ║
+║ │ Familiar [10:20]│ │ Expectancy [10:20] │ ║
+║ │ Retrieval[20:30]│ │ Motor-Aff. [20:30] │ ║
+║ └────────┬────────┘ └──────────┬────────────────┘ ║
+║ │ │ ║
+║ └──────────┬──────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ CDEM MODEL (10D Output) │ ║
+║ │ Manifold [398:408] │ ║
+║ │ │ ║
+║ │ Layer C (Context): f43_ctx_mod, f44_arousal_supp, │ ║
+║ │ f45_encoding_str │ ║
+║ │ Layer M (Math): congruency_index, context_recall_prob │ ║
+║ │ Layer P (Present): binding_state, arousal_gate │ ║
+║ │ Layer F (Future): encoding_strength_fc, retrieval_context_fc, │ ║
+║ │ mood_congruency_fc │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -209,7 +208,7 @@ Mori & Zatorre 2024:     Pre-listening auditory-reward FC predicts chills (N=49)
 | # | Study | Year | Method | N | Key Finding | Effect Size | Brain Regions | MNI/Talairach | MI Relevance |
 |---|-------|------|--------|---|-------------|-------------|---------------|---------------|-------------|
 | 1 | **Sachs, Kozak, Ochsner & Baldassano** | 2025 | fMRI (HMM + pattern analysis) | 39 | Emotions in the brain are dynamic and contextually dependent; tempoparietal brain-state transitions track emotional changes to music; same-valence context shifts transitions 6.26s earlier | z = 3.6-4.32 (transition alignment, p < 0.001); within > across context r: 0.303 vs 0.265 (p = 0.04) | Bilateral STG, MTG, angular gyrus, supramarginal gyrus, auditory cortex | Cortical surface searchlight (MNI space) | **f43_ctx_mod, congruency_index: context modulates emotional memory encoding and temporal dynamics** |
-| 2 | **Mitterschiffthaler, Fu, Dalton, Andrew & Williams** | 2007 | fMRI (blocked, conjunction) | 16 | Happy music activates ventral/dorsal striatum, ACC, parahippocampal gyrus; sad music activates R hippocampus/amygdala | Happy > neutral: Z = 3.41-4.96 (p < 0.05 FWE); Sad hippocampus/amygdala: Z = 3.25, p = 0.051 FWE | L ventral striatum, L ACC (BA32/24), L parahippocampal gyrus, R hippocampus/amygdala | Talairach: L-VS (-8, 10, -6); L-ACC (-4, 10, 36) & (-4, 4, 12); R-HC/Amy (24, -15, -20) | **f44_arousal_supp, AED*.arousal: valence-specific activation of hippocampal-amygdalar complex** |
+| 2 | **Mitterschiffthaler, Fu, Dalton, Andrew & Williams** | 2007 | fMRI (blocked, conjunction) | 16 | Happy music activates ventral/dorsal striatum, ACC, parahippocampal gyrus; sad music activates R hippocampus/amygdala | Happy > neutral: Z = 3.41-4.96 (p < 0.05 FWE); Sad hippocampus/amygdala: Z = 3.25, p = 0.051 FWE | L ventral striatum, L ACC (BA32/24), L parahippocampal gyrus, R hippocampus/amygdala | Talairach: L-VS (-8, 10, -6); L-ACC (-4, 10, 36) & (-4, 4, 12); R-HC/Amy (24, -15, -20) | **f44_arousal_supp, arousal: valence-specific activation of hippocampal-amygdalar complex** |
 | 3 | **Cheung, Harrison, Meyer, Pearce, Haynes & Koelsch** | 2019 | fMRI + computational modeling | 79 (beh) + 40 (fMRI) | Uncertainty and surprise jointly predict musical pleasure; amygdala and hippocampus show interaction effect | Significant uncertainty x surprise interaction (p < 0.05 FWE); amygdala + auditory cortex reflect joint modulation | Amygdala, hippocampus, auditory cortex, nucleus accumbens | Whole-brain FWE-corrected | **f45_encoding_str, congruency_index: prediction error modulates emotional memory encoding via amygdala-hippocampal interaction** |
 | 4 | **Janata** | 2009 | fMRI (parametric) | 13 | Dorsal MPFC (BA8/9) parametrically tracks autobiographical salience of music; MPFC serves as hub associating music, memories, and emotions; tonality tracking in same region | BOLD positively correlated with autobiographical salience (p < 0.05 corrected) | dMPFC (BA8/9), ventral MPFC, lateral PFC, posterior cortices | MNI: dMPFC ~(0, 38, 44) | **f43_ctx_mod, ctx_recall_prob: self-referential context evaluation via mPFC** |
 | 5 | **Billig, Lad, Sedley & Griffiths** | 2022 | Comprehensive review | — | Hippocampus binds auditory information with spatiotemporal context; trisynaptic loop supports pattern completion for auditory memories; predictive map framework extends to sound | Review (100+ studies synthesized) | Hippocampus (CA1, CA3, DG), entorhinal cortex, parahippocampal cortex, perirhinal cortex | Multiple MNI/Talairach from reviewed studies | **binding_state, ctx_recall_prob: hippocampal computational architecture for auditory context binding** |
@@ -219,7 +218,7 @@ Mori & Zatorre 2024:     Pre-listening auditory-reward FC predicts chills (N=49)
 | 9 | **Calabria, Ciongoli, Grunden, Ordas & Garcia-Sanchez** | 2023 | Behavioral (3 experiments) | MCI patients (varies) | Background music during memory tasks: no main effect, but high-arousal music x mood regulation predicts performance; individual differences modulate music-memory interaction | Moderation by mood regulation (p < 0.05); negative pleasantness-performance relationship for low-arousal | N/A (behavioral) | N/A | **f44_arousal_supp: arousal level of musical context modulates memory encoding in clinical populations** |
 | 10 | **Godden & Baddeley** | 1975 | Behavioral (field) | 18 | Context-dependent memory: words learned underwater recalled better underwater; encoding specificity principle | ~40% better recall in same context | N/A (behavioral, pre-neuroimaging) | N/A | **ctx_recall_prob: foundational context-dependent retrieval principle** |
 | 11 | **Tulving & Thomson** | 1973 | Behavioral | — | Encoding specificity: retrieval cues effective only if encoded with target information | Theoretical framework | N/A | N/A | **ctx_recall_prob: encoding specificity principle for context-dependent memory** |
-| 12 | **Huron** | 2006 | Theoretical (ITPRA model) | — | Sweet Anticipation: music and expectation; ITPRA framework for affective entrainment dynamics | Theoretical | N/A | N/A | **AED* mechanism: expectancy-based affective response framework** |
+| 12 | **Huron** | 2006 | Theoretical (ITPRA model) | — | Sweet Anticipation: music and expectation; ITPRA framework for affective entrainment dynamics | Theoretical | N/A | N/A | **affective-dynamics mechanism: expectancy-based affective response framework** |
 
 ### 3.2 The Context-Dependency Story
 
@@ -240,27 +239,27 @@ Phase 2: CROSS-MODAL BINDING (0.5-2s, H16 window)
 Hippocampus binds auditory and contextual features
 into a unified episodic trace. ACC monitors for
 context-music congruency.
-MEM.encoding_state activates.
+encoding_state activates.
 Evidence: Billig 2022 — hippocampal trisynaptic loop for binding
-          Borderie 2024 — theta-gamma CFC in hippocampus+STS
+ Borderie 2024 — theta-gamma CFC in hippocampus+STS
 
 Phase 3: AROUSAL MODULATION (1-5s, H20 window)
 ──────────────────────────────────────────────
-AED*.arousal is gated by contextual factors.
+arousal is gated by contextual factors.
 Music alone → higher arousal (amygdala dominant).
 Music + video → suppressed arousal (attentional competition).
 Emotional congruency amplifies encoding.
 Evidence: Mitterschiffthaler 2007 — sad music → R-hippocampus/amygdala
-          Mori & Zatorre 2024 — auditory-amygdala FC predicts arousal
-          Calabria 2023 — arousal x mood regulation interaction
+ Mori & Zatorre 2024 — auditory-amygdala FC predicts arousal
+ Calabria 2023 — arousal x mood regulation interaction
 
 Phase 4: CONTEXT-DEPENDENT CONSOLIDATION (5-36s, H24 window)
 ────────────────────────────────────────────────────────────
 Hippocampal-mPFC dialogue consolidates the context-tagged
 memory trace. Stronger context binding → more durable memory.
-MEM.retrieval_dynamics stores context-dependent trace.
+retrieval_dynamics stores context-dependent trace.
 Evidence: Janata 2009 — dMPFC tracks autobiographical salience
-          Cheung 2019 — uncertainty x surprise in amygdala+hippocampus
+ Cheung 2019 — uncertainty x surprise in amygdala+hippocampus
 
 Phase 5: CONTEXT-DEPENDENT RETRIEVAL (reinstated context)
 ─────────────────────────────────────────────────────────
@@ -269,26 +268,26 @@ completion retrieves the bound memory. Congruent context
 → stronger retrieval. This is the encoding specificity
 principle applied to musical memory.
 Evidence: Sachs 2025 — same-valence context shifts transitions 6.26s earlier
-          Sakakibara 2025 — nostalgia N-BMI enhances memory vividness
+ Sakakibara 2025 — nostalgia N-BMI enhances memory vividness
 ```
 
 ### 3.3 Effect Size Summary
 
 ```
 Primary Evidence:
-  Sachs 2025:             z = 3.6-4.32 (emotion transition alignment, N=39)
-  Mitterschiffthaler 2007: Z = 3.25-4.96 (valence-specific regions, N=16)
-  Cheung 2019:            Significant interaction (uncertainty x surprise, N=40)
-  Mori & Zatorre 2024:   r = 0.53 (auditory-reward FC predicts chills, N=49)
-  Sakakibara 2025:        Cohen's r = 0.71-0.88 (nostalgia ratings, N=33)
+ Sachs 2025: z = 3.6-4.32 (emotion transition alignment, N=39)
+ Mitterschiffthaler 2007: Z = 3.25-4.96 (valence-specific regions, N=16)
+ Cheung 2019: Significant interaction (uncertainty x surprise, N=40)
+ Mori & Zatorre 2024: r = 0.53 (auditory-reward FC predicts chills, N=49)
+ Sakakibara 2025: Cohen's r = 0.71-0.88 (nostalgia ratings, N=33)
 
-Pooled Estimate:      Multiple converging fMRI + behavioral studies;
-                      insufficient overlap for formal meta-analysis
-Quality Assessment:   Substantially improved — 5 fMRI studies + 2 behavioral
-                      + 1 iEEG + 1 comprehensive review + 3 theoretical
-Confidence Level:     <70% (Speculative) — direct context-dependent MUSIC
-                      memory study still lacking; inferred from
-                      context-dependent emotion + music-evoked memory literatures
+Pooled Estimate: Multiple converging fMRI + behavioral studies;
+ insufficient overlap for formal meta-analysis
+Quality Assessment: Substantially improved — 5 fMRI studies + 2 behavioral
+ + 1 iEEG + 1 comprehensive review + 3 theoretical
+Confidence Level: <70% (Speculative) — direct context-dependent MUSIC
+ memory study still lacking; inferred from
+ context-dependent emotion + music-evoked memory literatures
 ```
 
 ---
@@ -328,29 +327,29 @@ Confidence Level:     <70% (Speculative) — direct context-dependent MUSIC
 ### 4.3 Physical -> Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
-R³[0] roughness (inverse) ─────►   Consonance/pleasantness → valence
-                                   Context: pleasant music = positive context
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
+R³[0] roughness (inverse) ─────► Consonance/pleasantness → valence
+ Context: pleasant music = positive context
 
-R³[10] loudness + R³[7] amp ───►   Arousal level → emotional intensity
-                                   Context: loud = salient context marker
-                                   Math: arousal = σ(0.5 · loudness + 0.5 · amplitude)
+R³[10] loudness + R³[7] amp ───► Arousal level → emotional intensity
+ Context: loud = salient context marker
+ Math: arousal = σ(0.5 · loudness + 0.5 · amplitude)
 
-R³[21] spectral_flux ─────────►   Context change detection
-                                   High flux = environmental transition
-                                   New context → new memory trace
+R³[21] spectral_flux ─────────► Context change detection
+ High flux = environmental transition
+ New context → new memory trace
 
-R³[22] entropy ────────────────►   Context complexity
-                                   Low entropy = predictable context
-                                   High entropy = novel context → weaker binding
+R³[22] entropy ────────────────► Context complexity
+ Low entropy = predictable context
+ High entropy = novel context → weaker binding
 
-R³[25:33] x_l0l5 ─────────────►   Context-memory binding strength
-                                   Math: binding ∝ x_l0l5 · stumpf[3]
+R³[25:33] x_l0l5 ─────────────► Context-memory binding strength
+ Math: binding ∝ x_l0l5 · stumpf[3]
 
-R³[41:49] x_l5l7 ─────────────►   Mood congruency signal
-                                   Consonance x timbre warmth = congruent context
-                                   This IS the mood-matching signal
+R³[41:49] x_l5l7 ─────────────► Mood congruency signal
+ Consonance x timbre warmth = congruent context
+ This IS the mood-matching signal
 ```
 
 ---
@@ -359,7 +358,7 @@ R³[41:49] x_l5l7 ─────────────►   Mood congruency s
 
 ### 5.1 Demand Specification
 
-CDEM requires H³ features at three MEM horizons: H16 (1s), H20 (5s), H24 (36s), and two AED* horizons: H6 (200ms), H16 (1s).
+CDEM requires H³ features at three horizons: H16 (1s), H20 (5s), H24 (36s), and two affective-dynamics horizons: H6 (200ms), H16 (1s).
 
 | R³ Index | Feature | H | Morph | Law | Purpose |
 |----------|---------|---|-------|-----|---------|
@@ -391,23 +390,6 @@ No significant v2 expansion projected. CDEM's context-dependent emotional memory
 **v2 projected**: 0 tuples
 **Total projected**: 18 tuples of 294,912 theoretical = 0.0061%
 
-### 5.2 MEM Mechanism Binding
-
-CDEM reads from the **MEM** (Memory Encoding & Retrieval) mechanism:
-
-| MEM Sub-section | Range | CDEM Role | Weight |
-|-----------------|-------|-----------|--------|
-| **Encoding State** | MEM[0:10] | Context-dependent encoding strength, novelty detection | **1.0** (primary) |
-| **Familiarity Proxy** | MEM[10:20] | Context recognition, congruency estimation | 0.7 |
-| **Retrieval Dynamics** | MEM[20:30] | Context-dependent recall probability, vividness | 0.8 |
-
-Additionally reads from **AED*** mechanism (mesolimbic circuit, cross-circuit pathway):
-
-| AED* Sub-section | Range | CDEM Role | Weight |
-|------------------|-------|-----------|--------|
-| **Arousal Dynamics** | AED[0:10] | Arousal level for context-dependent gating | 0.6 |
-| **Expectancy Affect** | AED[10:20] | Emotional expectancy for congruency estimation | 0.5 |
-
 ---
 
 ## 6. Output Space: 10D Multi-Layer Representation
@@ -421,76 +403,76 @@ MANIFOLD RANGE: IMU CDEM [398:408]
 
 LAYER C — CONTEXT-DEPENDENT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 0  │ f43_ctx_mod       │ [0, 1] │ Cross-modal context modulation.
-    │                   │        │ Hippocampus + ACC multi-modal binding.
-    │                   │        │ f43 = σ(0.35 · x_l0l5.mean · MEM.encoding
-    │                   │        │        + 0.35 · (1-roughness) · MEM.familiar
-    │                   │        │        + 0.30 · stumpf · MEM.retrieval)
-    │                   │        │ |w| sum = 1.00
-    │                   │        │ Basis: Sachs 2025, Billig 2022
+ 0 │ f43_ctx_mod │ [0, 1] │ Cross-modal context modulation.
+ │ │ │ Hippocampus + ACC multi-modal binding.
+ │ │ │ f43 = σ(0.35 · x_l0l5.mean · encoding
+ │ │ │ + 0.35 · (1-roughness) · familiar
+ │ │ │ + 0.30 · stumpf · retrieval)
+ │ │ │ |w| sum = 1.00
+ │ │ │ Basis: Sachs 2025, Billig 2022
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 1  │ f44_arousal_supp  │ [0, 1] │ Context-dependent arousal suppression.
-    │                   │        │ Amygdala arousal gated by context.
-    │                   │        │ f44 = σ(0.40 · AED*.arousal · loudness
-    │                   │        │        + 0.30 · entropy · (1-stumpf)
-    │                   │        │        + 0.30 · flux · amplitude)
-    │                   │        │ |w| sum = 1.00
-    │                   │        │ Basis: Mitterschiffthaler 2007, Mori 2024
+ 1 │ f44_arousal_supp │ [0, 1] │ Context-dependent arousal suppression.
+ │ │ │ Amygdala arousal gated by context.
+ │ │ │ f44 = σ(0.40 · arousal · loudness
+ │ │ │ + 0.30 · entropy · (1-stumpf)
+ │ │ │ + 0.30 · flux · amplitude)
+ │ │ │ |w| sum = 1.00
+ │ │ │ Basis: Mitterschiffthaler 2007, Mori 2024
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 2  │ f45_encoding_str  │ [0, 1] │ Context-dependent encoding strength.
-    │                   │        │ Hippocampus + mPFC consolidation.
-    │                   │        │ f45 = σ(0.40 · MEM.encoding · x_l5l7.mean
-    │                   │        │        + 0.30 · (1-roughness) · warmth
-    │                   │        │        + 0.30 · AED*.expectancy · stumpf)
-    │                   │        │ |w| sum = 1.00
-    │                   │        │ Basis: Cheung 2019, Janata 2009
+ 2 │ f45_encoding_str │ [0, 1] │ Context-dependent encoding strength.
+ │ │ │ Hippocampus + mPFC consolidation.
+ │ │ │ f45 = σ(0.40 · encoding · x_l5l7.mean
+ │ │ │ + 0.30 · (1-roughness) · warmth
+ │ │ │ + 0.30 · expectancy · stumpf)
+ │ │ │ |w| sum = 1.00
+ │ │ │ Basis: Cheung 2019, Janata 2009
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 3  │ congruency_index  │ [0, 1] │ Music-mood congruency estimation.
-    │                   │        │ f(context_valence x music_valence x
-    │                   │        │   context_arousal x music_arousal)
-    │                   │        │ Congruent context = stronger encoding.
-    │                   │        │ σ(0.50 · (1-roughness) · MEM.familiar
-    │                   │        │   + 0.50 · x_l5l7.mean · warmth)
-    │                   │        │ |w| sum = 1.00
-    │                   │        │ Basis: Sachs 2025, Sakakibara 2025
+ 3 │ congruency_index │ [0, 1] │ Music-mood congruency estimation.
+ │ │ │ f(context_valence x music_valence x
+ │ │ │ context_arousal x music_arousal)
+ │ │ │ Congruent context = stronger encoding.
+ │ │ │ σ(0.50 · (1-roughness) · familiar
+ │ │ │ + 0.50 · x_l5l7.mean · warmth)
+ │ │ │ |w| sum = 1.00
+ │ │ │ Basis: Sachs 2025, Sakakibara 2025
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 4  │ ctx_recall_prob   │ [0, 1] │ P(recall | context reinstated).
-    │                   │        │ σ(0.35 · MEM.retrieval
-    │                   │        │   + 0.35 · MEM.familiar
-    │                   │        │   + 0.30 · (1-entropy))
-    │                   │        │ |w| sum = 1.00
-    │                   │        │ Basis: Godden & Baddeley 1975, Billig 2022
+ 4 │ ctx_recall_prob │ [0, 1] │ P(recall | context reinstated).
+ │ │ │ σ(0.35 · retrieval
+ │ │ │ + 0.35 · familiar
+ │ │ │ + 0.30 · (1-entropy))
+ │ │ │ |w| sum = 1.00
+ │ │ │ Basis: Godden & Baddeley 1975, Billig 2022
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 5  │ binding_state     │ [0, 1] │ Current cross-modal binding activation.
-    │                   │        │ MEM.encoding.mean() x stumpf.
-    │                   │        │ Basis: Borderie 2024, Billig 2022
+ 5 │ binding_state │ [0, 1] │ Current cross-modal binding activation.
+ │ │ │ encoding.mean() x stumpf.
+ │ │ │ Basis: Borderie 2024, Billig 2022
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 6  │ arousal_gate      │ [0, 1] │ Context-modulated arousal gate.
-    │                   │        │ AED*.arousal.mean() x (1-entropy).
-    │                   │        │ Basis: Mori & Zatorre 2024, Calabria 2023
+ 6 │ arousal_gate │ [0, 1] │ Context-modulated arousal gate.
+ │ │ │ arousal.mean() x (1-entropy).
+ │ │ │ Basis: Mori & Zatorre 2024, Calabria 2023
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 7  │ enc_strength_fc   │ [0, 1] │ Encoding strength prediction (2-5s ahead).
-    │                   │        │ Hippocampal consolidation trajectory.
+ 7 │ enc_strength_fc │ [0, 1] │ Encoding strength prediction (2-5s ahead).
+ │ │ │ Hippocampal consolidation trajectory.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 8  │ retrieval_ctx_fc  │ [0, 1] │ Context retrieval prediction (5-10s ahead).
-    │                   │        │ mPFC context reinstatement trajectory.
+ 8 │ retrieval_ctx_fc │ [0, 1] │ Context retrieval prediction (5-10s ahead).
+ │ │ │ mPFC context reinstatement trajectory.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 9  │ mood_cong_fc      │ [0, 1] │ Mood congruency prediction (1-3s ahead).
-    │                   │        │ Congruency trend trajectory.
+ 9 │ mood_cong_fc │ [0, 1] │ Mood congruency prediction (1-3s ahead).
+ │ │ │ Congruency trend trajectory.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
@@ -507,15 +489,14 @@ Context_Encoding(music, context) = f(Binding x Congruency x ArousalGate)
 P(recall | context) = σ(b0 + b1·Familiarity + b2·Congruency + b3·Binding)
 
 where:
-  Binding      = MEM.encoding_state.mean() x R³.stumpf[3]
-  Congruency   = (1 - R³.roughness[0]) x R³.warmth[12] x x_l5l7.mean()
-  ArousalGate  = AED*.arousal.mean() x (1 - R³.entropy[22])
-  Familiarity  = MEM.familiarity_proxy.mean()
+ Binding = encoding_state.mean() x R³.stumpf[3]
+ Congruency = (1 - R³.roughness[0]) x R³.warmth[12] x x_l5l7.mean()
+ ArousalGate = arousal.mean() x (1 - R³.entropy[22])
+ Familiarity = familiarity_proxy.mean()
 
 Expanded form with mechanisms:
-  Context_Encoding = MEM.encoding[0:10].mean() · Binding
-                   + MEM.familiar[10:20].mean() · Congruency
-                   + AED*.arousal[0:10].mean() · ArousalGate
+.mean() · Congruency
+.mean() · ArousalGate
 
 CONSTRAINT: For all sigmoid formulas, |wi| must sum <= 1.0
 ```
@@ -525,32 +506,25 @@ CONSTRAINT: For all sigmoid formulas, |wi| must sum <= 1.0
 ```python
 # f43: Context Modulation — cross-modal memory binding
 # |w| = 0.35 + 0.35 + 0.30 = 1.00 <= 1.0 checkmark
-f43 = σ(0.35 · mean(R³.x_l0l5[25:33]) · mean(MEM.encoding[0:10])
-      + 0.35 · (1 - R³.roughness[0]) · mean(MEM.familiar[10:20])
-      + 0.30 · R³.stumpf[3] · mean(MEM.retrieval[20:30]))
 
 # f44: Arousal Suppression — context-dependent arousal gating
 # |w| = 0.40 + 0.30 + 0.30 = 1.00 <= 1.0 checkmark
-f44 = σ(0.40 · mean(AED*.arousal[0:10]) · R³.loudness[10]
-      + 0.30 · R³.entropy[22] · (1 - R³.stumpf[3])
-      + 0.30 · R³.spectral_flux[21] · R³.amplitude[7])
+f44 = σ(0.40 · mean(arousal[0:10]) · R³.loudness[10]
+ + 0.30 · R³.entropy[22] · (1 - R³.stumpf[3])
+ + 0.30 · R³.spectral_flux[21] · R³.amplitude[7])
 
 # f45: Encoding Strength — context-dependent memory formation
 # |w| = 0.40 + 0.30 + 0.30 = 1.00 <= 1.0 checkmark
-f45 = σ(0.40 · mean(MEM.encoding[0:10]) · mean(R³.x_l5l7[41:49])
-      + 0.30 · (1 - R³.roughness[0]) · R³.warmth[12]
-      + 0.30 · mean(AED*.expectancy[10:20]) · R³.stumpf[3])
+ + 0.30 · (1 - R³.roughness[0]) · R³.warmth[12]
+ + 0.30 · mean(expectancy[10:20]) · R³.stumpf[3])
 
 # congruency_index: Music-mood matching
 # |w| = 0.50 + 0.50 = 1.00 <= 1.0 checkmark
-congruency = σ(0.50 · (1 - R³.roughness[0]) · mean(MEM.familiar[10:20])
-             + 0.50 · mean(R³.x_l5l7[41:49]) · R³.warmth[12])
+ + 0.50 · mean(R³.x_l5l7[41:49]) · R³.warmth[12])
 
 # ctx_recall_prob: Context-dependent recall probability
 # |w| = 0.35 + 0.35 + 0.30 = 1.00 <= 1.0 checkmark
-ctx_recall = σ(0.35 · mean(MEM.retrieval[20:30])
-             + 0.35 · mean(MEM.familiar[10:20])
-             + 0.30 · (1 - R³.entropy[22]))
+ + 0.30 · (1 - R³.entropy[22]))
 ```
 
 ---
@@ -577,31 +551,29 @@ ctx_recall = σ(0.35 · mean(MEM.retrieval[20:30])
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    CDEM INTERACTIONS                                        │
+│ CDEM INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  CROSS-CIRCUIT (AED* read from mesolimbic):                                │
-│  ARU mesolimbic ──────────► CDEM.AED* (arousal + expectancy signals)      │
-│                              └── CDEM reads AED as cross-circuit input    │
-│                                                                             │
-│  INTRA-UNIT (IMU):                                                         │
-│  MEAMN ──────────────────► CDEM                                           │
-│       │                    └── MEAMN provides autobiographical memory      │
-│       │                        signals; CDEM adds context dependency       │
-│       │                                                                      │
-│  CDEM ───────► HCMC (Hippocampal-Cortical Memory Circuit)                 │
-│       │        └── CDEM context-binding feeds hippocampal dialogue         │
-│       │                                                                      │
-│       ├─────► PMIM (Predictive Memory Integration)                         │
-│       │        └── Context modulates predictive memory processing          │
-│       │                                                                      │
-│       └─────► MMP (Musical Mnemonic Preservation)                         │
-│                └── Context-dependent memories in neurodegeneration         │
-│                                                                             │
-│  CROSS-UNIT (CDEM → ARU):                                                  │
-│  CDEM.congruency_index ────► ARU.SRP (congruent context → pleasure)       │
-│  CDEM.arousal_gate ────────► ARU.AAC (context-modulated autonomic)        │
-│                                                                             │
+│ │
+│ └── CDEM reads affective-dynamics as cross-circuit input │
+│ │
+│ INTRA-UNIT (IMU): │
+│ MEAMN ──────────────────► CDEM │
+│ │ └── MEAMN provides autobiographical memory │
+│ │ signals; CDEM adds context dependency │
+│ │ │
+│ CDEM ───────► HCMC (Hippocampal-Cortical Memory Circuit) │
+│ │ └── CDEM context-binding feeds hippocampal dialogue │
+│ │ │
+│ ├─────► PMIM (Predictive Memory Integration) │
+│ │ └── Context modulates predictive memory processing │
+│ │ │
+│ └─────► MMP (Musical Mnemonic Preservation) │
+│ └── Context-dependent memories in neurodegeneration │
+│ │
+│ CROSS-UNIT (CDEM → ARU): │
+│ CDEM.congruency_index ────► ARU.SRP (congruent context → pleasure) │
+│ CDEM.arousal_gate ────────► ARU.AAC (context-modulated autonomic) │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -636,154 +608,129 @@ CDEM reads from the unified Brain (26D) for shared state:
 
 ```python
 class CDEM(BaseModel):
-    """Context-Dependent Emotional Memory.
+ """Context-Dependent Emotional Memory.
 
-    Output: 10D per frame.
-    Reads: MEM mechanism (30D), AED* mechanism (cross-circuit from mesolimbic).
-    Zero learned parameters — all computations are deterministic.
-    """
-    NAME = "CDEM"
-    UNIT = "IMU"
-    TIER = "gamma3"
-    OUTPUT_DIM = 10
-    MECHANISM_NAMES = ("MEM",)        # Primary mechanism (mnemonic circuit)
-    CROSS_CIRCUIT = ("AED",)          # Cross-circuit read from mesolimbic
+ Output: 10D per frame.
+ Zero learned parameters — all computations are deterministic.
+ """
+ NAME = "CDEM"
+ UNIT = "IMU"
+ TIER = "gamma3"
+ OUTPUT_DIM = 10
+ CROSS_UNIT_READS = ()  # TODO: populate from Nucleus contract # Cross-circuit read from mesolimbic
 
-    # Coefficient constraint: for σ(Sum wi·gi), |wi| must sum <= 1.0
-    # f43: 0.35 + 0.35 + 0.30 = 1.00  checkmark
-    # f44: 0.40 + 0.30 + 0.30 = 1.00  checkmark
-    # f45: 0.40 + 0.30 + 0.30 = 1.00  checkmark
-    # congruency: 0.50 + 0.50 = 1.00  checkmark
-    # ctx_recall: 0.35 + 0.35 + 0.30 = 1.00  checkmark
+ # Coefficient constraint: for σ(Sum wi·gi), |wi| must sum <= 1.0
+ # f43: 0.35 + 0.35 + 0.30 = 1.00 checkmark
+ # f44: 0.40 + 0.30 + 0.30 = 1.00 checkmark
+ # f45: 0.40 + 0.30 + 0.30 = 1.00 checkmark
+ # congruency: 0.50 + 0.50 = 1.00 checkmark
+ # ctx_recall: 0.35 + 0.35 + 0.30 = 1.00 checkmark
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """18 tuples for CDEM computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            (3, 16, 1, 2),    # stumpf_fusion, 1s, mean, bidirectional
-            (3, 20, 1, 0),    # stumpf_fusion, 5s, mean, forward
-            (4, 16, 0, 2),    # pleasantness, 1s, value, bidirectional
-            (4, 20, 18, 0),   # pleasantness, 5s, trend, forward
-            (10, 16, 0, 2),   # loudness, 1s, value, bidirectional
-            (10, 20, 1, 0),   # loudness, 5s, mean, forward
-            (12, 16, 0, 2),   # warmth, 1s, value, bidirectional
-            (12, 20, 1, 0),   # warmth, 5s, mean, forward
-            (21, 16, 0, 2),   # spectral_flux, 1s, value, bidirectional
-            (21, 20, 4, 0),   # spectral_flux, 5s, max, forward
-            (22, 16, 0, 2),   # entropy, 1s, value, bidirectional
-            (22, 20, 1, 0),   # entropy, 5s, mean, forward
-            (22, 24, 19, 0),  # entropy, 36s, stability, forward
-            (0, 16, 0, 2),    # roughness, 1s, value, bidirectional
-            (0, 20, 18, 0),   # roughness, 5s, trend, forward
-            (7, 16, 8, 0),    # amplitude, 1s, velocity, forward
-            (11, 16, 0, 2),   # onset_strength, 1s, value, bidirectional
-            (11, 20, 4, 0),   # onset_strength, 5s, max, forward
-        ]
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """18 tuples for CDEM computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ (3, 16, 1, 2), # stumpf_fusion, 1s, mean, bidirectional
+ (3, 20, 1, 0), # stumpf_fusion, 5s, mean, forward
+ (4, 16, 0, 2), # pleasantness, 1s, value, bidirectional
+ (4, 20, 18, 0), # pleasantness, 5s, trend, forward
+ (10, 16, 0, 2), # loudness, 1s, value, bidirectional
+ (10, 20, 1, 0), # loudness, 5s, mean, forward
+ (12, 16, 0, 2), # warmth, 1s, value, bidirectional
+ (12, 20, 1, 0), # warmth, 5s, mean, forward
+ (21, 16, 0, 2), # spectral_flux, 1s, value, bidirectional
+ (21, 20, 4, 0), # spectral_flux, 5s, max, forward
+ (22, 16, 0, 2), # entropy, 1s, value, bidirectional
+ (22, 20, 1, 0), # entropy, 5s, mean, forward
+ (22, 24, 19, 0), # entropy, 36s, stability, forward
+ (0, 16, 0, 2), # roughness, 1s, value, bidirectional
+ (0, 20, 18, 0), # roughness, 5s, trend, forward
+ (7, 16, 8, 0), # amplitude, 1s, velocity, forward
+ (11, 16, 0, 2), # onset_strength, 1s, value, bidirectional
+ (11, 20, 4, 0), # onset_strength, 5s, max, forward
+ ]
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute CDEM 10D output.
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute CDEM 10D output.
 
-        Args:
-            mechanism_outputs: {"MEM": (B,T,30), "AED": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Args:
+ h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Returns:
-            (B,T,10) CDEM output
-        """
-        mem = mechanism_outputs["MEM"]    # (B, T, 30)
-        aed = mechanism_outputs["AED"]    # (B, T, 30) — cross-circuit
+ Returns:
+ (B,T,10) CDEM output
+ """
+ # R³ features
+ roughness = r3[..., 0:1] # [0, 1]
+ stumpf = r3[..., 3:4] # [0, 1]
+ amplitude = r3[..., 7:8] # [0, 1]
+ loudness = r3[..., 10:11] # [0, 1]
+ warmth = r3[..., 12:13] # [0, 1]
+ spectral_flux = r3[..., 21:22] # [0, 1]
+ entropy = r3[..., 22:23] # [0, 1]
+ x_l0l5 = r3[..., 25:33] # (B, T, 8)
+ x_l5l7 = r3[..., 41:49] # (B, T, 8)
 
-        # R³ features
-        roughness = r3[..., 0:1]          # [0, 1]
-        stumpf = r3[..., 3:4]             # [0, 1]
-        amplitude = r3[..., 7:8]          # [0, 1]
-        loudness = r3[..., 10:11]         # [0, 1]
-        warmth = r3[..., 12:13]           # [0, 1]
-        spectral_flux = r3[..., 21:22]    # [0, 1]
-        entropy = r3[..., 22:23]          # [0, 1]
-        x_l0l5 = r3[..., 25:33]           # (B, T, 8)
-        x_l5l7 = r3[..., 41:49]           # (B, T, 8)
+ # affective-dynamics cross-circuit sub-sections
+ # === LAYER C: Context-dependent features ===
+ # f43: Context Modulation (|w| = 0.35+0.35+0.30 = 1.00)
+ f43 = torch.sigmoid(
+ 0.35 * x_l0l5.mean(-1, keepdim=True)
+ + 0.35 * (1.0 - roughness)
+ + 0.30 * stumpf
+ )
 
-        # MEM sub-sections
-        mem_encoding = mem[..., 0:10]      # encoding state
-        mem_familiar = mem[..., 10:20]     # familiarity proxy
-        mem_retrieval = mem[..., 20:30]    # retrieval dynamics
+ # f44: Arousal Suppression (|w| = 0.40+0.30+0.30 = 1.00)
+ f44 = torch.sigmoid(
+ * loudness
+ + 0.30 * entropy * (1.0 - stumpf)
+ + 0.30 * spectral_flux * amplitude
+ )
 
-        # AED* cross-circuit sub-sections
-        aed_arousal = aed[..., 0:10]       # arousal dynamics
-        aed_expectancy = aed[..., 10:20]   # expectancy affect
+ # f45: Encoding Strength (|w| = 0.40+0.30+0.30 = 1.00)
+ f45 = torch.sigmoid(
+ * x_l5l7.mean(-1, keepdim=True)
+ + 0.30 * (1.0 - roughness) * warmth
+ * stumpf
+ )
 
-        # === LAYER C: Context-dependent features ===
-        # f43: Context Modulation (|w| = 0.35+0.35+0.30 = 1.00)
-        f43 = torch.sigmoid(
-            0.35 * x_l0l5.mean(-1, keepdim=True)
-                 * mem_encoding.mean(-1, keepdim=True)
-            + 0.35 * (1.0 - roughness)
-                   * mem_familiar.mean(-1, keepdim=True)
-            + 0.30 * stumpf
-                   * mem_retrieval.mean(-1, keepdim=True)
-        )
+ # === LAYER M: Mathematical ===
+ # Congruency index (|w| = 0.50+0.50 = 1.00)
+ congruency = torch.sigmoid(
+ 0.50 * (1.0 - roughness)
+ + 0.50 * x_l5l7.mean(-1, keepdim=True)
+ * warmth
+ )
 
-        # f44: Arousal Suppression (|w| = 0.40+0.30+0.30 = 1.00)
-        f44 = torch.sigmoid(
-            0.40 * aed_arousal.mean(-1, keepdim=True)
-                 * loudness
-            + 0.30 * entropy * (1.0 - stumpf)
-            + 0.30 * spectral_flux * amplitude
-        )
+ # Context recall probability (|w| = 0.35+0.35+0.30 = 1.00)
+ ctx_recall = torch.sigmoid(
+ + 0.30 * (1.0 - entropy)
+ )
 
-        # f45: Encoding Strength (|w| = 0.40+0.30+0.30 = 1.00)
-        f45 = torch.sigmoid(
-            0.40 * mem_encoding.mean(-1, keepdim=True)
-                 * x_l5l7.mean(-1, keepdim=True)
-            + 0.30 * (1.0 - roughness) * warmth
-            + 0.30 * aed_expectancy.mean(-1, keepdim=True)
-                   * stumpf
-        )
+ # === LAYER P: Present ===
+ binding_state = (
+ ).clamp(0, 1)
+ arousal_gate = (
+ ).clamp(0, 1)
 
-        # === LAYER M: Mathematical ===
-        # Congruency index (|w| = 0.50+0.50 = 1.00)
-        congruency = torch.sigmoid(
-            0.50 * (1.0 - roughness)
-                 * mem_familiar.mean(-1, keepdim=True)
-            + 0.50 * x_l5l7.mean(-1, keepdim=True)
-                   * warmth
-        )
+ # === LAYER F: Future ===
+ enc_strength_fc = self._predict_future(
+ mem_encoding, h3_direct, window_h=20)
+ retrieval_ctx_fc = self._predict_future(
+ mem_retrieval, h3_direct, window_h=24)
+ mood_cong_fc = self._predict_future(
+ mem_familiar, h3_direct, window_h=16)
 
-        # Context recall probability (|w| = 0.35+0.35+0.30 = 1.00)
-        ctx_recall = torch.sigmoid(
-            0.35 * mem_retrieval.mean(-1, keepdim=True)
-            + 0.35 * mem_familiar.mean(-1, keepdim=True)
-            + 0.30 * (1.0 - entropy)
-        )
-
-        # === LAYER P: Present ===
-        binding_state = (
-            mem_encoding.mean(-1, keepdim=True) * stumpf
-        ).clamp(0, 1)
-        arousal_gate = (
-            aed_arousal.mean(-1, keepdim=True) * (1.0 - entropy)
-        ).clamp(0, 1)
-
-        # === LAYER F: Future ===
-        enc_strength_fc = self._predict_future(
-            mem_encoding, h3_direct, window_h=20)
-        retrieval_ctx_fc = self._predict_future(
-            mem_retrieval, h3_direct, window_h=24)
-        mood_cong_fc = self._predict_future(
-            mem_familiar, h3_direct, window_h=16)
-
-        return torch.cat([
-            f43, f44, f45,                           # C: 3D
-            congruency, ctx_recall,                   # M: 2D
-            binding_state, arousal_gate,              # P: 2D
-            enc_strength_fc, retrieval_ctx_fc,         # F: 3D
-            mood_cong_fc,
-        ], dim=-1)  # (B, T, 10)
+ return torch.cat([
+ f43, f44, f45, # C: 3D
+ congruency, ctx_recall, # M: 2D
+ binding_state, arousal_gate, # P: 2D
+ enc_strength_fc, retrieval_ctx_fc, # F: 3D
+ mood_cong_fc,
+ ], dim=-1) # (B, T, 10)
 ```
 
 ### 11.2 Doc-Code Mismatches (cdem.py vs this document)
@@ -792,7 +739,7 @@ class CDEM(BaseModel):
 |--------|---------------|-----------------|----------|
 | **LAYERS** | E(2D), M(2D), P(3D), F(3D) = different names | C(3D), M(2D), P(2D), F(3D) | High — feature names and layer structure diverge |
 | **Dimension names** | f01_context_modulation, f02_emotional_encoding, context_dependency_index, cross_modal_enhancement, emotional_state, context_match, encoding_strength, retrieval_context_pred, emotional_decay_fc, recontextualization_pred | f43_ctx_mod, f44_arousal_supp, f45_encoding_str, congruency_index, ctx_recall_prob, binding_state, arousal_gate, enc_strength_fc, retrieval_ctx_fc, mood_cong_fc | High — complete naming divergence |
-| **CROSS_UNIT_READS** | `()` (empty) | `CROSS_CIRCUIT = ("AED",)` | Medium — code missing cross-circuit read |
+| **CROSS_UNIT_READS** | `()` (empty) | `CROSS_UNIT_READS = ()  # TODO: populate from Nucleus contract` | Medium — code missing cross-circuit read |
 | **h3_demand** | `()` (empty tuple) | 18 tuples specified | Medium — code has no temporal demand |
 | **brain_regions** | Hippocampus, Amygdala, STS (3 regions) | Hippocampus, Amygdala, mPFC, ACC, STG/STS, Parahippocampal, V-Striatum (7 regions) | Medium — code missing 4 regions |
 | **Citations** | "Eschrich 2008" (not in doc) | 12 papers listed | Medium — code has unverified citation |
@@ -812,8 +759,6 @@ class CDEM(BaseModel):
 | **Falsification Tests** | 3/5 partially confirmed or indirectly supported | Improved from 1/5 |
 | **R³ Features Used** | 31D of 49D | Context-focused |
 | **H³ Demand** | 18 tuples (0.78%) | Sparse, efficient |
-| **MEM Mechanism** | 30D (3 sub-sections) | Full coverage |
-| **AED* Mechanism** | 30D (cross-circuit) | Arousal + expectancy |
 | **Output Dimensions** | **10D** | 4-layer structure |
 | **Manifold Range** | **[398:408]** | IMU CDEM block |
 
@@ -843,7 +788,7 @@ class CDEM(BaseModel):
 
 11. **Tulving, E. & Thomson, D. M.** (1973). Encoding specificity and retrieval processes in episodic memory. *Psychological Review*, 80, 352-373. Encoding specificity principle.
 
-12. **Huron, D.** (2006). *Sweet Anticipation: Music and the Psychology of Expectation*. MIT Press. ITPRA model for AED* mechanism framework.
+12. **Huron, D.** (2006). *Sweet Anticipation: Music and the Psychology of Expectation*. MIT Press. ITPRA model for affective-dynamics mechanism framework.
 
 ---
 
@@ -854,25 +799,15 @@ class CDEM(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) | MI (v2.1.0) |
 |--------|-------------|-------------|-------------|
 | Input space | S0 (256D) | R³ (49D) | R³ (49D) — unchanged |
-| Temporal | HC0 mechanisms (SGM, BND, AED) | MEM mechanism (30D) + AED* cross-circuit | Unchanged |
-| Context binding | S0.X_L5L6 x HC0.BND | R³.x_l0l5 x MEM.encoding | Unchanged |
-| Arousal suppression | S0.L5.loudness x HC0.AED | R³.loudness x AED*.arousal | Unchanged |
-| Encoding strength | S0.X_L5L9 x HC0.SGM | R³.x_l5l7 x MEM.encoding | Unchanged |
+| Context binding | S0.X_L5L6 x HC0.BND | R³.x_l0l5 x encoding | Unchanged |
+| Arousal suppression | S0.L5.loudness x HC⁰ affect | R³.loudness x arousal | Unchanged |
+| Encoding strength | S0.X_L5L9 x HC0.SGM | R³.x_l5l7 x encoding | Unchanged |
 | Demand format | HC0 index ranges | H³ 4-tuples (sparse) | Unchanged |
 | Total demand | 24/2304 = 1.04% | 18/2304 = 0.78% | Unchanged |
 | Output dims | 11D | 10D (more compact, no reserved slot) | Unchanged |
 | **Papers** | **2** | **2** | **12 (deep lit review)** |
 | **Brain regions** | **4** | **4** | **7 (with verified MNI/Talairach)** |
 | **Effect sizes** | **1** | **1** | **5+ (multi-study converging)** |
-
-### Why MEM + AED* replaces HC0 mechanisms
-
-The D0 pipeline used 3 separate HC0 mechanisms (SGM, BND, AED). In MI, these are reorganized:
-- **SGM -> MEM.encoding_state** [0:10]: Striatal gradient = novelty/encoding strength
-- **BND -> MEM.retrieval_dynamics** [20:30]: Temporal binding = context-dependent retrieval
-- **AED -> AED* (cross-circuit)**: Remains in mesolimbic circuit, accessed as cross-circuit read. Provides arousal dynamics [0:10] and expectancy affect [10:20] for context-dependent emotional processing.
-
-The key architectural change: AED is now explicitly marked as a **cross-circuit read** (AED*) because affective entrainment dynamics belong to the mesolimbic pathway (ARU territory), not the mnemonic pathway (IMU). CDEM accesses AED* via the cross-unit pathway, making the circuit architecture cleaner and more neuroscientifically accurate.
 
 ---
 

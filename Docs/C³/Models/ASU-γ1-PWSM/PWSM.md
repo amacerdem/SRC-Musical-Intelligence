@@ -21,31 +21,31 @@ The **Precision-Weighted Salience Model** (PWSM) proposes that salience detectio
 PRECISION-WEIGHTED SALIENCE MODEL
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  CONTEXT STABILITY                   PREDICTION ERROR RESPONSE
+ CONTEXT STABILITY PREDICTION ERROR RESPONSE
 
-  ┌─────────────────┐                ┌─────────────────┐
-  │ HIGH PRECISION  │                │   MMN PRESENT   │
-  │ (stable jitter) │  ───────────►  │   (d = -1.37)   │
-  └─────────────────┘                └─────────────────┘
+ ┌─────────────────┐ ┌─────────────────┐
+ │ HIGH PRECISION │ │ MMN PRESENT │
+ │ (stable jitter) │ ───────────► │ (d = -1.37) │
+ └─────────────────┘ └─────────────────┘
 
-  ┌─────────────────┐                ┌─────────────────┐
-  │ LOW PRECISION   │                │  MMN ABOLISHED  │
-  │ (changing       │  ───────────►  │   (d = 0.01)    │
-  │  jitter)        │                │                 │
-  └─────────────────┘                └─────────────────┘
+ ┌─────────────────┐ ┌─────────────────┐
+ │ LOW PRECISION │ │ MMN ABOLISHED │
+ │ (changing │ ───────────► │ (d = 0.01) │
+ │ jitter) │ │ │
+ └─────────────────┘ └─────────────────┘
 
-     Sequence Input → Precision Estimation → Error Weighting
-                             │
-                             ▼
-                   ┌─────────────────┐
-                   │ Precision ∝ 1/σ²│
-                   └────────┬────────┘
-                             │
-              ┌──────────────┴──────────────┐
-              ▼                             ▼
-       High Precision                Low Precision
-       PE_weighted = PE              PE_weighted ≈ 0
-       MMN ✓                         MMN ✗
+ Sequence Input → Precision Estimation → Error Weighting
+ │
+ ▼
+ ┌─────────────────┐
+ │ Precision ∝ 1/σ²│
+ └────────┬────────┘
+ │
+ ┌──────────────┴──────────────┐
+ ▼ ▼
+ High Precision Low Precision
+ PE_weighted = PE PE_weighted ≈ 0
+ MMN ✓ MMN ✗
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 KEY INSIGHT: The brain "ignores" prediction errors in uncertain
@@ -66,82 +66,80 @@ PWSM adds predictive coding precision to salience processing:
 
 ## 2. Neural Circuit: Complete Anatomy
 
-### 2.1 Information Flow Architecture (EAR → BRAIN → ASA+BEP → PWSM)
+### 2.1 Information Flow Architecture (EAR → BRAIN → PWSM)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    PWSM COMPUTATION ARCHITECTURE                             ║
+║ PWSM COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins x 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
-║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ CHANGE   │ │ X-INT  │ │        ║
-║  │  │ 7D [0:7]  │ │ 5D[7:12]│ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
-║  │  │           │ │         │ │ [12:21] │ │ [21:25]  │ │ [25:49]│ │        ║
-║  │  │roughness  │ │amplitude│ │warmth   │ │spec_chg  │ │x_l0l5  │ │        ║
-║  │  │sethares   │ │loudness │ │tristim. │ │enrg_chg  │ │x_l4l5  │ │        ║
-║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                         PWSM reads: ~10D                        │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                                                                  │        ║
-║  │  ┌── BEP Horizons ─────────────┐ ┌── ASA Horizons ──────────┐  │        ║
-║  │  │ H0 (25ms gamma)            │ │ H3 (100ms alpha)          │  │        ║
-║  │  │ H1 (50ms gamma)            │ │                            │  │        ║
-║  │  │ H3 (100ms alpha)           │ │ Precision estimation       │  │        ║
-║  │  │ H4 (125ms theta)           │ │ Error weighting             │  │        ║
-║  │  │ H16 (1000ms beat)          │ │                            │  │        ║
-║  │  │                             │ │                            │  │        ║
-║  │  │ Stability tracking          │ │                            │  │        ║
-║  │  │ Periodicity encoding        │ │                            │  │        ║
-║  │  └─────────────────────────────┘ └────────────────────────────┘  │        ║
-║  │                         PWSM demand: ~16 of 2304 tuples         │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Salience Circuit ════════     ║
-║                               │                                              ║
-║                       ┌───────┴───────┐                                      ║
-║                       ▼               ▼                                      ║
-║  ┌─────────────────┐  ┌─────────────────┐                                   ║
-║  │  BEP (30D)      │  │  ASA (30D)      │                                   ║
-║  │                 │  │                 │                                    ║
-║  │ Beat Entr[0:10] │  │ Scene An [0:10] │                                   ║
-║  │ Motor Coup      │  │ Attention       │                                   ║
-║  │         [10:20] │  │ Gating  [10:20] │                                   ║
-║  │ Groove  [20:30] │  │ Salience        │                                   ║
-║  │                 │  │ Weight  [20:30] │                                   ║
-║  └────────┬────────┘  └────────┬────────┘                                   ║
-║           │                    │                                              ║
-║           └────────┬───────────┘                                             ║
-║                    ▼                                                          ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    PWSM MODEL (9D Output)                        │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f19_precision_weighting,                   │        ║
-║  │                       f20_error_suppression,                     │        ║
-║  │                       f21_stability_encoding                      │        ║
-║  │  Layer M (Math):      pe_weighted, precision                     │        ║
-║  │  Layer P (Present):   weighted_error, precision_estimate         │        ║
-║  │  Layer F (Future):    mmn_presence_pred,                         │        ║
-║  │                       context_reliability_pred                    │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins x 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ ENERGY │ │ TIMBRE │ │ CHANGE │ │ X-INT │ │ ║
+║ │ │ 7D [0:7] │ │ 5D[7:12]│ │ 9D │ │ 4D │ │ 24D │ │ ║
+║ │ │ │ │ │ │ [12:21] │ │ [21:25] │ │ [25:49]│ │ ║
+║ │ │roughness │ │amplitude│ │warmth │ │spec_chg │ │x_l0l5 │ │ ║
+║ │ │sethares │ │loudness │ │tristim. │ │enrg_chg │ │x_l4l5 │ │ ║
+║ │ └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │ ║
+║ │ PWSM reads: ~10D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ │ ║
+║ │ │ H0 (25ms gamma) │ │ H3 (100ms alpha) │ │ ║
+║ │ │ H1 (50ms gamma) │ │ │ │ ║
+║ │ │ H3 (100ms alpha) │ │ Precision estimation │ │ ║
+║ │ │ H4 (125ms theta) │ │ Error weighting │ │ ║
+║ │ │ H16 (1000ms beat) │ │ │ │ ║
+║ │ │ │ │ │ │ ║
+║ │ │ Stability tracking │ │ │ │ ║
+║ │ │ Periodicity encoding │ │ │ │ ║
+║ │ └─────────────────────────────┘ └────────────────────────────┘ │ ║
+║ │ PWSM demand: ~16 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Salience Circuit ════════ ║
+║ │ ║
+║ ┌───────┴───────┐ ║
+║ ▼ ▼ ║
+║ ┌─────────────────┐ ┌─────────────────┐ ║
+║ │ │ │ │ ║
+║ │ Beat Entr[0:10] │ │ Scene An [0:10] │ ║
+║ │ Motor Coup │ │ Attention │ ║
+║ │ [10:20] │ │ Gating [10:20] │ ║
+║ │ Groove [20:30] │ │ Salience │ ║
+║ │ │ │ Weight [20:30] │ ║
+║ └────────┬────────┘ └────────┬────────┘ ║
+║ │ │ ║
+║ └────────┬───────────┘ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ PWSM MODEL (9D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f19_precision_weighting, │ ║
+║ │ f20_error_suppression, │ ║
+║ │ f21_stability_encoding │ ║
+║ │ Layer M (Math): pe_weighted, precision │ ║
+║ │ Layer P (Present): weighted_error, precision_estimate │ ║
+║ │ Layer F (Future): mmn_presence_pred, │ ║
+║ │ context_reliability_pred │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -170,15 +168,15 @@ PWSM adds predictive coding precision to salience processing:
 
 ```
 Primary Evidence (k=12, multi-modal):
-  - MMN abolition in low-precision context: d = 0.01 (n.s.) (Basinski 2025)
-  - MMN in high-precision context: d = -1.37 (Basinski 2025)
-  - Right HG activation for ambiguous intervals: cluster FWE p<0.05 (Bravo 2017)
-  - Hierarchical PE propagation: α/β ↑ for violations (Bonetti 2024, N=83)
-  - Asymmetric MMN: -0.34 μV for dissonant deviants (Wagner 2018)
-  - PE from IC→MGB→AC: p<0.001 across divisions (Cacciato-Salcedo 2025)
-  - Quadratic IC × liking: p<0.05, replicated N=43+27 (Gold 2019)
-Quality Assessment:      γ-tier (converging evidence, 9 HIGH-priority papers)
-Theoretical Basis:       Strong (variational free energy + predictive coding)
+ - MMN abolition in low-precision context: d = 0.01 (n.s.) (Basinski 2025)
+ - MMN in high-precision context: d = -1.37 (Basinski 2025)
+ - Right HG activation for ambiguous intervals: cluster FWE p<0.05 (Bravo 2017)
+ - Hierarchical PE propagation: α/β ↑ for violations (Bonetti 2024, N=83)
+ - Asymmetric MMN: -0.34 μV for dissonant deviants (Wagner 2018)
+ - PE from IC→MGB→AC: p<0.001 across divisions (Cacciato-Salcedo 2025)
+ - Quadratic IC × liking: p<0.05, replicated N=43+27 (Gold 2019)
+Quality Assessment: γ-tier (converging evidence, 9 HIGH-priority papers)
+Theoretical Basis: Strong (variational free energy + predictive coding)
 ```
 
 ---
@@ -211,19 +209,17 @@ Theoretical Basis:       Strong (variational free energy + predictive coding)
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[21] spectral_change ─────────┐
 R³[22] energy_change ───────────┼──► Prediction error signal
-R³[23] timbre_change ───────────┘   Deviation from expected pattern
+R³[23] timbre_change ───────────┘ Deviation from expected pattern
 
 R³[10] spectral_flux ───────────┐
 R³[11] onset_strength ──────────┼──► Event detection / PE trigger
-BEP.beat_entrainment[0:10] ────┘   Rhythmic event salience
 
 R³[37:45] x_l4l5 ──────────────┐
-ASA.attention_gating[10:20] ───┼──► Precision-weighted PE
-H³ stability/periodicity ─────┘   Derivatives × Perceptual = weighted error
+H³ stability/periodicity ─────┘ Derivatives × Perceptual = weighted error
 ```
 
 ---
@@ -232,7 +228,7 @@ H³ stability/periodicity ─────┘   Derivatives × Perceptual = weigh
 
 ### 5.1 Demand Specification
 
-PWSM requires H³ features across multiple BEP horizons for stability tracking and ASA horizons for precision estimation. The demand reflects the multi-scale temporal context needed for precision assessment.
+PWSM requires H³ features across multiple Beat entrainment horizons for stability tracking and for precision estimation. The demand reflects the multi-scale temporal context needed for precision assessment.
 
 | R³ Index | Feature | H | Morph | Law | Purpose |
 |----------|---------|---|-------|-----|---------|
@@ -266,17 +262,6 @@ Minor v2 expansion for PWSM from J[94:114].
 **v2 projected**: 1 tuples
 **Total projected**: 17 tuples of 294,912 theoretical = 0.0058%
 
-### 5.2 BEP + ASA Mechanism Binding
-
-| Mechanism | Sub-section | Range | PWSM Role | Weight |
-|-----------|-------------|-------|-----------|--------|
-| **BEP** | Beat Entrainment | BEP[0:10] | Temporal regularity / stability tracking | 0.7 |
-| **BEP** | Motor Coupling | BEP[10:20] | Motor-related precision encoding | 0.5 |
-| **BEP** | Groove Processing | BEP[20:30] | Rhythmic predictability baseline | 0.6 |
-| **ASA** | Scene Analysis | ASA[0:10] | Context segmentation for precision | 0.6 |
-| **ASA** | Attention Gating | ASA[10:20] | Error gating / precision weighting | **1.0** (primary) |
-| **ASA** | Salience Weighting | ASA[20:30] | Salience after precision adjustment | **0.8** |
-
 ---
 
 ## 6. Output Space: 9D Multi-Layer Representation
@@ -289,46 +274,43 @@ PWSM OUTPUT TENSOR: 9D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 0  │ f19_precision_weighting  │ [0, 1] │ Context-dependent error gating.
-    │                          │        │ f19 = σ(0.35 * onset_periodicity_1s
-    │                          │        │       + 0.35 * (1 - energy_std_1s)
-    │                          │        │       + 0.30 * mean(BEP.beat[0:10]))
+ 0 │ f19_precision_weighting │ [0, 1] │ Context-dependent error gating.
+ │ │ │ f19 = σ(0.35 * onset_periodicity_1s
+ │ │ │ + 0.35 * (1 - energy_std_1s)
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 1  │ f20_error_suppression    │ [0, 1] │ Low-precision → MMN abolition.
-    │                          │        │ f20 = σ(0.35 * (1 - f19)
-    │                          │        │       + 0.35 * mean(ASA.attn[10:20])
-    │                          │        │       + 0.30 * pe_entropy)
+ 1 │ f20_error_suppression │ [0, 1] │ Low-precision → MMN abolition.
+ │ │ │ f20 = σ(0.35 * (1 - f19)
+ │ │ │ + 0.30 * pe_entropy)
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 2  │ f21_stability_encoding   │ [0, 1] │ Jitter pattern stability.
-    │                          │        │ f21 = σ(0.35 * onset_periodicity_1s
-    │                          │        │       + 0.35 * mean(BEP.groove[20:30])
-    │                          │        │       + 0.30 * (1 - spectral_std_1s))
+ 2 │ f21_stability_encoding │ [0, 1] │ Jitter pattern stability.
+ │ │ │ f21 = σ(0.35 * onset_periodicity_1s
+ │ │ │ + 0.30 * (1 - spectral_std_1s))
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 3  │ pe_weighted              │ [0, 1] │ PE_raw × Precision.
+ 3 │ pe_weighted │ [0, 1] │ PE_raw × Precision.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 4  │ precision                │ [0, 1] │ 1 / (1 + Variance(context)).
+ 4 │ precision │ [0, 1] │ 1 / (1 + Variance(context)).
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 5  │ weighted_error           │ [0, 1] │ ASA attention × PE × precision.
+ 5 │ weighted_error │ [0, 1] │ auditory-scene attention × PE × precision.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 6  │ precision_estimate       │ [0, 1] │ BEP beat × onset regularity.
+ 6 │ precision_estimate │ [0, 1] │ beat-entrainment beat × onset regularity.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 7  │ mmn_presence_pred_0.35s  │ [0, 1] │ Prediction error response presence.
+ 7 │ mmn_presence_pred_0.35s │ [0, 1] │ Prediction error response presence.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 8  │ context_reliability_2s   │ [0, 1] │ Model confidence / reliability.
+ 8 │ context_reliability_2s │ [0, 1] │ Model confidence / reliability.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 9D per frame at 172.27 Hz
@@ -346,19 +328,19 @@ PE_weighted = PE_raw × Precision
 
 Precision = 1 / (1 + σ²_context)
 
-    where σ²_context = variance of inter-onset intervals
+ where σ²_context = variance of inter-onset intervals
 
 Context Effects:
-    Stable context (fixed jitter):
-        Precision ↑ → MMN present (d = -1.37 for inharmonicity)
+ Stable context (fixed jitter):
+ Precision ↑ → MMN present (d = -1.37 for inharmonicity)
 
-    Unstable context (changing jitter):
-        Precision ↓ → MMN abolished (d = 0.01, n.s.)
+ Unstable context (changing jitter):
+ Precision ↓ → MMN abolished (d = 0.01, n.s.)
 
 Bayesian Interpretation:
-    Posterior ∝ Likelihood × Prior
-    PE_weighted ∝ PE × Precision
-    Brain "ignores" prediction errors in uncertain contexts
+ Posterior ∝ Likelihood × Prior
+ PE_weighted ∝ PE × Precision
+ Brain "ignores" prediction errors in uncertain contexts
 ```
 
 ### 7.2 Feature Formulas
@@ -368,20 +350,17 @@ Bayesian Interpretation:
 
 # f19: Precision Weighting
 f19 = σ(0.35 * onset_periodicity_1s
-       + 0.35 * (1 - energy_std_1s)
-       + 0.30 * mean(BEP.beat_entrainment[0:10]))
+ + 0.35 * (1 - energy_std_1s)
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # f20: Error Suppression
-f20 = σ(0.35 * (1 - f19)                    # inverse of precision
-       + 0.35 * mean(ASA.attention_gating[10:20])
-       + 0.30 * pe_entropy_100ms)
+f20 = σ(0.35 * (1 - f19) # inverse of precision
+ + 0.30 * pe_entropy_100ms)
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # f21: Stability Encoding
 f21 = σ(0.35 * onset_periodicity_1s
-       + 0.35 * mean(BEP.groove[20:30])
-       + 0.30 * (1 - spectral_std_1s))
+ + 0.30 * (1 - spectral_std_1s))
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # Precision estimation dynamics
@@ -413,24 +392,22 @@ f21 = σ(0.35 * onset_periodicity_1s
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    PWSM INTERACTIONS                                         │
+│ PWSM INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (ASU):                                                         │
-│  PWSM.precision ──────────────► IACM (precision gates error responses)    │
-│  PWSM.stability_encoding ────► SNEM (stability informs beat prediction)   │
-│  PWSM.pe_weighted ───────────► CSG (weighted errors for valence)          │
-│                                                                             │
-│  CROSS-UNIT (ASU → NDU):                                                   │
-│  PWSM.precision ──────────────► NDU (precision context for novelty)       │
-│  PWSM.mmn_presence_pred ─────► NDU (MMN prediction)                       │
-│                                                                             │
-│  UPSTREAM DEPENDENCIES:                                                     │
-│  BEP mechanism (30D) ────────► PWSM (beat/groove for stability)           │
-│  ASA mechanism (30D) ────────► PWSM (attention gating, primary)           │
-│  R³ (~10D) ──────────────────► PWSM (change + energy features)            │
-│  H³ (16 tuples) ─────────────► PWSM (temporal dynamics)                   │
-│                                                                             │
+│ │
+│ INTRA-UNIT (ASU): │
+│ PWSM.precision ──────────────► IACM (precision gates error responses) │
+│ PWSM.stability_encoding ────► SNEM (stability informs beat prediction) │
+│ PWSM.pe_weighted ───────────► CSG (weighted errors for valence) │
+│ │
+│ CROSS-UNIT (ASU → NDU): │
+│ PWSM.precision ──────────────► NDU (precision context for novelty) │
+│ PWSM.mmn_presence_pred ─────► NDU (MMN prediction) │
+│ │
+│ UPSTREAM DEPENDENCIES: │
+│ R³ (~10D) ──────────────────► PWSM (change + energy features) │
+│ H³ (16 tuples) ─────────────► PWSM (temporal dynamics) │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -454,135 +431,113 @@ f21 = σ(0.35 * onset_periodicity_1s
 
 ```python
 class PWSM(BaseModel):
-    """Precision-Weighted Salience Model.
+ """Precision-Weighted Salience Model.
 
-    Output: 9D per frame.
-    Reads: BEP mechanism (30D), ASA mechanism (30D), R³ direct.
-    """
-    NAME = "PWSM"
-    UNIT = "ASU"
-    TIER = "γ1"
-    OUTPUT_DIM = 9
-    MECHANISM_NAMES = ("BEP", "ASA")
+ Output: 9D per frame.
+ """
+ NAME = "PWSM"
+ UNIT = "ASU"
+ TIER = "γ1"
+ OUTPUT_DIM = 9
+ TAU_DECAY = 3.0 # Precision estimation window (seconds)
+ PRECISION_BASELINE = 0.5 # Neutral precision
+ MMN_THRESHOLD = 0.3 # PE threshold for MMN
 
-    TAU_DECAY = 3.0          # Precision estimation window (seconds)
-    PRECISION_BASELINE = 0.5 # Neutral precision
-    MMN_THRESHOLD = 0.3      # PE threshold for MMN
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """16 tuples for PWSM computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ (10, 0, 0, 2), # spectral_flux, 25ms, value, bidi
+ (10, 1, 1, 2), # spectral_flux, 50ms, mean, bidi
+ (10, 3, 0, 2), # spectral_flux, 100ms, value, bidi
+ (10, 4, 17, 2), # spectral_flux, 125ms, periodicity, bidi
+ (10, 16, 17, 2), # spectral_flux, 1000ms, periodicity, bidi
+ (11, 3, 0, 2), # onset_strength, 100ms, value, bidi
+ (11, 3, 2, 2), # onset_strength, 100ms, std, bidi
+ # ── PE signals ──
+ (21, 3, 0, 2), # spectral_change, 100ms, value, bidi
+ (21, 16, 2, 2), # spectral_change, 1000ms, std, bidi
+ (22, 3, 0, 2), # energy_change, 100ms, value, bidi
+ (22, 16, 2, 2), # energy_change, 1000ms, std, bidi
+ # ── Precision-weighted PE integration ──
+ (37, 3, 0, 2), # x_l4l5[0], 100ms, value, bidi
+ (37, 3, 17, 2), # x_l4l5[0], 100ms, periodicity, bidi
+ (37, 3, 20, 2), # x_l4l5[0], 100ms, entropy, bidi
+ (37, 16, 17, 2), # x_l4l5[0], 1000ms, periodicity, bidi
+ (37, 16, 21, 2), # x_l4l5[0], 1000ms, zero_crossings, bidi
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """16 tuples for PWSM computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # ── BEP horizons: stability tracking ──
-            (10, 0, 0, 2),     # spectral_flux, 25ms, value, bidi
-            (10, 1, 1, 2),     # spectral_flux, 50ms, mean, bidi
-            (10, 3, 0, 2),     # spectral_flux, 100ms, value, bidi
-            (10, 4, 17, 2),    # spectral_flux, 125ms, periodicity, bidi
-            (10, 16, 17, 2),   # spectral_flux, 1000ms, periodicity, bidi
-            (11, 3, 0, 2),     # onset_strength, 100ms, value, bidi
-            (11, 3, 2, 2),     # onset_strength, 100ms, std, bidi
-            # ── PE signals ──
-            (21, 3, 0, 2),     # spectral_change, 100ms, value, bidi
-            (21, 16, 2, 2),    # spectral_change, 1000ms, std, bidi
-            (22, 3, 0, 2),     # energy_change, 100ms, value, bidi
-            (22, 16, 2, 2),    # energy_change, 1000ms, std, bidi
-            # ── Precision-weighted PE integration ──
-            (37, 3, 0, 2),     # x_l4l5[0], 100ms, value, bidi
-            (37, 3, 17, 2),    # x_l4l5[0], 100ms, periodicity, bidi
-            (37, 3, 20, 2),    # x_l4l5[0], 100ms, entropy, bidi
-            (37, 16, 17, 2),   # x_l4l5[0], 1000ms, periodicity, bidi
-            (37, 16, 21, 2),   # x_l4l5[0], 1000ms, zero_crossings, bidi
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute PWSM 9D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute PWSM 9D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"BEP": (B,T,30), "ASA": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,9) PWSM output
+ """
+ # R³ features
+ spectral_change = r3[..., 21:22]
+ energy_change = r3[..., 22:23]
 
-        Returns:
-            (B,T,9) PWSM output
-        """
-        bep = mechanism_outputs["BEP"]    # (B, T, 30)
-        asa = mechanism_outputs["ASA"]    # (B, T, 30)
+ # H³ direct features
+ onset_period_1s = h3_direct[(10, 16, 17, 2)].unsqueeze(-1)
+ energy_std_1s = h3_direct[(22, 16, 2, 2)].unsqueeze(-1)
+ spectral_std_1s = h3_direct[(21, 16, 2, 2)].unsqueeze(-1)
+ pe_entropy = h3_direct[(37, 3, 20, 2)].unsqueeze(-1)
 
-        # R³ features
-        spectral_change = r3[..., 21:22]
-        energy_change = r3[..., 22:23]
+ # ═══ LAYER E: Explicit features ═══
 
-        # BEP sub-sections
-        bep_beat = bep[..., 0:10]
-        bep_groove = bep[..., 20:30]
+ # f19: Precision Weighting (coefficients sum = 1.0)
+ f19 = torch.sigmoid(
+ 0.35 * onset_period_1s
+ + 0.35 * (1 - energy_std_1s)
+ )
 
-        # ASA sub-sections
-        asa_attn = asa[..., 10:20]
-        asa_salience = asa[..., 20:30]
+ # f20: Error Suppression (coefficients sum = 1.0)
+ f20 = torch.sigmoid(
+ 0.35 * (1 - f19)
+ + 0.30 * pe_entropy
+ )
 
-        # H³ direct features
-        onset_period_1s = h3_direct[(10, 16, 17, 2)].unsqueeze(-1)
-        energy_std_1s = h3_direct[(22, 16, 2, 2)].unsqueeze(-1)
-        spectral_std_1s = h3_direct[(21, 16, 2, 2)].unsqueeze(-1)
-        pe_entropy = h3_direct[(37, 3, 20, 2)].unsqueeze(-1)
+ # f21: Stability Encoding (coefficients sum = 1.0)
+ f21 = torch.sigmoid(
+ 0.35 * onset_period_1s
+ + 0.30 * (1 - spectral_std_1s)
+ )
 
-        # ═══ LAYER E: Explicit features ═══
+ # ═══ LAYER M: Mathematical ═══
+ pe_raw = torch.abs(spectral_change) + torch.abs(energy_change)
+ pe_weighted = torch.sigmoid(
+ )
+ precision = f19 # Precision output
 
-        # f19: Precision Weighting (coefficients sum = 1.0)
-        f19 = torch.sigmoid(
-            0.35 * onset_period_1s
-            + 0.35 * (1 - energy_std_1s)
-            + 0.30 * bep_beat.mean(-1, keepdim=True)
-        )
+ # ═══ LAYER P: Present ═══
+ weighted_error = torch.sigmoid(
+ + 0.5 * f19
+ )
+ precision_estimate = torch.sigmoid(
+ + 0.5 * onset_period_1s
+ )
 
-        # f20: Error Suppression (coefficients sum = 1.0)
-        f20 = torch.sigmoid(
-            0.35 * (1 - f19)
-            + 0.35 * asa_attn.mean(-1, keepdim=True)
-            + 0.30 * pe_entropy
-        )
+ # ═══ LAYER F: Future ═══
+ mmn_pred = torch.sigmoid(
+ 0.5 * f19 + 0.5 * pe_weighted
+ )
+ context_reliability = torch.sigmoid(
+ 0.5 * f21 + 0.5 * precision
+ )
 
-        # f21: Stability Encoding (coefficients sum = 1.0)
-        f21 = torch.sigmoid(
-            0.35 * onset_period_1s
-            + 0.35 * bep_groove.mean(-1, keepdim=True)
-            + 0.30 * (1 - spectral_std_1s)
-        )
-
-        # ═══ LAYER M: Mathematical ═══
-        pe_raw = torch.abs(spectral_change) + torch.abs(energy_change)
-        pe_weighted = torch.sigmoid(
-            0.5 * pe_raw * f19 + 0.5 * asa_attn.mean(-1, keepdim=True)
-        )
-        precision = f19  # Precision output
-
-        # ═══ LAYER P: Present ═══
-        weighted_error = torch.sigmoid(
-            0.5 * asa_attn.mean(-1, keepdim=True) * pe_raw
-            + 0.5 * f19
-        )
-        precision_estimate = torch.sigmoid(
-            0.5 * bep_beat.mean(-1, keepdim=True)
-            + 0.5 * onset_period_1s
-        )
-
-        # ═══ LAYER F: Future ═══
-        mmn_pred = torch.sigmoid(
-            0.5 * f19 + 0.5 * pe_weighted
-        )
-        context_reliability = torch.sigmoid(
-            0.5 * f21 + 0.5 * precision
-        )
-
-        return torch.cat([
-            f19, f20, f21,                              # E: 3D
-            pe_weighted, precision,                      # M: 2D
-            weighted_error, precision_estimate,          # P: 2D
-            mmn_pred, context_reliability,               # F: 2D
-        ], dim=-1)  # (B, T, 9)
+ return torch.cat([
+ f19, f20, f21, # E: 3D
+ pe_weighted, precision, # M: 2D
+ weighted_error, precision_estimate, # P: 2D
+ mmn_pred, context_reliability, # F: 2D
+ ], dim=-1) # (B, T, 9)
 ```
 
 ---
@@ -598,8 +553,6 @@ class PWSM(BaseModel):
 | **Falsification Tests** | 1/5 confirmed | Limited validation |
 | **R³ Features Used** | ~10D of 49D | Change + energy + interactions |
 | **H³ Demand** | 16 tuples (0.69%) | Sparse, efficient |
-| **BEP Mechanism** | 30D (3 sub-sections) | Stability / beat tracking |
-| **ASA Mechanism** | 30D (3 sub-sections) | Error gating (primary) |
 | **Output Dimensions** | **9D** | 4-layer structure |
 
 ---
@@ -639,20 +592,13 @@ class PWSM(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) | MI (v2.1.0) |
 |--------|-------------|-------------|-------------|
 | Input space | S⁰ (256D) | R³ (49D) | R³ (49D) — no change |
-| Temporal | HC⁰ mechanisms (OSC, ATT, NPL) | BEP (30D) + ASA (30D) mechanisms | Same — 16 H³ tuples |
 | PE signal | S⁰.L4.velocity_T[15] + HC⁰.OSC | R³.spectral_change[21] + R³.energy_change[22] | Same |
-| Precision | S⁰.L9.std_T[108] + HC⁰.NPL | R³.x_l4l5[37:45] + BEP.beat_entrainment | Same |
-| Error gating | S⁰.L9.entropy_T[116] + HC⁰.ATT | H³ entropy tuples + ASA.attention_gating | Same |
-| Stability | S⁰.X_L4L9[192:200] + HC⁰.OSC | R³.onset_strength[11] + BEP.groove | Same |
+| Precision | S⁰.L9.std_T[108] + HC⁰.NPL | R³.x_l4l5[37:45] | Same |
+| Error gating | S⁰.L9.entropy_T[116] + HC⁰.ATT | H³ entropy tuples | Same |
+| Stability | S⁰.X_L4L9[192:200] + HC⁰.OSC | R³.onset_strength[11] | Same |
 | Papers | 0 | 1 (Basinski 2025) | **12** (9 HIGH, 3 MEDIUM) |
 | Brain regions | 0 | 2 (inferred) | **8** (EEG/fMRI/MEG/single-unit) |
 | Output | 9D | 9D (same) | 9D — no change |
-
-### Why BEP + ASA replaces HC⁰ mechanisms
-
-- **OSC → BEP.beat_entrainment** [0:10] + BEP.groove [20:30]: Oscillatory band tracking maps to BEP's stability monitoring and groove regularity.
-- **ATT → ASA.attention_gating** [10:20]: Attentional entrainment maps to ASA's error gating for precision-weighted PE.
-- **NPL → BEP.beat_entrainment** [0:10] + H³ periodicity tuples: Neural phase locking maps to BEP's temporal precision encoding.
 
 ---
 

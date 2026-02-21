@@ -21,23 +21,23 @@ The **Over-Normalization in Intervention** (ONI) model describes the preliminary
 OVER-NORMALIZATION IN INTERVENTION
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-EXPECTED:                          OBSERVED:
-────────                           ─────────
+EXPECTED: OBSERVED:
+──────── ─────────
 
-Full-term > Intervention > Control    Intervention > Full-term > Control
+Full-term > Intervention > Control Intervention > Full-term > Control
 
 ┌─────────────────────────────────────────────────────────────────┐
-│                                                                  │
-│   MMR                                                            │
-│   Amplitude                    ●  Intervention                  │
-│     │                                                            │
-│     │                   ●  Full-term                            │
-│     │                                                            │
-│     │           ●  Control                                      │
-│     │                                                            │
-│     └───────────────────────────────────────────────────────    │
-│               Preterm                   Full-term                │
-│                                                                  │
+│ │
+│ MMR │
+│ Amplitude ● Intervention │
+│ │ │
+│ │ ● Full-term │
+│ │ │
+│ │ ● Control │
+│ │ │
+│ └─────────────────────────────────────────────────────── │
+│ Preterm Full-term │
+│ │
 └─────────────────────────────────────────────────────────────────┘
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -49,11 +49,11 @@ INTERPRETATION:
 Possible enhanced attentional orienting OR compensatory adaptation
 
 ALTERNATIVE EXPLANATIONS:
-  1. Enhanced attention capture (intervention-trained orienting)
-  2. Compensatory over-development (preterm adaptation)
-  3. Measurement artifact (control group differences)
-  4. Developmental trajectory differences (timing effects)
-  5. Sample selection bias
+ 1. Enhanced attention capture (intervention-trained orienting)
+ 2. Compensatory over-development (preterm adaptation)
+ 3. Measurement artifact (control group differences)
+ 4. Developmental trajectory differences (timing effects)
+ 5. Sample selection bias
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -69,82 +69,80 @@ ONI documents an unexpected finding from the developmental plasticity data:
 
 ## 2. Neural Circuit: Complete Anatomy
 
-### 2.1 Information Flow Architecture (EAR → BRAIN → PPC+ASA → ONI)
+### 2.1 Information Flow Architecture (EAR → BRAIN → ONI)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    ONI COMPUTATION ARCHITECTURE                              ║
+║ ONI COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins x 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
-║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ CHANGE   │ │ X-INT  │ │        ║
-║  │  │ 7D [0:7]  │ │ 5D[7:12]│ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
-║  │  │           │ │         │ │ [12:21] │ │ [21:25]  │ │ [25:49]│ │        ║
-║  │  │roughness  │ │amplitude│ │warmth   │ │spec_chg  │ │x_l0l5  │ │        ║
-║  │  │sethares   │ │loudness │ │tristim. │ │enrg_chg  │ │x_l4l5  │ │        ║
-║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                         ONI reads: ~14D                         │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                                                                  │        ║
-║  │  ┌── PPC Horizons ─────────────┐ ┌── ASA Horizons ──────────┐  │        ║
-║  │  │ H0 (25ms gamma)            │ │ H3 (100ms alpha)          │  │        ║
-║  │  │ H3 (100ms alpha)           │ │ H4 (125ms theta)          │  │        ║
-║  │  │ H4 (125ms theta)           │ │ H16 (1000ms beat)         │  │        ║
-║  │  │ H16 (1000ms beat)          │ │                            │  │        ║
-║  │  │                             │ │ Enhanced prediction         │  │        ║
-║  │  │ Deviance detection          │ │ Heightened attention         │  │        ║
-║  │  └─────────────────────────────┘ └────────────────────────────┘  │        ║
-║  │                         ONI demand: ~16 of 2304 tuples          │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Salience Circuit ════════     ║
-║                               │                                              ║
-║                       ┌───────┴───────┐                                      ║
-║                       ▼               ▼                                      ║
-║  ┌─────────────────┐  ┌─────────────────┐                                   ║
-║  │  PPC (30D)      │  │  ASA (30D)      │                                   ║
-║  │                 │  │                 │                                    ║
-║  │ Pitch Ext[0:10] │  │ Scene An [0:10] │                                   ║
-║  │ Interval        │  │ Attention       │                                   ║
-║  │ Anal    [10:20] │  │ Gating  [10:20] │                                   ║
-║  │ Contour [20:30] │  │ Salience        │                                   ║
-║  │                 │  │ Weight  [20:30] │                                   ║
-║  └────────┬────────┘  └────────┬────────┘                                   ║
-║           │                    │                                              ║
-║           └────────┬───────────┘                                             ║
-║                    ▼                                                          ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    ONI MODEL (11D Output)                       │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f01_over_normalization,                    │        ║
-║  │                       f02_compensatory_response,                 │        ║
-║  │                       f03_attention_enhancement,                 │        ║
-║  │                       f04_intervention_ceiling                   │        ║
-║  │  Layer M (Math):      dosage_accumulation,                      │        ║
-║  │                       preterm_baseline, fullterm_reference       │        ║
-║  │  Layer P (Present):   enhanced_mmr, attentional_state           │        ║
-║  │  Layer F (Future):    longterm_outcomes,                        │        ║
-║  │                       intervention_optimization                  │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins x 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ ENERGY │ │ TIMBRE │ │ CHANGE │ │ X-INT │ │ ║
+║ │ │ 7D [0:7] │ │ 5D[7:12]│ │ 9D │ │ 4D │ │ 24D │ │ ║
+║ │ │ │ │ │ │ [12:21] │ │ [21:25] │ │ [25:49]│ │ ║
+║ │ │roughness │ │amplitude│ │warmth │ │spec_chg │ │x_l0l5 │ │ ║
+║ │ │sethares │ │loudness │ │tristim. │ │enrg_chg │ │x_l4l5 │ │ ║
+║ │ └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │ ║
+║ │ ONI reads: ~14D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ │ ║
+║ │ │ H0 (25ms gamma) │ │ H3 (100ms alpha) │ │ ║
+║ │ │ H3 (100ms alpha) │ │ H4 (125ms theta) │ │ ║
+║ │ │ H4 (125ms theta) │ │ H16 (1000ms beat) │ │ ║
+║ │ │ H16 (1000ms beat) │ │ │ │ ║
+║ │ │ │ │ Enhanced prediction │ │ ║
+║ │ │ Deviance detection │ │ Heightened attention │ │ ║
+║ │ └─────────────────────────────┘ └────────────────────────────┘ │ ║
+║ │ ONI demand: ~16 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Salience Circuit ════════ ║
+║ │ ║
+║ ┌───────┴───────┐ ║
+║ ▼ ▼ ║
+║ ┌─────────────────┐ ┌─────────────────┐ ║
+║ │ │ │ │ ║
+║ │ Pitch Ext[0:10] │ │ Scene An [0:10] │ ║
+║ │ Interval │ │ Attention │ ║
+║ │ Anal [10:20] │ │ Gating [10:20] │ ║
+║ │ Contour [20:30] │ │ Salience │ ║
+║ │ │ │ Weight [20:30] │ ║
+║ └────────┬────────┘ └────────┬────────┘ ║
+║ │ │ ║
+║ └────────┬───────────┘ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ ONI MODEL (11D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f01_over_normalization, │ ║
+║ │ f02_compensatory_response, │ ║
+║ │ f03_attention_enhancement, │ ║
+║ │ f04_intervention_ceiling │ ║
+║ │ Layer M (Math): dosage_accumulation, │ ║
+║ │ preterm_baseline, fullterm_reference │ ║
+║ │ Layer P (Present): enhanced_mmr, attentional_state │ ║
+║ │ Layer F (Future): longterm_outcomes, │ ║
+║ │ intervention_optimization │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -173,20 +171,20 @@ ONI documents an unexpected finding from the developmental plasticity data:
 
 ```
 Primary Evidence (k=2 empirical + 2 developmental + 1 preterm physiology):
-  Partanen 2022 (MEG):     η²=0.229 (oddball group effect), η²=0.309 (sex×singing)
-  Scholkmann 2024 (fNIRS): r_rb=1.000 (auditory cortex, subgroup 1), sex p=0.034
-  Edalati 2023 (EEG):      Cohen's d=0.75 (duple > beat), p=0.0013 (beat tracking)
-  Saadatmehr 2024 (EEG):   ρ=0.31-0.37 (age-rhythm correlations), Rc=0.47 (phase-age)
-  Kaminska 2025 (EEG):     Stimulus-specific topography (qualitative)
+ Partanen 2022 (MEG): η²=0.229 (oddball group effect), η²=0.309 (sex×singing)
+ Scholkmann 2024 (fNIRS): r_rb=1.000 (auditory cortex, subgroup 1), sex p=0.034
+ Edalati 2023 (EEG): Cohen's d=0.75 (duple > beat), p=0.0013 (beat tracking)
+ Saadatmehr 2024 (EEG): ρ=0.31-0.37 (age-rhythm correlations), Rc=0.47 (phase-age)
+ Kaminska 2025 (EEG): Stimulus-specific topography (qualitative)
 
-Heterogeneity:  HIGH — over-normalization demonstrated in MEG only (Partanen);
-                fNIRS shows opposite sex pattern (Scholkmann); developmental
-                studies show progressive maturation rather than over-normalization per se
-Quality:        γ-tier — single RCT with small N, no independent replication
-                of over-normalization effect; mechanism unclear
+Heterogeneity: HIGH — over-normalization demonstrated in MEG only (Partanen);
+ fNIRS shows opposite sex pattern (Scholkmann); developmental
+ studies show progressive maturation rather than over-normalization per se
+Quality: γ-tier — single RCT with small N, no independent replication
+ of over-normalization effect; mechanism unclear
 Largest sample: N=39,358 (Nayak epidemiological — distal relevance only)
-Replication:    PENDING — Finnish cohort (Kostilainen et al. 2021 EEG) shows
-                some consistency but used different imaging modality
+Replication: PENDING — Finnish cohort (Kostilainen et al. 2021 EEG) shows
+ some consistency but used different imaging modality
 ```
 
 ---
@@ -220,19 +218,16 @@ Replication:    PENDING — Finnish cohort (Kostilainen et al. 2021 EEG) shows
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[10] spectral_flux ──────────┐
 R³[11] onset_strength ─────────┼──► MMR deviance magnitude
-PPC.pitch_extraction[0:10] ────┘   Over-normalization index (f01)
 
 R³[21] spectral_change ────────┐
 R³[23] pitch_change ───────────┼──► Enhanced predictive processing
-ASA.salience_weighting[20:30] ─┘   Compensatory response (f02)
 
 R³[13] brightness ─────────────┐
-ASA.attention_gating[10:20] ───┼──► Heightened attention
-H³ deviance variability ───────┘   Attention enhancement (f03)
+H³ deviance variability ───────┘ Attention enhancement (f03)
 ```
 
 ---
@@ -241,7 +236,7 @@ H³ deviance variability ───────┘   Attention enhancement (f03)
 
 ### 5.1 Demand Specification
 
-ONI requires H³ features at PPC horizons for deviance detection at enhanced levels and ASA horizons for heightened attentional processing. The demand reflects the over-normalization temporal dynamics.
+ONI requires H³ features for deviance detection at enhanced levels and for heightened attentional processing. The demand reflects the over-normalization temporal dynamics.
 
 | R³ Index | Feature | H | Morph | Law | Purpose |
 |----------|---------|---|-------|-----|---------|
@@ -271,17 +266,6 @@ No significant v2 expansion projected.
 **v2 projected**: 0 tuples
 **Total projected**: 16 tuples of 294,912 theoretical = 0.0054%
 
-### 5.2 PPC + ASA Mechanism Binding
-
-| Mechanism | Sub-section | Range | ONI Role | Weight |
-|-----------|-------------|-------|----------|--------|
-| **PPC** | Pitch Extraction | PPC[0:10] | Enhanced MMR detection | **1.0** (primary) |
-| **PPC** | Interval Analysis | PPC[10:20] | Over-normalization magnitude | 0.7 |
-| **PPC** | Contour Tracking | PPC[20:30] | Compensatory prediction | 0.6 |
-| **ASA** | Scene Analysis | ASA[0:10] | Preterm baseline encoding | 0.6 |
-| **ASA** | Attention Gating | ASA[10:20] | Heightened attention | **0.9** |
-| **ASA** | Salience Weighting | ASA[20:30] | Enhanced salience | 0.7 |
-
 ---
 
 ## 6. Output Space: 11D Multi-Layer Representation
@@ -294,54 +278,52 @@ ONI OUTPUT TENSOR: 11D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 0  │ f01_over_normalization   │ [0, 2] │ Enhancement beyond full-term.
-    │                          │        │ f01 = MMR_intervention /
-    │                          │        │       (MMR_fullterm + ε)
+ 0 │ f01_over_normalization │ [0, 2] │ Enhancement beyond full-term.
+ │ │ │ f01 = MMR_intervention /
+ │ │ │ (MMR_fullterm + ε)
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 1  │ f02_compensatory_resp    │ [0, 1] │ Enhanced prediction magnitude.
-    │                          │        │ f02 = σ(0.35 * spec_change_100ms
-    │                          │        │       + 0.35 * coupling_mean_1s
-    │                          │        │       + 0.30 * mean(ASA.sal[20:30]))
+ 1 │ f02_compensatory_resp │ [0, 1] │ Enhanced prediction magnitude.
+ │ │ │ f02 = σ(0.35 * spec_change_100ms
+ │ │ │ + 0.35 * coupling_mean_1s
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 2  │ f03_attention_enhance    │ [0, 1] │ Heightened deviance detection.
-    │                          │        │ f03 = σ(0.35 * brightness_100ms
-    │                          │        │       + 0.35 * tonal_entropy_100ms
-    │                          │        │       + 0.30 * mean(ASA.attn[10:20]))
+ 2 │ f03_attention_enhance │ [0, 1] │ Heightened deviance detection.
+ │ │ │ f03 = σ(0.35 * brightness_100ms
+ │ │ │ + 0.35 * tonal_entropy_100ms
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 3  │ f04_intervention_ceiling │ [0, 1] │ Response saturation point.
-    │                          │        │ f04 = 1 - exp(-dosage / τ_ceil)
-    │                          │        │ τ_ceil = 4 weeks (hypothesized)
+ 3 │ f04_intervention_ceiling │ [0, 1] │ Response saturation point.
+ │ │ │ f04 = 1 - exp(-dosage / τ_ceil)
+ │ │ │ τ_ceil = 4 weeks (hypothesized)
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS (Intervention Dynamics)
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 4  │ dosage_accumulation      │ [0, 1] │ Cumulative intervention exposure.
-    │                          │        │ EMA of f03 over session timescale
+ 4 │ dosage_accumulation │ [0, 1] │ Cumulative intervention exposure.
+ │ │ │ EMA of f03 over session timescale
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 5  │ preterm_baseline         │ [0, 1] │ Starting point reference.
-    │                          │        │ PPC baseline strength proxy
+ 5 │ preterm_baseline │ [0, 1] │ Starting point reference.
+ │ │ │ pitch-processing baseline strength proxy
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 6  │ fullterm_reference       │ [0, 1] │ Normalization target.
-    │                          │        │ External reference (constant)
+ 6 │ fullterm_reference │ [0, 1] │ Normalization target.
+ │ │ │ External reference (constant)
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 7  │ enhanced_mmr             │ [0, 1] │ Current mismatch strength.
+ 7 │ enhanced_mmr │ [0, 1] │ Current mismatch strength.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 8  │ attentional_state        │ [0, 1] │ Heightened attention level.
+ 8 │ attentional_state │ [0, 1] │ Heightened attention level.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 9  │ longterm_outcomes        │ [0, 1] │ Developmental trajectory.
+ 9 │ longterm_outcomes │ [0, 1] │ Developmental trajectory.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
-10  │ intervention_opt         │ [0, 1] │ Protocol ceiling detection.
+10 │ intervention_opt │ [0, 1] │ Protocol ceiling detection.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 11D per frame at 172.27 Hz
@@ -358,10 +340,10 @@ TOTAL: 11D per frame at 172.27 Hz
 OverNormalization(t) = MMR_intervention(t) / (MMR_fullterm + ε)
 
 Parameters:
-    f01 > 1.0: Over-normalization (intervention > full-term)
-    f01 = 1.0: Normalization (intervention = full-term)
-    f01 < 1.0: Under-normalization (intervention < full-term)
-    Observed: f01 ≈ 1.2-1.3 (20-30% enhancement beyond full-term)
+ f01 > 1.0: Over-normalization (intervention > full-term)
+ f01 = 1.0: Normalization (intervention = full-term)
+ f01 < 1.0: Under-normalization (intervention < full-term)
+ Observed: f01 ≈ 1.2-1.3 (20-30% enhancement beyond full-term)
 ```
 
 ### 7.2 Feature Formulas
@@ -375,14 +357,12 @@ f01 = MMR_intervention / (MMR_fullterm + 1e-6)
 
 # f02: Compensatory Response (coefficients sum = 1.0)
 f02 = σ(0.35 * spectral_change_100ms
-       + 0.35 * coupling_mean_1s
-       + 0.30 * mean(ASA.salience_weighting[20:30]))
+ + 0.35 * coupling_mean_1s
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # f03: Attention Enhancement (coefficients sum = 1.0)
 f03 = σ(0.35 * brightness_100ms
-       + 0.35 * tonal_entropy_100ms
-       + 0.30 * mean(ASA.attention_gating[10:20]))
+ + 0.35 * tonal_entropy_100ms
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # f04: Intervention Ceiling
@@ -414,22 +394,20 @@ f04 = 1 - exp(-dosage / 4.0)
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    ONI INTERACTIONS                                           │
+│ ONI INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (NDU):                                                         │
-│  DSP.plasticity_index ───────► ONI (over-normalization evidence)           │
-│  SDDP.intervention_resp ────► ONI (sex-dependent component)               │
-│                                                                             │
-│  CROSS-UNIT (NDU → ARU):                                                   │
-│  ONI.enhanced_mmr ───────────► ARU (enhanced affective processing)        │
-│                                                                             │
-│  UPSTREAM DEPENDENCIES:                                                     │
-│  PPC mechanism (30D) ────────► ONI (pitch/contour deviance)               │
-│  ASA mechanism (30D) ────────► ONI (attention/salience)                    │
-│  R³ (~14D) ──────────────────► ONI (direct spectral features)              │
-│  H³ (16 tuples) ─────────────► ONI (temporal dynamics)                     │
-│                                                                             │
+│ │
+│ INTRA-UNIT (NDU): │
+│ DSP.plasticity_index ───────► ONI (over-normalization evidence) │
+│ SDDP.intervention_resp ────► ONI (sex-dependent component) │
+│ │
+│ CROSS-UNIT (NDU → ARU): │
+│ ONI.enhanced_mmr ───────────► ARU (enhanced affective processing) │
+│ │
+│ UPSTREAM DEPENDENCIES: │
+│ R³ (~14D) ──────────────────► ONI (direct spectral features) │
+│ H³ (16 tuples) ─────────────► ONI (temporal dynamics) │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -453,141 +431,113 @@ f04 = 1 - exp(-dosage / 4.0)
 
 ```python
 class ONI(BaseModel):
-    """Over-Normalization in Intervention Model.
+ """Over-Normalization in Intervention Model.
 
-    Output: 11D per frame.
-    Reads: PPC mechanism (30D), ASA mechanism (30D), R³ direct.
-    SPECULATIVE: Unexpected finding requiring mechanistic explanation.
-    """
-    NAME = "ONI"
-    UNIT = "NDU"
-    TIER = "γ2"
-    OUTPUT_DIM = 11
-    MECHANISM_NAMES = ("PPC", "ASA")
+ Output: 11D per frame.
+ SPECULATIVE: Unexpected finding requiring mechanistic explanation.
+ """
+ NAME = "ONI"
+ UNIT = "NDU"
+ TIER = "γ2"
+ OUTPUT_DIM = 11
+ TAU_DECAY = 0.8 # Response persistence (seconds)
+ ENHANCEMENT_FACTOR = 1.0 # Over-normalization threshold
+ RTI_WINDOW = 2.5 # Oddball integration (seconds)
+ CEILING_CONSTANT = 4.0 # Weeks (hypothesized)
 
-    TAU_DECAY = 0.8           # Response persistence (seconds)
-    ENHANCEMENT_FACTOR = 1.0  # Over-normalization threshold
-    RTI_WINDOW = 2.5          # Oddball integration (seconds)
-    CEILING_CONSTANT = 4.0    # Weeks (hypothesized)
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """16 tuples for ONI computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ (10, 0, 0, 2), # spectral_flux, 25ms, value, bidi
+ (10, 3, 2, 2), # spectral_flux, 100ms, std, bidi
+ (10, 16, 1, 2), # spectral_flux, 1000ms, mean, bidi
+ (11, 0, 0, 2), # onset_strength, 25ms, value, bidi
+ (11, 3, 0, 2), # onset_strength, 100ms, value, bidi
+ (23, 3, 0, 2), # pitch_change, 100ms, value, bidi
+ (23, 16, 1, 2), # pitch_change, 1000ms, mean, bidi
+ (22, 3, 0, 2), # energy_change, 100ms, value, bidi
+ (13, 3, 0, 2), # brightness, 100ms, value, bidi
+ (13, 3, 20, 2), # brightness, 100ms, entropy, bidi
+ (21, 3, 0, 2), # spectral_change, 100ms, value, bidi
+ (21, 4, 8, 0), # spectral_change, 125ms, velocity, fwd
+ (33, 3, 0, 2), # x_l4l5[0], 100ms, value, bidi
+ (33, 3, 2, 2), # x_l4l5[0], 100ms, std, bidi
+ (33, 16, 1, 2), # x_l4l5[0], 1000ms, mean, bidi
+ (33, 16, 18, 0), # x_l4l5[0], 1000ms, trend, fwd
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """16 tuples for ONI computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # ── PPC horizons: deviance detection ──
-            (10, 0, 0, 2),     # spectral_flux, 25ms, value, bidi
-            (10, 3, 2, 2),     # spectral_flux, 100ms, std, bidi
-            (10, 16, 1, 2),    # spectral_flux, 1000ms, mean, bidi
-            (11, 0, 0, 2),     # onset_strength, 25ms, value, bidi
-            (11, 3, 0, 2),     # onset_strength, 100ms, value, bidi
-            (23, 3, 0, 2),     # pitch_change, 100ms, value, bidi
-            (23, 16, 1, 2),    # pitch_change, 1000ms, mean, bidi
-            (22, 3, 0, 2),     # energy_change, 100ms, value, bidi
-            # ── ASA horizons: enhanced attention ──
-            (13, 3, 0, 2),     # brightness, 100ms, value, bidi
-            (13, 3, 20, 2),    # brightness, 100ms, entropy, bidi
-            (21, 3, 0, 2),     # spectral_change, 100ms, value, bidi
-            (21, 4, 8, 0),     # spectral_change, 125ms, velocity, fwd
-            (33, 3, 0, 2),     # x_l4l5[0], 100ms, value, bidi
-            (33, 3, 2, 2),     # x_l4l5[0], 100ms, std, bidi
-            (33, 16, 1, 2),    # x_l4l5[0], 1000ms, mean, bidi
-            (33, 16, 18, 0),   # x_l4l5[0], 1000ms, trend, fwd
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute ONI 11D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute ONI 11D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"PPC": (B,T,30), "ASA": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,11) ONI output
+ """
+ # R³ features
+ spectral_flux = r3[..., 10:11]
+ onset_strength = r3[..., 11:12]
+ brightness = r3[..., 13:14]
+ spectral_change = r3[..., 21:22]
+ pitch_change = r3[..., 23:24]
+ x_l4l5 = r3[..., 33:41]
 
-        Returns:
-            (B,T,11) ONI output
-        """
-        ppc = mechanism_outputs["PPC"]    # (B, T, 30)
-        asa = mechanism_outputs["ASA"]    # (B, T, 30)
+ # H³ direct features
+ brightness_100ms = h3_direct[(13, 3, 0, 2)].unsqueeze(-1)
+ tonal_entropy_100ms = h3_direct[(13, 3, 20, 2)].unsqueeze(-1)
+ spectral_change_100ms = h3_direct[(21, 3, 0, 2)].unsqueeze(-1)
+ coupling_mean_1s = h3_direct[(33, 16, 1, 2)].unsqueeze(-1)
 
-        # R³ features
-        spectral_flux = r3[..., 10:11]
-        onset_strength = r3[..., 11:12]
-        brightness = r3[..., 13:14]
-        spectral_change = r3[..., 21:22]
-        pitch_change = r3[..., 23:24]
-        x_l4l5 = r3[..., 33:41]
+ # ═══ LAYER E: Explicit features ═══
 
-        # PPC sub-sections
-        ppc_pitch = ppc[..., 0:10]
-        ppc_interval = ppc[..., 10:20]
-        ppc_contour = ppc[..., 20:30]
+ # f01: Over-Normalization Index (ratio)
+ f01 = intervention_mmr # scaled by fullterm_mmr externally
 
-        # ASA sub-sections
-        asa_scene = asa[..., 0:10]
-        asa_attn = asa[..., 10:20]
-        asa_salience = asa[..., 20:30]
+ # f02: Compensatory Response (coefficients sum = 1.0)
+ f02 = torch.sigmoid(
+ 0.35 * spectral_change_100ms
+ + 0.35 * coupling_mean_1s
+ )
 
-        # H³ direct features
-        brightness_100ms = h3_direct[(13, 3, 0, 2)].unsqueeze(-1)
-        tonal_entropy_100ms = h3_direct[(13, 3, 20, 2)].unsqueeze(-1)
-        spectral_change_100ms = h3_direct[(21, 3, 0, 2)].unsqueeze(-1)
-        coupling_mean_1s = h3_direct[(33, 16, 1, 2)].unsqueeze(-1)
+ # f03: Attention Enhancement (coefficients sum = 1.0)
+ f03 = torch.sigmoid(
+ 0.35 * brightness_100ms
+ + 0.35 * tonal_entropy_100ms
+ )
 
-        # ═══ LAYER E: Explicit features ═══
+ # f04: Intervention Ceiling (exponential saturation)
+ f04 = torch.sigmoid(
+ 0.50 * f03 + 0.50 * f02
+ )
 
-        # f01: Over-Normalization Index (ratio)
-        intervention_mmr = ppc_pitch.mean(-1, keepdim=True)
-        f01 = intervention_mmr  # scaled by fullterm_mmr externally
+ # ═══ LAYER M: Intervention Dynamics ═══
+ dosage_accumulation = torch.sigmoid(
+ )
+ fullterm_reference = torch.sigmoid(
+ )
 
-        # f02: Compensatory Response (coefficients sum = 1.0)
-        f02 = torch.sigmoid(
-            0.35 * spectral_change_100ms
-            + 0.35 * coupling_mean_1s
-            + 0.30 * asa_salience.mean(-1, keepdim=True)
-        )
+ # ═══ LAYER P: Present ═══
 
-        # f03: Attention Enhancement (coefficients sum = 1.0)
-        f03 = torch.sigmoid(
-            0.35 * brightness_100ms
-            + 0.35 * tonal_entropy_100ms
-            + 0.30 * asa_attn.mean(-1, keepdim=True)
-        )
+ # ═══ LAYER F: Future ═══
+ longterm_outcomes = torch.sigmoid(
+ 0.50 * f01 + 0.50 * f02
+ )
+ intervention_opt = torch.sigmoid(
+ 0.50 * f04 + 0.50 * dosage_accumulation
+ )
 
-        # f04: Intervention Ceiling (exponential saturation)
-        f04 = torch.sigmoid(
-            0.50 * f03 + 0.50 * f02
-        )
-
-        # ═══ LAYER M: Intervention Dynamics ═══
-        dosage_accumulation = torch.sigmoid(
-            0.50 * f03 + 0.50 * ppc_pitch.mean(-1, keepdim=True)
-        )
-        preterm_baseline = ppc_pitch.mean(-1, keepdim=True)
-        fullterm_reference = torch.sigmoid(
-            0.50 * asa_scene.mean(-1, keepdim=True)
-            + 0.50 * ppc_contour.mean(-1, keepdim=True)
-        )
-
-        # ═══ LAYER P: Present ═══
-        enhanced_mmr = ppc_pitch.mean(-1, keepdim=True)
-        attentional_state = asa_attn.mean(-1, keepdim=True)
-
-        # ═══ LAYER F: Future ═══
-        longterm_outcomes = torch.sigmoid(
-            0.50 * f01 + 0.50 * f02
-        )
-        intervention_opt = torch.sigmoid(
-            0.50 * f04 + 0.50 * dosage_accumulation
-        )
-
-        return torch.cat([
-            f01, f02, f03, f04,                                       # E: 4D
-            dosage_accumulation, preterm_baseline, fullterm_reference, # M: 3D
-            enhanced_mmr, attentional_state,                          # P: 2D
-            longterm_outcomes, intervention_opt,                       # F: 2D
-        ], dim=-1)  # (B, T, 11)
+ return torch.cat([
+ f01, f02, f03, f04, # E: 4D
+ dosage_accumulation, preterm_baseline, fullterm_reference, # M: 3D
+ enhanced_mmr, attentional_state, # P: 2D
+ longterm_outcomes, intervention_opt, # F: 2D
+ ], dim=-1) # (B, T, 11)
 ```
 
 ---
@@ -603,8 +553,6 @@ class ONI(BaseModel):
 | **Falsification Tests** | 1/5 preliminary | Low validity (mechanism unclear) |
 | **R³ Features Used** | ~14D of 49D | Energy + timbre + change + interactions |
 | **H³ Demand** | 16 tuples (0.69%) | Sparse, efficient |
-| **PPC Mechanism** | 30D (3 sub-sections) | Enhanced deviance detection |
-| **ASA Mechanism** | 30D (3 sub-sections) | Heightened attention/salience |
 | **Output Dimensions** | **11D** | 4-layer structure |
 | **Brain Regions** | 5 regions (STG, A1, PFC, TC-preterm, AC-developing) | MEG/fNIRS/EEG localization |
 
@@ -638,21 +586,13 @@ class ONI(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D) | R³ (49D) |
-| Temporal | HC⁰ mechanisms (OSC, ATT, HRM, EFC) | PPC (30D) + ASA (30D) mechanisms |
-| Deviance signal | S⁰.L5.spectral_flux[45] + HC⁰.EFC | R³.spectral_flux[10] + PPC.pitch_extraction |
-| Attention | S⁰.L5.spectral_kurtosis[41] + HC⁰.ATT | R³.brightness[13] + ASA.attention_gating |
-| Enhancement | S⁰.L4.velocity_F[16] + HC⁰.OSC | R³.spectral_change[21] + ASA.salience_weighting |
-| Prediction | S⁰.X_L4L5[192:200] + HC⁰.HRM | R³.x_l4l5[33:41] + PPC.contour_tracking |
+| Deviance signal | S⁰.L5.spectral_flux[45] + HC⁰.EFC | R³.spectral_flux[10] |
+| Attention | S⁰.L5.spectral_kurtosis[41] + HC⁰.ATT | R³.brightness[13] |
+| Enhancement | S⁰.L4.velocity_F[16] + HC⁰.OSC | R³.spectral_change[21] |
+| Prediction | S⁰.X_L4L5[192:200] + HC⁰.HRM | R³.x_l4l5[33:41] |
 | Demand format | HC⁰ index ranges | H³ 4-tuples (sparse) |
 | Total demand | 27/2304 = 1.17% | 16/2304 = 0.69% |
 | Output | 11D | 11D (same) |
-
-### Why PPC + ASA replaces HC⁰ mechanisms
-
-- **EFC → PPC.pitch_extraction** [0:10]: Enhanced prediction learning maps to PPC's deviance detection.
-- **ATT → ASA.attention_gating** [10:20]: Heightened auditory attention maps to ASA's attentional gating.
-- **OSC → ASA.salience_weighting** [20:30]: Accelerated neural maturation maps to ASA's enhanced salience.
-- **HRM → PPC.contour_tracking** [20:30]: Over-developed pattern encoding maps to PPC's compensatory prediction.
 
 ---
 
@@ -664,7 +604,6 @@ class ONI(BaseModel):
 |---|-------|-------------|---------------|-------|
 | 1 | **FULL_NAME** | "Over-Normalization in Intervention" | "Oddball Novelty Index" | Different name entirely |
 | 2 | **OUTPUT_DIM** | 11D (4E+3M+2P+2F) | 10D (4E+2M+2P+2F) | Code missing fullterm_reference in Layer M |
-| 3 | **MECHANISM_NAMES** | ("PPC", "ASA") | ("ASA",) | Code omits PPC mechanism |
 | 4 | **h3_demand** | 16 tuples (0.69% of 2304) | () empty tuple | Code has no H³ demand |
 | 5 | **Layer M dims** | 3 (dosage_accumulation, preterm_baseline, fullterm_reference) | 2 (intervention_dosage, full_term_comparison) | Different names and count |
 | 6 | **Layer E dim names** | f01_over_normalization, f02_compensatory_resp, f03_attention_enhance, f04_intervention_ceiling | f01_over_normalization_idx, f02_compensatory_response, f03_attention_enhancement, f04_intervention_ceiling | Minor naming differences |

@@ -111,7 +111,6 @@
 ### ASU — Auditory Salience Unit (9 models)
 
 **Circuit**: Salience (Anterior Insula, dACC, TPJ)
-**Mechanisms**: BEP (Beat Entrainment Processing, 30D) + ASA (Auditory Scene Analysis, 30D)
 
 | ID | Acronym | Full Name | Tier | Output |
 |----|---------|-----------|------|--------|
@@ -128,7 +127,6 @@
 ### NDU — Novelty Detection Unit (9 models)
 
 **Circuit**: Salience + Perceptual (Anterior Insula, dACC, IFG)
-**Mechanisms**: PPC (Pitch Processing Chain, 30D) + ASA (Auditory Scene Analysis, 30D)
 
 | ID | Acronym | Full Name | Tier | Output |
 |----|---------|-----------|------|--------|
@@ -145,7 +143,6 @@
 ### MPU — Motor Planning Unit (10 models)
 
 **Circuit**: Sensorimotor (SMA, PMC, Cerebellum, Basal Ganglia)
-**Mechanisms**: BEP (Beat Entrainment Processing, 30D) + TMH (Temporal Memory Hierarchy, 30D)
 
 | ID | Acronym | Full Name | Tier | Output |
 |----|---------|-----------|------|--------|
@@ -163,7 +160,6 @@
 ### PCU — Predictive Coding Unit (10 models)
 
 **Circuit**: Imagery (Auditory Cortex, IFG, STS, Hippocampus)
-**Mechanisms**: PPC (Pitch Processing Chain, 30D) + TPC (Timbre Processing Chain, 30D) + MEM (Memory Integration, 30D)
 
 | ID | Acronym | Full Name | Tier | Output |
 |----|---------|-----------|------|--------|
@@ -181,11 +177,10 @@
 ### RPU — Reward Processing Unit (10 models)
 
 **Circuit**: Mesolimbic (NAcc, VTA, vmPFC, OFC, Amygdala)
-**Mechanisms**: AED (Affective Entrainment Dynamics, 30D) + CPD (Consummatory Phase Dynamics, 30D) + C0P (Cognitive Polarity, 30D)
 
 | ID | Acronym | Full Name | Tier | Output |
 |----|---------|-----------|------|--------|
-| [RPU-α1-DAED](RPU-α1-DAED/DAED.md) | DAED | Dopamine Anticipation-Experience Dissociation | α | — |
+| [RPU-α1-DAED](RPU-α1-DAED/Dmd) | DAED | Dopamine Anticipation-Experience Dissociation | α | — |
 | [RPU-α2-MORMR](RPU-α2-MORMR/MORMR.md) | MORMR | μ-Opioid Receptor Music Reward | α | — |
 | [RPU-α3-RPEM](RPU-α3-RPEM/RPEM.md) | RPEM | Reward Prediction Error in Music | α | — |
 | [RPU-β1-IUCP](RPU-β1-IUCP/IUCP.md) | IUCP | Inverted-U Complexity Preference | β | — |
@@ -195,22 +190,6 @@
 | [RPU-γ1-LDAC](RPU-γ1-LDAC/LDAC.md) | LDAC | Liking-Dependent Auditory Cortex | γ | — |
 | [RPU-γ2-IOTMS](RPU-γ2-IOTMS/IOTMS.md) | IOTMS | Individual Opioid Tone Music Sensitivity | γ | — |
 | [RPU-γ3-SSPS](RPU-γ3-SSPS/SSPS.md) | SSPS | Saddle-Shaped Preference Surface | γ | — |
-
----
-
-## Mechanism Assignments
-
-| Unit | Mechanisms | Sub-sections (each 10D) |
-|------|-----------|------------------------|
-| **SPU** | PPC + TPC | pitch extraction, interval analysis, contour tracking / spectral shape, temporal envelope, source identity |
-| **STU** | BEP + TMH | beat entrainment, motor coupling, groove / short-term memory, sequence integration, hierarchical structure |
-| **IMU** | MEM + TMH | working memory, long-term memory, prediction buffer / short-term memory, sequence integration, hierarchical structure |
-| **ARU** | AED + CPD | valence tracking, arousal dynamics, emotional trajectory / anticipation, peak experience, resolution |
-| **ASU** | BEP + ASA | beat entrainment, motor coupling, groove / scene analysis, attention gating, salience weighting |
-| **NDU** | PPC + ASA | pitch extraction, interval analysis, contour tracking / scene analysis, attention gating, salience weighting |
-| **MPU** | BEP + TMH | beat entrainment, motor coupling, groove / short-term memory, sequence integration, hierarchical structure |
-| **PCU** | PPC + TPC + MEM | pitch / timbre / memory (3 mechanisms) |
-| **RPU** | AED + CPD + C0P | valence-arousal / anticipation-resolution / tension-expectation-approach (3 mechanisms) |
 
 ---
 

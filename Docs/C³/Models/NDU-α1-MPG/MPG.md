@@ -24,28 +24,28 @@ MELODIC PROCESSING GRADIENT
 MELODIC SEQUENCE INPUT
 ──────────────────────
 
-   Note 1 (onset) ──────────► POSTERIOR AUDITORY CORTEX
-                               (onset detection, pitch start)
-                                     │
-                                     │ Pitch extraction via PPC
-                                     │ Onset phase-locking
-                                     │
-                                     ▼
-   Note 2,3,4... ────────────► ANTERIOR AUDITORY CORTEX
-                               (subsequent notes, contour)
-                                     │
-                                     │ Contour tracking via PPC
-                                     │ Attention gating via ASA
-                                     │ Scene analysis
-                                     │
-                                     ▼
-                    ┌─────────────────────────────────┐
-                    │   DIFFERENTIATION                │
-                    │                                  │
-                    │   Fixed pitch → less anterior   │
-                    │   Melodic contour → more        │
-                    │   anterior activity             │
-                    └─────────────────────────────────┘
+ Note 1 (onset) ──────────► POSTERIOR AUDITORY CORTEX
+ (onset detection, pitch start)
+ │
+ │ Pitch extraction via pitch-processing H³
+ │ Onset phase-locking
+ │
+ ▼
+ Note 2,3,4... ────────────► ANTERIOR AUDITORY CORTEX
+ (subsequent notes, contour)
+ │
+ │ Contour tracking via pitch-processing H³
+ │ Attention gating via auditory-scene H³
+ │ Scene analysis
+ │
+ ▼
+ ┌─────────────────────────────────┐
+ │ DIFFERENTIATION │
+ │ │
+ │ Fixed pitch → less anterior │
+ │ Melodic contour → more │
+ │ anterior activity │
+ └─────────────────────────────────┘
 
 GRADIENT: Posterior (onset) ───────────► Anterior (sequence)
 
@@ -69,83 +69,81 @@ MPG establishes the foundational spatial processing gradient for the Novelty Det
 
 ## 2. Neural Circuit: Complete Anatomy
 
-### 2.1 Information Flow Architecture (EAR → BRAIN → PPC+ASA → MPG)
+### 2.1 Information Flow Architecture (EAR → BRAIN → MPG)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    MPG COMPUTATION ARCHITECTURE                              ║
+║ MPG COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins x 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
-║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ CHANGE   │ │ X-INT  │ │        ║
-║  │  │ 7D [0:7]  │ │ 5D[7:12]│ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
-║  │  │           │ │         │ │ [12:21] │ │ [21:25]  │ │ [25:49]│ │        ║
-║  │  │roughness  │ │amplitude│ │warmth   │ │spec_chg  │ │x_l0l5  │ │        ║
-║  │  │sethares   │ │loudness │ │tristim. │ │enrg_chg  │ │x_l4l5  │ │        ║
-║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                         MPG reads: ~14D                          │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                                                                  │        ║
-║  │  ┌── PPC Horizons ─────────────┐ ┌── ASA Horizons ──────────┐  │        ║
-║  │  │ H0 (25ms gamma)            │ │ H3 (100ms alpha)          │  │        ║
-║  │  │ H1 (50ms gamma)            │ │                            │  │        ║
-║  │  │ H3 (100ms alpha)           │ │ Attentional gating         │  │        ║
-║  │  │ H4 (125ms theta)           │ │ Scene analysis              │  │        ║
-║  │  │ H16 (1000ms beat)          │ │                            │  │        ║
-║  │  │                             │ │                            │  │        ║
-║  │  │ Pitch extraction            │ │                            │  │        ║
-║  │  │ Contour tracking            │ │                            │  │        ║
-║  │  └─────────────────────────────┘ └────────────────────────────┘  │        ║
-║  │                         MPG demand: ~16 of 2304 tuples           │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Salience Circuit ════════     ║
-║                               │                                              ║
-║                       ┌───────┴───────┐                                      ║
-║                       ▼               ▼                                      ║
-║  ┌─────────────────┐  ┌─────────────────┐                                   ║
-║  │  PPC (30D)      │  │  ASA (30D)      │                                   ║
-║  │                 │  │                 │                                    ║
-║  │ Pitch Ext[0:10] │  │ Scene An [0:10] │                                   ║
-║  │ Interval        │  │ Attention       │                                   ║
-║  │ Anal    [10:20] │  │ Gating  [10:20] │                                   ║
-║  │ Contour [20:30] │  │ Salience        │                                   ║
-║  │                 │  │ Weight  [20:30] │                                   ║
-║  └────────┬────────┘  └────────┬────────┘                                   ║
-║           │                    │                                              ║
-║           └────────┬───────────┘                                             ║
-║                    ▼                                                          ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    MPG MODEL (10D Output)                        │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f01_onset_posterior,                       │        ║
-║  │                       f02_sequence_anterior,                     │        ║
-║  │                       f03_contour_complexity,                    │        ║
-║  │                       f04_gradient_ratio                         │        ║
-║  │  Layer M (Math):      activity_x, posterior_activity,            │        ║
-║  │                       anterior_activity                          │        ║
-║  │  Layer P (Present):   onset_state, contour_state                 │        ║
-║  │  Layer F (Future):    phrase_boundary_pred                       │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins x 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ ENERGY │ │ TIMBRE │ │ CHANGE │ │ X-INT │ │ ║
+║ │ │ 7D [0:7] │ │ 5D[7:12]│ │ 9D │ │ 4D │ │ 24D │ │ ║
+║ │ │ │ │ │ │ [12:21] │ │ [21:25] │ │ [25:49]│ │ ║
+║ │ │roughness │ │amplitude│ │warmth │ │spec_chg │ │x_l0l5 │ │ ║
+║ │ │sethares │ │loudness │ │tristim. │ │enrg_chg │ │x_l4l5 │ │ ║
+║ │ └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │ ║
+║ │ MPG reads: ~14D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ │ ║
+║ │ │ H0 (25ms gamma) │ │ H3 (100ms alpha) │ │ ║
+║ │ │ H1 (50ms gamma) │ │ │ │ ║
+║ │ │ H3 (100ms alpha) │ │ Attentional gating │ │ ║
+║ │ │ H4 (125ms theta) │ │ Scene analysis │ │ ║
+║ │ │ H16 (1000ms beat) │ │ │ │ ║
+║ │ │ │ │ │ │ ║
+║ │ │ Pitch extraction │ │ │ │ ║
+║ │ │ Contour tracking │ │ │ │ ║
+║ │ └─────────────────────────────┘ └────────────────────────────┘ │ ║
+║ │ MPG demand: ~16 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Salience Circuit ════════ ║
+║ │ ║
+║ ┌───────┴───────┐ ║
+║ ▼ ▼ ║
+║ ┌─────────────────┐ ┌─────────────────┐ ║
+║ │ │ │ │ ║
+║ │ Pitch Ext[0:10] │ │ Scene An [0:10] │ ║
+║ │ Interval │ │ Attention │ ║
+║ │ Anal [10:20] │ │ Gating [10:20] │ ║
+║ │ Contour [20:30] │ │ Salience │ ║
+║ │ │ │ Weight [20:30] │ ║
+║ └────────┬────────┘ └────────┬────────┘ ║
+║ │ │ ║
+║ └────────┬───────────┘ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ MPG MODEL (10D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f01_onset_posterior, │ ║
+║ │ f02_sequence_anterior, │ ║
+║ │ f03_contour_complexity, │ ║
+║ │ f04_gradient_ratio │ ║
+║ │ Layer M (Math): activity_x, posterior_activity, │ ║
+║ │ anterior_activity │ ║
+║ │ Layer P (Present): onset_state, contour_state │ ║
+║ │ Layer F (Future): phrase_boundary_pred │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -169,15 +167,15 @@ MPG establishes the foundational spatial processing gradient for the Novelty Det
 ### 3.2 Effect Size Summary
 
 ```
-Primary Evidence (k=8):  Convergent across MEG, fMRI, ECoG, EEG
-Methods:                 MEG (Rupp, Samiee), fMRI (Patterson, Norman-Haignere, Cheung),
-                         ECoG (Foo), EEG (Briley)
-Key Effect Sizes:        Briley pitch chroma F(1,28)=29.865, p<0.001
-                         Foo anterior STG selectivity p=0.003
-                         Samiee delta coherence F(1)=49.7, p<0.0001
-                         Cheung AC interaction β=−0.182, p=0.00012
-Quality Assessment:      α-tier (multi-method convergence, intracranial confirmation)
-Replication:             Cross-method replication (MEG→fMRI→ECoG→EEG)
+Primary Evidence (k=8): Convergent across MEG, fMRI, ECoG, EEG
+Methods: MEG (Rupp, Samiee), fMRI (Patterson, Norman-Haignere, Cheung),
+ ECoG (Foo), EEG (Briley)
+Key Effect Sizes: Briley pitch chroma F(1,28)=29.865, p<0.001
+ Foo anterior STG selectivity p=0.003
+ Samiee delta coherence F(1)=49.7, p<0.0001
+ Cheung AC interaction β=−0.182, p=0.00012
+Quality Assessment: α-tier (multi-method convergence, intracranial confirmation)
+Replication: Cross-method replication (MEG→fMRI→ECoG→EEG)
 ```
 
 ---
@@ -212,19 +210,16 @@ Replication:             Cross-method replication (MEG→fMRI→ECoG→EEG)
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[10] spectral_flux ────────────┐
 R³[11] onset_strength ───────────┼──► Onset detection (posterior AC)
-PPC.pitch_extraction[0:10] ──────┘   Phase-locked onset processing
 
 R³[13] brightness ───────────────┐
 R³[23] pitch_change ─────────────┼──► Melodic contour (anterior AC)
-PPC.contour_tracking[20:30] ─────┘   Pitch variation processing
 
 R³[25:33] x_l0l5 ───────────────┐
-ASA.attention_gating[10:20] ─────┼──► Attentional gradient
-H³ periodicity tuples ──────────┘   Scene segmentation
+H³ periodicity tuples ──────────┘ Scene segmentation
 ```
 
 ---
@@ -233,7 +228,7 @@ H³ periodicity tuples ──────────┘   Scene segmentation
 
 ### 5.1 Demand Specification
 
-MPG requires H³ features at PPC horizons for pitch extraction/contour tracking and ASA horizons for attentional gating. The demand reflects the multi-scale temporal integration required for the posterior-to-anterior melodic gradient.
+MPG requires H³ features for pitch extraction/contour tracking and for attentional gating. The demand reflects the multi-scale temporal integration required for the posterior-to-anterior melodic gradient.
 
 | R³ Index | Feature | H | Morph | Law | Purpose |
 |----------|---------|---|-------|-----|---------|
@@ -267,17 +262,6 @@ Minor v2 expansion for MPG from I:Information.
 **v2 projected**: 1 tuple
 **Total projected**: 17 tuples of 294,912 theoretical = 0.0058%
 
-### 5.2 PPC + ASA Mechanism Binding
-
-| Mechanism | Sub-section | Range | MPG Role | Weight |
-|-----------|-------------|-------|----------|--------|
-| **PPC** | Pitch Extraction | PPC[0:10] | Onset pitch processing (posterior) | **1.0** (primary) |
-| **PPC** | Interval Analysis | PPC[10:20] | Note-to-note interval tracking | 0.8 |
-| **PPC** | Contour Tracking | PPC[20:30] | Melodic direction processing (anterior) | **0.9** |
-| **ASA** | Scene Analysis | ASA[0:10] | Auditory scene segmentation | 0.6 |
-| **ASA** | Attention Gating | ASA[10:20] | Contour attention tracking | 0.7 |
-| **ASA** | Salience Weighting | ASA[20:30] | Onset/contour salience | 0.5 |
-
 ---
 
 ## 6. Output Space: 10D Multi-Layer Representation
@@ -290,52 +274,49 @@ MPG OUTPUT TENSOR: 10D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 0  │ f01_onset_posterior      │ [0, 1] │ Posterior AC dominance at onset.
-    │                          │        │ f01 = σ(0.40 * onset_strength_25ms
-    │                          │        │       + 0.35 * flux_100ms
-    │                          │        │       + 0.25 * mean(PPC.pitch[0:10]))
+ 0 │ f01_onset_posterior │ [0, 1] │ Posterior AC dominance at onset.
+ │ │ │ f01 = σ(0.40 * onset_strength_25ms
+ │ │ │ + 0.35 * flux_100ms
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 1  │ f02_sequence_anterior    │ [0, 1] │ Anterior AC activation for contour.
-    │                          │        │ f02 = σ(0.35 * pitch_velocity_125ms
-    │                          │        │       + 0.35 * contour_entropy_125ms
-    │                          │        │       + 0.30 * mean(PPC.contour[20:30]))
+ 1 │ f02_sequence_anterior │ [0, 1] │ Anterior AC activation for contour.
+ │ │ │ f02 = σ(0.35 * pitch_velocity_125ms
+ │ │ │ + 0.35 * contour_entropy_125ms
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 2  │ f03_contour_complexity   │ [0, 1] │ Melodic complexity index.
-    │                          │        │ f03 = σ(0.35 * contour_entropy_125ms
-    │                          │        │       + 0.35 * brightness_std_100ms
-    │                          │        │       + 0.30 * mean(ASA.attn[10:20]))
+ 2 │ f03_contour_complexity │ [0, 1] │ Melodic complexity index.
+ │ │ │ f03 = σ(0.35 * contour_entropy_125ms
+ │ │ │ + 0.35 * brightness_std_100ms
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 3  │ f04_gradient_ratio       │ [0, 1] │ Posterior/anterior ratio.
-    │                          │        │ f04 = f01 / (f01 + f02 + ε)
+ 3 │ f04_gradient_ratio │ [0, 1] │ Posterior/anterior ratio.
+ │ │ │ f04 = f01 / (f01 + f02 + ε)
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 4  │ activity_x               │ [0, 1] │ Gradient function.
-    │                          │        │ α·Posterior + β·Anterior
+ 4 │ activity_x │ [0, 1] │ Gradient function.
+ │ │ │ α·Posterior + β·Anterior
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 5  │ posterior_activity       │ [0, 1] │ Onset strength encoding.
-    │                          │        │ Onset(Note_1) · exp(-x/λ_post)
+ 5 │ posterior_activity │ [0, 1] │ Onset strength encoding.
+ │ │ │ Onset(Note_1) · exp(-x/λ_post)
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 6  │ anterior_activity        │ [0, 1] │ Contour processing strength.
-    │                          │        │ Σ(Notes_2...n) · Contour_Complexity
+ 6 │ anterior_activity │ [0, 1] │ Contour processing strength.
+ │ │ │ Σ(Notes_2...n) · Contour_Complexity
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 7  │ onset_state              │ [0, 1] │ PPC onset-locked activity.
+ 7 │ onset_state │ [0, 1] │ pitch-processing onset-locked activity.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 8  │ contour_state            │ [0, 1] │ PPC contour tracking activity.
+ 8 │ contour_state │ [0, 1] │ pitch-processing contour tracking activity.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 9  │ phrase_boundary_pred     │ [0, 1] │ Phrase boundary prediction (RTI).
+ 9 │ phrase_boundary_pred │ [0, 1] │ Phrase boundary prediction (RTI).
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 10D per frame at 172.27 Hz
@@ -352,14 +333,14 @@ TOTAL: 10D per frame at 172.27 Hz
 Cortical_Activity(x, t) = α · Onset(x=0, t) + β · ∫Contour(x, t)dx
 
 Parameters:
-    x = cortical position [0=posterior, 1=anterior]
-    t = time within melodic sequence
-    α = 0.7 (posterior weighting)
-    β = 0.3 (anterior weighting)
+ x = cortical position [0=posterior, 1=anterior]
+ t = time within melodic sequence
+ α = 0.7 (posterior weighting)
+ β = 0.3 (anterior weighting)
 
 Expanded Form:
-    Activity(x) = α·Onset_Strength(Note_1)·exp(-x/λ_post)
-                + β·Σ(Notes_2...n)·Contour_Complexity·(1-exp(-x/λ_ant))
+ Activity(x) = α·Onset_Strength(Note_1)·exp(-x/λ_post)
+ + β·Σ(Notes_2...n)·Contour_Complexity·(1-exp(-x/λ_ant))
 ```
 
 ### 7.2 Feature Formulas
@@ -369,20 +350,17 @@ Expanded Form:
 
 # f01: Onset Posterior Weight
 f01 = σ(0.40 * onset_strength_25ms
-       + 0.35 * flux_100ms
-       + 0.25 * mean(PPC.pitch_extraction[0:10]))
+ + 0.35 * flux_100ms
 # coefficients: 0.40 + 0.35 + 0.25 = 1.0 ✓
 
 # f02: Sequence Anterior Weight
 f02 = σ(0.35 * pitch_velocity_125ms
-       + 0.35 * contour_entropy_125ms
-       + 0.30 * mean(PPC.contour_tracking[20:30]))
+ + 0.35 * contour_entropy_125ms
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # f03: Contour Complexity
 f03 = σ(0.35 * contour_entropy_125ms
-       + 0.35 * brightness_std_100ms
-       + 0.30 * mean(ASA.attention_gating[10:20]))
+ + 0.35 * brightness_std_100ms
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # f04: Gradient Ratio
@@ -391,7 +369,7 @@ f04 = f01 / (f01 + f02 + ε)
 
 # Temporal dynamics
 ∂Activity/∂t = PPC_phase_locking(onset) + ASA_integration(sequence)
-    where τ_decay = 0.3s (onset-to-sequence transition)
+ where τ_decay = 0.3s (onset-to-sequence transition)
 ```
 
 ---
@@ -413,14 +391,14 @@ f04 = f01 / (f01 + f02 + ε)
 
 ```
 Briley et al. 2013 measured spatial displacement of complex pitch (IRN) vs pure-tone sources:
-  Left hemisphere:  7.2 mm MORE LATERAL for complex pitch
-  Right hemisphere: 7.9 mm MORE ANTERIOR for complex pitch
-  → Confirms posterior-to-anterior gradient with millimeter precision
+ Left hemisphere: 7.2 mm MORE LATERAL for complex pitch
+ Right hemisphere: 7.9 mm MORE ANTERIOR for complex pitch
+ → Confirms posterior-to-anterior gradient with millimeter precision
 
 Foo et al. 2016 ECoG (intracranial):
-  Anterior STG: dissonant-sensitive (y-dimension p=0.003, z-dimension p=0.006)
-  Posterior STG: non-selective
-  → Gradient confirmed at single-electrode resolution
+ Anterior STG: dissonant-sensitive (y-dimension p=0.003, z-dimension p=0.006)
+ Posterior STG: non-selective
+ → Gradient confirmed at single-electrode resolution
 ```
 
 ---
@@ -431,24 +409,22 @@ Foo et al. 2016 ECoG (intracranial):
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    MPG INTERACTIONS                                          │
+│ MPG INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (NDU):                                                         │
-│  MPG.gradient_ratio ─────────► SDD (deviance context)                     │
-│  MPG.contour_complexity ─────► CDMR (melodic context modulates mismatch)  │
-│  MPG.onset_state ────────────► EDNR (processing efficiency varies)        │
-│                                                                             │
-│  CROSS-UNIT (NDU → STU):                                                   │
-│  MPG.onset_state ────────────► STU (onset timing for motor sync)          │
-│  MPG.phrase_boundary_pred ───► STU (phrase segmentation)                  │
-│                                                                             │
-│  UPSTREAM DEPENDENCIES:                                                     │
-│  PPC mechanism (30D) ────────► MPG (pitch/contour processing)             │
-│  ASA mechanism (30D) ────────► MPG (attention/salience)                   │
-│  R³ (~14D) ──────────────────► MPG (direct spectral features)            │
-│  H³ (16 tuples) ─────────────► MPG (temporal dynamics)                   │
-│                                                                             │
+│ │
+│ INTRA-UNIT (NDU): │
+│ MPG.gradient_ratio ─────────► SDD (deviance context) │
+│ MPG.contour_complexity ─────► CDMR (melodic context modulates mismatch) │
+│ MPG.onset_state ────────────► EDNR (processing efficiency varies) │
+│ │
+│ CROSS-UNIT (NDU → STU): │
+│ MPG.onset_state ────────────► STU (onset timing for motor sync) │
+│ MPG.phrase_boundary_pred ───► STU (phrase segmentation) │
+│ │
+│ UPSTREAM DEPENDENCIES: │
+│ R³ (~14D) ──────────────────► MPG (direct spectral features) │
+│ H³ (16 tuples) ─────────────► MPG (temporal dynamics) │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -472,143 +448,115 @@ Foo et al. 2016 ECoG (intracranial):
 
 ```python
 class MPG(BaseModel):
-    """Melodic Processing Gradient Model.
+ """Melodic Processing Gradient Model.
 
-    Output: 10D per frame.
-    Reads: PPC mechanism (30D), ASA mechanism (30D), R³ direct.
-    """
-    NAME = "MPG"
-    UNIT = "NDU"
-    TIER = "α1"
-    OUTPUT_DIM = 10
-    MECHANISM_NAMES = ("PPC", "ASA")
+ Output: 10D per frame.
+ """
+ NAME = "MPG"
+ UNIT = "NDU"
+ TIER = "α1"
+ OUTPUT_DIM = 10
+ ALPHA_POSTERIOR = 0.7 # Posterior weighting
+ BETA_ANTERIOR = 0.3 # Anterior weighting
+ TAU_DECAY = 0.3 # Onset transition (seconds)
+ ONSET_SHARPNESS = 0.9 # Onset detection sensitivity
+ RTI_WINDOW = 2.5 # seconds
 
-    ALPHA_POSTERIOR = 0.7   # Posterior weighting
-    BETA_ANTERIOR = 0.3     # Anterior weighting
-    TAU_DECAY = 0.3         # Onset transition (seconds)
-    ONSET_SHARPNESS = 0.9   # Onset detection sensitivity
-    RTI_WINDOW = 2.5        # seconds
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """16 tuples for MPG computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ (10, 0, 0, 2), # spectral_flux, 25ms, value, bidi
+ (10, 1, 1, 2), # spectral_flux, 50ms, mean, bidi
+ (10, 3, 0, 2), # spectral_flux, 100ms, value, bidi
+ (11, 0, 0, 2), # onset_strength, 25ms, value, bidi
+ (11, 3, 1, 2), # onset_strength, 100ms, mean, bidi
+ (11, 16, 14, 2), # onset_strength, 1000ms, periodicity, bidi
+ (13, 3, 0, 2), # brightness, 100ms, value, bidi
+ (13, 3, 2, 2), # brightness, 100ms, std, bidi
+ (13, 4, 8, 0), # brightness, 125ms, velocity, fwd
+ (23, 3, 0, 2), # pitch_change, 100ms, value, bidi
+ (23, 4, 20, 2), # pitch_change, 125ms, entropy, bidi
+ (23, 16, 1, 2), # pitch_change, 1000ms, mean, bidi
+ (7, 3, 0, 2), # amplitude, 100ms, value, bidi
+ (25, 3, 0, 2), # x_l0l5[0], 100ms, value, bidi
+ (25, 3, 14, 2), # x_l0l5[0], 100ms, periodicity, bidi
+ (33, 3, 8, 0), # x_l4l5[0], 100ms, velocity, fwd
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """16 tuples for MPG computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # ── PPC horizons: pitch extraction / onset ──
-            (10, 0, 0, 2),     # spectral_flux, 25ms, value, bidi
-            (10, 1, 1, 2),     # spectral_flux, 50ms, mean, bidi
-            (10, 3, 0, 2),     # spectral_flux, 100ms, value, bidi
-            (11, 0, 0, 2),     # onset_strength, 25ms, value, bidi
-            (11, 3, 1, 2),     # onset_strength, 100ms, mean, bidi
-            (11, 16, 14, 2),   # onset_strength, 1000ms, periodicity, bidi
-            # ── PPC horizons: contour tracking ──
-            (13, 3, 0, 2),     # brightness, 100ms, value, bidi
-            (13, 3, 2, 2),     # brightness, 100ms, std, bidi
-            (13, 4, 8, 0),     # brightness, 125ms, velocity, fwd
-            (23, 3, 0, 2),     # pitch_change, 100ms, value, bidi
-            (23, 4, 20, 2),    # pitch_change, 125ms, entropy, bidi
-            (23, 16, 1, 2),    # pitch_change, 1000ms, mean, bidi
-            # ── ASA horizons: attentional gating ──
-            (7, 3, 0, 2),      # amplitude, 100ms, value, bidi
-            (25, 3, 0, 2),     # x_l0l5[0], 100ms, value, bidi
-            (25, 3, 14, 2),    # x_l0l5[0], 100ms, periodicity, bidi
-            (33, 3, 8, 0),     # x_l4l5[0], 100ms, velocity, fwd
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute MPG 10D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute MPG 10D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"PPC": (B,T,30), "ASA": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,10) MPG output
+ """
+ # R³ features
+ amplitude = r3[..., 7:8]
+ loudness = r3[..., 8:9]
+ spectral_flux = r3[..., 10:11]
+ onset_strength = r3[..., 11:12]
+ brightness = r3[..., 13:14]
+ pitch_change = r3[..., 23:24]
 
-        Returns:
-            (B,T,10) MPG output
-        """
-        ppc = mechanism_outputs["PPC"]    # (B, T, 30)
-        asa = mechanism_outputs["ASA"]    # (B, T, 30)
+ # H³ direct features
+ onset_strength_25ms = h3_direct[(11, 0, 0, 2)].unsqueeze(-1)
+ flux_100ms = h3_direct[(10, 3, 0, 2)].unsqueeze(-1)
+ pitch_velocity_125ms = h3_direct[(13, 4, 8, 0)].unsqueeze(-1)
+ contour_entropy_125ms = h3_direct[(23, 4, 20, 2)].unsqueeze(-1)
+ brightness_std_100ms = h3_direct[(13, 3, 2, 2)].unsqueeze(-1)
 
-        # R³ features
-        amplitude = r3[..., 7:8]
-        loudness = r3[..., 8:9]
-        spectral_flux = r3[..., 10:11]
-        onset_strength = r3[..., 11:12]
-        brightness = r3[..., 13:14]
-        pitch_change = r3[..., 23:24]
+ # ═══ LAYER E: Explicit features ═══
 
-        # PPC sub-sections
-        ppc_pitch = ppc[..., 0:10]       # pitch extraction
-        ppc_interval = ppc[..., 10:20]   # interval analysis
-        ppc_contour = ppc[..., 20:30]    # contour tracking
+ # f01: Onset Posterior Weight (coefficients sum = 1.0)
+ f01 = torch.sigmoid(
+ 0.40 * onset_strength_25ms
+ + 0.35 * flux_100ms
+ )
 
-        # ASA sub-sections
-        asa_scene = asa[..., 0:10]       # scene analysis
-        asa_attn = asa[..., 10:20]       # attention gating
-        asa_salience = asa[..., 20:30]   # salience weighting
+ # f02: Sequence Anterior Weight (coefficients sum = 1.0)
+ f02 = torch.sigmoid(
+ 0.35 * pitch_velocity_125ms
+ + 0.35 * contour_entropy_125ms
+ )
 
-        # H³ direct features
-        onset_strength_25ms = h3_direct[(11, 0, 0, 2)].unsqueeze(-1)
-        flux_100ms = h3_direct[(10, 3, 0, 2)].unsqueeze(-1)
-        pitch_velocity_125ms = h3_direct[(13, 4, 8, 0)].unsqueeze(-1)
-        contour_entropy_125ms = h3_direct[(23, 4, 20, 2)].unsqueeze(-1)
-        brightness_std_100ms = h3_direct[(13, 3, 2, 2)].unsqueeze(-1)
+ # f03: Contour Complexity (coefficients sum = 1.0)
+ f03 = torch.sigmoid(
+ 0.35 * contour_entropy_125ms
+ + 0.35 * brightness_std_100ms
+ )
 
-        # ═══ LAYER E: Explicit features ═══
+ # f04: Gradient Ratio
+ f04 = f01 / (f01 + f02 + 1e-6)
 
-        # f01: Onset Posterior Weight (coefficients sum = 1.0)
-        f01 = torch.sigmoid(
-            0.40 * onset_strength_25ms
-            + 0.35 * flux_100ms
-            + 0.25 * ppc_pitch.mean(-1, keepdim=True)
-        )
+ # ═══ LAYER M: Mathematical ═══
+ activity_x = torch.sigmoid(
+ 0.50 * f01 + 0.50 * f02
+ )
+ posterior_activity = torch.sigmoid(
+ )
+ anterior_activity = torch.sigmoid(
+ )
 
-        # f02: Sequence Anterior Weight (coefficients sum = 1.0)
-        f02 = torch.sigmoid(
-            0.35 * pitch_velocity_125ms
-            + 0.35 * contour_entropy_125ms
-            + 0.30 * ppc_contour.mean(-1, keepdim=True)
-        )
+ # ═══ LAYER P: Present ═══
 
-        # f03: Contour Complexity (coefficients sum = 1.0)
-        f03 = torch.sigmoid(
-            0.35 * contour_entropy_125ms
-            + 0.35 * brightness_std_100ms
-            + 0.30 * asa_attn.mean(-1, keepdim=True)
-        )
+ # ═══ LAYER F: Future ═══
+ phrase_boundary_pred = torch.sigmoid(
+ 0.50 * contour_entropy_125ms
+ )
 
-        # f04: Gradient Ratio
-        f04 = f01 / (f01 + f02 + 1e-6)
-
-        # ═══ LAYER M: Mathematical ═══
-        activity_x = torch.sigmoid(
-            0.50 * f01 + 0.50 * f02
-        )
-        posterior_activity = torch.sigmoid(
-            0.50 * f01 + 0.50 * ppc_pitch.mean(-1, keepdim=True)
-        )
-        anterior_activity = torch.sigmoid(
-            0.50 * f02 + 0.50 * ppc_contour.mean(-1, keepdim=True)
-        )
-
-        # ═══ LAYER P: Present ═══
-        onset_state = ppc_pitch.mean(-1, keepdim=True)
-        contour_state = ppc_contour.mean(-1, keepdim=True)
-
-        # ═══ LAYER F: Future ═══
-        phrase_boundary_pred = torch.sigmoid(
-            0.50 * contour_entropy_125ms
-            + 0.50 * asa_attn.mean(-1, keepdim=True)
-        )
-
-        return torch.cat([
-            f01, f02, f03, f04,                                    # E: 4D
-            activity_x, posterior_activity, anterior_activity,     # M: 3D
-            onset_state, contour_state,                            # P: 2D
-            phrase_boundary_pred,                                   # F: 1D
-        ], dim=-1)  # (B, T, 10)
+ return torch.cat([
+ f01, f02, f03, f04, # E: 4D
+ activity_x, posterior_activity, anterior_activity, # M: 3D
+ onset_state, contour_state, # P: 2D
+ phrase_boundary_pred, # F: 1D
+ ], dim=-1) # (B, T, 10)
 ```
 
 ---
@@ -623,8 +571,6 @@ class MPG(BaseModel):
 | **Falsification Tests** | 2/5 confirmed | High validity |
 | **R³ Features Used** | ~14D of 49D | Energy + timbre + change + interactions |
 | **H³ Demand** | 16 tuples (0.69%) | Sparse, efficient |
-| **PPC Mechanism** | 30D (3 sub-sections) | Pitch/contour processing |
-| **ASA Mechanism** | 30D (3 sub-sections) | Attention/salience |
 | **Output Dimensions** | **10D** | 4-layer structure |
 
 ---
@@ -649,21 +595,13 @@ class MPG(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D) | R³ (49D) |
-| Temporal | HC⁰ mechanisms (OSC, TIH, ATT, EFC) | PPC (30D) + ASA (30D) mechanisms |
-| Onset signal | S⁰.L5.Λ_flux[45] + HC⁰.OSC | R³.onset_strength[11] + PPC.pitch_extraction |
-| Contour signal | S⁰.L5.Λ_centroid[38] + HC⁰.ATT | R³.brightness[13] + PPC.contour_tracking |
-| Pitch variation | S⁰.X_L4L5[192:200] + HC⁰.TIH | R³.pitch_change[23] + PPC.interval_analysis |
-| Prediction | S⁰.L4.τ_T[15] + HC⁰.EFC | R³.spectral_change[21] + ASA.attention_gating |
+| Onset signal | S⁰.L5.Λ_flux[45] + HC⁰.OSC | R³.onset_strength[11] |
+| Contour signal | S⁰.L5.Λ_centroid[38] + HC⁰.ATT | R³.brightness[13] |
+| Pitch variation | S⁰.X_L4L5[192:200] + HC⁰.TIH | R³.pitch_change[23] |
+| Prediction | S⁰.L4.τ_T[15] + HC⁰.EFC | R³.spectral_change[21] |
 | Demand format | HC⁰ index ranges | H³ 4-tuples (sparse) |
 | Total demand | 40/2304 = 1.74% | 16/2304 = 0.69% |
 | Output | 10D | 10D (same) |
-
-### Why PPC + ASA replaces HC⁰ mechanisms
-
-- **OSC → PPC.pitch_extraction** [0:10]: Oscillatory delta-theta phase-locking for onset maps to PPC's pitch extraction at onset.
-- **TIH → PPC.contour_tracking** [20:30]: Multi-scale temporal integration for contour maps to PPC's contour tracking.
-- **ATT → ASA.attention_gating** [10:20]: Attentional contour tracking maps to ASA's auditory scene attention.
-- **EFC → ASA.salience_weighting** [20:30]: Efference copy prediction maps to ASA's salience for phrase boundaries.
 
 ---
 

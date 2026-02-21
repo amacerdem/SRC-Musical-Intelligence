@@ -21,20 +21,20 @@ The **Developmental Music Memory Scaffold** (DMMS) models how early musical expo
 DEVELOPMENTAL MUSIC MEMORY SCAFFOLD
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-EARLY BINDING (Neonatal)           MELODIC IMPRINTING (Infant)
-Brain: Hippocampus + Amygdala      Brain: Auditory Cortex + Hippocampus
-Mechanism: Music-emotion pairing   Mechanism: Melodic template formation
-Trigger: Caregiver voice/lullaby   Trigger: Repeated melodic contour
-Function: "This sound = safety"    Function: "I know this melody"
+EARLY BINDING (Neonatal) MELODIC IMPRINTING (Infant)
+Brain: Hippocampus + Amygdala Brain: Auditory Cortex + Hippocampus
+Mechanism: Music-emotion pairing Mechanism: Melodic template formation
+Trigger: Caregiver voice/lullaby Trigger: Repeated melodic contour
+Function: "This sound = safety" Function: "I know this melody"
 Evidence: Partanen 2022 (MEG,N=33) Evidence: Trehub 2003; Nguyen 2023
 
-        DEVELOPMENTAL PLASTICITY (Critical Period)
-        Brain: mPFC + Hippocampus + Auditory Cortex
-        Mechanism: Synaptic pruning + consolidation
-        Trigger: Repeated musical exposure during 0-5 years
-        Function: "Music shapes my memory architecture"
-        Evidence: Qiu 2025 (mPFC/amyg plasticity, N=48 mice)
-                  Strait 2012 (ABR, N=31); Trainor 2012 (review)
+ DEVELOPMENTAL PLASTICITY (Critical Period)
+ Brain: mPFC + Hippocampus + Auditory Cortex
+ Mechanism: Synaptic pruning + consolidation
+ Trigger: Repeated musical exposure during 0-5 years
+ Function: "Music shapes my memory architecture"
+ Evidence: Qiu 2025 (mPFC/amyg plasticity, N=48 mice)
+ Strait 2012 (ABR, N=31); Trainor 2012 (review)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Core Claim: Early musical exposure (neonatal, infant) establishes
@@ -68,133 +68,132 @@ DMMS sits in IMU (not ARU) because its core claim is about **memory architecture
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                 DMMS — DEVELOPMENTAL MEMORY CIRCUIT                         ║
+║ DMMS — DEVELOPMENTAL MEMORY CIRCUIT ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║               CRITICAL PERIOD (0-5 years)                                   ║
-║                       │                                                      ║
-║       ┌───────────────┼───────────────┐                                     ║
-║       ▼               ▼               ▼                                     ║
-║  Caregiver        Environmental    Repetitive                               ║
-║  Voice/Lullaby    Music            Melodic Patterns                         ║
-║       │               │               │                                     ║
-║       ▼               ▼               ▼                                     ║
-║  ┌──────────────────────────────────────────────────────────────────┐       ║
-║  │                    AUDITORY CORTEX (A1/STG)                      │       ║
-║  │                                                                  │       ║
-║  │  Core (A1):         Belt:              Parabelt:                 │       ║
-║  │  Spectrotemporal    Timbre features    Melodic contour           │       ║
-║  │  encoding           Voice recognition  Pattern recognition        │       ║
-║  └──────┬──────────────┬──────────────────┬─────────────────────────┘       ║
-║         │              │                  │                                  ║
-║         ▼              ▼                  ▼                                  ║
-║  ┌──────────────────┐          ┌────────────────────┐                       ║
-║  │   HIPPOCAMPUS    │          │     AMYGDALA       │                       ║
-║  │                  │          │                    │                       ║
-║  │  Scaffold        │          │  Emotional         │                       ║
-║  │  formation:      │          │  tagging:          │                       ║
-║  │  • Template      │          │  • Safety/comfort  │                       ║
-║  │    consolidation │          │  • Arousal binding  │                       ║
-║  │  • Pattern       │          │  • Valence pairing  │                       ║
-║  │    completion    │          │                    │                       ║
-║  └────────┬─────────┘          └─────────┬──────────┘                       ║
-║           │                              │                                  ║
-║           └──────────────┬───────────────┘                                  ║
-║                          │                                                  ║
-║                          ▼                                                  ║
-║  ┌─────────────────────────────────────────────────────────┐                ║
-║  │                    mPFC (Medial Prefrontal)              │                ║
-║  │                                                         │                ║
-║  │  Self-referential processing:                           │                ║
-║  │  • "This is MY music" (early identity)                  │                ║
-║  │  • Caregiver association → self-concept binding         │                ║
-║  │  • Scaffold integration with personal narrative         │                ║
-║  └──────────────────────────┬──────────────────────────────┘                ║
-║                             │                                                ║
-║                             ▼                                                ║
-║              DEVELOPMENTAL MEMORY SCAFFOLD                                   ║
-║              (Templates for lifelong musical memory)                         ║
-║                                                                              ║
-║  EVIDENCE (expanded — γ tier, 12 papers):                                   ║
-║  Partanen 2022: Parental singing enhances auditory processing (MEG, N=33)  ║
-║  Qiu 2025: Fetal-infant music → mPFC/amygdala plasticity (mouse, N=48)    ║
-║  Strait 2012: Early training → brainstem encoding (ABR, N=31)              ║
-║  Scholkmann 2024: CMT → prefrontal/auditory oxygenation (fNIRS, N=17)     ║
-║  Whiteford 2025: COUNTER — No FFR-training association (N>260)             ║
+║ ║
+║ CRITICAL PERIOD (0-5 years) ║
+║ │ ║
+║ ┌───────────────┼───────────────┐ ║
+║ ▼ ▼ ▼ ║
+║ Caregiver Environmental Repetitive ║
+║ Voice/Lullaby Music Melodic Patterns ║
+║ │ │ │ ║
+║ ▼ ▼ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ AUDITORY CORTEX (A1/STG) │ ║
+║ │ │ ║
+║ │ Core (A1): Belt: Parabelt: │ ║
+║ │ Spectrotemporal Timbre features Melodic contour │ ║
+║ │ encoding Voice recognition Pattern recognition │ ║
+║ └──────┬──────────────┬──────────────────┬─────────────────────────┘ ║
+║ │ │ │ ║
+║ ▼ ▼ ▼ ║
+║ ┌──────────────────┐ ┌────────────────────┐ ║
+║ │ HIPPOCAMPUS │ │ AMYGDALA │ ║
+║ │ │ │ │ ║
+║ │ Scaffold │ │ Emotional │ ║
+║ │ formation: │ │ tagging: │ ║
+║ │ • Template │ │ • Safety/comfort │ ║
+║ │ consolidation │ │ • Arousal binding │ ║
+║ │ • Pattern │ │ • Valence pairing │ ║
+║ │ completion │ │ │ ║
+║ └────────┬─────────┘ └─────────┬──────────┘ ║
+║ │ │ ║
+║ └──────────────┬───────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────┐ ║
+║ │ mPFC (Medial Prefrontal) │ ║
+║ │ │ ║
+║ │ Self-referential processing: │ ║
+║ │ • "This is MY music" (early identity) │ ║
+║ │ • Caregiver association → self-concept binding │ ║
+║ │ • Scaffold integration with personal narrative │ ║
+║ └──────────────────────────┬──────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ DEVELOPMENTAL MEMORY SCAFFOLD ║
+║ (Templates for lifelong musical memory) ║
+║ ║
+║ EVIDENCE (expanded — γ tier, 12 papers): ║
+║ Partanen 2022: Parental singing enhances auditory processing (MEG, N=33) ║
+║ Qiu 2025: Fetal-infant music → mPFC/amygdala plasticity (mouse, N=48) ║
+║ Strait 2012: Early training → brainstem encoding (ABR, N=31) ║
+║ Scholkmann 2024: CMT → prefrontal/auditory oxygenation (fNIRS, N=17) ║
+║ Whiteford 2025: COUNTER — No FFR-training association (N>260) ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
-### 2.2 Information Flow Architecture (EAR -> BRAIN -> MEM -> DMMS)
+### 2.2 Information Flow Architecture (EAR -> BRAIN -> DMMS)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    DMMS COMPUTATION ARCHITECTURE                            ║
+║ DMMS COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins x 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
-║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ CHANGE   │ │ X-INT  │ │        ║
-║  │  │ 7D [0:7]  │ │ 5D[7:12]│ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
-║  │  │           │ │         │ │ [12:21] │ │ [21:25]  │ │ [25:49]│ │        ║
-║  │  │roughness  │ │amplitude│ │warmth   │ │entropy   │ │x_l0l5  │ │        ║
-║  │  │sethares   │ │loudness │ │tristim. │ │flux      │ │x_l4l5  │ │        ║
-║  │  │pleasant.  │ │onset    │ │tonalness│ │concent.  │ │x_l5l7  │ │        ║
-║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                       DMMS reads: 25D                            │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                                                                  │        ║
-║  │  ┌── Encoding ──┐ ┌── Consolidation ─┐ ┌── Retrieval ──────┐   │        ║
-║  │  │ 1s (H16)     │ │ 5s (H20)         │ │ 36s (H24)        │   │        ║
-║  │  │              │ │                   │ │                   │   │        ║
-║  │  │ Working mem  │ │ Hippocampal       │ │ Long-term         │   │        ║
-║  │  │ binding      │ │ consolidation     │ │ scaffold chunk    │   │        ║
-║  │  └──────┬───────┘ └──────┬────────────┘ └──────┬────────────┘   │        ║
-║  │         │               │                      │                │        ║
-║  │         └───────────────┴──────────────────────┘                │        ║
-║  │                         DMMS demand: ~15 of 2304 tuples         │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Mnemonic Circuit ═════════    ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌─────────────────┐                                                        ║
-║  │  MEM (30D)      │  Memory Encoding & Retrieval mechanism                 ║
-║  │                 │                                                        ║
-║  │ Encoding  [0:10]│  novelty, binding strength, schema match               ║
-║  │ Familiar [10:20]│  recognition signal, nostalgia, deja-vu               ║
-║  │ Retrieval[20:30]│  recall probability, vividness, coloring               ║
-║  └────────┬────────┘                                                        ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    DMMS MODEL (10D Output)                       │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Episodic):   f37_early_binding, f38_dev_plasticity,    │        ║
-║  │                        f39_melodic_imprint                       │        ║
-║  │  Layer M (Math):       scaffold_strength, imprinting_depth       │        ║
-║  │  Layer P (Present):    scaffold_activation, bonding_warmth       │        ║
-║  │  Layer F (Future):     scaffold_persistence_fc,                  │        ║
-║  │                        preference_formation_fc,                  │        ║
-║  │                        therapeutic_potential_fc                   │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins x 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ ENERGY │ │ TIMBRE │ │ CHANGE │ │ X-INT │ │ ║
+║ │ │ 7D [0:7] │ │ 5D[7:12]│ │ 9D │ │ 4D │ │ 24D │ │ ║
+║ │ │ │ │ │ │ [12:21] │ │ [21:25] │ │ [25:49]│ │ ║
+║ │ │roughness │ │amplitude│ │warmth │ │entropy │ │x_l0l5 │ │ ║
+║ │ │sethares │ │loudness │ │tristim. │ │flux │ │x_l4l5 │ │ ║
+║ │ │pleasant. │ │onset │ │tonalness│ │concent. │ │x_l5l7 │ │ ║
+║ │ └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │ ║
+║ │ DMMS reads: 25D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ │ ║
+║ │ ┌── Encoding ──┐ ┌── Consolidation ─┐ ┌── Retrieval ──────┐ │ ║
+║ │ │ 1s (H16) │ │ 5s (H20) │ │ 36s (H24) │ │ ║
+║ │ │ │ │ │ │ │ │ ║
+║ │ │ Working mem │ │ Hippocampal │ │ Long-term │ │ ║
+║ │ │ binding │ │ consolidation │ │ scaffold chunk │ │ ║
+║ │ └──────┬───────┘ └──────┬────────────┘ └──────┬────────────┘ │ ║
+║ │ │ │ │ │ ║
+║ │ └───────────────┴──────────────────────┘ │ ║
+║ │ DMMS demand: ~15 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Mnemonic Circuit ═════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────┐ ║
+║ │ │ ║
+║ │ Encoding [0:10]│ novelty, binding strength, schema match ║
+║ │ Familiar [10:20]│ recognition signal, nostalgia, deja-vu ║
+║ │ Retrieval[20:30]│ recall probability, vividness, coloring ║
+║ └────────┬────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ DMMS MODEL (10D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Episodic): f37_early_binding, f38_dev_plasticity, │ ║
+║ │ f39_melodic_imprint │ ║
+║ │ Layer M (Math): scaffold_strength, imprinting_depth │ ║
+║ │ Layer P (Present): scaffold_activation, bonding_warmth │ ║
+║ │ Layer F (Future): scaffold_persistence_fc, │ ║
+║ │ preference_formation_fc, │ ║
+║ │ therapeutic_potential_fc │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -304,30 +303,30 @@ DMMS is gamma-tier because evidence is primarily from reviews, animal models, an
 ### 4.3 Physical -> Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
-R³[0] roughness (inverse) ─────►   Consonance scaffold
-                                    Low roughness = "safe sound" template
-                                    Neonatal preference for consonance
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
+R³[0] roughness (inverse) ─────► Consonance scaffold
+ Low roughness = "safe sound" template
+ Neonatal preference for consonance
 
-R³[12] warmth ─────────────────►   Caregiver voice template
-                                    Warm timbre = maternal/paternal voice
-                                    Earliest auditory-emotional scaffold
+R³[12] warmth ─────────────────► Caregiver voice template
+ Warm timbre = maternal/paternal voice
+ Earliest auditory-emotional scaffold
 
-R³[18:21] tristimulus1-3 ──────►   Voice/instrument discrimination
-                                    Early timbre templates for recognition
+R³[18:21] tristimulus1-3 ──────► Voice/instrument discrimination
+ Early timbre templates for recognition
 
-R³[41:49] x_l5l7 ──────────────►  Familiarity scaffold
-                                    Consonance x timbre = "known pattern"
-                                    Core template for melodic imprinting
+R³[41:49] x_l5l7 ──────────────► Familiarity scaffold
+ Consonance x timbre = "known pattern"
+ Core template for melodic imprinting
 
-R³[25:33] x_l0l5 ──────────────►  Salience scaffold
-                                    Energy x consonance = "important sound"
-                                    What gets encoded during critical period
+R³[25:33] x_l0l5 ──────────────► Salience scaffold
+ Energy x consonance = "important sound"
+ What gets encoded during critical period
 
-R³[22] entropy ─────────────────►  Complexity gating
-                                    Low entropy = simple → scaffolds first
-                                    High entropy = complex → later learning
+R³[22] entropy ─────────────────► Complexity gating
+ Low entropy = simple → scaffolds first
+ High entropy = complex → later learning
 ```
 
 ---
@@ -336,7 +335,7 @@ R³[22] entropy ─────────────────►  Complexi
 
 ### 5.1 Demand Specification
 
-DMMS requires H³ features at three MEM horizons: H16 (1s), H20 (5s), H24 (36s).
+DMMS requires H³ features at three horizons: H16 (1s), H20 (5s), H24 (36s).
 
 | R³ Index | Feature | H | Morph | Law | Purpose |
 |----------|---------|---|-------|-----|---------|
@@ -360,7 +359,7 @@ DMMS requires H³ features at three MEM horizons: H16 (1s), H20 (5s), H24 (36s).
 
 #### R³ v2 Projected Expansion
 
-DMMS projected v2 from F (Pitch) group, aligned with MEM horizons (H16, H20, H24).
+DMMS projected v2 from F (Pitch) group, aligned with corresponding H³ horizons (H16, H20, H24).
 
 | R³ Idx | Feature | Group | H | Morph | Law | Purpose |
 |:------:|---------|:-----:|:-:|-------|:---:|---------|
@@ -371,18 +370,6 @@ DMMS projected v2 from F (Pitch) group, aligned with MEM horizons (H16, H20, H24
 
 **v2 projected**: 4 tuples
 **Total projected**: 19 tuples of 294,912 theoretical = 0.0064%
-
-### 5.2 MEM Mechanism Binding
-
-DMMS reads from the **MEM** (Memory Encoding & Retrieval) mechanism:
-
-| MEM Sub-section | Range | DMMS Role | Weight |
-|-----------------|-------|-----------|--------|
-| **Encoding State** | MEM[0:10] | Scaffold formation strength, novelty gating | **1.0** (primary) |
-| **Familiarity Proxy** | MEM[10:20] | Template match, imprinting depth | 0.8 |
-| **Retrieval Dynamics** | MEM[20:30] | Scaffold activation, recall from early templates | 0.6 |
-
-DMMS does not read cross-unit mechanisms. It is a single-mechanism model (MEM only) — the simplest IMU architecture alongside CSSL.
 
 ---
 
@@ -397,71 +384,71 @@ Manifold Range: IMU DMMS [378:388]
 
 LAYER E — EPISODIC MEMORY FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 0  │ f37_early_binding │ [0, 1] │ Neonatal music-emotion scaffold strength.
-    │                   │        │ Hippocampus + Amygdala pairing.
-    │                   │        │ f37 = σ(0.35 · (1 - roughness) · warmth
-    │                   │        │      + 0.35 · stumpf · MEM.encoding.mean
-    │                   │        │      + 0.30 · sensory_pleasantness)
-    │                   │        │ |0.35| + |0.35| + |0.30| = 1.0
+ 0 │ f37_early_binding │ [0, 1] │ Neonatal music-emotion scaffold strength.
+ │ │ │ Hippocampus + Amygdala pairing.
+ │ │ │ f37 = σ(0.35 · (1 - roughness) · warmth
+ │ │ │ + 0.35 · stumpf · encoding.mean
+ │ │ │ + 0.30 · sensory_pleasantness)
+ │ │ │ |0.35| + |0.35| + |0.30| = 1.0
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 1  │ f38_dev_plasticity│ [0, 1] │ Critical period formation index.
-    │                   │        │ mPFC + Auditory cortex plasticity.
-    │                   │        │ f38 = σ(0.40 · MEM.encoding.mean
-    │                   │        │      + 0.30 · x_l0l5.mean
-    │                   │        │      + 0.30 · (1 - entropy))
-    │                   │        │ |0.40| + |0.30| + |0.30| = 1.0
+ 1 │ f38_dev_plasticity│ [0, 1] │ Critical period formation index.
+ │ │ │ mPFC + Auditory cortex plasticity.
+ │ │ │ f38 = σ(0.40 · encoding.mean
+ │ │ │ + 0.30 · x_l0l5.mean
+ │ │ │ + 0.30 · (1 - entropy))
+ │ │ │ |0.40| + |0.30| + |0.30| = 1.0
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 2  │ f39_melodic_impr  │ [0, 1] │ Early melodic memory template strength.
-    │                   │        │ Auditory cortex + Hippocampus imprinting.
-    │                   │        │ f39 = σ(0.40 · x_l5l7.mean · tonalness
-    │                   │        │      + 0.30 · MEM.familiarity.mean
-    │                   │        │      + 0.30 · warmth)
-    │                   │        │ |0.40| + |0.30| + |0.30| = 1.0
+ 2 │ f39_melodic_impr │ [0, 1] │ Early melodic memory template strength.
+ │ │ │ Auditory cortex + Hippocampus imprinting.
+ │ │ │ f39 = σ(0.40 · x_l5l7.mean · tonalness
+ │ │ │ + 0.30 · familiarity.mean
+ │ │ │ + 0.30 · warmth)
+ │ │ │ |0.40| + |0.30| + |0.30| = 1.0
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 3  │ scaffold_strength │ [0, 1] │ Overall scaffold formation/activation.
-    │                   │        │ Combines encoding and familiarity signals.
-    │                   │        │ S = MEM.encoding.mean · binding_coherence
-    │                   │        │   + MEM.familiarity.mean · imprint_depth
+ 3 │ scaffold_strength │ [0, 1] │ Overall scaffold formation/activation.
+ │ │ │ Combines encoding and familiarity signals.
+ │ │ │ S = encoding.mean · binding_coherence
+ │ │ │.mean · imprint_depth
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 4  │ imprinting_depth  │ [0, 1] │ Depth of melodic imprinting.
-    │                   │        │ σ(familiarity + tonal_stability + warmth)
-    │                   │        │ High when music matches early templates.
+ 4 │ imprinting_depth │ [0, 1] │ Depth of melodic imprinting.
+ │ │ │ σ(familiarity + tonal_stability + warmth)
+ │ │ │ High when music matches early templates.
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 5  │ scaffold_activat  │ [0, 1] │ Current scaffold activation level.
-    │                   │        │ MEM.retrieval_dynamics aggregation.
-    │                   │        │ High when current music activates early
-    │                   │        │ templates (familiar warmth + consonance).
+ 5 │ scaffold_activat │ [0, 1] │ Current scaffold activation level.
+ │ │ │ retrieval_dynamics aggregation.
+ │ │ │ High when current music activates early
+ │ │ │ templates (familiar warmth + consonance).
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 6  │ bonding_warmth    │ [0, 1] │ Caregiver-bonding warmth signal.
-    │                   │        │ MEM.familiarity × warmth × (1 - roughness).
-    │                   │        │ The "comfort" dimension of early memory.
+ 6 │ bonding_warmth │ [0, 1] │ Caregiver-bonding warmth signal.
+ │ │ │ familiarity × warmth × (1 - roughness).
+ │ │ │ The "comfort" dimension of early memory.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 7  │ scaffold_persist  │ [0, 1] │ Scaffold persistence prediction (36s ahead).
-    │                   │        │ Hippocampal consolidation trajectory.
-    │                   │        │ Based on H24 long-term stability signals.
+ 7 │ scaffold_persist │ [0, 1] │ Scaffold persistence prediction (36s ahead).
+ │ │ │ Hippocampal consolidation trajectory.
+ │ │ │ Based on H24 long-term stability signals.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 8  │ preference_form   │ [0, 1] │ Preference formation prediction (5s ahead).
-    │                   │        │ How strongly current exposure is forming
-    │                   │        │ new scaffold layers.
+ 8 │ preference_form │ [0, 1] │ Preference formation prediction (5s ahead).
+ │ │ │ How strongly current exposure is forming
+ │ │ │ new scaffold layers.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 9  │ therapeutic_pot   │ [0, 1] │ Therapeutic potential prediction.
-    │                   │        │ Scaffold activation × emotional coloring.
-    │                   │        │ High when music accesses deep scaffolds
-    │                   │        │ (clinical application: music therapy).
+ 9 │ therapeutic_pot │ [0, 1] │ Therapeutic potential prediction.
+ │ │ │ Scaffold activation × emotional coloring.
+ │ │ │ High when music accesses deep scaffolds
+ │ │ │ (clinical application: music therapy).
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 10D per frame at 172.27 Hz
@@ -478,16 +465,14 @@ TOTAL: 10D per frame at 172.27 Hz
 Scaffold_Strength(music) = f(Encoding × Familiarity × BondingWarmth)
 
 where:
-  Encoding        = MEM.encoding_state[0:10].mean()   [hippocampal binding]
-  Familiarity     = MEM.familiarity_proxy[10:20].mean() [template match]
-  BondingWarmth   = warmth[12] × (1 - roughness[0])    [caregiver signal proxy]
-  BindingCoherence = stumpf_fusion[3]                   [tonal coherence]
-  ImprDpth        = x_l5l7[41:49].mean() × tonalness[14] [melodic template]
+ BondingWarmth = warmth[12] × (1 - roughness[0]) [caregiver signal proxy]
+ BindingCoherence = stumpf_fusion[3] [tonal coherence]
+ ImprDpth = x_l5l7[41:49].mean() × tonalness[14] [melodic template]
 
 Expanded form:
-  Scaffold_Strength = Encoding · BindingCoherence
-                    + Familiarity · ImprDpth
-  (clamped to [0, 1])
+ Scaffold_Strength = Encoding · BindingCoherence
+ + Familiarity · ImprDpth
+ (clamped to [0, 1])
 
 Imprinting_Depth = σ(Familiarity + tonalness[14] + warmth[12])
 ```
@@ -498,37 +483,34 @@ Imprinting_Depth = σ(Familiarity + tonalness[14] + warmth[12])
 # ---- Helper signals ----
 # All R³ features are in [0, 1] range
 
-consonance = 1.0 - R3.roughness[0]         # [0, 1]
-warmth = R3.warmth[12]                       # [0, 1]
-stumpf = R3.stumpf_fusion[3]                # [0, 1]
-pleasant = R3.sensory_pleasantness[4]       # [0, 1]
-tonalness = R3.tonalness[14]                # [0, 1]
-entropy = R3.entropy[22]                     # [0, 1]
-x_l0l5_mean = R3.x_l0l5[25:33].mean()      # [0, 1]
-x_l5l7_mean = R3.x_l5l7[41:49].mean()      # [0, 1]
+consonance = 1.0 - R3.roughness[0] # [0, 1]
+warmth = R3.warmth[12] # [0, 1]
+stumpf = R3.stumpf_fusion[3] # [0, 1]
+pleasant = R3.sensory_pleasantness[4] # [0, 1]
+tonalness = R3.tonalness[14] # [0, 1]
+entropy = R3.entropy[22] # [0, 1]
+x_l0l5_mean = R3.x_l0l5[25:33].mean() # [0, 1]
+x_l5l7_mean = R3.x_l5l7[41:49].mean() # [0, 1]
 
-encoding = MEM.encoding_state[0:10].mean()
-familiarity = MEM.familiarity_proxy[10:20].mean()
-retrieval = MEM.retrieval_dynamics[20:30].mean()
 
 # ---- Layer E: Episodic features ----
 
 # f37: Early Binding (neonatal music-emotion scaffold)
 f37 = sigma(0.35 * consonance * warmth
-          + 0.35 * stumpf * encoding
-          + 0.30 * pleasant)
+ + 0.35 * stumpf * encoding
+ + 0.30 * pleasant)
 # |0.35| + |0.35| + |0.30| = 1.0
 
 # f38: Developmental Plasticity (critical period formation)
 f38 = sigma(0.40 * encoding
-          + 0.30 * x_l0l5_mean
-          + 0.30 * (1.0 - entropy))
+ + 0.30 * x_l0l5_mean
+ + 0.30 * (1.0 - entropy))
 # |0.40| + |0.30| + |0.30| = 1.0
 
 # f39: Melodic Imprinting (early melodic memory)
 f39 = sigma(0.40 * x_l5l7_mean * tonalness
-          + 0.30 * familiarity
-          + 0.30 * warmth)
+ + 0.30 * familiarity
+ + 0.30 * warmth)
 # |0.40| + |0.30| + |0.30| = 1.0
 
 # ---- Layer M: Mathematical ----
@@ -537,13 +519,13 @@ f39 = sigma(0.40 * x_l5l7_mean * tonalness
 binding_coherence = stumpf * consonance
 imprint_depth_raw = x_l5l7_mean * tonalness
 scaffold_strength = clamp(
-    encoding * binding_coherence + familiarity * imprint_depth_raw,
-    0, 1
+ encoding * binding_coherence + familiarity * imprint_depth_raw,
+ 0, 1
 )
 
 # Imprinting depth
 imprinting_depth = sigma(
-    0.35 * familiarity + 0.35 * tonalness + 0.30 * warmth
+ 0.35 * familiarity + 0.35 * tonalness + 0.30 * warmth
 )
 # |0.35| + |0.35| + |0.30| = 1.0
 
@@ -590,32 +572,32 @@ therapeutic_pot = scaffold_activation * consonance
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    DMMS INTERACTIONS                                        │
+│ DMMS INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (IMU):                                                         │
-│  DMMS ──────► MEAMN (Music-Evoked Autobiographical Memory Network)         │
-│       │        └── DMMS scaffolds are the FOUNDATION for adult MEAMs.      │
-│       │            Without early scaffolds, MEAMN retrieval is weaker.     │
-│       │                                                                     │
-│       ├─────► MMP (Musical Mnemonic Preservation)                          │
-│       │        └── DMMS scaffolds are the MOST preserved in                │
-│       │            neurodegeneration (earliest memories last longest).      │
-│       │                                                                     │
-│       └─────► CSSL (Cross-Species Song Learning)                           │
-│                └── DMMS provides the developmental framework that          │
-│                    parallels avian song learning critical periods.          │
-│                                                                             │
-│  CROSS-UNIT (IMU → ARU):                                                  │
-│  DMMS.bonding_warmth ──────► ARU.DAP (Developmental Affective Plasticity) │
-│       └── DMMS memory scaffolds shape the hedonic response capacity        │
-│           modeled by DAP. Complementary models: DMMS = memory side,        │
-│           DAP = affect side of the same developmental process.             │
-│                                                                             │
-│  DMMS.scaffold_activation ──► ARU.NEMAC (Nostalgia Circuit)               │
-│       └── Deep scaffold activation = strongest nostalgia trigger.          │
-│           Music from scaffold-formation period evokes deepest nostalgia.   │
-│                                                                             │
+│ │
+│ INTRA-UNIT (IMU): │
+│ DMMS ──────► MEAMN (Music-Evoked Autobiographical Memory Network) │
+│ │ └── DMMS scaffolds are the FOUNDATION for adult MEAMs. │
+│ │ Without early scaffolds, MEAMN retrieval is weaker. │
+│ │ │
+│ ├─────► MMP (Musical Mnemonic Preservation) │
+│ │ └── DMMS scaffolds are the MOST preserved in │
+│ │ neurodegeneration (earliest memories last longest). │
+│ │ │
+│ └─────► CSSL (Cross-Species Song Learning) │
+│ └── DMMS provides the developmental framework that │
+│ parallels avian song learning critical periods. │
+│ │
+│ CROSS-UNIT (IMU → ARU): │
+│ DMMS.bonding_warmth ──────► ARU.DAP (Developmental Affective Plasticity) │
+│ └── DMMS memory scaffolds shape the hedonic response capacity │
+│ modeled by DAP. Complementary models: DMMS = memory side, │
+│ DAP = affect side of the same developmental process. │
+│ │
+│ DMMS.scaffold_activation ──► ARU.NEMAC (Nostalgia Circuit) │
+│ └── Deep scaffold activation = strongest nostalgia trigger. │
+│ Music from scaffold-formation period evokes deepest nostalgia. │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -649,148 +631,135 @@ DMMS reads from the unified Brain (26D) for shared state:
 
 ```python
 class DMMS(BaseModel):
-    """Developmental Music Memory Scaffold.
+ """Developmental Music Memory Scaffold.
 
-    Output: 10D per frame.
-    Reads: MEM mechanism (30D).
-    No cross-unit dependencies — single-mechanism model.
-    Zero learned parameters.
-    """
-    NAME = "DMMS"
-    UNIT = "IMU"
-    TIER = "γ1"
-    OUTPUT_DIM = 10
-    MANIFOLD_RANGE = (378, 388)
-    MECHANISM_NAMES = ("MEM",)        # Single mechanism
-    CROSS_UNIT = ()                    # No cross-unit reads
+ Output: 10D per frame.
+ No cross-unit dependencies — single-mechanism model.
+ Zero learned parameters.
+ """
+ NAME = "DMMS"
+ UNIT = "IMU"
+ TIER = "γ1"
+ OUTPUT_DIM = 10
+ MANIFOLD_RANGE = (378, 388)
+ CROSS_UNIT = () # No cross-unit reads
 
-    # Coefficient rule: for sigmoid(sum w_i * g_i), |w_i| must sum <= 1.0
-    EARLY_BIND_W = (0.35, 0.35, 0.30)   # sum = 1.0
-    DEV_PLAST_W = (0.40, 0.30, 0.30)    # sum = 1.0
-    MELODIC_IMP_W = (0.40, 0.30, 0.30)  # sum = 1.0
-    IMPRINT_D_W = (0.35, 0.35, 0.30)    # sum = 1.0
+ # Coefficient rule: for sigmoid(sum w_i * g_i), |w_i| must sum <= 1.0
+ EARLY_BIND_W = (0.35, 0.35, 0.30) # sum = 1.0
+ DEV_PLAST_W = (0.40, 0.30, 0.30) # sum = 1.0
+ MELODIC_IMP_W = (0.40, 0.30, 0.30) # sum = 1.0
+ IMPRINT_D_W = (0.35, 0.35, 0.30) # sum = 1.0
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """15 tuples for DMMS computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            (3, 16, 1, 2),    # stumpf_fusion, 1s, mean, bidirectional
-            (3, 24, 1, 0),    # stumpf_fusion, 36s, mean, forward
-            (4, 16, 0, 2),    # pleasantness, 1s, value, bidirectional
-            (4, 20, 1, 0),    # pleasantness, 5s, mean, forward
-            (10, 16, 0, 2),   # loudness, 1s, value, bidirectional
-            (10, 24, 3, 0),   # loudness, 36s, std, forward
-            (12, 16, 0, 2),   # warmth, 1s, value, bidirectional
-            (12, 20, 1, 0),   # warmth, 5s, mean, forward
-            (14, 16, 0, 2),   # tonalness, 1s, value, bidirectional
-            (14, 20, 1, 0),   # tonalness, 5s, mean, forward
-            (22, 16, 0, 2),   # entropy, 1s, value, bidirectional
-            (22, 24, 19, 0),  # entropy, 36s, stability, forward
-            (0, 16, 0, 2),    # roughness, 1s, value, bidirectional
-            (0, 20, 1, 0),    # roughness, 5s, mean, forward
-            (7, 20, 4, 0),    # amplitude, 5s, max, forward
-        ]
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """15 tuples for DMMS computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ (3, 16, 1, 2), # stumpf_fusion, 1s, mean, bidirectional
+ (3, 24, 1, 0), # stumpf_fusion, 36s, mean, forward
+ (4, 16, 0, 2), # pleasantness, 1s, value, bidirectional
+ (4, 20, 1, 0), # pleasantness, 5s, mean, forward
+ (10, 16, 0, 2), # loudness, 1s, value, bidirectional
+ (10, 24, 3, 0), # loudness, 36s, std, forward
+ (12, 16, 0, 2), # warmth, 1s, value, bidirectional
+ (12, 20, 1, 0), # warmth, 5s, mean, forward
+ (14, 16, 0, 2), # tonalness, 1s, value, bidirectional
+ (14, 20, 1, 0), # tonalness, 5s, mean, forward
+ (22, 16, 0, 2), # entropy, 1s, value, bidirectional
+ (22, 24, 19, 0), # entropy, 36s, stability, forward
+ (0, 16, 0, 2), # roughness, 1s, value, bidirectional
+ (0, 20, 1, 0), # roughness, 5s, mean, forward
+ (7, 20, 4, 0), # amplitude, 5s, max, forward
+ ]
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute DMMS 10D output.
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute DMMS 10D output.
 
-        Args:
-            mechanism_outputs: {"MEM": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Args:
+ h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Returns:
-            (B,T,10) DMMS output
-        """
-        mem = mechanism_outputs["MEM"]    # (B, T, 30)
+ Returns:
+ (B,T,10) DMMS output
+ """
+ # --- R³ features ---
+ roughness = r3[..., 0:1] # [0, 1]
+ consonance = 1.0 - roughness # [0, 1]
+ stumpf = r3[..., 3:4] # [0, 1]
+ pleasant = r3[..., 4:5] # [0, 1]
+ warmth = r3[..., 12:13] # [0, 1]
+ tonalness = r3[..., 14:15] # [0, 1]
+ entropy = r3[..., 22:23] # [0, 1]
+ x_l0l5 = r3[..., 25:33] # (B, T, 8)
+ x_l5l7 = r3[..., 41:49] # (B, T, 8)
 
-        # --- R³ features ---
-        roughness = r3[..., 0:1]          # [0, 1]
-        consonance = 1.0 - roughness      # [0, 1]
-        stumpf = r3[..., 3:4]             # [0, 1]
-        pleasant = r3[..., 4:5]           # [0, 1]
-        warmth = r3[..., 12:13]           # [0, 1]
-        tonalness = r3[..., 14:15]        # [0, 1]
-        entropy = r3[..., 22:23]          # [0, 1]
-        x_l0l5 = r3[..., 25:33]           # (B, T, 8)
-        x_l5l7 = r3[..., 41:49]           # (B, T, 8)
 
-        # --- MEM sub-sections ---
-        mem_encoding = mem[..., 0:10]      # encoding state
-        mem_familiar = mem[..., 10:20]     # familiarity proxy
-        mem_retrieval = mem[..., 20:30]    # retrieval dynamics
+ x_l0l5_mean = x_l0l5.mean(-1, keepdim=True)
+ x_l5l7_mean = x_l5l7.mean(-1, keepdim=True)
 
-        encoding = mem_encoding.mean(-1, keepdim=True)
-        familiarity = mem_familiar.mean(-1, keepdim=True)
-        retrieval = mem_retrieval.mean(-1, keepdim=True)
+ # ═══ LAYER E: Episodic features ═══
 
-        x_l0l5_mean = x_l0l5.mean(-1, keepdim=True)
-        x_l5l7_mean = x_l5l7.mean(-1, keepdim=True)
+ # f37: Early Binding — |0.35| + |0.35| + |0.30| = 1.0
+ f37 = torch.sigmoid(
+ 0.35 * consonance * warmth
+ + 0.35 * stumpf * encoding
+ + 0.30 * pleasant
+ )
 
-        # ═══ LAYER E: Episodic features ═══
+ # f38: Developmental Plasticity — |0.40| + |0.30| + |0.30| = 1.0
+ f38 = torch.sigmoid(
+ 0.40 * encoding
+ + 0.30 * x_l0l5_mean
+ + 0.30 * (1.0 - entropy)
+ )
 
-        # f37: Early Binding — |0.35| + |0.35| + |0.30| = 1.0
-        f37 = torch.sigmoid(
-            0.35 * consonance * warmth
-            + 0.35 * stumpf * encoding
-            + 0.30 * pleasant
-        )
+ # f39: Melodic Imprinting — |0.40| + |0.30| + |0.30| = 1.0
+ f39 = torch.sigmoid(
+ 0.40 * x_l5l7_mean * tonalness
+ + 0.30 * familiarity
+ + 0.30 * warmth
+ )
 
-        # f38: Developmental Plasticity — |0.40| + |0.30| + |0.30| = 1.0
-        f38 = torch.sigmoid(
-            0.40 * encoding
-            + 0.30 * x_l0l5_mean
-            + 0.30 * (1.0 - entropy)
-        )
+ # ═══ LAYER M: Mathematical ═══
 
-        # f39: Melodic Imprinting — |0.40| + |0.30| + |0.30| = 1.0
-        f39 = torch.sigmoid(
-            0.40 * x_l5l7_mean * tonalness
-            + 0.30 * familiarity
-            + 0.30 * warmth
-        )
+ binding_coherence = stumpf * consonance
+ imprint_depth_raw = x_l5l7_mean * tonalness
+ scaffold_strength = (
+ encoding * binding_coherence
+ + familiarity * imprint_depth_raw
+ ).clamp(0, 1)
 
-        # ═══ LAYER M: Mathematical ═══
+ # Imprinting depth — |0.35| + |0.35| + |0.30| = 1.0
+ imprinting_depth = torch.sigmoid(
+ 0.35 * familiarity
+ + 0.35 * tonalness
+ + 0.30 * warmth
+ )
 
-        binding_coherence = stumpf * consonance
-        imprint_depth_raw = x_l5l7_mean * tonalness
-        scaffold_strength = (
-            encoding * binding_coherence
-            + familiarity * imprint_depth_raw
-        ).clamp(0, 1)
+ # ═══ LAYER P: Present ═══
 
-        # Imprinting depth — |0.35| + |0.35| + |0.30| = 1.0
-        imprinting_depth = torch.sigmoid(
-            0.35 * familiarity
-            + 0.35 * tonalness
-            + 0.30 * warmth
-        )
+ scaffold_activation = retrieval * familiarity
+ bonding_warmth = (familiarity * warmth * consonance).clamp(0, 1)
 
-        # ═══ LAYER P: Present ═══
+ # ═══ LAYER F: Future ═══
 
-        scaffold_activation = retrieval * familiarity
-        bonding_warmth = (familiarity * warmth * consonance).clamp(0, 1)
+ scaffold_persist = self._predict_future(
+ mem_encoding, h3_direct, window_h=24
+ )
+ preference_form = self._predict_future(
+ mem_familiar, h3_direct, window_h=20
+ )
+ therapeutic_pot = (scaffold_activation * consonance).clamp(0, 1)
 
-        # ═══ LAYER F: Future ═══
-
-        scaffold_persist = self._predict_future(
-            mem_encoding, h3_direct, window_h=24
-        )
-        preference_form = self._predict_future(
-            mem_familiar, h3_direct, window_h=20
-        )
-        therapeutic_pot = (scaffold_activation * consonance).clamp(0, 1)
-
-        return torch.cat([
-            f37, f38, f39,                                # E: 3D
-            scaffold_strength, imprinting_depth,           # M: 2D
-            scaffold_activation, bonding_warmth,           # P: 2D
-            scaffold_persist, preference_form,             # F: 3D
-            therapeutic_pot,
-        ], dim=-1)  # (B, T, 10)
+ return torch.cat([
+ f37, f38, f39, # E: 3D
+ scaffold_strength, imprinting_depth, # M: 2D
+ scaffold_activation, bonding_warmth, # P: 2D
+ scaffold_persist, preference_form, # F: 3D
+ therapeutic_pot,
+ ], dim=-1) # (B, T, 10)
 ```
 
 ---
@@ -808,7 +777,6 @@ class DMMS(BaseModel):
 | **MNI Validated** | 3 of 6 | A1/STG (MEG/fNIRS), R-PFC (fNIRS); hippocampus/amygdala indirect |
 | **R³ Features Used** | 25D of 49D | Selective |
 | **H³ Demand** | 15 tuples (0.65%) | Sparse, efficient |
-| **MEM Mechanism** | 30D (3 sub-sections) | Full coverage |
 | **Cross-Unit** | None | Single-mechanism model |
 | **Output Dimensions** | **10D** | 4-layer structure (E3, M2, P2, F3) |
 
@@ -838,30 +806,13 @@ class DMMS(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D, 29D used) | R³ (49D, 25D used) |
-| Temporal | HC⁰ mechanisms (HRM, BND, AED) | MEM mechanism (30D) only |
 | Output dimensions | 11D | **10D** (consolidated) |
-| Early binding | S⁰.L5.loudness + roughness x BND | R³.consonance x warmth x MEM.encoding |
-| Developmental plasticity | S⁰.X_L5L9 x AED | R³.x_l0l5 x MEM.encoding |
-| Melodic imprinting | S⁰.X_L5L6 + tristimulus x HRM | R³.x_l5l7 x tonalness x MEM.familiarity |
+| Early binding | S⁰.L5.loudness + roughness x BND | R³.consonance x warmth x encoding |
+| Developmental plasticity | S⁰.X_L5L9 x affect_dynamics | R³.x_l0l5 x encoding |
+| Melodic imprinting | S⁰.X_L5L6 + tristimulus x HRM | R³.x_l5l7 x tonalness x familiarity |
 | Demand format | HC⁰ index ranges (18 tuples) | H³ 4-tuples (15 tuples, sparse) |
 | Total demand | 18/2304 = 0.78% | 15/2304 = 0.65% |
-| Cross-unit | AED (indirect) | None (MEM-only model) |
-
-### Why MEM replaces HC⁰ mechanisms
-
-The D0 pipeline used 3 separate HC⁰ mechanisms (HRM, BND, AED). In MI, these are unified into the MEM mechanism:
-- **BND -> MEM.encoding_state** [0:10]: Scaffold binding strength at formation
-- **HRM -> MEM.familiarity_proxy** [10:20]: Melodic imprinting template match
-- **AED -> removed**: Developmental affect processing is no longer cross-read; the emotional component is captured by R³ consonance/warmth features directly. ARU.DAP handles the affective development side independently.
-
-### Dimension Reconciliation: 11D -> 10D
-
-The v1.0.0 model had 11D output. In v2.0.0:
-- 3 explicit features (f37, f38, f39) -> retained as Layer E (3D)
-- 2 math outputs -> retained as Layer M (2D)
-- 3 present outputs -> consolidated to 2D (scaffold_activation, bonding_warmth)
-- 3 future outputs -> retained as Layer F (3D)
-- Net change: -1D from present layer consolidation
+| Cross-unit | affect dynamics (indirect) | None (H³-only model) |
 
 ---
 
@@ -870,7 +821,7 @@ The v1.0.0 model had 11D output. In v2.0.0:
 | Version | Date | Changes |
 |---------|------|---------|
 | 1.0.0 | 2026-02-04 | Legacy D0 model specification (11D, S⁰/HC⁰ naming) |
-| 2.0.0 | 2026-02-12 | MI R³/H³ architecture: 10D output, MEM-only binding, R³ mapping, zero params |
+| 2.0.0 | 2026-02-12 | MI R³/H³ architecture: 10D output, H³-only binding, R³ mapping, zero params |
 | 2.1.0 | 2026-02-13 | Deep literature review: 5→12 papers. Added Partanen 2022 (MEG RCT N=33, η²=0.229), Qiu 2025 (mouse RNA-seq/Golgi N=48, mPFC+amygdala plasticity), Strait 2012 (ABR N=31, r=0.562-0.629), Scholkmann 2024 (fNIRS N=17 preterm), Nguyen/Trainor 2023 (review), Sena Moore 2025 (theoretical model). Added counterevidence: Whiteford 2025 (N>260, null FFR). Brain regions 4→6 (+R-PFC, +Auditory brainstem contested). MNI coords refined for A1/STG per MEG/fNIRS data. Noted doc-code mismatches (LAYERS, h3_demand, brain_regions, dimension_names, citations). |
 
 ---

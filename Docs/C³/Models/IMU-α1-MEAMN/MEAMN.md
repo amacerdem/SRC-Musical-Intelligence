@@ -21,19 +21,19 @@ The **Music-Evoked Autobiographical Memory Network** (MEAMN) models how music un
 THE THREE COMPONENTS OF MUSIC-EVOKED AUTOBIOGRAPHICAL MEMORY
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-RETRIEVAL (Episodic)                  NOSTALGIA (Familiarity)
-Brain region: Hippocampus + PCC       Brain region: Hippocampus + STG
-Mechanism: Pattern completion         Mechanism: Melodic template match
-Trigger: Statistical regularity       Trigger: Timbre warmth + contour
-Function: "I remember this moment"    Function: "This feels like home"
-Evidence: d = 0.53 pooled (k=4)       Evidence: r = 0.94 (zebra finch)
+RETRIEVAL (Episodic) NOSTALGIA (Familiarity)
+Brain region: Hippocampus + PCC Brain region: Hippocampus + STG
+Mechanism: Pattern completion Mechanism: Melodic template match
+Trigger: Statistical regularity Trigger: Timbre warmth + contour
+Function: "I remember this moment" Function: "This feels like home"
+Evidence: d = 0.53 pooled (k=4) Evidence: r = 0.94 (zebra finch)
 
-              EMOTIONAL COLORING (Affect)
-              Brain region: Amygdala
-              Mechanism: Affective tagging
-              Trigger: Arousal × Valence
-              Function: "This makes me feel..."
-              Evidence: d = 0.17, p < 0.0001
+ EMOTIONAL COLORING (Affect)
+ Brain region: Amygdala
+ Mechanism: Affective tagging
+ Trigger: Arousal × Valence
+ Function: "This makes me feel..."
+ Evidence: d = 0.17, p < 0.0001
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Janata 2009: Music-evoked autobiographical memories (MEAMs) are
@@ -62,131 +62,130 @@ Music activates autobiographical memory more robustly than other stimuli because
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                 MEAMN — COMPLETE CIRCUIT                                     ║
+║ MEAMN — COMPLETE CIRCUIT ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │                    AUDITORY CORTEX (STG/A1)                        │    ║
-║  │                                                                     │    ║
-║  │  Core (A1)      Belt           Parabelt                             │    ║
-║  │  Spectrotemporal Feature       Pattern recognition                  │    ║
-║  │  encoding        extraction    Melodic contour + timbre             │    ║
-║  └──────┬──────────────┬──────────────────┬────────────────────────────┘    ║
-║         │              │                  │                                  ║
-║         │              │                  │                                  ║
-║         ▼              ▼                  ▼                                  ║
-║  ┌──────────────────┐          ┌────────────────────┐                       ║
-║  │   FRONTAL CORTEX │          │     AMYGDALA       │                       ║
-║  │                  │          │                    │                       ║
-║  │  mPFC:           │          │  Emotional         │                       ║
-║  │  Self-referential│          │  tagging            │                       ║
-║  │  processing      │          │  (arousal × valence)│                       ║
-║  │                  │          │                    │                       ║
-║  └────────┬─────────┘          └─────────┬──────────┘                       ║
-║           │                              │                                  ║
-║           └──────────────┬───────────────┘                                  ║
-║                          │                                                  ║
-║                          ▼                                                  ║
-║  ┌─────────────────────────────────────────────────────────┐                ║
-║  │                    MEMORY RETRIEVAL HUB                  │                ║
-║  │                                                         │                ║
-║  │  ┌─────────────────────┐  ┌───────────────────────┐    │                ║
-║  │  │    HIPPOCAMPUS      │  │         PCC           │    │                ║
-║  │  │                     │  │  (Posterior Cingulate) │    │                ║
-║  │  │  • Episodic         │  │                       │    │                ║
-║  │  │    encoding (fast)  │  │  • Episodic retrieval │    │                ║
-║  │  │  • Pattern          │  │  • Recollection       │    │                ║
-║  │  │    completion       │  │  • Vivid replay       │    │                ║
-║  │  │  • Familiarity      │  │                       │    │                ║
-║  │  │    detection        │  │                       │    │                ║
-║  │  └─────────────────────┘  └───────────────────────┘    │                ║
-║  │                                                         │                ║
-║  └──────────────────────────┬──────────────────────────────┘                ║
-║                             │                                                ║
-║                             ▼                                                ║
-║              AUTOBIOGRAPHICAL MEMORY + EMOTIONAL COLORING                    ║
-║                                                                              ║
+║ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ AUDITORY CORTEX (STG/A1) │ ║
+║ │ │ ║
+║ │ Core (A1) Belt Parabelt │ ║
+║ │ Spectrotemporal Feature Pattern recognition │ ║
+║ │ encoding extraction Melodic contour + timbre │ ║
+║ └──────┬──────────────┬──────────────────┬────────────────────────────┘ ║
+║ │ │ │ ║
+║ │ │ │ ║
+║ ▼ ▼ ▼ ║
+║ ┌──────────────────┐ ┌────────────────────┐ ║
+║ │ FRONTAL CORTEX │ │ AMYGDALA │ ║
+║ │ │ │ │ ║
+║ │ mPFC: │ │ Emotional │ ║
+║ │ Self-referential│ │ tagging │ ║
+║ │ processing │ │ (arousal × valence)│ ║
+║ │ │ │ │ ║
+║ └────────┬─────────┘ └─────────┬──────────┘ ║
+║ │ │ ║
+║ └──────────────┬───────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────┐ ║
+║ │ MEMORY RETRIEVAL HUB │ ║
+║ │ │ ║
+║ │ ┌─────────────────────┐ ┌───────────────────────┐ │ ║
+║ │ │ HIPPOCAMPUS │ │ PCC │ │ ║
+║ │ │ │ │ (Posterior Cingulate) │ │ ║
+║ │ │ • Episodic │ │ │ │ ║
+║ │ │ encoding (fast) │ │ • Episodic retrieval │ │ ║
+║ │ │ • Pattern │ │ • Recollection │ │ ║
+║ │ │ completion │ │ • Vivid replay │ │ ║
+║ │ │ • Familiarity │ │ │ │ ║
+║ │ │ detection │ │ │ │ ║
+║ │ └─────────────────────┘ └───────────────────────┘ │ ║
+║ │ │ ║
+║ └──────────────────────────┬──────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ AUTOBIOGRAPHICAL MEMORY + EMOTIONAL COLORING ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 CRITICAL EVIDENCE:
 ─────────────────
-Neonatal care review:   Music affects hippocampus, amygdala (scoping, n=1500)
-AD music therapy:       Preserved autobiographical/episodic memory (review)
-Context-dependent:      STS, hippocampus multimodal integration (d=0.17, n=84)
-Zebra finch:            HVC, hippocampus in song learning (r=0.94, n=37)
+Neonatal care review: Music affects hippocampus, amygdala (scoping, n=1500)
+AD music therapy: Preserved autobiographical/episodic memory (review)
+Context-dependent: STS, hippocampus multimodal integration (d=0.17, n=84)
+Zebra finch: HVC, hippocampus in song learning (r=0.94, n=37)
 ```
 
-### 2.2 Information Flow Architecture (EAR → BRAIN → MEM → MEAMN)
+### 2.2 Information Flow Architecture (EAR → BRAIN → MEAMN)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    MEAMN COMPUTATION ARCHITECTURE                            ║
+║ MEAMN COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins × 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
-║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ CHANGE   │ │ X-INT  │ │        ║
-║  │  │ 7D [0:7]  │ │ 5D[7:12]│ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
-║  │  │           │ │         │ │ [12:21] │ │ [21:25]  │ │ [25:49]│ │        ║
-║  │  │roughness  │ │amplitude│ │warmth   │ │flux      │ │x_l0l5  │ │        ║
-║  │  │sethares   │ │loudness │ │tristim. │ │entropy   │ │x_l4l5  │ │        ║
-║  │  │pleasant.  │ │onset    │ │tonalness│ │concent.  │ │x_l5l7  │ │        ║
-║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                         MEAMN reads: 35D                          │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                                                                  │        ║
-║  │  ┌── Encoding ──┐ ┌── Consolidation ─┐ ┌── Retrieval ──────┐   │        ║
-║  │  │ 1s (H16)     │ │ 5s (H20)         │ │ 36s (H24)        │   │        ║
-║  │  │              │ │                   │ │                   │   │        ║
-║  │  │ Working mem  │ │ Hippocampal       │ │ Long-term         │   │        ║
-║  │  │ binding      │ │ binding window    │ │ episodic chunk    │   │        ║
-║  │  └──────┬───────┘ └──────┬────────────┘ └──────┬────────────┘   │        ║
-║  │         │               │                      │                │        ║
-║  │         └───────────────┴──────────────────────┘                │        ║
-║  │                         MEAMN demand: ~42 of 2304 tuples        │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Mnemonic Circuit ═════════    ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌─────────────────┐                                                        ║
-║  │  MEM (30D)      │  Memory Encoding & Retrieval mechanism                 ║
-║  │                 │                                                        ║
-║  │ Encoding  [0:10]│  novelty, binding strength, schema match               ║
-║  │ Familiar [10:20]│  recognition, nostalgia, déjà-vu                       ║
-║  │ Retrieval[20:30]│  recall probability, vividness, coloring               ║
-║  └────────┬────────┘                                                        ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    MEAMN MODEL (12D Output)                      │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Episodic):   f01_retrieval, f02_nostalgia, f03_emotion │        ║
-║  │  Layer M (Math):       meam_retrieval, p_recall                  │        ║
-║  │  Layer P (Present):    memory_state, emotional_coloring,         │        ║
-║  │                        nostalgia_link                            │        ║
-║  │  Layer F (Future):     memory_vividness_pred,                    │        ║
-║  │                        emotional_response_pred,                  │        ║
-║  │                        self_referential_pred, (reserved)         │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins × 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ ENERGY │ │ TIMBRE │ │ CHANGE │ │ X-INT │ │ ║
+║ │ │ 7D [0:7] │ │ 5D[7:12]│ │ 9D │ │ 4D │ │ 24D │ │ ║
+║ │ │ │ │ │ │ [12:21] │ │ [21:25] │ │ [25:49]│ │ ║
+║ │ │roughness │ │amplitude│ │warmth │ │flux │ │x_l0l5 │ │ ║
+║ │ │sethares │ │loudness │ │tristim. │ │entropy │ │x_l4l5 │ │ ║
+║ │ │pleasant. │ │onset │ │tonalness│ │concent. │ │x_l5l7 │ │ ║
+║ │ └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │ ║
+║ │ MEAMN reads: 35D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ │ ║
+║ │ ┌── Encoding ──┐ ┌── Consolidation ─┐ ┌── Retrieval ──────┐ │ ║
+║ │ │ 1s (H16) │ │ 5s (H20) │ │ 36s (H24) │ │ ║
+║ │ │ │ │ │ │ │ │ ║
+║ │ │ Working mem │ │ Hippocampal │ │ Long-term │ │ ║
+║ │ │ binding │ │ binding window │ │ episodic chunk │ │ ║
+║ │ └──────┬───────┘ └──────┬────────────┘ └──────┬────────────┘ │ ║
+║ │ │ │ │ │ ║
+║ │ └───────────────┴──────────────────────┘ │ ║
+║ │ MEAMN demand: ~42 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Mnemonic Circuit ═════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────┐ ║
+║ │ │ ║
+║ │ Encoding [0:10]│ novelty, binding strength, schema match ║
+║ │ Familiar [10:20]│ recognition, nostalgia, déjà-vu ║
+║ │ Retrieval[20:30]│ recall probability, vividness, coloring ║
+║ └────────┬────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ MEAMN MODEL (12D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Episodic): f01_retrieval, f02_nostalgia, f03_emotion │ ║
+║ │ Layer M (Math): meam_retrieval, p_recall │ ║
+║ │ Layer P (Present): memory_state, emotional_coloring, │ ║
+║ │ nostalgia_link │ ║
+║ │ Layer F (Future): memory_vividness_pred, │ ║
+║ │ emotional_response_pred, │ ║
+║ │ self_referential_pred, (reserved) │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -198,14 +197,14 @@ Zebra finch:            HVC, hippocampus in song learning (r=0.94, n=37)
 
 | Study | Method | N | Key Finding | Effect Size | MI Relevance |
 |-------|--------|---|-------------|-------------|-------------|
-| **Janata 2009** | fMRI (3T) | 13 | Dorsal MPFC (BA 8/9) tracks tonal space movement during autobiographically salient songs; MPFC serves as hub binding music, memories, emotions | t(9) = 5.784, p < 0.0003 (imagery vividness); FAV left-lateralized t(12) = 2.96, p = 0.012 | **Primary: mPFC as retrieval hub; MEM.retrieval_dynamics + familiarity binding** |
-| **Sakakibara et al. 2025** | EEG (in-ear) + behavioral | 33 | Nostalgia Brain-Music Interface enhances nostalgic feelings, well-being, and memory vividness; acoustic similarity alone can trigger nostalgia | ηp² = 0.636 (nostalgia), ηp² = 0.541 (memory vividness); Cohen's r = 0.878 (older) | **MEM.familiarity_proxy: acoustic-feature-based nostalgia pathway** |
-| **Derks-Dijkman et al. 2024** | Systematic review | 37 studies | Musical mnemonics benefit working and episodic memory; familiarity contributes positively; AD patients retain music-memory advantage | 28/37 studies show benefit | **MEM.encoding_state: music as mnemonic scaffold** |
-| **Scarratt et al. 2025** | fMRI | 57 | Familiar music activates auditory, motor, emotion, and memory areas; calm music strongest predictor of relaxation; 4 behavioral clusters | fMRI contrasts (p < 0.05 FWE) | **MEM.familiarity_proxy: familiar music engages distributed memory network** |
-| **Neonatal care review (2023)** | Scoping review | 1500 | Music affects hippocampus, amygdala in neonatal care | scoping | **MEM.encoding_state: early binding strength** |
-| **AD music therapy (2022)** | Systematic review | 10 studies | Preserved autobiographical/episodic memory in AD | review | **MEM.retrieval_dynamics: preserved pathway** |
-| **Context-dependent study (2021)** | fMRI | 84 | Multimodal integration in STS and hippocampus | d = 0.17, p < 0.0001 | **MEM.encoding_state: context modulation** |
-| **Zebra finch study (2020)** | Behavioral + neural | 37 | HVC, hippocampus in song learning; r = 0.94 for all-shared | r = 0.94, p < 0.01 | **MEM.familiarity_proxy: cross-species conservation** |
+| **Janata 2009** | fMRI (3T) | 13 | Dorsal MPFC (BA 8/9) tracks tonal space movement during autobiographically salient songs; MPFC serves as hub binding music, memories, emotions | t(9) = 5.784, p < 0.0003 (imagery vividness); FAV left-lateralized t(12) = 2.96, p = 0.012 | **Primary: mPFC as retrieval hub; retrieval_dynamics + familiarity binding** |
+| **Sakakibara et al. 2025** | EEG (in-ear) + behavioral | 33 | Nostalgia Brain-Music Interface enhances nostalgic feelings, well-being, and memory vividness; acoustic similarity alone can trigger nostalgia | ηp² = 0.636 (nostalgia), ηp² = 0.541 (memory vividness); Cohen's r = 0.878 (older) | **acoustic-feature-based nostalgia pathway** |
+| **Derks-Dijkman et al. 2024** | Systematic review | 37 studies | Musical mnemonics benefit working and episodic memory; familiarity contributes positively; AD patients retain music-memory advantage | 28/37 studies show benefit | **music as mnemonic scaffold** |
+| **Scarratt et al. 2025** | fMRI | 57 | Familiar music activates auditory, motor, emotion, and memory areas; calm music strongest predictor of relaxation; 4 behavioral clusters | fMRI contrasts (p < 0.05 FWE) | **familiar music engages distributed memory network** |
+| **Neonatal care review (2023)** | Scoping review | 1500 | Music affects hippocampus, amygdala in neonatal care | scoping | **early binding strength** |
+| **AD music therapy (2022)** | Systematic review | 10 studies | Preserved autobiographical/episodic memory in AD | review | **preserved pathway** |
+| **Context-dependent study (2021)** | fMRI | 84 | Multimodal integration in STS and hippocampus | d = 0.17, p < 0.0001 | **context modulation** |
+| **Zebra finch study (2020)** | Behavioral + neural | 37 | HVC, hippocampus in song learning; r = 0.94 for all-shared | r = 0.94, p < 0.01 | **cross-species conservation** |
 | **Janata et al. 2007** | Behavioral | ~300 | Characterisation of MEAMs: reminiscence bump ages 10-30; 30%+ MEAM trigger rate with popular music | 30-80% trigger rate | **Retrieval function: Age_at_encoding factor** |
 | **Barrett et al. 2010** | Behavioral | — | Music-evoked nostalgia: affect, memory, and personality modulate nostalgia intensity | — | **Individual differences in nostalgia pathway** |
 | **Tulving 2002** | Review | — | Episodic memory requires coherent feature binding | — | **Why consonance group binds memory** |
@@ -229,14 +228,14 @@ Phase 2: FAMILIARITY DETECTION (0.5-2s, H16 window)
 Hippocampal pattern completion begins.
 Low entropy (R³[22]) = familiar → high recognition.
 Statistical regularity (R³[25:33] x_l0l5) binds features.
-MEM.familiarity_proxy activates.
+familiarity_proxy activates.
 
 Phase 3: MEMORY RETRIEVAL (2-5s, H20 window)
 ─────────────────────────────────────────────
 Hippocampus-mPFC-PCC hub engages.
 Autobiographical memory trace retrieved.
 Emotional coloring applied via amygdala pathway.
-MEM.retrieval_dynamics produces vividness signal.
+retrieval_dynamics produces vividness signal.
 
 Phase 4: EMOTIONAL RESPONSE (3-10s, sustained)
 ───────────────────────────────────────────────
@@ -256,17 +255,17 @@ replace negative associations.
 ### 3.3 Effect Size Summary
 
 ```
-Janata 2009 (primary):   t(9) = 5.784, p < 0.0003 (imagery vividness strong vs weak auto.)
-                         t(12) = 2.96, p = 0.012 (FAV left-lateralization)
-                         t(9) = 3.442, p < 0.008 (emotional evocation strong vs weak)
-Sakakibara 2025:         ηp² = 0.636 (nostalgia condition main effect)
-                         ηp² = 0.541 (memory vividness main effect)
-                         Cohen's r = 0.878 (older), 0.711 (younger) nostalgia ratings
-Context-dependent:       d = 0.17, p < 0.0001 (N=84, multimodal integration)
-Zebra finch:             r = 0.94, p < 0.01 (N=37, song learning)
-Derks-Dijkman 2024:      28/37 studies show musical mnemonic benefit (systematic)
-Pooled Effect (k=4):     d = 0.53 [95% CI: 0.42, 0.65], I² = 95.8%
-Quality Assessment:      12 primary studies; α-tier evidence from fMRI + EEG + behavioral
+Janata 2009 (primary): t(9) = 5.784, p < 0.0003 (imagery vividness strong vs weak auto.)
+ t(12) = 2.96, p = 0.012 (FAV left-lateralization)
+ t(9) = 3.442, p < 0.008 (emotional evocation strong vs weak)
+Sakakibara 2025: ηp² = 0.636 (nostalgia condition main effect)
+ ηp² = 0.541 (memory vividness main effect)
+ Cohen's r = 0.878 (older), 0.711 (younger) nostalgia ratings
+Context-dependent: d = 0.17, p < 0.0001 (N=84, multimodal integration)
+Zebra finch: r = 0.94, p < 0.01 (N=37, song learning)
+Derks-Dijkman 2024: 28/37 studies show musical mnemonic benefit (systematic)
+Pooled Effect (k=4): d = 0.53 [95% CI: 0.42, 0.65], I² = 95.8%
+Quality Assessment: 12 primary studies; α-tier evidence from fMRI + EEG + behavioral
 ```
 
 ---
@@ -309,26 +308,26 @@ Quality Assessment:      12 primary studies; α-tier evidence from fMRI + EEG + 
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
-R³[0] roughness (inverse) ─────►   Consonance/pleasantness → valence
-R³[10] loudness + R³[7] amp ───►   Arousal level → emotional intensity
-                                    Math: arousal = σ(loudness × amplitude)
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
+R³[0] roughness (inverse) ─────► Consonance/pleasantness → valence
+R³[10] loudness + R³[7] amp ───► Arousal level → emotional intensity
+ Math: arousal = σ(loudness × amplitude)
 
-R³[18:21] tristimulus1-3 ──────►   Voice/instrument recognition
-R³[12] warmth + R³[14] tonal. ─►   Familiar timbre → nostalgia trigger
-                                    Math: familiarity ∝ warmth × tonalness
+R³[18:21] tristimulus1-3 ──────► Voice/instrument recognition
+R³[12] warmth + R³[14] tonal. ─► Familiar timbre → nostalgia trigger
+ Math: familiarity ∝ warmth × tonalness
 
-R³[41:49] x_l5l7 ──────────────►  Autobiographical binding
-                                    Consonance warmth × timbre = familiar
-                                    This IS the nostalgia signal
+R³[41:49] x_l5l7 ──────────────► Autobiographical binding
+ Consonance warmth × timbre = familiar
+ This IS the nostalgia signal
 
-R³[25:33] x_l0l5 ──────────────►  Memory retrieval probability
-                                    Math: P(recall) ∝ x_l0l5 · stumpf[3]
+R³[25:33] x_l0l5 ──────────────► Memory retrieval probability
+ Math: P(recall) ∝ x_l0l5 · stumpf[3]
 
-R³[22] entropy ─────────────────►  Familiarity detection
-                                    Low entropy = familiar patterns
-                                    High entropy = novel = weaker recall
+R³[22] entropy ─────────────────► Familiarity detection
+ Low entropy = familiar patterns
+ High entropy = novel = weaker recall
 ```
 
 ---
@@ -337,7 +336,7 @@ R³[22] entropy ─────────────────►  Familiar
 
 ### 5.1 Demand Specification
 
-MEAMN requires H³ features at three MEM horizons: H16 (1s), H20 (5s), H24 (36s).
+MEAMN requires H³ features at three horizons: H16 (1s), H20 (5s), H24 (36s).
 
 | R³ Index | Feature | H | Morph | Law | Purpose |
 |----------|---------|---|-------|-----|---------|
@@ -365,7 +364,7 @@ MEAMN requires H³ features at three MEM horizons: H16 (1s), H20 (5s), H24 (36s)
 
 #### R³ v2 Projected Expansion
 
-MEAMN projected v2 from H (Harmony) and F (Pitch) groups, aligned with MEM horizons (H16, H20, H24).
+MEAMN projected v2 from H (Harmony) and F (Pitch) groups, aligned with corresponding H³ horizons (H16, H20, H24).
 
 | R³ Idx | Feature | Group | H | Morph | Law | Purpose |
 |:------:|---------|:-----:|:-:|-------|:---:|---------|
@@ -379,22 +378,6 @@ MEAMN projected v2 from H (Harmony) and F (Pitch) groups, aligned with MEM horiz
 **v2 projected**: 6 tuples
 **Total projected**: 25 tuples of 294,912 theoretical = 0.0085%
 
-### 5.2 MEM Mechanism Binding
-
-MEAMN reads from the **MEM** (Memory Encoding & Retrieval) mechanism:
-
-| MEM Sub-section | Range | MEAMN Role | Weight |
-|-----------------|-------|------------|--------|
-| **Encoding State** | MEM[0:10] | Novelty detection, binding strength | 0.7 |
-| **Familiarity Proxy** | MEM[10:20] | Recognition signal, nostalgia, déjà-vu | **1.0** (primary) |
-| **Retrieval Dynamics** | MEM[20:30] | Recall probability, vividness, coloring | 0.8 |
-
-Additionally reads from **AED** mechanism (mesolimbic circuit, cross-unit pathway P3):
-
-| AED Sub-section | Range | MEAMN Role | Weight |
-|-----------------|-------|------------|--------|
-| **Arousal** | AED[0:10] | Emotional intensity for memory tagging | 0.6 |
-
 ---
 
 ## 6. Output Space: 12D Multi-Layer Representation
@@ -407,65 +390,65 @@ MEAMN OUTPUT TENSOR: 12D PER FRAME (172.27 Hz)
 
 LAYER E — EPISODIC MEMORY FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 0  │ f01_retrieval     │ [0, 1] │ Autobiographical retrieval activation.
-    │                   │        │ Hippocampus + mPFC + PCC hub.
-    │                   │        │ f01 = σ(α · x_l0l5.mean · MEM.retrieval · stumpf)
-    │                   │        │ α = 0.80 (attention weight)
+ 0 │ f01_retrieval │ [0, 1] │ Autobiographical retrieval activation.
+ │ │ │ Hippocampus + mPFC + PCC hub.
+ │ │ │ f01 = σ(α · x_l0l5.mean · retrieval · stumpf)
+ │ │ │ α = 0.80 (attention weight)
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 1  │ f02_nostalgia     │ [0, 1] │ Nostalgia response intensity.
-    │                   │        │ Hippocampus + STG melodic trace.
-    │                   │        │ f02 = σ(β · x_l5l7.mean · MEM.familiarity)
-    │                   │        │ β = 0.70 (familiarity weight)
+ 1 │ f02_nostalgia │ [0, 1] │ Nostalgia response intensity.
+ │ │ │ Hippocampus + STG melodic trace.
+ │ │ │ f02 = σ(β · x_l5l7.mean · familiarity)
+ │ │ │ β = 0.70 (familiarity weight)
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 2  │ f03_emotion       │ [0, 1] │ Emotional memory coloring.
-    │                   │        │ Amygdala affective tagging.
-    │                   │        │ f03 = σ(γ · (1-roughness) · loudness · AED.arousal)
-    │                   │        │ γ = 0.60 (emotional weight)
+ 2 │ f03_emotion │ [0, 1] │ Emotional memory coloring.
+ │ │ │ Amygdala affective tagging.
+ │ │ │ f03 = σ(γ · (1-roughness) · loudness · arousal)
+ │ │ │ γ = 0.60 (emotional weight)
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 3  │ meam_retrieval    │ [0, 1] │ MEAM Retrieval function.
-    │                   │        │ f(Familiarity × EmotionalIntensity × SelfRelevance)
-    │                   │        │ Expanded: MEM.retrieval · (familiarity × emotional)
-    │                   │        │         + MEM.familiarity · familiarity
-    │                   │        │         + AED.arousal · emotional_intensity
+ 3 │ meam_retrieval │ [0, 1] │ MEAM Retrieval function.
+ │ │ │ f(Familiarity × EmotionalIntensity × SelfRelevance)
+ │ │ │ Expanded: retrieval · (familiarity × emotional)
+ │ │ │ · familiarity
+ │ │ │ · emotional_intensity
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 4  │ p_recall          │ [0, 1] │ P(recall | music).
-    │                   │        │ σ(β₀ + β₁·Familiarity + β₂·Arousal + β₃·Valence)
-    │                   │        │ Familiarity from MEM.familiarity_proxy
-    │                   │        │ Arousal from R³.loudness, Valence from 1-roughness
+ 4 │ p_recall │ [0, 1] │ P(recall | music).
+ │ │ │ σ(β₀ + β₁·Familiarity + β₂·Arousal + β₃·Valence)
+ │ │ │ Familiarity from familiarity_proxy
+ │ │ │ Arousal from R³.loudness, Valence from 1-roughness
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 5  │ memory_state      │ [0, 1] │ Current memory retrieval activation.
-    │                   │        │ MEM.retrieval_dynamics aggregation.
+ 5 │ memory_state │ [0, 1] │ Current memory retrieval activation.
+ │ │ │ retrieval_dynamics aggregation.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 6  │ emotional_color   │ [0, 1] │ Affective tag strength on current memory.
-    │                   │        │ AED.arousal × (1-roughness).
+ 6 │ emotional_color │ [0, 1] │ Affective tag strength on current memory.
+ │ │ │ arousal × (1-roughness).
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 7  │ nostalgia_link    │ [0, 1] │ Nostalgia-familiarity warmth signal.
-    │                   │        │ MEM.familiarity × x_l5l7.mean.
+ 7 │ nostalgia_link │ [0, 1] │ Nostalgia-familiarity warmth signal.
+ │ │ │ familiarity × x_l5l7.mean.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 8  │ mem_vividness_fc  │ [0, 1] │ Memory vividness prediction (2-5s ahead).
-    │                   │        │ Hippocampal activation trajectory.
+ 8 │ mem_vividness_fc │ [0, 1] │ Memory vividness prediction (2-5s ahead).
+ │ │ │ Hippocampal activation trajectory.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 9  │ emo_response_fc   │ [0, 1] │ Emotional response prediction (1-3s ahead).
-    │                   │        │ Amygdala engagement trajectory.
+ 9 │ emo_response_fc │ [0, 1] │ Emotional response prediction (1-3s ahead).
+ │ │ │ Amygdala engagement trajectory.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
-10  │ self_ref_fc       │ [0, 1] │ Self-referential prediction (5-10s ahead).
-    │                   │        │ mPFC activation trajectory.
+10 │ self_ref_fc │ [0, 1] │ Self-referential prediction (5-10s ahead).
+ │ │ │ mPFC activation trajectory.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
-11  │ (reserved)        │ [0, 1] │ Future expansion.
+11 │ (reserved) │ [0, 1] │ Future expansion.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
@@ -482,32 +465,28 @@ MEAM_Retrieval(music) = f(Familiarity × EmotionalIntensity × SelfRelevance)
 P(recall | music) = σ(β₀ + β₁·Familiarity + β₂·Arousal + β₃·Valence + β₄·Age)
 
 where:
-  Familiarity     = MEM.familiarity_proxy.mean()  [derived from entropy, warmth]
-  EmotionalInt.   = |Valence| × Arousal           [from R³ + AED]
-  SelfRelevance   = MEM.retrieval_dynamics.mean()  [hippocampal binding]
-  Arousal         = σ(R³.loudness[10] × R³.amplitude[7])
-  Valence         = 1 - R³.roughness[0]            [consonance = pleasant]
+ Familiarity = familiarity_proxy.mean() [derived from entropy, warmth]
+ EmotionalInt. = |Valence| × Arousal [from R³ + affect dynamics]
+ SelfRelevance = retrieval_dynamics.mean() [hippocampal binding]
+ Arousal = σ(R³.loudness[10] × R³.amplitude[7])
+ Valence = 1 - R³.roughness[0] [consonance = pleasant]
 
-Expanded form with MEM mechanism:
-  MEAM_Retrieval = MEM.retrieval[20:30].mean() · (Familiarity × EmotionalInt.)
-                 + MEM.familiarity[10:20].mean() · Familiarity
-                 + AED.arousal[0:10].mean() · EmotionalIntensity
+Expanded form with memory-encoding mechanism:
+.mean() · Familiarity
+.mean() · EmotionalIntensity
 
 Temporal dynamics:
-  dMEAM/dt = α · (Current_Music - MEAM) + β · ∂Familiarity/∂t
+ dMEAM/dt = α · (Current_Music - MEAM) + β · ∂Familiarity/∂t
 ```
 
 ### 7.2 Feature Formulas
 
 ```python
 # f01: Autobiographical Retrieval
-f01 = σ(0.80 · mean(R³.x_l0l5[25:33]) · mean(MEM.retrieval[20:30]) · R³.stumpf[3])
 
 # f02: Nostalgia Response
-f02 = σ(0.70 · mean(R³.x_l5l7[41:49]) · mean(MEM.familiarity[10:20]))
 
 # f03: Emotional Memory Coloring
-f03 = σ(0.60 · (1 - R³.roughness[0]) · R³.loudness[10] · mean(AED.arousal[0:10]))
 ```
 
 ---
@@ -535,26 +514,26 @@ f03 = σ(0.60 · (1 - R³.roughness[0]) · R³.loudness[10] · mean(AED.arousal[
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    MEAMN INTERACTIONS                                       │
+│ MEAMN INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  CROSS-UNIT (P3: IMU → ARU):                                              │
-│  MEAMN.nostalgia_link ──────► ARU.SRP (pleasure from familiar music)      │
-│  MEAMN.emotional_color ─────► ARU.AAC (autonomic response to memories)    │
-│                                                                             │
-│  INTRA-UNIT (IMU):                                                         │
-│  MEAMN ──────► MMP (Musical Mnemonic Preservation)                        │
-│       │        └── MEAMN pathways preserved in neurodegeneration           │
-│       │                                                                      │
-│       ├─────► HCMC (Hippocampal-Cortical Memory Circuit)                  │
-│       │        └── MEAMN engages hippocampal-cortical networks             │
-│       │                                                                      │
-│       ├─────► PMIM (Predictive Memory Integration)                         │
-│       │        └── MEAMN retrieval feeds predictive processing             │
-│       │                                                                      │
-│       └─────► CDEM (Context-Dependent Emotional Memory)                    │
-│                └── MEAMN provides contextual memory signals                │
-│                                                                             │
+│ │
+│ CROSS-UNIT (P3: IMU → ARU): │
+│ MEAMN.nostalgia_link ──────► ARU.SRP (pleasure from familiar music) │
+│ MEAMN.emotional_color ─────► ARU.AAC (autonomic response to memories) │
+│ │
+│ INTRA-UNIT (IMU): │
+│ MEAMN ──────► MMP (Musical Mnemonic Preservation) │
+│ │ └── MEAMN pathways preserved in neurodegeneration │
+│ │ │
+│ ├─────► HCMC (Hippocampal-Cortical Memory Circuit) │
+│ │ └── MEAMN engages hippocampal-cortical networks │
+│ │ │
+│ ├─────► PMIM (Predictive Memory Integration) │
+│ │ └── MEAMN retrieval feeds predictive processing │
+│ │ │
+│ └─────► CDEM (Context-Dependent Emotional Memory) │
+│ └── MEAMN provides contextual memory signals │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -589,123 +568,101 @@ MEAMN reads from the unified Brain (26D) for shared state:
 
 ```python
 class MEAMN(BaseModel):
-    """Music-Evoked Autobiographical Memory Network.
+ """Music-Evoked Autobiographical Memory Network.
 
-    Output: 12D per frame.
-    Reads: MEM mechanism (30D), AED mechanism (cross-unit), R³ direct.
-    """
-    NAME = "MEAMN"
-    UNIT = "IMU"
-    TIER = "α1"
-    OUTPUT_DIM = 12
-    MECHANISM_NAMES = ("MEM",)        # Primary mechanism
-    CROSS_UNIT = ("AED",)             # Cross-unit pathway P3
+ Output: 12D per frame.
+ """
+ NAME = "MEAMN"
+ UNIT = "IMU"
+ TIER = "α1"
+ OUTPUT_DIM = 12
+ CROSS_UNIT_READS = ()  # TODO: populate from Nucleus contract # Cross-unit pathway P3
 
-    ALPHA = 0.80   # Attention weight (autobiographical retrieval)
-    BETA = 0.70    # Familiarity weight (nostalgia)
-    GAMMA = 0.60   # Emotional weight (affective coloring)
+ ALPHA = 0.80 # Attention weight (autobiographical retrieval)
+ BETA = 0.70 # Familiarity weight (nostalgia)
+ GAMMA = 0.60 # Emotional weight (affective coloring)
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """19 tuples for MEAMN computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            (3, 16, 1, 2),    # stumpf_fusion, 1s, mean, bidirectional
-            (3, 20, 1, 2),    # stumpf_fusion, 5s, mean, bidirectional
-            (3, 24, 1, 0),    # stumpf_fusion, 36s, mean, forward
-            (4, 16, 0, 2),    # pleasantness, 1s, value, bidirectional
-            (4, 20, 18, 0),   # pleasantness, 5s, trend, forward
-            (10, 16, 0, 2),   # loudness, 1s, value, bidirectional
-            (10, 20, 1, 0),   # loudness, 5s, mean, forward
-            (10, 24, 3, 0),   # loudness, 36s, std, forward
-            (12, 16, 0, 2),   # warmth, 1s, value, bidirectional
-            (12, 20, 1, 0),   # warmth, 5s, mean, forward
-            (14, 16, 0, 2),   # tonalness, 1s, value, bidirectional
-            (14, 20, 1, 0),   # tonalness, 5s, mean, forward
-            (22, 16, 0, 2),   # entropy, 1s, value, bidirectional
-            (22, 20, 1, 0),   # entropy, 5s, mean, forward
-            (22, 24, 19, 0),  # entropy, 36s, stability, forward
-            (0, 16, 0, 2),    # roughness, 1s, value, bidirectional
-            (0, 20, 18, 0),   # roughness, 5s, trend, forward
-            (7, 16, 8, 0),    # amplitude, 1s, velocity, forward
-            (7, 20, 4, 0),    # amplitude, 5s, max, forward
-        ]
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """19 tuples for MEAMN computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ (3, 16, 1, 2), # stumpf_fusion, 1s, mean, bidirectional
+ (3, 20, 1, 2), # stumpf_fusion, 5s, mean, bidirectional
+ (3, 24, 1, 0), # stumpf_fusion, 36s, mean, forward
+ (4, 16, 0, 2), # pleasantness, 1s, value, bidirectional
+ (4, 20, 18, 0), # pleasantness, 5s, trend, forward
+ (10, 16, 0, 2), # loudness, 1s, value, bidirectional
+ (10, 20, 1, 0), # loudness, 5s, mean, forward
+ (10, 24, 3, 0), # loudness, 36s, std, forward
+ (12, 16, 0, 2), # warmth, 1s, value, bidirectional
+ (12, 20, 1, 0), # warmth, 5s, mean, forward
+ (14, 16, 0, 2), # tonalness, 1s, value, bidirectional
+ (14, 20, 1, 0), # tonalness, 5s, mean, forward
+ (22, 16, 0, 2), # entropy, 1s, value, bidirectional
+ (22, 20, 1, 0), # entropy, 5s, mean, forward
+ (22, 24, 19, 0), # entropy, 36s, stability, forward
+ (0, 16, 0, 2), # roughness, 1s, value, bidirectional
+ (0, 20, 18, 0), # roughness, 5s, trend, forward
+ (7, 16, 8, 0), # amplitude, 1s, velocity, forward
+ (7, 20, 4, 0), # amplitude, 5s, max, forward
+ ]
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute MEAMN 12D output.
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute MEAMN 12D output.
 
-        Args:
-            mechanism_outputs: {"MEM": (B,T,30), "AED": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) → (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Args:
+ h3_direct: Dict of (r3,h,m,l) → (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Returns:
-            (B,T,12) MEAMN output
-        """
-        mem = mechanism_outputs["MEM"]    # (B, T, 30)
-        aed = mechanism_outputs["AED"]    # (B, T, 30) — cross-unit
+ Returns:
+ (B,T,12) MEAMN output
+ """
+ # R³ features
+ roughness = r3[..., 0:1] # [0, 1]
+ stumpf = r3[..., 3:4] # [0, 1]
+ loudness = r3[..., 10:11] # [0, 1]
+ warmth = r3[..., 12:13] # [0, 1]
+ x_l0l5 = r3[..., 25:33] # (B, T, 8)
+ x_l5l7 = r3[..., 41:49] # (B, T, 8)
 
-        # R³ features
-        roughness = r3[..., 0:1]          # [0, 1]
-        stumpf = r3[..., 3:4]             # [0, 1]
-        loudness = r3[..., 10:11]         # [0, 1]
-        warmth = r3[..., 12:13]           # [0, 1]
-        x_l0l5 = r3[..., 25:33]           # (B, T, 8)
-        x_l5l7 = r3[..., 41:49]           # (B, T, 8)
+ # affective-dynamics arousal (cross-unit)
+ # ═══ LAYER E: Episodic features ═══
+ f01 = torch.sigmoid(self.ALPHA * (
+ x_l0l5.mean(-1, keepdim=True)
+ * stumpf
+ ))
+ f02 = torch.sigmoid(self.BETA * (
+ x_l5l7.mean(-1, keepdim=True)
+ ))
+ f03 = torch.sigmoid(self.GAMMA * (
+ (1.0 - roughness) * loudness
+ ))
 
-        # MEM sub-sections
-        mem_encoding = mem[..., 0:10]      # encoding state
-        mem_familiar = mem[..., 10:20]     # familiarity proxy
-        mem_retrieval = mem[..., 20:30]    # retrieval dynamics
+ # ═══ LAYER M: Mathematical ═══
+ emotional_int = torch.abs(1.0 - roughness) * loudness
+ meam_ret = (
+ + familiarity * familiarity
+ ).clamp(0, 1)
+ p_recall = torch.sigmoid(familiarity + loudness + (1.0 - roughness))
 
-        # AED arousal (cross-unit)
-        aed_arousal = aed[..., 0:10]       # arousal sub-section
+ # ═══ LAYER P: Present ═══
 
-        # ═══ LAYER E: Episodic features ═══
-        f01 = torch.sigmoid(self.ALPHA * (
-            x_l0l5.mean(-1, keepdim=True)
-            * mem_retrieval.mean(-1, keepdim=True)
-            * stumpf
-        ))
-        f02 = torch.sigmoid(self.BETA * (
-            x_l5l7.mean(-1, keepdim=True)
-            * mem_familiar.mean(-1, keepdim=True)
-        ))
-        f03 = torch.sigmoid(self.GAMMA * (
-            (1.0 - roughness) * loudness
-            * aed_arousal.mean(-1, keepdim=True)
-        ))
+ # ═══ LAYER F: Future ═══
+ mem_vividness_fc = self._predict_future(mem_retrieval, h3_direct, window_h=20)
+ emo_response_fc = self._predict_future(aed_arousal, h3_direct, window_h=16)
+ self_ref_fc = self._predict_future(mem_familiar, h3_direct, window_h=24)
+ reserved = torch.zeros_like(f01)
 
-        # ═══ LAYER M: Mathematical ═══
-        familiarity = mem_familiar.mean(-1, keepdim=True)
-        emotional_int = torch.abs(1.0 - roughness) * loudness
-        meam_ret = (
-            mem_retrieval.mean(-1, keepdim=True) * familiarity * emotional_int
-            + familiarity * familiarity
-            + aed_arousal.mean(-1, keepdim=True) * emotional_int
-        ).clamp(0, 1)
-        p_recall = torch.sigmoid(familiarity + loudness + (1.0 - roughness))
-
-        # ═══ LAYER P: Present ═══
-        memory_state = mem_retrieval.mean(-1, keepdim=True)
-        emotional_color = aed_arousal.mean(-1, keepdim=True) * (1.0 - roughness)
-        nostalgia_link = mem_familiar.mean(-1, keepdim=True) * x_l5l7.mean(-1, keepdim=True)
-
-        # ═══ LAYER F: Future ═══
-        mem_vividness_fc = self._predict_future(mem_retrieval, h3_direct, window_h=20)
-        emo_response_fc = self._predict_future(aed_arousal, h3_direct, window_h=16)
-        self_ref_fc = self._predict_future(mem_familiar, h3_direct, window_h=24)
-        reserved = torch.zeros_like(f01)
-
-        return torch.cat([
-            f01, f02, f03,                           # E: 3D
-            meam_ret, p_recall,                      # M: 2D
-            memory_state, emotional_color, nostalgia_link,  # P: 3D
-            mem_vividness_fc, emo_response_fc,        # F: 4D
-            self_ref_fc, reserved,
-        ], dim=-1)  # (B, T, 12)
+ return torch.cat([
+ f01, f02, f03, # E: 3D
+ meam_ret, p_recall, # M: 2D
+ memory_state, emotional_color, nostalgia_link, # P: 3D
+ mem_vividness_fc, emo_response_fc, # F: 4D
+ self_ref_fc, reserved,
+ ], dim=-1) # (B, T, 12)
 ```
 
 ---
@@ -721,7 +678,6 @@ class MEAMN(BaseModel):
 | **Falsification Tests** | 5/5 confirmed | High validity |
 | **R³ Features Used** | 35D of 49D | Comprehensive |
 | **H³ Demand** | 19 tuples (0.82%) | Sparse, efficient |
-| **MEM Mechanism** | 30D (3 sub-sections) | Full coverage |
 | **Output Dimensions** | **12D** | 4-layer structure |
 | **Brain Regions** | 8 verified (MNI from Janata 2009) | 5→8 regions with direct fMRI evidence |
 
@@ -751,20 +707,11 @@ class MEAMN(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D) | R³ (49D) |
-| Temporal | HC⁰ mechanisms (BND, HRM, SGM, AED) | MEM mechanism (30D) + AED cross-unit |
-| Memory binding | S⁰.X_L5L9 × HC⁰.BND | R³.x_l0l5 × MEM.retrieval |
-| Nostalgia warmth | S⁰.X_L5L6 × HC⁰.HRM | R³.x_l5l7 × MEM.familiarity |
-| Emotional coloring | S⁰.L5.roughness × HC⁰.AED | R³.roughness × AED.arousal |
+| Memory binding | S⁰.X_L5L9 × HC⁰.BND | R³.x_l0l5 |
+| Nostalgia warmth | S⁰.X_L5L6 × HC⁰.HRM | R³.x_l5l7 |
+| Emotional coloring | S⁰.L5.roughness × HC⁰ affect | R³.roughness |
 | Demand format | HC⁰ index ranges | H³ 4-tuples (sparse) |
 | Total demand | 27/2304 = 1.17% | 19/2304 = 0.82% |
-
-### Why MEM replaces HC⁰ mechanisms
-
-The D0 pipeline used 4 separate HC⁰ mechanisms (BND, HRM, SGM, AED). In MI, these are unified into the MEM mechanism with 3 sub-sections:
-- **BND → MEM.retrieval_dynamics** [20:30]: Temporal binding for recall
-- **HRM → MEM.familiarity_proxy** [10:20]: Hippocampal replay = familiarity
-- **SGM → MEM.encoding_state** [0:10]: Striatal gradient = novelty detection
-- **AED → AED (cross-unit)**: Remains in mesolimbic circuit, accessed via pathway P3
 
 ---
 

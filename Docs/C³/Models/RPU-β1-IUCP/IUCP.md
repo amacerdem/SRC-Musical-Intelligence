@@ -21,21 +21,21 @@ The **Inverted-U Complexity Preference** (IUCP) model describes how musical liki
 INVERTED-U COMPLEXITY PREFERENCE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-INFORMATION CONTENT (IC)              ENTROPY
+INFORMATION CONTENT (IC) ENTROPY
 
-Liking                                Liking
-  │     ╭──╮                           │     ╭──╮
-  │    ╱    ╲                          │    ╱    ╲
-  │   ╱      ╲                         │   ╱      ╲
-  │  ╱        ╲                        │  ╱        ╲
-  │ ╱          ╲                       │ ╱          ╲
-  │╱            ╲                      │╱            ╲
-  └──────────────►                     └──────────────►
-  Low    Med    High                   Low    Med    High
+Liking Liking
+ │ ╭──╮ │ ╭──╮
+ │ ╱ ╲ │ ╱ ╲
+ │ ╱ ╲ │ ╱ ╲
+ │ ╱ ╲ │ ╱ ╲
+ │ ╱ ╲ │ ╱ ╲
+ │╱ ╲ │╱ ╲
+ └──────────────► └──────────────►
+ Low Med High Low Med High
 
 INTERACTION:
-  High Uncertainty → Prefer LOW IC (predictable outcomes)
-  Low Uncertainty  → Prefer MEDIUM IC (some surprise ok)
+ High Uncertainty → Prefer LOW IC (predictable outcomes)
+ Low Uncertainty → Prefer MEDIUM IC (some surprise ok)
 
 EFFECT: Inverted U for both IC and Entropy (Gold 2019)
 
@@ -59,74 +59,72 @@ IUCP provides the complexity-preference surface for the Reward Processing Unit:
 
 ## 2. Neural Circuit: Complete Anatomy
 
-### 2.1 Information Flow Architecture (EAR → BRAIN → AED+CPD+C0P → IUCP)
+### 2.1 Information Flow Architecture (EAR → BRAIN → IUCP)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    IUCP COMPUTATION ARCHITECTURE                             ║
+║ IUCP COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins x 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
-║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ CHANGE   │ │ X-INT  │ │        ║
-║  │  │ 7D [0:7]  │ │ 5D[7:12]│ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
-║  │  │           │ │         │ │ [12:21] │ │ [21:25]  │ │ [25:49]│ │        ║
-║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                         IUCP reads: ~10D                         │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                                                                  │        ║
-║  │  ┌── C0P Horizons ─────────────┐ ┌── AED Horizons ──────────┐  │        ║
-║  │  │ H4 (125ms theta)            │ │ H16 (1000ms beat)         │  │        ║
-║  │  │ H8 (500ms delta)            │ │                            │  │        ║
-║  │  │ H16 (1000ms beat)           │ │ Liking evaluation          │  │        ║
-║  │  │                             │ │                            │  │        ║
-║  │  │ Complexity assessment       │ │                            │  │        ║
-║  │  └─────────────────────────────┘ └────────────────────────────┘  │        ║
-║  │                         IUCP demand: ~14 of 2304 tuples          │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Preference Circuit ════       ║
-║                               │                                              ║
-║                       ┌───────┴───────┐                                      ║
-║                       ▼               ▼                                      ║
-║  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐              ║
-║  │  AED (30D)      │  │  CPD (30D)      │  │  C0P (30D)      │              ║
-║  │                 │  │                 │  │                 │              ║
-║  │ Valence  [0:10] │  │ Anticip. [0:10] │  │ Tension  [0:10] │              ║
-║  │ Arousal  [10:20]│  │ Peak Exp [10:20]│  │ Expect.  [10:20]│              ║
-║  │ Emotion  [20:30]│  │ Resolut. [20:30]│  │ Approach [20:30]│              ║
-║  └────────┬────────┘  └────────┬────────┘  └────────┬────────┘              ║
-║           │                    │                    │                        ║
-║           └────────────┬───────┴────────────────────┘                        ║
-║                        ▼                                                     ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    IUCP MODEL (6D Output)                        │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f01_ic_liking_curve,                       │        ║
-║  │                       f02_entropy_liking_curve,                   │        ║
-║  │                       f03_ic_entropy_interaction,                  │        ║
-║  │                       f04_optimal_complexity                      │        ║
-║  │  Layer P (Present):   current_preference_state                    │        ║
-║  │  Layer F (Future):    optimal_zone_pred                           │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins x 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ ENERGY │ │ TIMBRE │ │ CHANGE │ │ X-INT │ │ ║
+║ │ │ 7D [0:7] │ │ 5D[7:12]│ │ 9D │ │ 4D │ │ 24D │ │ ║
+║ │ │ │ │ │ │ [12:21] │ │ [21:25] │ │ [25:49]│ │ ║
+║ │ └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │ ║
+║ │ IUCP reads: ~10D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ │ ║
+║ │ │ H4 (125ms theta) │ │ H16 (1000ms beat) │ │ ║
+║ │ │ H8 (500ms delta) │ │ │ │ ║
+║ │ │ H16 (1000ms beat) │ │ Liking evaluation │ │ ║
+║ │ │ │ │ │ │ ║
+║ │ │ Complexity assessment │ │ │ │ ║
+║ │ └─────────────────────────────┘ └────────────────────────────┘ │ ║
+║ │ IUCP demand: ~14 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Preference Circuit ════ ║
+║ │ ║
+║ ┌───────┴───────┐ ║
+║ ▼ ▼ ║
+║ ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐ ║
+║ │ │ │ │ │ │ ║
+║ │ Valence [0:10] │ │ Anticip. [0:10] │ │ Tension [0:10] │ ║
+║ │ Arousal [10:20]│ │ Peak Exp [10:20]│ │ Expect. [10:20]│ ║
+║ │ Emotion [20:30]│ │ Resolut. [20:30]│ │ Approach [20:30]│ ║
+║ └────────┬────────┘ └────────┬────────┘ └────────┬────────┘ ║
+║ │ │ │ ║
+║ └────────────┬───────┴────────────────────┘ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ IUCP MODEL (6D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f01_ic_liking_curve, │ ║
+║ │ f02_entropy_liking_curve, │ ║
+║ │ f03_ic_entropy_interaction, │ ║
+║ │ f04_optimal_complexity │ ║
+║ │ Layer P (Present): current_preference_state │ ║
+║ │ Layer F (Future): optimal_zone_pred │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -154,12 +152,12 @@ IUCP provides the complexity-preference surface for the Reward Processing Unit:
 
 ```
 Primary Evidence (k=11): Multi-study behavioral + fMRI convergence
-Heterogeneity:           Low — consistent inverted-U across 3 independent samples
-Quality Assessment:      β-tier (behavioral replication + fMRI convergence)
-Replication:             Gold 2019 Study 1 → Study 2 replication; Cheung 2019 independent replication
-                         Gold 2023b provides fMRI evidence for VS+STG
-Note:                    IC×Entropy interaction marginal in Gold 2019 Study 1 (p=0.06)
-                         but significant in Cheung 2019 and Gold 2023b behavioral
+Heterogeneity: Low — consistent inverted-U across 3 independent samples
+Quality Assessment: β-tier (behavioral replication + fMRI convergence)
+Replication: Gold 2019 Study 1 → Study 2 replication; Cheung 2019 independent replication
+ Gold 2023b provides fMRI evidence for VS+STG
+Note: IC×Entropy interaction marginal in Gold 2019 Study 1 (p=0.06)
+ but significant in Cheung 2019 and Gold 2023b behavioral
 ```
 
 ---
@@ -192,19 +190,16 @@ Note:                    IC×Entropy interaction marginal in Gold 2019 Study 1 (
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[21] spectral_change ─────────┐
-C0P.expectation_surprise[10:20] ┼──► Information Content (IC)
-H³ entropy tuples ──────────────┘   Temporal surprise level
+H³ entropy tuples ──────────────┘ Temporal surprise level
 
 R³[24] concentration_change ────┐
 R³[0] roughness ────────────────┼──► Entropy / uncertainty
-H³ std/entropy tuples ──────────┘   Spectral complexity
+H³ std/entropy tuples ──────────┘ Spectral complexity
 
 R³[33:41] x_l4l5 ──────────────┐
-AED.valence_tracking[0:10] ─────┼──► IC × Entropy preference surface
-CPD.anticipation[0:10] ─────────┘   Derivatives × Perceptual = liking
 
 R³[8] loudness ─────────────────────► Perceptual salience weighting
 ```
@@ -215,7 +210,7 @@ R³[8] loudness ─────────────────────�
 
 ### 5.1 Demand Specification
 
-IUCP requires H³ features at longer horizons for complexity assessment (entropy needs context) and C0P horizons for expectation-surprise computation.
+IUCP requires H³ features at longer horizons for complexity assessment (entropy needs context) and for expectation-surprise computation.
 
 | R³ Index | Feature | H | Morph | Law | Purpose |
 |----------|---------|---|-------|-----|---------|
@@ -238,7 +233,7 @@ IUCP requires H³ features at longer horizons for complexity assessment (entropy
 
 #### R³ v2 Projected Expansion
 
-IUCP projected v2 from G:Rhythm + I:Information, aligned with AED+CPD+C0P horizons.
+IUCP projected v2 from G:Rhythm + I:Information, aligned with H³ direct+Cognitive polarity horizons.
 
 | R³ Idx | Feature | Group | H | Morph | Law | Purpose |
 |:------:|---------|:-----:|:-:|-------|:---:|---------|
@@ -254,20 +249,6 @@ IUCP projected v2 from G:Rhythm + I:Information, aligned with AED+CPD+C0P horizo
 **v2 projected**: 8 tuples
 **Total projected**: 22 tuples of 294,912 theoretical = 0.0075%
 
-### 5.2 AED + CPD + C0P Mechanism Binding
-
-| Mechanism | Sub-section | Range | IUCP Role | Weight |
-|-----------|-------------|-------|-----------|--------|
-| **AED** | Valence Tracking | AED[0:10] | Liking signal | **1.0** (primary) |
-| **AED** | Arousal Dynamics | AED[10:20] | Arousal-complexity mapping | 0.8 |
-| **AED** | Emotional Trajectory | AED[20:30] | Preference trajectory | 0.5 |
-| **CPD** | Anticipation | CPD[0:10] | Complexity anticipation | 0.7 |
-| **CPD** | Peak Experience | CPD[10:20] | Optimal zone detection | 0.6 |
-| **CPD** | Resolution | CPD[20:30] | Post-peak preference | 0.5 |
-| **C0P** | Tension-Release | C0P[0:10] | Complexity tension | 0.7 |
-| **C0P** | Expectation-Surprise | C0P[10:20] | IC computation | **1.0** (primary) |
-| **C0P** | Approach-Avoidance | C0P[20:30] | Complexity approach/avoid | 0.8 |
-
 ---
 
 ## 6. Output Space: 6D Multi-Layer Representation
@@ -280,39 +261,35 @@ IUCP OUTPUT TENSOR: 6D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 0  │ f01_ic_liking_curve      │ [0, 1] │ Inverted-U for IC.
-    │                          │        │ f01 = σ(0.40 * ic_quadratic
-    │                          │        │       + 0.30 * mean(AED.valence[0:10])
-    │                          │        │       + 0.30 * mean_pleasantness_1s)
+ 0 │ f01_ic_liking_curve │ [0, 1] │ Inverted-U for IC.
+ │ │ │ f01 = σ(0.40 * ic_quadratic
+ │ │ │ + 0.30 * mean_pleasantness_1s)
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 1  │ f02_entropy_liking_curve │ [0, 1] │ Inverted-U for entropy.
-    │                          │        │ f02 = σ(0.40 * entropy_quadratic
-    │                          │        │       + 0.30 * mean(AED.arousal[10:20])
-    │                          │        │       + 0.30 * concentration_entropy_1s)
+ 1 │ f02_entropy_liking_curve │ [0, 1] │ Inverted-U for entropy.
+ │ │ │ f02 = σ(0.40 * entropy_quadratic
+ │ │ │ + 0.30 * concentration_entropy_1s)
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 2  │ f03_ic_entropy_interact  │ [0, 1] │ IC x Entropy interaction.
-    │                          │        │ f03 = σ(0.40 * f01 * f02
-    │                          │        │       + 0.30 * mean(C0P.expect[10:20])
-    │                          │        │       + 0.30 * coupling_entropy_1s)
+ 2 │ f03_ic_entropy_interact │ [0, 1] │ IC x Entropy interaction.
+ │ │ │ f03 = σ(0.40 * f01 * f02
+ │ │ │ + 0.30 * coupling_entropy_1s)
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 3  │ f04_optimal_complexity   │ [0, 1] │ Preferred complexity level.
-    │                          │        │ f04 = σ(0.50 * f03
-    │                          │        │       + 0.25 * mean(C0P.approach[20:30])
-    │                          │        │       + 0.25 * pleasantness_std_1s)
+ 3 │ f04_optimal_complexity │ [0, 1] │ Preferred complexity level.
+ │ │ │ f04 = σ(0.50 * f03
+ │ │ │ + 0.25 * pleasantness_std_1s)
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 4  │ current_preference_state │ [0, 1] │ Real-time liking level.
+ 4 │ current_preference_state │ [0, 1] │ Real-time liking level.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 5  │ optimal_zone_pred        │ [0, 1] │ Predicted preference zone.
+ 5 │ optimal_zone_pred │ [0, 1] │ Predicted preference zone.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 6D per frame at 172.27 Hz
@@ -332,9 +309,9 @@ Inverted-U: β2 < 0, β4 < 0 (negative quadratic terms)
 Interaction: β5 < 0 (high entropy → prefer low IC)
 
 Parameters:
-    τ_decay = 2.0s  (liking signal decay, Gold 2019)
-    Optimal IC ≈ 0.5 (medium information content)
-    Optimal Entropy ≈ 0.5 (medium uncertainty)
+ τ_decay = 2.0s (liking signal decay, Gold 2019)
+ Optimal IC ≈ 0.5 (medium information content)
+ Optimal Entropy ≈ 0.5 (medium uncertainty)
 ```
 
 ### 7.2 Feature Formulas
@@ -343,33 +320,29 @@ Parameters:
 # COEFFICIENT SATURATION RULE: For sigmoid(Σ wi*gi), |wi| must sum <= 1.0
 
 # Intermediate: IC quadratic (inverted-U via 4·x·(1-x))
-ic_quadratic = 4.0 * mean_ic_1s * (1.0 - mean_ic_1s)  # peaks at 0.5
+ic_quadratic = 4.0 * mean_ic_1s * (1.0 - mean_ic_1s) # peaks at 0.5
 
 # Intermediate: Entropy quadratic
 entropy_quadratic = 4.0 * concentration_entropy_1s * (1.0 - concentration_entropy_1s)
 
 # f01: IC Liking Curve
 f01 = σ(0.40 * ic_quadratic
-       + 0.30 * mean(AED.valence_tracking[0:10])
-       + 0.30 * mean_pleasantness_1s)
+ + 0.30 * mean_pleasantness_1s)
 # coefficients: 0.40 + 0.30 + 0.30 = 1.0 ✓
 
 # f02: Entropy Liking Curve
 f02 = σ(0.40 * entropy_quadratic
-       + 0.30 * mean(AED.arousal_dynamics[10:20])
-       + 0.30 * concentration_entropy_1s)
+ + 0.30 * concentration_entropy_1s)
 # coefficients: 0.40 + 0.30 + 0.30 = 1.0 ✓
 
 # f03: IC × Entropy Interaction
 f03 = σ(0.40 * f01 * f02
-       + 0.30 * mean(C0P.expectation_surprise[10:20])
-       + 0.30 * coupling_entropy_1s)
+ + 0.30 * coupling_entropy_1s)
 # coefficients: 0.40 + 0.30 + 0.30 = 1.0 ✓
 
 # f04: Optimal Complexity
 f04 = σ(0.50 * f03
-       + 0.25 * mean(C0P.approach_avoidance[20:30])
-       + 0.25 * pleasantness_std_1s)
+ + 0.25 * pleasantness_std_1s)
 # coefficients: 0.50 + 0.25 + 0.25 = 1.0 ✓
 ```
 
@@ -394,25 +367,22 @@ f04 = σ(0.50 * f03
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    IUCP INTERACTIONS                                         │
+│ IUCP INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (RPU):                                                         │
-│  IUCP.ic_liking_curve ──────► RPEM (IC liking → RPE modulation)           │
-│  IUCP.optimal_complexity ────► SSPS (optimal zone → saddle surface)       │
-│  IUCP.current_preference ────► DAED (preference → DA anticipation)        │
-│  IUCP.entropy_liking ────────► MCCN (entropy → chills likelihood)         │
-│                                                                             │
-│  CROSS-UNIT (RPU → IMU):                                                   │
-│  IUCP.optimal_complexity ────► IMU.complexity_target (learning target)     │
-│                                                                             │
-│  UPSTREAM DEPENDENCIES:                                                     │
-│  AED mechanism (30D) ──────────► IUCP (liking evaluation)                 │
-│  CPD mechanism (30D) ──────────► IUCP (complexity anticipation)            │
-│  C0P mechanism (30D) ──────────► IUCP (expectation/approach)               │
-│  R³ (~10D) ─────────────────────► IUCP (direct spectral features)         │
-│  H³ (14 tuples) ────────────────► IUCP (temporal dynamics)                │
-│                                                                             │
+│ │
+│ INTRA-UNIT (RPU): │
+│ IUCP.ic_liking_curve ──────► RPEM (IC liking → RPE modulation) │
+│ IUCP.optimal_complexity ────► SSPS (optimal zone → saddle surface) │
+│ IUCP.current_preference ────► DAED (preference → DA anticipation) │
+│ IUCP.entropy_liking ────────► MCCN (entropy → chills likelihood) │
+│ │
+│ CROSS-UNIT (RPU → IMU): │
+│ IUCP.optimal_complexity ────► IMU.complexity_target (learning target) │
+│ │
+│ UPSTREAM DEPENDENCIES: │
+│ R³ (~10D) ─────────────────────► IUCP (direct spectral features) │
+│ H³ (14 tuples) ────────────────► IUCP (temporal dynamics) │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -436,124 +406,104 @@ f04 = σ(0.50 * f03
 
 ```python
 class IUCP(BaseModel):
-    """Inverted-U Complexity Preference Model.
+ """Inverted-U Complexity Preference Model.
 
-    Output: 6D per frame.
-    Reads: AED mechanism (30D), CPD mechanism (30D), C0P mechanism (30D), R³ direct.
-    """
-    NAME = "IUCP"
-    UNIT = "RPU"
-    TIER = "β1"
-    OUTPUT_DIM = 6
-    MECHANISM_NAMES = ("AED", "CPD", "C0P")
+ Output: 6D per frame.
+ """
+ NAME = "IUCP"
+ UNIT = "RPU"
+ TIER = "β1"
+ OUTPUT_DIM = 6
+ TAU_DECAY = 2.0 # Liking signal decay (Gold 2019)
+ OPTIMAL_IC = 0.5 # Optimal information content level
+ OPTIMAL_ENTROPY = 0.5 # Optimal entropy level
 
-    TAU_DECAY = 2.0          # Liking signal decay (Gold 2019)
-    OPTIMAL_IC = 0.5         # Optimal information content level
-    OPTIMAL_ENTROPY = 0.5    # Optimal entropy level
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """14 tuples for IUCP computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ (21, 4, 0, 2), # spectral_change, 125ms, value, bidi
+ (21, 8, 20, 2), # spectral_change, 500ms, entropy, bidi
+ (21, 16, 1, 2), # spectral_change, 1000ms, mean, bidi
+ (24, 4, 0, 2), # concentration_change, 125ms, value, bidi
+ (24, 8, 2, 2), # concentration_change, 500ms, std, bidi
+ (24, 16, 20, 2), # concentration_change, 1000ms, entropy, bidi
+ (0, 8, 1, 2), # roughness, 500ms, mean, bidi
+ (0, 16, 2, 2), # roughness, 1000ms, std, bidi
+ (8, 16, 1, 2), # loudness, 1000ms, mean, bidi
+ (4, 16, 1, 2), # sensory_pleasantness, 1000ms, mean, bidi
+ (4, 16, 2, 2), # sensory_pleasantness, 1000ms, std, bidi
+ (33, 8, 1, 2), # x_l4l5[0], 500ms, mean, bidi
+ (33, 16, 2, 2), # x_l4l5[0], 1000ms, std, bidi
+ (33, 16, 20, 2), # x_l4l5[0], 1000ms, entropy, bidi
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """14 tuples for IUCP computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # ── C0P horizons: IC / complexity ──
-            (21, 4, 0, 2),     # spectral_change, 125ms, value, bidi
-            (21, 8, 20, 2),    # spectral_change, 500ms, entropy, bidi
-            (21, 16, 1, 2),    # spectral_change, 1000ms, mean, bidi
-            (24, 4, 0, 2),     # concentration_change, 125ms, value, bidi
-            (24, 8, 2, 2),     # concentration_change, 500ms, std, bidi
-            (24, 16, 20, 2),   # concentration_change, 1000ms, entropy, bidi
-            # ── AED horizons: liking ──
-            (0, 8, 1, 2),      # roughness, 500ms, mean, bidi
-            (0, 16, 2, 2),     # roughness, 1000ms, std, bidi
-            (8, 16, 1, 2),     # loudness, 1000ms, mean, bidi
-            (4, 16, 1, 2),     # sensory_pleasantness, 1000ms, mean, bidi
-            (4, 16, 2, 2),     # sensory_pleasantness, 1000ms, std, bidi
-            # ── CPD horizons: coupling ──
-            (33, 8, 1, 2),     # x_l4l5[0], 500ms, mean, bidi
-            (33, 16, 2, 2),    # x_l4l5[0], 1000ms, std, bidi
-            (33, 16, 20, 2),   # x_l4l5[0], 1000ms, entropy, bidi
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute IUCP 6D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute IUCP 6D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"AED": (B,T,30), "CPD": (B,T,30), "C0P": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,6) IUCP output
+ """
+ # Mechanism sub-sections
+ # H³ direct features
+ mean_ic_1s = h3_direct[(21, 16, 1, 2)].unsqueeze(-1)
+ concentration_entropy_1s = h3_direct[(24, 16, 20, 2)].unsqueeze(-1)
+ mean_pleasantness_1s = h3_direct[(4, 16, 1, 2)].unsqueeze(-1)
+ pleasantness_std_1s = h3_direct[(4, 16, 2, 2)].unsqueeze(-1)
+ coupling_entropy_1s = h3_direct[(33, 16, 20, 2)].unsqueeze(-1)
 
-        Returns:
-            (B,T,6) IUCP output
-        """
-        aed = mechanism_outputs["AED"]    # (B, T, 30)
-        cpd = mechanism_outputs["CPD"]    # (B, T, 30)
-        c0p = mechanism_outputs["C0P"]    # (B, T, 30)
+ # Inverted-U quadratics
+ ic_quadratic = 4.0 * mean_ic_1s * (1.0 - mean_ic_1s)
+ entropy_quadratic = 4.0 * concentration_entropy_1s * (1.0 - concentration_entropy_1s)
 
-        # Mechanism sub-sections
-        aed_valence = aed[..., 0:10]
-        aed_arousal = aed[..., 10:20]
-        c0p_expect = c0p[..., 10:20]
-        c0p_approach = c0p[..., 20:30]
+ # ═══ LAYER E: Explicit features ═══
 
-        # H³ direct features
-        mean_ic_1s = h3_direct[(21, 16, 1, 2)].unsqueeze(-1)
-        concentration_entropy_1s = h3_direct[(24, 16, 20, 2)].unsqueeze(-1)
-        mean_pleasantness_1s = h3_direct[(4, 16, 1, 2)].unsqueeze(-1)
-        pleasantness_std_1s = h3_direct[(4, 16, 2, 2)].unsqueeze(-1)
-        coupling_entropy_1s = h3_direct[(33, 16, 20, 2)].unsqueeze(-1)
+ # f01: IC Liking Curve (coefficients sum = 1.0)
+ f01 = torch.sigmoid(
+ 0.40 * ic_quadratic
+ + 0.30 * mean_pleasantness_1s
+ )
 
-        # Inverted-U quadratics
-        ic_quadratic = 4.0 * mean_ic_1s * (1.0 - mean_ic_1s)
-        entropy_quadratic = 4.0 * concentration_entropy_1s * (1.0 - concentration_entropy_1s)
+ # f02: Entropy Liking Curve (coefficients sum = 1.0)
+ f02 = torch.sigmoid(
+ 0.40 * entropy_quadratic
+ + 0.30 * concentration_entropy_1s
+ )
 
-        # ═══ LAYER E: Explicit features ═══
+ # f03: IC × Entropy Interaction (coefficients sum = 1.0)
+ f03 = torch.sigmoid(
+ 0.40 * (f01 * f02)
+ + 0.30 * coupling_entropy_1s
+ )
 
-        # f01: IC Liking Curve (coefficients sum = 1.0)
-        f01 = torch.sigmoid(
-            0.40 * ic_quadratic
-            + 0.30 * aed_valence.mean(-1, keepdim=True)
-            + 0.30 * mean_pleasantness_1s
-        )
+ # f04: Optimal Complexity (coefficients sum = 1.0)
+ f04 = torch.sigmoid(
+ 0.50 * f03
+ + 0.25 * pleasantness_std_1s
+ )
 
-        # f02: Entropy Liking Curve (coefficients sum = 1.0)
-        f02 = torch.sigmoid(
-            0.40 * entropy_quadratic
-            + 0.30 * aed_arousal.mean(-1, keepdim=True)
-            + 0.30 * concentration_entropy_1s
-        )
+ # ═══ LAYER P: Present ═══
+ current_preference = torch.sigmoid(
+ 0.5 * f01 + 0.5 * f02
+ )
 
-        # f03: IC × Entropy Interaction (coefficients sum = 1.0)
-        f03 = torch.sigmoid(
-            0.40 * (f01 * f02)
-            + 0.30 * c0p_expect.mean(-1, keepdim=True)
-            + 0.30 * coupling_entropy_1s
-        )
+ # ═══ LAYER F: Future ═══
+ optimal_zone_pred = torch.sigmoid(
+ 0.5 * f04 + 0.5 * f03
+ )
 
-        # f04: Optimal Complexity (coefficients sum = 1.0)
-        f04 = torch.sigmoid(
-            0.50 * f03
-            + 0.25 * c0p_approach.mean(-1, keepdim=True)
-            + 0.25 * pleasantness_std_1s
-        )
-
-        # ═══ LAYER P: Present ═══
-        current_preference = torch.sigmoid(
-            0.5 * f01 + 0.5 * f02
-        )
-
-        # ═══ LAYER F: Future ═══
-        optimal_zone_pred = torch.sigmoid(
-            0.5 * f04 + 0.5 * f03
-        )
-
-        return torch.cat([
-            f01, f02, f03, f04,            # E: 4D
-            current_preference,            # P: 1D
-            optimal_zone_pred,             # F: 1D
-        ], dim=-1)  # (B, T, 6)
+ return torch.cat([
+ f01, f02, f03, f04, # E: 4D
+ current_preference, # P: 1D
+ optimal_zone_pred, # F: 1D
+ ], dim=-1) # (B, T, 6)
 ```
 
 ---
@@ -568,9 +518,6 @@ class IUCP(BaseModel):
 | **Falsification Tests** | 3/5 confirmed (interaction marginal in Gold 2019 S1, confirmed elsewhere) | High validity |
 | **R³ Features Used** | ~10D of 49D | Consonance + energy + change + interactions |
 | **H³ Demand** | 14 tuples (0.61%) | Sparse, efficient |
-| **AED Mechanism** | 30D (3 sub-sections) | Liking evaluation |
-| **CPD Mechanism** | 30D (3 sub-sections) | Complexity anticipation |
-| **C0P Mechanism** | 30D (3 sub-sections) | Expectation/approach |
 | **Output Dimensions** | **6D** | 3-layer structure |
 
 ---
@@ -592,21 +539,12 @@ class IUCP(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D) | R³ (49D) |
-| Temporal | HC⁰ mechanisms (EFC, AED, CPD, C0P) | AED (30D) + CPD (30D) + C0P (30D) mechanisms |
-| IC signal | S⁰.L9.entropy_T[116] + HC⁰.EFC | R³.spectral_change[21] + C0P.expectation_surprise |
+| IC signal | S⁰.L9.entropy_T[116] + HC⁰.EFC | R³.spectral_change[21] |
 | Entropy signal | S⁰.L9.entropy_F[117] + S⁰.L9.std_T[108] | R³.concentration_change[24] + H³ entropy tuples |
-| Liking signal | S⁰.L5.roughness[30] + HC⁰.AED | R³.sensory_pleasantness[4] + AED.valence_tracking |
-| Interaction | S⁰.X_L4L5[192:200] | R³.x_l4l5[33:41] + CPD mechanisms |
+| Liking signal | S⁰.L5.roughness[30] + HC⁰ affect | R³.sensory_pleasantness[4] |
 | Demand format | HC⁰ index ranges (24 tuples) | H³ 4-tuples (14 tuples, sparse) |
 | Total demand | 24/2304 = 1.04% | 14/2304 = 0.61% |
 | Output | 6D | 6D (same) |
-
-### Why AED + CPD + C0P replaces HC⁰ mechanisms
-
-- **EFC → C0P.expectation_surprise** [10:20]: Efference copy prediction maps to C0P's IC computation.
-- **AED → AED.valence_tracking** [0:10]: Affective entrainment maps to AED's liking evaluation.
-- **CPD → CPD.anticipation** [0:10]: Chills/peak detection maps to CPD's complexity anticipation.
-- **C0P → C0P.approach_avoidance** [20:30]: C⁰ projection maps to C0P's complexity approach/avoidance.
 
 ---
 

@@ -21,21 +21,19 @@ The **RAS-Intelligent Rehabilitation Integration** (RIRI) models how rhythmic au
 THE THREE COMPONENTS OF REHABILITATION INTEGRATION
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-MULTI-MODAL ENTRAINMENT              SENSORIMOTOR INTEGRATION
-Brain region: SMA + Premotor         Brain region: Cerebellum + IPL
-Mechanism: BEP*.beat_induction       Mechanism: BEP*.motor_entrainment
-Trigger: RAS + VR + haptic sync      Trigger: Cross-modal prediction
-Function: "Lock all channels          Function: "Predict and correct
-           to one rhythm"                        movement"
-Evidence: Thaut 2015, Harrison 2025   Evidence: Liang 2025 fNIRS VR+music
+MULTI-MODAL ENTRAINMENT SENSORIMOTOR INTEGRATION
+Brain region: SMA + Premotor Brain region: Cerebellum + IPL
+Trigger: RAS + VR + haptic sync Trigger: Cross-modal prediction
+Function: "Lock all channels Function: "Predict and correct
+ to one rhythm" movement"
+Evidence: Thaut 2015, Harrison 2025 Evidence: Liang 2025 fNIRS VR+music
 
-              ADAPTIVE RECOVERY (Memory Consolidation)
-              Brain region: Hippocampus + mPFC
-              Mechanism: MEM.encoding_state
-              Trigger: Repeated multi-modal sessions
-              Function: "Consolidate motor learning
-                         across sessions"
-              Evidence: Blasi 2025 (20 RCTs, N=718)
+ ADAPTIVE RECOVERY (Memory Consolidation)
+ Brain region: Hippocampus + mPFC
+ Trigger: Repeated multi-modal sessions
+ Function: "Consolidate motor learning
+ across sessions"
+ Evidence: Blasi 2025 (20 RCTs, N=718)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 KEY INSIGHT: The synergy emerges from temporal coherence — when
@@ -66,133 +64,132 @@ RAS combined with intelligent technologies outperforms RAS alone because:
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                 RIRI — COMPLETE CIRCUIT                                      ║
+║ RIRI — COMPLETE CIRCUIT ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  MULTI-MODAL INPUT (RAS + VR + Robotics/Haptic)                             ║
-║       │                                                                      ║
-║       ├──► AUDITORY: Rhythmic cues (tempo, accent, onset)                   ║
-║       ├──► VISUAL: VR environment (visual flow, spatial cues)               ║
-║       └──► HAPTIC: Robotic feedback (force, vibration, guidance)            ║
-║            │                                                                 ║
-║            ▼                                                                 ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │       TEMPORAL COHERENCE LAYER                                     │    ║
-║  │       Phase-locking across all modalities                          │    ║
-║  │       RAS provides master clock for VR + robotics                  │    ║
-║  └──────────────────────────┬──────────────────────────────────────────┘    ║
-║                              │                                               ║
-║                              ▼                                               ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │       SMA + PREMOTOR CORTEX                                        │    ║
-║  │       Multi-modal entrainment hub                                  │    ║
-║  │       Beat anticipation + motor planning                           │    ║
-║  └──────────────────────────┬──────────────────────────────────────────┘    ║
-║                              │                                               ║
-║                              ▼                                               ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │       CEREBELLUM + INFERIOR PARIETAL LOBULE                        │    ║
-║  │       Cross-modal sensorimotor prediction                          │    ║
-║  │       Error correction + timing calibration                        │    ║
-║  └──────────────────────────┬──────────────────────────────────────────┘    ║
-║                              │                                               ║
-║                              ▼                                               ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │       HIPPOCAMPUS + mPFC (Memory Consolidation)                    │    ║
-║  │       Multi-session motor learning consolidation                   │    ║
-║  │       Adaptive parameter storage across sessions                   │    ║
-║  └─────────────────────────────────────────────────────────────────────┘    ║
-║                                                                              ║
-║  ENHANCED MOTOR & COGNITIVE RECOVERY                                        ║
-║  (RAS + VR + Robotics > RAS alone)                                          ║
-║                                                                              ║
+║ ║
+║ MULTI-MODAL INPUT (RAS + VR + Robotics/Haptic) ║
+║ │ ║
+║ ├──► AUDITORY: Rhythmic cues (tempo, accent, onset) ║
+║ ├──► VISUAL: VR environment (visual flow, spatial cues) ║
+║ └──► HAPTIC: Robotic feedback (force, vibration, guidance) ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL COHERENCE LAYER │ ║
+║ │ Phase-locking across all modalities │ ║
+║ │ RAS provides master clock for VR + robotics │ ║
+║ └──────────────────────────┬──────────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ SMA + PREMOTOR CORTEX │ ║
+║ │ Multi-modal entrainment hub │ ║
+║ │ Beat anticipation + motor planning │ ║
+║ └──────────────────────────┬──────────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ CEREBELLUM + INFERIOR PARIETAL LOBULE │ ║
+║ │ Cross-modal sensorimotor prediction │ ║
+║ │ Error correction + timing calibration │ ║
+║ └──────────────────────────┬──────────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ HIPPOCAMPUS + mPFC (Memory Consolidation) │ ║
+║ │ Multi-session motor learning consolidation │ ║
+║ │ Adaptive parameter storage across sessions │ ║
+║ └─────────────────────────────────────────────────────────────────────┘ ║
+║ ║
+║ ENHANCED MOTOR & COGNITIVE RECOVERY ║
+║ (RAS + VR + Robotics > RAS alone) ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 CRITICAL EVIDENCE:
 ─────────────────
-Thaut 2015:    Period entrainment optimizes all motor control parameters
+Thaut 2015: Period entrainment optimizes all motor control parameters
 Harrison 2025: fMRI: SMA + putamen + sensorimotor cortex during musical cues (PD)
-Blasi 2025:    20 RCTs (N=718): structural + functional neuroplasticity from music rehab
-Liang 2025:    fNIRS (N=26): music + VR > VR alone for SMA/premotor activation
+Blasi 2025: 20 RCTs (N=718): structural + functional neuroplasticity from music rehab
+Liang 2025: fNIRS (N=26): music + VR > VR alone for SMA/premotor activation
 Yamashita 2025: Gait-synchronized M1+SMA stimulation reduces step variability (N=15)
 Huang & Qi 2025: Music bypasses basal ganglia via auditory-motor networks in PD
 ```
 
-### 2.2 Information Flow Architecture (EAR → BRAIN → MEM + BEP* → RIRI)
+### 2.2 Information Flow Architecture (EAR → BRAIN → H³ direct* → RIRI)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    RIRI COMPUTATION ARCHITECTURE                            ║
+║ RIRI COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins × 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
-║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ CHANGE   │ │ X-INT  │ │        ║
-║  │  │ 7D [0:7]  │ │ 5D[7:12]│ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
-║  │  │           │ │         │ │ [12:21] │ │ [21:25]  │ │ [25:49]│ │        ║
-║  │  │roughness  │ │amplitude│ │warmth   │ │spec_chg  │ │x_l0l5  │ │        ║
-║  │  │pleasant.  │ │loudness │ │         │ │energy_chg│ │x_l4l5  │ │        ║
-║  │  │           │ │onset    │ │         │ │pitch_chg │ │x_l5l7  │ │        ║
-║  │  │           │ │flux     │ │         │ │timbre_chg│ │        │ │        ║
-║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                         RIRI reads: 29D                          │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                                                                  │        ║
-║  │  ┌── Encoding ──┐ ┌── Consolidation ─┐ ┌── Long-term ────────┐ │        ║
-║  │  │ 200ms (H6)   │ │ 500ms (H11)      │ │ 1000ms (H16)       │ │        ║
-║  │  │              │ │                   │ │                      │ │        ║
-║  │  │ Beat-level   │ │ Motor prep        │ │ Bar-level memory    │ │        ║
-║  │  │ entrainment  │ │ sensorimotor      │ │ consolidation       │ │        ║
-║  │  │ quality      │ │ integration       │ │                      │ │        ║
-║  │  └──────┬───────┘ └──────┬────────────┘ └──────┬───────────────┘ │        ║
-║  │         │               │                      │                │        ║
-║  │         └───────────────┴──────────────────────┘                │        ║
-║  │                         RIRI demand: ~16 of 2304 tuples         │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Mnemonic + Sensorimotor ═════ ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌─────────────────┐  ┌─────────────────┐                                   ║
-║  │  MEM (30D)      │  │  BEP* (30D)     │  ← cross-circuit from STU        ║
-║  │                 │  │                 │                                   ║
-║  │ Encoding  [0:10]│  │ Beat Ind [0:10] │  Entrainment quality             ║
-║  │ Familiar [10:20]│  │ Meter    [10:20]│  Rhythmic regularity             ║
-║  │ Retrieval[20:30]│  │ Motor    [20:30]│  Motor synchronization           ║
-║  └────────┬────────┘  └────────┬────────┘                                   ║
-║           │                    │                                              ║
-║           └────────┬───────────┘                                              ║
-║                    │                                                          ║
-║                    ▼                                                          ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    RIRI MODEL (10D Output)                      │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f01_multimodal_entrainment,                │        ║
-║  │                       f02_sensorimotor_integration,               │        ║
-║  │                       f03_enhanced_recovery                       │        ║
-║  │  Layer M (Math):      integration_synergy, temporal_coherence    │        ║
-║  │  Layer P (Present):   entrainment_state, motor_adaptation        │        ║
-║  │  Layer F (Future):    recovery_trajectory, connectivity_pred,    │        ║
-║  │                       consolidation_pred                          │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins × 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ ENERGY │ │ TIMBRE │ │ CHANGE │ │ X-INT │ │ ║
+║ │ │ 7D [0:7] │ │ 5D[7:12]│ │ 9D │ │ 4D │ │ 24D │ │ ║
+║ │ │ │ │ │ │ [12:21] │ │ [21:25] │ │ [25:49]│ │ ║
+║ │ │roughness │ │amplitude│ │warmth │ │spec_chg │ │x_l0l5 │ │ ║
+║ │ │pleasant. │ │loudness │ │ │ │energy_chg│ │x_l4l5 │ │ ║
+║ │ │ │ │onset │ │ │ │pitch_chg │ │x_l5l7 │ │ ║
+║ │ │ │ │flux │ │ │ │timbre_chg│ │ │ │ ║
+║ │ └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │ ║
+║ │ RIRI reads: 29D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ │ ║
+║ │ ┌── Encoding ──┐ ┌── Consolidation ─┐ ┌── Long-term ────────┐ │ ║
+║ │ │ 200ms (H6) │ │ 500ms (H11) │ │ 1000ms (H16) │ │ ║
+║ │ │ │ │ │ │ │ │ ║
+║ │ │ Beat-level │ │ Motor prep │ │ Bar-level memory │ │ ║
+║ │ │ entrainment │ │ sensorimotor │ │ consolidation │ │ ║
+║ │ │ quality │ │ integration │ │ │ │ ║
+║ │ └──────┬───────┘ └──────┬────────────┘ └──────┬───────────────┘ │ ║
+║ │ │ │ │ │ ║
+║ │ └───────────────┴──────────────────────┘ │ ║
+║ │ RIRI demand: ~16 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Mnemonic + Sensorimotor ═════ ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────┐ ┌─────────────────┐ ║
+║ │ │ │ │ ║
+║ │ Encoding [0:10]│ │ Beat Ind [0:10] │ Entrainment quality ║
+║ │ Familiar [10:20]│ │ Meter [10:20]│ Rhythmic regularity ║
+║ │ Retrieval[20:30]│ │ Motor [20:30]│ Motor synchronization ║
+║ └────────┬────────┘ └────────┬────────┘ ║
+║ │ │ ║
+║ └────────┬───────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ RIRI MODEL (10D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f01_multimodal_entrainment, │ ║
+║ │ f02_sensorimotor_integration, │ ║
+║ │ f03_enhanced_recovery │ ║
+║ │ Layer M (Math): integration_synergy, temporal_coherence │ ║
+║ │ Layer P (Present): entrainment_state, motor_adaptation │ ║
+║ │ Layer F (Future): recovery_trajectory, connectivity_pred, │ ║
+║ │ consolidation_pred │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -205,18 +202,18 @@ Huang & Qi 2025: Music bypasses basal ganglia via auditory-motor networks in PD
 | # | Study | Method | N | Key Finding | Effect Size | MI Relevance |
 |---|-------|--------|---|-------------|-------------|-------------|
 | 1 | **Thaut, McIntosh & Hoemberg (2015)** | Review | Multiple | Period entrainment (not beat entrainment) drives comprehensive motor optimization; auditory rhythm acts as forcing function for all motor control aspects | Foundational review | **f01_multimodal_entrainment**: rhythmic period entrainment as master clock; auditory-motor coupling via reticulospinal pathways |
-| 2 | **Harrison et al. (2025)** | fMRI, finger tapping | PwPD + HC | External musical cues activate sensorimotor cortex, temporal gyri, SMA, putamen; internal cues (mental singing) additionally activate cerebellum; CTC and SPT pathways work in tandem | fMRI activation maps | **f02_sensorimotor_integration**: SMA + putamen activation during musically-cued movement; **BEP*.beat_induction**: external cueing drives CTC pathway |
+| 2 | **Harrison et al. (2025)** | fMRI, finger tapping | PwPD + HC | External musical cues activate sensorimotor cortex, temporal gyri, SMA, putamen; internal cues (mental singing) additionally activate cerebellum; CTC and SPT pathways work in tandem | fMRI activation maps | **f02_sensorimotor_integration**: SMA + putamen activation during musically-cued movement; **beat_induction**: external cueing drives CTC pathway |
 | 3 | **Huang & Qi (2025)** | Mini review | Review | Music therapy bypasses dysfunctional basal ganglia via auditory-motor neural networks; central pattern generator synchronizes gait with musical rhythm through entrainment | Review-level | **f01_multimodal_entrainment**: auditory-motor bypass of basal ganglia; CPG-rhythm synchronization |
-| 4 | **Blasi et al. (2025)** | Systematic review of 20 RCTs | 718 | Music/dance-based rehab produces structural neuroplasticity (increased GM in frontal, temporal, cerebellar regions) and functional neuroplasticity (enhanced FC within language and motor networks) | Review of 20 RCTs | **f03_enhanced_recovery**: structural + functional neuroplasticity from music-based rehabilitation; hippocampal volume increases from dance; **MEM.encoding_state**: session-to-session consolidation |
-| 5 | **Buard et al. (2021)** | RCT protocol (NMT vs OT) | 100 (planned) | TIMP with rhythm vs without rhythm vs standard OT for PD fine motor; MEG + 9HPT + MDS-UPDRS-III outcomes | Protocol (β-tier) | **BEP*.beat_induction**: TIMP relies on rhythmic entrainment via auditory-motor pathways unaffected by PD |
+| 4 | **Blasi et al. (2025)** | Systematic review of 20 RCTs | 718 | Music/dance-based rehab produces structural neuroplasticity (increased GM in frontal, temporal, cerebellar regions) and functional neuroplasticity (enhanced FC within language and motor networks) | Review of 20 RCTs | **f03_enhanced_recovery**: structural + functional neuroplasticity from music-based rehabilitation; hippocampal volume increases from dance; **encoding_state**: session-to-session consolidation |
+| 5 | **Buard et al. (2021)** | RCT protocol (NMT vs OT) | 100 (planned) | TIMP with rhythm vs without rhythm vs standard OT for PD fine motor; MEG + 9HPT + MDS-UPDRS-III outcomes | Protocol (β-tier) | **beat_induction**: TIMP relies on rhythmic entrainment via auditory-motor pathways unaffected by PD |
 | 6 | **Yamashita et al. (2025)** | Pilot RCT, gait-synchronized tACS | 15 | Simultaneous M1+SMA tACS synchronized to gait rhythm reduced step length variability (CV) in post-stroke hemiparetic patients | Pilot (N=15) | **f02_sensorimotor_integration**: M1+SMA stimulation synchronized to movement rhythm improves gait; supports SMA role as entrainment hub |
 | 7 | **Liang et al. (2025)** | fNIRS | 26 | Music stimulation + VR motor observation activated bilateral SMA, premotor, and prefrontal cortex more than motor observation alone; music enhanced PFC oxygenation during VR tasks | fNIRS activation, N=26 | **f01_multimodal_entrainment**: music + VR > VR alone for SMA/premotor activation; **temporal_coherence**: multi-modal convergent activation |
-| 8 | **Ross & Balasubramaniam (2022)** | Mini review | Review | Sensorimotor system engages in simulation during rhythm perception even without movement; SMA, premotor cortex, cerebellum, and basal ganglia form beat perception network; predictive timing relies on cerebellar forward models | Review-level | **BEP*.motor_entrainment**: sensorimotor simulation for beat prediction; cerebellum as forward-model generator; SMA/premotor entrainment hub |
-| 9 | **Jiao (2025)** | Mini review | Review | Synergistic music therapy + brainwave entrainment + multisensory stimulation enhances outcomes; AI-driven biofeedback enables closed-loop adaptation; 40 Hz gamma entrainment supports memory and neural integrity | Framework-level | **f03_enhanced_recovery**: multi-modal synergy concept; **MEM.encoding_state**: 40 Hz gamma enhances memory consolidation; closed-loop AI adaptation parallels RIRI adaptive model |
+| 8 | **Ross & Balasubramaniam (2022)** | Mini review | Review | Sensorimotor system engages in simulation during rhythm perception even without movement; SMA, premotor cortex, cerebellum, and basal ganglia form beat perception network; predictive timing relies on cerebellar forward models | Review-level | **motor_entrainment**: sensorimotor simulation for beat prediction; cerebellum as forward-model generator; SMA/premotor entrainment hub |
+| 9 | **Jiao (2025)** | Mini review | Review | Synergistic music therapy + brainwave entrainment + multisensory stimulation enhances outcomes; AI-driven biofeedback enables closed-loop adaptation; 40 Hz gamma entrainment supports memory and neural integrity | Framework-level | **f03_enhanced_recovery**: multi-modal synergy concept; **encoding_state**: 40 Hz gamma enhances memory consolidation; closed-loop AI adaptation parallels RIRI adaptive model |
 | 10 | **Liuzzi et al. (2025)** | Multimodal framework (Euterpe Method) | NDD patients | Orchestral music therapy with auditory + visual + motor + social modalities engages fronto-striatal, cerebellar, and temporal networks; multisensory integration enhances neurodevelopmental rehabilitation | Framework-level | **f01_multimodal_entrainment**: multimodal orchestral framework validates multi-channel entrainment concept; fronto-striatal engagement |
-| 11 | **Fang et al. (2017)** | Mini review | AD patients | Music therapy reduces cognitive decline in autobiographical memory, episodic memory, psychomotor speed, executive function; MT combined with dance/exercise recommended | Review-level | **MEM.encoding_state**: music therapy preserves encoding in neurodegeneration; supports session-to-session consolidation |
-| 12 | **Provias et al. (2025)** | Feasibility trial protocol | Chronic stroke | Remote intentional music listening for chronic stroke mental health; self-selected familiar music activates reward and memory circuits | Protocol-level | **MEM.familiarity_proxy**: familiar music engages reward + memory networks in stroke recovery |
-| 13 | **Li et al. (2025)** | Biomechanical analysis | Runners | Musical groove modulates running biomechanics through auditory-motor coupling; high-groove music alters lower-limb kinematics | Biomechanical measures | **BEP*.motor_entrainment**: groove-driven auditory-motor coupling extends to locomotion; entrainment modulates spatial-temporal movement parameters |
+| 11 | **Fang et al. (2017)** | Mini review | AD patients | Music therapy reduces cognitive decline in autobiographical memory, episodic memory, psychomotor speed, executive function; MT combined with dance/exercise recommended | Review-level | **encoding_state**: music therapy preserves encoding in neurodegeneration; supports session-to-session consolidation |
+| 12 | **Provias et al. (2025)** | Feasibility trial protocol | Chronic stroke | Remote intentional music listening for chronic stroke mental health; self-selected familiar music activates reward and memory circuits | Protocol-level | **familiarity_proxy**: familiar music engages reward + memory networks in stroke recovery |
+| 13 | **Li et al. (2025)** | Biomechanical analysis | Runners | Musical groove modulates running biomechanics through auditory-motor coupling; high-groove music alters lower-limb kinematics | Biomechanical measures | **motor_entrainment**: groove-driven auditory-motor coupling extends to locomotion; entrainment modulates spatial-temporal movement parameters |
 | 14 | **Castillo et al. (2025)** | Systematic review | Athletes/rehab | Music-based interventions in sports science and rehabilitation; rhythmic auditory stimulation improves movement quality across clinical and athletic populations | Review-level | **f01_multimodal_entrainment**: confirms RAS efficacy across rehabilitation and sports populations |
 | 15 | **Shi et al. (2025)** | Action observation + imitation | Neurorehab patients | Action observation and imitation training (AOIT) is evidence-based cognitive-motor rehabilitation; combining visual observation with motor execution enhances neural plasticity | Multi-study review | **f02_sensorimotor_integration**: visual-motor integration in rehabilitation; supports cross-modal prediction error driving motor learning |
 
@@ -227,7 +224,7 @@ Huang & Qi 2025: Music bypasses basal ganglia via auditory-motor networks in PD
 | **FULL_NAME** | RAS-Intelligent Rehabilitation Integration | Recognition-Recall Integration Recency Index | Code implements a completely different model concept |
 | **LAYERS** | E(3D: f01/f02/f03), M(2D), P(2D), F(3D) | E(2D: recognition/recall), M(2D), P(3D), F(3D) | Different feature names and layer sizes |
 | **h3_demand** | 16 tuples (detailed specification) | Empty tuple `()` | Code has no H3 demand |
-| **CROSS_UNIT_READS** | `("BEP",)` | `()` | Code has no cross-circuit read |
+| **CROSS_UNIT_READS** | `() # TODO` | `()` | Code has no cross-circuit read |
 | **brain_regions** | 7 (SMA, Premotor, Cerebellum, IPL, Hippo, mPFC, STS/TPJ) | 2 (Hippocampus, Perirhinal Cortex) | Code regions are for recognition/recall, not rehabilitation |
 | **Citations** | Thaut 2015, Harrison 2025, Blasi 2025, etc. | Dowling 2008, Dalla Bella 2009 | Code citations match recognition-recall concept, not RIRI |
 | **compute()** | Full formula implementation | Returns zeros (stub) | Code is a placeholder stub |
@@ -241,25 +238,24 @@ REHABILITATION INTEGRATION THROUGH TEMPORAL COHERENCE
 
 LEVEL 1: UNIMODAL RAS (baseline)
 ─────────────────────────────────
-  Auditory rhythm → SMA → motor entrainment
-  Gait improvement via rhythmic cuing
-  BEP*.beat_induction provides entrainment signal
-  Effective but limited to auditory channel
+ Auditory rhythm → SMA → motor entrainment
+ Gait improvement via rhythmic cuing
+ Effective but limited to auditory channel
 
 LEVEL 2: RAS + VR (enhanced)
 ────────────────────────────
-  Auditory rhythm + visual flow → multisensory areas
-  Visual environment provides spatial context
-  Cerebellum integrates cross-modal timing
-  Enhancement: visual + auditory temporal binding
+ Auditory rhythm + visual flow → multisensory areas
+ Visual environment provides spatial context
+ Cerebellum integrates cross-modal timing
+ Enhancement: visual + auditory temporal binding
 
 LEVEL 3: RAS + VR + ROBOTICS (full integration)
 ────────────────────────────────────────────────
-  Auditory + visual + haptic → convergent temporal coherence
-  Robotics provides physical guidance + feedback
-  All modalities phase-locked to RAS master clock
-  Maximum enhancement: 3-channel temporal coherence
-  MEM.encoding_state consolidates across sessions
+ Auditory + visual + haptic → convergent temporal coherence
+ Robotics provides physical guidance + feedback
+ All modalities phase-locked to RAS master clock
+ Maximum enhancement: 3-channel temporal coherence
+ encoding_state consolidates across sessions
 
 KEY PRINCIPLE: Each additional synchronized modality
 provides redundant temporal cues that strengthen motor
@@ -270,18 +266,18 @@ engrams. The synergy is multiplicative, not additive.
 ### 3.3 Effect Size Summary
 
 ```
-Evidence Quality:     β-tier (integrative, multiple systematic reviews + fMRI + fNIRS)
-Design Strength:      15 papers: 3 systematic reviews (20+ RCTs, 718+ subjects),
-                      2 fMRI studies, 1 fNIRS study, 1 pilot RCT, 5 reviews, 3 protocols
-Confidence:           70–90%
-Replication:          Converging evidence across PD, stroke, TBI, NDD populations
-Key Effect Sizes:     Harrison 2025: SMA/putamen activation during musical cueing (fMRI)
-                      Liang 2025: PFC oxygenation increase with music+VR (fNIRS, N=26)
-                      Yamashita 2025: Step length CV reduction with gait-sync tACS (N=15)
-                      Blasi 2025: Structural neuroplasticity in 20 RCTs (N=718)
-Key Limitation:       No single RCT with full 3-modality + neuroimaging design;
-                      model is integrative synthesis across multiple sources.
-                      Most studies examine unimodal or bimodal interventions.
+Evidence Quality: β-tier (integrative, multiple systematic reviews + fMRI + fNIRS)
+Design Strength: 15 papers: 3 systematic reviews (20+ RCTs, 718+ subjects),
+ 2 fMRI studies, 1 fNIRS study, 1 pilot RCT, 5 reviews, 3 protocols
+Confidence: 70–90%
+Replication: Converging evidence across PD, stroke, TBI, NDD populations
+Key Effect Sizes: Harrison 2025: SMA/putamen activation during musical cueing (fMRI)
+ Liang 2025: PFC oxygenation increase with music+VR (fNIRS, N=26)
+ Yamashita 2025: Step length CV reduction with gait-sync tACS (N=15)
+ Blasi 2025: Structural neuroplasticity in 20 RCTs (N=718)
+Key Limitation: No single RCT with full 3-modality + neuroimaging design;
+ model is integrative synthesis across multiple sources.
+ Most studies examine unimodal or bimodal interventions.
 ```
 
 ---
@@ -321,22 +317,22 @@ Key Limitation:       No single RCT with full 3-modality + neuroimaging design;
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[10] spectral_flux ──────────┐
 R³[11] onset_strength ─────────┼──► Multi-modal Entrainment
-R³[25:33] x_l0l5 (8D) ────────┘   BEP*.beat_induction at H6 (200ms)
-                                    Math: f01 = σ(w · flux · onset · BEP*)
+R³[25:33] x_l0l5 (8D) ────────┘ beat_induction at H6 (200ms)
+ Math: f01 = σ(w · flux · onset · beat-entrainment)
 
 R³[7] amplitude ────────────────┐
 R³[8] loudness ─────────────────┼──► Sensorimotor Integration
-R³[33:41] x_l4l5 (8D) ─────────┤   BEP*.motor_entrainment at H11 (500ms)
-R³[22] energy_change ───────────┘   Math: f02 = σ(w · amp · loud · BEP*)
+R³[33:41] x_l4l5 (8D) ─────────┤ motor_entrainment at H11 (500ms)
+R³[22] energy_change ───────────┘ Math: f02 = σ(w · amp · loud · beat-entrainment)
 
 R³[41:49] x_l5l7 (8D) ────────┐
 R³[4] sensory_pleasantness ────┼──► Enhanced Recovery (Integration Synergy)
-R³[14] tonalness ──────────────┘   MEM.encoding × f01 × f02
-                                    Math: f03 = σ(w · connectivity · MEM)
+R³[14] tonalness ──────────────┘ encoding × f01 × f02
+ Math: f03 = σ(w · connectivity · memory_h3)
 ```
 
 ---
@@ -370,7 +366,7 @@ RIRI requires H³ features at three horizons: H6 (200ms), H11 (500ms), H16 (1000
 
 #### R³ v2 Projected Expansion
 
-RIRI projected v2 from G (Rhythm) group, aligned with BEP* horizons (H6, H11, H16) and MEM horizons (H16).
+RIRI projected v2 from G (Rhythm) group, aligned with Beat entrainment horizons (H6, H11, H16) and Memory horizons (H16).
 
 | R³ Idx | Feature | Group | H | Morph | Law | Purpose |
 |:------:|---------|:-----:|:-:|-------|:---:|---------|
@@ -382,26 +378,6 @@ RIRI projected v2 from G (Rhythm) group, aligned with BEP* horizons (H6, H11, H1
 
 **v2 projected**: 5 tuples
 **Total projected**: 21 tuples of 294,912 theoretical = 0.0071%
-
-### 5.2 Mechanism Bindings
-
-RIRI reads from two mechanisms: **MEM** (primary, mnemonic circuit) and **BEP*** (cross-circuit, sensorimotor):
-
-**MEM** (Memory Encoding & Retrieval) — primary mechanism:
-
-| MEM Sub-section | Range | RIRI Role | Weight |
-|-----------------|-------|-----------|--------|
-| **Encoding State** | MEM[0:10] | Neuroplastic consolidation, session-to-session binding | **1.0** (primary) |
-| **Familiarity Proxy** | MEM[10:20] | Motor routine familiarity, adaptive challenge calibration | 0.7 |
-| **Retrieval Dynamics** | MEM[20:30] | Motor memory retrieval, learned movement patterns | 0.8 |
-
-**BEP*** (Beat Entrainment Processing) — cross-circuit read from sensorimotor:
-
-| BEP* Sub-section | Range | RIRI Role | Weight |
-|------------------|-------|-----------|--------|
-| **Beat Induction** | BEP*[0:10] | RAS rhythmic entrainment quality (master clock) | **1.0** (primary) |
-| **Meter Extraction** | BEP*[10:20] | Rhythmic regularity for multi-modal phase-locking | 0.8 |
-| **Motor Entrainment** | BEP*[20:30] | Sensorimotor synchronization for physical guidance | 0.9 |
 
 ---
 
@@ -416,64 +392,62 @@ Manifold range: IMU RIRI [327:337]
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                       │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼────────────────────────────┼────────┼────────────────────────────────────
- 0  │ f01_multimodal_entrainment │ [0, 1] │ Multi-modal rhythmic entrainment.
-    │                            │        │ SMA + premotor convergent temporal input.
-    │                            │        │ f01 = σ(0.35 · flux · onset ·
-    │                            │        │         mean(BEP*.beat_induction[0:10])
-    │                            │        │       + 0.35 · x_l0l5_coupling
-    │                            │        │       + 0.30 · onset_periodicity)
+ 0 │ f01_multimodal_entrainment │ [0, 1] │ Multi-modal rhythmic entrainment.
+ │ │ │ SMA + premotor convergent temporal input.
+ │ │ │ f01 = σ(0.35 · flux · onset ·
+ │ │ │ mean(beat_induction[0:10])
+ │ │ │ + 0.35 · x_l0l5_coupling
+ │ │ │ + 0.30 · onset_periodicity)
 ────┼────────────────────────────┼────────┼────────────────────────────────────
- 1  │ f02_sensorimotor_integr    │ [0, 1] │ Cross-modal sensorimotor integration.
-    │                            │        │ Cerebellum + IPL prediction coupling.
-    │                            │        │ f02 = σ(0.35 · loudness_mean ·
-    │                            │        │         mean(BEP*.motor_entrainment[20:30])
-    │                            │        │       + 0.35 · x_l4l5_coupling
-    │                            │        │       + 0.30 · energy_periodicity)
+ 1 │ f02_sensorimotor_integr │ [0, 1] │ Cross-modal sensorimotor integration.
+ │ │ │ Cerebellum + IPL prediction coupling.
+ │ │ │ f02 = σ(0.35 · loudness_mean ·
+ │ │ │ mean(motor_entrainment[20:30])
+ │ │ │ + 0.35 · x_l4l5_coupling
+ │ │ │ + 0.30 · energy_periodicity)
 ────┼────────────────────────────┼────────┼────────────────────────────────────
- 2  │ f03_enhanced_recovery      │ [0, 1] │ Integration synergy (multi > uni).
-    │                            │        │ Hippocampus + mPFC session consolidation.
-    │                            │        │ f03 = σ(0.30 · connectivity_mean ·
-    │                            │        │         mean(MEM.encoding[0:10])
-    │                            │        │       + 0.30 · pleasantness_mean
-    │                            │        │       + 0.20 · f01
-    │                            │        │       + 0.20 · f02)
+ 2 │ f03_enhanced_recovery │ [0, 1] │ Integration synergy (multi > uni).
+ │ │ │ Hippocampus + mPFC session consolidation.
+ │ │ │ f03 = σ(0.30 · connectivity_mean ·
+ │ │ │ + 0.30 · pleasantness_mean
+ │ │ │ + 0.20 · f01
+ │ │ │ + 0.20 · f02)
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                       │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼────────────────────────────┼────────┼────────────────────────────────────
- 3  │ integration_synergy        │ [0, 1] │ Multi-modal integration synergy index.
-    │                            │        │ Geometric mean of entrainment × integration.
-    │                            │        │ synergy = (f01 · f02 · f03) ^ (1/3)
+ 3 │ integration_synergy │ [0, 1] │ Multi-modal integration synergy index.
+ │ │ │ Geometric mean of entrainment × integration.
+ │ │ │ synergy = (f01 · f02 · f03) ^ (1/3)
 ────┼────────────────────────────┼────────┼────────────────────────────────────
- 4  │ temporal_coherence         │ [0, 1] │ Cross-modal temporal coherence.
-    │                            │        │ Entrainment stability × rhythmic regularity.
-    │                            │        │ coherence = σ(0.5 · stability + 0.5 · periodicity)
+ 4 │ temporal_coherence │ [0, 1] │ Cross-modal temporal coherence.
+ │ │ │ Entrainment stability × rhythmic regularity.
+ │ │ │ coherence = σ(0.5 · stability + 0.5 · periodicity)
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                       │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼────────────────────────────┼────────┼────────────────────────────────────
- 5  │ entrainment_state          │ [0, 1] │ Current multi-modal entrainment quality.
-    │                            │        │ BEP*.beat_induction × onset_signal.
+ 5 │ entrainment_state │ [0, 1] │ Current multi-modal entrainment quality.
+ │ │ │ beat_induction × onset_signal.
 ────┼────────────────────────────┼────────┼────────────────────────────────────
- 6  │ motor_adaptation           │ [0, 1] │ Current motor adaptation state.
-    │                            │        │ BEP*.motor_entrainment × MEM.familiarity.
+ 6 │ motor_adaptation │ [0, 1] │ Current motor adaptation state.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                       │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼────────────────────────────┼────────┼────────────────────────────────────
- 7  │ recovery_trajectory        │ [0, 1] │ Recovery trajectory prediction.
-    │                            │        │ Connectivity trend + entrainment stability.
+ 7 │ recovery_trajectory │ [0, 1] │ Recovery trajectory prediction.
+ │ │ │ Connectivity trend + entrainment stability.
 ────┼────────────────────────────┼────────┼────────────────────────────────────
- 8  │ connectivity_pred          │ [0, 1] │ Functional connectivity restoration prediction.
-    │                            │        │ x_l5l7 trend + MEM consolidation.
+ 8 │ connectivity_pred │ [0, 1] │ Functional connectivity restoration prediction.
+ │ │ │ x_l5l7 trend + memory-encoding consolidation.
 ────┼────────────────────────────┼────────┼────────────────────────────────────
- 9  │ consolidation_pred         │ [0, 1] │ Motor memory consolidation prediction.
-    │                            │        │ MEM.encoding × session coherence.
+ 9 │ consolidation_pred │ [0, 1] │ Motor memory consolidation prediction.
+ │ │ │ encoding × session coherence.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 10D per frame at 172.27 Hz
@@ -490,12 +464,12 @@ TOTAL: 10D per frame at 172.27 Hz
 Integration_Synergy(t) = (Entrainment(t) · SensorimotorInteg(t) · Recovery(t)) ^ (1/3)
 
 Network Functions:
-  Entrainment(t)       = σ(w₁ · BEP*.beat_induction · onset_signal + ...)
-  SensorimotorInteg(t) = σ(w₂ · BEP*.motor_entrainment · coupling + ...)
-  Recovery(t)          = σ(w₃ · MEM.encoding · connectivity + ...)
+ Entrainment(t) = σ(w₁ · beat_induction · onset_signal + ...)
+ SensorimotorInteg(t) = σ(w₂ · motor_entrainment · coupling + ...)
+ Recovery(t) = σ(w₃ · encoding · connectivity + ...)
 
 Temporal Coherence:
-  Coherence(t) = σ(w₄ · entrainment_stability + w₅ · onset_periodicity)
+ Coherence(t) = σ(w₄ · entrainment_stability + w₅ · onset_periodicity)
 
 Note: The geometric mean (synergy) ensures all three components must
 contribute — if any pathway fails, overall integration collapses.
@@ -508,34 +482,33 @@ This models the empirical finding that multi-modal > unimodal.
 # COEFFICIENT SATURATION RULE: For sigmoid(Σ wi*gi), |wi| must sum <= 1.0
 
 # f01: Multi-modal Entrainment (SMA + premotor)
-flux_val = h3[(10, 6, 0, 0)]             # spectral_flux value at H6
-onset_val = h3[(11, 6, 0, 0)]            # onset_strength value at H6
-x_l0l5_val = h3[(25, 6, 0, 2)]           # x_l0l5 coupling at H6
-onset_period = h3[(11, 6, 14, 2)]        # onset periodicity at H6
+flux_val = h3[(10, 6, 0, 0)] # spectral_flux value at H6
+onset_val = h3[(11, 6, 0, 0)] # onset_strength value at H6
+x_l0l5_val = h3[(25, 6, 0, 2)] # x_l0l5 coupling at H6
+onset_period = h3[(11, 6, 14, 2)] # onset periodicity at H6
 f01 = σ(0.35 · flux_val · onset_val
-              · mean(BEP*.beat_induction[0:10])
-       + 0.35 · x_l0l5_val
-       + 0.30 · onset_period)
+ · mean(beat_induction[0:10])
+ + 0.35 · x_l0l5_val
+ + 0.30 · onset_period)
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # f02: Sensorimotor Integration (cerebellum + IPL)
-loudness_mean = h3[(8, 11, 1, 0)]        # loudness mean at H11
-x_l4l5_val = h3[(33, 11, 0, 2)]          # x_l4l5 coupling at H11
-energy_period = h3[(22, 11, 14, 2)]      # energy periodicity at H11
+loudness_mean = h3[(8, 11, 1, 0)] # loudness mean at H11
+x_l4l5_val = h3[(33, 11, 0, 2)] # x_l4l5 coupling at H11
+energy_period = h3[(22, 11, 14, 2)] # energy periodicity at H11
 f02 = σ(0.35 · loudness_mean
-              · mean(BEP*.motor_entrainment[20:30])
-       + 0.35 · x_l4l5_val
-       + 0.30 · energy_period)
+ · mean(motor_entrainment[20:30])
+ + 0.35 · x_l4l5_val
+ + 0.30 · energy_period)
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # f03: Enhanced Recovery (hippocampus + mPFC)
-connectivity_mean = h3[(41, 16, 1, 0)]   # x_l5l7 mean at H16
-pleasantness_mean = h3[(4, 16, 1, 0)]    # pleasantness mean at H16
+connectivity_mean = h3[(41, 16, 1, 0)] # x_l5l7 mean at H16
+pleasantness_mean = h3[(4, 16, 1, 0)] # pleasantness mean at H16
 f03 = σ(0.30 · connectivity_mean
-              · mean(MEM.encoding[0:10])
-       + 0.30 · pleasantness_mean
-       + 0.20 · f01
-       + 0.20 · f02)
+ + 0.30 · pleasantness_mean
+ + 0.20 · f01
+ + 0.20 · f02)
 # coefficients: 0.30 + 0.30 + 0.20 + 0.20 = 1.0 ✓
 ```
 
@@ -566,30 +539,26 @@ f03 = σ(0.30 · connectivity_mean
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    RIRI INTERACTIONS                                        │
+│ RIRI INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  CROSS-CIRCUIT (BEP* from STU sensorimotor circuit):                       │
-│  BEP*.beat_induction ─────► RIRI.f01 (rhythmic entrainment quality)       │
-│  BEP*.meter_extraction ───► RIRI.temporal_coherence (rhythmic regularity) │
-│  BEP*.motor_entrainment ──► RIRI.f02 (sensorimotor synchronization)       │
-│                                                                             │
-│  INTRA-UNIT (IMU):                                                         │
-│  RASN ──────► RIRI (RASN provides RAS-only baseline; RIRI extends          │
-│       │              to multi-modal integration)                            │
-│       │                                                                     │
-│  MEAMN ─────► RIRI (autobiographical memory of rehabilitation sessions    │
-│       │              strengthens motor memory consolidation)                │
-│       │                                                                     │
-│  MMP ───────► RIRI (musical mnemonic preservation shows why music-         │
-│       │              based therapy is robust in neurodegeneration)          │
-│       │                                                                     │
-│  HCMC ──────► RIRI (hippocampal-cortical circuit provides the memory      │
-│                      infrastructure for session-to-session learning)        │
-│                                                                             │
-│  RIRI ──────► VRIAP (rehabilitation integration informs VR analgesia      │
-│                      active vs. passive paradigms)                          │
-│                                                                             │
+│ │
+│ │
+│ INTRA-UNIT (IMU): │
+│ RASN ──────► RIRI (RASN provides RAS-only baseline; RIRI extends │
+│ │ to multi-modal integration) │
+│ │ │
+│ MEAMN ─────► RIRI (autobiographical memory of rehabilitation sessions │
+│ │ strengthens motor memory consolidation) │
+│ │ │
+│ MMP ───────► RIRI (musical mnemonic preservation shows why music- │
+│ │ based therapy is robust in neurodegeneration) │
+│ │ │
+│ HCMC ──────► RIRI (hippocampal-cortical circuit provides the memory │
+│ infrastructure for session-to-session learning) │
+│ │
+│ RIRI ──────► VRIAP (rehabilitation integration informs VR analgesia │
+│ active vs. passive paradigms) │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -623,162 +592,139 @@ RIRI reads from the unified Brain (26D) for shared state:
 
 ```python
 class RIRI(BaseModel):
-    """RAS-Intelligent Rehabilitation Integration.
+ """RAS-Intelligent Rehabilitation Integration.
 
-    Output: 10D per frame.
-    Reads: MEM mechanism (30D, primary), BEP* mechanism (30D, cross-circuit).
-    Zero learned parameters.
-    """
-    NAME = "RIRI"
-    UNIT = "IMU"
-    TIER = "β5"
-    OUTPUT_DIM = 10
-    MECHANISM_NAMES = ("MEM",)           # Primary mechanism (mnemonic circuit)
-    CROSS_UNIT = ("BEP",)                # Cross-circuit read from sensorimotor
+ Output: 10D per frame.
+ Reads: R³ + H³ direct.
+ Zero learned parameters.
+ """
+ NAME = "RIRI"
+ UNIT = "IMU"
+ TIER = "β5"
+ OUTPUT_DIM = 10
+ CROSS_UNIT_READS = ()  # TODO: populate from Nucleus contract # Cross-circuit read from sensorimotor
 
-    # Network weights (all formulas satisfy |wi| <= 1.0)
-    W_PRIMARY = 0.35     # Primary signal weight
-    W_COUPLING = 0.35    # Coupling signal weight
-    W_SUPPORT = 0.30     # Supporting signal weight
+ # Network weights (all formulas satisfy |wi| <= 1.0)
+ W_PRIMARY = 0.35 # Primary signal weight
+ W_COUPLING = 0.35 # Coupling signal weight
+ W_SUPPORT = 0.30 # Supporting signal weight
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """16 tuples for RIRI computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # Beat-level entrainment quality (H6 = 200ms)
-            (10, 6, 0, 0),    # spectral_flux, value, forward
-            (10, 6, 17, 0),   # spectral_flux, peaks, forward
-            (11, 6, 0, 0),    # onset_strength, value, forward
-            (11, 6, 14, 2),   # onset_strength, periodicity, bidirectional
-            # Motor-level sensorimotor integration (H11 = 500ms)
-            (7, 11, 0, 2),    # amplitude, value, bidirectional
-            (7, 11, 8, 0),    # amplitude, velocity, forward
-            (8, 11, 1, 0),    # loudness, mean, forward
-            (22, 11, 14, 2),  # energy_change, periodicity, bidirectional
-            (25, 6, 0, 2),    # x_l0l5[0], value, bidirectional
-            (33, 11, 0, 2),   # x_l4l5[0], value, bidirectional
-            (33, 11, 17, 0),  # x_l4l5[0], peaks, forward
-            # Bar-level memory consolidation (H16 = 1000ms)
-            (41, 16, 1, 0),   # x_l5l7[0], mean, forward
-            (41, 16, 14, 2),  # x_l5l7[0], periodicity, bidirectional
-            (41, 16, 18, 0),  # x_l5l7[0], trend, forward
-            (25, 16, 19, 0),  # x_l0l5[0], stability, forward
-            (4, 16, 1, 0),    # sensory_pleasantness, mean, forward
-        ]
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """16 tuples for RIRI computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ # Beat-level entrainment quality (H6 = 200ms)
+ (10, 6, 0, 0), # spectral_flux, value, forward
+ (10, 6, 17, 0), # spectral_flux, peaks, forward
+ (11, 6, 0, 0), # onset_strength, value, forward
+ (11, 6, 14, 2), # onset_strength, periodicity, bidirectional
+ # Motor-level sensorimotor integration (H11 = 500ms)
+ (7, 11, 0, 2), # amplitude, value, bidirectional
+ (7, 11, 8, 0), # amplitude, velocity, forward
+ (8, 11, 1, 0), # loudness, mean, forward
+ (22, 11, 14, 2), # energy_change, periodicity, bidirectional
+ (25, 6, 0, 2), # x_l0l5[0], value, bidirectional
+ (33, 11, 0, 2), # x_l4l5[0], value, bidirectional
+ (33, 11, 17, 0), # x_l4l5[0], peaks, forward
+ # Bar-level memory consolidation (H16 = 1000ms)
+ (41, 16, 1, 0), # x_l5l7[0], mean, forward
+ (41, 16, 14, 2), # x_l5l7[0], periodicity, bidirectional
+ (41, 16, 18, 0), # x_l5l7[0], trend, forward
+ (25, 16, 19, 0), # x_l0l5[0], stability, forward
+ (4, 16, 1, 0), # sensory_pleasantness, mean, forward
+ ]
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute RIRI 10D output.
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute RIRI 10D output.
 
-        Args:
-            mechanism_outputs: {"MEM": (B,T,30), "BEP": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) → (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Args:
+ h3_direct: Dict of (r3,h,m,l) → (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Returns:
-            (B,T,10) RIRI output
-        """
-        mem = mechanism_outputs["MEM"]    # (B, T, 30) — primary
-        bep = mechanism_outputs["BEP"]    # (B, T, 30) — cross-circuit
+ Returns:
+ (B,T,10) RIRI output
+ """
+ # H³ features
+ flux_val = h3_direct[(10, 6, 0, 0)].unsqueeze(-1)
+ onset_val = h3_direct[(11, 6, 0, 0)].unsqueeze(-1)
+ onset_period = h3_direct[(11, 6, 14, 2)].unsqueeze(-1)
+ x_l0l5_val = h3_direct[(25, 6, 0, 2)].unsqueeze(-1)
+ loudness_mean = h3_direct[(8, 11, 1, 0)].unsqueeze(-1)
+ x_l4l5_val = h3_direct[(33, 11, 0, 2)].unsqueeze(-1)
+ energy_period = h3_direct[(22, 11, 14, 2)].unsqueeze(-1)
+ connectivity_mean = h3_direct[(41, 16, 1, 0)].unsqueeze(-1)
+ connectivity_period = h3_direct[(41, 16, 14, 2)].unsqueeze(-1)
+ connectivity_trend = h3_direct[(41, 16, 18, 0)].unsqueeze(-1)
+ stability = h3_direct[(25, 16, 19, 0)].unsqueeze(-1)
+ pleasantness_mean = h3_direct[(4, 16, 1, 0)].unsqueeze(-1)
 
-        # MEM sub-sections
-        mem_encoding = mem[..., 0:10]     # encoding state
-        mem_familiar = mem[..., 10:20]    # familiarity proxy
-        mem_retrieval = mem[..., 20:30]   # retrieval dynamics
+ # ═══ LAYER E: Explicit features ═══
 
-        # BEP* sub-sections (cross-circuit from sensorimotor)
-        bep_beat = bep[..., 0:10]         # beat induction
-        bep_meter = bep[..., 10:20]       # meter extraction
-        bep_motor = bep[..., 20:30]       # motor entrainment
+ # f01: Multi-modal Entrainment (|wi| = 0.35+0.35+0.30 = 1.0)
+ f01 = torch.sigmoid(
+ 0.35 * (flux_val * onset_val
+ + 0.35 * x_l0l5_val
+ + 0.30 * onset_period
+ )
 
-        # H³ features
-        flux_val = h3_direct[(10, 6, 0, 0)].unsqueeze(-1)
-        onset_val = h3_direct[(11, 6, 0, 0)].unsqueeze(-1)
-        onset_period = h3_direct[(11, 6, 14, 2)].unsqueeze(-1)
-        x_l0l5_val = h3_direct[(25, 6, 0, 2)].unsqueeze(-1)
-        loudness_mean = h3_direct[(8, 11, 1, 0)].unsqueeze(-1)
-        x_l4l5_val = h3_direct[(33, 11, 0, 2)].unsqueeze(-1)
-        energy_period = h3_direct[(22, 11, 14, 2)].unsqueeze(-1)
-        connectivity_mean = h3_direct[(41, 16, 1, 0)].unsqueeze(-1)
-        connectivity_period = h3_direct[(41, 16, 14, 2)].unsqueeze(-1)
-        connectivity_trend = h3_direct[(41, 16, 18, 0)].unsqueeze(-1)
-        stability = h3_direct[(25, 16, 19, 0)].unsqueeze(-1)
-        pleasantness_mean = h3_direct[(4, 16, 1, 0)].unsqueeze(-1)
+ # f02: Sensorimotor Integration (|wi| = 0.35+0.35+0.30 = 1.0)
+ f02 = torch.sigmoid(
+ 0.35 * (loudness_mean
+ + 0.35 * x_l4l5_val
+ + 0.30 * energy_period
+ )
 
-        # ═══ LAYER E: Explicit features ═══
+ # f03: Enhanced Recovery (|wi| = 0.30+0.30+0.20+0.20 = 1.0)
+ f03 = torch.sigmoid(
+ 0.30 * (connectivity_mean
+ + 0.30 * pleasantness_mean
+ + 0.20 * f01
+ + 0.20 * f02
+ )
 
-        # f01: Multi-modal Entrainment (|wi| = 0.35+0.35+0.30 = 1.0)
-        f01 = torch.sigmoid(
-            0.35 * (flux_val * onset_val
-                    * bep_beat.mean(-1, keepdim=True))
-            + 0.35 * x_l0l5_val
-            + 0.30 * onset_period
-        )
+ # ═══ LAYER M: Mathematical ═══
+ integration_synergy = (f01 * f02 * f03) ** (1.0 / 3.0)
+ temporal_coherence = torch.sigmoid(
+ 0.50 * stability + 0.50 * onset_period
+ )
+ # coefficients: 0.50 + 0.50 = 1.0 ✓
 
-        # f02: Sensorimotor Integration (|wi| = 0.35+0.35+0.30 = 1.0)
-        f02 = torch.sigmoid(
-            0.35 * (loudness_mean
-                    * bep_motor.mean(-1, keepdim=True))
-            + 0.35 * x_l4l5_val
-            + 0.30 * energy_period
-        )
+ # ═══ LAYER P: Present ═══
+ entrainment_state = torch.sigmoid(
+ + 0.50 * flux_val * onset_val
+ )
+ # coefficients: 0.50 + 0.50 = 1.0 ✓
+ motor_adaptation = torch.sigmoid(
+ )
+ # coefficients: 0.50 + 0.50 = 1.0 ✓
 
-        # f03: Enhanced Recovery (|wi| = 0.30+0.30+0.20+0.20 = 1.0)
-        f03 = torch.sigmoid(
-            0.30 * (connectivity_mean
-                    * mem_encoding.mean(-1, keepdim=True))
-            + 0.30 * pleasantness_mean
-            + 0.20 * f01
-            + 0.20 * f02
-        )
+ # ═══ LAYER F: Future ═══
+ recovery_trajectory = torch.sigmoid(
+ 0.40 * connectivity_trend
+ + 0.30 * stability
+ + 0.30 * integration_synergy
+ )
+ # coefficients: 0.40 + 0.30 + 0.30 = 1.0 ✓
+ connectivity_pred = torch.sigmoid(
+ 0.50 * connectivity_mean
+ + 0.50 * connectivity_period
+ )
+ # coefficients: 0.50 + 0.50 = 1.0 ✓
+ consolidation_pred = torch.sigmoid(
+ + 0.30 * temporal_coherence
+ )
+ # coefficients: 0.40 + 0.30 + 0.30 = 1.0 ✓
 
-        # ═══ LAYER M: Mathematical ═══
-        integration_synergy = (f01 * f02 * f03) ** (1.0 / 3.0)
-        temporal_coherence = torch.sigmoid(
-            0.50 * stability + 0.50 * onset_period
-        )
-        # coefficients: 0.50 + 0.50 = 1.0 ✓
-
-        # ═══ LAYER P: Present ═══
-        entrainment_state = torch.sigmoid(
-            0.50 * bep_beat.mean(-1, keepdim=True)
-            + 0.50 * flux_val * onset_val
-        )
-        # coefficients: 0.50 + 0.50 = 1.0 ✓
-        motor_adaptation = torch.sigmoid(
-            0.50 * bep_motor.mean(-1, keepdim=True)
-            + 0.50 * mem_familiar.mean(-1, keepdim=True)
-        )
-        # coefficients: 0.50 + 0.50 = 1.0 ✓
-
-        # ═══ LAYER F: Future ═══
-        recovery_trajectory = torch.sigmoid(
-            0.40 * connectivity_trend
-            + 0.30 * stability
-            + 0.30 * integration_synergy
-        )
-        # coefficients: 0.40 + 0.30 + 0.30 = 1.0 ✓
-        connectivity_pred = torch.sigmoid(
-            0.50 * connectivity_mean
-            + 0.50 * connectivity_period
-        )
-        # coefficients: 0.50 + 0.50 = 1.0 ✓
-        consolidation_pred = torch.sigmoid(
-            0.40 * mem_encoding.mean(-1, keepdim=True)
-            + 0.30 * temporal_coherence
-            + 0.30 * mem_retrieval.mean(-1, keepdim=True)
-        )
-        # coefficients: 0.40 + 0.30 + 0.30 = 1.0 ✓
-
-        return torch.cat([
-            f01, f02, f03,                                    # E: 3D
-            integration_synergy, temporal_coherence,           # M: 2D
-            entrainment_state, motor_adaptation,               # P: 2D
-            recovery_trajectory, connectivity_pred,            # F: 3D
-            consolidation_pred,
-        ], dim=-1)  # (B, T, 10)
+ return torch.cat([
+ f01, f02, f03, # E: 3D
+ integration_synergy, temporal_coherence, # M: 2D
+ entrainment_state, motor_adaptation, # P: 2D
+ recovery_trajectory, connectivity_pred, # F: 3D
+ consolidation_pred,
+ ], dim=-1) # (B, T, 10)
 ```
 
 ---
@@ -795,8 +741,6 @@ class RIRI(BaseModel):
 | **Brain Regions** | **10** (7→10: +Putamen, +M1, +Auditory Cortex) | Harrison 2025, Liang 2025, Yamashita 2025 |
 | **R³ Features Used** | 29D of 49D | Energy + Change + Interactions |
 | **H³ Demand** | 16 tuples (0.69%) | Sparse, efficient |
-| **MEM Mechanism** | 30D (3 sub-sections) | Primary (mnemonic circuit) |
-| **BEP* Mechanism** | 30D (3 sub-sections) | Cross-circuit (sensorimotor) |
 | **Output Dimensions** | **10D** | 4-layer structure |
 
 ---
@@ -839,26 +783,11 @@ class RIRI(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D): L4, L5, L9, X_L0L1, X_L1L5, X_L4L5 | R³ (49D): Energy, Change, Interactions |
-| Temporal | HC⁰ mechanisms (NPL, PTM, GRV, EFC) | MEM mechanism (30D) + BEP* cross-circuit (30D) |
-| Multi-modal entrainment | S⁰.X_L0L1[128:136] × HC⁰.NPL | R³.x_l0l5[25:33] × BEP*.beat_induction |
-| Sensorimotor integration | S⁰.X_L4L5[192:200] × HC⁰.EFC | R³.x_l4l5[33:41] × BEP*.motor_entrainment |
-| Enhanced recovery | S⁰.X_L1L5[152:160] × HC⁰.GRV | R³.x_l5l7[41:49] × MEM.encoding |
+| Multi-modal entrainment | S⁰.X_L0L1[128:136] × HC⁰.NPL | R³.x_l0l5[25:33] |
+| Sensorimotor integration | S⁰.X_L4L5[192:200] × HC⁰.EFC | R³.x_l4l5[33:41] |
+| Enhanced recovery | S⁰.X_L1L5[152:160] × HC⁰.GRV | R³.x_l5l7[41:49] |
 | Demand format | HC⁰ index ranges (15/2304 = 0.65%) | H³ 4-tuples (16/2304 = 0.69%) |
 | Output dimensions | 11D | **10D** (catalog-corrected) |
-
-### Why MEM + BEP* replaces HC⁰ mechanisms
-
-The D0 pipeline used 4 separate HC⁰ mechanisms (NPL, PTM, GRV, EFC). In MI, these split across two circuits:
-
-**Mnemonic circuit (MEM):**
-- **EFC → MEM.encoding_state** [0:10]: Efference Copy Mechanism → encoding state. The sensorimotor prediction error that EFC computed is now captured by MEM's encoding state, which tracks how novel or familiar a motor pattern is.
-- **GRV (partial) → MEM.familiarity_proxy** [10:20]: Groove familiarity → motor routine familiarity. Repeated RAS sessions create increasingly familiar motor patterns, tracked by MEM.
-- **GRV (partial) → MEM.retrieval_dynamics** [20:30]: Movement facilitation → motor memory retrieval. The groove-driven movement facilitation maps to retrieving learned motor patterns.
-
-**Sensorimotor circuit (BEP*, cross-circuit read):**
-- **NPL → BEP*.beat_induction** [0:10]: Neural Phase Locking → beat-level entrainment. The phase-locking that drove multi-modal synchronization maps directly to BEP's beat induction.
-- **PTM → BEP*.meter_extraction** [10:20]: Predictive Timing → rhythmic regularity. The predictive timing that calibrated temporal coherence maps to BEP's meter extraction.
-- **NPL + GRV → BEP*.motor_entrainment** [20:30]: Phase-locking + groove → sensorimotor synchronization. The combined auditory-motor coupling maps to BEP's motor entrainment.
 
 ---
 

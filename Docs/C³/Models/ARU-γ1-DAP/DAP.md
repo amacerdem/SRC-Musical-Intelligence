@@ -23,19 +23,19 @@ CRITICAL PERIOD PLASTICITY
 
 P(age) = P_max × exp(−age / τ_critical)
 
-    P(age)
-    1.0 │████
-        │ ██████
-    0.8 │   ██████
-        │     ██████
-    0.6 │       ██████████   ← Critical period ends (~5 years)
-        │           ████████████
-    0.4 │               ████████████
-        │                   ████████████
-    0.2 │                       ████████████████
-        │                               ████████████████
-    0.0 └──────────────────────────────────────────────────► age
-        0    2    4    6    8   10   12   14   16   18   20
+ P(age)
+ 1.0 │████
+ │ ██████
+ 0.8 │ ██████
+ │ ██████
+ 0.6 │ ██████████ ← Critical period ends (~5 years)
+ │ ████████████
+ 0.4 │ ████████████
+ │ ████████████
+ 0.2 │ ████████████████
+ │ ████████████████
+ 0.0 └──────────────────────────────────────────────────► age
+ 0 2 4 6 8 10 12 14 16 18 20
 
 τ_critical ≈ 5 years
 adult_hedonic ≈ ∫ enrichment(age) × P(age) da
@@ -43,7 +43,7 @@ Early music exposure → enhanced adult hedonic response
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Scholkmann 2024: 2 distinct response patterns in preterm infants.
-                 Sex differences in StO₂ response to music.
+ Sex differences in StO₂ response to music.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -63,39 +63,39 @@ DAP is a **background/trait model** — it explains baseline individual differen
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    DAP — DEVELOPMENTAL PATHWAY                              ║
+║ DAP — DEVELOPMENTAL PATHWAY ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║               CRITICAL PERIOD (0-5 years)                                   ║
-║                       │                                                      ║
-║       ┌───────────────┼───────────────┐                                     ║
-║       ▼               ▼               ▼                                     ║
-║  Musical          Emotional       Social                                    ║
-║  Exposure         Bonding         Context                                   ║
-║       │               │               │                                     ║
-║       ▼               ▼               ▼                                     ║
-║  Auditory          Limbic        Prefrontal                                 ║
-║  Cortex            System         Cortex                                    ║
-║       │               │               │                                     ║
-║       └───────────────┼───────────────┘                                     ║
-║                       ▼                                                      ║
-║          SYNAPTIC PRUNING & MYELINATION                                     ║
-║          • Use-dependent selection                                          ║
-║          • Musical exposure strengthens A1-limbic connections               ║
-║          • Underused pathways eliminated                                    ║
-║                       │                                                      ║
-║                       ▼                                                      ║
-║          ADULT AFFECTIVE RESPONSE TO MUSIC                                  ║
-║          (Individual differences in hedonic capacity)                        ║
-║                                                                              ║
-║  ADULT HEDONIC CAPACITY:                                                    ║
-║    H_adult = α × early_enrichment + β × genetic_baseline + ε              ║
-║    α ≈ 0.6 (environment), β ≈ 0.4 (genetic)                               ║
-║                                                                              ║
-║  EVIDENCE (limited — γ tier):                                               ║
-║  Scholkmann 2024: Preterm infants show 2 distinct response patterns        ║
-║  Scholkmann 2024: Sex differences in cerebral oxygenation to music         ║
-║  Trainor 2012: Musical training before age 7 → enhanced processing         ║
+║ ║
+║ CRITICAL PERIOD (0-5 years) ║
+║ │ ║
+║ ┌───────────────┼───────────────┐ ║
+║ ▼ ▼ ▼ ║
+║ Musical Emotional Social ║
+║ Exposure Bonding Context ║
+║ │ │ │ ║
+║ ▼ ▼ ▼ ║
+║ Auditory Limbic Prefrontal ║
+║ Cortex System Cortex ║
+║ │ │ │ ║
+║ └───────────────┼───────────────┘ ║
+║ ▼ ║
+║ SYNAPTIC PRUNING & MYELINATION ║
+║ • Use-dependent selection ║
+║ • Musical exposure strengthens A1-limbic connections ║
+║ • Underused pathways eliminated ║
+║ │ ║
+║ ▼ ║
+║ ADULT AFFECTIVE RESPONSE TO MUSIC ║
+║ (Individual differences in hedonic capacity) ║
+║ ║
+║ ADULT HEDONIC CAPACITY: ║
+║ H_adult = α × early_enrichment + β × genetic_baseline + ε ║
+║ α ≈ 0.6 (environment), β ≈ 0.4 (genetic) ║
+║ ║
+║ EVIDENCE (limited — γ tier): ║
+║ Scholkmann 2024: Preterm infants show 2 distinct response patterns ║
+║ Scholkmann 2024: Sex differences in cerebral oxygenation to music ║
+║ Trainor 2012: Musical training before age 7 → enhanced processing ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -130,47 +130,47 @@ DAP OUTPUT TENSOR: 10D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Basis
+idx │ Name │ Range │ Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 0  │ f12_dev_sensitiv  │ [0, 1] │ Age-dependent plasticity coefficient.
-    │                   │        │ P(age) = exp(−age/τ_critical) × enrichment.
+ 0 │ f12_dev_sensitiv │ [0, 1] │ Age-dependent plasticity coefficient.
+ │ │ │ P(age) = exp(−age/τ_critical) × enrichment.
 
 LAYER D — DEVELOPMENTAL MARKERS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Basis
+idx │ Name │ Range │ Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 1  │ critical_period   │ [0, 1] │ Critical period indicator. High for ages 0-5.
+ 1 │ critical_period │ [0, 1] │ Critical period indicator. High for ages 0-5.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 2  │ plasticity_coeff  │ [0, 1] │ Age-adjusted learning rate for affect circuits.
+ 2 │ plasticity_coeff │ [0, 1] │ Age-adjusted learning rate for affect circuits.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 3  │ exposure_history  │ [0, 1] │ Musical enrichment proxy estimated from
-    │                   │        │ response characteristics.
+ 3 │ exposure_history │ [0, 1] │ Musical enrichment proxy estimated from
+ │ │ │ response characteristics.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 4  │ neural_maturation │ [0, 1] │ Myelination + synaptic pruning index.
-    │                   │        │ High = mature (post-critical period).
+ 4 │ neural_maturation │ [0, 1] │ Myelination + synaptic pruning index.
+ │ │ │ High = mature (post-critical period).
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Basis
+idx │ Name │ Range │ Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 5  │ current_affect    │ [0, 1] │ Current affective response strength to music.
-    │                   │        │ Modulated by developmental history.
+ 5 │ current_affect │ [0, 1] │ Current affective response strength to music.
+ │ │ │ Modulated by developmental history.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 6  │ familiarity_warmth│ [0, 1] │ Familiarity-warmth link. Strength of
-    │                   │        │ learned associations from early exposure.
+ 6 │ familiarity_warmth│ [0, 1] │ Familiarity-warmth link. Strength of
+ │ │ │ learned associations from early exposure.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 7  │ learning_rate     │ [0, 1] │ Current affect-learning rate.
-    │                   │        │ Decreases with age (plasticity decay).
+ 7 │ learning_rate │ [0, 1] │ Current affect-learning rate.
+ │ │ │ Decreases with age (plasticity decay).
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Basis
+idx │ Name │ Range │ Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 8  │ adult_hedonic_pred│ [0, 1] │ Predicted adult hedonic capacity.
-    │                   │        │ 0.6×exposure + 0.4×genetic baseline.
+ 8 │ adult_hedonic_pred│ [0, 1] │ Predicted adult hedonic capacity.
+ │ │ │ 0.6×exposure + 0.4×genetic baseline.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 9  │ preference_stab   │ [0, 1] │ Preference stability index.
-    │                   │        │ High when past critical period.
+ 9 │ preference_stab │ [0, 1] │ Preference stability index.
+ │ │ │ High when past critical period.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 10D per frame at 172.27 Hz
@@ -229,13 +229,13 @@ TOTAL: 10D per frame at 172.27 Hz
 ```
 R³ DEMAND FOR DAP: 13D of 49D
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Group A: Consonance        2D   → valence development
-Group B: Energy            1D   → arousal baseline
-Group C: Timbre            1D   → tonal learning
-Group D: Change            1D   → pattern acquisition
-Group E: Interactions      8D   → affective learning
+Group A: Consonance 2D → valence development
+Group B: Energy 1D → arousal baseline
+Group C: Timbre 1D → tonal learning
+Group D: Change 1D → pattern acquisition
+Group E: Interactions 8D → affective learning
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-TOTAL:                    13D
+TOTAL: 13D
 ```
 
 ---
@@ -244,39 +244,35 @@ TOTAL:                    13D
 
 ### 6.1 Mechanism-Level Demand
 
-DAP uses only **AED** (single mechanism — simplest ARU model).
+DAP uses only **affective-dynamics* (single mechanism — simplest ARU model).
 
 ```
 H³ DEMAND FOR DAP
 ━━━━━━━━━━━━━━━━━
 
-Mechanism │ Horizons              │ H-Law       │ Morphs Used              │ Tuples
+Mechanism │ Horizons │ H-Law │ Morphs Used │ Tuples
 ──────────┼───────────────────────┼─────────────┼──────────────────────────┼───────
-AED       │ H6 (200ms)            │ bidirection │ M0(value), M8(velocity), │ 6
-          │ H16 (1000ms)          │             │ M20(entropy)             │
+ │ H16 (1000ms) │ │ M20(entropy) │
 ──────────┼───────────────────────┼─────────────┼──────────────────────────┼───────
-TOTAL     │ 2 horizons            │             │                          │ 6
-          │                       │             │               6/2304 = 0.26%
+TOTAL │ 2 horizons │ │ │ 6
+ │ │ │ 6/2304 = 0.26%
 ```
 
 ### 6.2 Key H³ Reads
 
 ```
 AFFECTIVE RESPONSE STRENGTH:
-  AED.arousal_dynamics via H6(200ms) + M0(value)
-  → Instant affective response magnitude
-  → Low in underdeveloped circuits, high in enriched
+ → Instant affective response magnitude
+ → Low in underdeveloped circuits, high in enriched
 
 RESPONSE VARIABILITY:
-  AED.arousal_dynamics via H6(200ms) + M8(velocity)
-  → Rate of affective change
-  → High variability = high plasticity (still developing)
+ → Rate of affective change
+ → High variability = high plasticity (still developing)
 
 PREDICTABILITY:
-  AED.expectancy_affect via H16(1000ms) + M20(entropy)
-  → Entropy of expectation distribution
-  → Low entropy = well-learned patterns (mature)
-  → High entropy = still forming associations
+ → Entropy of expectation distribution
+ → Low entropy = well-learned patterns (mature)
+ → High entropy = still forming associations
 ```
 
 ### 6.3 R³ v2 Projected Expansion
@@ -289,78 +285,54 @@ No significant direct v2 expansion projected for DAP. As a pathway-dependent ARU
 
 ## 7. Mechanism Computation
 
-### 7.1 AED Binding (Only Mechanism)
-
-```python
-# AED reads: arousal_dynamics[0:10], expectancy_affect[10:20]
-# Horizons: H6(200ms) and H16(1000ms), bidirectional
-
-# Response strength (reflects developmental state)
-response_fast = AED.arousal_dynamics[0:4].mean()   # H6: instant affect
-response_slow = AED.expectancy_affect[10:14].mean()  # H16: 1s context
-response_entropy = AED.arousal_dynamics[6]            # M20(entropy)
-response_velocity = AED.arousal_dynamics[4]           # M8(velocity)
-
-# Maturation estimate: low entropy + low velocity = mature
-maturation = sigmoid(0.5 * (1.0 - response_entropy) + 0.5 * (1.0 - abs(response_velocity)))
-# |0.5| + |0.5| = 1.0
-
-# Plasticity estimate: high entropy + high velocity = plastic
-plasticity = 1.0 - maturation
-
-# Exposure estimate: high response + low entropy = enriched
-exposure = sigmoid(0.5 * response_slow + 0.5 * (1.0 - response_entropy))
-# |0.5| + |0.5| = 1.0
-```
-
 ### 7.2 DAP Output Computation
 
 ```python
-def compute_dap(R3, H3, AED):
-    """
-    DAP: 10D output per frame.
+def compute_dap(R3, H3):
+ """
+ DAP: 10D output per frame.
 
-    All deterministic. Zero learned parameters.
-    Based on neurodevelopmental principles.
-    """
-    # --- Core signals from AED ---
-    response = compute_response_strength(AED, R3)  # [0,1]
-    maturation = compute_maturation(AED)            # [0,1]
-    plasticity = 1.0 - maturation                    # [0,1]
-    exposure = compute_exposure_estimate(AED, R3)   # [0,1]
+ All deterministic. Zero learned parameters.
+ Based on neurodevelopmental principles.
+ """
+ # --- Core signals from affective-dynamics H³ ---
+ response = compute_response_strength(h3, R3) # [0,1]
+ maturation = compute_maturation() # [0,1]
+ plasticity = 1.0 - maturation # [0,1]
+ exposure = compute_exposure_estimate(h3, R3) # [0,1]
 
-    # --- Layer E ---
-    f12 = plasticity * exposure  # Developmental sensitivity
+ # --- Layer E ---
+ f12 = plasticity * exposure # Developmental sensitivity
 
-    # --- Layer D ---
-    critical_period = plasticity  # High plasticity ≈ in critical period
-    plasticity_coeff = plasticity
-    exposure_history = exposure
-    neural_mat = maturation
+ # --- Layer D ---
+ critical_period = plasticity # High plasticity ≈ in critical period
+ plasticity_coeff = plasticity
+ exposure_history = exposure
+ neural_mat = maturation
 
-    # --- Layer P ---
-    current_affect = sigmoid(
-        0.5 * response + 0.5 * R3.sensory_pleasantness[4]
-    )  # |0.5| + |0.5| = 1.0
-    familiarity_warmth = sigmoid(
-        exposure * (1.0 - R3.distribution_entropy[22]) * 2.0
-    )
-    learning_rate = plasticity * sigmoid(AED.arousal_dynamics[4] * 2.0)
+ # --- Layer P ---
+ current_affect = sigmoid(
+ 0.5 * response + 0.5 * R3.sensory_pleasantness[4]
+ ) # |0.5| + |0.5| = 1.0
+ familiarity_warmth = sigmoid(
+ exposure * (1.0 - R3.distribution_entropy[22]) * 2.0
+ )
+ learning_rate = plasticity * sigmoid(arousal_dynamics[4] * 2.0)
 
-    # --- Layer F ---
-    adult_hedonic = clamp(
-        0.6 * exposure + 0.4 * response, 0, 1
-    )  # |0.6| + |0.4| = 1.0
-    preference_stability = maturation  # Mature = stable preferences
+ # --- Layer F ---
+ adult_hedonic = clamp(
+ 0.6 * exposure + 0.4 * response, 0, 1
+ ) # |0.6| + |0.4| = 1.0
+ preference_stability = maturation # Mature = stable preferences
 
-    return stack([
-        f12,                                         # E: 1D
-        critical_period, plasticity_coeff,           # D: 4D
-        exposure_history, neural_mat,
-        current_affect, familiarity_warmth,           # P: 3D
-        learning_rate,
-        adult_hedonic, preference_stability           # F: 2D
-    ])  # Total: 10D
+ return stack([
+ f12, # E: 1D
+ critical_period, plasticity_coeff, # D: 4D
+ exposure_history, neural_mat,
+ current_affect, familiarity_warmth, # P: 3D
+ learning_rate,
+ adult_hedonic, preference_stability # F: 2D
+ ]) # Total: 10D
 ```
 
 ---
@@ -374,18 +346,18 @@ DAP INTERACTIONS WITHIN ARU
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 DAP ──► SRP (Striatal Reward Pathway)
-    │     └── DAP determines baseline reward sensitivity
-    │
-    ├──► NEMAC (Nostalgia Circuit)
-    │     └── DAP shapes which music evokes nostalgia
-    │         (music from critical period = strongest)
-    │
-    ├──► MAD (Musical Anhedonia)
-    │     └── DAP may explain some developmental anhedonia
-    │
-    └──► PUPF (Prediction-Uncertainty-Pleasure)
-          └── DAP determines baseline prediction model quality
-              (enriched exposure → better internal model → lower H)
+ │ └── DAP determines baseline reward sensitivity
+ │
+ ├──► NEMAC (Nostalgia Circuit)
+ │ └── DAP shapes which music evokes nostalgia
+ │ (music from critical period = strongest)
+ │
+ ├──► MAD (Musical Anhedonia)
+ │ └── DAP may explain some developmental anhedonia
+ │
+ └──► PUPF (Prediction-Uncertainty-Pleasure)
+ └── DAP determines baseline prediction model quality
+ (enriched exposure → better internal model → lower H)
 
 Note: DAP is a BACKGROUND model affecting ALL other ARU processes.
 ```
@@ -423,7 +395,7 @@ Note: DAP is a BACKGROUND model affecting ALL other ARU processes.
 |--------|-------------|-------------|--------|
 | Output dimensions | 7D | 10D | **+3D** (neural_maturation, learning_rate, preference_stability) |
 | Input space | S⁰ 15D | R³ 13D | Remapped to R³ groups |
-| Temporal | HC⁰ AED+ASA (9 tuples) | H³ → AED only (6 tuples) | ASA removed |
+| Temporal | HC⁰ (9 tuples) | H³ only (6 tuples) | auditory-scene removed |
 | H⁰ tuples | 9/2304 = 0.39% | 6/2304 = 0.26% | Reduced |
 
 ---
@@ -451,7 +423,7 @@ Note: DAP is a BACKGROUND model affecting ALL other ARU processes.
 | Version | Date | Changes |
 |---------|------|---------|
 | 1.0.0 | 2026-02-04 | Legacy D0 model specification (7D) |
-| 2.0.0 | 2026-02-12 | MI R³/H³ architecture: +3D, AED-only binding, R³ mapping |
+| 2.0.0 | 2026-02-12 | MI R³/H³ architecture: +3D, H³-only binding, R³ mapping |
 | 2.1.0 | 2026-02-13 | Beta upgrade: +2 papers (Nguyen 2023 infant music review, Qiu 2025 prenatal music plasticity) |
 
 ---

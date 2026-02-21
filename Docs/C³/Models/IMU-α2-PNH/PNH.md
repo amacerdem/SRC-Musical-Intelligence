@@ -21,17 +21,17 @@ The **Pythagorean Neural Hierarchy** (PNH) models how neural responses to musica
 THE PYTHAGOREAN HIERARCHY IN THE BRAIN
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-RATIO COMPLEXITY              NEURAL ACTIVATION              CONSONANCE
-log₂(n × d)                  BOLD signal (IFG/ACC)          Perceived
+RATIO COMPLEXITY NEURAL ACTIVATION CONSONANCE
+log₂(n × d) BOLD signal (IFG/ACC) Perceived
 
-Octave  (2:1)   = 1.00       ████                           Very consonant
-Fifth   (3:2)   = 2.58       ██████████                     Consonant
-Fourth  (4:3)   = 3.58       ████████████                   Consonant
-Maj 6th (5:3)   = 3.91       █████████████                  Mildly consonant
-Min 3rd (6:5)   = 4.91       ██████████████████             Moderate
-Maj 2nd (9:8)   = 6.17       ████████████████████████       Mildly dissonant
-Min 2nd (16:15) = 7.91       ████████████████████████████   Dissonant
-Tritone (45:32) = 10.49      ████████████████████████████████ Very dissonant
+Octave (2:1) = 1.00 ████ Very consonant
+Fifth (3:2) = 2.58 ██████████ Consonant
+Fourth (4:3) = 3.58 ████████████ Consonant
+Maj 6th (5:3) = 3.91 █████████████ Mildly consonant
+Min 3rd (6:5) = 4.91 ██████████████████ Moderate
+Maj 2nd (9:8) = 6.17 ████████████████████████ Mildly dissonant
+Min 2nd (16:15) = 7.91 ████████████████████████████ Dissonant
+Tritone (45:32) = 10.49 ████████████████████████████████ Very dissonant
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 KEY FINDING: Musicians show this pattern in 5 ROIs (L-IFG, L-STG,
@@ -58,120 +58,119 @@ Though PNH involves consonance processing (SPU territory), its core claim is abo
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                 PNH — COMPLETE CIRCUIT                                       ║
+║ PNH — COMPLETE CIRCUIT ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  INTERVAL INPUT (two concurrent or sequential pitches)                       ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │                    AUDITORY CORTEX (STG/A1)                        │    ║
-║  │                                                                     │    ║
-║  │  Spectrotemporal encoding → frequency ratio detection               │    ║
-║  │  Roughness computation (critical band beating)                      │    ║
-║  │  Inharmonicity measurement (deviation from harmonic series)         │    ║
-║  └──────┬──────────────────────────────────────────────────────────────┘    ║
-║         │                                                                    ║
-║         ▼                                                                    ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │              RATIO COMPLEXITY ENCODING                              │    ║
-║  │                                                                     │    ║
-║  │  ┌─────────────────────┐  ┌───────────────────────┐                │    ║
-║  │  │    L-IFG (BA 44)    │  │      ACC              │                │    ║
-║  │  │                     │  │  (Anterior Cingulate)  │                │    ║
-║  │  │  • Conflict         │  │                       │                │    ║
-║  │  │    monitoring       │  │  • Salience detection │                │    ║
-║  │  │  • Dissonant >      │  │  • Error monitoring   │                │    ║
-║  │  │    consonant        │  │  • Complexity coding  │                │    ║
-║  │  └─────────────────────┘  └───────────────────────┘                │    ║
-║  │                                                                     │    ║
-║  │  ┌─────────────────────┐  ┌───────────────────────┐                │    ║
-║  │  │    L-MFG            │  │      L-IPL            │                │    ║
-║  │  │                     │  │                       │                │    ║
-║  │  │  • Working memory   │  │  • Integration        │                │    ║
-║  │  │  • Template match   │  │  • Multi-feature      │                │    ║
-║  │  │  • Ratio comparison │  │    binding             │                │    ║
-║  │  └─────────────────────┘  └───────────────────────┘                │    ║
-║  │                                                                     │    ║
-║  │  MUSICIANS: 5 ROIs (L-IFG, L-STG, L-MFG, L-IPL, ACC)             │    ║
-║  │  NON-MUSICIANS: 1 ROI (R-IFG only)                                │    ║
-║  │                                                                     │    ║
-║  └─────────────────────────────────────────────────────────────────────┘    ║
-║                                                                              ║
-║  MATHEMATICAL RELATIONSHIP:                                                  ║
-║  Neural_Activation(interval) ∝ log₂(numerator × denominator)                ║
-║                                                                              ║
+║ ║
+║ INTERVAL INPUT (two concurrent or sequential pitches) ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ AUDITORY CORTEX (STG/A1) │ ║
+║ │ │ ║
+║ │ Spectrotemporal encoding → frequency ratio detection │ ║
+║ │ Roughness computation (critical band beating) │ ║
+║ │ Inharmonicity measurement (deviation from harmonic series) │ ║
+║ └──────┬──────────────────────────────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ RATIO COMPLEXITY ENCODING │ ║
+║ │ │ ║
+║ │ ┌─────────────────────┐ ┌───────────────────────┐ │ ║
+║ │ │ L-IFG (BA 44) │ │ ACC │ │ ║
+║ │ │ │ │ (Anterior Cingulate) │ │ ║
+║ │ │ • Conflict │ │ │ │ ║
+║ │ │ monitoring │ │ • Salience detection │ │ ║
+║ │ │ • Dissonant > │ │ • Error monitoring │ │ ║
+║ │ │ consonant │ │ • Complexity coding │ │ ║
+║ │ └─────────────────────┘ └───────────────────────┘ │ ║
+║ │ │ ║
+║ │ ┌─────────────────────┐ ┌───────────────────────┐ │ ║
+║ │ │ L-MFG │ │ L-IPL │ │ ║
+║ │ │ │ │ │ │ ║
+║ │ │ • Working memory │ │ • Integration │ │ ║
+║ │ │ • Template match │ │ • Multi-feature │ │ ║
+║ │ │ • Ratio comparison │ │ binding │ │ ║
+║ │ └─────────────────────┘ └───────────────────────┘ │ ║
+║ │ │ ║
+║ │ MUSICIANS: 5 ROIs (L-IFG, L-STG, L-MFG, L-IPL, ACC) │ ║
+║ │ NON-MUSICIANS: 1 ROI (R-IFG only) │ ║
+║ │ │ ║
+║ └─────────────────────────────────────────────────────────────────────┘ ║
+║ ║
+║ MATHEMATICAL RELATIONSHIP: ║
+║ Neural_Activation(interval) ∝ log₂(numerator × denominator) ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
-### 2.2 Information Flow Architecture (EAR → BRAIN → SYN → PNH)
+### 2.2 Information Flow Architecture (EAR → BRAIN → PNH)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    PNH COMPUTATION ARCHITECTURE                              ║
+║ PNH COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins × 172.27Hz frame rate                    ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  PNH reads primarily:                                            │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌────────┐                           │        ║
-║  │  │CONSONANCE │ │ TIMBRE  │ │ X-INT  │                           │        ║
-║  │  │ 7D [0:7]  │ │ 9D      │ │ 24D    │                           │        ║
-║  │  │           │ │ [12:21] │ │ [25:49]│                           │        ║
-║  │  │roughness★ │ │tonalness│ │x_l0l5★ │                           │        ║
-║  │  │sethares ★ │ │autocorr │ │x_l5l7  │                           │        ║
-║  │  │inharm.  ★ │ │         │ │        │                           │        ║
-║  │  │harm_dev ★ │ │         │ │        │                           │        ║
-║  │  └───────────┘ └─────────┘ └────────┘                           │        ║
-║  │                         PNH reads: 27D                            │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed features                    │        ║
-║  │                                                                  │        ║
-║  │  ┌── Chord ─────┐ ┌── Progression ──┐ ┌── Phrase ──────────┐   │        ║
-║  │  │ 400ms (H10)  │ │ 700ms (H14)     │ │ 2s (H18)          │   │        ║
-║  │  │              │ │                  │ │                    │   │        ║
-║  │  │ Single chord │ │ 2-4 chords      │ │ Harmonic arc       │   │        ║
-║  │  │ processing   │ │ progression     │ │ I-IV-V-I          │   │        ║
-║  │  └──────────────┘ └─────────────────┘ └────────────────────┘   │        ║
-║  │                         PNH demand: ~15 of 2304 tuples          │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Mnemonic Circuit ═════════    ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌─────────────────┐                                                        ║
-║  │  SYN (30D)      │  Syntactic Processing mechanism                        ║
-║  │                 │                                                        ║
-║  │ Harmony  [0:10] │  chord function, progression, key stability            ║
-║  │ PredErr [10:20] │  ERAN amplitude, MMN proxy, surprise                   ║
-║  │ Struct  [20:30] │  cadence expectation, resolution, closure              ║
-║  └────────┬────────┘                                                        ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    PNH MODEL (11D Output)                        │        ║
-║  │                                                                  │        ║
-║  │  Layer H (Harmonic):  f04_ratio, f05_conflict, f06_expertise     │        ║
-║  │  Layer M (Math):      ratio_complexity, neural_activation        │        ║
-║  │  Layer P (Present):   ratio_enc, conflict_mon, consonance_pref   │        ║
-║  │  Layer F (Future):    dissonance_resolution_fc,                   │        ║
-║  │                       preference_judgment_fc, expertise_mod_fc    │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins × 172.27Hz frame rate ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ PNH reads primarily: │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ TIMBRE │ │ X-INT │ │ ║
+║ │ │ 7D [0:7] │ │ 9D │ │ 24D │ │ ║
+║ │ │ │ │ [12:21] │ │ [25:49]│ │ ║
+║ │ │roughness★ │ │tonalness│ │x_l0l5★ │ │ ║
+║ │ │sethares ★ │ │autocorr │ │x_l5l7 │ │ ║
+║ │ │inharm. ★ │ │ │ │ │ │ ║
+║ │ │harm_dev ★ │ │ │ │ │ │ ║
+║ │ └───────────┘ └─────────┘ └────────┘ │ ║
+║ │ PNH reads: 27D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed features │ ║
+║ │ │ ║
+║ │ ┌── Chord ─────┐ ┌── Progression ──┐ ┌── Phrase ──────────┐ │ ║
+║ │ │ 400ms (H10) │ │ 700ms (H14) │ │ 2s (H18) │ │ ║
+║ │ │ │ │ │ │ │ │ ║
+║ │ │ Single chord │ │ 2-4 chords │ │ Harmonic arc │ │ ║
+║ │ │ processing │ │ progression │ │ I-IV-V-I │ │ ║
+║ │ └──────────────┘ └─────────────────┘ └────────────────────┘ │ ║
+║ │ PNH demand: ~15 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Mnemonic Circuit ═════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────┐ ║
+║ │ │ ║
+║ │ Harmony [0:10] │ chord function, progression, key stability ║
+║ │ PredErr [10:20] │ ERAN amplitude, MMN proxy, surprise ║
+║ │ Struct [20:30] │ cadence expectation, resolution, closure ║
+║ └────────┬────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ PNH MODEL (11D Output) │ ║
+║ │ │ ║
+║ │ Layer H (Harmonic): f04_ratio, f05_conflict, f06_expertise │ ║
+║ │ Layer M (Math): ratio_complexity, neural_activation │ ║
+║ │ Layer P (Present): ratio_enc, conflict_mon, consonance_pref │ ║
+║ │ Layer F (Future): dissonance_resolution_fc, │ ║
+║ │ preference_judgment_fc, expertise_mod_fc │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -190,7 +189,7 @@ Though PNH involves consonance processing (SPU territory), its core claim is abo
 | **Crespo-Bojorque et al. (2018)** *Neuropsychologia* | EEG oddball | 32 | Consonance-context violations → MMN in all; dissonance-context → MMN only in musicians | ANOVA interaction | **Expertise modulation (f06)** |
 | **Kim et al. (2021)** *Front Neurosci* | MEG connectivity | 19 | Syntactic irregularity → R-IFG→L-IFG connectivity; perceptual ambiguity → R-STG→L-STG | p = 0.024 FDR (IFG), p < 0.001 FDR (STG) | **IFG conflict monitoring, STG dissociation** |
 | **Di Stefano, Vuust & Brattico (2022)** *Phys Life Rev* | Review | — | Integrates roughness, vocality, cultural hypotheses; sensory vs harmonic consonance | — (review) | **Framework review: multi-level C/D** |
-| **Harrison & Pearce (2020)** *Psychol Rev* | Model + reanalysis | 500+ | Consonance = interference + harmonicity + cultural familiarity (3-factor model) | R² across 4 datasets | **Three-factor model; MEM.familiarity** |
+| **Harrison & Pearce (2020)** *Psychol Rev* | Model + reanalysis | 500+ | Consonance = interference + harmonicity + cultural familiarity (3-factor model) | R² across 4 datasets | **Three-factor model; familiarity** |
 | **Schon et al. (2005)** *Music Perception* | ERP | 20 | Musicians: N1-P2 (100-200ms); non-musicians: N2 (200-300ms) for consonance | ANOVA main effects | **Expertise timing difference** |
 | **Sarasso et al. (2019)** *Sci Rep* | EEG + behavioral | 22 | Consonance → aesthetic appreciation → motor inhibition; N1/P2 modulated by interval type | η²p = 0.685 (AJ), 0.225 (N1) | **Consonance-preference-attention link** |
 | **Plomp & Levelt (1965)** | Psychoacoustic | — | Critical bandwidth theory of roughness perception | — | **R³.roughness[0] computation** |
@@ -210,22 +209,22 @@ where n = numerator, d = denominator of the simplest frequency ratio
 
 EXAMPLES:
 ┌─────────────────┬─────────────────┬─────────────────────────────────────┐
-│ Interval        │ Ratio           │ Complexity                          │
+│ Interval │ Ratio │ Complexity │
 ├─────────────────┼─────────────────┼─────────────────────────────────────┤
-│ Octave          │ 2:1             │ log₂(2) = 1.00                      │
-│ Fifth           │ 3:2             │ log₂(6) = 2.58                      │
-│ Fourth          │ 4:3             │ log₂(12) = 3.58                     │
-│ Major Sixth     │ 5:3             │ log₂(15) = 3.91                     │
-│ Major Third     │ 5:4             │ log₂(20) = 4.32                     │
-│ Minor Third     │ 6:5             │ log₂(30) = 4.91                     │
-│ Major Second    │ 9:8             │ log₂(72) = 6.17                     │
-│ Minor Second    │ 16:15           │ log₂(240) = 7.91                    │
-│ Tritone         │ 45:32           │ log₂(1440) = 10.49                  │
+│ Octave │ 2:1 │ log₂(2) = 1.00 │
+│ Fifth │ 3:2 │ log₂(6) = 2.58 │
+│ Fourth │ 4:3 │ log₂(12) = 3.58 │
+│ Major Sixth │ 5:3 │ log₂(15) = 3.91 │
+│ Major Third │ 5:4 │ log₂(20) = 4.32 │
+│ Minor Third │ 6:5 │ log₂(30) = 4.91 │
+│ Major Second │ 9:8 │ log₂(72) = 6.17 │
+│ Minor Second │ 16:15 │ log₂(240) = 7.91 │
+│ Tritone │ 45:32 │ log₂(1440) = 10.49 │
 └─────────────────┴─────────────────┴─────────────────────────────────────┘
 
 NEURAL MAPPING:
-  BOLD_musician(ratio) = α · Complexity(ratio) + ε   [5 ROIs]
-  BOLD_nonmusician(ratio) = α · Complexity(ratio) + ε   [1 ROI]
+ BOLD_musician(ratio) = α · Complexity(ratio) + ε [5 ROIs]
+ BOLD_nonmusician(ratio) = α · Complexity(ratio) + ε [1 ROI]
 ```
 
 ### 3.3 Effect Size Summary
@@ -252,20 +251,20 @@ R³ PROXY CHAIN FOR RATIO COMPLEXITY:
 ─────────────────────────────────────
 
 Simple ratios → aligned partials → low beating → low roughness
-                                              → low inharmonicity
-                                              → high stumpf_fusion
+ → low inharmonicity
+ → high stumpf_fusion
 
 Complex ratios → misaligned partials → high beating → high roughness
-                                                   → high inharmonicity
-                                                   → low stumpf_fusion
+ → high inharmonicity
+ → low stumpf_fusion
 
 Therefore:
-  Ratio_Complexity_Proxy = σ(α · (R³.roughness[0] + R³.inharmonicity[5]) / 2)
+ Ratio_Complexity_Proxy = σ(α · (R³.roughness[0] + R³.inharmonicity[5]) / 2)
 
 This proxy tracks the Pythagorean hierarchy because:
-  1. Roughness ∝ critical-band beating ∝ ratio complexity (Plomp & Levelt 1965)
-  2. Inharmonicity = deviation from harmonic series ∝ ratio complexity
-  3. The relationship is monotonic and quasi-logarithmic — matching log₂(n×d)
+ 1. Roughness ∝ critical-band beating ∝ ratio complexity (Plomp & Levelt 1965)
+ 2. Inharmonicity = deviation from harmonic series ∝ ratio complexity
+ 3. The relationship is monotonic and quasi-logarithmic — matching log₂(n×d)
 ```
 
 ---
@@ -304,23 +303,23 @@ This proxy tracks the Pythagorean hierarchy because:
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
-R³[0] roughness ────────────────►  Sensory dissonance (∝ ratio complexity)
-R³[1] sethares ─────────────────►  Beating-based dissonance
-                                    Consonance = 1 - (roughness + sethares)/2
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
+R³[0] roughness ────────────────► Sensory dissonance (∝ ratio complexity)
+R³[1] sethares ─────────────────► Beating-based dissonance
+ Consonance = 1 - (roughness + sethares)/2
 
-R³[5] inharmonicity ────────────►  Ratio complexity proxy
-                                    Simple ratios → low inharmonicity
-                                    Complex ratios → high inharmonicity
+R³[5] inharmonicity ────────────► Ratio complexity proxy
+ Simple ratios → low inharmonicity
+ Complex ratios → high inharmonicity
 
-R³[3] stumpf_fusion ────────────►  Tonal fusion (inverse)
-                                    High fusion = simple ratio = consonant
+R³[3] stumpf_fusion ────────────► Tonal fusion (inverse)
+ High fusion = simple ratio = consonant
 
-R³[14] tonalness ───────────────►  Harmonic-to-noise → ratio purity
+R³[14] tonalness ───────────────► Harmonic-to-noise → ratio purity
 
-R³[25:33] x_l0l5 ──────────────►  Pitch-dissonance coupling
-                                    Math: conflict = x_l0l5 × (1 - consonance)
+R³[25:33] x_l0l5 ──────────────► Pitch-dissonance coupling
+ Math: conflict = x_l0l5 × (1 - consonance)
 ```
 
 ---
@@ -329,7 +328,7 @@ R³[25:33] x_l0l5 ──────────────►  Pitch-dissonanc
 
 ### 5.1 Demand Specification
 
-PNH requires H³ features at three SYN horizons: H10 (400ms), H14 (700ms), H18 (2s).
+PNH requires H³ features at three horizons: H10 (400ms), H14 (700ms), H18 (2s).
 
 | R³ Index | Feature | H | Morph | Law | Purpose |
 |----------|---------|---|-------|-----|---------|
@@ -353,7 +352,7 @@ PNH requires H³ features at three SYN horizons: H10 (400ms), H14 (700ms), H18 (
 
 #### R³ v2 Projected Expansion
 
-PNH projected v2 from F (Pitch) and H (Harmony) groups, aligned with SYN horizons (H10, H14, H18).
+PNH projected v2 from F (Pitch) and H (Harmony) groups, aligned with corresponding H³ horizons (H10, H14, H18).
 
 | R³ Idx | Feature | Group | H | Morph | Law | Purpose |
 |:------:|---------|:-----:|:-:|-------|:---:|---------|
@@ -365,22 +364,6 @@ PNH projected v2 from F (Pitch) and H (Harmony) groups, aligned with SYN horizon
 
 **v2 projected**: 5 tuples
 **Total projected**: 20 tuples of 294,912 theoretical = 0.0068%
-
-### 5.2 SYN Mechanism Binding
-
-PNH reads from the **SYN** (Syntactic Processing) mechanism:
-
-| SYN Sub-section | Range | PNH Role | Weight |
-|-----------------|-------|----------|--------|
-| **Harmonic Syntax** | SYN[0:10] | Chord function, progression regularity | **1.0** (primary) |
-| **Prediction Error** | SYN[10:20] | ERAN/MMN response to violations | 0.7 |
-| **Structural Expectation** | SYN[20:30] | Cadence expectation, resolution | 0.6 |
-
-Also reads from **MEM** mechanism (intra-circuit):
-
-| MEM Sub-section | Range | PNH Role | Weight |
-|-----------------|-------|----------|--------|
-| **Familiarity Proxy** | MEM[10:20] | Stored ratio templates (expertise) | 0.5 |
 
 ---
 
@@ -394,61 +377,61 @@ PNH OUTPUT TENSOR: 11D PER FRAME (172.27 Hz)
 
 LAYER H — HARMONIC ENCODING FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 0  │ f04_ratio         │ [0, 1] │ Pythagorean ratio complexity encoding.
-    │                   │        │ σ(α · (roughness + inharmonicity) / 2)
-    │                   │        │ Low = simple ratio (consonant).
-    │                   │        │ High = complex ratio (dissonant).
-    │                   │        │ α = 0.75 (attention weight)
+ 0 │ f04_ratio │ [0, 1] │ Pythagorean ratio complexity encoding.
+ │ │ │ σ(α · (roughness + inharmonicity) / 2)
+ │ │ │ Low = simple ratio (consonant).
+ │ │ │ High = complex ratio (dissonant).
+ │ │ │ α = 0.75 (attention weight)
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 1  │ f05_conflict      │ [0, 1] │ Conflict monitoring response (IFG/ACC).
-    │                   │        │ σ(β · SYN.pred_error · x_l0l5.mean · roughness)
-    │                   │        │ Dissonant > consonant activation.
-    │                   │        │ β = 0.70 (conflict sensitivity)
+ 1 │ f05_conflict │ [0, 1] │ Conflict monitoring response (IFG/ACC).
+ │ │ │ σ(β · pred_error · x_l0l5.mean · roughness)
+ │ │ │ Dissonant > consonant activation.
+ │ │ │ β = 0.70 (conflict sensitivity)
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 2  │ f06_expertise     │ [0, 1] │ Training-dependent encoding modulation.
-    │                   │        │ σ(γ · MEM.familiarity · (1-sethares) · training)
-    │                   │        │ Musicians: 5 ROIs. Non-musicians: 1 ROI.
-    │                   │        │ γ = 0.60 (training weight)
+ 2 │ f06_expertise │ [0, 1] │ Training-dependent encoding modulation.
+ │ │ │ σ(γ · familiarity · (1-sethares) · training)
+ │ │ │ Musicians: 5 ROIs. Non-musicians: 1 ROI.
+ │ │ │ γ = 0.60 (training weight)
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 3  │ ratio_complexity  │ [0, 1] │ Normalized log₂(n×d) proxy.
-    │                   │        │ σ((roughness + inharmonicity + harm_dev) / 3)
+ 3 │ ratio_complexity │ [0, 1] │ Normalized log₂(n×d) proxy.
+ │ │ │ σ((roughness + inharmonicity + harm_dev) / 3)
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 4  │ neural_activation │ [0, 1] │ Predicted BOLD signal.
-    │                   │        │ SYN.harmony · ratio_complexity
-    │                   │        │ + SYN.pred_error · (1-consonance)
-    │                   │        │ + MEM.familiarity · training_level
+ 4 │ neural_activation │ [0, 1] │ Predicted BOLD signal.
+ │ │ │ harmony · ratio_complexity
+ │ │ │ · (1-consonance)
+ │ │ │ · training_level
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 5  │ ratio_enc         │ [0, 1] │ Current ratio encoding state.
-    │                   │        │ SYN.harmony.mean() — harmonic context.
+ 5 │ ratio_enc │ [0, 1] │ Current ratio encoding state.
+ │ │ │ harmony.mean() — harmonic context.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 6  │ conflict_mon      │ [0, 1] │ Current conflict monitoring activation.
-    │                   │        │ SYN.pred_error.mean() — IFG/ACC signal.
+ 6 │ conflict_mon │ [0, 1] │ Current conflict monitoring activation.
+ │ │ │ pred_error.mean() — IFG/ACC signal.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 7  │ consonance_pref   │ [0, 1] │ Consonance-preference binding.
-    │                   │        │ SYN.struct_expect.mean() × (1-roughness).
+ 7 │ consonance_pref │ [0, 1] │ Consonance-preference binding.
+ │ │ │ struct_expect.mean() × (1-roughness).
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 8  │ dissonance_res_fc │ [0, 1] │ Dissonance resolution prediction (0.5-2s).
-    │                   │        │ Based on SYN.struct_expect trajectory.
+ 8 │ dissonance_res_fc │ [0, 1] │ Dissonance resolution prediction (0.5-2s).
+ │ │ │ Based on struct_expect trajectory.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 9  │ pref_judgment_fc  │ [0, 1] │ Preference judgment prediction (1-3s).
-    │                   │        │ Consonance → pleasure mapping.
+ 9 │ pref_judgment_fc │ [0, 1] │ Preference judgment prediction (1-3s).
+ │ │ │ Consonance → pleasure mapping.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
-10  │ expertise_mod_fc  │ [0, 1] │ Expertise modulation forecast.
-    │                   │        │ Training-dependent sensitivity prediction.
+10 │ expertise_mod_fc │ [0, 1] │ Expertise modulation forecast.
+ │ │ │ Training-dependent sensitivity prediction.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
@@ -473,17 +456,17 @@ idx │ Name              │ Range  │ Neuroscience Basis
 ### 7.2 Musician vs Non-Musician
 
 ```
-MUSICIAN BRAIN:                      NON-MUSICIAN BRAIN:
-─────────────────                    ────────────────────
+MUSICIAN BRAIN: NON-MUSICIAN BRAIN:
+───────────────── ────────────────────
 
-L-IFG  ████████ (strong)            R-IFG  ████ (moderate)
-L-STG  ██████ (moderate)            L-STG  ── (weak)
-L-MFG  █████ (moderate)             L-MFG  ── (absent)
-L-IPL  ████ (moderate)              L-IPL  ── (absent)
-ACC    ██████ (moderate)            ACC    ── (weak)
+L-IFG ████████ (strong) R-IFG ████ (moderate)
+L-STG ██████ (moderate) L-STG ── (weak)
+L-MFG █████ (moderate) L-MFG ── (absent)
+L-IPL ████ (moderate) L-IPL ── (absent)
+ACC ██████ (moderate) ACC ── (weak)
 
-5 ROIs follow Pythagorean pattern   1 ROI follows pattern
-                                    (R-IFG only)
+5 ROIs follow Pythagorean pattern 1 ROI follows pattern
+ (R-IFG only)
 ```
 
 ---
@@ -494,26 +477,26 @@ ACC    ██████ (moderate)            ACC    ── (weak)
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    PNH INTERACTIONS                                         │
+│ PNH INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  CROSS-CIRCUIT (SPU ← PNH):                                               │
-│  PNH.ratio_enc ─────────────► SPU.BCH (Brainstem Consonance Hierarchy)    │
-│  PNH.consonance_pref ───────► SPU.PSCL (Pitch Salience)                  │
-│                                                                             │
-│  CROSS-UNIT (P1: SPU → ARU via PNH):                                      │
-│  PNH.consonance_pref ───────► ARU.SRP (consonance → pleasure)            │
-│                                                                             │
-│  INTRA-UNIT (IMU):                                                         │
-│  PNH ──────► PMIM (Predictive Memory Integration)                         │
-│       │        └── Ratio templates feed predictive processing              │
-│       │                                                                      │
-│       ├─────► MSPBA (Musical Syntax Processing in Broca's Area)           │
-│       │        └── Shares IFG substrate with PNH                           │
-│       │                                                                      │
-│       └─────► TPRD (Tonotopy-Pitch Representation Dissociation)           │
-│                └── PNH ratio encoding in primary vs nonprimary cortex     │
-│                                                                             │
+│ │
+│ CROSS-CIRCUIT (SPU ← PNH): │
+│ PNH.ratio_enc ─────────────► SPU.BCH (Brainstem Consonance Hierarchy) │
+│ PNH.consonance_pref ───────► SPU.PSCL (Pitch Salience) │
+│ │
+│ CROSS-UNIT (P1: SPU → ARU via PNH): │
+│ PNH.consonance_pref ───────► ARU.SRP (consonance → pleasure) │
+│ │
+│ INTRA-UNIT (IMU): │
+│ PNH ──────► PMIM (Predictive Memory Integration) │
+│ │ └── Ratio templates feed predictive processing │
+│ │ │
+│ ├─────► MSPBA (Musical Syntax Processing in Broca's Area) │
+│ │ └── Shares IFG substrate with PNH │
+│ │ │
+│ └─────► TPRD (Tonotopy-Pitch Representation Dissociation) │
+│ └── PNH ratio encoding in primary vs nonprimary cortex │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -543,115 +526,95 @@ ACC    ██████ (moderate)            ACC    ── (weak)
 
 ```python
 class PNH(BaseModel):
-    """Pythagorean Neural Hierarchy.
+ """Pythagorean Neural Hierarchy.
 
-    Output: 11D per frame.
-    Reads: SYN mechanism (30D, primary), MEM mechanism (30D, intra-circuit).
-    """
-    NAME = "PNH"
-    UNIT = "IMU"
-    TIER = "α2"
-    OUTPUT_DIM = 11
-    MECHANISM_NAMES = ("SYN",)       # Primary mechanism
-    INTRA_CIRCUIT = ("MEM",)         # Intra-circuit read for expertise
+ Output: 11D per frame.
+ Reads: R³ + H³ direct.
+ """
+ NAME = "PNH"
+ UNIT = "IMU"
+ TIER = "α2"
+ OUTPUT_DIM = 11
+ UPSTREAM_READS = ()  # TODO: populate from Nucleus contract # Intra-circuit read for expertise
 
-    ALPHA = 0.75   # Attention weight (ratio encoding)
-    BETA = 0.70    # Conflict sensitivity
-    GAMMA = 0.60   # Training weight
+ ALPHA = 0.75 # Attention weight (ratio encoding)
+ BETA = 0.70 # Conflict sensitivity
+ GAMMA = 0.60 # Training weight
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """15 tuples for PNH computation."""
-        return [
-            (0, 10, 0, 2),    # roughness, 400ms, value, bidirectional
-            (0, 14, 1, 0),    # roughness, 700ms, mean, forward
-            (0, 18, 18, 0),   # roughness, 2s, trend, forward
-            (5, 10, 0, 2),    # inharmonicity, 400ms, value, bidirectional
-            (5, 14, 1, 0),    # inharmonicity, 700ms, mean, forward
-            (3, 10, 0, 2),    # stumpf_fusion, 400ms, value, bidirectional
-            (3, 14, 1, 2),    # stumpf_fusion, 700ms, mean, bidirectional
-            (4, 10, 0, 2),    # pleasantness, 400ms, value, bidirectional
-            (4, 18, 19, 0),   # pleasantness, 2s, stability, forward
-            (14, 10, 0, 2),   # tonalness, 400ms, value, bidirectional
-            (14, 14, 3, 0),   # tonalness, 700ms, std, forward
-            (17, 10, 14, 2),  # spectral_autocorr, 400ms, periodicity, bidir
-            (10, 10, 0, 2),   # loudness, 400ms, value, bidirectional
-            (6, 14, 0, 0),    # harmonic_deviation, 700ms, value, forward
-            (2, 18, 1, 0),    # helmholtz_kang, 2s, mean, forward
-        ]
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """15 tuples for PNH computation."""
+ return [
+ (0, 10, 0, 2), # roughness, 400ms, value, bidirectional
+ (0, 14, 1, 0), # roughness, 700ms, mean, forward
+ (0, 18, 18, 0), # roughness, 2s, trend, forward
+ (5, 10, 0, 2), # inharmonicity, 400ms, value, bidirectional
+ (5, 14, 1, 0), # inharmonicity, 700ms, mean, forward
+ (3, 10, 0, 2), # stumpf_fusion, 400ms, value, bidirectional
+ (3, 14, 1, 2), # stumpf_fusion, 700ms, mean, bidirectional
+ (4, 10, 0, 2), # pleasantness, 400ms, value, bidirectional
+ (4, 18, 19, 0), # pleasantness, 2s, stability, forward
+ (14, 10, 0, 2), # tonalness, 400ms, value, bidirectional
+ (14, 14, 3, 0), # tonalness, 700ms, std, forward
+ (17, 10, 14, 2), # spectral_autocorr, 400ms, periodicity, bidir
+ (10, 10, 0, 2), # loudness, 400ms, value, bidirectional
+ (6, 14, 0, 0), # harmonic_deviation, 700ms, value, forward
+ (2, 18, 1, 0), # helmholtz_kang, 2s, mean, forward
+ ]
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute PNH 11D output.
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute PNH 11D output.
 
-        Args:
-            mechanism_outputs: {"SYN": (B,T,30), "MEM": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) → (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Args:
+ h3_direct: Dict of (r3,h,m,l) → (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Returns:
-            (B,T,11) PNH output
-        """
-        syn = mechanism_outputs["SYN"]    # (B, T, 30)
-        mem = mechanism_outputs["MEM"]    # (B, T, 30) — intra-circuit
+ Returns:
+ (B,T,11) PNH output
+ """
+ # R³ features
+ roughness = r3[..., 0:1]
+ sethares = r3[..., 1:2]
+ inharmonicity = r3[..., 5:6]
+ harmonic_dev = r3[..., 6:7]
+ x_l0l5 = r3[..., 25:33] # (B, T, 8)
 
-        # R³ features
-        roughness = r3[..., 0:1]
-        sethares = r3[..., 1:2]
-        inharmonicity = r3[..., 5:6]
-        harmonic_dev = r3[..., 6:7]
-        x_l0l5 = r3[..., 25:33]           # (B, T, 8)
+ # memory-encoding familiarity (for expertise modulation)
+ # ═══ LAYER H: Harmonic features ═══
+ f04 = torch.sigmoid(self.ALPHA * (
+ (roughness + inharmonicity) / 2.0
+ ))
+ f05 = torch.sigmoid(self.BETA * (
+ * x_l0l5.mean(-1, keepdim=True)
+ * roughness
+ ))
+ f06 = torch.sigmoid(self.GAMMA * (
+ * (1.0 - sethares)
+ ))
 
-        # SYN sub-sections
-        syn_harmony = syn[..., 0:10]       # harmonic syntax
-        syn_pred_err = syn[..., 10:20]     # prediction error
-        syn_struct = syn[..., 20:30]       # structural expectation
+ # ═══ LAYER M: Mathematical ═══
+ ratio_complexity = torch.sigmoid(
+ (roughness + inharmonicity + harmonic_dev) / 3.0
+ )
+ neural_activation = (
+ ).clamp(0, 1)
 
-        # MEM familiarity (for expertise modulation)
-        mem_familiar = mem[..., 10:20]
+ # ═══ LAYER P: Present ═══
 
-        # ═══ LAYER H: Harmonic features ═══
-        f04 = torch.sigmoid(self.ALPHA * (
-            (roughness + inharmonicity) / 2.0
-        ))
-        f05 = torch.sigmoid(self.BETA * (
-            syn_pred_err.mean(-1, keepdim=True)
-            * x_l0l5.mean(-1, keepdim=True)
-            * roughness
-        ))
-        f06 = torch.sigmoid(self.GAMMA * (
-            mem_familiar.mean(-1, keepdim=True)
-            * (1.0 - sethares)
-        ))
+ # ═══ LAYER F: Future ═══
+ dissonance_res_fc = self._predict_future(syn_struct, h3_direct, window_h=14)
+ pref_judgment_fc = self._predict_future(syn_harmony, h3_direct, window_h=18)
+ expertise_mod_fc = self._predict_future(mem_familiar, h3_direct, window_h=14)
 
-        # ═══ LAYER M: Mathematical ═══
-        ratio_complexity = torch.sigmoid(
-            (roughness + inharmonicity + harmonic_dev) / 3.0
-        )
-        neural_activation = (
-            syn_harmony.mean(-1, keepdim=True) * ratio_complexity
-            + syn_pred_err.mean(-1, keepdim=True) * roughness
-            + mem_familiar.mean(-1, keepdim=True)
-        ).clamp(0, 1)
-
-        # ═══ LAYER P: Present ═══
-        ratio_enc = syn_harmony.mean(-1, keepdim=True)
-        conflict_mon = syn_pred_err.mean(-1, keepdim=True)
-        consonance_pref = syn_struct.mean(-1, keepdim=True) * (1.0 - roughness)
-
-        # ═══ LAYER F: Future ═══
-        dissonance_res_fc = self._predict_future(syn_struct, h3_direct, window_h=14)
-        pref_judgment_fc = self._predict_future(syn_harmony, h3_direct, window_h=18)
-        expertise_mod_fc = self._predict_future(mem_familiar, h3_direct, window_h=14)
-
-        return torch.cat([
-            f04, f05, f06,                           # H: 3D
-            ratio_complexity, neural_activation,     # M: 2D
-            ratio_enc, conflict_mon, consonance_pref, # P: 3D
-            dissonance_res_fc, pref_judgment_fc,      # F: 3D
-            expertise_mod_fc,
-        ], dim=-1)  # (B, T, 11)
+ return torch.cat([
+ f04, f05, f06, # H: 3D
+ ratio_complexity, neural_activation, # M: 2D
+ ratio_enc, conflict_mon, consonance_pref, # P: 3D
+ dissonance_res_fc, pref_judgment_fc, # F: 3D
+ expertise_mod_fc,
+ ], dim=-1) # (B, T, 11)
 ```
 
 ---
@@ -667,7 +630,6 @@ class PNH(BaseModel):
 | **Falsification Tests** | 3/3 confirmed | High validity |
 | **R³ Features Used** | 27D of 49D | Consonance-focused |
 | **H³ Demand** | 15 tuples (0.65%) | Sparse, efficient |
-| **SYN Mechanism** | 30D (3 sub-sections) | Full coverage |
 | **Output Dimensions** | **11D** | 4-layer structure |
 
 ---
@@ -696,21 +658,12 @@ class PNH(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D) | R³ (49D) |
-| Temporal | HC⁰ mechanisms (ATT, HRM, BND) | SYN mechanism (30D) + MEM intra-circuit |
 | Ratio encoding | S⁰.L5.roughness + S⁰.L6.inharmonicity | R³.roughness[0] + R³.inharmonicity[5] |
-| Conflict monitoring | S⁰.X_L0L5 × HC⁰.ATT | R³.x_l0l5 × SYN.pred_error |
-| Expertise | S⁰.L5.sethares × HC⁰.BND | R³.sethares × MEM.familiarity |
+| Conflict monitoring | S⁰.X_L0L5 × HC⁰.ATT | R³.x_l0l5 |
+| Expertise | S⁰.L5.sethares × HC⁰.BND | R³.sethares |
 | Demand format | HC⁰ index ranges | H³ 4-tuples (sparse) |
 | Total demand | 13/2304 = 0.56% | 15/2304 = 0.65% |
 | Output dims | 10D | 11D (+expertise_mod_fc) |
-
-### Why SYN replaces HC⁰ mechanisms
-
-The D0 pipeline used 3 HC⁰ mechanisms (ATT, HRM, BND). In MI:
-- **ATT → SYN.prediction_error** [10:20]: Attention gating = prediction error response
-- **HRM → SYN.harmonic_syntax** [0:10]: Ratio templates = harmonic syntax state
-- **BND → SYN.structural_expectation** [20:30]: Consonance binding = structural expectation
-- **MEM.familiarity** [10:20]: Expertise modulation (new, from intra-circuit)
 
 ---
 

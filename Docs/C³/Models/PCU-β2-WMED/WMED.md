@@ -21,24 +21,24 @@ The **Working Memory-Entrainment Dissociation** (WMED) model describes how neura
 WORKING MEMORY-ENTRAINMENT DISSOCIATION
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-ENTRAINMENT PATHWAY                     WORKING MEMORY PATHWAY
-──────────────────                      ─────────────────────
-SS-EP at beat frequencies               Counting span / WM capacity
+ENTRAINMENT PATHWAY WORKING MEMORY PATHWAY
+────────────────── ─────────────────────
+SS-EP at beat frequencies Counting span / WM capacity
 
-  Beat ────► Neural ────► Motor          Pattern ────► WM ────► Motor
-  Input     Entrainment   Output         Complexity   Load     Output
+ Beat ────► Neural ────► Motor Pattern ────► WM ────► Motor
+ Input Entrainment Output Complexity Load Output
 
-  PARADOX: ↑ Entrainment → ↓ Tapping    STANDARD: ↑ WM → ↑ Tapping
-  (over-synchronization reduces          (cognitive control aids
-   motor flexibility)                     motor adaptation)
+ PARADOX: ↑ Entrainment → ↓ Tapping STANDARD: ↑ WM → ↑ Tapping
+ (over-synchronization reduces (cognitive control aids
+ motor flexibility) motor adaptation)
 
 ┌──────────────────────────────────────────────────────────────────┐
-│         DUAL-ROUTE INDEPENDENCE (Noboa 2025)                     │
-│                                                                  │
-│  Route 1 (Automatic):   SS-EP strength ↑ → Tapping ↓ (p<0.006) │
-│  Route 2 (Controlled):  WM capacity ↑  → Tapping ↑ (p<0.006)  │
-│                                                                  │
-│  These routes are INDEPENDENT (no interaction term significant)  │
+│ DUAL-ROUTE INDEPENDENCE (Noboa 2025) │
+│ │
+│ Route 1 (Automatic): SS-EP strength ↑ → Tapping ↓ (p<0.006) │
+│ Route 2 (Controlled): WM capacity ↑ → Tapping ↑ (p<0.006) │
+│ │
+│ These routes are INDEPENDENT (no interaction term significant) │
 └──────────────────────────────────────────────────────────────────┘
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -61,63 +61,62 @@ WMED separates automatic entrainment from controlled WM contributions:
 
 ## 2. Neural Circuit: Complete Anatomy
 
-### 2.1 Information Flow Architecture (EAR → BRAIN → PPC+TPC+MEM → WMED)
+### 2.1 Information Flow Architecture (EAR → BRAIN → WMED)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    WMED COMPUTATION ARCHITECTURE                            ║
+║ WMED COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins x 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                         WMED reads: ~15D                         │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                         WMED demand: ~16 of 2304 tuples          │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Imagery Circuit ═══════════   ║
-║                               │                                              ║
-║                       ┌───────┴───────┐───────┐                              ║
-║                       ▼               ▼       ▼                              ║
-║  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐              ║
-║  │  PPC (30D)      │  │  TPC (30D)      │  │  MEM (30D)      │              ║
-║  │                 │  │                 │  │                 │              ║
-║  │ Pitch Ext[0:10] │  │ Spec Shp [0:10] │  │ Work Mem [0:10] │              ║
-║  │ Interval  [10:20]│ │ Temp Env [10:20]│  │ Long-Term[10:20]│              ║
-║  │ Contour  [20:30] │ │ Source Id[20:30]│  │ Pred Buf [20:30]│              ║
-║  └────────┬────────┘  └────────┬────────┘  └────────┬────────┘              ║
-║           └────────────┬───────┴────────────────────┘                        ║
-║                        ▼                                                     ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    WMED MODEL (11D Output)                       │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f01_entrainment_strength,                  │        ║
-║  │                       f02_wm_contribution,                       │        ║
-║  │                       f03_tapping_accuracy,                      │        ║
-║  │                       f04_dissociation_index                     │        ║
-║  │  Layer P (Present):   phase_locking_strength,                    │        ║
-║  │                       pattern_segmentation,                      │        ║
-║  │                       rhythmic_engagement                        │        ║
-║  │  Layer F (Future):    next_beat_pred, tapping_accuracy_pred,     │        ║
-║  │                       wm_interference_pred,                      │        ║
-║  │                       paradox_strength_pred                      │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins x 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ WMED reads: ~15D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ WMED demand: ~16 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Imagery Circuit ═══════════ ║
+║ │ ║
+║ ┌───────┴───────┐───────┐ ║
+║ ▼ ▼ ▼ ║
+║ ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐ ║
+║ │ │ │ │ │ │ ║
+║ │ Pitch Ext[0:10] │ │ Spec Shp [0:10] │ │ Work Mem [0:10] │ ║
+║ │ Interval [10:20]│ │ Temp Env [10:20]│ │ Long-Term[10:20]│ ║
+║ │ Contour [20:30] │ │ Source Id[20:30]│ │ Pred Buf [20:30]│ ║
+║ └────────┬────────┘ └────────┬────────┘ └────────┬────────┘ ║
+║ └────────────┬───────┴────────────────────┘ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ WMED MODEL (11D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f01_entrainment_strength, │ ║
+║ │ f02_wm_contribution, │ ║
+║ │ f03_tapping_accuracy, │ ║
+║ │ f04_dissociation_index │ ║
+║ │ Layer P (Present): phase_locking_strength, │ ║
+║ │ pattern_segmentation, │ ║
+║ │ rhythmic_engagement │ ║
+║ │ Layer F (Future): next_beat_pred, tapping_accuracy_pred, │ ║
+║ │ wm_interference_pred, │ ║
+║ │ paradox_strength_pred │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -149,19 +148,19 @@ WMED separates automatic entrainment from controlled WM contributions:
 
 ```
 Primary Evidence (k=15 findings across 11 papers):
-  - Core dissociation:        R2adj = 0.27, p = 0.006 (Noboa 2025)
-  - SS-EP entrainment:        eta2 = 0.199, p < 0.001 (Noboa 2025)
-  - Auditory WM alpha:        BFincl > 3 (Yuan 2025)
-  - MEG WM load:              F = 51.0, p < 0.001 (Lu 2022)
-  - Neural entrainment ITPC:  eta2 = 0.14, p < 0.001 (Ding 2025)
-  - Neural entrainment EPS:   eta2 = 0.32, p < 0.001 (Ding 2025)
-  - Entrainment-emotion:      r = 0.22, p = 0.002 (Ding 2025)
-  - Musical pattern ERP:      p = 0.022 (Bridwell 2017)
-Heterogeneity:  Low-moderate (consistent direction across paradigms)
-Quality Assessment:  β-tier (multiple EEG/MEG + behavioral, within-subjects)
-Replication:    Entrainment effect replicated across 5 independent studies
-                WM-rhythm link replicated across 3 studies
-                Dissociation finding awaiting direct replication
+ - Core dissociation: R2adj = 0.27, p = 0.006 (Noboa 2025)
+ - SS-EP entrainment: eta2 = 0.199, p < 0.001 (Noboa 2025)
+ - Auditory WM alpha: BFincl > 3 (Yuan 2025)
+ - MEG WM load: F = 51.0, p < 0.001 (Lu 2022)
+ - Neural entrainment ITPC: eta2 = 0.14, p < 0.001 (Ding 2025)
+ - Neural entrainment EPS: eta2 = 0.32, p < 0.001 (Ding 2025)
+ - Entrainment-emotion: r = 0.22, p = 0.002 (Ding 2025)
+ - Musical pattern ERP: p = 0.022 (Bridwell 2017)
+Heterogeneity: Low-moderate (consistent direction across paradigms)
+Quality Assessment: β-tier (multiple EEG/MEG + behavioral, within-subjects)
+Replication: Entrainment effect replicated across 5 independent studies
+ WM-rhythm link replicated across 3 studies
+ Dissociation finding awaiting direct replication
 ```
 
 ---
@@ -196,23 +195,19 @@ Replication:    Entrainment effect replicated across 5 independent studies
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[10] spectral_flux ────────────┐
 R³[11] onset_strength ───────────┼──► Entrainment strength (SS-EP proxy)
-PPC.pitch_extraction[0:10] ──────┘   High periodicity → strong SS-EP
 
 R³[25:33] x_l0l5 ───────────────┐
-TPC.temporal_envelope[10:20] ────┼──► Automatic entrainment pathway
-H³ periodicity tuples ──────────┘   Paradox: high x_l0l5 → worse tapping (p<0.006)
+H³ periodicity tuples ──────────┘ Paradox: high x_l0l5 → worse tapping (p<0.006)
 
 R³[41:49] x_l5l7 ───────────────┐
-MEM.working_memory[0:10] ───────┼──► Working memory pathway
-H³ entropy tuples ──────────────┘   Higher x_l5l7 → better tapping (p<0.006)
+H³ entropy tuples ──────────────┘ Higher x_l5l7 → better tapping (p<0.006)
 
 R³[21] spectral_change ─────────┐
-MEM.prediction_buffer[20:30] ───┼──► Tapping accuracy (outcome measure)
-                                    Lower change variability → better consistency
+ Lower change variability → better consistency
 ```
 
 ---
@@ -246,7 +241,7 @@ WMED requires H³ features for entrainment tracking (beat-scale periodicity) and
 
 #### R³ v2 Projected Expansion
 
-WMED projected v2 from I:Information, aligned with PPC+MEM horizons.
+WMED projected v2 from I:Information, aligned with corresponding H³ horizons.
 
 | R³ Idx | Feature | Group | H | Morph | Law | Purpose |
 |:------:|---------|:-----:|:-:|-------|:---:|---------|
@@ -258,20 +253,6 @@ WMED projected v2 from I:Information, aligned with PPC+MEM horizons.
 
 **v2 projected**: 5 tuples
 **Total projected**: 21 tuples of 294,912 theoretical = 0.0071%
-
-### 5.2 PPC + TPC + MEM Mechanism Binding
-
-| Mechanism | Sub-section | Range | WMED Role | Weight |
-|-----------|-------------|-------|-----------|--------|
-| **PPC** | Pitch Extraction | PPC[0:10] | Phase-locking for entrainment | 0.7 |
-| **PPC** | Interval Analysis | PPC[10:20] | Beat interval tracking | 0.6 |
-| **PPC** | Contour Tracking | PPC[20:30] | Rhythmic contour | 0.5 |
-| **TPC** | Spectral Shape | TPC[0:10] | Rhythm pattern recognition | 0.6 |
-| **TPC** | Temporal Envelope | TPC[10:20] | Entrainment pathway (automatic) | **0.9** |
-| **TPC** | Source Identity | TPC[20:30] | Syncopation detection | 0.5 |
-| **MEM** | Working Memory | MEM[0:10] | WM capacity (counting span) | **1.0** (primary) |
-| **MEM** | Long-Term Memory | MEM[10:20] | Pattern familiarity | 0.7 |
-| **MEM** | Prediction Buffer | MEM[20:30] | Tapping prediction | **0.9** |
 
 ---
 
@@ -285,48 +266,45 @@ WMED OUTPUT TENSOR: 11D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 0  │ f01_entrainment_strength │ [0, 1] │ SS-EP magnitude at beat frequency.
-    │                          │        │ f01 = σ(0.35 * beat_periodicity_1s
-    │                          │        │       + 0.35 * onset_periodicity_1s
-    │                          │        │       + 0.30 * mean(TPC.env[10:20]))
+ 0 │ f01_entrainment_strength │ [0, 1] │ SS-EP magnitude at beat frequency.
+ │ │ │ f01 = σ(0.35 * beat_periodicity_1s
+ │ │ │ + 0.35 * onset_periodicity_1s
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 1  │ f02_wm_contribution      │ [0, 1] │ Working memory capacity measure.
-    │                          │        │ f02 = σ(0.40 * wm_coupling_mean_1s
-    │                          │        │       + 0.30 * wm_entropy_1s
-    │                          │        │       + 0.30 * mean(MEM.wm[0:10]))
+ 1 │ f02_wm_contribution │ [0, 1] │ Working memory capacity measure.
+ │ │ │ f02 = σ(0.40 * wm_coupling_mean_1s
+ │ │ │ + 0.30 * wm_entropy_1s
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 2  │ f03_tapping_accuracy     │ [0, 1] │ Motor precision outcome.
-    │                          │        │ f03 = σ(0.40 * timing_stability_1s
-    │                          │        │       + 0.30 * mean(MEM.pred[20:30])
-    │                          │        │       + 0.30 * (1 - timing_std_1s))
+ 2 │ f03_tapping_accuracy │ [0, 1] │ Motor precision outcome.
+ │ │ │ f03 = σ(0.40 * timing_stability_1s
+ │ │ │ + 0.30 * (1 - timing_std_1s))
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 3  │ f04_dissociation_index   │ [0, 1] │ Independence of entrainment vs WM.
-    │                          │        │ f04 = σ(0.50 * |f01 - f02|
-    │                          │        │       + 0.50 * entrainment_phase_resets)
+ 3 │ f04_dissociation_index │ [0, 1] │ Independence of entrainment vs WM.
+ │ │ │ f04 = σ(0.50 * |f01 - f02|
+ │ │ │ + 0.50 * entrainment_phase_resets)
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 4  │ phase_locking_strength   │ [0, 1] │ TPC entrainment magnitude.
+ 4 │ phase_locking_strength │ [0, 1] │ timbre-processing entrainment magnitude.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 5  │ pattern_segmentation     │ [0, 1] │ MEM working memory loading.
+ 5 │ pattern_segmentation │ [0, 1] │ memory-encoding working memory loading.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 6  │ rhythmic_engagement      │ [0, 1] │ PPC motor preparation level.
+ 6 │ rhythmic_engagement │ [0, 1] │ pitch-processing motor preparation level.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 7  │ next_beat_pred           │ [0, 1] │ Motor system beat timing.
+ 7 │ next_beat_pred │ [0, 1] │ Motor system beat timing.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 8  │ tapping_accuracy_pred    │ [0, 1] │ Performance prediction.
+ 8 │ tapping_accuracy_pred │ [0, 1] │ Performance prediction.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 9  │ wm_interference_pred     │ [0, 1] │ Entrainment-motor conflict.
+ 9 │ wm_interference_pred │ [0, 1] │ Entrainment-motor conflict.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
-10  │ paradox_strength_pred    │ [0, 1] │ Entrainment→tapping inverse.
+10 │ paradox_strength_pred │ [0, 1] │ Entrainment→tapping inverse.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 11D per frame at 172.27 Hz
@@ -342,10 +320,10 @@ TOTAL: 11D per frame at 172.27 Hz
 ```
 Tapping_Accuracy = α·WM_Contribution - β·Entrainment_Paradox + ε
 
-Route 1 (Entrainment):  Automatic SS-EP → Motor coupling
-    High entrainment → WORSE tapping (over-synchronization)
+Route 1 (Entrainment): Automatic SS-EP → Motor coupling
+ High entrainment → WORSE tapping (over-synchronization)
 Route 2 (Working Memory): Counting span → Cognitive control
-    High WM → BETTER tapping (flexibility)
+ High WM → BETTER tapping (flexibility)
 
 Dissociation_Index = |Route1 - Route2| / (Route1 + Route2)
 ```
@@ -357,29 +335,26 @@ Dissociation_Index = |Route1 - Route2| / (Route1 + Route2)
 
 # f01: Entrainment Strength
 f01 = σ(0.35 * beat_periodicity_1s
-       + 0.35 * onset_periodicity_1s
-       + 0.30 * mean(TPC.temporal_envelope[10:20]))
+ + 0.35 * onset_periodicity_1s
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 
 # f02: WM Contribution
 f02 = σ(0.40 * wm_coupling_mean_1s
-       + 0.30 * wm_entropy_1s
-       + 0.30 * mean(MEM.working_memory[0:10]))
+ + 0.30 * wm_entropy_1s
 # coefficients: 0.40 + 0.30 + 0.30 = 1.0 ✓
 
 # f03: Tapping Accuracy
 f03 = σ(0.40 * timing_stability_1s
-       + 0.30 * mean(MEM.prediction_buffer[20:30])
-       + 0.30 * (1 - timing_std_1s))
+ + 0.30 * (1 - timing_std_1s))
 # coefficients: 0.40 + 0.30 + 0.30 = 1.0 ✓
 
 # f04: Dissociation Index
 f04 = σ(0.50 * abs(f01 - f02)
-       + 0.50 * entrainment_phase_resets)
+ + 0.50 * entrainment_phase_resets)
 # coefficients: 0.50 + 0.50 = 1.0 ✓
 
 # Paradox effect
-paradox = f01 * (1 - f03)  # high entrainment × low accuracy
+paradox = f01 * (1 - f03) # high entrainment × low accuracy
 ```
 
 ---
@@ -411,26 +386,23 @@ paradox = f01 * (1 - f03)  # high entrainment × low accuracy
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    WMED INTERACTIONS                                         │
+│ WMED INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (PCU):                                                         │
-│  PWUP.precision_weight ─────► WMED (precision modulates entrainment PE)   │
-│  WMED.entrainment_strength ──► UDP (entrainment context for reward)        │
-│  WMED.dissociation_index ────► PSH (dual-route for silencing decision)    │
-│  WMED.wm_contribution ──────► IGFE (WM baseline for enhancement)          │
-│                                                                             │
-│  CROSS-UNIT (PCU → STU):                                                   │
-│  WMED.entrainment_strength ──► STU (entrainment for motor coupling)       │
-│  WMED.tapping_accuracy ─────► STU.HMCE (tapping accuracy baseline)        │
-│                                                                             │
-│  UPSTREAM DEPENDENCIES:                                                     │
-│  PPC mechanism (30D) ────────► WMED (phase-locking / entrainment)         │
-│  TPC mechanism (30D) ────────► WMED (temporal envelope / entrainment)     │
-│  MEM mechanism (30D) ────────► WMED (WM capacity / prediction)            │
-│  R³ (~15D) ──────────────────► WMED (direct spectral features)            │
-│  H³ (16 tuples) ─────────────► WMED (temporal dynamics)                   │
-│                                                                             │
+│ │
+│ INTRA-UNIT (PCU): │
+│ PWUP.precision_weight ─────► WMED (precision modulates entrainment PE) │
+│ WMED.entrainment_strength ──► UDP (entrainment context for reward) │
+│ WMED.dissociation_index ────► PSH (dual-route for silencing decision) │
+│ WMED.wm_contribution ──────► IGFE (WM baseline for enhancement) │
+│ │
+│ CROSS-UNIT (PCU → STU): │
+│ WMED.entrainment_strength ──► STU (entrainment for motor coupling) │
+│ WMED.tapping_accuracy ─────► STU.HMCE (tapping accuracy baseline) │
+│ │
+│ UPSTREAM DEPENDENCIES: │
+│ R³ (~15D) ──────────────────► WMED (direct spectral features) │
+│ H³ (16 tuples) ─────────────► WMED (temporal dynamics) │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -456,129 +428,109 @@ paradox = f01 * (1 - f03)  # high entrainment × low accuracy
 
 ```python
 class WMED(BaseModel):
-    """Working Memory-Entrainment Dissociation Model.
+ """Working Memory-Entrainment Dissociation Model.
 
-    Output: 11D per frame.
-    Reads: PPC mechanism (30D), TPC mechanism (30D), MEM mechanism (30D), R³ direct.
-    """
-    NAME = "WMED"
-    UNIT = "PCU"
-    TIER = "β2"
-    OUTPUT_DIM = 11
-    MECHANISM_NAMES = ("PPC", "TPC", "MEM")
+ Output: 11D per frame.
+ """
+ NAME = "WMED"
+ UNIT = "PCU"
+ TIER = "β2"
+ OUTPUT_DIM = 11
+ TAU_DECAY = 0.5 # s (Noboa 2025)
+ PARADOX_THRESHOLD = 0.6 # SS-EP level for paradox onset
 
-    TAU_DECAY = 0.5                # s (Noboa 2025)
-    PARADOX_THRESHOLD = 0.6        # SS-EP level for paradox onset
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """16 tuples for WMED computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ # ── Entrainment pathway: beat tracking ──
+ (10, 3, 0, 2), # spectral_flux, 100ms, value, bidi
+ (10, 3, 14, 2), # spectral_flux, 100ms, periodicity, bidi
+ (10, 16, 14, 2), # spectral_flux, 1000ms, periodicity, bidi
+ (11, 3, 0, 2), # onset_strength, 100ms, value, bidi
+ (11, 16, 14, 2), # onset_strength, 1000ms, periodicity, bidi
+ (7, 3, 2, 2), # amplitude, 100ms, std, bidi
+ (7, 16, 1, 2), # amplitude, 1000ms, mean, bidi
+ # ── Entrainment route: automatic coupling ──
+ (25, 3, 14, 2), # x_l0l5[0], 100ms, periodicity, bidi
+ (25, 16, 14, 2), # x_l0l5[0], 1000ms, periodicity, bidi
+ (25, 16, 21, 2), # x_l0l5[0], 1000ms, zero_crossings, bidi
+ # ── WM route: controlled processing ──
+ (41, 8, 0, 0), # x_l5l7[0], 500ms, value, fwd
+ (41, 16, 1, 0), # x_l5l7[0], 1000ms, mean, fwd
+ (41, 16, 20, 0), # x_l5l7[0], 1000ms, entropy, fwd
+ # ── Tapping accuracy ──
+ (21, 3, 0, 2), # spectral_change, 100ms, value, bidi
+ (21, 16, 2, 0), # spectral_change, 1000ms, std, fwd
+ (21, 16, 19, 0), # spectral_change, 1000ms, stability, fwd
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """16 tuples for WMED computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # ── Entrainment pathway: beat tracking ──
-            (10, 3, 0, 2),      # spectral_flux, 100ms, value, bidi
-            (10, 3, 14, 2),     # spectral_flux, 100ms, periodicity, bidi
-            (10, 16, 14, 2),    # spectral_flux, 1000ms, periodicity, bidi
-            (11, 3, 0, 2),      # onset_strength, 100ms, value, bidi
-            (11, 16, 14, 2),    # onset_strength, 1000ms, periodicity, bidi
-            (7, 3, 2, 2),       # amplitude, 100ms, std, bidi
-            (7, 16, 1, 2),      # amplitude, 1000ms, mean, bidi
-            # ── Entrainment route: automatic coupling ──
-            (25, 3, 14, 2),     # x_l0l5[0], 100ms, periodicity, bidi
-            (25, 16, 14, 2),    # x_l0l5[0], 1000ms, periodicity, bidi
-            (25, 16, 21, 2),    # x_l0l5[0], 1000ms, zero_crossings, bidi
-            # ── WM route: controlled processing ──
-            (41, 8, 0, 0),      # x_l5l7[0], 500ms, value, fwd
-            (41, 16, 1, 0),     # x_l5l7[0], 1000ms, mean, fwd
-            (41, 16, 20, 0),    # x_l5l7[0], 1000ms, entropy, fwd
-            # ── Tapping accuracy ──
-            (21, 3, 0, 2),      # spectral_change, 100ms, value, bidi
-            (21, 16, 2, 0),     # spectral_change, 1000ms, std, fwd
-            (21, 16, 19, 0),    # spectral_change, 1000ms, stability, fwd
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute WMED 11D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute WMED 11D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"PPC": (B,T,30), "TPC": (B,T,30), "MEM": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,11) WMED output
+ """
+ # Mechanism sub-sections
+ # H³ direct features
+ beat_period_1s = h3_direct[(10, 16, 14, 2)].unsqueeze(-1)
+ onset_period_1s = h3_direct[(11, 16, 14, 2)].unsqueeze(-1)
+ wm_coupling_mean_1s = h3_direct[(41, 16, 1, 0)].unsqueeze(-1)
+ wm_entropy_1s = h3_direct[(41, 16, 20, 0)].unsqueeze(-1)
+ timing_stability_1s = h3_direct[(21, 16, 19, 0)].unsqueeze(-1)
+ timing_std_1s = h3_direct[(21, 16, 2, 0)].unsqueeze(-1)
+ phase_resets = h3_direct[(25, 16, 21, 2)].unsqueeze(-1)
 
-        Returns:
-            (B,T,11) WMED output
-        """
-        ppc = mechanism_outputs["PPC"]
-        tpc = mechanism_outputs["TPC"]
-        mem = mechanism_outputs["MEM"]
+ # ═══ LAYER E: Explicit features ═══
 
-        # Mechanism sub-sections
-        ppc_pitch = ppc[..., 0:10]
-        tpc_env = tpc[..., 10:20]
-        mem_wm = mem[..., 0:10]
-        mem_ltm = mem[..., 10:20]
-        mem_pred = mem[..., 20:30]
+ # f01: Entrainment Strength (coefficients sum = 1.0)
+ f01 = torch.sigmoid(
+ 0.35 * beat_period_1s
+ + 0.35 * onset_period_1s
+ )
 
-        # H³ direct features
-        beat_period_1s = h3_direct[(10, 16, 14, 2)].unsqueeze(-1)
-        onset_period_1s = h3_direct[(11, 16, 14, 2)].unsqueeze(-1)
-        wm_coupling_mean_1s = h3_direct[(41, 16, 1, 0)].unsqueeze(-1)
-        wm_entropy_1s = h3_direct[(41, 16, 20, 0)].unsqueeze(-1)
-        timing_stability_1s = h3_direct[(21, 16, 19, 0)].unsqueeze(-1)
-        timing_std_1s = h3_direct[(21, 16, 2, 0)].unsqueeze(-1)
-        phase_resets = h3_direct[(25, 16, 21, 2)].unsqueeze(-1)
+ # f02: WM Contribution (coefficients sum = 1.0)
+ f02 = torch.sigmoid(
+ 0.40 * wm_coupling_mean_1s
+ + 0.30 * wm_entropy_1s
+ )
 
-        # ═══ LAYER E: Explicit features ═══
+ # f03: Tapping Accuracy (coefficients sum = 1.0)
+ f03 = torch.sigmoid(
+ 0.40 * timing_stability_1s
+ + 0.30 * (1 - timing_std_1s)
+ )
 
-        # f01: Entrainment Strength (coefficients sum = 1.0)
-        f01 = torch.sigmoid(
-            0.35 * beat_period_1s
-            + 0.35 * onset_period_1s
-            + 0.30 * tpc_env.mean(-1, keepdim=True)
-        )
+ # f04: Dissociation Index (coefficients sum = 1.0)
+ f04 = torch.sigmoid(
+ 0.50 * torch.abs(f01 - f02)
+ + 0.50 * phase_resets
+ )
 
-        # f02: WM Contribution (coefficients sum = 1.0)
-        f02 = torch.sigmoid(
-            0.40 * wm_coupling_mean_1s
-            + 0.30 * wm_entropy_1s
-            + 0.30 * mem_wm.mean(-1, keepdim=True)
-        )
+ # ═══ LAYER P: Present ═══
 
-        # f03: Tapping Accuracy (coefficients sum = 1.0)
-        f03 = torch.sigmoid(
-            0.40 * timing_stability_1s
-            + 0.30 * mem_pred.mean(-1, keepdim=True)
-            + 0.30 * (1 - timing_std_1s)
-        )
+ # ═══ LAYER F: Future ═══
+ next_beat = torch.sigmoid(0.5 * f01 + 0.5 * beat_period_1s)
+ tapping_pred = torch.sigmoid(0.5 * f03 + 0.5 * f02)
+ wm_interf = torch.sigmoid(
+ 0.5 * f01 + 0.5 * (1 - f02)
+ )
+ paradox = torch.sigmoid(
+ 0.5 * f01 + 0.5 * (1 - f03)
+ )
 
-        # f04: Dissociation Index (coefficients sum = 1.0)
-        f04 = torch.sigmoid(
-            0.50 * torch.abs(f01 - f02)
-            + 0.50 * phase_resets
-        )
-
-        # ═══ LAYER P: Present ═══
-        phase_lock = tpc_env.mean(-1, keepdim=True)
-        pattern_seg = mem_wm.mean(-1, keepdim=True)
-        rhythmic_eng = ppc_pitch.mean(-1, keepdim=True)
-
-        # ═══ LAYER F: Future ═══
-        next_beat = torch.sigmoid(0.5 * f01 + 0.5 * beat_period_1s)
-        tapping_pred = torch.sigmoid(0.5 * f03 + 0.5 * f02)
-        wm_interf = torch.sigmoid(
-            0.5 * f01 + 0.5 * (1 - f02)
-        )
-        paradox = torch.sigmoid(
-            0.5 * f01 + 0.5 * (1 - f03)
-        )
-
-        return torch.cat([
-            f01, f02, f03, f04,                          # E: 4D
-            phase_lock, pattern_seg, rhythmic_eng,       # P: 3D
-            next_beat, tapping_pred, wm_interf, paradox, # F: 4D
-        ], dim=-1)  # (B, T, 11)
+ return torch.cat([
+ f01, f02, f03, f04, # E: 4D
+ phase_lock, pattern_seg, rhythmic_eng, # P: 3D
+ next_beat, tapping_pred, wm_interf, paradox, # F: 4D
+ ], dim=-1) # (B, T, 11)
 ```
 
 ---
@@ -593,9 +545,6 @@ class WMED(BaseModel):
 | **Falsification Tests** | 7/7 testable, 5 confirmed | High validity |
 | **R³ Features Used** | ~15D of 49D | Energy + change + interactions |
 | **H³ Demand** | 16 tuples (0.69%) | Sparse, efficient |
-| **PPC Mechanism** | 30D (3 sub-sections) | Phase-locking / entrainment |
-| **TPC Mechanism** | 30D (3 sub-sections) | Temporal envelope / entrainment |
-| **MEM Mechanism** | 30D (3 sub-sections) | WM capacity / prediction |
 | **Output Dimensions** | **11D** | 3-layer structure (no M layer) |
 
 ---
@@ -623,11 +572,10 @@ class WMED(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D) | R³ (49D) |
-| Temporal | HC⁰ mechanisms (NPL, ITM, GRV, SGM) | PPC (30D) + TPC (30D) + MEM (30D) mechanisms |
-| Entrainment signal | S⁰.L3.coherence[14] + S⁰.X_L0L1[128:136] | R³[10,11] onset/flux + TPC.temporal_envelope |
-| WM pathway | S⁰.X_L4L5[192:200] | R³[41:49] x_l5l7 + MEM.working_memory |
-| Tapping accuracy | S⁰.L9.std_T[108] | R³[21] spectral_change + MEM.prediction_buffer |
-| Entrainment route | S⁰.X_L0L1[128:136] | R³[25:33] x_l0l5 + TPC.temporal_envelope |
+| Entrainment signal | S⁰.L3.coherence[14] + S⁰.X_L0L1[128:136] | R³[10,11] onset/flux |
+| WM pathway | S⁰.X_L4L5[192:200] | R³[41:49] x_l5l7 |
+| Tapping accuracy | S⁰.L9.std_T[108] | R³[21] spectral_change |
+| Entrainment route | S⁰.X_L0L1[128:136] | R³[25:33] x_l0l5 |
 | Demand format | HC⁰ index ranges | H³ 4-tuples (sparse) |
 | Total demand | 21/2304 = 0.91% | 16/2304 = 0.69% |
 | Output | 11D | 11D (same) |
@@ -642,13 +590,6 @@ class WMED(BaseModel):
 | Falsification tests | 5 testable, 3 confirmed | 7 testable, 5 confirmed |
 | Effect sizes | 3 | 15 |
 | Evidence modality | EEG + behavioral | EEG + MEG + behavioral + reviews |
-
-### Why PPC + TPC + MEM replaces HC⁰ mechanisms
-
-- **NPL → TPC.temporal_envelope** [10:20]: Neural phase locking for entrainment maps to TPC's temporal envelope tracking.
-- **ITM → MEM.prediction_buffer** [20:30]: Interval timing maps to MEM's prediction buffer for timing accuracy.
-- **GRV → TPC.spectral_shape** [0:10] + PPC.pitch_extraction [0:10]: Groove processing spans rhythmic pattern and phase-locking.
-- **SGM → MEM.long_term_memory** [10:20]: Striatal gradient memory maps to MEM's long-term pattern memory.
 
 ---
 

@@ -21,33 +21,33 @@ The **Singing Training Connectivity** (STC) model proposes that singing training
 SINGING TRAINING CONNECTIVITY
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-       INTEROCEPTIVE-MOTOR INTEGRATION
-       ═════════════════════════════════
+ INTEROCEPTIVE-MOTOR INTEGRATION
+ ═════════════════════════════════
 
-┌─────────────────┐          ┌─────────────────┐
-│    INSULA       │          │  SPEECH/RESP    │
-│ Interoceptive   │◄────────►│  SENSORIMOTOR   │
-│ Monitoring      │          │  AREAS          │
-│                 │          │                 │
-│ Body awareness  │          │ Voice production│
-│ Breath state    │          │ Breath control  │
-│ Vocal effort    │          │ Articulation    │
-└────────┬────────┘          └────────┬────────┘
-         │                            │
-         └────────────┬───────────────┘
-                      │
-                      ▼
+┌─────────────────┐ ┌─────────────────┐
+│ INSULA │ │ SPEECH/RESP │
+│ Interoceptive │◄────────►│ SENSORIMOTOR │
+│ Monitoring │ │ AREAS │
+│ │ │ │
+│ Body awareness │ │ Voice production│
+│ Breath state │ │ Breath control │
+│ Vocal effort │ │ Articulation │
+└────────┬────────┘ └────────┬────────┘
+ │ │
+ └────────────┬───────────────┘
+ │
+ ▼
 ┌──────────────────────────────────────────────────────────────────┐
-│              SINGING TRAINING EFFECT                              │
-│                                                                  │
-│   Pre-training:  Weak insula-sensorimotor connectivity           │
-│   Post-training: Enhanced resting-state connectivity             │
-│                                                                  │
-│   MECHANISMS:                                                    │
-│   ════════════                                                   │
-│   Respiratory motor control (breath-phrase coupling)             │
-│   Interoceptive awareness (vocal effort monitoring)              │
-│   Voice-body integration (sensorimotor feedback)                 │
+│ SINGING TRAINING EFFECT │
+│ │
+│ Pre-training: Weak insula-sensorimotor connectivity │
+│ Post-training: Enhanced resting-state connectivity │
+│ │
+│ MECHANISMS: │
+│ ════════════ │
+│ Respiratory motor control (breath-phrase coupling) │
+│ Interoceptive awareness (vocal effort monitoring) │
+│ Voice-body integration (sensorimotor feedback) │
 └──────────────────────────────────────────────────────────────────┘
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -71,65 +71,64 @@ STC extends motor planning to vocal-respiratory integration in the Motor Plannin
 
 ## 2. Neural Circuit: Complete Anatomy
 
-### 2.1 Information Flow Architecture (EAR → BRAIN → BEP+TMH → STC)
+### 2.1 Information Flow Architecture (EAR → BRAIN → STC)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    STC COMPUTATION ARCHITECTURE                             ║
+║ STC COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins x 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                         STC reads: ~16D                          │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                         STC demand: ~12 of 2304 tuples           │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Sensorimotor Circuit ═══════  ║
-║                               │                                              ║
-║                       ┌───────┴───────┐                                      ║
-║                       ▼               ▼                                      ║
-║  ┌─────────────────┐  ┌─────────────────┐                                   ║
-║  │  BEP (30D)      │  │  TMH (30D)      │                                   ║
-║  │                 │  │                 │                                    ║
-║  │ Beat Entr[0:10] │  │ Short-term      │                                   ║
-║  │ Motor Coup      │  │ Memory  [0:10]  │                                   ║
-║  │         [10:20] │  │ Sequence        │                                   ║
-║  │ Groove  [20:30] │  │ Integ  [10:20]  │                                   ║
-║  │                 │  │ Hierarch        │                                   ║
-║  │                 │  │ Struct  [20:30] │                                   ║
-║  └────────┬────────┘  └────────┬────────┘                                   ║
-║           │                    │                                              ║
-║           └────────┬───────────┘                                             ║
-║                    ▼                                                          ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    STC MODEL (11D Output)                        │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f28_interoceptive_coupling,                │        ║
-║  │                       f29_respiratory_integration,                │        ║
-║  │                       f30_speech_sensorimotor                     │        ║
-║  │  Layer M (Math):      connectivity_strength, respiratory_index,  │        ║
-║  │                       voice_body_coupling                         │        ║
-║  │  Layer P (Present):   insula_activity, vocal_motor               │        ║
-║  │  Layer F (Future):    connectivity_pred, respiratory_pred,       │        ║
-║  │                       vocal_pred                                  │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins x 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ STC reads: ~16D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ STC demand: ~12 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Sensorimotor Circuit ═══════ ║
+║ │ ║
+║ ┌───────┴───────┐ ║
+║ ▼ ▼ ║
+║ ┌─────────────────┐ ┌─────────────────┐ ║
+║ │ │ │ │ ║
+║ │ Beat Entr[0:10] │ │ Short-term │ ║
+║ │ Motor Coup │ │ Memory [0:10] │ ║
+║ │ [10:20] │ │ Sequence │ ║
+║ │ Groove [20:30] │ │ Integ [10:20] │ ║
+║ │ │ │ Hierarch │ ║
+║ │ │ │ Struct [20:30] │ ║
+║ └────────┬────────┘ └────────┬────────┘ ║
+║ │ │ ║
+║ └────────┬───────────┘ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ STC MODEL (11D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f28_interoceptive_coupling, │ ║
+║ │ f29_respiratory_integration, │ ║
+║ │ f30_speech_sensorimotor │ ║
+║ │ Layer M (Math): connectivity_strength, respiratory_index, │ ║
+║ │ voice_body_coupling │ ║
+║ │ Layer P (Present): insula_activity, vocal_motor │ ║
+║ │ Layer F (Future): connectivity_pred, respiratory_pred, │ ║
+║ │ vocal_pred │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -155,16 +154,16 @@ STC extends motor planning to vocal-respiratory integration in the Motor Plannin
 ### 3.2 Effect Size Summary
 
 ```
-Primary Evidence (k=6):  Multi-method convergence across species
-Method Range:            rs-fMRI, task fMRI + anesthesia (causal), single-neuron, ALE meta-analysis
-Key Effect Sizes:        F = 22.08 (Kleber 2013 right AIC interaction)
-                         t(728) = −4.8 (pitch accuracy singers > nonsingers)
-                         F(1,728) = 106.63 (pitch reproduction group main effect)
-                         r = 0.46 (phrase-interval correlation, 3285 units)
-Causal Evidence:         YES — vocal-fold anesthesia (Kleber 2013) + microstimulation (Eliades 2024)
-Heterogeneity:           Low (consistent insula-sensorimotor finding across paradigms)
-Quality Assessment:      γ-tier → approaching β (causal anesthesia evidence strengthens claim)
-Replication:             Partially replicated across Zarate 2008, 2010, Kleber 2013, Zamorano 2023
+Primary Evidence (k=6): Multi-method convergence across species
+Method Range: rs-fMRI, task fMRI + anesthesia (causal), single-neuron, ALE meta-analysis
+Key Effect Sizes: F = 22.08 (Kleber 2013 right AIC interaction)
+ t(728) = −4.8 (pitch accuracy singers > nonsingers)
+ F(1,728) = 106.63 (pitch reproduction group main effect)
+ r = 0.46 (phrase-interval correlation, 3285 units)
+Causal Evidence: YES — vocal-fold anesthesia (Kleber 2013) + microstimulation (Eliades 2024)
+Heterogeneity: Low (consistent insula-sensorimotor finding across paradigms)
+Quality Assessment: γ-tier → approaching β (causal anesthesia evidence strengthens claim)
+Replication: Partially replicated across Zarate 2008, 2010, Kleber 2013, Zamorano 2023
 ```
 
 ---
@@ -200,19 +199,14 @@ Replication:             Partially replicated across Zarate 2008, 2010, Kleber 2
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[33:41] x_l4l5 ───────────────┐
-TMH.sequence_integration[10:20] ─┼──► Interoceptive-motor connectivity
-BEP.motor_coupling[10:20] ──────┘   Insula ↔ sensorimotor binding
 
 R³[7] amplitude ─────────────────┐
 R³[8] loudness ──────────────────┼──► Respiratory motor control
-BEP.groove[20:30] ──────────────┘   Vocal intensity → breath coupling
 
 R³[12,15:18] timbre features ───┐
-TMH.short_term[0:10] ───────────┼──► Speech sensorimotor areas
-TMH.hierarchical[20:30] ────────┘   Vocal formants → articulatory feedback
 ```
 
 ---
@@ -221,7 +215,7 @@ TMH.hierarchical[20:30] ────────┘   Vocal formants → articul
 
 ### 5.1 Demand Specification
 
-STC requires H³ features at TMH horizons for interoceptive memory and BEP horizons for respiratory motor coupling. The demand reflects the vocal-respiratory temporal integration needed for singing.
+STC requires H³ features for interoceptive memory and for respiratory motor coupling. The demand reflects the vocal-respiratory temporal integration needed for singing.
 
 | R³ Index | Feature | H | Morph | Law | Purpose |
 |----------|---------|---|-------|-----|---------|
@@ -242,7 +236,7 @@ STC requires H³ features at TMH horizons for interoceptive memory and BEP horiz
 
 #### R³ v2 Projected Expansion
 
-STC projected v2 from G:Rhythm, aligned with BEP+TMH horizons.
+STC projected v2 from G:Rhythm, aligned with corresponding H³ horizons.
 
 | R³ Idx | Feature | Group | H | Morph | Law | Purpose |
 |:------:|---------|:-----:|:-:|-------|:---:|---------|
@@ -256,17 +250,6 @@ STC projected v2 from G:Rhythm, aligned with BEP+TMH horizons.
 **v2 projected**: 6 tuples
 **Total projected**: 18 tuples of 294,912 theoretical = 0.0061%
 
-### 5.2 BEP + TMH Mechanism Binding
-
-| Mechanism | Sub-section | Range | STC Role | Weight |
-|-----------|-------------|-------|----------|--------|
-| **BEP** | Beat Entrainment | BEP[0:10] | Phrase rhythmic structure | 0.5 |
-| **BEP** | Motor Coupling | BEP[10:20] | Insula-sensorimotor coupling | **1.0** (primary) |
-| **BEP** | Groove Processing | BEP[20:30] | Respiratory motor drive | 0.7 |
-| **TMH** | Short-term Memory | TMH[0:10] | Vocal timbre tracking | 0.7 |
-| **TMH** | Sequence Integration | TMH[10:20] | Interoceptive sequence | **1.0** (primary) |
-| **TMH** | Hierarchical Structure | TMH[20:30] | Voice-body hierarchy | **1.0** (primary) |
-
 ---
 
 ## 6. Output Space: 11D Multi-Layer Representation
@@ -279,50 +262,45 @@ STC OUTPUT TENSOR: 11D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 0  │ f28_interoceptive_coupling│[0, 1] │ Insula-sensorimotor connectivity.
-    │                          │        │ f28 = σ(0.40 * interoceptive_period_1s
-    │                          │        │       + 0.30 * mean(TMH.seq[10:20])
-    │                          │        │       + 0.30 * mean(BEP.motor[10:20]))
+ 0 │ f28_interoceptive_coupling│[0, 1] │ Insula-sensorimotor connectivity.
+ │ │ │ f28 = σ(0.40 * interoceptive_period_1s
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 1  │ f29_respiratory_integration│[0, 1]│ Respiratory motor control.
-    │                          │        │ f29 = σ(0.40 * respiratory_period_1s
-    │                          │        │       + 0.30 * mean(BEP.groove[20:30])
-    │                          │        │       + 0.30 * breath_entropy)
+ 1 │ f29_respiratory_integration│[0, 1]│ Respiratory motor control.
+ │ │ │ f29 = σ(0.40 * respiratory_period_1s
+ │ │ │ + 0.30 * breath_entropy)
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 2  │ f30_speech_sensorimotor  │ [0, 1] │ Speech motor areas activation.
-    │                          │        │ f30 = σ(0.35 * vocal_warmth_100ms
-    │                          │        │       + 0.35 * mean(TMH.hier[20:30])
-    │                          │        │       + 0.30 * mean(TMH.short[0:10]))
+ 2 │ f30_speech_sensorimotor │ [0, 1] │ Speech motor areas activation.
+ │ │ │ f30 = σ(0.35 * vocal_warmth_100ms
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 3  │ connectivity_strength    │ [0, 1] │ Insula-sensorimotor connectivity.
+ 3 │ connectivity_strength │ [0, 1] │ Insula-sensorimotor connectivity.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 4  │ respiratory_index        │ [0, 1] │ Respiratory control quality.
+ 4 │ respiratory_index │ [0, 1] │ Respiratory control quality.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 5  │ voice_body_coupling      │ [0, 1] │ Voice-body integration index.
+ 5 │ voice_body_coupling │ [0, 1] │ Voice-body integration index.
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 6  │ insula_activity          │ [0, 1] │ TMH interoceptive monitoring level.
+ 6 │ insula_activity │ [0, 1] │ temporal-context interoceptive monitoring level.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 7  │ vocal_motor              │ [0, 1] │ BEP vocal motor output level.
+ 7 │ vocal_motor │ [0, 1] │ beat-entrainment vocal motor output level.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 8  │ connectivity_pred        │ [0, 1] │ Connectivity change prediction.
+ 8 │ connectivity_pred │ [0, 1] │ Connectivity change prediction.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
- 9  │ respiratory_pred         │ [0, 1] │ Respiratory control prediction.
+ 9 │ respiratory_pred │ [0, 1] │ Respiratory control prediction.
 ────┼──────────────────────────┼────────┼────────────────────────────────────
-10  │ vocal_pred               │ [0, 1] │ Vocal production prediction.
+10 │ vocal_pred │ [0, 1] │ Vocal production prediction.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 11D per frame at 172.27 Hz
@@ -338,16 +316,16 @@ TOTAL: 11D per frame at 172.27 Hz
 ```
 PRIMARY EQUATIONS:
 
-    Connectivity_Change = Post_Training_RS - Pre_Training_RS
-    (RS = resting-state functional connectivity)
+ Connectivity_Change = Post_Training_RS - Pre_Training_RS
+ (RS = resting-state functional connectivity)
 
 INTEROCEPTIVE-MOTOR COUPLING:
 
-    Coupling = Insula_Activity × Sensorimotor_Activity × Training_Duration
+ Coupling = Insula_Activity × Sensorimotor_Activity × Training_Duration
 
 RESPIRATORY INTEGRATION:
 
-    Respiratory_Control = Breath_Regularity × Vocal_Intensity × Phrase_Alignment
+ Respiratory_Control = Breath_Regularity × Vocal_Intensity × Phrase_Alignment
 ```
 
 ### 7.2 Feature Formulas
@@ -357,20 +335,15 @@ RESPIRATORY INTEGRATION:
 
 # f28: Interoceptive Coupling
 f28 = σ(0.40 * interoceptive_period_1s
-       + 0.30 * mean(TMH.sequence_integration[10:20])
-       + 0.30 * mean(BEP.motor_coupling[10:20]))
 # coefficients: 0.40 + 0.30 + 0.30 = 1.0 ✓
 
 # f29: Respiratory Integration
 f29 = σ(0.40 * respiratory_period_1s
-       + 0.30 * mean(BEP.groove[20:30])
-       + 0.30 * breath_entropy)
+ + 0.30 * breath_entropy)
 # coefficients: 0.40 + 0.30 + 0.30 = 1.0 ✓
 
 # f30: Speech Sensorimotor
 f30 = σ(0.35 * vocal_warmth_100ms
-       + 0.35 * mean(TMH.hierarchical[20:30])
-       + 0.30 * mean(TMH.short_term[0:10]))
 # coefficients: 0.35 + 0.35 + 0.30 = 1.0 ✓
 ```
 
@@ -401,24 +374,22 @@ f30 = σ(0.35 * vocal_warmth_100ms
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    STC INTERACTIONS                                           │
+│ STC INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (MPU):                                                         │
-│  STC.interoceptive_coupling ────► MSR (training effects on connectivity)   │
-│  STC.respiratory_integration ───► SPMC (respiratory in motor circuit)      │
-│  STC.voice_body_coupling ───────► VRMSME (vocal in multi-modal)            │
-│                                                                             │
-│  CROSS-UNIT (MPU → ARU):                                                   │
-│  STC.vocal_motor ────────────────► ARU (singing pleasure/reward)           │
-│  STC.insula_activity ────────────► ARU (interoceptive affect signal)       │
-│                                                                             │
-│  UPSTREAM DEPENDENCIES:                                                     │
-│  BEP mechanism (30D) ────────────► STC (beat/motor processing)             │
-│  TMH mechanism (30D) ────────────► STC (temporal memory/sequence)          │
-│  R³ (~16D) ──────────────────────► STC (direct spectral features)          │
-│  H³ (12 tuples) ─────────────────► STC (temporal dynamics)                 │
-│                                                                             │
+│ │
+│ INTRA-UNIT (MPU): │
+│ STC.interoceptive_coupling ────► MSR (training effects on connectivity) │
+│ STC.respiratory_integration ───► SPMC (respiratory in motor circuit) │
+│ STC.voice_body_coupling ───────► VRMSME (vocal in multi-modal) │
+│ │
+│ CROSS-UNIT (MPU → ARU): │
+│ STC.vocal_motor ────────────────► ARU (singing pleasure/reward) │
+│ STC.insula_activity ────────────► ARU (interoceptive affect signal) │
+│ │
+│ UPSTREAM DEPENDENCIES: │
+│ R³ (~16D) ──────────────────────► STC (direct spectral features) │
+│ H³ (12 tuples) ─────────────────► STC (temporal dynamics) │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -442,127 +413,101 @@ f30 = σ(0.35 * vocal_warmth_100ms
 
 ```python
 class STC(BaseModel):
-    """Singing Training Connectivity Model.
+ """Singing Training Connectivity Model.
 
-    Output: 11D per frame.
-    Reads: BEP mechanism (30D), TMH mechanism (30D), R³ direct.
-    """
-    NAME = "STC"
-    UNIT = "MPU"
-    TIER = "γ3"
-    OUTPUT_DIM = 11
-    MECHANISM_NAMES = ("BEP", "TMH")
+ Output: 11D per frame.
+ """
+ NAME = "STC"
+ UNIT = "MPU"
+ TIER = "γ3"
+ OUTPUT_DIM = 11
+ TAU_DECAY = None # Training-dependent plasticity window
 
-    TAU_DECAY = None  # Training-dependent plasticity window
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """12 tuples for STC computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ (33, 3, 0, 2), # x_l4l5[0], 100ms, value, bidi
+ (33, 3, 2, 2), # x_l4l5[0], 100ms, std, bidi
+ (33, 8, 14, 2), # x_l4l5[0], 500ms, periodicity, bidi
+ (33, 16, 14, 2), # x_l4l5[0], 1000ms, periodicity, bidi
+ (25, 3, 0, 2), # x_l0l5[0], 100ms, value, bidi
+ (25, 8, 14, 2), # x_l0l5[0], 500ms, periodicity, bidi
+ (25, 16, 14, 2), # x_l0l5[0], 1000ms, periodicity, bidi
+ # ── Vocal/respiratory features ──
+ (8, 3, 0, 2), # loudness, 100ms, value, bidi
+ (8, 3, 20, 2), # loudness, 100ms, entropy, bidi
+ (12, 3, 0, 2), # warmth, 100ms, value, bidi
+ (15, 3, 0, 2), # tristimulus1, 100ms, value, bidi
+ (7, 8, 1, 2), # amplitude, 500ms, mean, bidi
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """12 tuples for STC computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # ── TMH horizons: interoceptive-motor ──
-            (33, 3, 0, 2),     # x_l4l5[0], 100ms, value, bidi
-            (33, 3, 2, 2),     # x_l4l5[0], 100ms, std, bidi
-            (33, 8, 14, 2),    # x_l4l5[0], 500ms, periodicity, bidi
-            (33, 16, 14, 2),   # x_l4l5[0], 1000ms, periodicity, bidi
-            # ── BEP horizons: respiratory coupling ──
-            (25, 3, 0, 2),     # x_l0l5[0], 100ms, value, bidi
-            (25, 8, 14, 2),    # x_l0l5[0], 500ms, periodicity, bidi
-            (25, 16, 14, 2),   # x_l0l5[0], 1000ms, periodicity, bidi
-            # ── Vocal/respiratory features ──
-            (8, 3, 0, 2),      # loudness, 100ms, value, bidi
-            (8, 3, 20, 2),     # loudness, 100ms, entropy, bidi
-            (12, 3, 0, 2),     # warmth, 100ms, value, bidi
-            (15, 3, 0, 2),     # tristimulus1, 100ms, value, bidi
-            (7, 8, 1, 2),      # amplitude, 500ms, mean, bidi
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute STC 11D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute STC 11D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"BEP": (B,T,30), "TMH": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,11) STC output
+ """
+ # H³ direct features
+ interoceptive_period_1s = h3_direct[(33, 16, 14, 2)].unsqueeze(-1)
+ respiratory_period_1s = h3_direct[(25, 16, 14, 2)].unsqueeze(-1)
+ breath_entropy = h3_direct[(8, 3, 20, 2)].unsqueeze(-1)
+ vocal_warmth_100ms = h3_direct[(12, 3, 0, 2)].unsqueeze(-1)
 
-        Returns:
-            (B,T,11) STC output
-        """
-        bep = mechanism_outputs["BEP"]    # (B, T, 30)
-        tmh = mechanism_outputs["TMH"]    # (B, T, 30)
+ # ═══ LAYER E: Explicit features ═══
 
-        # BEP sub-sections
-        bep_beat = bep[..., 0:10]
-        bep_motor = bep[..., 10:20]
-        bep_groove = bep[..., 20:30]
+ # f28: Interoceptive Coupling (coefficients sum = 1.0)
+ f28 = torch.sigmoid(
+ 0.40 * interoceptive_period_1s
+ )
 
-        # TMH sub-sections
-        tmh_short = tmh[..., 0:10]
-        tmh_seq = tmh[..., 10:20]
-        tmh_hier = tmh[..., 20:30]
+ # f29: Respiratory Integration (coefficients sum = 1.0)
+ f29 = torch.sigmoid(
+ 0.40 * respiratory_period_1s
+ + 0.30 * breath_entropy
+ )
 
-        # H³ direct features
-        interoceptive_period_1s = h3_direct[(33, 16, 14, 2)].unsqueeze(-1)
-        respiratory_period_1s = h3_direct[(25, 16, 14, 2)].unsqueeze(-1)
-        breath_entropy = h3_direct[(8, 3, 20, 2)].unsqueeze(-1)
-        vocal_warmth_100ms = h3_direct[(12, 3, 0, 2)].unsqueeze(-1)
+ # f30: Speech Sensorimotor (coefficients sum = 1.0)
+ f30 = torch.sigmoid(
+ 0.35 * vocal_warmth_100ms
+ )
 
-        # ═══ LAYER E: Explicit features ═══
+ # ═══ LAYER M: Mathematical ═══
+ connectivity_strength = torch.sigmoid(
+ 0.5 * f28 + 0.5 * interoceptive_period_1s
+ )
+ respiratory_index = f29
+ voice_body_coupling = torch.sigmoid(
+ 0.5 * f28 + 0.5 * f30
+ )
 
-        # f28: Interoceptive Coupling (coefficients sum = 1.0)
-        f28 = torch.sigmoid(
-            0.40 * interoceptive_period_1s
-            + 0.30 * tmh_seq.mean(-1, keepdim=True)
-            + 0.30 * bep_motor.mean(-1, keepdim=True)
-        )
+ # ═══ LAYER P: Present ═══
 
-        # f29: Respiratory Integration (coefficients sum = 1.0)
-        f29 = torch.sigmoid(
-            0.40 * respiratory_period_1s
-            + 0.30 * bep_groove.mean(-1, keepdim=True)
-            + 0.30 * breath_entropy
-        )
+ # ═══ LAYER F: Future ═══
+ connectivity_pred = torch.sigmoid(
+ 0.5 * f28 + 0.5 * interoceptive_period_1s
+ )
+ respiratory_pred = torch.sigmoid(
+ 0.5 * f29 + 0.5 * respiratory_period_1s
+ )
+ vocal_pred = torch.sigmoid(
+ 0.5 * f30 + 0.5 * vocal_warmth_100ms
+ )
 
-        # f30: Speech Sensorimotor (coefficients sum = 1.0)
-        f30 = torch.sigmoid(
-            0.35 * vocal_warmth_100ms
-            + 0.35 * tmh_hier.mean(-1, keepdim=True)
-            + 0.30 * tmh_short.mean(-1, keepdim=True)
-        )
-
-        # ═══ LAYER M: Mathematical ═══
-        connectivity_strength = torch.sigmoid(
-            0.5 * f28 + 0.5 * interoceptive_period_1s
-        )
-        respiratory_index = f29
-        voice_body_coupling = torch.sigmoid(
-            0.5 * f28 + 0.5 * f30
-        )
-
-        # ═══ LAYER P: Present ═══
-        insula_activity = tmh_seq.mean(-1, keepdim=True)
-        vocal_motor = bep_groove.mean(-1, keepdim=True)
-
-        # ═══ LAYER F: Future ═══
-        connectivity_pred = torch.sigmoid(
-            0.5 * f28 + 0.5 * interoceptive_period_1s
-        )
-        respiratory_pred = torch.sigmoid(
-            0.5 * f29 + 0.5 * respiratory_period_1s
-        )
-        vocal_pred = torch.sigmoid(
-            0.5 * f30 + 0.5 * vocal_warmth_100ms
-        )
-
-        return torch.cat([
-            f28, f29, f30,                                          # E: 3D
-            connectivity_strength, respiratory_index,
-            voice_body_coupling,                                     # M: 3D
-            insula_activity, vocal_motor,                            # P: 2D
-            connectivity_pred, respiratory_pred, vocal_pred,         # F: 3D
-        ], dim=-1)  # (B, T, 11)
+ return torch.cat([
+ f28, f29, f30, # E: 3D
+ connectivity_strength, respiratory_index,
+ voice_body_coupling, # M: 3D
+ insula_activity, vocal_motor, # P: 2D
+ connectivity_pred, respiratory_pred, vocal_pred, # F: 3D
+ ], dim=-1) # (B, T, 11)
 ```
 
 ---
@@ -579,8 +524,6 @@ class STC(BaseModel):
 | **Falsification Tests** | 2/5 testable | Anesthesia test partially validates criterion |
 | **R³ Features Used** | ~16D of 49D | Energy + timbre + interactions |
 | **H³ Demand** | 12 tuples (0.52%) | Sparse, efficient |
-| **BEP Mechanism** | 30D (3 sub-sections) | Beat/motor processing |
-| **TMH Mechanism** | 30D (3 sub-sections) | Temporal memory/sequence |
 | **Output Dimensions** | **11D** | 4-layer structure |
 
 ---
@@ -603,19 +546,12 @@ class STC(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D) | R³ (49D) |
-| Temporal | HC⁰ mechanisms (NPL, GRV, EFC) | BEP (30D) + TMH (30D) mechanisms |
-| Interoceptive signal | S⁰.X_L5L6[208:216] + HC⁰.EFC | R³.x_l4l5[33:41] + TMH.sequence_integration |
-| Respiratory signal | S⁰.X_L4L5[192:200] + HC⁰.GRV | R³.x_l0l5[25:33] + BEP.groove |
-| Vocal signal | S⁰.L6.spectral_envelope[55:60] + HC⁰.NPL | R³.timbre[12:21] + TMH.short_term |
+| Interoceptive signal | S⁰.X_L5L6[208:216] + HC⁰.EFC | R³.x_l4l5[33:41] |
+| Respiratory signal | S⁰.X_L4L5[192:200] + HC⁰.GRV | R³.x_l0l5[25:33] |
+| Vocal signal | S⁰.L6.spectral_envelope[55:60] + HC⁰.NPL | R³.timbre[12:21] |
 | Demand format | HC⁰ index ranges | H³ 4-tuples (sparse) |
 | Total demand | 12/2304 = 0.52% | 12/2304 = 0.52% |
 | Output | 11D | 11D (same) |
-
-### Why BEP + TMH replaces HC⁰ mechanisms
-
-- **EFC → TMH.sequence_integration** [10:20] + **BEP.motor_coupling** [10:20]: Efference copy mechanism for interoceptive-motor binding maps to TMH's sequence integration and BEP's motor coupling.
-- **GRV → BEP.groove_processing** [20:30]: Groove processing for respiratory motor drive maps to BEP's groove section.
-- **NPL → TMH.short_term** [0:10] + **TMH.hierarchical** [20:30]: Neural phase locking for vocal sensorimotor areas maps to TMH's short-term memory and hierarchical structure.
 
 ---
 
@@ -627,7 +563,6 @@ class STC(BaseModel):
 |---|-------|-----------------|------------------|------------|
 | 1 | `FULL_NAME` | "Singing Training Connectivity" | "Sensorimotor Timing Calibration" | Update code |
 | 2 | `OUTPUT_DIM` | 11 | 10 | Update code to 11 |
-| 3 | `MECHANISM_NAMES` | ("BEP", "TMH") | ("BEP",) | Add TMH to code |
 | 4 | `h3_demand` | 12 tuples (see §5.1) | () (empty) | Populate in code |
 | 5 | `LAYERS` | E(3), M(3), P(2), F(3) = 11D | E(3), M(2), P(2), F(3) = 10D | Update Layer M to 3 dims |
 | 6 | `dimension_names` | 11 names (§6.1) | 10 names (no voice_body_coupling) | Add missing dim |

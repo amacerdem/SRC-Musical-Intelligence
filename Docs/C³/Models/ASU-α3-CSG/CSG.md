@@ -21,26 +21,26 @@ The **Consonance-Salience Gradient** (CSG) model describes how dissonance level 
 CONSONANCE-SALIENCE GRADIENT
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-           CONSONANCE LEVEL
-  Consonant ◄─────────────────────────────────► Strong Dissonance
+ CONSONANCE LEVEL
+ Consonant ◄─────────────────────────────────► Strong Dissonance
 
-  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐
-  │  CONSONANT  │    │INTERMEDIATE │    │   STRONG    │
-  │  (Octave,   │    │ DISSONANCE  │    │ DISSONANCE  │
-  │   Fifth)    │    │ (m3, dim)   │    │  (Tritone)  │
-  └──────┬──────┘    └──────┬──────┘    └──────┬──────┘
-         │                  │                   │
-         ▼                  ▼                   ▼
-  Low Processing     Heschl's Gyrus ↑    ACC + Bilateral AI
-  Demand             (sensory evidence)   (SALIENCE NETWORK)
-                     d = 1.9              d = 5.16
+ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐
+ │ CONSONANT │ │INTERMEDIATE │ │ STRONG │
+ │ (Octave, │ │ DISSONANCE │ │ DISSONANCE │
+ │ Fifth) │ │ (m3, dim) │ │ (Tritone) │
+ └──────┬──────┘ └──────┬──────┘ └──────┬──────┘
+ │ │ │
+ ▼ ▼ ▼
+ Low Processing Heschl's Gyrus ↑ ACC + Bilateral AI
+ Demand (sensory evidence) (SALIENCE NETWORK)
+ d = 1.9 d = 5.16
 
-  RT: 4333ms         RT: 6792ms          RT: moderate
-  Valence: +3.5      Valence: ~5.7       Valence: -6.8
-                     (ambiguous)         (negative)
+ RT: 4333ms RT: 6792ms RT: moderate
+ Valence: +3.5 Valence: ~5.7 Valence: -6.8
+ (ambiguous) (negative)
 
-  AESTHETIC EFFECT:
-  Consonant > Dissonant for appreciation (p<0.001, d=2.008)
+ AESTHETIC EFFECT:
+ Consonant > Dissonant for appreciation (p<0.001, d=2.008)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 KEY INSIGHT: Dissonance drives salience network activation with a
@@ -61,83 +61,81 @@ CSG completes the α-tier salience triad by linking consonance to affective eval
 
 ## 2. Neural Circuit: Complete Anatomy
 
-### 2.1 Information Flow Architecture (EAR → BRAIN → ASA+BEP → CSG)
+### 2.1 Information Flow Architecture (EAR → BRAIN → CSG)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    CSG COMPUTATION ARCHITECTURE                              ║
+║ CSG COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins x 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
-║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ CHANGE   │ │ X-INT  │ │        ║
-║  │  │ 7D [0:7]  │ │ 5D[7:12]│ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
-║  │  │           │ │         │ │ [12:21] │ │ [21:25]  │ │ [25:49]│ │        ║
-║  │  │roughness  │ │amplitude│ │warmth   │ │spec_chg  │ │x_l0l5  │ │        ║
-║  │  │sethares   │ │loudness │ │tonalness│ │enrg_chg  │ │x_l4l5  │ │        ║
-║  │  │pleasantns │ │spec_cent│ │sharpness│ │          │ │x_l5l7  │ │        ║
-║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                         CSG reads: ~16D                          │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                                                                  │        ║
-║  │  ┌── BEP Horizons ─────────────┐ ┌── ASA Horizons ──────────┐  │        ║
-║  │  │ H0 (25ms gamma)            │ │ H3 (100ms alpha)          │  │        ║
-║  │  │ H3 (100ms alpha)           │ │ H8 (500ms delta)          │  │        ║
-║  │  │ H4 (125ms theta)           │ │ H16 (1000ms beat)         │  │        ║
-║  │  │ H16 (1000ms beat)          │ │                            │  │        ║
-║  │  │                             │ │ Salience evaluation        │  │        ║
-║  │  │ Consonance tracking         │ │ Affective dynamics         │  │        ║
-║  │  └─────────────────────────────┘ └────────────────────────────┘  │        ║
-║  │                         CSG demand: ~18 of 2304 tuples           │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Salience Circuit ════════     ║
-║                               │                                              ║
-║                       ┌───────┴───────┐                                      ║
-║                       ▼               ▼                                      ║
-║  ┌─────────────────┐  ┌─────────────────┐                                   ║
-║  │  BEP (30D)      │  │  ASA (30D)      │                                   ║
-║  │                 │  │                 │                                    ║
-║  │ Beat Entr[0:10] │  │ Scene An [0:10] │                                   ║
-║  │ Motor Coup      │  │ Attention       │                                   ║
-║  │         [10:20] │  │ Gating  [10:20] │                                   ║
-║  │ Groove  [20:30] │  │ Salience        │                                   ║
-║  │                 │  │ Weight  [20:30] │                                   ║
-║  └────────┬────────┘  └────────┬────────┘                                   ║
-║           │                    │                                              ║
-║           └────────┬───────────┘                                             ║
-║                    ▼                                                          ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    CSG MODEL (12D Output)                        │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f07_salience_activation,                   │        ║
-║  │                       f08_sensory_evidence,                      │        ║
-║  │                       f09_consonance_valence                      │        ║
-║  │  Layer M (Math):      salience_response,                          │        ║
-║  │                       rt_valence_judgment, aesthetic_appreciation  │        ║
-║  │  Layer P (Present):   salience_network, affective_eval,          │        ║
-║  │                       sensory_load                                │        ║
-║  │  Layer F (Future):    valence_pred, processing_pred,             │        ║
-║  │                       aesthetic_pred                               │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins x 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ ENERGY │ │ TIMBRE │ │ CHANGE │ │ X-INT │ │ ║
+║ │ │ 7D [0:7] │ │ 5D[7:12]│ │ 9D │ │ 4D │ │ 24D │ │ ║
+║ │ │ │ │ │ │ [12:21] │ │ [21:25] │ │ [25:49]│ │ ║
+║ │ │roughness │ │amplitude│ │warmth │ │spec_chg │ │x_l0l5 │ │ ║
+║ │ │sethares │ │loudness │ │tonalness│ │enrg_chg │ │x_l4l5 │ │ ║
+║ │ │pleasantns │ │spec_cent│ │sharpness│ │ │ │x_l5l7 │ │ ║
+║ │ └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │ ║
+║ │ CSG reads: ~16D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ │ ║
+║ │ │ H0 (25ms gamma) │ │ H3 (100ms alpha) │ │ ║
+║ │ │ H3 (100ms alpha) │ │ H8 (500ms delta) │ │ ║
+║ │ │ H4 (125ms theta) │ │ H16 (1000ms beat) │ │ ║
+║ │ │ H16 (1000ms beat) │ │ │ │ ║
+║ │ │ │ │ Salience evaluation │ │ ║
+║ │ │ Consonance tracking │ │ Affective dynamics │ │ ║
+║ │ └─────────────────────────────┘ └────────────────────────────┘ │ ║
+║ │ CSG demand: ~18 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Salience Circuit ════════ ║
+║ │ ║
+║ ┌───────┴───────┐ ║
+║ ▼ ▼ ║
+║ ┌─────────────────┐ ┌─────────────────┐ ║
+║ │ │ │ │ ║
+║ │ Beat Entr[0:10] │ │ Scene An [0:10] │ ║
+║ │ Motor Coup │ │ Attention │ ║
+║ │ [10:20] │ │ Gating [10:20] │ ║
+║ │ Groove [20:30] │ │ Salience │ ║
+║ │ │ │ Weight [20:30] │ ║
+║ └────────┬────────┘ └────────┬────────┘ ║
+║ │ │ ║
+║ └────────┬───────────┘ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ CSG MODEL (12D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f07_salience_activation, │ ║
+║ │ f08_sensory_evidence, │ ║
+║ │ f09_consonance_valence │ ║
+║ │ Layer M (Math): salience_response, │ ║
+║ │ rt_valence_judgment, aesthetic_appreciation │ ║
+║ │ Layer P (Present): salience_network, affective_eval, │ ║
+║ │ sensory_load │ ║
+║ │ Layer F (Future): valence_pred, processing_pred, │ ║
+║ │ aesthetic_pred │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -166,13 +164,13 @@ CSG completes the α-tier salience triad by linking consonance to affective eval
 
 ```
 Primary Evidence (k=12): 12 papers with converging multi-method evidence
-Salience activation:     d = 5.16 (ACC/AI, Bravo 2017)
-Sensory processing:      d = 1.9 (Heschl's, Bravo 2017)
-Valence mapping:         d = 3.31 (consonance-valence, Bravo 2017)
-Aesthetic preference:    d = 2.008 (Sarasso 2019)
-Cortical phase-locking:  Graded across consonance-dissonance (Fishman, Foo, Wöhrle)
-Quality Assessment:      α-tier (direct fMRI/EEG/ECoG/MEG measurement)
-Replication:             Multi-species (monkey+human), multi-method convergence
+Salience activation: d = 5.16 (ACC/AI, Bravo 2017)
+Sensory processing: d = 1.9 (Heschl's, Bravo 2017)
+Valence mapping: d = 3.31 (consonance-valence, Bravo 2017)
+Aesthetic preference: d = 2.008 (Sarasso 2019)
+Cortical phase-locking: Graded across consonance-dissonance (Fishman, Foo, Wöhrle)
+Quality Assessment: α-tier (direct fMRI/EEG/ECoG/MEG measurement)
+Replication: Multi-species (monkey+human), multi-method convergence
 ```
 
 ---
@@ -207,23 +205,20 @@ Replication:             Multi-species (monkey+human), multi-method convergence
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[0] roughness ────────────────┐
 R³[1] sethares ─────────────────┼──► Dissonance (inverse = consonance)
-R³[4] sensory_pleasantness ────┘   High roughness → dissonant → salience↑
+R³[4] sensory_pleasantness ────┘ High roughness → dissonant → salience↑
 
 R³[8] loudness ─────────────────┐
 R³[7] amplitude ────────────────┼──► Arousal component
-ASA.salience_weighting[20:30] ─┘   Intensity → emotional activation
 
 R³[12] warmth ──────────────────┐
 R³[9] spectral_centroid ───────┼──► Harmonic structure quality
-BEP.beat_entrainment[0:10] ───┘   Interval identity for consonance
 
 R³[25:33] x_l0l5 ──────────────┐
-ASA.attention_gating[10:20] ───┼──► Integrated salience signal
-H³ entropy/velocity tuples ────┘   Perceptual × feature = holistic assessment
+H³ entropy/velocity tuples ────┘ Perceptual × feature = holistic assessment
 ```
 
 ---
@@ -232,7 +227,7 @@ H³ entropy/velocity tuples ────┘   Perceptual × feature = holistic a
 
 ### 5.1 Demand Specification
 
-CSG requires H³ features at BEP horizons for consonance tracking and ASA horizons for salience evaluation and affective dynamics. The demand reflects the integration of consonance over multiple time scales for graded salience response.
+CSG requires H³ features for consonance tracking and for salience evaluation and affective dynamics. The demand reflects the integration of consonance over multiple time scales for graded salience response.
 
 | R³ Index | Feature | H | Morph | Law | Purpose |
 |----------|---------|---|-------|-----|---------|
@@ -259,7 +254,7 @@ CSG requires H³ features at BEP horizons for consonance tracking and ASA horizo
 
 #### R³ v2 Projected Expansion
 
-CSG is projected to consume R³ v2 features from F[49:65], aligned with BEP+ASA horizons.
+CSG is projected to consume R³ v2 features from F[49:65], aligned with corresponding H³ horizons.
 
 | R³ Idx | Feature | Group | H | Morph | Law | Purpose |
 |:------:|---------|:-----:|:-:|-------|:---:|---------|
@@ -269,17 +264,6 @@ CSG is projected to consume R³ v2 features from F[49:65], aligned with BEP+ASA 
 
 **v2 projected**: 3 tuples
 **Total projected**: 21 tuples of 294,912 theoretical = 0.0071%
-
-### 5.2 BEP + ASA Mechanism Binding
-
-| Mechanism | Sub-section | Range | CSG Role | Weight |
-|-----------|-------------|-------|----------|--------|
-| **BEP** | Beat Entrainment | BEP[0:10] | Harmonic structure context | 0.5 |
-| **BEP** | Motor Coupling | BEP[10:20] | Sensorimotor valence | 0.3 |
-| **BEP** | Groove Processing | BEP[20:30] | Rhythmic context for consonance | 0.2 |
-| **ASA** | Scene Analysis | ASA[0:10] | Consonance-in-scene assessment | 0.7 |
-| **ASA** | Attention Gating | ASA[10:20] | Salience detection for dissonance | **1.0** |
-| **ASA** | Salience Weighting | ASA[20:30] | Consonance-affective weighting | **0.9** |
 
 ---
 
@@ -293,51 +277,49 @@ CSG OUTPUT TENSOR: 12D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range   │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼─────────┼────────────────────────────────────
- 0  │ f07_salience_activation  │ [0, 1]  │ ACC/AI activation level.
-    │                          │         │ f07 = σ(0.40 * (1-consonance)
-    │                          │         │       + 0.35 * mean(ASA.attn[10:20])
-    │                          │         │       + 0.25 * loudness_entropy)
+ 0 │ f07_salience_activation │ [0, 1] │ ACC/AI activation level.
+ │ │ │ f07 = σ(0.40 * (1-consonance)
+ │ │ │ + 0.25 * loudness_entropy)
 ────┼──────────────────────────┼─────────┼────────────────────────────────────
- 1  │ f08_sensory_evidence     │ [0, 1]  │ Heschl's gyrus processing load.
-    │                          │         │ f08 = σ(0.40 * ambiguity
-    │                          │         │       + 0.35 * mean(ASA.scene[0:10])
-    │                          │         │       + 0.25 * roughness_std)
+ 1 │ f08_sensory_evidence │ [0, 1] │ Heschl's gyrus processing load.
+ │ │ │ f08 = σ(0.40 * ambiguity
+ │ │ │ + 0.25 * roughness_std)
 ────┼──────────────────────────┼─────────┼────────────────────────────────────
- 2  │ f09_consonance_valence   │ [-1, 1] │ Linear consonance-valence mapping.
-    │                          │         │ f09 = tanh(0.50 * pleasantness_vel
-    │                          │         │       + 0.50 * pleasantness_mean_1s)
+ 2 │ f09_consonance_valence │ [-1, 1] │ Linear consonance-valence mapping.
+ │ │ │ f09 = tanh(0.50 * pleasantness_vel
+ │ │ │ + 0.50 * pleasantness_mean_1s)
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range   │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼─────────┼────────────────────────────────────
- 3  │ salience_response        │ [0, 1]  │ Graded salience network response.
+ 3 │ salience_response │ [0, 1] │ Graded salience network response.
 ────┼──────────────────────────┼─────────┼────────────────────────────────────
- 4  │ rt_valence_judgment      │ [0, 1]  │ Inverted-U RT function.
+ 4 │ rt_valence_judgment │ [0, 1] │ Inverted-U RT function.
 ────┼──────────────────────────┼─────────┼────────────────────────────────────
- 5  │ aesthetic_appreciation   │ [0, 1]  │ Consonance preference index.
+ 5 │ aesthetic_appreciation │ [0, 1] │ Consonance preference index.
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range   │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼─────────┼────────────────────────────────────
- 6  │ salience_network         │ [0, 1]  │ ASA attention-gated salience.
+ 6 │ salience_network │ [0, 1] │ auditory-scene attention-gated salience.
 ────┼──────────────────────────┼─────────┼────────────────────────────────────
- 7  │ affective_evaluation     │ [-1, 1] │ ASA salience-weighted valence.
+ 7 │ affective_evaluation │ [-1, 1] │ auditory-scene salience-weighted valence.
 ────┼──────────────────────────┼─────────┼────────────────────────────────────
- 8  │ sensory_load             │ [0, 1]  │ BEP oscillatory processing load.
+ 8 │ sensory_load │ [0, 1] │ beat-entrainment oscillatory processing load.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name                     │ Range   │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼──────────────────────────┼─────────┼────────────────────────────────────
- 9  │ valence_pred_1.5s        │ [-1, 1] │ Behavioral valence prediction.
+ 9 │ valence_pred_1.5s │ [-1, 1] │ Behavioral valence prediction.
 ────┼──────────────────────────┼─────────┼────────────────────────────────────
-10  │ processing_pred_0.75s    │ [0, 1]  │ Heschl's load prediction.
+10 │ processing_pred_0.75s │ [0, 1] │ Heschl's load prediction.
 ────┼──────────────────────────┼─────────┼────────────────────────────────────
-11  │ aesthetic_pred_3s        │ [0, 1]  │ Appreciation prediction.
+11 │ aesthetic_pred_3s │ [0, 1] │ Appreciation prediction.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 12D per frame at 172.27 Hz
@@ -352,21 +334,21 @@ TOTAL: 12D per frame at 172.27 Hz
 
 ```
 Salience_Response(consonance) =
-    if consonance < threshold_low (0.3):
-        Salience_Network(ACC, AI) → HIGH ACTIVATION (d = 5.16)
-    elif threshold_low ≤ c < threshold_high (0.7):
-        Sensory_Cortex(Heschl) → INCREASED PROCESSING (d = 1.9)
-    else:
-        Baseline_Processing → EFFICIENT
+ if consonance < threshold_low (0.3):
+ Salience_Network(ACC, AI) → HIGH ACTIVATION (d = 5.16)
+ elif threshold_low ≤ c < threshold_high (0.7):
+ Sensory_Cortex(Heschl) → INCREASED PROCESSING (d = 1.9)
+ else:
+ Baseline_Processing → EFFICIENT
 
 RT(valence_judgment) ∝ |consonance - midpoint|⁻¹
-    RT_consonant = 4333ms, RT_intermediate = 6792ms
+ RT_consonant = 4333ms, RT_intermediate = 6792ms
 
 Valence(consonance) = a · consonance + b
-    Consonant: +3.5, Ambiguous: ~5.7, Dissonant: -6.8
+ Consonant: +3.5, Ambiguous: ~5.7, Dissonant: -6.8
 
 Aesthetic_Appreciation = β · consonance + ε
-    Consonant > Dissonant: d = 2.008, p < 0.001
+ Consonant > Dissonant: d = 2.008, p < 0.001
 ```
 
 ### 7.2 Feature Formulas
@@ -375,28 +357,26 @@ Aesthetic_Appreciation = β · consonance + ε
 # COEFFICIENT SATURATION RULE: For sigmoid(Σ wi*gi), |wi| must sum <= 1.0
 
 # f07: Salience Activation
-consonance = sensory_pleasantness_value  # R³[4]
+consonance = sensory_pleasantness_value # R³[4]
 dissonance = 1.0 - consonance
 f07 = σ(0.40 * dissonance
-       + 0.35 * mean(ASA.attention_gating[10:20])
-       + 0.25 * loudness_entropy)
+ + 0.25 * loudness_entropy)
 # coefficients: 0.40 + 0.35 + 0.25 = 1.0 ✓
 
 # f08: Sensory Evidence (inverted-U)
-ambiguity = 1.0 - |consonance - 0.5| * 2  # peaks at 0.5
+ambiguity = 1.0 - |consonance - 0.5| * 2 # peaks at 0.5
 f08 = σ(0.40 * ambiguity
-       + 0.35 * mean(ASA.scene_analysis[0:10])
-       + 0.25 * roughness_std)
+ + 0.25 * roughness_std)
 # coefficients: 0.40 + 0.35 + 0.25 = 1.0 ✓
 
 # f09: Consonance-Valence ([-1, 1] range)
 f09 = tanh(0.50 * pleasantness_velocity
-          + 0.50 * pleasantness_mean_1s)
+ + 0.50 * pleasantness_mean_1s)
 # coefficients: 0.50 + 0.50 = 1.0 ✓
 
 # Temporal dynamics
 dSalience/dt = τ⁻¹ · (Target_Salience - Current_Salience)
-    where τ = 4.0s (integration window)
+ where τ = 4.0s (integration window)
 ```
 
 ---
@@ -422,25 +402,23 @@ dSalience/dt = τ⁻¹ · (Target_Salience - Current_Salience)
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    CSG INTERACTIONS                                          │
+│ CSG INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (ASU):                                                         │
-│  CSG.salience_activation ────────► AACM (aesthetic attention modulation)   │
-│  CSG.consonance_valence ─────────► IACM (salience network complement)     │
-│  CSG.sensory_load ────────────────► STANM (network reconfiguration)       │
-│  CSG.aesthetic_appreciation ──────► PWSM (precision for consonance)       │
-│                                                                             │
-│  CROSS-UNIT (ASU → ARU):                                                   │
-│  CSG.consonance_valence ──────────► ARU.affect (valence information)      │
-│  CSG.aesthetic_appreciation ──────► ARU.reward (consonance pleasure)      │
-│                                                                             │
-│  UPSTREAM DEPENDENCIES:                                                     │
-│  BEP mechanism (30D) ──────────── ► CSG (harmonic context)                 │
-│  ASA mechanism (30D) ──────────── ► CSG (attention/salience, primary)     │
-│  R³ (~16D) ──────────────────────► CSG (direct consonance features)       │
-│  H³ (18 tuples) ─────────────────► CSG (temporal dynamics)                │
-│                                                                             │
+│ │
+│ INTRA-UNIT (ASU): │
+│ CSG.salience_activation ────────► AACM (aesthetic attention modulation) │
+│ CSG.consonance_valence ─────────► IACM (salience network complement) │
+│ CSG.sensory_load ────────────────► STANM (network reconfiguration) │
+│ CSG.aesthetic_appreciation ──────► PWSM (precision for consonance) │
+│ │
+│ CROSS-UNIT (ASU → ARU): │
+│ CSG.consonance_valence ──────────► ARU.affect (valence information) │
+│ CSG.aesthetic_appreciation ──────► ARU.reward (consonance pleasure) │
+│ │
+│ UPSTREAM DEPENDENCIES: │
+│ R³ (~16D) ──────────────────────► CSG (direct consonance features) │
+│ H³ (18 tuples) ─────────────────► CSG (temporal dynamics) │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -464,148 +442,126 @@ dSalience/dt = τ⁻¹ · (Target_Salience - Current_Salience)
 
 ```python
 class CSG(BaseModel):
-    """Consonance-Salience Gradient.
+ """Consonance-Salience Gradient.
 
-    Output: 12D per frame.
-    Reads: BEP mechanism (30D), ASA mechanism (30D), R³ direct.
-    """
-    NAME = "CSG"
-    UNIT = "ASU"
-    TIER = "α3"
-    OUTPUT_DIM = 12
-    MECHANISM_NAMES = ("BEP", "ASA")
+ Output: 12D per frame.
+ """
+ NAME = "CSG"
+ UNIT = "ASU"
+ TIER = "α3"
+ OUTPUT_DIM = 12
+ THRESHOLD_LOW = 0.3 # Strong dissonance boundary
+ THRESHOLD_HIGH = 0.7 # Consonance boundary
+ D_SALIENCE = 5.16 # Effect size for salience activation
+ D_SENSORY = 1.9 # Effect size for sensory processing
+ D_VALENCE = 3.31 # Effect size for valence
+ TAU_DECAY = 4.0 # Integration window (seconds)
 
-    THRESHOLD_LOW = 0.3     # Strong dissonance boundary
-    THRESHOLD_HIGH = 0.7    # Consonance boundary
-    D_SALIENCE = 5.16       # Effect size for salience activation
-    D_SENSORY = 1.9         # Effect size for sensory processing
-    D_VALENCE = 3.31        # Effect size for valence
-    TAU_DECAY = 4.0         # Integration window (seconds)
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """18 tuples for CSG computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ (0, 0, 0, 2), # roughness, 25ms, value, bidi
+ (0, 3, 1, 2), # roughness, 100ms, mean, bidi
+ (0, 3, 2, 2), # roughness, 100ms, std, bidi
+ (0, 16, 1, 2), # roughness, 1000ms, mean, bidi
+ (4, 3, 0, 2), # sensory_pleasantness, 100ms, value, bidi
+ (4, 3, 8, 2), # sensory_pleasantness, 100ms, velocity, bidi
+ (4, 16, 1, 2), # sensory_pleasantness, 1000ms, mean, bidi
+ (8, 3, 0, 2), # loudness, 100ms, value, bidi
+ (8, 3, 20, 2), # loudness, 100ms, entropy, bidi
+ (8, 16, 1, 2), # loudness, 1000ms, mean, bidi
+ (1, 3, 0, 2), # sethares, 100ms, value, bidi
+ (1, 8, 8, 0), # sethares, 500ms, velocity, fwd
+ (21, 4, 8, 0), # spectral_change, 125ms, velocity, fwd
+ # ── Direct H³: salience coupling ──
+ (25, 3, 0, 2), # x_l0l5[0], 100ms, value, bidi
+ (25, 8, 0, 2), # x_l0l5[0], 500ms, value, bidi
+ (25, 16, 1, 2), # x_l0l5[0], 1000ms, mean, bidi
+ (22, 3, 8, 0), # energy_change, 100ms, velocity, fwd
+ (9, 3, 0, 2), # spectral_centroid, 100ms, value, bidi
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """18 tuples for CSG computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # ── BEP horizons: consonance tracking ──
-            (0, 0, 0, 2),     # roughness, 25ms, value, bidi
-            (0, 3, 1, 2),     # roughness, 100ms, mean, bidi
-            (0, 3, 2, 2),     # roughness, 100ms, std, bidi
-            (0, 16, 1, 2),    # roughness, 1000ms, mean, bidi
-            (4, 3, 0, 2),     # sensory_pleasantness, 100ms, value, bidi
-            (4, 3, 8, 2),     # sensory_pleasantness, 100ms, velocity, bidi
-            (4, 16, 1, 2),    # sensory_pleasantness, 1000ms, mean, bidi
-            # ── ASA horizons: salience evaluation ──
-            (8, 3, 0, 2),     # loudness, 100ms, value, bidi
-            (8, 3, 20, 2),    # loudness, 100ms, entropy, bidi
-            (8, 16, 1, 2),    # loudness, 1000ms, mean, bidi
-            (1, 3, 0, 2),     # sethares, 100ms, value, bidi
-            (1, 8, 8, 0),     # sethares, 500ms, velocity, fwd
-            (21, 4, 8, 0),    # spectral_change, 125ms, velocity, fwd
-            # ── Direct H³: salience coupling ──
-            (25, 3, 0, 2),    # x_l0l5[0], 100ms, value, bidi
-            (25, 8, 0, 2),    # x_l0l5[0], 500ms, value, bidi
-            (25, 16, 1, 2),   # x_l0l5[0], 1000ms, mean, bidi
-            (22, 3, 8, 0),    # energy_change, 100ms, velocity, fwd
-            (9, 3, 0, 2),     # spectral_centroid, 100ms, value, bidi
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute CSG 12D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute CSG 12D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"BEP": (B,T,30), "ASA": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) -> (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,12) CSG output
+ """
+ # R³ features
+ roughness = r3[..., 0:1]
+ sethares = r3[..., 1:2]
+ pleasantness = r3[..., 4:5]
+ loudness = r3[..., 8:9]
 
-        Returns:
-            (B,T,12) CSG output
-        """
-        bep = mechanism_outputs["BEP"]    # (B, T, 30)
-        asa = mechanism_outputs["ASA"]    # (B, T, 30)
+ # H³ direct features
+ loudness_entropy = h3_direct[(8, 3, 20, 2)].unsqueeze(-1)
+ roughness_std = h3_direct[(0, 3, 2, 2)].unsqueeze(-1)
+ pleasantness_velocity = h3_direct[(4, 3, 8, 2)].unsqueeze(-1)
+ pleasantness_mean_1s = h3_direct[(4, 16, 1, 2)].unsqueeze(-1)
 
-        # R³ features
-        roughness = r3[..., 0:1]
-        sethares = r3[..., 1:2]
-        pleasantness = r3[..., 4:5]
-        loudness = r3[..., 8:9]
+ # Consonance proxy
+ consonance = pleasantness
+ dissonance = 1.0 - consonance
+ ambiguity = 1.0 - torch.abs(consonance - 0.5) * 2
 
-        # ASA sub-sections
-        asa_scene = asa[..., 0:10]
-        asa_attn = asa[..., 10:20]
-        asa_salience = asa[..., 20:30]
+ # ═══ LAYER E: Explicit features ═══
+ f07 = torch.sigmoid(
+ 0.40 * dissonance
+ + 0.25 * loudness_entropy
+ )
+ f08 = torch.sigmoid(
+ 0.40 * ambiguity
+ + 0.25 * roughness_std
+ )
+ f09 = torch.tanh(
+ 0.50 * pleasantness_velocity
+ + 0.50 * pleasantness_mean_1s
+ )
 
-        # BEP sub-sections
-        bep_beat = bep[..., 0:10]
+ # ═══ LAYER M: Mathematical ═══
+ salience_response = torch.sigmoid(
+ 0.5 * f07 + 0.3 * f08 + 0.2 * dissonance
+ )
+ rt_judgment = torch.sigmoid(
+ 0.5 * ambiguity + 0.5 * f08
+ )
+ aesthetic = torch.sigmoid(
+ 0.5 * consonance + 0.5 * pleasantness_mean_1s
+ )
 
-        # H³ direct features
-        loudness_entropy = h3_direct[(8, 3, 20, 2)].unsqueeze(-1)
-        roughness_std = h3_direct[(0, 3, 2, 2)].unsqueeze(-1)
-        pleasantness_velocity = h3_direct[(4, 3, 8, 2)].unsqueeze(-1)
-        pleasantness_mean_1s = h3_direct[(4, 16, 1, 2)].unsqueeze(-1)
+ # ═══ LAYER P: Present ═══
+ affective_eval = torch.tanh(
+ + 0.5 * f09
+ )
+ sensory_load = torch.sigmoid(
+ + 0.5 * ambiguity
+ )
 
-        # Consonance proxy
-        consonance = pleasantness
-        dissonance = 1.0 - consonance
-        ambiguity = 1.0 - torch.abs(consonance - 0.5) * 2
+ # ═══ LAYER F: Future ═══
+ valence_pred = torch.tanh(
+ 0.5 * f09 + 0.5 * pleasantness_mean_1s
+ )
+ processing_pred = torch.sigmoid(
+ 0.5 * f08 + 0.5 * ambiguity
+ )
+ aesthetic_pred = torch.sigmoid(
+ 0.5 * aesthetic + 0.5 * consonance
+ )
 
-        # ═══ LAYER E: Explicit features ═══
-        f07 = torch.sigmoid(
-            0.40 * dissonance
-            + 0.35 * asa_attn.mean(-1, keepdim=True)
-            + 0.25 * loudness_entropy
-        )
-        f08 = torch.sigmoid(
-            0.40 * ambiguity
-            + 0.35 * asa_scene.mean(-1, keepdim=True)
-            + 0.25 * roughness_std
-        )
-        f09 = torch.tanh(
-            0.50 * pleasantness_velocity
-            + 0.50 * pleasantness_mean_1s
-        )
-
-        # ═══ LAYER M: Mathematical ═══
-        salience_response = torch.sigmoid(
-            0.5 * f07 + 0.3 * f08 + 0.2 * dissonance
-        )
-        rt_judgment = torch.sigmoid(
-            0.5 * ambiguity + 0.5 * f08
-        )
-        aesthetic = torch.sigmoid(
-            0.5 * consonance + 0.5 * pleasantness_mean_1s
-        )
-
-        # ═══ LAYER P: Present ═══
-        salience_net = asa_attn.mean(-1, keepdim=True)
-        affective_eval = torch.tanh(
-            0.5 * asa_salience.mean(-1, keepdim=True)
-            + 0.5 * f09
-        )
-        sensory_load = torch.sigmoid(
-            0.5 * bep_beat.mean(-1, keepdim=True)
-            + 0.5 * ambiguity
-        )
-
-        # ═══ LAYER F: Future ═══
-        valence_pred = torch.tanh(
-            0.5 * f09 + 0.5 * pleasantness_mean_1s
-        )
-        processing_pred = torch.sigmoid(
-            0.5 * f08 + 0.5 * ambiguity
-        )
-        aesthetic_pred = torch.sigmoid(
-            0.5 * aesthetic + 0.5 * consonance
-        )
-
-        return torch.cat([
-            f07, f08, f09,                                          # E: 3D
-            salience_response, rt_judgment, aesthetic,               # M: 3D
-            salience_net, affective_eval, sensory_load,             # P: 3D
-            valence_pred, processing_pred, aesthetic_pred,           # F: 3D
-        ], dim=-1)  # (B, T, 12)
+ return torch.cat([
+ f07, f08, f09, # E: 3D
+ salience_response, rt_judgment, aesthetic, # M: 3D
+ salience_net, affective_eval, sensory_load, # P: 3D
+ valence_pred, processing_pred, aesthetic_pred, # F: 3D
+ ], dim=-1) # (B, T, 12)
 ```
 
 ---
@@ -621,8 +577,6 @@ class CSG(BaseModel):
 | **Falsification Tests** | 4/5 confirmed | High validity |
 | **R³ Features Used** | ~16D of 49D | Consonance + energy + interactions |
 | **H³ Demand** | 18 tuples (0.78%) | Sparse, efficient |
-| **BEP Mechanism** | 30D (3 sub-sections) | Harmonic context (secondary) |
-| **ASA Mechanism** | 30D (3 sub-sections) | Attention/salience (primary) |
 | **Output Dimensions** | **12D** | 4-layer structure |
 
 ---
@@ -662,20 +616,13 @@ class CSG(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D) | R³ (49D) |
-| Temporal | HC⁰ mechanisms (OSC, ATT, AED) | BEP (30D) + ASA (30D) mechanisms |
 | Consonance | S⁰.L5.roughness[30] + S⁰.L5.sethares[31] | R³.roughness[0] + R³.sethares[1] + R³.sensory_pleasantness[4] |
-| Salience | S⁰.L5.loudness[35] + HC⁰.ATT | R³.loudness[8] + ASA.attention_gating |
-| Affective | S⁰.L6.spectral_envelope[55:60] + HC⁰.AED | R³.warmth[12] + ASA.salience_weighting |
+| Salience | S⁰.L5.loudness[35] + HC⁰.ATT | R³.loudness[8] |
+| Affective | S⁰.L6.spectral_envelope[55:60] + HC⁰ affect | R³.warmth[12] |
 | Integration | S⁰.X_L5L6[208:216] | R³.x_l0l5[25:33] + H³ tuples |
 | Demand format | HC⁰ index ranges | H³ 4-tuples (sparse) |
 | Total demand | 26/2304 = 1.13% | 18/2304 = 0.78% |
 | Output | 12D | 12D (same) |
-
-### Why BEP + ASA replaces HC⁰ mechanisms
-
-- **OSC → BEP.beat_entrainment** [0:10]: Oscillatory band tracking maps to BEP's harmonic context monitoring (secondary).
-- **ATT → ASA.attention_gating** [10:20]: Attentional salience for dissonance maps to ASA's attention gating (primary).
-- **AED → ASA.salience_weighting** [20:30]: Affective entrainment dynamics maps to ASA's consonance-weighted salience evaluation.
 
 ---
 

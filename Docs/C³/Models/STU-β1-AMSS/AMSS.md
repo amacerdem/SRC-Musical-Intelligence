@@ -21,15 +21,13 @@ The **Attention-Modulated Stream Segregation** (AMSS) model describes how top-do
 THE THREE ATTENTION DELAY WINDOWS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-EARLY WINDOW (150-220ms)                MIDDLE WINDOW (320-360ms)
-Brain region: Heschl's Gyrus            Brain region: STG
-Mechanism: TMH.short_context            Mechanism: TMH.medium_context
-Function: "Select this stream"          Function: "Track this stream"
-Evidence: d = 0.60 (Hausfeld 2021)      Evidence: bassoon > cello
+EARLY WINDOW (150-220ms) MIDDLE WINDOW (320-360ms)
+Brain region: Heschl's Gyrus Brain region: STG
+Function: "Select this stream" Function: "Track this stream"
+Evidence: d = 0.60 (Hausfeld 2021) Evidence: bassoon > cello
 
 LATE WINDOW (410-450ms)
 Brain region: IFG / MTG
-Mechanism: TMH.long_context
 Function: "Integrate stream identity"
 Evidence: d = 0.68 (attended > unattended)
 
@@ -58,121 +56,120 @@ AMSS establishes how attention shapes the sensorimotor processing of concurrent 
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                 AMSS — COMPLETE CIRCUIT                                      ║
+║ AMSS — COMPLETE CIRCUIT ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  POLYPHONIC INPUT (e.g. Bassoon + Cello)                                     ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │        HESCHL'S GYRUS (Primary Auditory Cortex)                    │    ║
-║  │        Early attention window: 150–220 ms                          │    ║
-║  │        Function: Initial stream selection                          │    ║
-║  │        Effect: Attended > unattended envelope tracking (d = 0.60)  │    ║
-║  └──────────────────────────┬──────────────────────────────────────────┘    ║
-║                              │  Increasing processing depth                  ║
-║                              ▼                                               ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │        SUPERIOR TEMPORAL GYRUS (STG)                                │    ║
-║  │        Middle attention window: 320–360 ms                          │    ║
-║  │        Function: Ongoing stream tracking                            │    ║
-║  │        Effect: Bassoon > cello attention modulation                 │    ║
-║  └──────────────────────────┬──────────────────────────────────────────┘    ║
-║                              │                                               ║
-║                              ▼                                               ║
-║  ┌─────────────────────────────────────────────────────────────────────┐    ║
-║  │        MIDDLE TEMPORAL GYRUS (MTG) / INFERIOR FRONTAL GYRUS (IFG)  │    ║
-║  │        Late attention window: 410–450 ms                            │    ║
-║  │        Function: Deep stream integration and identity binding       │    ║
-║  │        Effect: Strongest attention enhancement (d = 0.68)           │    ║
-║  └─────────────────────────────────────────────────────────────────────┘    ║
-║                                                                              ║
-║  GRADIENT: Processing delay ↔ Attention depth: early → middle → late       ║
-║  MODULATION: Attended envelope tracking d = 0.60–0.68 (Hausfeld 2021)      ║
-║                                                                              ║
+║ ║
+║ POLYPHONIC INPUT (e.g. Bassoon + Cello) ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ HESCHL'S GYRUS (Primary Auditory Cortex) │ ║
+║ │ Early attention window: 150–220 ms │ ║
+║ │ Function: Initial stream selection │ ║
+║ │ Effect: Attended > unattended envelope tracking (d = 0.60) │ ║
+║ └──────────────────────────┬──────────────────────────────────────────┘ ║
+║ │ Increasing processing depth ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ SUPERIOR TEMPORAL GYRUS (STG) │ ║
+║ │ Middle attention window: 320–360 ms │ ║
+║ │ Function: Ongoing stream tracking │ ║
+║ │ Effect: Bassoon > cello attention modulation │ ║
+║ └──────────────────────────┬──────────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────────────────────────────────────────────────────────┐ ║
+║ │ MIDDLE TEMPORAL GYRUS (MTG) / INFERIOR FRONTAL GYRUS (IFG) │ ║
+║ │ Late attention window: 410–450 ms │ ║
+║ │ Function: Deep stream integration and identity binding │ ║
+║ │ Effect: Strongest attention enhancement (d = 0.68) │ ║
+║ └─────────────────────────────────────────────────────────────────────┘ ║
+║ ║
+║ GRADIENT: Processing delay ↔ Attention depth: early → middle → late ║
+║ MODULATION: Attended envelope tracking d = 0.60–0.68 (Hausfeld 2021) ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 CRITICAL EVIDENCE:
 ─────────────────
-Hausfeld 2021 (EEG):   Attended > unattended envelope tracking (n=15, mTRF)
-Hausfeld 2021 (EEG):   Bassoon shows stronger attention effects than cello
-Hausfeld 2021 (EEG):   Three delay windows: early, middle, late
-Wikman 2025 (fMRI):    Attended object DOMINATES AC activation pattern (n=20)
-Basinski 2025 (EEG):   Inharmonicity triggers ORN + P3a, F(2,170)=31.38 (n=35)
+Hausfeld 2021 (EEG): Attended > unattended envelope tracking (n=15, mTRF)
+Hausfeld 2021 (EEG): Bassoon shows stronger attention effects than cello
+Hausfeld 2021 (EEG): Three delay windows: early, middle, late
+Wikman 2025 (fMRI): Attended object DOMINATES AC activation pattern (n=20)
+Basinski 2025 (EEG): Inharmonicity triggers ORN + P3a, F(2,170)=31.38 (n=35)
 ```
 
-### 2.2 Information Flow Architecture (EAR → BRAIN → TMH → AMSS)
+### 2.2 Information Flow Architecture (EAR → BRAIN → AMSS)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                    AMSS COMPUTATION ARCHITECTURE                             ║
+║ AMSS COMPUTATION ARCHITECTURE ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  AUDIO (44.1kHz waveform)                                                    ║
-║       │                                                                      ║
-║       ▼                                                                      ║
-║  ┌──────────────────┐                                                        ║
-║  │ COCHLEA          │  128 mel bins × 172.27Hz frame rate                    ║
-║  │ (Mel Spectrogram)│  hop = 256 samples, frame = 5.8ms                     ║
-║  └────────┬─────────┘                                                        ║
-║           │                                                                  ║
-║  ═════════╪══════════════════════════ EAR ═══════════════════════════════    ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  SPECTRAL (R³): 49D per frame                                    │        ║
-║  │                                                                  │        ║
-║  │  ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │        ║
-║  │  │CONSONANCE │ │ ENERGY  │ │ TIMBRE  │ │ CHANGE   │ │ X-INT  │ │        ║
-║  │  │ 7D [0:7]  │ │ 5D[7:12]│ │ 9D      │ │ 4D       │ │ 24D    │ │        ║
-║  │  │           │ │         │ │ [12:21] │ │ [21:25]  │ │ [25:49]│ │        ║
-║  │  │           │ │amplitude│ │bright-  │ │spec_chg  │ │x_l0l5  │ │        ║
-║  │  │           │ │loudness │ │ness     │ │energy_chg│ │x_l4l5  │ │        ║
-║  │  │           │ │centroid │ │sharpness│ │pitch_chg │ │x_l5l7  │ │        ║
-║  │  │           │ │flux     │ │roughness│ │timbre_chg│ │        │ │        ║
-║  │  │           │ │onset    │ │         │ │          │ │        │ │        ║
-║  │  └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │        ║
-║  │                         AMSS reads: 28D                          │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │  TEMPORAL (H³): Multi-scale windowed morphological features      │        ║
-║  │                                                                  │        ║
-║  │  ┌── Syllable ────┐ ┌── Beat ──────────┐ ┌── Section ────────┐ │        ║
-║  │  │ 300ms (H8)     │ │ 700ms (H14)      │ │ 5000ms (H20)     │ │        ║
-║  │  │                │ │                   │ │                    │ │        ║
-║  │  │ Early window   │ │ Middle window     │ │ Late window        │ │        ║
-║  │  │ (150-220ms)    │ │ (320-360ms)      │ │ (410-450ms)       │ │        ║
-║  │  └──────┬─────────┘ └──────┬────────────┘ └──────┬─────────────┘ │        ║
-║  │         │                  │                     │               │        ║
-║  │         └──────────────────┴─────────────────────┘               │        ║
-║  │                         AMSS demand: ~16 of 2304 tuples          │        ║
-║  └────────────────────────────┬─────────────────────────────────────┘        ║
-║                               │                                              ║
-║  ═════════════════════════════╪═══════ BRAIN: Sensorimotor Circuit ═══════  ║
-║                               │                                              ║
-║                               ▼                                              ║
-║  ┌─────────────────┐                                                        ║
-║  │  TMH (30D)      │  Temporal Memory Hierarchy mechanism                   ║
-║  │                 │                                                        ║
-║  │ Short   [0:10] │  Early attention: stream selection, envelope onset      ║
-║  │ Medium  [10:20]│  Middle attention: stream tracking, instrument ID       ║
-║  │ Long    [20:30]│  Late attention: deep integration, stream binding       ║
-║  └────────┬────────┘                                                        ║
-║           │                                                                  ║
-║           ▼                                                                  ║
-║  ┌──────────────────────────────────────────────────────────────────┐        ║
-║  │                    AMSS MODEL (11D Output)                       │        ║
-║  │                                                                  │        ║
-║  │  Layer E (Explicit):  f01_early_attention, f02_middle_attention, │        ║
-║  │                       f03_late_attention,                         │        ║
-║  │                       f04_stream_enhancement, f05_instrument_sep │        ║
-║  │  Layer M (Math):      attention_gradient, segregation_index      │        ║
-║  │  Layer P (Present):   envelope_tracking, spectral_separation     │        ║
-║  │  Layer F (Future):    stream_continuation, attention_predict      │        ║
-║  └──────────────────────────────────────────────────────────────────┘        ║
-║                                                                              ║
+║ ║
+║ AUDIO (44.1kHz waveform) ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────┐ ║
+║ │ COCHLEA │ 128 mel bins × 172.27Hz frame rate ║
+║ │ (Mel Spectrogram)│ hop = 256 samples, frame = 5.8ms ║
+║ └────────┬─────────┘ ║
+║ │ ║
+║ ═════════╪══════════════════════════ EAR ═══════════════════════════════ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ SPECTRAL (R³): 49D per frame │ ║
+║ │ │ ║
+║ │ ┌───────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌────────┐ │ ║
+║ │ │CONSONANCE │ │ ENERGY │ │ TIMBRE │ │ CHANGE │ │ X-INT │ │ ║
+║ │ │ 7D [0:7] │ │ 5D[7:12]│ │ 9D │ │ 4D │ │ 24D │ │ ║
+║ │ │ │ │ │ │ [12:21] │ │ [21:25] │ │ [25:49]│ │ ║
+║ │ │ │ │amplitude│ │bright- │ │spec_chg │ │x_l0l5 │ │ ║
+║ │ │ │ │loudness │ │ness │ │energy_chg│ │x_l4l5 │ │ ║
+║ │ │ │ │centroid │ │sharpness│ │pitch_chg │ │x_l5l7 │ │ ║
+║ │ │ │ │flux │ │roughness│ │timbre_chg│ │ │ │ ║
+║ │ │ │ │onset │ │ │ │ │ │ │ │ ║
+║ │ └───────────┘ └─────────┘ └─────────┘ └──────────┘ └────────┘ │ ║
+║ │ AMSS reads: 28D │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ TEMPORAL (H³): Multi-scale windowed morphological features │ ║
+║ │ │ ║
+║ │ ┌── Syllable ────┐ ┌── Beat ──────────┐ ┌── Section ────────┐ │ ║
+║ │ │ 300ms (H8) │ │ 700ms (H14) │ │ 5000ms (H20) │ │ ║
+║ │ │ │ │ │ │ │ │ ║
+║ │ │ Early window │ │ Middle window │ │ Late window │ │ ║
+║ │ │ (150-220ms) │ │ (320-360ms) │ │ (410-450ms) │ │ ║
+║ │ └──────┬─────────┘ └──────┬────────────┘ └──────┬─────────────┘ │ ║
+║ │ │ │ │ │ ║
+║ │ └──────────────────┴─────────────────────┘ │ ║
+║ │ AMSS demand: ~16 of 2304 tuples │ ║
+║ └────────────────────────────┬─────────────────────────────────────┘ ║
+║ │ ║
+║ ═════════════════════════════╪═══════ BRAIN: Sensorimotor Circuit ═══════ ║
+║ │ ║
+║ ▼ ║
+║ ┌─────────────────┐ ║
+║ │ │ ║
+║ │ Short [0:10] │ Early attention: stream selection, envelope onset ║
+║ │ Medium [10:20]│ Middle attention: stream tracking, instrument ID ║
+║ │ Long [20:30]│ Late attention: deep integration, stream binding ║
+║ └────────┬────────┘ ║
+║ │ ║
+║ ▼ ║
+║ ┌──────────────────────────────────────────────────────────────────┐ ║
+║ │ AMSS MODEL (11D Output) │ ║
+║ │ │ ║
+║ │ Layer E (Explicit): f01_early_attention, f02_middle_attention, │ ║
+║ │ f03_late_attention, │ ║
+║ │ f04_stream_enhancement, f05_instrument_sep │ ║
+║ │ Layer M (Math): attention_gradient, segregation_index │ ║
+║ │ Layer P (Present): envelope_tracking, spectral_separation │ ║
+║ │ Layer F (Future): stream_continuation, attention_predict │ ║
+║ └──────────────────────────────────────────────────────────────────┘ ║
+║ ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -188,7 +185,7 @@ Basinski 2025 (EEG):   Inharmonicity triggers ORN + P3a, F(2,170)=31.38 (n=35)
 |---|-------|--------|---|-------------|-------------|-------------|
 | 1 | **Hausfeld et al. 2021** | EEG (63ch), mTRF envelope tracking | 15 | Attended > unattended instrument envelope reconstruction in polyphonic music (bassoon + cello) | Permutation p<0.05; d ≈ 0.60 attended enhancement | **Primary**: f01_early_attn, f04_stream_enh |
 | 2 | **Hausfeld et al. 2021** | EEG mTRF | 15 | Bassoon shows stronger attention modulation than cello (spectral distinctiveness) | Middle-latency + late windows significant | **f05_instrument_sep**: timbre-dependent segregation |
-| 3 | **Hausfeld et al. 2021** | EEG mTRF | 15 | Three distinct delay windows: early (enhancement for both), middle (bassoon-specific), late (bassoon-specific) | Temporal dynamics across 0-500ms | **TMH horizons**: short/medium/long context |
+| 3 | **Hausfeld et al. 2021** | EEG mTRF | 15 | Three distinct delay windows: early (enhancement for both), middle (bassoon-specific), late (bassoon-specific) | Temporal dynamics across 0-500ms | **H³ horizons**: short/medium/long context |
 | 4 | **Wikman et al. 2025** | fMRI, spatial pattern analysis | 20 | Attended object DOMINATES auditory cortex activation pattern; attention modulates at category-level in diverse scenes, exemplar-level in same-category scenes | FDR-corrected p<0.05, 5 significant ROIs | **CONVERGENT**: fMRI validates attention-dependent stream dominance in AC |
 | 5 | **Wikman et al. 2025** | fMRI | 20 | Speech attention → lateral AC; animal/instrument attention → medial AC; context-dependent processing level | Spatial pattern regression | **Brain regions**: AC subfield specificity for object categories |
 | 6 | **Basinski, Celma-Miralles, Quiroga-Martinez & Vuust 2025** | EEG roving oddball | 35 | Inharmonicity triggers object-related negativity (ORN) → stream segregation; P3a enhanced for inharmonic sounds | ORN: F(2,170)=31.38, p<0.0001; P3a: χ²(2)=18.80, p<0.0001 | **Bottom-up**: harmonicity/inharmonicity drives pre-attentive stream segregation |
@@ -207,19 +204,18 @@ Basinski 2025 (EEG):   Inharmonicity triggers ORN + P3a, F(2,170)=31.38 (n=35)
 ATTENTION ENHANCEMENT AS A FUNCTION OF PROCESSING DELAY
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Window         Delay       Brain Region      TMH Sub-section   Function
 ────────────────────────────────────────────────────────────────────────
-Early          150-220ms   Heschl's Gyrus    Short [0:10]      Initial selection
-Middle         320-360ms   STG               Medium [10:20]    Ongoing tracking
-Late           410-450ms   MTG / IFG         Long [20:30]      Deep integration
+Early 150-220ms Heschl's Gyrus Short [0:10] Initial selection
+Middle 320-360ms STG Medium [10:20] Ongoing tracking
+Late 410-450ms MTG / IFG Long [20:30] Deep integration
 
 Attention Effect Hierarchy:
-  Early:    d = 0.60 (attended > unattended)
-  Late:     d = 0.68 (strongest modulation)
-  Bassoon:  d = 0.68 (spectrally distinct → stronger effect)
-  Cello:    d = 0.60 (less spectrally distinct → weaker effect)
+ Early: d = 0.60 (attended > unattended)
+ Late: d = 0.68 (strongest modulation)
+ Bassoon: d = 0.68 (spectrally distinct → stronger effect)
+ Cello: d = 0.60 (less spectrally distinct → weaker effect)
 
-Note: The three delay windows map cleanly onto TMH's
+Note: The three delay windows map cleanly onto the temporal hierarchy's
 short/medium/long context hierarchy. Attention modulates
 envelope tracking at each level independently.
 ```
@@ -228,29 +224,29 @@ envelope tracking at each level independently.
 
 ```
 ATTENTION-MODULATED TRACKING:
-  Attended > unattended (music):     d ≈ 0.60, permutation p<0.05       [Hausfeld 2021, EEG]
-  Bassoon > cello modulation:        Middle+late windows significant      [Hausfeld 2021, EEG]
-  Target bias (speech, group):       Significant target > non-target      [Har-shai Yahav 2025]
-  Individual variability:            >50% NO reliable neural bias         [Har-shai Yahav 2025] CONSTRAINS
+ Attended > unattended (music): d ≈ 0.60, permutation p<0.05 [Hausfeld 2021, EEG]
+ Bassoon > cello modulation: Middle+late windows significant [Hausfeld 2021, EEG]
+ Target bias (speech, group): Significant target > non-target [Har-shai Yahav 2025]
+ Individual variability: >50% NO reliable neural bias [Har-shai Yahav 2025] CONSTRAINS
 
 STREAM SEGREGATION (bottom-up):
-  ORN condition effect:              F(2,170) = 31.38, p < 0.0001        [Basinski 2025]
-  P3a (attentional capture):         χ²(2) = 18.80, p < 0.0001          [Basinski 2025]
-  MMN condition effect:              χ²(2) = 14.71, p = 0.0006          [Basinski 2025]
-  Inharmonic → multiple objects:     OR = 16.44, p < 0.0001             [Basinski 2025]
+ ORN condition effect: F(2,170) = 31.38, p < 0.0001 [Basinski 2025]
+ P3a (attentional capture): χ²(2) = 18.80, p < 0.0001 [Basinski 2025]
+ MMN condition effect: χ²(2) = 14.71, p = 0.0006 [Basinski 2025]
+ Inharmonic → multiple objects: OR = 16.44, p < 0.0001 [Basinski 2025]
 
 ATTENTION × SPECTROTEMPORAL:
-  3-way interaction (fMRI graph):    χ² = 41.358, df=19, p = 0.002      [Haiduk 2024]
-  Modularity Q: not significant      χ² = 15.632, df=19, p = 0.682      [Haiduk 2024]
-  5 ROIs with significant local CC:  FDR-corrected, bilateral network    [Haiduk 2024]
-  Attended object dominates AC:      FDR-corrected spatial patterns      [Wikman 2025]
+ 3-way interaction (fMRI graph): χ² = 41.358, df=19, p = 0.002 [Haiduk 2024]
+ Modularity Q: not significant χ² = 15.632, df=19, p = 0.682 [Haiduk 2024]
+ 5 ROIs with significant local CC: FDR-corrected, bilateral network [Haiduk 2024]
+ Attended object dominates AC: FDR-corrected spatial patterns [Wikman 2025]
 
 EXPERTISE MODULATION:
-  Music piece f-ratio (expertise):   p = 0.009                           [Mischler 2025]
-  Left hemisphere lateralization:    FDR-corrected, p<0.05 all layers    [Mischler 2025]
+ Music piece f-ratio (expertise): p = 0.009 [Mischler 2025]
+ Left hemisphere lateralization: FDR-corrected, p<0.05 all layers [Mischler 2025]
 
 Quality Assessment: β-tier (multi-method convergence, individual variability constrains clean dissociation)
-Replication:        7 independent methods across EEG, fMRI, iEEG
+Replication: 7 independent methods across EEG, fMRI, iEEG
 ```
 
 ---
@@ -290,35 +286,35 @@ Replication:        7 independent methods across EEG, fMRI, iEEG
 ### 4.3 Physical → Cognitive Transformation
 
 ```
-R³ Physical Input                    Cognitive Output
-────────────────────────────────    ──────────────────────────────────────
+R³ Physical Input Cognitive Output
+──────────────────────────────── ──────────────────────────────────────
 R³[7] amplitude ──────────────┐
 R³[10] spectral_flux ─────────┼──► Early Attention (150-220ms)
-R³[11] onset_strength ────────┘   TMH.short_context at H8 (300ms)
-                                   Math: A_early = σ(α · env · onset ·
-                                                     TMH.short[mean])
+R³[11] onset_strength ────────┘ short_context at H8 (300ms)
+ Math: A_early = σ(α · env · onset ·
+ short[mean])
 
 R³[8] loudness ────────────────┐
 R³[9] spectral_centroid ───────┤
 R³[12] brightness ─────────────┼──► Middle Attention (320-360ms)
-R³[14] sharpness ──────────────┘   TMH.medium_context at H14 (700ms)
-                                   Math: A_mid = σ(β · timbre_sep ·
-                                                    TMH.medium[mean])
+R³[14] sharpness ──────────────┘ medium_context at H14 (700ms)
+ Math: A_mid = σ(β · timbre_sep ·
+ medium[mean])
 
 R³[25:33] x_l0l5 (8D) ───────┐
 R³[33:41] x_l4l5 (8D) ───────┼──► Late Attention (410-450ms)
-R³[22] energy_change ─────────┘   TMH.long_context at H20 (5000ms)
-                                   Math: A_late = σ(γ · x_coupling ·
-                                                    TMH.long[mean])
+R³[22] energy_change ─────────┘ long_context at H20 (5000ms)
+ Math: A_late = σ(γ · x_coupling ·
+ long[mean])
 
 Instrument Separation ─────────── Timbre-dependent modulation
-                                   Bassoon (d=0.68) > Cello (d=0.60)
-                                   Math: sep = σ(δ · brightness_diff ·
-                                                  sharpness_diff)
+ Bassoon (d=0.68) > Cello (d=0.60)
+ Math: sep = σ(δ · brightness_diff ·
+ sharpness_diff)
 
 R³[73] tempo_stability ────────── Temporal Prediction (v2)
-                                   Stable tempo enables precise
-                                   stream segregation and tracking
+ Stable tempo enables precise
+ stream segregation and tracking
 ```
 
 ---
@@ -327,7 +323,7 @@ R³[73] tempo_stability ────────── Temporal Prediction (v2)
 
 ### 5.1 Demand Specification
 
-AMSS requires H³ features at three TMH horizons: H8 (300ms), H14 (700ms), H20 (5000ms).
+AMSS requires H³ features at three horizons: H8 (300ms), H14 (700ms), H20 (5000ms).
 These correspond to early attention → middle tracking → late integration timescales.
 
 | R³ Index | Feature | H | Morph | Law | Purpose |
@@ -353,7 +349,7 @@ These correspond to early attention → middle tracking → late integration tim
 
 #### R³ v2 Projected Expansion
 
-Minor v2 expansion. AMSS projected v2 feature from G:Rhythm, aligned with TMH horizons.
+Minor v2 expansion. AMSS projected v2 feature from G:Rhythm, aligned with corresponding H³ horizons.
 
 | R³ Idx | Feature | Group | H | Morph | Law | Purpose |
 |:------:|---------|:-----:|:-:|-------|:---:|---------|
@@ -362,18 +358,6 @@ Minor v2 expansion. AMSS projected v2 feature from G:Rhythm, aligned with TMH ho
 
 **v2 projected**: 2 tuples
 **Total projected**: 18 tuples of 294,912 theoretical = 0.0061%
-
-### 5.2 TMH Mechanism Binding
-
-AMSS reads from the **TMH** (Temporal Memory Hierarchy) mechanism:
-
-| TMH Sub-section | Range | AMSS Role | Weight |
-|-----------------|-------|-----------|--------|
-| **Short Context** | TMH[0:10] | Early attention window (Heschl's, 150-220ms) | **1.0** (primary) |
-| **Medium Context** | TMH[10:20] | Middle attention window (STG, 320-360ms) | **1.0** (primary) |
-| **Long Context** | TMH[20:30] | Late attention window (MTG/IFG, 410-450ms) | **1.0** (primary) |
-
-AMSS does NOT read from BEP — attention-modulated stream segregation is about selective processing of concurrent streams, not beat entrainment.
 
 ---
 
@@ -387,64 +371,64 @@ AMSS OUTPUT TENSOR: 11D PER FRAME (172.27 Hz)
 
 LAYER E — EXPLICIT FEATURES
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 0  │ f01_early_attn    │ [0, 1] │ Early attention window (Heschl's, 150-220ms).
-    │                   │        │ Initial stream selection via envelope onset.
-    │                   │        │ f01 = σ(0.35 · env_val · onset_val ·
-    │                   │        │         TMH.short_mean + 0.25 · flux_val)
+ 0 │ f01_early_attn │ [0, 1] │ Early attention window (Heschl's, 150-220ms).
+ │ │ │ Initial stream selection via envelope onset.
+ │ │ │ f01 = σ(0.35 · env_val · onset_val ·
+ │ │ │ short_mean + 0.25 · flux_val)
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 1  │ f02_middle_attn   │ [0, 1] │ Middle attention window (STG, 320-360ms).
-    │                   │        │ Ongoing stream tracking via timbre features.
-    │                   │        │ f02 = σ(0.30 · loudness_mean ·
-    │                   │        │         centroid_mean + 0.25 · brightness_std
-    │                   │        │         · TMH.medium_mean)
+ 1 │ f02_middle_attn │ [0, 1] │ Middle attention window (STG, 320-360ms).
+ │ │ │ Ongoing stream tracking via timbre features.
+ │ │ │ f02 = σ(0.30 · loudness_mean ·
+ │ │ │ centroid_mean + 0.25 · brightness_std
+ │ │ │ · medium_mean)
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 2  │ f03_late_attn     │ [0, 1] │ Late attention window (MTG/IFG, 410-450ms).
-    │                   │        │ Deep stream integration via cross-feature
-    │                   │        │ coupling.
-    │                   │        │ f03 = σ(0.30 · x_coupling · autocorr ·
-    │                   │        │         TMH.long_mean + 0.20 · energy_chg)
+ 2 │ f03_late_attn │ [0, 1] │ Late attention window (MTG/IFG, 410-450ms).
+ │ │ │ Deep stream integration via cross-feature
+ │ │ │ coupling.
+ │ │ │ f03 = σ(0.30 · x_coupling · autocorr ·
+ │ │ │ long_mean + 0.20 · energy_chg)
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 3  │ f04_stream_enh    │ [0, 1] │ Overall stream enhancement (d=0.60-0.68).
-    │                   │        │ Weighted combination across windows.
-    │                   │        │ f04 = 0.3·f01 + 0.3·f02 + 0.4·f03
+ 3 │ f04_stream_enh │ [0, 1] │ Overall stream enhancement (d=0.60-0.68).
+ │ │ │ Weighted combination across windows.
+ │ │ │ f04 = 0.3·f01 + 0.3·f02 + 0.4·f03
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 4  │ f05_instrument_sep│ [0, 1] │ Instrument-specific segregation.
-    │                   │        │ Timbre distinctiveness modulates attention.
-    │                   │        │ f05 = σ(0.40 · brightness_std ·
-    │                   │        │         sharpness_val + 0.30 · timbre_chg)
+ 4 │ f05_instrument_sep│ [0, 1] │ Instrument-specific segregation.
+ │ │ │ Timbre distinctiveness modulates attention.
+ │ │ │ f05 = σ(0.40 · brightness_std ·
+ │ │ │ sharpness_val + 0.30 · timbre_chg)
 
 LAYER M — MATHEMATICAL MODEL OUTPUTS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 5  │ attention_gradient│ [0, 1] │ Attention deepening across windows.
-    │                   │        │ Monotonic increase: early < middle < late.
-    │                   │        │ grad = (1·f01 + 2·f02 + 3·f03) / 6
+ 5 │ attention_gradient│ [0, 1] │ Attention deepening across windows.
+ │ │ │ Monotonic increase: early < middle < late.
+ │ │ │ grad = (1·f01 + 2·f02 + 3·f03) / 6
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 6  │ segregation_index │ [0, 1] │ Segregation quality estimate.
-    │                   │        │ f04_stream_enh × f05_instrument_sep
+ 6 │ segregation_index │ [0, 1] │ Segregation quality estimate.
+ │ │ │ f04_stream_enh × f05_instrument_sep
 
 LAYER P — PRESENT PROCESSING
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 7  │ envelope_tracking │ [0, 1] │ Current attended envelope coupling.
-    │                   │        │ TMH.short_context aggregation.
+ 7 │ envelope_tracking │ [0, 1] │ Current attended envelope coupling.
+ │ │ │ short_context aggregation.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 8  │ spectral_sep      │ [0, 1] │ Current spectral separation strength.
-    │                   │        │ TMH.medium_context + timbre features.
+ 8 │ spectral_sep │ [0, 1] │ Current spectral separation strength.
+ │ │ │ medium_context + timbre features.
 
 LAYER F — FUTURE PREDICTIONS
 ─────────────────────────────────────────────────────────────────────────────
-idx │ Name              │ Range  │ Neuroscience Basis
+idx │ Name │ Range │ Neuroscience Basis
 ────┼───────────────────┼────────┼────────────────────────────────────────────
- 9  │ stream_continue   │ [0, 1] │ Attended stream continuation prediction.
-    │                   │        │ Stability + autocorrelation at H20.
+ 9 │ stream_continue │ [0, 1] │ Attended stream continuation prediction.
+ │ │ │ Stability + autocorrelation at H20.
 ────┼───────────────────┼────────┼────────────────────────────────────────────
-10  │ attention_predict │ [0, 1] │ Attention engagement prediction.
-    │                   │        │ Entropy-driven attention load estimate.
+10 │ attention_predict │ [0, 1] │ Attention engagement prediction.
+ │ │ │ Entropy-driven attention load estimate.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOTAL: 11D per frame at 172.27 Hz
@@ -460,56 +444,53 @@ TOTAL: 11D per frame at 172.27 Hz
 ```
 Attention-Modulated Stream Segregation:
 
-    Stream_Enhancement(window) = f(Envelope, Timbre, TMH_context)
+ Stream_Enhancement(window) = f(Envelope, Timbre, TMH_context)
 
-    For each delay window:
-      Early (150-220ms):
-        A_early = σ(α₁ · Envelope · Onset · TMH.short + α₂ · Flux)
-        |α₁| + |α₂| = 0.60  (≤ 1.0, saturation rule)
+ For each delay window:
+ Early (150-220ms):
+ A_early = σ(α₁ · Envelope · Onset · short + α₂ · Flux)
+ |α₁| + |α₂| = 0.60 (≤ 1.0, saturation rule)
 
-      Middle (320-360ms):
-        A_middle = σ(β₁ · Loudness · Centroid + β₂ · Brightness · TMH.medium)
-        |β₁| + |β₂| = 0.55  (≤ 1.0, saturation rule)
+ Middle (320-360ms):
+ A_middle = σ(β₁ · Loudness · Centroid + β₂ · Brightness · medium)
+ |β₁| + |β₂| = 0.55 (≤ 1.0, saturation rule)
 
-      Late (410-450ms):
-        A_late = σ(γ₁ · CrossCoupling · Autocorr · TMH.long + γ₂ · EnergyChg)
-        |γ₁| + |γ₂| = 0.50  (≤ 1.0, saturation rule)
+ Late (410-450ms):
+ A_late = σ(γ₁ · CrossCoupling · Autocorr · long + γ₂ · EnergyChg)
+ |γ₁| + |γ₂| = 0.50 (≤ 1.0, saturation rule)
 
-    Instrument Separation:
-      Bassoon (spectrally distinct): d = 0.68
-      Cello (less distinct): d = 0.60
-      sep = σ(δ₁ · brightness_variability · sharpness + δ₂ · timbre_change)
-      |δ₁| + |δ₂| = 0.70  (≤ 1.0, saturation rule)
+ Instrument Separation:
+ Bassoon (spectrally distinct): d = 0.68
+ Cello (less distinct): d = 0.60
+ sep = σ(δ₁ · brightness_variability · sharpness + δ₂ · timbre_change)
+ |δ₁| + |δ₂| = 0.70 (≤ 1.0, saturation rule)
 ```
 
 ### 7.2 Feature Formulas
 
 ```python
 # f01: Early Attention (Heschl's, 150-220ms)
-env_val = h3[(7, 8, 0, 0)]           # amplitude value at H8
-onset_val = h3[(11, 8, 0, 0)]        # onset_strength value at H8
-flux_val = h3[(10, 8, 0, 0)]         # spectral_flux value at H8
+env_val = h3[(7, 8, 0, 0)] # amplitude value at H8
+onset_val = h3[(11, 8, 0, 0)] # onset_strength value at H8
+flux_val = h3[(10, 8, 0, 0)] # spectral_flux value at H8
 f01 = σ(0.35 · env_val · onset_val
-         · mean(TMH.short_context[0:10])
-         + 0.25 · flux_val)
+ + 0.25 · flux_val)
 # |0.35| + |0.25| = 0.60 ≤ 1.0 ✓
 
 # f02: Middle Attention (STG, 320-360ms)
-loudness_mean = h3[(8, 14, 1, 0)]    # loudness mean at H14
-centroid_mean = h3[(9, 14, 1, 0)]    # spectral_centroid mean at H14
-brightness_std = h3[(12, 14, 3, 0)]  # brightness std at H14
+loudness_mean = h3[(8, 14, 1, 0)] # loudness mean at H14
+centroid_mean = h3[(9, 14, 1, 0)] # spectral_centroid mean at H14
+brightness_std = h3[(12, 14, 3, 0)] # brightness std at H14
 f02 = σ(0.30 · loudness_mean · centroid_mean
-         + 0.25 · brightness_std
-         · mean(TMH.medium_context[10:20]))
+ + 0.25 · brightness_std
 # |0.30| + |0.25| = 0.55 ≤ 1.0 ✓
 
 # f03: Late Attention (MTG/IFG, 410-450ms)
-x_coupling = h3[(25, 20, 1, 0)]      # x_l0l5 mean at H20
-autocorr = h3[(33, 20, 22, 0)]       # x_l4l5 autocorrelation at H20
-energy_chg = h3[(22, 14, 1, 0)]      # energy_change mean at H14
+x_coupling = h3[(25, 20, 1, 0)] # x_l0l5 mean at H20
+autocorr = h3[(33, 20, 22, 0)] # x_l4l5 autocorrelation at H20
+energy_chg = h3[(22, 14, 1, 0)] # energy_change mean at H14
 f03 = σ(0.30 · x_coupling · autocorr
-         · mean(TMH.long_context[20:30])
-         + 0.20 · energy_chg)
+ + 0.20 · energy_chg)
 # |0.30| + |0.20| = 0.50 ≤ 1.0 ✓
 
 # f04: Overall Stream Enhancement (d = 0.60-0.68)
@@ -517,10 +498,10 @@ f04 = 0.3 · f01 + 0.3 · f02 + 0.4 · f03
 # Late window weighted highest (d = 0.68 strongest)
 
 # f05: Instrument Separation (bassoon > cello)
-sharpness_val = h3[(14, 14, 0, 0)]   # sharpness value at H14
-timbre_chg = h3[(24, 8, 1, 0)]       # timbre_change mean at H8
+sharpness_val = h3[(14, 14, 0, 0)] # sharpness value at H14
+timbre_chg = h3[(24, 8, 1, 0)] # timbre_change mean at H8
 f05 = σ(0.40 · brightness_std · sharpness_val
-         + 0.30 · timbre_chg)
+ + 0.30 · timbre_chg)
 # |0.40| + |0.30| = 0.70 ≤ 1.0 ✓
 ```
 
@@ -550,21 +531,21 @@ f05 = σ(0.40 · brightness_std · sharpness_val
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    AMSS INTERACTIONS                                         │
+│ AMSS INTERACTIONS │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  INTRA-UNIT (STU):                                                         │
-│  HMCE.structure_predict ──────► AMSS (structural context for segregation) │
-│  AMSS.envelope_tracking ─────► AMSC (which stream drives motor coupling)  │
-│  AMSS.stream_enhancement ────► MDNS (attended stream for TRF decoding)    │
-│                                                                             │
-│  CROSS-UNIT (P4: STU internal):                                            │
-│  TMH.context_depth ↔ HMCE.gradient ↔ AMSS.attention_gradient (r = 0.99) │
-│  Deeper temporal context → deeper attention processing                     │
-│                                                                             │
-│  CROSS-UNIT (P5: STU → ARU):                                              │
-│  AMSS.stream_enhancement ──► ARU (attended stream → emotional processing) │
-│                                                                             │
+│ │
+│ INTRA-UNIT (STU): │
+│ HMCE.structure_predict ──────► AMSS (structural context for segregation) │
+│ AMSS.envelope_tracking ─────► AMSC (which stream drives motor coupling) │
+│ AMSS.stream_enhancement ────► MDNS (attended stream for TRF decoding) │
+│ │
+│ CROSS-UNIT (P4: STU internal): │
+│ context_depth ↔ HMCE.gradient ↔ AMSS.attention_gradient (r = 0.99) │
+│ Deeper temporal context → deeper attention processing │
+│ │
+│ CROSS-UNIT (P5: STU → ARU): │
+│ AMSS.stream_enhancement ──► ARU (attended stream → emotional processing) │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -591,150 +572,133 @@ f05 = σ(0.40 · brightness_std · sharpness_val
 
 ```python
 class AMSS(BaseModel):
-    """Attention-Modulated Stream Segregation.
+ """Attention-Modulated Stream Segregation.
 
-    Output: 11D per frame.
-    Reads: TMH mechanism (30D), R³ direct.
-    """
-    NAME = "AMSS"
-    UNIT = "STU"
-    TIER = "β1"
-    OUTPUT_DIM = 11
-    MECHANISM_NAMES = ("TMH",)        # Primary mechanism
+ Output: 11D per frame.
+ """
+ NAME = "AMSS"
+ UNIT = "STU"
+ TIER = "β1"
+ OUTPUT_DIM = 11
+ # Coefficient saturation rule: |wᵢ| must sum ≤ 1.0 per sigmoid
+ ALPHA_1 = 0.35 # Early envelope × onset weight
+ ALPHA_2 = 0.25 # Early flux weight
+ BETA_1 = 0.30 # Middle loudness × centroid weight
+ BETA_2 = 0.25 # Middle brightness × temporal-context weight
+ GAMMA_1 = 0.30 # Late coupling × temporal-context weight
+ GAMMA_2 = 0.20 # Late energy change weight
+ DELTA_1 = 0.40 # Instrument brightness × sharpness
+ DELTA_2 = 0.30 # Instrument timbre change
 
-    # Coefficient saturation rule: |wᵢ| must sum ≤ 1.0 per sigmoid
-    ALPHA_1 = 0.35   # Early envelope × onset weight
-    ALPHA_2 = 0.25   # Early flux weight
-    BETA_1 = 0.30    # Middle loudness × centroid weight
-    BETA_2 = 0.25    # Middle brightness × TMH weight
-    GAMMA_1 = 0.30   # Late coupling × TMH weight
-    GAMMA_2 = 0.20   # Late energy change weight
-    DELTA_1 = 0.40   # Instrument brightness × sharpness
-    DELTA_2 = 0.30   # Instrument timbre change
+ # Hausfeld 2021 effect sizes
+ EARLY_D = 0.60 # Early attention window
+ LATE_D = 0.68 # Late attention window (bassoon)
 
-    # Hausfeld 2021 effect sizes
-    EARLY_D = 0.60    # Early attention window
-    LATE_D = 0.68     # Late attention window (bassoon)
+ @property
+ def h3_demand(self) -> List[Tuple[int, int, int, int]]:
+ """16 tuples for AMSS computation."""
+ return [
+ # (r3_idx, horizon, morph, law)
+ # Early attention (H8 = 300ms, maps to 150-220ms window)
+ (7, 8, 0, 0), # amplitude, value, forward
+ (7, 8, 1, 0), # amplitude, mean, forward
+ (10, 8, 0, 0), # spectral_flux, value, forward
+ (11, 8, 0, 0), # onset_strength, value, forward
+ (21, 8, 8, 0), # spectral_change, velocity, forward
+ (24, 8, 1, 0), # timbre_change, mean, forward
+ # Middle attention (H14 = 700ms, maps to 320-360ms window)
+ (8, 14, 1, 0), # loudness, mean, forward
+ (9, 14, 1, 0), # spectral_centroid, mean, forward
+ (12, 14, 3, 0), # brightness, std, forward
+ (14, 14, 0, 0), # sharpness, value, forward
+ (22, 14, 1, 0), # energy_change, mean, forward
+ (22, 14, 13, 0), # energy_change, entropy, forward
+ # Late attention (H20 = 5000ms, maps to 410-450ms window)
+ (25, 20, 1, 0), # x_l0l5[0], mean, forward
+ (25, 20, 19, 0), # x_l0l5[0], stability, forward
+ (33, 20, 1, 0), # x_l4l5[0], mean, forward
+ (33, 20, 22, 0), # x_l4l5[0], autocorrelation, forward
+ ]
 
-    @property
-    def h3_demand(self) -> List[Tuple[int, int, int, int]]:
-        """16 tuples for AMSS computation."""
-        return [
-            # (r3_idx, horizon, morph, law)
-            # Early attention (H8 = 300ms, maps to 150-220ms window)
-            (7, 8, 0, 0),     # amplitude, value, forward
-            (7, 8, 1, 0),     # amplitude, mean, forward
-            (10, 8, 0, 0),    # spectral_flux, value, forward
-            (11, 8, 0, 0),    # onset_strength, value, forward
-            (21, 8, 8, 0),    # spectral_change, velocity, forward
-            (24, 8, 1, 0),    # timbre_change, mean, forward
-            # Middle attention (H14 = 700ms, maps to 320-360ms window)
-            (8, 14, 1, 0),    # loudness, mean, forward
-            (9, 14, 1, 0),    # spectral_centroid, mean, forward
-            (12, 14, 3, 0),   # brightness, std, forward
-            (14, 14, 0, 0),   # sharpness, value, forward
-            (22, 14, 1, 0),   # energy_change, mean, forward
-            (22, 14, 13, 0),  # energy_change, entropy, forward
-            # Late attention (H20 = 5000ms, maps to 410-450ms window)
-            (25, 20, 1, 0),   # x_l0l5[0], mean, forward
-            (25, 20, 19, 0),  # x_l0l5[0], stability, forward
-            (33, 20, 1, 0),   # x_l4l5[0], mean, forward
-            (33, 20, 22, 0),  # x_l4l5[0], autocorrelation, forward
-        ]
+ def compute(self, h3_features: Dict,
+ r3: Tensor) -> Tensor:
+ """
+ Compute AMSS 11D output.
 
-    def compute(self, mechanism_outputs: Dict, h3_direct: Dict,
-                r3: Tensor) -> Tensor:
-        """
-        Compute AMSS 11D output.
+ Args:
+ h3_direct: Dict of (r3,h,m,l) → (B,T) scalars
+ r3: (B,T,49) raw R³ features
 
-        Args:
-            mechanism_outputs: {"TMH": (B,T,30)}
-            h3_direct: Dict of (r3,h,m,l) → (B,T) scalars
-            r3: (B,T,49) raw R³ features
+ Returns:
+ (B,T,11) AMSS output
+ """
+ # ═══ LAYER E: Explicit features ═══
 
-        Returns:
-            (B,T,11) AMSS output
-        """
-        tmh = mechanism_outputs["TMH"]    # (B, T, 30)
+ # f01: Early attention (150-220ms) — stream selection
+ env_val = h3_direct[(7, 8, 0, 0)].unsqueeze(-1)
+ onset_val = h3_direct[(11, 8, 0, 0)].unsqueeze(-1)
+ flux_val = h3_direct[(10, 8, 0, 0)].unsqueeze(-1)
+ f01 = torch.sigmoid(
+ self.ALPHA_1 * env_val * onset_val
+ + self.ALPHA_2 * flux_val
+ ) # |0.35| + |0.25| = 0.60 ≤ 1.0 ✓
 
-        # TMH sub-sections
-        tmh_short = tmh[..., 0:10]        # short context
-        tmh_medium = tmh[..., 10:20]      # medium context
-        tmh_long = tmh[..., 20:30]        # long context
+ # f02: Middle attention (320-360ms) — stream tracking
+ loudness_mean = h3_direct[(8, 14, 1, 0)].unsqueeze(-1)
+ centroid_mean = h3_direct[(9, 14, 1, 0)].unsqueeze(-1)
+ brightness_std = h3_direct[(12, 14, 3, 0)].unsqueeze(-1)
+ f02 = torch.sigmoid(
+ self.BETA_1 * loudness_mean * centroid_mean
+ + self.BETA_2 * brightness_std
+ ) # |0.30| + |0.25| = 0.55 ≤ 1.0 ✓
 
-        # ═══ LAYER E: Explicit features ═══
+ # f03: Late attention (410-450ms) — deep integration
+ x_coupling = h3_direct[(25, 20, 1, 0)].unsqueeze(-1)
+ autocorr = h3_direct[(33, 20, 22, 0)].unsqueeze(-1)
+ energy_chg = h3_direct[(22, 14, 1, 0)].unsqueeze(-1)
+ f03 = torch.sigmoid(
+ self.GAMMA_1 * x_coupling * autocorr
+ + self.GAMMA_2 * energy_chg
+ ) # |0.30| + |0.20| = 0.50 ≤ 1.0 ✓
 
-        # f01: Early attention (150-220ms) — stream selection
-        env_val = h3_direct[(7, 8, 0, 0)].unsqueeze(-1)
-        onset_val = h3_direct[(11, 8, 0, 0)].unsqueeze(-1)
-        flux_val = h3_direct[(10, 8, 0, 0)].unsqueeze(-1)
-        f01 = torch.sigmoid(
-            self.ALPHA_1 * env_val * onset_val
-            * tmh_short.mean(-1, keepdim=True)
-            + self.ALPHA_2 * flux_val
-        )  # |0.35| + |0.25| = 0.60 ≤ 1.0 ✓
+ # f04: Overall stream enhancement
+ # Late weighted highest (d=0.68 strongest effect)
+ f04 = 0.3 * f01 + 0.3 * f02 + 0.4 * f03
 
-        # f02: Middle attention (320-360ms) — stream tracking
-        loudness_mean = h3_direct[(8, 14, 1, 0)].unsqueeze(-1)
-        centroid_mean = h3_direct[(9, 14, 1, 0)].unsqueeze(-1)
-        brightness_std = h3_direct[(12, 14, 3, 0)].unsqueeze(-1)
-        f02 = torch.sigmoid(
-            self.BETA_1 * loudness_mean * centroid_mean
-            + self.BETA_2 * brightness_std
-            * tmh_medium.mean(-1, keepdim=True)
-        )  # |0.30| + |0.25| = 0.55 ≤ 1.0 ✓
+ # f05: Instrument separation (bassoon d=0.68 > cello d=0.60)
+ sharpness_val = h3_direct[(14, 14, 0, 0)].unsqueeze(-1)
+ timbre_chg = h3_direct[(24, 8, 1, 0)].unsqueeze(-1)
+ f05 = torch.sigmoid(
+ self.DELTA_1 * brightness_std * sharpness_val
+ + self.DELTA_2 * timbre_chg
+ ) # |0.40| + |0.30| = 0.70 ≤ 1.0 ✓
 
-        # f03: Late attention (410-450ms) — deep integration
-        x_coupling = h3_direct[(25, 20, 1, 0)].unsqueeze(-1)
-        autocorr = h3_direct[(33, 20, 22, 0)].unsqueeze(-1)
-        energy_chg = h3_direct[(22, 14, 1, 0)].unsqueeze(-1)
-        f03 = torch.sigmoid(
-            self.GAMMA_1 * x_coupling * autocorr
-            * tmh_long.mean(-1, keepdim=True)
-            + self.GAMMA_2 * energy_chg
-        )  # |0.30| + |0.20| = 0.50 ≤ 1.0 ✓
+ # ═══ LAYER M: Mathematical ═══
+ attention_gradient = (1 * f01 + 2 * f02 + 3 * f03) / 6
+ segregation_index = f04 * f05
 
-        # f04: Overall stream enhancement
-        # Late weighted highest (d=0.68 strongest effect)
-        f04 = 0.3 * f01 + 0.3 * f02 + 0.4 * f03
+ # ═══ LAYER P: Present ═══
+ spectral_sep = torch.sigmoid(
+ + 0.5 * brightness_std
+ )
 
-        # f05: Instrument separation (bassoon d=0.68 > cello d=0.60)
-        sharpness_val = h3_direct[(14, 14, 0, 0)].unsqueeze(-1)
-        timbre_chg = h3_direct[(24, 8, 1, 0)].unsqueeze(-1)
-        f05 = torch.sigmoid(
-            self.DELTA_1 * brightness_std * sharpness_val
-            + self.DELTA_2 * timbre_chg
-        )  # |0.40| + |0.30| = 0.70 ≤ 1.0 ✓
+ # ═══ LAYER F: Future ═══
+ stability = h3_direct[(25, 20, 19, 0)].unsqueeze(-1)
+ stream_continue = torch.sigmoid(
+ 0.5 * autocorr + 0.5 * stability
+ ) # |0.5| + |0.5| = 1.0 ≤ 1.0 ✓
 
-        # ═══ LAYER M: Mathematical ═══
-        attention_gradient = (1 * f01 + 2 * f02 + 3 * f03) / 6
-        segregation_index = f04 * f05
+ entropy_energy = h3_direct[(22, 14, 13, 0)].unsqueeze(-1)
+ attention_predict = torch.sigmoid(
+ 0.4 * f04 + 0.3 * entropy_energy
+ ) # |0.4| + |0.3| + |0.3| = 1.0 ≤ 1.0 ✓
 
-        # ═══ LAYER P: Present ═══
-        envelope_tracking = tmh_short.mean(-1, keepdim=True)
-        spectral_sep = torch.sigmoid(
-            0.5 * tmh_medium.mean(-1, keepdim=True)
-            + 0.5 * brightness_std
-        )
-
-        # ═══ LAYER F: Future ═══
-        stability = h3_direct[(25, 20, 19, 0)].unsqueeze(-1)
-        stream_continue = torch.sigmoid(
-            0.5 * autocorr + 0.5 * stability
-        )  # |0.5| + |0.5| = 1.0 ≤ 1.0 ✓
-
-        entropy_energy = h3_direct[(22, 14, 13, 0)].unsqueeze(-1)
-        attention_predict = torch.sigmoid(
-            0.4 * f04 + 0.3 * entropy_energy
-            + 0.3 * tmh_long.mean(-1, keepdim=True)
-        )  # |0.4| + |0.3| + |0.3| = 1.0 ≤ 1.0 ✓
-
-        return torch.cat([
-            f01, f02, f03, f04, f05,                         # E: 5D
-            attention_gradient, segregation_index,            # M: 2D
-            envelope_tracking, spectral_sep,                  # P: 2D
-            stream_continue, attention_predict,               # F: 2D
-        ], dim=-1)  # (B, T, 11)
+ return torch.cat([
+ f01, f02, f03, f04, f05, # E: 5D
+ attention_gradient, segregation_index, # M: 2D
+ envelope_tracking, spectral_sep, # P: 2D
+ stream_continue, attention_predict, # F: 2D
+ ], dim=-1) # (B, T, 11)
 ```
 
 ---
@@ -749,7 +713,6 @@ class AMSS(BaseModel):
 | **Falsification Tests** | 6/8 confirmed, 1 partial, 1 untested | High validity (with individual variability constraint) |
 | **R³ Features Used** | 28D of 49D | Energy + Timbre + Change + Interactions |
 | **H³ Demand** | 16 tuples (0.69%) | Sparse, efficient |
-| **TMH Mechanism** | 30D (3 sub-sections) | Full coverage |
 | **Output Dimensions** | **11D** | 4-layer structure |
 
 ---
@@ -778,26 +741,12 @@ class AMSS(BaseModel):
 | Aspect | D0 (v1.0.0) | MI (v2.0.0) |
 |--------|-------------|-------------|
 | Input space | S⁰ (256D): L0, L4, L5, L6, L7, L9, X_L5L7 | R³ (49D): Energy, Timbre, Change, Interactions |
-| Temporal | HC⁰ mechanisms (TIH, ATT, NPL, SGM) | TMH mechanism (30D) |
-| Attention hierarchy | ATT (attention gating) + NPL (phase locking) + TIH (integration) | TMH 3 sub-sections (short/medium/long) |
+| Attention hierarchy | ATT (attention gating) + NPL (phase locking) + TIH (integration) | H³ direct features |
 | Statistics | S⁰.L9 (variance) | H³ morphs (M0, M1, M3, M13, M19, M22) |
 | Cross-feature | X_L5L7[216:224] (Perceptual×Crossband) | R³.x_l0l5[25:33], x_l4l5[33:41] |
 | Demand format | HC⁰ index ranges (30 tuples, 1.30%) | H³ 4-tuples (16 tuples, 0.69%) |
 | Output dimensions | 12D | **11D** (catalog value) |
-| Delay windows | H₃(150ms), H₈(320ms), H₉(410ms) via ATT/TIH/SGM | H8(300ms), H14(700ms), H20(5000ms) via TMH |
-
-### Why TMH replaces HC⁰ mechanisms
-
-The D0 pipeline used 4 separate HC⁰ mechanisms (TIH, ATT, NPL, SGM). In MI, these are unified into the TMH mechanism with 3 sub-sections:
-- **ATT → TMH.short_context** [0:10]: Attentional gating for early stream selection → envelope onset features
-- **TIH + NPL → TMH.medium_context** [10:20]: Temporal integration + neural phase locking for stream tracking → timbre identification
-- **SGM → TMH.long_context** [20:30]: Striatal gradient memory for long-range stream binding → deep integration and identity
-
-### Key Semantic Differences
-
-1. **Instrument separation**: D0 used L5.sharpness and L5.spectral_centroid with L7.crossband ratios. MI uses R³ Timbre group (brightness, sharpness, roughness) and Interactions (x_l0l5, x_l4l5) for richer stream differentiation.
-2. **Attention windows**: D0 mapped delay windows to specific event horizons (H₃, H₈, H₉). MI uses TMH sub-sections that naturally correspond to motif → phrase → section timescales, which subsume the original delay windows.
-3. **Stream enhancement**: D0 computed separate attended vs. unattended features. MI computes a single attention gradient that implicitly encodes the attended-unattended contrast through f04_stream_enhancement.
+| Delay windows | H₃(150ms), H₈(320ms), H₉(410ms) via ATT/TIH/SGM | H8(300ms), H14(700ms), H20(5000ms) via temporal-context H³ |
 
 ---
 
@@ -807,7 +756,6 @@ The D0 pipeline used 4 separate HC⁰ mechanisms (TIH, ATT, NPL, SGM). In MI, th
 **Confidence**: **70-90%**
 
 > **Code note** (`mi_beta/brain/units/stu/models/amss.py`):
-> - `MECHANISM_NAMES = ("BEP",)` in code but doc specifies `("TMH",)` — BEP should be replaced with TMH
 > - Layer E has 2D in code (`attended_tracking, unattended_suppression`) but doc has 5D (3 attention windows + stream_enh + instrument_sep) — significant mismatch
 > - `h3_demand = ()` empty — needs population from doc's 16 tuples
 > - `version="2.0.0"`, `paper_count=5` — needs update to `2.1.0`, `12`
