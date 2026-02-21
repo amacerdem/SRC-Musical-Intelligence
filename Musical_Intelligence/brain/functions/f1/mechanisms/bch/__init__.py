@@ -1,8 +1,8 @@
 """BCH — Brainstem Consonance Hierarchy.
 
-Relay nucleus (depth 0) in SPU. Transforms raw R³ spectral features and
-H³ temporal morphologies into a 16D consonance representation following
-the brainstem's ascending auditory pathway (AN → CN → SOC → IC → MGB).
+Relay nucleus (depth 0) in SPU, Function F1. Transforms raw R³ spectral
+features and H³ temporal morphologies into a 16D consonance representation
+following the brainstem's ascending auditory pathway (AN → CN → SOC → IC → MGB).
 
 Output structure: E(4) + M(4) + P(4) + F(4) = 16D
   E-layer [0:4]   Extraction    (instantaneous R³)     scope=internal
@@ -29,29 +29,10 @@ from Musical_Intelligence.contracts.dataclasses import (
     RegionLink,
 )
 
-# ── R³ feature indices (post-freeze 97D) ─────────────────────────────
-# A group [0:7]
-_ROUGH = 0          # roughness
-_SETH = 1           # sethares_dissonance
-_HELM = 2           # helmholtz_kang
-_STUMP = 3          # stumpf_fusion
-_PLEAS = 4          # sensory_pleasantness
-_INHARM = 5         # inharmonicity
-_HDEV = 6           # harmonic_deviation
-# C group [12:21]
-_TONAL = 14         # tonalness (brightness_kuttruff in code)
-_AUTOCORR = 17      # spectral_autocorrelation
-_TRIST1 = 18        # tristimulus1
-_TRIST2 = 19        # tristimulus2
-_TRIST3 = 20        # tristimulus3
-# F group [25:41]
-_PCE = 38           # pitch_class_entropy
-_PITCHSAL = 39      # pitch_salience
-# H group [51:63]
-_KEYCLAR = 51       # key_clarity
-_TONALSTAB = 60     # tonal_stability
-# G group [41:51]
-_COUPLING = 41      # cross-domain coupling
+from .cognitive_present import compute_cognitive_present
+from .extraction import compute_extraction
+from .forecast import compute_forecast
+from .temporal_integration import compute_temporal_integration
 
 # ── Horizon labels ────────────────────────────────────────────────────
 _H_LABELS = {
@@ -87,6 +68,26 @@ def _h3(
         purpose=purpose,
         citation=citation,
     )
+
+
+# ── R³ feature indices (post-freeze 97D) ─────────────────────────────
+_ROUGH = 0
+_SETH = 1
+_HELM = 2
+_STUMP = 3
+_PLEAS = 4
+_INHARM = 5
+_HDEV = 6
+_TONAL = 14
+_AUTOCORR = 17
+_TRIST1 = 18
+_TRIST2 = 19
+_TRIST3 = 20
+_PCE = 38
+_PITCHSAL = 39
+_KEYCLAR = 51
+_TONALSTAB = 60
+_COUPLING = 41
 
 
 # ── 50 H³ Demand Specifications ──────────────────────────────────────
@@ -213,6 +214,7 @@ class BCH(Relay):
     NAME = "BCH"
     FULL_NAME = "Brainstem Consonance Hierarchy"
     UNIT = "SPU"
+    FUNCTION = "F1"
     OUTPUT_DIM = 16
 
     LAYERS = (
@@ -349,6 +351,9 @@ class BCH(Relay):
     ) -> Tensor:
         """Transform R³/H³ into 16D consonance representation.
 
+        Delegates to 4 layer functions (extraction → temporal_integration
+        → cognitive_present → forecast) and stacks results.
+
         Args:
             h3_features: ``{(r3_idx, horizon, morph, law): (B, T)}``
             r3_features: ``(B, T, 97)``
@@ -356,187 +361,10 @@ class BCH(Relay):
         Returns:
             ``(B, T, 16)`` — E(4) + M(4) + P(4) + F(4)
         """
-        B, T = r3_features.shape[:2]
+        e = compute_extraction(r3_features)
+        m = compute_temporal_integration(r3_features, h3_features)
+        p = compute_cognitive_present(r3_features, h3_features, e)
+        f = compute_forecast(r3_features, h3_features, e, m, p)
 
-        # Helper to read R³ feature
-        def r3(idx: int) -> Tensor:
-            return r3_features[:, :, idx]
-
-        # Helper to read H³ feature
-        def h3(r3_idx: int, horizon: int, morph: int, law: int) -> Tensor:
-            key = (r3_idx, horizon, morph, law)
-            if key in h3_features:
-                return h3_features[key]
-            return torch.zeros(B, T, device=r3_features.device)
-
-        # === E-LAYER (indices 0-3) — instantaneous R³ ===
-
-        # E0: Neural Pitch Salience
-        e0 = 0.90 * (0.5 * r3(_TONAL) * r3(_AUTOCORR) + 0.5 * r3(_PITCHSAL))
-
-        # E1: Harmonicity Index
-        trist_std = torch.stack(
-            [r3(_TRIST1), r3(_TRIST2), r3(_TRIST3)], dim=-1,
-        ).std(dim=-1)
-        trist_balance = (1.0 - trist_std).clamp(0, 1)
-        e1 = 0.85 * (1.0 - r3(_INHARM)) * (
-            0.5 * trist_balance + 0.5 * (1.0 - r3(_PCE))
-        )
-
-        # E2: Consonance Hierarchy
-        e2 = 0.80 * r3(_HELM) * r3(_STUMP)
-
-        # E3: FFR-Behavior Correlation
-        e3 = 0.81 * (e0 + e1) / 2.0
-
-        # === M-LAYER (indices 4-7) — H³ temporal integration ===
-
-        # Coupling (consonance × timbre interaction)
-        coupling = h3(_COUPLING, 3, 0, 2)
-
-        # M0: Consonance Memory
-        m0 = (
-            0.20 * (1.0 - h3(_ROUGH, 0, 0, 2))
-            + 0.15 * (1.0 - h3(_ROUGH, 3, 1, 2))
-            + 0.10 * (1.0 - h3(_ROUGH, 6, 18, 0))
-            + 0.10 * r3(_PLEAS)
-            + 0.10 * coupling
-            + 0.05 * h3(_ROUGH, 6, 14, 2)
-            + 0.15 * h3(_PITCHSAL, 3, 0, 2)
-            + 0.15 * (1.0 - h3(_PCE, 0, 0, 2))
-        )
-
-        # M1: Pitch Memory
-        m1 = (
-            0.25 * h3(_PITCHSAL, 0, 0, 2)
-            + 0.20 * h3(_PITCHSAL, 3, 0, 2)
-            + 0.15 * h3(_PITCHSAL, 6, 0, 2)
-            + 0.15 * (1.0 - h3(_INHARM, 0, 0, 2))
-            + 0.10 * (1.0 - h3(_INHARM, 3, 18, 0))
-            + 0.15 * (1.0 - h3(_PCE, 3, 1, 2))
-        )
-
-        # M2: Tonal Memory
-        m2 = (
-            0.20 * h3(_KEYCLAR, 3, 0, 2)
-            + 0.20 * h3(_KEYCLAR, 3, 1, 2)
-            + 0.20 * h3(_KEYCLAR, 6, 0, 2)
-            + 0.20 * h3(_TONALSTAB, 3, 0, 2)
-            + 0.20 * h3(_TONALSTAB, 6, 1, 0)
-        )
-
-        # M3: Spectral Memory
-        trist1_h = h3(_TRIST1, 0, 0, 2)
-        trist2_h = h3(_TRIST2, 0, 0, 2)
-        trist3_h = h3(_TRIST3, 0, 0, 2)
-        trist_balance_h = (1.0 - torch.stack(
-            [trist1_h, trist2_h, trist3_h], dim=-1,
-        ).std(dim=-1)).clamp(0, 1)
-        m3 = (
-            0.25 * trist_balance_h
-            + 0.25 * (1.0 - h3(_HDEV, 0, 0, 2))
-            + 0.25 * (1.0 - h3(_HDEV, 3, 1, 0))
-            + 0.25 * (1.0 - h3(_INHARM, 12, 1, 0))
-        )
-
-        # === P-LAYER (indices 8-11) — cognitive present ===
-
-        # P0: Consonance Signal
-        p0 = (
-            0.20 * (1.0 - r3(_ROUGH))
-            + 0.15 * (1.0 - r3(_SETH))
-            + 0.15 * (1.0 - h3(_ROUGH, 3, 1, 2))
-            + 0.10 * r3(_PLEAS)
-            + 0.10 * (1.0 - r3(_HDEV))
-            + 0.10 * (1.0 - h3(_ROUGH, 6, 18, 0))
-            + 0.10 * h3(_KEYCLAR, 6, 0, 2)
-            + 0.10 * (1.0 - h3(_PCE, 3, 1, 2))
-        )
-
-        # P1: Template Match
-        p1 = (
-            0.15 * h3(_HELM, 0, 0, 2)
-            + 0.15 * h3(_HELM, 3, 1, 2)
-            + 0.15 * h3(_STUMP, 0, 0, 2)
-            + 0.10 * h3(_STUMP, 6, 1, 0)
-            + 0.15 * (1.0 - h3(_HDEV, 0, 0, 2))
-            + 0.10 * (1.0 - r3(_HDEV))
-            + 0.10 * h3(_KEYCLAR, 3, 0, 2)
-            + 0.10 * r3(_TONALSTAB)
-        )
-
-        # P2: Neural Pitch
-        p2 = (
-            0.25 * e0
-            + 0.15 * r3(_TONAL)
-            + 0.15 * (1.0 - h3(_INHARM, 0, 0, 2))
-            + 0.10 * r3(_AUTOCORR)
-            + 0.10 * (1.0 - h3(_INHARM, 3, 18, 0))
-            + 0.15 * h3(_PITCHSAL, 0, 0, 2)
-            + 0.10 * (1.0 - r3(_PCE))
-        )
-
-        # P3: Tonal Context
-        p3 = (
-            0.25 * h3(_KEYCLAR, 3, 0, 2)
-            + 0.25 * h3(_KEYCLAR, 6, 0, 2)
-            + 0.25 * h3(_TONALSTAB, 3, 0, 2)
-            + 0.25 * r3(_TONALSTAB)
-        )
-
-        # === F-LAYER (indices 12-15) — trend extrapolation ===
-
-        # Recompute trist_balance for F3 (same as E1)
-        trist_bal = trist_balance
-
-        # F0: Consonance Forecast
-        f0 = (
-            0.15 * e1
-            + 0.15 * m0
-            + 0.20 * p0
-            + 0.10 * coupling
-            + 0.10 * e3
-            + 0.10 * r3(_PLEAS)
-            + 0.10 * h3(_KEYCLAR, 12, 1, 0)
-            + 0.10 * h3(_TONALSTAB, 6, 1, 0)
-        )
-
-        # F1: Pitch Forecast
-        f1 = (
-            0.20 * e0
-            + 0.20 * m1
-            + 0.20 * p2
-            + 0.15 * h3(_ROUGH, 6, 14, 2)
-            + 0.15 * h3(_PITCHSAL, 6, 0, 2)
-            + 0.10 * (1.0 - h3(_PCE, 0, 0, 2))
-        )
-
-        # F2: Tonal Forecast
-        f2 = (
-            0.25 * m2
-            + 0.25 * p3
-            + 0.15 * h3(_KEYCLAR, 12, 1, 0)
-            + 0.15 * h3(_TONALSTAB, 18, 1, 0)
-            + 0.10 * h3(_KEYCLAR, 6, 1, 1)
-            + 0.10 * h3(_TONALSTAB, 6, 1, 1)
-        )
-
-        # F3: Interval Forecast
-        f3 = (
-            0.20 * h3(_HELM, 12, 1, 0)
-            + 0.15 * h3(_STUMP, 6, 1, 0)
-            + 0.15 * (1.0 - h3(_ROUGH, 6, 18, 0))
-            + 0.10 * (1.0 - h3(_INHARM, 3, 18, 0))
-            + 0.10 * trist_bal
-            + 0.10 * coupling
-            + 0.10 * h3(_KEYCLAR, 6, 0, 2)
-            + 0.10 * h3(_TONALSTAB, 6, 1, 0)
-        )
-
-        # === Stack into (B, T, 16) ===
-        output = torch.stack(
-            [e0, e1, e2, e3, m0, m1, m2, m3, p0, p1, p2, p3, f0, f1, f2, f3],
-            dim=-1,
-        )
-
+        output = torch.stack([*e, *m, *p, *f], dim=-1)
         return output.clamp(0.0, 1.0)

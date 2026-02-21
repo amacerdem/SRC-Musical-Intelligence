@@ -13,8 +13,8 @@ from typing import TYPE_CHECKING, Dict, List, Optional, Tuple
 
 import torch
 
-# Backward-compatibility: old conftest.py imports UNIT_ORDER
-UNIT_ORDER = ("SPU", "STU", "IMU", "ASU", "NDU", "MPU", "PCU", "ARU", "RPU")
+# Function-based ordering (F1-F9)
+FUNCTION_ORDER = ("F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9")
 
 from Musical_Intelligence.brain.executor import execute
 from Musical_Intelligence.brain.psi_interpreter import PsiInterpreter

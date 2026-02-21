@@ -162,7 +162,7 @@ def main() -> None:
     print()
 
     # Initialise pipeline components (once)
-    from Musical_Intelligence.brain.units.spu.relays.bch import BCH
+    from Musical_Intelligence.brain.functions.f1.mechanisms.bch import BCH
     from Musical_Intelligence.ear.h3 import H3Extractor
     from Musical_Intelligence.ear.r3 import R3Extractor
 

@@ -62,6 +62,7 @@ class Nucleus(ABC):
     NAME: str = ""
     FULL_NAME: str = ""
     UNIT: str = ""
+    FUNCTION: str = ""
     ROLE: str = ""
     PROCESSING_DEPTH: int = -1
     OUTPUT_DIM: int = 0
@@ -177,6 +178,8 @@ class Nucleus(ABC):
             errors.append("FULL_NAME must be non-empty")
         if not self.UNIT:
             errors.append("UNIT must be non-empty")
+        if not self.FUNCTION:
+            errors.append("FUNCTION must be non-empty")
         if self.ROLE not in _VALID_ROLES:
             errors.append(
                 f"ROLE must be one of {sorted(_VALID_ROLES)}, "
@@ -249,9 +252,9 @@ class Nucleus(ABC):
     def __repr__(self) -> str:
         return (
             f"{self.__class__.__name__}("
-            f"name={self.NAME!r}, unit={self.UNIT!r}, "
-            f"role={self.ROLE!r}, depth={self.PROCESSING_DEPTH}, "
-            f"dim={self.OUTPUT_DIM})"
+            f"name={self.NAME!r}, function={self.FUNCTION!r}, "
+            f"unit={self.UNIT!r}, role={self.ROLE!r}, "
+            f"depth={self.PROCESSING_DEPTH}, dim={self.OUTPUT_DIM})"
         )
 
 

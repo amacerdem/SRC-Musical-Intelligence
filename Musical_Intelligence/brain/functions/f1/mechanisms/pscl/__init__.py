@@ -1,8 +1,9 @@
 """PSCL — Pitch Salience in Cortical Lateralization.
 
-Encoder nucleus (depth 1) in SPU. Transforms BCH relay output, R³ spectral
-features, and H³ temporal morphologies into a 16D pitch-salience representation
-following the cortical auditory pathway in anterolateral Heschl's Gyrus (alHG).
+Encoder nucleus (depth 1) in SPU, Function F1. Transforms BCH relay output,
+R³ spectral features, and H³ temporal morphologies into a 16D pitch-salience
+representation following the cortical auditory pathway in anterolateral
+Heschl's Gyrus (alHG).
 
 Output structure: E(4) + M(4) + P(4) + F(4) = 16D
   E-layer [0:4]   Extraction    (instantaneous R³)     scope=internal
@@ -29,31 +30,10 @@ from Musical_Intelligence.contracts.dataclasses import (
     RegionLink,
 )
 
-# ── R³ feature indices (post-freeze 97D) ─────────────────────────────
-# A group [0:7]
-_PLEAS = 4          # sensory_pleasantness
-_INHARM = 5         # inharmonicity
-# C group [12:21]
-_TONAL = 14         # tonalness (brightness_kuttruff in code)
-_CLARITY = 15       # clarity
-_SMOOTH = 16        # spectral_smoothness
-_AUTOCORR = 17      # spectral_autocorrelation
-_TRIST1 = 18        # tristimulus1
-# D group [21:25]
-_ENTROPY = 22       # distribution_entropy
-_FLATNESS = 23      # distribution_flatness
-_CONC = 24          # distribution_concentration
-# F group [25:41]
-_CHROMA_START = 25  # chroma vector start (12D pitch classes)
-_CHROMA_END = 37    # chroma vector end (exclusive)
-_PITCH_H = 37       # pitch_height
-_PITCHSAL = 39      # pitch_salience
-
-# ── BCH relay output indices ─────────────────────────────────────────
-_BCH_E0 = 0         # E0:nps (neural pitch salience)
-_BCH_E1 = 1         # E1:harmonicity
-_BCH_P0 = 8         # P0:consonance_signal
-_BCH_F1 = 13        # F1:pitch_forecast
+from .cognitive_present import compute_cognitive_present
+from .extraction import compute_extraction
+from .forecast import compute_forecast
+from .temporal_integration import compute_temporal_integration
 
 # ── Horizon labels ────────────────────────────────────────────────────
 _H_LABELS = {
@@ -87,6 +67,21 @@ def _h3(
         purpose=purpose,
         citation=citation,
     )
+
+
+# ── R³ feature indices (post-freeze 97D) ─────────────────────────────
+_PLEAS = 4
+_INHARM = 5
+_TONAL = 14
+_CLARITY = 15
+_SMOOTH = 16
+_AUTOCORR = 17
+_TRIST1 = 18
+_ENTROPY = 22
+_FLATNESS = 23
+_CONC = 24
+_PITCH_H = 37
+_PITCHSAL = 39
 
 
 # ── 20 H³ Demand Specifications ──────────────────────────────────────
@@ -153,6 +148,7 @@ class PSCL(Encoder):
     NAME = "PSCL"
     FULL_NAME = "Pitch Salience in Cortical Lateralization"
     UNIT = "SPU"
+    FUNCTION = "F1"
     OUTPUT_DIM = 16
     UPSTREAM_READS = ("BCH",)
     CROSS_UNIT_READS = ()
@@ -292,6 +288,9 @@ class PSCL(Encoder):
     ) -> Tensor:
         """Transform R³/H³ + BCH relay into 16D pitch-salience representation.
 
+        Delegates to 4 layer functions (extraction → temporal_integration
+        → cognitive_present → forecast) and stacks results.
+
         Args:
             h3_features: ``{(r3_idx, horizon, morph, law): (B, T)}``
             r3_features: ``(B, T, 97)``
@@ -300,159 +299,14 @@ class PSCL(Encoder):
         Returns:
             ``(B, T, 16)`` — E(4) + M(4) + P(4) + F(4)
         """
-        B, T = r3_features.shape[:2]
-        device = r3_features.device
-
-        # BCH relay output
         bch = relay_outputs["BCH"]  # (B, T, 16)
 
-        # Helper to read R³ feature
-        def r3(idx: int) -> Tensor:
-            return r3_features[:, :, idx]
+        e = compute_extraction(r3_features)
+        m = compute_temporal_integration(r3_features, h3_features, bch)
+        p = compute_cognitive_present(r3_features, h3_features, e, m)
+        f = compute_forecast(r3_features, h3_features, p, m, bch)
 
-        # Helper to read H³ feature
-        def h3(r3_idx: int, horizon: int, morph: int, law: int) -> Tensor:
-            key = (r3_idx, horizon, morph, law)
-            if key in h3_features:
-                return h3_features[key]
-            return torch.zeros(B, T, device=device)
-
-        # === E-LAYER (indices 0-3) — instantaneous R³ ===
-
-        # E0: Pitch Salience Raw
-        e0 = 0.90 * (
-            0.40 * r3(_PITCHSAL)
-            + 0.35 * r3(_TONAL) * r3(_AUTOCORR)
-            + 0.25 * r3(_CONC)
-        )
-
-        # E1: HG Activation Proxy
-        e1 = 0.85 * (1.0 - r3(_INHARM)) * (
-            0.50 * r3(_TRIST1)
-            + 0.30 * r3(_SMOOTH)
-            + 0.20 * r3(_PITCHSAL)
-        )
-
-        # E2: Salience Gradient
-        e2 = 0.80 * (1.0 - r3(_ENTROPY)) * (1.0 - r3(_FLATNESS)) * r3(_PLEAS)
-
-        # E3: Spectral Focus
-        e3 = r3(_CONC) * r3(_CLARITY) * (1.0 - r3(_FLATNESS))
-
-        # === M-LAYER (indices 4-7) — H³ temporal + BCH ===
-
-        # M0: Salience Sustained
-        m0 = (
-            0.25 * h3(_TONAL, 6, 1, 0)
-            + 0.25 * h3(_PITCHSAL, 6, 1, 0)
-            + 0.20 * h3(_AUTOCORR, 6, 1, 0)
-            + 0.15 * h3(_TRIST1, 6, 1, 0)
-            + 0.15 * h3(_CONC, 6, 14, 0)
-        )
-
-        # M1: Spectral Coherence
-        m1 = (
-            0.30 * h3(_AUTOCORR, 3, 0, 2)
-            + 0.30 * h3(_TONAL, 3, 0, 2)
-            + 0.20 * h3(_TRIST1, 3, 0, 2)
-            + 0.20 * (1.0 - h3(_ENTROPY, 6, 1, 0))
-        )
-
-        # M2: Tonal Salience Context
-        chroma = r3_features[:, :, _CHROMA_START:_CHROMA_END]  # (B, T, 12)
-        chroma_peak = chroma.max(dim=-1).values  # (B, T)
-        m2 = (
-            0.35 * chroma_peak
-            + 0.30 * r3(_PITCHSAL)
-            + 0.20 * (1.0 - r3(_ENTROPY))
-            + 0.15 * r3(_PITCH_H)
-        )
-
-        # M3: BCH Integration
-        m3 = (
-            0.40 * bch[:, :, _BCH_E0]
-            + 0.30 * bch[:, :, _BCH_E1]
-            + 0.20 * bch[:, :, _BCH_P0]
-            + 0.10 * bch[:, :, _BCH_F1]
-        )
-
-        # === P-LAYER (indices 8-11) — cognitive present ===
-
-        # P0: Pitch Prominence Signal
-        p0 = (
-            0.25 * e0
-            + 0.25 * m0
-            + 0.20 * m3
-            + 0.15 * r3(_PITCHSAL)
-            + 0.15 * h3(_PITCHSAL, 6, 0, 2)
-        )
-
-        # P1: HG Cortical Response
-        p1 = (
-            0.30 * e1
-            + 0.25 * m1
-            + 0.20 * h3(_PITCHSAL, 3, 0, 2)
-            + 0.15 * (1.0 - h3(_INHARM, 3, 0, 2))
-            + 0.10 * h3(_CLARITY, 3, 0, 2)
-        )
-
-        # P2: Periodicity Clarity
-        p2 = (
-            0.30 * e3
-            + 0.25 * h3(_CONC, 6, 14, 0)
-            + 0.25 * h3(_AUTOCORR, 3, 0, 2)
-            + 0.20 * r3(_TONAL)
-        )
-
-        # P3: Salience Hierarchy
-        p3 = (
-            0.35 * e2
-            + 0.25 * m2
-            + 0.25 * m0
-            + 0.15 * e0
-        )
-
-        # === F-LAYER (indices 12-15) — trend extrapolation ===
-
-        # F0: Pitch Continuation
-        f0 = (
-            0.30 * h3(_TONAL, 6, 18, 0)
-            + 0.25 * h3(_PITCHSAL, 6, 18, 0)
-            + 0.20 * h3(_TONAL, 6, 1, 1)
-            + 0.15 * h3(_PITCHSAL, 6, 1, 1)
-            + 0.10 * bch[:, :, _BCH_F1]
-        )
-
-        # F1: Salience Direction (signed, [-1, 1])
-        f1_raw = (
-            0.35 * h3(_PITCHSAL, 6, 18, 0)
-            + 0.30 * h3(_TONAL, 6, 18, 0)
-            + 0.20 * h3(_CONC, 6, 18, 1)
-            + 0.15 * h3(_PITCH_H, 6, 8, 0)
-        )
-        f1 = torch.tanh(f1_raw)
-
-        # F2: Melody Propagation
-        f2 = (
-            0.30 * p0
-            + 0.25 * h3(_PITCH_H, 6, 1, 1)
-            + 0.25 * h3(_PITCH_H, 6, 8, 0)
-            + 0.20 * m2
-        )
-
-        # F3: Register Trajectory
-        f3 = (
-            0.40 * h3(_PITCH_H, 6, 8, 0)
-            + 0.30 * h3(_PITCH_H, 6, 1, 1)
-            + 0.30 * r3(_PITCH_H)
-        )
-
-        # === Stack into (B, T, 16) ===
-        # Clamp [0,1] for all except F1 which is [-1,1]
-        output = torch.stack(
-            [e0, e1, e2, e3, m0, m1, m2, m3, p0, p1, p2, p3, f0, f1, f2, f3],
-            dim=-1,
-        )
+        output = torch.stack([*e, *m, *p, *f], dim=-1)
         # Selective clamping: all dims to [0,1] except dim 13 (F1) to [-1,1]
         output[:, :, :13] = output[:, :, :13].clamp(0.0, 1.0)
         output[:, :, 13] = output[:, :, 13].clamp(-1.0, 1.0)

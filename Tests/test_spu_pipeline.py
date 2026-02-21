@@ -11,8 +11,8 @@ from __future__ import annotations
 import torch
 
 from Musical_Intelligence.brain.executor import execute
-from Musical_Intelligence.brain.units.spu.encoders.pscl import PSCL
-from Musical_Intelligence.brain.units.spu.relays.bch import BCH
+from Musical_Intelligence.brain.functions.f1.mechanisms.pscl import PSCL
+from Musical_Intelligence.brain.functions.f1.mechanisms.bch import BCH
 
 B, T = 2, 100  # batch, time
 

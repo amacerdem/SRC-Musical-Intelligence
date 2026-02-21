@@ -1,4 +1,4 @@
-"""C³ Brain — 96 cognitive nuclei organized into 9 units.
+"""C³ Brain — 96 cognitive nuclei organized into 12 cognitive functions (F1-F12).
 
 The brain module transforms R³ spectral features and H³ temporal demands
 into a ``BrainOutput`` containing four channels:
