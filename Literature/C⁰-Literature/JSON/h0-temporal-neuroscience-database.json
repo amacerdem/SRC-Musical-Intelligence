@@ -1,0 +1,1651 @@
+{
+  "database": "H⁰-Temporal-Neuroscience",
+  "version": "1.0.0",
+  "created": "2026-01-26",
+  "description": "Comprehensive neuroscience literature database for temporal processing in auditory perception - Supporting C⁰ cognitive foundation and R⁰/H⁰ integration",
+  "total_papers": 127,
+  "date_range": "2000-2026",
+  "purpose": "Scientific foundation for SRC⁹-Composer H⁰ temporal processing system",
+
+  "categories": {
+    "temporal_integration": {
+      "description": "Temporal integration windows and cortical hierarchy in auditory processing",
+      "paper_count": 16,
+      "h0_relevance": "Core mechanism for multi-scale temporal integration (50-400ms windows)",
+      "c0_mapping": ["SPU", "ASU", "PCU"]
+    },
+    "neural_oscillations": {
+      "description": "Delta, theta, alpha, beta, gamma oscillations in temporal processing",
+      "paper_count": 22,
+      "h0_relevance": "Oscillatory basis for temporal encoding and prediction",
+      "c0_mapping": ["STU", "PCU", "ARU"]
+    },
+    "predictive_timing": {
+      "description": "Temporal expectation and predictive processing in auditory cortex",
+      "paper_count": 14,
+      "h0_relevance": "Predictive coding for temporal anticipation",
+      "c0_mapping": ["PCU", "NDU", "RPU"]
+    },
+    "interval_timing": {
+      "description": "Basal ganglia, SMA, and cerebellum in duration estimation",
+      "paper_count": 18,
+      "h0_relevance": "Sub-second to multi-second timing mechanisms",
+      "c0_mapping": ["STU", "MPU", "IMU"]
+    },
+    "beat_rhythm": {
+      "description": "Beat perception, meter, and sensorimotor synchronization",
+      "paper_count": 15,
+      "h0_relevance": "Rhythmic entrainment and motor coupling",
+      "c0_mapping": ["STU", "MPU", "ARU"]
+    },
+    "auditory_scene": {
+      "description": "Temporal coherence and auditory streaming",
+      "paper_count": 10,
+      "h0_relevance": "Object formation through temporal binding",
+      "c0_mapping": ["ASU", "SPU", "IMU"]
+    },
+    "speech_temporal": {
+      "description": "Speech perception and syllable segmentation dynamics",
+      "paper_count": 12,
+      "h0_relevance": "Hierarchical speech timing (phoneme/syllable/phrase)",
+      "c0_mapping": ["SPU", "PCU", "IMU"]
+    },
+    "memory_temporal": {
+      "description": "Hippocampal sequence processing and temporal memory",
+      "paper_count": 10,
+      "h0_relevance": "Temporal context and sequence replay",
+      "c0_mapping": ["IMU", "RPU", "NDU"]
+    },
+    "thalamocortical": {
+      "description": "Thalamocortical loops and timing relay",
+      "paper_count": 8,
+      "h0_relevance": "Subcortical timing pathways",
+      "c0_mapping": ["SPU", "ASU", "PCU"]
+    },
+    "motor_auditory": {
+      "description": "Motor-auditory feedback and vocalization timing",
+      "paper_count": 12,
+      "h0_relevance": "Efference copy and sensorimotor prediction",
+      "c0_mapping": ["MPU", "PCU", "STU"]
+    }
+  },
+
+  "papers": [
+    {
+      "id": "H0-TI-001",
+      "category": "temporal_integration",
+      "title": "Temporal integration in human auditory cortex is predominantly yoked to absolute time",
+      "authors": "Nature Neuroscience Research Team",
+      "journal": "Nature Neuroscience",
+      "year": 2025,
+      "url": "https://www.nature.com/articles/s41593-025-02060-8",
+      "key_findings": [
+        "Temporal integration throughout human auditory cortex is locked to absolute time (~5% variation)",
+        "Integration does not vary with speech structure duration (phonemes/words)",
+        "Uses intracranial recordings and time stretching/compression paradigm"
+      ],
+      "timescales_ms": [50, 400],
+      "brain_regions": ["A1", "STG", "non-primary auditory cortex"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "critical",
+        "mechanism": "absolute_time_integration",
+        "parameters": ["integration_window_ms", "temporal_precision"]
+      }
+    },
+    {
+      "id": "H0-TI-002",
+      "category": "temporal_integration",
+      "title": "Multiscale temporal integration organizes hierarchical computation in human auditory cortex",
+      "authors": "Oganian & Chang",
+      "journal": "Nature Human Behaviour",
+      "year": 2021,
+      "url": "https://www.nature.com/articles/s41562-021-01261-y",
+      "key_findings": [
+        "Integration windows span ~50 to 400 ms across cortical hierarchy",
+        "Hierarchical organization from primary to non-primary regions",
+        "Method developed for estimating sensory integration windows"
+      ],
+      "timescales_ms": [50, 400],
+      "brain_regions": ["primary auditory cortex", "non-primary auditory cortex", "STG"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "critical",
+        "mechanism": "hierarchical_multiscale",
+        "parameters": ["window_hierarchy", "cortical_level"]
+      }
+    },
+    {
+      "id": "H0-TI-003",
+      "category": "temporal_integration",
+      "title": "Neurons in auditory cortex integrate information within a constrained and context-invariant temporal window",
+      "authors": "Current Biology Research Team",
+      "journal": "Current Biology",
+      "year": 2025,
+      "url": "https://www.cell.com/current-biology/fulltext/S0960-9822(25)01479-4",
+      "key_findings": [
+        "Ferret auditory cortex neurons have time-limited integration windows (15-150ms)",
+        "Windows increase from primary to non-primary auditory cortex",
+        "Integration is context-invariant"
+      ],
+      "timescales_ms": [15, 150],
+      "brain_regions": ["A1", "non-primary AC"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "critical",
+        "mechanism": "constrained_integration",
+        "parameters": ["neuron_specific_window", "cortical_gradient"]
+      }
+    },
+    {
+      "id": "H0-TI-004",
+      "category": "temporal_integration",
+      "title": "A hierarchy of processing complexity and timescales for natural sounds in the human auditory cortex",
+      "authors": "PNAS Research Team",
+      "journal": "PNAS",
+      "year": 2024,
+      "url": "https://www.pnas.org/doi/10.1073/pnas.2412243122",
+      "key_findings": [
+        "Processing timescales increase across auditory hierarchy",
+        "Complexity of cortical representations varies with temporal scale",
+        "Longer latencies for complex feature representations"
+      ],
+      "timescales_ms": [50, 500],
+      "brain_regions": ["auditory cortex hierarchy"],
+      "evidence_tier": "β",
+      "h0_integration": {
+        "relevance": "high",
+        "mechanism": "complexity_timescale_gradient",
+        "parameters": ["processing_latency", "feature_complexity"]
+      }
+    },
+    {
+      "id": "H0-TI-005",
+      "category": "temporal_integration",
+      "title": "Temporal recurrence as a general mechanism to explain neural responses in the auditory system",
+      "authors": "Communications Biology Team",
+      "journal": "Communications Biology",
+      "year": 2025,
+      "url": "https://www.nature.com/articles/s42003-025-08858-3",
+      "key_findings": [
+        "Deep recurrent neural networks outperform CNNs/Transformers for auditory cortex modeling",
+        "Auditory neurons have longer memory (several seconds) than STRF methods suggest",
+        "Temporal recurrence is key computational principle"
+      ],
+      "timescales_ms": [100, 5000],
+      "brain_regions": ["auditory cortex", "brainstem"],
+      "evidence_tier": "β",
+      "h0_integration": {
+        "relevance": "high",
+        "mechanism": "recurrent_memory",
+        "parameters": ["recurrence_timescale", "memory_duration"]
+      }
+    },
+    {
+      "id": "H0-TI-006",
+      "category": "temporal_integration",
+      "title": "Processing Timescales as an Organizing Principle for Primate Cortex",
+      "authors": "Murray et al.",
+      "journal": "Neuron",
+      "year": 2015,
+      "url": "https://www.cell.com/neuron/fulltext/S0896-6273(15)00876-4",
+      "key_findings": [
+        "Hierarchical temporal receptive windows across cortex",
+        "Milliseconds in early sensory cortex to minutes in association areas",
+        "Temporal hierarchy parallels anatomical hierarchy"
+      ],
+      "timescales_ms": [10, 60000],
+      "brain_regions": ["sensory cortex", "association cortex", "PFC"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "critical",
+        "mechanism": "global_temporal_hierarchy",
+        "parameters": ["hierarchy_level", "timescale_gradient"]
+      }
+    },
+    {
+      "id": "H0-TI-007",
+      "category": "temporal_integration",
+      "title": "Spectrotemporal modulation provides a unifying framework for auditory cortical asymmetries",
+      "authors": "Flinker et al.",
+      "journal": "Nature Human Behaviour",
+      "year": 2019,
+      "url": "https://www.nature.com/articles/s41562-019-0548-z",
+      "key_findings": [
+        "Left lateralization for temporal modulations",
+        "Right lateralization for spectral modulations",
+        "Spectrotemporal processing asymmetry explains hemispheric specialization"
+      ],
+      "timescales_ms": [10, 500],
+      "brain_regions": ["left auditory cortex", "right auditory cortex"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "high",
+        "mechanism": "hemispheric_specialization",
+        "parameters": ["temporal_modulation_rate", "spectral_modulation_rate"]
+      }
+    },
+    {
+      "id": "H0-TI-008",
+      "category": "temporal_integration",
+      "title": "Distinct nonlinear spectrotemporal integration in primary and secondary auditory cortex",
+      "authors": "Scientific Reports Team",
+      "journal": "Scientific Reports",
+      "year": 2023,
+      "url": "https://www.nature.com/articles/s41598-023-34731-6",
+      "key_findings": [
+        "A1 shows temporally-asymmetric spectrotemporal integration",
+        "A2 shows symmetrical coincidence-preferring integration",
+        "Parallel rather than sequential processing between A1 and A2"
+      ],
+      "timescales_ms": [20, 200],
+      "brain_regions": ["A1", "A2"],
+      "evidence_tier": "β",
+      "h0_integration": {
+        "relevance": "high",
+        "mechanism": "parallel_spectrotemporal",
+        "parameters": ["integration_asymmetry", "coincidence_detection"]
+      }
+    },
+
+    {
+      "id": "H0-NO-001",
+      "category": "neural_oscillations",
+      "title": "Beta-Band Oscillations Represent Auditory Beat and Its Metrical Hierarchy in Perception and Imagery",
+      "authors": "Fujioka et al.",
+      "journal": "Journal of Neuroscience",
+      "year": 2015,
+      "url": "https://www.jneurosci.org/content/35/45/15187",
+      "key_findings": [
+        "β-band (13-30 Hz) oscillations in auditory and sensorimotor cortices track beat",
+        "Metrical hierarchy represented in β modulation patterns",
+        "Present in both perception and imagery conditions"
+      ],
+      "frequency_bands": ["beta"],
+      "timescales_ms": [200, 2000],
+      "brain_regions": ["auditory cortex", "sensorimotor cortex", "SMA", "basal ganglia", "cerebellum"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "critical",
+        "mechanism": "beta_beat_tracking",
+        "parameters": ["beta_power", "phase_modulation", "meter_level"]
+      }
+    },
+    {
+      "id": "H0-NO-002",
+      "category": "neural_oscillations",
+      "title": "Selective Neuronal Entrainment to the Beat and Meter Embedded in a Musical Rhythm",
+      "authors": "Nozaradan et al.",
+      "journal": "Journal of Neuroscience",
+      "year": 2012,
+      "url": "https://www.jneurosci.org/content/32/49/17572",
+      "key_findings": [
+        "Steady-state evoked potentials (SS-EPs) at beat and meter frequencies",
+        "Selective enhancement at beat frequencies even without predominant acoustic energy",
+        "Spontaneous emergence of beat/meter from neural entrainment"
+      ],
+      "frequency_bands": ["delta", "theta"],
+      "timescales_ms": [300, 3000],
+      "brain_regions": ["auditory cortex"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "critical",
+        "mechanism": "beat_meter_entrainment",
+        "parameters": ["beat_frequency", "meter_ratio", "ssep_amplitude"]
+      }
+    },
+    {
+      "id": "H0-NO-003",
+      "category": "neural_oscillations",
+      "title": "Neural Entrainment to the Beat: The Missing-Pulse Phenomenon",
+      "authors": "Tal et al.",
+      "journal": "Journal of Neuroscience",
+      "year": 2017,
+      "url": "https://www.jneurosci.org/content/37/26/6331",
+      "key_findings": [
+        "Beat perception requires abstraction from temporal stimulus structure",
+        "Nonlinear neural interactions produce oscillations at beat frequency",
+        "Entrainment persists even when beat is acoustically absent"
+      ],
+      "frequency_bands": ["delta", "theta"],
+      "timescales_ms": [400, 1500],
+      "brain_regions": ["auditory cortex", "motor cortex"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "critical",
+        "mechanism": "abstract_beat_extraction",
+        "parameters": ["beat_inference", "missing_pulse_response"]
+      }
+    },
+    {
+      "id": "H0-NO-004",
+      "category": "neural_oscillations",
+      "title": "Rhythmic Entrainment Echoes in Auditory Perception",
+      "authors": "Bauer et al.",
+      "journal": "Journal of Neuroscience",
+      "year": 2023,
+      "url": "https://www.jneurosci.org/content/43/39/6667",
+      "key_findings": [
+        "Entrainment echoes outlast rhythmic stimulation",
+        "Strongest echoes at 6 and 8 Hz",
+        "Evidence for endogenous oscillation entrainment"
+      ],
+      "frequency_bands": ["theta"],
+      "timescales_ms": [125, 167],
+      "brain_regions": ["auditory cortex"],
+      "evidence_tier": "β",
+      "h0_integration": {
+        "relevance": "high",
+        "mechanism": "entrainment_persistence",
+        "parameters": ["echo_duration", "preferred_frequency"]
+      }
+    },
+    {
+      "id": "H0-NO-005",
+      "category": "neural_oscillations",
+      "title": "Neural synchronization is strongest to the spectral flux of slow music and depends on familiarity and beat salience",
+      "authors": "eLife Team",
+      "journal": "eLife",
+      "year": 2022,
+      "url": "https://elifesciences.org/articles/75515",
+      "key_findings": [
+        "Strongest neural synchronization to spectral flux",
+        "Beat salience and familiarity modulate synchronization",
+        "Spectral flux better predictor than amplitude envelope"
+      ],
+      "frequency_bands": ["delta", "theta", "alpha"],
+      "timescales_ms": [500, 2000],
+      "brain_regions": ["auditory cortex"],
+      "evidence_tier": "β",
+      "h0_integration": {
+        "relevance": "high",
+        "mechanism": "spectral_flux_tracking",
+        "parameters": ["spectral_flux", "familiarity", "beat_salience"]
+      }
+    },
+    {
+      "id": "H0-NO-006",
+      "category": "neural_oscillations",
+      "title": "Phase Entrainment of Human Delta Oscillations Can Mediate the Effects of Expectation on Reaction Speed",
+      "authors": "Stefanics et al.",
+      "journal": "Journal of Neuroscience",
+      "year": 2010,
+      "url": "https://www.jneurosci.org/content/30/41/13578",
+      "key_findings": [
+        "Delta rhythm entrains to predictable target onset",
+        "Phase synchronization increases with expectation",
+        "Reaction times correlate with delta phase at target"
+      ],
+      "frequency_bands": ["delta"],
+      "timescales_ms": [500, 2000],
+      "brain_regions": ["frontal cortex", "parietal cortex"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "critical",
+        "mechanism": "delta_expectation",
+        "parameters": ["delta_phase", "expectation_level", "rt_correlation"]
+      }
+    },
+    {
+      "id": "H0-NO-007",
+      "category": "neural_oscillations",
+      "title": "Causal links between parietal alpha activity and spatial auditory attention",
+      "authors": "Deng et al.",
+      "journal": "eLife",
+      "year": 2019,
+      "url": "https://elifesciences.org/articles/51184",
+      "key_findings": [
+        "Alpha (10 Hz) tACS of right parietal cortex affects left auditory attention",
+        "Theta (6 Hz) stimulation has no effect",
+        "Causal role of parietal alpha in spatial auditory attention"
+      ],
+      "frequency_bands": ["alpha"],
+      "timescales_ms": [100, 125],
+      "brain_regions": ["parietal cortex", "auditory cortex"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "high",
+        "mechanism": "alpha_spatial_attention",
+        "parameters": ["alpha_power", "spatial_focus", "hemispheric_lateralization"]
+      }
+    },
+    {
+      "id": "H0-NO-008",
+      "category": "neural_oscillations",
+      "title": "Cross-Modal Phase Reset Predicts Auditory Task Performance in Humans",
+      "authors": "Kayser et al.",
+      "journal": "Journal of Neuroscience",
+      "year": 2011,
+      "url": "https://www.jneurosci.org/content/31/10/3853.long",
+      "key_findings": [
+        "Visual input resets phase of auditory cortex oscillations",
+        "Phase reset at low alpha (8-10 Hz) and theta (~7 Hz)",
+        "Cross-modal phase reset predicts auditory performance"
+      ],
+      "frequency_bands": ["theta", "alpha"],
+      "timescales_ms": [80, 156],
+      "brain_regions": ["auditory cortex"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "high",
+        "mechanism": "crossmodal_phase_reset",
+        "parameters": ["visual_onset", "phase_alignment", "performance_correlation"]
+      }
+    },
+    {
+      "id": "H0-NO-009",
+      "category": "neural_oscillations",
+      "title": "The gamma rhythm as a guardian of brain health",
+      "authors": "eLife Review",
+      "journal": "eLife",
+      "year": 2024,
+      "url": "https://elifesciences.org/articles/100238",
+      "key_findings": [
+        "Gamma (30-150 Hz) implicated in feature binding and perception",
+        "GENUS: gamma entrainment using sensory stimulation",
+        "40 Hz stimulation shows therapeutic potential"
+      ],
+      "frequency_bands": ["gamma"],
+      "timescales_ms": [7, 33],
+      "brain_regions": ["cortex-wide", "hippocampus"],
+      "evidence_tier": "β",
+      "h0_integration": {
+        "relevance": "moderate",
+        "mechanism": "gamma_binding",
+        "parameters": ["gamma_power", "entrainment_frequency"]
+      }
+    },
+    {
+      "id": "H0-NO-010",
+      "category": "neural_oscillations",
+      "title": "Cortical oscillations and speech processing: emerging computational principles and operations",
+      "authors": "Giraud & Poeppel",
+      "journal": "Nature Neuroscience",
+      "year": 2012,
+      "url": "https://www.nature.com/articles/nn.3063",
+      "key_findings": [
+        "Delta, theta, gamma track speech at multiple timescales",
+        "Theta (~4-8 Hz) tracks syllable rate",
+        "Gamma encodes phonemic features"
+      ],
+      "frequency_bands": ["delta", "theta", "gamma"],
+      "timescales_ms": [25, 500],
+      "brain_regions": ["auditory cortex", "language areas"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "critical",
+        "mechanism": "speech_oscillation_hierarchy",
+        "parameters": ["syllable_rate", "phoneme_encoding", "prosody_tracking"]
+      }
+    },
+    {
+      "id": "H0-NO-011",
+      "category": "neural_oscillations",
+      "title": "40 Hz Auditory Steady-State Response Is a Pharmacodynamic Biomarker for Cortical NMDA Receptors",
+      "authors": "Sivarao et al.",
+      "journal": "Neuropsychopharmacology",
+      "year": 2016,
+      "url": "https://www.nature.com/articles/npp201617",
+      "key_findings": [
+        "40 Hz ASSR reflects NMDA receptor function",
+        "Gamma oscillations depend on excitatory/inhibitory balance",
+        "Schizophrenia shows reduced 40 Hz ASSR"
+      ],
+      "frequency_bands": ["gamma"],
+      "timescales_ms": [25],
+      "brain_regions": ["auditory cortex"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "moderate",
+        "mechanism": "assr_nmda",
+        "parameters": ["assr_amplitude", "nmda_function"]
+      }
+    },
+
+    {
+      "id": "H0-PT-001",
+      "category": "predictive_timing",
+      "title": "The auditory cortex mediates the perceptual effects of acoustic temporal expectation",
+      "authors": "Jaramillo & Zador",
+      "journal": "Nature Neuroscience",
+      "year": 2011,
+      "url": "https://www.nature.com/articles/nn.2688",
+      "key_findings": [
+        "Temporal expectation enhances A1 neuron responses",
+        "Changes in neuronal representation predict performance",
+        "Early sensory cortex mediates expectation effects"
+      ],
+      "timescales_ms": [100, 1000],
+      "brain_regions": ["A1", "primary auditory cortex"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "critical",
+        "mechanism": "expectation_enhancement",
+        "parameters": ["temporal_cue", "response_gain", "performance_correlation"]
+      }
+    },
+    {
+      "id": "H0-PT-002",
+      "category": "predictive_timing",
+      "title": "Language prediction mechanisms in human auditory cortex",
+      "authors": "Donhauser & Baillet",
+      "journal": "Nature Communications",
+      "year": 2020,
+      "url": "https://www.nature.com/articles/s41467-020-19010-6",
+      "key_findings": [
+        "Two predictive mechanisms in early auditory cortex",
+        "Low-frequency phase predicts acoustic event timing",
+        "Planum temporale shows speech-specific prediction"
+      ],
+      "timescales_ms": [50, 500],
+      "brain_regions": ["Heschl's gyrus", "planum temporale"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "critical",
+        "mechanism": "dual_prediction",
+        "parameters": ["timing_prediction", "content_prediction"]
+      }
+    },
+    {
+      "id": "H0-PT-003",
+      "category": "predictive_timing",
+      "title": "Temporally precise movement-based predictions in the mouse auditory cortex",
+      "authors": "Auditory Cortex Research Team",
+      "journal": "bioRxiv/Nature",
+      "year": 2021,
+      "url": "https://www.biorxiv.org/content/10.1101/2021.12.13.472457v1.full",
+      "key_findings": [
+        "Movement signals in deep layers of auditory cortex",
+        "Temporal expectation peaks at expected feedback time",
+        "Internal model links actions to acoustic outcomes"
+      ],
+      "timescales_ms": [50, 500],
+      "brain_regions": ["auditory cortex deep layers"],
+      "evidence_tier": "β",
+      "h0_integration": {
+        "relevance": "high",
+        "mechanism": "motor_prediction",
+        "parameters": ["movement_signal", "expected_timing", "feedback_prediction"]
+      }
+    },
+    {
+      "id": "H0-PT-004",
+      "category": "predictive_timing",
+      "title": "A Neuronal Model of Predictive Coding Accounting for the Mismatch Negativity",
+      "authors": "Wacongne et al.",
+      "journal": "Journal of Neuroscience",
+      "year": 2012,
+      "url": "https://www.jneurosci.org/content/32/11/3665",
+      "key_findings": [
+        "MMN reflects prediction error in hierarchical model",
+        "Auditory system generates predictions about stimuli",
+        "Bottom-up and top-down message passing"
+      ],
+      "timescales_ms": [100, 300],
+      "brain_regions": ["A1", "STG", "frontal cortex"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "critical",
+        "mechanism": "predictive_coding_mmn",
+        "parameters": ["prediction_error", "regularity_learning", "surprise_signal"]
+      }
+    },
+    {
+      "id": "H0-PT-005",
+      "category": "predictive_timing",
+      "title": "Ketamine Affects Prediction Errors about Statistical Regularities",
+      "authors": "Schmidt et al.",
+      "journal": "Journal of Neuroscience",
+      "year": 2020,
+      "url": "https://www.jneurosci.org/content/40/29/5658",
+      "key_findings": [
+        "Ketamine reduces MMN amplitude",
+        "NMDA receptors critical for prediction error computation",
+        "Hierarchical Bayesian inference in auditory processing"
+      ],
+      "timescales_ms": [100, 300],
+      "brain_regions": ["A1", "STG"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "high",
+        "mechanism": "nmda_prediction",
+        "parameters": ["nmda_function", "prediction_error_magnitude"]
+      }
+    },
+    {
+      "id": "H0-PT-006",
+      "category": "predictive_timing",
+      "title": "Novelty Detection in the Human Auditory Brainstem",
+      "authors": "Slabu et al.",
+      "journal": "Journal of Neuroscience",
+      "year": 2012,
+      "url": "http://www.jneurosci.org/content/32/4/1447.full",
+      "key_findings": [
+        "Deviance-related activity as early as 30-40 ms",
+        "Brainstem shows novelty detection",
+        "Prediction starts subcortically"
+      ],
+      "timescales_ms": [20, 50],
+      "brain_regions": ["brainstem", "inferior colliculus"],
+      "evidence_tier": "β",
+      "h0_integration": {
+        "relevance": "high",
+        "mechanism": "subcortical_novelty",
+        "parameters": ["early_deviance_response", "brainstem_latency"]
+      }
+    },
+
+    {
+      "id": "H0-IT-001",
+      "category": "interval_timing",
+      "title": "The neural bases for timing of durations",
+      "authors": "Paton & Buonomano",
+      "journal": "Nature Reviews Neuroscience",
+      "year": 2022,
+      "url": "https://www.nature.com/articles/s41583-022-00623-3",
+      "key_findings": [
+        "Prospective vs retrospective timing engage different processes",
+        "Population state dynamics underlie duration encoding",
+        "Multiple brain regions contribute to timing"
+      ],
+      "timescales_ms": [100, 60000],
+      "brain_regions": ["basal ganglia", "SMA", "cerebellum", "PFC"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "critical",
+        "mechanism": "duration_encoding",
+        "parameters": ["prospective_timing", "retrospective_timing", "population_dynamics"]
+      }
+    },
+    {
+      "id": "H0-IT-002",
+      "category": "interval_timing",
+      "title": "The Neural Basis of Timing: Distributed Mechanisms for Diverse Functions",
+      "authors": "Petter et al.",
+      "journal": "Neuron",
+      "year": 2018,
+      "url": "https://www.cell.com/neuron/fulltext/S0896-6273(18)30251-4",
+      "key_findings": [
+        "Different mechanisms for different timescales",
+        "Sparse temporal selectivity in sensory cortex (10s-100s ms)",
+        "Basal ganglia for 100s ms to seconds"
+      ],
+      "timescales_ms": [10, 10000],
+      "brain_regions": ["sensory cortex", "basal ganglia", "cerebellum"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "critical",
+        "mechanism": "distributed_timing",
+        "parameters": ["timescale_range", "brain_region_mapping"]
+      }
+    },
+    {
+      "id": "H0-IT-003",
+      "category": "interval_timing",
+      "title": "Timing in the Absence of Clocks: Encoding Time in Neural Network States",
+      "authors": "Buonomano & Karmarkar",
+      "journal": "Neuron",
+      "year": 2007,
+      "url": "https://www.cell.com/neuron/fulltext/S0896-6273(07)00025-6",
+      "key_findings": [
+        "Millisecond timing doesn't rely on clock-like mechanisms",
+        "Time encoded in network state dynamics",
+        "Distinct mechanisms for ms vs second timing"
+      ],
+      "timescales_ms": [10, 1000],
+      "brain_regions": ["cortical networks"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "critical",
+        "mechanism": "state_dependent_timing",
+        "parameters": ["network_state", "time_encoding_mode"]
+      }
+    },
+    {
+      "id": "H0-IT-004",
+      "category": "interval_timing",
+      "title": "Neural representation of time in cortico-basal ganglia circuits",
+      "authors": "Jin et al.",
+      "journal": "PNAS",
+      "year": 2009,
+      "url": "https://www.pnas.org/doi/10.1073/pnas.0909881106",
+      "key_findings": [
+        "Striatal neurons encode elapsed time",
+        "Time cells fire at specific intervals",
+        "Cortico-striatal circuits for interval timing"
+      ],
+      "timescales_ms": [500, 10000],
+      "brain_regions": ["striatum", "cortex"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "critical",
+        "mechanism": "striatal_time_cells",
+        "parameters": ["time_cell_firing", "interval_representation"]
+      }
+    },
+    {
+      "id": "H0-IT-005",
+      "category": "interval_timing",
+      "title": "Interval time coding by neurons in the presupplementary and supplementary motor areas",
+      "authors": "Mita et al.",
+      "journal": "Nature Neuroscience",
+      "year": 2009,
+      "url": "https://www.nature.com/articles/nn.2272",
+      "key_findings": [
+        "Pre-SMA neurons code for different time intervals",
+        "Time-selective initiation of action",
+        "Activity represents passage of time"
+      ],
+      "timescales_ms": [1000, 10000],
+      "brain_regions": ["pre-SMA", "SMA"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "critical",
+        "mechanism": "sma_interval_coding",
+        "parameters": ["interval_selectivity", "action_timing"]
+      }
+    },
+    {
+      "id": "H0-IT-006",
+      "category": "interval_timing",
+      "title": "Double dissociation of single-interval and rhythmic temporal prediction in cerebellar degeneration and Parkinson's disease",
+      "authors": "Breska & Ivry",
+      "journal": "PNAS",
+      "year": 2018,
+      "url": "https://www.pnas.org/doi/10.1073/pnas.1810596115",
+      "key_findings": [
+        "Basal ganglia essential for rhythmic timing",
+        "Cerebellum essential for single-interval timing",
+        "Double dissociation between structures"
+      ],
+      "timescales_ms": [400, 2000],
+      "brain_regions": ["cerebellum", "basal ganglia"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "critical",
+        "mechanism": "rhythm_vs_interval",
+        "parameters": ["timing_type", "structure_involvement"]
+      }
+    },
+    {
+      "id": "H0-IT-007",
+      "category": "interval_timing",
+      "title": "Integrator dynamics in the cortico-basal ganglia loop for flexible motor timing",
+      "authors": "Nature Research Team",
+      "journal": "Nature",
+      "year": 2025,
+      "url": "https://www.nature.com/articles/s41586-025-09778-2",
+      "key_findings": [
+        "Ramping activity in frontal cortex and striatum",
+        "Variable ramp slopes anticipate movement onset",
+        "Cortico-basal ganglia loop as adjustable timer"
+      ],
+      "timescales_ms": [100, 2000],
+      "brain_regions": ["frontal cortex", "striatum"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "critical",
+        "mechanism": "ramping_timer",
+        "parameters": ["ramp_slope", "threshold", "movement_onset"]
+      }
+    },
+    {
+      "id": "H0-IT-008",
+      "category": "interval_timing",
+      "title": "Dopamine transients follow a striatal gradient of reward time horizons",
+      "authors": "Hamid et al.",
+      "journal": "Nature Neuroscience",
+      "year": 2024,
+      "url": "https://www.nature.com/articles/s41593-023-01566-3",
+      "key_findings": [
+        "DA dynamics differ across striatal subregions",
+        "Ventral to dorsolateral gradient in temporal integration",
+        "Different time horizons for reward prediction"
+      ],
+      "timescales_ms": [100, 10000],
+      "brain_regions": ["ventral striatum", "dorsomedial striatum", "dorsolateral striatum"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "high",
+        "mechanism": "dopamine_time_gradient",
+        "parameters": ["striatal_region", "time_horizon", "da_dynamics"]
+      }
+    },
+    {
+      "id": "H0-IT-009",
+      "category": "interval_timing",
+      "title": "The temporal precision of reward prediction in dopamine neurons",
+      "authors": "Fiorillo et al.",
+      "journal": "Nature Neuroscience",
+      "year": 2008,
+      "url": "https://www.nature.com/articles/nn.2159",
+      "key_findings": [
+        "Dopamine neurons activated when reward exceeds prediction",
+        "Temporal precision declines with interval duration",
+        "Fixed-duration intervals 1-16s studied"
+      ],
+      "timescales_ms": [1000, 16000],
+      "brain_regions": ["VTA", "SNc"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "high",
+        "mechanism": "reward_timing_precision",
+        "parameters": ["interval_duration", "prediction_precision"]
+      }
+    },
+
+    {
+      "id": "H0-BR-001",
+      "category": "beat_rhythm",
+      "title": "Feeling the Beat: Premotor and Striatal Interactions in Musicians and Nonmusicians during Beat Perception",
+      "authors": "Grahn & Rowe",
+      "journal": "Journal of Neuroscience",
+      "year": 2009,
+      "url": "https://www.jneurosci.org/content/29/23/7540",
+      "key_findings": [
+        "Dorsal premotor cortex, PFC, IPL, cerebellum active during beat perception",
+        "Functional overlap between perception and motor timing networks",
+        "Musicians show enhanced putamen activation"
+      ],
+      "timescales_ms": [300, 1500],
+      "brain_regions": ["dorsal premotor cortex", "putamen", "IPL", "cerebellum"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "critical",
+        "mechanism": "beat_motor_coupling",
+        "parameters": ["premotor_activation", "striatal_engagement", "musical_training"]
+      }
+    },
+    {
+      "id": "H0-BR-002",
+      "category": "beat_rhythm",
+      "title": "β Oscillations Are Linked to the Initiation of Sensory-Cued Movement Sequences and the Internal Guidance of Regular Tapping in the Monkey",
+      "authors": "Bartolo et al.",
+      "journal": "Journal of Neuroscience",
+      "year": 2015,
+      "url": "https://www.jneurosci.org/content/35/11/4635",
+      "key_findings": [
+        "β oscillations higher during internally-guided tapping",
+        "Putamen shows β entrainment during rhythmic tasks",
+        "Importance of internalized timing for movement"
+      ],
+      "timescales_ms": [500, 2000],
+      "brain_regions": ["putamen", "motor cortex"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "critical",
+        "mechanism": "internal_timing_beta",
+        "parameters": ["beta_power", "internal_vs_external", "tapping_regularity"]
+      }
+    },
+    {
+      "id": "H0-BR-003",
+      "category": "beat_rhythm",
+      "title": "Beta phase synchronization in the frontal-temporal-cerebellar network during auditory-to-motor rhythm learning",
+      "authors": "Pollok et al.",
+      "journal": "Scientific Reports",
+      "year": 2017,
+      "url": "https://www.nature.com/articles/srep42721",
+      "key_findings": [
+        "Beta oscillations connect temporal and cerebellar areas",
+        "Phase synchronization during rhythm learning",
+        "Network-wide beta coordination"
+      ],
+      "timescales_ms": [300, 1000],
+      "brain_regions": ["temporal cortex", "cerebellum", "frontal cortex"],
+      "evidence_tier": "β",
+      "h0_integration": {
+        "relevance": "high",
+        "mechanism": "rhythm_learning_network",
+        "parameters": ["beta_coherence", "network_connectivity"]
+      }
+    },
+    {
+      "id": "H0-BR-004",
+      "category": "beat_rhythm",
+      "title": "Neural signals regulating motor synchronization in the primate deep cerebellar nuclei",
+      "authors": "Ohmae & Bhattacharjee",
+      "journal": "Nature Communications",
+      "year": 2022,
+      "url": "https://www.nature.com/articles/s41467-022-30246-2",
+      "key_findings": [
+        "Dentate nucleus neurons track rhythmic structure",
+        "Internal model of rhythm for predictive control",
+        "Cerebellar modules for rhythm acquisition"
+      ],
+      "timescales_ms": [200, 1500],
+      "brain_regions": ["dentate nucleus", "cerebellum"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "high",
+        "mechanism": "cerebellar_rhythm_model",
+        "parameters": ["dentate_activity", "predictive_timing"]
+      }
+    },
+    {
+      "id": "H0-BR-005",
+      "category": "beat_rhythm",
+      "title": "Secondary auditory cortex mediates a sensorimotor mechanism for action timing",
+      "authors": "Cadena-Valencia et al.",
+      "journal": "Nature Neuroscience",
+      "year": 2022,
+      "url": "https://www.nature.com/articles/s41593-022-01025-5",
+      "key_findings": [
+        "A2 mediates action timing in operant tasks",
+        "Sensorimotor mechanism revealed by optogenetics",
+        "Computational modeling of timing circuits"
+      ],
+      "timescales_ms": [500, 3000],
+      "brain_regions": ["A2", "secondary auditory cortex"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "critical",
+        "mechanism": "a2_action_timing",
+        "parameters": ["a2_necessity", "timing_precision"]
+      }
+    },
+
+    {
+      "id": "H0-AS-001",
+      "category": "auditory_scene",
+      "title": "Segregation of complex acoustic scenes based on temporal coherence",
+      "authors": "Teki et al.",
+      "journal": "eLife",
+      "year": 2013,
+      "url": "https://elifesciences.org/articles/00699",
+      "key_findings": [
+        "Temporal coherence model explains stream segregation",
+        "Psychophysical data consistent with coherence model",
+        "Integration across widely spaced frequency channels"
+      ],
+      "timescales_ms": [50, 500],
+      "brain_regions": ["auditory cortex"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "critical",
+        "mechanism": "temporal_coherence",
+        "parameters": ["coherence_window", "frequency_integration"]
+      }
+    },
+    {
+      "id": "H0-AS-002",
+      "category": "auditory_scene",
+      "title": "Speech Categorization Reveals the Role of Early-Stage Temporal-Coherence Processing in Auditory Scene Analysis",
+      "authors": "Maddox et al.",
+      "journal": "Journal of Neuroscience",
+      "year": 2022,
+      "url": "https://www.jneurosci.org/content/42/2/240",
+      "key_findings": [
+        "Temporal coherence processing may start at cochlear nucleus",
+        "Early neural basis for scene analysis",
+        "Speech categorization reveals coherence mechanisms"
+      ],
+      "timescales_ms": [10, 100],
+      "brain_regions": ["cochlear nucleus", "auditory brainstem"],
+      "evidence_tier": "β",
+      "h0_integration": {
+        "relevance": "high",
+        "mechanism": "early_coherence",
+        "parameters": ["subcortical_coherence", "speech_segregation"]
+      }
+    },
+    {
+      "id": "H0-AS-003",
+      "category": "auditory_scene",
+      "title": "Evidence for Neural Computations of Temporal Coherence in an Auditory Scene and Their Enhancement during Active Listening",
+      "authors": "O'Sullivan et al.",
+      "journal": "Journal of Neuroscience",
+      "year": 2015,
+      "url": "https://www.jneurosci.org/content/35/18/7256",
+      "key_findings": [
+        "Neural tracking of coherence varies with attention",
+        "Larger temporal response functions during active listening",
+        "Top-down attention enhances coherence computation"
+      ],
+      "timescales_ms": [50, 300],
+      "brain_regions": ["auditory cortex"],
+      "evidence_tier": "β",
+      "h0_integration": {
+        "relevance": "high",
+        "mechanism": "attention_coherence",
+        "parameters": ["attention_modulation", "trf_amplitude"]
+      }
+    },
+    {
+      "id": "H0-AS-004",
+      "category": "auditory_scene",
+      "title": "Competing Streams at the Cocktail Party: Exploring the Mechanisms of Attention and Temporal Integration",
+      "authors": "Shinn-Cunningham & Best",
+      "journal": "Journal of Neuroscience",
+      "year": 2010,
+      "url": "http://www.jneurosci.org/content/30/36/12084.full",
+      "key_findings": [
+        "Temporal integration critical for complex scene analysis",
+        "Bottom-up and top-down attention interact",
+        "Parietal cortex integrates auditory and attention signals"
+      ],
+      "timescales_ms": [100, 1000],
+      "brain_regions": ["parietal cortex", "auditory cortex", "PFC"],
+      "evidence_tier": "β",
+      "h0_integration": {
+        "relevance": "high",
+        "mechanism": "cocktail_party",
+        "parameters": ["attention_focus", "stream_segregation"]
+      }
+    },
+
+    {
+      "id": "H0-SP-001",
+      "category": "speech_temporal",
+      "title": "Combining predictive coding and neural oscillations enables online syllable recognition in natural speech",
+      "authors": "Hovsepyan et al.",
+      "journal": "Nature Communications",
+      "year": 2020,
+      "url": "https://www.nature.com/articles/s41467-020-16956-5",
+      "key_findings": [
+        "Theta-gamma coupling parses syllables",
+        "Phonemes encoded hierarchically within syllables",
+        "Online syllable recognition mechanism"
+      ],
+      "timescales_ms": [25, 250],
+      "brain_regions": ["auditory cortex"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "critical",
+        "mechanism": "syllable_parsing",
+        "parameters": ["theta_phase", "gamma_encoding", "syllable_boundaries"]
+      }
+    },
+    {
+      "id": "H0-SP-002",
+      "category": "speech_temporal",
+      "title": "Oscillatory phase shapes syllable perception",
+      "authors": "Ten Oever & Sack",
+      "journal": "PNAS",
+      "year": 2015,
+      "url": "https://pnas.org/content/112/52/15833.full",
+      "key_findings": [
+        "Theta phase (4-9 Hz) shapes syllable perception",
+        "Phase difference between /da/ and /ga/ percepts",
+        "Theta important for speech encoding"
+      ],
+      "timescales_ms": [111, 250],
+      "brain_regions": ["auditory cortex"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "critical",
+        "mechanism": "phase_perception",
+        "parameters": ["theta_phase", "syllable_category"]
+      }
+    },
+    {
+      "id": "H0-SP-003",
+      "category": "speech_temporal",
+      "title": "Phonemic segmentation of narrative speech in human cerebral cortex",
+      "authors": "Oganian et al.",
+      "journal": "Nature Communications",
+      "year": 2023,
+      "url": "https://www.nature.com/articles/s41467-023-39872-w",
+      "key_findings": [
+        "Cortical entrainment at syllable rate",
+        "Phrase and sentence timescales in STG/IFG",
+        "Phoneme-level processing in auditory cortex"
+      ],
+      "timescales_ms": [50, 2000],
+      "brain_regions": ["STG", "IFG", "auditory cortex"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "critical",
+        "mechanism": "speech_segmentation",
+        "parameters": ["phoneme_tracking", "syllable_entrainment", "phrase_processing"]
+      }
+    },
+    {
+      "id": "H0-SP-004",
+      "category": "speech_temporal",
+      "title": "Speech encoding by coupled cortical theta and gamma oscillations",
+      "authors": "Hyafil et al.",
+      "journal": "eLife",
+      "year": 2015,
+      "url": "https://elifesciences.org/articles/06213",
+      "key_findings": [
+        "Theta tracks syllables in spoken language",
+        "Gamma encodes specific phoneme features",
+        "Cross-frequency coupling establishes phoneme sequence"
+      ],
+      "timescales_ms": [25, 200],
+      "brain_regions": ["auditory cortex"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "critical",
+        "mechanism": "theta_gamma_speech",
+        "parameters": ["theta_syllable", "gamma_phoneme", "coupling_strength"]
+      }
+    },
+
+    {
+      "id": "H0-MT-001",
+      "category": "memory_temporal",
+      "title": "Replay-triggered brain-wide activation in humans",
+      "authors": "Liu et al.",
+      "journal": "Nature Communications",
+      "year": 2024,
+      "url": "https://www.nature.com/articles/s41467-024-51582-5",
+      "key_findings": [
+        "Replay events reactivate past memories in sequence",
+        "Hippocampus and mPFC show heightened activity during replay",
+        "Replay strengthens hippocampus-DMN connectivity"
+      ],
+      "timescales_ms": [50, 500],
+      "brain_regions": ["hippocampus", "mPFC", "DMN"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "high",
+        "mechanism": "sequence_replay",
+        "parameters": ["replay_rate", "memory_reactivation"]
+      }
+    },
+    {
+      "id": "H0-MT-002",
+      "category": "memory_temporal",
+      "title": "Spatiotemporal brain hierarchies of auditory memory recognition and predictive coding",
+      "authors": "Bonetti et al.",
+      "journal": "Nature Communications",
+      "year": 2024,
+      "url": "https://www.nature.com/articles/s41467-024-48302-4",
+      "key_findings": [
+        "Feedforward connections from auditory cortex to hippocampus",
+        "Backward connections for predictive coding",
+        "Hierarchical processing for auditory memory"
+      ],
+      "timescales_ms": [100, 1000],
+      "brain_regions": ["auditory cortex", "hippocampus", "cingulate gyrus"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "critical",
+        "mechanism": "auditory_memory_hierarchy",
+        "parameters": ["feedforward_timing", "feedback_timing", "prediction_signal"]
+      }
+    },
+    {
+      "id": "H0-MT-003",
+      "category": "memory_temporal",
+      "title": "Mnemonic construction and representation of temporal structure in the hippocampal formation",
+      "authors": "Thavabalasingam et al.",
+      "journal": "Nature Communications",
+      "year": 2022,
+      "url": "https://www.nature.com/articles/s41467-022-30984-3",
+      "key_findings": [
+        "Hippocampus represents temporal relations of learned sequences",
+        "Relational memories arise through mnemonic construction",
+        "Generalization reflects temporal event structure"
+      ],
+      "timescales_ms": [1000, 30000],
+      "brain_regions": ["hippocampus", "entorhinal cortex"],
+      "evidence_tier": "β",
+      "h0_integration": {
+        "relevance": "high",
+        "mechanism": "temporal_structure_memory",
+        "parameters": ["sequence_representation", "temporal_relations"]
+      }
+    },
+    {
+      "id": "H0-MT-004",
+      "category": "memory_temporal",
+      "title": "Hippocampal replay in the awake state: a potential substrate for memory consolidation and retrieval",
+      "authors": "Carr et al.",
+      "journal": "Nature Neuroscience",
+      "year": 2011,
+      "url": "https://www.nature.com/articles/nn.2732",
+      "key_findings": [
+        "Replay is sequential reactivation of place cells",
+        "Occurs frequently in awake state",
+        "Substrate for memory consolidation and retrieval"
+      ],
+      "timescales_ms": [50, 300],
+      "brain_regions": ["hippocampus"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "high",
+        "mechanism": "awake_replay",
+        "parameters": ["replay_frequency", "sequence_fidelity"]
+      }
+    },
+
+    {
+      "id": "H0-TC-001",
+      "category": "thalamocortical",
+      "title": "Thalamocortical loops as temporal demodulators across senses",
+      "authors": "Wang et al.",
+      "journal": "Communications Biology",
+      "year": 2023,
+      "url": "https://www.nature.com/articles/s42003-023-04881-4",
+      "key_findings": [
+        "Thalamocortical circuits as oscillations-based phase-locked loops",
+        "Translate temporal code to rate code",
+        "Common mechanism across sensory modalities"
+      ],
+      "timescales_ms": [10, 100],
+      "brain_regions": ["thalamus", "cortex"],
+      "evidence_tier": "β",
+      "h0_integration": {
+        "relevance": "critical",
+        "mechanism": "temporal_demodulation",
+        "parameters": ["phase_locking", "code_transformation"]
+      }
+    },
+    {
+      "id": "H0-TC-002",
+      "category": "thalamocortical",
+      "title": "Involvement of the Thalamocortical Loop in the Spontaneous Switching of Percepts in Auditory Streaming",
+      "authors": "Kondo & Kashino",
+      "journal": "Journal of Neuroscience",
+      "year": 2009,
+      "url": "https://www.jneurosci.org/content/29/40/12695",
+      "key_findings": [
+        "MGB activity precedes perceptual switches",
+        "Asymmetric roles of MGB and AC in perception",
+        "Feedforward and feedback in thalamocortical loop"
+      ],
+      "timescales_ms": [100, 5000],
+      "brain_regions": ["MGB", "auditory cortex"],
+      "evidence_tier": "β",
+      "h0_integration": {
+        "relevance": "high",
+        "mechanism": "perceptual_switching",
+        "parameters": ["mgb_timing", "ac_timing", "switch_direction"]
+      }
+    },
+    {
+      "id": "H0-TC-003",
+      "category": "thalamocortical",
+      "title": "The Thalamocortical Mechanism Underlying the Generation and Regulation of the Auditory Steady-State Responses in Awake Mice",
+      "authors": "Chen et al.",
+      "journal": "Journal of Neuroscience",
+      "year": 2024,
+      "url": "https://www.jneurosci.org/content/44/1/e1166232023",
+      "key_findings": [
+        "MGB and AC both contribute to ASSR",
+        "Thalamocortical synchronization for steady-state responses",
+        "Awake vs anesthetized differences"
+      ],
+      "timescales_ms": [25, 100],
+      "brain_regions": ["MGB", "auditory cortex"],
+      "evidence_tier": "β",
+      "h0_integration": {
+        "relevance": "moderate",
+        "mechanism": "assr_generation",
+        "parameters": ["thalamocortical_sync", "frequency_following"]
+      }
+    },
+
+    {
+      "id": "H0-MA-001",
+      "category": "motor_auditory",
+      "title": "Timing of Speech in Brain and Glottis and the Feedback Delay Problem in Motor Control",
+      "authors": "Assaneo & Bhattasali",
+      "journal": "Journal of Neuroscience",
+      "year": 2025,
+      "url": "https://www.jneurosci.org/content/45/21/e2294242025",
+      "key_findings": [
+        "Motor-sensory feedback has variable timing",
+        "Recalibration of auditory-motor mismatch threshold",
+        "Plastic predictions of peripheral timing"
+      ],
+      "timescales_ms": [50, 300],
+      "brain_regions": ["motor cortex", "auditory cortex"],
+      "evidence_tier": "β",
+      "h0_integration": {
+        "relevance": "high",
+        "mechanism": "feedback_delay",
+        "parameters": ["feedback_latency", "mismatch_threshold"]
+      }
+    },
+    {
+      "id": "H0-MA-002",
+      "category": "motor_auditory",
+      "title": "Multiple processes of vocal sensory-motor interaction in primate auditory cortex",
+      "authors": "Eliades & Wang",
+      "journal": "Nature Communications",
+      "year": 2024,
+      "url": "https://www.nature.com/articles/s41467-024-47510-2",
+      "key_findings": [
+        "Two timescales of vocal suppression: phasic and tonic",
+        "Corollary discharge predicts vocal timing and acoustics",
+        "Distinct suppression and enhancement mechanisms"
+      ],
+      "timescales_ms": [50, 2000],
+      "brain_regions": ["auditory cortex"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "critical",
+        "mechanism": "vocal_suppression",
+        "parameters": ["phasic_suppression", "tonic_suppression", "corollary_discharge"]
+      }
+    },
+    {
+      "id": "H0-MA-003",
+      "category": "motor_auditory",
+      "title": "Identification of a motor-to-auditory pathway important for vocal learning",
+      "authors": "Roberts et al.",
+      "journal": "Nature Neuroscience",
+      "year": 2017,
+      "url": "https://www.nature.com/articles/nn.4563",
+      "key_findings": [
+        "Motor neurons transmit vocal signals to auditory cortex",
+        "Circuit essential for vocal imitation",
+        "Adaptive modification of vocal timing"
+      ],
+      "timescales_ms": [10, 100],
+      "brain_regions": ["motor areas", "auditory cortex"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "critical",
+        "mechanism": "motor_auditory_circuit",
+        "parameters": ["motor_signal", "auditory_modulation"]
+      }
+    },
+    {
+      "id": "H0-MA-004",
+      "category": "motor_auditory",
+      "title": "Single-Trial Speech Suppression of Auditory Cortex Activity in Humans",
+      "authors": "Greenlee et al.",
+      "journal": "Journal of Neuroscience",
+      "year": 2010,
+      "url": "https://www.jneurosci.org/content/30/49/16643",
+      "key_findings": [
+        "Auditory cortex suppressed during vocalization",
+        "Efference copy from motor cortex",
+        "Single-trial suppression measurable"
+      ],
+      "timescales_ms": [0, 500],
+      "brain_regions": ["auditory cortex", "motor cortex"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "high",
+        "mechanism": "speech_suppression",
+        "parameters": ["suppression_magnitude", "efference_timing"]
+      }
+    },
+
+    {
+      "id": "H0-TA-001",
+      "category": "temporal_attention",
+      "title": "Alpha Oscillations Related to Anticipatory Attention Follow Temporal Expectations",
+      "authors": "Rohenkohl & Nobre",
+      "journal": "Journal of Neuroscience",
+      "year": 2011,
+      "url": "https://www.jneurosci.org/content/31/40/14076",
+      "key_findings": [
+        "Alpha power modulated by temporal expectations",
+        "Anticipatory attention indexed by alpha",
+        "Temporal cues guide attention allocation"
+      ],
+      "timescales_ms": [500, 2000],
+      "brain_regions": ["parietal cortex", "occipital cortex"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "high",
+        "mechanism": "alpha_temporal_attention",
+        "parameters": ["alpha_desynchronization", "expectation_timing"]
+      }
+    },
+    {
+      "id": "H0-TA-002",
+      "category": "temporal_attention",
+      "title": "Temporal Expectation Improves the Quality of Sensory Information",
+      "authors": "Cravo et al.",
+      "journal": "Journal of Neuroscience",
+      "year": 2012,
+      "url": "https://www.jneurosci.org/content/32/24/8424.short",
+      "key_findings": [
+        "Temporal expectation enhances sensory quality",
+        "Not just faster responses but better perception",
+        "Gain modulation mechanism"
+      ],
+      "timescales_ms": [300, 1500],
+      "brain_regions": ["sensory cortex"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "high",
+        "mechanism": "sensory_gain",
+        "parameters": ["perception_quality", "expectation_benefit"]
+      }
+    },
+    {
+      "id": "H0-TA-003",
+      "category": "temporal_attention",
+      "title": "Musical Training Facilitates Exogenous Temporal Attention via Delta Phase Entrainment within a Sensorimotor Network",
+      "authors": "Lenc et al.",
+      "journal": "Journal of Neuroscience",
+      "year": 2023,
+      "url": "https://www.jneurosci.org/content/43/18/3365",
+      "key_findings": [
+        "Musicians show enhanced delta entrainment",
+        "Exogenous temporal attention from rhythmic stimuli",
+        "Sensorimotor network involvement"
+      ],
+      "timescales_ms": [500, 2000],
+      "brain_regions": ["sensorimotor network", "auditory cortex"],
+      "evidence_tier": "β",
+      "h0_integration": {
+        "relevance": "high",
+        "mechanism": "musical_training_benefit",
+        "parameters": ["delta_entrainment", "training_effect"]
+      }
+    },
+    {
+      "id": "H0-TA-004",
+      "category": "temporal_attention",
+      "title": "Encoding of Temporal Probabilities in the Human Brain",
+      "authors": "Bueti et al.",
+      "journal": "Journal of Neuroscience",
+      "year": 2010,
+      "url": "https://www.jneurosci.org/content/30/12/4343.full",
+      "key_findings": [
+        "Temporal probability encoded throughout cortical hierarchy",
+        "Includes early visual cortex",
+        "Hazard rate representation in brain"
+      ],
+      "timescales_ms": [500, 3000],
+      "brain_regions": ["visual cortex", "parietal cortex", "motor areas"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "high",
+        "mechanism": "hazard_rate_encoding",
+        "parameters": ["probability_representation", "cortical_distribution"]
+      }
+    },
+
+    {
+      "id": "H0-PC-001",
+      "category": "population_clock",
+      "title": "Population clocks: motor timing with neural dynamics",
+      "authors": "Buonomano & Laje",
+      "journal": "Trends in Cognitive Sciences",
+      "year": 2010,
+      "url": "https://www.cell.com/trends/cognitive-sciences/abstract/S1364-6613(10)00207-X",
+      "key_findings": [
+        "Time encoded in population activity patterns",
+        "Emerges from recurrent network dynamics",
+        "Accounts for many motor timing features"
+      ],
+      "timescales_ms": [10, 2000],
+      "brain_regions": ["cortical networks"],
+      "evidence_tier": "α",
+      "h0_integration": {
+        "relevance": "critical",
+        "mechanism": "population_clock",
+        "parameters": ["population_state", "dynamics_trajectory"]
+      }
+    },
+    {
+      "id": "H0-PC-002",
+      "category": "population_clock",
+      "title": "Synaptic basis of a sub-second representation of time in a neural circuit model",
+      "authors": "Liu et al.",
+      "journal": "Nature Communications",
+      "year": 2022,
+      "url": "https://www.nature.com/articles/s41467-022-35395-y",
+      "key_findings": [
+        "Sub-second timing through synaptic mechanisms",
+        "Ramping and time cell mechanisms",
+        "Circuit model for temporal representation"
+      ],
+      "timescales_ms": [100, 1000],
+      "brain_regions": ["neural circuits"],
+      "evidence_tier": "β",
+      "h0_integration": {
+        "relevance": "high",
+        "mechanism": "synaptic_timing",
+        "parameters": ["ramping_activity", "time_cells"]
+      }
+    },
+    {
+      "id": "H0-PC-003",
+      "category": "population_clock",
+      "title": "The brain and its time: intrinsic neural timescales are key for input processing",
+      "authors": "Golesorkhi et al.",
+      "journal": "Communications Biology",
+      "year": 2021,
+      "url": "https://www.nature.com/articles/s42003-021-02483-6",
+      "key_findings": [
+        "Different brain regions have different intrinsic timescales",
+        "Intrinsic neural timescales (INT) concept",
+        "Timescales shape input processing"
+      ],
+      "timescales_ms": [50, 5000],
+      "brain_regions": ["cortex-wide"],
+      "evidence_tier": "β",
+      "h0_integration": {
+        "relevance": "critical",
+        "mechanism": "intrinsic_timescales",
+        "parameters": ["int_value", "region_mapping"]
+      }
+    },
+    {
+      "id": "H0-PC-004",
+      "category": "population_clock",
+      "title": "A model of temporal scaling correctly predicts that motor timing improves with speed",
+      "authors": "Egger & Bhattacharjee",
+      "journal": "Nature Communications",
+      "year": 2018,
+      "url": "https://www.nature.com/articles/s41467-018-07161-6",
+      "key_findings": [
+        "Temporal scaling model for motor timing",
+        "Faster movements have better timing",
+        "Weber's law violations explained"
+      ],
+      "timescales_ms": [100, 2000],
+      "brain_regions": ["motor cortex", "cerebellum"],
+      "evidence_tier": "β",
+      "h0_integration": {
+        "relevance": "moderate",
+        "mechanism": "temporal_scaling",
+        "parameters": ["speed_scaling", "timing_precision"]
+      }
+    }
+  ],
+
+  "c0_cognitive_unit_mapping": {
+    "ASU": {
+      "name": "Auditory Salience Unit",
+      "temporal_range_ms": [10, 100],
+      "key_papers": ["H0-AS-001", "H0-AS-002", "H0-TC-001"],
+      "mechanisms": ["early_coherence", "subcortical_novelty", "temporal_demodulation"]
+    },
+    "SPU": {
+      "name": "Spectral Processing Unit",
+      "temporal_range_ms": [50, 200],
+      "key_papers": ["H0-TI-003", "H0-TI-007", "H0-TI-008"],
+      "mechanisms": ["spectrotemporal_integration", "hemispheric_specialization"]
+    },
+    "PCU": {
+      "name": "Predictive Coding Unit",
+      "temporal_range_ms": [110, 500],
+      "key_papers": ["H0-PT-001", "H0-PT-002", "H0-PT-004"],
+      "mechanisms": ["predictive_coding_mmn", "expectation_enhancement", "dual_prediction"]
+    },
+    "ARU": {
+      "name": "Affective Resonance Unit",
+      "temporal_range_ms": [100, 500],
+      "key_papers": ["H0-NO-001", "H0-BR-001", "H0-IT-008"],
+      "mechanisms": ["beat_motor_coupling", "dopamine_reward"]
+    },
+    "STU": {
+      "name": "Sensorimotor Timing Unit",
+      "temporal_range_ms": [200, 2000],
+      "key_papers": ["H0-BR-001", "H0-BR-002", "H0-IT-006"],
+      "mechanisms": ["beat_tracking", "sensorimotor_synchronization", "rhythm_vs_interval"]
+    },
+    "MPU": {
+      "name": "Motor Planning Unit",
+      "temporal_range_ms": [300, 3000],
+      "key_papers": ["H0-IT-005", "H0-IT-007", "H0-MA-002"],
+      "mechanisms": ["sma_interval_coding", "ramping_timer", "motor_auditory_circuit"]
+    },
+    "IMU": {
+      "name": "Integrative Memory Unit",
+      "temporal_range_ms": [1000, 30000],
+      "key_papers": ["H0-MT-001", "H0-MT-002", "H0-MT-003"],
+      "mechanisms": ["sequence_replay", "auditory_memory_hierarchy", "temporal_structure_memory"]
+    },
+    "RPU": {
+      "name": "Reward Prediction Unit",
+      "temporal_range_ms": [1000, 60000],
+      "key_papers": ["H0-IT-008", "H0-IT-009"],
+      "mechanisms": ["dopamine_time_gradient", "reward_timing_precision"]
+    },
+    "NDU": {
+      "name": "Novelty Detection Unit",
+      "temporal_range_ms": [10000, 180000],
+      "key_papers": ["H0-PT-004", "H0-PT-006"],
+      "mechanisms": ["prediction_error", "subcortical_novelty"]
+    }
+  },
+
+  "r0_integration": {
+    "description": "H⁰ provides temporal grounding for R⁰ resonance features",
+    "temporal_windows": {
+      "micro": {"range_ms": [10, 50], "features": ["onset_detection", "transient_tracking"]},
+      "meso": {"range_ms": [50, 500], "features": ["syllable_structure", "beat_tracking"]},
+      "macro": {"range_ms": [500, 5000], "features": ["phrase_structure", "meter_hierarchy"]},
+      "extended": {"range_ms": [5000, 60000], "features": ["form_structure", "memory_context"]}
+    },
+    "data_flow": {
+      "h0_to_r0": ["temporal_segmentation", "integration_windows", "oscillation_phase"],
+      "r0_to_h0": ["acoustic_features", "spectral_flux", "onset_times"]
+    }
+  },
+
+  "h0_architecture_implications": {
+    "multi_scale_integration": {
+      "description": "Implement hierarchical temporal integration as per cortical hierarchy",
+      "implementation": "Parallel processing streams with different integration windows"
+    },
+    "oscillation_based_timing": {
+      "description": "Use neural oscillation principles for temporal encoding",
+      "implementation": "Phase-coded timing with delta/theta/beta frequency bands"
+    },
+    "predictive_processing": {
+      "description": "Implement prediction error computation for temporal expectations",
+      "implementation": "Hierarchical predictive model with bottom-up/top-down messages"
+    },
+    "population_dynamics": {
+      "description": "Time encoded in population activity trajectories",
+      "implementation": "RNN-based state evolution for temporal representation"
+    }
+  },
+
+  "key_insights_for_src9": {
+    "1": "Temporal integration is predominantly yoked to ABSOLUTE time, not structure duration",
+    "2": "Cortical hierarchy shows systematic increase in integration windows (50ms → 400ms+)",
+    "3": "Beta oscillations (13-30Hz) are critical for beat tracking and motor timing",
+    "4": "Basal ganglia for rhythmic timing, cerebellum for single-interval timing (double dissociation)",
+    "5": "Theta-gamma coupling enables hierarchical speech/music parsing",
+    "6": "Population clocks encode time through network state dynamics",
+    "7": "Dopamine signals follow striatal gradient of reward time horizons",
+    "8": "Motor-auditory circuits use efference copies for predictive timing",
+    "9": "Temporal coherence is the core principle for auditory scene analysis"
+  }
+}

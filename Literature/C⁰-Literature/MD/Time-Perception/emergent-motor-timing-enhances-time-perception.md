@@ -1,0 +1,1848 @@
+# emergent-motor-timing-enhances-time-perception
+
+Article
+iScience
+Emergent motor timing enhances time perception
+Graphical abstract
+Highlights
+• Stable motor timing enhances perceptual sensitivity to
+matched intervals
+• Self-paced movement induces a shared tempor al structure
+for action and perception
+• Perceptual gains persist beyond training, suggestin g durable
+motor–percep tual links
+• Implicit timing in motor learning shapes tempora l perception
+without explicit cues
+Authors
+Jianfei Guo, Zhaoran Zhang,
+Mukesh Makwana, Dagmar Sternad,
+Joo-Hyun Song
+Correspondence
+joo-hyun_so ng@brown.e du
+In brief
+Neuroscien ce; Behavioral neuroscience ;
+Cognitive neuroscience; Psychology
+Guo et al., 2025, iScience 28 , 113367
+September 19, 2025 © 2025 The Author(s). Published by Elsevier Inc.
+https://doi.org/10.1016/j.isci.2025.113367
+ll
+
+iScience
+Ar ticle
+Emergent motor timing enhances time perception
+Jianfei Guo,
+1, 4
+Zhaoran Zhang,
+2, 3, 4
+Mukesh Makwana,
+1
+Dagmar Sternad,
+2
+and Joo-Hyun Song
+1, 5,
+*
+1
+Departm ent of Cognitive and Psycholog ical Sciences , Brown Univers ity, Providence , RI, USA
+2
+Departm ents of Biology , Electrical and Computer Engineer ing and Physics, Northea stern Univers ity, Boston, MA, USA
+3
+School of Psycholog y, Shenzhen Univers ity, Shenzhen, Guangdon g, China
+4
+These authors contribute d equally 
+5
+Lead contact
+*Corresp ondence: joo-hyun_so ng@brown .edu
+https://do i.org/10.1016 /j.isci.2025 .113367
+SUMMARY
+Precise timing underlies many behavior s, from musical performance to navigating a dynam ic environment . 
+This study examined how stable tempora l patterns that emerge during goal-directed movements influence 
+timing acuity in perceptual discrimi nation. Rather than relying on explicitly timed actions, we used a self- 
+paced throwing task in which temporal structure develops implicitly with practice. Across three experiments, 
+participants were trained for four days, developing stable motor timing reflected in consistent ‘ ‘ball release 
+times.’ ’ This emergent timing selectively enhanced sensitivity to matching temporal intervals in a perceptual 
+discrimination task. Importantly, this effect was not explained by perceptual learning and persisted over 
+several weeks, suggesting a durable motor-p erceptual linkage. The results point to a shared representat ion 
+of time in action and perception , an emergent timing primitive that arises through experience in spatiotem -
+poral movements. These findings shed light on how motor learning can shape tempora l perception in ecolog -
+ically relevant contexts, with implications for rehabilita tion and sensorimo tor integra tion.
+INTRODUCTION
+One notion that probably all neuroscientists, cognitive scientists, 
+and experimental psychologists agree upon is that behavior com -
+prises perceptual, cognitive, and motor systems, each divided 
+into functionally relevant subdomains.
+1
+While few would claim 
+that these domains are strictly independent, in practice, they 
+nevertheless tend to be studied in isolation. This ‘ ‘silo’ ’ approach 
+reifies these (sub-)systems as distinct entities that are expected to 
+have identifiable biological substrates. This leaves behind the fact 
+that in real-life behaviors, motor circuits operate smoothly in con -
+cert with perceptual and cognitive systems.
+2–6
+Time seems to be 
+the ‘ ‘glue’ ’ that seamlessly unites these domains: we coordinate 
+movements to external events with strikingly accurate timing; 
+we perceive others and communicate by generating and interpret -
+ing temporally patterned sounds in speech.
+7
+The synchronization 
+of perceptual, cognitive, and motor processes is at the root of all 
+successful behavior. Here, we embraced this interconnection and 
+explicitly examined how timing in the motor and perceptual sys -
+tems is tightly intertwined.
+8
+Prior studies have demonstrated extremely precise timing in 
+skilled movements: for example, professional table tennis 
+players hit a ball within a time window of 4 ms
+9
+; a baseball batter 
+can see a pitch, start a swing, and get the bat at the right place 
+and time within less than 600 ms.
+10
+The notion that coordinated 
+behavior relies upon an internal representation of time, a ‘ ‘clock,’ ’ 
+has been germane to numerous lines of research. Many psycho -
+logical approaches developed models of clock-like timing, espe -
+cially for time perception.
+11–19
+However, there has also been growing concern over the clock 
+metaphor in human motor performance. Over the past decades, 
+research in motor neuroscience has recognized that movement 
+control is unlikely to be a solely top-down cortically controlled 
+process. Rather, it is a dynamic process arising from all levels 
+of the neuromechanical system. Any movement not only unfolds 
+over time, but is also constrained by limits set by the limb system 
+and the task.
+20 , 21
+While the spatiotemporal pattern of a new 
+movement skill is initially highly variable in space and time, this 
+variability attenuates with practice.
+22–24
+Importantly, over many 
+repetitions, movement timing can develop a stable pattern. Tur -
+vey and colleagues have argued that temporal regularities in mo -
+tor coordination are emergent properties of a self-organizing dy -
+namic system.
+25 , 26
+From this perspective, movements do not 
+require a timekeeper. Rather, timing is implicit and manifests 
+via a dynamic process that evolves within the complex neurome -
+chanical system.
+One intriguing question would be whether such stable spatio -
+temporal patterns in movement can also impact the perception 
+of temporal intervals. Relatively little attention has been paid to 
+the active contribution of neuromotor processes to the percep -
+tion of time, because studies on time perception have typically 
+used movements only to mark the endpoints of a timed process. 
+Put in simple terms, the implicit assumption has been that the 
+brain controls when and how to move, and the motor system 
+generates an output in accord with these cortical timing 
+commands.
+10 , 27–30
+A growing body of research has, however, identified a link be -
+tween motor timing and time perception. Keele et al. were the 
+iScience 28 , 113367, Septembe r 19, 2025 © 2025 The Author(s). Published by Elsevier Inc. 1 
+This is an open access article under the CC BY-NC license ( http://crea tivecommon s.org/licen ses/by-nc/4. 0/ ).
+ll
+OPEN ACCESS
+first to report a positive correlation between time perception 
+and simple motor tasks.
+31
+Using rhythmic single-finger tapping, 
+individuals who displayed larger timing variability also demon -
+strated lower acuity in time perception. Ivry and Hazeltine 
+showed that variability in both perception and action tasks 
+increased similarly over increasing temporal intervals.
+32
+In 
+addition, simultaneous movements can not only create biased 
+time estimates, but can also make them more precise.
+19 , 30
+Neural data also revealed that similar brain regions, such as 
+motor circuits in the supplementary motor area (SMA) and 
+subcortical regions, are involved both in time perception and 
+motor timing via cortico-striato-thalamic connections.
+33–35
+Collectively, these findings support a close connection be -
+tween motor and perceptual timing.
+While previous research has not fully resolved whether 
+perceptual and motor systems merely represent time in a similar 
+fashion or whether they share a common mechanism,
+36 , 37
+this 
+study aims to take a one step forward by directly juxtaposing 
+motor and perceptual tasks to test whether temporal patterns 
+that were developed through motor practice transfer to percep -
+tual time judgments. According to theories of learning, transfer to 
+another situation is facilitated by the similarity between the two 
+situations or substrates.
+38–40
+Simply put, if there is nothing in 
+common, information learned in one situation will not be of any 
+value in the other situation. We hypothesized that as spatiotem -
+poral patterns in skilled movements emerge from basic dynamic 
+processes during practice, this emergent timing serves as an 
+amodal ‘ ‘primitive’ ’ that pervades perceptual and possibly also 
+cognitive processes. It is worth noting that previous research 
+found that improved perceptual sensitivity was context-specific 
+and, as such, did not generalize to other perceptual tasks.
+41 , 42
+Therefore, without a shared timing mechanisms, any direct effect 
+of motor timing on perceptual timing is unlikely.
+To evaluate the hypothesis of an amodal timing primitive, 
+we employed a virtual throwing task, called skittles, where 
+motor timing emerged as a by-product of goal achievement 
+( Figure 1 ). Skittles is a virtual target-oriented throwing task 
+similar to the American playground game tetherball ( Figure 1 A). 
+In this virtual version of the game ( Figure 1 B), each throw is an 
+independent and discrete event ( Figure 1 C). Success depends 
+solely on the angle and velocity at the moment of ball release 
+( Figure 1 D). Participants were instructed to hit the target as often 
+as possible. Critically, they received no instructions regarding 
+motor timing, such as when to release the ball or the duration 
+of the throwing movements, as these were not relevant for suc -
+cess ( Figure 1 E). In direct succession to the motor session, we 
+employed a time-interval discrimination task ( Figure 2 ) to inves -
+tigate whether the temporal patterns emerging in the increas -
+ingly stable throwing movements of skittles influenced the audi -
+tory discrimination of similar temporal intervals. To prevent any 
+perceptual learning component, we provided no feedback on 
+the time-interval performance and also limited the number of tri -
+als to those minimally required for reliable discrimination 
+evaluation.
+Figure 1. The throwing task skittles and its 
+motor timing 
+(A) Model of the skittles task. 
+(B) Experimental setup of the virtual skittles task. 
+The lever height was adjusted so that the upper 
+arm formed a 45
+◦
+angle relative to the trunk. The 
+participant grasped a real ball that was fixed at 
+the distal end of the lever. The virtual ball was 
+released, i.e., ‘ ‘thrown’ ’ toward a target, by lifting 
+the index finger from a force sensor. Angular dis -
+placements of the lever arm were measured at 
+1000 Hz by an optical encoder. The display 
+showed the paddle representing the arm, and the 
+starting position. The ball, shown as a small white 
+circle, detached after release and traversed 
+around the red center post to hit a target shown as 
+a yellow circle. 
+(C) Top-down view of the skittles workspace. 
+The larger red circle is the post, the small yellow 
+circle is the target, and the pink bar is the lever 
+arm. Errors were defined as the minimum dis -
+tance between the target and the ball trajectory. 
+Two ball trajectories (dashed lines) pass within 
+the 1 cm error threshold, regarded a successful 
+hit; the third ball trajectory (solid line) exem -
+plifies an unsuccessful throw, with the error 
+defined at the trajectory’s minimum distance to 
+the target. 
+(D) Solution space of the skittles task, spanned by angle and velocity of the arm at ball release. The green band denotes the solution manifold, comprising 
+all angle and velocity combinations, where the throw results in errors below the 1 cm threshold. Two representative arm trajectories and their ball releases 
+are plotted (red and blue lines); the white dots represent the ball releases. The orange color shading codes the error. The release point on the red trajectory 
+resulted in a large error, while the release point on the blue trajectory was a successful hit as it intersected with the solution manifold. 
+(E) Velocity profile of the arm trajectory of two successive throws with the landmarks onset, ball release, and offset. The red dot indicates the ball release 
+moment at trial n and trial n +1. Two intervals of potential salience were defined: ball-release time and movement time.
+2 iScience 28 , 113367, Septemb er 19, 2025 
+iScience
+Article
+ll
+OPEN ACCESS
+In principle, temporal patterns during skittles could emerge in 
+both ball-release times and the overall throwing movement dura -
+tions ( Figure 1 E). We did not have a priori hypotheses about 
+whether one or both would selectively influence subsequent 
+perceptual time-interval discrimination. In a series of three ex -
+periments, we evaluated whether and how the temporal intervals 
+developed during training, such as ball-release time and move -
+ment time, influenced a corresponding auditory time interval 
+discrimination.
+In Experiment 1, we demonstrated that with throwing practice, 
+participants acquired a stable motor pattern which, in turn, 
+enhanced their sensitivity to time-interval discrimination, specif -
+ically in relation to ball-release time. However, within each individ -
+ual, we did not observe a linear relation between an individual’s 
+improvement in throwing and their perceptual discrimination 
+sensitivity. We conjectured that this lack of a strong dependency 
+might be due to some participants exhibiting relatively atypical 
+throwing actions, which did not display the typical profile of a 
+ballistic throw (see supplemental information , Method S1 , and 
+Figures S1–S3 : Differences in Throwing Strategies in Experiments 
+1 and 2).
+To address this conjecture, Experiment 2 introduced a varia -
+tion of the throwing task eliciting a different temporal pattern, re -
+sulting in more typical velocity profiles of ballistic throwing move -
+ments. Both at the group level and at the individual level, these 
+throwing movements gave rise to much stronger relations be -
+tween the temporal profile of the trained movement and the 
+enhanced sensitivity to time-interval discrimination, specifically 
+linked to ball-release time. Within individuals, they showed that 
+the more they improved their throwing movements, the better 
+their time perception became over days. We also demonstrated 
+that this motor-perceptual timing association persisted for 
+several weeks.
+In addition, Experiment 3 confirmed that without throwing 
+practice, simply repeating the same time-interval discrimination 
+task across multiple days did not lead to perceptual improve -
+ments. Therefore, the findings from Experiments 1 and 2 could 
+not be solely attributed to the mere repetition of motor and 
+perceptual tasks across days. Together, this study provides 
+strong evidence that improved motor timing can enhance the 
+discrimination of similar time intervals, consistent with the notion 
+of an emergent timing primitive, suggesting the need for further 
+investigation into the underlying mechanisms.
+RESULTS
+Experiment 1: Training in motor timing enhances time 
+perception
+Experiment 1 investigated whether throwing practice in skittles 
+( Figure 1 ) increased the sensitivity of time-interval discrimination 
+( Figure 2 ) and, if so, whether this enhancement was selectively 
+linked to the timing of the practiced movement. Our hypothesis 
+was that with training a self-paced goal-oriented movement, a 
+stable temporal structure emerges that embraces both the mo -
+tor and perceptual domains and therefore enhances the percep -
+tual discrimination of this interval. Consistent with advances in 
+motor neuroscience,
+43 , 44
+we posit that such a stable temporal 
+structure is a dynamic primitive governing both motor and 
+perceptual processes.
+Participants practiced throwing a ball to hit a target skittle in a 
+virtual environment over multiple days. They were asked to start 
+each throw from a rest position, indicated on the display by a line 
+to match with the manipulandum ( Figure 1 B). There were no 
+explicit instructions on the timing of the action: participants 
+could choose their preferred velocity profile and initiate the ball 
+throw at their self-chosen pace. The only instruction was to 
+throw the virtual ball to hit the virtual skittle as accurately as 
+possible. Figure 1 C illustrates the x-y coordinates of the work -
+space as a top-down view with 3 exemplary ball trajectories 
+traversing around the center post; the target is the small yellow 
+circle at the left. Importantly, the task has redundancy: infinitely 
+many arm trajectories with infinitely many combinations of angle 
+and velocity at ball release can lead to task success. However, 
+for each arm angle and velocity at release, the error was fully 
+determined. Figure 1 D shows the solution space of the task as 
+it is spanned by the angle and velocity of the arm at ball release. 
+The color codes the error, with darker shades of orange indi -
+cating larger errors. The green band comprises all angle-velocity 
+combinations at ball release that lead to errors less than 1 cm 
+from the target center, i.e., it denotes the solution manifold. 
+The red trajectory from early practice had a ball release in the or -
+ange-colored area that resulted in a large error; the blue trajec -
+tory from later practice resulted in zero error as the ball release 
+occurred directly when intersecting the solution manifold.
+An important feature of the skittles task is that different arm 
+movements can result in the same error or target hit, and the 
+same arm trajectories could result in different errors when the 
+Figure 2. Time-interval discrimination task 
+(A) Trial structure. Participants compared the time 
+intervals of two pairs of beep sounds and reported 
+whether the comparison interval was ‘ ‘shorter’ ’ or 
+‘ ‘longer’ ’ than the standard interval. The Δ t for 
+every standard-interval t condition was deter -
+mined by a QUEST+ procedure. 
+(B) Estimation of the auditory discrimination 
+threshold. Threshold is defined as ½ × (the dis -
+tance between the stimulus value at 84% ‘ ‘longer’ ’ 
+response and the stimulus value at 16% ‘ ‘longer’ ’ 
+response), which corresponds to 1 SD of the fitted 
+cumulative normal function. A cartoon psycho -
+metric function is shown for illustrative purposes, 
+including threshold and SD.
+iScience 28 , 113367, Septemb er 19, 2025 3 
+iScience
+Article
+ll
+OPEN ACCESS
+ball was released earlier or later. Critical for the analyses below is 
+that task success is determined only by the angle and velocity at 
+ball release and not by the time interval from onset to ball release. 
+Despite this redundancy, previous work already showed that in -
+dividuals tended to converge toward a preferred trajectory with a 
+relatively invariant temporal pattern, becoming a stable pattern, 
+i.e., a dynamic primitive.
+45
+To determine how the timing of the movement evolved, the tra -
+jectory of the arm, specifically its velocity profile, was analyzed. 
+Figure 1 E shows an exemplary arm trajectory over two succes -
+sive throws, n and n+1 . The trajectory at both throws reveals a 
+relatively invariant temporal pattern: following the onset of the 
+movement, the velocity increased and the ball was released in 
+the vicinity of peak velocity. Then, the arm velocity decreased 
+as the participant resumed the start position for the next throw. 
+This time profile was parsed into two intervals: 1) ball-release 
+time , defined as the interval between the movement onset and 
+ball release; 2) movement time , defined as the interval between 
+movement onset and offset.
+Following each throwing session, participants performed the 
+time-interval discrimination task, in which they compared the in -
+tervals of two pairs of tones and reported which interval was 
+longer by pressing one of the two keys; no performance feed -
+back was given.
+31
+The first pair was the standard interval t , 
+which was pre-determined based on the temporal intervals 
+measured in the motor task, e.g., ball-release time and move -
+ment time ( Figure 2 ). The second pair formed the comparison in -
+terval , which was either shorter or longer than the standard 
+interval (± Δ t ) based on a Bayesian adaptive procedure called 
+QUEST+.
+46
+Each standard interval was tested separately in a 
+different block to estimate the duration discrimination threshold. 
+There were 10 practice trials plus 70 experimental trials per 
+block. To assess the reliability of participants’ discrimination 
+thresholds across days and standard durations, we analyzed 
+the mean and standard deviation of final posterior distributions 
+from the Quest+ algorithm. The results confirmed that it 
+consistently converged on stable parameter estimates for each 
+standard interval across days
+46
+(see supplemental information , 
+Method S2 , and Figures S4 and S5 : Analysis of Posterior Distri -
+butions from Quest+ Algorithm).
+On Day 1, participants performed the time-interval discrimina -
+tion task with three standard intervals. Two were associated with 
+the motor timing intervals extracted from the skittles task, and 
+one was an unrelated control interval ( Figure 3 ). According to 
+our pilot results, the standard intervals in Experiment 1 were 
+set to 500 ms (linked to the ball-release time), 800 ms (linked 
+to the movement time), and 300 ms (unrelated time). On Days 
+2–5, participants practiced skittles with 320 trials on each day, 
+which took approximately 30min. Following each motor training 
+session, participants performed the auditory duration discrimi -
+nation task as on Day 1.
+Does timing in the goal-directed motor task stabilize and 
+affect perceptual timing?
+A first assessment of throwing performance verified that partic -
+ipants learnt and improved in the task over the 4 practice days. 
+Two metrics evaluated performance changes with practice: the 
+success rate of hitting the target and the error. Success rate 
+was defined as the percentage of throws that achieved an error 
+below the threshold of 1 cm (touching the target). Performance 
+error was defined as the minimum distance between the target 
+and the ball’s trajectory, regardless of its location in work space 
+( Figure 1 C). As shown in Figure 4 , over the course of practice, the 
+success rate increased significantly, supported by a one-way 
+repeated-measures ANOVA with Day as the main factor, F 
+(3,69) = 29.241, p < 0.001, η
+2 
+= 0.594. Concomitantly, a second 
+ANOVA for performance error revealed a significant decrease, F 
+(3,69) = 46.737, p < 0.001, η
+2 
+= 0.700.
+The next important question was whether a temporal pattern 
+emerged in the kinematics of the throwing movement. 
+Figure 5 A shows the mean durations of the two different seg -
+ments, ball-release time and movement time, of the arm trajec -
+tory across Days 2–5. Even though participants could throw 
+and hit the target with infinitely many different arm trajectories, 
+they settled on a stable movement time with a relatively stable 
+ball-release interval. The ball-release time was around 500 ms, 
+although it exhibited a minor increase throughout the practice 
+from 512 to 535 ms. A one-way repeated-measures ANOVA 
+was weakly significant, F(3,60) = 3.443, p = 0.044, η
+2 
+= 0.147. 
+The movement time settled on 693 ± 20 ms on Day 1 and re -
+mained consistent across days ( p = 0.765).
+To evaluate whether the temporal pattern of the throwing 
+movements became more stable, i.e., less variable with practice, 
+the variability of ball-release time and movement time was 
+Figure 3. Timeline of the motor and perceptual tasks across the five 
+daily sessions in Experiment 1 
+On Day 1, the baseline of the time-interval discrimination threshold was 
+measured. From Day 2 to Day 5, participants first performed the motor task 
+and then the time-interval discrimination task in each of the five daily sessions.
+Figure 4. Motor performance in Experiment 1 
+(A) Success rate. 
+(B) Performance error. 
+Error bars represent the standard error across participants.
+4 iScience 28 , 113367, Septemb er 19, 2025 
+iScience
+Article
+ll
+OPEN ACCESS
+estimated by the coefficient of variation ( Figure 5 B). The same 
+one-way ANOVA supported the expected declines in variability 
+for both ball-release time, F(3,60) = 6.302, p < 0.001, η
+2 
+= 
+0.208), and movement time, F(3, 60) = 3.594, p = 0.031, η
+2 
+= 
+0.13. This practice-induced decrease in variability was consis -
+tent with previous studies using the skittles paradigm and is 
+also a fundamental finding in motor learning research.
+22 , 24
+Of primary interest was understanding how motor timing influ -
+enced time-interval discrimination. To explore this, we calcu -
+lated the Weber fraction, which is the ratio between the esti -
+mated discrimination threshold and the standard interval (see 
+Figure 2 ). A smaller Weber fraction indicates better discrimina -
+tion. Figure 6 A presents the Weber fractions averaged over 
+all participants for the 3 discrimination intervals across the 
+5 days. The inspection of this figure suggests that the discrimina -
+tion of the 500 ms interval, corresponding to the ball-release 
+time, improved the most. To assess the Weber fractions over 
+practice, we employed linear mixed models to analyze perfor -
+mance in the three intervals separately. The model was con -
+structed with Day as the fixed effect, and intercepts for partici -
+pants were included as random effect. As the main interest of 
+the analyses was the trend across days and to keep the model 
+simple and computationally efficient, the slope of the Day effect 
+was fixed across participants. A negative slope indicates that as 
+days progressed, the discrimination threshold decreased, sug -
+gesting an improvement in sensitivity to time perception with 
+training.
+Figure 6 B illustrates the results of the standard interval of 
+500 ms, where the slope was significant ( β =   0.0142). In 
+contrast, the slopes for 300 ms and 800 ms intervals were not 
+significant (all p > 0.28). Figure 6 C summarizes the slopes ob -
+tained for all three intervals, pooled over individuals. The average 
+slope for the 500 ms interval was significantly different from zero: 
+β =   0.0142 with [-0.0021,   0.0263] as the 95% confidence in -
+terval, t(90) =   2.356, p = 0.021); there was no significant change 
+in discrimination for the 300 ms and 800 ms intervals (all 
+p > 0.281). This is a first indication that ball-release time, not 
+movement time, was a salient interval of the throwing action 
+that influences the temporal discrimination of this similar interval.
+We conducted the same linear mixed model analyses to deter -
+mine if performance error, success rate, or movement time pre -
+dicted the change in the Weber fractions for the three different 
+time intervals. Results showed that there was no significant cor -
+relation between performance error and the Weber fraction (all 
+p > 0.15), nor between success rate and the Weber fraction (all 
+p > 0.07), nor between movement time and the Weber fraction 
+(all p > 0.3).
+To investigate whether the stabilization of an individual’s mo -
+tor timing, indicated by decreasing variability in ball-release 
+times, correlated with enhanced perceptual sensitivity over 
+time, a linear mixed model examined whether a reduction in 
+ball-release time variability predicted a decrease in the Weber 
+fraction across Days 2–5 for each individual. The model included 
+ball-release time variability as fixed effects, with participant inter -
+cepts as a random effect. Figure 6 D illustrates the relationship 
+between ball-release time variability and the Weber fraction for 
+all individuals. None of the three intervals showed a significant 
+within-individual relationship ( Figures 6 D, 6E, and 6F). A sum -
+mary of these findings is provided in Figure 6 G.
+We tested one additional question: given that the individually 
+preferred ball-release times did not uniformly converge to 
+500 ms, does closeness of the actual ball-release time to the 
+tested 500 ms interval lead to stronger perceptual discrimina -
+tion? To this end, we correlated the individually averaged 
+ball-release times with the corresponding Weber fractions. The 
+correlations did not identify a significant effect ( p = 0.978, 
+rho = 0.0061). Note that given the single Weber fraction, we 
+had to average the ball release times within participants, which 
+reduced the power of this analysis.
+To better understand this lack of within-individual relations, we 
+inspected the throwing trajectories of the arm again. Sometimes, 
+the velocity profile of a single throw exhibited two peaks, which is 
+not typical for a ballistic throwing action. Further, the ball release 
+sometimes occurred after the peak velocity, which is also very 
+unusual.
+47
+This may have been due to the start location for the 
+arm that was selected to elicit movements in the vicinity of 
+500 ms. In pilot studies, we had attempted to create an arm- 
+target constellation that would elicit a ball-release time of 
+500 ms as this interval is frequently studied in timing studies. 
+However, it seemed that for throwing movements, this is a rela -
+tively long duration and therefore caused the observed devia -
+tions from the typical ballistic movement profile. We therefore 
+reasoned that the lack of the correlation of timing variability 
+with the Weber fraction at the individual level might be due to 
+this atypical throwing imposed by the start and target locations 
+in this experiment (see supplemental information , Method S1 , 
+and Figures S1–S3 : Differences in Throwing Strategies in Exper -
+iments 1 and 2).
+In sum, our first study found that when participants practiced 
+throwing, they settled into a stable temporal pattern. Directly 
+after this practice, they exhibited enhanced sensitivity to the 
+time interval prominent in the throwing action, which was 
+the 500 ms interval closest to the ball-release time. For move -
+ment time and the unrelated interval, no improvements were 
+Figure 5. Timing in motor performance in Experiment 1 
+(A) Motor timing durations of the two motor intervals, ball-release time, and 
+movement time. 
+(B) Variability of timing of the two movement intervals (coefficient of variation of 
+ball-release time and movement time). 
+In both panels, the colors of the dots mark the daily sessions, and the error 
+bars denote the standard error of the mean across participants.
+iScience 28 , 113367, Septemb er 19, 2025 5 
+iScience
+Article
+ll
+OPEN ACCESS
+observed. This result suggested that while multiple motor timing 
+patterns emerged overall, only the selected timing of the ball 
+release influenced perceptual discrimination.
+Experiment 2: Converging evidence: Selective 
+improvement of perceptual timing linked to ball-release 
+time
+Experiment 2 aimed to replicate and further investigate the 
+unique link observed in Experiment 1 between perception and 
+motor performance. Specifically, we examined whether this 
+link is driven by ball-release time, rather than uniquely associ -
+ated with the 500 ms standard interval. To test whether percep -
+tual timing improvements are tied to an interval matched with 
+ball-release time, we modified the skittles task to create a 
+different spatiotemporal profile of throwing movements. In this 
+version, participants had to throw the ball at a different angle 
+and velocity from Experiment 1 to be successful, resulting in 
+ball-release times around 300 ms ( Figure 1 E). This faster ball- 
+release time reflected a more typical throwing action compared 
+to the slower action in Experiment 1, which allowed us to deter -
+mine whether typical throwing actions established an even 
+closer link between performance improvements and temporal 
+sensitivity Therefore, Experiment 2 could provide converging ev -
+idence and serve as an active control, verifying the specific rela -
+tion between perceptual timing discrimination and timing in the 
+throwing action.
+To demonstrate that perceptual timing improved only for an in -
+terval matched with the motor timing structure, the starting posi -
+tion of the arm was set at a different arm angle to elicit a ball- 
+release time of around 300 ms ( Figures 1 B and 1C). This was 
+explored in pilot studies that also analyzed the arm trajectories 
+to ensure that the throwing actions were ballistic, i.e., with a single 
+velocity peak and ball release prior to or at this peak. Conse -
+quently, the time-interval discrimination task included the new 
+ball-release time (300 ms), the new movement time (600 ms), 
+and a control interval (1000 ms), unrelated to the modified 
+throwing action. All experimental procedures remained the same.
+In accord with Experiment 1, participants again improved their 
+performance in target hitting, as evidenced by a significantly 
+increasing success rate across practice days, F(3,69) = 12.783, 
+p < 0.001, η
+2 
+= 0.357, and a decreasing performance error, 
+F(3,69) = 19.398, p < 0.001, η
+2 
+= 0.458 ( Figures 7 A and 7B). These 
+results were obtained using one-way repeated-measures 
+ANOVA with days as a within-participant factor.
+Figure 6. Perceptual performance quantified by the Weber fraction in Experiment 1 
+(A) Weber fraction for the time-interval discrimination threshold of each standard interval across Days 1–5. Smaller Weber fractions indicate better perceptual 
+performance. The slopes of the linear regressions for each standard interval were averaged with error bars representing the standard error across participants. 
+(B) The linear mixed model applied to the Weber fraction of the standard interval of 500 ms across Days 1–5. The gray lines represent the model’s fixed effect, and 
+the shaded areas indicate the 95% confidence interval of the model prediction. 
+(C) Regression slopes of Weber fraction for each standard interval. A negative slope indicates that time perception improved with training. The different shades of 
+blue denote the different participants. Only the interval of 500 ms, which was linked to ball-release time, showed a significant reduction. Error bars represent the 
+95% confidence interval of the estimated parameters. * p < 0.05. 
+(D) The linear mixed model applied to the relation between the Weber fraction of the standard interval of 300 ms and the ball-release time variability across 
+Days 2–5. 
+(E) The linear mixed model applied to the relation between the Weber fraction of the standard interval of 500 ms and the ball-release time variability across 
+Days 2–5. 
+(F) The linear mixed model applied to the relation between the Weber fraction of the standard interval of 800 ms and the ball-release time variability across 
+Days 2–5. 
+(G) Participant averages of the regression slopes between the ball-release time variability and the Weber fraction of each standard interval. Error bars represent 
+the 95% confidence interval of the estimated parameters. The differences are not significant. 
+Data and fitted curves for individual participants are available in the data and code availability section.
+6 iScience 28 , 113367, Septemb er 19, 2025 
+iScience
+Article
+ll
+OPEN ACCESS
+Figure 8 A shows the mean durations of the two segments 
+of the arm trajectory, ball-release time, and movement time, 
+across Days 2–5. As can be seen, the ball-release time and the 
+movement time settled to durations of approximately 350 and 
+550 ms, respectively. The one-way ANOVA ascertained that 
+both time intervals did not change significantly across practice 
+days (all p > 0.6).
+To evaluate the stability of the temporal pattern in the throwing 
+movement across days, the variability in ball-release time and 
+movement time was analyzed using the coefficient of variation 
+( Figure 8 B). The one-way repeated-measures ANOVA confirmed 
+the expected reductions in variability for both ball-release time, F 
+(3,69) = 14.230, p < 0.001, η
+2 
+= 0.382, and movement time, F 
+(3,69) = 6.451, p = 0.003, η
+2 
+= 0.219, which was consistent 
+with Experiment 1.
+Next, we investigated how motor timing affected the time- 
+interval discrimination of the three standard intervals, 
+300 ms, 600 ms, and 1000 ms. Of interest was whether, as 
+in Experiment 1, Weber fractions for the standard interval of 
+300 ms, linked to ball-release time, would improve following 
+motor training. Figure 9 A summarizes the changes in the 
+Weber fractions for all participants for the three tested time in -
+tervals over 5 days. There was a marked decrease in the 
+Weber fraction for 300 ms, while the other two intervals 
+showed less change.
+For each standard interval, the change in Weber fractions over 
+the 5 days was evaluated by a linear mixed model, with Day as a 
+fixed effect and Participant as a random effect. Figure 9 B illus -
+trates that participants significantly decreased the threshold of 
+time-interval discrimination for the 300 ms interval, the interval 
+linked with ball-release time: slope =   0.0204 ± 0.0074, t (101) = 
+  5.431, p < 0.001. There were no changes in the two other time 
+intervals (all p > 0.18). Figure 9 C summarizes the regression 
+slopes for the three intervals by aggregating the means of all par -
+ticipants: the negative slope for the 300 ms interval was signifi -
+cantly different from zero. Therefore, this result confirmed that 
+ball-release time was consistently linked with improvements in 
+perceptual timing discrimination, as seen for the 500 ms interval 
+in Experiment 1 ( Figure 6 C).
+The next objective was to determine whether this faster and 
+more ballistic throwing action of 300 ms strengthened the link 
+between stabilized performance and discrimination sensitivity, 
+i.e., a correlation between ball-release time variability and the 
+Weber fraction. Once again, a linear mixed model examined 
+this relation. Figures 9 D–9F illustrate the linear regressions 
+applied to the Weber fractions for the three standard intervals 
+for all participants. The positive regression slopes for the 
+300 ms interval supported that lower ball-release variability 
+was associated with smaller Weber fractions, slope = 0.286, 
+confidence interval = [0.126, 0.447], t(82) = 3.56, p < 0.001. 
+This enhancement was not observed for the two other intervals. 
+Figure 9 G summarizes the regression slopes for all tested time 
+intervals with the 95% confidence intervals, verifying that this 
+positive relation was only evident for the 300 ms standard inter -
+val discrimination. These results supported that a more stable 
+temporal structure in the throwing action enhanced temporal 
+discrimination, not only at the group level, but also at the individ -
+ual level.
+In summary, after extended throwing practice, participants 
+showed improved sensitivity in discriminating time intervals, 
+specifically for the 300 ms interval that was close to the ball- 
+release time. Furthermore, within individuals, the stability of mo -
+tor timing was positively correlated with time-interval discrimina -
+tion, a finding that went beyond the results from Experiment 1. 
+This strengthened relation may be attributed to the more ballistic 
+throwing movements in Experiment 2. These results provide the 
+first empirical evidence that improvements in motor timing can 
+enhance time perception sensitivity through a shared, amodal 
+timing mechanism.
+Does the Temporal Coupling between Action and 
+Perception Persist in the Long Term?
+The retention of a motor skill or of a perceptual ability over a 
+longer period has received relatively little systematic study, 
+even though lasting skill is the holy grail of any teaching, 
+Figure 7. Motor performance in Experiment 2 
+(A) Success rate over days. 
+(B) Performance error over days. 
+In both panels, color indicates the days and the error bars represent the 
+standard error of the mean across participants.
+Figure 8. Timing in motor performance in Experiment 2 
+(A) Durations of the two motor intervals, ball-release time, and movement time. 
+(B) Variability of the two movement intervals quantified by the coefficient of 
+variation. 
+In both panels, the color of the dots corresponds to the daily sessions. Error 
+bars represent the standard error across the means of participants.
+iScience 28 , 113367, Septemb er 19, 2025 7 
+iScience
+Article
+ll
+OPEN ACCESS
+coaching, and clinical intervention. In motor control, it has been 
+shown that the temporal patterns in movement skills have indeed 
+remarkable persistence. One study of a bimanual polyrhythmic 
+task showed that individuals not only stabilized their idiosyn -
+cratic temporal patterns over 20 practice sessions, but that the 
+fine-grained spatiotemporal pattern then also persisted for 
+6 months and in three of four cases, for 8 years after the end of 
+practice.
+48 , 49
+For a visuomotor task, it was shown that motor 
+learning and its association with external sensory stimuli also 
+persisted for an extended time.
+50
+Bolstered by these findings, 
+we examined whether coupling between action and perception 
+timing, and the amodal timing primitive, could also persist in 
+the longer term.
+After the five sessions of Experiment 2 were completed, we 
+asked some of the participants to return for a retention session. 
+Based on their availability, 11 participants returned after a period 
+between 6 and 91 days following the last experimental day, i.e., 
+after 22.9 ± 7.7 days. In the retention session, all participants 
+performed one session of the identical skittles task followed by 
+the same time-interval discrimination task. We reasoned that: 
+1) the temporal structure, or dynamic primitive, formed by the 
+throwing practice, was encoded into long-term memory together 
+with the action, and 2) as the motor timing was maintained, the 
+improved perceptual acuity persisted together with it.
+To evaluate how well participants retained their learned 
+throwing skill, we first regressed the ball-release time variability 
+against the motor sessions on Days 2–5 for each individual. 
+The derived regression equation served as a reference to 
+compare the retention day’s performance to previous perfor -
+mance. Figure 10 A shows how the retention performance of an 
+individual compares to the regression of the previous perfor -
+mance. A day of 5 indicated that the learned motor skill was fully 
+recovered on the retention day without loss. Figure 10 B shows 
+ball-release time variability averaged across participants within 
+the confidence band, including the average day of the retention 
+performance. Interestingly, motor performance was very close to 
+Day 5, the last training day (4.75 ± 0.26 s.e.), indicating that the 
+learned throwing skill almost fully persisted.
+Correspondingly, we evaluated how much of their improved 
+time perception of the 300 ms interval participants maintained. 
+To this end, the Weber fractions of the 300 ms time interval 
+were regressed against the 5 days of Experiment 2. As before, 
+the derived regression equations served to determine on which 
+day performance was equal to the retention day’s performance. 
+Figure 9. Perceptual performance quantified by the Weber fraction in Experiment 2 
+(A) Weber fraction for the time-interval discrimination threshold of each standard interval across Days 1–5. Smaller Weber fractions indicate better perceptual 
+performance. 
+(B) The linear mixed model applied to the Weber fraction of the standard interval of 300 ms across Days 1–5. The gray lines represent the model’s fixed effect, and 
+the shaded areas indicate the 95% confidence interval of the model prediction. 
+(C) Participant averages of the regression slopes of the Weber fraction for each standard interval. A negative slope indicates that time perception improved with 
+training. Only the interval of 300 ms, which is linked to ball-release time, showed a significant reduction. Error bars represent the 95% confidence interval of the 
+estimated parameters. *** p < 0.001. 
+(D) The linear mixed model applied to the relation between the Weber fraction of the standard interval of 300 ms and the ball-release time variability across 
+Days 2–5. 
+(E) The linear mixed model applied to the relation between the Weber fraction of the standard interval of 600 ms and the ball-release time variability across 
+Days 2–5. 
+(F) The linear mixed model applied to the relation between the Weber fraction of the standard interval of 1000 ms and the ball-release time variability across 
+Days 2–5. 
+(G) Participant averages of the regression slopes applied to the relation between the ball-release time variability and the Weber fraction of each standard interval. 
+Error bars represent the 95% confidence interval of the estimated parameters. *** p < 0.001. Data and fitted curves for individual participants are available in the 
+data and code availability section.
+8 iScience 28 , 113367, Septemb er 19, 2025 
+iScience
+Article
+ll
+OPEN ACCESS
+Figure 10 C shows the level of retention of the Weber fraction in 
+the 300 ms standard interval averaged across participants. 
+Time perception performance on the retention day was the 
+same as on Day 3.89 ± 1.21s.e.
+In sum, these retention results of Experiment 2 demonstrated 
+that the temporal pattern in the motor action was indeed en -
+coded together with the associated perceptual acuity. The find -
+ings established that with throwing practice, participants 
+enhanced the sensitivity of time interval discrimination, and this 
+enhanced sensitivity was selectively linked to the timing of the 
+trained movement. Together, our results corroborated evidence 
+that improved motor timing can be associated with enhanced 
+time-interval discrimination sensitivity, probably mediated by a 
+timing primitive.
+Experiment 3: Motor training is necessary to improve 
+time perception
+It is important to note that in all temporal perception experi -
+ments, we restricted the number of trials to 70 per standard inter -
+val, unlike conventional perceptual learning studies that typically 
+involve thousands of trials.
+42
+Furthermore, participants did not 
+receive any error feedback. These short sessions without feed -
+back were chosen to capture transfer effects from the motor to 
+the perceptual tasks in both Experiments 1 and 2 to reduce 
+any sort of temporal learning from the perceptual task itself. 
+Therefore, we reasoned that without motor practice, perceptual 
+sensitivity was unlikely to improve solely through perceptual 
+learning, regardless of the intervals. To test this expectation, 
+Experiment 3 involved another group of 15 participants who per -
+formed only the time interval discrimination task over 5 days, in 
+an identical fashion as in Experiment 2. We did not expect to 
+see any enhanced performance, specifically not in the standard 
+interval of 300 ms.
+Indeed, participants did not improve their sensitivity to time-in -
+terval discrimination in the three standard intervals. Figure 11 A 
+shows that discrimination sensitivity for all three standard inter -
+vals was comparable to Experiment 2. The same linear mixed 
+model of the Weber fractions for each standard interval over 
+the 5 days indicated that the effect of Day for 300 ms was not 
+significantly different from zero, slope =   0.0085 ± 0.0118, t 
+(72) =   1.435, p = 0.156 ( Figure 11 B), similar to 600 and 
+1000 ms (all p > 0.15). The slopes of all participants for each 
+standard interval are summarized in Figure 11 C, showing no sig -
+nificant difference from zero (see supplemental information , 
+Method S3 , and Figure S6 : Weber Fraction across Days in 
+Experiment 3).
+In sum, Experiment 3 showed that without throwing practice, 
+participants did not demonstrate any improvements in discrimina -
+tion sensitivity across all intervals. These findings provide further 
+evidence that the enhanced sensitivity to the salient interval in mo -
+tor performance was likely induced by motor training, rather than 
+by perceptual learning. However, Experiment 3 could not entirely 
+rule out the possibility that passive exposure to a temporal struc -
+ture of repeated throwing in each trial might have contributed to 
+the improvement observed in Experiments 1 and 2. Nonetheless, 
+this appeared to be less likely since participants in Experiments 1 
+and 2 were both exposed to the temporal structure related to 
+movement time. This repeated exposure, which also stabilized 
+over days, did not result in improved perceptual discrimination. 
+Therefore, repeated exposure to a temporal structure alone is 
+not sufficient for transfer. Rather, it is the repeated exposure to 
+task-relevant motor timing that leads to perceptual improvement.
+DISCUSSION
+This study examined how implicit temporal structure established 
+and stabilized during extended practice of a throwing task influ -
+enced the discrimination ability in an auditory time discrimination 
+task. That timing cuts across perceptual and motor processes, i. 
+e., timing is not domain-specific, has already been shown in 
+several previous studies.
+30 , 51 , 52
+However, this study adds several 
+essential new findings to this emerging body of understanding. 
+Our study established that a temporal pattern emerging in the 
+context of a goal-directed, but otherwise completely untimed mo -
+tor skill can selectively enhance perceptual discrimination. Specif -
+ically, our results demonstrated that it was the time from onset to 
+ball release that most affected perceptual discrimination. We con -
+jectured that the significance of ball-release time likely stems from 
+its critical role in the throwing action. However, it is important to 
+note that ball-release time does not directly determine perfor -
+mance success. Future research is needed to further explore 
+the underlying mechanisms linking stable spatiotemporal coordi -
+nation patterns with enhanced sensitivity to temporal intervals 
+during stabilized motor behavior.
+Goal-directed task with implicit timing
+Our investigation of emergent motor timing in a goal-oriented 
+movement deviated significantly from most timing experiments 
+Figure 10. Retention performance is evalu -
+ated by variability of ball-release time 
+(A) For each individual, linear regressions on ball- 
+release time variability across Days 2–5 deter -
+mined the day on which performance was similar 
+to the retention day. The equation of the example 
+regression was: y =   0.05 × + 0.38. 
+(B) Average ball-release time variability with 
+regression: y =   0.05 × + 0.40, and retained day 
+(4.75 ± 0.26 s.e.). 
+(C) Averaged Weber fraction of the 300 ms interval 
+with regression: y =   0.02 × + 0.2, and retained 
+day (3.89 ± 1.21 s.e.). 
+The gray-shaded areas in (B) and (C) represent the 
+95% confidence interval of the best-fit line.
+iScience 28 , 113367, Septemb er 19, 2025 9 
+iScience
+Article
+ll
+OPEN ACCESS
+as our participants did not produce specific ‘ ‘empty’ ’ temporal 
+intervals in a laboratory task such as tapping. This is an essential 
+step beyond previous work. Unlike in laboratory tasks, most 
+movements in the real world are not timed by an external metro -
+nome, but timing arises in the context of other goals. When you 
+drink a glass of wine, you reach for the glass, lift and tilt it, care -
+fully controlling the angle of the glass to drink without spilling. 
+The goal is defined by the actor’s intention to drink and is evalu -
+ated by the outcome of the action. When actions are repeated 
+many times, the temporal pattern stabilizes. Actions typically 
+happen at a timescale of a 500–1500 ms, determined by the 
+extrinsic task constraints, such as the distance between the 
+hand and the glass and the mouth. The kinematic and dynamic 
+characteristics, i.e., movement and forces of the arm and hand 
+in space and time, require a precisely orchestrated pattern of 
+muscle activity guided by proprioceptive and visual informa -
+tion.
+53 , 54
+Notably, these actions are also constrained by the 
+weight of the glass, the amount of wine in it, and the physics of 
+the fluid moving in the glass. Spatiotemporal structure emerges 
+at the interface of kinematics, dynamics, and intentions.
+To capture these complex interactions inherent to any real-life 
+action, we employed the task of throwing a ball to hit a target. 
+The experimental paradigm skittles could also capitalize on pre -
+vious research that developed the virtual implementation based 
+on the dynamics of the real task.
+55 , 56
+This task provided an op -
+portunity to examine emergent spatiotemporal patterns, i.e., mo -
+tor timing, as a by-product of the goal achievement within given 
+task constraints. This task had redundancy, i.e., any perfor -
+mance error could be achieved with mathematically infinite 
+arm trajectories and ball releases. As mentioned, ball-release 
+times do not directly correspond to the error, as different ball- 
+release times can be associated with the same error (see 
+supplemental information , Method S4 : Variability in Execution 
+Does Not Necessarily Predict Variability in Task Error). Neverthe -
+less, previous research already reported that even in completely 
+self-paced movements, a stable throwing pattern emerged over 
+repeated throwing actions.
+57
+With this motor task, this research 
+created a bridge between motor neuroscience and perceptual 
+psychology using insights from motor control to address the 
+question of time perception.
+Experimental demonstration of a link via a multi-session 
+learning study
+Our participants practiced the task for four daily sessions, each 
+comprising 320 trials. With such extended practice, we monitored 
+the emergence of a stable spatiotemporal pattern that was 
+coupled with testing perceptual sensitivity for related temporal in -
+tervals. This experimental design established a direct link between 
+emerging motor timing and its gradual influence on perceptual 
+sensitivity. This procedure differs from earlier studies that sup -
+ported a direct connection by demonstrating deficits in both 
+time perception and production in patients.
+28 , 58
+Similarly, in 
+neurologically healthy individuals, the relation between motor 
+timing and perceptual timing has only been demonstrated via cor -
+relation analyses. For instance, the discrimination of temporal in -
+tervals, presented by brief auditory stimuli, was correlated with 
+successive finger taps separated by the same temporal inter -
+val.
+59 , 60
+Even when the development of motor timing was the 
+focus, it was triggered by an explicit timing instruction without 
+any other motor goal.
+10
+While revealing, such correlational evi -
+dence leaves open the possibility that perceptual and motor sys -
+tems represent time merely in a similar fashion, or that they only 
+share a common mechanism.
+36 , 61
+The current multi-session 
+design demonstrated how stabilizing temporal features in motor 
+performance across daily practice concordantly improved tempo -
+ral representations in a perception task.
+Specificity and longevity of action-perception coupling
+It is worth emphasizing that this enhanced sensitivity was spe -
+cific to the ball-release time, a time that was salient to the suc -
+cess of target-oriented throwing. The results in Experiments 1 
+and 2 corroborated that the transfer from motor timing to 
+perceptual discrimination was temporally specific to this interval. 
+Experiment 3 established that it was not the result of general 
+learning of the time perception task. Furthermore, in Experiment 
+2, within individuals, the selective enhancement in time percep -
+tion correlated with the decrease in ball-release time variability: 
+the more stable the motor timing became, the more accurate 
+was the perception of the same interval. This correlation be -
+tween motor-timing variability and perceptual discrimination 
+suggested that there is a shared temporal mechanism between 
+perception and movement, regardless of the complexity of the 
+motor tasks.
+Figure 11. Perceptual discrimination performance in Experiment 3 
+(A) Weber fraction for each standard interval on Days 1–5. The regression 
+slopes for each standard interval were estimated from a linear mixed model. 
+(B) The linear mixed model applied to the Weber fraction of the standard in -
+terval of 300 ms across Days 1–5. 
+(C) Slopes of Weber fractions changed over time, estimated with a linear mixed 
+model; error bars represent 95% confidence intervals.
+10 iScience 28 , 113367, Septemb er 19, 2025 
+iScience
+Article
+ll
+OPEN ACCESS
+This individual connection between motor stability and percep -
+tual discrimination was not observed in Experiment 1. We conjec -
+tured that the stronger results in Experiment 2 were due to the na -
+ture of the throwing action. Throwing involves a fast ballistic 
+movement with a single peak in velocity and the release is at 
+this peak or shortly before. Due to experimental set-up, Experi -
+ment 1 elicited a movement that often exhibited two peaks and 
+the ball release came after the peak of the arm velocity, which is 
+atypical for throwing (see supplemental information , Method S1 , 
+and Figures S1–S3 : Differences in Throwing Strategies in Experi -
+ments 1 and 2).
+45
+It is also worth noting that in our study, only the ball-release in -
+terval, and not the others, was the critical duration that shows 
+improvement. We did not know a priori whether it would be move -
+ment time, i.e., the rhythmicity of successive throwing actions or, 
+as it turned out, the time from movement onset to ball release that 
+would be the salient interval. Interestingly, the timing of the arm 
+trajectory was not what directly led to low errors. Hitting errors 
+are determined by angle and velocity at ball release, independent 
+of the ball-release time, while the timing of the arm movement 
+arose from the entire task constellation. However, we have yet 
+to determine the underlying mechanisms for such specificity. 
+One conjecture could be that the ball release in the skittles task 
+involved a time interval that participants actively controlled. Future 
+research could explore other critical factors.
+In addition, the improved time-interval discrimination persisted 
+together with the improved sensorimotor skill for a relatively long 
+period of time, although perceptual timing sensitivity decayed 
+faster than that of motor timing. This remarkable persistence com -
+ported with a prior longitudinal case study demonstrating that 
+temporal patterns in a bimanual polyrhythmic task were retained 
+even for 6 months and 8 years after the end of practice.
+62
+The re -
+sults are also in accord with a previous study showing that visuo -
+motor learning and its arbitrary association with external sensory 
+stimuli was retained for a longer term.
+50
+However, no one has 
+shown that perceptual discrimination would persist with the re -
+tained motor timing in the longer term. This latter result has impor -
+tant implications for our overall hypothesis that dynamic timing 
+primitives may underlie the observed phenomena.
+Embodied cognition
+Our findings are consistent with research on embodied cognition 
+that has endowed the motor system with a more critical role in 
+higher-level perceptual and cognitive functions.
+63–65
+Perceptual 
+and cognitive processes are assumed to be grounded in and co- 
+determined by our bodily interactions with the environment.
+65–68
+Research from this perspective has already documented that 
+transfer from perception to action exists, for instance in the 
+form of observational motor learning.
+5
+However, transfer from 
+action to perception has received much less attention, although 
+empirical evidence supports that self-generated action and ac -
+tion experience can modulate perception and cognition.
+69–74
+Such action-perception transfer is also compatible with the ideo -
+motor theory stating that the observer can activate their internal 
+representations of actions that are represented in the same 
+format as perceived events. Thus, the final stages of perception 
+and the initial stages of action control share a common 
+coding.
+37 , 75 , 76
+Dynamic primitives in motor control and perception
+Our observations also match a perspective that has come to the 
+fore in movement neuroscience over the past decades: coordi -
+nation is achieved via dynamic primitives.
+43 , 77–79
+Several 
+research lines have converged to recognize that the control of 
+our high-dimensional motor system is unlikely to exclusively 
+rely on top-down processes. Instead, motor control is a dynamic 
+process arising from multiple interacting modules distributed 
+across the complex neuromechanical system. These subsys -
+tems, or ‘ ‘dynamic primitives,’ ’ are established through practice 
+and become building blocks for the execution of complex ac -
+tions.
+80 , 81
+Dynamic primitives are stable attractors that unfold 
+over time, partly shaped by the mechanical properties of the 
+limbs, especially when allowed to evolve in a self-paced manner. 
+In this skittles task, humans swing their arm and release the ball 
+at a time between 300 and 700 ms after initiation, and never after 
+5s, nor after 100 ms, given that the arm has to accelerate to a 
+suitable ball release velocity. Hence, spatiotemporal patterns 
+arise from basic physical constraints and dynamic neurome -
+chanical processes. Temporal structure is not explicitly 
+controlled; timing is implicit.
+Further, it is generally agreed upon that highly practiced skills 
+settle into a repeatable, sometimes almost stereotypic and idio -
+syncratic spatiotemporal patterns. Thus, stability with an implicit 
+temporal structure is a core feature of skilled movements.
+57
+Our 
+experiments showed this stabilization of the throwing action by 
+tracking the decreasing variability across practice days. These 
+observations of stable but spatiotemporally bounded patterns 
+are consistent with a basic fact in physics: A nonlinear dynamic 
+system, such as the human neuromotor system, tends to form a 
+stable equilibrium or attractor states, with timing arising from the 
+system’s properties.
+82
+Two main types of stable attractors are 
+distinguished: fixed points, i.e., a single equilibrium point, or limit 
+cycles, i.e., a periodic equilibrium state.
+83
+There is accumulating 
+evidence that discrete and rhythmic movements map onto these 
+stable attractors. For example, research on bimanual coordina -
+tion has provided firm support that rhythmic movements are 
+competently modeled by stable limit cycle dynamics.
+44 , 83–85
+Recent neural work also demonstrated that the primary motor 
+cortex (M1) and SMA exhibit constrained neural dynamics during 
+motor preparation and rhythmic behaviors. This evidence sug -
+gests that neuronal populations in motor regions, which may 
+be utilized for perceptual timing, develop stereotyped routines 
+that reduce internal noise.
+86 , 87
+A previous study on the skittles task showed that repeated 
+throwing actions developed a preferred inter-throw rhythm 
+with dynamic stability.
+57
+Other studies showed that complex, 
+skilled behaviors are a combination of these dynamic primi -
+tives.
+83 , 88
+We believe that the throwing movements in the current 
+experiments are consistent with a stable attractor, a dynamic 
+primitive, established over the neuromuscular substrate. The 
+transfer to perceptual discrimination suggests that such attrac -
+tors are not confined to the neuromotor system, but also affect 
+and include other brain areas.
+8 , 12
+We suggest to interpret them 
+as ‘ ‘amodal timing primitives.’ ’
+We conclude with the thesis that emergent motor timing man -
+ifests via a dynamic primitive in the neuromuscular system and 
+serves as an amodal ‘ ‘timing primitive’ ’ that pervades perceptual 
+iScience 28 , 113367, Septemb er 19, 2025 11 
+iScience
+Article
+ll
+OPEN ACCESS
+and, maybe, even cognitive systems. Clearly, its presence in 
+cortical dynamics has yet to be shown. Future work is needed 
+to corroborate this notion beyond behavioral experiments to 
+include neuroimaging and computational modeling. Recent 
+strides in motor neuroscience about manifolds in population dy -
+namics of motor cortical neurons generate optimism that this 
+avenue might give more fruitful and supportive insights.
+Limitations of the study
+While the current study focuses on perceptual sensitivity, it is 
+important to acknowledge broader considerations in modeling 
+and interpreting learning dynamics. We modeled changes across 
+training days using a linear trend to capture overall improvements 
+in discrimination thresholds. However, learning trajectories may 
+follow nonlinear patterns, and future studies could evaluate this 
+possibility by modeling training day as a categorical variable. 
+Additionally, although not a focus here, future research could 
+examine whether and how motor experience influences the point 
+of subjective equality (PSE). Such work could help determine 
+whether emergent motor timing alters not only sensitivity but 
+also perceived duration itself. For example, systematically manip -
+ulating temporal structure or feedback in motor training tasks 
+could test whether perceptual biases emerge alongside precision 
+gains. This line of inquiry would further elucidate the mechanisms 
+by which motor experience shapes temporal perception.
+RESOURCE AVAILABILITY
+Lead contact
+Further information and requests for resources should be directed to and will 
+be fulfilled by the lead contact, Joo-Hyun Song ( joo-hyun_song@brown.edu ).
+Materials availability
+This study did not generate new unique reagents.
+Data and code availability
+• Data: All behavior data from the experiments are publicly available as of 
+the date of publication. Accession numbers are listed in the key 
+resources table .
+• Code: All original code has been deposited at Zenodo and is publicly 
+available as of the date of publication. DOIs are listed in the key 
+resources table . All the software used in the article are listed in the 
+key resources table .
+• Additional information: Any additional information required to reanalyze 
+the data reported in this article is available from the lead contact upon 
+request.
+ACKNOWLEDGMENT S
+This work was supported by NSF BCS-1555006, NSF BCS-2341363 and BCS- 
+2043328 to J.H.S., NSF BCS-2043318 to D.S., and by the National Natural Sci -
+ence Foundation of China (32300868) to Z.Z. We thank Ms. Carissa Aekins for 
+her assistance with data collection in Experiment 1 and Drs. Leslie Welch, Tri 
+Nguyen and Helene Serre for their insightful discussions during the revision 
+process.
+AUTHOR CONTRIBUTIONS
+J.G., D.S., and J.H.S. designed the tasks. J.G. collected the data. J.G., Z.Z., 
+and M.M. conducted the data analysis. J.G., Z.Z., D.S., and J.H.S. drafted 
+the article. J.H.S., Z.Z., and D.S. revised the article.
+DECLARATION OF INTERESTS
+The authors declare no competing interests.
+STAR ★ METHODS
+Detailed methods are provided in the online version of this paper and include 
+the following:
+• KEY RESOURCES TABLE
+• EXPERIMENT AL MODEL AND STUDY PARTICIPANT DETAILS
+○ Participants
+○ Participant elimination
+• METHOD DETAILS
+○ Experiment 1
+○ Experiment 2
+○ Experiment 3
+• QUANTIFICATIO N AND STATISTICAL ANALYSIS
+○ Statistical testing
+SUPPLEMENTAL INFORMATION
+Supplemental information can be found online at https://doi.org/10.1016 /j.isci. 
+2025.113367 .
+Received: November 27, 2024
+Revised: February 24, 2025
+Accepted: August 12, 2025
+Published: August 14, 2025
+REFERENCES
+1. Hurley, S. (2001). Perception and action: alternative views. Synthese 129 , 
+3–40. https://doi.org/10.1023 /A:1012643006930 .
+2. Cisek, P. (2019). Resynthesizing behavior through phylogenetic refine -
+ment. Atten. Percept. Psychophys. 81 , 2265–2287. https://doi.org/ 10. 
+3758/s13414-019-0176 0-1 .
+3. Cisek, P., and Kalaska, J.F. (2010). Neural mechanisms for interacting with 
+a world full of action choices. Annu. Rev. Neurosci. 33 , 269–298. https:// 
+doi.org/10.1146/annurev .neuro.051508.135409 .
+4. Song, J.-H. (2017). Abandoning and modifying one action plan for alterna -
+tives. Philos. Trans. R. Soc. Lond. B Biol. Sci. 372 , 20160195. https://doi. 
+org/10.1098/rstb.2016. 0195 .
+5. Nakayama, K., Moher, J., and Song, J.-H. (2023). Rethinking vision and 
+action. Annu. Rev. Psychol. 74 , 59–86. https://doi.org/10.1146 /annurev- 
+psych-021422-043229 .
+6. Song, J.-H., and Nakayama, K. (2009). Hidden cognitive states revealed in 
+choice reaching tasks. Trends Cogn. Sci. 13 , 360–366. https://doi.org /10. 
+1016/j.tics.2009.04. 009 .
+7. Drayton, L., and Furman, M. (2018). Thy mind, thy brain and time. Trends 
+Cogn. Sci. 22 , 841–843. https://doi.org/10.1016 /j.tics.2018.08.007 .
+8. Balasubramania m, R., Haegens, S., Jazayeri, M., Merchant, H., Sternad, 
+D., and Song, J.-H. (2021). Neural encoding and representation of time 
+for sensorimotor control and learning. J. Neurosci. 41 , 866–872. https:// 
+doi.org/10.1523/JNEU ROSCI.1652-20.2020 .
+9. Bootsma, R.J., and van Wieringen, P.C. (1990). Timing an attacking fore -
+hand drive in table tennis. J. Exp. Psychol. Hum. Percept. Perform. 
+16 , 21–29.
+10. Zelaznik, H.N. (2018). The past and future of clock-like timing in motor per -
+formance. Kinesiol. Rev. 7 , 36–41. https://doi.org/10 .1123/kr.2017-0055 .
+11. Gibbon, J., Malapani, C., Dale, C.L., and Gallistel, C. (1997). Toward a 
+neurobiology of temporal cognition: advances and challenges. Curr. 
+Opin. Neurobiol. 7 , 170–184. https://doi.org/10.1016 /s0959-4388(97) 
+80005-0 .
+12 iScience 28 , 113367, Septemb er 19, 2025 
+iScience
+Article
+ll
+OPEN ACCESS
+12. Merchant, H., and Yarrow, K. (2016). How the motor system both encodes 
+and influences our sense of time. Curr. Opin. Behav. Sci. 8 , 22–27. https:// 
+doi.org/10.1016/j.cob eha.2016.01.006 .
+13. Meck, W.H., Penney, T.B., and Pouthas, V. (2008). Cortico-striatal repre -
+sentation of time in animals and humans. Curr. Opin. Neurobiol. 18 , 
+145–152. https://doi.org/10.1016 /j.conb.2008.08.002 .
+14. Harrington, D.L., Zimbelman, J.L., Hinton, S.C., and Rao, S.M. (2010). 
+Neural modulation of temporal encoding, maintenance, and decision pro -
+cesses. Cereb. Cortex 20 , 1274–1285. https://doi.org/10.1093 /cercor/ 
+bhp194 .
+15. Coull, J., and Nobre, A. (2008). Dissociating explicit timing from temporal 
+expectation with fMRI. Curr. Opin. Neurobiol. 18 , 137–144. https://doi.org/ 
+10.1016/j.conb.200 8.07.011 .
+16. Buonomano, D.V., and Maass, W. (2009). State-dependent computations: 
+spatiotemporal processing in cortical networks. Nat. Rev. Neurosci. 10 , 
+113–125. https://doi.org/10.1038 /nrn2558 .
+17. Miniussi, C., Wilding, E.L., Coull, J.T., and Nobre, A.C. (1999). Orienting 
+attention in time. Modulation of brain potentials. Brain 122 , 1507–1518. 
+https://doi.org/10.1093 /brain/122.8.1507 .
+18. Leon, M.I., and Shadlen, M.N. (2003). Representation of time by neurons in 
+the posterior parietal cortex of the macaque. Neuron 38 , 317–327. https:// 
+doi.org/10.1016/s0896- 6273(03)00185-5 .
+19. De Kock, R., Gladhill, K.A., Ali, M.N., Joiner, W.M., and Wiener, M. (2021). 
+How movements shape the perception of time. Trends Cogn. Sci. 25 , 
+950–963.
+20. Bernshte ĭ n, N.A. (1967). The co-ordination and regulation of movements 
+(Oxford: Pergamon Press).
+21. Turvey, M.T. (1990). Coordination. Am. Psychol. 45 , 938–953.
+22. Schmidt, R.A., Lee, T., Winstein, C., Wulf, G., and Zelaznik, H. (2018). Mo -
+tor control and learning. A behavioral emphasis (Human Kinetics).
+23. Yu, H., Russell, D.M., and Sternad, D. (2003). Task-effector asymmetries in 
+a rhythmic continuation task. J. Exp. Psychol. Hum. Percept. Perform. 29 , 
+616–630.
+24. Sternad, D. (2018). It’s not (only) the mean that matters: variability, noise 
+and exploration in skill learning. Curr. Opin. Behav. Sci. 20 , 183–195.
+25. Kugler, P. N., Kelso, J. S., and Turvey, M. T. (1980). On the concept of 
+coordinative structures as dissipative structures: I. Theoretical lines of 
+convergence. In Tutorials in motor behavior, G.E. Stelmach and J. Requin, 
+eds., pp. 3–47.
+26. Kugler, P.N., and Turvey, M.T. (1988). Self-organization, flow fields, and in -
+formation. Human Mov. Sci. 7 , 97–129.
+27. Allman, M.J., Teki, S., Griffiths, T.D., and Meck, W.H. (2014). Properties of 
+the internal clock: first- and second-order principles of subjective time. 
+Annu. Rev. Psychol. 65 , 743–771. https://doi.org /10.1146/annurev- 
+psych-010213-115117 .
+28. Breska, A., and Ivry, R.B. (2016). Taxonomies of timing: where does the 
+cerebellum fit in? Curr. Opin. Behav. Sci. 8 , 282–288. https://doi.org/10. 
+1016/j.cobeha.2016.02. 034 .
+29. Grondin, S. (2010). Timing and time perception: a review of recent behav -
+ioral and neuroscience findings and theoretical directions. Atten. Percept. 
+Psychophys. 72 , 561–582.
+30. Wiener, M., Zhou, W., Bader, F., and Joiner, W.M. (2019). Movement im -
+proves the quality of temporal perception and decision-making. eNeuro 6 . 
+https://doi.org/10.15 23/ENEURO.0042-19.2 019 .
+31. Keele, S.W., Pokorny, R.A., Corcos, D.M., and Ivry, R. (1985). Do percep -
+tion and motor production share common timing mechanisms: a correla -
+tional analysis. Acta Psychol. 60 , 173–191.
+32. Ivry, R.B., and Hazeltine, R.E. (1995). Perception and production of tempo -
+ral intervals across a range of durations: evidence for a common timing 
+mechanism. J. Exp. Psychol. Hum. Percept. Perform. 21 , 3–18. https:// 
+doi.org/10.1037//0 096-1523.21.1.3 .
+33. Ivry, R.B., and Diener, H.C. (1991). Impaired velocity perception in patients 
+with lesions of the cerebellum. J. Cogn. Neurosci. 3 , 355–366.
+34. Ivry, R.B., Keele, S.W., and Diener, H.C. (1988). Dissociation of the lateral 
+and medial cerebellum in movement timing and movement execution. 
+Exp. Brain Res. 73 , 167–180.
+35. Schubotz, R.I., Friederici, A.D., and von Cramon, D.Y. (2000). Time 
+perception and motor timing: a common cortical and subcortical basis re -
+vealed by fMRI. Neuroimage 11 , 1–12.
+36. Meegan, D.V., Aslin, R.N., and Jacobs, R.A. (2000). Motor timing learned 
+without motor training. Nat. Neurosci. 3 , 860–862.
+37. Hommel, B., Mu ¨ sseler, J., Aschersleben, G., and Prinz, W. (2001). The the -
+ory of event coding (TEC): a framework for perception and action planning. 
+Behav. Brain Sci. 24 , 849–878. https://doi.org/10.1016 /S0025-3227(02) 
+00186-X .
+38. Thorndike, E.L., and Woodworth, R.S. (1901). The influence of improve -
+ment in one mental function upon the efficiency of other functions: III. 
+Functions involving attention, observation and discrimination. Psychol. 
+Rev. 8 , 553–564.
+39. Wang, T.S.L., and Song, J.H. (2017). Impaired visuomotor generalization 
+by inconsistent attentional contexts. J. Neurophysiol. 118 , 1709–1719. 
+https://doi.org /10.1152/jn.00089.2017 .
+40. Song, J.-H. (2019). The role of attention in motor control and learning. Curr. 
+Opin. Psychol. 29 , 261–265.
+41. Karni, A., and Bertini, G. (1997). Learning perceptual skills: behavioral 
+probes into adult cortical plasticity. Curr. Opin. Neurobiol. 7 , 530–535. 
+https://doi.org /10.1016/s0959-4388(97)80 033-5 .
+42. Bueti, D., and Buonomano, D.V. (2014). Temporal perceptual learning. 
+Tim. Time Percept. 2 , 261–289. https://doi.org/10.1163 /22134468- 
+00002023 .
+43. Hogan, N., and Sternad, D. (2012). Dynamic primitives of motor behavior. 
+Biol. Cybern. 106 , 727–739.
+44. Degallier, S., and Ijspeert, A. (2010). Modeling discrete and rhythmic 
+movements through motor primitives: a review. Biol. Cybern. 103 , 
+319–338.
+45. Zhang, Z., Guo, D., Huber, M.E., Park, S.-W., and Sternad, D. (2018). Ex -
+ploiting the geometry of the solution space to reduce sensitivity to neuro -
+motor noise. PLoS Comput. Biol. 14 , e1006013.
+46. Watson, A.B. (2017). QUEST+: a general multidimensional Bayesian adap -
+tive psychometric method. J. Vis. 17 , 10.
+47. Hore, J., and Watts, S. (2011). Skilled throwers use physics to time ball 
+release to the nearest millisecond. J. Neurophysiol. 106 , 2024–2033.
+48. Park, S.W., and Sternad, D. (2015). Robust retention of individual sensori -
+motor skill after self-guided practice. J. Neurophysiol. 113 , 2635–2645. 
+https://doi.org /10.1152/jn.00884.2014 .
+49. Park, S.W., Dijkstra, T.M.H., and Sternad, D. (2013). Learning to never 
+forget-time scales and specificity of long-term memory of a motor skill. 
+Front. Comput. Neurosci. 7 , 111. https://doi.org /10.3389/fncom.2013. 
+00111 .
+50. Im, H.Y., Be ´ dard, P., and Song, J.H. (2016). Long lasting attentional- 
+context dependent visuomotor memory. J. Exp. Psychol. Hum. Percept. 
+Perform. 42 , 1269–1274. https://doi.org/10.1037 /xhp0000271 .
+51. Manto, M., Bower, J.M., Conforto, A.B., Delgado-Garcı ´a, J.M., da Guarda, 
+S.N.F., Gerwig, M., Habas, C., Hagura, N., Ivry, R.B., Marie ¨ n, P., et al. 
+(2012). Consensus paper: roles of the cerebellum in motor control–the di -
+versity of ideas on cerebellar involvement in movement. Cerebellum 11 , 
+457–487. https://doi.org/10.1007 /s12311-011-0331-9 .
+52. Press, C., Berlot, E., Bird, G., Ivry, R., and Cook, R. (2014). Moving time: 
+the influence of action on duration perception. J. Exp. Psychol. Gen. 
+143 , 1787–1793. https://doi.org/ 10.1037/a0037650 .
+53. Hamilton, A., and Grafton, S.T. (2007). The motor hierarchy: from kine -
+matics to goals and intentions. Sens. Found. High. Cogn. 22 , 381–408.
+iScience 28 , 113367, Septemb er 19, 2025 13 
+iScience
+Article
+ll
+OPEN ACCESS
+54. Hogan, N., Bizzi, E., Mussa-Ivaldi, F.A., and Flash, T. (1987). Controlling 
+multijoint motor behavior. Exerc. Sport Sci. Rev. 15 , 153–190.
+55. Sternad, D., Huber, M.E., and Kuznetsov, N. (2014). Acquisition of novel 
+and complex motor skills: stable solutions where intrinsic noise matters 
+less. Adv. Exp. Med. Biol. 826 , 101–124. https://doi.org/10.1007 /978-1- 
+4939-1338-1_8 .
+56. Huber, M.E., Kuznetsov, N., and Sternad, D. (2016). Persistence of 
+reduced neuromotor noise in long-term motor skill learning. 
+J. Neurophysiol. 116 , 2922–2935. https://doi.org/10.1152 /jn.00263.2016 .
+57. Zhang, Z., and Sternad, D. (2019). The primacy of rhythm: how discrete ac -
+tions merge into a stable rhythmic pattern. J. Neurophysiol. 121 , 574–587. 
+https://doi.org/10.1152 /jn.00587.2018 .
+58. Breska, A., and Ivry, R.B. (2018). Double dissociation of single-interval and 
+rhythmic temporal prediction in cerebellar degeneration and Parkinson’s 
+disease. Proc. Natl. Acad. Sci. USA 115 , 12283–12288. https://doi.org/ 
+10.1073/pnas.181059611 5 .
+59. Keele, S.W., Nicoletti, R., Ivry, R.I., and Pokorny, R.A. (1989). Mechanisms 
+of perceptual timing: beat-based or interval-based judgements? Psychol. 
+Res. 50 , 251–256.
+60. Pastor, M.A., Artieda, J., Jahanshahi, M., and Obeso, J.A. (1992). Time 
+estimation and reproduction is abnormal in Parkinson’s disease. Brain 
+115 , 211–225.
+61. Hecht, H., Vogt, S., and Prinz, W. (2001). Motor learning enhances percep -
+tual judgment: a case for action-perception transfer. Psychol. Res. 65 , 
+3–14. https://doi.org/10.1007/ s004260000043 .
+62. Park, D.C., and Bischof, G.N. (2013). The aging mind: neuroplasticity in 
+response to cognitive training. Dialogues Clin. Neurosci. 15 , 109–119. 
+https://doi.org/10.3188 7/DCNS.2013.15.1/dpark .
+63. Adolph, K.E., and Hoch, J.E. (2019). Motor development: embodied, 
+embedded, enculturated, and enabling. Annu. Rev. Psychol. 70 , 
+141–164. https://doi.org/10.1146/ annurev-psych-010418 .
+64. Wilson, M. (2002). Six views of embodied cognition. Psychon. Bull. Rev. 9 , 
+625–636. https://doi.org/10.3758/ BF03196322 .
+65. Varela, F. J., Thompson, E., and Rosch, E. (2017). The embodied mind, 
+revised edition: Cognitive science and human experience (MIT press).
+66. Barsalou, L.W. (2008). Grounded cognition. Annu. Rev. Psychol. 59 , 
+617–645. https://doi.org/10.1146/ annurev.psych.59.103006. 093639 .
+67. Bergen, B., and Wheeler, K. (2010). Grammatical aspect and mental simu -
+lation. Brain Lang. 112 , 150–158. https://doi.org/10.1016 /j.bandl.2009. 
+07.002 .
+68. Borghi, A.M., and Cimatti, F. (2010). Embodied cognition and beyond: 
+acting and sensing the body. Neuropsychologia 48 , 763–773. https:// 
+doi.org/10.1016/j.neuropsy chologia.2009.10.029 .
+69. Bekkering, H., and Neggers, S.F.W. (2002). Visual search is modulated by 
+action intentions. Psychol. Sci. 13 , 370–374.
+70. Craighero, L., Fadiga, L., Rizzolatti, G., and Umilta ` , C. (1999). Action for 
+perception: a motor-visual attentional effect. J. Exp. Psychol. Hum. 
+Percept. Perform. 25 , 1673–1692.
+71. Neggers, S.F.W., Huijbers, W., Vrijlandt, C.M., Vlaskamp, B.N.S., Schut -
+ter, D.J.L.G., and Kenemans, J.L. (2007). TMS pulses on the frontal eye 
+fields break coupling between visuospatial attention and eye movements. 
+J. Neurophysiol. 98 , 2765–2778. https://doi.org/10.1152 /jn.00357.2007 .
+72. Guo, J., and Song, J.-H. (2019). Action fluency facilitates perceptual 
+discrimination. Psychol. Sci. 30 , 1434–1448. https://doi.org/10.1177 / 
+0956797619859361 .
+73. Casile, A., and Giese, M.A. (2006). Nonvisual motor training influences bio -
+logical motion perception. Curr. Biol. 16 , 69–74. https://doi.org/1 0.1016/j. 
+cub.2005.10.071 .
+74. Guo, J., and Song, J.-H. (2023). Reciprocal facilitation between mental 
+and visuomotor rotations. Sci. Rep. 13 , 825. https://doi.org/10.1038 / 
+s41598-022-26397-3 .
+75. Prinz, W. (1992). Why don’t we perceive our brain states? Eur. J. Cognit. 
+Psychol. 4 , 1–20.
+76. Prinz, W. (1997). Perception and action planning. Eur. J. Cognit. Psychol. 
+9 , 129–154.
+77. Giszter, S.F. (2015). Motor primitives—new data and future questions. 
+Curr. Opin. Neurobiol. 33 , 156–165.
+78. Schaal, S., Kotosaka, S., and Sternad, D. (2000). Nonlinear dynamical sys -
+tems as movement primitives. IEEE international conference on humanoid 
+robotics, pp. 1–11.
+79. Schaal, S. (2006). Dynamic Movement Primitives -A Framework for Motor 
+Control in Humans and Humanoid Robotics. In Adaptive Motion of Animals 
+and Machines, H. Kimura, K. Tsuchiya, A. Ishiguro, and H. Witte, eds. (To -
+kyo: Springer).
+80. Sternad, D. (2000). Debates in Dynamics: A Dynamical Systems Perspec -
+tive on Action and Perception (Elsevier).
+81. Hogan, N., and Sternad, D. (2013). Dynamic primitives in the control of 
+locomotion. Front. Comput. Neurosci. 7 , 71.
+82. Strogatz, S. (2001). Nonlinear dynamics and chaos: with applications to 
+physics, biology, chemistry, and engineering (studies in nonlinearity). 
+(Vol. 1) (Westview press).
+83. Sternad, D. (2008). Towards a unified framework for rhythmic and discrete 
+movements: behavioral, modeling and imaging results. In Coordination: 
+neural, behavioral and social dynamics, A. Fuchs and V. Jirsa, eds. 
+(Springer), pp. 105–136.
+84. Hogan, N., and Sternad, D. (2007). On rhythmic and discrete movements: 
+reflections, definitions and implications for motor control. Exp. Brain Res. 
+181 , 13–30. https://doi.org/10.1007 /s00221-007-0899-y .
+85. Feldman, A.G. (1986). Once more on the equilibrium-poin t hypothesis ( λ 
+model) for motor control. J. Mot. Behav. 18 , 17–54. https://doi.org/10. 
+1080/00222895.1986. 10735369 .
+86. Russo, A.A., Khajeh, R., Bittner, S.R., Perkins, S.M., Cunningham, J.P., 
+Abbott, L.F., and Churchland, M.M. (2020). Neural trajectories in the sup -
+plementary motor area and motor cortex exhibit distinct geometries, 
+compatible with different classes of computation. Neuron 107 , 745– 
+758.e6.
+87. Guo, X., Yamashita, M., Suzuki, M., Ohsawa, C., Asano, K., Abe, N., Soshi, 
+T., and Sekiyama, K. (2021). Musical instrument training program im -
+proves verbal memory and neural efficiency in novice older adults. Hum. 
+Brain Mapp. 42 , 1359–1375. https://doi.org/10.1002 /hbm.25298 .
+88. Flash, T., and Hochner, B. (2005). Motor primitives in vertebrates and in -
+vertebrates. Curr. Opin. Neurobiol. 15 , 660–666. https://doi.org/10 .1016/ 
+j.conb.2005.10.011 .
+89. Richman, J.S., and Moorman, J.R. (2000). Physiological time-series anal -
+ysis using approximate entropy and sample entropy. Am. J. Physiol. Heart 
+Circ. Physiol. 278 , H2039–H2049.
+90. Hasson, C.J., Zhang, Z., Abe, M.O., and Sternad, D. (2016). Neuromotor 
+noise is malleable by amplifying perceived errors. PLoS Comput. Biol. 
+12 , e1005044.
+91. Scholz, J.P., and Scho ¨ ner, G. (1999). The uncontrolled manifold concept: 
+identifying control variables for a functional task. Exp. Brain Res. 126 , 
+289–306.
+92. Mu ¨ ller, H., and Sternad, D. (2009). Motor learning: changes in the structure 
+of variability in a redundant task. In Progress in motor control: A multidis -
+ciplinary perspective, pp. 439–456.
+93. Latash, M.L., Scholz, J.P., and Scho ¨ ner, G. (2002). Motor control strate -
+gies revealed in the structure of motor variability. Exerc. Sport Sci. Rev. 
+30 , 26–31.
+94. Cohen, R.G., and Sternad, D. (2009). Variability in motor learning: relocat -
+ing, channeling and reducing noise. Exp. Brain Res. 193 , 69–83.
+14 iScience 28 , 113367, Septemb er 19, 2025 
+iScience
+Article
+ll
+OPEN ACCESS
+STAR ★ METHOD S
+KEY RESOURCES TABLE
+EXPERIMENTAL MODEL AND STUDY PARTICIPANT DETAILS
+Participants
+In Experiment 1, 25 participants (13 females; mean age = 22.56 years) were recruited; for Experiment 2, another cohort of 25 partic -
+ipants (14 females; mean age = 25.04 years) were recruited. Eleven participants (7 females; mean age = 22.64 years) who completed 
+the 5-day training session of Experiment 2 were recalled to perform a one-day retention session. For the control Experiment 3, 15 new 
+participants (8 females; mean age = 23.00 years) were recruited. In each experiment, the sample size was determined on the basis of 
+the effect size needed to achieve 90% statistical power, as determined with a one-sample t- test on preliminary data. All participants 
+signed the informed consent form prior to the experiment and were compensated with $10/h after completing the experimental ses -
+sions. They had normal or corrected-to-normal vision and were naive to the aim of the study. All procedures were approved by the 
+Northeastern University Institutional Review Board (IRB#08-09-12) and conducted in accordance with the Code of Ethics of the 
+World Medical Association (Declaration of Helsinki) for research involving human participants. All research was carried out in compli -
+ance with the approved IRB guidelines. Informed consent was obtained from all participants.
+Participant elimination
+The throwing action was not explicitly timed, because the emphasis was on allowing participants to stabilize their self-paced action to 
+a relatively invariant spatiotemporal pattern with practice. A previous study on the same skittles task documented how participants 
+not only stabilized their discrete throwing actions, but also fell into a continuous rhythmic sequence of movements.
+57
+This observa -
+tion is consistent with the notion of dynamic primitives that arise with practice. As the present study wanted to isolate salient intervals, 
+participants were asked to initialize each throw from a designated rest position, i.e., with zero velocity and acceleration, i.e., establish 
+a discrete attractor. Despite the instruction, some participants fell into a rhythm, connecting successive throws into a continuous 
+stream of actions. For the current objective, these participants were eliminated, because the determination of the two intervals, 
+ball release time and movement time, was problematic for such a continuous action. Further, as we argued previously, a continuous 
+rhythmic movement differs in its dynamic structure from a discrete movement: a rhythmic movement establishes a limit cycle, which 
+is a different dynamic primitive than a fixed-point attractor that may underlie a discrete movement.
+83 , 84
+Hence, these actions should 
+be paired with a different discrimination task.
+To identify these continuous throwing actions, we computed ‘ ‘dwell time’ ’ between the successive throws. The onset of a throw 
+was indicated when the velocity surpassed 5deg/s for 10 ms and the acceleration exceeded 50deg/s
+2 
+for 10 ms.
+45
+When the onset of 
+a new trial could not be distinguished from the end of the previous one, dwell time was zero. If dwell time was zero in more than 20% of 
+the 320 trials (throws) of a participant in one daily session, then this participant was eliminated from further analysis. Note that for the 
+subsequent regressions across days, 3 days of data were not sufficient. With this procedure, 3 participants were excluded from 
+Experiment 1 (leaving n = 22), and 1 participant from Experiment 2 (leaving n = 24).
+Following this elimination, the perception data of the remaining participants were also screened for potential problems. Inspec -
+tion of the generated stimuli revealed that the Quest+ procedure occasionally elicited a sequence of invariant stimuli regardless of 
+the response. To identify such sequences of invariant stimuli, entropy analysis was applied to each block of 70 stimuli. An entropy 
+value below 2.5 signaled that the stimuli did not vary based on the participants’ responses.
+89
+If more than one day contained 
+flawed interval sequences, the specific interval condition was eliminated. If more than 80% of stimuli (56 of 70 forced-choice 
+REAGENT or RESOURCE SOURCE IDENTIFIER
+Deposited data
+Behavioral data This paper Zenodo: https://doi.org/10.5281/zenodo . 
+14913669
+Software and algorithms
+Codes for presenting individual data This paper Zenodo: https://doi.org/10.5281/zenodo . 
+14913669
+MATLAB R2023b MathWorks https://www.mathworks.com/p roducts/ 
+matlab.html
+mQUESTPlus: A MATLAB implementation 
+of QUEST+
+Watson
+46
+https://github.com/brainard lab/ 
+mQUESTPlus
+iScience 28 , 113367, Septemb er 19, 2025 e1 
+iScience
+Article
+ll
+OPEN ACCESS
+judgments) were flawed, the entire block was eliminated. In Experiment 1, one participant had to be removed in total (reducing the 
+number of participants to n = 21) and for one additional participant, the 500 ms condition had to be removed ( n = 20). For the 
+800 ms condition, five subjects were eliminated ( n = 16). In Experiment 2, 2 participants were removed in the 300 ms condition 
+( n = 22), while the 600 and 1000 ms conditions did not require any eliminations ( n = 24). In Experiment 3, 1 participant had to be 
+removed in total ( n = 14).
+After these eliminations, Experiment 1 included 21, 20, 16 participants in the 300, 500, 800 ms perception conditions, respectively. 
+Experiment 2 included 22, 24, 24 participants in the 300, 600, and 1000 ms perception conditions, respectively. Experiment 3 
+included 14 participants in all conditions.
+METHOD DETAILS
+Experiment 1
+Motor task
+The task, called Skittles, is a target-oriented throwing action similar to the American playground game tetherball ( Figure 1 A). In the 
+real game, the player throws a ball that is attached via a string to a vertical post to hit one or more target skittles on the far side.
+57 , 90
+This task was implemented as a virtual game, where the target and the workspace were shown to the participant as a top down view 
+( Figure 1 B). The throwing movement was simplified to a single-joint forearm rotation in the horizontal plane; the ball release was trig -
+gered by extending the index finger from a ball attached to the lever arm that simulated the opening of the hand to throw the ball. The 
+participants saw their own arm movements as a rotating purple bar at the bottom of the projection screen (40 cm length) together with 
+the virtual white ball (10 cm diameter) after release as it traversed around the red post (50 cm diameter), hitting or missing the yellow 
+target (10 cm diameter).
+Participants stood 1.5 m in front of a large backprojection screen (2 × 2 m) and rested their forearm on a lever arm and performed 
+extension movements in the horizontal plane to throw the ball. The height of the lever arm was individually adjusted so that the sub -
+ject’s upper arm had a 45
+◦
+angle with respect to the trunk. Angular displacements of the lever arm were measured by an optical 
+encoder (BEI Sensors, Goleta, CA) with a sampling rate of 1000 Hz. The participant grasped a wooden ball that was fixed at the distal 
+end of the lever to ‘ ‘throw’ ’ the ball to hit a target. A force sensor (Interlink Electronics, Camarillo, CA) attached to the ball was closed 
+when pressing the index finger onto it; finger extension opened the contact and triggered the release of the virtual ball on the screen. 
+The angular position and angular velocity of the arm movement at the moment of ball release were used to calculate the ball trajec -
+tory. Using these as initial conditions, the ball’s trajectory was simulated to traverse around the post in an elliptic trajectory toward the 
+target on the opposite side ( Figure 1 B).
+The ball’s trajectory was generated by a simple 2D model where the ball was attached to two orthogonal springs that held the ball at 
+its equilibrium position at the post in the center of the workspace, defined as x = y = 0. The equations for the ball movements after 
+release in x - and y -direction were:
+x ( t ) = A
+x
+sin ( ω t + φ
+x
+) e
+ 
+t
+τ
+(Equation 1) 
+y ( t ) = A
+y
+sin
+ 
+ω t + φ
+y
+)
+e
+ 
+t
+τ
+(Equation 2) 
+ω represented the natural frequency of the springs; the amplitudes A
+x 
+and A
+y
+, as well as the phases φ
+x 
+and φ
+y 
+of the springs resulted 
+from the ball’s angle and angular velocity at release. The ball motions were lightly damped by the exponential term to approximate 
+realistic motion, where τ denoted the relaxation time of the decay.
+Figure 1 C illustrates the x - y coordinates of the workspace and three exemplary ball trajectories traversing around the center post; 
+the target is the small yellow circle at the left. The delay between data sampling and visual display were within the refresh rate of the 
+computer, which was 13 ms. The throwing action had redundancy: mathematically infinitely many combinations of angle and velocity 
+that initiated the ball release could achieve zero error or any other given error value. This feature is summarized in the solution space 
+spanned by release angle and velocity ( Figure 1 D): the green U-shaped band is the set of all angle-velocity combinations that hit the 
+target successfully with errors <1.0 cm; this is called the solution manifold. The orange shades encode the error that the ball trajectory 
+would have achieved for all other relase combinations; the black area comprises releases that hit the center post. The nonlinear ge -
+ometry of the solution manifold was determined by the target location in the workspace. Small changes in target location could 
+generate qualitatively different solution manifolds, requiring different throwing strategies.
+Metrics of task performance and motor execution
+As measures of task achievement, both the success rate and performance error were calculated in each block. The success rate, a 
+binary measure for each trial, indicated the percentage of throws with a performance error below the threshold of 1.0 cm; the error 
+represented a finer-grained metric that was defined as the minimum distance between the target and the ball trajectory.
+For the identification of the onset and offset of each throw, the angular position was first smoothed using a Savitzky-Golay filter with 
+a 2nd-order polynomial and a window length of 100 ms. Subsequently, the angular velocity of each data point was calculated as the 
+slope of a linear fit to 20 smoothed data samples prior to the current data point; acceleration was then estimated using the same linear 
+fit applied to the 20 velocity samples prior to the time point of interest. The onset of each throw was indicated when the acceleration 
+e2 iScience 28 , 113367, Septemb er 19, 2025 
+iScience
+Article
+ll
+OPEN ACCESS
+exceeded 20% of the peak acceleration of the same trial in the direction of arm extension. The offset of each throw was determined as 
+the moment that the hand reached the maximum extension for the first time.
+This delimited time profile was parsed into two segments: (1) ball-release time , defined as the interval between the movement onset 
+and the moment of ball release, and (2) movement time , defined as the interval between movement onset and offset ( Figure 1 E). We 
+also calculated the mean and the variability of these intervals of each participant across the 320 trials of each daily session; variability 
+was quantified by the coefficient of variation (standard deviation of the durations divided by their mean). Note that motor learning is 
+commonly gauged by the reduction in variability with training.
+24 , 36
+It is also important to keep in mind that due to the redundancy of 
+the task, variability of the ball-release time does not need to be the same as the variability of the error. In fact, this relation between 
+execution variables and the result variable has been the subject of a lot of theorizing in human motor control research. Several meth -
+odological approaches have been developed to gain insight into control principles from the differing distributions of these two var -
+iable types.
+91–93
+Time-interval discrimination task
+Participants compared the time-intervals of two pairs of tones: a standard and a comparison interval ( Figure 2 A). In one block the 
+standard interval t was fixed, whereas the second comparison interval was either shorter or longer than the standard interval, t ± 
+Δ t ms, where t is the target interval, Δ t equals to half of this interval. Participants reported which pair of tones had the longer interval 
+by a keypress; they did not receive any error feedback to avoid any learning (Keele et al., 1985). The threshold of each standard in -
+terval was estimated by a Bayesian adaptive procedure available in the software package QUEST+ (Watson, 2017). QUEST+ 
+selected a difference between two intervals (± Δ t ) for the next trial based on the key press responses in all past trials. Generally, 
+for each trial, the prior of the interval is a normal distribution with the mean set at t ± Δ t/ 2 ms and standard deviation between 
+0 and t /2. The probability of the keypress response for all Δ t ’s was fitted with this cumulative normal distribution. After each key -
+press, ± Δ t of the next trial was computed by maximizing the posterior density of responses obtained from all previous trials. The com -
+parison interval for the next trial was then determined as t ± Δ t . After all trials, a maximum likelihood (ML) fit of a sigmoidal function was 
+applied on all responses ( Figure 2 B). The time-interval discrimination threshold was the estimated standard deviation of the ML-fitted 
+psychometric function.
+Note that in contrast to conventional perceptual learning studies that typically involve thousands of trials,
+42
+we utilized the psycho -
+physical paradigm as a transfer test. Therefore, we deliberately aimed to minimize perceptual learning by restricting the number of 
+trials to 70 per interval. This approach mitigated the potential confounding effects of perceptual learning and helped focus on the 
+specific transfer effects. For the same reason, we did not provide any feedback about the correctness of the response.
+Procedure
+All participants performed 5 daily sessions ( Figure 3 ). On Day 1, they performed only the time-interval discrimination task to obtain a 
+baseline measurement. This perceptual task comprised 3 standard intervals, 2 of which were associated with 2 movement intervals 
+extracted from the spatiotemporal pattern of the arm movement ( Figure 1 E); one additional control interval was unrelated to the 
+movement times. The standard intervals were determined in pilot tests with a separate group of participants. According to the pilot 
+results, the standard intervals were set to 500 ms (linked to the ball-release time), 800 ms (linked to the movement time), 300 ms (un -
+related time). On Days 2–5, participants first performed the skittles task with 320 trials/throws per day.
+To ensure that participants performed separate throwing actions, we asked them to start their throwing movement from a stan -
+dardized arm position ( Figure 1 B: starting line). Over practice, participants were expected to stabilize their spatiotemporal pattern 
+of the arm movement ( Figure 1 E). Following each throwing session, they continued with the perceptual discrimination task with 
+the same intervals as on Day 1. The QUEST+ procedure for each standard interval on each day included 70 trials. A prior 10-trial 
+QUEST+ procedure with an unrelated 300 ms standard interval was used on Day 1 for a practice block. Specifically, for 300 ms, 
+the mean was set at 225 and 375 ms and the standard deviation were between 0 and half of the interval; the standard deviation 
+ranged from 0 to 150 ms. This information means that the discrimination threshold for 300 ms ranged from 0 to 150 ms, and the Weber 
+fraction ranged between 0 and 0.5.
+In the perception task, discrimination performance was compared across different standard intervals by computing the Weber 
+fraction. The Weber fraction was defined as the ratio of the estimated discrimination threshold over its standard interval ( Equation 3 ):
+Weber fraction =
+threshold
+standard interval
+(Equation 3) 
+A smaller Weber fraction corresponds to better discrimination. This threshold was compared between the different intervals. It was 
+also regressed against motor timing variability to evaluate the influence of the stability of motor timing on the timing sensitivity.
+Experiment 2
+Tasks and procedures
+The same skittles and time-interval discrimination task were used as in Experiment 1, except for the following modifications: In the 
+skittles task, the starting line was modified to afford more ballistic throwing movements with ball releases that could hit the target. 
+Figure 1 B shows the two starting lines for Experiment 1 and 2. Experiment 2 afforded a shorter arm movement before releasing 
+the ball. In the time-interval discrimination task, the three standard intervals were altered to match the new movement intervals: 
+300 ms (linked to the ball-release time), 600 ms (linked to the movement time), and 1000 ms (unrelated time).
+iScience 28 , 113367, Septemb er 19, 2025 e3 
+iScience
+Article
+ll
+OPEN ACCESS
+After participants finished all 5 sessions, we asked them to return for a retention session. Eleven participants returned after after 6– 
+91 days, with an average retention time of 22.9 ± 7.69 s.e. days. This time period between the last practice and the retention session 
+was based on the availability of each participant. Upon return, they performed one session of the identical Skittles task followed by 
+the same time-interval discrimination task. All other procedures were identical to those in Experiment 1.
+Experiment 3
+Tasks and procedures
+This experiment did not include any motor practice. All procedures of the perceptual discrimination task were identical to those in 
+Experiment 1 and 2; the three standard intervals were also the same. All data analysis and statistics were performed as in Experiment 
+1 and 2.
+QUANTIFICATION AND STATISTICAL ANALYSIS
+Statistical testing
+The results of motor performance, success rate and error and motor timing and its variability, were subjected to one-way repeated- 
+measures ANOVA with Day as a fixed factor and participants as random factor, partial η
+2 
+was calculated as a measure of effect size. 
+ANOVAs were preferred over regressions as previous work has shown that motor learning in this task tended to follow an exponential 
+time course.
+45 , 94
+The perception data were analyzed by linear mixed-effect models (LMM). The first model examined the gradual improvements in 
+Weber fraction, treating Day as a continuous variable. This approach allowed us to assess how changes in motor performance and its 
+influence on time perception evolved over time. We acknowledge that treating day as a continuous predictor assumes a linear trend, 
+which may not fully reflect the true shape of the learning trajectory. However, this linear approximation offers a conservative and inter -
+pretable starting point for capturing the overall direction of change.
+The model was constructed with Weber fraction ( y
+weber
+) as output and practice Day as fixed effects. Intercepts for participants were 
+included as random effect:
+y
+weber
+= β
+0
++ β
+1
+x
+day
++ Zu
+participant
++ ε ; (Equation 4) 
+where y
+weber 
+is the outcome variable, β
+0 
+is the overall intercept, β
+1 
+is the fixed effect coefficient, Z include the random intercepts for all 
+participants ( u
+participant
+), ε is the residual error term. We also use an LMM model on Weber fraction and motor timing variability with 
+Weber fraction ( y
+weber
+) as output and ball release CV ( x
+releaseCV
+) as fixed effects. Again, intercepts for participants were included as 
+random effect:
+y
+weber
+= β
+0
++ β
+1
+x
+releaseCV
++ Zu
+participant
++ ε (Equation 5) 
+where the variables have the same meaning as the previous one.
+All data processing was conducted in MATLAB, and the statistical analyses were carried out with the MATLAB Statistics and Ma -
+chine Learning Toolbox. The linear mixed model was conducted with the MATLAB function fitlme . All error bars in the figures repre -
+sented the standard error of the mean (s.e.) or 95% confidence intervals of estimated parameter value upon specification. We also 
+reported the ANOVA results of the LMM and the model fit indices (marginal R
+2 
+and conditional R
+2
+) in the supplemental information , 
+Method S5 , and Tables S1 and S2 : Summary of Statistical Results of the Linear Mixed-Effects Models.
+e4 iScience 28 , 113367, Septemb er 19, 2025 
+iScience
+Article
+ll
+OPEN ACCESS
