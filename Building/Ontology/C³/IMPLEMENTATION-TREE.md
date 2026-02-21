@@ -1,8 +1,8 @@
 # C³ Implementation Tree — Unified R³→H³→C³ DAG
 
-**Created**: 2026-02-21
+**Created**: 2026-02-21, **Updated**: 2026-02-21 (v2.0 Function-based)
 **Scope**: All 96 C³ models mapped to a single execution DAG
-**Key insight**: Domain grouping ≠ implementation order. The kernel phase schedule IS the implementation backbone.
+**Key insight**: Function grouping ≠ implementation order. The kernel phase schedule IS the implementation backbone.
 
 ---
 
@@ -17,7 +17,7 @@ prediction   needs domain signal → domain signal needs PE feedback
 
 → Reward is not an independent domain — it is reward OF consonance, OF beat, OF timbre
 → Prediction is not independent — it is prediction OF each domain
-→ 8 flat domains is WRONG. There is a hierarchy.
+→ Flat domains are WRONG. There is a Function hierarchy.
 ```
 
 ### Resolution: Temporal Unfolding (Already in scheduler.py)
@@ -36,10 +36,11 @@ Frame t+1:
 
 ### Implication
 
-The 96 models are NOT 8 independent domains. They are nodes in ONE DAG.
-Each model has two coordinates:
-- **Phase** (WHEN it runs) — determines execution order
-- **Domain** (WHAT it processes) — determines shared R³/H³ infrastructure
+The 96 models are NOT independent domains. They are nodes in ONE DAG.
+Each model has three coordinates:
+- **Function** (F1–F12) — runtime grouping (which brain function)
+- **Phase** (WHEN it runs) — determines execution order within Function DAG
+- **Unit** (anatomical origin) — metadata, shared R³/H³ infrastructure
 
 ---
 
@@ -64,67 +65,64 @@ LAYER 1: H³ (131+ tuples)
   (already implemented)
           │
           ▼
-LAYER 2: C³ Phase 0a — Independent Observation ─────────────────────
-  7 relays read ONLY R³+H³, no cross-model deps:
-  ┌─────────┬──────┬────────────────┬─────┬─────┬────────────┐
-  │ Relay   │ Unit │ R³ Primary     │  D  │ H³  │ Domain     │
-  ├─────────┼──────┼────────────────┼─────┼─────┼────────────┤
-  │ BCH     │ SPU  │ A,C            │  12 │  17 │ Consonance │
-  │ SNEM    │ ASU  │ B,D,E          │  12 │  18 │ Beat/Sal.  │
-  │ MEAMN   │ IMU  │ A,C,D,E        │  12 │  11 │ Memory     │
-  │ MPG     │ NDU  │ B,D,E          │  10 │   2 │ Novelty    │
-  │ SRP     │ ARU  │ A,B,D          │  19 │   5 │ Reward     │
-  │ PEOM    │ MPU  │ B,D,E          │  11 │   3 │ Motor      │
-  │ HTP     │ PCU  │ A,B,C,D,E      │  12 │   9 │ Prediction │
-  └─────────┴──────┴────────────────┴─────┴─────┴────────────┘
+LAYER 2: C³ Phase 0 — Sensory Grounding (F1 + F7) ─────────────────
+  Independent relay observation — read ONLY R³+H³:
+  ┌─────────┬──────┬────────────────┬─────┬─────┬──────────┐
+  │ Relay   │ Unit │ R³ Primary     │  D  │ H³  │ Function │
+  ├─────────┼──────┼────────────────┼─────┼─────┼──────────┤
+  │ BCH     │ SPU  │ A,C            │  12 │  17 │ F1       │
+  │ PEOM    │ MPU  │ B,D,E          │  11 │   3 │ F7       │
+  │ SNEM    │ ASU  │ B,D,E          │  12 │  18 │ F3(→F7)  │
+  │ MPG     │ NDU  │ B,D,E          │  10 │   2 │ F1(→F3)  │
+  │ HTP     │ PCU  │ A,B,C,D,E      │  12 │   9 │ F2(→F1)  │
+  │ MEAMN   │ IMU  │ A,C,D,E        │  12 │  11 │ F4       │
+  │ SRP     │ ARU  │ A,B,D          │  19 │   5 │ F6       │
+  └─────────┴──────┴────────────────┴─────┴─────┴──────────┘
+  Cross-relay dependent (Phase 0b):
+  ┌─────────┬──────┬──────────────────────────────┬──────────┐
+  │ HMCE    │ STU  │ ← SNEM.beat_locked_activity   │ F2       │
+  │ DAED    │ RPU  │ ← BCH.consonance + MEAMN.mem  │ F6       │
+  └─────────┴──────┴──────────────────────────────┴──────────┘
+  F1 beliefs: consonance(R³+BCH+HTP), pitch_salience, timbre_quality
+  F7 beliefs: tempo(R³+HMCE+PEOM), groove, entrainment
   + enrichment models (same phase, parallel) — see §3
           │
           ▼
-LAYER 3: C³ Phase 0b — Dependent Observation ───────────────────────
-  2 relays with cross-relay inputs:
-  ┌─────────┬──────┬──────────────────────────────┬────────────┐
-  │ Relay   │ Unit │ Depends On                   │ Domain     │
-  ├─────────┼──────┼──────────────────────────────┼────────────┤
-  │ HMCE    │ STU  │ SNEM.beat_locked_activity     │ Timing     │
-  │ DAED    │ RPU  │ BCH.consonance + MEAMN.memory │ Dopamine   │
-  └─────────┴──────┴──────────────────────────────┴────────────┘
-  + enrichment models (same phase, parallel) — see §3
+LAYER 3: C³ Phase 1 — Pattern + Attention (F2 + F3) ───────────────
+  F2 beliefs: prediction_state(HTP+HMCE), temporal_expectation, IC
+  F3 beliefs: salience(R³+H³+PE_prev+SNEM+MPG+SRP.tension),
+              attention_allocation
           │
           ▼
-LAYER 4: C³ Phase 0c — Belief Observe ──────────────────────────────
-  ┌──────────────┬────────────────────────────────┬────────────┐
-  │ Belief       │ Inputs                         │ Domain     │
-  ├──────────────┼────────────────────────────────┼────────────┤
-  │ Consonance   │ R³+H³ + BCH + HTP             │ Consonance │
-  │ Tempo        │ R³+H³ + HMCE + PEOM           │ Beat       │
-  └──────────────┴────────────────────────────────┴────────────┘
+LAYER 4: C³ Phase 2 — Memory + Emotion (F4 + F5) ─────────────────
+  F4 beliefs: familiarity(R³+H³+MEAMN+MPG), memory_scaffold
+  F5 beliefs: affect_valence(VMM+MEAMN), emotional_arousal
           │
           ▼
-LAYER 5: C³ Phase 1 — Salience ─────────────────────────────────────
-  ┌──────────────┬─────────────────────────────────────────────┐
-  │ Belief       │ Inputs                                      │
-  ├──────────────┼─────────────────────────────────────────────┤
-  │ Salience     │ R³+H³ + PE_prev + SNEM + MPG + SRP.tension │
-  └──────────────┴─────────────────────────────────────────────┘
+LAYER 5: C³ Phase 3 — Learning + Social (F8 + F9) ────────────────
+  F8 beliefs: plasticity_state, expertise_level
+  F9 beliefs: social_synchrony
           │
           ▼
-LAYER 6: C³ Phase 2a — Predict + Observe ───────────────────────────
-  ALL beliefs predict(beliefs_{t-1}, H³)
-  Familiarity observe(R³, H³, MEAMN, MPG)
-          │
-          ▼
-LAYER 7: C³ Phase 2b-2c — PE + Precision + Bayesian Update ────────
-  PE = observed − predicted
+LAYER 6: C³ Phase 4 — PE + Precision ─────────────────────────────
+  PE = observed − predicted   (for ALL Function beliefs)
   precision = f(PE_history) + HTP boost
   posterior = Bayesian(likelihood, prior, precision)
           │
           ▼
-LAYER 8: C³ Phase 3 — Reward ──────────────────────────────────────
-  reward = f(ALL PEs × precision × salience × familiarity
-             + DAED.DA_gain + SRP.hedonic + MEAMN.emotion)
+LAYER 7: C³ Phase 5 — Reward (F6, terminal) ──────────────────────
+  F6 beliefs: reward_valence = f(ALL PEs × precision × salience
+               × familiarity + DAED.DA_gain + SRP.hedonic
+               + MEAMN.emotion)
+              pleasure_state, wanting_state
           │
           ▼
-OUTPUT:  beliefs(5) + PE(5) + precision(5) + reward(1) + RAM(26)
+  Meta-Layers: F10/F11/F12 contribute evidence during Phase 0–3
+               (no beliefs, no phases — evidence providers only)
+          │
+          ▼
+OUTPUT:  beliefs(N) + PE(N) + precision(N) + reward(1) + RAM(26)
+         where N = total active beliefs across 9 Functions
 ```
 
 ---
@@ -280,28 +278,29 @@ shared test infrastructure and implementation grouping WITHIN each wave.
 ✓ R³ pipeline: 97D per frame (ear/r3/)
 ✓ H³ pipeline: batch morphology (ear/h3/)
 ✓ 9 relay wrappers (kernel/relays/)
-✓ 5 beliefs + precision + reward + RAM (kernel/)
-✓ scheduler.py phase schedule
+✓ 5 primary beliefs (F1:cons, F7:tempo, F3:sal, F4:fam, F6:reward)
+✓ precision + reward + RAM (kernel/)
+✓ scheduler.py phase schedule (v1.0: 5-belief, v2.0: Function DAG)
 ```
 
 ### Wave 1: α-Tier Relay Models — Full Implementation (9 models)
 
 Currently relay wrappers are SIMPLIFIED versions. Wave 1 = make each relay
-match its full model doc (§11 pseudocode).
+match its full model doc (§11 pseudocode). Each relay serves a Function.
 
 ```
-Phase 0a parallel:
-  BCH  (SPU-α1): 12D, 17 H³  — consonance hierarchy
-  SNEM (ASU-α1): 12D, 18 H³  — beat/meter entrainment
-  MEAMN(IMU-α1): 12D, 11 H³  — autobiographical memory
-  MPG  (NDU-α1): 10D, 16 H³  — melodic pitch gradient
-  SRP  (ARU-α1): 19D,~124 H³ — striatal reward pathway
-  PEOM (MPU-α1): 11D, 15 H³  — period entrainment
-  HTP  (PCU-α1): 12D, 18 H³  — hierarchical temporal prediction
+Phase 0a parallel (F1, F7, F3, F2, F4, F6 relays):
+  BCH  [F1] (SPU-α1): 12D, 17 H³  — consonance hierarchy
+  PEOM [F7] (MPU-α1): 11D, 15 H³  — period entrainment
+  SNEM [F3] (ASU-α1): 12D, 18 H³  — beat/meter entrainment
+  MPG  [F1] (NDU-α1): 10D, 16 H³  — melodic pitch gradient
+  HTP  [F2] (PCU-α1): 12D, 18 H³  — hierarchical temporal prediction
+  MEAMN[F4] (IMU-α1): 12D, 11 H³  — autobiographical memory
+  SRP  [F6] (ARU-α1): 19D,~124 H³ — striatal reward pathway
 
 Phase 0b sequential:
-  HMCE (STU-α1): 13D, 18 H³  — needs SNEM.beat_locked
-  DAED (RPU-α1):  8D, 16 H³  — needs BCH.cons + MEAMN.mem
+  HMCE [F2] (STU-α1): 13D, 18 H³  — needs SNEM.beat_locked
+  DAED [F6] (RPU-α1):  8D, 16 H³  — needs BCH.cons + MEAMN.mem
 
 Total: 9 models, 109D, 131 H³ tuples
 ```
@@ -464,9 +463,10 @@ Total: 27 models, ~268D
 
 ---
 
-## 4. R³ Usage Heatmap
+## 4. R³ Usage Heatmap (by Unit — Metadata)
 
 Which R³ groups each unit/tier reads. Numbers = model count.
+Units are metadata (anatomical origin); runtime grouping is by Function (see §7).
 
 ```
          A(cons) B(energy) C(timbre) D(change) E(interact) H/J/K
@@ -589,34 +589,60 @@ Actual unique count requires aggregating all h3_demand lists.
 
 ---
 
-## 7. Belief Integration Points
+## 7. Function Belief Integration Points (v3.0 — Mechanism-Based)
 
-Where non-relay models ENRICH the existing belief cycle:
+131 mechanism-level beliefs (36 Core + 65 Appraisal + 30 Anticipation).
+Only **Core Beliefs** carry PE/precision overhead. Appraisal/Anticipation are direct mechanism outputs.
 
-### Consonance Belief (Phase 0c)
-Currently reads: BCH(3 fields) + HTP(1 field)
-Wave 2 adds: PSCL.pitch_salience, PCCR.chroma, PNH.ratio_complexity
-Wave 3 adds: STAI.aesthetic_integration, CSG.consonance_gradient
+### F1 Sensory (17 beliefs: 5C + 7A + 5N, Phase 0)
+Core: harmonic_stability(BCH), pitch_prominence(PSCL), pitch_identity(PCCR), timbral_character(MIAA), aesthetic_quality(STAI)
+Wave 1: BCH→harmonic_stability + interval_quality + harmonic_template_match
+Wave 2: PSCL→pitch_prominence + pitch_continuation; PCCR→pitch_identity + octave_equivalence
+Wave 3: MIAA→timbral_character + imagery_recognition; STAI→aesthetic_quality + reward_response_pred
 
-### Tempo Belief (Phase 0c)
-Currently reads: HMCE(6 fields) + PEOM(4 fields)
-Wave 2 adds: AMSC.motor_coupling, MSR.timing_precision
-Wave 3 adds: ETAM.entrainment, EDTA.expertise_tempo
+### F7 Motor (17 beliefs: 4C + 9A + 4N, Phase 0)
+Core: period_entrainment(PEOM), kinematic_efficiency(PEOM), groove_quality(HGSIC), context_depth(HMCE)
+Wave 1: PEOM→period_entrainment + timing_precision + period_lock_strength + next_beat_pred
+Wave 2: HMCE→context_depth + short/medium/long_context + phrase_boundary_pred
+Wave 3: HGSIC→groove_quality + beat_prominence + meter_structure + groove_trajectory
 
-### Salience Belief (Phase 1)
-Currently reads: SNEM(3 fields) + MPG(3 fields) + SRP.tension
-Wave 2 adds: IACM.inharmonicity_capture, SDD.deviance
-Wave 3 adds: STANM.spectral_attention, BARM.brainstem_response
+### F3 Attention (15 beliefs: 4C + 7A + 4N, Phase 1)
+Core: beat_entrainment(SNEM), meter_hierarchy(SNEM), attention_capture(IACM), salience_network_activation(CSG)
+Wave 1: SNEM→beat_entrainment + selective_gain + beat_onset_pred + meter_position_pred
+Wave 2: IACM→attention_capture + object_segregation + precision_weighting
+Wave 3: AACM→aesthetic_engagement + savoring_effect
 
-### Familiarity Belief (Phase 2a)
-Currently reads: MEAMN(3 fields) + MPG(1 field)
-Wave 2 adds: MMP.memory_strength, PNH.ratio_familiarity
-Wave 3 adds: HCMC.hippocampal_match, PMIM.predictive_memory
+### F4 Memory (13 beliefs: 4C + 7A + 2N, Phase 2)
+Core: autobiographical_retrieval(MEAMN), nostalgia_intensity(MEAMN), emotional_coloring(MEAMN), episodic_encoding(HCMC)
+Wave 1: MEAMN→all 3 Core + retrieval_probability + memory_vividness + self_relevance + vividness_trajectory
+Wave 2: HCMC→episodic_encoding + episodic_boundary + consolidation_strength
+Wave 3: MMP→melodic_recognition + memory_preservation + memory_scaffold_pred
 
-### Reward (Phase 3)
-Currently reads: DAED.DA_gain + SRP.hedonic(3 fields) + MEAMN.emotion(3 fields)
-Wave 2 adds: AAC.autonomic, RPEM.prediction_error, MORMR.opioid
-Wave 3 adds: IUCP.complexity_preference, MCCN.chills
+### F2 Prediction (15 beliefs: 4C + 6A + 5N, Phase 1)
+Core: prediction_hierarchy(HTP), sequence_match(SPH), information_content(ICEM), prediction_accuracy(HTP)
+Wave 1: HTP→prediction_hierarchy + hierarchy_coherence + abstract_future + midlevel_future
+Wave 2: SPH→sequence_match + error_propagation + oscillatory_signature + sequence_completion
+Wave 3: ICEM→information_content + defense_cascade + arousal_scaling + valence_inversion
+
+### F5 Emotion (14 beliefs: 4C + 8A + 2N, Phase 2)
+Core: perceived_happy(VMM), perceived_sad(VMM), emotional_arousal(AAC), nostalgia_affect(NEMAC)
+Wave 2: VMM→perceived_happy/sad + mode_detection + emotion_certainty + happy/sad_pathway
+Wave 3: AAC→emotional_arousal + chills_intensity + ans_dominance + driving_signal
+Wave 3: NEMAC→nostalgia_affect + self_referential_nostalgia + wellbeing_enhancement
+
+### F6 Reward (16 beliefs: 5C + 7A + 4N, Phase 5)
+Core: wanting(SRP), liking(SRP), pleasure(SRP), prediction_error(SRP), tension(SRP)
+Wave 1: SRP→wanting + liking + pleasure + prediction_match + peak_detection + chills_proximity
+Wave 2: DAED→dissociation_index + temporal_phase + da_caudate + da_nacc + wanting_ramp
+Wave 3: SRP→harmonic_tension + resolution_expectation + reward_forecast
+
+### F8 Learning (14 beliefs: 4C + 8A + 2N, Phase 3)
+Core: trained_timbre_recognition(TSCP), expertise_enhancement(ESME), network_specialization(EDNR), statistical_model(SLEE)
+Wave 4: All F8 models activate. Very high τ (0.88–0.95) — minimal per-frame change.
+
+### F9 Social (10 beliefs: 2C + 6A + 2N, Phase 3)
+Core: neural_synchrony(NSCP), social_coordination(DDSMI)
+Wave 5: All F9 models activate. Requires multi-agent context.
 
 ---
 

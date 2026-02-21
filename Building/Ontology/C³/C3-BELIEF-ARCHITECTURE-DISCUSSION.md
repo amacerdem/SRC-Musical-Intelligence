@@ -371,11 +371,149 @@ MIGRATION:
 
 ---
 
+## Decision 18: Function-Based Architecture Evolution (v2.0)
+
+**Date**: 2026-02-21
+**Trigger**: Completion of `96-model-functional-brain-map.md` revealed that the 9 anatomical
+units (SPU–RPU) do not map cleanly to brain functions. Models cluster by cognitive function
+(sensory processing, prediction, attention, etc.) rather than by anatomical origin.
+
+### The Problem
+
+v1.0 architecture had 5 beliefs owned by 5 units (SPU, STU, ASU, IMU, ARU). But:
+- F7 Motor contains 21 models from 3 different units (MPU, STU, ASU)
+- F2 Prediction contains 18 models from 4 units (PCU, RPU, NDU, STU)
+- Many models contribute to multiple cognitive functions
+- Unit boundaries don't reflect runtime information flow
+
+### Four Key Decisions
+
+**Decision 18a: F10–F12 = Meta-Layers (evidence only, no beliefs)**
+F10 Clinical (10 models), F11 Development (6), F12 Cross-Modal (5) do not produce
+beliefs at runtime. They provide evidence to F1–F9 during observe() calls.
+Rationale: Clinical/developmental models inform but don't drive real-time cognition.
+
+**Decision 18b: F8 Learning = v1.0 Function (produces beliefs)**
+Learning & Plasticity IS a runtime function. It produces beliefs like plasticity_state
+and expertise_level that modulate other Functions (e.g., familiarity sensitivity).
+Not deferred to v2.0 — it's a first-class Function.
+
+**Decision 18c: Multiple beliefs per Function**
+Each Function can produce up to 5 beliefs (max cap, see FM-12). The original 5 beliefs
+are preserved as primary beliefs within their respective Functions:
+- consonance → F1 primary, pitch_salience + timbre_quality as secondary
+- tempo → F7 primary, groove + entrainment as secondary
+- salience → F3 primary, attention_allocation as secondary
+- familiarity → F4 primary, memory_scaffold as secondary
+- reward → F6 primary, pleasure_state + wanting_state as secondary
+
+**Decision 18d: Units = metadata (anatomical origin tag)**
+The 9 units (SPU, ARU, ASU, IMU, MPU, NDU, PCU, RPU, STU) remain as metadata tags
+on each model. They indicate anatomical origin but no longer determine runtime
+execution grouping. Runtime grouping = Functions. Scheduling = Function phase DAG.
+
+### Impact on Documents
+
+All 11 C³ ontology documents updated to v2.0:
+- C3-ARCHITECTURE-RFC.md: 9 Functions × multi-belief, 6-phase DAG
+- C3-ONTOLOGY-BOUNDARY.md: §3.2' Functional Domain axis added
+- MODEL-ATLAS.md: Function-based index + unit tables as metadata
+- BELIEF-CYCLE.md: Belief parameters table expanded to all Functions
+- REGION-ACTIVATION-MAP.md: Region links organized by Function
+- IMPLEMENTATION-TREE.md: Function-based execution DAG + waves
+- REWARD-FORMULA.md: Function source map added
+- PRECISION-ENGINE.md: HTP boost table expanded for all Functions
+- C3-FAILURE-MODES.md: FM-11 (cross-Function contradiction), FM-12 (belief explosion)
+- TEMPORAL-WEIGHTING.md: T_char table for all Function beliefs
+- R3-MIGRATION-REFERENCE.md: No changes (pure R³ document)
+
+### Backward Compatibility
+
+v1.0 kernel code (scheduler.py, 5 beliefs) continues to work as-is. The 5 original
+beliefs are the primary beliefs of F1, F7, F3, F4, F6. New beliefs activate in
+implementation waves 2–5 as Function infrastructure is built.
+
+---
+
+## Decision 19: Mechanism-Based Beliefs — Signal Features ≠ Beliefs (v3.0)
+
+**Date**: 2026-02-21
+
+**Problem**: v2.0 treated signal features (consonance, tempo, salience) as beliefs.
+These are R³/H³ features — physical measurements. Beliefs must be COGNITIVE INFERENCES.
+
+**Example**: R³ `roughness_total = 0.3` is a signal feature. The belief
+`harmonic_stability = 0.7` is the cognitive inference "this sound is harmonically resolved."
+SRP's output is not "reward=0.4" but discrete cognitive judgments: "I want more of this"
+(wanting), "I like this" (liking), "Something is about to happen" (tension).
+
+**Decision 19a: 3 Belief Categories**
+
+| Category | Count | Role | PE? |
+|----------|:-----:|------|:---:|
+| Core | 36 | Full Bayesian cycle (predict→observe→update) | Yes |
+| Appraisal | 65 | Observe-only mechanism outputs | No |
+| Anticipation | 30 | Forward predictions → feed Core predict() | No |
+
+**Rationale**: Core Beliefs are the primary cognitive states that drive reward through PE.
+Appraisal Beliefs are evaluative judgments computed by mechanisms (e.g., `interval_quality`,
+`mode_detection`, `timing_precision`). Anticipation Beliefs are forward predictions
+(e.g., `pitch_continuation`, `next_beat_pred`, `wanting_ramp`). Only Core Beliefs carry
+PE/precision/reward computational overhead.
+
+**Decision 19b: FM-12 Revised Caps**
+
+Old: max 5 beliefs per Function (too restrictive for 131 total).
+New: max 5 Core + 10 Appraisal + 5 Anticipation = 20 per Function.
+System-wide: 131 actual vs 180 theoretical max.
+
+**Decision 19c: v1.0 Backward Compatibility Mapping**
+
+| v1.0 | v3.0 Core Belief | Function |
+|------|------------------|----------|
+| perceived_consonance | harmonic_stability | F1 |
+| tempo_state | period_entrainment | F7 |
+| salience_state | beat_entrainment | F3 |
+| familiarity_state | autobiographical_retrieval | F4 |
+| reward_valence | wanting | F6 |
+
+**Decision 19d: Per-Function Belief Inventory**
+
+| Function | Core | Appraisal | Anticipation | Total |
+|----------|:----:|:---------:|:------------:|:-----:|
+| F1 Sensory | 5 | 7 | 5 | 17 |
+| F2 Prediction | 4 | 6 | 5 | 15 |
+| F3 Attention | 4 | 7 | 4 | 15 |
+| F4 Memory | 4 | 7 | 2 | 13 |
+| F5 Emotion | 4 | 8 | 2 | 14 |
+| F6 Reward | 5 | 7 | 4 | 16 |
+| F7 Motor | 4 | 9 | 4 | 17 |
+| F8 Learning | 4 | 8 | 2 | 14 |
+| F9 Social | 2 | 6 | 2 | 10 |
+| **TOTAL** | **36** | **65** | **30** | **131** |
+
+### Impact on Documents
+
+All 11 ontology documents updated to v3.0 mechanism-based beliefs:
+- BELIEF-CYCLE.md: Full 131-belief inventory with categories (master reference)
+- C3-ARCHITECTURE-RFC.md: §2.2 updated, FM-12 revised
+- C3-ONTOLOGY-BOUNDARY.md: §3.4 belief graph with 3 categories
+- C3-FAILURE-MODES.md: FM-12 3-category caps
+- MODEL-ATLAS.md: Mechanism-level belief distribution table
+- IMPLEMENTATION-TREE.md: Per-Function belief integration points
+- REWARD-FORMULA.md: PE from 36 Core Beliefs (not all 131)
+- PRECISION-ENGINE.md: PE buffer keys for Core Beliefs only
+- TEMPORAL-WEIGHTING.md: T_char for 36 Core Beliefs
+- REGION-ACTIVATION-MAP.md: Function-based organization preserved
+
+---
+
 ## References to Existing Documents
 
-- `Building/Ontology/C3-ONTOLOGY-BOUNDARY.md` — v1.0.0 (needs update to reflect belief architecture)
-- `Building/Ontology/C3-FAILURE-MODES.md` — 10 failure modes (all still relevant)
-- `Building/C³/MODEL-ATLAS.md` — 96/96 models (data foundation for all decisions)
+- `Building/Ontology/C³/C3-ONTOLOGY-BOUNDARY.md` — v3.0.0
+- `Building/Ontology/C³/C3-FAILURE-MODES.md` — 12 failure modes (v3.0)
+- `Building/Ontology/C³/MODEL-ATLAS.md` — 96/96 models + Function index (v3.0)
+- `Building/C³-Brain/Functions/96-model-functional-brain-map.md` — Function source data
 - `Building/Ontology/R3-ONTOLOGY-BOUNDARY.md` — FROZEN
 - `Building/Ontology/H3-ONTOLOGY-BOUNDARY.md` — FROZEN
 - `Docs/MI-PLASTICITY.md` — v2.0 learned heads path

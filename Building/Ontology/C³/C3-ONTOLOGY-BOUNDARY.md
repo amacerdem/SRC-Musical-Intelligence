@@ -1,11 +1,13 @@
 # C³ Ontology & Boundary Specification
 
-**Version**: 1.0.0
-**Date**: 2026-02-16
-**Status**: PROPOSAL — pending review and freeze
+**Version**: 2.0.0
+**Date**: 2026-02-21
+**Status**: ACTIVE — Function-based architecture
+**Supersedes**: v1.0.0 (2026-02-16, unit-based architecture)
 **Companion documents**:
 - `R3-ONTOLOGY-BOUNDARY.md` (FROZEN v1.0.0)
 - `H3-ONTOLOGY-BOUNDARY.md` (FROZEN v1.0.0)
+- `C3-ARCHITECTURE-RFC.md` (RFC v2.0.0 — Function-based belief architecture)
 - `../teminology/TERMINOLOGY.md` (ACTIVE v1.0.0)
 
 ---
@@ -87,13 +89,14 @@ For each nucleus N:
   assert N.CROSS_UNIT_READS == () if N.PROCESSING_DEPTH < 3 and N not in {SRP, DAED}
 ```
 
-### 3.2 Axis B — Execution Domain (structural, 9 units)
+### 3.2 Axis B — Anatomical Origin (metadata, 9 units)
 
-Units are the organizational containers. Each unit is a coherent cognitive subsystem with
-its own Relay → Encoder → Associator → Integrator → Hub pipeline.
+Units are the **anatomical origin metadata** for each model. They indicate which published
+neuroscience domain the model was derived from. As of v2.0, units are NO LONGER the
+runtime execution containers — Functions (Axis B') are.
 
-| Unit | Full Name | Relay | Nuclei | Primary function |
-|------|-----------|-------|--------|-----------------|
+| Unit | Full Name | Relay | Nuclei | Anatomical domain |
+|------|-----------|-------|--------|-------------------|
 | **SPU** | Spectral Processing | BCH | 9 | Consonance, pitch, timbre |
 | **STU** | Structural-Tonal | HMCE | 14 | Temporal structure, meter, motor coupling |
 | **IMU** | Integrative Memory | MEAMN | 15 | Memory encoding, retrieval, consolidation |
@@ -104,19 +107,50 @@ its own Relay → Encoder → Associator → Integrator → Hub pipeline.
 | **ARU** | Affective-Reward | SRP | 10 | Emotion, valence, clinical applications |
 | **RPU** | Reward Processing | DAED | 10 | Dopamine, pleasure, preference |
 
-**Execution phases** (cross-unit scheduling):
+**v2.0 change**: Units remain as metadata tags on each model (`unit: SPU`) but do NOT
+determine execution order, belief ownership, or phase scheduling. See Axis B'.
+
+### 3.2' Axis B' — Functional Domain (runtime, 9 Functions + 3 Meta-Layers)
+
+Functions are the **runtime execution containers** in v2.0. Each Function groups models
+by brain function (not by anatomical origin). A Function owns one or more beliefs and
+contains models drawn from multiple units.
+
+| # | Function | Models | Phase | Primary Relay | Description |
+|---|----------|:------:|:-----:|---------------|-------------|
+| F1 | Sensory Processing | 14 | 0 | BCH | Acoustic feature extraction: pitch, timbre, consonance |
+| F2 | Pattern Recognition & Prediction | 18 | 1 | HTP | Expectation, prediction error, information content |
+| F3 | Attention & Salience | 14 | 1 | SNEM | Resource allocation, filtering, selective focus |
+| F4 | Memory Systems | 12 | 2 | MEAMN | Encoding, consolidation, retrieval |
+| F5 | Emotion & Valence | 11 | 2 | SRP | Emotion generation, affective coloring, mood |
+| F6 | Reward & Motivation | 16 | 5 | DAED | Dopamine, pleasure, wanting, preference |
+| F7 | Motor & Timing | 21 | 0 | PEOM | Entrainment, synchronization, groove, tempo |
+| F8 | Learning & Plasticity | 14 | 3 | — | Experience-dependent change, neural efficiency |
+| F9 | Social Cognition | 4 | 3 | — | Group coordination, social reward |
+
+**3 Meta-Layers** (provide evidence, no beliefs):
+
+| # | Meta-Layer | Models | Evidence targets |
+|---|------------|:------:|-----------------|
+| F10 | Clinical & Therapeutic | 10 | F4, F5, F6, F7 |
+| F11 | Development & Evolution | 6 | F4, F8 |
+| F12 | Cross-Modal Integration | 5 | F2, F3, F7 |
+
+**Execution phases** (Function-based scheduling):
 ```
-Phase 1: 7 independent Relays in parallel (SPU, STU, IMU, ASU, NDU, MPU, PCU)
-Phase 2: Forward pathway routing (Relay → Relay for ARU, RPU)
-Phase 3: Each of the 7 independent units runs depth 1→2→3→4 internally
-Phase 4: 12 cross-unit pathways route signals
-Phase 5: Dependent units (ARU, RPU) run depth 0→1→2→3→4
-Phase 6: Assembly — scope-aware concatenation → BrainOutput
+Phase 0: F1 Sensory + F7 Motor — sensory/motor grounding (concurrent)
+Phase 1: F2 Prediction + F3 Attention — pattern/attention (reads Phase 0)
+Phase 2: F4 Memory + F5 Emotion — memory/emotion (reads Phase 0+1)
+Phase 3: F8 Learning + F9 Social — higher cognition (reads Phase 0+1+2)
+Phase 4: PE + precision computation — meta-computation (all beliefs)
+Phase 5: F6 Reward — terminal aggregation (reads all PEs)
+Meta: F10/F11/F12 contribute evidence during Phases 0–3
+Assembly: scope-aware concatenation → BrainOutput
 ```
 
-**Unit independence invariant**: SPU, STU, IMU, ASU, NDU, MPU, PCU have no cross-unit
-dependencies at depth 0-2. Only their Integrators/Hubs may read cross-unit inputs.
-ARU and RPU are exceptions: their Relays receive forward pathway inputs.
+**Function independence**: Phase 0 Functions (F1, F7) have no cross-function dependencies.
+Phase 1+ Functions read previous-phase beliefs via predict() context weights.
+F6 Reward is terminal: reads all PEs but no Function reads reward within the same frame.
 
 ### 3.3 Axis C — Neuromodulatory Channels (modulatory overlay, semi-orthogonal)
 
@@ -156,79 +190,76 @@ DA/OPI experience ──modulates──► 5-HT (background mood)
 ### 3.4 Axis D — Belief Graph (the cognitive hierarchy)
 
 The belief graph is the TRUE hierarchy of C³ — it lives in belief variables, not in
-model count. Each belief variable has exactly ONE owner (BeliefOwner) and zero or more
-evidence providers.
+model count. Each belief variable has exactly ONE owning **Function** and zero or more
+evidence providers from within or across Functions.
 
-#### 3.4.1 Belief Types
+#### 3.4.1 Belief Types — 3 Categories (v3.0)
 
-Beliefs are organized by abstraction level, which correlates with (but is not identical to)
-processing depth and temporal scale:
+Beliefs are **cognitive inferences** from mechanisms, NOT signal features.
+R³/H³ produce signal features (roughness, periodicity). Beliefs are what the brain INFERS.
 
-**Low-level beliefs** (frame-rate, depth 0-1 owners):
-| Belief | Owner | Evidence providers | Update rate |
-|--------|-------|--------------------|-------------|
-| `onset_prob` | SPU-R-BCH | ASU-E-CSG, PCU-R-HTP | per frame |
-| `pitch_salience` | SPU-E-PSCL | SPU-R-BCH, STU-E-MDNS | per frame |
-| `spectral_tension` | SPU-A-TSCP | SPU-R-BCH, SPU-E-STAI | per frame |
-| `consonance_state` | SPU-R-BCH | — (direct from R³) | per frame |
-| `roughness_state` | SPU-A-SDED | SPU-R-BCH | per frame |
-| `entrainment_strength` | ASU-R-SNEM | MPU-R-PEOM, STU-E-ETAM | per frame |
-| `salience_map` | ASU-E-IACM | ASU-R-SNEM, ASU-E-CSG | per frame |
+**131 beliefs in 3 categories:**
 
-**Mid-level beliefs** (beat/bar rate, depth 1-2 owners):
-| Belief | Owner | Evidence providers | Update rate |
-|--------|-------|--------------------|-------------|
-| `tempo_estimate` | STU-R-HMCE | MPU-R-PEOM, ASU-E-BARM | per beat |
-| `meter_state` | STU-R-HMCE | MPU-R-PEOM, STU-E-AMSC | per bar |
-| `key_estimate` | STU-E-MDNS | SPU-E-PSCL, PCU-A-CHPI | per phrase |
-| `harmonic_function` | SPU-A-PCCR | STU-R-HMCE, PCU-R-HTP | per beat |
-| `groove_phase` | MPU-R-PEOM | STU-E-AMSC, ASU-E-BARM | per beat |
-| `timbral_identity` | SPU-A-TSCP | SPU-E-STAI | per phrase |
-| `attention_allocation` | ASU-E-STANM | ASU-R-SNEM, NDU-E-SDD | per beat |
+| Category | Count | Bayesian Cycle | PE | Role |
+|----------|:-----:|:--------------:|:--:|------|
+| **Core** (C) | 36 | Full (predict→observe→update) | Yes | Primary cognitive states |
+| **Appraisal** (A) | 65 | Observe-only | No | Evaluative judgments from mechanisms |
+| **Anticipation** (N) | 30 | Prediction outputs | No | Forward predictions → Core predict() |
 
-**High-level beliefs** (phrase/section rate, depth 2-4 owners):
-| Belief | Owner | Evidence providers | Update rate |
-|--------|-------|--------------------|-------------|
-| `phrase_boundary` | STU-A-TPIO | STU-R-HMCE, PCU-A-PWUP | per phrase |
-| `section_label` | STU-A-EDTA | STU-R-HMCE, STU-A-TPIO | per section |
-| `affect_valence` | ARU-E-VMM | ARU-R-SRP, RPU-R-DAED | per beat |
-| `affect_arousal` | ARU-E-AAC | ASU-R-SNEM (NE), ARU-R-SRP | per beat |
-| `narrative_tension` | PCU-I-UDP | PCU-A-PWUP, ARU-A-PUPF | per phrase |
-| `familiarity` | IMU-R-MEAMN | IMU-E-HCMC, IMU-E-PMIM | per phrase |
-| `aesthetic_pleasure` | PCU-H-MAA | PCU-I-UDP, RPU-A-MEAMR | per phrase |
-| `memory_scaffold` | IMU-E-DMMS | IMU-R-MEAMN, IMU-E-HCMC | per section |
+**Per-Function Core Beliefs (36 total):**
+
+| Function | Phase | Core Beliefs | A | N | Total |
+|----------|:-----:|--------------|:-:|:-:|:-----:|
+| F1 Sensory | 0 | harmonic_stability(0.3), pitch_prominence(0.35), pitch_identity(0.4), timbral_character(0.5), aesthetic_quality(0.4) | 7 | 5 | 17 |
+| F7 Motor | 0 | period_entrainment(0.65), kinematic_efficiency(0.6), groove_quality(0.55), context_depth(0.7) | 9 | 4 | 17 |
+| F2 Prediction | 1 | prediction_hierarchy(0.4), sequence_match(0.45), information_content(0.35), prediction_accuracy(0.5) | 6 | 5 | 15 |
+| F3 Attention | 1 | beat_entrainment(0.35), meter_hierarchy(0.4), attention_capture(0.25), salience_network_activation(0.3) | 7 | 4 | 15 |
+| F4 Memory | 2 | autobiographical_retrieval(0.85), nostalgia_intensity(0.8), emotional_coloring(0.75), episodic_encoding(0.7) | 7 | 2 | 13 |
+| F5 Emotion | 2 | perceived_happy(0.55), perceived_sad(0.55), emotional_arousal(0.5), nostalgia_affect(0.65) | 8 | 2 | 14 |
+| F6 Reward | 5 | wanting(0.6), liking(0.65), pleasure(0.7), prediction_error(0.5), tension(0.55) | 7 | 4 | 16 |
+| F8 Learning | 3 | trained_timbre_recognition(0.9), expertise_enhancement(0.92), network_specialization(0.95), statistical_model(0.88) | 8 | 2 | 14 |
+| F9 Social | 3 | neural_synchrony(0.65), social_coordination(0.6) | 6 | 2 | 10 |
+
+> Full 131-belief inventory with descriptions: see BELIEF-CYCLE.md v3.0
+> Model origin units preserved as metadata. Function determines runtime ownership.
 
 #### 3.4.2 Single-Writer Invariant
 
 ```
 For each belief variable B:
-  assert len({N for N in all_nuclei if N.owns(B)}) == 1
-  # Exactly one nucleus writes each belief
-  # All others can only contribute evidence (likelihood messages)
+  assert len({F for F in all_functions if B in F.owned_beliefs}) == 1
+  # Exactly one Function owns each belief
+  # Models within the Function provide evidence
+  # Models in other Functions may contribute cross-function evidence
 ```
 
 This is the most critical structural constraint of C³. It prevents:
-- Race conditions (two nuclei writing the same belief simultaneously)
+- Race conditions (two Functions writing the same belief simultaneously)
 - Incoherent state (contradictory updates to the same variable)
 - Responsibility diffusion (no clear owner means no clear debugging)
 
 #### 3.4.3 Belief Update Protocol
 
 ```python
-# Belief update at each tick
-for belief in active_beliefs:
-    owner = belief.owner_nucleus
-    evidence = [ep.compute_likelihood(belief) for ep in belief.evidence_providers]
+# Belief update at each tick — organized by Function phase
+for phase in scheduler.phases:
+    for function in scheduler.functions_at(phase):
+        for belief in function.owned_beliefs:
+            # 1. Predict from previous frame
+            predicted = belief.predict(beliefs_{t-1}, h3)
 
-    if owner.update_method == "bayesian":
-        belief.posterior = bayesian_update(belief.prior, evidence)
-    elif owner.update_method == "ema":
-        belief.value = ema_update(belief.value, owner.tau, new_observation)
-    elif owner.update_method == "direct":
-        belief.value = owner.compute_belief(evidence)
+            # 2. Observe from current frame
+            observed = belief.observe(r3, h3, relay_outputs)
 
-    belief.prior = belief.posterior  # Shift for next tick
+            # 3. Bayesian update
+            gain = observed.precision / (observed.precision + precision_pred)
+            belief.posterior = (1 - gain) * predicted + gain * observed.value
+
+            belief.prior = belief.posterior  # Shift for next tick
 ```
+
+**v2.0 change**: All beliefs use precision-weighted Bayesian fusion (single method).
+The v1.0 three-method protocol (bayesian/ema/direct) is unified into Bayesian.
 
 ---
 
@@ -389,17 +420,16 @@ class SemanticPrior:
     learning_rate: float       # 0.0 for fixed (published constants)
 ```
 
-### 4.4 Scheduler — Multi-Rate Depth-Ordered Execution
+### 4.4 Scheduler — Function-Phase DAG Execution
 
 ```python
 class C3Scheduler:
-    """Orchestrates multi-rate, depth-ordered nucleus execution."""
+    """Orchestrates Function-phase, DAG-ordered execution."""
 
-    def __init__(self, nuclei: List[Nucleus], pathways: List[CrossUnitPathway]):
-        self._nuclei = nuclei
-        self._pathways = pathways
-        self._depth_groups = self._build_depth_groups()
-        self._unit_groups = self._build_unit_groups()
+    def __init__(self, functions: List[Function], meta_layers: List[MetaLayer]):
+        self._functions = functions
+        self._meta_layers = meta_layers
+        self._phase_groups = self._build_phase_groups()
         self._cadence_map = self._build_cadence_map()
 
     def tick(self, frame_idx: int, r3: R3Message, h3: H3Message,
@@ -410,66 +440,69 @@ class C3Scheduler:
         outputs: Dict[str, Tensor] = {}
         ram = torch.zeros(B, T, 26)
 
-        # ── Phase 1: Independent Relays (depth 0, 7 units in parallel) ──
-        independent_relays = [n for n in self._depth_groups[0]
-                              if n.UNIT not in ("ARU", "RPU")]
-        for relay in independent_relays:
-            if self._should_execute(relay, frame_idx):
-                outputs[relay.NAME] = relay.compute(h3.features, r3.features)
-                self._apply_neuro_links(neuro, relay, outputs[relay.NAME])
-                self._apply_region_links(ram, relay, outputs[relay.NAME])
+        # ── Phase 0: F1 Sensory + F7 Motor (concurrent, no dependencies) ──
+        for function in self._phase_groups[0]:  # [F1, F7]
+            for model in function.models:
+                if self._should_execute(model, frame_idx):
+                    outputs[model.NAME] = model.compute(h3.features, r3.features)
+                    self._apply_neuro_links(neuro, model, outputs[model.NAME])
+                    self._apply_region_links(ram, model, outputs[model.NAME])
+            # predict + observe + update for all Function beliefs
+            for belief in function.owned_beliefs:
+                belief.predict(belief_store.previous, h3)
+                belief.observe(r3, h3, outputs)
+                belief.update()
+                belief_store.write(belief)
 
-        # ── Phase 2: Forward pathway routing ──
-        pathway_inputs = self._route_pathways(outputs, phase="forward")
+        # ── Phase 1: F2 Prediction + F3 Attention (reads Phase 0) ──
+        for function in self._phase_groups[1]:  # [F2, F3]
+            for model in function.models:
+                if self._should_execute(model, frame_idx):
+                    upstream = self._scope_filter(outputs, model)
+                    outputs[model.NAME] = model.compute(h3.features, r3.features, upstream)
+                    self._apply_neuro_links(neuro, model, outputs[model.NAME])
+                    self._apply_region_links(ram, model, outputs[model.NAME])
+            for belief in function.owned_beliefs:
+                belief.predict(belief_store.previous, h3)
+                belief.observe(r3, h3, outputs)
+                belief.update()
+                belief_store.write(belief)
 
-        # ── Phase 3: Dependent Relays (ARU.SRP, RPU.DAED) ──
-        dependent_relays = [n for n in self._depth_groups[0]
-                            if n.UNIT in ("ARU", "RPU")]
-        for relay in dependent_relays:
-            if self._should_execute(relay, frame_idx):
-                outputs[relay.NAME] = relay.compute(
-                    h3.features, r3.features,
-                    cross_unit_inputs=pathway_inputs.get(relay.NAME, {})
-                )
-                self._apply_neuro_links(neuro, relay, outputs[relay.NAME])
-                self._apply_region_links(ram, relay, outputs[relay.NAME])
+        # ── Phase 2: F4 Memory + F5 Emotion (reads Phase 0+1) ──
+        # ... same pattern
 
-        # ── Phase 4: Depths 1→5 (scope-filtered) ──
-        for depth in range(1, 6):
-            if depth not in self._depth_groups:
-                continue
-            for nucleus in self._depth_groups[depth]:
-                if not self._should_execute(nucleus, frame_idx):
-                    continue
+        # ── Phase 3: F8 Learning + F9 Social (reads Phase 0+1+2) ──
+        # ... same pattern
 
-                # Scope-filter upstream outputs
-                upstream = self._scope_filter(outputs, nucleus)
-                cross = pathway_inputs.get(nucleus.NAME, {})
+        # ── Meta-Layers: F10/F11/F12 contribute evidence ──
+        for meta in self._meta_layers:
+            for model in meta.models:
+                if self._should_execute(model, frame_idx):
+                    upstream = self._scope_filter(outputs, model)
+                    outputs[model.NAME] = model.compute(h3.features, r3.features, upstream)
+                    # evidence only — no belief updates
+                    self._apply_region_links(ram, model, outputs[model.NAME])
 
-                # Dispatch by role
-                if isinstance(nucleus, Encoder):
-                    relay_out = self._get_relay_output(outputs, nucleus.UNIT)
-                    out = nucleus.compute(h3.features, r3.features, relay_out)
-                elif isinstance(nucleus, Associator):
-                    out = nucleus.compute(h3.features, r3.features, upstream)
-                elif isinstance(nucleus, (Integrator, Hub)):
-                    out = nucleus.compute(h3.features, r3.features, upstream, cross)
-                else:
-                    continue
+        # ── Phase 4: PE + Precision computation ──
+        for function in self._functions:
+            if function.id == "F6":
+                continue  # F6 does not have PE
+            for belief in function.owned_beliefs:
+                pe = belief.observed - belief.predicted
+                precision_pred = self._estimate_precision(belief, pe)
+                belief_store.record_pe(belief.name, pe, precision_pred)
 
-                outputs[nucleus.NAME] = out
-                self._apply_neuro_links(neuro, nucleus, out)
-                self._apply_region_links(ram, nucleus, out)
+        # ── Phase 5: F6 Reward (terminal aggregator) ──
+        reward_function = self._get_function("F6")
+        reward_function.compute_reward(belief_store, outputs)
+        for belief in reward_function.owned_beliefs:
+            belief_store.write(belief)
 
-        # ── Phase 5: Cross-unit pathway routing (all 12) ──
-        # Already handled inline above via pathway_inputs
-
-        # ── Phase 6: Assembly ──
-        tensor = self._assemble_exportable(outputs)  # external + hybrid dims only
+        # ── Assembly ──
+        tensor = self._assemble_exportable(outputs)
         neuro = neuro.clamp(0.0, 1.0)
 
         return BrainOutput(tensor=tensor, ram=ram, neuro=neuro, psi=None)
-        # Ψ³ interpretation applied by orchestrator after assembly
 
     def _should_execute(self, nucleus: Nucleus, frame_idx: int) -> bool:
         """Multi-rate gating: skip nuclei whose cadence doesn't match this frame."""
@@ -510,7 +543,7 @@ Cadence is a PROPERTY of the nucleus, not a hard constraint. The scheduler uses 
 efficiency (skip computation when nothing has changed), but any nucleus can declare any
 cadence. Between executions, the nucleus's last output is held constant.
 
-### 4.6 The Tick — Complete Pseudocode
+### 4.6 The Tick — Complete Pseudocode (v2.0 Function-Based)
 
 ```
 TICK(frame_t, r3_frame, h3_demand_result):
@@ -521,35 +554,44 @@ TICK(frame_t, r3_frame, h3_demand_result):
      binding_service = BindingService(r3_msg, h3_msg)
 
   2. COMPUTE DEMANDED BINDINGS (lazy — computed on first access)
-     # binding_service caches; nuclei call binding_service.get_binding(name)
+     # binding_service caches; models call binding_service.get_binding(name)
 
-  3. EXECUTE EVIDENCE PROVIDERS (depth 0 → 5)
-     For each depth d = 0, 1, 2, 3, 4, 5:
-       For each nucleus at depth d (respecting cadence):
-         output = nucleus.compute(h3, r3, upstream, cross_unit, neuro_state)
-         store output in outputs[nucleus.NAME]
-         apply region_links → RAM
-         apply neuro_links → neuro_state
+  3. FUNCTION PHASE EXECUTION
+     For each phase p = 0, 1, 2, 3:
+       For each Function F at phase p (concurrent within phase):
+         a. Execute models within F (depth-ordered within Function):
+            For each model in F.models (respecting cadence):
+              output = model.compute(h3, r3, upstream, neuro_state)
+              store output in outputs[model.NAME]
+              apply region_links → RAM
+              apply neuro_links → neuro_state
+         b. Update beliefs within F:
+            For each belief in F.owned_beliefs:
+              predicted = belief.predict(beliefs_{t-1}, h3)
+              observed = belief.observe(r3, h3, outputs)
+              gain = π_obs / (π_obs + π_pred)
+              posterior = (1 - gain) × predicted + gain × observed
+              Store in belief_store
 
-  4. UPDATE BELIEFS (owners)
-     For each active belief:
-       Gather evidence from providers who computed this tick
-       Owner computes posterior from prior + evidence
-       Store updated belief in working memory
-       If salience > threshold: snapshot → episodic memory
+     Meta-Layers: F10/F11/F12 models execute (evidence only, no beliefs)
 
-  5. COMPUTE PREDICTION ERRORS
-     For each belief with a prediction (F-layer):
-       error = observed - predicted
-       Store error in belief_store.working[belief].prediction_error
+  4. COMPUTE PREDICTION ERRORS (Phase 4)
+     For each Function F (except F6):
+       For each belief in F.owned_beliefs:
+         PE = observed - predicted
+         Update PE ring buffer
+         Estimate precision_pred from PE history
+
+  5. REWARD AGGREGATION (Phase 5)
+     F6 Reward: aggregate all PEs + hedonic + dopamine → reward_valence
+     Update F6 beliefs (reward_valence, pleasure_state, wanting_state)
 
   6. UPDATE MODULATORS
-     # Already done inline during step 3 (neuro_links accumulate per depth)
-     # Final neuro_state reflects all writer contributions
+     # Done inline during step 3 (neuro_links accumulate per phase)
      neuro = neuro.clamp(0.0, 1.0)
 
   7. ASSEMBLE OUTPUTS
-     tensor = concat(exportable dims from all nuclei)    → (B, T, N_ext)
+     tensor = concat(exportable dims from all models)    → (B, T, N_ext)
      ram = aggregated region links                        → (B, T, 26)
      neuro = final neurochemical state                    → (B, T, 4)
 
@@ -559,35 +601,54 @@ TICK(frame_t, r3_frame, h3_demand_result):
   9. PRODUCE BrainOutput(tensor, ram, neuro, psi)
 
   10. LOG PROVENANCE
-      For each belief updated: log evidence sources, weights, prediction error
+      For each belief updated: log Function, evidence sources, PE, precision
 ```
 
 ---
 
-## 5. The 12 Cross-Unit Pathways
+## 5. Cross-Function Signal Routes
 
-Pathways are the ONLY mechanism for data flow between units. They are declared,
-typed, and carry specific signals.
+Signal routes are the mechanism for data flow between Functions. They replace the
+v1.0 "12 cross-unit pathways". Routes are declared, typed, and carry specific signals.
 
-| ID | Name | Source | Target | Type | Signal |
-|----|------|--------|--------|------|--------|
-| P1 | Spectral→Tonal | SPU-R-BCH | STU-R-HMCE | forward | consonance, pitch |
-| P2 | Tonal→Motor | STU-R-HMCE | MPU-R-PEOM | forward | tempo, meter |
-| P3 | Motor→Salience | MPU-R-PEOM | ASU-R-SNEM | forward | beat phase, groove |
-| P4 | Salience→Prediction | ASU-R-SNEM | PCU-R-HTP | forward | salience, attention |
-| P5 | Prediction→Reward | PCU-R-HTP | RPU-R-DAED | forward | prediction error |
-| P6 | Spectral→Reward | SPU-R-BCH | ARU-R-SRP | forward | consonance signal |
-| P7 | Memory→Reward | IMU-R-MEAMN | ARU-R-SRP | forward | familiarity |
-| P8 | Reward→Affect | RPU-R-DAED | ARU-R-SRP | forward | DA anticipation |
-| P9 | Affect→Prediction | ARU-E-VMM | PCU-A-PWUP | backward | valence modulation |
-| P10 | Reward→Salience | RPU-E-RPEM | ASU-A-PWSM | backward | surprise signal |
-| P11 | Memory→Tonal | IMU-E-PNH | STU-E-MDNS | lateral | tonal memory |
-| P12 | Motor→Development | MPU-E-MSR | NDU-E-EDNR | lateral | motor expertise |
+### 5.1 Cross-Function Routes (v2.0)
 
-**Pathway types**:
+| ID | Name | Source Function | Target Function | Type | Signal |
+|----|------|----------------|-----------------|------|--------|
+| R1 | Sensory→Motor | F1 (BCH) | F7 (PEOM) | forward | consonance, pitch → tempo context |
+| R2 | Sensory→Prediction | F1 (BCH) | F2 (HTP) | forward | spectral features → prediction basis |
+| R3 | Motor→Attention | F7 (PEOM) | F3 (SNEM) | forward | beat phase, groove → salience gate |
+| R4 | Attention→Prediction | F3 (SNEM) | F2 (HTP) | forward | salience → precision weighting |
+| R5 | Prediction→Reward | F2 (HTP) | F6 (DAED) | forward | prediction error → reward computation |
+| R6 | Sensory→Reward | F1 (BCH) | F6 (SRP) | forward | consonance → hedonic signal |
+| R7 | Memory→Reward | F4 (MEAMN) | F6 (SRP) | forward | familiarity → reward modulation |
+| R8 | Emotion→Prediction | F5 (VMM) | F2 (PWUP) | backward | valence → precision modulation |
+| R9 | Reward→Attention | F6 (RPEM) | F3 (PWSM) | backward | surprise → salience boost |
+| R10 | Memory→Sensory | F4 (PNH) | F1 (MDNS) | lateral | tonal memory → pitch context |
+| R11 | Motor→Learning | F7 (MSR) | F8 (EDNR) | lateral | motor expertise → plasticity |
+| R12 | Emotion→Memory | F5 (NEMAC) | F4 (MEAMN) | lateral | emotional coloring → memory encoding |
+
+### 5.2 Legacy Pathway Mapping
+
+| v1.0 Pathway | v2.0 Route | Change |
+|-------------|------------|--------|
+| P1 SPU→STU | R1 F1→F7 | Unit→Function |
+| P2 STU→MPU | (absorbed within F7) | Both models now in F7 |
+| P3 MPU→ASU | R3 F7→F3 | Unit→Function |
+| P4 ASU→PCU | R4 F3→F2 | Unit→Function |
+| P5 PCU→RPU | R5 F2→F6 | Unit→Function |
+| P6 SPU→ARU | R6 F1→F6 | Unit→Function |
+| P7 IMU→ARU | R7 F4→F6 | Unit→Function |
+| P8 RPU→ARU | (absorbed within F6) | Both models now in F6 |
+| P9 ARU→PCU | R8 F5→F2 | Unit→Function |
+| P10 RPU→ASU | R9 F6→F3 | Unit→Function |
+| P11 IMU→STU | R10 F4→F1 | Unit→Function |
+| P12 MPU→NDU | R11 F7→F8 | Unit→Function |
+
+**Route types**:
 - **Forward**: ascending direction, bottom-up signal (evidence flows toward higher integration)
 - **Backward**: descending direction, top-down signal (predictions/modulation flow back)
-- **Lateral**: same-depth communication between units
+- **Lateral**: same-phase communication between Functions
 
 ---
 
@@ -1058,15 +1119,17 @@ Numeric indices in code are a lint error.
 | Component | What is frozen | Since |
 |-----------|---------------|-------|
 | Role hierarchy | R(0)→E(1)→A(2)→I(3)→H(4-5) — five roles, depth ordering | v1.0.0 |
-| Single-writer invariant | Each belief has exactly one owner | v1.0.0 |
+| Single-writer invariant | Each belief has exactly one Function owner | v1.0.0 |
 | Scope system | internal / external / hybrid — three scopes | v1.0.0 |
 | Output structure | BrainOutput = tensor + RAM(26) + neuro(4) + Ψ³ | v1.0.0 |
 | E/M/P/F layers | Four-layer output structure per nucleus | v1.0.0 |
 | Causality modes | ONLINE=L0 only, OFFLINE=L0+L1+L2 | v1.0.0 |
 | Contract tests | State Declaration, Single-Writer, Causality, Role Consistency | v1.0.0 |
-| 9 units | SPU, STU, IMU, ASU, NDU, MPU, PCU, ARU, RPU | v1.0.0 |
+| 9 Functions + 3 Meta-Layers | F1–F9 (belief-owning) + F10–F12 (evidence-only) | v2.0.0 |
+| 9 units (metadata) | SPU, STU, IMU, ASU, NDU, MPU, PCU, ARU, RPU | v1.0.0 |
 | Neurochemical channels | DA(0), NE(1), OPI(2), 5HT(3) — four channels | v1.0.0 |
 | 26 brain regions | The canonical region list for RAM | v1.0.0 |
+| Function phase DAG | Phase 0(F1,F7)→1(F2,F3)→2(F4,F5)→3(F8,F9)→4(PE)→5(F6) | v2.0.0 |
 
 ### 9.2 STABLE (change with justification + migration plan)
 
@@ -1543,7 +1606,9 @@ H³ (sparse temporal morphology,                 C³ Binding Service
 
 | Version | Date | Changes |
 |---------|------|---------|
-| 1.0.0 | 2026-02-16 | Initial proposal. Full specification of axes, beliefs, runtime kernel, contracts, integration plan. |
+| 1.0.0 | 2026-02-16 | Initial proposal. 9 units, ~25 beliefs, mechanism-centered execution. |
+| 2.0.0 | 2026-02-21 | Function-based architecture. 9 Functions + 3 Meta-Layers replace units as runtime structure. Multi-belief per Function. 6-phase DAG scheduler. Cross-function signal routes. |
+| 3.0.0 | 2026-02-21 | Mechanism-based beliefs. 131 beliefs in 3 categories (36 Core + 65 Appraisal + 30 Anticipation). Signal features ≠ beliefs. Only Core Beliefs carry PE overhead. |
 
 ---
 

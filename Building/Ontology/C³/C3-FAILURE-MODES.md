@@ -1,12 +1,13 @@
 # C³ Failure Modes & Prevention
 
-**Version**: 1.0.0
-**Date**: 2026-02-16
+**Version**: 2.0.0
+**Date**: 2026-02-21 (v2.0 Function-based update)
 **Companion**: `C3-ONTOLOGY-BOUNDARY.md` §8
 
-This document characterizes 10 concrete failure patterns that arise when 96 cognitive
-nuclei execute without proper architectural constraints, and specifies how the C³
-design prevents each one.
+This document characterizes 12 concrete failure patterns that arise when 96 cognitive
+models execute without proper architectural constraints, and specifies how the C³
+design prevents each one. FM-1 through FM-10 apply to models within Functions.
+FM-11 and FM-12 are Function-level failure modes (v2.0).
 
 ---
 
@@ -227,6 +228,70 @@ active R³ version. Numeric indices in code are a lint error.
 
 ---
 
+---
+
+## FM-11: Cross-Function Model Contradiction (v2.0)
+
+**Pattern**: Model X has primary assignment F2 (Prediction) and secondary assignment F5
+(Emotion). X produces evidence for both Functions. F2 interprets X's output as "high
+prediction confidence" while F5 interprets the same output as "high emotional arousal."
+These interpretations conflict — high confidence implies stability, high arousal implies change.
+
+**Why it fails**:
+- Same model output carries contradictory semantics in different Functions
+- No arbitration mechanism — both Functions trust the evidence equally
+- Debugging becomes impossible ("is X a prediction model or an emotion model?")
+- Downstream beliefs diverge based on which Function's interpretation dominates
+
+**Prevention**: Primary/Secondary distinction (§3.2' of ontology). A model's primary
+Function receives full output weight. Secondary Functions receive only specific
+pre-declared output fields (dims), not the full model output. Each field has exactly one
+semantic interpretation declared in the model's Function manifest.
+
+**Contract**: Function Manifest Test — every model declares which output dims map to
+which Function with what semantic tag. Conflicting tags = compile error.
+
+---
+
+## FM-12: Function Belief Explosion (v3.0 — 3-Category)
+
+**Pattern**: Unbounded belief declarations cause PE computation to explode O(N²),
+precision buffers consume O(N × H × W) memory, reward signal is diluted.
+
+**Why it fails**:
+- Computational cost scales quadratically with belief count (cross-belief context)
+- Memory for PE ring buffers: N_beliefs × N_horizons × window_size
+- Reward signal is diluted: averaging over many PEs → everything converges to mean
+- τ tuning becomes intractable with too many independent inertia parameters
+- Debugging: "which of 131 beliefs caused this reward spike?"
+
+**Prevention (v3.0)**: 3-category system controls PE overhead:
+
+| Category | Cap/Function | PE | Precision buffer | Reward input |
+|----------|:------------:|:--:|:----------------:|:------------:|
+| **Core** | max 5 | Yes | Yes (ring buffer) | Yes (PE-based) |
+| **Appraisal** | max 10 | No | No | No (evidence only) |
+| **Anticipation** | max 5 | No | No | No (prediction only) |
+
+Total per Function: max 20 beliefs. System-wide: max 180 theoretical.
+**Actual**: 131 beliefs (36 Core + 65 Appraisal + 30 Anticipation).
+
+**Only 36 Core Beliefs** carry PE/precision/reward overhead. This is manageable
+(vs 131 full-cycle beliefs which would be intractable).
+
+**Contract**: Function Belief Registry with category validation:
+```
+✗ F7.register_core_belief("a", "b", "c", "d", "e", "f")
+  → ERROR: 6 Core beliefs exceed max 5
+
+✓ F7.register_core_belief("period_entrainment", "kinematic_efficiency", "groove_quality", "context_depth")
+  F7.register_appraisal_belief("timing_precision", "period_lock_strength", ...)
+  F7.register_anticipation_belief("next_beat_pred", "groove_trajectory", ...)
+  → OK: 4 Core + 9 Appraisal + 4 Anticipation = 17 ≤ 20
+```
+
+---
+
 ## Summary Matrix
 
 | # | Failure Mode | Severity | Prevention | Contract Test |
@@ -241,3 +306,5 @@ active R³ version. Numeric indices in code are a lint error.
 | FM-8 | Unbounded memory | Performance | Bounded buffer | Runtime monitor |
 | FM-9 | Scope leakage | Correctness | Scope-filtering in scheduler | Role Consistency |
 | FM-10 | Index fragility | Correctness | Feature Registry | Compile-time resolution |
+| FM-11 | Cross-Function contradiction | Correctness | Primary/Secondary + manifest | Function Manifest Test |
+| FM-12 | Belief explosion | Performance | 3-category caps (5C+10A+5N/Function) | Function Belief Registry |

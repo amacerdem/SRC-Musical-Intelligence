@@ -1,6 +1,11 @@
 # Reward Formula
 
+**Version**: v3.0.0 (Mechanism-based beliefs)
+
 ## Core: Salience-Gated Inverted-U Reward
+
+F6 Reward (terminal Function, Phase 5) aggregates PEs from ALL 36 Core Beliefs
+across 8 Functions (F1-F5, F7-F9). Appraisal/Anticipation beliefs do NOT produce PE.
 
 ```
 reward = Σ_beliefs [ salience × (
@@ -42,7 +47,7 @@ reward *= 0.5 + 0.5 × fam_mod
 - Familiar=0.5 (sweet spot): mod=1.0 (full)
 - Familiar=1.0 (overlearned): mod=0.5 (halved)
 
-## SRP Hedonic Pathway (v4.0)
+## F6 Reward: SRP Hedonic Pathway (v4.0)
 
 ```
 srp_hedonic = 0.30×wanting + 0.30×liking + 0.25×pleasure + 0.15×tension
@@ -56,14 +61,14 @@ w_srp = 0.25 × srp_confidence
 reward = (1 − w_srp) × reward_pe + w_srp × reward_srp
 ```
 
-## MEAMN Emotional Modulation (v4.0)
+## F5 Emotion → F6: MEAMN Emotional Modulation (v4.0)
 
 ```
 emo_mod = 0.85 + 0.15 × emo_response_pred    # range [0.85, 1.0]
 reward *= emo_mod
 ```
 
-## DA Modulation — DAED Mesolimbic Pathway (v3.0)
+## F6 Reward: DA Modulation — DAED Mesolimbic Pathway (v3.0)
 
 ```
 da_signal = 0.6 × wanting_index + 0.4 × liking_index
@@ -98,8 +103,21 @@ neredeyse aktif olmuyor — spurious negative reward önlenir.
 
 ```
 1. Per-belief PE-based reward (surprise/resolution/exploration/monotony)
-2. SRP hedonic blend (v4.0)
-3. Familiarity modulation (inverted-U)
-4. MEAMN emotional modulation (v4.0)
-5. DAED DA gain (v3.0)
+   v3.0: PEs from ALL 36 Core Beliefs across 8 Functions (F1-F5, F7-F9)
+2. F6 SRP hedonic blend (v4.0)
+3. F4 Familiarity modulation (inverted-U)
+4. F5→F6 MEAMN emotional modulation (v4.0)
+5. F6 DAED DA gain (v3.0)
 ```
+
+## Function Source Map
+
+| Component | Function | Primary Model | Cross-Function Route |
+|-----------|----------|---------------|---------------------|
+| PE aggregation | All F1–F9 | — | Terminal aggregation |
+| SRP hedonic | F6 Reward | SRP (ARU) | — |
+| Familiarity mod | F4 Memory | MEAMN (IMU) | R3: F4→F6 |
+| Emotional mod | F5 Emotion | VMM (ARU) | R6: F5→F6 |
+| DA gain | F6 Reward | DAED (RPU) | — |
+| Chills | F6 Reward | MCCN (RPU) | — |
+| Pleasure | F6 Reward | MORMR (RPU) | — |

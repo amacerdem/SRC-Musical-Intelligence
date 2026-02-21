@@ -1,8 +1,43 @@
 # C³ Model Atlas
 
-**Generated**: 2026-02-16
+**Generated**: 2026-02-16, **Updated**: 2026-02-21 (v2.0 Function mapping)
 **Coverage**: 96 of 96 models read (100%), all 9 units × 3 tiers (α, β, γ)
 **Source**: Documentation sections 1, 4, 5, 6, 9, 11 of each model .md file at `Docs/C³/Models/`
+
+---
+
+## Function-Based Model Index (v2.0)
+
+As of v2.0, the runtime architecture groups models by **Function** (brain function),
+not by **Unit** (anatomical origin). This index maps all 96 models to their primary
+Function. The detailed model tables below remain organized by unit (metadata).
+
+| Function | Models (Primary Assignment) |
+|----------|---------------------------|
+| **F1 Sensory** (14) | BCH[SPU], PSCL[SPU], PCCR[SPU], SDNPS[SPU], SDED[SPU], PNH[IMU], TPRD[IMU], MPG[NDU], CSG[ASU], MIAA[SPU], MDNS[STU], TPIO[STU], MSPBA[IMU], LDAC[RPU] |
+| **F2 Prediction** (18) | HTP[PCU], SPH[PCU], ICEM[PCU], PWUP[PCU], PSH[PCU], UDP[PCU], CHPI[PCU], WMED[PCU], RPEM[RPU], IUCP[RPU], SSPS[RPU], PUPF[ARU], PMIM[IMU], PWSM[ASU], SDD[NDU], CDMR[NDU], SLEE[NDU], HMCE[STU] |
+| **F3 Attention** (14) | SNEM[ASU], IACM[ASU], BARM[ASU], STANM[ASU], AACM[ASU], DGTP[ASU], SDL[ASU], AMSS[STU], ETAM[STU], NEWMD[STU], IGFE[PCU], CSG[ASU]*, SDD[NDU]*, PWSM[ASU]* |
+| **F4 Memory** (12) | MEAMN[IMU], MMP[IMU], HCMC[IMU], DMMS[IMU], CDEM[IMU], PMIM[IMU]*, CSSL[IMU], HMCE[STU]*, TMRM[STU], MEAMR[RPU], NEMAC[ARU], SPH[PCU]* |
+| **F5 Emotion** (11) | VMM[ARU], AAC[ARU], CLAM[ARU], NEMAC[ARU]*, CMAT[ARU], TAR[ARU], ICEM[PCU]*, MAA[PCU], MEAMN[IMU]*, CDEM[IMU]*, STAI[SPU] |
+| **F6 Reward** (16) | SRP[ARU], DAED[RPU], MORMR[RPU], RPEM[RPU]*, IUCP[RPU]*, MCCN[RPU], MEAMR[RPU]*, SSRI[RPU], LDAC[RPU]*, IOTMS[RPU], SSPS[RPU]*, PUPF[ARU]*, UDP[PCU]*, STAI[SPU]*, AACM[ASU]*, MAD[ARU] |
+| **F7 Motor** (21) | PEOM[MPU], MSR[MPU], GSSM[MPU], ASAP[MPU], DDSMI[MPU], VRMSME[MPU], SPMC[MPU], CTBB[MPU], STC[MPU], AMSC[STU], EDTA[STU], ETAM[STU]*, HGSIC[STU], OMS[STU], TMRM[STU]*, NEWMD[STU]*, MPFS[STU], SNEM[ASU]*, BARM[ASU]*, MCCN[RPU]*, WMED[PCU]* |
+| **F8 Learning** (14) | TSCP[SPU], ESME[SPU], EDNR[NDU], CDMR[NDU]*, SLEE[NDU]*, ECT[NDU], EDTA[STU]*, MTNE[STU], PTGMP[STU], MPFS[STU]*, MSR[MPU]*, STC[MPU]*, OII[IMU], MAA[PCU]* |
+| **F9 Social** (4) | SSRI[RPU]*, DDSMI[MPU]*, NSCP[MPU], OMS[STU]* |
+| **F10 Clinical** (10) | MMP[IMU]*, RASN[IMU], RIRI[IMU], VRIAP[IMU], GSSM[MPU]*, VRMSME[MPU]*, CLAM[ARU]*, MAD[ARU]*, TAR[ARU]*, DSP[NDU] |
+| **F11 Development** (6) | DAP[ARU], DMMS[IMU]*, CSSL[IMU]*, DSP[NDU]*, SDDP[NDU], ONI[NDU] |
+| **F12 Cross-Modal** (5) | CMAT[ARU]*, CMAPCC[IMU], CHPI[PCU]*, DGTP[ASU]*, SDD[NDU]* |
+
+> `*` = secondary Function assignment (model has a different primary Function).
+> `[UNIT]` = anatomical origin metadata.
+> Total > 96 because many models span multiple Functions.
+> Full cross-intersection analysis: `Building/C³-Brain/Functions/96-model-functional-brain-map.md`
+
+---
+
+## Unit-Based Model Tables (Metadata Reference)
+
+The following sections organize models by their anatomical **unit** of origin.
+As of v2.0, units are metadata — the runtime grouping is by Function (see index above).
 
 ---
 
@@ -298,6 +333,95 @@
 | Only Relay | SPU-α1-BCH | Relay |
 | Most cross-unit reads | ARU-α1-SRP | 5+ units |
 | Most intra-unit connections | IMU-β3-OII | 5 intra models |
+
+---
+
+## Function-Based Summary Statistics (v3.0 — Mechanism-Based Beliefs)
+
+### 1. Models Per Function
+
+| Function | Primary | Secondary | Total | Primary Relay |
+|----------|---------|-----------|-------|---------------|
+| F1 Sensory | 14 | 0 | 14 | BCH |
+| F2 Prediction | 18 | 0 | 18 | HTP |
+| F3 Attention | 11 | 3 | 14 | SNEM |
+| F4 Memory | 9 | 3 | 12 | MEAMN |
+| F5 Emotion | 8 | 3 | 11 | VMM |
+| F6 Reward | 10 | 6 | 16 | SRP |
+| F7 Motor | 14 | 7 | 21 | PEOM |
+| F8 Learning | 8 | 6 | 14 | TSCP |
+| F9 Social | 1 | 3 | 4 | NSCP |
+| F10 Clinical | 3 | 7 | 10 | — (meta) |
+| F11 Development | 2 | 4 | 6 | — (meta) |
+| F12 Cross-Modal | 1 | 4 | 5 | — (meta) |
+
+> Primary = model's main Function. Secondary = model also contributes evidence.
+> Sum of primary = 96. Sum of total > 96 due to multi-Function models.
+
+### 2. Function Phase DAG — H³ Demand Estimate
+
+| Phase | Functions | Est. Primary H³ Tuples |
+|-------|-----------|------------------------|
+| 0 (sensory grounding) | F1, F7 | ~200 + ~180 |
+| 1 (pattern + attention) | F2, F3 | ~200 + ~150 |
+| 2 (memory + emotion) | F4, F5 | ~190 + ~100 |
+| 3 (learning + social) | F8, F9 | ~120 + ~40 |
+| 4 (PE + precision) | — | — |
+| 5 (reward) | F6 | ~250 |
+
+> Estimates based on sum of H³ tuples for primary models. Actual kernel demand is lower (relay subset).
+
+### 3. Cross-Function Bridge Models
+
+Models with 3+ Function assignments (primary + 2+ secondary):
+
+| Model | Primary | Secondary Functions | Total |
+|-------|---------|-------------------|-------|
+| SNEM | F3 | F7 | 2 |
+| HMCE | F2 | F4 | 2 |
+| MEAMN | F4 | F1, F5 | 3 |
+| NEMAC | F5 | F4 | 2 |
+| PUPF | F2 | F6 | 2 |
+| DAED | F6 | — | 1 |
+| SRP | F6 | — | 1 |
+| ICEM | F2 | F5 | 2 |
+| DSP | F10 | F11 | 2 |
+| WMED | F2 | F7 | 2 |
+
+> Bridge models create cross-function signal routes. See §5 Cross-Function Routes in C3-ONTOLOGY-BOUNDARY.md.
+
+### 4. Function Convergence Hub
+
+| Function | Receives From | Feeds To |
+|----------|--------------|----------|
+| F6 Reward | F1, F2, F3, F4, F5 | Output (terminal) |
+| F2 Prediction | F1, F7 | F3, F4, F5, F6 |
+| F3 Attention | F1, F2 | F4, F5, F6 |
+| F1 Sensory | R³/H³ (input) | F2, F3, F6, F7 |
+| F7 Motor | R³/H³, F1 | F2, F3, F8 |
+
+> F6 Reward is the terminal convergence hub (analogous to ARU in unit architecture).
+> F1 Sensory and F7 Motor are the entry points (Phase 0, no Function dependencies).
+
+### 5. Mechanism-Level Belief Distribution (v3.0)
+
+131 beliefs in 3 categories derived from model mechanisms:
+
+| Function | Core | Appraisal | Anticipation | Total | Key Core Beliefs |
+|----------|:----:|:---------:|:------------:|:-----:|------------------|
+| F1 Sensory | 5 | 7 | 5 | 17 | harmonic_stability, pitch_prominence, pitch_identity, timbral_character, aesthetic_quality |
+| F2 Prediction | 4 | 6 | 5 | 15 | prediction_hierarchy, sequence_match, information_content, prediction_accuracy |
+| F3 Attention | 4 | 7 | 4 | 15 | beat_entrainment, meter_hierarchy, attention_capture, salience_network_activation |
+| F4 Memory | 4 | 7 | 2 | 13 | autobiographical_retrieval, nostalgia_intensity, emotional_coloring, episodic_encoding |
+| F5 Emotion | 4 | 8 | 2 | 14 | perceived_happy, perceived_sad, emotional_arousal, nostalgia_affect |
+| F6 Reward | 5 | 7 | 4 | 16 | wanting, liking, pleasure, prediction_error, tension |
+| F7 Motor | 4 | 9 | 4 | 17 | period_entrainment, kinematic_efficiency, groove_quality, context_depth |
+| F8 Learning | 4 | 8 | 2 | 14 | trained_timbre_recognition, expertise_enhancement, network_specialization, statistical_model |
+| F9 Social | 2 | 6 | 2 | 10 | neural_synchrony, social_coordination |
+| **TOTAL** | **36** | **65** | **30** | **131** | |
+
+> Core = full Bayesian cycle with PE. Appraisal = observe-only mechanism outputs. Anticipation = forward predictions.
+> Full inventory: BELIEF-CYCLE.md v3.0
 
 ---
 

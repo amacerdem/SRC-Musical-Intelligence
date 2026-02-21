@@ -1,8 +1,14 @@
 # Region Activation Map (RAM)
 
+**Version**: v3.0.0 (Mechanism-based beliefs)
+
 Non-computational 26D brain region activation.
 Visualization ve HYBRID layer için spatial output.
 Belief'leri veya reward'ı ETKİLEMEZ.
+
+> RAM is driven by relay outputs (model-level), not by beliefs directly.
+> The 131 mechanism-level beliefs (v3.0) do not change region link computation.
+> Region links are organized by Function (v2.0) — the same relay models drive the same regions.
 
 ## 26 Brain Regions
 
@@ -55,75 +61,94 @@ Belief'leri veya reward'ı ETKİLEMEZ.
 
 T=1 (single frame): z-norm skipped → sigmoid(ReLU(x)) ∈ [0.5, 1)
 
-## Region Link Table
+## Region Link Table (v2.0 — Function-Based)
 
-### BCH (SPU) — Brainstem Consonance
-| Output | Region | Weight |
-|--------|--------|--------|
-| hierarchy | IC | 0.85 |
-| consonance_signal | MGB | 0.6, STG | 0.4 |
+As of v2.0, region links are organized by Function. Each Function's primary relay
+model drives the region activations. Relay names preserved for backward compatibility.
 
-### HMCE (STU) — Temporal Context
-| Output | Region | Weight |
-|--------|--------|--------|
-| a1_encoding | A1_HG | 0.85 |
-| stg_encoding | STG | 0.80 |
-| mtg_encoding | STS | 0.75 |
-| context_prediction | hippocampus | 0.50 |
-| structure_predict | IFG | 0.60 |
+### F1 Sensory Processing (primary relay: BCH)
+| Output | Region | Weight | Relay |
+|--------|--------|--------|-------|
+| hierarchy | IC | 0.85 | BCH |
+| consonance_signal | MGB | 0.60 | BCH |
+| consonance_signal | STG | 0.40 | BCH |
 
-### SNEM (ASU) — Neural Entrainment
-| Output | Region | Weight |
-|--------|--------|--------|
-| beat_locked_activity | SMA | 0.80 |
-| entrainment_strength | putamen | 0.85 |
-| selective_gain | ACC | 0.50 |
-| beat_onset_pred | PMC | 0.60 |
+### F2 Pattern Recognition & Prediction (primary relay: HTP)
+| Output | Region | Weight | Relay |
+|--------|--------|--------|-------|
+| sensory_match | A1_HG | 0.90 | HTP |
+| pitch_prediction | STG | 0.85 | HTP |
+| abstract_prediction | STG | 0.80 | HTP |
+| abstract_future_500ms | ACC | 0.60 | HTP |
+| a1_encoding | A1_HG | 0.85 | HMCE |
+| stg_encoding | STG | 0.80 | HMCE |
+| mtg_encoding | STS | 0.75 | HMCE |
+| context_prediction | hippocampus | 0.50 | HMCE |
+| structure_predict | IFG | 0.60 | HMCE |
 
-### MEAMN (IMU) — Autobiographical Memory
-| Output | Region | Weight |
-|--------|--------|--------|
-| memory_state | hippocampus | 0.90 |
-| emotional_color | amygdala | 0.80 |
-| nostalgia_link | AG | 0.60, STG | 0.80 |
-| self_referential_pred | vmPFC | 0.85 |
+### F3 Attention & Salience (primary relay: SNEM)
+| Output | Region | Weight | Relay |
+|--------|--------|--------|-------|
+| beat_locked_activity | SMA | 0.80 | SNEM |
+| entrainment_strength | putamen | 0.85 | SNEM |
+| selective_gain | ACC | 0.50 | SNEM |
+| beat_onset_pred | PMC | 0.60 | SNEM |
 
-### DAED (RPU) — Dopamine Dissociation
-| Output | Region | Weight |
-|--------|--------|--------|
-| wanting_index | amygdala | 0.60, hippocampus | 0.40 |
-| liking_index | putamen | 0.60, OFC | 0.70 |
-| caudate_activation | caudate | 0.85 |
-| nacc_activation | NAcc | 0.85 |
+### F4 Memory Systems (primary relay: MEAMN)
+| Output | Region | Weight | Relay |
+|--------|--------|--------|-------|
+| memory_state | hippocampus | 0.90 | MEAMN |
+| emotional_color | amygdala | 0.80 | MEAMN |
+| nostalgia_link | AG | 0.60 | MEAMN |
+| nostalgia_link | STG | 0.80 | MEAMN |
+| self_referential_pred | vmPFC | 0.85 | MEAMN |
 
-### MPG (NDU) — Melodic Processing
-| Output | Region | Weight |
-|--------|--------|--------|
-| onset_state | STG | 0.60 |
-| contour_state | STG | 0.70 |
+### F5 Emotion & Valence (primary relay: VMM)
 
-### SRP (ARU) — Striatal Reward
-| Output | Region | Weight |
-|--------|--------|--------|
-| wanting | caudate | 0.70 |
-| liking | NAcc | 0.80 |
-| tension | IFG | 0.60 |
+> F5 has no kernel relay in v1.0. Region links pending implementation wave 3.
+> Evidence from MEAMN.emotional_color (F4) provides indirect amygdala activation.
 
-### PEOM (MPU) — Motor Entrainment
-| Output | Region | Weight |
-|--------|--------|--------|
-| period_lock_strength | STG | 0.60 |
-| next_beat_pred | SMA | 0.70 |
+### F6 Reward & Motivation (primary relay: SRP)
+| Output | Region | Weight | Relay |
+|--------|--------|--------|-------|
+| wanting | caudate | 0.70 | SRP |
+| liking | NAcc | 0.80 | SRP |
+| tension | IFG | 0.60 | SRP |
+| wanting_index | amygdala | 0.60 | DAED |
+| liking_index | putamen | 0.60 | DAED |
+| liking_index | OFC | 0.70 | DAED |
+| caudate_activation | caudate | 0.85 | DAED |
+| nacc_activation | NAcc | 0.85 | DAED |
 
-### HTP (PCU) — Hierarchical Prediction
-| Output | Region | Weight |
-|--------|--------|--------|
-| sensory_match | A1_HG | 0.90 |
-| pitch_prediction | STG | 0.85 |
-| abstract_prediction | STG | 0.80 |
-| abstract_future_500ms | ACC | 0.60 |
+### F7 Motor & Timing (primary relay: PEOM)
+| Output | Region | Weight | Relay |
+|--------|--------|--------|-------|
+| period_lock_strength | STG | 0.60 | PEOM |
+| next_beat_pred | SMA | 0.70 | PEOM |
+| onset_state | STG | 0.60 | MPG |
+| contour_state | STG | 0.70 | MPG |
 
-## Convergence Hub: STG
+### F8 Learning, F9 Social
 
-4 relay feeds into STG: BCH, MEAMN, MPG, PEOM, HTP.
-Highest connectivity in the network.
+> F8/F9 have no kernel relay in v1.0. Region links pending implementation waves 4–5.
+> F8 plasticity → potential links: A1_HG, STG (expertise-dependent cortical reorganization).
+> F9 social → potential links: STS, ACC, vmPFC (social cognition network).
+
+### F10–F12 Meta-Layers
+
+> Meta-Layers produce no beliefs and drive no region activations.
+> Their evidence contributes indirectly via F1–F9 observe() calls.
+
+## Convergence Hubs
+
+### STG — Superior Temporal Gyrus
+5 relay feeds from 4 Functions: BCH(F1), HMCE(F2), HTP(F2), MPG(F7), PEOM(F7), MEAMN(F4).
+Highest connectivity in the network. Convergence of sensory, temporal, and memory signals.
+
+### NAcc — Nucleus Accumbens
+2 relay feeds from F6: SRP(liking), DAED(nacc_activation).
+Primary reward convergence point.
+
+### Hippocampus
+2 relay feeds: HMCE(F2, context), MEAMN(F4, memory), DAED(F6, wanting).
+Memory-prediction-reward convergence.
