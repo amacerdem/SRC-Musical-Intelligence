@@ -40,10 +40,10 @@ BCH_R3_ACTIVE_INDICES: tuple = (
     0, 1, 2, 3, 4, 5, 6,
     # Timbre group C [12:21]
     14, 17, 18, 19, 20,
-    # Pitch & Chroma group F [49:65]
-    62, 63,
-    # Harmony group H [75:87]
-    75, 84,
+    # Pitch & Chroma group F [25:41] (post-freeze, was [49:65])
+    38, 39,
+    # Harmony group H [51:63] (post-freeze, was [75:87])
+    51, 60,
 )
 BCH_R3_ACTIVE_DIM: int = len(BCH_R3_ACTIVE_INDICES)   # 16
 BCH_H3_DEMAND_COUNT: int = 50                          # 50 H³ tuples
@@ -90,15 +90,15 @@ BCH_H3_DEMAND_NAMES: tuple = (
     "h3:trist3_H0_val_integ",      # (20, 0, 0, 2)
     "h3:coupling_H3_val_integ",    # (41, 3, 0, 2)
     "h3:coupling_H6_period_integ", # (41, 6, 14, 2)
-    "h3:pce_H0_val_integ",         # (62, 0, 0, 2)
-    "h3:pce_H3_mean_integ",        # (62, 3, 1, 2)
-    "h3:pitchsal_H0_val_integ",    # (63, 0, 0, 2)
-    "h3:pitchsal_H3_val_integ",    # (63, 3, 0, 2)
-    "h3:pitchsal_H6_val_integ",    # (63, 6, 0, 2)
-    "h3:keyclarity_H3_val_integ",  # (75, 3, 0, 2)
-    "h3:keyclarity_H3_mean_integ", # (75, 3, 1, 2)
-    "h3:keyclarity_H6_val_integ",  # (75, 6, 0, 2)
-    "h3:tonalstab_H3_val_integ",   # (84, 3, 0, 2)
+    "h3:pce_H0_val_integ",         # (38, 0, 0, 2)
+    "h3:pce_H3_mean_integ",        # (38, 3, 1, 2)
+    "h3:pitchsal_H0_val_integ",    # (39, 0, 0, 2)
+    "h3:pitchsal_H3_val_integ",    # (39, 3, 0, 2)
+    "h3:pitchsal_H6_val_integ",    # (39, 6, 0, 2)
+    "h3:keyclarity_H3_val_integ",  # (51, 3, 0, 2)
+    "h3:keyclarity_H3_mean_integ", # (51, 3, 1, 2)
+    "h3:keyclarity_H6_val_integ",  # (51, 6, 0, 2)
+    "h3:tonalstab_H3_val_integ",   # (60, 3, 0, 2)
     # Past demands (L0 = Memory, 17 tuples)
     "h3:rough_H6_trend_mem",       # (0, 6, 18, 0)
     "h3:rough_H12_mean_mem",       # (0, 12, 1, 0)
@@ -111,12 +111,12 @@ BCH_H3_DEMAND_NAMES: tuple = (
     "h3:inharm_H12_mean_mem",      # (5, 12, 1, 0)
     "h3:hdev_H3_mean_mem",         # (6, 3, 1, 0)
     "h3:hdev_H12_mean_mem",        # (6, 12, 1, 0)
-    "h3:pitchsal_H12_mean_mem",    # (63, 12, 1, 0)
-    "h3:pitchsal_H18_mean_mem",    # (63, 18, 1, 0)
-    "h3:keyclarity_H12_mean_mem",  # (75, 12, 1, 0)
-    "h3:keyclarity_H18_mean_mem",  # (75, 18, 1, 0)
-    "h3:tonalstab_H6_mean_mem",    # (84, 6, 1, 0)
-    "h3:tonalstab_H18_mean_mem",   # (84, 18, 1, 0)
+    "h3:pitchsal_H12_mean_mem",    # (39, 12, 1, 0)
+    "h3:pitchsal_H18_mean_mem",    # (39, 18, 1, 0)
+    "h3:keyclarity_H12_mean_mem",  # (51, 12, 1, 0)
+    "h3:keyclarity_H18_mean_mem",  # (51, 18, 1, 0)
+    "h3:tonalstab_H6_mean_mem",    # (60, 6, 1, 0)
+    "h3:tonalstab_H18_mean_mem",   # (60, 18, 1, 0)
     # Future demands (L1 = Prediction, 12 tuples)
     "h3:rough_H6_mean_pred",       # (0, 6, 1, 1)
     "h3:rough_H12_trend_pred",     # (0, 12, 18, 1)
@@ -124,12 +124,12 @@ BCH_H3_DEMAND_NAMES: tuple = (
     "h3:helm_H12_mean_pred",       # (2, 12, 1, 1)
     "h3:stumpf_H6_mean_pred",      # (3, 6, 1, 1)
     "h3:inharm_H6_trend_pred",     # (5, 6, 18, 1)
-    "h3:pitchsal_H6_mean_pred",    # (63, 6, 1, 1)
-    "h3:pitchsal_H12_mean_pred",   # (63, 12, 1, 1)
-    "h3:keyclarity_H6_mean_pred",  # (75, 6, 1, 1)
-    "h3:keyclarity_H16_mean_pred", # (75, 16, 1, 1)
-    "h3:tonalstab_H6_mean_pred",   # (84, 6, 1, 1)
-    "h3:tonalstab_H12_mean_pred",  # (84, 12, 1, 1)
+    "h3:pitchsal_H6_mean_pred",    # (39, 6, 1, 1)
+    "h3:pitchsal_H12_mean_pred",   # (39, 12, 1, 1)
+    "h3:keyclarity_H6_mean_pred",  # (51, 6, 1, 1)
+    "h3:keyclarity_H16_mean_pred", # (51, 16, 1, 1)
+    "h3:tonalstab_H6_mean_pred",   # (60, 6, 1, 1)
+    "h3:tonalstab_H12_mean_pred",  # (60, 12, 1, 1)
 )
 BCH_OUTPUT_NAMES: tuple = (
     # E-layer (4D): Extraction
@@ -154,3 +154,34 @@ BCH_RAM_NAMES: tuple = (
 BCH_NEURO_NAMES: tuple = (
     "neuro:DA", "neuro:NE", "neuro:OPI", "neuro:5HT",
 )
+
+# ── PSCL nucleus (Encoder, depth 1) ──────────────────────────────
+PSCL_DIM: int = 16       # PSCL total output: E(4) + M(4) + P(4) + F(4)
+PSCL_EXPORTABLE_DIM: int = 8   # PSCL external+hybrid dims (P4 + F4 = [8:16])
+
+PSCL_R3_ACTIVE_INDICES: tuple = (
+    # Consonance group A [0:7]
+    4, 5,
+    # Timbre group C [12:21]
+    14, 15, 16, 17, 18,
+    # Dynamics group D [21:25]
+    22, 23, 24,
+    # Pitch & Chroma group F [25:41]
+    25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36,  # chroma [25:37]
+    37, 39,                                             # pitch_height, pitch_salience
+)
+PSCL_R3_ACTIVE_DIM: int = len(PSCL_R3_ACTIVE_INDICES)  # 24
+PSCL_H3_DEMAND_COUNT: int = 20                           # 20 H³ tuples (7 L2 + 9 L0 + 4 L1)
+
+# PSCL Computational Manifold (for future inverse heads):
+#   R³ active dims  → 24D
+#   H³ active dims  → 20D
+#   BCH output      → 16D (upstream relay)
+#   PSCL output     → 16D
+#   RAM             → 26D
+#   Neuro           → 4D
+# Total = 106D
+PSCL_MANIFOLD_DIM: int = (
+    PSCL_R3_ACTIVE_DIM + PSCL_H3_DEMAND_COUNT + BCH_DIM + PSCL_DIM
+    + RAM_DIM + NEURO_DIM
+)  # 106
