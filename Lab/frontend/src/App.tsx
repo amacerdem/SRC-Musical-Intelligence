@@ -1,35 +1,41 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Sidebar from './components/layout/Sidebar';
+import TopBar from './components/layout/TopBar';
+import Dashboard from './pages/Dashboard';
+import PipelineRunner from './pages/PipelineRunner';
+import R3Explorer from './pages/R3Explorer';
+import H3Explorer from './pages/H3Explorer';
+import C3Explorer from './pages/C3Explorer';
+import RewardAnalyzer from './pages/RewardAnalyzer';
+import ExperimentCompare from './pages/ExperimentCompare';
+import Documentation from './pages/Documentation';
+import NeuroacousticAtlas from './pages/NeuroacousticAtlas';
 
-function App() {
-  const [count, setCount] = useState(0)
-
+export default function App() {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <BrowserRouter>
+      <div className="flex h-screen w-screen" style={{ background: 'var(--bg)' }}>
+        {/* Sidebar */}
+        <Sidebar />
 
-export default App
+        {/* Main content */}
+        <div className="flex-1 flex flex-col min-w-0">
+          <TopBar />
+          <main className="flex-1 overflow-hidden">
+            <Routes>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/pipeline" element={<PipelineRunner />} />
+              <Route path="/r3" element={<R3Explorer />} />
+              <Route path="/h3" element={<H3Explorer />} />
+              <Route path="/c3" element={<C3Explorer />} />
+              <Route path="/reward" element={<RewardAnalyzer />} />
+              <Route path="/compare" element={<ExperimentCompare />} />
+              <Route path="/docs" element={<Documentation />} />
+              <Route path="/atlas" element={<NeuroacousticAtlas />} />
+            </Routes>
+          </main>
+        </div>
+      </div>
+    </BrowserRouter>
+  );
+}

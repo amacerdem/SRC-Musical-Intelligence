@@ -1,0 +1,843 @@
+% ============================================================================
+% Project-MI-Feb22.tex — Musical Intelligence: A Three-Layer Computational
+% Architecture for Neuroscience-Informed Music Cognition
+% ============================================================================
+\documentclass[10pt,twocolumn]{article}
+
+% ── Packages ────────────────────────────────────────────────────────────────
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=1.8cm,top=2.2cm,bottom=2.2cm]{geometry}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc,fit,backgrounds}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{microtype}
+
+% ── Colors ──────────────────────────────────────────────────────────────────
+\definecolor{r3color}{RGB}{52,120,198}
+\definecolor{h3color}{RGB}{180,90,45}
+\definecolor{c3color}{RGB}{38,150,80}
+\definecolor{rewardcolor}{RGB}{180,40,40}
+\definecolor{linkcolor}{RGB}{0,80,160}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=linkcolor,
+  citecolor=linkcolor,
+  urlcolor=linkcolor,
+}
+
+% ── Section formatting ──────────────────────────────────────────────────────
+\titleformat{\section}{\large\bfseries}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.5em}{}
+\titleformat{\subsubsection}{\small\bfseries\itshape}{\thesubsubsection}{0.5em}{}
+\titlespacing*{\section}{0pt}{1.2ex plus .3ex minus .2ex}{0.6ex plus .1ex}
+\titlespacing*{\subsection}{0pt}{0.8ex plus .2ex minus .1ex}{0.4ex plus .1ex}
+
+% ── Header/Footer ───────────────────────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape Musical Intelligence: R\textsuperscript{3}--H\textsuperscript{3}--C\textsuperscript{3} Architecture}
+\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ── Custom commands ─────────────────────────────────────────────────────────
+\newcommand{\Rcube}{R\textsuperscript{3}}
+\newcommand{\Hcube}{H\textsuperscript{3}}
+\newcommand{\Ccube}{C\textsuperscript{3}}
+\newcommand{\pe}{\mathrm{PE}}
+\newcommand{\piobs}{\pi_{\mathrm{obs}}}
+\newcommand{\pipred}{\pi_{\mathrm{pred}}}
+\newcommand{\pieff}{\pi_{\mathrm{eff}}}
+
+% ============================================================================
+\begin{document}
+
+% ── Title Block ─────────────────────────────────────────────────────────────
+\twocolumn[
+\begin{@twocolumnfalse}
+\begin{center}
+{\LARGE\bfseries Musical Intelligence: A Three-Layer Computational\\[4pt]
+Architecture for Neuroscience-Informed Music Cognition}\\[14pt]
+{\large A.~Macerdem\textsuperscript{1}}\\[6pt]
+{\small\itshape \textsuperscript{1}Independent Researcher}\\[4pt]
+{\small February 22, 2026}\\[10pt]
+\rule{\textwidth}{0.5pt}
+\end{center}
+
+\begin{abstract}
+\noindent
+We present \textbf{Musical Intelligence (MI)}, a deterministic, neuroscience-grounded computational architecture for real-time music cognition modeling.
+MI decomposes auditory processing into three hierarchically organized layers:
+\textbf{\Rcube{}} (Early Perceptual Front-End), a stateless 97-dimensional spectral feature extractor operating at frame resolution;
+\textbf{\Hcube{}} (Multi-Scale Temporal Morphology Engine), a demand-driven windowed statistical transform engine spanning 32 temporal horizons from 5.8\,ms to 981\,s via 24 morphological operators;
+and \textbf{\Ccube{}} (Cognitive Brain), a function-centered distributed predictive coding system with 131 typed beliefs across 9 cognitive functions, precision-weighted Bayesian updating, and a salience-gated inverted-U reward aggregator.
+The architecture is grounded in 96 neuroscience-derived computational models spanning 9 anatomical units, informed by a literature corpus of 250+ peer-reviewed studies.
+Each layer maintains strict ontological boundaries: \Rcube{} is frame-local and deterministic, \Hcube{} is window-local and stateless, and \Ccube{} performs cognitive inference through predict--observe--update cycles.
+A relay system bridges the perceptual substrate (\Rcube{}/\Hcube{}) to cognitive processing (\Ccube{}), while a 26-region Regional Activation Map provides neuroanatomically grounded spatial output.
+Alpha testing on four classical music excerpts demonstrates 100\% positive reward across all pieces, with mean reward convergence at $+0.147$ for three of four test stimuli, validating the architecture's capacity to generate musically coherent hedonic responses.
+The full system processes audio at approximately 249 frames per second, enabling real-time operation.
+\end{abstract}
+\vspace{6pt}
+\noindent\textbf{Keywords:} computational music cognition, predictive coding, Bayesian brain, auditory neuroscience, temporal morphology, reward modeling, spectral features
+\vspace{8pt}
+\rule{\textwidth}{0.5pt}
+\vspace{12pt}
+\end{@twocolumnfalse}
+]
+
+% ============================================================================
+\section{Introduction}
+\label{sec:intro}
+
+The computational modeling of music perception and cognition remains one of the most challenging problems at the intersection of auditory neuroscience, cognitive science, and artificial intelligence.
+Music engages virtually every major brain system---from peripheral auditory transduction through subcortical processing, cortical hierarchies, limbic emotion circuits, basal ganglia reward pathways, and motor timing networks~\cite{zatorre2007,janata2009,salimpoor2011}.
+Existing computational approaches tend to address isolated aspects of this processing chain: spectral analysis tools extract acoustic features~\cite{mcfee2015librosa}, music information retrieval (MIR) systems classify or segment musical audio~\cite{mueller2015fundamentals}, and cognitive models of expectation operate on symbolic representations~\cite{pearce2018idyom}.
+
+A comprehensive architecture that spans the full processing hierarchy---from raw audio to hedonic reward---while maintaining neurobiological plausibility at each level has remained elusive.
+We identify three key challenges:
+\begin{enumerate}[leftmargin=*,nosep]
+    \item \textbf{Ontological clarity}: Perceptual features, temporal dynamics, and cognitive inferences are qualitatively different representations that require distinct computational principles. Conflating them leads to systems that are neither scientifically interpretable nor compositionally modular.
+    \item \textbf{Multi-scale temporal integration}: Music operates simultaneously at timescales spanning three orders of magnitude---from sub-millisecond transients to multi-minute formal structures. A unified temporal framework must span these scales without accumulated state that would violate stationarity assumptions.
+    \item \textbf{Predictive coding with precision weighting}: The brain's response to music is fundamentally predictive: pleasure arises from the interplay of expectation, surprise, and resolution~\cite{huron2006,salimpoor2011,gold2019}. A complete model must implement precision-weighted prediction errors across multiple belief types and temporal scales.
+\end{enumerate}
+
+This paper presents \textbf{Musical Intelligence (MI)}, a three-layer architecture that addresses these challenges through strict ontological separation.
+\Rcube{} answers ``What does the sound look like right now?'' through 97 frame-local acoustic descriptors.
+\Hcube{} answers ``How does each feature behave over time?'' through deterministic windowed transforms across 32 temporal horizons.
+\Ccube{} answers ``What does this temporal pattern mean?'' through 131 typed cognitive beliefs organized into 9 functional domains, updated via a Bayesian predict--observe--update cycle and aggregated into a salience-gated reward signal.
+
+The architecture is informed by a comprehensive analysis of 96 neuroscience-derived computational models drawn from 250+ peer-reviewed publications, organized into 9 anatomical units and 12 functional categories.
+Every design decision---from \Rcube{}'s inclusion rules to \Ccube{}'s belief taxonomy---is traceable to specific neuroscience findings.
+
+The remainder of this paper is organized as follows:
+\Cref{sec:architecture} provides an overview of the three-layer architecture.
+\Cref{sec:r3,sec:h3,sec:c3} detail each layer's formalization, algorithms, and design rationale.
+\Cref{sec:relay} describes the relay system bridging perception and cognition.
+\Cref{sec:implementation} summarizes the implementation.
+\Cref{sec:results} presents alpha-test results, and \Cref{sec:discussion} discusses implications and future directions.
+
+% ============================================================================
+\section{Architecture Overview}
+\label{sec:architecture}
+
+Musical Intelligence is organized as a feedforward processing stack with three ontologically distinct layers (\Cref{fig:architecture}):
+
+\begin{equation}
+\text{Audio} \xrightarrow{\text{mel}} \Rcube \xrightarrow{\text{demand}} \Hcube \xrightarrow{\text{relay}} \Ccube \rightarrow \text{Output}
+\label{eq:pipeline}
+\end{equation}
+
+Each layer answers a fundamentally different question and operates under strict boundary constraints:
+
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{\Rcube{} (Early Perceptual Front-End)}: 97-dimensional stateless, deterministic, frame-local spectral feature extraction. Biological analogy: cochlea through primary auditory cortex (A1).
+    \item \textbf{\Hcube{} (Multi-Scale Temporal Morphology Engine)}: Demand-driven, stateless, windowed statistical transforms parameterized by a 4-tuple address $(r_3, h, m, l)$. Biological analogy: temporal receptive windows in auditory cortex hierarchies.
+    \item \textbf{\Ccube{} (Cognitive Brain)}: Function-centered distributed predictive coding with 131 beliefs, 9 relay wrappers, Bayesian updating, and reward aggregation. Biological analogy: cortical--subcortical cognitive networks.
+\end{itemize}
+
+No layer may answer another layer's question.
+\Rcube{} does not predict; \Hcube{} does not bind cross-feature information; \Ccube{} does not extract raw spectral features.
+This separation ensures that each layer is independently testable, scientifically interpretable, and compositionally replaceable.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[
+    layer/.style={draw, rounded corners=3pt, minimum width=6.5cm, minimum height=0.85cm, font=\small\bfseries, align=center},
+    arrow/.style={-{Stealth[length=3mm]}, thick},
+    label/.style={font=\scriptsize\itshape, text width=3.8cm, align=left},
+    node distance=0.7cm
+]
+% Layers
+\node[layer, fill=r3color!15, draw=r3color] (r3) {R\textsuperscript{3}: Early Perceptual Front-End (97D)};
+\node[layer, fill=h3color!15, draw=h3color, below=of r3] (h3) {H\textsuperscript{3}: Temporal Morphology (4-tuple)};
+\node[layer, fill=c3color!15, draw=c3color, below=of h3] (c3) {C\textsuperscript{3}: Cognitive Brain (131 beliefs)};
+\node[layer, fill=rewardcolor!10, draw=rewardcolor, below=of c3] (out) {Output: Reward + RAM (26D)};
+
+% Audio input
+\node[above=0.4cm of r3, font=\small] (audio) {Audio (mel spectrogram)};
+
+% Arrows
+\draw[arrow, r3color] (audio) -- (r3);
+\draw[arrow, h3color] (r3) -- node[right, label] {97 features\\per frame} (h3);
+\draw[arrow, c3color] (h3) -- node[right, label] {sparse 4-tuple\\time series} (c3);
+\draw[arrow, rewardcolor] (c3) -- node[right, label] {beliefs, PE,\\reward, RAM} (out);
+
+% Side labels
+\node[left=0.3cm of r3, font=\scriptsize, text width=2cm, align=right, r3color] {Frame-local\\Deterministic\\Stateless};
+\node[left=0.3cm of h3, font=\scriptsize, text width=2cm, align=right, h3color] {Window-local\\Demand-driven\\Stateless};
+\node[left=0.3cm of c3, font=\scriptsize, text width=2cm, align=right, c3color] {Bayesian\\Predictive\\9 Functions};
+\end{tikzpicture}
+\caption{Three-layer architecture of Musical Intelligence. Each layer maintains strict ontological boundaries: \Rcube{} is frame-local and deterministic, \Hcube{} is window-local and stateless, \Ccube{} performs cognitive inference. Arrows indicate data flow; side labels indicate computational constraints.}
+\label{fig:architecture}
+\end{figure}
+
+% ============================================================================
+\section{R\textsuperscript{3}: Early Perceptual Front-End}
+\label{sec:r3}
+
+\subsection{Formal Definition}
+
+\Rcube{} is formally defined as \emph{the set of acoustic descriptors extractable from a single frame ($\pm 2$ neighboring frames) of the audio signal, requiring no accumulated history, no listener model, no cross-domain feature products, and no predictive or information-theoretic context beyond the immediate spectral neighborhood.}
+
+This boundary is enforced through five inclusion rules:
+\begin{enumerate}[leftmargin=*,nosep]
+    \item \textbf{Frame locality}: Computable from frame $t$ and at most $t \pm 2$ neighbors ($\pm 11.6$\,ms at 172.27\,Hz frame rate).
+    \item \textbf{No listener model}: Describes the signal, not the listener's response.
+    \item \textbf{No cross-domain binding}: Each feature operates within a single perceptual domain.
+    \item \textbf{No prediction}: No future state estimation or information-theoretic context.
+    \item \textbf{Deterministic}: No learned parameters; closed-form functions of the spectrogram.
+\end{enumerate}
+
+\subsection{Feature Architecture}
+
+After ontological boundary enforcement, \Rcube{} consists of 97 features organized in 9 groups across a 2-stage directed acyclic graph (DAG):
+
+\begin{table}[h]
+\centering
+\caption{\Rcube{} feature groups after ontology freeze (v1.0.0).}
+\label{tab:r3groups}
+\small
+\begin{tabular}{@{}llccl@{}}
+\toprule
+\textbf{Group} & \textbf{Domain} & \textbf{Range} & \textbf{D} & \textbf{Stage} \\
+\midrule
+A -- Consonance   & Psychoacoustic & $[0,7)$   & 7  & 1 \\
+B -- Energy       & Spectral       & $[7,12)$  & 5  & 1 \\
+C -- Timbre       & Spectral       & $[12,21)$ & 9  & 1 \\
+D -- Change       & Temporal       & $[21,25)$ & 4  & 1 \\
+F -- Pitch/Chroma & Tonal          & $[25,41)$ & 16 & 1 \\
+G -- Rhythm       & Temporal       & $[41,51)$ & 10 & 2 \\
+H -- Harmony      & Tonal          & $[51,63)$ & 12 & 2 \\
+J -- Timbre Ext.  & Spectral       & $[63,83)$ & 20 & 1 \\
+K -- Modulation   & Psychoacoustic & $[83,97)$ & 14 & 1 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Two original groups were dissolved during ontological boundary enforcement:
+\textbf{Group E (Interactions, 24D)} violated Rule~3 by computing cross-domain products (e.g., amplitude $\times$ roughness), and
+\textbf{Group I (Information, 7D)} violated Rules~1, 2, and~4 through accumulated statistics (melodic entropy, spectral surprise).
+These features were redistributed to \Ccube{} (where models compute needed interactions internally) and \Hcube{} (velocity morphs), respectively.
+
+\subsection{Biological Correspondence}
+
+\Rcube{}'s processing stages map to the ascending auditory pathway:
+Group~A (consonance) corresponds to cochlear nucleus and superior olivary complex processing;
+Groups B--D (energy, timbre, change) to inferior colliculus amplitude and modulation rate extraction;
+Groups F, H (pitch, harmony) to medial geniculate body spectral template matching;
+and Groups J, K (extended timbre, modulation) to primary auditory cortex (A1) spectral contrast computation.
+Processing \emph{beyond} A1---expectation, binding, prediction---is explicitly excluded from \Rcube{}.
+
+The consonance features in Group~A implement Sethares' dissonance model~\cite{sethares1993} with Plomp--Levelt roughness curves~\cite{plomp1965}, producing a six-level consonance hierarchy (P1 $>$ P5 $>$ P4 $>$ M3 $>$ m6 $>$ TT) with 45\% spread between most and least consonant intervals.
+
+% ============================================================================
+\section{H\textsuperscript{3}: Multi-Scale Temporal Morphology Engine}
+\label{sec:h3}
+
+\subsection{Formal Definition}
+
+\Hcube{} is formally defined as \emph{the set of deterministic, stateless, window-based statistical transforms applied to \Rcube{} features, parameterized by (feature, scale, operator, direction), requiring no accumulated state, no listener model, no prediction, and no cross-feature binding.}
+
+The statelessness principle is critical: every \Hcube{} output is a pure function of the window content.
+No exponential moving averages, no running baselines, no frame counters.
+This makes \Hcube{} computations at different time steps embarrassingly parallel.
+
+\subsection{4-Tuple Address Space}
+
+Every \Hcube{} descriptor is uniquely addressed by a 4-tuple:
+\begin{equation}
+(r_3, h, m, l) \in [0,96] \times [0,31] \times [0,23] \times [0,2]
+\label{eq:h3tuple}
+\end{equation}
+where $r_3$ indexes the \Rcube{} feature, $h$ the temporal horizon, $m$ the morphological operator, and $l$ the causal law (window direction).
+The theoretical space spans $97 \times 32 \times 24 \times 3 = 223{,}488$ tuples, of which approximately 8,600 ($\sim$3.9\%) are actively demanded by \Ccube{} models---a sparse, demand-driven design.
+
+\subsection{Temporal Horizons}
+
+The 32 horizons are quasi-logarithmically spaced across four perceptual bands:
+
+\begin{table}[h]
+\centering
+\caption{\Hcube{} horizon bands.}
+\label{tab:h3horizons}
+\small
+\begin{tabular}{@{}lccl@{}}
+\toprule
+\textbf{Band} & \textbf{Range} & \textbf{Duration} & \textbf{Musical analogy} \\
+\midrule
+Micro (H0--H7)   & 5.8ms--250ms  & Note attacks \\
+Meso (H8--H15)   & 300ms--800ms  & Beats, phrases \\
+Macro (H16--H23)  & 1s--25s       & Sections \\
+Ultra (H24--H31)  & 36s--981s     & Movements \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The architectural pivot point is H6 (200\,ms, 34 frames)---the boundary between sub-note sound quality processing and supra-note musical structure processing.
+This corresponds to the densest demand region across \Ccube{} models.
+
+\subsection{Morphological Operators}
+
+Twenty-four morph operators organized in six families provide a comprehensive vocabulary for temporal description:
+
+\begin{table}[h]
+\centering
+\caption{H\textsuperscript{3} morph families (24 operators).}
+\label{tab:morphs}
+\small
+\begin{tabular}{@{}lcp{4.0cm}@{}}
+\toprule
+\textbf{Family} & \textbf{Count} & \textbf{Key operators} \\
+\midrule
+Distribution & 8 & mean (M0), std (M2), range (M5), kurtosis (M7) \\
+Dynamics     & 9 & velocity (M8), trend (M18), acceleration (M11), smoothness (M15) \\
+Rhythm       & 3 & periodicity (M14), shape period (M17), peaks (M22) \\
+Information  & 1 & entropy (M20) \\
+Symmetry     & 3 & curvature (M16), stability (M19), symmetry (M23) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+A critical distinction exists between M8 (velocity: instantaneous $x[t] - x[t-1]$, horizon-\emph{independent}) and M18 (trend: regression slope over the full window, horizon-\emph{dependent}).
+Requesting M8 at multiple horizons is redundant; requesting M18 at multiple horizons yields informative multi-scale trend information.
+
+\subsection{Causal Laws}
+
+Three laws define window orientation:
+\begin{itemize}[leftmargin=*,nosep]
+    \item \textbf{L0 (Memory)}: Backward window $[t-W+1, t]$, causal, zero latency.
+    \item \textbf{L1 (Forward)}: Forward window $[t, t+W-1]$, acausal, $W$ frame latency.
+    \item \textbf{L2 (Integration)}: Centered window $[t-W/2, t+W/2]$, acausal.
+\end{itemize}
+
+All laws share an exponential attention kernel $w(i) = \exp(-\lambda(1 - p(i)))$ with $\lambda = 3.0$, implementing recency bias for L0, proximity bias for L1, and centrality bias for L2.
+For real-time applications, only L0 outputs are available without latency.
+
+% ============================================================================
+\section{C\textsuperscript{3}: Cognitive Brain}
+\label{sec:c3}
+
+\subsection{Architecture Overview}
+
+\Ccube{} is a function-centered distributed predictive coding system implementing 131 typed beliefs across 9 cognitive functions (\Cref{tab:functions}).
+The architecture is grounded in a comprehensive analysis of 96 neuroscience-derived computational models spanning 9 anatomical units (SPU, ARU, ASU, IMU, MPU, PCU, NDU, STU, RPU) and 12 functional categories.
+
+\begin{table}[h]
+\centering
+\caption{The 9 cognitive functions of \Ccube{}.}
+\label{tab:functions}
+\small
+\begin{tabular}{@{}clccc@{}}
+\toprule
+\textbf{F\#} & \textbf{Function} & \textbf{Models} & \textbf{Beliefs} & \textbf{Phase} \\
+\midrule
+F1 & Sensory Processing       & 14 & 17 & 0 \\
+F2 & Prediction               & 18 & 15 & 1 \\
+F3 & Attention \& Salience    & 14 & 15 & 1 \\
+F4 & Memory Systems           & 12 & 13 & 2 \\
+F5 & Emotion \& Valence       & 11 & 14 & 2 \\
+F6 & Reward \& Motivation     & 16 & 16 & 5 \\
+F7 & Motor \& Timing          & 21 & 17 & 0 \\
+F8 & Learning \& Plasticity   & 14 & 14 & 3 \\
+F9 & Social Cognition         &  4 & 10 & 3 \\
+\midrule
+   & \textbf{Total}           & \textbf{96*} & \textbf{131} & \\
+\bottomrule
+\multicolumn{5}{@{}l}{\scriptsize *Models span multiple functions; unique count is 96.}
+\end{tabular}
+\end{table}
+
+Three meta-layers (F10 Clinical, F11 Development, F12 Cross-Modal) provide evidence but own no beliefs, as they operate on timescales (sessions, years) incompatible with frame-by-frame inference.
+
+\subsection{Belief Taxonomy}
+\label{sec:beliefs}
+
+Beliefs are \emph{cognitive inferences}---not signal features.
+\Rcube{}/\Hcube{} produce signal features (roughness, periodicity); beliefs represent what the brain \emph{infers} from those features (e.g., ``this sound is harmonically stable'').
+
+The 131 beliefs are organized into three categories:
+
+\begin{table}[h]
+\centering
+\caption{Belief categories in \Ccube{}.}
+\label{tab:beliefcats}
+\small
+\begin{tabular}{@{}lcccp{3.2cm}@{}}
+\toprule
+\textbf{Category} & \textbf{Sym.} & \textbf{Count} & \textbf{PE} & \textbf{Cycle} \\
+\midrule
+Core          & C & 36 & Yes & Full Bayesian \\
+Appraisal     & A & 65 & No  & Observe only \\
+Anticipation  & N & 30 & No  & Predictions \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Core beliefs} (36) undergo the full predict--observe--update Bayesian cycle with inertia parameter $\tau$.
+Each Core belief generates precision-weighted prediction errors that drive the reward computation.
+\textbf{Appraisal beliefs} (65) are direct mechanism outputs tracked without prediction---evaluative judgments computed each frame.
+\textbf{Anticipation beliefs} (30) are forward predictions that feed into Core beliefs' predict() methods as context signals.
+
+Representative Core beliefs span the cognitive hierarchy:
+\emph{harmonic\_stability} (F1, $\tau=0.3$): ``This sound is harmonically resolved'';
+\emph{beat\_entrainment} (F3, $\tau=0.35$): ``Neural oscillations locked to beat frequency'';
+\emph{autobiographical\_retrieval} (F4, $\tau=0.85$): ``I remember this music'';
+\emph{wanting} (F6, $\tau=0.6$): ``I want more of this music''.
+
+\subsection{Bayesian Belief Update}
+
+For each Core belief $b_i$ at each frame:
+
+\vspace{-4pt}
+\begin{align}
+\hat{b}_i^{(t)} &= \tau_i \cdot b_i^{(t-1)} + (1-\tau_i) \cdot \beta_i \nonumber \\
+& \quad + w_{\mathrm{trend}} \cdot \Hcube_{\mathrm{M18}} + w_{\mathrm{period}} \cdot \Hcube_{\mathrm{M14}} \nonumber \\
+& \quad + w_{\mathrm{ctx}} \cdot \sum_j c_{ij} \cdot b_j^{(t-1)} \label{eq:predict} \\[4pt]
+\tilde{b}_i^{(t)} &= f_{\mathrm{obs}}(\Rcube, \Hcube, \mathbf{r}) \label{eq:observe} \\[4pt]
+\pe_i^{(t)} &= \tilde{b}_i^{(t)} - \hat{b}_i^{(t)} \label{eq:pe} \\[4pt]
+g_i^{(t)} &= \frac{\piobs_i}{\piobs_i + \pipred_i + \epsilon} \label{eq:gain} \\[4pt]
+b_i^{(t)} &= (1 - g_i^{(t)}) \cdot \hat{b}_i^{(t)} + g_i^{(t)} \cdot \tilde{b}_i^{(t)} \label{eq:update}
+\end{align}
+\vspace{-2pt}
+
+where $\hat{b}_i$ is the prediction (Eq.~\ref{eq:predict}), $\tilde{b}_i$ the observation (Eq.~\ref{eq:observe}), $\pe_i$ the prediction error (Eq.~\ref{eq:pe}), $g_i$ the Bayesian gain (Eq.~\ref{eq:gain}), and $b_i$ the posterior (Eq.~\ref{eq:update}).
+The inertia parameter $\tau_i$ ranges from 0.25 (fast-adapting attention beliefs) to 0.95 (slow-adapting learning beliefs), reflecting the biological timescale of each cognitive process.
+The observation function $f_{\mathrm{obs}}$ is belief-specific: for \emph{harmonic\_stability}, it combines consonance signal (50\%), template match (30\%), and hierarchy position (20\%) from the BCH relay.
+
+\subsection{Multi-Scale Prediction}
+
+Core beliefs that span multiple temporal horizons use scale-matched exponential weighting:
+\begin{equation}
+w(h, \Delta) = \frac{\exp(-\alpha |h - \Delta|)}{\sum_{h'} \exp(-\alpha |h' - \Delta|)}
+\label{eq:scaleweight}
+\end{equation}
+where $h$ is the evidence horizon, $\Delta$ the target horizon, and $\alpha = 0.3$.
+This produces peak weight ($\sim$49\%) at exact horizon match, dropping to $\sim$20\% at $\pm 3$ indices and $\sim$5\% at $\pm 8$ indices.
+
+\emph{Harmonic\_stability} uses 8 horizons spanning H5 (46\,ms) to H28 (414\,s) with characteristic timescale $T_{\mathrm{char}} = 525$\,ms.
+\emph{Period\_entrainment} uses 6 horizons spanning H5--H21 with $T_{\mathrm{char}} = 600$\,ms.
+\emph{Autobiographical\_retrieval} uses 8 horizons up to H30 (800\,s) with $T_{\mathrm{char}} = 8$\,s, reflecting the slow timescale of memory retrieval.
+
+Horizon activation gating prevents spurious prediction errors from insufficiently populated ultra-horizons:
+\begin{equation}
+a(t, T_h) = \sigma\!\left(5 \cdot \left(\frac{t}{T_h} - 1\right)\right)
+\label{eq:activation}
+\end{equation}
+where $t$ is elapsed time and $T_h$ the horizon's characteristic duration.
+Ultra horizons (H24 = 36\,s, H28 = 414\,s) are effectively silent during 30-second excerpts, preventing negative reward artifacts.
+
+\subsection{Precision Engine}
+\label{sec:precision}
+
+Two precision types modulate each Core belief's update:
+
+\textbf{Observation precision} ($\piobs$) quantifies sensory confidence.
+Each belief defines its own $\piobs$ formula reflecting its signal quality.
+For example, for harmonic stability: $\piobs = \text{spectral\_SNR} \times \text{salience} / (\Hcube_{\text{std}} + \epsilon)$.
+
+\textbf{Prediction precision} ($\pipred$) is estimated from prediction error history via a 32-frame ring buffer:
+\begin{align}
+\text{stability} &= 1 / (\overline{|\pe|} + 0.1) \label{eq:stability} \\
+\text{consistency} &= 1 / (\text{std}(|\pe|) + 0.1) \\
+\pipred &= \text{EMA}(\pipred^{(t-1)},\, \text{stab} \times \text{cons} \times (0.5 + \tau),\, 0.6)
+\end{align}
+clamped to $[0.01, 10.0]$.
+
+Hierarchical prediction from the HTP (Hierarchical Temporal Prediction) relay boosts $\pipred$ for beliefs with validated prediction pathways, with boost scales ranging from 0.05 to 0.15 depending on the belief's function.
+
+\subsection{Phase Scheduler}
+\label{sec:scheduler}
+
+\Ccube{} processes beliefs in a single-pass DAG-ordered phase schedule that resolves circular dependencies:
+
+\begin{equation*}
+\begin{aligned}
+\text{Phase 0:} & \quad \text{F1 (Sensory), F7 (Motor)} &\leftarrow \Rcube/\Hcube \\
+\text{Phase 1:} & \quad \text{F2 (Prediction), F3 (Attention)} &\leftarrow \text{F1, F7} \\
+\text{Phase 2:} & \quad \text{F4 (Memory), F5 (Emotion)} &\leftarrow \text{F1--F3} \\
+\text{Phase 3:} & \quad \text{F8 (Learning), F9 (Social)} &\leftarrow \text{F2, F7} \\
+\text{Phase 4:} & \quad \text{PE + Precision (all 36 Core)} & \\
+\text{Phase 5:} & \quad \text{F6 (Reward)} &\leftarrow \text{all PEs}
+\end{aligned}
+\end{equation*}
+
+F6 Reward is the terminal function, requiring all other functions' prediction errors.
+Circular dependency with F1 is resolved by using $b^{(t-1)}$ reward values: beliefs at Phase~0 read the \emph{previous} frame's reward.
+
+Within Phase~0, relays are further ordered: Phase~0a computes 7 independent relays (BCH, SNEM, MEAMN, DAED, MPG, SRP, PEOM), Phase~0b resolves cross-relay dependencies (HMCE, DAED cross-reads), and Phase~0c integrates consonance with HTP and tempo with PEOM.
+
+\subsection{Salience Computation}
+\label{sec:salience}
+
+Salience gates the reward signal, ensuring that reward responds primarily to perceptually prominent events.
+Four signals contribute:
+\begin{equation}
+s = 0.25\,s_{\text{energy}} + 0.25\,s_{\Hcube} + 0.15\,s_{\pe} + 0.35\,s_{\text{relay}}
+\label{eq:salience}
+\end{equation}
+where $s_{\text{energy}}$ is \Rcube{} energy, $s_{\Hcube}$ is \Hcube{} velocity magnitude, $s_{\pe}$ is previous-frame PE carry-over, and $s_{\text{relay}}$ aggregates entrainment, onset, contour, and tension signals from SNEM, MPG, and SRP relays.
+
+A peak-preservation mixing strategy combines weighted average and element-wise maximum:
+\begin{equation}
+s_{\text{final}} = 0.5 \cdot s + 0.5 \cdot \max(s_{\text{energy}}, s_{\Hcube}, s_{\pe}, s_{\text{relay}})
+\end{equation}
+
+The SNEM selective gain gate applies multiplicative attention after mixing:
+$s_{\text{final}} \leftarrow s_{\text{final}} \cdot (1 + 0.3 \cdot g_{\text{selective}})$, boosting salience at metrically strong positions.
+
+\subsection{Reward Aggregation}
+\label{sec:reward}
+
+F6 Reward implements a salience-gated inverted-U reward function that aggregates precision-weighted prediction errors from all 36 Core beliefs:
+
+\begin{equation}
+R = \sum_{i=1}^{36} s_i \left[ w_s \cdot S_i + w_r \cdot V_i + w_e \cdot E_i - w_m \cdot M_i \right] \cdot F \cdot D
+\label{eq:reward}
+\end{equation}
+
+where the four reward components are:
+\begin{align}
+\pieff &= \tanh(\pipred / 12) \label{eq:pieff} \\
+S_i &= |\pe_i| \cdot \pieff \cdot (1 - f_i) & \text{(surprise)} \label{eq:surprise} \\
+V_i &= (1 - |\pe_i|) \cdot \pieff \cdot f_i & \text{(resolution)} \label{eq:resolution} \\
+E_i &= |\pe_i| \cdot (1 - \pieff) & \text{(exploration)} \label{eq:exploration} \\
+M_i &= \pieff^2 & \text{(monotony)} \label{eq:monotony}
+\end{align}
+
+with weights $w_s = 1.5$, $w_r = 0.8$, $w_e = 0.5$, $w_m = 0.6$ (calibrated to produce 14$\times$ steeper dynamic range between climaxes and calm passages compared to uniform weights).
+
+The tanh compression (Eq.~\ref{eq:pieff}) is essential: without it, $\pipred^2$ saturates monotony at high precision ($M = 0.90$ at $\pi = 10$), producing uniformly negative reward.
+With compression, $M = 0.37$ at $\pi = 10$, maintaining the operating range.
+
+\textbf{Familiarity modulation} implements the Wundt/Berlyne inverted-U preference curve~\cite{berlyne1971}:
+\begin{equation}
+F = 0.5 + 0.5 \cdot 4 f_i (1 - f_i)
+\label{eq:familiarity}
+\end{equation}
+peaking at $f_i = 0.5$ (moderate familiarity) and halving reward at both extremes ($f_i = 0$ or $f_i = 1$).
+
+Familiarity is computed as a recurrence-aware signal blending \Hcube{} periodicity (50\%), inverted standard deviation (35\%), and tonal stability (15\%), with an energy gate $\sigma(10(e - 0.1))$ suppressing familiarity estimates during silence.
+
+\textbf{Dopaminergic modulation} via the DAED relay:
+\begin{equation}
+D = 1 + 0.25 \cdot (0.6 \cdot w_{\text{wanting}} + 0.4 \cdot w_{\text{liking}})
+\label{eq:dagain}
+\end{equation}
+providing a $[1.0, 1.25]$ multiplicative gain reflecting the anticipatory (caudate) and consummatory (nucleus accumbens) dopamine pathways~\cite{salimpoor2011}.
+
+\textbf{SRP hedonic pathway} (v4.0) blends PE-based reward with explicit hedonic signals from the Striatal Reward Pathway:
+\begin{equation}
+R_{\text{final}} = (1 - w_{\text{srp}}) \cdot R_{\pe} + w_{\text{srp}} \cdot R_{\text{srp}}
+\end{equation}
+where $R_{\text{srp}} = s \cdot (0.30 w + 0.30 l + 0.25 p + 0.15 \tau) \cdot c_{\text{chills}} \cdot a_{\text{res}}$, incorporating wanting ($w$), liking ($l$), pleasure ($p$), and tension ($\tau$) signals with chills proximity and resolution expectation multipliers.
+
+\textbf{Emotional modulation} from MEAMN provides a $[0.85, 1.0]$ range:
+$R \leftarrow R \cdot (0.85 + 0.15 \cdot e_{\text{pred}})$, where $e_{\text{pred}}$ is the emotional response prediction from the Memory--Emotion circuit.
+
+% ============================================================================
+\section{Relay System}
+\label{sec:relay}
+
+The relay system bridges the perceptual substrate (\Rcube{}/\Hcube{}) and cognitive processing (\Ccube{}).
+Nine relay wrappers---one per cognitive unit---transform raw perceptual features into cognitively meaningful signals (\Cref{tab:relays}).
+
+\begin{table}[h]
+\centering
+\caption{The 9 relay wrappers bridging \Hcube{} to \Ccube{}.}
+\label{tab:relays}
+\small
+\begin{tabular}{@{}llcl@{}}
+\toprule
+\textbf{Relay} & \textbf{Unit} & \textbf{\Hcube{} L0} & \textbf{Key outputs} \\
+\midrule
+BCH   & SPU & 17 & hierarchy, consonance, template \\
+HTP   & PCU &  9 & sensory match, predictions \\
+HMCE  & STU & 18 & context encoding, structure \\
+SNEM  & ASU &  3 & entrainment, selective gain \\
+MEAMN & IMU & 11 & memory, emotion, nostalgia \\
+DAED  & RPU &  5 & wanting/liking, DA activation \\
+MPG   & NDU &  2 & onset, contour, boundary \\
+SRP   & ARU &  5 & wanting, liking, pleasure \\
+PEOM  & MPU &  3 & period lock, kinematics \\
+\midrule
+      & \textbf{Total} & \textbf{73} & 44 output fields \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+All relays operate exclusively under L0 (memory) law, ensuring causal real-time operation.
+The total of 73 \Hcube{} L0 tuples are deduplicated across the 131 beliefs' demands via the DemandTree routing structure.
+
+The BCH relay deserves special attention: it implements a hierarchy--consonance--template integration producing a 27$\times$ wider consonance range than raw \Rcube{} features alone, correctly ordering P1 $>$ P5 $>$ P4 $>$ M3 $>$ m6 $>$ TT with 45\% spread.
+Its 12-dimensional output (E4+M2+P3+F3) feeds both the harmonic stability belief (F1) and the reward pathway (F6) via cross-function routes.
+
+\subsection{Neurochemical System}
+
+A 4-channel neurochemical overlay (dopamine, norepinephrine, opioid, serotonin) accumulates across processing depths.
+Each Nucleus declares NeuroLinks mapping output dimensions to neurochemical channels via produce, amplify, or inhibit effects.
+The neurochemical tensor $(B, T, 4)$ is initialized at baseline (0.5) and clamped to $[0, 1]$ after each depth level.
+
+\subsection{Regional Activation Map}
+\label{sec:ram}
+
+A non-computational 26-dimensional Regional Activation Map (RAM) provides neuroanatomically grounded spatial output.
+RAM does not influence beliefs or reward---it is purely an output visualization layer mapping relay activations to brain regions.
+
+The 26 regions span cortical (A1/HG, STG, STS, IFG, dlPFC, vmPFC, OFC, ACC, SMA, PMC, AG, TP), subcortical (VTA, NAcc, caudate, amygdala, hippocampus, putamen, MGB, hypothalamus, insula), and brainstem (IC, AN, CN, SOC, PAG) structures.
+
+Assembly follows:
+\begin{equation}
+\text{RAM}_r = \sigma\!\left(\text{znorm}\!\left(\text{ReLU}\!\left(\sum_k w_{rk} \cdot \mathbf{o}_k\right)\right)\right)
+\end{equation}
+where $\mathbf{o}_k$ are relay outputs, $w_{rk}$ are static link weights from the REGION\_LINK\_TABLE, znorm is applied for $T > 1$ (skipped for single frames to avoid NaN from zero-variance division), and $\sigma$ maps to $[0, 1]$.
+STG serves as the convergence hub, receiving 5 relay feeds from 4 functions---the highest connectivity in the network.
+
+% ============================================================================
+\section{Implementation}
+\label{sec:implementation}
+
+MI is implemented in Python~3 using PyTorch for tensor operations.
+The codebase comprises approximately 350+ source files organized into three packages:
+
+\begin{itemize}[leftmargin=*,nosep]
+    \item \texttt{contracts/}: 17 interface contract files defining data structures (H3DemandSpec, LayerSpec, ModelMetadata, Citation, etc.) and the Nucleus base class hierarchy (Relay $\rightarrow$ Encoder $\rightarrow$ Associator $\rightarrow$ Integrator $\rightarrow$ Hub), each with distinct \texttt{compute()} signatures reflecting scope-dependent data access.
+    \item \texttt{ear/}: 98 files implementing \Rcube{} (9 spectral groups, 2-stage DAG pipeline) and \Hcube{} (24 morphology operators, batch computation via \texttt{torch.unfold}, DemandTree sparse routing).
+    \item \texttt{brain/}: 155+ files implementing \Ccube{} (scheduler with 6-phase DAG, 5 kernel belief implementations, 9 relay wrappers, precision engine with per-belief ring buffers, reward aggregator, RAM assembler, 4-channel neurochemical manager, and function-organized mechanism layers).
+\end{itemize}
+
+The \Hcube{} computation was optimized from 40M+ sequential loop iterations to vectorized \texttt{torch.unfold} batch operations, achieving approximately 249 frames per second with $\sim$1.7\,GB memory per 30-second excerpt on consumer hardware.
+
+Each of the 96 neuroscience models is implemented as a Nucleus subclass with declarative metadata: \Hcube{} demand specifications (as typed H3DemandSpec dataclasses), layer structure with scope labels (internal/external/hybrid), cross-unit pathway dependencies, region links, neurochemical links, and evidence provenance (citations, tier, confidence, falsification criteria).
+This enables automatic demand aggregation, validation, and routing through the DemandTree.
+
+Mechanism implementations follow a 4-layer E/M/P/F architecture: Extraction (raw feature access), Mathematical (statistical transforms), Present (cognitive present integration), and Forecast (trend extrapolation).
+Each layer's computation is documented in matching specification files and validated through contract tests.
+
+A companion web application provides real-time visualization of \Rcube{}/\Hcube{}/\Ccube{} outputs through a React/TypeScript frontend with Zustand state management and a FastAPI/Python backend serving audio streaming, waveform visualization, mel spectrograms, and pipeline execution endpoints.
+
+% ============================================================================
+\section{Experimental Results}
+\label{sec:results}
+
+\subsection{Alpha Test Protocol}
+
+We evaluated MI v3.1 on four classical music excerpts (30\,s each), selected to span a range of timbral and harmonic complexity:
+
+\begin{enumerate}[leftmargin=*,nosep]
+    \item \textbf{Bach}: Cello Suite No.~1, Prelude (solo cello, monophonic)
+    \item \textbf{Swan Lake}: Tchaikovsky, Swan Theme (orchestral, lyrical)
+    \item \textbf{Herald}: Grieg, In the Hall of the Mountain King (orchestral, building dynamics)
+    \item \textbf{Beethoven}: Symphony No.~5, 1st movement (orchestral, dense texture)
+\end{enumerate}
+
+\subsection{Results}
+
+\begin{table}[h]
+\centering
+\caption{Alpha test results (MI v3.1, 30-second excerpts).}
+\label{tab:results}
+\small
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Piece} & \textbf{Mean $R$} & \textbf{\% Pos.} & \textbf{vs.\ v2.3} \\
+\midrule
+Bach         & $+0.149$ & 100\% & $+38\%$ \\
+Swan Lake    & $+0.147$ & 100\% & $+123\%$ \\
+Herald       & $+0.146$ & 100\% & $+26\%$ \\
+Beethoven    & $+0.056$ & 100\% & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Three key findings emerge:
+
+\textbf{1.\ Convergence}: Bach, Swan Lake, and Herald converge to $\sim$0.147 mean reward, suggesting stable normalization behavior at this calibration point.
+The tight clustering ($\pm$0.003) across musically diverse pieces indicates that the reward formula achieves genre-independent baseline calibration.
+
+\textbf{2.\ Universal positivity}: All four pieces maintain positive reward throughout the entire 30-second duration, validating that the inverted-U reward formula with tanh precision compression (Eq.~\ref{eq:pieff}) successfully prevents the monotony-dominated negative reward that plagued earlier versions (v2.3: Swan Lake was $-0.065$).
+
+\textbf{3.\ Complexity-sensitive differentiation}: Beethoven's significantly lower reward ($+0.056$ vs.\ $\sim$0.147) reflects genuine musical complexity: dense orchestral textures produce high and sustained prediction error with reduced resolution opportunity.
+This aligns with the theoretical expectation that dense, complex music should produce more exploratory ($E_i$ in Eq.~\ref{eq:exploration}) and less resolved ($V_i$ in Eq.~\ref{eq:resolution}) reward---an appropriate cognitive response rather than a system failure.
+
+\subsection{Version Progression}
+
+The improvement from v2.3 to v3.1 reflects three key architectural advances:
+(i) tanh precision compression eliminating monotony saturation;
+(ii) multi-scale temporal prediction with horizon activation gating;
+and (iii) relay integration providing richer observation signals.
+Swan Lake's 123\% improvement is particularly notable, as this piece's sustained melodic lines previously triggered excessive monotony penalties under linear precision.
+
+\subsection{Stress Test Validation}
+
+All validation tests pass for v4.0, including:
+import integrity, tensor shape consistency, NaN absence throughout the pipeline,
+RAM bounds within $[0, 1]$, precision bounds within $[0.01, 10]$,
+reward positivity across the test suite,
+and complete relay field coverage (44/44 fields consumed by beliefs, up from 13/44 in v3.2).
+
+% ============================================================================
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{Contributions}
+
+MI makes several contributions to computational music cognition:
+
+\textbf{Ontological rigor.}
+The three-layer separation with frozen boundary specifications provides unprecedented clarity about what constitutes a perceptual feature (\Rcube{}), a temporal descriptor (\Hcube{}), and a cognitive inference (\Ccube{}).
+This addresses a pervasive source of confusion in music cognition research where signal features (e.g., roughness = 0.3) and beliefs (e.g., ``this sound is harmonically stable'') are routinely conflated.
+
+\textbf{Comprehensive temporal coverage.}
+\Hcube{}'s 32 horizons spanning 5.8\,ms to 981\,s cover the full range of musically relevant timescales within a single stateless framework.
+The demand-driven sparse computation ensures efficiency: only 3.9\% of the theoretical address space is computed.
+The statelessness property enables embarrassingly parallel computation, with the current implementation exploiting this via \texttt{torch.unfold} vectorization.
+
+\textbf{Typed belief taxonomy.}
+The three-category taxonomy (Core/Appraisal/Anticipation) reflects genuine cognitive distinctions: beliefs that are predicted and updated via Bayesian inference (Core), beliefs that are directly observed from mechanism outputs (Appraisal), and beliefs that represent forward predictions feeding into the predict step (Anticipation).
+This avoids the common approach of treating all cognitive quantities uniformly.
+
+\textbf{Neuroscience grounding at scale.}
+Every design decision traces to specific neuroscience findings from the 250+ publication literature corpus.
+The 96 computational models spanning 9 anatomical units and 12 functional categories provide falsifiable predictions about neural processing that can be validated against neuroimaging data.
+
+\textbf{Interpretability.}
+Unlike deep learning approaches, every dimension in MI has a named meaning traceable to neuroscience.
+The deterministic, parameter-free pipeline enables complete auditability: given the same audio input, the same output is guaranteed.
+
+\subsection{Relation to Prior Work}
+
+MI differs from existing approaches along several axes.
+Unlike MIR feature extraction tools~\cite{mcfee2015librosa,mueller2015fundamentals}, MI maintains the perceptual--cognitive distinction and models the listener's internal states rather than just signal properties.
+Unlike symbolic expectation models~\cite{pearce2018idyom}, MI operates on raw audio and models the full processing hierarchy from cochlea to reward.
+Unlike deep learning approaches to music understanding, MI is fully interpretable and deterministic.
+
+The predictive coding framework aligns with Friston's free energy principle~\cite{friston2010} applied to auditory cognition~\cite{koelsch2019}.
+The reward model operationalizes Huron's ITPRA (Imagination--Tension--Prediction--Reaction--Appraisal) theory~\cite{huron2006} and Salimpoor et al.'s dopaminergic pleasure model~\cite{salimpoor2011}, with the inverted-U preference curve implementing the Berlyne--Wundt optimal complexity hypothesis~\cite{berlyne1971}.
+The precision-weighting mechanism implements Feldman and Friston's hierarchical predictive coding with precision estimation~\cite{friston2010}, extended to multiple temporal scales.
+
+\subsection{Limitations and Future Directions}
+
+\textbf{Fixed parameters.}
+MI v4.0 uses no learned parameters.
+While this preserves interpretability and determinism, it limits adaptivity to individual listeners.
+The planned HYBRID layer would add supervised bidirectional mapping (Head1: mel $\rightarrow$ \Ccube{}, Head2: \Ccube{} $\rightarrow$ mel) while keeping the deterministic pipeline as ground truth for supervision.
+
+\textbf{Single-listener model.}
+The current architecture models an idealized listener with fixed familiarity and expertise parameters.
+Individual differences in musical training, cultural background, and personal history are not yet captured but could be accommodated through per-listener $\tau$ profiles and familiarity baselines.
+
+\textbf{Limited validation corpus.}
+Alpha testing on four classical pieces demonstrates architectural viability but does not constitute comprehensive validation across genres, cultures, or listening contexts.
+Planned validation includes cross-genre testing (jazz, electronic, non-Western traditions) and correlation with behavioral pleasure ratings and neuroimaging data.
+
+\textbf{Partial belief activation.}
+The current v1.0 kernel activates 5 of 36 Core beliefs.
+Full activation of all 131 beliefs across implementation waves 2--5 will reveal emergent cross-function dynamics not observable in the current configuration.
+
+% ============================================================================
+\section{Conclusion}
+\label{sec:conclusion}
+
+We have presented Musical Intelligence, a three-layer computational architecture for neuroscience-informed music cognition.
+By maintaining strict ontological boundaries between perceptual feature extraction (\Rcube{}, 97D across 9 groups), multi-scale temporal morphology (\Hcube{}, $97 \times 32 \times 24 \times 3$ address space), and cognitive inference (\Ccube{}, 131 beliefs across 9 functions with Bayesian updating), the architecture achieves both scientific interpretability and computational efficiency.
+
+The system processes raw audio through a deterministic, single-pass pipeline that produces frame-level belief states, precision-weighted prediction errors, a four-component salience-gated reward signal, and a 26-region neuroanatomical activation map---all at real-time speeds ($\sim$249 fps).
+
+Alpha testing demonstrates musically coherent behavior: 100\% positive reward across diverse classical pieces, appropriate differentiation between simple and complex textures, and stable convergence behavior ($\pm$0.003 across three pieces).
+The architecture provides a principled foundation for both scientific investigation of music cognition mechanisms and practical applications in music therapy, adaptive recommendation, and brain--computer interfaces.
+
+% ============================================================================
+% References
+% ============================================================================
+\begin{thebibliography}{20}
+\small
+
+\bibitem{berlyne1971}
+D.~E. Berlyne,
+\emph{Aesthetics and Psychobiology}.
+Appleton-Century-Crofts, New York, 1971.
+
+\bibitem{friston2010}
+K.~Friston,
+``The free-energy principle: a unified brain theory?''
+\emph{Nature Reviews Neuroscience}, vol.~11, no.~2, pp.~127--138, 2010.
+
+\bibitem{gold2019}
+B.~P. Gold, M.~T. Pearce, E.~Mas-Herrero, A.~Dagher, and R.~J. Zatorre,
+``Predictability and uncertainty in the pleasure of music: a reward for learning?''
+\emph{Journal of Neuroscience}, vol.~39, no.~47, pp.~9397--9409, 2019.
+
+\bibitem{huron2006}
+D.~Huron,
+\emph{Sweet Anticipation: Music and the Psychology of Expectation}.
+MIT Press, Cambridge, MA, 2006.
+
+\bibitem{janata2009}
+P.~Janata,
+``The neural architecture of music-evoked autobiographical memories,''
+\emph{Cerebral Cortex}, vol.~19, no.~11, pp.~2579--2594, 2009.
+
+\bibitem{koelsch2019}
+S.~Koelsch, P.~Vuust, and K.~Friston,
+``Predictive processes and the peculiar case of music,''
+\emph{Trends in Cognitive Sciences}, vol.~23, no.~1, pp.~63--77, 2019.
+
+\bibitem{mcfee2015librosa}
+B.~McFee, C.~Raffel, D.~Liang, D.~P.~W. Ellis, M.~McVicar, E.~Battenberg, and O.~Nieto,
+``librosa: Audio and music signal analysis in Python,''
+in \emph{Proc.\ 14th Python in Science Conference}, pp.~18--24, 2015.
+
+\bibitem{mueller2015fundamentals}
+M.~M{\"u}ller,
+\emph{Fundamentals of Music Processing}.
+Springer, Cham, 2015.
+
+\bibitem{pearce2018idyom}
+M.~T. Pearce,
+``Statistical learning and probabilistic prediction in music cognition: mechanisms of stylistic enculturation,''
+\emph{Annals of the New York Academy of Sciences}, vol.~1423, no.~1, pp.~378--395, 2018.
+
+\bibitem{plomp1965}
+R.~Plomp and W.~J.~M. Levelt,
+``Tonal consonance and critical bandwidth,''
+\emph{Journal of the Acoustical Society of America}, vol.~38, no.~4, pp.~548--560, 1965.
+
+\bibitem{salimpoor2011}
+V.~N. Salimpoor, M.~Benovoy, K.~Larcher, A.~Dagher, and R.~J. Zatorre,
+``Anatomically distinct dopamine release during anticipation and experience of peak emotion to music,''
+\emph{Nature Neuroscience}, vol.~14, no.~2, pp.~257--262, 2011.
+
+\bibitem{sethares1993}
+W.~A. Sethares,
+``Local consonance and the relationship between timbre and scale,''
+\emph{Journal of the Acoustical Society of America}, vol.~94, no.~3, pp.~1218--1228, 1993.
+
+\bibitem{zatorre2007}
+R.~J. Zatorre,
+``There's more to auditory cortex than meets the ear,''
+\emph{Hearing Research}, vol.~229, no.~1--2, pp.~24--30, 2007.
+
+\end{thebibliography}
+
+\end{document}

@@ -42,9 +42,13 @@ app.add_middleware(
 # ── Register routers ──
 from routers.audio import router as audio_router
 from routers.docs import router as docs_router
+from routers.pipeline import router as pipeline_router
+from routers.experiments import router as experiments_router
 
 app.include_router(audio_router, prefix="/api/audio", tags=["audio"])
 app.include_router(docs_router, prefix="/api/docs", tags=["docs"])
+app.include_router(pipeline_router, prefix="/api/pipeline", tags=["pipeline"])
+app.include_router(experiments_router, prefix="/api/experiments", tags=["experiments"])
 
 
 @app.get("/api/health")

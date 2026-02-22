@@ -1,6 +1,7 @@
 """Audio loading, waveform extraction, and spectrogram computation."""
 
 import numpy as np
+import soundfile as sf
 import torch
 import torchaudio
 from pathlib import Path
@@ -14,15 +15,25 @@ def list_audio_files() -> list[dict]:
     files = []
     for f in sorted(AUDIO_DIR.iterdir()):
         if f.suffix.lower() in extensions and not f.name.startswith("."):
-            info = torchaudio.info(str(f))
-            duration = info.num_frames / info.sample_rate
-            files.append({
-                "name": f.stem,
-                "filename": f.name,
-                "duration": round(duration, 2),
-                "sample_rate": info.sample_rate,
-                "channels": info.num_channels,
-            })
+            try:
+                info = sf.info(str(f))
+                files.append({
+                    "name": f.stem,
+                    "filename": f.name,
+                    "duration": round(info.duration, 2),
+                    "sample_rate": info.samplerate,
+                    "channels": info.channels,
+                })
+            except Exception:
+                # Fallback: load to get metadata
+                waveform, sr = torchaudio.load(str(f))
+                files.append({
+                    "name": f.stem,
+                    "filename": f.name,
+                    "duration": round(waveform.shape[1] / sr, 2),
+                    "sample_rate": sr,
+                    "channels": waveform.shape[0],
+                })
     return files
 
 
