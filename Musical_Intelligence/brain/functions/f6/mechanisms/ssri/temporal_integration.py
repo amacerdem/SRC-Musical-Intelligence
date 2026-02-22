@@ -1,8 +1,8 @@
 """SSRI M-Layer -- Temporal Integration (2D).
 
 Social Synchrony Reward Integration mathematical model outputs:
-  f05: social_prediction_error   -- Social reward prediction error [-1, 1]
-  f06: synchrony_amplification   -- Social reward amplification ratio [0, 3]
+  M0: social_prediction_error   -- Social reward prediction error [0, 1]
+  M1: synchrony_amplification   -- Social reward amplification ratio [0, 1]
 
 social_prediction_error implements a social extension of reward prediction
 error. It compares actual entrainment quality (f04) against an expected
@@ -11,14 +11,17 @@ have direct belief state access). Positive SPE triggers a reward surge
 in downstream mesolimbic targets (NAcc, VTA); negative SPE suppresses
 reward. This extends RPEM's individual prediction error to interpersonal
 coordination. Cheung et al. 2019: uncertainty x surprise interaction
-predicts musical pleasure.
+predicts musical pleasure. Normalized: (tanh(raw) + 1) / 2 maps to [0, 1]
+where 0.5 = neutral, >0.5 = positive PE (better than expected), <0.5 =
+negative PE (worse than expected).
 
 synchrony_amplification provides a multiplicative scaling factor. Starting
 from a solo baseline of 1.0, it adds the product of synchrony_reward
 (f01) with the sum of entrainment_quality (f04) and social_bonding_index
 (f02). This captures the key empirical finding that group music-making
 amplifies hedonic reward by 1.3-1.8x compared to solitary listening,
-implemented with kappa_social = 0.60.
+implemented with kappa_social = 0.60. Normalized: (raw - 1.0) / 2.0 maps
+[1.0, 3.0] to [0, 1] where 0 = solo baseline, 1 = maximum amplification.
 
 H3 demands consumed: 0 tuples (operates entirely on E-layer outputs).
 
@@ -54,14 +57,15 @@ def compute_temporal_integration(
     direct access to belief states (expect_surprise[10:20]), we approximate
     the baseline from the upstream RPEM relay output. Positive SPE indicates
     better-than-expected coordination producing a reward surge; negative SPE
-    signals coordination breakdown and reward suppression. Bounded to [-1, 1]
-    via tanh.
+    signals coordination breakdown and reward suppression. Raw value bounded
+    to [-1, 1] via tanh, then normalized to [0, 1] via (tanh + 1) / 2.
 
     synchrony_amplification (SA) provides a multiplicative reward boost from
     successful group coordination. SA = 1.0 + kappa_social * f01 * (f04 + f02).
-    Ranges from 1.0 (solo baseline) to approximately 3.0 (maximum social
-    amplification). Implements the 1.3-1.8x range reported for group vs solo
-    music-making (Dunbar 2012).
+    Raw value ranges from 1.0 (solo baseline) to approximately 3.0 (maximum
+    social amplification). Normalized to [0, 1] via (raw - 1.0) / 2.0.
+    Implements the 1.3-1.8x range reported for group vs solo music-making
+    (Dunbar 2012).
 
     Args:
         h3_features: ``{(r3_idx, horizon, morph, law): (B, T)}``
@@ -85,20 +89,22 @@ def compute_temporal_integration(
     expected_coordination = rpem.mean(dim=-1).clamp(0.0, 1.0)  # (B, T)
 
     # -- social_prediction_error (SPE) --
-    # SPE = tanh(f04 - expected_coordination)
-    # Positive: better-than-expected coordination -> reward surge
-    # Negative: coordination breakdown -> reward suppression
+    # SPE = (tanh(f04 - expected_coordination) + 1) / 2
+    # Positive PE (>0.5): better-than-expected coordination -> reward surge
+    # Negative PE (<0.5): coordination breakdown -> reward suppression
+    # Neutral (0.5): coordination meets expectation
     # Cheung et al. 2019: uncertainty x surprise interaction predicts pleasure
     spe_raw = f04 - expected_coordination
-    social_prediction_error = torch.tanh(spe_raw)  # [-1, 1]
+    social_prediction_error = (torch.tanh(spe_raw) + 1.0) * 0.5  # [0, 1]
 
     # -- synchrony_amplification (SA) --
-    # SA = 1.0 + kappa_social * f01 * (f04 + f02)
-    # Captures multiplicative reward boost from group coordination.
-    # Range: [1.0, ~3.0] at kappa=0.60 (f01=1, f04=1, f02=1 -> 2.2)
+    # SA_raw = 1.0 + kappa_social * f01 * (f04 + f02), range [1.0, ~3.0]
+    # Normalized: (SA_raw - 1.0) / 2.0, range [0, 1]
+    # 0 = solo baseline (no amplification), 1 = maximum social amplification
     # Dunbar 2012: synchronized music-making amplifies reward 1.3-1.8x
-    synchrony_amplification = (
+    sa_raw = (
         1.0 + _KAPPA_SOCIAL * f01 * (f04 + f02)
-    ).clamp(0.0, 3.0)
+    ).clamp(1.0, 3.0)
+    synchrony_amplification = (sa_raw - 1.0) * 0.5  # [0, 1]
 
     return social_prediction_error, synchrony_amplification
