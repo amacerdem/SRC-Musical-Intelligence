@@ -1,0 +1,78 @@
+"""CSG F-Layer — Forecast (3D).
+
+Three forward predictions for consonance-salience dynamics:
+
+  F0: valence_pred       — Predicted valence [-1, 1] (tanh)
+  F1: processing_pred    — Predicted processing load [0, 1]
+  F2: aesthetic_pred     — Predicted aesthetic appreciation [0, 1]
+
+H3 consumed:
+    (4, 16, 1, 2)   sensory_pleas mean H16 L2    — sustained pleasantness (reused)
+    (17, 16, 1, 2)  spectral_auto mean H16 L2    — long-range coupling
+    (0, 3, 1, 2)    roughness mean H3 L2          — roughness context (reused)
+
+R3 consumed:
+    [4] sensory_pleasantness — consonance proxy
+
+See Building/C3-Brain/F1-Sensory-Processing/mechanisms/csg/CSG-forecast.md
+"""
+from __future__ import annotations
+
+from typing import Dict, Tuple
+
+import torch
+from torch import Tensor
+
+# -- H3 tuples ----------------------------------------------------------------
+_PLEAS_MEAN_1S = (4, 16, 1, 2)
+_SPECTRAL_AUTO_H16 = (17, 16, 1, 2)
+_ROUGHNESS_MEAN = (0, 3, 1, 2)
+
+# -- R3 indices ----------------------------------------------------------------
+_PLEAS = 4
+
+
+def compute_forecast(
+    r3_features: Tensor,
+    h3_features: Dict[Tuple[int, int, int, int], Tensor],
+    e_outputs: Tuple[Tensor, Tensor, Tensor],
+    m_outputs: Tuple[Tensor, Tensor, Tensor],
+) -> Tuple[Tensor, Tensor, Tensor]:
+    """F-layer: 3D forecast from E/M outputs + H3/R3 context.
+
+    Args:
+        r3_features: ``(B, T, 97)`` R3 feature tensor.
+        h3_features: ``{(r3_idx, horizon, morph, law): (B, T)}``.
+        e_outputs: ``(E0, E1, E2)`` each ``(B, T)``.
+        m_outputs: ``(M0, M1, M2)`` each ``(B, T)``.
+
+    Returns:
+        ``(F0, F1, F2)`` each ``(B, T)``. F0 is tanh-valued ``[-1, 1]``.
+    """
+    _e0, e1, e2 = e_outputs
+    (_m0, _m1, m2) = m_outputs
+
+    pleas_mean_1s = h3_features[_PLEAS_MEAN_1S]
+    spectral_auto_h16 = h3_features[_SPECTRAL_AUTO_H16]
+    roughness_mean = h3_features[_ROUGHNESS_MEAN]
+
+    consonance = r3_features[:, :, _PLEAS]
+    ambiguity = 1.0 - torch.abs(consonance - 0.5) * 2
+
+    # F0: Valence prediction [-1, 1]
+    # Cheung: amygdala/hippocampus integrate uncertainty x surprise
+    f0 = torch.tanh(
+        0.50 * e2 + 0.30 * pleas_mean_1s + 0.20 * spectral_auto_h16
+    )
+
+    # F1: Processing load prediction
+    # Bravo 2017: intermediate dissonance = highest processing demand
+    f1 = torch.sigmoid(
+        0.40 * e1 + 0.30 * ambiguity + 0.30 * roughness_mean
+    )
+
+    # F2: Aesthetic appreciation prediction
+    # Sarasso 2019: consonance -> aesthetic preference (d=2.008)
+    f2 = torch.sigmoid(0.50 * m2 + 0.50 * consonance)
+
+    return f0, f1, f2

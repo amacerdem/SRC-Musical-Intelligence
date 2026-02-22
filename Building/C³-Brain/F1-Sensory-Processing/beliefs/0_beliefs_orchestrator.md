@@ -3,8 +3,8 @@
 **Function**: F1 Sensory Processing
 **Phase**: 0 (earliest in DAG — reads R³/H³ directly)
 **Total F1 beliefs**: 17 (5 Core + 7 Appraisal + 5 Anticipation)
-**Documented**: BCH (4) + PSCL (2) + PCCR (2) + MPG (2) + MIAA (2) = 12 of 17
-**Remaining**: STAI (3), SDED (1), CSG (1) = 5
+**Documented**: BCH (4) + PSCL (2) + PCCR (2) + MPG (2) + MIAA (2) + SDED (1) + CSG (1) = 14 of 17
+**Remaining**: STAI (3) = 3
 
 ---
 
@@ -22,7 +22,7 @@ F1 has 14 models from 6 units. The full belief inventory (**bold** = documented)
 | 6 | **`interval_quality`** | **A** | — | **BCH** | "Interval at position X in P1/P5/M3 hierarchy" |
 | 7 | **`harmonic_template_match`** | **A** | — | **BCH** | "Partials fit harmonic series template" |
 | 8 | `spectral_complexity` | A | — | SDED | "Sound source is simple/complex" |
-| 9 | `consonance_salience_gradient` | A | — | CSG | "Dissonance level → saliency activation" |
+| 9 | **`consonance_salience_gradient`** | **A** | — | **CSG** | "Dissonance level → saliency activation" |
 | 10 | `spectral_temporal_synergy` | A | — | STAI | "Spectral and temporal features reinforce" |
 | 11 | `melodic_contour_tracking` | A | — | MPG | "Pitch is part of meaningful melodic contour" |
 | 12 | `octave_equivalence` | A | — | PCCR | "Tones in octaves → same chroma class" |

@@ -4,7 +4,7 @@
 **Models**: 14 (from 6 units: SPU, IMU, NDU, ASU, STU, RPU)
 **Beliefs**: 17 (5 Core + 7 Appraisal + 5 Anticipation)
 **Phase**: 0 (earliest in DAG — R³/H³ grounded, no cross-function dependencies)
-**Documented**: BCH + PSCL + PCCR + MPG + MIAA (5/14 models, 12/17 beliefs)
+**Documented**: BCH + PSCL + PCCR + MPG + MIAA + SDED + CSG (7/14 models, 14/17 beliefs)
 
 ---
 
@@ -83,11 +83,11 @@ Beliefs live in the BeliefStore (131 beliefs total across all Functions, 17 from
 | 2 | **PSCL** | SPU | α | 1 | 16D | 2 (1C+1N) | 0c | **done** |
 | 3 | **PCCR** | SPU | α | 2 | 11D | 2 (1C+1A) | 0c | **done** |
 | 4 | SDNPS | SPU | γ | — | TBD | 0 | — | — |
-| 5 | SDED | SPU | γ | — | TBD | 1 (1A) | — | — |
+| 5 | **SDED** | SPU | γ | 0 | 10D | 1 (1A) | 0a | **done** |
 | 6 | PNH | IMU | α | — | TBD | 0 | — | — |
 | 7 | TPRD | IMU | β | — | TBD | 0 | — | — |
 | 8 | **MPG** | NDU | α | 0 | 10D | 2 (1A+1N) | 0a | **done** |
-| 9 | CSG | ASU | α | — | TBD | 1 (1A) | — | — |
+| 9 | **CSG** | ASU | α | 0 | 12D | 1 (1A) | 0a | **done** |
 | 10 | **MIAA** | SPU | β | 0 | 11D | 2 (1C+1N) | 0a | **done** |
 | 11 | MDNS | STU | α | — | TBD | 0 | — | — |
 | 12 | TPIO | STU | β | — | TBD | 0 | — | — |
@@ -146,8 +146,8 @@ Models with no depth assignment (SDNPS, PNH, TPRD, MDNS, TPIO, MSPBA, LDAC) are 
 | 5 | `aesthetic_quality` | C | 0.4 | *STAI | TBD | — |
 | 6 | `interval_quality` | A | — | BCH | E2:hierarchy | **done** |
 | 7 | `harmonic_template_match` | A | — | BCH | P1:template_match | **done** |
-| 8 | `spectral_complexity` | A | — | SDED | TBD | — |
-| 9 | `consonance_salience_gradient` | A | — | CSG | TBD | — |
+| 8 | **`spectral_complexity`** | **A** | — | **SDED** | M0(40%)+P0(30%)+P1(30%) | **done** |
+| 9 | **`consonance_salience_gradient`** | **A** | — | **CSG** | P0(40%)+E0(30%)+M0(30%) | **done** |
 | 10 | `spectral_temporal_synergy` | A | — | *STAI | TBD | — |
 | 11 | `melodic_contour_tracking` | A | — | MPG | TBD | — |
 | 12 | `octave_equivalence` | A | — | PCCR | TBD | — |
@@ -242,13 +242,23 @@ F1-Sensory-Processing/
 │   │   ├── MPG-temporal-integration.md MPG M-layer (3D)
 │   │   ├── MPG-cognitive-present.md  MPG P-layer (2D)
 │   │   └── MPG-forecast.md           MPG F-layer (1D)
-│   └── miaa/
-│       ├── MIAA-extraction.md         MIAA E-layer (3D)
-│       ├── MIAA-temporal-integration.md MIAA M-layer (2D)
-│       ├── MIAA-cognitive-present.md  MIAA P-layer (3D)
-│       └── MIAA-forecast.md           MIAA F-layer (3D)
+│   ├── miaa/
+│   │   ├── MIAA-extraction.md         MIAA E-layer (3D)
+│   │   ├── MIAA-temporal-integration.md MIAA M-layer (2D)
+│   │   ├── MIAA-cognitive-present.md  MIAA P-layer (3D)
+│   │   └── MIAA-forecast.md           MIAA F-layer (3D)
+│   ├── sded/
+│   │   ├── SDED-extraction.md         SDED E-layer (3D)
+│   │   ├── SDED-temporal-integration.md SDED M-layer (1D)
+│   │   ├── SDED-cognitive-present.md  SDED P-layer (3D)
+│   │   └── SDED-forecast.md           SDED F-layer (3D)
+│   └── csg/
+│       ├── CSG-extraction.md          CSG E-layer (3D)
+│       ├── CSG-temporal-integration.md CSG M-layer (3D)
+│       ├── CSG-cognitive-present.md   CSG P-layer (3D)
+│       └── CSG-forecast.md            CSG F-layer (3D)
 └── beliefs/
-    ├── 0_beliefs_orchestrator.md      Belief overview (12/17 documented)
+    ├── 0_beliefs_orchestrator.md      Belief overview (14/17 documented)
     ├── harmonic_stability.md          Core (BCH, τ=0.3)
     ├── interval_quality.md            Appraisal (BCH)
     ├── harmonic_template_match.md     Appraisal (BCH)
@@ -258,9 +268,13 @@ F1-Sensory-Processing/
     ├── mpg/
     │   ├── melodic_contour_tracking.md Appraisal (MPG)
     │   └── contour_continuation.md    Anticipation (MPG)
-    └── miaa/
-        ├── timbral_character.md       Core (MIAA, τ=0.5)
-        └── imagery_recognition.md     Anticipation (MIAA)
+    ├── miaa/
+    │   ├── timbral_character.md       Core (MIAA, τ=0.5)
+    │   └── imagery_recognition.md     Anticipation (MIAA)
+    ├── sded/
+    │   └── spectral_complexity.md     Appraisal (SDED)
+    └── csg/
+        └── consonance_salience_gradient.md  Appraisal (CSG)
 ```
 
-**Next model to document**: SDED (SPU-γ3) — last F1 computational model with beliefs. Remaining 6 models (SDNPS, PNH, TPRD, MDNS, TPIO, MSPBA, LDAC, CSG) are meta-evidence or cross-function with no F1 mechanisms.
+**All F1 computational models documented** (7/14). Remaining 7 models (SDNPS, PNH, TPRD, MDNS, TPIO, MSPBA, LDAC) are meta-evidence or cross-function with no F1 mechanisms. Remaining 3 beliefs belong to STAI (SPU-β1, cross-function F5 primary).
