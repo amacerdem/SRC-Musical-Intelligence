@@ -137,6 +137,44 @@ class Citation:
         return f"Citation({self.author} {self.year})"
 
 
+class CrossUnitPathway:
+    """Cross-unit pathway connecting models in different functional units."""
+
+    __slots__ = (
+        "pathway_id", "name", "source_unit", "source_model",
+        "source_dims", "target_unit", "target_model",
+        "correlation", "citation",
+    )
+
+    def __init__(
+        self,
+        pathway_id: str,
+        name: str,
+        source_unit: str,
+        source_model: str,
+        source_dims: Tuple[str, ...],
+        target_unit: str,
+        target_model: str,
+        correlation: str,
+        citation: str,
+    ) -> None:
+        self.pathway_id = pathway_id
+        self.name = name
+        self.source_unit = source_unit
+        self.source_model = source_model
+        self.source_dims = source_dims
+        self.target_unit = target_unit
+        self.target_model = target_model
+        self.correlation = correlation
+        self.citation = citation
+
+    def __repr__(self) -> str:
+        return (
+            f"CrossUnitPathway({self.source_unit}.{self.source_model} "
+            f"-> {self.target_unit}.{self.target_model})"
+        )
+
+
 class ModelMetadata:
     """Metadata for a mechanism model."""
 
