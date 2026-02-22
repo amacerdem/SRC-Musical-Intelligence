@@ -75,35 +75,37 @@
 
 % ── Title Block ─────────────────────────────────────────────────────────────
 \twocolumn[
-\begin{@twocolumnfalse}
-\begin{center}
-{\LARGE\bfseries Musical Intelligence: A Three-Layer Computational\\[4pt]
-Architecture for Neuroscience-Informed Music Cognition}\\[14pt]
-{\large A.~Macerdem\textsuperscript{1}}\\[6pt]
-{\small\itshape \textsuperscript{1}Independent Researcher}\\[4pt]
-{\small February 22, 2026}\\[10pt]
-\rule{\textwidth}{0.5pt}
-\end{center}
-
-\begin{abstract}
-\noindent
-We present \textbf{Musical Intelligence (MI)}, a deterministic, neuroscience-grounded computational architecture for real-time music cognition modeling.
-MI decomposes auditory processing into three hierarchically organized layers:
-\textbf{\Rcube{}} (Early Perceptual Front-End), a stateless 97-dimensional spectral feature extractor operating at frame resolution;
-\textbf{\Hcube{}} (Multi-Scale Temporal Morphology Engine), a demand-driven windowed statistical transform engine spanning 32 temporal horizons from 5.8\,ms to 981\,s via 24 morphological operators;
-and \textbf{\Ccube{}} (Cognitive Brain), a function-centered distributed predictive coding system with 131 typed beliefs across 9 cognitive functions, precision-weighted Bayesian updating, and a salience-gated inverted-U reward aggregator.
-The architecture is grounded in 96 neuroscience-derived computational models spanning 9 anatomical units, informed by a literature corpus of 250+ peer-reviewed studies.
-Each layer maintains strict ontological boundaries: \Rcube{} is frame-local and deterministic, \Hcube{} is window-local and stateless, and \Ccube{} performs cognitive inference through predict--observe--update cycles.
-A relay system bridges the perceptual substrate (\Rcube{}/\Hcube{}) to cognitive processing (\Ccube{}), while a 26-region Regional Activation Map provides neuroanatomically grounded spatial output.
-Alpha testing on four classical music excerpts demonstrates 100\% positive reward across all pieces, with mean reward convergence at $+0.147$ for three of four test stimuli, validating the architecture's capacity to generate musically coherent hedonic responses.
-The full system processes audio at approximately 249 frames per second, enabling real-time operation.
-\end{abstract}
-\vspace{6pt}
-\noindent\textbf{Keywords:} computational music cognition, predictive coding, Bayesian brain, auditory neuroscience, temporal morphology, reward modeling, spectral features
-\vspace{8pt}
-\rule{\textwidth}{0.5pt}
-\vspace{12pt}
-\end{@twocolumnfalse}
+  \centering
+  {\LARGE\bfseries Musical Intelligence: A Three-Layer Computational\par
+  \vspace{4pt}
+  Architecture for Neuroscience-Informed Music Cognition\par}
+  \vspace{14pt}
+  {\large A.~Macerdem\textsuperscript{1}\par}
+  \vspace{6pt}
+  {\small\itshape \textsuperscript{1}Independent Researcher\par}
+  \vspace{4pt}
+  {\small February 22, 2026\par}
+  \vspace{10pt}
+  \rule{\textwidth}{0.5pt}
+  \vspace{8pt}
+  \begin{quote}\small
+  \noindent\textbf{Abstract.}
+  We present \textbf{Musical Intelligence (MI)}, a deterministic, neuroscience-grounded computational architecture for real-time music cognition modeling.
+  MI decomposes auditory processing into three hierarchically organized layers:
+  \textbf{\Rcube{}} (Early Perceptual Front-End), a stateless 97-dimensional spectral feature extractor operating at frame resolution;
+  \textbf{\Hcube{}} (Multi-Scale Temporal Morphology Engine), a demand-driven windowed statistical transform engine spanning 32 temporal horizons from 5.8\,ms to 981\,s via 24 morphological operators;
+  and \textbf{\Ccube{}} (Cognitive Brain), a function-centered distributed predictive coding system with 131 typed beliefs across 9 cognitive functions, precision-weighted Bayesian updating, and a salience-gated inverted-U reward aggregator.
+  The architecture is grounded in 96 neuroscience-derived computational models spanning 9 anatomical units, informed by a literature corpus of 250+ peer-reviewed studies.
+  Each layer maintains strict ontological boundaries: \Rcube{} is frame-local and deterministic, \Hcube{} is window-local and stateless, and \Ccube{} performs cognitive inference through predict--observe--update cycles.
+  A relay system bridges the perceptual substrate (\Rcube{}/\Hcube{}) to cognitive processing (\Ccube{}), while a 26-region Regional Activation Map provides neuroanatomically grounded spatial output.
+  Alpha testing on four classical music excerpts demonstrates 100\% positive reward across all pieces, with mean reward convergence at $+0.147$ for three of four test stimuli, validating the architecture's capacity to generate musically coherent hedonic responses.
+  The full system processes audio at approximately 249 frames per second, enabling real-time operation.
+  \end{quote}
+  \vspace{4pt}
+  \noindent\textbf{Keywords:} computational music cognition, predictive coding, Bayesian brain, auditory neuroscience, temporal morphology, reward modeling, spectral features
+  \vspace{8pt}
+  \rule{\textwidth}{0.5pt}
+  \vspace{12pt}
 ]
 
 % ============================================================================
@@ -213,7 +215,7 @@ This boundary is enforced through five inclusion rules:
 
 After ontological boundary enforcement, \Rcube{} consists of 97 features organized in 9 groups across a 2-stage directed acyclic graph (DAG):
 
-\begin{table}[h]
+\begin{table}[!t]
 \centering
 \caption{\Rcube{} feature groups after ontology freeze (v1.0.0).}
 \label{tab:r3groups}
@@ -277,7 +279,7 @@ The theoretical space spans $97 \times 32 \times 24 \times 3 = 223{,}488$ tuples
 
 The 32 horizons are quasi-logarithmically spaced across four perceptual bands:
 
-\begin{table}[h]
+\begin{table}[!t]
 \centering
 \caption{\Hcube{} horizon bands.}
 \label{tab:h3horizons}
@@ -301,7 +303,7 @@ This corresponds to the densest demand region across \Ccube{} models.
 
 Twenty-four morph operators organized in six families provide a comprehensive vocabulary for temporal description:
 
-\begin{table}[h]
+\begin{table}[!t]
 \centering
 \caption{H\textsuperscript{3} morph families (24 operators).}
 \label{tab:morphs}
@@ -343,7 +345,7 @@ For real-time applications, only L0 outputs are available without latency.
 \Ccube{} is a function-centered distributed predictive coding system implementing 131 typed beliefs across 9 cognitive functions (\Cref{tab:functions}).
 The architecture is grounded in a comprehensive analysis of 96 neuroscience-derived computational models spanning 9 anatomical units (SPU, ARU, ASU, IMU, MPU, PCU, NDU, STU, RPU) and 12 functional categories.
 
-\begin{table}[h]
+\begin{table}[!t]
 \centering
 \caption{The 9 cognitive functions of \Ccube{}.}
 \label{tab:functions}
@@ -378,7 +380,7 @@ Beliefs are \emph{cognitive inferences}---not signal features.
 
 The 131 beliefs are organized into three categories:
 
-\begin{table}[h]
+\begin{table}[!t]
 \centering
 \caption{Belief categories in \Ccube{}.}
 \label{tab:beliefcats}
@@ -416,7 +418,7 @@ For each Core belief $b_i$ at each frame:
 & \quad + w_{\mathrm{ctx}} \cdot \sum_j c_{ij} \cdot b_j^{(t-1)} \label{eq:predict} \\[4pt]
 \tilde{b}_i^{(t)} &= f_{\mathrm{obs}}(\Rcube, \Hcube, \mathbf{r}) \label{eq:observe} \\[4pt]
 \pe_i^{(t)} &= \tilde{b}_i^{(t)} - \hat{b}_i^{(t)} \label{eq:pe} \\[4pt]
-g_i^{(t)} &= \frac{\piobs_i}{\piobs_i + \pipred_i + \epsilon} \label{eq:gain} \\[4pt]
+g_i^{(t)} &= \frac{\pi_{\mathrm{obs},i}}{\pi_{\mathrm{obs},i} + \pi_{\mathrm{pred},i} + \epsilon} \label{eq:gain} \\[4pt]
 b_i^{(t)} &= (1 - g_i^{(t)}) \cdot \hat{b}_i^{(t)} + g_i^{(t)} \cdot \tilde{b}_i^{(t)} \label{eq:update}
 \end{align}
 \vspace{-2pt}
@@ -562,7 +564,7 @@ $R \leftarrow R \cdot (0.85 + 0.15 \cdot e_{\text{pred}})$, where $e_{\text{pred
 The relay system bridges the perceptual substrate (\Rcube{}/\Hcube{}) and cognitive processing (\Ccube{}).
 Nine relay wrappers---one per cognitive unit---transform raw perceptual features into cognitively meaningful signals (\Cref{tab:relays}).
 
-\begin{table}[h]
+\begin{table}[!t]
 \centering
 \caption{The 9 relay wrappers bridging \Hcube{} to \Ccube{}.}
 \label{tab:relays}
@@ -653,7 +655,7 @@ We evaluated MI v3.1 on four classical music excerpts (30\,s each), selected to 
 
 \subsection{Results}
 
-\begin{table}[h]
+\begin{table}[!t]
 \centering
 \caption{Alpha test results (MI v3.1, 30-second excerpts).}
 \label{tab:results}

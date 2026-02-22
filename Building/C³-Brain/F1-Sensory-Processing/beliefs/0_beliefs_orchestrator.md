@@ -3,8 +3,8 @@
 **Function**: F1 Sensory Processing
 **Phase**: 0 (earliest in DAG — reads R³/H³ directly)
 **Total F1 beliefs**: 17 (5 Core + 7 Appraisal + 5 Anticipation)
-**Documented**: BCH (4 beliefs) + PSCL (2 beliefs) = 6 of 17
-**Remaining**: PCCR (2), MIAA (2), STAI (3), SDED (1), CSG (1), MPG (2) = 11
+**Documented**: BCH (4) + PSCL (2) + PCCR (2) + MPG (2) + MIAA (2) = 12 of 17
+**Remaining**: STAI (3), SDED (1), CSG (1) = 5
 
 ---
 
