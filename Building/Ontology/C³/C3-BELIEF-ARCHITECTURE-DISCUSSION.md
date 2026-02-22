@@ -463,9 +463,9 @@ PE/precision/reward computational overhead.
 
 **Decision 19b: FM-12 Revised Caps**
 
-Old: max 5 beliefs per Function (too restrictive for 131 total).
+Old: max 5 beliefs per Function (too restrictive).
 New: max 5 Core + 10 Appraisal + 5 Anticipation = 20 per Function.
-System-wide: 131 actual vs 180 theoretical max.
+Actual counts are determined during model integration — see per-function `collections.md`.
 
 **Decision 19c: v1.0 Backward Compatibility Mapping**
 
@@ -477,20 +477,22 @@ System-wide: 131 actual vs 180 theoretical max.
 | familiarity_state | autobiographical_retrieval | F4 |
 | reward_valence | wanting | F6 |
 
-**Decision 19d: Per-Function Belief Inventory**
+**Decision 19d: Per-Function Belief Inventory (Estimates)**
 
-| Function | Core | Appraisal | Anticipation | Total |
-|----------|:----:|:---------:|:------------:|:-----:|
-| F1 Sensory | 5 | 7 | 5 | 17 |
-| F2 Prediction | 4 | 6 | 5 | 15 |
-| F3 Attention | 4 | 7 | 4 | 15 |
-| F4 Memory | 4 | 7 | 2 | 13 |
-| F5 Emotion | 4 | 8 | 2 | 14 |
-| F6 Reward | 5 | 7 | 4 | 16 |
-| F7 Motor | 4 | 9 | 4 | 17 |
-| F8 Learning | 4 | 8 | 2 | 14 |
-| F9 Social | 2 | 6 | 2 | 10 |
-| **TOTAL** | **36** | **65** | **30** | **131** |
+> Counts are design estimates. Final counts determined during model integration.
+> See per-function `collections.md` for implemented truth.
+
+| Function | Core | Appraisal | Anticipation | Est. Total |
+|----------|:----:|:---------:|:------------:|:----------:|
+| F1 Sensory | ~5 | ~7 | ~5 | ~17 |
+| F2 Prediction | ~4 | ~6 | ~5 | ~15 |
+| F3 Attention | ~4 | ~7 | ~4 | ~15 |
+| F4 Memory | ~4 | ~7 | ~2 | ~13 |
+| F5 Emotion | ~4 | ~8 | ~2 | ~14 |
+| F6 Reward | ~5 | ~7 | ~4 | ~16 |
+| F7 Motor | ~4 | ~9 | ~4 | ~17 |
+| F8 Learning | ~4 | ~8 | ~2 | ~14 |
+| F9 Social | ~2 | ~6 | ~2 | ~10 |
 
 ### Impact on Documents
 

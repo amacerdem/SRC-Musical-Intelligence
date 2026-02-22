@@ -72,35 +72,39 @@ contributing models drawn from multiple units.
 Beliefs are **cognitive inferences**, NOT signal features. R³/H³ produce signal features
 (roughness, periodicity). Beliefs are what the brain INFERS from those features.
 
-**131 total beliefs** in 3 categories:
+Beliefs in 3 categories:
 
-| Category | Symbol | Count | Bayesian Cycle | PE | Description |
-|----------|--------|:-----:|:--------------:|:--:|-------------|
-| **Core** | C | 36 | Full (predict→observe→update) | Yes | Primary cognitive states with τ-controlled inertia |
-| **Appraisal** | A | 65 | Observe-only (no predict) | No | Evaluative judgments from mechanisms |
-| **Anticipation** | N | 30 | Prediction outputs | No | Forward predictions; feed Core predict() |
+> **NOTE**: Counts below are **design estimates**. Authoritative belief/mechanism
+> counts are determined during model integration. See per-function `collections.md`
+> and `Docs/C³/Models/` for the implemented truth.
 
-**Per-Function Summary:**
+| Category | Symbol | Bayesian Cycle | PE | Description |
+|----------|--------|:--------------:|:--:|-------------|
+| **Core** | C | Full (predict→observe→update) | Yes | Primary cognitive states with τ-controlled inertia |
+| **Appraisal** | A | Observe-only (no predict) | No | Evaluative judgments from mechanisms |
+| **Anticipation** | N | Prediction outputs | No | Forward predictions; feed Core predict() |
 
-| Function | Core | Appraisal | Anticipation | Total | τ range (Core) |
-|----------|:----:|:---------:|:------------:|:-----:|:--------------:|
-| **F1 Sensory** | 5 | 7 | 5 | 17 | 0.3–0.5 |
-| **F2 Prediction** | 4 | 6 | 5 | 15 | 0.35–0.5 |
-| **F3 Attention** | 4 | 7 | 4 | 15 | 0.25–0.4 |
-| **F4 Memory** | 4 | 7 | 2 | 13 | 0.7–0.85 |
-| **F5 Emotion** | 4 | 8 | 2 | 14 | 0.5–0.65 |
-| **F6 Reward** | 5 | 7 | 4 | 16 | 0.5–0.7 |
-| **F7 Motor** | 4 | 9 | 4 | 17 | 0.55–0.7 |
-| **F8 Learning** | 4 | 8 | 2 | 14 | 0.88–0.95 |
-| **F9 Social** | 2 | 6 | 2 | 10 | 0.6–0.65 |
-| **TOTAL** | **36** | **65** | **30** | **131** | |
+**Per-Function Summary (estimates — verified during integration):**
+
+| Function | Core | Appraisal | Anticipation | Est. Total | τ range (Core) |
+|----------|:----:|:---------:|:------------:|:----------:|:--------------:|
+| **F1 Sensory** | ~5 | ~7 | ~5 | ~17 | 0.3–0.5 |
+| **F2 Prediction** | ~4 | ~6 | ~5 | ~15 | 0.35–0.5 |
+| **F3 Attention** | ~4 | ~7 | ~4 | ~15 | 0.25–0.4 |
+| **F4 Memory** | ~4 | ~7 | ~2 | ~13 | 0.7–0.85 |
+| **F5 Emotion** | ~4 | ~8 | ~2 | ~14 | 0.5–0.65 |
+| **F6 Reward** | ~5 | ~7 | ~4 | ~16 | 0.5–0.7 |
+| **F7 Motor** | ~4 | ~9 | ~4 | ~17 | 0.55–0.7 |
+| **F8 Learning** | ~4 | ~8 | ~2 | ~14 | 0.88–0.95 |
+| **F9 Social** | ~2 | ~6 | ~2 | ~10 | 0.6–0.65 |
 
 **Example (F6 Reward)**:
 - Core: `wanting`(τ=0.6), `liking`(τ=0.65), `pleasure`(τ=0.7), `prediction_error`(τ=0.5), `tension`(τ=0.55)
 - Appraisal: `prediction_match`, `peak_detection`, `harmonic_tension`, `dissociation_index`, `temporal_phase`, `da_caudate`, `da_nacc`
 - Anticipation: `wanting_ramp`, `chills_proximity`, `resolution_expectation`, `reward_forecast`
 
-> Full 131-belief inventory: see BELIEF-CYCLE.md §Belief Inventory v3.0
+> Full belief inventory: see BELIEF-CYCLE.md §Belief Inventory
+> Counts are provisional — verified during model integration.
 
 **Naming convention**: `function.belief_name` (e.g., `F1.harmonic_stability`, `F7.period_entrainment`)
 

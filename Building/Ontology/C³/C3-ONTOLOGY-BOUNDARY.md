@@ -198,15 +198,18 @@ evidence providers from within or across Functions.
 Beliefs are **cognitive inferences** from mechanisms, NOT signal features.
 R³/H³ produce signal features (roughness, periodicity). Beliefs are what the brain INFERS.
 
-**131 beliefs in 3 categories:**
+Beliefs in 3 categories:
 
-| Category | Count | Bayesian Cycle | PE | Role |
-|----------|:-----:|:--------------:|:--:|------|
-| **Core** (C) | 36 | Full (predict→observe→update) | Yes | Primary cognitive states |
-| **Appraisal** (A) | 65 | Observe-only | No | Evaluative judgments from mechanisms |
-| **Anticipation** (N) | 30 | Prediction outputs | No | Forward predictions → Core predict() |
+> **NOTE**: Counts are **design estimates** — verified during model integration.
+> See per-function `collections.md` and `Docs/C³/Models/` for implemented truth.
 
-**Per-Function Core Beliefs (36 total):**
+| Category | Bayesian Cycle | PE | Role |
+|----------|:--------------:|:--:|------|
+| **Core** (C) | Full (predict→observe→update) | Yes | Primary cognitive states |
+| **Appraisal** (A) | Observe-only | No | Evaluative judgments from mechanisms |
+| **Anticipation** (N) | Prediction outputs | No | Forward predictions → Core predict() |
+
+**Per-Function Core Beliefs (estimates):**
 
 | Function | Phase | Core Beliefs | A | N | Total |
 |----------|:-----:|--------------|:-:|:-:|:-----:|
@@ -220,7 +223,7 @@ R³/H³ produce signal features (roughness, periodicity). Beliefs are what the b
 | F8 Learning | 3 | trained_timbre_recognition(0.9), expertise_enhancement(0.92), network_specialization(0.95), statistical_model(0.88) | 8 | 2 | 14 |
 | F9 Social | 3 | neural_synchrony(0.65), social_coordination(0.6) | 6 | 2 | 10 |
 
-> Full 131-belief inventory with descriptions: see BELIEF-CYCLE.md v3.0
+> Full belief inventory: see BELIEF-CYCLE.md. Counts are provisional.
 > Model origin units preserved as metadata. Function determines runtime ownership.
 
 #### 3.4.2 Single-Writer Invariant

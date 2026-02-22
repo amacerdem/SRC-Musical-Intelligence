@@ -1,21 +1,34 @@
 # F1 Mechanism Orchestrator — Sensory Processing
 
 **Function**: F1 Sensory Processing
-**Models covered**: BCH (2/14), PSCL (2/14) — 12 remaining
-**Total F1 mechanism output**: 32D (BCH 16D + PSCL 16D)
-**Architecture**: Depth-ordered pipeline — BCH (Depth 0) → PSCL (Depth 1) → PCCR (Depth 2) → ...
+**Models covered**: 10/10 — ALL IMPLEMENTED
+**Total F1 mechanism output**: 117D (16+16+11+11+10+10+12+10+11+10)
+**Beliefs**: 14 (4C + 5A + 5N)
+**H³ demands**: ~151 tuples
+**Architecture**: Depth-ordered pipeline — 8 relays (Depth 0) → PSCL (Depth 1) → PCCR (Depth 2)
 
 ---
 
 ## Model Pipeline (Depth Order)
 
 ```
-R³ (97D) ──► BCH (Depth 0, 16D) ──► PSCL (Depth 1, 16D) ──► PCCR (Depth 2) ──► ...
-H³ tuples ──►        │                       │
-                      │                       │
-                      ▼                       ▼
-              4 beliefs               2 beliefs
-              (1C + 2A + 1N)          (1C + 1N)
+R³ (97D) ───┬────────────────────────────────────────────
+H³ tuples ──┤
+            ▼
+Depth 0:  BCH   (16D, relay, SPU)  ← brainstem consonance hierarchy
+          CSG   (12D, relay, ASU)  ← consonance-salience gradient
+          MIAA  (11D, relay, SPU)  ← musical imagery auditory activation
+          MPG   (10D, relay, NDU)  ← melodic processing gradient
+          PNH   (11D, relay, IMU)  ← Pythagorean neural hierarchy
+          SDNPS (10D, relay, SPU)  ← stimulus-dependent neural pitch salience
+          SDED  (10D, relay, SPU)  ← sensory dissonance early detection
+          TPRD  (10D, relay, IMU)  ← tonotopy-pitch dissociation
+            │
+            ▼
+Depth 1:  PSCL  (16D, SPU)        ← cortical pitch salience (reads BCH)
+            │
+            ▼
+Depth 2:  PCCR  (11D, SPU)        ← pitch chroma representation (reads BCH+PSCL)
 ```
 
 ---
@@ -256,10 +269,10 @@ H³ L0+L1 (trends)  ────────────────────
 ---
 
 *See individual layer files for exact computation formulas:*
-- [BCH-extraction.md](BCH-extraction.md) — E-layer (4D)
-- [BCH-temporal-integration.md](BCH-temporal-integration.md) — M-layer (4D)
-- [BCH-cognitive-present.md](BCH-cognitive-present.md) — P-layer (4D)
-- [BCH-forecast.md](BCH-forecast.md) — F-layer (4D)
+- [BCH-extraction.md](bch/BCH-extraction.md) — E-layer (4D)
+- [BCH-temporal-integration.md](bch/BCH-temporal-integration.md) — M-layer (4D)
+- [BCH-cognitive-present.md](bch/BCH-cognitive-present.md) — P-layer (4D)
+- [BCH-forecast.md](bch/BCH-forecast.md) — F-layer (4D)
 
 ---
 ---
@@ -464,7 +477,424 @@ BCH.F1  ────────────────────────
 ---
 
 *See individual layer files for exact computation formulas:*
-- [PSCL-extraction.md](PSCL-extraction.md) — E-layer (4D)
-- [PSCL-temporal-integration.md](PSCL-temporal-integration.md) — M-layer (4D)
-- [PSCL-cognitive-present.md](PSCL-cognitive-present.md) — P-layer (4D)
-- [PSCL-forecast.md](PSCL-forecast.md) — F-layer (4D)
+- [PSCL-extraction.md](pscl/PSCL-extraction.md) — E-layer (4D)
+- [PSCL-temporal-integration.md](pscl/PSCL-temporal-integration.md) — M-layer (4D)
+- [PSCL-cognitive-present.md](pscl/PSCL-cognitive-present.md) — P-layer (4D)
+- [PSCL-forecast.md](pscl/PSCL-forecast.md) — F-layer (4D)
+
+---
+---
+
+# PCCR — Pitch Chroma Cortical Representation
+
+**Model**: SPU-α3-PCCR
+**Type**: Associator (Depth 2) — reads BCH + PSCL upstream + R³/H³
+**Tier**: α (Mechanistic, 75-90% confidence)
+**Output**: 11D per frame — E(4) + M(1) + P(3) + F(3)
+**Phase**: After PSCL (reads BCH + PSCL outputs)
+
+---
+
+## 1. Identity
+
+PCCR transforms BCH (brainstem consonance) and PSCL (cortical pitch salience) outputs alongside R³ chroma features and H³ temporal morphologies into an 11D octave-invariant pitch-class representation. This is the deepest model in the F1 pipeline.
+
+## 2. Key Features
+
+- **Upstream reads**: BCH E1:harmonicity, E2:hierarchy, PSCL P0:pitch_prominence, P2:periodicity_clarity
+- **Graceful degradation**: Without BCH → P1/P2 degraded; without PSCL → P0/P2 degraded; without both → R³-only E-layer (functional but weak)
+- **Chroma vector**: Reads R³[25:37] (12D pitch class distribution)
+
+## 3. H³ Temporal Demand (14 tuples)
+
+- **L2 Integration** (5): PCE at H3/H6, pitch_height at H3/H6, tonalness at H6
+- **L0 Memory** (5): PCE trend/mean, pitch_height velocity, tonalness periodicity, pitch_salience mean
+- **L1 Prediction** (4): Expected PCE, pitch_height, tonalness, pitch_salience at 200ms
+
+## 4. Layer Outputs
+
+| Layer | Dims | Key Outputs |
+|-------|------|-------------|
+| E (4D) | [0:4] | chroma_energy, chroma_clarity, octave_coherence, pitch_class_confidence |
+| M (1D) | [4:5] | chroma_stability |
+| P (3D) | [5:8] | chroma_identity_signal, octave_equivalence_index, chroma_salience |
+| F (3D) | [8:11] | chroma_continuation, chroma_transition, chroma_resolution |
+
+## 5. Beliefs (2)
+
+| Belief | Type | Source |
+|--------|------|--------|
+| pitch_identity | Core (τ=0.4) | from PCCR mechanism |
+| octave_equivalence | Appraisal | from PCCR mechanism |
+
+## 6. Brain Regions
+
+- **Anterolateral HG**: Chroma encoding center (Patterson 2002, Briley 2013)
+- **STG**: Octave-invariant pitch (Warren 2003)
+- **STS**: Pitch class processing (Griffiths 2010)
+- **IFG**: Pitch categorization (Zatorre 2002)
+
+*Layer files:* [PCCR-extraction.md](pccr/PCCR-extraction.md), [PCCR-temporal-integration.md](pccr/PCCR-temporal-integration.md), [PCCR-cognitive-present.md](pccr/PCCR-cognitive-present.md), [PCCR-forecast.md](pccr/PCCR-forecast.md)
+
+---
+---
+
+# MIAA — Musical Imagery Auditory Activation
+
+**Model**: SPU-β3-MIAA
+**Type**: Relay (Depth 0) — reads R³/H³ directly
+**Tier**: β (Observation-compatible, 70-90% confidence)
+**Output**: 11D per frame — E(3) + M(2) + P(3) + F(3)
+**Phase**: 0a (independent relay)
+
+---
+
+## 1. Identity
+
+MIAA models auditory cortex activation during musical imagery — when a listener imagines music without physical sound. Kraemer 2005: AC active during silence, F(1,14)=48.92, p<.0001. Familiarity enhances BA22 activation (p<.0001). Instrumental > lyrics in A1 (p<.0005).
+
+## 2. R³ Inputs (10 features)
+
+[5] inharmonicity, [10] loudness, [12] warmth, [14] tonalness, [15] clarity, [17] spectral_autocorrelation (replaces dissolved x_l5l7), [18-20] tristimulus1-3, [21] spectral_flux
+
+## 3. H³ Temporal Demand (11 tuples)
+
+- **L2 Integration** (5): tonalness/tristimulus1-3 at H2 gamma, inharmonicity at H5
+- **L0 Memory** (6): tonalness/warmth/clarity/loudness means, spectral_flux entropy, spectral_auto at H5/H8
+
+## 4. Layer Outputs
+
+| Layer | Dims | Key Outputs |
+|-------|------|-------------|
+| E (3D) | [0:3] | imagery_activation, familiarity_enhancement, a1_modulation |
+| M (2D) | [3:5] | activation_function, familiarity_effect |
+| P (3D) | [5:8] | melody_retrieval, continuation_prediction, phrase_structure |
+| F (3D) | [8:11] | melody_continuation_pred, ac_activation_pred, recognition_pred |
+
+## 5. Beliefs (2)
+
+| Belief | Type | Source |
+|--------|------|--------|
+| timbral_character | Core (τ=0.5) | from MIAA mechanism |
+| imagery_recognition | Anticipation | from MIAA mechanism |
+
+## 6. Brain Regions
+
+- **BA22 / posterior STG**: Imagery activation hub (Kraemer 2005)
+- **Primary AC (A1_HG)**: Instrumental imagery modulation (Kraemer 2005)
+
+*Layer files:* [MIAA-extraction.md](miaa/MIAA-extraction.md), [MIAA-temporal-integration.md](miaa/MIAA-temporal-integration.md), [MIAA-cognitive-present.md](miaa/MIAA-cognitive-present.md), [MIAA-forecast.md](miaa/MIAA-forecast.md)
+
+---
+---
+
+# SDED — Sensory Dissonance Early Detection
+
+**Model**: SPU-γ3-SDED
+**Type**: Relay (Depth 0) — reads R³/H³ directly
+**Tier**: γ (Preliminary, 50-70% confidence)
+**Output**: 10D per frame — E(3) + M(1) + P(3) + F(3)
+**Phase**: 0a (independent relay)
+
+---
+
+## 1. Identity
+
+SDED models pre-attentive roughness detection at brainstem-cortex level. Key insight: neural machinery for dissonance detection is universal (early MMN 152-258ms), but behavioral discrimination is expertise-dependent (late MMN 232-314ms musicians only). Crespo-Bojorque 2018, N=32.
+
+## 2. R³ Inputs (8 features)
+
+[0] roughness, [1] sethares, [2] helmholtz_kang, [3] stumpf, [5] inharmonicity, [14] tonalness, [17] spectral_autocorrelation (replaces dissolved x_l5l7), [18] tristimulus1
+
+## 3. H³ Temporal Demand (9 tuples)
+
+- **L2 Integration** (8): roughness/sethares/helmholtz/inharmonicity/tristimulus1 at H0, roughness mean/helmholtz mean/spectral_auto at H3
+- **L0 Memory** (1): tonalness mean at H3
+
+## 4. Layer Outputs
+
+| Layer | Dims | Key Outputs |
+|-------|------|-------------|
+| E (3D) | [0:3] | early_detection, mmn_dissonance, behavioral_accuracy |
+| M (1D) | [3:4] | detection_function |
+| P (3D) | [4:7] | roughness_detection, deviation_detection, behavioral_response |
+| F (3D) | [7:10] | dissonance_detection_pred, behavioral_accuracy_pred, training_effect_pred |
+
+## 5. Beliefs (1)
+
+| Belief | Type | Source |
+|--------|------|--------|
+| spectral_complexity | Appraisal | M0, P0, P1 |
+
+## 6. Brain Regions
+
+- **Heschl's Gyrus (A1)**: Phase-locked roughness encoder (Fishman 2001)
+- **Inferior Colliculus**: Innate consonance hierarchy (Bidelman 2013)
+- **Right STG**: High-gamma dissonance sites (Foo 2016)
+
+*Layer files:* [SDED-extraction.md](sded/SDED-extraction.md), [SDED-temporal-integration.md](sded/SDED-temporal-integration.md), [SDED-cognitive-present.md](sded/SDED-cognitive-present.md), [SDED-forecast.md](sded/SDED-forecast.md)
+
+---
+---
+
+# CSG — Consonance-Salience Gradient
+
+**Model**: ASU-α3-CSG
+**Type**: Relay (Depth 0) — reads R³/H³ directly
+**Tier**: α (Mechanistic, 90-95% confidence)
+**Output**: 12D per frame — E(3) + M(3) + P(3) + F(3)
+**Phase**: 0a (independent relay)
+
+---
+
+## 1. Identity
+
+CSG models how consonance level systematically modulates salience network activation. Bravo 2017: strong dissonance activates ACC/bilateral AI (d=5.16); intermediate dissonance increases Heschl's gyrus load (d=1.9); consonance enables efficient processing with positive valence (d=3.31, N=45 behavioral + N=12 imaging).
+
+**NOTE**: CSG uses tanh [-1, 1] for valence dimensions (E2:consonance_valence, P1:affective_evaluation, F0:valence_pred). Output clamped to [-1, 1] not [0, 1].
+
+## 2. R³ Inputs (9 features)
+
+[0] roughness, [1] sethares, [4] sensory_pleasantness, [9] spectral_centroid, [10] loudness, [12] warmth, [17] spectral_autocorrelation (replaces dissolved x_l0l5), [21] spectral_flux, [22] energy_change
+
+## 3. H³ Temporal Demand (18 tuples)
+
+Multi-scale: H0(25ms) → H3(100ms) → H4(125ms) → H8(500ms) → H16(1000ms)
+- **Roughness** (4): H0 value, H3 mean+std, H16 mean
+- **Pleasantness** (3): H3 value+velocity, H16 mean
+- **Loudness** (3): H3 value+entropy, H16 mean
+- **Sethares** (2): H3 value, H8 velocity
+- **Spectral flux** (1): H4 velocity
+- **Spectral auto** (3): H3/H8/H16 value+mean
+- **Energy change** (1): H3 velocity
+- **Centroid** (1): H3 value
+
+## 4. Layer Outputs
+
+| Layer | Dims | Key Outputs |
+|-------|------|-------------|
+| E (3D) | [0:3] | salience_activation, sensory_evidence, consonance_valence (tanh) |
+| M (3D) | [3:6] | salience_response, rt_valence_judgment, aesthetic_appreciation |
+| P (3D) | [6:9] | salience_network, affective_evaluation (tanh), sensory_load |
+| F (3D) | [9:12] | valence_pred (tanh), processing_pred, aesthetic_pred |
+
+## 5. Beliefs (1)
+
+| Belief | Type | Source |
+|--------|------|--------|
+| consonance_salience_gradient | Appraisal | P0, E0, M0 |
+
+## 6. Brain Regions
+
+- **ACC**: Salience hub for dissonance (Bravo 2017, d=5.16)
+- **Anterior insula**: Salience network partner (Bravo 2017)
+- **Heschl's Gyrus**: Sensory evidence weighting (Bravo 2017)
+- **Amygdala**: Dissonance-driven salience (Koelsch 2006)
+
+*Layer files:* [CSG-extraction.md](csg/CSG-extraction.md), [CSG-temporal-integration.md](csg/CSG-temporal-integration.md), [CSG-cognitive-present.md](csg/CSG-cognitive-present.md), [CSG-forecast.md](csg/CSG-forecast.md)
+
+---
+---
+
+# MPG — Melodic Processing Gradient
+
+**Model**: NDU-α1-MPG
+**Type**: Relay (Depth 0) — reads R³/H³ directly
+**Tier**: α (Mechanistic, 80-92% confidence)
+**Output**: 10D per frame — E(4) + M(3) + P(2) + F(1)
+**Phase**: 0a (independent relay)
+
+---
+
+## 1. Identity
+
+MPG models the posterior-to-anterior cortical gradient for melodic processing. Posterior regions (medial HG) process sequence onset; anterior regions (STG) process subsequent notes and pitch variation (Rupp et al. 2022, MEG, N=20).
+
+## 2. R³ Inputs (8 features)
+
+[7] amplitude, [11] onset_strength, [13] sharpness, [21] spectral_flux, [37] pitch_height (replaces dissolved pitch_change), [38] pitch_class_entropy, [39] pitch_salience (replaces dissolved x_l4l5), [42] beat_strength (replaces dissolved x_l0l5)
+
+## 3. H³ Temporal Demand (16 tuples)
+
+- **L2 Integration** (13): spectral_flux H0/H1/H3, onset H0/H3/H16, sharpness H3 value+std, pitch_height H3/H16, PCE H4, amplitude H3, beat_strength H3
+- **L0 Memory** (3): sharpness velocity H4, pitch_height trend H4, pitch_salience velocity H3
+
+## 4. Layer Outputs
+
+| Layer | Dims | Key Outputs |
+|-------|------|-------------|
+| E (4D) | [0:4] | onset_posterior, sequence_anterior, contour_complexity, gradient_ratio |
+| M (3D) | [4:7] | activity_x, posterior_activity, anterior_activity |
+| P (2D) | [7:9] | onset_state, contour_state |
+| F (1D) | [9:10] | phrase_boundary_pred |
+
+## 5. Beliefs (2)
+
+| Belief | Type | Source |
+|--------|------|--------|
+| melodic_contour_tracking | Appraisal | from MPG mechanism |
+| contour_continuation | Anticipation | from MPG mechanism |
+
+## 6. Brain Regions
+
+- **Medial HG (A1)**: Onset pitch detection, posterior processing (Patterson 2002)
+- **STG**: Melodic contour, anterior processing (Rupp 2022, Foo 2016)
+- **IFG**: Phrase boundary integration (Cheung 2019)
+
+*Layer files:* [MPG-extraction.md](mpg/MPG-extraction.md), [MPG-temporal-integration.md](mpg/MPG-temporal-integration.md), [MPG-cognitive-present.md](mpg/MPG-cognitive-present.md), [MPG-forecast.md](mpg/MPG-forecast.md)
+
+---
+---
+
+# SDNPS — Stimulus-Dependent Neural Pitch Salience
+
+**Model**: SPU-γ1-SDNPS
+**Type**: Relay (Depth 0) — reads R³/H³ directly
+**Tier**: γ (Preliminary, 40-70% confidence)
+**Output**: 10D per frame — E(3) + M(1) + P(3) + F(3)
+**Phase**: 0a (independent relay)
+
+---
+
+## 1. Identity
+
+SDNPS models the critical finding that brainstem FFR-derived Neural Pitch Salience predicts behavioral consonance for synthetic tones (r=0.34, p<0.03) but fails to generalize to natural sounds (sax r=0.24 n.s., voice r=-0.10 n.s.). NPS ↔ roughness is the one invariant (r=-0.57, p<1e-05). Cousineau et al. 2015, N=14.
+
+## 2. R³ Inputs (7 features)
+
+[0] roughness, [1] sethares, [5] inharmonicity, [14] tonalness, [17] spectral_autocorrelation, [18-20] tristimulus1-3
+
+Key derived feature: `tristimulus_balance = 1 - std(trist1, trist2, trist3)` — uses `correction=0` to avoid NaN for T=1.
+
+## 3. H³ Temporal Demand (10 tuples)
+
+- **L2 Integration / H0 Gamma** (5): roughness, helmholtz_kang, inharmonicity, tonalness, tristimulus1 all at H0
+- **L2 Integration / H3 Alpha-Beta** (3): roughness mean, inharmonicity mean, spectral_auto periodicity
+- **L0 Memory** (1): tonalness mean H3 — generalization limit predictor
+- **L0 Memory / H6** (1): roughness periodicity H6 — stimulus regularity
+
+## 4. Layer Outputs
+
+| Layer | Dims | Key Outputs |
+|-------|------|-------------|
+| E (3D) | [0:3] | nps_value (FFR proxy), stimulus_dependency, roughness_corr (r=-0.57) |
+| M (1D) | [3:4] | nps_stimulus_function (E0×E1 product) |
+| P (3D) | [4:7] | ffr_encoding, harmonicity_proxy, roughness_interference |
+| F (3D) | [7:10] | behavioral_consonance_pred, roughness_response_pred, generalization_limit |
+
+## 5. Beliefs
+
+None at this time. May gain beliefs as integration matures.
+
+## 6. Brain Regions
+
+- **Inferior Colliculus**: FFR generator for NPS (Cousineau 2015)
+- **Anterolateral HG**: Cortical pitch salience (Penagos 2004)
+- **Right STG**: Dissonance-sensitive gradient (Foo 2016)
+
+*Layer files:* [SDNPS-extraction.md](sdnps/SDNPS-extraction.md), [SDNPS-temporal-integration.md](sdnps/SDNPS-temporal-integration.md), [SDNPS-cognitive-present.md](sdnps/SDNPS-cognitive-present.md), [SDNPS-forecast.md](sdnps/SDNPS-forecast.md)
+
+---
+---
+
+# PNH — Pythagorean Neural Hierarchy
+
+**Model**: IMU-α2-PNH
+**Type**: Relay (Depth 0) — reads R³/H³ directly
+**Tier**: α (Mechanistic, 90-100% confidence)
+**Output**: 11D per frame — H(3) + M(2) + P(3) + F(3)
+**Phase**: 0a (independent relay)
+
+---
+
+## 1. Identity
+
+PNH models how neural responses to musical intervals follow the Pythagorean ratio complexity hierarchy: log₂(n×d) predicts BOLD activation in IFG/ACC. Musicians show this pattern in 5 ROIs (L-IFG, L-STG, L-MFG, L-IPL, ACC); non-musicians in R-IFG only. Bidelman & Krishnan 2009, r≥0.81, N=10.
+
+## 2. R³ Inputs (10 features)
+
+[0] roughness, [1] sethares, [2] helmholtz_kang, [3] stumpf, [4] sensory_pleasantness, [5] inharmonicity, [6] harmonic_deviation, [8] velocity_D (doc said [10] loudness — corrected), [14] tonalness, [17] spectral_autocorrelation
+
+**R³ correction**: Model doc references `x_l0l5[25:33]` (dissolved E group). Replaced with inline `velocity_D × roughness` energy-consonance coupling.
+
+## 3. H³ Temporal Demand (15 tuples)
+
+- **L2 / H10 Chord** (7): roughness, inharmonicity, stumpf, pleasantness, tonalness, velocity_D values + spectral_auto periodicity
+- **L2 / H14** (1): stumpf mean
+- **L0 / H14** (4): roughness mean, inharmonicity mean, tonalness std, harmonic_deviation value
+- **L0 / H18** (3): roughness trend, pleasantness stability, helmholtz mean
+
+## 4. Layer Outputs
+
+| Layer | Dims | Key Outputs |
+|-------|------|-------------|
+| H (3D) | [0:3] | ratio_encoding (α=0.75), conflict_response (β=0.70), expertise_mod (γ=0.60) |
+| M (2D) | [3:5] | ratio_complexity (log₂(n×d) proxy), neural_activation (H0×H1) |
+| P (3D) | [5:8] | ratio_enc, conflict_mon (IFG/ACC), consonance_pref (η²p=0.685) |
+| F (3D) | [8:11] | dissonance_res_fc, pref_judgment_fc, expertise_mod_fc |
+
+## 5. Beliefs
+
+None at this time. May gain beliefs as integration matures.
+
+## 6. Brain Regions
+
+- **L-IFG (BA 44/45)**: Conflict monitoring for ratio complexity (Kim 2021)
+- **ACC**: Salience detection for dissonance (Bidelman & Krishnan 2009)
+- **L-STG**: Auditory encoding (Kim 2021)
+- **alHG**: Early consonance encoding, POR (Tabas 2019)
+
+*Layer files:* [PNH-extraction.md](pnh/PNH-extraction.md), [PNH-temporal-integration.md](pnh/PNH-temporal-integration.md), [PNH-cognitive-present.md](pnh/PNH-cognitive-present.md), [PNH-forecast.md](pnh/PNH-forecast.md)
+
+---
+---
+
+# TPRD — Tonotopy-Pitch Representation Dissociation
+
+**Model**: IMU-β8-TPRD
+**Type**: Relay (Depth 0) — reads R³/H³ directly
+**Tier**: β (Observation-compatible, 70-90% confidence)
+**Output**: 10D per frame — T(3) + M(2) + P(2) + F(3)
+**Phase**: 0a (independent relay)
+
+---
+
+## 1. Identity
+
+TPRD models the fundamental distinction between tonotopic (frequency) encoding in primary/medial Heschl's gyrus and pitch (F0) representation in nonprimary/lateral HG. Resolves the long-standing debate: tonotopy ≠ pitch. Briley et al. 2013, Cerebral Cortex 23(11):2601-2610.
+
+## 2. R³ Inputs (6 features)
+
+[0] roughness, [5] inharmonicity, [7] velocity_A, [14] tonalness, [17] spectral_autocorrelation, [22] entropy
+
+**R³ corrections applied**:
+- `[10] loudness` → `[8] velocity_D` (97D naming)
+- `x_l0l5[25:33]` dissolved → inline energy×consonance coupling
+- `x_l5l7[41:49]` dissolved → spectral_autocorrelation [17]
+
+## 3. H³ Temporal Demand (18 tuples)
+
+Dual horizon sets:
+- **Pitch-processing chain H0→H3→H6** (10): stumpf/tonalness at H0, stumpf/tonalness means + spectral_auto periodicity at H3, stumpf/tonalness means + spectral_auto period + entropy + velocity_A at H6
+- **Mnemonic horizons H10→H14→H18** (8): roughness/inharmonicity/harmonic_deviation/velocity_D at H10, roughness/inharmonicity/entropy means at H14, pleasantness stability at H18
+
+## 4. Layer Outputs
+
+| Layer | Dims | Key Outputs |
+|-------|------|-------------|
+| T (3D) | [0:3] | tonotopic (medial HG), pitch (lateral HG), dissociation |
+| M (2D) | [3:5] | dissociation_idx (0=pitch, 0.5=balanced, 1=tono), spectral_pitch_r |
+| P (2D) | [5:7] | tonotopic_state, pitch_state |
+| F (3D) | [7:10] | pitch_percept_fc (50-200ms), tonotopic_adpt_fc (200-700ms), dissociation_fc (0.5-2s) |
+
+## 5. Beliefs
+
+None at this time. May gain beliefs as integration matures.
+
+## 6. Brain Regions
+
+- **Medial HG (primary)**: Tonotopic encoding — T0, P0 (Briley 2013)
+- **Anterolateral HG (nonprimary)**: Pitch representation — T1, P1 (Briley 2013, Norman-Haignere 2013)
+- **Right STG**: Dissonance-sensitive gradient — T2 (Foo 2016)
+
+*Layer files:* [TPRD-extraction.md](tprd/TPRD-extraction.md), [TPRD-temporal-integration.md](tprd/TPRD-temporal-integration.md), [TPRD-cognitive-present.md](tprd/TPRD-cognitive-present.md), [TPRD-forecast.md](tprd/TPRD-forecast.md)

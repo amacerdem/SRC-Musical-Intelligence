@@ -403,25 +403,28 @@ Models with 3+ Function assignments (primary + 2+ secondary):
 > F6 Reward is the terminal convergence hub (analogous to ARU in unit architecture).
 > F1 Sensory and F7 Motor are the entry points (Phase 0, no Function dependencies).
 
-### 5. Mechanism-Level Belief Distribution (v3.0)
+### 5. Mechanism-Level Belief Distribution (Provisional)
 
-131 beliefs in 3 categories derived from model mechanisms:
+> **NOTE**: Counts below are **design estimates**. Authoritative belief and mechanism
+> counts are determined during model integration by reading each model's spec at
+> `Docs/C³/Models/`. See per-function `collections.md` for implemented truth.
 
-| Function | Core | Appraisal | Anticipation | Total | Key Core Beliefs |
-|----------|:----:|:---------:|:------------:|:-----:|------------------|
-| F1 Sensory | 5 | 7 | 5 | 17 | harmonic_stability, pitch_prominence, pitch_identity, timbral_character, aesthetic_quality |
-| F2 Prediction | 4 | 6 | 5 | 15 | prediction_hierarchy, sequence_match, information_content, prediction_accuracy |
-| F3 Attention | 4 | 7 | 4 | 15 | beat_entrainment, meter_hierarchy, attention_capture, salience_network_activation |
-| F4 Memory | 4 | 7 | 2 | 13 | autobiographical_retrieval, nostalgia_intensity, emotional_coloring, episodic_encoding |
-| F5 Emotion | 4 | 8 | 2 | 14 | perceived_happy, perceived_sad, emotional_arousal, nostalgia_affect |
-| F6 Reward | 5 | 7 | 4 | 16 | wanting, liking, pleasure, prediction_error, tension |
-| F7 Motor | 4 | 9 | 4 | 17 | period_entrainment, kinematic_efficiency, groove_quality, context_depth |
-| F8 Learning | 4 | 8 | 2 | 14 | trained_timbre_recognition, expertise_enhancement, network_specialization, statistical_model |
-| F9 Social | 2 | 6 | 2 | 10 | neural_synchrony, social_coordination |
-| **TOTAL** | **36** | **65** | **30** | **131** | |
+Beliefs in 3 categories derived from model mechanisms:
 
-> Core = full Bayesian cycle with PE. Appraisal = observe-only mechanism outputs. Anticipation = forward predictions.
-> Full inventory: BELIEF-CYCLE.md v3.0
+| Function | Key Core Beliefs (estimates) |
+|----------|------------------------------|
+| F1 Sensory | harmonic_stability, pitch_prominence, pitch_identity, timbral_character, aesthetic_quality |
+| F2 Prediction | prediction_hierarchy, sequence_match, information_content, prediction_accuracy |
+| F3 Attention | beat_entrainment, meter_hierarchy, attention_capture, salience_network_activation |
+| F4 Memory | autobiographical_retrieval, nostalgia_intensity, emotional_coloring, episodic_encoding |
+| F5 Emotion | perceived_happy, perceived_sad, emotional_arousal, nostalgia_affect |
+| F6 Reward | wanting, liking, pleasure, prediction_error, tension |
+| F7 Motor | period_entrainment, kinematic_efficiency, groove_quality, context_depth |
+| F8 Learning | trained_timbre_recognition, expertise_enhancement, network_specialization, statistical_model |
+| F9 Social | neural_synchrony, social_coordination |
+
+> Core = full Bayesian cycle with PE. Appraisal = observe-only. Anticipation = forward predictions.
+> Full inventory: BELIEF-CYCLE.md. Counts finalized per-function during integration.
 
 ---
 

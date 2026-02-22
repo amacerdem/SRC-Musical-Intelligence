@@ -1,7 +1,12 @@
 # Belief Cycle — Core Formulas
 
-**Version**: v3.0.0 (Mechanism-based, 131 beliefs)
-**Updated**: 2026-02-21
+**Version**: v3.1.0 (Mechanism-based)
+**Updated**: 2026-02-22
+
+> **NOTE**: Belief counts and per-function totals below are **provisional estimates**.
+> The authoritative source for each function's beliefs and mechanisms is the model
+> documentation at `Docs/C³/Models/` and the per-function `collections.md` files
+> under `Building/C³-Brain/F*-*/`. Counts will be finalized during model integration.
 
 ## 3 Belief Categories
 
@@ -13,11 +18,11 @@ is the cognitive inference "this sound is harmonically resolved."
 
 ### Category Definitions
 
-| Category | Symbol | Count | Bayesian Cycle | PE | Description |
-|----------|--------|-------|---------------|-----|-------------|
-| **Core** | C | 36 | Full (predict→observe→update) | Yes | Primary cognitive states; τ-controlled inertia |
-| **Appraisal** | A | 65 | Observe-only (no predict) | No | Evaluative judgments computed by mechanisms |
-| **Anticipation** | N | 30 | Prediction outputs | No | Forward predictions; feed Core predict() |
+| Category | Symbol | Bayesian Cycle | PE | Description |
+|----------|--------|---------------|-----|-------------|
+| **Core** | C | Full (predict→observe→update) | Yes | Primary cognitive states; τ-controlled inertia |
+| **Appraisal** | A | Observe-only (no predict) | No | Evaluative judgments computed by mechanisms |
+| **Anticipation** | N | Prediction outputs | No | Forward predictions; feed Core predict() |
 
 **Core Beliefs**: Full Bayesian cycle. Each has τ (inertia), baseline, precision, and PE history.
 These drive the reward formula via prediction error.
@@ -87,22 +92,25 @@ posterior = Σ agg_weights[h] × pred_h
 
 ---
 
-## Belief Inventory (v3.0 — Mechanism-Based)
+## Belief Inventory (Provisional — Verified During Integration)
 
-### Grand Total
+> **Counts below are design estimates.** Final belief counts are determined
+> during model integration by reading each model's `Docs/C³/Models/` spec.
+> See each function's `collections.md` for the implemented truth.
 
-| Function | Core | Appraisal | Anticipation | **Total** |
-|----------|:----:|:---------:|:------------:|:---------:|
-| F1 Sensory Processing | 5 | 7 | 5 | **17** |
-| F2 Pattern Recognition | 4 | 6 | 5 | **15** |
-| F3 Attention & Salience | 4 | 7 | 4 | **15** |
-| F4 Memory Systems | 4 | 7 | 2 | **13** |
-| F5 Emotion & Valence | 4 | 8 | 2 | **14** |
-| F6 Reward & Motivation | 5 | 7 | 4 | **16** |
-| F7 Motor & Timing | 4 | 9 | 4 | **17** |
-| F8 Learning & Plasticity | 4 | 8 | 2 | **14** |
-| F9 Social Cognition | 2 | 6 | 2 | **10** |
-| **TOTAL** | **36** | **65** | **30** | **131** |
+### Overview by Function
+
+| Function | Core | Appraisal | Anticipation | Est. Total |
+|----------|:----:|:---------:|:------------:|:----------:|
+| F1 Sensory Processing | ~5 | ~7 | ~5 | ~17 |
+| F2 Pattern Recognition | ~4 | ~6 | ~5 | ~15 |
+| F3 Attention & Salience | ~4 | ~7 | ~4 | ~15 |
+| F4 Memory Systems | ~4 | ~7 | ~2 | ~13 |
+| F5 Emotion & Valence | ~4 | ~8 | ~2 | ~14 |
+| F6 Reward & Motivation | ~5 | ~7 | ~4 | ~16 |
+| F7 Motor & Timing | ~4 | ~9 | ~4 | ~17 |
+| F8 Learning & Plasticity | ~4 | ~8 | ~2 | ~14 |
+| F9 Social Cognition | ~2 | ~6 | ~2 | ~10 |
 
 ---
 

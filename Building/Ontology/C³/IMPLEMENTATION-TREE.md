@@ -589,58 +589,60 @@ Actual unique count requires aggregating all h3_demand lists.
 
 ---
 
-## 7. Function Belief Integration Points (v3.0 — Mechanism-Based)
+## 7. Function Belief Integration Points (Provisional)
 
-131 mechanism-level beliefs (36 Core + 65 Appraisal + 30 Anticipation).
+> **NOTE**: Belief counts per function are **design estimates**. Final counts are
+> determined during model integration. See per-function `collections.md` for truth.
+
 Only **Core Beliefs** carry PE/precision overhead. Appraisal/Anticipation are direct mechanism outputs.
 
-### F1 Sensory (17 beliefs: 5C + 7A + 5N, Phase 0)
+### F1 Sensory (Phase 0)
 Core: harmonic_stability(BCH), pitch_prominence(PSCL), pitch_identity(PCCR), timbral_character(MIAA), aesthetic_quality(STAI)
 Wave 1: BCH→harmonic_stability + interval_quality + harmonic_template_match
 Wave 2: PSCL→pitch_prominence + pitch_continuation; PCCR→pitch_identity + octave_equivalence
 Wave 3: MIAA→timbral_character + imagery_recognition; STAI→aesthetic_quality + reward_response_pred
 
-### F7 Motor (17 beliefs: 4C + 9A + 4N, Phase 0)
+### F7 Motor (Phase 0)
 Core: period_entrainment(PEOM), kinematic_efficiency(PEOM), groove_quality(HGSIC), context_depth(HMCE)
 Wave 1: PEOM→period_entrainment + timing_precision + period_lock_strength + next_beat_pred
 Wave 2: HMCE→context_depth + short/medium/long_context + phrase_boundary_pred
 Wave 3: HGSIC→groove_quality + beat_prominence + meter_structure + groove_trajectory
 
-### F3 Attention (15 beliefs: 4C + 7A + 4N, Phase 1)
+### F3 Attention (Phase 1)
 Core: beat_entrainment(SNEM), meter_hierarchy(SNEM), attention_capture(IACM), salience_network_activation(CSG)
 Wave 1: SNEM→beat_entrainment + selective_gain + beat_onset_pred + meter_position_pred
 Wave 2: IACM→attention_capture + object_segregation + precision_weighting
 Wave 3: AACM→aesthetic_engagement + savoring_effect
 
-### F4 Memory (13 beliefs: 4C + 7A + 2N, Phase 2)
+### F4 Memory (Phase 2)
 Core: autobiographical_retrieval(MEAMN), nostalgia_intensity(MEAMN), emotional_coloring(MEAMN), episodic_encoding(HCMC)
 Wave 1: MEAMN→all 3 Core + retrieval_probability + memory_vividness + self_relevance + vividness_trajectory
 Wave 2: HCMC→episodic_encoding + episodic_boundary + consolidation_strength
 Wave 3: MMP→melodic_recognition + memory_preservation + memory_scaffold_pred
 
-### F2 Prediction (15 beliefs: 4C + 6A + 5N, Phase 1)
+### F2 Prediction (Phase 1)
 Core: prediction_hierarchy(HTP), sequence_match(SPH), information_content(ICEM), prediction_accuracy(HTP)
 Wave 1: HTP→prediction_hierarchy + hierarchy_coherence + abstract_future + midlevel_future
 Wave 2: SPH→sequence_match + error_propagation + oscillatory_signature + sequence_completion
 Wave 3: ICEM→information_content + defense_cascade + arousal_scaling + valence_inversion
 
-### F5 Emotion (14 beliefs: 4C + 8A + 2N, Phase 2)
+### F5 Emotion (Phase 2)
 Core: perceived_happy(VMM), perceived_sad(VMM), emotional_arousal(AAC), nostalgia_affect(NEMAC)
 Wave 2: VMM→perceived_happy/sad + mode_detection + emotion_certainty + happy/sad_pathway
 Wave 3: AAC→emotional_arousal + chills_intensity + ans_dominance + driving_signal
 Wave 3: NEMAC→nostalgia_affect + self_referential_nostalgia + wellbeing_enhancement
 
-### F6 Reward (16 beliefs: 5C + 7A + 4N, Phase 5)
+### F6 Reward (Phase 5)
 Core: wanting(SRP), liking(SRP), pleasure(SRP), prediction_error(SRP), tension(SRP)
 Wave 1: SRP→wanting + liking + pleasure + prediction_match + peak_detection + chills_proximity
 Wave 2: DAED→dissociation_index + temporal_phase + da_caudate + da_nacc + wanting_ramp
 Wave 3: SRP→harmonic_tension + resolution_expectation + reward_forecast
 
-### F8 Learning (14 beliefs: 4C + 8A + 2N, Phase 3)
+### F8 Learning (Phase 3)
 Core: trained_timbre_recognition(TSCP), expertise_enhancement(ESME), network_specialization(EDNR), statistical_model(SLEE)
 Wave 4: All F8 models activate. Very high τ (0.88–0.95) — minimal per-frame change.
 
-### F9 Social (10 beliefs: 2C + 6A + 2N, Phase 3)
+### F9 Social (Phase 3)
 Core: neural_synchrony(NSCP), social_coordination(DDSMI)
 Wave 5: All F9 models activate. Requires multi-agent context.
 
