@@ -7,7 +7,6 @@ from __future__ import annotations
 
 from .bases import (
     Associator,
-    BaseCognitiveUnit,
     BaseModel,
     BaseSemanticGroup,
     BaseSpectralGroup,
@@ -46,8 +45,7 @@ __all__ = [
     "R3FeatureSpec",
     "RegionLink",
     "SemanticGroupOutput",
-    # Legacy ABCs
-    "BaseCognitiveUnit",
+    # ABCs
     "BaseModel",
     "BaseSemanticGroup",
     "BaseSpectralGroup",
