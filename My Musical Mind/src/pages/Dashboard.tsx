@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Flame, ChevronRight, Sparkles, Brain, MessageCircle, X,
@@ -42,6 +43,27 @@ const BELIEF_LABELS: Record<string, string> = {
 };
 const DAY_LABELS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
+const BELIEF_I18N_KEY: Record<string, string> = {
+  consonance: "dashboard.beliefs.harmony",
+  tempo: "dashboard.beliefs.rhythm",
+  salience: "dashboard.beliefs.attention",
+  familiarity: "dashboard.beliefs.memory",
+  reward: "dashboard.beliefs.pleasure",
+};
+
+const DAY_I18N_KEYS = [
+  "dashboard.days.mon", "dashboard.days.tue", "dashboard.days.wed", "dashboard.days.thu",
+  "dashboard.days.fri", "dashboard.days.sat", "dashboard.days.sun",
+];
+
+const AXIS_I18N_KEY: Record<string, string> = {
+  entropyTolerance: "dashboard.axes.entropy",
+  resolutionCraving: "dashboard.axes.resolution",
+  monotonyTolerance: "dashboard.axes.monotony",
+  salienceSensitivity: "dashboard.axes.salience",
+  tensionAppetite: "dashboard.axes.tension",
+};
+
 /* ── Evolution % calculation ─────────────────────────────────── */
 function computeEvolution(): { pct: string; direction: "up" | "down" } {
   const snaps = monthlyEvolution.weeklySnapshots;
@@ -56,6 +78,7 @@ function computeEvolution(): { pct: string; direction: "up" | "down" } {
 
 export function Dashboard() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { mind, level, xp, streak, tracksAnalyzed, displayName, totalListeningHours } = useUserStore();
   const persona = mind ? getPersona(mind.personaId) : null;
   const [chatOpen, setChatOpen] = useState(false);
@@ -117,9 +140,9 @@ export function Dashboard() {
         animate="animate"
         className="fixed top-10 left-6 z-30 flex items-center gap-5"
       >
-        <HUDStat label="Streak" value={`${streak}d`} icon={<Flame size={14} />} accent={color} />
-        <HUDStat label="Tracks" value={String(tracksAnalyzed)} icon={<Music size={13} />} />
-        <HUDStat label="Level" value={String(level)} icon={<TrendingUp size={13} />} />
+        <HUDStat label={t("dashboard.streak")} value={`${streak}d`} icon={<Flame size={14} />} accent={color} />
+        <HUDStat label={t("dashboard.tracks")} value={String(tracksAnalyzed)} icon={<Music size={13} />} />
+        <HUDStat label={t("dashboard.level")} value={String(level)} icon={<TrendingUp size={13} />} />
         <div className="flex items-center gap-2.5">
           <div className="w-24 h-1.5 rounded-full overflow-hidden" style={{ background: `${color}15` }}>
             <motion.div className="h-full rounded-full" style={{ background: color, opacity: 0.7 }}
@@ -141,7 +164,7 @@ export function Dashboard() {
           </span>
           {displayName && displayName !== "You" && (
             <span className="text-sm text-slate-500 font-display font-light ml-4">
-              Welcome back, <span className="text-slate-300 font-medium">{displayName}</span>
+              {t("dashboard.welcomeBack")} <span className="text-slate-300 font-medium">{displayName}</span>
             </span>
           )}
         </motion.div>
@@ -166,7 +189,7 @@ export function Dashboard() {
 
             {/* Your DNA */}
             <div className="spatial-card p-4 flex-shrink-0">
-              <span className="text-sm font-display font-light tracking-[0.15em] uppercase text-slate-500 block mb-3">Your DNA</span>
+              <span className="text-sm font-display font-light tracking-[0.15em] uppercase text-slate-500 block mb-3">{t("dashboard.yourDna")}</span>
               <div className="space-y-3">
                 {AXIS_META.map((axis, i) => {
                   const value = mind.axes[axis.key];
@@ -177,7 +200,7 @@ export function Dashboard() {
                       <div className="flex items-center justify-between mb-1">
                         <div className="flex items-center gap-2">
                           <NucleusDot color={axisColor} size={4} active />
-                          <span className="text-[14px] font-display text-slate-400">{axis.shortLabel}</span>
+                          <span className="text-[14px] font-display text-slate-400">{t(AXIS_I18N_KEY[axis.key])}</span>
                         </div>
                         <span className="text-[14px] font-mono font-medium" style={{ color: axisColor }}>{pct}</span>
                       </div>
@@ -198,14 +221,14 @@ export function Dashboard() {
 
             {/* Belief Signals */}
             <motion.div variants={fadeIn} initial="initial" animate="animate" className="spatial-card p-3 flex-shrink-0">
-              <span className="text-xs font-display font-light tracking-[0.15em] uppercase text-slate-500 block mb-2">Live Signals</span>
+              <span className="text-xs font-display font-light tracking-[0.15em] uppercase text-slate-500 block mb-2">{t("dashboard.liveSignals")}</span>
               <BeliefMiniTrace height={55} />
               <div className="flex justify-center gap-3 mt-2">
                 {BELIEF_NAMES.map((b) => (
                   <div key={b} className="flex items-center gap-1">
                     <div className="w-2 h-2 rounded-full" style={{ background: beliefColors[b].primary }} />
                     <span className="text-[10px] font-mono capitalize" style={{ color: `${beliefColors[b].primary}90` }}>
-                      {BELIEF_LABELS[b]}
+                      {t(BELIEF_I18N_KEY[b])}
                     </span>
                   </div>
                 ))}
@@ -241,9 +264,9 @@ export function Dashboard() {
             >
               <Activity size={16} style={{ color }} />
               <span className="text-sm font-display font-medium" style={{ color }}>
-                +{evolution.pct}% evolution
+                {t("dashboard.evolution", { pct: evolution.pct })}
               </span>
-              <span className="text-xs text-slate-500 font-display font-light">this week</span>
+              <span className="text-xs text-slate-500 font-display font-light">{t("dashboard.evolutionThisWeek")}</span>
             </motion.div>
 
             {/* Brain quote */}
@@ -256,7 +279,7 @@ export function Dashboard() {
               <p className="text-sm text-slate-400 font-display font-light italic leading-relaxed">
                 "{brainQuote}"
               </p>
-              <p className="text-xs font-mono text-slate-600 mt-2">— Your {persona.family.slice(0, -1)} Mind</p>
+              <p className="text-xs font-mono text-slate-600 mt-2">— {t("dashboard.yourMind", { family: persona.family.slice(0, -1) })}</p>
             </motion.div>
 
             {/* PE Insight */}
@@ -271,7 +294,7 @@ export function Dashboard() {
                   <Sparkles size={16} className="mt-0.5 shrink-0" style={{ color: beliefColors.reward.primary }} />
                   <div className="flex-1 min-w-0">
                     <span className="text-[11px] font-display font-light tracking-[0.1em] uppercase" style={{ color: `${beliefColors.reward.primary}90` }}>
-                      Peak Moment This Week
+                      {t("dashboard.peakMomentThisWeek")}
                     </span>
                     <p className="text-[13px] text-slate-400 font-body font-light mt-1 leading-relaxed">
                       {weeklyStats.peakPE.description.slice(0, 120)}...
@@ -284,7 +307,7 @@ export function Dashboard() {
                         />
                       </div>
                       <span className="text-[11px] font-mono" style={{ color: beliefColors.reward.primary }}>
-                        {(weeklyStats.peakPE.magnitude * 100).toFixed(0)}% intensity
+                        {(weeklyStats.peakPE.magnitude * 100).toFixed(0)}% {t("dashboard.intensity")}
                       </span>
                     </div>
                   </div>
@@ -309,7 +332,7 @@ export function Dashboard() {
                 })}
               </div>
               <button onClick={() => navigate("/friends")} className="flex items-center gap-1 text-xs text-slate-500 hover:text-slate-300 transition-colors font-display">
-                Friends <ChevronRight size={14} />
+                {t("nav.friends")} <ChevronRight size={14} />
               </button>
               {similarMind && (
                 <button
@@ -319,7 +342,7 @@ export function Dashboard() {
                 >
                   <MessageCircle size={13} style={{ color: beliefColors.familiarity.primary }} />
                   <span className="text-[11px] font-display" style={{ color: beliefColors.familiarity.primary }}>
-                    {similarMind.similarity}% match
+                    {t("dashboard.match", { pct: similarMind.similarity })}
                   </span>
                 </button>
               )}
@@ -332,7 +355,7 @@ export function Dashboard() {
             {/* Weekly Listening Chart */}
             <div className="spatial-card p-3 flex-shrink-0">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-display font-light tracking-[0.15em] uppercase text-slate-500">This Week</span>
+                <span className="text-xs font-display font-light tracking-[0.15em] uppercase text-slate-500">{t("dashboard.thisWeek")}</span>
                 <div className="flex items-center gap-2">
                   <Clock size={12} className="text-slate-600" />
                   <span className="text-xs font-mono text-slate-400">{Math.floor(weeklyStats.totalMinutes / 60)}h {weeklyStats.totalMinutes % 60}m</span>
@@ -353,21 +376,21 @@ export function Dashboard() {
                         animate={{ height: `${height}%` }}
                         transition={{ duration: 0.8, delay: i * 0.06 }}
                       />
-                      <span className="text-[10px] font-mono text-slate-500">{DAY_LABELS[i]}</span>
+                      <span className="text-[10px] font-mono text-slate-500">{t(DAY_I18N_KEYS[i])}</span>
                     </div>
                   );
                 })}
               </div>
               <div className="flex justify-between mt-2 text-[11px] font-mono text-slate-500">
-                <span>{weeklyStats.totalTracks} tracks</span>
-                <span>Peak: {weeklyStats.peakListeningHour}:00</span>
+                <span>{t("dashboard.tracksCount", { count: weeklyStats.totalTracks })}</span>
+                <span>{t("dashboard.peak", { hour: weeklyStats.peakListeningHour })}</span>
               </div>
             </div>
 
             {/* Belief Evolution Deltas */}
             <div className="spatial-card p-3 flex-shrink-0">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-display font-light tracking-[0.15em] uppercase text-slate-500">Weekly Evolution</span>
+                <span className="text-xs font-display font-light tracking-[0.15em] uppercase text-slate-500">{t("dashboard.weeklyEvolution")}</span>
                 <div className="flex items-center gap-1.5">
                   <TrendingUp size={13} style={{ color }} />
                   <span className="text-sm font-mono font-medium" style={{ color }}>+{evolution.pct}%</span>
@@ -383,7 +406,7 @@ export function Dashboard() {
                     <div key={b} className="flex items-center gap-3">
                       <div className="flex items-center gap-1.5 w-20">
                         <div className="w-2 h-2 rounded-full" style={{ background: bColor }} />
-                        <span className="text-[11px] font-display text-slate-400">{BELIEF_LABELS[b]}</span>
+                        <span className="text-[11px] font-display text-slate-400">{t(BELIEF_I18N_KEY[b])}</span>
                       </div>
                       <div className="flex-1 h-[4px] rounded-full bg-white/5 overflow-hidden">
                         <motion.div
@@ -410,7 +433,7 @@ export function Dashboard() {
             <div className="spatial-card p-3 flex-shrink-0 overflow-hidden">
               <div className="flex items-center gap-2 mb-1.5">
                 <Brain size={14} style={{ color: beliefColors.reward.primary }} />
-                <span className="text-xs font-display font-light tracking-[0.15em] uppercase text-slate-500">Your Brain This Week</span>
+                <span className="text-xs font-display font-light tracking-[0.15em] uppercase text-slate-500">{t("dashboard.yourBrainThisWeek")}</span>
               </div>
               <p className="text-[12px] text-slate-400 leading-relaxed font-body font-light line-clamp-3">
                 {monologue}
@@ -457,10 +480,10 @@ export function Dashboard() {
                   <NucleusDot color={beliefColors.familiarity.primary} size={5} active pulsing />
                   <div>
                     <h3 className="text-sm font-display font-medium text-slate-300">
-                      Mind Link: {similarMind.user.displayName}
+                      {t("dashboard.mindLink", { name: similarMind.user.displayName })}
                     </h3>
                     <p className="text-xs font-mono text-slate-600">
-                      {similarMind.similarity}% neural similarity
+                      {t("dashboard.neuralSimilarity", { pct: similarMind.similarity })}
                     </p>
                   </div>
                 </div>
@@ -470,9 +493,9 @@ export function Dashboard() {
               </div>
               <div className="p-5 h-80 overflow-y-auto space-y-4">
                 <div className="text-center">
-                  <p className="text-xs font-mono text-slate-700 mb-2">Minds connected</p>
+                  <p className="text-xs font-mono text-slate-700 mb-2">{t("dashboard.mindsConnected")}</p>
                   <p className="text-sm text-slate-500 font-body font-light max-w-sm mx-auto">
-                    Your auditory cortices share {similarMind.sharedTraits.length} processing traits.
+                    {t("dashboard.sharedTraits", { count: similarMind.sharedTraits.length })}
                   </p>
                 </div>
                 <div className="flex gap-3">
@@ -480,7 +503,7 @@ export function Dashboard() {
                   <div className="flex-1">
                     <div className="rounded-xl p-3 max-w-[80%]" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.04)" }}>
                       <p className="text-sm text-slate-400 font-body font-light">
-                        Hey! I saw we matched at {similarMind.similarity}%. What's your peak track been this week?
+                        {t("dashboard.chatInitial", { pct: similarMind.similarity })}
                       </p>
                     </div>
                   </div>
@@ -500,10 +523,10 @@ export function Dashboard() {
               </div>
               <form className="p-4 border-t border-white/[0.04]" onSubmit={(e) => { e.preventDefault(); handleSendChat(); }}>
                 <div className="flex gap-3">
-                  <input type="text" placeholder="Share your mind..." value={chatInput} onChange={(e) => setChatInput(e.target.value)}
+                  <input type="text" placeholder={t("dashboard.shareMind")} value={chatInput} onChange={(e) => setChatInput(e.target.value)}
                     className="flex-1 px-4 py-2.5 rounded-xl text-sm text-slate-300 placeholder-slate-700 font-body font-light focus:outline-none"
                     style={{ background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.06)" }} />
-                  <Button variant="primary" size="sm" type="submit">Send</Button>
+                  <Button variant="primary" size="sm" type="submit">{t("dashboard.send")}</Button>
                 </div>
               </form>
             </motion.div>

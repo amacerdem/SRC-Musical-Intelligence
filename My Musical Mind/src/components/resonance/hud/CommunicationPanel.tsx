@@ -2,20 +2,21 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { useResonanceStore } from "@/stores/useResonanceStore";
 import type { ResonanceSignal } from "@/data/resonance-simulation";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
-const EMOTES: { type: ResonanceSignal["type"]; emoji: string; label: string }[] = [
-  { type: "wave", emoji: "👋", label: "Wave" },
-  { type: "chills", emoji: "✨", label: "Chills" },
-  { type: "vibe", emoji: "🌊", label: "Vibe" },
-  { type: "fire", emoji: "🔥", label: "Fire" },
-  { type: "mind", emoji: "🧠", label: "Mind" },
-  { type: "feel", emoji: "💜", label: "Feel" },
-  { type: "sync", emoji: "🔗", label: "Sync" },
-  { type: "peak", emoji: "⚡", label: "Peak" },
+const EMOTE_KEYS: { type: ResonanceSignal["type"]; emoji: string; key: string }[] = [
+  { type: "wave", emoji: "👋", key: "resonance.emotes.wave" },
+  { type: "chills", emoji: "✨", key: "resonance.emotes.chills" },
+  { type: "vibe", emoji: "🌊", key: "resonance.emotes.vibe" },
+  { type: "fire", emoji: "🔥", key: "resonance.emotes.fire" },
+  { type: "mind", emoji: "🧠", key: "resonance.emotes.mind" },
+  { type: "feel", emoji: "💜", key: "resonance.emotes.feel" },
+  { type: "sync", emoji: "🔗", key: "resonance.emotes.sync" },
+  { type: "peak", emoji: "⚡", key: "resonance.emotes.peak" },
 ];
 
 interface Props {
@@ -24,6 +25,7 @@ interface Props {
 }
 
 export function CommunicationPanel({ targetUserId, onClose }: Props) {
+  const { t } = useTranslation();
   const sendSignal = useResonanceStore(s => s.sendSignal);
   const users = useResonanceStore(s => s.users);
   const [message, setMessage] = useState("");
@@ -56,7 +58,7 @@ export function CommunicationPanel({ targetUserId, onClose }: Props) {
         {/* Header */}
         <div className="flex items-center justify-between">
           <span className="text-[8px] font-display uppercase tracking-[0.2em] text-white/30">
-            Signal → {targetUser.displayName}
+            {t("resonance.signalTo", { name: targetUser.displayName })}
           </span>
           <button
             onClick={onClose}
@@ -68,14 +70,14 @@ export function CommunicationPanel({ targetUserId, onClose }: Props) {
 
         {/* Emote grid */}
         <div className="grid grid-cols-4 gap-1.5">
-          {EMOTES.map(e => (
+          {EMOTE_KEYS.map(e => (
             <button
               key={e.type}
               onClick={() => handleEmote(e.type, e.emoji)}
               className="flex flex-col items-center gap-0.5 py-1.5 rounded-lg transition-all duration-200 hover:bg-white/[0.05] active:scale-90"
             >
               <span className="text-base">{e.emoji}</span>
-              <span className="text-[6px] font-mono text-slate-700">{e.label}</span>
+              <span className="text-[6px] font-mono text-slate-700">{t(e.key)}</span>
             </button>
           ))}
         </div>
@@ -87,7 +89,7 @@ export function CommunicationPanel({ targetUserId, onClose }: Props) {
             value={message}
             onChange={e => setMessage(e.target.value.slice(0, 50))}
             onKeyDown={e => e.key === "Enter" && handleMessage()}
-            placeholder="Short message..."
+            placeholder={t("resonance.messagePlaceholder")}
             className="flex-1 px-2.5 py-1.5 bg-white/[0.03] rounded-lg text-[9px] font-body text-slate-300 placeholder:text-slate-800 outline-none border border-white/[0.04] focus:border-white/[0.08] transition-colors"
           />
           <button
@@ -107,7 +109,7 @@ export function CommunicationPanel({ targetUserId, onClose }: Props) {
               exit={{ opacity: 0, y: -10 }}
               className="text-center text-sm"
             >
-              {sentEmote} <span className="text-[8px] text-slate-600">sent</span>
+              {sentEmote} <span className="text-[8px] text-slate-600">{t("resonance.sent")}</span>
             </motion.div>
           )}
         </AnimatePresence>

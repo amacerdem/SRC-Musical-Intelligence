@@ -1,5 +1,6 @@
 import { useState, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Upload, Search, Sparkles, ChevronDown, ChevronUp, Radio,
@@ -27,19 +28,26 @@ const BELIEF_KEYS = ["consonance", "tempo", "salience", "familiarity", "reward"]
 const BELIEF_LABELS: Record<string, string> = {
   consonance: "Harmony", tempo: "Rhythm", salience: "Attention", familiarity: "Memory", reward: "Pleasure",
 };
+const BELIEF_I18N_KEY: Record<string, string> = {
+  consonance: "dashboard.beliefs.harmony",
+  tempo: "dashboard.beliefs.rhythm",
+  salience: "dashboard.beliefs.attention",
+  familiarity: "dashboard.beliefs.memory",
+  reward: "dashboard.beliefs.pleasure",
+};
 
 /* ── Analysis pipeline phases — what's happening under the hood ── */
 const ANALYSIS_PHASES = [
-  { threshold: 5,  text: "Listening to the sound — breaking it into 128 frequency layers", icon: "ear" },
-  { threshold: 15, text: "Reading 97 perceptual features from every moment", icon: "eye" },
-  { threshold: 25, text: "Measuring harmony: how rough, how pure, how tonal...", icon: "wave" },
-  { threshold: 35, text: "Looking at patterns across time — from milliseconds to minutes", icon: "clock" },
-  { threshold: 50, text: "Tracking speed, direction, and rhythmic repetition...", icon: "chart" },
-  { threshold: 60, text: "Your mind is predicting what comes next", icon: "brain" },
-  { threshold: 70, text: "Comparing predictions to reality — where were you surprised?", icon: "zap" },
-  { threshold: 80, text: "Updating beliefs — how confident is your mind about each dimension?", icon: "target" },
-  { threshold: 90, text: "Computing pleasure: surprise + resolution + exploration − boredom", icon: "star" },
-  { threshold: 97, text: "Integrating across 8 time scales — from beats to movements", icon: "layers" },
+  { threshold: 5,  key: "discover.phases.p1", icon: "ear" },
+  { threshold: 15, key: "discover.phases.p2", icon: "eye" },
+  { threshold: 25, key: "discover.phases.p3", icon: "wave" },
+  { threshold: 35, key: "discover.phases.p4", icon: "clock" },
+  { threshold: 50, key: "discover.phases.p5", icon: "chart" },
+  { threshold: 60, key: "discover.phases.p6", icon: "brain" },
+  { threshold: 70, key: "discover.phases.p7", icon: "zap" },
+  { threshold: 80, key: "discover.phases.p8", icon: "target" },
+  { threshold: 90, key: "discover.phases.p9", icon: "star" },
+  { threshold: 97, key: "discover.phases.p10", icon: "layers" },
 ];
 
 /* ── Neuroscience context for analysis results ─────────────────── */
@@ -47,6 +55,7 @@ function generateAnalysisNarrative(
   traces: BeliefTrace[],
   personaName: string,
   style: string,
+  t: (key: string, opts?: Record<string, unknown>) => string,
 ): { summary: string; beliefs: { key: string; narrative: string; avgValue: number }[]; peakMoment: string; brainRegions: string[] } {
   const avg = (key: keyof BeliefTrace) => traces.reduce((s, t) => s + (t[key] as number), 0) / traces.length;
   const avgC = avg("consonance");
@@ -68,53 +77,56 @@ function generateAnalysisNarrative(
       key: "consonance",
       avgValue: avgC,
       narrative: avgC > 0.65
-        ? "You were deeply tuned into the harmony here. Chord changes hit you strongly — resolved intervals felt satisfying, and dissonance created real tension you wanted resolved."
+        ? t("discover.narratives.consonanceHigh")
         : avgC > 0.45
-        ? "You processed the harmony with flexibility — both consonant and dissonant passages felt natural to you. You're comfortable with harmonic ambiguity."
-        : "Harmony wasn't the main thing driving you here. You let chords wash over you without needing them to resolve — you hear structure through other channels.",
+        ? t("discover.narratives.consonanceMid")
+        : t("discover.narratives.consonanceLow"),
     },
     {
       key: "tempo",
       avgValue: avgT,
       narrative: avgT > 0.6
-        ? "Your body locked onto the rhythm. You were tightly synced with the beat — anticipating tempo changes and moving with the groove instinctively."
+        ? t("discover.narratives.tempoHigh")
         : avgT > 0.4
-        ? "You tracked the rhythm without being dominated by it. Complex rhythmic passages didn't throw you off — you're flexible enough to handle polyrhythm."
-        : "Rhythm wasn't your primary channel here. You experienced this music more as texture and color than pulse and beat.",
+        ? t("discover.narratives.tempoMid")
+        : t("discover.narratives.tempoLow"),
     },
     {
       key: "salience",
       avgValue: avgS,
       narrative: avgS > 0.55
-        ? "Your attention was grabbed hard. Sudden changes in dynamics, texture, or melody triggered strong reactions — your mind was on high alert for the unexpected."
+        ? t("discover.narratives.salienceHigh")
         : avgS > 0.35
-        ? "Balanced attention. You noticed structural changes without being overwhelmed by them — your filter separated the important moments from the noise."
-        : "You experienced this as a smooth flow. Rather than reacting to individual moments, you let the music carry you as a continuous stream.",
+        ? t("discover.narratives.salienceMid")
+        : t("discover.narratives.salienceLow"),
     },
     {
       key: "familiarity",
       avgValue: avgF,
       narrative: avgF > 0.6
-        ? "Your memory kicked in strongly. You were recognizing patterns, connecting themes across the piece — each repetition deepened your understanding rather than boring you."
+        ? t("discover.narratives.familiarityHigh")
         : avgF > 0.35
-        ? "Patterns emerged gradually. Your mind was slowly building connections, but each repetition still felt somewhat fresh — you hadn't fully mapped the structure yet."
-        : "This felt new throughout. Your pattern recognition kept the novelty signal high — even on re-hearing, it would likely feel relatively fresh.",
+        ? t("discover.narratives.familiarityMid")
+        : t("discover.narratives.familiarityLow"),
     },
     {
       key: "reward",
       avgValue: avgR,
       narrative: avgR > 0.06
-        ? `Strong pleasure response (${(avgR * 100).toFixed(1)}% average). Surprises resolved into satisfaction — moments of "I didn't expect that" followed by "but I love it."`
+        ? t("discover.narratives.rewardHigh", { value: (avgR * 100).toFixed(1) })
         : avgR > 0.02
-        ? `Selective pleasure (${(avgR * 100).toFixed(1)}% average). Your enjoyment spiked at specific moments rather than being sustained throughout — quality over quantity.`
-        : `Reserved response (${(avgR * 100).toFixed(1)}% average). Your standards are high — it takes more nuanced or unexpected music to trigger real satisfaction.`,
+        ? t("discover.narratives.rewardMid", { value: (avgR * 100).toFixed(1) })
+        : t("discover.narratives.rewardLow", { value: (avgR * 100).toFixed(1) }),
     },
   ];
 
   const brainRegions = [
-    "Hearing (auditory cortex)", "Harmony processing",
-    "Rhythm & movement", "Pleasure & reward",
-    "Memory & recognition", "Attention & surprise",
+    t("discover.brainRegions.hearing"),
+    t("discover.brainRegions.harmony"),
+    t("discover.brainRegions.rhythm"),
+    t("discover.brainRegions.pleasure"),
+    t("discover.brainRegions.memory"),
+    t("discover.brainRegions.attention"),
   ];
 
   const summary = `Your ${personaName} mind processed this ${style} track across 97 perceptual dimensions and ${traces.length} moments in time. `
@@ -143,6 +155,7 @@ function formatTime(sec: number): string {
 
 export function Discover() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { mind } = useUserStore();
   const persona = mind ? getPersona(mind.personaId) : null;
   const accentColor = persona?.color ?? beliefColors.consonance.primary;
@@ -184,8 +197,8 @@ export function Discover() {
   const peakReward = useMemo(() => traces.length > 0 ? findPeakReward(traces) : null, [traces]);
 
   const analysisNarrative = useMemo(
-    () => traces.length > 0 ? generateAnalysisNarrative(traces, persona?.name ?? "Unknown", analysisStyle) : null,
-    [traces, persona, analysisStyle],
+    () => traces.length > 0 ? generateAnalysisNarrative(traces, persona?.name ?? "Unknown", analysisStyle, t) : null,
+    [traces, persona, analysisStyle, t],
   );
 
   // Current analysis phase text
@@ -204,9 +217,9 @@ export function Discover() {
 
       {/* Header */}
       <motion.div variants={fadeIn} initial="initial" animate="animate" className="relative z-10 text-center mb-12 pt-8">
-        <span className="hud-label mb-3 block">Discovery</span>
-        <h1 className="text-4xl md:text-5xl font-display font-bold text-slate-100 tracking-tight mb-3">Discover</h1>
-        <p className="hud-label text-xs">Music your mind would love — curated by how you actually hear</p>
+        <span className="hud-label mb-3 block">{t("discover.hudLabel")}</span>
+        <h1 className="text-4xl md:text-5xl font-display font-bold text-slate-100 tracking-tight mb-3">{t("discover.title")}</h1>
+        <p className="hud-label text-xs">{t("discover.subtitle")}</p>
       </motion.div>
 
       <motion.div variants={staggerChildren} initial="initial" animate="animate" className="relative z-10 max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto px-4">
@@ -215,10 +228,10 @@ export function Discover() {
         <motion.div variants={slideUp} className="mb-12">
           <div className="flex items-center gap-2 mb-5">
             <Brain size={14} style={{ color: accentColor }} />
-            <span className="hud-label">Your Mind Would Love</span>
+            <span className="hud-label">{t("discover.yourMindWouldLove")}</span>
             {persona && (
               <span className="text-[9px] font-mono text-slate-700 ml-auto">
-                Curated for {persona.name} profile
+                {t("discover.curatedFor", { name: persona.name })}
               </span>
             )}
           </div>
@@ -276,8 +289,8 @@ export function Discover() {
         <motion.div variants={slideUp} className="mb-12">
           <div className="flex items-center gap-2 mb-5">
             <Headphones size={14} className="text-slate-600" />
-            <span className="hud-label">Top Performances</span>
-            <span className="text-[9px] font-mono text-slate-700 ml-auto">Community</span>
+            <span className="hud-label">{t("discover.topPerformances")}</span>
+            <span className="text-[9px] font-mono text-slate-700 ml-auto">{t("discover.community")}</span>
           </div>
           <div className="spatial-card p-6 space-y-1">
             {topPerformances.map((track, i) => {
@@ -300,7 +313,7 @@ export function Discover() {
                     <div className="flex items-center gap-2">
                       {track.isLive && (
                         <span className="flex items-center gap-1 text-[9px] font-mono text-red-400">
-                          <Radio size={10} className="animate-pulse" /> LIVE
+                          <Radio size={10} className="animate-pulse" /> {t("discover.live")}
                         </span>
                       )}
                       <h4 className="text-sm font-body font-medium text-slate-300 truncate group-hover:text-slate-100 transition-colors">{track.title}</h4>
@@ -313,13 +326,13 @@ export function Discover() {
                     {/* Peak moment */}
                     {track.peakMoment && (
                       <p className="text-[9px] font-mono mt-0.5" style={{ color: `${bColor}60` }}>
-                        Peak: {track.peakMoment}
+                        {t("discover.peakLabel")} {track.peakMoment}
                       </p>
                     )}
                   </div>
                   <div className="flex items-center gap-3 shrink-0">
                     {track.peakBelief && <NucleusDot color={bColor} size={3} active />}
-                    <span className="text-[10px] font-mono text-slate-700">{track.plays?.toLocaleString()} plays</span>
+                    <span className="text-[10px] font-mono text-slate-700">{t("discover.plays", { count: track.plays?.toLocaleString() })}</span>
                     <span className="text-[9px] font-mono text-slate-700">{track.duration}</span>
                   </div>
                 </div>
@@ -332,7 +345,7 @@ export function Discover() {
         <motion.div variants={slideUp} className="mb-12">
           <div className="flex items-center gap-2 mb-5">
             <Music size={14} className="text-slate-600" />
-            <span className="hud-label">Friends Are Listening</span>
+            <span className="hud-label">{t("discover.friendsListening")}</span>
           </div>
           <div className="spatial-card p-6 space-y-2">
             {friendActivity.map((fa) => {
@@ -362,7 +375,7 @@ export function Discover() {
                   <div className="flex-1 text-sm">
                     <span className="text-slate-300 font-body font-medium">{fa.userName}</span>
                     <span className="text-slate-600 font-body font-light ml-1">
-                      {fa.action === "performing" ? "is live performing" : fa.action === "composed" ? "composed" : "is listening to"}
+                      {fa.action === "performing" ? t("discover.friendActions.performing") : fa.action === "composed" ? t("discover.friendActions.composed") : t("discover.friendActions.listening")}
                     </span>
                     <span className="text-slate-400 font-body font-medium ml-1">"{fa.trackTitle}"</span>
                   </div>
@@ -379,7 +392,7 @@ export function Discover() {
           <button onClick={() => setAnalyzeOpen(!analyzeOpen)} className="w-full flex items-center justify-between py-3 mb-4">
             <div className="flex items-center gap-2">
               <TrendingUp size={14} className="text-slate-600" />
-              <span className="hud-label">Analyze a Track</span>
+              <span className="hud-label">{t("discover.analyzeTrack")}</span>
             </div>
             {analyzeOpen ? <ChevronUp size={14} className="text-slate-600" /> : <ChevronDown size={14} className="text-slate-600" />}
           </button>
@@ -391,18 +404,18 @@ export function Discover() {
                   <div className="flex flex-col sm:flex-row gap-4">
                     <div className="flex-1 relative">
                       <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-700" />
-                      <input type="text" placeholder="Paste a track URL or search..." value={trackUrl} onChange={(e) => setTrackUrl(e.target.value)} className="w-full pl-11 pr-4 py-3 rounded-xl text-slate-300 placeholder-slate-700 focus:outline-none transition-colors text-sm font-body font-light" style={{ background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.06)" }} />
+                      <input type="text" placeholder={t("discover.searchPlaceholder")} value={trackUrl} onChange={(e) => setTrackUrl(e.target.value)} className="w-full pl-11 pr-4 py-3 rounded-xl text-slate-300 placeholder-slate-700 focus:outline-none transition-colors text-sm font-body font-light" style={{ background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.06)" }} />
                     </div>
                     <div className="flex gap-3">
-                      <Button variant="glass" size="md"><Upload size={14} className="mr-2" />Upload</Button>
+                      <Button variant="glass" size="md"><Upload size={14} className="mr-2" />{t("discover.upload")}</Button>
                       <Button variant="primary" size="md" onClick={() => handleAnalyze()} disabled={labState === "analyzing"}>
-                        <Sparkles size={14} className="mr-2" />Analyze
+                        <Sparkles size={14} className="mr-2" />{t("discover.analyze")}
                       </Button>
                     </div>
                   </div>
                   {selectedTrack && labState !== "idle" && (
                     <p className="text-[10px] font-mono text-slate-600 mt-3">
-                      Analyzing: <span className="text-slate-400">{selectedTrack}</span>
+                      {t("discover.analyzing")} <span className="text-slate-400">{selectedTrack}</span>
                     </p>
                   )}
                 </div>
@@ -412,9 +425,9 @@ export function Discover() {
                     <motion.div key="idle" {...scaleIn} exit={{ opacity: 0 }}>
                       <div className="spatial-card min-h-[250px] flex flex-col items-center justify-center text-center p-10">
                         <MiniOrganism color={accentColor} stage={1} size={60} />
-                        <h3 className="text-base font-display font-medium text-slate-400 mt-6 mb-2">Drop a track into your mind</h3>
+                        <h3 className="text-base font-display font-medium text-slate-400 mt-6 mb-2">{t("discover.dropTrack")}</h3>
                         <p className="text-xs text-slate-600 max-w-md font-body font-light">
-                          Your mind will listen to it deeply — analyzing harmony, rhythm, attention, memory, and pleasure across every moment
+                          {t("discover.dropTrackDesc")}
                         </p>
                       </div>
                     </motion.div>
@@ -442,7 +455,7 @@ export function Discover() {
                                   style={{ backgroundColor: active ? accentColor : "#334155" }}
                                 />
                                 <span className={`text-[10px] font-mono ${active ? "text-slate-500" : "text-slate-800"} ${current ? "text-slate-300" : ""}`}>
-                                  {phase.text}
+                                  {t(phase.key)}
                                 </span>
                                 {active && !current && (
                                   <span className="text-[8px] font-mono text-green-800 ml-auto">done</span>

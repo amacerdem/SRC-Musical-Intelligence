@@ -1,5 +1,6 @@
 import { useCallback, useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Check, Crown, Sparkles, Zap, Music, Brain, Radio, Users, Star, Shield, Headphones, Eye } from "lucide-react";
 import { useOnboardingStore } from "@/stores/useOnboardingStore";
@@ -45,16 +46,16 @@ const MOCK_STATS = {
 
 /* ── Conversational analysis phases — more descriptive ───────────── */
 const ANALYSIS_PHASES = [
-  { text: "Connecting to your music library...", belief: null },
-  { text: "Scanning your library... 2,847 tracks across 8 years of listening.", belief: null },
-  { text: "Analyzing harmonic patterns... Your chord choices reveal something unusual.", belief: "consonance" as const },
-  { text: "Mapping tension arcs... You're drawn to the build-up before resolution.", belief: "consonance" as const },
-  { text: "Decoding temporal fingerprint... Your tempo patterns are fascinatingly unpredictable.", belief: "tempo" as const },
-  { text: "Measuring attentional peaks... High salience sensitivity detected.", belief: "salience" as const },
-  { text: "Tracing dynamic contrasts... You live for the shift between silence and chaos.", belief: "salience" as const },
-  { text: "Evaluating recurrence patterns... Repetition doesn't bore you — it deepens.", belief: "familiarity" as const },
-  { text: "Computing reward geometry... Your dopamine landscape is complex. Interesting.", belief: "reward" as const },
-  { text: "Synthesis complete. I know who you are now.", belief: "reward" as const },
+  { key: "onboarding.evolving.phases.p1", belief: null },
+  { key: "onboarding.evolving.phases.p2", belief: null },
+  { key: "onboarding.evolving.phases.p3", belief: "consonance" as const },
+  { key: "onboarding.evolving.phases.p4", belief: "consonance" as const },
+  { key: "onboarding.evolving.phases.p5", belief: "tempo" as const },
+  { key: "onboarding.evolving.phases.p6", belief: "salience" as const },
+  { key: "onboarding.evolving.phases.p7", belief: "salience" as const },
+  { key: "onboarding.evolving.phases.p8", belief: "familiarity" as const },
+  { key: "onboarding.evolving.phases.p9", belief: "reward" as const },
+  { key: "onboarding.evolving.phases.p10", belief: "reward" as const },
 ];
 
 /* ── Membership Plans ────────────────────────────────────────────── */
@@ -69,12 +70,12 @@ const PLANS = [
     icon: Headphones,
     color: "#6366F1",
     features: [
-      { text: "Musical Mind persona discovery", icon: Brain },
-      { text: "5-axis mind radar visualization", icon: Radio },
-      { text: "Weekly evolution reports", icon: Zap },
-      { text: "Basic listening analytics", icon: Music },
-      { text: "Community forum access", icon: Users },
-      { text: "50 track analyses / month", icon: Star },
+      { text: "Musical Mind persona discovery", key: "onboarding.plans.features.personaDiscovery", icon: Brain },
+      { text: "5-axis mind radar visualization", key: "onboarding.plans.features.fiveAxis", icon: Radio },
+      { text: "Weekly evolution reports", key: "onboarding.plans.features.weeklyReports", icon: Zap },
+      { text: "Basic listening analytics", key: "onboarding.plans.features.basicAnalytics", icon: Music },
+      { text: "Community forum access", key: "onboarding.plans.features.communityAccess", icon: Users },
+      { text: "50 track analyses / month", key: "onboarding.plans.features.fiftyAnalyses", icon: Star },
     ],
   },
   {
@@ -88,13 +89,13 @@ const PLANS = [
     color: "#A855F7",
     popular: true,
     features: [
-      { text: "Everything in Pulse", icon: Check },
-      { text: "Live Performance neural mode", icon: Radio },
-      { text: "Advanced 97D perceptual map", icon: Brain },
-      { text: "Mind compatibility matching", icon: Users },
-      { text: "Unlimited track analyses", icon: Zap },
-      { text: "Custom evolution paths", icon: Star },
-      { text: "Priority community badge", icon: Shield },
+      { text: "Everything in Pulse", key: "onboarding.plans.features.everythingPulse", icon: Check },
+      { text: "Live Performance neural mode", key: "onboarding.plans.features.livePerformance", icon: Radio },
+      { text: "Advanced 97D perceptual map", key: "onboarding.plans.features.advanced97D", icon: Brain },
+      { text: "Mind compatibility matching", key: "onboarding.plans.features.compatibility", icon: Users },
+      { text: "Unlimited track analyses", key: "onboarding.plans.features.unlimitedAnalyses", icon: Zap },
+      { text: "Custom evolution paths", key: "onboarding.plans.features.customPaths", icon: Star },
+      { text: "Priority community badge", key: "onboarding.plans.features.priorityBadge", icon: Shield },
     ],
   },
   {
@@ -107,14 +108,14 @@ const PLANS = [
     icon: Crown,
     color: "#FBBF24",
     features: [
-      { text: "Everything in Resonance", icon: Check },
-      { text: "Real-time brain region activation", icon: Brain },
-      { text: "AI-powered mind insights", icon: Sparkles },
-      { text: "Exclusive Visionary sessions", icon: Crown },
-      { text: "Early access to all features", icon: Zap },
-      { text: "Personal sound signature", icon: Music },
-      { text: "1-on-1 mind coaching", icon: Eye },
-      { text: "Founding member status", icon: Shield },
+      { text: "Everything in Resonance", key: "onboarding.plans.features.everythingResonance", icon: Check },
+      { text: "Real-time brain region activation", key: "onboarding.plans.features.brainActivation", icon: Brain },
+      { text: "AI-powered mind insights", key: "onboarding.plans.features.aiInsights", icon: Sparkles },
+      { text: "Exclusive Visionary sessions", key: "onboarding.plans.features.visionarySessions", icon: Crown },
+      { text: "Early access to all features", key: "onboarding.plans.features.earlyAccess", icon: Zap },
+      { text: "Personal sound signature", key: "onboarding.plans.features.soundSignature", icon: Music },
+      { text: "1-on-1 mind coaching", key: "onboarding.plans.features.coaching", icon: Eye },
+      { text: "Founding member status", key: "onboarding.plans.features.foundingMember", icon: Shield },
     ],
   },
 ];
@@ -178,7 +179,7 @@ export function Onboarding() {
         Math.floor((progress / 100) * ANALYSIS_PHASES.length),
         ANALYSIS_PHASES.length - 1
       );
-      setProgress(progress, ANALYSIS_PHASES[phaseIdx].text);
+      setProgress(progress, ANALYSIS_PHASES[phaseIdx].key);
 
       if (progress >= 100) {
         clearInterval(interval);
@@ -237,6 +238,7 @@ export function Onboarding() {
 
 /* ── Plan Selection Step ─────────────────────────────────────────── */
 function PlanStep({ onSelect }: { onSelect: (planId: string) => void }) {
+  const { t } = useTranslation();
   const [hoveredPlan, setHoveredPlan] = useState<string | null>(null);
   const [entered, setEntered] = useState(false);
 
@@ -266,9 +268,9 @@ function PlanStep({ onSelect }: { onSelect: (planId: string) => void }) {
           transition={{ delay: 0.3, duration: 1, ease: [0.22, 1, 0.36, 1] }}
           className="text-center mb-4"
         >
-          <p className="hud-label mb-4">Choose Your Journey</p>
+          <p className="hud-label mb-4">{t("onboarding.plans.chooseJourney")}</p>
           <h1 className="text-3xl md:text-5xl font-display font-bold text-slate-200 mb-4">
-            Your mind deserves to be{" "}
+            {t("onboarding.plans.mindDeserved")}{" "}
             <span
               style={{
                 background: "linear-gradient(135deg, #A855F7, #EC4899)",
@@ -276,12 +278,11 @@ function PlanStep({ onSelect }: { onSelect: (planId: string) => void }) {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              heard
+              {t("onboarding.plans.heard")}
             </span>
           </h1>
           <p className="text-base md:text-lg text-slate-500 font-display font-light max-w-2xl mx-auto leading-relaxed">
-            Every listener carries a unique neural fingerprint. Choose how deep you want to go
-            into the architecture of your musical consciousness.
+            {t("onboarding.plans.description")}
           </p>
         </motion.div>
 
@@ -292,7 +293,7 @@ function PlanStep({ onSelect }: { onSelect: (planId: string) => void }) {
           transition={{ delay: 0.8, duration: 1 }}
           className="text-center text-sm text-slate-600 font-display font-light mb-10 md:mb-14"
         >
-          Join 24,000+ listeners who already discovered their musical mind
+          {t("onboarding.plans.communityNote")}
         </motion.p>
 
         {/* Plans grid */}
@@ -328,7 +329,7 @@ function PlanStep({ onSelect }: { onSelect: (planId: string) => void }) {
                         boxShadow: `0 0 20px ${plan.color}40`,
                       }}
                     >
-                      Most Popular
+                      {t("onboarding.plans.mostPopular")}
                     </div>
                   </motion.div>
                 )}
@@ -361,7 +362,7 @@ function PlanStep({ onSelect }: { onSelect: (planId: string) => void }) {
                     </div>
                     <div>
                       <h3 className="text-lg font-display font-bold text-slate-200">{plan.name}</h3>
-                      <p className="text-xs text-slate-600 font-display font-light italic">{plan.tagline}</p>
+                      <p className="text-xs text-slate-600 font-display font-light italic">{t(`onboarding.plans.${plan.id}.tagline`)}</p>
                     </div>
                   </div>
 
@@ -375,7 +376,7 @@ function PlanStep({ onSelect }: { onSelect: (planId: string) => void }) {
 
                   {/* Description */}
                   <p className="text-sm text-slate-500 font-display font-light leading-relaxed mb-6">
-                    {plan.description}
+                    {t(`onboarding.plans.${plan.id}.description`)}
                   </p>
 
                   {/* Features */}
@@ -385,7 +386,7 @@ function PlanStep({ onSelect }: { onSelect: (planId: string) => void }) {
                       return (
                         <div key={fi} className="flex items-start gap-2.5">
                           <FIcon size={14} className="mt-0.5 flex-shrink-0" style={{ color: `${plan.color}90` }} />
-                          <span className="text-sm text-slate-400 font-display font-light">{feature.text}</span>
+                          <span className="text-sm text-slate-400 font-display font-light">{t(feature.key)}</span>
                         </div>
                       );
                     })}
@@ -407,7 +408,7 @@ function PlanStep({ onSelect }: { onSelect: (planId: string) => void }) {
                       onSelect(plan.id);
                     }}
                   >
-                    {isPopular ? "Start Your Journey" : "Choose " + plan.name}
+                    {isPopular ? t("onboarding.plans.startJourney") : t("onboarding.plans.choose", { name: plan.name })}
                   </button>
                 </div>
               </motion.div>
@@ -423,7 +424,7 @@ function PlanStep({ onSelect }: { onSelect: (planId: string) => void }) {
           className="text-center pb-8"
         >
           <p className="text-xs text-slate-700 font-display font-light">
-            Cancel anytime. No questions asked. Your mind, your rules.
+            {t("onboarding.plans.cancelAnytime")}
           </p>
         </motion.div>
       </div>
@@ -433,6 +434,7 @@ function PlanStep({ onSelect }: { onSelect: (planId: string) => void }) {
 
 /* ── Signup Step (Email + Password) ──────────────────────────────── */
 function SignupStep({ onComplete }: { onComplete: () => void }) {
+  const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [entered, setEntered] = useState(false);
@@ -504,9 +506,9 @@ function SignupStep({ onComplete }: { onComplete: () => void }) {
           transition={{ delay: 0.5, duration: 1 }}
           className="text-center mb-10"
         >
-          <p className="hud-label mb-4">Almost There</p>
+          <p className="hud-label mb-4">{t("onboarding.signup.almostThere")}</p>
           <h1 className="text-2xl md:text-3xl font-display font-bold text-slate-200 mb-3">
-            Create your{" "}
+            {t("onboarding.signup.createAccount")}{" "}
             <span
               style={{
                 background: `linear-gradient(135deg, ${plan?.color || "#A855F7"}, #EC4899)`,
@@ -516,10 +518,10 @@ function SignupStep({ onComplete }: { onComplete: () => void }) {
             >
               M³
             </span>
-            {" "}account
+            {" "}{t("onboarding.signup.account")}
           </h1>
           <p className="text-sm text-slate-500 font-display font-light">
-            A few keystrokes away from meeting your musical mind
+            {t("onboarding.signup.fewKeystrokes")}
           </p>
         </motion.div>
 
@@ -533,7 +535,7 @@ function SignupStep({ onComplete }: { onComplete: () => void }) {
           {/* Email */}
           <div>
             <label className="block text-[11px] uppercase tracking-[0.15em] text-slate-600 font-display font-medium mb-2">
-              Email
+              {t("onboarding.signup.email")}
             </label>
             <input
               type="email"

@@ -2,6 +2,7 @@
 
 import { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { useResonanceStore } from "@/stores/useResonanceStore";
 import { DIMENSIONS, type Psi5 } from "@/data/resonance-simulation";
 
@@ -9,7 +10,7 @@ const ease = [0.22, 1, 0.36, 1] as const;
 
 /* ── Single bipolar bar (center-anchored, colored by polarity) ──── */
 
-function BipolarBar({ value, dim, index }: { value: number; dim: typeof DIMENSIONS[number]; index: number }) {
+function BipolarBar({ value, dim, index, t }: { value: number; dim: typeof DIMENSIONS[number]; index: number; t: (key: string) => string }) {
   // value is [-5, +5], we show a bar from center (0) outward
   const pct = (value / 5) * 50; // -50% to +50%
   const isPositive = value >= 0;
@@ -28,7 +29,7 @@ function BipolarBar({ value, dim, index }: { value: number; dim: typeof DIMENSIO
         className="text-[8px] font-mono w-14 text-right tracking-wider transition-opacity duration-300"
         style={{ color: !isPositive ? dim.negColor : "rgba(100,116,139,0.3)" }}
       >
-        {dim.negLabel.toUpperCase()}
+        {t(`resonance.dimensions.${dim.id}.neg`).toUpperCase()}
       </span>
 
       {/* Bar track */}
@@ -53,7 +54,7 @@ function BipolarBar({ value, dim, index }: { value: number; dim: typeof DIMENSIO
         className="text-[8px] font-mono w-14 tracking-wider transition-opacity duration-300"
         style={{ color: isPositive ? dim.posColor : "rgba(100,116,139,0.3)" }}
       >
-        {dim.posLabel.toUpperCase()}
+        {t(`resonance.dimensions.${dim.id}.pos`).toUpperCase()}
       </span>
 
       {/* Numeric value */}
@@ -70,6 +71,7 @@ function BipolarBar({ value, dim, index }: { value: number; dim: typeof DIMENSIO
 /* ── Panel ──────────────────────────────────────────────────────── */
 
 export function SelfStatePanel() {
+  const { t } = useTranslation();
   const entranceComplete = useResonanceStore(s => s.entranceComplete);
   const selfPsi = useResonanceStore(s => s.selfPsi);
 
@@ -125,7 +127,7 @@ export function SelfStatePanel() {
     >
       <div ref={containerRef} className="glass px-5 py-4 rounded-2xl flex flex-col gap-2">
         <span className="text-[8px] font-display uppercase tracking-[0.25em] text-white/20 mb-1">
-          Your Psychological State
+          {t("resonance.yourState")}
         </span>
         {DIMENSIONS.map((dim, i) => (
           <div key={dim.id} className="flex items-center gap-2">
@@ -133,7 +135,7 @@ export function SelfStatePanel() {
               className="text-[8px] font-mono w-14 text-right tracking-wider"
               style={{ color: selfPsi[i] < 0 ? dim.negColor : "rgba(100,116,139,0.3)" }}
             >
-              {dim.negLabel.toUpperCase()}
+              {t(`resonance.dimensions.${dim.id}.neg`).toUpperCase()}
             </span>
             <div className="relative flex-1 h-2.5 rounded-full bg-white/[0.04] overflow-hidden">
               <div className="absolute left-1/2 top-0 bottom-0 w-px bg-white/[0.08] z-10" />
@@ -152,7 +154,7 @@ export function SelfStatePanel() {
               className="text-[8px] font-mono w-14 tracking-wider"
               style={{ color: selfPsi[i] >= 0 ? dim.posColor : "rgba(100,116,139,0.3)" }}
             >
-              {dim.posLabel.toUpperCase()}
+              {t(`resonance.dimensions.${dim.id}.pos`).toUpperCase()}
             </span>
             <span
               data-num

@@ -2,11 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { useResonanceStore } from "@/stores/useResonanceStore";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export function EntranceSequence() {
+  const { t } = useTranslation();
   const completeEntrance = useResonanceStore(s => s.completeEntrance);
   const entranceComplete = useResonanceStore(s => s.entranceComplete);
   const [visible, setVisible] = useState(true);
@@ -40,7 +42,7 @@ export function EntranceSequence() {
               transition={{ duration: 1.2, ease, delay: 0.3 }}
               className="text-3xl md:text-5xl font-display font-light tracking-[0.3em] text-white/90"
             >
-              RESONANCE FIELD
+              {t("resonance.entranceTitle")}
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -48,7 +50,7 @@ export function EntranceSequence() {
               transition={{ duration: 0.8, ease, delay: 1.0 }}
               className="text-xs font-display tracking-[0.25em] text-slate-600 uppercase"
             >
-              Feel the minds around you
+              {t("resonance.entranceSub")}
             </motion.p>
             <motion.div
               initial={{ scaleX: 0 }}

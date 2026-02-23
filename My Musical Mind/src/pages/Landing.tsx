@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { MindOrganismCanvas } from "@/components/mind/MindOrganismCanvas";
 import { OrbitalBeliefs } from "@/components/landing/OrbitalBeliefs";
 
@@ -11,6 +12,7 @@ const INSTITUTIONS = [
 
 export function Landing() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <div className="fixed inset-0 bg-black overflow-hidden">
@@ -72,7 +74,7 @@ export function Landing() {
           transition={{ duration: 1.5, delay: 1, ease: [0.22, 1, 0.36, 1] }}
           className="text-lg md:text-xl text-slate-400 font-display font-light tracking-[0.2em] mt-4 mb-14"
         >
-          MY MUSICAL MIND
+          {t("landing.subtitle")}
         </motion.p>
 
         {/* CTA Button */}
@@ -99,7 +101,7 @@ export function Landing() {
             }}
           />
           <span className="relative z-10 text-sm font-display font-medium text-slate-200 group-hover:text-white transition-colors tracking-wide">
-            Discover Your Mind
+            {t("landing.cta")}
           </span>
         </motion.button>
 
@@ -112,7 +114,7 @@ export function Landing() {
           className="group mt-5 px-8 py-3 text-sm text-slate-700 hover:text-slate-400 transition-all duration-500"
         >
           <span className="border-b border-slate-800 group-hover:border-slate-600 pb-0.5 transition-colors font-display tracking-wide">
-            Explore the mind behind the engine
+            {t("landing.ctaSub")}
           </span>
         </motion.button>
       </div>
@@ -131,14 +133,14 @@ export function Landing() {
             SRC<sup className="text-[11px]">9</sup>
           </span>
           <span className="text-[13px] font-display font-light text-slate-400 tracking-[0.2em]">
-            &copy; 2025 Amac Erdem. All rights reserved.
+            {t("landing.copyright")}
           </span>
         </div>
 
         {/* Center: Collaboration */}
         <div className="hidden md:flex flex-col items-center gap-1.5">
           <span className="text-[12px] font-display font-light text-slate-400 tracking-[0.2em] uppercase">
-            In collaboration with
+            {t("landing.collaboration")}
           </span>
           <div className="flex items-center gap-6">
             {INSTITUTIONS.map((inst) => (

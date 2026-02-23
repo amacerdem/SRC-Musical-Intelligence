@@ -1,6 +1,7 @@
 /* ── SignalOverlay — Floating signal notifications ───────────────── */
 
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { useResonanceStore } from "@/stores/useResonanceStore";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -17,6 +18,7 @@ const EMOTE_MAP: Record<string, string> = {
 };
 
 export function SignalOverlay() {
+  const { t } = useTranslation();
   const signals = useResonanceStore(s => s.signals);
   const users = useResonanceStore(s => s.users);
 
@@ -44,7 +46,7 @@ export function SignalOverlay() {
             >
               <span className="text-sm">{emoji}</span>
               <span className="text-[9px] font-display text-white/50">
-                from <span className="text-white/70 font-medium">{name}</span>
+                {t("resonance.from")} <span className="text-white/70 font-medium">{name}</span>
               </span>
             </motion.div>
           );
