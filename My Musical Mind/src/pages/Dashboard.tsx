@@ -186,32 +186,25 @@ export function Dashboard() {
               </div>
             </motion.div>
 
-            {/* Your DNA */}
-            <div className="spatial-card p-4 flex-shrink-0">
-              <span className="text-sm font-display font-light tracking-[0.15em] uppercase text-slate-500 block mb-3">{t("dashboard.yourDna")}</span>
-              <div className="space-y-3">
+            {/* Radar legend — integrated with radar above */}
+            <div className="px-3 py-2 flex-shrink-0 -mt-1">
+              <div className="space-y-1.5">
                 {AXIS_META.map((axis, i) => {
                   const value = mind.axes[axis.key];
                   const pct = Math.round(value * 100);
-                  const axisColor = beliefColors[axis.belief].primary;
                   return (
-                    <div key={axis.key}>
-                      <div className="flex items-center justify-between mb-1">
-                        <div className="flex items-center gap-2">
-                          <NucleusDot color={axisColor} size={4} active />
-                          <span className="text-[14px] font-display text-slate-400">{t(AXIS_I18N_KEY[axis.key])}</span>
-                        </div>
-                        <span className="text-[14px] font-mono font-medium" style={{ color: axisColor }}>{pct}</span>
-                      </div>
-                      <div className="w-full h-[5px] rounded-full bg-white/5 overflow-hidden">
+                    <div key={axis.key} className="flex items-center gap-2">
+                      <span className="text-[10px] font-display text-slate-500 w-20 truncate">{t(AXIS_I18N_KEY[axis.key])}</span>
+                      <div className="flex-1 h-[2px] rounded-full bg-white/5 overflow-hidden">
                         <motion.div
                           className="h-full rounded-full"
-                          style={{ backgroundColor: axisColor }}
+                          style={{ backgroundColor: color, opacity: 0.5 }}
                           initial={{ width: 0 }}
                           animate={{ width: `${pct}%` }}
                           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.3 + i * 0.08 }}
                         />
                       </div>
+                      <span className="text-[10px] font-mono w-7 text-right" style={{ color: `${color}90` }}>{pct}</span>
                     </div>
                   );
                 })}

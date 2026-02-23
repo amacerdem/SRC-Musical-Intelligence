@@ -17,12 +17,12 @@ interface Props {
   size?: number;
 }
 
-const axisKeys: (keyof MindAxes)[] = [
-  "entropyTolerance",
-  "resolutionCraving",
-  "tensionAppetite",
-  "salienceSensitivity",
-  "monotonyTolerance",
+const axisKeys: { field: keyof MindAxes; tKey: string }[] = [
+  { field: "entropyTolerance", tKey: "entropy" },
+  { field: "resolutionCraving", tKey: "resolution" },
+  { field: "tensionAppetite", tKey: "tension" },
+  { field: "salienceSensitivity", tKey: "salience" },
+  { field: "monotonyTolerance", tKey: "monotony" },
 ];
 
 export function MindRadar({
@@ -34,10 +34,10 @@ export function MindRadar({
 }: Props) {
   const { t } = useTranslation();
 
-  const data = axisKeys.map((key) => ({
-    axis: t(`dashboard.axes.${key === "entropyTolerance" ? "entropy" : key === "resolutionCraving" ? "resolution" : key === "monotonyTolerance" ? "monotony" : key === "salienceSensitivity" ? "salience" : "tension"}`),
-    value: Math.round(axes[key] * 100),
-    ...(compareAxes ? { compare: Math.round(compareAxes[key] * 100) } : {}),
+  const data = axisKeys.map(({ field, tKey }) => ({
+    axis: t(`dashboard.axes.${tKey}`),
+    value: Math.round(axes[field] * 100),
+    ...(compareAxes ? { compare: Math.round(compareAxes[field] * 100) } : {}),
   }));
 
   return (
