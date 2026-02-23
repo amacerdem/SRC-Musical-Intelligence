@@ -4,17 +4,34 @@ import { useRef, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { useResonanceStore } from "@/stores/useResonanceStore";
-import type { Connection } from "@/data/resonance-simulation";
+import { DIMENSIONS, type Connection } from "@/data/resonance-simulation";
 
-/* ── Belief colors ──────────────────────────────────────────────── */
+/* ── Dimension colors (neg + pos) ──────────────────────────────── */
 
-const BELIEF_COLORS = [
-  new THREE.Color("#C084FC"), // consonance
-  new THREE.Color("#F97316"), // tempo
-  new THREE.Color("#84CC16"), // salience
-  new THREE.Color("#38BDF8"), // familiarity
-  new THREE.Color("#FBBF24"), // reward
-];
+const DIM_NEG_COLORS = DIMENSIONS.map(d => new THREE.Color(d.negColor));
+const DIM_POS_COLORS = DIMENSIONS.map(d => new THREE.Color(d.posColor));
+
+/** Get the connection color based on dominant resonant dimension + average polarity */
+function getConnectionColor(
+  connection: Connection,
+  users: { id: string; psi: number[] }[],
+  selfPsi: number[],
+): THREE.Color {
+  const dim = connection.dominantDim;
+  // Average the two users' psi on that dimension to determine polarity
+  const psiA = connection.userA === "self"
+    ? selfPsi[dim]
+    : (users.find(u => u.id === connection.userA)?.psi[dim] ?? 0);
+  const psiB = connection.userB === "self"
+    ? selfPsi[dim]
+    : (users.find(u => u.id === connection.userB)?.psi[dim] ?? 0);
+  const avg = (psiA + psiB) / 2;
+  // Blend between neg and pos color based on average polarity
+  const t = (avg + 5) / 10; // 0–1
+  const color = new THREE.Color();
+  color.lerpColors(DIM_NEG_COLORS[dim], DIM_POS_COLORS[dim], t);
+  return color;
+}
 
 /* ── Tendril shader ─────────────────────────────────────────────── */
 
@@ -24,7 +41,6 @@ uniform float uStrength;
 
 attribute float aProgress;
 varying float vProgress;
-varying float vRadial;
 
 void main() {
   vProgress = aProgress;
@@ -74,10 +90,11 @@ export function ResonanceTendril({ connection }: Props) {
   const meshRef = useRef<THREE.Mesh>(null);
   const matRef = useRef<THREE.ShaderMaterial>(null);
   const users = useResonanceStore(s => s.users);
+  const selfPsi = useResonanceStore(s => s.selfPsi);
 
   const color = useMemo(
-    () => BELIEF_COLORS[connection.dominantBelief] ?? BELIEF_COLORS[0],
-    [connection.dominantBelief],
+    () => getConnectionColor(connection, users, selfPsi),
+    [connection.dominantDim],
   );
 
   const uniforms = useMemo(() => ({
@@ -97,18 +114,21 @@ export function ResonanceTendril({ connection }: Props) {
     const u = matRef.current.uniforms;
     u.uTime.value += delta;
     u.uStrength.value += (connection.strength - u.uStrength.value) * 0.1;
-    u.uColor.value = BELIEF_COLORS[connection.dominantBelief] ?? BELIEF_COLORS[0];
+
+    // Update color based on current psi polarities
+    const newColor = getConnectionColor(connection, users, selfPsi);
+    u.uColor.value.lerp(newColor, 0.05);
 
     // Get user positions
-    const userA = connection.userA === "self" ? null : users.find(u => u.id === connection.userA);
-    const userB = connection.userB === "self" ? null : users.find(u => u.id === connection.userB);
+    const userA = connection.userA === "self" ? null : users.find(usr => usr.id === connection.userA);
+    const userB = connection.userB === "self" ? null : users.find(usr => usr.id === connection.userB);
 
     const posA = userA ? userA.position : [0, 0, 0];
     const posB = userB ? userB.position : [0, 0, 0];
 
     // Update curve control points
     const midX = (posA[0] + posB[0]) * 0.5;
-    const midY = (posA[1] + posB[1]) * 0.5 + 1.0; // Arc upward
+    const midY = (posA[1] + posB[1]) * 0.5 + 1.0;
     const midZ = (posA[2] + posB[2]) * 0.5;
 
     curve.points[0].set(posA[0], posA[1], posA[2]);
@@ -119,9 +139,9 @@ export function ResonanceTendril({ connection }: Props) {
     // Rebuild geometry (lightweight for thin tubes)
     const tubeGeo = new THREE.TubeGeometry(
       curve,
-      20,                                  // tubularSegments
-      0.01 + connection.strength * 0.03,   // radius
-      6,                                   // radialSegments
+      20,
+      0.01 + connection.strength * 0.03,
+      6,
       false,
     );
 
@@ -131,7 +151,6 @@ export function ResonanceTendril({ connection }: Props) {
     const posArr = tubeGeo.attributes.position.array;
     for (let i = 0; i < count; i++) {
       const p = new THREE.Vector3(posArr[i * 3], posArr[i * 3 + 1], posArr[i * 3 + 2]);
-      // Approximate progress along curve
       const tA = curve.points[0];
       const tB = curve.points[2];
       const total = tA.distanceTo(tB) + 0.001;

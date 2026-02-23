@@ -1,17 +1,22 @@
-/* ── FieldParticles — Drifting belief-colored particles ──────────── */
+/* ── FieldParticles — Drifting dimension-colored particles ─────────── */
 
 import { useRef, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { useResonanceStore } from "@/stores/useResonanceStore";
+import { DIMENSIONS } from "@/data/resonance-simulation";
 
-const BELIEF_RGB: [number, number, number][] = [
-  [0.753, 0.518, 0.988],  // consonance purple
-  [0.976, 0.451, 0.086],  // tempo orange
-  [0.518, 0.800, 0.086],  // salience lime
-  [0.220, 0.741, 0.973],  // familiarity sky
-  [0.984, 0.749, 0.141],  // reward gold
-];
+/* ── Pre-compute neg/pos RGB per dimension ──────────────────────── */
+
+const DIM_NEG_RGB: [number, number, number][] = DIMENSIONS.map(d => {
+  const c = new THREE.Color(d.negColor);
+  return [c.r, c.g, c.b];
+});
+
+const DIM_POS_RGB: [number, number, number][] = DIMENSIONS.map(d => {
+  const c = new THREE.Color(d.posColor);
+  return [c.r, c.g, c.b];
+});
 
 const COUNT = 3000;
 
@@ -34,8 +39,10 @@ export function FieldParticles() {
       pos[i * 3 + 1] = (r * Math.cos(phi)) * 0.4;
       pos[i * 3 + 2] = r * Math.sin(phi) * Math.sin(theta);
 
-      // Random belief color
-      const bc = BELIEF_RGB[Math.floor(Math.random() * 5)];
+      // Random dimension color (pick random dim, random polarity)
+      const dimIdx = Math.floor(Math.random() * 5);
+      const usePos = Math.random() > 0.5;
+      const bc = usePos ? DIM_POS_RGB[dimIdx] : DIM_NEG_RGB[dimIdx];
       col[i * 3] = bc[0];
       col[i * 3 + 1] = bc[1];
       col[i * 3 + 2] = bc[2];
@@ -69,7 +76,6 @@ export function FieldParticles() {
 
       // Gentle attraction toward nearest user organism
       if (users.length > 0 && i % 4 === 0) {
-        // Only check every 4th particle per frame for perf
         let nearDist = 999;
         let nearIdx = 0;
         const px = posArr[i * 3], py = posArr[i * 3 + 1], pz = posArr[i * 3 + 2];
@@ -80,14 +86,20 @@ export function FieldParticles() {
           const d = dx * dx + dy * dy + dz * dz;
           if (d < nearDist) { nearDist = d; nearIdx = u; }
         }
-        if (nearDist < 25) { // within ~5 units
+        if (nearDist < 25) {
           const up = users[nearIdx].position;
           velocities[i * 3] += (up[0] - px) * 0.002;
           velocities[i * 3 + 1] += (up[1] - py) * 0.001;
           velocities[i * 3 + 2] += (up[2] - pz) * 0.002;
 
-          // Color toward organism's dominant belief
-          const bc = BELIEF_RGB[users[nearIdx].dominantBelief];
+          // Color toward organism's dominant dimension polarity
+          const psi = users[nearIdx].psi;
+          let maxAbs = 0, maxDim = 0;
+          for (let d = 0; d < 5; d++) {
+            const a = Math.abs(psi[d]);
+            if (a > maxAbs) { maxAbs = a; maxDim = d; }
+          }
+          const bc = psi[maxDim] >= 0 ? DIM_POS_RGB[maxDim] : DIM_NEG_RGB[maxDim];
           colors[i * 3] += (bc[0] - colors[i * 3]) * 0.01;
           colors[i * 3 + 1] += (bc[1] - colors[i * 3 + 1]) * 0.01;
           colors[i * 3 + 2] += (bc[2] - colors[i * 3 + 2]) * 0.01;

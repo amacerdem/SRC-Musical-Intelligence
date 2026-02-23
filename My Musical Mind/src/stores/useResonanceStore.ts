@@ -3,12 +3,13 @@
 import { create } from "zustand";
 import {
   generateUsers,
-  evolveBeliefsAndPositions,
+  evolve,
   computeConnections,
   generateRandomSignal,
   type ResonanceUser,
   type Connection,
   type ResonanceSignal,
+  type Psi5,
 } from "@/data/resonance-simulation";
 import { useUserStore } from "./useUserStore";
 
@@ -18,6 +19,7 @@ interface ResonanceState {
   users: ResonanceUser[];
   connections: Connection[];
   signals: ResonanceSignal[];
+  selfPsi: Psi5;
   selectedUserId: string | null;
   entranceComplete: boolean;
   cameraMode: "self" | "selected" | "free";
@@ -34,19 +36,18 @@ interface ResonanceState {
   cleanup: () => void;
 }
 
-/* ── Self beliefs helper ────────────────────────────────────────── */
+/* ── Map user axes → bipolar Psi5 [-5, +5] ──────────────────────── */
 
-function getSelfBeliefs(): [number, number, number, number, number] {
+function getSelfPsi(): Psi5 {
   const mind = useUserStore.getState().mind;
-  if (!mind) return [0.5, 0.5, 0.5, 0.5, 0.5];
+  if (!mind) return [0, 0, 0, 0, 0];
   const a = mind.axes;
-  // Map axes to belief-like values
   return [
-    1 - a.entropyTolerance,     // consonance (inverse of entropy tolerance)
-    a.tensionAppetite,           // tempo (tension maps to rhythmic drive)
-    a.salienceSensitivity,       // salience
-    a.monotonyTolerance,         // familiarity (monotony tolerance → familiarity seeking)
-    a.resolutionCraving,         // reward (resolution craving → reward sensitivity)
+    (a.tensionAppetite - 0.5) * 10,        // arousal
+    (a.resolutionCraving - 0.5) * 10,       // valence
+    (a.salienceSensitivity - 0.5) * 10,     // focus
+    (1 - a.monotonyTolerance - 0.5) * 10,   // temporal (novelty)
+    (a.entropyTolerance - 0.5) * 10,        // social
   ];
 }
 
@@ -56,6 +57,7 @@ export const useResonanceStore = create<ResonanceState>((set, get) => ({
   users: [],
   connections: [],
   signals: [],
+  selfPsi: [0, 0, 0, 0, 0],
   selectedUserId: null,
   entranceComplete: false,
   cameraMode: "self",
@@ -64,39 +66,37 @@ export const useResonanceStore = create<ResonanceState>((set, get) => ({
   _signalTimer: 10 + Math.random() * 10,
 
   initialize: () => {
-    const selfBeliefs = getSelfBeliefs();
-    const users = generateUsers(selfBeliefs);
-    const connections = computeConnections(users, selfBeliefs);
-    set({ users, connections, signals: [], selectedUserId: null, time: 0 });
+    const selfPsi = getSelfPsi();
+    const users = generateUsers(selfPsi);
+    const connections = computeConnections(users, selfPsi);
+    set({ users, connections, selfPsi, signals: [], selectedUserId: null, time: 0 });
   },
 
   tick: (dt: number) => {
     const state = get();
     if (state.users.length === 0) return;
 
-    const selfBeliefs = getSelfBeliefs();
+    const selfPsi = getSelfPsi();
     const newTime = state.time + dt;
 
-    // Evolve beliefs and positions
-    evolveBeliefsAndPositions(state.users, selfBeliefs, dt, newTime);
+    // Continuous 60fps evolution
+    evolve(state.users, selfPsi, dt, newTime);
 
-    // Recompute connections every 2s
+    // Recompute connections every 1.5s (more responsive)
     let newConnections = state.connections;
     let connTimer = state._connectionTimer + dt;
-    if (connTimer >= 2) {
+    if (connTimer >= 1.5) {
       connTimer = 0;
-      newConnections = computeConnections(state.users, selfBeliefs);
+      newConnections = computeConnections(state.users, selfPsi);
     }
 
-    // Random incoming signal
+    // Random incoming signals
     let newSignals = state.signals;
     let sigTimer = state._signalTimer - dt;
     if (sigTimer <= 0) {
-      sigTimer = 15 + Math.random() * 15;
+      sigTimer = 12 + Math.random() * 18;
       const sig = generateRandomSignal(state.users);
-      if (sig) {
-        newSignals = [...state.signals, sig];
-      }
+      if (sig) newSignals = [...state.signals, sig];
     }
 
     // Expire old signals (> 6s)
@@ -105,6 +105,7 @@ export const useResonanceStore = create<ResonanceState>((set, get) => ({
 
     set({
       time: newTime,
+      selfPsi,
       connections: newConnections,
       signals: newSignals,
       _connectionTimer: connTimer,
@@ -112,56 +113,39 @@ export const useResonanceStore = create<ResonanceState>((set, get) => ({
     });
   },
 
-  selectUser: (id) => {
-    set({
-      selectedUserId: id,
-      cameraMode: id ? "selected" : "self",
-    });
-  },
+  selectUser: (id) => set({
+    selectedUserId: id,
+    cameraMode: id ? "selected" : "self",
+  }),
 
   sendSignal: (to, type, content) => {
     const signal: ResonanceSignal = {
       id: `sig-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
-      from: "self",
-      to,
-      type,
-      content,
-      ts: Date.now(),
-      received: false,
+      from: "self", to, type, content, ts: Date.now(), received: false,
     };
-    const state = get();
-    set({ signals: [...state.signals, signal] });
+    set(s => ({ signals: [...s.signals, signal] }));
 
-    // Simulate response after 2-4s
+    // Simulated response 2-4s later
     setTimeout(() => {
       const respType = (["wave", "chills", "vibe", "feel", "sync"] as const)[
         Math.floor(Math.random() * 5)
       ];
       const response: ResonanceSignal = {
         id: `sig-${Date.now()}-resp`,
-        from: to,
-        to: "self",
-        type: respType,
-        content: respType,
-        ts: Date.now(),
-        received: false,
+        from: to, to: "self", type: respType, content: respType,
+        ts: Date.now(), received: false,
       };
-      const current = get();
-      set({ signals: [...current.signals, response] });
+      set(s => ({ signals: [...s.signals, response] }));
     }, 2000 + Math.random() * 2000);
   },
 
   completeEntrance: () => set({ entranceComplete: true }),
-
   setCameraMode: (mode) => set({ cameraMode: mode }),
 
   cleanup: () => set({
-    users: [],
-    connections: [],
-    signals: [],
-    selectedUserId: null,
-    entranceComplete: false,
-    cameraMode: "self",
-    time: 0,
+    users: [], connections: [], signals: [],
+    selfPsi: [0, 0, 0, 0, 0],
+    selectedUserId: null, entranceComplete: false,
+    cameraMode: "self", time: 0,
   }),
 }));

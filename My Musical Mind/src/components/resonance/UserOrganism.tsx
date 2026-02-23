@@ -5,19 +5,29 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
 import * as THREE from "three";
 import { useResonanceStore } from "@/stores/useResonanceStore";
-import type { ResonanceUser } from "@/data/resonance-simulation";
+import { DIMENSIONS, type ResonanceUser } from "@/data/resonance-simulation";
 
-/* ── Belief colors as vec3 ──────────────────────────────────────── */
+/* ── Dimension colors as vec3 (neg + pos per dimension) ───────── */
 
-const BELIEF_COLORS_RGB = [
-  [0.753, 0.518, 0.988],  // #C084FC consonance (purple)
-  [0.976, 0.451, 0.086],  // #F97316 tempo (orange)
-  [0.518, 0.800, 0.086],  // #84CC16 salience (lime)
-  [0.220, 0.741, 0.973],  // #38BDF8 familiarity (sky)
-  [0.984, 0.749, 0.141],  // #FBBF24 reward (gold)
-];
+const NEG_COLORS_RGB = DIMENSIONS.map(d => {
+  const c = new THREE.Color(d.negColor);
+  return [c.r, c.g, c.b] as [number, number, number];
+});
 
-const BELIEF_COLOR_HEX = ["#C084FC", "#F97316", "#84CC16", "#38BDF8", "#FBBF24"];
+const POS_COLORS_RGB = DIMENSIONS.map(d => {
+  const c = new THREE.Color(d.posColor);
+  return [c.r, c.g, c.b] as [number, number, number];
+});
+
+/** Find dominant dimension (highest |psi|) and its polarity color */
+function getDominantColor(psi: number[]): string {
+  let maxAbs = 0, maxIdx = 0;
+  for (let i = 0; i < 5; i++) {
+    const a = Math.abs(psi[i]);
+    if (a > maxAbs) { maxAbs = a; maxIdx = i; }
+  }
+  return psi[maxIdx] >= 0 ? DIMENSIONS[maxIdx].posColor : DIMENSIONS[maxIdx].negColor;
+}
 
 /* ── Vertex shader ──────────────────────────────────────────────── */
 
@@ -108,8 +118,9 @@ void main() {
 
 const fragmentShader = `
 uniform float uTime;
-uniform vec3 uBeliefColors[5];
-uniform float uBeliefs[5];
+uniform vec3 uNegColors[5];
+uniform vec3 uPosColors[5];
+uniform float uPsi[5];
 uniform float uIntensity;
 uniform float uSelected;
 uniform float uHovered;
@@ -120,12 +131,17 @@ varying float vFresnel;
 varying vec3 vLocalPos;
 
 void main() {
-  // Weighted blend of belief colors
+  // Weighted blend of bipolar dimension colors
+  // For each dimension: mix(negColor, posColor, t) where t = (psi+5)/10
+  // Weight by |psi|/5 — neutral dims contribute less
   vec3 col = vec3(0.0);
   float totalWeight = 0.0;
   for (int i = 0; i < 5; i++) {
-    float w = uBeliefs[i] * uBeliefs[i]; // Square for more contrast
-    col += uBeliefColors[i] * w;
+    float t = clamp((uPsi[i] + 5.0) / 10.0, 0.0, 1.0);
+    vec3 dimCol = mix(uNegColors[i], uPosColors[i], t);
+    float w = abs(uPsi[i]) / 5.0;
+    w = w * w; // Square for more contrast
+    col += dimCol * w;
     totalWeight += w;
   }
   col /= max(totalWeight, 0.001);
@@ -168,7 +184,6 @@ export function UserOrganism({ user, isSelected }: Props) {
   const matRef = useRef<THREE.ShaderMaterial>(null);
   const [hovered, setHovered] = useState(false);
   const selectUser = useResonanceStore(s => s.selectUser);
-  const camera = useThree(s => s.camera);
 
   const radius = 0.35 + user.intensity * 0.35;
 
@@ -178,8 +193,9 @@ export function UserOrganism({ user, isSelected }: Props) {
     uIntensity: { value: user.intensity },
     uSelected: { value: 0 },
     uHovered: { value: 0 },
-    uBeliefColors: { value: BELIEF_COLORS_RGB.map(c => new THREE.Vector3(c[0], c[1], c[2])) },
-    uBeliefs: { value: [...user.beliefs] },
+    uNegColors: { value: NEG_COLORS_RGB.map(c => new THREE.Vector3(c[0], c[1], c[2])) },
+    uPosColors: { value: POS_COLORS_RGB.map(c => new THREE.Vector3(c[0], c[1], c[2])) },
+    uPsi: { value: [...user.psi] },
   }), []);
 
   const targetPos = useMemo(() => new THREE.Vector3(), []);
@@ -195,9 +211,9 @@ export function UserOrganism({ user, isSelected }: Props) {
     targetPos.set(user.position[0], user.position[1], user.position[2]);
     groupRef.current.position.lerp(targetPos, 0.04);
 
-    // Update beliefs
+    // Update psi values (smooth interpolation)
     for (let i = 0; i < 5; i++) {
-      u.uBeliefs.value[i] += (user.beliefs[i] - u.uBeliefs.value[i]) * 0.1;
+      u.uPsi.value[i] += (user.psi[i] - u.uPsi.value[i]) * 0.1;
     }
 
     // Update derived
@@ -215,7 +231,7 @@ export function UserOrganism({ user, isSelected }: Props) {
     selectUser(isSelected ? null : user.id);
   }, [isSelected, user.id, selectUser]);
 
-  const domColor = BELIEF_COLOR_HEX[user.dominantBelief];
+  const domColor = getDominantColor(user.psi);
 
   // Distance check for label
   const dist = useMemo(() => {
