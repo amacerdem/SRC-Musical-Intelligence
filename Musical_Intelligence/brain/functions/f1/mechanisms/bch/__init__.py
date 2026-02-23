@@ -90,8 +90,8 @@ _TONALSTAB = 60
 _COUPLING = 41
 
 
-# ── 50 H³ Demand Specifications ──────────────────────────────────────
-# Ordered: L2 (integration, 21) → L0 (memory, 17) → L1 (prediction, 12)
+# ── 48 H³ Demand Specifications ──────────────────────────────────────
+# Ordered: L2 (integration, 19) → L0 (memory, 17) → L1 (prediction, 12)
 
 _BCH_H3_DEMANDS: Tuple[H3DemandSpec, ...] = (
     # === L2 Integration (21 tuples) ===
@@ -115,10 +115,6 @@ _BCH_H3_DEMANDS: Tuple[H3DemandSpec, ...] = (
         "2nd-4th harmonic energy now", "Pollard 1982"),
     _h3(_TRIST3, "tristimulus3", 0, 0, 2,
         "5th+ harmonic energy now", "Pollard 1982"),
-    _h3(_COUPLING, "coupling", 3, 0, 2,
-        "Consonance-timbre coupling 23ms", "McAdams 1999"),
-    _h3(_COUPLING, "coupling", 6, 14, 2,
-        "Coupling periodicity 200ms", "McAdams 1999"),
     _h3(_PCE, "pitch_class_entropy", 0, 0, 2,
         "Pitch class entropy now", "Temperley 2007"),
     _h3(_PCE, "pitch_class_entropy", 3, 1, 2,
@@ -201,7 +197,7 @@ _BCH_H3_DEMANDS: Tuple[H3DemandSpec, ...] = (
         "Expected tonal stability 525ms", "Bharucha 1987"),
 )
 
-assert len(_BCH_H3_DEMANDS) == 50
+assert len(_BCH_H3_DEMANDS) == 48
 
 
 class BCH(Relay):

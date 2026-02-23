@@ -33,9 +33,10 @@ from .dgtp import DGTP
 from .sdl import SDL
 from .newmd import NEWMD
 from .igfe import IGFE
+from .pwsm import PWSM
 
 __all__ = [
     "SNEM", "IACM",
     "BARM", "STANM", "AACM", "AMSS", "ETAM",
-    "DGTP", "SDL", "NEWMD", "IGFE",
+    "DGTP", "SDL", "NEWMD", "IGFE", "PWSM",
 ]

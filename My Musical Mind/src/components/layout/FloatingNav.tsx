@@ -19,7 +19,7 @@ import { useDesktop } from "@/hooks/useMediaQuery";
 
 const mainNav = [
   { to: "/dashboard", icon: LayoutGrid, label: "Home", belief: "consonance" as const },
-  { to: "/live", icon: Radio, label: "Live", belief: "tempo" as const },
+  { to: "/live", icon: Radio, label: "Field", belief: "tempo" as const },
   { to: "/discover", icon: Compass, label: "Discover", belief: "salience" as const },
 ];
 

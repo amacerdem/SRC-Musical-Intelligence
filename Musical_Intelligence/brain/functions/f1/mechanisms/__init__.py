@@ -8,6 +8,7 @@ Depth-ordered pipeline (executor runs in this order):
     PNH   (Relay,      depth 0, 11D, IMU) — reads R³/H³ directly
     SDNPS (Relay,      depth 0, 10D, SPU) — reads R³/H³ directly
     SDED  (Relay,      depth 0, 10D, SPU) — reads R³/H³ directly
+    TPIO  (Relay,      depth 0, 10D, SPU) — reads R³/H³ directly
     TPRD  (Relay,      depth 0, 10D, IMU) — reads R³/H³ directly
     PSCL  (Encoder,    depth 1, 16D, SPU) — reads BCH output + R³/H³
     PCCR  (Associator, depth 2, 11D, SPU) — reads BCH + PSCL output + R³/H³
@@ -31,9 +32,10 @@ from .pnh import PNH
 from .pscl import PSCL
 from .sdnps import SDNPS
 from .sded import SDED
+from .tpio import TPIO
 from .tprd import TPRD
 
 __all__ = [
     "BCH", "CSG", "MIAA", "MPG", "PCCR", "PNH",
-    "PSCL", "SDNPS", "SDED", "TPRD",
+    "PSCL", "SDNPS", "SDED", "TPIO", "TPRD",
 ]

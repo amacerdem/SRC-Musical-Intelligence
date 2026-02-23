@@ -12,7 +12,7 @@ import { PersonaDetail } from "@/pages/PersonaDetail";
 import { ExploreAE } from "@/pages/ExploreAE";
 import { Friends } from "@/pages/Friends";
 import { ProfileView } from "@/pages/ProfileView";
-import { LivePerformance } from "@/pages/LivePerformance";
+import { ResonanceField } from "@/pages/ResonanceField";
 import { Leaderboard } from "@/pages/Leaderboard";
 import { Discover } from "@/pages/Discover";
 import { InfoHub } from "@/pages/InfoHub";
@@ -38,7 +38,7 @@ export default function App() {
                 hasCompletedOnboarding ? <Dashboard /> : <Navigate to="/" />
               }
             />
-            <Route path="/live" element={<LivePerformance />} />
+            <Route path="/live" element={<ResonanceField />} />
             <Route path="/discover" element={<Discover />} />
             <Route path="/friends" element={<Friends />} />
             <Route path="/friends/:userId" element={<ProfileView />} />

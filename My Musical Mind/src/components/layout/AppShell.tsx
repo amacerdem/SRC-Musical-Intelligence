@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { FloatingNav } from "./FloatingNav";
 import { useSmoothScroll } from "@/hooks/useSmoothScroll";
 import { MindOrganismCanvas } from "@/components/mind/MindOrganismCanvas";
@@ -8,16 +8,18 @@ import { useMobile } from "@/hooks/useMediaQuery";
 
 export function AppShell() {
   useSmoothScroll();
+  const location = useLocation();
   const { mind } = useUserStore();
   const persona = mind ? personas.find((p) => p.id === mind.personaId) : null;
   const color = persona?.color ?? "#A855F7";
   const stage = mind?.stage ?? 1;
   const isMobile = useMobile();
+  const isImmersive = location.pathname === "/live";
 
   return (
     <div className="min-h-screen bg-black relative">
-      {/* Persistent ambient organism background */}
-      {!isMobile && (
+      {/* Persistent ambient organism background (hidden on immersive pages) */}
+      {!isMobile && !isImmersive && (
         <div className="fixed inset-0 z-0 opacity-[0.06] pointer-events-none">
           <MindOrganismCanvas
             color={color}
@@ -31,7 +33,7 @@ export function AppShell() {
         </div>
       )}
 
-      <main className="relative z-10 min-h-screen overflow-y-auto pb-24 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 pt-16">
+      <main className={`relative z-10 min-h-screen ${isImmersive ? "" : "overflow-y-auto pb-24 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 pt-16"}`}>
         <Outlet />
       </main>
       <FloatingNav />
