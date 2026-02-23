@@ -152,11 +152,38 @@ export function SelectedUserPanel({ onOpenComm }: { onOpenComm?: () => void }) {
               </div>
             </div>
 
-            {/* Current track */}
-            {user.currentTrack && (
-              <div className="flex items-center gap-2 mt-1">
-                <span className="text-[9px] font-mono text-slate-600">{t("resonance.now").toUpperCase()}</span>
-                <span className="text-[10px] font-mono text-slate-400 truncate max-w-[200px]">{user.currentTrack}</span>
+            {/* Current track with mini play bar */}
+            {user.trackTitle && (
+              <div className="flex flex-col gap-1.5 mt-2">
+                <div className="flex items-center gap-2">
+                  <div className="flex items-end gap-[2px] h-3 shrink-0">
+                    {[0.5, 1, 0.6].map((_, i) => (
+                      <div
+                        key={i}
+                        className="w-[2px] rounded-full origin-bottom"
+                        style={{
+                          background: resColor,
+                          height: "100%",
+                          animation: "eq 0.8s ease-in-out infinite",
+                          animationDelay: `${i * 0.15}s`,
+                        }}
+                      />
+                    ))}
+                  </div>
+                  <span className="text-[10px] font-mono text-slate-400 truncate flex-1">
+                    {user.trackArtist} — {user.trackTitle}
+                  </span>
+                </div>
+                <div className="h-[2px] rounded-full bg-white/5 overflow-hidden">
+                  <div
+                    className="h-full rounded-full transition-[width] duration-1000"
+                    style={{
+                      width: `${(user.trackProgress ?? 0) * 100}%`,
+                      background: resColor,
+                      opacity: 0.5,
+                    }}
+                  />
+                </div>
               </div>
             )}
 

@@ -13,6 +13,16 @@ import {
 } from "@/data/resonance-simulation";
 import { useUserStore } from "./useUserStore";
 
+/* ── Self track playlist ────────────────────────────────────────── */
+
+export const SELF_TRACKS = [
+  { title: "Luminous Beings", artist: "Jon Hopkins", duration: 312 },
+  { title: "On The Nature of Daylight", artist: "Max Richter", duration: 378 },
+  { title: "Nuvole Bianche", artist: "Ludovico Einaudi", duration: 337 },
+  { title: "Ageispolis", artist: "Aphex Twin", duration: 298 },
+  { title: "Says", artist: "Nils Frahm", duration: 332 },
+];
+
 /* ── Types ──────────────────────────────────────────────────────── */
 
 interface ResonanceState {
@@ -31,6 +41,10 @@ interface ResonanceState {
   _selfPhases: Psi5;
   _selfSpeeds: Psi5;
   _selfAmplitude: Psi5;
+  /** Playback state */
+  isPlaying: boolean;
+  selfPlaybackTime: number;
+  selfTrackIdx: number;
 
   initialize: () => void;
   tick: (dt: number) => void;
@@ -38,6 +52,8 @@ interface ResonanceState {
   sendSignal: (to: string, type: ResonanceSignal["type"], content: string) => void;
   completeEntrance: () => void;
   setCameraMode: (mode: "self" | "selected" | "free") => void;
+  togglePlay: () => void;
+  skipTrack: () => void;
   cleanup: () => void;
 }
 
@@ -73,6 +89,9 @@ export const useResonanceStore = create<ResonanceState>((set, get) => ({
   _selfPhases: [0, 0, 0, 0, 0],
   _selfSpeeds: [0.12, 0.09, 0.07, 0.05, 0.10],
   _selfAmplitude: [0.8, 0.6, 0.5, 0.4, 0.7],
+  isPlaying: true,
+  selfPlaybackTime: 0,
+  selfTrackIdx: 0,
 
   initialize: () => {
     const selfCenter = getSelfPsi();
@@ -82,6 +101,7 @@ export const useResonanceStore = create<ResonanceState>((set, get) => ({
     set({
       users, connections, selfPsi, signals: [],
       selectedUserId: null, time: 0,
+      isPlaying: true, selfPlaybackTime: 0, selfTrackIdx: 0,
       _selfCenter: selfCenter,
       _selfPhases: [
         Math.random() * 100, Math.random() * 100, Math.random() * 100,
@@ -96,7 +116,24 @@ export const useResonanceStore = create<ResonanceState>((set, get) => ({
 
     const newTime = state.time + dt;
 
-    // Evolve self psi with gentle oscillators (same logic as other users, smaller amplitude)
+    // Advance self playback
+    let newPlaybackTime = state.selfPlaybackTime;
+    let newTrackIdx = state.selfTrackIdx;
+    let energyFactor = 1.0;
+
+    if (state.isPlaying) {
+      newPlaybackTime += dt;
+      if (newPlaybackTime >= SELF_TRACKS[newTrackIdx].duration) {
+        newTrackIdx = (newTrackIdx + 1) % SELF_TRACKS.length;
+        newPlaybackTime = 0;
+      }
+      // Music energy curve — peaks at verse/chorus transitions
+      const progress = newPlaybackTime / SELF_TRACKS[newTrackIdx].duration;
+      const energy = 0.5 + 0.3 * Math.sin(progress * Math.PI) + 0.2 * Math.sin(progress * 3 * Math.PI);
+      energyFactor = 0.7 + 0.6 * energy;
+    }
+
+    // Evolve self psi with gentle oscillators (modulated by track energy)
     const selfPsi: Psi5 = [...state.selfPsi];
     const phases = state._selfPhases;
     for (let d = 0; d < 5; d++) {
@@ -104,7 +141,7 @@ export const useResonanceStore = create<ResonanceState>((set, get) => ({
       const slow = Math.sin(phases[d] * 0.3) * state._selfAmplitude[d] * 0.6;
       const med  = Math.sin(phases[d] * 1.1 + d * 1.7) * state._selfAmplitude[d] * 0.3;
       const fast = Math.sin(phases[d] * 3.7) * state._selfAmplitude[d] * 0.1;
-      const target = state._selfCenter[d] + slow + med + fast;
+      const target = state._selfCenter[d] + (slow + med + fast) * energyFactor;
       selfPsi[d] += (target - selfPsi[d]) * Math.min(2.5 * dt, 0.15);
       selfPsi[d] = Math.max(-5, Math.min(5, selfPsi[d]));
     }
@@ -140,6 +177,8 @@ export const useResonanceStore = create<ResonanceState>((set, get) => ({
       signals: newSignals,
       _connectionTimer: connTimer,
       _signalTimer: sigTimer,
+      selfPlaybackTime: newPlaybackTime,
+      selfTrackIdx: newTrackIdx,
     });
   },
 
@@ -171,6 +210,11 @@ export const useResonanceStore = create<ResonanceState>((set, get) => ({
 
   completeEntrance: () => set({ entranceComplete: true }),
   setCameraMode: (mode) => set({ cameraMode: mode }),
+  togglePlay: () => set(s => ({ isPlaying: !s.isPlaying })),
+  skipTrack: () => set(s => ({
+    selfTrackIdx: (s.selfTrackIdx + 1) % SELF_TRACKS.length,
+    selfPlaybackTime: 0,
+  })),
 
   cleanup: () => set({
     users: [], connections: [], signals: [],
@@ -179,5 +223,6 @@ export const useResonanceStore = create<ResonanceState>((set, get) => ({
     cameraMode: "self", time: 0,
     _selfCenter: [0, 0, 0, 0, 0],
     _selfPhases: [0, 0, 0, 0, 0],
+    isPlaying: true, selfPlaybackTime: 0, selfTrackIdx: 0,
   }),
 }));

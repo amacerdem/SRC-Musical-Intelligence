@@ -16,7 +16,7 @@
   },
   "nav": {
     "home": "Ana Sayfa",
-    "field": "Alan",
+    "field": "Rezonans",
     "discover": "Ke\u015ffet",
     "friends": "Arkada\u015flar",
     "ranks": "S\u0131ralama",
@@ -722,6 +722,8 @@
       "feel": "Hisset",
       "sync": "Senkron",
       "peak": "Zirve"
-    }
+    },
+    "nowPlaying": "\u015eU AN \u00c7ALIYOR",
+    "paused": "DURAKLATILDI"
   }
 }

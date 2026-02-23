@@ -5,7 +5,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { Html, Billboard, useTexture } from "@react-three/drei";
 import * as THREE from "three";
 import { useResonanceStore } from "@/stores/useResonanceStore";
-import { DIMENSIONS, type ResonanceUser } from "@/data/resonance-simulation";
+import { DIMENSIONS, resonance as computeResonance, type ResonanceUser, type Psi5 } from "@/data/resonance-simulation";
 
 /* ── Dimension colors as vec3 (neg + pos per dimension) ───────── */
 
@@ -260,8 +260,10 @@ export function UserOrganism({ user, isSelected }: Props) {
   const matRef = useRef<THREE.ShaderMaterial>(null);
   const [hovered, setHovered] = useState(false);
   const selectUser = useResonanceStore(s => s.selectUser);
+  const displayScale = useRef(1);
 
-  const radius = 0.35 + user.intensity * 0.35;
+  // Base radius for geometry (fixed); visual size controlled by group scale
+  const radius = 0.5;
 
   const uniforms = useMemo(() => ({
     uTime: { value: 0 },
@@ -301,6 +303,13 @@ export function UserOrganism({ user, isSelected }: Props) {
     u.uSelected.value += (selTarget - u.uSelected.value) * 0.1;
     const hovTarget = hovered ? 1 : 0;
     u.uHovered.value += (hovTarget - u.uHovered.value) * 0.15;
+
+    // Resonance-based sizing — read selfPsi directly (no re-render)
+    const selfPsi = useResonanceStore.getState().selfPsi;
+    const res = computeResonance(selfPsi as Psi5, user.psi);
+    const targetScale = 0.5 + res * 1.2; // 0.5 (divergent) to 1.7 (deep sync)
+    displayScale.current += (targetScale - displayScale.current) * 0.05;
+    groupRef.current.scale.setScalar(displayScale.current);
   });
 
   const handleClick = useCallback(() => {

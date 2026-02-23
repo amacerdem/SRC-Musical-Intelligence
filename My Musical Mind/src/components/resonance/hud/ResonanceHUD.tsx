@@ -7,6 +7,7 @@ import { SelfStatePanel } from "./SelfStatePanel";
 import { SelectedUserPanel } from "./SelectedUserPanel";
 import { CommunicationPanel } from "./CommunicationPanel";
 import { SignalOverlay } from "./SignalOverlay";
+import { NowPlayingBar } from "./NowPlayingBar";
 
 export function ResonanceHUD() {
   const selectedUserId = useResonanceStore(s => s.selectedUserId);
@@ -23,6 +24,7 @@ export function ResonanceHUD() {
       <SelfStatePanel />
       <SelectedUserPanel onOpenComm={() => setShowComm(true)} />
       <SignalOverlay />
+      <NowPlayingBar />
       {showComm && selectedUserId && (
         <CommunicationPanel
           targetUserId={selectedUserId}

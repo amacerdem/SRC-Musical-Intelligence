@@ -41,6 +41,10 @@ export interface ResonanceUser {
   pulseRate: number;           // derived from arousal
   bio: string;
   currentTrack?: string;
+  trackArtist?: string;
+  trackTitle?: string;
+  trackDuration?: number;     // seconds
+  trackProgress?: number;     // 0–1
   /** Internal oscillator phases (5 per user, continuous) */
   _phases: [number, number, number, number, number];
   /** Internal oscillator speeds */
@@ -85,6 +89,17 @@ const EXTRA_USERS: { name: string; country: string; bio: string }[] = [
 ];
 
 const EMOTE_TYPES: ResonanceSignal["type"][] = ["wave", "chills", "vibe", "feel", "sync"];
+
+const EXTRA_TRACKS = [
+  { artist: "Orbital Patterns", title: "Helios" },
+  { artist: "Glacier", title: "Murmur" },
+  { artist: "Lux Aeterna", title: "Phase Drift" },
+  { artist: "Sine Wave", title: "Deep Current" },
+  { artist: "Dusk Patrol", title: "Amber Signal" },
+  { artist: "Pulse Theory", title: "Neuron Fire" },
+  { artist: "Horizon Line", title: "Scattered Light" },
+  { artist: "Echo State", title: "Memory Bloom" },
+];
 
 /* ── Pseudo-random (deterministic per seed) ─────────────────────── */
 
@@ -164,6 +179,10 @@ export function generateUsers(selfPsi: Psi5): ResonanceUser[] {
       currentTrack: mu.recentTracks?.[0]?.title
         ? `${mu.recentTracks[0].artist} — ${mu.recentTracks[0].title}`
         : undefined,
+      trackArtist: mu.recentTracks?.[0]?.artist,
+      trackTitle: mu.recentTracks?.[0]?.title,
+      trackDuration: 180 + Math.floor(rng() * 180),
+      trackProgress: rng() * 0.6,
       _phases: phases,
       _speeds: speeds,
       _center: center,
@@ -201,6 +220,7 @@ export function generateUsers(selfPsi: Psi5): ResonanceUser[] {
     ];
     const psi: Psi5 = [...center];
 
+    const et = EXTRA_TRACKS[i % EXTRA_TRACKS.length];
     const user: ResonanceUser = {
       id: `gen-${i}`,
       displayName: ex.name,
@@ -213,6 +233,11 @@ export function generateUsers(selfPsi: Psi5): ResonanceUser[] {
       intensity: 0,
       pulseRate: 1,
       bio: ex.bio,
+      currentTrack: `${et.artist} — ${et.title}`,
+      trackArtist: et.artist,
+      trackTitle: et.title,
+      trackDuration: 200 + Math.floor(rng() * 160),
+      trackProgress: rng() * 0.7,
       _phases: phases,
       _speeds: speeds,
       _center: center,
@@ -288,6 +313,11 @@ export function evolve(
     }
 
     computeDerived(u);
+
+    // Advance track playback
+    if (u.trackDuration) {
+      u.trackProgress = ((u.trackProgress ?? 0) + dt / u.trackDuration) % 1;
+    }
   }
 
   updatePositions(users, selfPsi, dt);

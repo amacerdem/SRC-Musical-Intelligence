@@ -16,7 +16,7 @@
   },
   "nav": {
     "home": "Home",
-    "field": "Field",
+    "field": "Resonance",
     "discover": "Discover",
     "friends": "Friends",
     "ranks": "Ranks",
@@ -722,6 +722,8 @@
       "feel": "Feel",
       "sync": "Sync",
       "peak": "Peak"
-    }
+    },
+    "nowPlaying": "NOW PLAYING",
+    "paused": "PAUSED"
   }
 }
