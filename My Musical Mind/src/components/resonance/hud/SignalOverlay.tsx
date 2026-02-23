@@ -42,11 +42,11 @@ export function SignalOverlay() {
               animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
               exit={{ opacity: 0, y: -15, scale: 0.9, filter: "blur(4px)" }}
               transition={{ duration: 0.5, ease }}
-              className="glass px-4 py-2 rounded-full flex items-center gap-2"
+              className="glass px-5 py-3 rounded-2xl flex items-center gap-3"
             >
-              <span className="text-sm">{emoji}</span>
-              <span className="text-[9px] font-display text-white/50">
-                {t("resonance.from")} <span className="text-white/70 font-medium">{name}</span>
+              <span className="text-2xl">{emoji}</span>
+              <span className="text-[12px] font-display text-white/50">
+                {t("resonance.from")} <span className="text-white/80 font-medium">{name}</span>
               </span>
             </motion.div>
           );

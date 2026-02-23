@@ -55,7 +55,7 @@ export function NowPlayingBar() {
       initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
       animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
       transition={{ duration: 0.8, ease, delay: 1.2 }}
-      className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[45] w-[340px] max-w-[calc(100vw-32px)]"
+      className="fixed bottom-6 left-[30%] -translate-x-1/2 z-[45] w-[340px] max-w-[calc(100vw-32px)]"
     >
       <div className="glass px-4 py-3 rounded-2xl">
         {/* Label */}
