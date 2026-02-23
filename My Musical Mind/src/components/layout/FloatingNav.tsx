@@ -10,26 +10,29 @@ import {
   Search,
 } from "lucide-react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useUserStore } from "@/stores/useUserStore";
 import { personas } from "@/data/personas";
 import { beliefColors } from "@/design/tokens";
 import { NucleusDot } from "@/components/mind/NucleusDot";
 import { MiniOrganism } from "@/components/mind/MiniOrganism";
 import { useDesktop } from "@/hooks/useMediaQuery";
+import { LanguageToggle } from "./LanguageToggle";
 
 const mainNav = [
-  { to: "/dashboard", icon: LayoutGrid, label: "Home", belief: "consonance" as const },
-  { to: "/live", icon: Radio, label: "Field", belief: "tempo" as const },
-  { to: "/discover", icon: Compass, label: "Discover", belief: "salience" as const },
+  { to: "/dashboard", icon: LayoutGrid, labelKey: "nav.home", belief: "consonance" as const },
+  { to: "/live", icon: Radio, labelKey: "nav.field", belief: "tempo" as const },
+  { to: "/discover", icon: Compass, labelKey: "nav.discover", belief: "salience" as const },
 ];
 
 const secondaryNav = [
-  { to: "/friends", icon: Users, label: "Friends" },
-  { to: "/leaderboard", icon: Trophy, label: "Ranks" },
-  { to: "/info", icon: BookOpen, label: "Info" },
+  { to: "/friends", icon: Users, labelKey: "nav.friends" },
+  { to: "/leaderboard", icon: Trophy, labelKey: "nav.ranks" },
+  { to: "/info", icon: BookOpen, labelKey: "nav.info" },
 ];
 
 export function FloatingNav() {
+  const { t } = useTranslation();
   const location = useLocation();
   const { mind, level } = useUserStore();
   const persona = mind ? personas.find(p => p.id === mind.personaId) : null;
@@ -50,7 +53,7 @@ export function FloatingNav() {
         className="fixed bottom-5 right-6 z-50"
       >
         <div className={`nav-dock flex items-center ${isDesktop ? "px-2.5 py-2 gap-1" : "px-2 py-1.5 gap-0.5"}`}>
-          {mainNav.map(({ to, icon: Icon, label, belief }) => {
+          {mainNav.map(({ to, icon: Icon, labelKey, belief }) => {
             const isActive = location.pathname === to;
             const navColor = isActive ? accentColor : beliefColors[belief].primary;
             return (
@@ -79,7 +82,7 @@ export function FloatingNav() {
                       textShadow: isActive ? `0 0 8px ${accentColor}60` : undefined,
                     }}
                   >
-                    {label}
+                    {t(labelKey)}
                   </span>
                 </div>
 
@@ -94,10 +97,10 @@ export function FloatingNav() {
 
           <div className={`w-px bg-white/[0.06] mx-1 ${isDesktop ? "h-5" : "h-4"}`} />
 
-          {secondaryNav.map(({ to, icon: Icon, label }) => {
+          {secondaryNav.map(({ to, icon: Icon, labelKey }) => {
             const isActive = location.pathname === to;
             return (
-              <NavLink key={to} to={to} className="relative group" title={label}>
+              <NavLink key={to} to={to} className="relative group" title={t(labelKey)}>
                 <div
                   className="flex items-center gap-1.5 rounded-full px-2.5 transition-all duration-300"
                   style={{
@@ -111,7 +114,7 @@ export function FloatingNav() {
                   />
                   {isDesktop && (
                     <span className={`text-[10px] font-display transition-colors duration-300 ${isActive ? "text-slate-300 font-medium" : "text-slate-700 group-hover:text-slate-400"}`}>
-                      {label}
+                      {t(labelKey)}
                     </span>
                   )}
                 </div>
@@ -158,6 +161,8 @@ export function FloatingNav() {
         transition={{ duration: 0.8, delay: 0.5 }}
         className="fixed top-5 right-6 z-40 flex items-center gap-3"
       >
+        <LanguageToggle />
+
         <button
           onClick={() => setShowSearch(!showSearch)}
           className="w-8 h-8 rounded-full flex items-center justify-center text-slate-700 hover:text-slate-400 transition-colors duration-300"
@@ -194,7 +199,7 @@ export function FloatingNav() {
           <div className="glass p-1 w-72 lg:w-80">
             <input
               type="text"
-              placeholder="Search minds, personas..."
+              placeholder={t("nav.search")}
               autoFocus
               onBlur={() => setShowSearch(false)}
               className="w-full px-4 py-2.5 bg-transparent text-sm text-slate-300 placeholder:text-slate-700 outline-none font-body"

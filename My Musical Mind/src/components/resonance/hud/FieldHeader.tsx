@@ -1,6 +1,7 @@
 /* ── FieldHeader — "RESONANCE FIELD" + online count ─────────────── */
 
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { useResonanceStore } from "@/stores/useResonanceStore";
 
 const ease = [0.22, 1, 0.36, 1] as const;

@@ -17,11 +17,11 @@ import { personas } from "./personas";
 /* ── Dimension Metadata ─────────────────────────────────────────── */
 
 export const DIMENSIONS = [
-  { id: "arousal",   negLabel: "Serene",   posLabel: "Intense",  negColor: "#6366F1", posColor: "#EF4444" },
-  { id: "valence",   negLabel: "Dark",     posLabel: "Luminous", negColor: "#7C3AED", posColor: "#FBBF24" },
-  { id: "focus",     negLabel: "Diffuse",  posLabel: "Focused",  negColor: "#06B6D4", posColor: "#84CC16" },
-  { id: "temporal",  negLabel: "Ancient",  posLabel: "Novel",    negColor: "#F97316", posColor: "#EC4899" },
-  { id: "social",    negLabel: "Isolated", posLabel: "Merged",   negColor: "#475569", posColor: "#38BDF8" },
+  { id: "arousal",  negColor: "#6366F1", posColor: "#EF4444" },
+  { id: "valence",  negColor: "#7C3AED", posColor: "#FBBF24" },
+  { id: "focus",    negColor: "#06B6D4", posColor: "#84CC16" },
+  { id: "temporal", negColor: "#F97316", posColor: "#EC4899" },
+  { id: "social",   negColor: "#475569", posColor: "#38BDF8" },
 ] as const;
 
 export type Psi5 = [number, number, number, number, number]; // each [-5, +5]
