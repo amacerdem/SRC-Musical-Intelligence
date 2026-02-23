@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { MiniOrganism } from "./MiniOrganism";
 import type { Persona } from "@/types/mind";
 
@@ -10,6 +11,7 @@ interface Props {
 
 export function PersonaCard({ persona, compact = false }: Props) {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   if (compact) {
     return (
@@ -30,8 +32,8 @@ export function PersonaCard({ persona, compact = false }: Props) {
             {persona.id}
           </div>
           <div>
-            <div className="text-sm font-medium text-slate-300">{persona.name}</div>
-            <div className="text-[10px] text-slate-600">{persona.tagline}</div>
+            <div className="text-sm font-medium text-slate-300">{t(`personas.${persona.id}.name`)}</div>
+            <div className="text-[10px] text-slate-600">{t(`personas.${persona.id}.tagline`)}</div>
           </div>
         </div>
       </motion.div>
@@ -78,16 +80,16 @@ export function PersonaCard({ persona, compact = false }: Props) {
 
       {/* Name */}
       <h3 className="text-base font-display font-bold text-slate-200 mb-1 group-hover:text-white transition-colors">
-        {persona.name}
+        {t(`personas.${persona.id}.name`)}
       </h3>
-      <p className="text-xs text-slate-600 mb-4 font-light">{persona.tagline}</p>
+      <p className="text-xs text-slate-600 mb-4 font-light">{t(`personas.${persona.id}.tagline`)}</p>
 
       {/* Mini axes — thin bars */}
       <div className="space-y-1.5">
         {Object.entries(persona.axes).map(([key, val]) => (
           <div key={key} className="flex items-center gap-2">
             <div className="w-14 text-[9px] text-slate-700 capitalize truncate">
-              {key.replace(/([A-Z])/g, " $1").trim()}
+              {t(`axes.${key}`)}
             </div>
             <div className="flex-1 h-[2px] rounded-full bg-white/[0.03] overflow-hidden">
               <div

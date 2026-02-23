@@ -2,7 +2,7 @@
 
 import { useRef, useMemo, useState, useCallback } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
-import { Html } from "@react-three/drei";
+import { Html, Billboard, useTexture } from "@react-three/drei";
 import * as THREE from "three";
 import { useResonanceStore } from "@/stores/useResonanceStore";
 import { DIMENSIONS, type ResonanceUser } from "@/data/resonance-simulation";
@@ -172,6 +172,82 @@ void main() {
 }
 `;
 
+/* ── Circular avatar billboard shaders ──────────────────────────── */
+
+const avatarVertexShader = `
+varying vec2 vUv;
+void main() {
+  vUv = uv;
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+}
+`;
+
+const avatarFragmentShader = `
+uniform sampler2D uTexture;
+uniform vec3 uBorderColor;
+uniform float uOpacity;
+varying vec2 vUv;
+
+void main() {
+  vec2 centered = vUv - 0.5;
+  float dist = length(centered);
+
+  // Hard circular clip (crisp edge)
+  if (dist > 0.48) discard;
+
+  // Thin glowing border ring at the edge
+  float ring = smoothstep(0.38, 0.44, dist);
+
+  vec4 tex = texture2D(uTexture, vUv);
+  vec3 col = mix(tex.rgb, uBorderColor * 1.2, ring * 0.8);
+
+  gl_FragColor = vec4(col, uOpacity);
+}
+`;
+
+/** Check if the user has a real avatar image */
+function hasRealAvatar(avatarUrl: string): boolean {
+  return avatarUrl.includes("/avatars/photo_");
+}
+
+/** Billboard avatar that always faces the camera */
+function AvatarBillboard({ avatarUrl, borderColor, opacity }: {
+  avatarUrl: string;
+  borderColor: string;
+  opacity: number;
+}) {
+  const texture = useTexture(avatarUrl);
+
+  // Sharp texture filtering
+  useMemo(() => {
+    texture.minFilter = THREE.LinearFilter;
+    texture.magFilter = THREE.LinearFilter;
+    texture.generateMipmaps = false;
+  }, [texture]);
+
+  const borderColorObj = useMemo(() => new THREE.Color(borderColor), [borderColor]);
+
+  const uniforms = useMemo(() => ({
+    uTexture: { value: texture },
+    uBorderColor: { value: borderColorObj },
+    uOpacity: { value: opacity },
+  }), [texture, borderColorObj, opacity]);
+
+  return (
+    <mesh>
+      <planeGeometry args={[0.7, 0.7]} />
+      <shaderMaterial
+        vertexShader={avatarVertexShader}
+        fragmentShader={avatarFragmentShader}
+        uniforms={uniforms}
+        transparent
+        depthWrite={false}
+        side={THREE.DoubleSide}
+      />
+    </mesh>
+  );
+}
+
 /* ── Component ──────────────────────────────────────────────────── */
 
 interface Props {
@@ -286,6 +362,17 @@ export function UserOrganism({ user, isSelected }: Props) {
             blending={THREE.AdditiveBlending}
           />
         </mesh>
+      )}
+
+      {/* Billboard avatar — centered on sphere */}
+      {hasRealAvatar(user.avatarUrl) && (
+        <Billboard position={[0, 0, 0]} follow lockX={false} lockY={false} lockZ={false}>
+          <AvatarBillboard
+            avatarUrl={user.avatarUrl}
+            borderColor={domColor}
+            opacity={isSelected ? 1.0 : hovered ? 0.95 : 0.8}
+          />
+        </Billboard>
       )}
 
       {/* Name label */}

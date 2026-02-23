@@ -1,5 +1,6 @@
 import { useMemo, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { Radio } from "lucide-react";
 import { mockUsers, mockActivity } from "@/data/mock-users";
@@ -36,6 +37,7 @@ const ACTIVITY_ICON_COLOR: Record<string, string> = {
 };
 
 export function Friends() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const cardGridRef = useRef<HTMLDivElement>(null);
   const feedRef = useRef<HTMLDivElement>(null);
@@ -74,11 +76,11 @@ export function Friends() {
 
       {/* Header */}
       <motion.div variants={fadeIn} initial="initial" animate="animate" className="relative z-10 text-center mb-14 pt-8">
-        <span className="hud-label mb-3 block">Community</span>
+        <span className="hud-label mb-3 block">{t("friends.hudLabel")}</span>
         <h1 className="text-4xl md:text-5xl font-display font-bold text-slate-100 tracking-tight mb-3">
-          Friends
+          {t("friends.title")}
         </h1>
-        <p className="hud-label text-xs">See what your friends' minds are creating</p>
+        <p className="hud-label text-xs">{t("friends.subtitle")}</p>
       </motion.div>
 
       {/* User cards — staggered scroll entry */}
@@ -121,7 +123,7 @@ export function Friends() {
                       {user.displayName}
                     </h4>
                     <p className="text-xs truncate font-body font-light" style={{ color: user.persona.color }}>
-                      {user.persona.name}
+                      {t(`personas.${user.persona.id}.name`)}
                     </p>
                   </div>
                 </div>
@@ -136,7 +138,7 @@ export function Friends() {
                   style={{ background: "rgba(0,0,0,0.5)", backdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.06)" }}
                 >
                   <div className="flex items-center justify-between mb-2">
-                    <span className="hud-label">Compatibility</span>
+                    <span className="hud-label">{t("friends.compatibility")}</span>
                     <span className="hud-value text-lg" style={{ color: compatLabel.color }}>
                       {user.compatibility}%
                     </span>
@@ -151,7 +153,7 @@ export function Friends() {
                     />
                   </div>
                   <span className="text-[10px] mt-1.5 block font-body font-light" style={{ color: compatLabel.color }}>
-                    {compatLabel.label}
+                    {t(`compatibility.${compatLabel.label.toLowerCase()}`)}
                   </span>
                 </div>
               </div>
@@ -165,12 +167,12 @@ export function Friends() {
         <div className="spatial-card p-8">
           <div className="flex items-center gap-2 mb-8">
             <NucleusDot color={beliefColors.salience.primary} size={5} active pulsing />
-            <span className="hud-label">Community Feed</span>
+            <span className="hud-label">{t("friends.communityFeed")}</span>
           </div>
           <div className="space-y-5">
             {mockActivity.map((item) => {
               const iconColor = ACTIVITY_ICON_COLOR[item.type] || "#94A3B8";
-              const timeSince = getTimeSince(item.timestamp);
+              const timeSince = getTimeSince(item.timestamp, t);
 
               return (
                 <div key={item.id} className="scroll-feed-item flex items-start gap-3">
@@ -195,11 +197,11 @@ export function Friends() {
   );
 }
 
-function getTimeSince(isoDate: string): string {
+function getTimeSince(isoDate: string, t: (key: string, params?: Record<string, number>) => string): string {
   const diff = Date.now() - new Date(isoDate).getTime();
   const hours = Math.floor(diff / (1000 * 60 * 60));
-  if (hours < 1) return "Just now";
-  if (hours < 24) return `${hours}h ago`;
+  if (hours < 1) return t("common.justNow");
+  if (hours < 24) return t("common.hoursAgo", { h: hours });
   const days = Math.floor(hours / 24);
-  return `${days}d ago`;
+  return t("common.daysAgo", { d: days });
 }

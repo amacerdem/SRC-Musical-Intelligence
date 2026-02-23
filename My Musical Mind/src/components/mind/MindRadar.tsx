@@ -6,6 +6,7 @@ import {
   PolarRadiusAxis,
   ResponsiveContainer,
 } from "recharts";
+import { useTranslation } from "react-i18next";
 import type { MindAxes } from "@/types/mind";
 
 interface Props {
@@ -16,12 +17,12 @@ interface Props {
   size?: number;
 }
 
-const axisLabels: { key: keyof MindAxes; label: string }[] = [
-  { key: "entropyTolerance", label: "Entropy" },
-  { key: "resolutionCraving", label: "Resolution" },
-  { key: "tensionAppetite", label: "Tension" },
-  { key: "salienceSensitivity", label: "Salience" },
-  { key: "monotonyTolerance", label: "Monotony" },
+const axisKeys: (keyof MindAxes)[] = [
+  "entropyTolerance",
+  "resolutionCraving",
+  "tensionAppetite",
+  "salienceSensitivity",
+  "monotonyTolerance",
 ];
 
 export function MindRadar({
@@ -31,8 +32,10 @@ export function MindRadar({
   compareColor = "#6366F1",
   size = 300,
 }: Props) {
-  const data = axisLabels.map(({ key, label }) => ({
-    axis: label,
+  const { t } = useTranslation();
+
+  const data = axisKeys.map((key) => ({
+    axis: t(`dashboard.axes.${key === "entropyTolerance" ? "entropy" : key === "resolutionCraving" ? "resolution" : key === "monotonyTolerance" ? "monotony" : key === "salienceSensitivity" ? "salience" : "tension"}`),
     value: Math.round(axes[key] * 100),
     ...(compareAxes ? { compare: Math.round(compareAxes[key] * 100) } : {}),
   }));

@@ -233,8 +233,8 @@ _SRP_H3_DEMANDS: Tuple[H3DemandSpec, ...] = (
     _h3(_ROUGHNESS, "roughness", 18, 19, 2,
         "Harmonic stability phrase — resolution baseline",
         "Huron 2006"),
-    # #31: Consonance trend 5s (F-layer)
-    _h3(_SENSORY_PLEASANTNESS, "sensory_pleasantness", 20, 18, 0,
+    # #31: Consonance trend 5s (F-layer) — forward law for forecast
+    _h3(_SENSORY_PLEASANTNESS, "sensory_pleasantness", 20, 18, 1,
         "Consonance trend 5s — forecast resolution signal",
         "Zatorre & Salimpoor 2013"),
 )

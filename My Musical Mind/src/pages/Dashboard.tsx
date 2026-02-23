@@ -23,7 +23,6 @@ import {
   generateBrainQuote,
 } from "@/data/mind-insights";
 import { beliefColors, getCompatibilityLabel } from "@/design/tokens";
-import { STAGE_NAMES } from "@/types/mind";
 import { pageTransition, fadeIn, cinematicReveal } from "@/design/animations";
 import type { MindAxes } from "@/types/mind";
 import { weeklyStats, lastWeekDays, monthlyEvolution } from "@/data/mock-listening";
@@ -92,10 +91,10 @@ export function Dashboard() {
   const xpProgress = Math.min(100, (xp % xpForNext) / xpForNext * 100);
   const evolution = useMemo(() => computeEvolution(), []);
 
-  const monologue = useMemo(() => generateWeeklyMonologue(persona, mind.axes), [persona, mind.axes]);
-  const peInsight = useMemo(() => generatePEInsight(), []);
-  const similarMind = useMemo(() => findSimilarMind(mind.axes, persona, mockUsers), [mind.axes, persona]);
-  const brainQuote = useMemo(() => generateBrainQuote(persona, mind.axes), [persona, mind.axes]);
+  const monologue = useMemo(() => generateWeeklyMonologue(persona, mind.axes, t), [persona, mind.axes, t]);
+  const peInsight = useMemo(() => generatePEInsight(t), [t]);
+  const similarMind = useMemo(() => findSimilarMind(mind.axes, persona, mockUsers, t), [mind.axes, persona, t]);
+  const brainQuote = useMemo(() => generateBrainQuote(persona, mind.axes, t), [persona, mind.axes, t]);
 
   const handleSendChat = () => {
     const text = chatInput.trim();
@@ -160,7 +159,7 @@ export function Dashboard() {
         {/* ── TOP: Identity ───────────────────────────────────── */}
         <motion.div {...cinematicReveal} className="text-center py-0.5">
           <span className="text-xs font-display font-light tracking-[0.25em] uppercase" style={{ color: `${color}90` }}>
-            {STAGE_NAMES[mind.stage]}
+            {t(`stages.${mind.stage}`)}
           </span>
           {displayName && displayName !== "You" && (
             <span className="text-sm text-slate-500 font-display font-light ml-4">
@@ -247,10 +246,10 @@ export function Dashboard() {
               className="text-center"
             >
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight leading-none" style={{ color }}>
-                {persona.name}
+                {t(`personas.${persona.id}.name`)}
               </h1>
               <p className="text-sm text-slate-500 mt-2 font-display font-light italic">
-                {persona.tagline}
+                {t(`personas.${persona.id}.tagline`)}
               </p>
             </motion.div>
 
@@ -297,7 +296,7 @@ export function Dashboard() {
                       {t("dashboard.peakMomentThisWeek")}
                     </span>
                     <p className="text-[13px] text-slate-400 font-body font-light mt-1 leading-relaxed">
-                      {weeklyStats.peakPE.description.slice(0, 120)}...
+                      {t("insights.mockPE").slice(0, 120)}...
                     </p>
                     <div className="flex items-center gap-2 mt-2">
                       <div className="h-1 flex-1 rounded-full bg-white/5 overflow-hidden">
@@ -425,7 +424,7 @@ export function Dashboard() {
                 })}
               </div>
               <p className="text-[11px] text-slate-500 font-display font-light mt-3 leading-relaxed">
-                {monthlyEvolution.driftDescription.slice(0, 100)}...
+                {t("insights.mockDrift").slice(0, 100)}...
               </p>
             </div>
 

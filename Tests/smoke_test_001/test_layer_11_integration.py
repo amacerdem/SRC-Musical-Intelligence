@@ -105,14 +105,16 @@ class TestMelToR3ToH3:
 class TestH3ToMechanisms:
     """Validate that mechanisms can consume H3 features and produce output."""
 
-    def test_relay_forward_with_synthetic_h3(self, all_relays):
-        """Every relay can forward() with synthetic H3 and produce output."""
+    def test_relay_compute_with_synthetic_h3(self, all_relays):
+        """Every relay can compute() with synthetic H3 and produce output."""
+        torch.manual_seed(SEED)
+        r3 = torch.rand(B, T, 97)
         failures = []
         for relay in all_relays:
             h3 = make_synthetic_h3(relay, batch_size=B, time_steps=T)
             try:
                 with torch.no_grad():
-                    out = relay.forward(h3)
+                    out = relay.compute(h3, r3)
                 expected = (B, T, relay.OUTPUT_DIM)
                 if out.shape != expected:
                     failures.append(
@@ -120,30 +122,34 @@ class TestH3ToMechanisms:
                     )
             except Exception as exc:
                 failures.append(f"{relay.NAME}: {exc!r}")
-        assert not failures, "Relay forward failures:\n" + "\n".join(failures)
+        assert not failures, "Relay compute failures:\n" + "\n".join(failures)
 
     def test_relay_output_no_nan(self, all_relays):
         """Relay outputs have no NaN."""
+        torch.manual_seed(SEED)
+        r3 = torch.rand(B, T, 97)
         failures = []
         for relay in all_relays:
             h3 = make_synthetic_h3(relay, batch_size=B, time_steps=T)
             try:
                 with torch.no_grad():
-                    out = relay.forward(h3)
+                    out = relay.compute(h3, r3)
                 if torch.isnan(out).any():
                     failures.append(relay.NAME)
             except Exception:
-                pass  # forward failure covered by other test
+                pass  # compute failure covered by other test
         assert not failures, f"NaN from relays: {failures}"
 
     def test_relay_output_no_inf(self, all_relays):
         """Relay outputs have no Inf."""
+        torch.manual_seed(SEED)
+        r3 = torch.rand(B, T, 97)
         failures = []
         for relay in all_relays:
             h3 = make_synthetic_h3(relay, batch_size=B, time_steps=T)
             try:
                 with torch.no_grad():
-                    out = relay.forward(h3)
+                    out = relay.compute(h3, r3)
                 if torch.isinf(out).any():
                     failures.append(relay.NAME)
             except Exception:

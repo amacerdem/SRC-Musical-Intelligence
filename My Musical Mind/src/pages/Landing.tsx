@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { MindOrganismCanvas } from "@/components/mind/MindOrganismCanvas";
 import { OrbitalBeliefs } from "@/components/landing/OrbitalBeliefs";
+import { LanguageToggle } from "@/components/layout/LanguageToggle";
 
 const INSTITUTIONS = [
   { name: "MIT", dept: "Media Lab" },
@@ -32,6 +33,11 @@ export function Landing() {
       {/* Orbital beliefs — ambient decoration */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[1]">
         <OrbitalBeliefs visible size={Math.min(900, typeof window !== "undefined" ? window.innerWidth * 1.275 : 900)} />
+      </div>
+
+      {/* Language toggle */}
+      <div className="fixed top-6 right-6 z-20">
+        <LanguageToggle />
       </div>
 
       {/* Cinematic vignette */}

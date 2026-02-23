@@ -13,7 +13,7 @@ from typing import TYPE_CHECKING
 
 import torch
 
-from Musical_Intelligence.contracts.dataclasses.neuro_link import (
+from Musical_Intelligence.contracts.dataclasses import (
     DA,
     NE,
     NUM_CHANNELS,

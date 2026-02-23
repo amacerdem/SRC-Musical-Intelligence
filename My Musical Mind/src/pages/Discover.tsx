@@ -332,7 +332,7 @@ export function Discover() {
                   </div>
                   <div className="flex items-center gap-3 shrink-0">
                     {track.peakBelief && <NucleusDot color={bColor} size={3} active />}
-                    <span className="text-[10px] font-mono text-slate-700">{t("discover.plays", { count: track.plays?.toLocaleString() })}</span>
+                    <span className="text-[10px] font-mono text-slate-700">{t("discover.plays", { num: track.plays?.toLocaleString() ?? "0" })}</span>
                     <span className="text-[9px] font-mono text-slate-700">{track.duration}</span>
                   </div>
                 </div>
@@ -458,7 +458,7 @@ export function Discover() {
                                   {t(phase.key)}
                                 </span>
                                 {active && !current && (
-                                  <span className="text-[8px] font-mono text-green-800 ml-auto">done</span>
+                                  <span className="text-[8px] font-mono text-green-800 ml-auto">{t("discover.done")}</span>
                                 )}
                               </motion.div>
                             );
@@ -492,7 +492,7 @@ export function Discover() {
                         <div className="spatial-card p-6 glow-border" style={{ "--glow-color": accentColor } as React.CSSProperties}>
                           <div className="flex items-center gap-2 mb-4">
                             <Brain size={14} style={{ color: accentColor }} />
-                            <span className="hud-label">What Your Mind Heard</span>
+                            <span className="hud-label">{t("discover.whatYourMindHeard")}</span>
                             {selectedTrack && (
                               <span className="text-[10px] font-mono text-slate-600 ml-auto">{selectedTrack}</span>
                             )}
@@ -514,7 +514,7 @@ export function Discover() {
 
                       {/* Belief Traces */}
                       <div className="spatial-card p-8">
-                        <span className="hud-label mb-6 block">How Your Mind Responded — {traces.length} Moments</span>
+                        <span className="hud-label mb-6 block">{t("discover.howYourMindResponded", { count: traces.length })}</span>
                         <div className="space-y-6">
                           {BELIEF_KEYS.map((belief) => {
                             const bColor = beliefColors[belief].primary;
@@ -525,7 +525,7 @@ export function Discover() {
                                 <div className="flex items-center justify-between mb-2">
                                   <div className="flex items-center gap-2">
                                     <NucleusDot color={bColor} size={4} active pulsing />
-                                    <span className="text-xs font-body font-medium text-slate-400">{BELIEF_LABELS[belief]}</span>
+                                    <span className="text-xs font-body font-medium text-slate-400">{t(BELIEF_I18N_KEY[belief])}</span>
                                   </div>
                                   <div className="flex items-center gap-4 text-[10px]">
                                     <span className="text-slate-700 font-mono">
@@ -580,10 +580,10 @@ export function Discover() {
                             <Sparkles size={16} style={{ color: beliefColors.reward.primary }} />
                             <div className="flex-1">
                               <h3 className="text-sm font-body font-medium text-slate-300">
-                                Peak Pleasure at {formatTime(peakReward.time)}
+                                {t("discover.peakPleasure", { time: formatTime(peakReward.time) })}
                               </h3>
                               <p className="text-[10px] text-slate-600 font-mono">
-                                Intensity: {(peakReward.value * 100).toFixed(1)}% — This is the moment you were most surprised by the music, and most satisfied by what came next.
+                                {t("discover.peakIntensityDesc", { value: (peakReward.value * 100).toFixed(1) })}
                               </p>
                             </div>
                             <div className="shrink-0 w-12 h-12 rounded-full flex items-center justify-center"
@@ -600,7 +600,7 @@ export function Discover() {
                       {/* Analyze another */}
                       <div className="text-center pt-2">
                         <Button variant="glass" size="sm" onClick={() => { setLabState("idle"); setTraces([]); setSelectedTrack(null); }}>
-                          Analyze Another Track
+                          {t("discover.analyzeAnother")}
                         </Button>
                       </div>
                     </motion.div>

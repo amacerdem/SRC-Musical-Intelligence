@@ -381,7 +381,7 @@ class TestDeepLayerStructure:
     def test_encoder_layers_valid(self, pipeline_outputs):
         """Encoder layer slices sum to OUTPUT_DIM."""
         for name, (enc, out) in pipeline_outputs["encoder"].items():
-            total = sum(layer.dims for layer in enc.LAYERS)
+            total = sum(layer.end - layer.start for layer in enc.LAYERS)
             assert total == enc.OUTPUT_DIM, (
                 f"{name}: layer dims sum={total}, OUTPUT_DIM={enc.OUTPUT_DIM}"
             )
@@ -389,7 +389,7 @@ class TestDeepLayerStructure:
     def test_associator_layers_valid(self, pipeline_outputs):
         """Associator layer slices sum to OUTPUT_DIM."""
         for name, (assoc, out) in pipeline_outputs["associator"].items():
-            total = sum(layer.dims for layer in assoc.LAYERS)
+            total = sum(layer.end - layer.start for layer in assoc.LAYERS)
             assert total == assoc.OUTPUT_DIM, (
                 f"{name}: layer dims sum={total}, OUTPUT_DIM={assoc.OUTPUT_DIM}"
             )
@@ -398,8 +398,9 @@ class TestDeepLayerStructure:
         """Each encoder layer slice is extractable from the output tensor."""
         for name, (enc, out) in pipeline_outputs["encoder"].items():
             for layer in enc.LAYERS:
+                expected = layer.end - layer.start
                 sliced = out[:, :, layer.start:layer.end]
-                assert sliced.shape[2] == layer.dims, (
+                assert sliced.shape[2] == expected, (
                     f"{name}/{layer.code}: slice dims mismatch"
                 )
 
@@ -407,8 +408,9 @@ class TestDeepLayerStructure:
         """Each associator layer slice is extractable from the output tensor."""
         for name, (assoc, out) in pipeline_outputs["associator"].items():
             for layer in assoc.LAYERS:
+                expected = layer.end - layer.start
                 sliced = out[:, :, layer.start:layer.end]
-                assert sliced.shape[2] == layer.dims, (
+                assert sliced.shape[2] == expected, (
                     f"{name}/{layer.code}: slice dims mismatch"
                 )
 
@@ -451,14 +453,18 @@ class TestDeepPopulation:
     def test_no_overlap_relay_encoder_associator(
         self, all_relays, all_encoders, all_associators
     ):
-        """No mechanism should appear in more than one role category."""
-        relay_names = {r.NAME for r in all_relays}
-        encoder_names = {e.NAME for e in all_encoders}
-        assoc_names = {a.NAME for a in all_associators}
+        """No mechanism instance should appear in more than one role.
 
-        re_overlap = relay_names & encoder_names
-        ra_overlap = relay_names & assoc_names
-        ea_overlap = encoder_names & assoc_names
+        Cross-function name reuse is allowed (e.g. PNH in F1 and F4),
+        so we check by (NAME, FUNCTION) identity.
+        """
+        relay_ids = {(r.NAME, r.FUNCTION) for r in all_relays}
+        encoder_ids = {(e.NAME, e.FUNCTION) for e in all_encoders}
+        assoc_ids = {(a.NAME, a.FUNCTION) for a in all_associators}
+
+        re_overlap = relay_ids & encoder_ids
+        ra_overlap = relay_ids & assoc_ids
+        ea_overlap = encoder_ids & assoc_ids
 
         assert not re_overlap, f"Relay/Encoder overlap: {re_overlap}"
         assert not ra_overlap, f"Relay/Associator overlap: {ra_overlap}"

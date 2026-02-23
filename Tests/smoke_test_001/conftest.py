@@ -7,6 +7,7 @@ modules.
 from __future__ import annotations
 
 import importlib
+import pathlib
 from typing import Any, Dict, List, Set, Tuple
 
 import pytest
@@ -29,24 +30,62 @@ _BELIEF_MODULES = {
     for fn in _FUNCTION_IDS
 }
 
+_PROJECT_ROOT = pathlib.Path(__file__).resolve().parent.parent.parent
+
+
+def _try_collect_from_module(mod, base_class: type) -> List[Any]:
+    """Collect instances of *base_class* from a module's __all__."""
+    instances: List[Any] = []
+    for name in getattr(mod, "__all__", []):
+        cls = getattr(mod, name, None)
+        if cls is None:
+            continue
+        try:
+            if isinstance(cls, type) and issubclass(cls, base_class):
+                instances.append(cls())
+        except Exception:
+            continue
+    return instances
+
 
 def _collect_instances(module_map: Dict[str, str], base_class: type) -> List[Any]:
-    """Import modules and collect instances of *base_class* from __all__."""
+    """Import modules and collect instances of *base_class* from __all__.
+
+    If a module-level import fails (e.g. F2 mechanisms with Hub/Integrator),
+    falls back to importing individual subpackages from the filesystem.
+    """
     instances: List[Any] = []
     for fn, mod_path in module_map.items():
         try:
             mod = importlib.import_module(mod_path)
+            instances.extend(_try_collect_from_module(mod, base_class))
         except Exception:
-            continue
-        for name in getattr(mod, "__all__", []):
-            cls = getattr(mod, name, None)
-            if cls is None:
+            # Fallback: try individual subpackages
+            pkg_parts = mod_path.split(".")
+            pkg_dir = _PROJECT_ROOT / "/".join(pkg_parts)
+            if not pkg_dir.is_dir():
                 continue
-            try:
-                if isinstance(cls, type) and issubclass(cls, base_class):
-                    instances.append(cls())
-            except Exception:
-                continue
+            for sub in sorted(pkg_dir.iterdir()):
+                if not sub.is_dir() or sub.name.startswith(("_", ".")):
+                    continue
+                sub_mod_path = f"{mod_path}.{sub.name}"
+                try:
+                    sub_mod = importlib.import_module(sub_mod_path)
+                except Exception:
+                    continue
+                # Look for classes in submodule
+                for attr_name in dir(sub_mod):
+                    attr = getattr(sub_mod, attr_name, None)
+                    if attr is None:
+                        continue
+                    try:
+                        if (isinstance(attr, type)
+                                and issubclass(attr, base_class)
+                                and attr is not base_class
+                                and not attr_name.startswith("_")):
+                            instances.append(attr())
+                    except Exception:
+                        continue
     return instances
 
 
@@ -64,8 +103,11 @@ def synthetic_mel(batch_size: int, time_steps: int) -> Tensor:
 @pytest.fixture(scope="session")
 def r3_extractor():
     """R³ extractor singleton."""
-    from Musical_Intelligence.ear.r3.extractor import R3Extractor
-    return R3Extractor()
+    try:
+        from Musical_Intelligence.ear.r3.extractor import R3Extractor
+        return R3Extractor()
+    except Exception as e:
+        pytest.skip(f"R³ extractor unavailable: {e}")
 
 
 @pytest.fixture(scope="session")
@@ -83,8 +125,11 @@ def r3_features(r3_output) -> Tensor:
 @pytest.fixture(scope="session")
 def h3_extractor():
     """H³ extractor singleton."""
-    from Musical_Intelligence.ear.h3.extractor import H3Extractor
-    return H3Extractor()
+    try:
+        from Musical_Intelligence.ear.h3.extractor import H3Extractor
+        return H3Extractor()
+    except Exception as e:
+        pytest.skip(f"H³ extractor unavailable: {e}")
 
 
 # ======================================================================

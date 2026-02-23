@@ -261,8 +261,9 @@ class TestBeliefBases:
         assert issubclass(_BeliefBase, ABC)
 
     def test_core_belief_has_tau(self):
-        """CoreBelief class defines TAU."""
-        assert hasattr(CoreBelief, "TAU")
+        """CoreBelief class declares TAU (annotation or attribute)."""
+        # TAU is a type annotation (TAU: float) — not a default value
+        assert "TAU" in getattr(CoreBelief, "__annotations__", {}) or hasattr(CoreBelief, "TAU")
 
     def test_core_belief_baseline_default(self):
         """CoreBelief.BASELINE defaults to 0.5."""

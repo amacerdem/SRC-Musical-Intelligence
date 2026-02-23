@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { ArrowLeft, Flame, Headphones, TrendingUp, Crown, Sparkles } from "lucide-react";
 import { aeMind, aeProfile } from "@/data/ae-mind";
@@ -15,9 +16,10 @@ const AE_COLOR = "#6C5CE7";
 
 export function ExploreAE() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const persona = getPersona(aeMind.personaId);
 
-  const quoteText = "Music is not heard. It is thought.";
+  const quoteText = t("exploreAE.quote");
 
   return (
     <motion.div {...pageTransition} className="min-h-screen bg-black relative overflow-hidden">
@@ -45,7 +47,7 @@ export function ExploreAE() {
       <div className="absolute top-8 left-8 z-20">
         <Button variant="ghost" size="sm" onClick={() => navigate("/")}>
           <ArrowLeft size={18} className="mr-2" />
-          Back
+          {t("common.back")}
         </Button>
       </div>
 
@@ -59,13 +61,13 @@ export function ExploreAE() {
         >
           {/* Hero section */}
           <motion.div variants={cinematicReveal} className="text-center mb-6">
-            <span className="hud-label mb-4 block">Stage 3 / Transcendent</span>
+            <span className="hud-label mb-4 block">{t("exploreAE.stageLabel")}</span>
             <h1 className="text-5xl md:text-7xl font-display font-bold mt-2 mb-4 text-gradient tracking-tight"
               style={{ "--tw-gradient-from": AE_COLOR, "--tw-gradient-to": `${AE_COLOR}80` } as React.CSSProperties}
             >
               Amac Erdem
             </h1>
-            <p className="hud-label tracking-wide text-base">The mind behind the engine</p>
+            <p className="hud-label tracking-wide text-base">{t("exploreAE.mindBehindEngine")}</p>
           </motion.div>
 
           {/* Quote — hero text with kinetic character-by-character reveal */}
@@ -95,7 +97,7 @@ export function ExploreAE() {
               <div className="rounded-3xl p-10 flex flex-col items-center"
                 style={{ background: "rgba(0,0,0,0.5)", backdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.06)" }}
               >
-                <span className="hud-label mb-6">Mind Profile</span>
+                <span className="hud-label mb-6">{t("exploreAE.mindProfile")}</span>
                 <MindRadar axes={aeProfile.mind.axes} color={AE_COLOR} size={500} />
               </div>
             </motion.div>
@@ -115,27 +117,27 @@ export function ExploreAE() {
                     <Crown size={24} style={{ color: AE_COLOR }} />
                   </div>
                   <div>
-                    <h3 className="text-xl font-display font-bold text-slate-200">{persona.name}</h3>
-                    <p className="text-sm text-slate-600 italic font-body font-light">"{persona.tagline}"</p>
+                    <h3 className="text-xl font-display font-bold text-slate-200">{t(`personas.${persona.id}.name`)}</h3>
+                    <p className="text-sm text-slate-600 italic font-body font-light">"{t(`personas.${persona.id}.tagline`)}"</p>
                   </div>
                 </div>
-                <p className="text-sm text-slate-500 leading-relaxed font-body font-light">{persona.description}</p>
+                <p className="text-sm text-slate-500 leading-relaxed font-body font-light">{t(`personas.${persona.id}.description`)}</p>
               </motion.div>
 
               {/* Stats — HUD style */}
               <motion.div variants={slideUp} className="spatial-card p-8">
-                <span className="hud-label mb-6 block">Stats</span>
+                <span className="hud-label mb-6 block">{t("exploreAE.stats")}</span>
                 <div className="grid grid-cols-2 gap-5">
-                  <StatBlock icon={<TrendingUp size={14} />} label="Level" value="50" color={AE_COLOR} />
-                  <StatBlock icon={<Headphones size={14} />} label="Tracks" value="12,847" color={AE_COLOR} />
-                  <StatBlock icon={<Flame size={14} />} label="Streak" value="365 days" color={AE_COLOR} />
-                  <StatBlock icon={<Sparkles size={14} />} label="Stage" value={STAGE_NAMES[aeMind.stage]} color={AE_COLOR} />
+                  <StatBlock icon={<TrendingUp size={14} />} label={t("exploreAE.level")} value="50" color={AE_COLOR} />
+                  <StatBlock icon={<Headphones size={14} />} label={t("exploreAE.tracks")} value="12,847" color={AE_COLOR} />
+                  <StatBlock icon={<Flame size={14} />} label={t("exploreAE.streak")} value="365 days" color={AE_COLOR} />
+                  <StatBlock icon={<Sparkles size={14} />} label={t("exploreAE.stage")} value={t(`stages.${aeMind.stage}`)} color={AE_COLOR} />
                 </div>
               </motion.div>
 
               {/* Belief Traces — glass panels with belief colors */}
               <motion.div variants={slideUp} className="spatial-card p-8">
-                <span className="hud-label mb-5 block">Belief Signature</span>
+                <span className="hud-label mb-5 block">{t("exploreAE.beliefSignature")}</span>
                 <div className="space-y-4">
                   {(Object.keys(beliefColors) as (keyof typeof beliefColors)[]).map((belief) => {
                     const color = beliefColors[belief].primary;
@@ -146,7 +148,7 @@ export function ExploreAE() {
                         <div className="flex items-center justify-between mb-1.5">
                           <div className="flex items-center gap-2">
                             <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: color }} />
-                            <span className="text-xs font-body font-medium text-slate-400 capitalize">{belief}</span>
+                            <span className="text-xs font-body font-medium text-slate-400">{t(`beliefs.${belief}`)}</span>
                           </div>
                           <span className="hud-value text-xs" style={{ color }}>{pct}</span>
                         </div>
@@ -167,7 +169,7 @@ export function ExploreAE() {
 
               {/* Famous Minds */}
               <motion.div variants={slideUp} className="spatial-card p-8">
-                <span className="hud-label mb-5 block">Famous Minds</span>
+                <span className="hud-label mb-5 block">{t("exploreAE.famousMinds")}</span>
                 <div className="flex flex-wrap gap-2">
                   {persona.famousMinds.map((name) => (
                     <span
@@ -189,7 +191,7 @@ export function ExploreAE() {
           {/* CTA */}
           <motion.div variants={slideUp} className="text-center mt-20">
             <Button variant="primary" size="lg" onClick={() => navigate("/onboarding")}>
-              Create Your Own Mind
+              {t("exploreAE.createYourMind")}
             </Button>
           </motion.div>
         </motion.div>

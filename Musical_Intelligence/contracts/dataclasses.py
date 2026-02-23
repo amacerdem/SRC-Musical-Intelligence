@@ -95,22 +95,61 @@ class RegionLink:
         return f"RegionLink({self.dim_name} -> {self.region}, w={self.weight})"
 
 
+# -- Neurochemical channel constants ------------------------------------------
+DA = 0        # Dopamine
+NE = 1        # Norepinephrine
+OPI = 2       # Opioid
+_5HT = 3      # Serotonin
+NUM_CHANNELS = 4
+
+
 class NeuroLink:
-    """Link between a mechanism dimension and a neuromodulator."""
+    """Link between a mechanism dimension and a neuromodulator.
 
-    __slots__ = ("dim_name", "modulator", "weight", "citation")
+    Attributes:
+        dim_name:  Name of the output dimension that drives the link.
+        modulator: Neuromodulator name (e.g. "DA", "NE", "OPI", "5HT").
+        weight:    Coupling strength (0-1).
+        citation:  Literature reference.
+        channel:   Integer index into the (B, T, 4) neuro tensor.
+        effect:    One of ``"produce"``, ``"amplify"``, ``"inhibit"``.
+    """
 
-    def __init__(
-        self,
-        dim_name: str,
-        modulator: str,
-        weight: float,
-        citation: str,
-    ) -> None:
-        self.dim_name = dim_name
-        self.modulator = modulator
-        self.weight = weight
-        self.citation = citation
+    __slots__ = ("dim_name", "modulator", "weight", "citation", "channel", "effect")
+
+    _MODULATOR_TO_CHANNEL = {"DA": DA, "NE": NE, "OPI": OPI, "5HT": _5HT}
+
+    def __init__(self, *args, **kwargs) -> None:
+        """Accept both calling conventions:
+
+        4-arg:  NeuroLink(dim_name, modulator, weight, citation)
+        5-arg:  NeuroLink(dim_name, channel, effect, weight, citation)
+        """
+        if len(args) == 5 and isinstance(args[1], int):
+            # 5-arg: (dim_name, channel, effect, weight, citation)
+            self.dim_name = args[0]
+            self.channel = args[1]
+            self.effect = args[2]
+            self.weight = args[3]
+            self.citation = args[4]
+            _ch_to_mod = {v: k for k, v in self._MODULATOR_TO_CHANNEL.items()}
+            self.modulator = _ch_to_mod.get(self.channel, f"CH{self.channel}")
+        elif len(args) >= 4:
+            # 4-arg: (dim_name, modulator, weight, citation)
+            self.dim_name = args[0]
+            self.modulator = args[1]
+            self.weight = args[2]
+            self.citation = args[3]
+            self.channel = kwargs.get("channel") or self._MODULATOR_TO_CHANNEL.get(str(self.modulator), 0)
+            self.effect = kwargs.get("effect", "produce")
+        else:
+            # Kwargs-only or partial
+            self.dim_name = kwargs.get("dim_name", args[0] if args else "")
+            self.modulator = kwargs.get("modulator", args[1] if len(args) > 1 else "")
+            self.weight = kwargs.get("weight", args[2] if len(args) > 2 else 0.0)
+            self.citation = kwargs.get("citation", args[3] if len(args) > 3 else "")
+            self.channel = kwargs.get("channel") or self._MODULATOR_TO_CHANNEL.get(str(self.modulator), 0)
+            self.effect = kwargs.get("effect", "produce")
 
     def __repr__(self) -> str:
         return f"NeuroLink({self.dim_name} -> {self.modulator}, w={self.weight})"

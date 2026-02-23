@@ -1,4 +1,5 @@
 import { useState, useMemo, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { Crown, Medal } from "lucide-react";
 import { mockUsers } from "@/data/mock-users";
@@ -39,6 +40,7 @@ function buildLeaderboard(filter: FilterTab): (UserProfile & { rank: number })[]
 }
 
 export function Leaderboard() {
+  const { t } = useTranslation();
   const [filter, setFilter] = useState<FilterTab>("all");
   const [personaFilter, setPersonaFilter] = useState<number | null>(null);
   const tableRef = useRef<HTMLDivElement>(null);
@@ -78,18 +80,18 @@ export function Leaderboard() {
 
       {/* Header */}
       <motion.div variants={fadeIn} initial="initial" animate="animate" className="relative z-10 text-center mb-12 pt-8">
-        <span className="hud-label mb-3 block">Rankings</span>
+        <span className="hud-label mb-3 block">{t("leaderboard.hudLabel")}</span>
         <h1 className="text-4xl md:text-5xl font-display font-bold text-slate-100 tracking-tight mb-3">
-          Global Leaderboard
+          {t("leaderboard.title")}
         </h1>
-        <p className="hud-label text-xs">The greatest musical minds, ranked</p>
+        <p className="hud-label text-xs">{t("leaderboard.subtitle")}</p>
       </motion.div>
 
       {/* Filter tabs */}
       <div className="relative z-10 flex items-center justify-center gap-2 mb-8 flex-wrap">
-        <Tag label="All Time" active={filter === "all"} onClick={() => { setFilter("all"); setPersonaFilter(null); }} />
-        <Tag label="Weekly" active={filter === "weekly"} onClick={() => { setFilter("weekly"); setPersonaFilter(null); }} />
-        <Tag label="By Persona" active={filter === "persona"} onClick={() => setFilter("persona")} />
+        <Tag label={t("leaderboard.allTime")} active={filter === "all"} onClick={() => { setFilter("all"); setPersonaFilter(null); }} />
+        <Tag label={t("leaderboard.weekly")} active={filter === "weekly"} onClick={() => { setFilter("weekly"); setPersonaFilter(null); }} />
+        <Tag label={t("leaderboard.byPersona")} active={filter === "persona"} onClick={() => setFilter("persona")} />
       </div>
 
       {/* Persona sub-filter */}
@@ -99,7 +101,7 @@ export function Leaderboard() {
             {availablePersonas.map((p) => (
               <Tag
                 key={p.id}
-                label={p.name}
+                label={t(`personas.${p.id}.name`)}
                 active={personaFilter === p.id}
                 onClick={() => setPersonaFilter(personaFilter === p.id ? null : p.id)}
               />
@@ -116,22 +118,22 @@ export function Leaderboard() {
             style={{ background: "rgba(0,0,0,0.5)", backdropFilter: "blur(12px)" }}
           >
             <div className="col-span-1">
-              <span className="hud-label">Rank</span>
+              <span className="hud-label">{t("leaderboard.rank")}</span>
             </div>
             <div className="col-span-4">
-              <span className="hud-label">Player</span>
+              <span className="hud-label">{t("leaderboard.player")}</span>
             </div>
             <div className="col-span-2">
-              <span className="hud-label">Persona</span>
+              <span className="hud-label">{t("leaderboard.persona")}</span>
             </div>
             <div className="col-span-2">
-              <span className="hud-label">Level</span>
+              <span className="hud-label">{t("leaderboard.level")}</span>
             </div>
             <div className="col-span-2 text-right">
-              <span className="hud-label">XP</span>
+              <span className="hud-label">{t("leaderboard.xp")}</span>
             </div>
             <div className="col-span-1 text-right">
-              <span className="hud-label">Flag</span>
+              <span className="hud-label">{t("leaderboard.flag")}</span>
             </div>
           </div>
 
@@ -189,7 +191,7 @@ export function Leaderboard() {
 
                 {/* Persona */}
                 <div className="col-span-2">
-                  <Badge label={persona.name} color={persona.color} />
+                  <Badge label={t(`personas.${persona.id}.name`)} color={persona.color} />
                 </div>
 
                 {/* Level */}
@@ -214,7 +216,7 @@ export function Leaderboard() {
 
           {leaderboard.length === 0 && (
             <div className="px-8 py-16 text-center text-slate-600 font-body font-light">
-              No minds found for this filter.
+              {t("leaderboard.noMinds")}
             </div>
           )}
         </div>

@@ -101,78 +101,59 @@ _ENERGY_CHANGE = 22       # energy_change (D group)
 _COUPLING = 25            # x_l0l5 (F group)
 
 
-# -- 18 H3 Demand Specifications ----------------------------------------------
-# All L0 (memory/backward). Multi-scale: H5→H8→H11→H16→H20
+# -- 14 H3 Demand Specifications ----------------------------------------------
+# Aligned with layer code (extraction / temporal_integration / cognitive_present
+# / forecast). Mostly L2 (integration) for bidirectional context, one L0.
 
 _SNEM_H3_DEMANDS: Tuple[H3DemandSpec, ...] = (
-    # === Amplitude (3 tuples) ===
-    _h3(_AMPLITUDE, "amplitude", 5, 0, 0,
-        "Beat-scale amplitude value",
-        "Large 2008"),
-    _h3(_AMPLITUDE, "amplitude", 8, 8, 0,
-        "Amplitude velocity — onset detection",
-        "Large 2008"),
-    _h3(_AMPLITUDE, "amplitude", 11, 14, 0,
-        "Beat periodicity — entrainment",
+    # === Extraction layer (8 tuples) ===
+    _h3(_SPECTRAL_FLUX, "spectral_flux", 16, 14, 2,
+        "Flux periodicity H16 L2 — beat periodicity at 1s",
         "Nozaradan 2011"),
-
-    # === Spectral flux / onset_strength[10] (3 tuples) ===
-    _h3(_SPECTRAL_FLUX, "spectral_flux", 5, 0, 0,
-        "Beat-scale onset value",
+    _h3(_ONSET_STRENGTH, "onset_strength", 16, 14, 2,
+        "Onset periodicity H16 L2 — onset periodicity at 1s",
         "Nozaradan 2011"),
-    _h3(_SPECTRAL_FLUX, "spectral_flux", 8, 8, 0,
-        "Onset velocity — event boundary",
-        "Nozaradan 2018"),
-    _h3(_SPECTRAL_FLUX, "spectral_flux", 11, 14, 0,
-        "Onset periodicity",
-        "Nozaradan 2011"),
-
-    # === Spectral change [21] (3 tuples) ===
-    _h3(_SPECTRAL_CHANGE, "spectral_change", 5, 0, 0,
-        "Spectral change at beat scale",
-        "Nozaradan 2018"),
-    _h3(_SPECTRAL_CHANGE, "spectral_change", 8, 2, 0,
-        "Spectral flux variability 500ms",
-        "Nozaradan 2018"),
-    _h3(_SPECTRAL_CHANGE, "spectral_change", 16, 18, 0,
-        "Spectral trend 1s",
-        "Vuust 2022"),
-
-    # === Onset strength [11] (3 tuples) ===
-    _h3(_ONSET_STRENGTH, "onset_strength", 5, 0, 0,
-        "Transient onset beat-scale",
-        "Nozaradan 2011"),
-    _h3(_ONSET_STRENGTH, "onset_strength", 11, 8, 0,
-        "Transient velocity",
-        "Nozaradan 2018"),
-    _h3(_ONSET_STRENGTH, "onset_strength", 16, 14, 0,
-        "Transient periodicity 1s",
-        "Nozaradan 2011"),
-
-    # === Loudness [8] (2 tuples) ===
-    _h3(_LOUDNESS, "loudness", 8, 1, 0,
-        "Mean loudness 500ms",
+    _h3(_AMPLITUDE, "amplitude", 16, 1, 2,
+        "Amplitude mean H16 L2 — beat salience context",
         "Large 2008"),
-    _h3(_LOUDNESS, "loudness", 16, 18, 0,
-        "Loudness trend 1s",
-        "Vuust 2022"),
-
-    # === Energy change [22] (4 tuples) ===
-    _h3(_ENERGY_CHANGE, "energy_change", 5, 0, 0,
-        "Energy change beat-scale",
-        "Large 2008"),
-    _h3(_ENERGY_CHANGE, "energy_change", 11, 8, 0,
-        "Energy velocity",
-        "Large 2008"),
-    _h3(_ENERGY_CHANGE, "energy_change", 16, 2, 0,
-        "Energy variability 1s",
-        "Large 2008"),
-    _h3(_ENERGY_CHANGE, "energy_change", 20, 14, 0,
-        "Energy periodicity 5s — phrase",
+    _h3(_COUPLING, "coupling", 16, 14, 2,
+        "Coupling periodicity H16 L2 — metric structure 1s",
         "Grahn 2007"),
+    _h3(_COUPLING, "coupling", 3, 14, 2,
+        "Coupling periodicity H3 L2 — fast metric cue 100ms",
+        "Grahn 2007"),
+    _h3(_COUPLING, "coupling", 16, 21, 2,
+        "Coupling zero-crossings H16 L2 — phase resets 1s",
+        "Large 2008"),
+    _h3(_SPECTRAL_CHANGE, "spectral_change", 4, 8, 0,
+        "Spectral change velocity H4 L0 — enhancement cue",
+        "Nozaradan 2018"),
+    _h3(_LOUDNESS, "loudness", 3, 20, 2,
+        "Loudness entropy H3 L2 — salience context",
+        "Large 2008"),
+
+    # === Temporal integration layer (6 tuples) ===
+    _h3(_SPECTRAL_FLUX, "spectral_flux", 0, 0, 2,
+        "Flux value instantaneous L2 — current onset state",
+        "Nozaradan 2011"),
+    _h3(_SPECTRAL_FLUX, "spectral_flux", 1, 1, 2,
+        "Flux mean 50ms L2 — smoothed onset",
+        "Nozaradan 2011"),
+    _h3(_SPECTRAL_FLUX, "spectral_flux", 3, 0, 2,
+        "Flux value 100ms L2 — short-term onset",
+        "Nozaradan 2018"),
+    _h3(_SPECTRAL_FLUX, "spectral_flux", 4, 14, 2,
+        "Flux periodicity 125ms L2 — fast periodicity",
+        "Nozaradan 2018"),
+    _h3(_AMPLITUDE, "amplitude", 3, 0, 2,
+        "Amplitude value 100ms L2 — short-term amplitude",
+        "Large 2008"),
+    _h3(_AMPLITUDE, "amplitude", 3, 2, 2,
+        "Amplitude std 100ms L2 — amplitude variability",
+        "Large 2008"),
 )
 
-assert len(_SNEM_H3_DEMANDS) == 18
+assert len(_SNEM_H3_DEMANDS) == 14
 
 
 class SNEM(Relay):

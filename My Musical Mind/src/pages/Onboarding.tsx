@@ -9,6 +9,7 @@ import { MindOrganismCanvas } from "@/components/mind/MindOrganismCanvas";
 import { MindRadar } from "@/components/mind/MindRadar";
 import { personas, getPersona } from "@/data/personas";
 import { beliefColors } from "@/design/tokens";
+import { LanguageToggle } from "@/components/layout/LanguageToggle";
 
 /* ── Platform SVG logos (inline, no dependencies) ────────────────── */
 function SpotifyLogo({ size = 28 }: { size?: number }) {
@@ -205,6 +206,11 @@ export function Onboarding() {
   return (
     <div className="fixed inset-0 bg-black overflow-hidden">
       <div className="cinematic-vignette" />
+
+      {/* Language toggle */}
+      <div className="fixed top-6 right-6 z-50">
+        <LanguageToggle />
+      </div>
 
       <AnimatePresence mode="wait">
         {step === "plans" && (
@@ -541,7 +547,7 @@ function SignupStep({ onComplete }: { onComplete: () => void }) {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="your@email.com"
+              placeholder={t("onboarding.signup.emailPlaceholder")}
               autoFocus
               className="w-full text-base font-display text-slate-200 bg-transparent rounded-xl px-4 py-3.5 outline-none transition-all duration-500 placeholder:text-slate-700"
               style={{
@@ -557,7 +563,7 @@ function SignupStep({ onComplete }: { onComplete: () => void }) {
           {/* Password */}
           <div>
             <label className="block text-[11px] uppercase tracking-[0.15em] text-slate-600 font-display font-medium mb-2">
-              Password
+              {t("onboarding.signup.password")}
             </label>
             <div className="relative">
               <input
@@ -565,7 +571,7 @@ function SignupStep({ onComplete }: { onComplete: () => void }) {
                 type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Create a password"
+                placeholder={t("onboarding.signup.passwordPlaceholder")}
                 className="w-full text-base font-display text-slate-200 bg-transparent rounded-xl px-4 py-3.5 pr-12 outline-none transition-all duration-500 placeholder:text-slate-700"
                 style={{
                   background: "rgba(255,255,255,0.03)",
@@ -606,7 +612,7 @@ function SignupStep({ onComplete }: { onComplete: () => void }) {
               cursor: canProceed ? "pointer" : "not-allowed",
             }}
           >
-            Continue
+            {t("onboarding.signup.continue")}
             <ArrowRight size={16} className="inline ml-2" />
           </button>
         </motion.div>
@@ -618,9 +624,9 @@ function SignupStep({ onComplete }: { onComplete: () => void }) {
           transition={{ delay: 1.3, duration: 1 }}
           className="text-center text-[11px] text-slate-700 font-display font-light mt-5 leading-relaxed"
         >
-          By continuing, you agree to our Terms of Service and Privacy Policy.
+          {t("onboarding.signup.terms")}
           <br />
-          We respect your data as much as we respect your taste in music.
+          {t("onboarding.signup.respectData")}
         </motion.p>
       </div>
     </motion.div>
@@ -629,6 +635,7 @@ function SignupStep({ onComplete }: { onComplete: () => void }) {
 
 /* ── Connect Step (Spotify + Name) ───────────────────────────────── */
 function ConnectStep({ userName, onNameChange, onConnect }: { userName: string; onNameChange: (n: string) => void; onConnect: () => void }) {
+  const { t } = useTranslation();
   const [entered, setEntered] = useState(false);
   const canProceed = userName.trim().length >= 2;
 
@@ -655,7 +662,7 @@ function ConnectStep({ userName, onNameChange, onConnect }: { userName: string; 
           transition={{ delay: 0.5, duration: 1 }}
           className="hud-label mb-6"
         >
-          Welcome
+          {t("onboarding.connect.welcome")}
         </motion.p>
 
         <motion.h1
@@ -664,7 +671,7 @@ function ConnectStep({ userName, onNameChange, onConnect }: { userName: string; 
           transition={{ delay: 0.8, duration: 1 }}
           className="text-2xl font-display font-bold text-slate-200 mb-3"
         >
-          What should we call you?
+          {t("onboarding.connect.whatName")}
         </motion.h1>
 
         <motion.div
@@ -677,7 +684,7 @@ function ConnectStep({ userName, onNameChange, onConnect }: { userName: string; 
             type="text"
             value={userName}
             onChange={(e) => onNameChange(e.target.value)}
-            placeholder="Your name"
+            placeholder={t("onboarding.connect.namePlaceholder")}
             autoFocus
             className="w-full max-w-xs mx-auto block text-center text-xl font-display font-medium text-slate-200 bg-transparent border-b-2 border-white/10 focus:border-indigo-500/50 outline-none py-3 px-4 placeholder:text-slate-700 transition-colors duration-500"
             onKeyDown={(e) => { if (e.key === "Enter" && canProceed) onConnect(); }}
@@ -690,7 +697,7 @@ function ConnectStep({ userName, onNameChange, onConnect }: { userName: string; 
           transition={{ duration: 0.5 }}
           className="hud-label mb-4"
         >
-          Connect your music
+          {t("onboarding.connect.connectMusic")}
         </motion.p>
 
         <motion.h2
@@ -699,7 +706,7 @@ function ConnectStep({ userName, onNameChange, onConnect }: { userName: string; 
           transition={{ duration: 0.5 }}
           className="text-lg font-display font-medium text-slate-400 mb-8"
         >
-          Where does your music live?
+          {t("onboarding.connect.whereMusic")}
         </motion.h2>
 
         <motion.div
@@ -709,9 +716,9 @@ function ConnectStep({ userName, onNameChange, onConnect }: { userName: string; 
           className="space-y-3"
           style={{ pointerEvents: canProceed ? "auto" : "none" }}
         >
-          <ConnectButton logo={<SpotifyLogo />} name="Spotify" sub="Connect your playlists" color="#1DB954" onClick={onConnect} delay={0} />
-          <ConnectButton logo={<SoundCloudLogo />} name="SoundCloud" sub="Connect your likes" color="#FF5500" onClick={onConnect} delay={0.1} />
-          <ConnectButton logo={<AppleMusicLogo />} name="Apple Music" sub="Connect your library" color="#FC3C44" onClick={onConnect} delay={0.2} />
+          <ConnectButton logo={<SpotifyLogo />} name="Spotify" sub={t("onboarding.connect.spotifySub")} color="#1DB954" onClick={onConnect} delay={0} />
+          <ConnectButton logo={<SoundCloudLogo />} name="SoundCloud" sub={t("onboarding.connect.soundcloudSub")} color="#FF5500" onClick={onConnect} delay={0.1} />
+          <ConnectButton logo={<AppleMusicLogo />} name="Apple Music" sub={t("onboarding.connect.appleSub")} color="#FC3C44" onClick={onConnect} delay={0.2} />
         </motion.div>
       </motion.div>
     </div>
@@ -746,12 +753,13 @@ function ConnectButton({ logo, name, sub, color, onClick, delay }: {
 
 /* ── Evolving Step — Mind Forming ────────────────────────────────── */
 function EvolvingStep({ progress, phase, userName }: { progress: number; phase: string; userName: string }) {
+  const { t } = useTranslation();
   const hue = 260 + progress * 0.6;
   const color = `hsl(${hue}, 60%, 55%)`;
   const orgStage = progress > 70 ? 2 : 1 as const;
   const orgIntensity = 0.15 + progress * 0.007;
 
-  const typedPhase = useTypewriter(phase, 22);
+  const typedPhase = useTypewriter(t(phase), 22);
   const songCount = useTicker(MOCK_STATS.songCount, 6000, progress > 5);
   const totalHours = useTicker(Math.floor(MOCK_STATS.totalMinutes / 60), 8000, progress > 5);
 
@@ -818,13 +826,13 @@ function EvolvingStep({ progress, phase, userName }: { progress: number; phase: 
           className="mb-6"
         >
           <p className="text-sm font-display font-light text-slate-600 tracking-[0.2em] uppercase mb-3">
-            Neural Genesis
+            {t("onboarding.evolving.neuralGenesis")}
           </p>
           <h2 className="text-3xl md:text-4xl font-display font-bold text-slate-200 mb-2">
-            {userName ? `${userName}'s Mind is Forming` : "Your Mind is Forming"}
+            {userName ? t("onboarding.evolving.mindForming", { name: userName }) : t("onboarding.evolving.mindFormingDefault")}
           </h2>
           <p className="text-base font-display font-light text-slate-500">
-            Mapping 97 perceptual dimensions across your listening history
+            {t("onboarding.evolving.mapping97")}
           </p>
         </motion.div>
 
@@ -873,13 +881,13 @@ function EvolvingStep({ progress, phase, userName }: { progress: number; phase: 
                     <div className="text-2xl font-mono font-medium text-slate-200">
                       {songCount.toLocaleString()}
                     </div>
-                    <div className="text-[11px] uppercase tracking-widest text-slate-600 font-display">tracks scanned</div>
+                    <div className="text-[11px] uppercase tracking-widest text-slate-600 font-display">{t("onboarding.evolving.tracksScanned")}</div>
                   </div>
                   <div className="text-center">
                     <div className="text-2xl font-mono font-medium text-slate-200">
                       {totalHours.toLocaleString()}
                     </div>
-                    <div className="text-[11px] uppercase tracking-widest text-slate-600 font-display">hours of listening</div>
+                    <div className="text-[11px] uppercase tracking-widest text-slate-600 font-display">{t("onboarding.evolving.hoursListening")}</div>
                   </div>
                 </div>
 
@@ -919,7 +927,7 @@ function EvolvingStep({ progress, phase, userName }: { progress: number; phase: 
                       transition={{ duration: 0.5 }}
                       className="text-center"
                     >
-                      <span className="text-[10px] uppercase tracking-[0.15em] text-slate-700 block mb-2 font-display">Top Artists</span>
+                      <span className="text-[10px] uppercase tracking-[0.15em] text-slate-700 block mb-2 font-display">{t("onboarding.evolving.topArtists")}</span>
                       <p className="text-sm text-slate-500 font-body font-light">
                         {MOCK_STATS.topArtists.map((artist, i) => (
                           <motion.span
@@ -947,9 +955,9 @@ function EvolvingStep({ progress, phase, userName }: { progress: number; phase: 
             <motion.div className="h-full rounded-full" style={{ background: `linear-gradient(90deg, ${color}80, ${color})`, boxShadow: `0 0 24px ${color}40` }} animate={{ width: `${progress}%` }} transition={{ duration: 0.3 }} />
           </div>
           <div className="mt-3 flex justify-between items-center">
-            <span className="text-[10px] font-display font-light text-slate-700 tracking-wider uppercase">Forming</span>
+            <span className="text-[10px] font-display font-light text-slate-700 tracking-wider uppercase">{t("onboarding.evolving.forming")}</span>
             <span className="text-xs font-mono text-slate-600 tracking-wider">{progress}%</span>
-            <span className="text-[10px] font-display font-light text-slate-700 tracking-wider uppercase">Complete</span>
+            <span className="text-[10px] font-display font-light text-slate-700 tracking-wider uppercase">{t("onboarding.evolving.complete")}</span>
           </div>
         </div>
       </div>
@@ -966,6 +974,7 @@ function RevealStep({ personaId, mind, displayName, onEnter }: {
   displayName: string;
   onEnter: () => void;
 }) {
+  const { t } = useTranslation();
   const [phase, setPhase] = useState<RevealPhase>("void");
   const persona = getPersona(personaId);
 
@@ -1058,7 +1067,7 @@ function RevealStep({ personaId, mind, displayName, onEnter }: {
           {phase === "void" && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 0.4 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }}>
               <motion.span animate={{ opacity: [0.2, 0.6, 0.2] }} transition={{ duration: 2, repeat: Infinity }} className="text-base text-slate-600 font-display font-light tracking-[0.15em]">
-                Preparing your mind...
+                {t("onboarding.reveal.preparing")}
               </motion.span>
             </motion.div>
           )}
@@ -1069,7 +1078,7 @@ function RevealStep({ personaId, mind, displayName, onEnter }: {
           {(phase === "name" || phase === "radar" || phase === "ready") && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }} className="text-center">
               <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 0.4, y: 0 }} transition={{ duration: 1 }} className="text-sm font-display font-light text-slate-500 tracking-[0.2em] uppercase mb-6">
-                {displayName && displayName !== "You" ? `${displayName}, you are` : "You are"}
+                {displayName && displayName !== "You" ? `${displayName}, ${t("onboarding.reveal.youAre")}` : t("onboarding.reveal.youAreDefault")}
               </motion.p>
 
               <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold mb-5 leading-none flex justify-center flex-wrap">
@@ -1118,7 +1127,7 @@ function RevealStep({ personaId, mind, displayName, onEnter }: {
             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.5 }} className="mt-10 text-center max-w-lg">
               <p className="text-base text-slate-500 mb-3 leading-relaxed font-light">{persona.description}</p>
               <motion.p initial={{ opacity: 0 }} animate={{ opacity: 0.3 }} transition={{ delay: 1, duration: 1.5 }} className="text-xs font-display font-light text-slate-600 tracking-[0.2em] uppercase mb-8">
-                This is your Musical Mind
+                {t("onboarding.reveal.thisIsYourMind")}
               </motion.p>
               <button
                 onClick={onEnter}
@@ -1127,7 +1136,7 @@ function RevealStep({ personaId, mind, displayName, onEnter }: {
                 onMouseEnter={(e) => { e.currentTarget.style.background = `${color}18`; e.currentTarget.style.boxShadow = `0 0 50px ${color}20`; }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = `${color}08`; e.currentTarget.style.boxShadow = "none"; }}
               >
-                <span className="text-base font-display font-medium text-slate-200">Enter Your Mind</span>
+                <span className="text-base font-display font-medium text-slate-200">{t("onboarding.reveal.enterMind")}</span>
                 <ArrowRight size={18} className="inline ml-2 text-slate-400 group-hover:translate-x-1 transition-transform" />
               </button>
             </motion.div>

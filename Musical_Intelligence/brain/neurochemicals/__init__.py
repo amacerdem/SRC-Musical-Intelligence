@@ -4,7 +4,7 @@ Each neurochemical is defined in its own file with channel metadata,
 reference values, and interaction descriptions. The ``manager`` module
 provides the accumulation logic.
 """
-from Musical_Intelligence.contracts.dataclasses.neuro_link import (
+from Musical_Intelligence.contracts.dataclasses import (
     DA,
     NE,
     NUM_CHANNELS,

@@ -109,6 +109,14 @@ export function SelfStatePanel() {
           num.textContent = `${isPos ? "+" : ""}${Math.abs(val).toFixed(1)}`;
           num.style.color = isPos ? dim.posColor : dim.negColor;
         });
+        const negs = containerRef.current.querySelectorAll<HTMLElement>("[data-neg]");
+        negs.forEach((el, i) => {
+          el.style.color = displayPsi.current[i] < 0 ? DIMENSIONS[i].negColor : "rgba(100,116,139,0.3)";
+        });
+        const poss = containerRef.current.querySelectorAll<HTMLElement>("[data-pos]");
+        poss.forEach((el, i) => {
+          el.style.color = displayPsi.current[i] >= 0 ? DIMENSIONS[i].posColor : "rgba(100,116,139,0.3)";
+        });
       }
       frameRef.current = requestAnimationFrame(tick);
     };
@@ -123,21 +131,22 @@ export function SelfStatePanel() {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease, delay: 0.5 }}
-      className="fixed bottom-16 left-1/2 -translate-x-1/2 z-[45] w-[420px] max-w-[calc(100vw-48px)]"
+      className="fixed bottom-6 left-4 z-[45] w-[380px] max-w-[calc(100vw-32px)]"
     >
-      <div ref={containerRef} className="glass px-5 py-4 rounded-2xl flex flex-col gap-2">
-        <span className="text-[8px] font-display uppercase tracking-[0.25em] text-white/20 mb-1">
+      <div ref={containerRef} className="glass px-5 py-4 rounded-2xl flex flex-col gap-2.5">
+        <span className="text-[10px] font-display uppercase tracking-[0.25em] text-white/20 mb-1">
           {t("resonance.yourState")}
         </span>
         {DIMENSIONS.map((dim, i) => (
           <div key={dim.id} className="flex items-center gap-2">
             <span
-              className="text-[8px] font-mono w-14 text-right tracking-wider"
+              data-neg
+              className="text-[10px] font-mono w-16 text-right tracking-wider"
               style={{ color: selfPsi[i] < 0 ? dim.negColor : "rgba(100,116,139,0.3)" }}
             >
               {t(`resonance.dimensions.${dim.id}.neg`).toUpperCase()}
             </span>
-            <div className="relative flex-1 h-2.5 rounded-full bg-white/[0.04] overflow-hidden">
+            <div className="relative flex-1 h-3 rounded-full bg-white/[0.04] overflow-hidden">
               <div className="absolute left-1/2 top-0 bottom-0 w-px bg-white/[0.08] z-10" />
               <div
                 data-bar
@@ -151,14 +160,15 @@ export function SelfStatePanel() {
               />
             </div>
             <span
-              className="text-[8px] font-mono w-14 tracking-wider"
+              data-pos
+              className="text-[10px] font-mono w-16 tracking-wider"
               style={{ color: selfPsi[i] >= 0 ? dim.posColor : "rgba(100,116,139,0.3)" }}
             >
               {t(`resonance.dimensions.${dim.id}.pos`).toUpperCase()}
             </span>
             <span
               data-num
-              className="text-[10px] font-mono w-8 text-right tabular-nums font-medium"
+              className="text-xs font-mono w-10 text-right tabular-nums font-medium"
               style={{ color: selfPsi[i] >= 0 ? dim.posColor : dim.negColor }}
             >
               {selfPsi[i] >= 0 ? "+" : ""}{Math.abs(selfPsi[i]).toFixed(1)}

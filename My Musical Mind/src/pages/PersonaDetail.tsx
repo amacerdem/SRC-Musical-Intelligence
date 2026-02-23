@@ -1,4 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { ArrowLeft, Users, Sparkles } from "lucide-react";
 import { getPersona, personas } from "@/data/personas";
@@ -29,12 +30,13 @@ const STAGES: { stage: EvolutionStage; name: string }[] = [
 export function PersonaDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const persona = getPersona(Number(id));
 
   if (!persona) {
     return (
       <motion.div {...pageTransition} className="flex items-center justify-center h-96 bg-black">
-        <p className="text-slate-500 text-lg font-body font-light">Persona not found.</p>
+        <p className="text-slate-500 text-lg font-body font-light">{t("personaDetail.notFound")}</p>
       </motion.div>
     );
   }
@@ -69,7 +71,7 @@ export function PersonaDetail() {
       <div className="relative z-20 mb-8 pt-4">
         <Button variant="ghost" size="sm" onClick={() => navigate("/info")}>
           <ArrowLeft size={16} className="mr-2" />
-          All Personas
+          {t("personaDetail.allPersonas")}
         </Button>
       </div>
 
@@ -87,12 +89,12 @@ export function PersonaDetail() {
             {persona.id}
           </div>
           <h1 className="text-4xl md:text-5xl font-display font-bold text-slate-100 tracking-tight mb-3">
-            {persona.name}
+            {t(`personas.${persona.id}.name`)}
           </h1>
-          <p className="text-lg text-slate-500 italic font-body font-light mb-4">"{persona.tagline}"</p>
-          <Badge label={`${persona.populationPct}% of listeners`} color={persona.color} size="md" />
+          <p className="text-lg text-slate-500 italic font-body font-light mb-4">"{t(`personas.${persona.id}.tagline`)}"</p>
+          <Badge label={t("common.ofListeners", { pct: persona.populationPct })} color={persona.color} size="md" />
           <p className="text-slate-500 leading-relaxed mt-6 max-w-2xl mx-auto font-body font-light">
-            {persona.description}
+            {t(`personas.${persona.id}.description`)}
           </p>
         </motion.div>
 
@@ -104,13 +106,13 @@ export function PersonaDetail() {
             <div className="rounded-2xl p-8 flex flex-col items-center"
               style={{ background: "rgba(0,0,0,0.5)", backdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.06)" }}
             >
-              <span className="hud-label mb-6">Mind Profile</span>
+              <span className="hud-label mb-6">{t("personaDetail.mindProfile")}</span>
               <MindRadar axes={persona.axes} color={persona.color} size={420} />
             </div>
 
             {/* Axes — HUD style bars with belief colors */}
             <div className="spatial-card p-8">
-              <span className="hud-label mb-6 block">Axes Breakdown</span>
+              <span className="hud-label mb-6 block">{t("personaDetail.axesBreakdown")}</span>
               <div className="space-y-5">
                 {AXIS_LABELS.map(({ key, label, short, belief }) => {
                   const pct = Math.round(persona.axes[key] * 100);
@@ -120,7 +122,7 @@ export function PersonaDetail() {
                       <div className="flex items-center justify-between mb-1.5">
                         <div className="flex items-center gap-2">
                           <span className="hud-label w-8">{short}</span>
-                          <span className="text-xs text-slate-500 font-body">{label}</span>
+                          <span className="text-xs text-slate-500 font-body">{t(`axes.${key}`)}</span>
                         </div>
                         <span className="hud-value text-xs" style={{ color: barColor }}>{pct}</span>
                       </div>
@@ -146,18 +148,18 @@ export function PersonaDetail() {
             <div className="spatial-card p-8">
               <div className="flex items-center gap-2 mb-5">
                 <Sparkles size={14} className="text-slate-600" />
-                <span className="hud-label">Strengths</span>
+                <span className="hud-label">{t("personaDetail.strengths")}</span>
               </div>
               <div className="flex flex-wrap gap-2">
-                {persona.strengths.map((s) => (
-                  <Badge key={s} label={s} color={persona.color} size="md" />
+                {persona.strengths.map((s, i) => (
+                  <Badge key={s} label={t(`personas.${persona.id}.strengths.${i}`)} color={persona.color} size="md" />
                 ))}
               </div>
             </div>
 
             {/* Famous Minds */}
             <div className="spatial-card p-8">
-              <span className="hud-label mb-5 block">Famous Minds</span>
+              <span className="hud-label mb-5 block">{t("personaDetail.famousMinds")}</span>
               <div className="flex flex-wrap gap-3">
                 {persona.famousMinds.map((name) => (
                   <div
@@ -178,7 +180,7 @@ export function PersonaDetail() {
             <div className="spatial-card p-8">
               <div className="flex items-center gap-2 mb-5">
                 <Users size={14} className="text-slate-600" />
-                <span className="hud-label">Compatible Personas</span>
+                <span className="hud-label">{t("personaDetail.compatiblePersonas")}</span>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {compatiblePersonas.map((cp) => (
@@ -189,7 +191,7 @@ export function PersonaDetail() {
 
             {/* Evolution Path */}
             <div className="spatial-card p-8">
-              <span className="hud-label mb-8 block">Evolution Path</span>
+              <span className="hud-label mb-8 block">{t("personaDetail.evolutionPath")}</span>
               <div className="flex items-center gap-0">
                 {STAGES.map((s, i) => (
                   <div key={s.stage} className="flex items-center flex-1">
@@ -205,8 +207,8 @@ export function PersonaDetail() {
                       >
                         {s.stage}
                       </div>
-                      <span className="text-sm font-body font-medium text-slate-300">{s.name}</span>
-                      <span className="hud-label mt-1">Stage {s.stage}</span>
+                      <span className="text-sm font-body font-medium text-slate-300">{t(`stages.${s.stage}`)}</span>
+                      <span className="hud-label mt-1">{t("common.stage", { n: s.stage })}</span>
                     </div>
                     {i < STAGES.length - 1 && (
                       <div

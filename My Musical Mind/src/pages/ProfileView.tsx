@@ -1,6 +1,7 @@
 import { useState, useMemo, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import {
   ArrowLeft, Headphones, Flame, TrendingUp, Trophy, Clock, Music,
   Brain, MessageCircle, X, Sparkles,
@@ -46,7 +47,7 @@ function computeCompatibility(a: MindAxes, b: MindAxes): number {
 }
 
 /** Generate a neural compatibility narrative between two minds */
-function generateCompatNarrative(userAxes: MindAxes, myAxes: MindAxes, userPersona: string, compat: number): string {
+function generateCompatNarrative(userAxes: MindAxes, myAxes: MindAxes, userPersona: string, compat: number, t: (key: string, opts?: Record<string, string>) => string): string {
   type AxisWithDiff = { key: keyof MindAxes; label: string; short: string; belief: string; diff: number };
   const closestAxis = AXIS_LABELS.reduce<AxisWithDiff>((best, ax) => {
     const diff = Math.abs(userAxes[ax.key] - myAxes[ax.key]);
@@ -58,17 +59,21 @@ function generateCompatNarrative(userAxes: MindAxes, myAxes: MindAxes, userPerso
     return diff > best.diff ? { ...ax, diff } : best;
   }, { ...AXIS_LABELS[0], diff: 0 });
 
+  const closestLabel = t(`axes.profileShort.${closestAxis.key}`).toLowerCase();
+  const furthestLabel = t(`axes.profileShort.${furthestAxis.key}`).toLowerCase();
+
   if (compat >= 90) {
-    return `Your auditory cortices share an almost identical processing architecture. When this ${userPersona} mind hears music, their prediction-error cascade mirrors yours within 0.08σ. The ${closestAxis.label.toLowerCase()} axis alignment is remarkable — you'd reach peak reward at the same musical moments.`;
+    return t("insights.compatNarrative.high", { persona: userPersona, axis: closestLabel });
   } else if (compat >= 70) {
-    return `Strong resonance in ${closestAxis.label.toLowerCase()} processing — your temporal windows align. The ${furthestAxis.label.toLowerCase()} divergence creates complementary tension: where your mind rests, theirs explores, and vice versa. This is the kind of neural asymmetry that makes shared listening transformative.`;
+    return t("insights.compatNarrative.good", { closestAxis: closestLabel, furthestAxis: furthestLabel });
   } else if (compat >= 50) {
-    return `Complementary architecture. Your ${closestAxis.label.toLowerCase()} systems share common ground, but the ${furthestAxis.label.toLowerCase()} gap means you hear fundamentally different structures in the same piece. This divergence isn't weakness — it's the basis for perspective expansion.`;
+    return t("insights.compatNarrative.mid", { closestAxis: closestLabel, furthestAxis: furthestLabel });
   }
-  return `Contrasting minds. Your prediction models operate on different wavelengths — what triggers your reward system leaves theirs indifferent, and vice versa. But contrast is where growth lives: exposure to this mind's listening patterns could unlock new perceptual dimensions for you.`;
+  return t("insights.compatNarrative.low");
 }
 
 export function ProfileView() {
+  const { t } = useTranslation();
   const { userId } = useParams<{ userId: string }>();
   const navigate = useNavigate();
   const { mind: myMind } = useUserStore();
@@ -83,10 +88,10 @@ export function ProfileView() {
   if (!user) {
     return (
       <motion.div {...pageTransition} className="flex flex-col items-center justify-center h-96 gap-4 bg-black">
-        <p className="text-2xl font-display font-bold text-slate-500">Mind not found</p>
-        <p className="text-slate-600 font-body font-light">This mind does not exist in our network.</p>
+        <p className="text-2xl font-display font-bold text-slate-500">{t("profile.mindNotFound")}</p>
+        <p className="text-slate-600 font-body font-light">{t("profile.mindNotFoundDesc")}</p>
         <Button variant="glass" size="sm" onClick={() => navigate("/friends")}>
-          <ArrowLeft size={16} className="mr-2" />Back to Friends
+          <ArrowLeft size={16} className="mr-2" />{t("profile.backToFriends")}
         </Button>
       </motion.div>
     );
@@ -100,9 +105,9 @@ export function ProfileView() {
   const compatLabel = compatibility !== null ? getCompatibilityLabel(compatibility) : null;
   const compatNarrative = useMemo(
     () => myMind && compatibility !== null
-      ? generateCompatNarrative(user.mind.axes, myMind.axes, persona.name, compatibility)
+      ? generateCompatNarrative(user.mind.axes, myMind.axes, t(`personas.${persona.id}.name`), compatibility, t)
       : null,
-    [user.mind.axes, myMind, persona.name, compatibility],
+    [user.mind.axes, myMind, persona.id, compatibility, t],
   );
 
   const listening = user.listening;
@@ -160,9 +165,9 @@ export function ProfileView() {
                   {user.displayName}
                 </h1>
                 <div className="flex items-center gap-3 mt-2 flex-wrap">
-                  <Badge label={persona.name} color={persona.color} size="md" />
-                  <Badge label={STAGE_NAMES[user.mind.stage]} color={persona.color} />
-                  <Badge label={persona.family} color={`${persona.color}80`} />
+                  <Badge label={t(`personas.${persona.id}.name`)} color={persona.color} size="md" />
+                  <Badge label={t(`stages.${user.mind.stage}`)} color={persona.color} />
+                  <Badge label={t(`families.${persona.family}`)} color={`${persona.color}80`} />
                 </div>
                 {user.bio && (
                   <p className="text-xs text-slate-500 mt-3 leading-relaxed font-body font-light max-w-xl">{user.bio}</p>
@@ -172,14 +177,14 @@ export function ProfileView() {
 
             {/* Stats row */}
             <div className="flex flex-wrap gap-6 text-sm">
-              <StatChip icon={<TrendingUp size={13} />} label="Level" value={`${user.level}`} color={beliefColors.reward.primary} />
-              <StatChip icon={<Headphones size={13} />} label="Tracks" value={user.tracksAnalyzed.toLocaleString()} color={beliefColors.consonance.primary} />
-              <StatChip icon={<Flame size={13} />} label="Streak" value={`${user.streak}d`} color={beliefColors.tempo.primary} />
-              <StatChip icon={<Trophy size={13} />} label="Region" value={user.country} color={beliefColors.salience.primary} />
+              <StatChip icon={<TrendingUp size={13} />} label={t("profile.level")} value={`${user.level}`} color={beliefColors.reward.primary} />
+              <StatChip icon={<Headphones size={13} />} label={t("profile.tracks")} value={user.tracksAnalyzed.toLocaleString()} color={beliefColors.consonance.primary} />
+              <StatChip icon={<Flame size={13} />} label={t("profile.streak")} value={`${user.streak}d`} color={beliefColors.tempo.primary} />
+              <StatChip icon={<Trophy size={13} />} label={t("profile.region")} value={user.country} color={beliefColors.salience.primary} />
               {listening && (
                 <>
-                  <StatChip icon={<Clock size={13} />} label="Total Hours" value={listening.totalHours.toLocaleString()} color={beliefColors.familiarity.primary} />
-                  <StatChip icon={<Music size={13} />} label="Compositions" value={String(user.compositionsCreated || 0)} color={beliefColors.consonance.primary} />
+                  <StatChip icon={<Clock size={13} />} label={t("profile.totalHours")} value={listening.totalHours.toLocaleString()} color={beliefColors.familiarity.primary} />
+                  <StatChip icon={<Music size={13} />} label={t("profile.compositions")} value={String(user.compositionsCreated || 0)} color={beliefColors.consonance.primary} />
                 </>
               )}
             </div>
@@ -190,7 +195,7 @@ export function ProfileView() {
             {/* Left: Radar + Axes */}
             <motion.div variants={slideUp} className="col-span-12 lg:col-span-5 space-y-6">
               <div className="spatial-card p-8 flex flex-col items-center">
-                <span className="hud-label mb-5">Mind Profile</span>
+                <span className="hud-label mb-5">{t("profile.mindProfile")}</span>
                 <MindRadar
                   axes={user.mind.axes}
                   color={persona.color}
@@ -206,7 +211,7 @@ export function ProfileView() {
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 rounded-full" style={{ backgroundColor: myPersona?.color ?? beliefColors.consonance.primary }} />
-                      <span className="text-slate-600 font-body font-light">You</span>
+                      <span className="text-slate-600 font-body font-light">{t("common.you")}</span>
                     </div>
                   </div>
                 )}
@@ -214,7 +219,7 @@ export function ProfileView() {
 
               {/* Axes bars */}
               <div className="spatial-card p-6">
-                <span className="hud-label mb-4 block">Axes</span>
+                <span className="hud-label mb-4 block">{t("profile.axes")}</span>
                 <div className="space-y-3">
                   {AXIS_LABELS.map(({ key, label, short, belief }) => {
                     const pct = Math.round(user.mind.axes[key] * 100);
@@ -224,7 +229,7 @@ export function ProfileView() {
                         <div className="flex items-center justify-between mb-1">
                           <div className="flex items-center gap-2">
                             <NucleusDot color={barColor} size={3} active />
-                            <span className="text-[10px] text-slate-600 font-body">{label}</span>
+                            <span className="text-[10px] text-slate-600 font-body">{t(`axes.profileShort.${key}`)}</span>
                           </div>
                           <span className="hud-value text-[11px]" style={{ color: barColor }}>{pct}</span>
                         </div>
@@ -246,14 +251,14 @@ export function ProfileView() {
               {/* Compatibility panel */}
               {compatibility !== null && compatLabel && (
                 <div className="spatial-card p-6 glow-border" style={{ "--glow-color": compatLabel.color } as React.CSSProperties}>
-                  <span className="hud-label mb-5 block">Mind Compatibility</span>
+                  <span className="hud-label mb-5 block">{t("profile.mindCompatibility")}</span>
                   <div className="flex items-start gap-6 mb-5">
                     <div className="text-center shrink-0">
                       <span className="text-4xl font-display font-bold" style={{ color: compatLabel.color }}>
                         {compatibility}%
                       </span>
                       <p className="text-[11px] mt-1 font-body font-light" style={{ color: compatLabel.color }}>
-                        {compatLabel.label}
+                        {t(`compatibility.${compatLabel.label.toLowerCase()}`)}
                       </p>
                     </div>
                     <div className="flex-1 space-y-2">
@@ -263,7 +268,7 @@ export function ProfileView() {
                         const barColor = beliefColors[belief].primary;
                         return (
                           <div key={key} className="flex items-center gap-2 text-xs">
-                            <span className="w-14 text-slate-600 font-body font-light truncate">{label}</span>
+                            <span className="w-14 text-slate-600 font-body font-light truncate">{t(`axes.profileShort.${key}`)}</span>
                             <div className="flex-1 h-[2px] rounded-full bg-white/5 overflow-hidden">
                               <motion.div className="h-full rounded-full" style={{ backgroundColor: barColor }}
                                 initial={{ width: 0 }} animate={{ width: `${similarity}%` }}
@@ -296,7 +301,7 @@ export function ProfileView() {
                         }]);
                       }
                     }}>
-                      <MessageCircle size={14} className="mr-2" />Connect Minds
+                      <MessageCircle size={14} className="mr-2" />{t("profile.connectMinds")}
                     </Button>
                   </div>
                 </div>
@@ -306,7 +311,7 @@ export function ProfileView() {
               {listening && (
                 <div className="spatial-card p-6">
                   <div className="flex items-center justify-between mb-5">
-                    <span className="hud-label">This Week's Listening</span>
+                    <span className="hud-label">{t("profile.thisWeekListening")}</span>
                     <span className="text-[10px] font-mono text-slate-700">
                       {listening.minutesThisWeek} min · {listening.tracksThisWeek} tracks
                     </span>
@@ -342,7 +347,7 @@ export function ProfileView() {
 
                   {/* Belief snapshot */}
                   <div className="pt-4 border-t border-white/[0.04]">
-                    <span className="hud-label mb-3 block">Current Mind State</span>
+                    <span className="hud-label mb-3 block">{t("profile.currentMindState")}</span>
                     <div className="flex gap-3">
                       {BELIEF_NAMES.map((b, i) => {
                         const val = listening.beliefSnapshot[i];
@@ -363,7 +368,7 @@ export function ProfileView() {
                             <div className="text-[8px] font-mono" style={{ color: delta >= 0 ? "#84CC16" : "#EF4444" }}>
                               {delta >= 0 ? "+" : ""}{(delta * 100).toFixed(0)}%
                             </div>
-                            <div className="text-[8px] font-mono text-slate-700">{BELIEF_LABELS[b]}</div>
+                            <div className="text-[8px] font-mono text-slate-700">{t(`beliefs.short.${b}`)}</div>
                           </div>
                         );
                       })}
@@ -375,7 +380,7 @@ export function ProfileView() {
               {/* Recent Tracks */}
               {recentTracks && recentTracks.length > 0 && (
                 <div className="spatial-card p-6">
-                  <span className="hud-label mb-4 block">Recent Listening</span>
+                  <span className="hud-label mb-4 block">{t("profile.recentListening")}</span>
                   <div className="space-y-3">
                     {recentTracks.map((track, i) => (
                       <div key={i} className="flex items-start gap-3 py-2 border-b border-white/[0.03] last:border-0">
@@ -392,7 +397,7 @@ export function ProfileView() {
                           </div>
                           <p className="text-[10px] text-slate-600 font-body font-light">{track.artist} · {track.genre}</p>
                           {track.peakMoment && (
-                            <p className="text-[9px] font-mono text-slate-700 mt-0.5">Peak: {track.peakMoment}</p>
+                            <p className="text-[9px] font-mono text-slate-700 mt-0.5">{t("profile.peak")}: {track.peakMoment}</p>
                           )}
                         </div>
                         <div className="shrink-0 w-7 h-7 rounded-full flex items-center justify-center"
@@ -413,12 +418,12 @@ export function ProfileView() {
           {/* ── PROGRESSION + ACHIEVEMENTS ─────────────────────── */}
           <div className="scroll-section grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12">
             <div className="spatial-card p-6">
-              <span className="hud-label mb-4 block">Progression</span>
+              <span className="hud-label mb-4 block">{t("profile.progression")}</span>
               <div className="flex items-center gap-5">
                 <LevelBadge level={user.level} size="lg" />
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs text-slate-600 font-body font-light">Experience</span>
+                    <span className="text-xs text-slate-600 font-body font-light">{t("profile.experience")}</span>
                     <span className="hud-value text-xs text-slate-500">{user.xp.toLocaleString()} XP</span>
                   </div>
                   <div className="w-full h-[3px] rounded-full bg-white/5 overflow-hidden">
@@ -433,21 +438,21 @@ export function ProfileView() {
               <div className="grid grid-cols-3 gap-3 mt-5 pt-4 border-t border-white/[0.04]">
                 <div className="text-center">
                   <span className="hud-value text-lg">{user.compositionsCreated || 0}</span>
-                  <p className="text-[9px] font-mono text-slate-700">Compositions</p>
+                  <p className="text-[9px] font-mono text-slate-700">{t("profile.compositions")}</p>
                 </div>
                 <div className="text-center">
                   <span className="hud-value text-lg">{user.liveSessionsPlayed || 0}</span>
-                  <p className="text-[9px] font-mono text-slate-700">Live Sessions</p>
+                  <p className="text-[9px] font-mono text-slate-700">{t("profile.liveSessions")}</p>
                 </div>
                 <div className="text-center">
                   <span className="hud-value text-lg">{listening?.totalHours.toLocaleString() ?? "—"}</span>
-                  <p className="text-[9px] font-mono text-slate-700">Hours Listened</p>
+                  <p className="text-[9px] font-mono text-slate-700">{t("profile.hoursListened")}</p>
                 </div>
               </div>
             </div>
 
             <div className="spatial-card p-6">
-              <span className="hud-label mb-4 block">Achievements</span>
+              <span className="hud-label mb-4 block">{t("profile.achievements")}</span>
               <div className="grid grid-cols-2 gap-2">
                 {userAchievements.map((ach) => {
                   if (!ach) return null;
@@ -480,21 +485,21 @@ export function ProfileView() {
             <div className="spatial-card p-8 text-center">
               <Brain size={18} className="mx-auto mb-4" style={{ color: `${persona.color}40` }} />
               <p className="text-sm text-slate-400 font-display font-light italic max-w-2xl mx-auto leading-relaxed">
-                "{persona.description}"
+                "{t(`personas.${persona.id}.description`)}"
               </p>
               <div className="flex items-center justify-center gap-3 mt-5">
-                {persona.strengths.map((s) => (
+                {persona.strengths.map((s, i) => (
                   <span key={s} className="text-[9px] font-mono px-2 py-0.5 rounded-full"
                     style={{ background: `${persona.color}08`, color: `${persona.color}60`, border: `1px solid ${persona.color}15` }}
                   >
-                    {s}
+                    {t(`personas.${persona.id}.strengths.${i}`)}
                   </span>
                 ))}
               </div>
               <div className="flex items-center justify-center gap-2 mt-4 text-[10px] text-slate-700 font-mono">
-                <span>{persona.populationPct}% of all minds</span>
+                <span>{persona.populationPct}% {t("common.ofAllMinds")}</span>
                 <span>·</span>
-                <span>Famous: {persona.famousMinds.join(", ")}</span>
+                <span>{t("common.famous")}: {persona.famousMinds.join(", ")}</span>
               </div>
             </div>
           </div>
@@ -521,10 +526,10 @@ export function ProfileView() {
                   <NucleusDot color={persona.color} size={5} active pulsing />
                   <div>
                     <h3 className="text-sm font-display font-medium text-slate-300">
-                      Mind Link: {user.displayName}
+                      {t("profile.mindLink", { name: user.displayName })}
                     </h3>
                     <p className="text-[10px] font-mono text-slate-600">
-                      {compatibility}% neural similarity · {persona.name}
+                      {t("profile.neuralSimilarity", { pct: compatibility })} · {t(`personas.${persona.id}.name`)}
                     </p>
                   </div>
                 </div>
@@ -535,7 +540,7 @@ export function ProfileView() {
 
               <div className="p-5 h-80 overflow-y-auto space-y-4">
                 <div className="text-center mb-4">
-                  <p className="text-[10px] font-mono text-slate-700">Minds connected</p>
+                  <p className="text-[10px] font-mono text-slate-700">{t("profile.mindsConnected")}</p>
                 </div>
                 {messages.map((msg, i) => (
                   <div key={i} className={`flex gap-3 ${msg.from === "you" ? "flex-row-reverse" : ""}`}>
@@ -568,11 +573,11 @@ export function ProfileView() {
                   const input = e.currentTarget.querySelector("input");
                   if (input) { handleSendMessage(input.value); input.value = ""; }
                 }} className="flex gap-3">
-                  <input type="text" placeholder="Share your mind..."
+                  <input type="text" placeholder={t("profile.shareMind")}
                     className="flex-1 px-4 py-2.5 rounded-xl text-sm text-slate-300 placeholder-slate-700 font-body font-light focus:outline-none"
                     style={{ background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.06)" }}
                   />
-                  <Button variant="primary" size="sm">Send</Button>
+                  <Button variant="primary" size="sm">{t("common.send")}</Button>
                 </form>
               </div>
             </motion.div>

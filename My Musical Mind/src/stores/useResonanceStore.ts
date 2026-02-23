@@ -26,6 +26,11 @@ interface ResonanceState {
   time: number;
   _connectionTimer: number;
   _signalTimer: number;
+  /** Self-user oscillator state for dynamic psi evolution */
+  _selfCenter: Psi5;
+  _selfPhases: Psi5;
+  _selfSpeeds: Psi5;
+  _selfAmplitude: Psi5;
 
   initialize: () => void;
   tick: (dt: number) => void;
@@ -64,20 +69,45 @@ export const useResonanceStore = create<ResonanceState>((set, get) => ({
   time: 0,
   _connectionTimer: 0,
   _signalTimer: 10 + Math.random() * 10,
+  _selfCenter: [0, 0, 0, 0, 0],
+  _selfPhases: [0, 0, 0, 0, 0],
+  _selfSpeeds: [0.12, 0.09, 0.07, 0.05, 0.10],
+  _selfAmplitude: [0.8, 0.6, 0.5, 0.4, 0.7],
 
   initialize: () => {
-    const selfPsi = getSelfPsi();
+    const selfCenter = getSelfPsi();
+    const selfPsi: Psi5 = [...selfCenter];
     const users = generateUsers(selfPsi);
     const connections = computeConnections(users, selfPsi);
-    set({ users, connections, selfPsi, signals: [], selectedUserId: null, time: 0 });
+    set({
+      users, connections, selfPsi, signals: [],
+      selectedUserId: null, time: 0,
+      _selfCenter: selfCenter,
+      _selfPhases: [
+        Math.random() * 100, Math.random() * 100, Math.random() * 100,
+        Math.random() * 100, Math.random() * 100,
+      ] as Psi5,
+    });
   },
 
   tick: (dt: number) => {
     const state = get();
     if (state.users.length === 0) return;
 
-    const selfPsi = getSelfPsi();
     const newTime = state.time + dt;
+
+    // Evolve self psi with gentle oscillators (same logic as other users, smaller amplitude)
+    const selfPsi: Psi5 = [...state.selfPsi];
+    const phases = state._selfPhases;
+    for (let d = 0; d < 5; d++) {
+      phases[d] += state._selfSpeeds[d] * dt;
+      const slow = Math.sin(phases[d] * 0.3) * state._selfAmplitude[d] * 0.6;
+      const med  = Math.sin(phases[d] * 1.1 + d * 1.7) * state._selfAmplitude[d] * 0.3;
+      const fast = Math.sin(phases[d] * 3.7) * state._selfAmplitude[d] * 0.1;
+      const target = state._selfCenter[d] + slow + med + fast;
+      selfPsi[d] += (target - selfPsi[d]) * Math.min(2.5 * dt, 0.15);
+      selfPsi[d] = Math.max(-5, Math.min(5, selfPsi[d]));
+    }
 
     // Continuous 60fps evolution
     evolve(state.users, selfPsi, dt, newTime);
@@ -147,5 +177,7 @@ export const useResonanceStore = create<ResonanceState>((set, get) => ({
     selfPsi: [0, 0, 0, 0, 0],
     selectedUserId: null, entranceComplete: false,
     cameraMode: "self", time: 0,
+    _selfCenter: [0, 0, 0, 0, 0],
+    _selfPhases: [0, 0, 0, 0, 0],
   }),
 }));

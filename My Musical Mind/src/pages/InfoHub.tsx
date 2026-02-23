@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { personas } from "@/data/personas";
 import { PersonaCard } from "@/components/mind/PersonaCard";
 import { MindOrganismCanvas } from "@/components/mind/MindOrganismCanvas";
@@ -13,13 +14,14 @@ import { useScrollBatch } from "@/hooks/useScrollTrigger";
 const ENGINE_COLOR = "#6C5CE7";
 
 const ENGINE_STATS = [
-  { value: "97", label: "Perceptual Dimensions", color: beliefColors.consonance.primary },
-  { value: "5", label: "Cognitive Beliefs", color: beliefColors.reward.primary },
-  { value: "32", label: "Temporal Horizons", color: beliefColors.tempo.primary },
-  { value: "24", label: "Morphologies", color: beliefColors.salience.primary },
+  { value: "97", labelKey: "infoHub.stats.perceptualDimensions", color: beliefColors.consonance.primary },
+  { value: "5", labelKey: "infoHub.stats.cognitiveBeliefs", color: beliefColors.reward.primary },
+  { value: "32", labelKey: "infoHub.stats.temporalHorizons", color: beliefColors.tempo.primary },
+  { value: "24", labelKey: "infoHub.stats.morphologies", color: beliefColors.salience.primary },
 ];
 
 export function InfoHub() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const gridRef = useRef<HTMLDivElement>(null);
   useScrollBatch(".scroll-item", gridRef, { stagger: 0.06 });
@@ -45,12 +47,12 @@ export function InfoHub() {
 
       {/* Header */}
       <motion.div variants={fadeIn} initial="initial" animate="animate" className="relative z-10 text-center mb-14 pt-8">
-        <span className="hud-label mb-3 block">Info</span>
+        <span className="hud-label mb-3 block">{t("infoHub.hudLabel")}</span>
         <h1 className="text-4xl md:text-5xl font-display font-bold text-slate-100 tracking-tight mb-3">
-          The Engine & The Minds
+          {t("infoHub.title")}
         </h1>
         <p className="hud-label max-w-lg mx-auto leading-relaxed text-xs">
-          Explore the architecture behind musical cognition and the 24 persona archetypes it reveals.
+          {t("infoHub.subtitle")}
         </p>
       </motion.div>
 
@@ -70,23 +72,21 @@ export function InfoHub() {
             <div className="relative z-10">
               <div className="flex items-center gap-2 mb-5">
                 <NucleusDot color={ENGINE_COLOR} size={5} active pulsing />
-                <span className="hud-label">The Engine</span>
+                <span className="hud-label">{t("infoHub.engineLabel")}</span>
               </div>
 
               <p className="text-sm text-slate-400 leading-relaxed font-body font-light mb-6 max-w-2xl">
-                M³ is built on three layers of musical intelligence: R³ captures 97 dimensions of
-                perceptual reality, H³ tracks temporal morphology across 32 horizons, and C³ maintains
-                5 cognitive beliefs that model how your mind experiences music.
+                {t("infoHub.engineDescription")}
               </p>
 
               {/* Stats row */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                 {ENGINE_STATS.map((stat) => (
-                  <div key={stat.label} className="text-center">
+                  <div key={stat.labelKey} className="text-center">
                     <div className="hud-value text-2xl mb-1" style={{ color: stat.color }}>
                       {stat.value}
                     </div>
-                    <div className="hud-label text-[9px]">{stat.label}</div>
+                    <div className="hud-label text-[9px]">{t(stat.labelKey)}</div>
                   </div>
                 ))}
               </div>
@@ -111,7 +111,7 @@ export function InfoHub() {
                 }}
               >
                 <span className="text-xs font-display font-medium text-slate-500 group-hover:text-slate-200 transition-colors">
-                  Explore AE's Mind
+                  {t("infoHub.exploreAE")}
                 </span>
                 <ArrowRight
                   size={14}
@@ -125,13 +125,12 @@ export function InfoHub() {
         {/* Persona Atlas */}
         <motion.div variants={slideUp} className="px-4">
           <div className="text-center mb-10">
-            <span className="hud-label mb-2 block">Persona Atlas</span>
+            <span className="hud-label mb-2 block">{t("infoHub.personaAtlas")}</span>
             <h2 className="text-2xl font-display font-bold text-slate-200 mb-2">
-              24 Musical Minds
+              {t("infoHub.personaAtlasTitle")}
             </h2>
             <p className="hud-label max-w-md mx-auto leading-relaxed text-xs">
-              Each persona represents a unique region in the cognitive parameter space.
-              No mind is better or worse — only different.
+              {t("infoHub.personaAtlasSubtitle")}
             </p>
           </div>
 
