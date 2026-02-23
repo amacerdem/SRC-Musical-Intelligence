@@ -3,8 +3,8 @@
 **Function**: F1 Sensory Processing
 **Phase**: 0 (earliest in DAG — reads R³/H³ directly)
 **Total F1 beliefs**: 17 (5 Core + 7 Appraisal + 5 Anticipation)
-**Documented**: BCH (4) + PSCL (2) + PCCR (2) + MPG (2) + MIAA (2) + SDED (1) + CSG (1) = 14 of 17
-**Remaining**: STAI (3) = 3
+**Documented**: BCH (4) + PSCL (2) + PCCR (2) + MPG (2) + MIAA (2) + SDED (1) + CSG (1) + STAI (3) = 17 of 17
+**Remaining**: 0
 
 ---
 
@@ -88,6 +88,16 @@ BCH computes 16D. Only 4 dimensions produce beliefs. The rest (E0, E1, E3, M0–
 
 PSCL computes 16D. Only 2 dimensions produce beliefs. The rest feed PCCR (chroma identification), HMCE (temporal encoding), SRP (reward), and downstream attention.
 
+### 3.3 STAI (SPU-β1, 3 beliefs)
+
+| Belief | Category | Mechanism Sources | Layer |
+|--------|----------|-------------------|-------|
+| `aesthetic_quality` | Core | E:aesthetic_integration (40%) + P:aesthetic_response (30%) + M:aesthetic_value (20%) + E:vmpfc_connectivity (10%) | E+M+P |
+| `spectral_temporal_synergy` | Appraisal | E:spectral_temporal_interaction (50%) + M:coherence_index (30%) + P:binding_strength (20%) | E+M+P |
+| `reward_response_pred` | Anticipation | F:reward_prediction (50%) + P:aesthetic_response (30%) + E:aesthetic_integration (20%) | E+P+F |
+
+STAI computes 10D. 3 beliefs span all layers (E+M+P+F). The spectral × temporal interaction (Kim et al. 2019, d=0.709–0.735) is the core aesthetic integration signal that drives all three beliefs.
+
 ### Key Principle: Mechanism ≠ Belief
 
 - **Mechanism** (mechanism/ folder): HOW the computation works (R³ inputs, H³ integration, weighted sums)
@@ -137,6 +147,17 @@ BCH beliefs are available from Phase 0a onward. `harmonic_stability`'s full Baye
 | `pitch_continuation` | F1 (PSCL) | Feeds pitch_prominence predict() as context |
 | `pitch_continuation` | F2 (HTP) | Pitch persistence expectation for prediction |
 
+### 5.3 STAI Beliefs
+
+| STAI Belief | → Function | → Purpose |
+|-------------|-----------|-----------|
+| `aesthetic_quality` | F6 (Reward) | PE from aesthetic_quality feeds reward formula |
+| `aesthetic_quality` | F3 (Salience) | Aesthetic integration contributes to salience |
+| `spectral_temporal_synergy` | F3 (Salience) | Synergy modulates salience signal strength |
+| `spectral_temporal_synergy` | F6 (Reward) | Synergy contributes to resolution component |
+| `reward_response_pred` | F6 (SRP, DAED) | Predicted reward level for anticipatory DA |
+| `reward_response_pred` | F3 (Salience) | Predicted reward modulates salience allocation |
+
 ---
 
 *See individual belief files for complete definitions:*
@@ -148,5 +169,10 @@ BCH beliefs are available from Phase 0a onward. `harmonic_stability`'s full Baye
 - [consonance_trajectory.md](consonance_trajectory.md) — Anticipation
 
 **PSCL beliefs:**
-- [pitch_prominence.md](pitch_prominence.md) — Core (τ=0.35)
-- [pitch_continuation.md](pitch_continuation.md) — Anticipation
+- [pitch_prominence.md](pscl/pitch_prominence.md) — Core (τ=0.35)
+- [pitch_continuation.md](pscl/pitch_continuation.md) — Anticipation
+
+**STAI beliefs:**
+- [aesthetic_quality.md](stai/aesthetic_quality.md) — Core (τ=0.4)
+- [spectral_temporal_synergy.md](stai/spectral_temporal_synergy.md) — Appraisal
+- [reward_response_pred.md](stai/reward_response_pred.md) — Anticipation

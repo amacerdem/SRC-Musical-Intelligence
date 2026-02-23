@@ -3,8 +3,8 @@
 **Function**: F3 Attention & Salience
 **Phase**: 1 (reads F1 beliefs + R³/H³ — same phase as F2)
 **Total F3 beliefs**: 15 (4 Core + 7 Appraisal + 4 Anticipation)
-**Documented**: SNEM (5) + IACM (3) + CSG cross-fn (4) + AACM (2) = 14 of 15
-**Remaining**: 1 (meter_position_pred — SNEM relay partial, full mechanism pending)
+**Documented**: SNEM (5) + IACM (4) + CSG cross-fn (4) + AACM (2) = 15 of 15
+**Remaining**: 0
 
 ---
 

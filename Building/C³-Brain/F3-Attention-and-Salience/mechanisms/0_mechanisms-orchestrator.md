@@ -1,11 +1,11 @@
 # F3 Mechanism Orchestrator — Attention & Salience
 
 **Function**: F3 Attention & Salience
-**Models covered**: 11/11 primary — 1 IMPLEMENTED (SNEM relay) + 10 PENDING
-**Total F3 mechanism output**: 113D (12+11+10+11+10+9+9+11+11+10+9)
+**Models covered**: 12/12 primary — 1 IMPLEMENTED (SNEM relay) + 11 PENDING
+**Total F3 mechanism output**: 122D (12+11+10+11+10+9+9+9+11+11+10+9)
 **Beliefs**: 15 (4C + 7A + 4N) — from SNEM (5), IACM (3), CSG cross-fn (4), AACM (2), β/γ (0)
-**H³ demands**: 173 tuples (18 SNEM-implemented + 155 pending)
-**Architecture**: Depth-ordered — 2 α (Depth 0) → 5 β (Depth 1) → 4 γ (Depth 2)
+**H³ demands**: 189 tuples (18 SNEM-implemented + 171 pending)
+**Architecture**: Depth-ordered — 2 α (Depth 0) → 5 β (Depth 1) → 5 γ (Depth 2)
 
 ---
 
@@ -26,7 +26,8 @@ Depth 1:  BARM  (10D, ASU-β1)  ← brainstem auditory response modulation (read
           ETAM  (11D, STU-β4)  ← entrainment-tempo-attention modulation
             │
             ▼
-Depth 2:  DGTP  ( 9D, ASU-γ2)  ← domain-general temporal processing
+Depth 2:  PWSM  ( 9D, ASU-γ1)  ← precision-weighted salience (reads R³/H³)
+          DGTP  ( 9D, ASU-γ2)  ← domain-general temporal processing
           SDL   ( 9D, ASU-γ3)  ← salience-dependent lateralization
           NEWMD (10D, STU-γ2)  ← entrainment–working memory dissociation
           IGFE  ( 9D, PCU-γ1)  ← individual gamma frequency enhancement
@@ -662,6 +663,52 @@ A1/STG, Heschl's gyrus, hippocampus, DLPFC, thalamus, fronto-central cortex, SMA
 ---
 ---
 
+# PWSM — Precision-Weighted Salience Model
+
+**Model**: ASU-γ1-PWSM
+**Type**: Mechanism (Depth 2) — reads R³/H³ directly
+**Tier**: γ (50-70% confidence)
+**Output**: 9D per frame (4 layers: E3 + M2 + P2 + F2)
+**Phase**: 1
+**Status**: PENDING (layer files created)
+
+---
+
+## 1. Identity
+
+PWSM models how precision-weighting gates prediction error salience: high-precision (stable) contexts generate MMN responses (d=-1.37), while low-precision (changing jitter) contexts abolish MMN entirely (d=0.01). This implements the variational free energy framework where Precision = 1/(1+σ²_context) multiplicatively gates PE propagation.
+
+**Reads**: R³/H³ directly (change + energy + interaction features)
+**Cross-unit**: PWSM.precision → IACM (gates error responses), PWSM.stability → SNEM (beat prediction), PWSM.pe_weighted → CSG (valence), PWSM.precision/mmn_pred → NDU
+
+---
+
+## 2. R³ Inputs + H³ Demand
+
+- R³: ~10D from B:Energy [10,11], D:Change [21,22,23,24], F:Interactions [37:45]
+- H³: **16 tuples**, all L2 (bidirectional), horizons H0(25ms), H1(50ms), H3(100ms), H4(125ms), H16(1s)
+- Key morphs: M0(value), M1(mean), M2(std), M17(periodicity), M20(entropy), M21(zero_crossings)
+
+---
+
+## 3. Output Layers
+
+| Layer | Dims | Fields |
+|-------|------|--------|
+| **E** | 3D | E0:f19_precision_weighting, E1:f20_error_suppression, E2:f21_stability_encoding |
+| **M** | 2D | M0:pe_weighted, M1:precision |
+| **P** | 2D | P0:weighted_error, P1:precision_estimate |
+| **F** | 2D | F0:mmn_presence_pred_0.35s, F1:context_reliability_2s |
+
+---
+
+## 4. Brain Regions
+
+STG/Auditory Cortex, Right Heschl's Gyrus, IFG, IC, MGB, Hippocampus, ACC/Medial Cingulate, Amygdala. 12 papers, 8 brain regions.
+
+---
+---
+
 ## Summary Statistics
 
 ### Output Dimensions by Model
@@ -673,13 +720,14 @@ A1/STG, Heschl's gyrus, hippocampus, DLPFC, thalamus, fronto-central cortex, SMA
 | BARM | ASU | β | 10 | 3 | 2 | 2 | 3 | 14 |
 | STANM | ASU | β | 11 | 3 | 3 | 2 | 3 | 16 |
 | AACM | ASU | β | 10 | 3 | 2 | 2 | 3 | 12 |
+| PWSM | ASU | γ | 9 | 3 | 2 | 2 | 2 | 16 |
 | DGTP | ASU | γ | 9 | 3 | 2 | 2 | 2 | 9 |
 | SDL | ASU | γ | 9 | 3 | 2 | 2 | 2 | 18 |
 | AMSS | STU | β | 11 | 5 | 2 | 2 | 2 | 16 |
 | ETAM | STU | β | 11 | 4 | 2 | 2 | 3 | 20 |
 | NEWMD | STU | γ | 10 | 4 | 2 | 2 | 2 | 16 |
 | IGFE | PCU | γ | 9 | 4 | 0 | 3 | 2 | 18 |
-| **TOTAL** | | | **113** | **38** | **23** | **24** | **28** | **173** |
+| **TOTAL** | | | **122** | **41** | **25** | **26** | **30** | **189** |
 
 ### Tier Gradient
 
@@ -687,12 +735,13 @@ A1/STG, Heschl's gyrus, hippocampus, DLPFC, thalamus, fronto-central cortex, SMA
 |------|-------|-------|--------|
 | α | 2 | 11.5 | 17.0 |
 | β | 5 | 10.6 | 15.6 |
-| γ | 4 | 9.3 | 15.3 |
+| γ | 5 | 9.2 | 15.4 |
 
 Clear tier gradient in dimensionality; H³ is relatively uniform due to SDL and IGFE (γ models with high H³).
 
 ### Brain Region Convergence
 
-**STG** is the convergence hub: mentioned in 9 of 11 models.
+**STG** is the convergence hub: mentioned in 10 of 12 models.
 **Anterior insula + dACC** (salience network): mentioned in SNEM, IACM, AACM, STANM.
 **Cerebellum**: mentioned in ETAM, NEWMD, DGTP — timing models.
+**IC + MGB** (subcortical PE): mentioned in SNEM, BARM, PWSM — precision/PE hierarchy.
