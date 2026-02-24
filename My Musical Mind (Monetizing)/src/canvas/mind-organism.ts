@@ -15,6 +15,8 @@
 
 export type OrganismVariant = "hero" | "ambient" | "micro" | "trace" | "glow";
 
+export type FamilyMorphology = "volatile" | "crystalline" | "fluid" | "organic" | "rhythmic";
+
 export interface OrganismConfig {
   color: string;
   secondaryColor?: string;
@@ -29,6 +31,9 @@ export interface OrganismConfig {
   maxParticles?: number;    // performance cap
   bloomEnabled?: boolean;   // opt-out bloom (default: variant-based)
   chromaticEnabled?: boolean; // opt-out chromatic (default: variant-based)
+  familyMorphology?: FamilyMorphology; // visual style per family
+  tendrilCount?: number;    // override default tendril count
+  nucleiCount?: number;     // override default nuclei count
 }
 
 /* ── Belief domain colors for tendril coloring ─────────────── */
@@ -216,33 +221,97 @@ export class MindOrganism {
   }
 
   private generate() {
-    const { stage } = this.config;
-    const baseTendrils = stage === 3 ? 24 : stage === 2 ? 16 : 9;
-    const baseNuclei = stage === 3 ? 12 : stage === 2 ? 7 : 4;
+    const { stage, familyMorphology: morph } = this.config;
+    const baseTendrils = this.config.tendrilCount
+      ?? (stage === 3 ? 24 : stage === 2 ? 16 : 9);
+    const baseNuclei = this.config.nucleiCount
+      ?? (stage === 3 ? 12 : stage === 2 ? 7 : 4);
 
     const tendrilCount = this.flags.tendrils ? baseTendrils : 0;
     const nucleiCount = this.flags.nuclei
       ? Math.max(3, Math.round(baseNuclei * this.flags.nucleiScale))
       : 0;
 
-    this.tendrils = Array.from({ length: tendrilCount }, (_, i) => ({
-      originAngle: (i / tendrilCount) * Math.PI * 2 + (Math.random() - 0.5) * 0.3,
-      length: 0.25 + Math.random() * 0.35,
-      speed: 0.3 + Math.random() * 0.5,
-      width: stage === 3 ? 2 + Math.random() * 3 : 1 + Math.random() * 2,
-      phase: Math.random() * Math.PI * 2,
-      amplitude: 15 + Math.random() * 25,
-      beliefIndex: i % 5,
-    }));
+    this.tendrils = Array.from({ length: tendrilCount }, (_, i) => {
+      const base = {
+        originAngle: (i / tendrilCount) * Math.PI * 2 + (Math.random() - 0.5) * 0.3,
+        length: 0.25 + Math.random() * 0.35,
+        speed: 0.3 + Math.random() * 0.5,
+        width: stage === 3 ? 2 + Math.random() * 3 : 1 + Math.random() * 2,
+        phase: Math.random() * Math.PI * 2,
+        amplitude: 15 + Math.random() * 25,
+        beliefIndex: i % 5,
+      };
 
-    this.nuclei = Array.from({ length: nucleiCount }, (_, i) => ({
-      angle: Math.random() * Math.PI * 2,
-      dist: 0.15 + Math.random() * 0.4,
-      baseSize: stage === 3 ? 4 + Math.random() * 6 : 2 + Math.random() * 4,
-      phase: Math.random() * Math.PI * 2,
-      orbit: (Math.random() - 0.5) * 0.08,
-      beliefIndex: i % 5,
-    }));
+      // Family morphology adjustments
+      switch (morph) {
+        case "volatile": // Alchemists: jagged, high noise, scattered
+          base.amplitude *= 1.6;
+          base.speed *= 1.4;
+          base.width *= 0.8;
+          break;
+        case "crystalline": // Architects: geometric, angular, structured
+          base.originAngle = (i / tendrilCount) * Math.PI * 2; // even spacing
+          base.amplitude *= 0.5;
+          base.width *= 1.3;
+          break;
+        case "fluid": // Explorers: random lengths, varied widths
+          base.length *= 0.7 + Math.random() * 0.8;
+          base.width *= 0.5 + Math.random() * 1.5;
+          base.speed *= 0.6 + Math.random() * 0.8;
+          break;
+        case "organic": // Anchors: smooth sine, warm
+          base.amplitude *= 0.7;
+          base.speed *= 0.7;
+          base.width *= 1.2;
+          break;
+        case "rhythmic": // Kineticists: pulsing width
+          base.speed *= 1.2;
+          base.amplitude *= 0.9;
+          break;
+      }
+
+      return base;
+    });
+
+    this.nuclei = Array.from({ length: nucleiCount }, (_, i) => {
+      const base = {
+        angle: Math.random() * Math.PI * 2,
+        dist: 0.15 + Math.random() * 0.4,
+        baseSize: stage === 3 ? 4 + Math.random() * 6 : 2 + Math.random() * 4,
+        phase: Math.random() * Math.PI * 2,
+        orbit: (Math.random() - 0.5) * 0.08,
+        beliefIndex: i % 5,
+      };
+
+      // Family morphology adjustments for nuclei
+      switch (morph) {
+        case "volatile": // scattered nuclei
+          base.dist = 0.1 + Math.random() * 0.55;
+          base.orbit *= 2;
+          break;
+        case "crystalline": // lattice / grid-like
+          base.angle = (i / nucleiCount) * Math.PI * 2; // even spacing
+          base.dist = 0.2 + (i % 3) * 0.12;
+          base.orbit *= 0.3;
+          break;
+        case "fluid": // scattered, amoeba
+          base.dist = 0.1 + Math.random() * 0.5;
+          base.orbit *= 1.5;
+          break;
+        case "organic": // clustered near center
+          base.dist = 0.1 + Math.random() * 0.25;
+          base.orbit *= 0.5;
+          break;
+        case "rhythmic": // orbital, evenly spaced
+          base.angle = (i / nucleiCount) * Math.PI * 2;
+          base.dist = 0.25 + (i % 2) * 0.15;
+          base.orbit = 0.04 + (i % 2) * 0.04;
+          break;
+      }
+
+      return base;
+    });
   }
 
   private bindEvents() {
@@ -322,9 +391,12 @@ export class MindOrganism {
   updateConfig(partial: Partial<OrganismConfig>) {
     const stageChanged = partial.stage !== undefined && partial.stage !== this.config.stage;
     const variantChanged = partial.variant !== undefined && partial.variant !== this.config.variant;
+    const morphChanged = partial.familyMorphology !== undefined && partial.familyMorphology !== this.config.familyMorphology;
+    const tendrilsChanged = partial.tendrilCount !== undefined && partial.tendrilCount !== this.config.tendrilCount;
+    const nucleiChanged = partial.nucleiCount !== undefined && partial.nucleiCount !== this.config.nucleiCount;
     Object.assign(this.config, partial);
 
-    if (stageChanged || variantChanged) {
+    if (stageChanged || variantChanged || morphChanged || tendrilsChanged || nucleiChanged) {
       this.flags = getVariantFlags(this.config.variant, this.config.stage);
       this.generate();
     }
@@ -410,14 +482,29 @@ export class MindOrganism {
         const memR = R * (0.55 + 0.04 * breath + pulseWave * 0.05);
         ctx.arc(cx, cy, memR, 0, Math.PI * 2);
       } else {
-        const memPoints = 120;
+        const morph = this.config.familyMorphology;
+        const memPoints = morph === "crystalline" ? 6 : 120;
         for (let i = 0; i <= memPoints; i++) {
           const a = (i / memPoints) * Math.PI * 2;
           const noiseVal = this.noise.noise2D(
             Math.cos(a) * 2 + t * 0.15,
             Math.sin(a) * 2 + t * 0.15
           );
-          const r = R * (0.55 + 0.12 * noiseVal + 0.04 * breath + pulseWave * 0.06);
+
+          // Base radius varies by family morphology
+          let noiseScale = 0.12;
+          let baseR = 0.55;
+          switch (morph) {
+            case "volatile": noiseScale = 0.20; break; // flickering
+            case "crystalline": noiseScale = 0.04; baseR = 0.52; break; // polygonal
+            case "fluid": noiseScale = 0.18; break; // amoeba
+            case "organic": noiseScale = 0.06; baseR = 0.53; break; // elliptical smooth
+            case "rhythmic": // beating - modulate base radius by time
+              baseR = 0.55 + Math.sin(t * 3) * 0.03;
+              noiseScale = 0.08;
+              break;
+          }
+          const r = R * (baseR + noiseScale * noiseVal + 0.04 * breath + pulseWave * 0.06);
 
           let warp = 0;
           if (flags.mouse && this.mouse.influence > 0.01) {
@@ -469,19 +556,46 @@ export class MindOrganism {
           : rgb;
 
         ctx.beginPath();
+        const morph = this.config.familyMorphology;
         const segments = variant === "ambient" ? 30 : 40;
         for (let s = 0; s <= segments; s++) {
           const frac = s / segments;
           const r = startR + (endR - startR) * frac;
 
-          const nx = this.noise.noise2D(
+          let nx = this.noise.noise2D(
             Math.cos(ang) * frac * 3 + t * td.speed * 0.4,
             Math.sin(ang) * frac * 3 + t * td.speed * 0.4
           );
-          const ny = this.noise.noise2D(
+          let ny = this.noise.noise2D(
             Math.cos(ang) * frac * 3 + 100 + t * td.speed * 0.4,
             Math.sin(ang) * frac * 3 + 100 + t * td.speed * 0.4
           );
+
+          // Family morphology path modifiers
+          switch (morph) {
+            case "volatile": // jagged — quantize noise for sharp steps
+              nx = Math.round(nx * 4) / 4;
+              ny = Math.round(ny * 4) / 4;
+              break;
+            case "crystalline": // geometric segments — angular straight lines
+              if (s % 5 !== 0 && s !== segments) {
+                // interpolate linearly between control points
+                const prevFrac = Math.floor(s / 5) * 5 / segments;
+                const nextFrac = Math.min(1, Math.ceil(s / 5) * 5 / segments);
+                const localT = (frac - prevFrac) / Math.max(0.001, nextFrac - prevFrac);
+                nx = nx * (1 - localT) + this.noise.noise2D(Math.cos(ang) * nextFrac * 3, Math.sin(ang) * nextFrac * 3) * localT;
+                ny = ny * (1 - localT) + this.noise.noise2D(Math.cos(ang) * nextFrac * 3 + 100, Math.sin(ang) * nextFrac * 3 + 100) * localT;
+              }
+              break;
+            case "organic": // smooth sine overlay
+              nx += Math.sin(frac * Math.PI * 3 + t * 0.5) * 0.3;
+              ny += Math.cos(frac * Math.PI * 3 + t * 0.5) * 0.3;
+              break;
+            case "rhythmic": // pulsing displacement
+              nx *= 1 + Math.sin(t * 3 + frac * Math.PI * 4) * 0.4;
+              ny *= 1 + Math.cos(t * 3 + frac * Math.PI * 4) * 0.4;
+              break;
+          }
 
           const displace = td.amplitude * frac * intensity;
           const px = cx + Math.cos(ang) * r + nx * displace;

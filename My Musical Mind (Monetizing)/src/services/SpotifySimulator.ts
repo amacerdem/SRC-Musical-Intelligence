@@ -1,5 +1,5 @@
 import { NeuralFamily } from "@/types/mind";
-import type { M3Temperament, M3TrackSignal } from "@/types/m3";
+import type { M3TrackSignal } from "@/types/m3";
 
 export interface MockTrack {
     id: string;
@@ -118,55 +118,6 @@ function pickRandom(): MockTrack {
     return MOCK_TRACKS[Math.floor(Math.random() * MOCK_TRACKS.length)];
 }
 
-/**
- * Determine birth temperament from a batch of tracks.
- * Analyzes genre diversity, repeat ratio, tempo variance,
- * harmonic complexity, and valence range.
- */
-export function calculateTemperament(tracks: MockTrack[]): M3Temperament {
-    if (tracks.length === 0) return "explorer";
-
-    const genres = new Set(tracks.map(t => t.genre));
-    const genreDiversity = genres.size / tracks.length; // 0-1
-
-    // Repeat ratio (how many duplicates)
-    const ids = tracks.map(t => t.id);
-    const uniqueIds = new Set(ids);
-    const repeatRatio = 1 - (uniqueIds.size / ids.length);
-
-    // Tempo variance
-    const tempos = tracks.map(t => t.features.tempo);
-    const tempoMean = tempos.reduce((s, v) => s + v, 0) / tempos.length;
-    const tempoVar = tempos.reduce((s, v) => s + (v - tempoMean) ** 2, 0) / tempos.length;
-    const tempoStd = Math.sqrt(tempoVar);
-
-    // Harmonic complexity mean
-    const harmMean = tracks.reduce((s, t) => s + t.features.harmonicComplexity, 0) / tracks.length;
-
-    // Valence range
-    const valences = tracks.map(t => t.features.valence);
-    const valRange = Math.max(...valences) - Math.min(...valences);
-
-    // Score each temperament
-    const scores: Record<M3Temperament, number> = {
-        explorer: genreDiversity * 2 + (1 - repeatRatio),
-        deep_diver: repeatRatio * 2 + (1 - genreDiversity),
-        rhythmic: tempoStd / 30 + tracks.reduce((s, t) => s + t.features.danceability, 0) / tracks.length,
-        harmonic: harmMean * 2,
-        emotive: valRange * 2 + tracks.reduce((s, t) => s + Math.abs(t.features.valence - 0.5), 0) / tracks.length,
-    };
-
-    // Return highest scoring
-    let best: M3Temperament = "explorer";
-    let bestScore = -1;
-    for (const [key, score] of Object.entries(scores)) {
-        if (score > bestScore) {
-            bestScore = score;
-            best = key as M3Temperament;
-        }
-    }
-    return best;
-}
 
 /**
  * Convert a MockTrack to an M3TrackSignal for feeding M³.

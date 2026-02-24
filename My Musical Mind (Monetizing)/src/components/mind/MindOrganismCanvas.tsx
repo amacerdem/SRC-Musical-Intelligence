@@ -1,5 +1,5 @@
 import { useRef, useEffect, useImperativeHandle, forwardRef } from "react";
-import { MindOrganism, type OrganismConfig, type OrganismVariant } from "@/canvas/mind-organism";
+import { MindOrganism, type OrganismConfig, type OrganismVariant, type FamilyMorphology } from "@/canvas/mind-organism";
 
 export interface OrganismHandle {
   highlightBelief: (index: number, strength?: number) => void;
@@ -20,6 +20,9 @@ interface Props {
   frozen?: boolean;
   className?: string;
   interactive?: boolean;
+  familyMorphology?: FamilyMorphology;
+  tendrilCount?: number;
+  nucleiCount?: number;
 }
 
 export const MindOrganismCanvas = forwardRef<OrganismHandle, Props>(
@@ -37,6 +40,9 @@ export const MindOrganismCanvas = forwardRef<OrganismHandle, Props>(
       frozen,
       className = "",
       interactive = true,
+      familyMorphology,
+      tendrilCount,
+      nucleiCount,
     },
     ref
   ) {
@@ -88,6 +94,9 @@ export const MindOrganismCanvas = forwardRef<OrganismHandle, Props>(
       if (secondaryColor) config.secondaryColor = secondaryColor;
       if (breathRate) config.breathRate = breathRate;
       if (beliefWeights) config.beliefWeights = beliefWeights;
+      if (familyMorphology) config.familyMorphology = familyMorphology;
+      if (tendrilCount) config.tendrilCount = tendrilCount;
+      if (nucleiCount) config.nucleiCount = nucleiCount;
 
       const organism = new MindOrganism(canvas, config);
       organismRef.current = organism;
@@ -118,6 +127,9 @@ export const MindOrganismCanvas = forwardRef<OrganismHandle, Props>(
         beliefWeights,
         constellations,
         frozen,
+        familyMorphology,
+        tendrilCount,
+        nucleiCount,
       });
     }, [
       color,
@@ -130,6 +142,9 @@ export const MindOrganismCanvas = forwardRef<OrganismHandle, Props>(
       beliefWeights,
       constellations,
       frozen,
+      familyMorphology,
+      tendrilCount,
+      nucleiCount,
     ]);
 
     return (

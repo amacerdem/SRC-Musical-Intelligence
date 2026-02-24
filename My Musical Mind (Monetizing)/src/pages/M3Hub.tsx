@@ -1,50 +1,56 @@
-/* ── M³ Hub — The Living Mind ──────────────────────────────────────
- *  Central page for the M³ personal musical mind.
- *  Shows stage, temperament, active functions, observations,
- *  growth timeline, and the feed mechanism.
+/* ── M³ Hub — "Zihnim" (My Mind) ─ Living Identity ──────────────────
+ *  WHO your mind IS right now. Experiential, immersive, organism-centered.
+ *  Full-screen organism hero + persona identity + family affinity +
+ *  observations (3-layer) + feed button + growth timeline.
  *  ──────────────────────────────────────────────────────────────── */
 
 import { useState, useMemo, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Brain, ChevronRight, Sparkles, Lock,
-  Activity, Zap, Clock,
+  Brain, Sparkles, Lock, Zap, Clock, ChevronRight,
 } from "lucide-react";
 import { useM3Store } from "@/stores/useM3Store";
 import { useM3Gate } from "@/hooks/useM3Gate";
 import { useUserStore } from "@/stores/useUserStore";
-import { getPersona } from "@/data/personas";
+import { getPersona, personas } from "@/data/personas";
 import { MindOrganismCanvas } from "@/components/mind/MindOrganismCanvas";
 import { NucleusDot } from "@/components/mind/NucleusDot";
-import { C3_FUNCTIONS, M3_STAGES, M3_TEMPERAMENTS, M3_TIERS } from "@/data/m3-stages";
-import { generateObservations, getPrimaryObservation } from "@/data/m3-observations";
+import { FamilyAffinityRing } from "@/components/mind/FamilyAffinityRing";
+import { PersonaLevelTrack } from "@/components/persona/PersonaLevelTrack";
+import { C3_FUNCTIONS, M3_STAGES, M3_TIERS } from "@/data/m3-stages";
+import { generateObservations, getPrimaryObservation, getUnlockedObservationTypes } from "@/data/m3-observations";
 import { SpotifySimulator, trackToM3Signal } from "@/services/SpotifySimulator";
+import { FAMILY_MORPHOLOGY, levelToOrganismStage } from "@/types/m3";
 import { pageTransition, fadeIn, cinematicReveal } from "@/design/animations";
 import type { PresentationLayer } from "@/types/m3";
+import type { FamilyMorphology } from "@/canvas/mind-organism";
 
 const LAYERS: PresentationLayer[] = ["surface", "narrative", "deep"];
 
 export function M3Hub() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const m3Mind = useM3Store((s) => s.mind);
   const milestones = useM3Store((s) => s.milestones);
   const feedListening = useM3Store((s) => s.feedListening);
   const preferredLayer = useM3Store((s) => s.preferredLayer);
   const setPreferredLayer = useM3Store((s) => s.setPreferredLayer);
   const gate = useM3Gate();
-  const { mind: userMind } = useUserStore();
-  const persona = userMind ? getPersona(userMind.personaId) : null;
-  const accentColor = persona?.color ?? "#A855F7";
 
   const [activeLayer, setActiveLayer] = useState<PresentationLayer>(preferredLayer);
   const [feeding, setFeeding] = useState(false);
   const [feedResult, setFeedResult] = useState<string | null>(null);
 
-  // Stage data
+  // Persona + family data
+  const activePersona = m3Mind ? personas.find(p => p.id === m3Mind.activePersonaId) : null;
+  const accentColor = activePersona?.color ?? "#A855F7";
+  const family = activePersona?.family ?? "Alchemists";
+  const morphology = FAMILY_MORPHOLOGY[family] as FamilyMorphology;
+  const organismStage = m3Mind ? levelToOrganismStage(m3Mind.level) : 1;
   const stageDef = m3Mind ? M3_STAGES[m3Mind.stage] : null;
   const stageColor = stageDef?.color ?? "#94A3B8";
-  const temperamentDef = m3Mind ? M3_TEMPERAMENTS[m3Mind.temperament] : null;
   const tierDef = m3Mind ? M3_TIERS[m3Mind.tier] : null;
 
   // Observations
@@ -53,10 +59,10 @@ export function M3Hub() {
     return generateObservations(m3Mind, activeLayer, t);
   }, [m3Mind, activeLayer, t]);
 
-  const primaryObs = useMemo(() => {
-    if (!m3Mind) return null;
-    return getPrimaryObservation(m3Mind, t);
-  }, [m3Mind, t]);
+  const unlockedTypes = useMemo(() => {
+    if (!m3Mind) return [];
+    return getUnlockedObservationTypes(m3Mind.level);
+  }, [m3Mind]);
 
   // Feed M³
   const handleFeed = useCallback(() => {
@@ -65,17 +71,14 @@ export function M3Hub() {
     setFeedResult(null);
 
     const session = SpotifySimulator.getListeningSession();
-    let newMilestones: ReturnType<typeof feedListening>[] = [];
 
-    // Simulate feeding tracks one by one with a delay
     setTimeout(() => {
       for (const entry of session) {
         const signal = trackToM3Signal(entry.track, {
           wasSkipped: entry.wasSkipped,
           isRepeat: false,
         });
-        const ms = feedListening(signal);
-        newMilestones.push(ms);
+        feedListening(signal);
       }
       setFeeding(false);
       setFeedResult(t("m3.hub.feedSuccess", { count: session.length }));
@@ -104,14 +107,14 @@ export function M3Hub() {
 
   return (
     <motion.div {...pageTransition} className="relative h-screen overflow-hidden">
-      {/* Organism background */}
+      {/* ── Full-screen organism hero ─────────────────────────────── */}
       <div className="absolute inset-0 z-0" style={{ transform: "scale(1.3)", transformOrigin: "center center" }}>
         <MindOrganismCanvas
-          color={stageColor}
-          secondaryColor={temperamentDef?.color ?? stageColor}
-          stage={stageDef?.organismStage ?? 1}
+          color={accentColor}
+          stage={organismStage}
           intensity={0.5 + m3Mind.stageProgress * 0.4}
           breathRate={5 - m3Mind.stageProgress * 2}
+          familyMorphology={morphology}
           className="w-full h-full"
           variant="hero"
           interactive
@@ -123,7 +126,7 @@ export function M3Hub() {
       />
       <div className="cinematic-vignette z-[2]" />
 
-      {/* ── Frozen Overlay ─────────────────────────────────────────── */}
+      {/* ── Frozen Overlay ────────────────────────────────────────── */}
       <AnimatePresence>
         {m3Mind.frozen && (
           <motion.div
@@ -139,10 +142,10 @@ export function M3Hub() {
               <button
                 className="px-6 py-3 rounded-xl text-sm font-display font-semibold transition-all duration-500"
                 style={{
-                  background: `linear-gradient(135deg, ${stageColor}, ${stageColor}CC)`,
+                  background: `linear-gradient(135deg, ${accentColor}, ${accentColor}CC)`,
                   color: "#000",
-                  border: `1px solid ${stageColor}60`,
-                  boxShadow: `0 0 30px ${stageColor}25`,
+                  border: `1px solid ${accentColor}60`,
+                  boxShadow: `0 0 30px ${accentColor}25`,
                 }}
               >
                 {t("m3.frozen.cta")}
@@ -152,73 +155,53 @@ export function M3Hub() {
         )}
       </AnimatePresence>
 
-      {/* ── TOP HUD ────────────────────────────────────────────────── */}
-      <motion.div
-        variants={fadeIn}
-        initial="initial"
-        animate="animate"
-        className="fixed top-10 left-6 z-30 flex items-center gap-4"
-      >
-        {/* Stage badge */}
-        <div className="flex items-center gap-2">
-          <span className="text-lg" style={{ color: stageColor }}>{stageDef?.icon}</span>
-          <div>
-            <span className="text-xs font-display font-medium" style={{ color: stageColor }}>
-              {t(`m3.stage.${m3Mind.stage}`)}
-            </span>
-            <span className="text-[10px] font-mono text-slate-600 ml-2">
-              {Math.round(m3Mind.stageProgress * 100)}%
-            </span>
-          </div>
-        </div>
-
-        {/* Temperament */}
-        <div className="flex items-center gap-1.5">
-          <span style={{ color: temperamentDef?.color }}>{temperamentDef?.icon}</span>
-          <span className="text-[11px] font-display text-slate-500">
-            {t(`m3.temperament.${m3Mind.temperament}`)}
-          </span>
-        </div>
-
-        {/* Tier */}
-        <div
-          className="px-2 py-0.5 rounded-full text-[10px] font-display font-medium"
-          style={{ background: `${tierDef?.color ?? "#94A3B8"}15`, color: tierDef?.color, border: `1px solid ${tierDef?.color ?? "#94A3B8"}20` }}
-        >
-          {t(`m3.tier.${m3Mind.tier}.name`)}
-        </div>
-
-        {/* Listen counter */}
-        <div className="flex items-center gap-1.5">
-          <Activity size={12} className="text-slate-600" />
-          <span className="text-xs font-mono text-slate-500">{m3Mind.totalListens} listens</span>
-        </div>
-      </motion.div>
-
       {/* ═══ MAIN LAYOUT ══════════════════════════════════════════ */}
       <div className="relative z-10 h-full flex flex-col px-5 sm:px-8 md:px-10 pt-10 pb-24">
 
-        {/* ── TOP: Title ─────────────────────────────────────────── */}
-        <motion.div {...cinematicReveal} className="text-center py-0.5">
-          <h1 className="text-3xl md:text-4xl font-display font-bold tracking-tight" style={{ color: stageColor }}>
-            {t("m3.hub.title")}
+        {/* ── TOP: Persona Identity ────────────────────────────── */}
+        <motion.div {...cinematicReveal} className="text-center py-1">
+          <div className="flex items-center justify-center gap-2 mb-1">
+            <NucleusDot color={accentColor} size={4} active pulsing />
+            <span className="text-[10px] font-display font-light tracking-[0.2em] uppercase text-slate-600">
+              {family} · L{m3Mind.level}/12
+            </span>
+          </div>
+          <h1 className="text-3xl md:text-4xl font-display font-bold tracking-tight" style={{ color: accentColor }}>
+            {activePersona ? t(`personas.${activePersona.id}.name`) : t("m3.hub.title")}
           </h1>
-          <p className="text-sm text-slate-500 font-display font-light mt-1">
-            {t("m3.hub.subtitle")}
+          <p className="text-sm text-slate-500 font-display font-light mt-1 italic">
+            {activePersona ? t(`personas.${activePersona.id}.tagline`) : ""}
           </p>
+          {/* Level track */}
+          <div className="max-w-xs mx-auto mt-3">
+            <PersonaLevelTrack currentLevel={m3Mind.level} color={accentColor} />
+          </div>
         </motion.div>
 
-        {/* ── MAIN GRID ─────────────────────────────────────────── */}
+        {/* ── MAIN GRID ────────────────────────────────────────── */}
         <div className="flex-1 grid grid-cols-12 gap-4 min-h-0 overflow-hidden mt-3">
 
-          {/* ═ LEFT COLUMN (3 cols): Active Functions + Timeline ═ */}
+          {/* ═ LEFT COLUMN (3 cols): Family Affinity + Functions + Timeline */}
           <div className="col-span-3 flex flex-col gap-3 min-h-0">
+
+            {/* Family Affinity Ring */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="spatial-card p-3 flex-shrink-0 flex flex-col items-center"
+            >
+              <span className="text-xs font-display font-light tracking-[0.15em] uppercase text-slate-500 block mb-2 w-full">
+                {t("m3.hub.familyAffinity")}
+              </span>
+              <FamilyAffinityRing affinity={m3Mind.familyAffinity} size={100} />
+            </motion.div>
 
             {/* Active Functions Grid */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
               className="spatial-card p-3 flex-shrink-0"
             >
               <span className="text-xs font-display font-light tracking-[0.15em] uppercase text-slate-500 block mb-3">
@@ -237,14 +220,11 @@ export function M3Hub() {
                         opacity: isActive ? 1 : 0.3,
                       }}
                     >
-                      <span
-                        className="text-xs font-mono font-bold"
-                        style={{ color: isActive ? fn.color : "#475569" }}
-                      >
+                      <span className="text-xs font-mono font-bold" style={{ color: isActive ? fn.color : "#475569" }}>
                         {fn.abbr}
                       </span>
                       <span className="text-[9px] font-display text-slate-500 text-center leading-tight px-1">
-                        {t(`m3.functions.f${fn.id}.name`)}
+                        {fn.name}
                       </span>
                       {isActive && (
                         <div className="absolute -top-1 -right-1">
@@ -268,17 +248,18 @@ export function M3Hub() {
                 {t("m3.hub.growthTimeline")}
               </span>
               <div className="space-y-2">
-                {[...milestones].reverse().slice(0, 15).map((ms, i) => {
-                  const isStageUp = ms.type === "stage_up";
-                  const isBirth = ms.type === "birth";
+                {[...milestones].reverse().slice(0, 20).map((ms, i) => {
+                  const milestoneColor =
+                    ms.type === "birth" ? "#FBBF24" :
+                    ms.type === "level_up" ? "#22D3EE" :
+                    ms.type === "stage_up" ? "#A855F7" :
+                    ms.type === "persona_shift" ? "#EC4899" :
+                    ms.type === "function_unlock" ? "#84CC16" : "#475569";
                   return (
                     <div key={i} className="flex items-start gap-2">
                       <div
                         className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0"
-                        style={{
-                          background: isBirth ? "#FBBF24" : isStageUp ? "#A855F7" : "#475569",
-                          boxShadow: isStageUp ? "0 0 8px #A855F740" : undefined,
-                        }}
+                        style={{ background: milestoneColor, boxShadow: `0 0 6px ${milestoneColor}40` }}
                       />
                       <div className="flex-1 min-w-0">
                         <p className="text-[11px] text-slate-400 font-display leading-tight truncate">
@@ -295,10 +276,10 @@ export function M3Hub() {
             </motion.div>
           </div>
 
-          {/* ═ CENTER COLUMN (5 cols): Observation + Feed ═══════ */}
-          <div className="col-span-5 flex flex-col items-center justify-center gap-5 min-h-0">
+          {/* ═ CENTER COLUMN (5 cols): Observations + Feed ═══════ */}
+          <div className="col-span-5 flex flex-col items-center justify-center gap-4 min-h-0">
 
-            {/* Stage progress bar */}
+            {/* Stage + progress */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -306,9 +287,12 @@ export function M3Hub() {
               className="w-full max-w-md"
             >
               <div className="flex items-center justify-between mb-1">
-                <span className="text-[10px] font-display font-light tracking-[0.15em] uppercase" style={{ color: stageColor }}>
-                  {t(`m3.stage.${m3Mind.stage}`)}
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className="text-lg" style={{ color: stageColor }}>{stageDef?.icon}</span>
+                  <span className="text-[10px] font-display font-light tracking-[0.15em] uppercase" style={{ color: stageColor }}>
+                    {t(`m3.stage.${m3Mind.stage}`)}
+                  </span>
+                </div>
                 <span className="text-[10px] font-mono text-slate-600">
                   {Math.round(m3Mind.stageProgress * 100)}%
                 </span>
@@ -322,9 +306,6 @@ export function M3Hub() {
                   transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
                 />
               </div>
-              <p className="text-[10px] text-slate-600 font-display font-light mt-1 text-center">
-                {t(`m3.stage.description.${m3Mind.stage}`)}
-              </p>
             </motion.div>
 
             {/* Layer Toggle */}
@@ -339,9 +320,9 @@ export function M3Hub() {
                     disabled={!canSee}
                     className="relative px-4 py-1.5 rounded-full text-[11px] font-display transition-all duration-300"
                     style={{
-                      background: isActive ? `${stageColor}15` : "transparent",
-                      color: isActive ? stageColor : canSee ? "#64748B" : "#1E293B",
-                      border: isActive ? `1px solid ${stageColor}20` : "1px solid transparent",
+                      background: isActive ? `${accentColor}15` : "transparent",
+                      color: isActive ? accentColor : canSee ? "#64748B" : "#1E293B",
+                      border: isActive ? `1px solid ${accentColor}20` : "1px solid transparent",
                       cursor: canSee ? "pointer" : "not-allowed",
                     }}
                   >
@@ -352,40 +333,42 @@ export function M3Hub() {
               })}
             </div>
 
-            {/* Current Observations */}
+            {/* Observations */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.5 }}
               className="w-full max-w-lg"
             >
-              <div className="spatial-card p-5 glow-border" style={{ "--glow-color": stageColor } as React.CSSProperties}>
+              <div className="spatial-card p-5 glow-border" style={{ "--glow-color": accentColor } as React.CSSProperties}>
                 <div className="flex items-center gap-2 mb-3">
-                  <Sparkles size={14} style={{ color: stageColor }} />
-                  <span className="text-[11px] font-display font-light tracking-[0.1em] uppercase" style={{ color: `${stageColor}90` }}>
+                  <Sparkles size={14} style={{ color: accentColor }} />
+                  <span className="text-[11px] font-display font-light tracking-[0.1em] uppercase" style={{ color: `${accentColor}90` }}>
                     {t("m3.hub.currentObservation")}
                   </span>
+                  <span className="text-[9px] font-mono text-slate-700 ml-auto">
+                    {unlockedTypes.length}/{9} {t("m3.hub.typesUnlocked")}
+                  </span>
                 </div>
-                <div className="space-y-3">
-                  {observations.map((obs) => (
+                <div className="space-y-3 max-h-40 overflow-y-auto">
+                  {observations.length > 0 ? observations.map((obs) => (
                     <div key={obs.id} className="flex items-start gap-2">
                       <div
                         className="w-1 h-1 rounded-full mt-2 flex-shrink-0"
-                        style={{ background: stageColor, opacity: obs.intensity }}
+                        style={{ background: accentColor, opacity: obs.intensity }}
                       />
                       <p className="text-[13px] text-slate-400 font-body font-light leading-relaxed">
                         {obs.text}
                       </p>
                     </div>
-                  ))}
+                  )) : (
+                    <p className="text-[12px] text-slate-600 font-body font-light italic">
+                      {t("m3.hub.noObservations")}
+                    </p>
+                  )}
                 </div>
               </div>
             </motion.div>
-
-            {/* Convince me note */}
-            <p className="text-[11px] text-slate-600 font-display font-light italic text-center max-w-sm">
-              {t("m3.hub.convinceMe")}
-            </p>
 
             {/* Feed M³ Button */}
             <motion.div
@@ -401,20 +384,17 @@ export function M3Hub() {
                   background: m3Mind.frozen
                     ? "rgba(255,255,255,0.03)"
                     : feeding
-                      ? `${stageColor}10`
-                      : `linear-gradient(135deg, ${stageColor}, ${stageColor}CC)`,
-                  color: m3Mind.frozen ? "#475569" : feeding ? stageColor : "#000",
-                  border: `1px solid ${m3Mind.frozen ? "rgba(255,255,255,0.05)" : `${stageColor}60`}`,
-                  boxShadow: !m3Mind.frozen && !feeding ? `0 0 30px ${stageColor}25` : "none",
+                      ? `${accentColor}10`
+                      : `linear-gradient(135deg, ${accentColor}, ${accentColor}CC)`,
+                  color: m3Mind.frozen ? "#475569" : feeding ? accentColor : "#000",
+                  border: `1px solid ${m3Mind.frozen ? "rgba(255,255,255,0.05)" : `${accentColor}60`}`,
+                  boxShadow: !m3Mind.frozen && !feeding ? `0 0 30px ${accentColor}25` : "none",
                   cursor: m3Mind.frozen ? "not-allowed" : "pointer",
                 }}
               >
                 {feeding ? (
                   <span className="flex items-center gap-2">
-                    <motion.span
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                    >
+                    <motion.span animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: "linear" }}>
                       <Zap size={14} />
                     </motion.span>
                     {t("m3.hub.feedButton")}...
@@ -433,7 +413,6 @@ export function M3Hub() {
               </button>
             </motion.div>
 
-            {/* Feed result message */}
             <AnimatePresence>
               {feedResult && (
                 <motion.p
@@ -441,15 +420,31 @@ export function M3Hub() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -5 }}
                   className="text-xs font-display font-light text-center"
-                  style={{ color: stageColor }}
+                  style={{ color: accentColor }}
                 >
                   {feedResult}
                 </motion.p>
               )}
             </AnimatePresence>
+
+            {/* Stats row */}
+            <div className="flex items-center gap-6 text-center">
+              <div>
+                <span className="text-xs font-mono text-slate-400">{m3Mind.totalListens}</span>
+                <p className="text-[9px] font-display text-slate-600">{t("m3.hub.listens")}</p>
+              </div>
+              <div>
+                <span className="text-xs font-mono text-slate-400">{m3Mind.totalMinutes}</span>
+                <p className="text-[9px] font-display text-slate-600">{t("m3.hub.minutes")}</p>
+              </div>
+              <div>
+                <span className="text-xs font-mono text-slate-400">{m3Mind.previousPersonaIds.length}</span>
+                <p className="text-[9px] font-display text-slate-600">{t("m3.hub.shifts")}</p>
+              </div>
+            </div>
           </div>
 
-          {/* ═ RIGHT COLUMN (4 cols): Parameters + Temperament + Tier ═ */}
+          {/* ═ RIGHT COLUMN (4 cols): Parameters + Tier ═══════ */}
           <div className="col-span-4 flex flex-col gap-3 min-h-0">
 
             {/* Parameter Activity */}
@@ -493,33 +488,38 @@ export function M3Hub() {
               </div>
             </motion.div>
 
-            {/* Temperament Profile */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
-              className="spatial-card p-3 flex-shrink-0"
-            >
-              <span className="text-xs font-display font-light tracking-[0.15em] uppercase text-slate-500 block mb-2">
-                {t("m3.hub.temperamentProfile")}
-              </span>
-              <div className="flex items-center gap-3 mb-2">
-                <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center text-lg"
-                  style={{ background: `${temperamentDef?.color}15`, border: `1px solid ${temperamentDef?.color}20` }}
+            {/* Persona card (link to detail page) */}
+            {activePersona && (
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.5 }}
+              >
+                <button
+                  onClick={() => navigate(`/info/${activePersona.id}`)}
+                  className="w-full spatial-card p-3 text-left transition-all duration-500 hover:scale-[1.01] group"
+                  style={{ border: `1px solid ${accentColor}15` }}
                 >
-                  {temperamentDef?.icon}
-                </div>
-                <div>
-                  <span className="text-sm font-display font-medium" style={{ color: temperamentDef?.color }}>
-                    {t(`m3.temperament.${m3Mind.temperament}`)}
-                  </span>
-                  <p className="text-[11px] text-slate-500 font-display font-light leading-tight mt-0.5">
-                    {t(`m3.temperament.description.${m3Mind.temperament}`)}
-                  </p>
-                </div>
-              </div>
-            </motion.div>
+                  <div className="flex items-center gap-3">
+                    <div
+                      className="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-display font-bold"
+                      style={{ background: `${accentColor}15`, color: accentColor, border: `1px solid ${accentColor}20` }}
+                    >
+                      {activePersona.id}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <span className="text-xs font-display font-medium" style={{ color: accentColor }}>
+                        {t(`personas.${activePersona.id}.name`)}
+                      </span>
+                      <p className="text-[10px] text-slate-600 font-display font-light truncate">
+                        {activePersona.family} · {t("common.ofListeners", { pct: activePersona.populationPct })}
+                      </p>
+                    </div>
+                    <ChevronRight size={14} className="text-slate-700 group-hover:text-slate-400 transition-colors" />
+                  </div>
+                </button>
+              </motion.div>
+            )}
 
             {/* Tier Info */}
             <motion.div
@@ -538,9 +538,6 @@ export function M3Hub() {
                 >
                   {t(`m3.tier.${m3Mind.tier}.name`)}
                 </div>
-                <span className="text-[10px] text-slate-600 font-display font-light italic">
-                  {t(`m3.tier.${m3Mind.tier}.tagline`)}
-                </span>
               </div>
               <div className="space-y-1">
                 {tierDef?.features.map((fKey) => (
@@ -554,9 +551,9 @@ export function M3Hub() {
                 <button
                   className="mt-3 w-full py-2 rounded-lg text-xs font-display font-medium transition-all duration-500"
                   style={{
-                    background: `linear-gradient(135deg, ${stageColor}, ${stageColor}CC)`,
+                    background: `linear-gradient(135deg, ${accentColor}, ${accentColor}CC)`,
                     color: "#000",
-                    border: `1px solid ${stageColor}50`,
+                    border: `1px solid ${accentColor}50`,
                   }}
                 >
                   {t("m3.hub.upgradeCta")} <ChevronRight size={12} className="inline" />

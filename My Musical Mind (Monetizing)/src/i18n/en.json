@@ -243,6 +243,19 @@
       "strengths": ["Energy response", "Physical engagement", "Impact sensitivity"]
     }
   },
+  "persona": {
+    "sections": {
+      "comingSoon": "Narrative coming soon — M³ is still learning this persona's story.",
+      "intro": "Introduction",
+      "listening": "Listening Patterns",
+      "emotion": "Emotional World",
+      "social": "Social Dynamics",
+      "growth": "Growth Path",
+      "famous": "Famous Minds",
+      "compatible": "Compatibility",
+      "shadow": "The Shadow"
+    }
+  },
   "infoHub": {
     "hudLabel": "Info",
     "title": "The Engine & The Minds",
@@ -268,7 +281,8 @@
     "strengths": "Strengths",
     "famousMinds": "Famous Minds",
     "compatiblePersonas": "Compatible Personas",
-    "evolutionPath": "Evolution Path"
+    "evolutionPath": "Evolution Path",
+    "sameFamily": "{{family}} Family"
   },
   "friends": {
     "hudLabel": "Community",
@@ -466,6 +480,7 @@
     "yourDna": "Your DNA",
     "liveSignals": "Live Signals",
     "yourMindWouldLove": "Your Mind Would Love",
+    "viewPersona": "View Your Persona",
     "yourBrainThisWeek": "Your Brain This Week",
     "thisWeek": "This Week",
     "weeklyEvolution": "Weekly Evolution",
@@ -742,7 +757,14 @@
       "temperamentProfile": "Temperament",
       "tierInfo": "Your Plan",
       "upgradeCta": "Upgrade to Grow",
-      "viewM3": "View M³"
+      "viewM3": "View M³",
+      "familyAffinity": "Family Affinity",
+      "listens": "Listens",
+      "minutes": "Minutes",
+      "shifts": "Shifts",
+      "typesUnlocked": "types unlocked",
+      "noObservations": "M³ needs more data to observe.",
+      "stageProgress": "Stage Progress"
     },
     "stage": {
       "seed": "Seed",
@@ -815,50 +837,102 @@
       "description": "Your Musical Mind was born but needs an upgrade to grow.",
       "cta": "Awaken M³"
     },
-    "observations": {
-      "surface": {
-        "mood": {
+    "obs": {
+      "mood": {
+        "surface": {
           "calm": "M³ is drifting in calm waters.",
           "restless": "M³ feels a quiet restlessness.",
           "bright": "M³ is radiating warmth.",
           "dark": "M³ is drawn to shadowed tones.",
           "searching": "M³ is scanning the horizon."
         },
-        "seed": "M³ is newborn — absorbing its first sounds.",
-        "sprout": "M³ is beginning to sense the world of sound.",
-        "shift": {
-          "reward": "Something is shifting in what brings M³ pleasure.",
-          "temporal": "M³ is sensing a new relationship with time and rhythm.",
-          "timbral": "The texture of sound is changing for M³.",
-          "precision": "M³ is becoming more precise in what it notices.",
-          "attention": "M³'s focus is drifting to new places."
-        }
-      },
-      "narrative": {
-        "trend": {
-          "reward": "Over {{listens}} listens, M³'s reward landscape is reshaping — what satisfies it is evolving. Currently at {{stage}} stage.",
-          "temporal": "Temporal preferences are shifting after {{listens}} listens. M³ is developing a more personal sense of rhythm. Stage: {{stage}}.",
-          "timbral": "The timbral map is gaining definition. After {{listens}} listens at {{stage}}, M³ is developing a distinct textural vocabulary.",
+        "narrative": {
+          "reward": "Over {{listens}} listens, M³'s reward landscape is reshaping — the {{family}} mind is evolving what satisfies it.",
+          "temporal": "Temporal preferences are shifting after {{listens}} listens. M³ is developing a more personal sense of rhythm through {{family}} ears.",
+          "timbral": "The timbral map is gaining definition. After {{listens}} listens, M³ is developing a distinct textural vocabulary.",
           "precision": "Precision weights are refining. After {{listens}} listens, M³ is becoming more selective about what it pays attention to.",
-          "attention": "Attention biases are reorganizing. M³ has processed {{listens}} listens at {{stage}} and is learning where to look."
+          "attention": "Attention biases are reorganizing. M³ has processed {{listens}} listens and is learning where to focus."
         },
-        "mood": {
-          "calm": "A period of settled listening — M³ is consolidating what it knows.",
-          "restless": "M³ is in a transitional state — old patterns fading, new ones not yet formed.",
-          "bright": "Recent listens have been energizing — M³'s reward signals are elevated.",
-          "dark": "M³ has been drawn to introspective, low-energy spaces recently.",
-          "searching": "M³ is in exploration mode — sampling broadly, committing to nothing yet."
-        },
-        "prediction": "Prediction coefficients are averaging {{accuracy}} — M³ is learning to anticipate what comes next.",
-        "memory": "After {{listens}} encounters, M³'s memory traces are deepening — patterns click faster now.",
-        "reward": "Reward sensitivity is at {{intensity}}% — M³ is becoming more selective about what moves it."
+        "deep": "μ(reward)={{reward}} | μ(precision)={{precision}} | μ(timbral)={{timbral}}"
       },
-      "deep": {
-        "metrics": "μ(reward)={{reward}} | μ(precision)={{precision}} | μ(temporal)={{temporal}} | μ(timbral)={{timbral}} | μ(attention)={{attention}}",
-        "functions": "Active: [{{active}}] — {{count}}/{{total}} functions online.",
-        "stage": "Stage: {{stage}} | Progress: {{progress}}% | Organism: L{{organism}} | Total listens: {{listens}}",
-        "prediction": "Prediction μ={{mean}} | Belief prior μ={{beliefPrior}} — Learning signal active."
+      "reflection": {
+        "surface": {
+          "calm": "A settled day — M³ is consolidating what it knows.",
+          "restless": "M³ is in transition — old patterns fading, new ones forming.",
+          "bright": "Recent listens energized M³ — reward signals elevated.",
+          "dark": "M³ has been drawn to introspective spaces today.",
+          "searching": "M³ is in exploration mode — scanning broadly."
+        },
+        "narrative": "{{persona}}'s M³ has processed {{listens}} listens at Level {{level}}. The {{dominant}} dimension is currently most active.",
+        "deep": "Active: [{{active}}] — {{count}}/{{total}} functions online. Progress: {{progress}}%."
+      },
+      "pattern": {
+        "surface": "M³ notices a recurring pull toward {{family}} territory.",
+        "narrative": "{{topFamily}} leads at {{topPct}}%, with {{runnerFamily}} close behind at {{runnerPct}}%. A pattern is crystallizing in how M³ processes music.",
+        "deep": "Family affinity: [{{affinity}}] | Total listens: {{listens}}"
+      },
+      "recommend": {
+        "surface": {
+          "reward": "M³ craves something that challenges its reward circuitry.",
+          "temporal": "M³ would benefit from music with unusual rhythmic structures.",
+          "timbral": "M³ is ready for new timbral textures — try something with richer harmonics.",
+          "precision": "M³ wants precision — seek out tightly produced, detail-rich music.",
+          "attention": "M³'s attention is restless — feed it something unpredictable."
+        },
+        "narrative": "For this {{family}} mind, exploring {{dominant}} territory could unlock the next growth phase.",
+        "deep": "Recommendation axes: [{{axes}}]"
+      },
+      "predict": {
+        "surface": {
+          "reward": "M³ predicts a shift in what brings pleasure soon.",
+          "temporal": "M³ senses a rhythmic preference change approaching.",
+          "timbral": "M³ anticipates a timbral evolution in the near future.",
+          "precision": "M³ forecasts increasing selectivity in what it notices.",
+          "attention": "M³ predicts its attention will drift to new musical dimensions."
+        },
+        "narrative": "{{persona}}'s M³ at Level {{level}} is developing stronger {{dominant}} predictions — the model is gaining confidence.",
+        "deep": "Prediction μ={{predMean}} across {{coeffCount}} coefficients."
+      },
+      "therapeutic": {
+        "surface": {
+          "calm": "M³ is in a balanced, settled state — no intervention needed.",
+          "restless": "M³ detects subtle restlessness — a transitional period.",
+          "bright": "M³ is energized — emotional resonance is high.",
+          "dark": "M³ notices a gravitational pull toward melancholic territory.",
+          "searching": "M³ senses uncertainty — the mind is seeking but not finding."
+        },
+        "narrative": "In this {{mood}} state, the {{family}} mind has spent {{minutes}} minutes listening. Emotional processing is active.",
+        "deep": "μ(reward)={{rewardMean}} | μ(attention)={{attentionMean}} | μ(temporal)={{temporalMean}}"
+      },
+      "counseling": {
+        "surface": "M³ suggests exploring {{family}} music — your least-traveled territory.",
+        "narrative": "{{weakFamily}} affinity is at {{weakPct}}% while {{strongFamily}} dominates at {{strongPct}}%. Expanding into weaker areas could deepen your musical consciousness.",
+        "deep": "Affinity: [{{affinity}}] | Level: {{level}}"
+      },
+      "cross": {
+        "surface": "As a {{persona}}, M³ belongs to {{pct}}% of all musical minds.",
+        "narrative": "{{persona}}'s {{family}} M³ at Level {{level}} shares this archetype with {{pct}}% of listeners. Each grows differently.",
+        "deep": "Persona ID: {{personaId}} | Previous shifts: {{previousCount}} | Total listens: {{totalListens}}"
+      },
+      "meta": {
+        "surface": "M³ at Level {{level}} has undergone {{shifts}} persona shifts — it is observing its own transformation.",
+        "narrative": "{{persona}}'s {{family}} M³ at Level {{level}} has shifted {{shifts}} times across {{listens}} listens and {{minutes}} minutes. The mind is becoming aware of its own evolution.",
+        "deep": "Family: [{{affinity}}] | Axes: [{{axes}}] | Level: {{level}}"
       }
+    },
+    "family": {
+      "Alchemists": "Alchemists",
+      "Architects": "Architects",
+      "Explorers": "Explorers",
+      "Anchors": "Anchors",
+      "Kineticists": "Kineticists"
+    },
+    "param": {
+      "reward": "Reward",
+      "temporal": "Temporal",
+      "timbral": "Timbral",
+      "precision": "Precision",
+      "attention": "Attention"
     },
     "dashboard": {
       "widget": {

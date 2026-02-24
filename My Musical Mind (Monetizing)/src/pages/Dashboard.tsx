@@ -1,28 +1,24 @@
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
-  Flame, ChevronRight, Sparkles, Brain, MessageCircle, X,
+  Flame, ChevronRight, Sparkles, Brain,
   TrendingUp, Activity, Clock, Music,
 } from "lucide-react";
 import { useUserStore } from "@/stores/useUserStore";
 import { getPersona } from "@/data/personas";
 import { MindOrganismCanvas } from "@/components/mind/MindOrganismCanvas";
 import { MindRadar } from "@/components/mind/MindRadar";
-import { MiniOrganism } from "@/components/mind/MiniOrganism";
 import { NucleusDot } from "@/components/mind/NucleusDot";
-import { Avatar } from "@/components/ui/Avatar";
 import { BeliefMiniTrace } from "@/components/dashboard/BeliefMiniTrace";
-import { Button } from "@/components/ui/Button";
-import { mockUsers } from "@/data/mock-users";
+import { FamilyAffinityRing } from "@/components/mind/FamilyAffinityRing";
 import {
   generateWeeklyMonologue,
   generatePEInsight,
-  findSimilarMind,
   generateBrainQuote,
 } from "@/data/mind-insights";
-import { beliefColors, getCompatibilityLabel } from "@/design/tokens";
+import { beliefColors } from "@/design/tokens";
 import { pageTransition, fadeIn, cinematicReveal } from "@/design/animations";
 import type { MindAxes } from "@/types/mind";
 import { weeklyStats, lastWeekDays, monthlyEvolution } from "@/data/mock-listening";
@@ -30,6 +26,8 @@ import { useM3Store } from "@/stores/useM3Store";
 import { M3_STAGES } from "@/data/m3-stages";
 import { getPrimaryObservation } from "@/data/m3-observations";
 import { getNextStage } from "@/data/m3-stages";
+import { FAMILY_MORPHOLOGY, levelToOrganismStage } from "@/types/m3";
+import type { FamilyMorphology } from "@/canvas/mind-organism";
 
 /* ── Axis metadata ──────────────────────────────────────────── */
 const AXIS_META: { key: keyof MindAxes; shortLabel: string; belief: keyof typeof beliefColors }[] = [
@@ -82,11 +80,9 @@ function computeEvolution(): { pct: string; direction: "up" | "down" } {
 export function Dashboard() {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { mind, level, xp, streak, tracksAnalyzed, displayName, totalListeningHours } = useUserStore();
+  const { mind, level, xp, streak, tracksAnalyzed, displayName } = useUserStore();
   const persona = mind ? getPersona(mind.personaId) : null;
-  const [chatOpen, setChatOpen] = useState(false);
-  const [chatMessages, setChatMessages] = useState<{ from: "you" | "them"; text: string }[]>([]);
-  const [chatInput, setChatInput] = useState("");
+  const m3Mind = useM3Store((s) => s.mind);
 
   if (!mind || !persona) return null;
 
@@ -96,25 +92,13 @@ export function Dashboard() {
   const evolution = useMemo(() => computeEvolution(), []);
 
   const monologue = useMemo(() => generateWeeklyMonologue(persona, mind.axes, t), [persona, mind.axes, t]);
-  const peInsight = useMemo(() => generatePEInsight(t), [t]);
-  const similarMind = useMemo(() => findSimilarMind(mind.axes, persona, mockUsers, t), [mind.axes, persona, t]);
   const brainQuote = useMemo(() => generateBrainQuote(persona, mind.axes, t), [persona, mind.axes, t]);
 
-  const handleSendChat = () => {
-    const text = chatInput.trim();
-    if (!text) return;
-    setChatMessages((prev) => [...prev, { from: "you", text }]);
-    setChatInput("");
-    setTimeout(() => {
-      const otherPersona = similarMind ? getPersona(similarMind.user.mind.personaId) : null;
-      const replies = [
-        `That resonates with how my ${otherPersona?.name || "mind"} processes harmony.`,
-        `My H³ temporal morphology has been shifting lately — I'm hearing longer arcs.`,
-        `Your mind is ${similarMind ? similarMind.similarity : 80}% aligned with mine, but that divergence makes it interesting.`,
-      ];
-      setChatMessages((prev) => [...prev, { from: "them", text: replies[prev.length % replies.length] }]);
-    }, 1200);
-  };
+  // Family morphology for organism
+  const family = persona.family;
+  const morphology = FAMILY_MORPHOLOGY[family] as FamilyMorphology;
+  const organismStage = m3Mind ? levelToOrganismStage(m3Mind.level) : mind.stage;
+  const personaLevel = m3Mind?.level ?? 1;
 
   return (
     <motion.div {...pageTransition} className="relative h-screen overflow-hidden">
@@ -123,9 +107,10 @@ export function Dashboard() {
         <MindOrganismCanvas
           color={color}
           secondaryColor={beliefColors.reward.primary}
-          stage={mind.stage}
+          stage={organismStage}
           intensity={0.7}
           breathRate={4}
+          familyMorphology={morphology}
           className="w-full h-full"
           variant="hero"
           interactive
@@ -145,7 +130,7 @@ export function Dashboard() {
       >
         <HUDStat label={t("dashboard.streak")} value={`${streak}d`} icon={<Flame size={14} />} accent={color} />
         <HUDStat label={t("dashboard.tracks")} value={String(tracksAnalyzed)} icon={<Music size={13} />} />
-        <HUDStat label={t("dashboard.level")} value={String(level)} icon={<TrendingUp size={13} />} />
+        <HUDStat label={t("dashboard.level")} value={`L${personaLevel}/12`} icon={<TrendingUp size={13} />} />
         <div className="flex items-center gap-2.5">
           <div className="w-24 h-1.5 rounded-full overflow-hidden" style={{ background: `${color}15` }}>
             <motion.div className="h-full rounded-full" style={{ background: color, opacity: 0.7 }}
@@ -230,6 +215,14 @@ export function Dashboard() {
                 ))}
               </div>
             </motion.div>
+
+            {/* Family Affinity (compact) */}
+            {m3Mind && (
+              <motion.div variants={fadeIn} initial="initial" animate="animate" className="spatial-card p-3 flex-shrink-0 flex flex-col items-center">
+                <span className="text-xs font-display font-light tracking-[0.15em] uppercase text-slate-500 block mb-2 w-full">{t("m3.hub.familyAffinity")}</span>
+                <FamilyAffinityRing affinity={m3Mind.familyAffinity} size={80} showLabels={false} />
+              </motion.div>
+            )}
           </div>
 
           {/* ═ CENTER COLUMN (5 cols): Persona + Quote + PE ═══ */}
@@ -314,37 +307,15 @@ export function Dashboard() {
               </div>
             </motion.div>
 
-            {/* Friends strip — bottom of center */}
-            <motion.div variants={fadeIn} initial="initial" animate="animate" className="flex items-center gap-4">
-              <div className="flex -space-x-2">
-                {mockUsers.slice(0, 5).map((user) => {
-                  const userPersona = getPersona(user.mind.personaId);
-                  return (
-                    <button
-                      key={user.id}
-                      onClick={() => navigate(`/friends/${user.id}`)}
-                      className="relative group"
-                    >
-                      <Avatar src={user.avatarUrl || undefined} name={user.displayName} size={32} borderColor={userPersona.color} />
-                    </button>
-                  );
-                })}
-              </div>
-              <button onClick={() => navigate("/friends")} className="flex items-center gap-1 text-xs text-slate-500 hover:text-slate-300 transition-colors font-display">
-                {t("nav.friends")} <ChevronRight size={14} />
+            {/* Persona link */}
+            <motion.div variants={fadeIn} initial="initial" animate="animate">
+              <button
+                onClick={() => navigate(`/info/${persona.id}`)}
+                className="flex items-center gap-2 px-4 py-2 rounded-full transition-colors text-xs font-display text-slate-500 hover:text-slate-300"
+                style={{ background: `${color}08`, border: `1px solid ${color}15` }}
+              >
+                {t("dashboard.viewPersona")} <ChevronRight size={14} />
               </button>
-              {similarMind && (
-                <button
-                  onClick={() => setChatOpen(true)}
-                  className="flex items-center gap-2 px-3 py-1.5 rounded-full transition-colors"
-                  style={{ background: `${beliefColors.familiarity.primary}10`, border: `1px solid ${beliefColors.familiarity.primary}20` }}
-                >
-                  <MessageCircle size={13} style={{ color: beliefColors.familiarity.primary }} />
-                  <span className="text-[11px] font-display" style={{ color: beliefColors.familiarity.primary }}>
-                    {t("dashboard.match", { pct: similarMind.similarity })}
-                  </span>
-                </button>
-              )}
             </motion.div>
           </div>
 
@@ -455,94 +426,11 @@ export function Dashboard() {
         </div>
       </div>
 
-      {/* ═══ CHAT MODAL ═════════════════════════════════════════════ */}
-      <AnimatePresence>
-        {chatOpen && similarMind && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/70 backdrop-blur-sm p-4"
-            onClick={() => setChatOpen(false)}
-          >
-            <motion.div
-              initial={{ y: 100, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 100, opacity: 0 }}
-              transition={{ type: "spring", damping: 25 }}
-              className="w-full max-w-lg rounded-2xl overflow-hidden"
-              style={{ background: "rgba(10,10,15,0.95)", border: "1px solid rgba(255,255,255,0.06)", backdropFilter: "blur(24px)" }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="flex items-center justify-between p-5 border-b border-white/[0.04]">
-                <div className="flex items-center gap-3">
-                  <NucleusDot color={beliefColors.familiarity.primary} size={5} active pulsing />
-                  <div>
-                    <h3 className="text-sm font-display font-medium text-slate-300">
-                      {t("dashboard.mindLink", { name: similarMind.user.displayName })}
-                    </h3>
-                    <p className="text-xs font-mono text-slate-600">
-                      {t("dashboard.neuralSimilarity", { pct: similarMind.similarity })}
-                    </p>
-                  </div>
-                </div>
-                <button onClick={() => setChatOpen(false)} className="text-slate-600 hover:text-slate-400 transition-colors">
-                  <X size={18} />
-                </button>
-              </div>
-              <div className="p-5 h-80 overflow-y-auto space-y-4">
-                <div className="text-center">
-                  <p className="text-xs font-mono text-slate-700 mb-2">{t("dashboard.mindsConnected")}</p>
-                  <p className="text-sm text-slate-500 font-body font-light max-w-sm mx-auto">
-                    {t("dashboard.sharedTraits", { count: similarMind.sharedTraits.length })}
-                  </p>
-                </div>
-                <div className="flex gap-3">
-                  <Avatar src={similarMind.user.avatarUrl || undefined} name={similarMind.user.displayName} size={32} borderColor={getPersona(similarMind.user.mind.personaId).color} />
-                  <div className="flex-1">
-                    <div className="rounded-xl p-3 max-w-[80%]" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.04)" }}>
-                      <p className="text-sm text-slate-400 font-body font-light">
-                        {t("dashboard.chatInitial", { pct: similarMind.similarity })}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                {chatMessages.map((msg, i) => (
-                  <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
-                    className={`flex gap-3 ${msg.from === "you" ? "flex-row-reverse" : ""}`}>
-                    {msg.from === "them" && (
-                      <Avatar src={similarMind.user.avatarUrl || undefined} name={similarMind.user.displayName} size={32} borderColor={getPersona(similarMind.user.mind.personaId).color} />
-                    )}
-                    <div className={`rounded-xl p-3 max-w-[80%] ${msg.from === "you" ? "ml-auto" : ""}`}
-                      style={{ background: msg.from === "you" ? `${color}15` : "rgba(255,255,255,0.03)", border: `1px solid ${msg.from === "you" ? `${color}30` : "rgba(255,255,255,0.04)"}` }}>
-                      <p className="text-sm text-slate-400 font-body font-light">{msg.text}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-              <form className="p-4 border-t border-white/[0.04]" onSubmit={(e) => { e.preventDefault(); handleSendChat(); }}>
-                <div className="flex gap-3">
-                  <input type="text" placeholder={t("dashboard.shareMind")} value={chatInput} onChange={(e) => setChatInput(e.target.value)}
-                    className="flex-1 px-4 py-2.5 rounded-xl text-sm text-slate-300 placeholder-slate-700 font-body font-light focus:outline-none"
-                    style={{ background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.06)" }} />
-                  <Button variant="primary" size="sm" type="submit">{t("dashboard.send")}</Button>
-                </div>
-              </form>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </motion.div>
   );
 }
 
 /* ── Helper Components ────────────────────────────────────────── */
-
-function seededCompat(userId: string): number {
-  let hash = 0;
-  for (let i = 0; i < userId.length; i++) hash = (hash * 31 + userId.charCodeAt(i)) | 0;
-  return 40 + Math.abs(hash % 59);
-}
 
 function HUDStat({ label, value, icon, accent }: { label: string; value: string; icon?: React.ReactNode; accent?: string }) {
   return (
@@ -567,6 +455,7 @@ function M3Widget({ color }: { color: string }) {
   const stageColor = stageDef.color;
   const nextStage = getNextStage(m3Mind.stage);
   const obs = getPrimaryObservation(m3Mind, t);
+  const activePersona = getPersona(m3Mind.activePersonaId);
 
   return (
     <motion.div
@@ -591,6 +480,9 @@ function M3Widget({ color }: { color: string }) {
             <div className="flex items-center gap-2">
               <span className="text-[11px] font-display font-light tracking-[0.1em] uppercase" style={{ color: `${stageColor}90` }}>
                 {t("m3.dashboard.widget.title")}
+              </span>
+              <span className="text-[9px] font-mono px-1.5 py-0.5 rounded-full" style={{ background: `${stageColor}10`, color: stageColor }}>
+                L{m3Mind.level}/12
               </span>
               {m3Mind.frozen && (
                 <span className="text-[9px] font-mono px-1.5 py-0.5 rounded-full bg-white/[0.04] text-slate-600">

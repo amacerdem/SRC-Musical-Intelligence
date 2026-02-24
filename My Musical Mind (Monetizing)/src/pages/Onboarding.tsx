@@ -11,7 +11,7 @@ import { MindRadar } from "@/components/mind/MindRadar";
 import { personas, getPersona } from "@/data/personas";
 import { beliefColors } from "@/design/tokens";
 import { LanguageToggle } from "@/components/layout/LanguageToggle";
-import { SpotifySimulator, calculateTemperament } from "@/services/SpotifySimulator";
+import { SpotifySimulator } from "@/services/SpotifySimulator";
 
 /* ── Platform SVG logos (inline, no dependencies) ────────────────── */
 function SpotifyLogo({ size = 28 }: { size?: number }) {
@@ -197,10 +197,8 @@ export function Onboarding() {
           subTrait: null,
         }, name);
 
-        // M³ birth: calculate temperament from mock listening data
-        const initialBatch = SpotifySimulator.getInitialBatch();
-        const temperament = calculateTemperament(initialBatch);
-        birthM3(temperament, selectedTier);
+        // M³ birth: use the assigned persona for initial family affinity
+        birthM3(randomPersona, selectedTier);
 
         setTimeout(() => {
           setStep("reveal");
@@ -1124,7 +1122,7 @@ function RevealStep({ personaId, mind, displayName, onEnter }: {
                 >
                   <Brain size={16} style={{ color }} />
                   <span className="text-sm font-display font-medium" style={{ color }}>
-                    {t("m3.birth.temperament", { temperament: t(`m3.temperament.${m3Mind.temperament}`) })}
+                    L{m3Mind.level}/12 · {persona.family}
                   </span>
                   <span className="text-[10px] font-mono px-2 py-0.5 rounded-full" style={{ background: `${color}15`, color }}>
                     {t(`m3.stage.${m3Mind.stage}`)}
