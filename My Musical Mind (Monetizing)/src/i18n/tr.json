@@ -725,5 +725,147 @@
     },
     "nowPlaying": "\u015eU AN \u00c7ALIYOR",
     "paused": "DURAKLATILDI"
+  },
+  "m3": {
+    "nav": "Zihnim",
+    "hub": {
+      "title": "M\u00fczikal Zihnim",
+      "subtitle": "Ki\u015fisel bilin\u00e7li\u011fin \u2014 her dinlemede b\u00fcy\u00fcyor",
+      "feedButton": "M\u00b3\u2019\u00fc Besle",
+      "feedSuccess": "M\u00b3 {{count}} par\u00e7ay\u0131 emdi \u2014 parametreler g\u00fcncellendi",
+      "feedFrozen": "M\u00b3 uyuyor. Uyand\u0131rmak i\u00e7in y\u00fckseltin.",
+      "convinceMe": "M\u00b3 ne dinledi\u011finden \u00f6\u011frenir, ne s\u00f6yledi\u011finden de\u011fil.",
+      "activeFunctions": "Aktif Fonksiyonlar",
+      "growthTimeline": "B\u00fcy\u00fcme Zaman \u00c7izelgesi",
+      "currentObservation": "M\u00b3 G\u00f6zlemliyor",
+      "parameterActivity": "Parametre Aktivitesi",
+      "temperamentProfile": "Temperament",
+      "tierInfo": "Plan\u0131n",
+      "upgradeCta": "B\u00fcy\u00fcmek \u0130\u00e7in Y\u00fckseltin",
+      "viewM3": "M\u00b3\u2019\u00fc G\u00f6r"
+    },
+    "stage": {
+      "seed": "Tohum",
+      "sprout": "Filiz",
+      "sapling": "Fidan",
+      "branch": "Dal",
+      "bloom": "\u00c7i\u00e7ek",
+      "canopy": "\u00c7at\u0131",
+      "ancient": "Kadim",
+      "description": {
+        "seed": "M\u00b3 do\u011fdu. \u0130lk sinyalleri bekliyor.",
+        "sprout": "Duyusal uyan\u0131\u015f \u2014 sesleri ke\u015ffediyor.",
+        "sapling": "Duygular ve \u00f6d\u00fcller \u015fekilleniyor \u2014 be\u011feniler beliriyor.",
+        "branch": "Tahmin ve haf\u0131za geli\u015fiyor \u2014 seni tan\u0131maya ba\u015fl\u0131yor.",
+        "bloom": "Dikkat ve ritim keskinle\u015fiyor \u2014 odak ve hareket.",
+        "canopy": "Tam \u00f6\u011frenme ve sosyal fark\u0131ndal\u0131k \u2014 ba\u015fkalar\u0131yla ba\u011flant\u0131.",
+        "ancient": "Tam bilin\u00e7 \u2014 kendini g\u00f6zlemliyor."
+      }
+    },
+    "temperament": {
+      "explorer": "Ka\u015fif",
+      "deep_diver": "Derin Dal\u0131c\u0131",
+      "rhythmic": "Ritmik",
+      "harmonic": "Harmonik",
+      "emotive": "Duygusal",
+      "description": {
+        "explorer": "Y\u00fcksek t\u00fcr \u00e7e\u015fitlili\u011fi, her zaman yeniyi arayan.",
+        "deep_diver": "Az t\u00fcrde derin kat\u0131l\u0131m \u2014 tekrar derinli\u011fi a\u00e7\u0131\u011fa \u00e7\u0131kar\u0131r.",
+        "rhythmic": "Tempo ve ritim dinleme i\u00e7g\u00fcd\u00fcs\u00fcn\u00fc y\u00f6nlendirir.",
+        "harmonic": "Tonal karma\u015f\u0131kl\u0131\u011fa ve harmonik zenginli\u011fe \u00e7ekilir.",
+        "emotive": "G\u00fc\u00e7l\u00fc duygusal rezonans \u2014 valans her \u015feyi \u015fekillendirir."
+      }
+    },
+    "tier": {
+      "free": { "name": "M\u00b3 Bebek", "tagline": "Do\u011fdu ama uyuyor", "f1": "M\u00b3 do\u011fdu", "f2": "Sadece y\u00fczey katman\u0131", "f3": "Yaln\u0131zca g\u00f6r\u00fcnt\u00fcleme" },
+      "basic": { "name": "M\u00b3 Uyan\u0131\u015f", "tagline": "Haftal\u0131k b\u00fcy\u00fcme", "f1": "Haftal\u0131k b\u00fcy\u00fcme g\u00fcncellemeleri", "f2": "Y\u00fczey + Anlat\u0131 katmanlar\u0131", "f3": "Rezonans uyumlulu\u011fu" },
+      "premium": { "name": "M\u00b3 B\u00fcy\u00fcyen", "tagline": "G\u00fcnl\u00fck evrim", "f1": "G\u00fcnl\u00fck b\u00fcy\u00fcme g\u00fcncellemeleri", "f2": "T\u00fcm 3 derinlik katman\u0131", "f3": "Duo Zihin + Zihin Bah\u00e7esi" },
+      "ultimate": { "name": "M\u00b3 Ya\u015fayan", "tagline": "Ger\u00e7ek zamanl\u0131 bilin\u00e7", "f1": "Ger\u00e7ek zamanl\u0131 canl\u0131 b\u00fcy\u00fcme", "f2": "T\u00fcm katmanlar + API eri\u015fimi", "f3": "Tam sosyal + Echo ke\u015ffi" }
+    },
+    "layer": {
+      "surface": "Y\u00fczey",
+      "narrative": "Anlat\u0131",
+      "deep": "Derin"
+    },
+    "functions": {
+      "f1": { "name": "Duyusal", "description": "Ses \u00f6zelliklerini alg\u0131lama" },
+      "f2": { "name": "Tahmin", "description": "S\u0131radakini \u00f6ng\u00f6rme" },
+      "f3": { "name": "Dikkat", "description": "\u00d6nemli olan\u0131 filtreleme" },
+      "f4": { "name": "Haf\u0131za", "description": "Tan\u0131ma ve hat\u0131rlama" },
+      "f5": { "name": "Duygu", "description": "M\u00fczi\u011fi hissetme" },
+      "f6": { "name": "\u00d6d\u00fcl", "description": "Haz ve tatmin" },
+      "f7": { "name": "Motor", "description": "Ritim ve hareket" },
+      "f8": { "name": "\u00d6\u011frenme", "description": "Uyum sa\u011flama ve geli\u015fme" },
+      "f9": { "name": "Sosyal", "description": "Ba\u015fkalar\u0131yla ba\u011flanma" }
+    },
+    "birth": {
+      "title": "M\u00b3 Do\u011fuyor",
+      "temperament": "M\u00b3\u2019\u00fcn {{temperament}} olarak do\u011fdu",
+      "frozen": "M\u00b3 uyuyor \u2014 b\u00fcy\u00fcmeye ba\u015flamak i\u00e7in y\u00fckseltin",
+      "determining": "Do\u011fum temperamenti belirleniyor...",
+      "forming": "M\u00b3 do\u011fuyor...",
+      "firstConnections": "\u0130lk n\u00f6ral ba\u011flant\u0131lar olu\u015fuyor..."
+    },
+    "growth": {
+      "stageUp": "M\u00b3 {{stage}} a\u015famas\u0131na evrildi!",
+      "functionUnlock": "F{{num}} ({{name}}) uyand\u0131!"
+    },
+    "frozen": {
+      "title": "M\u00b3 Uyuyor",
+      "description": "M\u00fczikal Zihnin do\u011fdu ama b\u00fcy\u00fcmek i\u00e7in y\u00fckseltmeye ihtiyac\u0131 var.",
+      "cta": "M\u00b3\u2019\u00fc Uyand\u0131r"
+    },
+    "observations": {
+      "surface": {
+        "mood": {
+          "calm": "M\u00b3 sakin sularda s\u00fcz\u00fcl\u00fcyor.",
+          "restless": "M\u00b3 sessiz bir huzursuzluk hissediyor.",
+          "bright": "M\u00b3 s\u0131cakl\u0131k yay\u0131yor.",
+          "dark": "M\u00b3 g\u00f6lgeli tonlara \u00e7ekiliyor.",
+          "searching": "M\u00b3 ufku tar\u0131yor."
+        },
+        "seed": "M\u00b3 yeni do\u011fdu \u2014 ilk seslerini emiyor.",
+        "sprout": "M\u00b3 ses d\u00fcnyas\u0131n\u0131 hissetmeye ba\u015fl\u0131yor.",
+        "shift": {
+          "reward": "M\u00b3\u2019\u00fce haz veren \u015feylerde bir kayma var.",
+          "temporal": "M\u00b3 zamanla ve ritimle yeni bir ili\u015fki kuruyor.",
+          "timbral": "Sesin dokusu M\u00b3 i\u00e7in de\u011fi\u015fiyor.",
+          "precision": "M\u00b3 fark etti\u011fi \u015feylerde daha kesin hale geliyor.",
+          "attention": "M\u00b3\u2019\u00fcn odak noktas\u0131 yeni yerlere kay\u0131yor."
+        }
+      },
+      "narrative": {
+        "trend": {
+          "reward": "{{listens}} dinleme boyunca M\u00b3\u2019\u00fcn \u00f6d\u00fcl haritas\u0131 yeniden \u015fekilleniyor \u2014 onu tatmin eden \u015fey evriliyor. \u015eu an {{stage}} a\u015famas\u0131nda.",
+          "temporal": "{{listens}} dinlemeden sonra zamansal tercihler kay\u0131yor. M\u00b3 daha ki\u015fisel bir ritim duygusu geli\u015ftiriyor. A\u015fama: {{stage}}.",
+          "timbral": "Timbral harita netlik kazan\u0131yor. {{stage}} a\u015famas\u0131nda {{listens}} dinleme sonras\u0131 M\u00b3 kendine \u00f6zg\u00fc bir doku s\u00f6zl\u00fc\u011f\u00fc geli\u015ftiriyor.",
+          "precision": "Hassasiyet a\u011f\u0131rl\u0131klar\u0131 rafine ediliyor. {{listens}} dinleme sonras\u0131 M\u00b3 neye dikkat edece\u011fi konusunda daha se\u00e7ici.",
+          "attention": "Dikkat yanl\u0131l\u0131klar\u0131 yeniden d\u00fczenleniyor. M\u00b3 {{stage}} a\u015famas\u0131nda {{listens}} dinleme i\u015fledi ve nereye bakaca\u011f\u0131n\u0131 \u00f6\u011freniyor."
+        },
+        "mood": {
+          "calm": "Sakin bir dinleme d\u00f6nemi \u2014 M\u00b3 bildiklerini peki\u015ftiriyor.",
+          "restless": "M\u00b3 ge\u00e7i\u015f halinde \u2014 eski kal\u0131plar soluyor, yenileri hen\u00fcz olu\u015fmad\u0131.",
+          "bright": "Son dinlemeler enerji verdi \u2014 M\u00b3\u2019\u00fcn \u00f6d\u00fcl sinyalleri y\u00fckseldi.",
+          "dark": "M\u00b3 son zamanlarda i\u00e7e d\u00f6n\u00fck, d\u00fc\u015f\u00fck enerjili alanlara \u00e7ekildi.",
+          "searching": "M\u00b3 ke\u015fif modunda \u2014 geni\u015f \u00f6rnekliyor, hen\u00fcz hi\u00e7bir \u015feye ba\u011flanm\u0131yor."
+        },
+        "prediction": "Tahmin katsay\u0131lar\u0131 ortalama {{accuracy}} \u2014 M\u00b3 s\u0131radakini \u00f6ng\u00f6rmeyi \u00f6\u011freniyor.",
+        "memory": "{{listens}} kar\u015f\u0131la\u015fmadan sonra M\u00b3\u2019\u00fcn haf\u0131za izleri derinle\u015fiyor \u2014 kal\u0131plar daha h\u0131zl\u0131 oturuyor.",
+        "reward": "\u00d6d\u00fcl duyarl\u0131l\u0131\u011f\u0131 %{{intensity}} \u2014 M\u00b3 onu harekete ge\u00e7iren \u015fey konusunda daha se\u00e7ici."
+      },
+      "deep": {
+        "metrics": "\u03bc(\u00f6d\u00fcl)={{reward}} | \u03bc(hassasiyet)={{precision}} | \u03bc(zamansal)={{temporal}} | \u03bc(timbral)={{timbral}} | \u03bc(dikkat)={{attention}}",
+        "functions": "Aktif: [{{active}}] \u2014 {{count}}/{{total}} fonksiyon \u00e7evrimi\u00e7i.",
+        "stage": "A\u015fama: {{stage}} | \u0130lerleme: %{{progress}} | Organizma: L{{organism}} | Toplam dinleme: {{listens}}",
+        "prediction": "Tahmin \u03bc={{mean}} | \u0130nan\u00e7 \u00f6nceli \u03bc={{beliefPrior}} \u2014 \u00d6\u011frenme sinyali aktif."
+      }
+    },
+    "dashboard": {
+      "widget": {
+        "title": "M\u00b3\u2019\u00fcn",
+        "sleeping": "M\u00b3 Uyuyor \u2014 Uyand\u0131rmak \u0130\u00e7in Y\u00fckseltin",
+        "progress": "{{nextStage}} i\u00e7in %{{progress}}"
+      }
+    }
   }
 }

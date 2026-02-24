@@ -1,6 +1,7 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
+  Brain,
   Compass,
   LayoutGrid,
   Radio,
@@ -20,6 +21,7 @@ import { useDesktop } from "@/hooks/useMediaQuery";
 import { LanguageToggle } from "./LanguageToggle";
 
 const mainNav = [
+  { to: "/m3", icon: Brain, labelKey: "m3.nav", belief: "reward" as const },
   { to: "/dashboard", icon: LayoutGrid, labelKey: "nav.home", belief: "consonance" as const },
   { to: "/live", icon: Radio, labelKey: "nav.field", belief: "tempo" as const },
   { to: "/discover", icon: Compass, labelKey: "nav.discover", belief: "salience" as const },
@@ -136,7 +138,7 @@ export function FloatingNav() {
         transition={{ duration: 0.8, delay: 0.5 }}
         className="fixed top-5 left-6 z-40"
       >
-        <NavLink to="/" className="group flex items-center gap-2.5">
+        <NavLink to="/m3" className="group flex items-center gap-2.5">
           <div className="relative">
             <div className="absolute -inset-1 opacity-60 group-hover:opacity-100 transition-opacity duration-500">
               <MiniOrganism color={accentColor} stage={1} size={32} />

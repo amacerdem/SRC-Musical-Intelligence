@@ -80,6 +80,10 @@ export interface MindProfile {
   axes: MindAxes;
   stage: EvolutionStage;
   subTrait: SubTrait;
+  /** M³ integration — family affinity across all 5 families */
+  familyAffinity?: import("./m3").FamilyAffinity;
+  /** M³ integration — 12-level persona evolution */
+  personaLevel?: import("./m3").PersonaLevel;
 }
 
 /** Belief trace point (for timeline charts) */

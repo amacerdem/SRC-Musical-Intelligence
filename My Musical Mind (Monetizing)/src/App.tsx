@@ -16,6 +16,7 @@ import { ResonanceField } from "@/pages/ResonanceField";
 import { Leaderboard } from "@/pages/Leaderboard";
 import { Discover } from "@/pages/Discover";
 import { InfoHub } from "@/pages/InfoHub";
+import { M3Hub } from "@/pages/M3Hub";
 
 export default function App() {
   const { hasCompletedOnboarding } = useUserStore();
@@ -32,6 +33,12 @@ export default function App() {
 
           {/* App routes (with shell) */}
           <Route element={<AppShell />}>
+            <Route
+              path="/m3"
+              element={
+                hasCompletedOnboarding ? <M3Hub /> : <Navigate to="/" />
+              }
+            />
             <Route
               path="/dashboard"
               element={

@@ -26,6 +26,10 @@ import { beliefColors, getCompatibilityLabel } from "@/design/tokens";
 import { pageTransition, fadeIn, cinematicReveal } from "@/design/animations";
 import type { MindAxes } from "@/types/mind";
 import { weeklyStats, lastWeekDays, monthlyEvolution } from "@/data/mock-listening";
+import { useM3Store } from "@/stores/useM3Store";
+import { M3_STAGES } from "@/data/m3-stages";
+import { getPrimaryObservation } from "@/data/m3-observations";
+import { getNextStage } from "@/data/m3-stages";
 
 /* ── Axis metadata ──────────────────────────────────────────── */
 const AXIS_META: { key: keyof MindAxes; shortLabel: string; belief: keyof typeof beliefColors }[] = [
@@ -273,6 +277,9 @@ export function Dashboard() {
               </p>
               <p className="text-xs font-mono text-slate-600 mt-2">— {t("dashboard.yourMind", { family: persona.family.slice(0, -1) })}</p>
             </motion.div>
+
+            {/* M³ Widget */}
+            <M3Widget color={color} />
 
             {/* PE Insight */}
             <motion.div
@@ -546,5 +553,76 @@ function HUDStat({ label, value, icon, accent }: { label: string; value: string;
         <span className="text-base font-mono text-slate-300">{value}</span>
       </div>
     </div>
+  );
+}
+
+function M3Widget({ color }: { color: string }) {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const m3Mind = useM3Store((s) => s.mind);
+
+  if (!m3Mind) return null;
+
+  const stageDef = M3_STAGES[m3Mind.stage];
+  const stageColor = stageDef.color;
+  const nextStage = getNextStage(m3Mind.stage);
+  const obs = getPrimaryObservation(m3Mind, t);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.4, duration: 0.8 }}
+      className="w-full max-w-lg"
+    >
+      <button
+        onClick={() => navigate("/m3")}
+        className="w-full spatial-card p-4 text-left transition-all duration-500 hover:scale-[1.01] group"
+        style={{ border: `1px solid ${stageColor}15` }}
+      >
+        <div className="flex items-center gap-3">
+          <div
+            className="w-10 h-10 rounded-xl flex items-center justify-center text-sm"
+            style={{ background: `${stageColor}12`, border: `1px solid ${stageColor}20` }}
+          >
+            <span style={{ color: stageColor }}>{stageDef.icon}</span>
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2">
+              <span className="text-[11px] font-display font-light tracking-[0.1em] uppercase" style={{ color: `${stageColor}90` }}>
+                {t("m3.dashboard.widget.title")}
+              </span>
+              {m3Mind.frozen && (
+                <span className="text-[9px] font-mono px-1.5 py-0.5 rounded-full bg-white/[0.04] text-slate-600">
+                  {t("m3.dashboard.widget.sleeping")}
+                </span>
+              )}
+            </div>
+            <p className="text-[12px] text-slate-400 font-body font-light mt-0.5 truncate">
+              {obs.text}
+            </p>
+          </div>
+          <ChevronRight size={14} className="text-slate-700 group-hover:text-slate-400 transition-colors" />
+        </div>
+        {/* Progress bar */}
+        <div className="mt-2.5 flex items-center gap-2">
+          <span className="text-[10px] font-display" style={{ color: stageColor }}>{t(`m3.stage.${m3Mind.stage}`)}</span>
+          <div className="flex-1 h-[2px] rounded-full bg-white/[0.04] overflow-hidden">
+            <motion.div
+              className="h-full rounded-full"
+              style={{ background: stageColor, opacity: 0.7 }}
+              initial={{ width: 0 }}
+              animate={{ width: `${m3Mind.stageProgress * 100}%` }}
+              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+            />
+          </div>
+          {nextStage && (
+            <span className="text-[10px] font-mono text-slate-600">
+              {t("m3.dashboard.widget.progress", { progress: Math.round(m3Mind.stageProgress * 100), nextStage: t(`m3.stage.${nextStage}`) })}
+            </span>
+          )}
+        </div>
+      </button>
+    </motion.div>
   );
 }

@@ -1,55 +1,88 @@
+import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { PageShell } from '../../components/layout/PageShell'
-import { FUNCTIONS } from '../../data/functions'
+import { GlassTabs } from '../../components/glass/GlassTabs'
+import { FunctionHeader } from '../../components/c3/FunctionHeader'
+import { BeliefGrid } from '../../components/c3/BeliefGrid'
+import { MechanismCard } from '../../components/c3/MechanismCard'
+import { RelayPanel } from '../../components/c3/RelayPanel'
+import { AudioTimeline } from '../../components/audio/AudioTimeline'
+import { useFunctionData } from '../../hooks/useFunctionData'
+import { BELIEFS } from '../../data/beliefs'
 
 export function FunctionPage() {
   const { fId } = useParams<{ fId: string }>()
-  const fn = FUNCTIONS.find((f) => f.id === fId)
+  const { fn, beliefs, mechanisms, relay } = useFunctionData(fId ?? '')
+  const [activeTab, setActiveTab] = useState('beliefs')
 
   if (!fn) {
     return (
       <PageShell title="Function Not Found">
         <p className="text-text-secondary text-sm mt-4">
-          No function found for ID "{fId}". Valid IDs: f1\u2013f9.
+          No function found for ID "{fId}". Valid IDs: f1–f9.
         </p>
       </PageShell>
     )
   }
 
-  const { beliefCounts: bc } = fn
+  const tabs = [
+    { key: 'beliefs', label: 'Beliefs', count: fn.beliefCounts.total },
+    { key: 'mechanisms', label: 'Mechanisms', count: mechanisms.length },
+    ...(relay ? [{ key: 'relay', label: 'Relay' }] : []),
+  ]
 
   return (
-    <PageShell
-      title={`F${fn.index} ${fn.name}`}
-      subtitle={fn.description}
-      accent={fn.color}
-    >
-      {/* Belief count badges */}
-      <div className="flex gap-2 mt-2 mb-6">
-        <span className="glass-badge badge-core">{bc.core} Core</span>
-        <span className="glass-badge badge-appraisal">{bc.appraisal} Appraisal</span>
-        <span className="glass-badge badge-anticipation">{bc.anticipation} Anticipation</span>
-        <span className="glass-chip">{fn.mechanismCount} mechanisms</span>
-        {fn.relay && <span className="glass-chip">{fn.relay}</span>}
-      </div>
+    <PageShell title="" subtitle="">
+      <div className="space-y-6">
+        {/* Header */}
+        <FunctionHeader fn={fn} mechanismCount={mechanisms.length} />
 
-      {/* Tab placeholder */}
-      <div className="glass-tabs mb-6">
-        <div className="glass-tab active">Beliefs ({bc.total})</div>
-        <div className="glass-tab">Mechanisms ({fn.mechanismCount})</div>
-        {fn.relay && <div className="glass-tab">Relay</div>}
-      </div>
+        {/* Audio timeline strip */}
+        <AudioTimeline color={fn.color} />
 
-      {/* Content placeholder */}
-      <div className="glass-card p-6" style={{ borderColor: `${fn.color}22` }}>
-        <p className="text-sm text-text-secondary">
-          Function page content for F{fn.index} {fn.name} ({fn.unit}).
-          This will show {bc.total} beliefs, {fn.mechanismCount} mechanisms,
-          and {fn.relay ?? 'no'} relay data.
-        </p>
-        <p className="text-xs text-text-tertiary mt-2 mono">
-          Depth range: {fn.depthRange[0]}\u2013{fn.depthRange[1]}
-        </p>
+        {/* Tabs */}
+        <GlassTabs
+          tabs={tabs}
+          active={activeTab}
+          onChange={setActiveTab}
+          accent={fn.color}
+        />
+
+        {/* Tab content */}
+        {activeTab === 'beliefs' && (
+          <BeliefGrid
+            beliefs={beliefs.beliefs}
+            data={beliefs.data}
+            color={fn.color}
+            counts={fn.beliefCounts}
+          />
+        )}
+
+        {activeTab === 'mechanisms' && (
+          <div className="space-y-2">
+            {mechanisms.map((m) => (
+              <MechanismCard
+                key={m.name}
+                mechanism={m}
+                linkedBeliefs={BELIEFS.filter(
+                  (b) => b.mechanism === m.name && b.functionId === fn.id,
+                )}
+                color={fn.color}
+              />
+            ))}
+            {mechanisms.length === 0 && (
+              <div className="glass-card p-6 text-center text-text-tertiary text-sm">
+                F{fn.index} is a pure belief layer with zero mechanisms.
+                <br />
+                Beliefs source from cross-function mechanisms.
+              </div>
+            )}
+          </div>
+        )}
+
+        {activeTab === 'relay' && relay && (
+          <RelayPanel relay={relay} color={fn.color} />
+        )}
       </div>
     </PageShell>
   )

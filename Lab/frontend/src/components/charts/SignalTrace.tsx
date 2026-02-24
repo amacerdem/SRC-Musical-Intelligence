@@ -9,6 +9,10 @@ interface SignalTraceProps {
   height?: number
   className?: string
   showGrid?: boolean
+  /** Current playback frame for cursor sync */
+  cursorFrame?: number
+  /** Total frames in the data (for cursor position calculation) */
+  totalFrames?: number
 }
 
 const DEFAULT_PALETTE = [
@@ -26,6 +30,8 @@ export function SignalTrace({
   height = 200,
   className = '',
   showGrid = true,
+  cursorFrame,
+  totalFrames,
 }: SignalTraceProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -119,7 +125,24 @@ export function SignalTrace({
       }
       ctx.globalAlpha = 1
     }
-  }, [data, nChannels, colors, labels, height, showGrid])
+
+    // Playback cursor
+    if (cursorFrame != null && totalFrames && totalFrames > 0) {
+      const cx = pad.left + (cursorFrame / totalFrames) * plotW
+      ctx.beginPath()
+      ctx.strokeStyle = 'rgba(255,255,255,0.6)'
+      ctx.lineWidth = 1
+      ctx.moveTo(cx, pad.top)
+      ctx.lineTo(cx, pad.top + plotH)
+      ctx.stroke()
+
+      // Dot at top
+      ctx.beginPath()
+      ctx.arc(cx, pad.top, 2.5, 0, Math.PI * 2)
+      ctx.fillStyle = 'rgba(255,255,255,0.8)'
+      ctx.fill()
+    }
+  }, [data, nChannels, colors, labels, height, showGrid, cursorFrame, totalFrames])
 
   useEffect(() => {
     draw()

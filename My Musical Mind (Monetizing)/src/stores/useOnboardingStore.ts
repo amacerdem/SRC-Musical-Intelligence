@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import type { M3Tier } from "@/types/m3";
 
 type OnboardingStep = "plans" | "signup" | "connect" | "evolving" | "reveal" | "done";
 
@@ -8,6 +9,7 @@ interface OnboardingState {
   analysisProgress: number;   // 0-100
   analysisPhase: string;
   selectedPlan: string | null; // "pulse" | "resonance" | "transcendence"
+  selectedTier: M3Tier;       // M³ tier mapped from plan
 
   setStep: (step: OnboardingStep) => void;
   setPersona: (id: number) => void;
@@ -16,18 +18,26 @@ interface OnboardingState {
   reset: () => void;
 }
 
+/** Map plan IDs to M³ tiers */
+const PLAN_TO_TIER: Record<string, M3Tier> = {
+  pulse: "basic",
+  resonance: "premium",
+  transcendence: "ultimate",
+};
+
 export const useOnboardingStore = create<OnboardingState>((set) => ({
   step: "plans",
   selectedPersonaId: null,
   analysisProgress: 0,
   analysisPhase: "",
   selectedPlan: null,
+  selectedTier: "free",
 
   setStep: (step) => set({ step }),
   setPersona: (id) => set({ selectedPersonaId: id }),
   setProgress: (analysisProgress, analysisPhase) =>
     set({ analysisProgress, analysisPhase }),
-  setSelectedPlan: (selectedPlan) => set({ selectedPlan }),
+  setSelectedPlan: (plan) => set({ selectedPlan: plan, selectedTier: PLAN_TO_TIER[plan] ?? "free" }),
   reset: () =>
     set({
       step: "plans",
@@ -35,5 +45,6 @@ export const useOnboardingStore = create<OnboardingState>((set) => ({
       analysisProgress: 0,
       analysisPhase: "",
       selectedPlan: null,
+      selectedTier: "free",
     }),
 }));

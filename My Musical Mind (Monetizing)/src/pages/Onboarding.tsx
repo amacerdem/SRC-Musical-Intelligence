@@ -5,11 +5,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Check, Crown, Sparkles, Zap, Music, Brain, Radio, Users, Star, Shield, Headphones, Eye } from "lucide-react";
 import { useOnboardingStore } from "@/stores/useOnboardingStore";
 import { useUserStore } from "@/stores/useUserStore";
+import { useM3Store } from "@/stores/useM3Store";
 import { MindOrganismCanvas } from "@/components/mind/MindOrganismCanvas";
 import { MindRadar } from "@/components/mind/MindRadar";
 import { personas, getPersona } from "@/data/personas";
 import { beliefColors } from "@/design/tokens";
 import { LanguageToggle } from "@/components/layout/LanguageToggle";
+import { SpotifySimulator, calculateTemperament } from "@/services/SpotifySimulator";
 
 /* ── Platform SVG logos (inline, no dependencies) ────────────────── */
 function SpotifyLogo({ size = 28 }: { size?: number }) {
@@ -54,9 +56,9 @@ const ANALYSIS_PHASES = [
   { key: "onboarding.evolving.phases.p5", belief: "tempo" as const },
   { key: "onboarding.evolving.phases.p6", belief: "salience" as const },
   { key: "onboarding.evolving.phases.p7", belief: "salience" as const },
-  { key: "onboarding.evolving.phases.p8", belief: "familiarity" as const },
-  { key: "onboarding.evolving.phases.p9", belief: "reward" as const },
-  { key: "onboarding.evolving.phases.p10", belief: "reward" as const },
+  { key: "m3.birth.determining", belief: "familiarity" as const },
+  { key: "m3.birth.forming", belief: "reward" as const },
+  { key: "m3.birth.firstConnections", belief: "reward" as const },
 ];
 
 /* ── Membership Plans ────────────────────────────────────────────── */
@@ -162,9 +164,10 @@ function useTicker(target: number, duration: number, active: boolean) {
 
 export function Onboarding() {
   const navigate = useNavigate();
-  const { step, setStep, setPersona, setProgress, setSelectedPlan, analysisProgress, analysisPhase, selectedPersonaId } =
+  const { step, setStep, setPersona, setProgress, setSelectedPlan, analysisProgress, analysisPhase, selectedPersonaId, selectedTier } =
     useOnboardingStore();
   const { completeOnboarding, displayName, setDisplayName, mind } = useUserStore();
+  const birthM3 = useM3Store((s) => s.birthM3);
   const [userName, setUserName] = useState(displayName || "");
 
   const startEvolution = useCallback((name: string) => {
@@ -194,6 +197,11 @@ export function Onboarding() {
           subTrait: null,
         }, name);
 
+        // M³ birth: calculate temperament from mock listening data
+        const initialBatch = SpotifySimulator.getInitialBatch();
+        const temperament = calculateTemperament(initialBatch);
+        birthM3(temperament, selectedTier);
+
         setTimeout(() => {
           setStep("reveal");
         }, 1200);
@@ -201,7 +209,7 @@ export function Onboarding() {
     }, 200);
 
     return () => clearInterval(interval);
-  }, [setStep, setProgress, setPersona, completeOnboarding, setDisplayName]);
+  }, [setStep, setProgress, setPersona, completeOnboarding, setDisplayName, birthM3, selectedTier]);
 
   return (
     <div className="fixed inset-0 bg-black overflow-hidden">
@@ -235,7 +243,7 @@ export function Onboarding() {
           <EvolvingStep key="evolving" progress={analysisProgress} phase={analysisPhase} userName={userName} />
         )}
         {step === "reveal" && selectedPersonaId && mind && (
-          <RevealStep key="reveal" personaId={selectedPersonaId} mind={mind} displayName={userName} onEnter={() => navigate("/dashboard")} />
+          <RevealStep key="reveal" personaId={selectedPersonaId} mind={mind} displayName={userName} onEnter={() => navigate("/m3")} />
         )}
       </AnimatePresence>
     </div>
@@ -977,6 +985,7 @@ function RevealStep({ personaId, mind, displayName, onEnter }: {
   const { t } = useTranslation();
   const [phase, setPhase] = useState<RevealPhase>("void");
   const persona = getPersona(personaId);
+  const m3Mind = useM3Store((s) => s.mind);
 
   useEffect(() => {
     if (!persona) return;
@@ -1103,6 +1112,30 @@ function RevealStep({ personaId, mind, displayName, onEnter }: {
               >
                 "{persona.tagline}"
               </motion.p>
+
+              {/* M³ Birth Badge */}
+              {m3Mind && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: persona.name.length * 0.06 + 1.2, duration: 0.8 }}
+                  className="flex items-center gap-3 mt-5 px-5 py-2.5 rounded-full mx-auto"
+                  style={{ background: `${color}08`, border: `1px solid ${color}15` }}
+                >
+                  <Brain size={16} style={{ color }} />
+                  <span className="text-sm font-display font-medium" style={{ color }}>
+                    {t("m3.birth.temperament", { temperament: t(`m3.temperament.${m3Mind.temperament}`) })}
+                  </span>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full" style={{ background: `${color}15`, color }}>
+                    {t(`m3.stage.${m3Mind.stage}`)}
+                  </span>
+                  {m3Mind.frozen && (
+                    <span className="text-[10px] font-mono text-slate-500 px-2 py-0.5 rounded-full bg-white/[0.04]">
+                      {t("m3.frozen.title")}
+                    </span>
+                  )}
+                </motion.div>
+              )}
             </motion.div>
           )}
         </AnimatePresence>
