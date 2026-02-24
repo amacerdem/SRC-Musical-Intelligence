@@ -81,9 +81,11 @@ export function Dashboard() {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { mind, level, xp, streak, tracksAnalyzed, displayName } = useUserStore();
-  const persona = mind ? getPersona(mind.personaId) : null;
   const m3Mind = useM3Store((s) => s.mind);
   const identity = useActiveIdentity();
+  // Use M3's active persona (evolved through training), fall back to onboarding persona
+  const activePersonaId = m3Mind?.activePersonaId ?? mind?.personaId;
+  const persona = activePersonaId ? getPersona(activePersonaId) : null;
 
   if (!mind || !persona) return null;
 

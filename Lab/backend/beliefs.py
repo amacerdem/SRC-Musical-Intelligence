@@ -53,12 +53,12 @@ def _parse_beliefs_registry() -> List[Dict[str, Any]]:
     array_str = re.sub(r"//[^\n]*", "", array_str)
     # 2. Remove trailing commas before } or ]
     array_str = re.sub(r",\s*([}\]])", r"\1", array_str)
-    # 3. Replace single quotes with double BEFORE key quoting
-    #    (so dim names like 'P0:salience_network' become "P0:..." first)
+    # 3. Quote unquoted keys — only at property positions (after { or ,)
+    #    Done BEFORE single→double swap so string values are still in
+    #    single quotes and can't confuse the regex
+    array_str = re.sub(r"([{,])\s*(\w+)\s*:", r'\1 "\2":', array_str)
+    # 4. Replace single quotes with double
     array_str = array_str.replace("'", '"')
-    # 4. Quote unquoted keys — negative lookbehind for " avoids
-    #    matching colons inside strings like "P0:salience_network"
-    array_str = re.sub(r'(?<!")(\b\w+)\s*:', r'"\1":', array_str)
 
     beliefs = json.loads(array_str)
     return beliefs
@@ -80,17 +80,25 @@ def get_beliefs_registry() -> List[Dict[str, Any]]:
 # ---------------------------------------------------------------------------
 
 def build_dim_lookup(nuclei) -> Dict[str, Tuple[str, int]]:
-    """Build a lookup: "dim_name" → (mechanism_name, dim_index).
+    """Build a lookup: (mechanism_name, dim_name) → (mechanism_name, dim_index).
 
-    Source dims in beliefs use the format "P0:consonance_signal",
-    which matches the mechanism's dimension_names property.
+    Source dims in beliefs use formats like "P0:consonance_signal" or
+    sometimes just "consonance_signal" (without scope prefix).
+    We index both forms for robust matching.
     """
     lookup: Dict[str, Tuple[str, int]] = {}
     for n in nuclei:
-        for i, name in enumerate(n.dimension_names):
-            # Key by just the dim name (mechanism is known from belief.mechanism)
+        dims = n.dimension_names
+        if not dims:
+            continue
+        for i, name in enumerate(dims):
             lookup[(n.NAME, name)] = (n.NAME, i)
-    return lookup
+            # Also index without scope prefix (e.g. "groove_index" for "M0:groove_index")
+            if ":" in name:
+                bare = name.split(":", 1)[1]
+                key = (n.NAME, bare)
+                if key not in lookup:  # prefixed form takes priority
+                    lookup[key] = (n.NAME, i)
 
 
 # ---------------------------------------------------------------------------
@@ -137,13 +145,22 @@ def compute_beliefs(
             dim_name = sd["name"]
             weight = sd["weight"]
 
+            # Handle inversion syntax: "1-V1:mode_signal" → (1 - dim_value)
+            invert = False
+            if dim_name.startswith("1-"):
+                dim_name = dim_name[2:]
+                invert = True
+
             key = (mech_name, dim_name)
             if key not in dim_lookup:
                 continue
 
             _, dim_idx = dim_lookup[key]
             if dim_idx < mech_output.shape[1]:
-                value += mech_output[:, dim_idx] * weight
+                dim_val = mech_output[:, dim_idx]
+                if invert:
+                    dim_val = 1.0 - dim_val
+                value += dim_val * weight
 
         result[:, idx] = np.clip(value, 0.0, 1.0)
 
