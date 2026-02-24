@@ -12,7 +12,7 @@ import { MindOrganismCanvas } from "@/components/mind/MindOrganismCanvas";
 import { MindRadar } from "@/components/mind/MindRadar";
 import { NucleusDot } from "@/components/mind/NucleusDot";
 import { BeliefMiniTrace } from "@/components/dashboard/BeliefMiniTrace";
-import { FamilyAffinityRing } from "@/components/mind/FamilyAffinityRing";
+import { MindTypeRing } from "@/components/mind/MindTypeRing";
 import {
   generateWeeklyMonologue,
   generatePEInsight,
@@ -26,8 +26,8 @@ import { useM3Store } from "@/stores/useM3Store";
 import { M3_STAGES } from "@/data/m3-stages";
 import { getPrimaryObservation } from "@/data/m3-observations";
 import { getNextStage } from "@/data/m3-stages";
-import { FAMILY_MORPHOLOGY, levelToOrganismStage } from "@/types/m3";
-import type { FamilyMorphology } from "@/canvas/mind-organism";
+import { levelToOrganismStage } from "@/types/m3";
+import { useActiveIdentity } from "@/hooks/useActiveIdentity";
 
 /* ── Axis metadata ──────────────────────────────────────────── */
 const AXIS_META: { key: keyof MindAxes; shortLabel: string; belief: keyof typeof beliefColors }[] = [
@@ -83,20 +83,21 @@ export function Dashboard() {
   const { mind, level, xp, streak, tracksAnalyzed, displayName } = useUserStore();
   const persona = mind ? getPersona(mind.personaId) : null;
   const m3Mind = useM3Store((s) => s.mind);
+  const identity = useActiveIdentity();
 
   if (!mind || !persona) return null;
 
-  const color = persona.color;
+  const color = identity.color;
   const xpForNext = level * 200;
   const xpProgress = Math.min(100, (xp % xpForNext) / xpForNext * 100);
   const evolution = useMemo(() => computeEvolution(), []);
 
   const monologue = useMemo(() => generateWeeklyMonologue(persona, mind.axes, t), [persona, mind.axes, t]);
-  const brainQuote = useMemo(() => generateBrainQuote(persona, mind.axes, t), [persona, mind.axes, t]);
+  const brainQuote = useMemo(() => generateBrainQuote(identity.family, persona.id, t), [identity.family, persona.id, t]);
 
-  // Family morphology for organism
-  const family = persona.family;
-  const morphology = FAMILY_MORPHOLOGY[family] as FamilyMorphology;
+  // Family morphology from active identity (gene-derived)
+  const family = identity.family;
+  const morphology = identity.morphology;
   const organismStage = m3Mind ? levelToOrganismStage(m3Mind.level) : mind.stage;
   const personaLevel = m3Mind?.level ?? 1;
 
@@ -216,11 +217,11 @@ export function Dashboard() {
               </div>
             </motion.div>
 
-            {/* Family Affinity (compact) */}
+            {/* Mind Type (compact) */}
             {m3Mind && (
               <motion.div variants={fadeIn} initial="initial" animate="animate" className="spatial-card p-3 flex-shrink-0 flex flex-col items-center">
-                <span className="text-xs font-display font-light tracking-[0.15em] uppercase text-slate-500 block mb-2 w-full">{t("m3.hub.familyAffinity")}</span>
-                <FamilyAffinityRing affinity={m3Mind.familyAffinity} size={80} showLabels={false} />
+                <span className="text-xs font-display font-light tracking-[0.15em] uppercase text-slate-500 block mb-2 w-full">{t("m3.hub.mindType")}</span>
+                <MindTypeRing genes={m3Mind.genes} size={80} showLabels={false} />
               </motion.div>
             )}
           </div>
@@ -268,7 +269,7 @@ export function Dashboard() {
               <p className="text-sm text-slate-400 font-display font-light italic leading-relaxed">
                 "{brainQuote}"
               </p>
-              <p className="text-xs font-mono text-slate-600 mt-2">— {t("dashboard.yourMind", { family: persona.family.slice(0, -1) })}</p>
+              <p className="text-xs font-mono text-slate-600 mt-2">— {t("dashboard.yourMind", { family: identity.family.slice(0, -1) })}</p>
             </motion.div>
 
             {/* M³ Widget */}

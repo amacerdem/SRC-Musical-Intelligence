@@ -17,9 +17,9 @@ import type {
   PresentationLayer,
   ObservationType,
   PersonaLevel,
-  FamilyAffinity,
+  MindGenes,
 } from "@/types/m3";
-import { OBSERVATION_LEVEL_GATE, FAMILY_NAMES } from "@/types/m3";
+import { OBSERVATION_LEVEL_GATE, GENE_NAMES, GENE_TO_TYPE, getDominantType } from "@/types/m3";
 import { personas } from "@/data/personas";
 
 /* ── Helpers ───────────────────────────────────────────────────────── */
@@ -56,19 +56,14 @@ function dominantShift(mind: M3Mind): "reward" | "temporal" | "timbral" | "preci
   return groups[0].key;
 }
 
-/** Dominant family from affinity */
-function dominantFamily(aff: FamilyAffinity): string {
-  let best = FAMILY_NAMES[0];
-  let bestVal = -1;
-  for (const f of FAMILY_NAMES) {
-    if (aff[f] > bestVal) { bestVal = aff[f]; best = f; }
-  }
-  return best;
+/** Dominant Mind Type from genes */
+function dominantFamily(genes: MindGenes): string {
+  return getDominantType(genes);
 }
 
-/** Family affinity sorted descending */
-function rankedFamilies(aff: FamilyAffinity): { name: string; value: number }[] {
-  return FAMILY_NAMES.map(f => ({ name: f, value: aff[f] }))
+/** Genes ranked descending (as Mind Types) */
+function rankedFamilies(genes: MindGenes): { name: string; value: number }[] {
+  return GENE_NAMES.map(g => ({ name: GENE_TO_TYPE[g], value: genes[g] }))
     .sort((a, b) => b.value - a.value);
 }
 
@@ -87,7 +82,7 @@ function isUnlocked(type: ObservationType, level: PersonaLevel): boolean {
 /** L2+ Mood Landscape — M³'s current emotional terrain */
 function genMoodLandscape(mind: M3Mind, layer: PresentationLayer, t: TFunction): M3Observation[] {
   const mood = computeMood(mind);
-  const family = dominantFamily(mind.familyAffinity);
+  const family = dominantFamily(mind.genes);
   const obs: M3Observation[] = [];
 
   if (layer === "surface") {
@@ -174,7 +169,7 @@ function genDailyReflection(mind: M3Mind, layer: PresentationLayer, t: TFunction
 
 /** L5+ Pattern Discovery — recurring behaviors */
 function genPatternDiscovery(mind: M3Mind, layer: PresentationLayer, t: TFunction): M3Observation[] {
-  const ranked = rankedFamilies(mind.familyAffinity);
+  const ranked = rankedFamilies(mind.genes);
   const top = ranked[0];
   const runner = ranked[1];
   const obs: M3Observation[] = [];
@@ -218,7 +213,7 @@ function genPatternDiscovery(mind: M3Mind, layer: PresentationLayer, t: TFunctio
 /** L5+ Music Recommendation — growth-aligned suggestions */
 function genMusicRecommendation(mind: M3Mind, layer: PresentationLayer, t: TFunction): M3Observation[] {
   const dom = dominantShift(mind);
-  const family = dominantFamily(mind.familyAffinity);
+  const family = dominantFamily(mind.genes);
   const obs: M3Observation[] = [];
 
   if (layer === "surface") {
@@ -244,18 +239,18 @@ function genMusicRecommendation(mind: M3Mind, layer: PresentationLayer, t: TFunc
       functionSource: 6,
     });
   } else {
-    const axesStr = [
-      `ET=${mind.axes.entropyTolerance.toFixed(2)}`,
-      `RC=${mind.axes.resolutionCraving.toFixed(2)}`,
-      `MT=${mind.axes.monotonyTolerance.toFixed(2)}`,
-      `SS=${mind.axes.salienceSensitivity.toFixed(2)}`,
-      `TA=${mind.axes.tensionAppetite.toFixed(2)}`,
+    const genesStr = [
+      `ENT=${mind.genes.entropy.toFixed(2)}`,
+      `RES=${mind.genes.resolution.toFixed(2)}`,
+      `TEN=${mind.genes.tension.toFixed(2)}`,
+      `RSN=${mind.genes.resonance.toFixed(2)}`,
+      `PLS=${mind.genes.plasticity.toFixed(2)}`,
     ].join(", ");
     obs.push({
       id: "mr-deep",
       type: "music_recommendation",
       layer: "deep",
-      text: t("m3.obs.recommend.deep", { axes: axesStr }),
+      text: t("m3.obs.recommend.deep", { axes: genesStr }),
       intensity: 0.7,
       functionSource: 6,
     });
@@ -313,7 +308,7 @@ function genPredictiveInsight(mind: M3Mind, layer: PresentationLayer, t: TFuncti
 /** L7+ Therapeutic Observation — emotional trend analysis */
 function genTherapeuticObservation(mind: M3Mind, layer: PresentationLayer, t: TFunction): M3Observation[] {
   const mood = computeMood(mind);
-  const family = dominantFamily(mind.familyAffinity);
+  const family = dominantFamily(mind.genes);
   const rewardMean = paramMean(mind.parameters.rewardWeights);
   const obs: M3Observation[] = [];
 
@@ -359,7 +354,7 @@ function genTherapeuticObservation(mind: M3Mind, layer: PresentationLayer, t: TF
 
 /** L9+ Musical Counseling — growth/exploration guidance */
 function genMusicalCounseling(mind: M3Mind, layer: PresentationLayer, t: TFunction): M3Observation[] {
-  const ranked = rankedFamilies(mind.familyAffinity);
+  const ranked = rankedFamilies(mind.genes);
   const weakest = ranked[ranked.length - 1];
   const obs: M3Observation[] = [];
 
@@ -403,7 +398,7 @@ function genMusicalCounseling(mind: M3Mind, layer: PresentationLayer, t: TFuncti
 /** L9+ Cross-M³ Insight — comparing with other minds */
 function genCrossM3Insight(mind: M3Mind, layer: PresentationLayer, t: TFunction): M3Observation[] {
   const persona = activePersonaName(mind);
-  const family = dominantFamily(mind.familyAffinity);
+  const family = dominantFamily(mind.genes);
   const pop = personas.find(p => p.id === mind.activePersonaId)?.populationPct ?? 5;
   const obs: M3Observation[] = [];
 
@@ -450,7 +445,7 @@ function genCrossM3Insight(mind: M3Mind, layer: PresentationLayer, t: TFunction)
 /** L11+ Meta Awareness — M³ commenting on its own changes */
 function genMetaAwareness(mind: M3Mind, layer: PresentationLayer, t: TFunction): M3Observation[] {
   const shifts = mind.previousPersonaIds.length;
-  const family = dominantFamily(mind.familyAffinity);
+  const family = dominantFamily(mind.genes);
   const obs: M3Observation[] = [];
 
   if (layer === "surface") {
@@ -479,20 +474,20 @@ function genMetaAwareness(mind: M3Mind, layer: PresentationLayer, t: TFunction):
       functionSource: 8,
     });
   } else {
-    const ranked = rankedFamilies(mind.familyAffinity);
+    const ranked = rankedFamilies(mind.genes);
     const affinityStr = ranked.map(f => `${f.name}: ${(f.value * 100).toFixed(1)}%`).join(", ");
-    const axesStr = [
-      `ET=${mind.axes.entropyTolerance.toFixed(3)}`,
-      `RC=${mind.axes.resolutionCraving.toFixed(3)}`,
-      `MT=${mind.axes.monotonyTolerance.toFixed(3)}`,
-      `SS=${mind.axes.salienceSensitivity.toFixed(3)}`,
-      `TA=${mind.axes.tensionAppetite.toFixed(3)}`,
+    const genesStr = [
+      `ENT=${mind.genes.entropy.toFixed(3)}`,
+      `RES=${mind.genes.resolution.toFixed(3)}`,
+      `TEN=${mind.genes.tension.toFixed(3)}`,
+      `RSN=${mind.genes.resonance.toFixed(3)}`,
+      `PLS=${mind.genes.plasticity.toFixed(3)}`,
     ].join(", ");
     obs.push({
       id: "ma-deep",
       type: "meta_awareness",
       layer: "deep",
-      text: t("m3.obs.meta.deep", { affinity: affinityStr, axes: axesStr, level: mind.level }),
+      text: t("m3.obs.meta.deep", { affinity: affinityStr, axes: genesStr, level: mind.level }),
       intensity: 1.0,
       functionSource: 8,
     });

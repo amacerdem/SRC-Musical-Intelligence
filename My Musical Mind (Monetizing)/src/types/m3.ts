@@ -2,40 +2,43 @@
  *  The learnable parameter layer that sits on top of C³.
  *  C³ = physics (universal, frozen). M³ = individual (personal, growing).
  *  M³ growth IS persona evolution — not a parallel system.
+ *  5 Mind Genes (Entropy, Resolution, Tension, Resonance, Plasticity)
+ *  determine your Mind Type. Each learning session shifts all 5 genes.
  *  ──────────────────────────────────────────────────────────────────── */
 
-import type { NeuralFamily, MindAxes } from "./mind";
+import type { NeuralFamily } from "./mind";
+export type { NeuralFamily } from "./mind";
 
-/* ── Growth Stages ─────────────────────────────────────────────────── */
+/* ── Growth Stages (Human Development) ─────────────────────────────── */
 
-/** 7 developmental stages, following real neurodevelopment order */
+/** 7 developmental stages, following human neurodevelopment */
 export type M3Stage =
-  | "seed"     // Born — no functions active
-  | "sprout"   // F1 (Sensory) awakens
-  | "sapling"  // +F6 (Reward) +F5 (Emotion)
-  | "branch"   // +F2 (Prediction) +F4 (Memory)
-  | "bloom"    // +F3 (Attention) +F7 (Motor)
-  | "canopy"   // +F8 (Learning) +F9 (Social)
-  | "ancient"; // Full consciousness + meta-awareness
+  | "embryo"      // Born — no functions active
+  | "newborn"     // F1 (Sensory) awakens
+  | "infant"      // +F5 (Emotion) +F6 (Reward)
+  | "toddler"     // +F2 (Prediction) +F4 (Memory)
+  | "child"       // +F3 (Attention) +F7 (Motor)
+  | "adolescent"  // +F8 (Learning) +F9 (Social)
+  | "adult";      // Full consciousness + meta-awareness
 
 export const M3_STAGE_ORDER: M3Stage[] = [
-  "seed", "sprout", "sapling", "branch", "bloom", "canopy", "ancient",
+  "embryo", "newborn", "infant", "toddler", "child", "adolescent", "adult",
 ];
 
 /* ── Persona Level (1-12) ────────────────────────────────────────── */
 
-/** 12 evolution levels from birth to maturity */
+/** 12 evolution levels from embryo to sage */
 export type PersonaLevel = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 
 /** Maps persona level → M³ stage */
 export function levelToStage(level: PersonaLevel): M3Stage {
-  if (level <= 1) return "seed";
-  if (level <= 2) return "sprout";
-  if (level <= 4) return "sapling";
-  if (level <= 6) return "branch";
-  if (level <= 8) return "bloom";
-  if (level <= 10) return "canopy";
-  return "ancient";
+  if (level <= 1) return "embryo";     // L1: Embryonic Mind
+  if (level <= 2) return "newborn";    // L2: Newborn Mind
+  if (level <= 4) return "infant";     // L3-4: Infant/Toddler Mind
+  if (level <= 6) return "toddler";    // L5-6: Child/Tween Mind
+  if (level <= 8) return "child";      // L7-8: Teen/Young Mind
+  if (level <= 10) return "adolescent"; // L9-10: Adult/Master Mind
+  return "adult";                       // L11-12: Elder/Sage Mind
 }
 
 /** Maps persona level → organism canvas stage (1-3) */
@@ -51,19 +54,96 @@ export const LEVEL_THRESHOLDS: Record<PersonaLevel, number> = {
   7: 270, 8: 400, 9: 600, 10: 900, 11: 1400, 12: 2200,
 };
 
-/* ── Family Affinity ─────────────────────────────────────────────── */
+/* ── Mind Genes ────────────────────────────────────────────────────── */
 
-/** Per-family affinity scores (0-1 each). Updated on every listen. */
-export type FamilyAffinity = Record<NeuralFamily, number>;
+/** 5 genes that define the mind's DNA. Updated on every learning session. */
+export interface MindGenes {
+  entropy: number;      // 0-1 — Explorers gene (chaos/novelty)
+  resolution: number;   // 0-1 — Architects gene (structure/order)
+  tension: number;      // 0-1 — Alchemists gene (transformation/intensity)
+  resonance: number;    // 0-1 — Anchors gene (connection/emotion)
+  plasticity: number;   // 0-1 — Kineticists gene (adaptability/rhythm)
+}
 
-/** Default affinity for all families */
-export const DEFAULT_FAMILY_AFFINITY: FamilyAffinity = {
-  Architects: 0.1,
-  Alchemists: 0.1,
-  Explorers: 0.1,
-  Anchors: 0.1,
-  Kineticists: 0.1,
+export const GENE_NAMES = ["entropy", "resolution", "tension", "resonance", "plasticity"] as const;
+export type GeneName = (typeof GENE_NAMES)[number];
+
+export const DEFAULT_GENES: MindGenes = {
+  entropy: 0.2,
+  resolution: 0.2,
+  tension: 0.2,
+  resonance: 0.2,
+  plasticity: 0.2,
 };
+
+/** Maps each gene to its associated Mind Type */
+export const GENE_TO_TYPE: Record<GeneName, NeuralFamily> = {
+  entropy: "Explorers",
+  resolution: "Architects",
+  tension: "Alchemists",
+  resonance: "Anchors",
+  plasticity: "Kineticists",
+};
+
+/** Maps each Mind Type back to its dominant gene */
+export const TYPE_TO_GENE: Record<NeuralFamily, GeneName> = {
+  Explorers: "entropy",
+  Architects: "resolution",
+  Alchemists: "tension",
+  Anchors: "resonance",
+  Kineticists: "plasticity",
+};
+
+/** Gene colors (matches Mind Type colors) */
+export const GENE_COLORS: Record<GeneName, string> = {
+  entropy: "#84CC16",     // Explorers — Lime/Neon
+  resolution: "#38BDF8",  // Architects — Sky blue
+  tension: "#A855F7",     // Alchemists — Purple
+  resonance: "#FBBF24",   // Anchors — Amber
+  plasticity: "#EF4444",  // Kineticists — Red
+};
+
+/** Get the dominant Mind Type from genes */
+export function getDominantType(genes: MindGenes): NeuralFamily {
+  let maxGene: GeneName = "entropy";
+  let maxVal = -1;
+  for (const g of GENE_NAMES) {
+    if (genes[g] > maxVal) {
+      maxVal = genes[g];
+      maxGene = g;
+    }
+  }
+  return GENE_TO_TYPE[maxGene];
+}
+
+/** Get the dominant gene name */
+export function getDominantGene(genes: MindGenes): GeneName {
+  let maxGene: GeneName = "entropy";
+  let maxVal = -1;
+  for (const g of GENE_NAMES) {
+    if (genes[g] > maxVal) {
+      maxVal = genes[g];
+      maxGene = g;
+    }
+  }
+  return maxGene;
+}
+
+/** Convert genes to FamilyAffinity format for backward compat */
+export function genesToAffinity(genes: MindGenes): FamilyAffinity {
+  return {
+    Explorers: genes.entropy,
+    Architects: genes.resolution,
+    Alchemists: genes.tension,
+    Anchors: genes.resonance,
+    Kineticists: genes.plasticity,
+  };
+}
+
+/* ── Family Affinity (backward compat) ─────────────────────────────── */
+
+/** Per-family affinity scores — derived from genes */
+export type FamilyAffinity = Record<NeuralFamily, number>;
 
 /** All 5 families in order */
 export const FAMILY_NAMES: NeuralFamily[] = [
@@ -72,7 +152,7 @@ export const FAMILY_NAMES: NeuralFamily[] = [
 
 /* ── Family Morphology ───────────────────────────────────────────── */
 
-/** Visual style of the organism canvas per family */
+/** Visual style of the organism canvas per Mind Type */
 export type FamilyMorphology =
   | "volatile"     // Alchemists — jagged, electric, flickering
   | "crystalline"  // Architects — geometric, angular, structured
@@ -97,19 +177,19 @@ export type M3Tier = "free" | "basic" | "premium" | "ultimate";
 /** 3-layer depth system: same data, different reading level */
 export type PresentationLayer = "surface" | "narrative" | "deep";
 
-/* ── Observation Types (M3-SPEC §5.2) ────────────────────────────── */
+/* ── Observation Types ─────────────────────────────────────────────── */
 
 /** Stage-gated observation categories */
 export type ObservationType =
-  | "mood_landscape"          // Level 2+ (Sprout)
-  | "daily_reflection"        // Level 3+ (Sapling)
-  | "pattern_discovery"       // Level 5+ (Branch)
-  | "music_recommendation"    // Level 5+ (Branch)
-  | "predictive_insight"      // Level 7+ (Bloom)
-  | "therapeutic_observation" // Level 7+ (Bloom)
-  | "musical_counseling"      // Level 9+ (Canopy)
-  | "cross_m3_insight"        // Level 9+ (Canopy)
-  | "meta_awareness";         // Level 11+ (Ancient)
+  | "mood_landscape"          // Level 2+ (Newborn)
+  | "daily_reflection"        // Level 3+ (Infant)
+  | "pattern_discovery"       // Level 5+ (Toddler)
+  | "music_recommendation"    // Level 5+ (Toddler)
+  | "predictive_insight"      // Level 7+ (Child)
+  | "therapeutic_observation" // Level 7+ (Child)
+  | "musical_counseling"      // Level 9+ (Adolescent)
+  | "cross_m3_insight"        // Level 9+ (Adolescent)
+  | "meta_awareness";         // Level 11+ (Adult)
 
 /** Minimum persona level required for each observation type */
 export const OBSERVATION_LEVEL_GATE: Record<ObservationType, PersonaLevel> = {
@@ -152,11 +232,10 @@ export interface M3Mind {
   totalListens: number;
   totalMinutes: number;
 
-  /* Persona integration */
-  familyAffinity: FamilyAffinity; // Updated on every listen
-  activePersonaId: number;        // Derived from affinity × axes
+  /* Mind Genes + Persona */
+  genes: MindGenes;               // 5 genes, updated on every learning
+  activePersonaId: number;        // Derived from genes
   previousPersonaIds: number[];   // History of persona shifts
-  axes: MindAxes;                 // Live evolving axes
 
   /* Parameters */
   parameters: M3Parameters;
@@ -179,6 +258,7 @@ export type M3MilestoneType =
   | "stage_up"
   | "persona_shift"
   | "function_unlock"
+  | "type_change"
   | "insight";
 
 export interface M3Milestone {
@@ -188,6 +268,8 @@ export interface M3Milestone {
   level?: PersonaLevel;
   fromPersonaId?: number;
   toPersonaId?: number;
+  fromType?: NeuralFamily;
+  toType?: NeuralFamily;
   detail: string;
 }
 
@@ -208,7 +290,7 @@ export interface M3Observation {
   neuroChem?: "DA" | "NE" | "OPI" | "5HT";
 }
 
-/* ── Track Features (for feeding M³) ──────────────────────────────── */
+/* ── Track Features (for learning) ─────────────────────────────────── */
 
 /** Extended track features used to update M³ parameters */
 export interface M3TrackSignal {

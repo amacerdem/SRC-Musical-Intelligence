@@ -1,9 +1,9 @@
 /* ── M³ Store — Unified Personal Musical Mind ──────────────────────
- *  M³ growth IS persona evolution. Each listen updates:
- *  - All 5 family affinities
- *  - MindAxes (continuous drift)
- *  - Level progression (1-12)
- *  - Active persona derivation (from affinity × axes)
+ *  M³ growth IS persona evolution. Each learning session updates:
+ *  - All 5 mind genes (Entropy, Resolution, Tension, Resonance, Plasticity)
+ *  - Level progression (1-12, human growth stages)
+ *  - Active persona derivation (from genes)
+ *  - Type change detection (with animation trigger)
  *  ──────────────────────────────────────────────────────────────── */
 
 import { create } from "zustand";
@@ -17,25 +17,29 @@ import type {
   M3TrackSignal,
   PresentationLayer,
   PersonaLevel,
-  FamilyAffinity,
+  MindGenes,
+  GeneName,
 } from "@/types/m3";
 import {
   LEVEL_THRESHOLDS,
   levelToStage,
-  DEFAULT_FAMILY_AFFINITY,
-  FAMILY_NAMES,
+  DEFAULT_GENES,
+  GENE_NAMES,
+  GENE_TO_TYPE,
+  TYPE_TO_GENE,
+  getDominantType,
 } from "@/types/m3";
-import type { NeuralFamily, MindAxes } from "@/types/mind";
+import type { NeuralFamily } from "@/types/mind";
 import type { Persona } from "@/types/mind";
 import { personas } from "@/data/personas";
 import { M3_STAGES } from "@/data/m3-stages";
-import { FAMILY_PARAM_BIASES } from "@/data/m3-stages";
+import { GENE_PARAM_BIASES } from "@/data/m3-stages";
 
 /* ── Parameter Initialization ────────────────────────────────────── */
 
-/** Create fresh parameters biased by the birth persona's family */
-function initParameters(family: NeuralFamily): M3Parameters {
-  const bias = FAMILY_PARAM_BIASES[family];
+/** Create fresh parameters biased by the birth persona's dominant gene */
+function initParameters(dominantGene: GeneName): M3Parameters {
+  const bias = GENE_PARAM_BIASES[dominantGene];
   const rand = (n: number, scale: number) =>
     Array.from({ length: n }, () => (Math.random() * 0.1 - 0.05) * scale);
 
@@ -51,86 +55,72 @@ function initParameters(family: NeuralFamily): M3Parameters {
   };
 }
 
-/* ── Family Affinity Engine ──────────────────────────────────────── */
+/* ── Gene Engine ───────────────────────────────────────────────────── */
 
-const AFFINITY_DECAY = 0.995;
-const AFFINITY_LR = 0.02;
+const GENE_DECAY = 0.995;
+const GENE_LR = 0.02;
 
-/** Calculate how much a track contributes to each family's affinity */
-function calculateFamilyContribution(signal: M3TrackSignal): FamilyAffinity {
+/** Calculate how much a track contributes to each gene */
+function calculateGeneContribution(signal: M3TrackSignal): MindGenes {
   const { energy, valence, tempo, danceability, acousticness, harmonicComplexity } = signal;
   const tempoNorm = Math.min(1, tempo / 200);
 
   return {
-    Architects:
-      (1 - energy) * 0.25 + acousticness * 0.25 +
-      (1 - Math.abs(valence - 0.5) * 2) * 0.2 +
-      harmonicComplexity * 0.2 + (tempoNorm < 0.5 ? 0.1 : 0),
+    entropy:
+      (1 - acousticness) * 0.25 + energy * 0.15 +
+      danceability * 0.15 + Math.random() * 0.1 +
+      (tempoNorm > 0.6 ? 0.15 : 0.05) + harmonicComplexity * 0.1,
 
-    Alchemists:
+    resolution:
+      (1 - energy) * 0.25 + acousticness * 0.25 +
+      harmonicComplexity * 0.2 +
+      (1 - Math.abs(valence - 0.5) * 2) * 0.2 +
+      (tempoNorm < 0.5 ? 0.1 : 0),
+
+    tension:
       energy * 0.2 + (1 - valence) * 0.15 +
       Math.abs(energy - 0.5) * 2 * 0.25 +
-      harmonicComplexity * 0.15 + (tempoNorm > 0.5 ? 0.15 : 0.05),
+      harmonicComplexity * 0.15 +
+      (tempoNorm > 0.5 ? 0.15 : 0.05),
 
-    Explorers:
-      (1 - acousticness) * 0.2 + energy * 0.15 +
-      danceability * 0.15 + (1 - harmonicComplexity) * 0.1 +
-      Math.random() * 0.1 + (tempoNorm > 0.6 ? 0.15 : 0.05),
-
-    Anchors:
+    resonance:
       valence * 0.15 + acousticness * 0.25 +
-      (1 - energy) * 0.2 + (tempoNorm < 0.45 ? 0.2 : 0.1) + 0.05,
+      (1 - energy) * 0.2 +
+      (tempoNorm < 0.45 ? 0.2 : 0.1) + 0.05,
 
-    Kineticists:
+    plasticity:
       danceability * 0.3 + energy * 0.2 +
-      (tempoNorm > 0.55 ? 0.2 : 0.1) + (1 - acousticness) * 0.1 +
+      (tempoNorm > 0.55 ? 0.2 : 0.1) +
+      (1 - acousticness) * 0.1 +
       (1 - Math.abs(valence - 0.5) * 2) * 0.1,
   };
 }
 
-/** Update family affinities with EMA */
-function updateFamilyAffinity(
-  current: FamilyAffinity,
-  contribution: FamilyAffinity,
-): FamilyAffinity {
-  const result = { ...current };
-  for (const family of FAMILY_NAMES) {
-    result[family] = current[family] * AFFINITY_DECAY + contribution[family] * AFFINITY_LR;
+/** Update genes with EMA */
+function updateGenes(current: MindGenes, contribution: MindGenes): MindGenes {
+  const result: Record<string, number> = {};
+  for (const g of GENE_NAMES) {
+    result[g] = current[g] * GENE_DECAY + contribution[g] * GENE_LR;
   }
-  return result;
-}
-
-/* ── Axes Update ─────────────────────────────────────────────────── */
-
-const AXES_LR = 0.005;
-
-/** Nudge MindAxes based on track signal */
-function updateAxes(axes: MindAxes, signal: M3TrackSignal): MindAxes {
-  const rate = signal.wasSkipped ? AXES_LR * 0.3 : signal.isRepeat ? AXES_LR * 1.5 : AXES_LR;
-  return {
-    entropyTolerance:    clamp01(axes.entropyTolerance + (signal.harmonicComplexity - 0.5) * rate * 2),
-    resolutionCraving:   clamp01(axes.resolutionCraving + (signal.acousticness - 0.5) * rate),
-    monotonyTolerance:   clamp01(axes.monotonyTolerance + (signal.isRepeat ? rate : -rate * 0.5)),
-    salienceSensitivity: clamp01(axes.salienceSensitivity + (signal.energy - 0.5) * rate),
-    tensionAppetite:     clamp01(axes.tensionAppetite + ((1 - signal.valence) * 0.5 + signal.energy * 0.5 - 0.5) * rate),
-  };
-}
-
-function clamp01(v: number): number {
-  return Math.max(0, Math.min(1, v));
+  return result as unknown as MindGenes;
 }
 
 /* ── Persona Derivation ──────────────────────────────────────────── */
 
-/** Derive the best-matching persona from affinity + axes */
-function derivePersona(affinity: FamilyAffinity, axes: MindAxes): number {
+/** Derive the best-matching persona from genes */
+function derivePersona(genes: MindGenes): number {
   let bestId = 1;
   let bestScore = -Infinity;
 
   for (const p of personas) {
-    const familyWeight = affinity[p.family];
-    const axesSim = 1 - axesDistance(axes, p.axes);
-    const score = familyWeight * 0.6 + axesSim * 0.4;
+    // Gene-based family weight
+    const dominantGene = TYPE_TO_GENE[p.family];
+    const geneWeight = genes[dominantGene];
+
+    // Axes similarity (map genes → axes for comparison)
+    const axesSim = 1 - axesDistanceFromGenes(genes, p.axes);
+
+    const score = geneWeight * 0.6 + axesSim * 0.4;
     if (score > bestScore) {
       bestScore = score;
       bestId = p.id;
@@ -139,20 +129,22 @@ function derivePersona(affinity: FamilyAffinity, axes: MindAxes): number {
   return bestId;
 }
 
-/** Euclidean distance between two MindAxes (normalized 0-1) */
-function axesDistance(a: MindAxes, b: MindAxes): number {
+/** Distance between genes (as axes) and persona axes */
+function axesDistanceFromGenes(
+  genes: MindGenes,
+  axes: { entropyTolerance: number; resolutionCraving: number; monotonyTolerance: number; salienceSensitivity: number; tensionAppetite: number },
+): number {
   const d =
-    (a.entropyTolerance - b.entropyTolerance) ** 2 +
-    (a.resolutionCraving - b.resolutionCraving) ** 2 +
-    (a.monotonyTolerance - b.monotonyTolerance) ** 2 +
-    (a.salienceSensitivity - b.salienceSensitivity) ** 2 +
-    (a.tensionAppetite - b.tensionAppetite) ** 2;
-  return Math.sqrt(d) / Math.sqrt(5); // normalize by max possible distance
+    (genes.entropy - axes.entropyTolerance) ** 2 +
+    (genes.resolution - axes.resolutionCraving) ** 2 +
+    (genes.plasticity - axes.monotonyTolerance) ** 2 +
+    (genes.resonance - axes.salienceSensitivity) ** 2 +
+    (genes.tension - axes.tensionAppetite) ** 2;
+  return Math.sqrt(d) / Math.sqrt(5);
 }
 
 /* ── Level / Stage Computation ───────────────────────────────────── */
 
-/** Determine persona level (1-12) from total listens */
 function deriveLevel(totalListens: number): PersonaLevel {
   let level: PersonaLevel = 1;
   for (let l = 12; l >= 1; l--) {
@@ -164,7 +156,6 @@ function deriveLevel(totalListens: number): PersonaLevel {
   return level;
 }
 
-/** Compute progress (0-1) toward next level */
 function computeLevelProgress(totalListens: number, currentLevel: PersonaLevel): number {
   if (currentLevel >= 12) return 1;
   const nextLevel = (currentLevel + 1) as PersonaLevel;
@@ -174,7 +165,7 @@ function computeLevelProgress(totalListens: number, currentLevel: PersonaLevel):
   return range > 0 ? Math.min(1, (totalListens - currentThreshold) / range) : 1;
 }
 
-/* ── Parameter Update (convince the system) ──────────────────────── */
+/* ── Parameter Update ──────────────────────────────────────────── */
 
 function updateParameters(params: M3Parameters, signal: M3TrackSignal): M3Parameters {
   const lr = 0.02;
@@ -224,10 +215,10 @@ interface M3StoreState {
   milestones: M3Milestone[];
   preferredLayer: PresentationLayer;
 
-  /** Birth M³ from a persona (uses persona's family for initial bias) */
+  /** Birth M³ from a persona */
   birthM3: (persona: Persona, tier: M3Tier) => void;
-  /** Feed a track signal — updates all 5 families, axes, level, persona */
-  feedListening: (signal: M3TrackSignal) => M3Milestone[];
+  /** Learn from a track signal — updates all 5 genes, level, persona */
+  learnFromListening: (signal: M3TrackSignal) => M3Milestone[];
   setTier: (tier: M3Tier) => void;
   setPreferredLayer: (layer: PresentationLayer) => void;
   resetM3: () => void;
@@ -249,13 +240,14 @@ export const useM3Store = create<M3StoreState>()(
       birthM3: (persona, tier) => {
         const now = new Date().toISOString();
         const isFree = tier === "free";
+        const dominantGene = TYPE_TO_GENE[persona.family];
 
-        // Initial family affinity: 60% for birth persona's family, 10% each for others
-        const affinity: FamilyAffinity = { ...DEFAULT_FAMILY_AFFINITY };
-        affinity[persona.family] = 0.6;
+        // Initial genes: 60% for birth persona's dominant gene, 10% each for others
+        const genes: MindGenes = { ...DEFAULT_GENES };
+        genes[dominantGene] = 0.6;
 
-        const params = initParameters(persona.family);
-        const stage: M3Stage = "seed";
+        const params = initParameters(dominantGene);
+        const stage: M3Stage = "embryo";
         const functions = M3_STAGES[stage].functions;
 
         const mind: M3Mind = {
@@ -264,10 +256,9 @@ export const useM3Store = create<M3StoreState>()(
           stageProgress: 0,
           totalListens: 0,
           totalMinutes: 0,
-          familyAffinity: affinity,
+          genes,
           activePersonaId: persona.id,
           previousPersonaIds: [],
-          axes: { ...persona.axes },
           parameters: params,
           activeFunctions: [...functions],
           tier,
@@ -279,7 +270,7 @@ export const useM3Store = create<M3StoreState>()(
         const milestone: M3Milestone = {
           type: "birth",
           timestamp: now,
-          stage: "seed",
+          stage: "embryo",
           level: 1,
           detail: `Born as ${persona.name} (${persona.family})`,
         };
@@ -287,19 +278,31 @@ export const useM3Store = create<M3StoreState>()(
         set({ mind, milestones: [milestone] });
       },
 
-      feedListening: (signal) => {
+      learnFromListening: (signal) => {
         const { mind, milestones } = get();
         if (!mind || mind.frozen) return [];
 
         const now = new Date().toISOString();
         const newMilestones: M3Milestone[] = [];
 
-        // 1. Update all 5 family affinities
-        const contribution = calculateFamilyContribution(signal);
-        const newAffinity = updateFamilyAffinity(mind.familyAffinity, contribution);
+        // 0. Detect old Mind Type BEFORE gene update
+        const oldType = getDominantType(mind.genes);
 
-        // 2. Update MindAxes
-        const newAxes = updateAxes(mind.axes, signal);
+        // 1. Update all 5 genes
+        const contribution = calculateGeneContribution(signal);
+        const newGenes = updateGenes(mind.genes, contribution);
+
+        // 2. Detect Mind Type change
+        const newType = getDominantType(newGenes);
+        if (newType !== oldType) {
+          newMilestones.push({
+            type: "type_change",
+            timestamp: now,
+            fromType: oldType,
+            toType: newType,
+            detail: `Mind type shifted from ${oldType} to ${newType}`,
+          });
+        }
 
         // 3. Update M³ parameters
         const newParams = updateParameters(mind.parameters, signal);
@@ -331,7 +334,6 @@ export const useM3Store = create<M3StoreState>()(
             detail: `Evolved to ${newStage}`,
           });
 
-          // Check for newly unlocked functions
           const prevFunctions = M3_STAGES[mind.stage].functions;
           const newFunctions = M3_STAGES[newStage].functions;
           const unlocked = newFunctions.filter(f => !prevFunctions.includes(f));
@@ -344,8 +346,8 @@ export const useM3Store = create<M3StoreState>()(
           }
         }
 
-        // 7. Derive active persona from affinity × axes
-        const newPersonaId = derivePersona(newAffinity, newAxes);
+        // 7. Derive active persona from genes
+        const newPersonaId = derivePersona(newGenes);
         const personaShifted = newPersonaId !== mind.activePersonaId;
         if (personaShifted) {
           newMilestones.push({
@@ -362,8 +364,7 @@ export const useM3Store = create<M3StoreState>()(
 
         const updatedMind: M3Mind = {
           ...mind,
-          familyAffinity: newAffinity,
-          axes: newAxes,
+          genes: newGenes,
           parameters: newParams,
           totalListens: newListens,
           totalMinutes: newMinutes,
@@ -419,6 +420,40 @@ export const useM3Store = create<M3StoreState>()(
         milestones: state.milestones,
         preferredLayer: state.preferredLayer,
       }),
+      merge: (persisted, current) => {
+        const p = persisted as Partial<M3StoreState>;
+        if (p?.mind) {
+          // Migrate stale familyAffinity → genes
+          const m = p.mind as unknown as Record<string, unknown>;
+          if (!m.genes && m.familyAffinity) {
+            const fa = m.familyAffinity as Record<string, number>;
+            m.genes = {
+              entropy: fa.Explorers ?? 0.2,
+              resolution: fa.Architects ?? 0.2,
+              tension: fa.Alchemists ?? 0.2,
+              resonance: fa.Anchors ?? 0.2,
+              plasticity: fa.Kineticists ?? 0.2,
+            };
+            delete m.familyAffinity;
+            delete m.axes;
+          }
+          if (!m.genes) {
+            m.genes = { ...DEFAULT_GENES };
+          }
+          if (!m.previousPersonaIds) {
+            m.previousPersonaIds = [];
+          }
+          // Migrate old stage names
+          const stageMap: Record<string, string> = {
+            seed: "embryo", sprout: "newborn", sapling: "infant",
+            branch: "toddler", bloom: "child", canopy: "adolescent", ancient: "adult",
+          };
+          if (typeof m.stage === "string" && stageMap[m.stage]) {
+            m.stage = stageMap[m.stage];
+          }
+        }
+        return { ...(current as M3StoreState), ...p } as M3StoreState;
+      },
     },
   ),
 );

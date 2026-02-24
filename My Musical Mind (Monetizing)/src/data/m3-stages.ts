@@ -1,11 +1,10 @@
 /* ── M³ Growth Stages & Tiers ───────────────────────────────────────
  *  Constants for the M³ developmental system.
- *  Stages follow real neurodevelopment: sensory → reward/emotion →
+ *  Stages follow human neurodevelopment: sensory → reward/emotion →
  *  prediction/memory → attention/motor → learning/social → meta.
  *  ──────────────────────────────────────────────────────────────── */
 
-import type { M3Stage, M3Tier } from "@/types/m3";
-import type { NeuralFamily } from "@/types/mind";
+import type { M3Stage, M3Tier, GeneName } from "@/types/m3";
 
 /* ── Stage Definitions ─────────────────────────────────────────── */
 
@@ -17,44 +16,44 @@ export interface StageDefinition {
 }
 
 export const M3_STAGES: Record<M3Stage, StageDefinition> = {
-  seed: {
-    key: "seed",
+  embryo: {
+    key: "embryo",
     functions: [],
     color: "#94A3B8",
     icon: "◦",
   },
-  sprout: {
-    key: "sprout",
+  newborn: {
+    key: "newborn",
     functions: [1],
     color: "#84CC16",
-    icon: "⌇",
+    icon: "♒",
   },
-  sapling: {
-    key: "sapling",
+  infant: {
+    key: "infant",
     functions: [1, 5, 6],
     color: "#22D3EE",
     icon: "⌘",
   },
-  branch: {
-    key: "branch",
+  toddler: {
+    key: "toddler",
     functions: [1, 2, 4, 5, 6],
     color: "#A855F7",
     icon: "⊛",
   },
-  bloom: {
-    key: "bloom",
+  child: {
+    key: "child",
     functions: [1, 2, 3, 4, 5, 6, 7],
     color: "#EC4899",
     icon: "✦",
   },
-  canopy: {
-    key: "canopy",
+  adolescent: {
+    key: "adolescent",
     functions: [1, 2, 3, 4, 5, 6, 7, 8, 9],
     color: "#FBBF24",
     icon: "◈",
   },
-  ancient: {
-    key: "ancient",
+  adult: {
+    key: "adult",
     functions: [1, 2, 3, 4, 5, 6, 7, 8, 9],
     color: "#F1F5F9",
     icon: "⬡",
@@ -63,10 +62,10 @@ export const M3_STAGES: Record<M3Stage, StageDefinition> = {
 
 /** Ordered stage keys for progression lookups */
 export const STAGE_ORDER: M3Stage[] = [
-  "seed", "sprout", "sapling", "branch", "bloom", "canopy", "ancient",
+  "embryo", "newborn", "infant", "toddler", "child", "adolescent", "adult",
 ];
 
-/** Get the next stage (or null if already ancient) */
+/** Get the next stage (or null if already adult) */
 export function getNextStage(current: M3Stage): M3Stage | null {
   const idx = STAGE_ORDER.indexOf(current);
   return idx < STAGE_ORDER.length - 1 ? STAGE_ORDER[idx + 1] : null;
@@ -93,12 +92,11 @@ export const C3_FUNCTIONS: FunctionMeta[] = [
   { id: 9, abbr: "F9", name: "Social",     color: "#A78BFA" },
 ];
 
-/* ── Family Parameter Biases ─────────────────────────────────────
- *  Instead of temperament, initial M³ parameters are biased by
- *  the birth persona's neural family.
+/* ── Gene Parameter Biases ─────────────────────────────────────────
+ *  Initial M³ parameters are biased by the dominant gene at birth.
  *  ──────────────────────────────────────────────────────────────── */
 
-export interface FamilyParamBias {
+export interface GeneParamBias {
   timbral: number;
   temporal: number;
   reward: number;
@@ -106,12 +104,12 @@ export interface FamilyParamBias {
   attention: number;
 }
 
-export const FAMILY_PARAM_BIASES: Record<NeuralFamily, FamilyParamBias> = {
-  Alchemists:  { timbral: 1.0, temporal: 0.9, reward: 1.4, precision: 0.8, attention: 1.1 },
-  Architects:  { timbral: 1.4, temporal: 0.9, reward: 1.1, precision: 1.3, attention: 0.8 },
-  Explorers:   { timbral: 1.2, temporal: 0.8, reward: 0.9, precision: 0.7, attention: 1.3 },
-  Anchors:     { timbral: 0.9, temporal: 1.0, reward: 1.3, precision: 1.0, attention: 0.9 },
-  Kineticists: { timbral: 0.8, temporal: 1.4, reward: 1.0, precision: 0.9, attention: 1.0 },
+export const GENE_PARAM_BIASES: Record<GeneName, GeneParamBias> = {
+  tension:     { timbral: 1.0, temporal: 0.9, reward: 1.4, precision: 0.8, attention: 1.1 },
+  resolution:  { timbral: 1.4, temporal: 0.9, reward: 1.1, precision: 1.3, attention: 0.8 },
+  entropy:     { timbral: 1.2, temporal: 0.8, reward: 0.9, precision: 0.7, attention: 1.3 },
+  resonance:   { timbral: 0.9, temporal: 1.0, reward: 1.3, precision: 1.0, attention: 0.9 },
+  plasticity:  { timbral: 0.8, temporal: 1.4, reward: 1.0, precision: 0.9, attention: 1.0 },
 };
 
 /* ── Tier Definitions ──────────────────────────────────────────── */
@@ -137,20 +135,20 @@ export const M3_TIERS: Record<M3Tier, TierDefinition> = {
     color: "#22D3EE",
     updateInterval: "weekly",
     features: ["m3.tier.basic.f1", "m3.tier.basic.f2", "m3.tier.basic.f3"],
-    price: 9.99,
+    price: 5,
   },
   premium: {
     key: "premium",
     color: "#A855F7",
     updateInterval: "daily",
     features: ["m3.tier.premium.f1", "m3.tier.premium.f2", "m3.tier.premium.f3"],
-    price: 19.99,
+    price: 10,
   },
   ultimate: {
     key: "ultimate",
     color: "#FBBF24",
     updateInterval: "realtime",
     features: ["m3.tier.ultimate.f1", "m3.tier.ultimate.f2", "m3.tier.ultimate.f3"],
-    price: 49.99,
+    price: 20,
   },
 };

@@ -1,8 +1,8 @@
-/* ── usePersonaOrganism — Derive organism config from persona + level + family ── */
+/* ── usePersonaOrganism — Derive organism config from persona + level + identity ── */
 
 import { useMemo } from "react";
 import type { Persona } from "@/types/mind";
-import type { PersonaLevel, FamilyAffinity } from "@/types/m3";
+import type { PersonaLevel, NeuralFamily } from "@/types/m3";
 import { FAMILY_MORPHOLOGY, levelToOrganismStage } from "@/types/m3";
 import { getLevelVisualConfig } from "@/data/persona-levels";
 import type { FamilyMorphology } from "@/canvas/mind-organism";
@@ -23,16 +23,18 @@ export interface PersonaOrganismConfig {
 
 /**
  * Derive organism rendering config from persona identity + M³ level.
- * Memoized to avoid unnecessary organism regeneration.
+ * When overrideColor / overrideFamily are provided (from useActiveIdentity),
+ * those take precedence over persona's static values.
  */
 export function usePersonaOrganism(
   persona: Persona | null,
   level: PersonaLevel,
-  _familyAffinity?: FamilyAffinity,
+  overrideColor?: string,
+  overrideFamily?: NeuralFamily,
 ): PersonaOrganismConfig {
   return useMemo(() => {
-    const family = persona?.family ?? "Alchemists";
-    const color = persona?.color ?? "#A855F7";
+    const family = overrideFamily ?? persona?.family ?? "Alchemists";
+    const color = overrideColor ?? persona?.color ?? "#A855F7";
     const morphology = FAMILY_MORPHOLOGY[family] as FamilyMorphology;
     const levelConfig = getLevelVisualConfig(level);
     const organismStage = levelToOrganismStage(level);
@@ -50,5 +52,5 @@ export function usePersonaOrganism(
       constellations: organismStage >= 2,
       maxParticles: levelConfig.particleCap,
     };
-  }, [persona, level]);
+  }, [persona, level, overrideColor, overrideFamily]);
 }

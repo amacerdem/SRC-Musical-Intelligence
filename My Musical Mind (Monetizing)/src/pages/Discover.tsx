@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { useUserStore } from "@/stores/useUserStore";
 import { getPersona } from "@/data/personas";
+import { useActiveIdentity } from "@/hooks/useActiveIdentity";
 import { generateTrace } from "@/data/mock-traces";
 import { recommendedTracks, topPerformances, friendActivity } from "@/data/mock-tracks";
 import { Button } from "@/components/ui/Button";
@@ -158,7 +159,7 @@ export function Discover() {
   const { t } = useTranslation();
   const { mind } = useUserStore();
   const persona = mind ? getPersona(mind.personaId) : null;
-  const accentColor = persona?.color ?? beliefColors.consonance.primary;
+  const { color: accentColor } = useActiveIdentity();
 
   const [analyzeOpen, setAnalyzeOpen] = useState(false);
   const [trackUrl, setTrackUrl] = useState("");

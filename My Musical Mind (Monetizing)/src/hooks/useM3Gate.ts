@@ -16,7 +16,7 @@ export function useM3Gate() {
   const mind = useM3Store((s) => s.mind);
 
   const tier: M3Tier = mind?.tier ?? "free";
-  const stage: M3Stage = mind?.stage ?? "seed";
+  const stage: M3Stage = mind?.stage ?? "embryo";
   const isFrozen = mind?.frozen ?? true;
   const isAlive = mind !== null;
 
@@ -39,22 +39,22 @@ export function useM3Gate() {
     },
 
     /* Social features */
-    canUseSocial: isAlive && stageIndex(stage) >= stageIndex("sapling"),
+    canUseSocial: isAlive && stageIndex(stage) >= stageIndex("infant"),
     canUseDuoMind:
       isAlive &&
       (tier === "premium" || tier === "ultimate") &&
-      stageIndex(stage) >= stageIndex("canopy"),
+      stageIndex(stage) >= stageIndex("adolescent"),
     canUseEcho: isAlive && tier === "ultimate",
     canUseGarden:
       isAlive &&
       (tier === "premium" || tier === "ultimate") &&
-      stageIndex(stage) >= stageIndex("branch"),
+      stageIndex(stage) >= stageIndex("toddler"),
 
     /* Recommendations */
-    canGetRecommendations: isAlive && stageIndex(stage) >= stageIndex("branch"),
+    canGetRecommendations: isAlive && stageIndex(stage) >= stageIndex("toddler"),
 
     /* Therapeutic observations */
-    canSeeTherapeutic: isAlive && stageIndex(stage) >= stageIndex("bloom"),
+    canSeeTherapeutic: isAlive && stageIndex(stage) >= stageIndex("child"),
 
     /* Upgrade needed? */
     needsUpgrade: tier === "free",

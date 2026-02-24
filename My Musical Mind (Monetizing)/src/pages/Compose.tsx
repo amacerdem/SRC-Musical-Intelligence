@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Wand2, Share2, Play, Loader2, Check, Brain } from "lucide-react";
 import { useUserStore } from "@/stores/useUserStore";
 import { getPersona } from "@/data/personas";
+import { useActiveIdentity } from "@/hooks/useActiveIdentity";
 import { MindOrganismCanvas } from "@/components/mind/MindOrganismCanvas";
 import { NucleusDot } from "@/components/mind/NucleusDot";
 import { Button } from "@/components/ui/Button";
@@ -78,7 +79,8 @@ export function Compose() {
   const [shared, setShared] = useState(false);
   const [generationCount, setGenerationCount] = useState(0);
 
-  const accentColor = persona?.color ?? beliefColors.consonance.primary;
+  const identity = useActiveIdentity();
+  const accentColor = identity.color;
 
   const beliefInfluence = useMemo(
     () => genState === "done" ? generateBeliefInfluence(style, complexity) : null,
@@ -218,11 +220,11 @@ export function Compose() {
                    persona.axes.monotonyTolerance > 0.6 ? "comfort with repetition allows for deeper, evolving patterns" :
                    persona.axes.entropyTolerance > 0.7 ? "chaos appetite opens up wilder harmonic choices" :
                    "need for closure drives satisfying resolutions throughout"}.{" "}
-                  Your {persona.family} mind naturally leans toward{" "}
-                  {persona.family === "Alchemists" ? "tension-release cycles" :
-                   persona.family === "Architects" ? "structural precision" :
-                   persona.family === "Explorers" ? "novel sonic territories" :
-                   persona.family === "Anchors" ? "emotionally resonant textures" :
+                  Your {identity.family} mind naturally leans toward{" "}
+                  {identity.family === "Alchemists" ? "tension-release cycles" :
+                   identity.family === "Architects" ? "structural precision" :
+                   identity.family === "Explorers" ? "novel sonic territories" :
+                   identity.family === "Anchors" ? "emotionally resonant textures" :
                    "rhythmic drive"}.
                 </p>
               </div>

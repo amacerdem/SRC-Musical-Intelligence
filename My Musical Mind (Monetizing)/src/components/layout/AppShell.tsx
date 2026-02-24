@@ -3,15 +3,14 @@ import { FloatingNav } from "./FloatingNav";
 import { useSmoothScroll } from "@/hooks/useSmoothScroll";
 import { MindOrganismCanvas } from "@/components/mind/MindOrganismCanvas";
 import { useUserStore } from "@/stores/useUserStore";
-import { personas } from "@/data/personas";
+import { useActiveIdentity } from "@/hooks/useActiveIdentity";
 import { useMobile } from "@/hooks/useMediaQuery";
 
 export function AppShell() {
   useSmoothScroll();
   const location = useLocation();
   const { mind } = useUserStore();
-  const persona = mind ? personas.find((p) => p.id === mind.personaId) : null;
-  const color = persona?.color ?? "#A855F7";
+  const { color, morphology } = useActiveIdentity();
   const stage = mind?.stage ?? 1;
   const isMobile = useMobile();
   const isImmersive = location.pathname === "/live";
@@ -27,6 +26,7 @@ export function AppShell() {
             intensity={0.15}
             breathRate={8}
             variant="ambient"
+            familyMorphology={morphology}
             className="w-full h-full"
             interactive={false}
           />

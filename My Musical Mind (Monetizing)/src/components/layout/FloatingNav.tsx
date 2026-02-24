@@ -13,6 +13,7 @@ import { useUserStore } from "@/stores/useUserStore";
 import { useM3Store } from "@/stores/useM3Store";
 import { personas } from "@/data/personas";
 import { beliefColors } from "@/design/tokens";
+import { useActiveIdentity } from "@/hooks/useActiveIdentity";
 import { NucleusDot } from "@/components/mind/NucleusDot";
 import { MiniOrganism } from "@/components/mind/MiniOrganism";
 import { useDesktop } from "@/hooks/useMediaQuery";
@@ -31,8 +32,9 @@ export function FloatingNav() {
   const location = useLocation();
   const { mind, level } = useUserStore();
   const m3Mind = useM3Store((s) => s.mind);
+  const identity = useActiveIdentity();
+  const accentColor = identity.color;
   const persona = mind ? personas.find(p => p.id === mind.personaId) : null;
-  const accentColor = persona?.color ?? "#A855F7";
   const [showSearch, setShowSearch] = useState(false);
   const isDesktop = useDesktop();
 

@@ -7,6 +7,7 @@
 import type { TFunction } from "i18next";
 import type { MindAxes } from "@/types/mind";
 import type { Persona } from "@/types/mind";
+import type { NeuralFamily } from "@/types/m3";
 import { lastWeekDays, weeklyStats, monthlyEvolution, recentTracks } from "./mock-listening";
 
 /* ── Neurochemical language map ───────────────────────────────── */
@@ -63,7 +64,7 @@ export function generateWeeklyMonologue(persona: Persona, axes: MindAxes, t: TFu
 }
 
 /** Generate daily micro-insights for each day of the week */
-export function generateDailyInsights(persona: Persona, t: TFunction): InsightBlock[] {
+export function generateDailyInsights(family: NeuralFamily, persona: Persona, t: TFunction): InsightBlock[] {
   return lastWeekDays.map((day) => {
     const snap = day.beliefSnapshot;
     const dominantIdx = snap.indexOf(Math.max(...snap));
@@ -73,7 +74,7 @@ export function generateDailyInsights(persona: Persona, t: TFunction): InsightBl
     const insightMap: Record<string, () => InsightBlock> = {
       consonance: () => ({
         title: t("insights.daily.consonance.title", { genre: day.topGenre }),
-        body: t("insights.daily.consonance.body", { val: snap[0].toFixed(2), tracks: day.tracksPlayed, family: persona.family }),
+        body: t("insights.daily.consonance.body", { val: snap[0].toFixed(2), tracks: day.tracksPlayed, family }),
         belief: "consonance",
         neuroChem: "opioids",
         intensity: snap[0],
@@ -281,10 +282,9 @@ export function findSimilarMind(
 }
 
 /** Generate the closing insight — one powerful sentence */
-export function generateBrainQuote(persona: Persona, axes: MindAxes, t: TFunction): string {
-  const family = persona.family || "Alchemists";
+export function generateBrainQuote(family: NeuralFamily, personaId: number, t: TFunction): string {
   // Deterministic selection based on persona id
-  const idx = persona.id % 3;
+  const idx = personaId % 3;
   return t(`insights.brainQuotes.${family}.${idx}`);
 }
 

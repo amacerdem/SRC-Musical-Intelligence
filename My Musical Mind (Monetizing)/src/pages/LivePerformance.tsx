@@ -9,6 +9,7 @@ import { DuoOrganismCanvas, type DuoOrganismHandle } from "@/components/mind/Duo
 import { NucleusDot } from "@/components/mind/NucleusDot";
 import { useUserStore } from "@/stores/useUserStore";
 import { getPersona } from "@/data/personas";
+import { useActiveIdentity } from "@/hooks/useActiveIdentity";
 import { mockUsers } from "@/data/mock-users";
 import { pageTransition, staggerChildren, slideUp, fadeIn } from "@/design/animations";
 import { beliefColors } from "@/design/tokens";
@@ -254,8 +255,9 @@ export function LivePerformance() {
 
   const { mind } = useUserStore();
   const persona = mind ? getPersona(mind.personaId) : null;
-  const color = persona?.color ?? beliefColors.tempo.primary;
-  const family = persona?.family ?? "Explorers";
+  const identity = useActiveIdentity();
+  const color = identity.color;
+  const family = identity.family;
   const organismRef = useRef<OrganismHandle>(null);
   const duoOrganismRef = useRef<DuoOrganismHandle>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -643,7 +645,7 @@ export function LivePerformance() {
                 </div>
                 {persona && (
                   <p className="text-[9px] text-slate-600 font-body font-light mb-2">
-                    Expand your <span style={{ color: beliefColors.salience.primary }} className="font-medium">{persona.family}</span> mind into new territory.
+                    Expand your <span style={{ color: beliefColors.salience.primary }} className="font-medium">{family}</span> mind into new territory.
                   </p>
                 )}
                 <div className="space-y-2.5">
@@ -811,7 +813,7 @@ export function LivePerformance() {
                         <>
                           <div className="mt-5"><NucleusDot color={color} size={14} active pulsing /></div>
                           <span className="text-sm font-display text-slate-400 mt-3">{persona?.name ?? "Ready"}</span>
-                          <span className="text-[10px] font-mono mt-1" style={{ color: `${color}80` }}>{persona?.family}</span>
+                          <span className="text-[10px] font-mono mt-1" style={{ color: `${color}80` }}>{family}</span>
                           <button onClick={handleStart} className="mt-5 px-6 py-2.5 rounded-full text-[12px] font-display font-medium text-white transition-all"
                             style={{ background: `linear-gradient(135deg, ${color}, ${beliefColors.reward.primary})`, boxShadow: `0 0 20px ${color}30` }}>
                             <Play size={14} className="inline mr-1.5 -mt-px" /> Start Solo

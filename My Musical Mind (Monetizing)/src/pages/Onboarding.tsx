@@ -164,7 +164,7 @@ function useTicker(target: number, duration: number, active: boolean) {
 
 export function Onboarding() {
   const navigate = useNavigate();
-  const { step, setStep, setPersona, setProgress, setSelectedPlan, analysisProgress, analysisPhase, selectedPersonaId, selectedTier } =
+  const { step, setStep, setPersona, setProgress, analysisProgress, analysisPhase, selectedPersonaId } =
     useOnboardingStore();
   const { completeOnboarding, displayName, setDisplayName, mind } = useUserStore();
   const birthM3 = useM3Store((s) => s.birthM3);
@@ -197,8 +197,8 @@ export function Onboarding() {
           subTrait: null,
         }, name);
 
-        // M³ birth: use the assigned persona for initial family affinity
-        birthM3(randomPersona, selectedTier);
+        // M³ birth: always start as free
+        birthM3(randomPersona, "free");
 
         setTimeout(() => {
           setStep("reveal");
@@ -207,7 +207,7 @@ export function Onboarding() {
     }, 200);
 
     return () => clearInterval(interval);
-  }, [setStep, setProgress, setPersona, completeOnboarding, setDisplayName, birthM3, selectedTier]);
+  }, [setStep, setProgress, setPersona, completeOnboarding, setDisplayName, birthM3]);
 
   return (
     <div className="fixed inset-0 bg-black overflow-hidden">
@@ -219,29 +219,14 @@ export function Onboarding() {
       </div>
 
       <AnimatePresence mode="wait">
-        {step === "plans" && (
-          <PlanStep
-            key="plans"
-            onSelect={(planId) => {
-              setSelectedPlan(planId);
-              setStep("signup");
-            }}
-          />
-        )}
-        {step === "signup" && (
-          <SignupStep
-            key="signup"
-            onComplete={() => setStep("connect")}
-          />
-        )}
-        {step === "connect" && (
+        {(step === "plans" || step === "signup" || step === "connect") && (
           <ConnectStep key="connect" userName={userName} onNameChange={setUserName} onConnect={() => startEvolution(userName)} />
         )}
         {step === "evolving" && (
           <EvolvingStep key="evolving" progress={analysisProgress} phase={analysisPhase} userName={userName} />
         )}
         {step === "reveal" && selectedPersonaId && mind && (
-          <RevealStep key="reveal" personaId={selectedPersonaId} mind={mind} displayName={userName} onEnter={() => navigate("/m3")} />
+          <RevealStep key="reveal" personaId={selectedPersonaId} mind={mind} displayName={userName} onEnter={() => navigate("/dashboard")} />
         )}
       </AnimatePresence>
     </div>

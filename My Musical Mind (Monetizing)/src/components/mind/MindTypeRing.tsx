@@ -1,28 +1,28 @@
-/* ── FamilyAffinityRing — 5-segment donut showing family distribution ── */
+/* ── MindTypeRing — 5-segment donut showing gene distribution ──── */
 
 import { useTranslation } from "react-i18next";
-import type { FamilyAffinity } from "@/types/m3";
-import { FAMILY_NAMES } from "@/types/m3";
+import type { MindGenes } from "@/types/m3";
+import { GENE_NAMES, GENE_TO_TYPE, GENE_COLORS, getDominantGene } from "@/types/m3";
 import { FAMILY_COLORS } from "@/data/persona-levels";
 
 interface Props {
-  affinity: FamilyAffinity;
+  genes: MindGenes;
   size?: number;
   showLabels?: boolean;
 }
 
-export function FamilyAffinityRing({ affinity, size = 120, showLabels = true }: Props) {
+export function MindTypeRing({ genes, size = 120, showLabels = true }: Props) {
   const { t } = useTranslation();
-  const total = FAMILY_NAMES.reduce((s, f) => s + affinity[f], 0) || 1;
+  const safeGenes = genes ?? { entropy: 0.2, resolution: 0.2, tension: 0.2, resonance: 0.2, plasticity: 0.2 };
+  const total = GENE_NAMES.reduce((s, g) => s + safeGenes[g], 0) || 1;
   const r = size / 2;
   const innerR = r * 0.6;
   const cx = r;
   const cy = r;
 
-  // Build arc segments
-  let startAngle = -Math.PI / 2; // start at top
-  const segments = FAMILY_NAMES.map((family) => {
-    const fraction = affinity[family] / total;
+  let startAngle = -Math.PI / 2;
+  const segments = GENE_NAMES.map((gene) => {
+    const fraction = safeGenes[gene] / total;
     const angle = fraction * Math.PI * 2;
     const endAngle = startAngle + angle;
     const largeArc = angle > Math.PI ? 1 : 0;
@@ -44,71 +44,71 @@ export function FamilyAffinityRing({ affinity, size = 120, showLabels = true }: 
       `Z`,
     ].join(" ");
 
-    // Label position at midpoint of arc
-    const midAngle = startAngle + angle / 2;
-    const labelR = (r + innerR) / 2;
-    const labelX = cx + Math.cos(midAngle) * labelR;
-    const labelY = cy + Math.sin(midAngle) * labelR;
-
     startAngle = endAngle;
 
+    const mindType = GENE_TO_TYPE[gene];
     return {
-      family,
+      gene,
+      mindType,
       path,
-      color: FAMILY_COLORS[family],
+      color: GENE_COLORS[gene],
       pct: Math.round(fraction * 100),
-      labelX,
-      labelY,
       fraction,
     };
   });
 
-  // Find dominant
-  const dominant = segments.reduce((a, b) => (a.fraction > b.fraction ? a : b));
+  const dominantGene = getDominantGene(safeGenes);
+  const dominantType = GENE_TO_TYPE[dominantGene];
+  const dominantColor = FAMILY_COLORS[dominantType];
+  const dominantPct = segments.find(s => s.gene === dominantGene)?.pct ?? 0;
 
   return (
     <div className="flex flex-col items-center">
       <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
         {segments.map((seg) => (
           <path
-            key={seg.family}
+            key={seg.gene}
             d={seg.path}
             fill={seg.color}
-            opacity={seg.family === dominant.family ? 0.9 : 0.4}
+            opacity={seg.gene === dominantGene ? 0.9 : 0.35}
             stroke="rgba(0,0,0,0.5)"
             strokeWidth={1}
           />
         ))}
-        {/* Center text */}
         <text
           x={cx}
           y={cy - 4}
           textAnchor="middle"
-          fill={dominant.color}
+          fill={dominantColor}
           fontSize={size * 0.12}
           fontFamily="var(--font-display)"
           fontWeight="600"
         >
-          {dominant.pct}%
+          {dominantPct}%
         </text>
         <text
           x={cx}
           y={cy + size * 0.08}
           textAnchor="middle"
           fill="rgb(100,116,139)"
-          fontSize={size * 0.07}
+          fontSize={size * 0.065}
           fontFamily="var(--font-mono)"
         >
-          {dominant.family.slice(0, 4)}
+          {dominantType}
         </text>
       </svg>
 
       {showLabels && (
         <div className="flex flex-wrap justify-center gap-x-3 gap-y-1 mt-2">
           {segments.map((seg) => (
-            <div key={seg.family} className="flex items-center gap-1">
-              <div className="w-2 h-2 rounded-full" style={{ backgroundColor: seg.color, opacity: seg.family === dominant.family ? 1 : 0.5 }} />
-              <span className="text-[9px] font-mono text-slate-500">{seg.pct}%</span>
+            <div key={seg.gene} className="flex items-center gap-1">
+              <div
+                className="w-2 h-2 rounded-full"
+                style={{ backgroundColor: seg.color, opacity: seg.gene === dominantGene ? 1 : 0.5 }}
+              />
+              <span className="text-[9px] font-mono text-slate-500">
+                {seg.pct}%
+              </span>
             </div>
           ))}
         </div>

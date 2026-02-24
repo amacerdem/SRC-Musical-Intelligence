@@ -29,29 +29,29 @@ export interface LevelVisualConfig {
 
 /** 12 levels of organism complexity — shared across all families */
 export const LEVEL_VISUAL_CONFIGS: LevelVisualConfig[] = [
-  // Level 1: Barely visible seed
+  // Level 1: Embryonic Mind — barely formed, a flicker of potential
   { level: 1,  organismStage: 1, tendrilCount: 3,  nucleiCount: 2,  bloomEnabled: false, chromaticEnabled: false, particleCap: 0,   breathRate: 8,   intensity: 0.2, glowIntensity: 0.05, colorSaturation: 0.2, hasAura: false, hasCrown: false, hasWings: false },
-  // Level 2: First shoots
+  // Level 2: Newborn Mind — first sensory impressions
   { level: 2,  organismStage: 1, tendrilCount: 5,  nucleiCount: 3,  bloomEnabled: false, chromaticEnabled: false, particleCap: 5,   breathRate: 7,   intensity: 0.3, glowIntensity: 0.1,  colorSaturation: 0.3, hasAura: false, hasCrown: false, hasWings: false },
-  // Level 3: Young sapling
+  // Level 3: Infant Mind — emotions beginning to form
   { level: 3,  organismStage: 1, tendrilCount: 7,  nucleiCount: 4,  bloomEnabled: false, chromaticEnabled: false, particleCap: 10,  breathRate: 6,   intensity: 0.35, glowIntensity: 0.15, colorSaturation: 0.4, hasAura: false, hasCrown: false, hasWings: false },
-  // Level 4: Growing sapling
+  // Level 4: Toddler Mind — exploring, testing boundaries
   { level: 4,  organismStage: 1, tendrilCount: 9,  nucleiCount: 4,  bloomEnabled: true,  chromaticEnabled: false, particleCap: 15,  breathRate: 5.5, intensity: 0.4, glowIntensity: 0.2,  colorSaturation: 0.5, hasAura: false, hasCrown: false, hasWings: false },
-  // Level 5: Branch emerging
+  // Level 5: Child Mind — curiosity and learning accelerate
   { level: 5,  organismStage: 2, tendrilCount: 12, nucleiCount: 5,  bloomEnabled: true,  chromaticEnabled: false, particleCap: 25,  breathRate: 5,   intensity: 0.5, glowIntensity: 0.3,  colorSaturation: 0.6, hasAura: false, hasCrown: false, hasWings: false },
-  // Level 6: Full branches
+  // Level 6: Tween Mind — developing preferences and taste
   { level: 6,  organismStage: 2, tendrilCount: 14, nucleiCount: 6,  bloomEnabled: true,  chromaticEnabled: false, particleCap: 35,  breathRate: 4.5, intensity: 0.55, glowIntensity: 0.35, colorSaturation: 0.65, hasAura: false, hasCrown: false, hasWings: false },
-  // Level 7: First bloom
+  // Level 7: Teen Mind — identity forming, strong opinions
   { level: 7,  organismStage: 2, tendrilCount: 16, nucleiCount: 7,  bloomEnabled: true,  chromaticEnabled: false, particleCap: 50,  breathRate: 4,   intensity: 0.6, glowIntensity: 0.4,  colorSaturation: 0.7, hasAura: false, hasCrown: false, hasWings: false },
-  // Level 8: Full bloom
+  // Level 8: Young Mind — maturation, depth and nuance
   { level: 8,  organismStage: 2, tendrilCount: 18, nucleiCount: 8,  bloomEnabled: true,  chromaticEnabled: true,  particleCap: 60,  breathRate: 3.5, intensity: 0.7, glowIntensity: 0.5,  colorSaturation: 0.8, hasAura: false, hasCrown: false, hasWings: false },
-  // Level 9: Canopy forming
+  // Level 9: Adult Mind — full capacity, confident identity
   { level: 9,  organismStage: 3, tendrilCount: 20, nucleiCount: 9,  bloomEnabled: true,  chromaticEnabled: true,  particleCap: 75,  breathRate: 3.5, intensity: 0.75, glowIntensity: 0.6,  colorSaturation: 0.85, hasAura: true,  hasCrown: false, hasWings: false },
-  // Level 10: Dense canopy
+  // Level 10: Master Mind — deep expertise, refined taste
   { level: 10, organismStage: 3, tendrilCount: 22, nucleiCount: 10, bloomEnabled: true,  chromaticEnabled: true,  particleCap: 85,  breathRate: 3,   intensity: 0.8, glowIntensity: 0.7,  colorSaturation: 0.9, hasAura: true,  hasCrown: false, hasWings: false },
-  // Level 11: Ancient presence
+  // Level 11: Elder Mind — wisdom, pattern recognition across decades
   { level: 11, organismStage: 3, tendrilCount: 24, nucleiCount: 11, bloomEnabled: true,  chromaticEnabled: true,  particleCap: 100, breathRate: 2.5, intensity: 0.9, glowIntensity: 0.85, colorSaturation: 0.95, hasAura: true,  hasCrown: true,  hasWings: false },
-  // Level 12: Transcendent form
+  // Level 12: Sage Mind — transcendent, observing its own evolution
   { level: 12, organismStage: 3, tendrilCount: 28, nucleiCount: 12, bloomEnabled: true,  chromaticEnabled: true,  particleCap: 120, breathRate: 2,   intensity: 1.0, glowIntensity: 1.0,  colorSaturation: 1.0, hasAura: true,  hasCrown: true,  hasWings: true },
 ];
 

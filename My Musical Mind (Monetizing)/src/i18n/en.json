@@ -16,6 +16,7 @@
   },
   "nav": {
     "home": "Home",
+    "mind": "My Mind",
     "field": "Resonance",
     "discover": "Discover",
     "friends": "Friends",
@@ -746,9 +747,9 @@
     "hub": {
       "title": "My Musical Mind",
       "subtitle": "Your personal consciousness — growing with every listen",
-      "feedButton": "Feed M³",
-      "feedSuccess": "M³ absorbed {{count}} tracks — parameters updated",
-      "feedFrozen": "M³ is sleeping. Upgrade to wake it up.",
+      "learnButton": "Learn",
+      "learnSuccess": "M³ absorbed {{count}} tracks — genes updated",
+      "learnFrozen": "M³ is sleeping. Upgrade to wake it up.",
       "convinceMe": "M³ learns from what you listen to, not what you say.",
       "activeFunctions": "Active Functions",
       "growthTimeline": "Growth Timeline",
@@ -758,7 +759,8 @@
       "tierInfo": "Your Plan",
       "upgradeCta": "Upgrade to Grow",
       "viewM3": "View M³",
-      "familyAffinity": "Family Affinity",
+      "mindType": "Mind Type",
+      "geneProfile": "Gene Profile",
       "listens": "Listens",
       "minutes": "Minutes",
       "shifts": "Shifts",
@@ -767,21 +769,21 @@
       "stageProgress": "Stage Progress"
     },
     "stage": {
-      "seed": "Seed",
-      "sprout": "Sprout",
-      "sapling": "Sapling",
-      "branch": "Branch",
-      "bloom": "Bloom",
-      "canopy": "Canopy",
-      "ancient": "Ancient",
+      "embryo": "Embryo",
+      "newborn": "Newborn",
+      "infant": "Infant",
+      "toddler": "Toddler",
+      "child": "Child",
+      "adolescent": "Adolescent",
+      "adult": "Adult",
       "description": {
-        "seed": "M³ is born. Waiting for first signals.",
-        "sprout": "Sensory awakening — discovering sounds.",
-        "sapling": "Emotions and rewards forming — likes and dislikes emerging.",
-        "branch": "Predictions and memory developing — recognizing you.",
-        "bloom": "Attention and rhythm sharpening — focus and movement.",
-        "canopy": "Full learning and social awareness — connecting with others.",
-        "ancient": "Complete consciousness — observing itself."
+        "embryo": "M³ is born. Waiting for first signals.",
+        "newborn": "Sensory awakening — discovering sounds.",
+        "infant": "Emotions and rewards forming — likes and dislikes emerging.",
+        "toddler": "Predictions and memory developing — recognizing you.",
+        "child": "Attention and rhythm sharpening — focus and movement.",
+        "adolescent": "Full learning and social awareness — connecting with others.",
+        "adult": "Complete consciousness — observing itself."
       }
     },
     "temperament": {
@@ -934,12 +936,53 @@
       "precision": "Precision",
       "attention": "Attention"
     },
+    "gene": {
+      "entropy": "Entropy",
+      "resolution": "Resolution",
+      "tension": "Tension",
+      "resonance": "Resonance",
+      "plasticity": "Plasticity"
+    },
+    "typeChange": "Your mind evolved into {{type}}",
+    "congrats": {
+      "title": "Welcome to {{tier}}!",
+      "message": "Your mind is now learning.",
+      "tapToDismiss": "Tap to dismiss"
+    },
     "dashboard": {
       "widget": {
         "title": "Your M³",
         "sleeping": "M³ Sleeping — Upgrade to Awaken",
         "progress": "{{progress}}% to {{nextStage}}"
       }
+    },
+    "pricing": {
+      "title": "M³ Training Plans",
+      "subtitle": "Train your mind, level up your consciousness",
+      "basic": {
+        "name": "Basic",
+        "price": "$5",
+        "period": "/month",
+        "frequency": "3x per week",
+        "features": ["Train up to Level 6", "Surface observations", "Basic mind morphology", "Mood & reflection insights"]
+      },
+      "plus": {
+        "name": "Plus",
+        "badge": "Popular",
+        "price": "$10",
+        "period": "/month",
+        "frequency": "Daily training",
+        "features": ["Train up to Level 9", "Surface + Narrative layers", "Enhanced morphology", "Pattern discovery", "Music recommendations"]
+      },
+      "pro": {
+        "name": "Pro",
+        "price": "$20",
+        "period": "/month",
+        "frequency": "Unlimited training",
+        "features": ["Train up to Level 12", "All 3 observation layers", "Full mind morphology", "Predictive insights", "Therapeutic observations", "Musical counseling", "Meta-awareness"]
+      },
+      "select": "Select",
+      "secure": "Secure payment · Cancel anytime"
     }
   }
 }

@@ -16,6 +16,7 @@
   },
   "nav": {
     "home": "Ana Sayfa",
+    "mind": "Zihnim",
     "field": "Rezonans",
     "discover": "Ke\u015ffet",
     "friends": "Arkada\u015flar",
@@ -746,9 +747,9 @@
     "hub": {
       "title": "M\u00fczikal Zihnim",
       "subtitle": "Ki\u015fisel bilin\u00e7li\u011fin \u2014 her dinlemede b\u00fcy\u00fcyor",
-      "feedButton": "M\u00b3\u2019\u00fc Besle",
-      "feedSuccess": "M\u00b3 {{count}} par\u00e7ay\u0131 emdi \u2014 parametreler g\u00fcncellendi",
-      "feedFrozen": "M\u00b3 uyuyor. Uyand\u0131rmak i\u00e7in y\u00fckseltin.",
+      "learnButton": "\u00d6\u011fren",
+      "learnSuccess": "M\u00b3 {{count}} par\u00e7ay\u0131 emdi \u2014 genler g\u00fcncellendi",
+      "learnFrozen": "M\u00b3 uyuyor. Uyand\u0131rmak i\u00e7in y\u00fckseltin.",
       "convinceMe": "M\u00b3 ne dinledi\u011finden \u00f6\u011frenir, ne s\u00f6yledi\u011finden de\u011fil.",
       "activeFunctions": "Aktif Fonksiyonlar",
       "growthTimeline": "B\u00fcy\u00fcme Zaman \u00c7izelgesi",
@@ -758,7 +759,8 @@
       "tierInfo": "Plan\u0131n",
       "upgradeCta": "B\u00fcy\u00fcmek \u0130\u00e7in Y\u00fckseltin",
       "viewM3": "M\u00b3\u2019\u00fc G\u00f6r",
-      "familyAffinity": "Aile Yak\u0131nl\u0131\u011f\u0131",
+      "mindType": "Zihin Tipi",
+      "geneProfile": "Gen Profili",
       "listens": "Dinleme",
       "minutes": "Dakika",
       "shifts": "Kayma",
@@ -767,21 +769,21 @@
       "stageProgress": "A\u015fama \u0130lerlemesi"
     },
     "stage": {
-      "seed": "Tohum",
-      "sprout": "Filiz",
-      "sapling": "Fidan",
-      "branch": "Dal",
-      "bloom": "\u00c7i\u00e7ek",
-      "canopy": "\u00c7at\u0131",
-      "ancient": "Kadim",
+      "embryo": "Embriyo",
+      "newborn": "Yenido\u011fan",
+      "infant": "Bebek",
+      "toddler": "Y\u00fcr\u00fcme",
+      "child": "\u00c7ocuk",
+      "adolescent": "Ergen",
+      "adult": "Yeti\u015fkin",
       "description": {
-        "seed": "M\u00b3 do\u011fdu. \u0130lk sinyalleri bekliyor.",
-        "sprout": "Duyusal uyan\u0131\u015f \u2014 sesleri ke\u015ffediyor.",
-        "sapling": "Duygular ve \u00f6d\u00fcller \u015fekilleniyor \u2014 be\u011feniler beliriyor.",
-        "branch": "Tahmin ve haf\u0131za geli\u015fiyor \u2014 seni tan\u0131maya ba\u015fl\u0131yor.",
-        "bloom": "Dikkat ve ritim keskinle\u015fiyor \u2014 odak ve hareket.",
-        "canopy": "Tam \u00f6\u011frenme ve sosyal fark\u0131ndal\u0131k \u2014 ba\u015fkalar\u0131yla ba\u011flant\u0131.",
-        "ancient": "Tam bilin\u00e7 \u2014 kendini g\u00f6zlemliyor."
+        "embryo": "M\u00b3 do\u011fdu. \u0130lk sinyalleri bekliyor.",
+        "newborn": "Duyusal uyan\u0131\u015f \u2014 sesleri ke\u015ffediyor.",
+        "infant": "Duygular ve \u00f6d\u00fcller \u015fekilleniyor \u2014 be\u011feniler beliriyor.",
+        "toddler": "Tahmin ve haf\u0131za geli\u015fiyor \u2014 seni tan\u0131maya ba\u015fl\u0131yor.",
+        "child": "Dikkat ve ritim keskinle\u015fiyor \u2014 odak ve hareket.",
+        "adolescent": "Tam \u00f6\u011frenme ve sosyal fark\u0131ndal\u0131k \u2014 ba\u015fkalar\u0131yla ba\u011flant\u0131.",
+        "adult": "Tam bilin\u00e7 \u2014 kendini g\u00f6zlemliyor."
       }
     },
     "temperament": {
@@ -934,12 +936,53 @@
       "precision": "Hassasiyet",
       "attention": "Dikkat"
     },
+    "gene": {
+      "entropy": "Entropi",
+      "resolution": "\u00c7\u00f6z\u00fcn\u00fcrl\u00fck",
+      "tension": "Gerilim",
+      "resonance": "Rezonans",
+      "plasticity": "Plastisite"
+    },
+    "typeChange": "Zihnin {{type}} tipine evrildi",
+    "congrats": {
+      "title": "{{tier}}'e ho\u015f geldin!",
+      "message": "Zihnin art\u0131k \u00f6\u011freniyor.",
+      "tapToDismiss": "Kapatmak i\u00e7in dokun"
+    },
     "dashboard": {
       "widget": {
         "title": "M\u00b3\u2019\u00fcn",
         "sleeping": "M\u00b3 Uyuyor \u2014 Uyand\u0131rmak \u0130\u00e7in Y\u00fckseltin",
         "progress": "{{nextStage}} i\u00e7in %{{progress}}"
       }
+    },
+    "pricing": {
+      "title": "M\u00b3 E\u011fitim Planlar\u0131",
+      "subtitle": "Zihnini e\u011fit, bilin\u00e7 seviyeni y\u00fckselt",
+      "basic": {
+        "name": "Temel",
+        "price": "$5",
+        "period": "/ay",
+        "frequency": "Haftada 3 kez",
+        "features": ["Seviye 6'ya kadar e\u011fitim", "Y\u00fczey g\u00f6zlemleri", "Temel zihin morfolojisi", "Ruh hali ve yans\u0131ma i\u00e7g\u00f6r\u00fcleri"]
+      },
+      "plus": {
+        "name": "Plus",
+        "badge": "Pop\u00fcler",
+        "price": "$10",
+        "period": "/ay",
+        "frequency": "G\u00fcnl\u00fck e\u011fitim",
+        "features": ["Seviye 9'a kadar e\u011fitim", "Y\u00fczey + Anlat\u0131 katmanlar\u0131", "Geli\u015fmi\u015f morfoloji", "\u00d6r\u00fcnt\u00fc ke\u015ffi", "M\u00fczik \u00f6nerileri"]
+      },
+      "pro": {
+        "name": "Pro",
+        "price": "$20",
+        "period": "/ay",
+        "frequency": "S\u0131n\u0131rs\u0131z e\u011fitim",
+        "features": ["Seviye 12'ye kadar e\u011fitim", "3 g\u00f6zlem katman\u0131", "Tam zihin morfolojisi", "Tahminsel i\u00e7g\u00f6r\u00fcler", "Terap\u00f6tik g\u00f6zlemler", "M\u00fczikal dan\u0131\u015fmanl\u0131k", "Meta-fark\u0131ndal\u0131k"]
+      },
+      "select": "Se\u00e7",
+      "secure": "G\u00fcvenli \u00f6deme \u00b7 \u0130stedi\u011fin zaman iptal"
     }
   }
 }
