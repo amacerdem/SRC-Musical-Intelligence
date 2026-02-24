@@ -231,6 +231,28 @@ export function Dashboard() {
           {/* ═ CENTER COLUMN (5 cols): Persona + Quote + PE ═══ */}
           <div className="col-span-5 flex flex-col items-center justify-center gap-4 min-h-0">
 
+            {/* View Persona button */}
+            <motion.button
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              onClick={() => navigate(`/info/${persona.id}`)}
+              className="group relative px-6 py-2 rounded-full overflow-hidden transition-all duration-500 hover:scale-[1.05]"
+              style={{ background: `${color}08`, border: `1px solid ${color}20` }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = `${color}15`; e.currentTarget.style.boxShadow = `0 0 30px ${color}15`; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = `${color}08`; e.currentTarget.style.boxShadow = "none"; }}
+            >
+              <motion.div
+                className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                style={{ background: `radial-gradient(ellipse at 50% 50%, ${color}12, transparent 70%)` }}
+              />
+              <span className="relative z-10 flex items-center gap-2 text-sm font-display font-medium tracking-wide" style={{ color }}>
+                <Sparkles size={14} className="group-hover:animate-pulse" />
+                {t("dashboard.viewPersona")}
+                <ChevronRight size={14} className="group-hover:translate-x-0.5 transition-transform duration-300" />
+              </span>
+            </motion.button>
+
             {/* Persona identity */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}

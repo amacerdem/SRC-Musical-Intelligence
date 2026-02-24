@@ -20,7 +20,7 @@ _status: Dict[str, Dict[str, Any]] = {}
 
 class RunRequest(BaseModel):
     audio_name: str
-    excerpt_s: float = 30.0
+    excerpt_s: float = 0.0  # 0 = full file
 
 
 # ---------------------------------------------------------------------------
@@ -63,7 +63,7 @@ async def run_pipeline(req: RunRequest, request: Request):
             result = await asyncio.to_thread(
                 pipeline.run,
                 req.audio_name,
-                req.excerpt_s,
+                req.excerpt_s if req.excerpt_s > 0 else None,
                 status_callback=status_callback,
             )
             storage.save(experiment_id, result)

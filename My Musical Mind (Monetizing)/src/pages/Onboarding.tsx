@@ -2,7 +2,7 @@ import { useCallback, useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Check, Crown, Sparkles, Zap, Music, Brain, Radio, Users, Star, Shield, Headphones, Eye } from "lucide-react";
+import { ArrowRight, Check, Crown, Sparkles, Zap, Music, Brain, Radio, Users, Star, Shield, Headphones, Eye, CheckCircle2, Loader2 } from "lucide-react";
 import { useOnboardingStore } from "@/stores/useOnboardingStore";
 import { useUserStore } from "@/stores/useUserStore";
 import { useM3Store } from "@/stores/useM3Store";
@@ -169,6 +169,8 @@ export function Onboarding() {
   const { completeOnboarding, displayName, setDisplayName, mind } = useUserStore();
   const birthM3 = useM3Store((s) => s.birthM3);
   const [userName, setUserName] = useState(displayName || "");
+  const [showOAuth, setShowOAuth] = useState(false);
+  const [oAuthPlatform, setOAuthPlatform] = useState<"spotify" | "soundcloud" | "apple">("spotify");
 
   const startEvolution = useCallback((name: string) => {
     setDisplayName(name);
@@ -209,6 +211,16 @@ export function Onboarding() {
     return () => clearInterval(interval);
   }, [setStep, setProgress, setPersona, completeOnboarding, setDisplayName, birthM3]);
 
+  const handlePlatformConnect = useCallback((platform: "spotify" | "soundcloud" | "apple") => {
+    setOAuthPlatform(platform);
+    setShowOAuth(true);
+  }, []);
+
+  const handleOAuthComplete = useCallback(() => {
+    setShowOAuth(false);
+    startEvolution(userName);
+  }, [startEvolution, userName]);
+
   return (
     <div className="fixed inset-0 bg-black overflow-hidden">
       <div className="cinematic-vignette" />
@@ -218,9 +230,28 @@ export function Onboarding() {
         <LanguageToggle />
       </div>
 
+      {/* Spotify OAuth overlay */}
+      <AnimatePresence>
+        {showOAuth && (
+          <SpotifyOAuthOverlay
+            platform={oAuthPlatform}
+            onComplete={handleOAuthComplete}
+            onCancel={() => setShowOAuth(false)}
+          />
+        )}
+      </AnimatePresence>
+
       <AnimatePresence mode="wait">
-        {(step === "plans" || step === "signup" || step === "connect") && (
-          <ConnectStep key="connect" userName={userName} onNameChange={setUserName} onConnect={() => startEvolution(userName)} />
+        {step === "signup" && (
+          <SignupStep key="signup" onComplete={() => setStep("connect")} />
+        )}
+        {step === "connect" && (
+          <ConnectStep
+            key="connect"
+            userName={userName}
+            onNameChange={setUserName}
+            onPlatformConnect={handlePlatformConnect}
+          />
         )}
         {step === "evolving" && (
           <EvolvingStep key="evolving" progress={analysisProgress} phase={analysisPhase} userName={userName} />
@@ -624,8 +655,202 @@ function SignupStep({ onComplete }: { onComplete: () => void }) {
   );
 }
 
+/* ── Spotify OAuth Simulation Overlay ───────────────────────────── */
+type OAuthPhase = "opening" | "authorize" | "connecting" | "connected";
+const OAUTH_PERMISSIONS = [
+  "onboarding.connect.oauth.permPlaylists",
+  "onboarding.connect.oauth.permHistory",
+  "onboarding.connect.oauth.permActivity",
+  "onboarding.connect.oauth.permProfile",
+] as const;
+
+function SpotifyOAuthOverlay({ platform, onComplete, onCancel }: {
+  platform: "spotify" | "soundcloud" | "apple";
+  onComplete: () => void;
+  onCancel: () => void;
+}) {
+  const { t } = useTranslation();
+  const [phase, setPhase] = useState<OAuthPhase>("opening");
+
+  useEffect(() => {
+    if (phase === "opening") {
+      const timer = setTimeout(() => setPhase("authorize"), 1800);
+      return () => clearTimeout(timer);
+    }
+    if (phase === "connecting") {
+      const timer = setTimeout(() => setPhase("connected"), 2000);
+      return () => clearTimeout(timer);
+    }
+    if (phase === "connected") {
+      const timer = setTimeout(() => onComplete(), 1200);
+      return () => clearTimeout(timer);
+    }
+  }, [phase, onComplete]);
+
+  const platformColor = platform === "spotify" ? "#1DB954" : platform === "soundcloud" ? "#FF5500" : "#FC3C44";
+  const platformName = platform === "spotify" ? "Spotify" : platform === "soundcloud" ? "SoundCloud" : "Apple Music";
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      className="fixed inset-0 z-[100] flex items-center justify-center"
+      style={{ background: "rgba(0,0,0,0.85)", backdropFilter: "blur(20px)" }}
+    >
+      <AnimatePresence mode="wait">
+        {/* Phase 1: Opening */}
+        {phase === "opening" && (
+          <motion.div
+            key="opening"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.5 }}
+            className="text-center"
+          >
+            <Loader2 size={32} className="animate-spin mx-auto mb-4" style={{ color: platformColor }} />
+            <p className="text-lg font-display font-medium text-slate-300">
+              {t("onboarding.connect.oauth.opening")}
+            </p>
+            <p className="text-sm text-slate-600 font-display font-light mt-2">
+              accounts.spotify.com
+            </p>
+          </motion.div>
+        )}
+
+        {/* Phase 2: Authorization page */}
+        {phase === "authorize" && (
+          <motion.div
+            key="authorize"
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.5 }}
+            className="w-full max-w-sm mx-4"
+          >
+            {/* Fake browser chrome */}
+            <div className="rounded-t-xl px-4 py-2.5 flex items-center gap-2" style={{ background: "rgba(255,255,255,0.06)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+              <div className="flex gap-1.5">
+                <div className="w-2.5 h-2.5 rounded-full bg-red-500/60" />
+                <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
+                <div className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
+              </div>
+              <div className="flex-1 mx-3">
+                <div className="px-3 py-1 rounded-md text-[11px] font-mono text-slate-500 truncate" style={{ background: "rgba(255,255,255,0.04)" }}>
+                  accounts.spotify.com/authorize?client_id=m3&scope=...
+                </div>
+              </div>
+            </div>
+
+            {/* Authorization content */}
+            <div className="rounded-b-xl p-6" style={{ background: "rgba(15,15,15,0.95)", border: "1px solid rgba(255,255,255,0.06)", borderTop: "none" }}>
+              {/* Spotify logo + title */}
+              <div className="text-center mb-6">
+                <div className="w-12 h-12 rounded-full mx-auto mb-4 flex items-center justify-center" style={{ background: `${platformColor}15` }}>
+                  <SpotifyLogo size={28} />
+                </div>
+                <h2 className="text-xl font-display font-bold text-slate-200 mb-1">
+                  {t("onboarding.connect.oauth.authorize")}
+                </h2>
+                <p className="text-sm text-slate-500 font-display font-light">
+                  {t("onboarding.connect.oauth.authorizeDesc")}
+                </p>
+              </div>
+
+              {/* Permissions */}
+              <div className="space-y-3 mb-8">
+                {OAUTH_PERMISSIONS.map((perm, i) => (
+                  <motion.div
+                    key={perm}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.2 + i * 0.1, duration: 0.4 }}
+                    className="flex items-center gap-3"
+                  >
+                    <Check size={14} className="flex-shrink-0" style={{ color: platformColor }} />
+                    <span className="text-sm text-slate-400 font-display font-light">{t(perm)}</span>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Buttons */}
+              <div className="flex gap-3">
+                <button
+                  onClick={onCancel}
+                  className="flex-1 py-3 rounded-xl text-sm font-display font-medium text-slate-500 transition-all duration-300 hover:text-slate-300"
+                  style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}
+                >
+                  {t("onboarding.connect.oauth.deny")}
+                </button>
+                <motion.button
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.6 }}
+                  onClick={() => setPhase("connecting")}
+                  className="flex-1 py-3 rounded-xl text-sm font-display font-semibold text-black transition-all duration-300 hover:brightness-110"
+                  style={{ background: platformColor }}
+                >
+                  {t("onboarding.connect.oauth.agree")}
+                </motion.button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Phase 3: Connecting */}
+        {phase === "connecting" && (
+          <motion.div
+            key="connecting"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.05 }}
+            transition={{ duration: 0.5 }}
+            className="text-center"
+          >
+            <Loader2 size={32} className="animate-spin mx-auto mb-4" style={{ color: platformColor }} />
+            <p className="text-lg font-display font-medium text-slate-300">
+              {t("onboarding.connect.oauth.connecting")}
+            </p>
+            <p className="text-sm text-slate-600 font-display font-light mt-2">
+              {t("onboarding.connect.oauth.redirecting")}
+            </p>
+          </motion.div>
+        )}
+
+        {/* Phase 4: Connected */}
+        {phase === "connected" && (
+          <motion.div
+            key="connected"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.1, filter: "blur(10px)" }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="text-center"
+          >
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20, delay: 0.1 }}
+            >
+              <CheckCircle2 size={48} className="mx-auto mb-4" style={{ color: platformColor }} />
+            </motion.div>
+            <p className="text-xl font-display font-bold" style={{ color: platformColor }}>
+              {t("onboarding.connect.oauth.connected")}
+            </p>
+            <p className="text-sm text-slate-500 font-display font-light mt-2">
+              {t("onboarding.connect.oauth.accessGranted")}
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+}
+
 /* ── Connect Step (Spotify + Name) ───────────────────────────────── */
-function ConnectStep({ userName, onNameChange, onConnect }: { userName: string; onNameChange: (n: string) => void; onConnect: () => void }) {
+function ConnectStep({ userName, onNameChange, onPlatformConnect }: { userName: string; onNameChange: (n: string) => void; onPlatformConnect: (platform: "spotify" | "soundcloud" | "apple") => void }) {
   const { t } = useTranslation();
   const [entered, setEntered] = useState(false);
   const canProceed = userName.trim().length >= 2;
@@ -678,7 +903,7 @@ function ConnectStep({ userName, onNameChange, onConnect }: { userName: string; 
             placeholder={t("onboarding.connect.namePlaceholder")}
             autoFocus
             className="w-full max-w-xs mx-auto block text-center text-xl font-display font-medium text-slate-200 bg-transparent border-b-2 border-white/10 focus:border-indigo-500/50 outline-none py-3 px-4 placeholder:text-slate-700 transition-colors duration-500"
-            onKeyDown={(e) => { if (e.key === "Enter" && canProceed) onConnect(); }}
+            onKeyDown={(e) => { if (e.key === "Enter" && canProceed) onPlatformConnect("spotify"); }}
           />
         </motion.div>
 
@@ -707,9 +932,9 @@ function ConnectStep({ userName, onNameChange, onConnect }: { userName: string; 
           className="space-y-3"
           style={{ pointerEvents: canProceed ? "auto" : "none" }}
         >
-          <ConnectButton logo={<SpotifyLogo />} name="Spotify" sub={t("onboarding.connect.spotifySub")} color="#1DB954" onClick={onConnect} delay={0} />
-          <ConnectButton logo={<SoundCloudLogo />} name="SoundCloud" sub={t("onboarding.connect.soundcloudSub")} color="#FF5500" onClick={onConnect} delay={0.1} />
-          <ConnectButton logo={<AppleMusicLogo />} name="Apple Music" sub={t("onboarding.connect.appleSub")} color="#FC3C44" onClick={onConnect} delay={0.2} />
+          <ConnectButton logo={<SpotifyLogo />} name="Spotify" sub={t("onboarding.connect.spotifySub")} color="#1DB954" onClick={() => onPlatformConnect("spotify")} delay={0} />
+          <ConnectButton logo={<SoundCloudLogo />} name="SoundCloud" sub={t("onboarding.connect.soundcloudSub")} color="#FF5500" onClick={() => onPlatformConnect("soundcloud")} delay={0.1} />
+          <ConnectButton logo={<AppleMusicLogo />} name="Apple Music" sub={t("onboarding.connect.appleSub")} color="#FC3C44" onClick={() => onPlatformConnect("apple")} delay={0.2} />
         </motion.div>
       </motion.div>
     </div>

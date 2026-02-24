@@ -26,7 +26,7 @@ const PLAN_TO_TIER: Record<string, M3Tier> = {
 };
 
 export const useOnboardingStore = create<OnboardingState>((set) => ({
-  step: "connect",
+  step: "signup",
   selectedPersonaId: null,
   analysisProgress: 0,
   analysisPhase: "",
@@ -40,7 +40,7 @@ export const useOnboardingStore = create<OnboardingState>((set) => ({
   setSelectedPlan: (plan) => set({ selectedPlan: plan, selectedTier: PLAN_TO_TIER[plan] ?? "free" }),
   reset: () =>
     set({
-      step: "connect",
+      step: "signup",
       selectedPersonaId: null,
       analysisProgress: 0,
       analysisPhase: "",

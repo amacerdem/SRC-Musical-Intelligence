@@ -107,40 +107,35 @@ function updateGenes(current: MindGenes, contribution: MindGenes): MindGenes {
 
 /* ── Persona Derivation ──────────────────────────────────────────── */
 
-/** Derive the best-matching persona from genes */
+/** Normalized Euclidean distance between two gene profiles [0,1] */
+function geneDistance(a: MindGenes, b: MindGenes): number {
+  let d = 0;
+  for (const g of GENE_NAMES) {
+    d += (a[g] - b[g]) ** 2;
+  }
+  return Math.sqrt(d) / Math.sqrt(5);
+}
+
+/** Derive the best-matching persona from genes (gene-to-gene matching) */
 function derivePersona(genes: MindGenes): number {
   let bestId = 1;
   let bestScore = -Infinity;
 
   for (const p of personas) {
-    // Gene-based family weight
+    // Direct gene-to-gene similarity
+    const geneSim = 1 - geneDistance(genes, p.genes);
+
+    // Family alignment bonus
     const dominantGene = TYPE_TO_GENE[p.family];
-    const geneWeight = genes[dominantGene];
+    const familyBonus = genes[dominantGene];
 
-    // Axes similarity (map genes → axes for comparison)
-    const axesSim = 1 - axesDistanceFromGenes(genes, p.axes);
-
-    const score = geneWeight * 0.6 + axesSim * 0.4;
+    const score = geneSim * 0.85 + familyBonus * 0.15;
     if (score > bestScore) {
       bestScore = score;
       bestId = p.id;
     }
   }
   return bestId;
-}
-
-/** Distance between genes (as axes) and persona axes */
-function axesDistanceFromGenes(
-  genes: MindGenes,
-  axes: { entropyTolerance: number; resolutionCraving: number; monotonyTolerance: number; salienceSensitivity: number; tensionAppetite: number },
-): number {
-  const d =
-    (genes.entropy - axes.entropyTolerance) ** 2 +
-    (genes.resolution - axes.resolutionCraving) ** 2 +
-    (genes.plasticity - axes.monotonyTolerance) ** 2 +
-    (genes.resonance - axes.salienceSensitivity) ** 2 +
-    (genes.tension - axes.tensionAppetite) ** 2;
-  return Math.sqrt(d) / Math.sqrt(5);
 }
 
 /* ── Level / Stage Computation ───────────────────────────────────── */
@@ -242,9 +237,8 @@ export const useM3Store = create<M3StoreState>()(
         const isFree = tier === "free";
         const dominantGene = TYPE_TO_GENE[persona.family];
 
-        // Initial genes: 60% for birth persona's dominant gene, 10% each for others
-        const genes: MindGenes = { ...DEFAULT_GENES };
-        genes[dominantGene] = 0.6;
+        // Use the persona's canonical gene profile as starting point
+        const genes: MindGenes = { ...persona.genes };
 
         const params = initParameters(dominantGene);
         const stage: M3Stage = "embryo";

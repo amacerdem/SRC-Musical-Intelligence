@@ -281,6 +281,7 @@
     "notFound": "Persona not found.",
     "mindProfile": "Mind Profile",
     "axesBreakdown": "Axes Breakdown",
+    "geneDna": "Gene DNA",
     "strengths": "Strengths",
     "famousMinds": "Famous Minds",
     "compatiblePersonas": "Compatible Personas",
@@ -672,7 +673,22 @@
       "soundcloudSub": "Connect your likes",
       "appleMusic": "Apple Music",
       "appleSub": "Connect your library",
-      "connect": "Connect"
+      "connect": "Connect",
+      "oauth": {
+        "opening": "Opening Spotify...",
+        "authorize": "Authorize M\u00b3",
+        "authorizeDesc": "M\u00b3 wants to access your Spotify account",
+        "permPlaylists": "View your playlists and saved music",
+        "permHistory": "Access your listening history",
+        "permActivity": "View your recently played tracks",
+        "permProfile": "View your Spotify profile",
+        "agree": "Agree",
+        "deny": "Cancel",
+        "connecting": "Connecting to Spotify...",
+        "connected": "Connected!",
+        "redirecting": "Redirecting back to M\u00b3...",
+        "accessGranted": "Access granted"
+      }
     },
     "evolving": {
       "neuralGenesis": "Neural Genesis",
@@ -768,7 +784,9 @@
       "shifts": "Shifts",
       "typesUnlocked": "types unlocked",
       "noObservations": "M³ needs more data to observe.",
-      "stageProgress": "Stage Progress"
+      "stageProgress": "Stage Progress",
+      "neuralStream": "Neural Memory Stream",
+      "feedYourMind": "Feed your mind — press Learn below"
     },
     "stage": {
       "embryo": "Embryo",

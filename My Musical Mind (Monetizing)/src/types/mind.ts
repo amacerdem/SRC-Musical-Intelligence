@@ -66,6 +66,7 @@ export interface Persona {
   tagline: string;
   color: string;
   axes: MindAxes;
+  genes: import("./m3").MindGenes; // Canonical 5-gene fingerprint
   description: string;
   strengths: string[];
   compatibleWith: number[];   // persona IDs

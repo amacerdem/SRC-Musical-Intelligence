@@ -281,6 +281,7 @@
     "notFound": "Persona bulunamad\u0131.",
     "mindProfile": "Zihin Profili",
     "axesBreakdown": "Eksen Da\u011f\u0131l\u0131m\u0131",
+    "geneDna": "Gen DNA",
     "strengths": "G\u00fc\u00e7l\u00fc Yanlar",
     "famousMinds": "\u00dcnl\u00fc Zihinler",
     "compatiblePersonas": "Uyumlu Personalar",
@@ -672,7 +673,22 @@
       "soundcloudSub": "Be\u011fendiklerini ba\u011fla",
       "appleMusic": "Apple Music",
       "appleSub": "K\u00fct\u00fcphaneni ba\u011fla",
-      "connect": "Ba\u011fla"
+      "connect": "Ba\u011fla",
+      "oauth": {
+        "opening": "Spotify a\u00e7\u0131l\u0131yor...",
+        "authorize": "M\u00b3'e Yetki Ver",
+        "authorizeDesc": "M\u00b3, Spotify hesab\u0131n\u0131za eri\u015fmek istiyor",
+        "permPlaylists": "\u00c7alma listelerinizi ve kaydedilen m\u00fczi\u011finizi g\u00f6r\u00fcnt\u00fcleyin",
+        "permHistory": "Dinleme ge\u00e7mi\u015finize eri\u015fin",
+        "permActivity": "Son \u00e7al\u0131nan par\u00e7alar\u0131n\u0131z\u0131 g\u00f6r\u00fcnt\u00fcleyin",
+        "permProfile": "Spotify profilinizi g\u00f6r\u00fcnt\u00fcleyin",
+        "agree": "Kabul Et",
+        "deny": "\u0130ptal",
+        "connecting": "Spotify'a ba\u011flan\u0131yor...",
+        "connected": "Ba\u011fland\u0131!",
+        "redirecting": "M\u00b3'e y\u00f6nlendiriliyor...",
+        "accessGranted": "Eri\u015fim verildi"
+      }
     },
     "evolving": {
       "neuralGenesis": "N\u00f6ral Olu\u015fum",
@@ -768,7 +784,9 @@
       "shifts": "Kayma",
       "typesUnlocked": "t\u00fcr a\u00e7\u0131ld\u0131",
       "noObservations": "M\u00b3\u2019\u00fcn g\u00f6zlem yapabilmesi i\u00e7in daha fazla veriye ihtiyac\u0131 var.",
-      "stageProgress": "A\u015fama \u0130lerlemesi"
+      "stageProgress": "A\u015fama \u0130lerlemesi",
+      "neuralStream": "N\u00f6ral Haf\u0131za Ak\u0131\u015f\u0131",
+      "feedYourMind": "Zihnini besle \u2014 a\u015fa\u011f\u0131da \u00d6\u011fren\u2019e bas"
     },
     "stage": {
       "embryo": "Embriyo",
