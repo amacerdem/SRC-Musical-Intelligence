@@ -24,12 +24,12 @@ interface PipelineState {
   experiments: ExperimentMeta[];
   currentExperimentId: string | null;
 
-  // R³ data (loaded from backend)
+  // R3 data (loaded from backend)
   r3Features: Float32Array | null;
   r3Names: string[];
   r3Frames: number;
 
-  // H³ data
+  // H3 data
   h3Tuples: Int32Array | null;
   h3Values: Float32Array | null;
   h3NTuples: number;
@@ -39,6 +39,17 @@ interface PipelineState {
 
   // RAM
   ramData: Float32Array | null;
+
+  // Beliefs (centralized from C3Explorer)
+  beliefsData: Float32Array | null;
+  beliefNames: string[];
+  nBeliefs: number;
+
+  // Neuro (centralized)
+  neuroData: Float32Array | null;
+
+  // Relay cache (centralized)
+  relayCache: Record<string, { data: Float32Array; dim: number }>;
 
   // Actions
   setRunning: (r: boolean) => void;
@@ -50,6 +61,9 @@ interface PipelineState {
   setH3Data: (tuples: Int32Array, values: Float32Array, nTuples: number) => void;
   setRewardData: (data: Float32Array) => void;
   setRamData: (data: Float32Array) => void;
+  setBeliefsData: (data: Float32Array, names: string[], nBeliefs: number) => void;
+  setNeuroData: (data: Float32Array) => void;
+  setRelayData: (name: string, data: Float32Array, dim: number) => void;
   clearResults: () => void;
 }
 
@@ -67,6 +81,11 @@ export const usePipelineStore = create<PipelineState>((set) => ({
   h3NTuples: 0,
   rewardData: null,
   ramData: null,
+  beliefsData: null,
+  beliefNames: [],
+  nBeliefs: 0,
+  neuroData: null,
+  relayCache: {},
 
   setRunning: (r) => set({ isRunning: r }),
   setRunPhase: (p) => set({ runPhase: p }),
@@ -77,6 +96,11 @@ export const usePipelineStore = create<PipelineState>((set) => ({
   setH3Data: (tuples, values, nTuples) => set({ h3Tuples: tuples, h3Values: values, h3NTuples: nTuples }),
   setRewardData: (data) => set({ rewardData: data }),
   setRamData: (data) => set({ ramData: data }),
+  setBeliefsData: (data, names, nBeliefs) => set({ beliefsData: data, beliefNames: names, nBeliefs }),
+  setNeuroData: (data) => set({ neuroData: data }),
+  setRelayData: (name, data, dim) => set((state) => ({
+    relayCache: { ...state.relayCache, [name]: { data, dim } },
+  })),
   clearResults: () => set({
     r3Features: null,
     r3Names: [],
@@ -86,5 +110,10 @@ export const usePipelineStore = create<PipelineState>((set) => ({
     h3NTuples: 0,
     rewardData: null,
     ramData: null,
+    beliefsData: null,
+    beliefNames: [],
+    nBeliefs: 0,
+    neuroData: null,
+    relayCache: {},
   }),
 }));

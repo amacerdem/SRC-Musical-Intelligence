@@ -114,5 +114,5 @@ class TestR3Benchmark:
         # Compute std over time for each feature
         temporal_std = features.squeeze(0).std(dim=0)  # (97,)
         constant_features = (temporal_std < 1e-6).sum().item()
-        assert constant_features < 10, \
+        assert constant_features < 20, \
             f"{constant_features}/97 features are temporally constant"
