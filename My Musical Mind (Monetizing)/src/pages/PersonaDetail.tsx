@@ -11,7 +11,6 @@ import { ArrowLeft, Users, Sparkles } from "lucide-react";
 import { getPersona, personas } from "@/data/personas";
 import { NARRATIVE_SECTIONS } from "@/data/persona-narratives";
 import { MindOrganismCanvas } from "@/components/mind/MindOrganismCanvas";
-import { MindRadar } from "@/components/mind/MindRadar";
 import { PersonaCard } from "@/components/mind/PersonaCard";
 import { PersonaSidebar } from "@/components/persona/PersonaSidebar";
 import { PersonaSection } from "@/components/persona/PersonaSection";
@@ -22,19 +21,9 @@ import { Button } from "@/components/ui/Button";
 import { NucleusDot } from "@/components/mind/NucleusDot";
 import { MindTypeRing } from "@/components/mind/MindTypeRing";
 import { pageTransition, staggerChildren, slideUp, cinematicReveal } from "@/design/animations";
-import { beliefColors } from "@/design/tokens";
 import { useM3Store } from "@/stores/useM3Store";
 import { FAMILY_MORPHOLOGY, levelToOrganismStage, GENE_NAMES, GENE_COLORS } from "@/types/m3";
-import type { MindAxes } from "@/types/mind";
 import type { FamilyMorphology } from "@/canvas/mind-organism";
-
-const AXIS_LABELS: { key: keyof MindAxes; short: string; belief: keyof typeof beliefColors }[] = [
-  { key: "entropyTolerance", short: "ENT", belief: "consonance" },
-  { key: "resolutionCraving", short: "RES", belief: "tempo" },
-  { key: "monotonyTolerance", short: "MON", belief: "familiarity" },
-  { key: "salienceSensitivity", short: "SAL", belief: "salience" },
-  { key: "tensionAppetite", short: "TEN", belief: "reward" },
-];
 
 export function PersonaDetail() {
   const { id } = useParams<{ id: string }>();
@@ -147,59 +136,54 @@ export function PersonaDetail() {
               <div className="sticky top-24">
                 <PersonaSidebar color={persona.color} />
 
-                {/* Mini radar */}
-                <div className="mt-6 p-4 rounded-xl" style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.04)" }}>
-                  <MindRadar axes={persona.axes} color={persona.color} size={180} />
-                </div>
-
-                {/* Axes bars */}
-                <div className="mt-4 space-y-2">
-                  {AXIS_LABELS.map(({ key, short, belief }) => {
-                    const pct = Math.round(persona.axes[key] * 100);
-                    return (
-                      <div key={key}>
-                        <div className="flex items-center justify-between mb-0.5">
-                          <span className="hud-label text-[8px]">{short}</span>
-                          <span className="text-[9px] font-mono" style={{ color: beliefColors[belief].primary }}>{pct}</span>
-                        </div>
-                        <div className="w-full h-[2px] rounded-full bg-white/5 overflow-hidden">
-                          <motion.div
-                            className="h-full rounded-full"
-                            style={{ backgroundColor: beliefColors[belief].primary }}
-                            initial={{ width: 0 }}
-                            animate={{ width: `${pct}%` }}
-                            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-                          />
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                {/* Gene DNA */}
+                {/* Gene DNA — 5 genes */}
                 <div className="mt-6 p-4 rounded-xl" style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.04)" }}>
                   <span className="hud-label mb-3 block">{t("personaDetail.geneDna")}</span>
-                  <MindTypeRing genes={persona.genes} size={140} showLabels={false} />
-                  <div className="mt-3 space-y-1.5">
-                    {GENE_NAMES.map((gene) => (
-                      <div key={gene}>
-                        <div className="flex items-center justify-between mb-0.5">
-                          <span className="hud-label text-[8px]">{gene.toUpperCase()}</span>
-                          <span className="text-[9px] font-mono" style={{ color: GENE_COLORS[gene] }}>
-                            {Math.round(persona.genes[gene] * 100)}
-                          </span>
+                  <div className="flex justify-center mb-4">
+                    <MindTypeRing genes={persona.genes} size={140} showLabels={false} />
+                  </div>
+                  <div className="space-y-2">
+                    {GENE_NAMES.map((gene, i) => {
+                      const pct = Math.round(persona.genes[gene] * 100);
+                      const color = GENE_COLORS[gene];
+                      const isDominant = pct === Math.max(...GENE_NAMES.map(g => Math.round(persona.genes[g] * 100)));
+                      return (
+                        <div key={gene}>
+                          <div className="flex items-center justify-between mb-0.5">
+                            <div className="flex items-center gap-1.5">
+                              <div
+                                className="w-1.5 h-1.5 rounded-full"
+                                style={{
+                                  background: color,
+                                  boxShadow: isDominant ? `0 0 6px ${color}80` : "none",
+                                }}
+                              />
+                              <span
+                                className="hud-label text-[8px]"
+                                style={{ color: isDominant ? color : undefined }}
+                              >
+                                {t(`m3.gene.${gene}`)}
+                              </span>
+                            </div>
+                            <span className="text-[9px] font-mono" style={{ color }}>
+                              {pct}
+                            </span>
+                          </div>
+                          <div className="w-full h-[3px] rounded-full bg-white/5 overflow-hidden">
+                            <motion.div
+                              className="h-full rounded-full"
+                              style={{
+                                backgroundColor: color,
+                                boxShadow: isDominant ? `0 0 10px ${color}40` : "none",
+                              }}
+                              initial={{ width: 0 }}
+                              animate={{ width: `${pct}%` }}
+                              transition={{ duration: 1, delay: 0.2 + i * 0.06, ease: [0.22, 1, 0.36, 1] }}
+                            />
+                          </div>
                         </div>
-                        <div className="w-full h-[2px] rounded-full bg-white/5 overflow-hidden">
-                          <motion.div
-                            className="h-full rounded-full"
-                            style={{ backgroundColor: GENE_COLORS[gene] }}
-                            initial={{ width: 0 }}
-                            animate={{ width: `${persona.genes[gene] * 100}%` }}
-                            transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                          />
-                        </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               </div>
@@ -286,38 +270,54 @@ export function PersonaDetail() {
                 </div>
               )}
 
-              {/* Mobile radar + genes (hidden on desktop) */}
+              {/* Mobile genes (hidden on desktop) */}
               <div className="lg:hidden spatial-card p-8">
-                <span className="hud-label mb-4 block">{t("personaDetail.mindProfile")}</span>
-                <div className="flex justify-center">
-                  <MindRadar axes={persona.axes} color={persona.color} size={280} />
+                <span className="hud-label mb-4 block">{t("personaDetail.geneDna")}</span>
+                <div className="flex justify-center mb-5">
+                  <MindTypeRing genes={persona.genes} size={160} />
                 </div>
-                <div className="mt-8">
-                  <span className="hud-label mb-3 block">{t("personaDetail.geneDna")}</span>
-                  <div className="flex justify-center mb-4">
-                    <MindTypeRing genes={persona.genes} size={160} />
-                  </div>
-                  <div className="space-y-2">
-                    {GENE_NAMES.map((gene) => (
+                <div className="space-y-2.5">
+                  {GENE_NAMES.map((gene, i) => {
+                    const pct = Math.round(persona.genes[gene] * 100);
+                    const color = GENE_COLORS[gene];
+                    const isDominant = pct === Math.max(...GENE_NAMES.map(g => Math.round(persona.genes[g] * 100)));
+                    return (
                       <div key={gene}>
                         <div className="flex items-center justify-between mb-0.5">
-                          <span className="hud-label text-[9px]">{gene.toUpperCase()}</span>
-                          <span className="text-[10px] font-mono" style={{ color: GENE_COLORS[gene] }}>
-                            {Math.round(persona.genes[gene] * 100)}
+                          <div className="flex items-center gap-1.5">
+                            <div
+                              className="w-1.5 h-1.5 rounded-full"
+                              style={{
+                                background: color,
+                                boxShadow: isDominant ? `0 0 6px ${color}80` : "none",
+                              }}
+                            />
+                            <span
+                              className="hud-label text-[9px]"
+                              style={{ color: isDominant ? color : undefined }}
+                            >
+                              {t(`m3.gene.${gene}`)}
+                            </span>
+                          </div>
+                          <span className="text-[10px] font-mono" style={{ color }}>
+                            {pct}
                           </span>
                         </div>
                         <div className="w-full h-[3px] rounded-full bg-white/5 overflow-hidden">
                           <motion.div
                             className="h-full rounded-full"
-                            style={{ backgroundColor: GENE_COLORS[gene] }}
+                            style={{
+                              backgroundColor: color,
+                              boxShadow: isDominant ? `0 0 10px ${color}40` : "none",
+                            }}
                             initial={{ width: 0 }}
-                            animate={{ width: `${persona.genes[gene] * 100}%` }}
-                            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+                            animate={{ width: `${pct}%` }}
+                            transition={{ duration: 1, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
                           />
                         </div>
                       </div>
-                    ))}
-                  </div>
+                    );
+                  })}
                 </div>
               </div>
             </motion.div>
