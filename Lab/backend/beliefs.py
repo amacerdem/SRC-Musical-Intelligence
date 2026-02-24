@@ -99,6 +99,7 @@ def build_dim_lookup(nuclei) -> Dict[str, Tuple[str, int]]:
                 key = (n.NAME, bare)
                 if key not in lookup:  # prefixed form takes priority
                     lookup[key] = (n.NAME, i)
+    return lookup
 
 
 # ---------------------------------------------------------------------------

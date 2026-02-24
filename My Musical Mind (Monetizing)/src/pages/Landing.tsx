@@ -35,10 +35,32 @@ export function Landing() {
         <OrbitalBeliefs visible size={Math.min(900, typeof window !== "undefined" ? window.innerWidth * 1.275 : 900)} />
       </div>
 
-      {/* Language toggle */}
-      <div className="fixed top-6 right-6 z-20">
+      {/* Header: Auth buttons + Language toggle */}
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, delay: 2.5 }}
+        className="fixed top-6 right-6 z-20 flex items-center gap-3"
+      >
+        <button
+          onClick={() => navigate("/onboarding")}
+          className="px-5 py-2 text-sm font-display font-medium text-slate-400 hover:text-white transition-colors duration-300 tracking-wide"
+        >
+          {t("landing.signIn")}
+        </button>
+        <button
+          onClick={() => navigate("/onboarding")}
+          className="px-5 py-2 text-sm font-display font-medium text-slate-200 rounded-full transition-all duration-500 hover:text-white hover:shadow-lg hover:shadow-purple-500/20"
+          style={{
+            background: "rgba(255,255,255,0.06)",
+            backdropFilter: "blur(12px)",
+            border: "1px solid rgba(255,255,255,0.1)",
+          }}
+        >
+          {t("landing.signUp")}
+        </button>
         <LanguageToggle />
-      </div>
+      </motion.div>
 
       {/* Cinematic vignette */}
       <div className="cinematic-vignette" />
