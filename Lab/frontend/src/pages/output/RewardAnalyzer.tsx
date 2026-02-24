@@ -1,4 +1,5 @@
 import { PageShell } from '../../components/layout/PageShell'
+import { AudioTimeline } from '../../components/audio/AudioTimeline'
 import { RELAYS } from '../../data/relays'
 
 const SRP = RELAYS.find((r) => r.name === 'SRP')!
@@ -21,6 +22,9 @@ export function RewardAnalyzer() {
   return (
     <PageShell title="Reward Analyzer" subtitle="SRP reward decomposition \u2014 wanting, liking, pleasure, tension-resolution dynamics">
       <div className="space-y-6 mt-4">
+        {/* Audio sync timeline */}
+        <AudioTimeline color="#f59e0b" />
+
         {/* P-Layer reward signals */}
         <div className="glass-card p-5">
           <div className="text-xs text-text-tertiary uppercase tracking-wider mb-3">P-Layer: Primary Reward Signals</div>

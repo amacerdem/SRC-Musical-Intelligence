@@ -5,6 +5,7 @@ import { GlassChip } from '../glass/GlassChip'
 import { SparkLine } from '../charts/SparkLine'
 import { BeliefTrace } from '../charts/BeliefTrace'
 import { extractBeliefTrace } from '../../hooks/useBeliefData'
+import { useAudioCursor } from '../../stores/audioStore'
 import { ChevronDown, ChevronRight } from 'lucide-react'
 
 interface BeliefCardProps {
@@ -15,6 +16,7 @@ interface BeliefCardProps {
 
 export function BeliefCard({ belief, data, color }: BeliefCardProps) {
   const [expanded, setExpanded] = useState(false)
+  const { currentFrame, totalFrames } = useAudioCursor()
 
   const trace = useMemo(
     () => (data ? extractBeliefTrace(data, belief.index) : []),
@@ -65,6 +67,8 @@ export function BeliefCard({ belief, data, color }: BeliefCardProps) {
             color={color}
             baseline={belief.baseline}
             height={140}
+            cursorFrame={currentFrame}
+            totalFrames={totalFrames}
           />
 
           {/* Core belief params */}

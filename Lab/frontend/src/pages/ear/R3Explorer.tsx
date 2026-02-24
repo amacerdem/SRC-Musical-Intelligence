@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { PageShell } from '../../components/layout/PageShell'
+import { AudioTimeline } from '../../components/audio/AudioTimeline'
 import { GlassChip } from '../../components/glass/GlassChip'
 import { ChevronDown, ChevronRight } from 'lucide-react'
 
@@ -93,6 +94,9 @@ export function R3Explorer() {
   return (
     <PageShell title="R\u00b3 Features" subtitle="Early Perceptual Front-End \u2014 97D spectral features across 9 groups">
       <div className="space-y-5 mt-4">
+        {/* Audio sync timeline */}
+        <AudioTimeline color="#60a5fa" />
+
         {/* Summary metrics */}
         <div className="grid grid-cols-4 gap-3">
           {[

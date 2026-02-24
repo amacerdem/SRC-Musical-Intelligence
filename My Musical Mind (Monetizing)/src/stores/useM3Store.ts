@@ -1,6 +1,9 @@
-/* ── M³ Store — The Personal Musical Mind ─────────────────────────
- *  Persistent Zustand store managing M³ state, growth, and parameters.
- *  C³ = frozen physics. M³ = learnable individual weights.
+/* ── M³ Store — Unified Personal Musical Mind ──────────────────────
+ *  M³ growth IS persona evolution. Each listen updates:
+ *  - All 5 family affinities
+ *  - MindAxes (continuous drift)
+ *  - Level progression (1-12)
+ *  - Active persona derivation (from affinity × axes)
  *  ──────────────────────────────────────────────────────────────── */
 
 import { create } from "zustand";
@@ -9,20 +12,30 @@ import type {
   M3Mind,
   M3Milestone,
   M3Stage,
-  M3Temperament,
   M3Tier,
   M3Parameters,
   M3TrackSignal,
   PresentationLayer,
+  PersonaLevel,
+  FamilyAffinity,
 } from "@/types/m3";
-import { M3_STAGE_ORDER } from "@/types/m3";
-import { M3_STAGES, M3_TEMPERAMENTS, getNextStage, getNextThreshold } from "@/data/m3-stages";
+import {
+  LEVEL_THRESHOLDS,
+  levelToStage,
+  DEFAULT_FAMILY_AFFINITY,
+  FAMILY_NAMES,
+} from "@/types/m3";
+import type { NeuralFamily, MindAxes } from "@/types/mind";
+import type { Persona } from "@/types/mind";
+import { personas } from "@/data/personas";
+import { M3_STAGES } from "@/data/m3-stages";
+import { FAMILY_PARAM_BIASES } from "@/data/m3-stages";
 
 /* ── Parameter Initialization ────────────────────────────────────── */
 
-/** Create a fresh parameter set with small random values + temperament bias */
-function initParameters(temperament: M3Temperament): M3Parameters {
-  const bias = M3_TEMPERAMENTS[temperament].paramBias;
+/** Create fresh parameters biased by the birth persona's family */
+function initParameters(family: NeuralFamily): M3Parameters {
+  const bias = FAMILY_PARAM_BIASES[family];
   const rand = (n: number, scale: number) =>
     Array.from({ length: n }, () => (Math.random() * 0.1 - 0.05) * scale);
 
@@ -38,68 +51,157 @@ function initParameters(temperament: M3Temperament): M3Parameters {
   };
 }
 
-/* ── Growth Engine ───────────────────────────────────────────────── */
+/* ── Family Affinity Engine ──────────────────────────────────────── */
 
-/**
- * Compute how much a single listen contributes to M³ growth.
- * Signal strength: duration > repeat > skip (negative) > diversity
- */
-function computeGrowthDelta(signal: M3TrackSignal): number {
-  let delta = 0.01; // base per listen
+const AFFINITY_DECAY = 0.995;
+const AFFINITY_LR = 0.02;
 
-  // Duration boost (longer = more signal)
-  if (signal.duration > 180) delta += 0.005;
-  if (signal.duration > 300) delta += 0.005;
+/** Calculate how much a track contributes to each family's affinity */
+function calculateFamilyContribution(signal: M3TrackSignal): FamilyAffinity {
+  const { energy, valence, tempo, danceability, acousticness, harmonicComplexity } = signal;
+  const tempoNorm = Math.min(1, tempo / 200);
 
-  // Repeat = strong positive signal
-  if (signal.isRepeat) delta += 0.003;
+  return {
+    Architects:
+      (1 - energy) * 0.25 + acousticness * 0.25 +
+      (1 - Math.abs(valence - 0.5) * 2) * 0.2 +
+      harmonicComplexity * 0.2 + (tempoNorm < 0.5 ? 0.1 : 0),
 
-  // Skip = weak/negative signal
-  if (signal.wasSkipped) delta -= 0.005;
+    Alchemists:
+      energy * 0.2 + (1 - valence) * 0.15 +
+      Math.abs(energy - 0.5) * 2 * 0.25 +
+      harmonicComplexity * 0.15 + (tempoNorm > 0.5 ? 0.15 : 0.05),
 
-  // High energy / high complexity = more engagement
-  delta += signal.energy * 0.002;
-  delta += signal.harmonicComplexity * 0.002;
+    Explorers:
+      (1 - acousticness) * 0.2 + energy * 0.15 +
+      danceability * 0.15 + (1 - harmonicComplexity) * 0.1 +
+      Math.random() * 0.1 + (tempoNorm > 0.6 ? 0.15 : 0.05),
 
-  return Math.max(0.001, delta); // Always at least tiny growth
+    Anchors:
+      valence * 0.15 + acousticness * 0.25 +
+      (1 - energy) * 0.2 + (tempoNorm < 0.45 ? 0.2 : 0.1) + 0.05,
+
+    Kineticists:
+      danceability * 0.3 + energy * 0.2 +
+      (tempoNorm > 0.55 ? 0.2 : 0.1) + (1 - acousticness) * 0.1 +
+      (1 - Math.abs(valence - 0.5) * 2) * 0.1,
+  };
 }
 
-/**
- * Update M³ parameters based on a track signal.
- * Parameters shift slightly toward the track's characteristics.
- * This is the "convince the system" mechanism.
- */
+/** Update family affinities with EMA */
+function updateFamilyAffinity(
+  current: FamilyAffinity,
+  contribution: FamilyAffinity,
+): FamilyAffinity {
+  const result = { ...current };
+  for (const family of FAMILY_NAMES) {
+    result[family] = current[family] * AFFINITY_DECAY + contribution[family] * AFFINITY_LR;
+  }
+  return result;
+}
+
+/* ── Axes Update ─────────────────────────────────────────────────── */
+
+const AXES_LR = 0.005;
+
+/** Nudge MindAxes based on track signal */
+function updateAxes(axes: MindAxes, signal: M3TrackSignal): MindAxes {
+  const rate = signal.wasSkipped ? AXES_LR * 0.3 : signal.isRepeat ? AXES_LR * 1.5 : AXES_LR;
+  return {
+    entropyTolerance:    clamp01(axes.entropyTolerance + (signal.harmonicComplexity - 0.5) * rate * 2),
+    resolutionCraving:   clamp01(axes.resolutionCraving + (signal.acousticness - 0.5) * rate),
+    monotonyTolerance:   clamp01(axes.monotonyTolerance + (signal.isRepeat ? rate : -rate * 0.5)),
+    salienceSensitivity: clamp01(axes.salienceSensitivity + (signal.energy - 0.5) * rate),
+    tensionAppetite:     clamp01(axes.tensionAppetite + ((1 - signal.valence) * 0.5 + signal.energy * 0.5 - 0.5) * rate),
+  };
+}
+
+function clamp01(v: number): number {
+  return Math.max(0, Math.min(1, v));
+}
+
+/* ── Persona Derivation ──────────────────────────────────────────── */
+
+/** Derive the best-matching persona from affinity + axes */
+function derivePersona(affinity: FamilyAffinity, axes: MindAxes): number {
+  let bestId = 1;
+  let bestScore = -Infinity;
+
+  for (const p of personas) {
+    const familyWeight = affinity[p.family];
+    const axesSim = 1 - axesDistance(axes, p.axes);
+    const score = familyWeight * 0.6 + axesSim * 0.4;
+    if (score > bestScore) {
+      bestScore = score;
+      bestId = p.id;
+    }
+  }
+  return bestId;
+}
+
+/** Euclidean distance between two MindAxes (normalized 0-1) */
+function axesDistance(a: MindAxes, b: MindAxes): number {
+  const d =
+    (a.entropyTolerance - b.entropyTolerance) ** 2 +
+    (a.resolutionCraving - b.resolutionCraving) ** 2 +
+    (a.monotonyTolerance - b.monotonyTolerance) ** 2 +
+    (a.salienceSensitivity - b.salienceSensitivity) ** 2 +
+    (a.tensionAppetite - b.tensionAppetite) ** 2;
+  return Math.sqrt(d) / Math.sqrt(5); // normalize by max possible distance
+}
+
+/* ── Level / Stage Computation ───────────────────────────────────── */
+
+/** Determine persona level (1-12) from total listens */
+function deriveLevel(totalListens: number): PersonaLevel {
+  let level: PersonaLevel = 1;
+  for (let l = 12; l >= 1; l--) {
+    if (totalListens >= LEVEL_THRESHOLDS[l as PersonaLevel]) {
+      level = l as PersonaLevel;
+      break;
+    }
+  }
+  return level;
+}
+
+/** Compute progress (0-1) toward next level */
+function computeLevelProgress(totalListens: number, currentLevel: PersonaLevel): number {
+  if (currentLevel >= 12) return 1;
+  const nextLevel = (currentLevel + 1) as PersonaLevel;
+  const currentThreshold = LEVEL_THRESHOLDS[currentLevel];
+  const nextThreshold = LEVEL_THRESHOLDS[nextLevel];
+  const range = nextThreshold - currentThreshold;
+  return range > 0 ? Math.min(1, (totalListens - currentThreshold) / range) : 1;
+}
+
+/* ── Parameter Update (convince the system) ──────────────────────── */
+
 function updateParameters(params: M3Parameters, signal: M3TrackSignal): M3Parameters {
-  const lr = 0.02; // Learning rate — slow deliberate change
+  const lr = 0.02;
   const signalStrength = signal.wasSkipped ? 0.3 : signal.isRepeat ? 1.5 : 1.0;
   const rate = lr * signalStrength;
 
-  // Shift reward weights based on valence/energy
   const newReward = params.rewardWeights.map((w, i) => {
     const nudge = (signal.valence * 0.5 + signal.energy * 0.5) * rate * (((i * 7 + 13) % 131) / 131);
     return w + nudge;
   });
 
-  // Shift temporal prefs based on tempo
-  const tempoNorm = signal.tempo / 200; // Normalize BPM to ~0-1
+  const tempoNorm = signal.tempo / 200;
   const newTemporal = params.temporalPrefs.map((w, i) => {
     const nudge = (tempoNorm - 0.5) * rate * (((i * 3 + 7) % 50) / 50);
     return w + nudge;
   });
 
-  // Shift timbral map based on brightness/acousticness
   const newTimbral = params.timbralMap.map((w, i) => {
     const nudge = (signal.timbralBrightness * 0.5 + (1 - signal.acousticness) * 0.5) * rate * (((i * 11 + 3) % 97) / 97);
     return w + nudge;
   });
 
-  // Shift precision weights based on harmonic complexity
   const newPrecision = params.precisionWeights.map((w, i) => {
     const nudge = signal.harmonicComplexity * rate * 0.5 * (((i * 5 + 9) % 131) / 131);
     return w + nudge;
   });
 
-  // Shift attention biases based on danceability
   const newAttention = params.attentionBiases.map((w, i) => {
     const nudge = (signal.danceability - 0.5) * rate * (((i * 13 + 1) % 131) / 131);
     return w + nudge;
@@ -118,13 +220,13 @@ function updateParameters(params: M3Parameters, signal: M3TrackSignal): M3Parame
 /* ── Store Interface ─────────────────────────────────────────────── */
 
 interface M3StoreState {
-  /* Core state */
   mind: M3Mind | null;
   milestones: M3Milestone[];
   preferredLayer: PresentationLayer;
 
-  /* Actions */
-  birthM3: (temperament: M3Temperament, tier: M3Tier) => void;
+  /** Birth M³ from a persona (uses persona's family for initial bias) */
+  birthM3: (persona: Persona, tier: M3Tier) => void;
+  /** Feed a track signal — updates all 5 families, axes, level, persona */
   feedListening: (signal: M3TrackSignal) => M3Milestone[];
   setTier: (tier: M3Tier) => void;
   setPreferredLayer: (layer: PresentationLayer) => void;
@@ -144,31 +246,42 @@ export const useM3Store = create<M3StoreState>()(
     (set, get) => ({
       ...INITIAL_STATE,
 
-      birthM3: (temperament, tier) => {
+      birthM3: (persona, tier) => {
         const now = new Date().toISOString();
         const isFree = tier === "free";
-        const params = initParameters(temperament);
+
+        // Initial family affinity: 60% for birth persona's family, 10% each for others
+        const affinity: FamilyAffinity = { ...DEFAULT_FAMILY_AFFINITY };
+        affinity[persona.family] = 0.6;
+
+        const params = initParameters(persona.family);
         const stage: M3Stage = "seed";
         const functions = M3_STAGES[stage].functions;
 
         const mind: M3Mind = {
           stage,
-          temperament,
-          tier,
-          bornAt: now,
-          lastUpdated: null,
+          level: 1,
+          stageProgress: 0,
           totalListens: 0,
+          totalMinutes: 0,
+          familyAffinity: affinity,
+          activePersonaId: persona.id,
+          previousPersonaIds: [],
+          axes: { ...persona.axes },
           parameters: params,
           activeFunctions: [...functions],
-          stageProgress: 0,
+          tier,
           frozen: isFree,
+          bornAt: now,
+          lastUpdated: null,
         };
 
         const milestone: M3Milestone = {
           type: "birth",
           timestamp: now,
           stage: "seed",
-          detail: `Born as ${temperament} — ${isFree ? "frozen (free tier)" : "growing"}`,
+          level: 1,
+          detail: `Born as ${persona.name} (${persona.family})`,
         };
 
         set({ mind, milestones: [milestone] });
@@ -181,58 +294,87 @@ export const useM3Store = create<M3StoreState>()(
         const now = new Date().toISOString();
         const newMilestones: M3Milestone[] = [];
 
-        // Update parameters
-        const updatedParams = updateParameters(mind.parameters, signal);
-        const growthDelta = computeGrowthDelta(signal);
+        // 1. Update all 5 family affinities
+        const contribution = calculateFamilyContribution(signal);
+        const newAffinity = updateFamilyAffinity(mind.familyAffinity, contribution);
+
+        // 2. Update MindAxes
+        const newAxes = updateAxes(mind.axes, signal);
+
+        // 3. Update M³ parameters
+        const newParams = updateParameters(mind.parameters, signal);
+
+        // 4. Increment listen count + minutes
         const newListens = mind.totalListens + 1;
+        const newMinutes = mind.totalMinutes + Math.round(signal.duration / 60);
 
-        // Compute stage progress
-        const nextThreshold = getNextThreshold(mind.stage);
-        const currentThreshold = M3_STAGES[mind.stage].threshold;
-        const range = nextThreshold - currentThreshold;
-        const newProgress = range > 0
-          ? Math.min(1, (newListens - currentThreshold) / range)
-          : 1;
+        // 5. Check level-up (1→12)
+        const newLevel = deriveLevel(newListens);
+        const leveledUp = newLevel > mind.level;
+        if (leveledUp) {
+          newMilestones.push({
+            type: "level_up",
+            timestamp: now,
+            level: newLevel,
+            detail: `Reached level ${newLevel}`,
+          });
+        }
 
-        // Check stage transition
-        let newStage = mind.stage;
-        let newFunctions = [...mind.activeFunctions];
-        let adjustedProgress = newProgress;
+        // 6. Derive stage from level
+        const newStage = levelToStage(newLevel);
+        const stageChanged = newStage !== mind.stage;
+        if (stageChanged) {
+          newMilestones.push({
+            type: "stage_up",
+            timestamp: now,
+            stage: newStage,
+            detail: `Evolved to ${newStage}`,
+          });
 
-        if (newProgress >= 1) {
-          const next = getNextStage(mind.stage);
-          if (next) {
-            newStage = next;
-            newFunctions = [...M3_STAGES[next].functions];
-            adjustedProgress = 0;
-
+          // Check for newly unlocked functions
+          const prevFunctions = M3_STAGES[mind.stage].functions;
+          const newFunctions = M3_STAGES[newStage].functions;
+          const unlocked = newFunctions.filter(f => !prevFunctions.includes(f));
+          for (const fn of unlocked) {
             newMilestones.push({
-              type: "stage_up",
+              type: "function_unlock",
               timestamp: now,
-              stage: next,
-              detail: `Evolved to ${next}`,
+              detail: `F${fn} awakened`,
             });
-
-            // Check for newly unlocked functions
-            const prevFunctions = M3_STAGES[mind.stage].functions;
-            const unlocked = newFunctions.filter(f => !prevFunctions.includes(f));
-            for (const fn of unlocked) {
-              newMilestones.push({
-                type: "function_unlock",
-                timestamp: now,
-                detail: `F${fn} awakened`,
-              });
-            }
           }
         }
 
+        // 7. Derive active persona from affinity × axes
+        const newPersonaId = derivePersona(newAffinity, newAxes);
+        const personaShifted = newPersonaId !== mind.activePersonaId;
+        if (personaShifted) {
+          newMilestones.push({
+            type: "persona_shift",
+            timestamp: now,
+            fromPersonaId: mind.activePersonaId,
+            toPersonaId: newPersonaId,
+            detail: `Persona shifted to ${personas.find(p => p.id === newPersonaId)?.name ?? "unknown"}`,
+          });
+        }
+
+        // 8. Compute progress toward next level
+        const newProgress = computeLevelProgress(newListens, newLevel);
+
         const updatedMind: M3Mind = {
           ...mind,
-          parameters: updatedParams,
+          familyAffinity: newAffinity,
+          axes: newAxes,
+          parameters: newParams,
           totalListens: newListens,
+          totalMinutes: newMinutes,
+          level: newLevel,
           stage: newStage,
-          activeFunctions: newFunctions,
-          stageProgress: adjustedProgress,
+          activeFunctions: [...M3_STAGES[newStage].functions],
+          activePersonaId: personaShifted ? newPersonaId : mind.activePersonaId,
+          previousPersonaIds: personaShifted
+            ? [...mind.previousPersonaIds, mind.activePersonaId]
+            : mind.previousPersonaIds,
+          stageProgress: newProgress,
           lastUpdated: now,
         };
 
@@ -252,11 +394,7 @@ export const useM3Store = create<M3StoreState>()(
         const isFree = tier === "free";
         const now = new Date().toISOString();
 
-        const updatedMind: M3Mind = {
-          ...mind,
-          tier,
-          frozen: isFree,
-        };
+        const updatedMind: M3Mind = { ...mind, tier, frozen: isFree };
 
         const newMilestones = [...milestones];
         if (wasFrozen && !isFree) {

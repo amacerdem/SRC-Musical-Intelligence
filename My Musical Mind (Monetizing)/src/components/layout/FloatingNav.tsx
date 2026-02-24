@@ -2,17 +2,15 @@ import { NavLink, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   Brain,
-  Compass,
   LayoutGrid,
   Radio,
-  Trophy,
-  Users,
   BookOpen,
   Search,
 } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useUserStore } from "@/stores/useUserStore";
+import { useM3Store } from "@/stores/useM3Store";
 import { personas } from "@/data/personas";
 import { beliefColors } from "@/design/tokens";
 import { NucleusDot } from "@/components/mind/NucleusDot";
@@ -20,23 +18,19 @@ import { MiniOrganism } from "@/components/mind/MiniOrganism";
 import { useDesktop } from "@/hooks/useMediaQuery";
 import { LanguageToggle } from "./LanguageToggle";
 
+/* 4 main pages */
 const mainNav = [
-  { to: "/m3", icon: Brain, labelKey: "m3.nav", belief: "reward" as const },
-  { to: "/dashboard", icon: LayoutGrid, labelKey: "nav.home", belief: "consonance" as const },
-  { to: "/live", icon: Radio, labelKey: "nav.field", belief: "tempo" as const },
-  { to: "/discover", icon: Compass, labelKey: "nav.discover", belief: "salience" as const },
-];
-
-const secondaryNav = [
-  { to: "/friends", icon: Users, labelKey: "nav.friends" },
-  { to: "/leaderboard", icon: Trophy, labelKey: "nav.ranks" },
-  { to: "/info", icon: BookOpen, labelKey: "nav.info" },
+  { to: "/m3",        icon: Brain,      labelKey: "nav.mind",      belief: "reward" as const },
+  { to: "/dashboard", icon: LayoutGrid, labelKey: "nav.home",      belief: "consonance" as const },
+  { to: "/live",      icon: Radio,      labelKey: "nav.field",     belief: "tempo" as const },
+  { to: "/info",      icon: BookOpen,   labelKey: "nav.info",      belief: "salience" as const },
 ];
 
 export function FloatingNav() {
   const { t } = useTranslation();
   const location = useLocation();
   const { mind, level } = useUserStore();
+  const m3Mind = useM3Store((s) => s.mind);
   const persona = mind ? personas.find(p => p.id === mind.personaId) : null;
   const accentColor = persona?.color ?? "#A855F7";
   const [showSearch, setShowSearch] = useState(false);
@@ -44,7 +38,7 @@ export function FloatingNav() {
 
   const itemHeight = isDesktop ? 44 : 38;
   const iconSize = isDesktop ? 18 : 16;
-  const secondaryIconSize = isDesktop ? 16 : 14;
+  const personaLevel = m3Mind?.level ?? 1;
 
   return (
     <>
@@ -56,7 +50,7 @@ export function FloatingNav() {
       >
         <div className={`nav-dock flex items-center ${isDesktop ? "px-2.5 py-2 gap-1" : "px-2 py-1.5 gap-0.5"}`}>
           {mainNav.map(({ to, icon: Icon, labelKey, belief }) => {
-            const isActive = location.pathname === to;
+            const isActive = location.pathname === to || (to === "/info" && location.pathname.startsWith("/info"));
             const navColor = isActive ? accentColor : beliefColors[belief].primary;
             return (
               <NavLink key={to} to={to} className="relative group">
@@ -91,38 +85,6 @@ export function FloatingNav() {
                 {isActive && (
                   <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2">
                     <NucleusDot color={accentColor} size={isDesktop ? 4 : 3} active pulsing />
-                  </div>
-                )}
-              </NavLink>
-            );
-          })}
-
-          <div className={`w-px bg-white/[0.06] mx-1 ${isDesktop ? "h-5" : "h-4"}`} />
-
-          {secondaryNav.map(({ to, icon: Icon, labelKey }) => {
-            const isActive = location.pathname === to;
-            return (
-              <NavLink key={to} to={to} className="relative group" title={t(labelKey)}>
-                <div
-                  className="flex items-center gap-1.5 rounded-full px-2.5 transition-all duration-300"
-                  style={{
-                    height: itemHeight - 4,
-                    background: isActive ? `${accentColor}10` : "transparent",
-                  }}
-                >
-                  <Icon
-                    size={secondaryIconSize}
-                    className={`transition-all duration-300 ${isActive ? "text-slate-200" : "text-slate-700 group-hover:text-slate-400"}`}
-                  />
-                  {isDesktop && (
-                    <span className={`text-[10px] font-display transition-colors duration-300 ${isActive ? "text-slate-300 font-medium" : "text-slate-700 group-hover:text-slate-400"}`}>
-                      {t(labelKey)}
-                    </span>
-                  )}
-                </div>
-                {isActive && (
-                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2">
-                    <NucleusDot color={accentColor} size={3} active pulsing />
                   </div>
                 )}
               </NavLink>
@@ -174,7 +136,7 @@ export function FloatingNav() {
 
         {persona && (
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-mono text-slate-700">LV.{level}</span>
+            <span className="text-[10px] font-mono text-slate-700">L{personaLevel}/12</span>
             <div className="relative">
               <div
                 className="w-6 h-6 rounded-full flex items-center justify-center text-[8px] font-display font-bold"

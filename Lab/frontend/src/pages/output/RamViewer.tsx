@@ -1,5 +1,7 @@
 import { PageShell } from '../../components/layout/PageShell'
 import { HeatmapChart } from '../../components/charts/HeatmapChart'
+import { AudioTimeline } from '../../components/audio/AudioTimeline'
+import { useAudioCursor } from '../../stores/audioStore'
 
 const REGIONS = [
   { idx: 0, name: 'Primary Auditory Cortex', abbr: 'A1_HG', mni: '(48, -18, 8)', group: 'cortical', ba: '41' },
@@ -38,10 +40,14 @@ const GROUP_COLORS: Record<string, string> = {
 
 export function RamViewer() {
   const groups = ['cortical', 'subcortical', 'brainstem'] as const
+  const { currentFrame, totalFrames } = useAudioCursor()
 
   return (
     <PageShell title="Region Activation Map" subtitle="26 brain region activations \u2014 12 cortical + 9 subcortical + 5 brainstem">
       <div className="space-y-6 mt-4">
+        {/* Audio sync timeline */}
+        <AudioTimeline color="#14b8a6" />
+
         {/* Summary */}
         <div className="flex gap-4">
           {groups.map((g) => {
@@ -68,6 +74,8 @@ export function RamViewer() {
             rowLabels={REGIONS.map((r) => r.abbr)}
             colorScheme="plasma"
             height={260}
+            cursorFrame={currentFrame}
+            totalFrames={totalFrames}
           />
           <div className="text-[10px] text-text-tertiary mt-2">
             Pipeline: \u03a3(relay_dim \u00d7 link_weight) \u2192 ReLU \u2192 z-normalize(T&gt;1) \u2192 sigmoid \u2192 [0,1]

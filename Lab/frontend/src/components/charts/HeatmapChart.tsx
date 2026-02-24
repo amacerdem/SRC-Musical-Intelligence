@@ -135,7 +135,18 @@ export function HeatmapChart({
     ctx.textAlign = 'left'
     ctx.fillText(max.toFixed(2), legX, legY - 2)
     ctx.fillText(min.toFixed(2), legX, legY + legH + 10)
-  }, [data, rows, cols, rowLabels, colorScheme, height])
+
+    // Playback cursor
+    if (cursorFrame != null && totalFrames && totalFrames > 0) {
+      const cx = plotX + (cursorFrame / totalFrames) * plotW
+      ctx.beginPath()
+      ctx.strokeStyle = 'rgba(255,255,255,0.7)'
+      ctx.lineWidth = 1.5
+      ctx.moveTo(cx, 0)
+      ctx.lineTo(cx, plotH)
+      ctx.stroke()
+    }
+  }, [data, rows, cols, rowLabels, colorScheme, height, cursorFrame, totalFrames])
 
   useEffect(() => {
     draw()

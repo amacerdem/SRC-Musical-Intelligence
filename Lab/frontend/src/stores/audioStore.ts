@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { useShallow } from 'zustand/react/shallow'
 
 /** MI pipeline frame rate */
 const FRAME_RATE = 172.27
@@ -175,15 +176,17 @@ export const useAudioStore = create<AudioState>((set, get) => ({
   },
 }))
 
-/** Hook that returns just the cursor position (for re-render optimization) */
+/** Hook that returns just the cursor position (shallow equality to avoid infinite loops) */
 export function useAudioCursor() {
-  return useAudioStore((s) => ({
-    currentFrame: s.currentFrame,
-    totalFrames: s.totalFrames,
-    currentTime: s.currentTime,
-    duration: s.duration,
-    playing: s.playing,
-  }))
+  return useAudioStore(
+    useShallow((s) => ({
+      currentFrame: s.currentFrame,
+      totalFrames: s.totalFrames,
+      currentTime: s.currentTime,
+      duration: s.duration,
+      playing: s.playing,
+    })),
+  )
 }
 
 /** Hook for samples only (stable reference) */

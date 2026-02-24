@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { PageShell } from '../../components/layout/PageShell'
+import { AudioTimeline } from '../../components/audio/AudioTimeline'
 import { GlassChip } from '../../components/glass/GlassChip'
 import { ChevronDown, ChevronRight } from 'lucide-react'
 
@@ -96,6 +97,9 @@ export function H3Explorer() {
   return (
     <PageShell title="H\u00b3 Morphology" subtitle="Multi-Scale Temporal Morphology Engine \u2014 32 horizons \u00d7 24 morphs \u00d7 3 laws">
       <div className="space-y-5 mt-4">
+        {/* Audio sync timeline */}
+        <AudioTimeline color="#a78bfa" />
+
         {/* Summary metrics */}
         <div className="grid grid-cols-5 gap-3">
           {[
