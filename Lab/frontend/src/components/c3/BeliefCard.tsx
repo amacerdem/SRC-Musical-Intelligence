@@ -4,8 +4,10 @@ import { GlassBadge } from '../glass/GlassBadge'
 import { GlassChip } from '../glass/GlassChip'
 import { SparkLine } from '../charts/SparkLine'
 import { BeliefTrace } from '../charts/BeliefTrace'
+import { H3TemporalPanel } from './H3TemporalPanel'
 import { extractBeliefTrace } from '../../hooks/useBeliefData'
 import { useAudioCursor } from '../../stores/audioStore'
+import { usePipelineStore } from '../../stores/pipelineStore'
 import { ChevronDown, ChevronRight } from 'lucide-react'
 
 interface BeliefCardProps {
@@ -17,6 +19,7 @@ interface BeliefCardProps {
 export function BeliefCard({ belief, data, color }: BeliefCardProps) {
   const [expanded, setExpanded] = useState(false)
   const { currentFrame, totalFrames } = useAudioCursor()
+  const currentExperiment = usePipelineStore((s) => s.currentExperiment)
 
   const trace = useMemo(
     () => (data ? extractBeliefTrace(data, belief.index) : []),
@@ -110,6 +113,16 @@ export function BeliefCard({ belief, data, color }: BeliefCardProps) {
               ))}
             </div>
           </div>
+
+          {/* H³ Temporal Inputs */}
+          <H3TemporalPanel
+            beliefIndex={belief.index}
+            mechanismName={belief.mechanism}
+            experimentId={currentExperiment}
+            color={color}
+            cursorFrame={currentFrame}
+            totalFrames={totalFrames}
+          />
         </div>
       )}
     </div>
