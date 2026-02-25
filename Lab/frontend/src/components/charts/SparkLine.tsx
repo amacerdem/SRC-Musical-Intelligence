@@ -41,7 +41,9 @@ export function SparkLine({
     ctx.lineJoin = 'round'
     ctx.lineCap = 'round'
 
-    for (let i = 0; i < data.length; i++) {
+    // Downsample to max width pixels
+    const step = Math.max(1, Math.floor(data.length / width))
+    for (let i = 0; i < data.length; i += step) {
       const x = (i / (data.length - 1)) * width
       const y = pad + (1 - (data[i] - min) / range) * (height - pad * 2)
       if (i === 0) ctx.moveTo(x, y)

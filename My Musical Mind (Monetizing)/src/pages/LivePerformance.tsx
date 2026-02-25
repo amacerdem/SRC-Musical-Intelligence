@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Play, Square, Shield, Sprout, Users, Target, Trophy, X,
@@ -30,101 +31,13 @@ const AXIS_KEYS: (keyof MindAxes)[] = [
 ];
 
 const AXIS_META: Record<keyof MindAxes, {
-  label: string;
   belief: keyof typeof beliefColors;
-  strengthen: Record<NeuralFamily, string>;
-  develop: Record<NeuralFamily, string>;
 }> = {
-  entropyTolerance: {
-    label: "Chaos Tolerance",
-    belief: "consonance",
-    strengthen: {
-      Alchemists: "Channel chaos into transformation — let dissonance fuel your alchemy",
-      Architects: "Use controlled chaos to stress-test your structures",
-      Explorers: "Push deeper into the noise — your edge is where others retreat",
-      Anchors: "Let chaotic textures color your emotional palette",
-      Kineticists: "Layer polyrhythmic chaos over your groove foundation",
-    },
-    develop: {
-      Alchemists: "Sit with unresolved chaos longer before seeking the drop",
-      Architects: "Try free-form listening without seeking patterns",
-      Explorers: "You already thrive here — explore chaos in unfamiliar genres",
-      Anchors: "Gradually introduce noisy textures into your comfort zone",
-      Kineticists: "Listen to broken-beat and glitch to expand rhythmic chaos",
-    },
-  },
-  resolutionCraving: {
-    label: "Need for Closure",
-    belief: "tempo",
-    strengthen: {
-      Alchemists: "Maximize the payoff — build longer arcs before resolution",
-      Architects: "Perfect your cadence sensitivity with complex harmonic progressions",
-      Explorers: "Use resolution as a surprise tool in unexpected contexts",
-      Anchors: "Deepen emotional satisfaction through delayed gratification",
-      Kineticists: "Find rhythmic resolution in polymetric convergence points",
-    },
-    develop: {
-      Alchemists: "Practice leaving tension unresolved — embrace the open ending",
-      Architects: "Try ambient pieces that avoid traditional cadences",
-      Explorers: "Let go of needing an ending — some journeys don't close",
-      Anchors: "Explore music that fades rather than resolves",
-      Kineticists: "Listen to asymmetric rhythms that never fully land",
-    },
-  },
-  monotonyTolerance: {
-    label: "Repetition Comfort",
-    belief: "familiarity",
-    strengthen: {
-      Alchemists: "Find transformation within repetition — the loop evolves you",
-      Architects: "Hear the micro-variations that hide inside repetition",
-      Explorers: "Discover how repetition creates its own kind of novelty",
-      Anchors: "Let familiar patterns anchor you deeper into feeling",
-      Kineticists: "Lock into the groove — repetition is where pocket lives",
-    },
-    develop: {
-      Alchemists: "Build patience with minimal techno and loop-based music",
-      Architects: "Study Steve Reich — repetition as architectural material",
-      Explorers: "Challenge yourself with long drone pieces",
-      Anchors: "Sit with a single repeated melody and notice what shifts",
-      Kineticists: "Try meditative drum loops to build rhythmic patience",
-    },
-  },
-  salienceSensitivity: {
-    label: "Attention Sensitivity",
-    belief: "salience",
-    strengthen: {
-      Alchemists: "Amplify your sensitivity to dramatic peaks and drops",
-      Architects: "Sharpen your detection of structural turning points",
-      Explorers: "Train your ear to catch the most novel moments instantly",
-      Anchors: "Attune to the emotional weight of key musical moments",
-      Kineticists: "Push your sensitivity with dense polyrhythmic passages",
-    },
-    develop: {
-      Alchemists: "Practice noticing subtle shifts, not just the obvious peaks",
-      Architects: "Listen for quiet structural changes in ambient music",
-      Explorers: "Slow down and attend to detail within familiar territory",
-      Anchors: "Expand your attention beyond emotional peaks to texture",
-      Kineticists: "Train with dynamic pieces that reward patient attention",
-    },
-  },
-  tensionAppetite: {
-    label: "Tension Appetite",
-    belief: "reward",
-    strengthen: {
-      Alchemists: "You are the master of tension — push build-ups even further",
-      Architects: "Engineer longer suspension arcs with more complex layering",
-      Explorers: "Seek tension in unfamiliar harmonic territories",
-      Anchors: "Let tension deepen your emotional investment in the music",
-      Kineticists: "Build rhythmic tension through accelerating density",
-    },
-    develop: {
-      Alchemists: "Explore music with slow, gentle tension curves",
-      Architects: "Try pieces that build tension subtly over long durations",
-      Explorers: "Let tension accumulate naturally instead of seeking it",
-      Anchors: "Gradually increase tolerance with cinematic build-ups",
-      Kineticists: "Listen to progressive pieces that build energy slowly",
-    },
-  },
+  entropyTolerance: { belief: "consonance" },
+  resolutionCraving: { belief: "tempo" },
+  monotonyTolerance: { belief: "familiarity" },
+  salienceSensitivity: { belief: "salience" },
+  tensionAppetite: { belief: "reward" },
 };
 
 function splitAxes(axes: MindAxes): { strong: (keyof MindAxes)[]; weak: (keyof MindAxes)[] } {
@@ -135,37 +48,13 @@ function splitAxes(axes: MindAxes): { strong: (keyof MindAxes)[]; weak: (keyof M
 /* ── Duo session game conditions ──────────────────────────────── */
 
 interface DuoConditions {
-  task: string;
-  taskDetail: string;
-  goal: string;
-  goalMetric: string;
+  taskAxisKey: keyof MindAxes;
+  goalType: "sameFamily" | "crossFamily";
+  myFamily: string;
+  friendFamily: string;
   xpReward: number;
   difficulty: "Easy" | "Medium" | "Hard" | "Legendary";
-  complementaryAxis: string;
 }
-
-const DUO_TASKS: Record<keyof MindAxes, { task: string; detail: string }> = {
-  entropyTolerance: {
-    task: "Chaos Sync",
-    detail: "One embraces chaos, the other seeks order. Find the shared frequency where both minds resonate.",
-  },
-  resolutionCraving: {
-    task: "Resolution Negotiation",
-    detail: "One craves closure, the other resists. Navigate the tension and find where both feel complete.",
-  },
-  monotonyTolerance: {
-    task: "Repetition Bridge",
-    detail: "One thrives in loops, the other needs novelty. Build a bridge between patience and exploration.",
-  },
-  salienceSensitivity: {
-    task: "Attention Fusion",
-    detail: "Your attention peaks differ. Synchronize your salience — notice the same moments together.",
-  },
-  tensionAppetite: {
-    task: "Tension Alchemy",
-    detail: "One builds tension higher, the other seeks release sooner. Find the alchemical balance point.",
-  },
-};
 
 const DIFFICULTY_COLORS: Record<DuoConditions["difficulty"], string> = {
   Easy: "#10B981",
@@ -177,17 +66,17 @@ const DIFFICULTY_COLORS: Record<DuoConditions["difficulty"], string> = {
 /* ── Controllers ─────────────────────────────────────────────── */
 
 const EMOTIONAL_CONTROLLERS = [
-  { id: "valence", label: "Valence", description: "Mood polarity", Icon: Heart, color: "#EC4899" },
-  { id: "arousal", label: "Arousal", description: "Calm ↔ Excited", Icon: Sparkles, color: "#F59E0B" },
-  { id: "depth", label: "Depth", description: "Surface ↔ Deep", Icon: Layers, color: "#8B5CF6" },
-  { id: "nostalgia", label: "Nostalgia", description: "Present ↔ Memory", Icon: RotateCcw, color: "#38BDF8" },
+  { id: "valence", Icon: Heart, color: "#EC4899" },
+  { id: "arousal", Icon: Sparkles, color: "#F59E0B" },
+  { id: "depth", Icon: Layers, color: "#8B5CF6" },
+  { id: "nostalgia", Icon: RotateCcw, color: "#38BDF8" },
 ];
 
 const PHYSICAL_CONTROLLERS = [
-  { id: "tempo", label: "Tempo", description: "Rhythm speed", Icon: Gauge, color: "#F97316" },
-  { id: "energy", label: "Energy", description: "Intensity level", Icon: Activity, color: "#EF4444" },
-  { id: "dynamics", label: "Dynamics", description: "Contrast range", Icon: BarChart3, color: "#84CC16" },
-  { id: "density", label: "Density", description: "Note density", Icon: LayoutGrid, color: "#06B6D4" },
+  { id: "tempo", Icon: Gauge, color: "#F97316" },
+  { id: "energy", Icon: Activity, color: "#EF4444" },
+  { id: "dynamics", Icon: BarChart3, color: "#84CC16" },
+  { id: "density", Icon: LayoutGrid, color: "#06B6D4" },
 ];
 
 function generateDuoConditions(
@@ -196,33 +85,20 @@ function generateDuoConditions(
   myFamily: NeuralFamily,
   friendFamily: NeuralFamily,
 ): DuoConditions {
-  const gaps = AXIS_KEYS.map((k) => ({
-    key: k,
-    gap: Math.abs(myAxes[k] - friendAxes[k]),
-    label: AXIS_META[k].label,
-  }));
+  const gaps = AXIS_KEYS.map((k) => ({ key: k, gap: Math.abs(myAxes[k] - friendAxes[k]) }));
   gaps.sort((a, b) => b.gap - a.gap);
-  const topGap = gaps[0];
 
   const totalDist = gaps.reduce((s, g) => s + g.gap, 0);
   const difficulty: DuoConditions["difficulty"] =
     totalDist > 2.5 ? "Legendary" : totalDist > 1.8 ? "Hard" : totalDist > 1.0 ? "Medium" : "Easy";
 
-  const baseXP = Math.round(200 + totalDist * 400);
-  const sameFamily = myFamily === friendFamily;
-  const goal = sameFamily
-    ? `Push your shared ${myFamily} strengths to the limit — synchronized peak above 85%`
-    : `Fuse ${myFamily} × ${friendFamily} perspectives — achieve belief alignment within 15%`;
-  const goalMetric = sameFamily ? "Combined Peak > 85%" : "Belief Delta < 15%";
-
   return {
-    task: DUO_TASKS[topGap.key].task,
-    taskDetail: DUO_TASKS[topGap.key].detail,
-    goal,
-    goalMetric,
-    xpReward: baseXP,
+    taskAxisKey: gaps[0].key,
+    goalType: myFamily === friendFamily ? "sameFamily" : "crossFamily",
+    myFamily,
+    friendFamily,
+    xpReward: Math.round(200 + totalDist * 400),
     difficulty,
-    complementaryAxis: topGap.label,
   };
 }
 
@@ -233,6 +109,7 @@ function formatSessionTime(seconds: number): string {
 }
 
 export function LivePerformance() {
+  const { t } = useTranslation();
   const [mode, setMode] = useState<Mode>("solo");
   const [sessionState, setSessionState] = useState<SessionState>("idle");
   const [sessionTime, setSessionTime] = useState(0);
@@ -602,11 +479,11 @@ export function LivePerformance() {
               <motion.div variants={slideUp} className="spatial-card p-3">
                 <div className="flex items-center gap-2 mb-2">
                   <Shield size={14} style={{ color }} />
-                  <span className="hud-label text-[9px]">Strengthen Your Edge</span>
+                  <span className="hud-label text-[9px]">{t("live.strengthenEdge")}</span>
                 </div>
                 {persona && (
                   <p className="text-[9px] text-slate-600 font-body font-light mb-2">
-                    As a <span style={{ color }} className="font-medium">{persona.name}</span>, lean into what makes you powerful.
+                    <span style={{ color }} className="font-medium">{persona.name}</span>, {t("live.leanIntoPower")}
                   </p>
                 )}
                 <div className="space-y-2.5">
@@ -619,7 +496,7 @@ export function LivePerformance() {
                         <div className="flex items-center justify-between mb-0.5">
                           <div className="flex items-center gap-1.5">
                             <NucleusDot color={axisColor} size={2} active />
-                            <span className="text-[11px] font-display text-slate-300">{meta.label}</span>
+                            <span className="text-[11px] font-display text-slate-300">{t(`live.axes.${axisKey}`)}</span>
                           </div>
                           <span className="text-[10px] font-mono" style={{ color: axisColor }}>{val}%</span>
                         </div>
@@ -629,7 +506,7 @@ export function LivePerformance() {
                           style={{ background: `linear-gradient(90deg, ${axisColor} ${val}%, rgba(255,255,255,0.05) ${val}%)`, accentColor: axisColor }}
                         />
                         <p className="text-[8px] text-slate-600 font-body font-light leading-relaxed">
-                          {meta.strengthen[family]}
+                          {t(`live.strengthen.${axisKey}.${family}`)}
                         </p>
                       </div>
                     );
@@ -641,11 +518,11 @@ export function LivePerformance() {
               <motion.div variants={slideUp} className="spatial-card p-3">
                 <div className="flex items-center gap-2 mb-2">
                   <Sprout size={14} style={{ color: beliefColors.salience.primary }} />
-                  <span className="hud-label text-[9px]">Develop New Ground</span>
+                  <span className="hud-label text-[9px]">{t("live.developGround")}</span>
                 </div>
                 {persona && (
                   <p className="text-[9px] text-slate-600 font-body font-light mb-2">
-                    Expand your <span style={{ color: beliefColors.salience.primary }} className="font-medium">{family}</span> mind into new territory.
+                    {t("live.expandTerritory", { family })}
                   </p>
                 )}
                 <div className="space-y-2.5">
@@ -658,7 +535,7 @@ export function LivePerformance() {
                         <div className="flex items-center justify-between mb-0.5">
                           <div className="flex items-center gap-1.5">
                             <NucleusDot color={axisColor} size={2} active />
-                            <span className="text-[11px] font-display text-slate-300">{meta.label}</span>
+                            <span className="text-[11px] font-display text-slate-300">{t(`live.axes.${axisKey}`)}</span>
                           </div>
                           <span className="text-[10px] font-mono" style={{ color: axisColor }}>{val}%</span>
                         </div>
@@ -668,7 +545,7 @@ export function LivePerformance() {
                           style={{ background: `linear-gradient(90deg, ${axisColor} ${val}%, rgba(255,255,255,0.05) ${val}%)`, accentColor: axisColor }}
                         />
                         <p className="text-[8px] text-slate-600 font-body font-light leading-relaxed">
-                          {meta.develop[family]}
+                          {t(`live.develop.${axisKey}.${family}`)}
                         </p>
                       </div>
                     );
@@ -735,7 +612,7 @@ export function LivePerformance() {
                       {/* Title + toggle — hidden during performing */}
                       {sessionState !== "performing" && (
                         <>
-                          <span className="text-[13px] font-display font-bold text-slate-200 tracking-wide">Live Performance</span>
+                          <span className="text-[13px] font-display font-bold text-slate-200 tracking-wide">{t("live.title")}</span>
                           <div className="mt-2">
                             <div className="flex rounded-full p-0.5" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)" }}>
                               {(["solo", "duo"] as const).map((m) => (
@@ -747,7 +624,7 @@ export function LivePerformance() {
                                     border: mode === m ? `1px solid ${color}30` : "1px solid transparent",
                                   }}
                                 >
-                                  {m === "solo" ? "Solo" : "Duo"}
+                                  {m === "solo" ? t("live.solo") : t("live.duo")}
                                 </button>
                               ))}
                             </div>
@@ -765,8 +642,8 @@ export function LivePerformance() {
                           >
                             <NucleusDot color={color} size={18} active pulsing />
                           </motion.div>
-                          <span className="text-[11px] font-display text-slate-300 mt-4">Sending performance invite...</span>
-                          <span className="text-[9px] font-mono mt-2" style={{ color: `${color}60` }}>Waiting for the other Mind</span>
+                          <span className="text-[11px] font-display text-slate-300 mt-4">{t("live.sendingInvite")}</span>
+                          <span className="text-[9px] font-mono mt-2" style={{ color: `${color}60` }}>{t("live.waitingMind")}</span>
                           <motion.div
                             className="w-16 h-[2px] mt-4 rounded-full"
                             style={{ background: color }}
@@ -779,44 +656,44 @@ export function LivePerformance() {
                       ) : sessionState === "finished" ? (
                         mode === "duo" ? (
                           <>
-                            <span className="text-sm font-display text-slate-500 mt-4 mb-2">Duo Session Complete</span>
+                            <span className="text-sm font-display text-slate-500 mt-4 mb-2">{t("live.duoSessionComplete")}</span>
                             <span className="hud-value text-3xl" style={{ color: beliefColors.reward.primary }}>{finalScore}</span>
-                            <span className="text-[9px] font-mono text-slate-600 mt-1">Total Score</span>
+                            <span className="text-[9px] font-mono text-slate-600 mt-1">{t("live.totalScore")}</span>
                             <div className="flex items-center gap-3 mt-3">
                               <div className="text-center">
                                 <span className="text-[13px] font-display font-bold" style={{ color: beliefColors.salience.primary }}>{achievementCount}</span>
-                                <span className="text-[7px] font-mono text-slate-600 block">Achievements</span>
+                                <span className="text-[7px] font-mono text-slate-600 block">{t("live.achievements")}</span>
                               </div>
                               <div className="w-px h-5 bg-white/5" />
                               <div className="text-center">
                                 <span className="text-[13px] font-display font-bold text-slate-300">{formatSessionTime(sessionTime)}</span>
-                                <span className="text-[7px] font-mono text-slate-600 block">Duration</span>
+                                <span className="text-[7px] font-mono text-slate-600 block">{t("live.duration")}</span>
                               </div>
                             </div>
                             <button onClick={() => { setSessionState("idle"); setGameScore(0); setGameCombo(1); setFinalScore(0); setAchievementCount(0); setGameToasts([]); setActiveGameTask(null); }} className="mt-4 px-5 py-2 rounded-full text-[11px] font-display text-slate-300 transition-all"
                               style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}>
-                              New Session
+                              {t("live.newSession")}
                             </button>
                           </>
                         ) : (
                           <>
-                            <span className="text-sm font-display text-slate-500 mt-6 mb-2">Session Complete</span>
+                            <span className="text-sm font-display text-slate-500 mt-6 mb-2">{t("live.sessionComplete")}</span>
                             <span className="hud-value text-3xl" style={{ color: beliefColors.reward.primary }}>{(peakReward * 100).toFixed(0)}</span>
-                            <span className="text-[9px] font-mono text-slate-600 mt-1">Peak Reward</span>
+                            <span className="text-[9px] font-mono text-slate-600 mt-1">{t("live.peakReward")}</span>
                             <button onClick={() => { setSessionState("idle"); }} className="mt-4 px-5 py-2 rounded-full text-[11px] font-display text-slate-300 transition-all"
                               style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}>
-                              New Session
+                              {t("live.newSession")}
                             </button>
                           </>
                         )
                       ) : mode === "solo" ? (
                         <>
                           <div className="mt-5"><NucleusDot color={color} size={14} active pulsing /></div>
-                          <span className="text-sm font-display text-slate-400 mt-3">{persona?.name ?? "Ready"}</span>
+                          <span className="text-sm font-display text-slate-400 mt-3">{persona?.name ?? t("live.ready")}</span>
                           <span className="text-[10px] font-mono mt-1" style={{ color: `${color}80` }}>{family}</span>
                           <button onClick={handleStart} className="mt-5 px-6 py-2.5 rounded-full text-[12px] font-display font-medium text-white transition-all"
                             style={{ background: `linear-gradient(135deg, ${color}, ${beliefColors.reward.primary})`, boxShadow: `0 0 20px ${color}30` }}>
-                            <Play size={14} className="inline mr-1.5 -mt-px" /> Start Solo
+                            <Play size={14} className="inline mr-1.5 -mt-px" /> {t("live.startSolo")}
                           </button>
                         </>
                       ) : (
@@ -826,7 +703,7 @@ export function LivePerformance() {
                             <div className="space-y-1.5">
                               <div className="flex items-center gap-1.5 mb-1.5">
                                 <Users size={10} className="text-slate-500" />
-                                <span className="text-[8px] font-display text-slate-500 uppercase tracking-wider">Choose Partner</span>
+                                <span className="text-[8px] font-display text-slate-500 uppercase tracking-wider">{t("live.choosePartner")}</span>
                               </div>
                               {mockUsers.slice(0, 3).map((friend) => {
                                 const fp = getPersona(friend.mind.personaId);
@@ -882,20 +759,20 @@ export function LivePerformance() {
                                         <div className="flex items-center justify-between mb-1">
                                           <div className="flex items-center gap-1">
                                             <Target size={8} style={{ color: beliefColors.salience.primary }} />
-                                            <span className="text-[8px] font-display text-slate-400">{duoConditions.task}</span>
+                                            <span className="text-[8px] font-display text-slate-400">{t(`live.duoTasks.${duoConditions.taskAxisKey}.task`)}</span>
                                           </div>
                                           <span className="text-[7px] font-mono px-1.5 py-0.5 rounded-full" style={{ color: diffColor, background: `${diffColor}15` }}>
-                                            {duoConditions.difficulty}
+                                            {t(`live.difficulty.${duoConditions.difficulty}`)}
                                           </span>
                                         </div>
-                                        <p className="text-[7px] text-slate-600 font-body leading-relaxed">{duoConditions.taskDetail}</p>
+                                        <p className="text-[7px] text-slate-600 font-body leading-relaxed">{t(`live.duoTasks.${duoConditions.taskAxisKey}.detail`)}</p>
                                       </div>
                                       <div className="flex items-center justify-between px-2">
                                         <div className="flex items-center gap-1">
                                           <Trophy size={8} style={{ color: beliefColors.reward.primary }} />
                                           <span className="text-[8px] font-mono" style={{ color: beliefColors.reward.primary }}>{duoConditions.xpReward} XP</span>
                                         </div>
-                                        <span className="text-[7px] font-mono text-slate-600">{duoConditions.goalMetric}</span>
+                                        <span className="text-[7px] font-mono text-slate-600">{t(`live.duoGoalMetric.${duoConditions.goalType}`)}</span>
                                       </div>
                                     </>
                                   )}
@@ -903,7 +780,7 @@ export function LivePerformance() {
                                   {/* Start button */}
                                   <button onClick={handleStart} className="w-full mt-1 px-4 py-2 rounded-full text-[10px] font-display font-medium text-white transition-all"
                                     style={{ background: `linear-gradient(135deg, ${color}, ${beliefColors.reward.primary})`, boxShadow: `0 0 15px ${color}30` }}>
-                                    <Play size={12} className="inline mr-1.5 -mt-px" /> Start Duo
+                                    <Play size={12} className="inline mr-1.5 -mt-px" /> {t("live.startDuo")}
                                   </button>
                                 </div>
                               );
@@ -1043,7 +920,7 @@ export function LivePerformance() {
                         >
                           <button onClick={handleDuoStop} className="px-4 py-1.5 rounded-full text-[9px] font-display text-slate-400 transition-all hover:text-slate-200"
                             style={{ background: "rgba(0,0,0,0.5)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.08)" }}>
-                            <Square size={8} className="inline mr-1 -mt-px" /> End Session
+                            <Square size={8} className="inline mr-1 -mt-px" /> {t("live.endSession")}
                           </button>
                         </motion.div>}
                       </>
@@ -1063,7 +940,7 @@ export function LivePerformance() {
                         ))}
                       </div>
                       <span className="text-[8px] font-mono text-slate-700 block text-center mt-1.5">
-                        {activeControllers.size > 0 ? `${activeControllers.size} active` : "No controllers"}
+                        {activeControllers.size > 0 ? t("live.activeCount", { count: activeControllers.size }) : t("live.noControllers")}
                       </span>
                     </div>
                   </div>
@@ -1084,10 +961,10 @@ export function LivePerformance() {
               <motion.div variants={slideUp} className="spatial-card p-3">
                 <div className="flex items-center gap-2 mb-2">
                   <Heart size={14} className="text-pink-400" />
-                  <span className="hud-label text-[9px]">Emotional</span>
+                  <span className="hud-label text-[9px]">{t("live.emotional")}</span>
                 </div>
                 <div className="space-y-2">
-                  {EMOTIONAL_CONTROLLERS.map(({ id, label, description, Icon, color: cColor }) => {
+                  {EMOTIONAL_CONTROLLERS.map(({ id, Icon, color: cColor }) => {
                     const isActive = activeControllers.has(id);
                     return (
                       <button
@@ -1101,8 +978,8 @@ export function LivePerformance() {
                       >
                         <Icon size={14} style={{ color: isActive ? cColor : "#475569" }} />
                         <div className="flex-1 text-left">
-                          <div className="text-[11px] font-display" style={{ color: isActive ? "#E2E8F0" : "#64748B" }}>{label}</div>
-                          <div className="text-[8px] font-mono text-slate-700">{description}</div>
+                          <div className="text-[11px] font-display" style={{ color: isActive ? "#E2E8F0" : "#64748B" }}>{t(`live.controllers.${id}.label`)}</div>
+                          <div className="text-[8px] font-mono text-slate-700">{t(`live.controllers.${id}.description`)}</div>
                         </div>
                         <motion.div
                           className="w-2 h-2 rounded-full flex-shrink-0"
@@ -1120,10 +997,10 @@ export function LivePerformance() {
               <motion.div variants={slideUp} className="spatial-card p-3">
                 <div className="flex items-center gap-2 mb-2">
                   <Activity size={14} className="text-red-400" />
-                  <span className="hud-label text-[9px]">Physical</span>
+                  <span className="hud-label text-[9px]">{t("live.physical")}</span>
                 </div>
                 <div className="space-y-2">
-                  {PHYSICAL_CONTROLLERS.map(({ id, label, description, Icon, color: cColor }) => {
+                  {PHYSICAL_CONTROLLERS.map(({ id, Icon, color: cColor }) => {
                     const isActive = activeControllers.has(id);
                     return (
                       <button
@@ -1137,8 +1014,8 @@ export function LivePerformance() {
                       >
                         <Icon size={14} style={{ color: isActive ? cColor : "#475569" }} />
                         <div className="flex-1 text-left">
-                          <div className="text-[11px] font-display" style={{ color: isActive ? "#E2E8F0" : "#64748B" }}>{label}</div>
-                          <div className="text-[8px] font-mono text-slate-700">{description}</div>
+                          <div className="text-[11px] font-display" style={{ color: isActive ? "#E2E8F0" : "#64748B" }}>{t(`live.controllers.${id}.label`)}</div>
+                          <div className="text-[8px] font-mono text-slate-700">{t(`live.controllers.${id}.description`)}</div>
                         </div>
                         <motion.div
                           className="w-2 h-2 rounded-full flex-shrink-0"

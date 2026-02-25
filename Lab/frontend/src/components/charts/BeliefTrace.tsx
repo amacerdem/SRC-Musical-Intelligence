@@ -1,4 +1,4 @@
-import { useRef, useEffect, useCallback, useMemo } from 'react'
+import { useRef, useEffect, useMemo } from 'react'
 import { StatsSummary } from './StatsSummary'
 
 interface BeliefTraceProps {
@@ -27,6 +27,9 @@ const TYPE_COLORS: Record<string, string> = {
   anticipation: '#f59e0b',
 }
 
+/** Max display points for overview — prevents overdraw */
+const MAX_POINTS = 600
+
 export function BeliefTrace({
   data,
   name,
@@ -42,6 +45,16 @@ export function BeliefTrace({
   const containerRef = useRef<HTMLDivElement>(null)
   const traceColor = color ?? TYPE_COLORS[type] ?? '#60a5fa'
 
+  // Zoom state (refs to avoid re-binding event listeners)
+  const zoomRef = useRef({ start: 0, end: 1 })
+  const panRef = useRef({ active: false, startX: 0, startZoom: { start: 0, end: 1 } })
+  const drawRef = useRef<() => void>(() => {})
+
+  // Reset zoom when data changes
+  useEffect(() => {
+    zoomRef.current = { start: 0, end: 1 }
+  }, [data.length])
+
   const stats = useMemo(() => {
     if (data.length === 0) return { mean: 0, std: 0, min: 0, max: 0, current: 0 }
     const sum = data.reduce((a, b) => a + b, 0)
@@ -56,7 +69,8 @@ export function BeliefTrace({
     }
   }, [data])
 
-  const draw = useCallback(() => {
+  // Draw function — reads zoom from ref
+  const draw = () => {
     const canvas = canvasRef.current
     const container = containerRef.current
     if (!canvas || !container) return
@@ -83,15 +97,38 @@ export function BeliefTrace({
       return
     }
 
+    const { start: zs, end: ze } = zoomRef.current
+    const startIdx = Math.floor(zs * (data.length - 1))
+    const endIdx = Math.ceil(ze * (data.length - 1))
+    const viewLen = endIdx - startIdx + 1
+
     const pad = { top: 12, bottom: 8, left: 2, right: 2 }
     const plotW = width - pad.left - pad.right
     const plotH = height - pad.top - pad.bottom
-    const yMin = stats.min
-    const yMax = stats.max
+
+    // Y range on visible data
+    let yMin = Infinity
+    let yMax = -Infinity
+    for (let i = startIdx; i <= endIdx; i++) {
+      if (data[i] < yMin) yMin = data[i]
+      if (data[i] > yMax) yMax = data[i]
+    }
     const range = yMax - yMin || 1
 
     const toY = (v: number) => pad.top + (1 - (v - yMin) / range) * plotH
-    const toX = (i: number) => pad.left + (i / (data.length - 1)) * plotW
+
+    // Downsample visible range
+    const step = Math.max(1, Math.floor(viewLen / MAX_POINTS))
+    const indices: number[] = []
+    for (let i = startIdx; i <= endIdx; i += step) {
+      indices.push(i)
+    }
+    if (indices[indices.length - 1] !== endIdx) indices.push(endIdx)
+
+    const toX = (arrIdx: number) => {
+      const frac = (indices[arrIdx] - startIdx) / Math.max(1, endIdx - startIdx)
+      return pad.left + frac * plotW
+    }
 
     // Grid lines
     ctx.strokeStyle = 'rgba(255,255,255,0.04)'
@@ -135,11 +172,11 @@ export function BeliefTrace({
 
     // Fill area under curve
     ctx.beginPath()
-    ctx.moveTo(toX(0), toY(data[0]))
-    for (let i = 1; i < data.length; i++) {
-      ctx.lineTo(toX(i), toY(data[i]))
+    ctx.moveTo(toX(0), toY(data[indices[0]]))
+    for (let i = 1; i < indices.length; i++) {
+      ctx.lineTo(toX(i), toY(data[indices[i]]))
     }
-    ctx.lineTo(toX(data.length - 1), pad.top + plotH)
+    ctx.lineTo(toX(indices.length - 1), pad.top + plotH)
     ctx.lineTo(toX(0), pad.top + plotH)
     ctx.closePath()
     ctx.fillStyle = traceColor
@@ -152,17 +189,17 @@ export function BeliefTrace({
     ctx.strokeStyle = traceColor
     ctx.lineWidth = 1.5
     ctx.lineJoin = 'round'
-    for (let i = 0; i < data.length; i++) {
+    for (let i = 0; i < indices.length; i++) {
       const x = toX(i)
-      const y = toY(data[i])
+      const y = toY(data[indices[i]])
       if (i === 0) ctx.moveTo(x, y)
       else ctx.lineTo(x, y)
     }
     ctx.stroke()
 
     // Endpoint dot
-    const lastX = toX(data.length - 1)
-    const lastY = toY(data[data.length - 1])
+    const lastX = toX(indices.length - 1)
+    const lastY = toY(data[indices[indices.length - 1]])
     ctx.beginPath()
     ctx.arc(lastX, lastY, 3, 0, Math.PI * 2)
     ctx.fillStyle = traceColor
@@ -185,45 +222,150 @@ export function BeliefTrace({
 
     // Playback cursor
     if (cursorFrame != null && totalFrames && totalFrames > 0 && data.length > 1) {
-      // Map cursorFrame (in audio frames) to data index
-      const dataIdx = (cursorFrame / totalFrames) * (data.length - 1)
-      const cx = toX(dataIdx)
-      ctx.beginPath()
-      ctx.strokeStyle = 'rgba(255,255,255,0.7)'
-      ctx.lineWidth = 1
-      ctx.moveTo(cx, pad.top)
-      ctx.lineTo(cx, pad.top + plotH)
-      ctx.stroke()
+      const dataFrac = cursorFrame / totalFrames
+      if (dataFrac >= zs && dataFrac <= ze) {
+        const cx = pad.left + ((dataFrac - zs) / (ze - zs)) * plotW
+        ctx.beginPath()
+        ctx.strokeStyle = 'rgba(255,255,255,0.7)'
+        ctx.lineWidth = 1
+        ctx.moveTo(cx, pad.top)
+        ctx.lineTo(cx, pad.top + plotH)
+        ctx.stroke()
 
-      // Value dot at cursor position
-      const idx = Math.min(Math.round(dataIdx), data.length - 1)
-      const cy = toY(data[idx])
-      ctx.beginPath()
-      ctx.arc(cx, cy, 3, 0, Math.PI * 2)
-      ctx.fillStyle = traceColor
-      ctx.fill()
-      ctx.beginPath()
-      ctx.arc(cx, cy, 5, 0, Math.PI * 2)
-      ctx.strokeStyle = traceColor
-      ctx.lineWidth = 1
-      ctx.globalAlpha = 0.4
-      ctx.stroke()
-      ctx.globalAlpha = 1
+        const idx = Math.min(Math.round(dataFrac * (data.length - 1)), data.length - 1)
+        const cy = toY(data[idx])
+        ctx.beginPath()
+        ctx.arc(cx, cy, 3, 0, Math.PI * 2)
+        ctx.fillStyle = traceColor
+        ctx.fill()
+        ctx.beginPath()
+        ctx.arc(cx, cy, 5, 0, Math.PI * 2)
+        ctx.strokeStyle = traceColor
+        ctx.lineWidth = 1
+        ctx.globalAlpha = 0.4
+        ctx.stroke()
+        ctx.globalAlpha = 1
 
-      // Value label
-      ctx.fillStyle = traceColor
-      ctx.font = '9px var(--font-mono)'
-      ctx.textAlign = cx > width / 2 ? 'right' : 'left'
-      ctx.fillText(data[idx].toFixed(4), cx + (cx > width / 2 ? -8 : 8), cy - 6)
+        ctx.fillStyle = traceColor
+        ctx.font = '9px var(--font-mono)'
+        ctx.textAlign = cx > width / 2 ? 'right' : 'left'
+        ctx.fillText(data[idx].toFixed(4), cx + (cx > width / 2 ? -8 : 8), cy - 6)
+      }
     }
-  }, [data, height, stats, baseline, traceColor, name, cursorFrame, totalFrames])
 
+    // Zoom indicator bar
+    if (ze - zs < 0.99) {
+      const barY = height - 3
+      ctx.fillStyle = 'rgba(255,255,255,0.06)'
+      ctx.fillRect(pad.left, barY, plotW, 2)
+      ctx.fillStyle = traceColor
+      ctx.globalAlpha = 0.4
+      ctx.fillRect(pad.left + zs * plotW, barY, (ze - zs) * plotW, 2)
+      ctx.globalAlpha = 1
+    }
+  }
+
+  // Keep drawRef current
+  drawRef.current = draw
+
+  // Initial draw + resize observer
   useEffect(() => {
     draw()
-    const observer = new ResizeObserver(draw)
+    const observer = new ResizeObserver(() => drawRef.current())
     if (containerRef.current) observer.observe(containerRef.current)
     return () => observer.disconnect()
-  }, [draw])
+  }, [data, height, stats, baseline, traceColor, name, cursorFrame, totalFrames])
+
+  // Wheel zoom
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+
+    const handleWheel = (e: WheelEvent) => {
+      e.preventDefault()
+      if (data.length < 2) return
+
+      const rect = canvas.getBoundingClientRect()
+      const mouseXFrac = (e.clientX - rect.left) / rect.width
+      const { start: zs, end: ze } = zoomRef.current
+      const currentRange = ze - zs
+      const factor = e.deltaY > 0 ? 1.3 : 0.7
+      let newRange = Math.min(1, Math.max(0.005, currentRange * factor))
+
+      if (newRange >= 0.99) {
+        zoomRef.current = { start: 0, end: 1 }
+        drawRef.current()
+        return
+      }
+
+      const center = zs + mouseXFrac * currentRange
+      let ns = center - mouseXFrac * newRange
+      let ne = ns + newRange
+      if (ns < 0) { ne -= ns; ns = 0 }
+      if (ne > 1) { ns -= (ne - 1); ne = 1 }
+
+      zoomRef.current = { start: Math.max(0, ns), end: Math.min(1, ne) }
+      drawRef.current()
+    }
+
+    canvas.addEventListener('wheel', handleWheel, { passive: false })
+    return () => canvas.removeEventListener('wheel', handleWheel)
+  }, [data.length])
+
+  // Drag to pan
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+
+    const handleDown = (e: MouseEvent) => {
+      const z = zoomRef.current
+      if (z.end - z.start >= 0.99) return
+      panRef.current = { active: true, startX: e.clientX, startZoom: { ...z } }
+      canvas.style.cursor = 'grabbing'
+    }
+
+    const handleMove = (e: MouseEvent) => {
+      if (!panRef.current.active) return
+      const rect = canvas.getBoundingClientRect()
+      const dx = (e.clientX - panRef.current.startX) / rect.width
+      const { start: ps, end: pe } = panRef.current.startZoom
+      const range = pe - ps
+      let ns = ps - dx * range
+      let ne = ns + range
+      if (ns < 0) { ne -= ns; ns = 0 }
+      if (ne > 1) { ns -= (ne - 1); ne = 1 }
+      zoomRef.current = { start: Math.max(0, ns), end: Math.min(1, ne) }
+      drawRef.current()
+    }
+
+    const handleUp = () => {
+      if (panRef.current.active) {
+        panRef.current.active = false
+        canvas.style.cursor = ''
+      }
+    }
+
+    canvas.addEventListener('mousedown', handleDown)
+    window.addEventListener('mousemove', handleMove)
+    window.addEventListener('mouseup', handleUp)
+    return () => {
+      canvas.removeEventListener('mousedown', handleDown)
+      window.removeEventListener('mousemove', handleMove)
+      window.removeEventListener('mouseup', handleUp)
+    }
+  }, [])
+
+  // Double-click to reset zoom
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const handleDbl = () => {
+      zoomRef.current = { start: 0, end: 1 }
+      drawRef.current()
+    }
+    canvas.addEventListener('dblclick', handleDbl)
+    return () => canvas.removeEventListener('dblclick', handleDbl)
+  }, [])
 
   return (
     <div className={`space-y-2 ${className}`}>

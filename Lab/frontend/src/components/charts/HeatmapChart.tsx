@@ -1,4 +1,4 @@
-import { useRef, useEffect, useCallback } from 'react'
+import { useRef, useEffect } from 'react'
 
 interface HeatmapChartProps {
   /** Row-major Float32Array of shape rows×cols, or null for placeholder */
@@ -42,6 +42,9 @@ function interpolateColor(t: number, scheme: [number, number, number][]): string
   return `rgb(${r},${g},${b})`
 }
 
+/** Max display columns */
+const MAX_COLS = 600
+
 export function HeatmapChart({
   data,
   rows,
@@ -55,8 +58,11 @@ export function HeatmapChart({
 }: HeatmapChartProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
+  const zoomRef = useRef({ start: 0, end: 1 })
+  const panRef = useRef({ active: false, startX: 0, startZoom: { start: 0, end: 1 } })
+  const drawRef = useRef<() => void>(() => {})
 
-  const draw = useCallback(() => {
+  const draw = () => {
     const canvas = canvasRef.current
     const container = containerRef.current
     if (!canvas || !container) return
@@ -81,6 +87,11 @@ export function HeatmapChart({
       return
     }
 
+    const { start: zs, end: ze } = zoomRef.current
+    const startCol = Math.floor(zs * (cols - 1))
+    const endCol = Math.ceil(ze * (cols - 1))
+    const viewCols = endCol - startCol + 1
+
     // Layout
     const labelW = rowLabels ? 60 : 0
     const legendW = 24
@@ -88,26 +99,46 @@ export function HeatmapChart({
     const plotW = totalWidth - labelW - legendW - 8
     const plotH = height - 4
 
-    // Normalize
+    // Normalize on visible range
     let min = Infinity
     let max = -Infinity
-    for (let i = 0; i < data.length; i++) {
-      if (data[i] < min) min = data[i]
-      if (data[i] > max) max = data[i]
+    for (let r = 0; r < rows; r++) {
+      for (let c = startCol; c <= endCol; c++) {
+        const v = data[r * cols + c]
+        if (v < min) min = v
+        if (v > max) max = v
+      }
     }
     const range = max - min || 1
     const scheme = SCHEMES[colorScheme] ?? SCHEMES.viridis
 
+    // Downsample columns
+    const step = Math.max(1, Math.floor(viewCols / MAX_COLS))
+    const displayCols: number[] = []
+    for (let c = startCol; c <= endCol; c += step) {
+      displayCols.push(c)
+    }
+    if (displayCols[displayCols.length - 1] !== endCol) displayCols.push(endCol)
+
     // Draw cells
-    const cellW = plotW / cols
+    const cellW = plotW / displayCols.length
     const cellH = plotH / rows
 
     for (let r = 0; r < rows; r++) {
-      for (let c = 0; c < cols; c++) {
-        const v = data[r * cols + c]
+      for (let ci = 0; ci < displayCols.length; ci++) {
+        // Average values in this bucket for better representation
+        const bucketStart = displayCols[ci]
+        const bucketEnd = ci < displayCols.length - 1 ? displayCols[ci + 1] : endCol + 1
+        let sum = 0
+        let count = 0
+        for (let c = bucketStart; c < bucketEnd; c++) {
+          sum += data[r * cols + c]
+          count++
+        }
+        const v = count > 0 ? sum / count : data[r * cols + bucketStart]
         const t = (v - min) / range
         ctx.fillStyle = interpolateColor(t, scheme)
-        ctx.fillRect(plotX + c * cellW, r * cellH, cellW + 0.5, cellH + 0.5)
+        ctx.fillRect(plotX + ci * cellW, r * cellH, cellW + 0.5, cellH + 0.5)
       }
     }
 
@@ -138,22 +169,125 @@ export function HeatmapChart({
 
     // Playback cursor
     if (cursorFrame != null && totalFrames && totalFrames > 0) {
-      const cx = plotX + (cursorFrame / totalFrames) * plotW
-      ctx.beginPath()
-      ctx.strokeStyle = 'rgba(255,255,255,0.7)'
-      ctx.lineWidth = 1.5
-      ctx.moveTo(cx, 0)
-      ctx.lineTo(cx, plotH)
-      ctx.stroke()
+      const dataFrac = cursorFrame / totalFrames
+      if (dataFrac >= zs && dataFrac <= ze) {
+        const cx = plotX + ((dataFrac - zs) / (ze - zs)) * plotW
+        ctx.beginPath()
+        ctx.strokeStyle = 'rgba(255,255,255,0.7)'
+        ctx.lineWidth = 1.5
+        ctx.moveTo(cx, 0)
+        ctx.lineTo(cx, plotH)
+        ctx.stroke()
+      }
     }
-  }, [data, rows, cols, rowLabels, colorScheme, height, cursorFrame, totalFrames])
+
+    // Zoom indicator
+    if (ze - zs < 0.99) {
+      const barY = height - 3
+      ctx.fillStyle = 'rgba(255,255,255,0.06)'
+      ctx.fillRect(plotX, barY, plotW, 2)
+      ctx.fillStyle = 'rgba(100,180,255,0.4)'
+      ctx.fillRect(plotX + zs * plotW, barY, (ze - zs) * plotW, 2)
+    }
+  }
+
+  drawRef.current = draw
 
   useEffect(() => {
     draw()
-    const observer = new ResizeObserver(draw)
+    const observer = new ResizeObserver(() => drawRef.current())
     if (containerRef.current) observer.observe(containerRef.current)
     return () => observer.disconnect()
-  }, [draw])
+  }, [data, rows, cols, rowLabels, colorScheme, height, cursorFrame, totalFrames])
+
+  // Wheel zoom
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+
+    const handleWheel = (e: WheelEvent) => {
+      e.preventDefault()
+      if (cols < 2) return
+
+      const rect = canvas.getBoundingClientRect()
+      const mouseXFrac = (e.clientX - rect.left) / rect.width
+      const { start: zs, end: ze } = zoomRef.current
+      const currentRange = ze - zs
+      const factor = e.deltaY > 0 ? 1.3 : 0.7
+      let newRange = Math.min(1, Math.max(0.005, currentRange * factor))
+
+      if (newRange >= 0.99) {
+        zoomRef.current = { start: 0, end: 1 }
+        drawRef.current()
+        return
+      }
+
+      const center = zs + mouseXFrac * currentRange
+      let ns = center - mouseXFrac * newRange
+      let ne = ns + newRange
+      if (ns < 0) { ne -= ns; ns = 0 }
+      if (ne > 1) { ns -= (ne - 1); ne = 1 }
+
+      zoomRef.current = { start: Math.max(0, ns), end: Math.min(1, ne) }
+      drawRef.current()
+    }
+
+    canvas.addEventListener('wheel', handleWheel, { passive: false })
+    return () => canvas.removeEventListener('wheel', handleWheel)
+  }, [cols])
+
+  // Drag to pan
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+
+    const handleDown = (e: MouseEvent) => {
+      const z = zoomRef.current
+      if (z.end - z.start >= 0.99) return
+      panRef.current = { active: true, startX: e.clientX, startZoom: { ...z } }
+      canvas.style.cursor = 'grabbing'
+    }
+    const handleMove = (e: MouseEvent) => {
+      if (!panRef.current.active) return
+      const rect = canvas.getBoundingClientRect()
+      const dx = (e.clientX - panRef.current.startX) / rect.width
+      const { start: ps, end: pe } = panRef.current.startZoom
+      const range = pe - ps
+      let ns = ps - dx * range
+      let ne = ns + range
+      if (ns < 0) { ne -= ns; ns = 0 }
+      if (ne > 1) { ns -= (ne - 1); ne = 1 }
+      zoomRef.current = { start: Math.max(0, ns), end: Math.min(1, ne) }
+      drawRef.current()
+    }
+    const handleUp = () => {
+      if (panRef.current.active) {
+        panRef.current.active = false
+        canvas.style.cursor = ''
+      }
+    }
+
+    canvas.addEventListener('mousedown', handleDown)
+    window.addEventListener('mousemove', handleMove)
+    window.addEventListener('mouseup', handleUp)
+    return () => {
+      canvas.removeEventListener('mousedown', handleDown)
+      window.removeEventListener('mousemove', handleMove)
+      window.removeEventListener('mouseup', handleUp)
+    }
+  }, [])
+
+  // Double-click to reset
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const handleDbl = () => {
+      zoomRef.current = { start: 0, end: 1 }
+      drawRef.current()
+    }
+    canvas.addEventListener('dblclick', handleDbl)
+    return () => canvas.removeEventListener('dblclick', handleDbl)
+  }, [])
 
   return (
     <div ref={containerRef} className={`w-full ${className}`}>

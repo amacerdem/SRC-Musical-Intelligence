@@ -594,167 +594,178 @@ export function M3Hub() {
             </AnimatePresence>
           </div>
 
-          {/* ── CENTER: Mode-Switched ──── */}
+          {/* ── CENTER: Learn Button always visible, Visualizer behind when playing ──── */}
           <div className="md:col-span-6 order-1 md:order-2 flex flex-col items-center justify-center relative h-full min-h-0">
-            <AnimatePresence mode="wait">
-              {audioMode === "playing" ? (
-                /* ── PLAYING: Mind Visualizer ──── */
-                <MindVisualizer key="visualizer" accentColor={accentColor} />
-              ) : (
-                /* ── IDLE: Neural Nexus — Learn Button ──── */
+            {/* MindVisualizer renders behind when playing */}
+            <AnimatePresence>
+              {audioMode === "playing" && (
                 <motion.div
-                  key="idle-center"
-                  initial={{ opacity: 0, scale: 0.6, filter: "blur(20px)" }}
-                  animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-                  exit={{ opacity: 0, scale: 0.8, filter: "blur(16px)" }}
-                  transition={{ duration: 0.6, ease }}
-                  className="flex flex-col items-center justify-center relative w-full h-full"
+                  key="visualizer-bg"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.8, ease }}
+                  className="absolute inset-0 z-0"
                 >
-                  {/* Concentric neural rings — synaptic field */}
-                  {[90, 140, 200, 270].map((size, i) => (
-                    <motion.div
-                      key={`ring-${i}`}
-                      className="absolute rounded-full pointer-events-none"
-                      style={{
-                        width: size,
-                        height: size,
-                        border: `1px solid ${accentColor}${(8 - i * 2).toString(16).padStart(2, "0")}`,
-                      }}
-                      animate={{
-                        scale: [1, 1.04 - i * 0.005, 1],
-                        opacity: [0.2 + i * 0.05, 0.6 - i * 0.08, 0.2 + i * 0.05],
-                      }}
-                      transition={{
-                        duration: 5 + i * 1.8,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                        delay: i * 0.5,
-                      }}
-                    />
-                  ))}
-
-                  {/* Ambient radial glow */}
-                  <motion.div
-                    className="absolute w-48 h-48 rounded-full pointer-events-none"
-                    style={{
-                      background: `radial-gradient(circle, ${accentColor}0A, transparent 70%)`,
-                    }}
-                    animate={{
-                      scale: [1, 1.3, 1],
-                      opacity: [0.3, 0.6, 0.3],
-                    }}
-                    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                  />
-
-                  {/* Learn Button — the beating heart of the mind */}
-                  <motion.div
-                    className="relative z-10"
-                    animate={learning ? {} : { scale: [1, 1.025, 1] }}
-                    transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                  >
-                    {/* Glow aura */}
-                    {!m3Mind.frozen && !learning && (
-                      <motion.div
-                        className="absolute rounded-full pointer-events-none"
-                        style={{
-                          inset: "-28px",
-                          background: `radial-gradient(circle, ${accentColor}0C, transparent 65%)`,
-                        }}
-                        animate={{
-                          scale: [1, 1.25, 1],
-                          opacity: [0.3, 0.7, 0.3],
-                        }}
-                        transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-                      />
-                    )}
-
-                    <button
-                      onClick={m3Mind.frozen ? () => setShowPricing(true) : handleLearn}
-                      disabled={learning}
-                      className="relative px-10 py-4 rounded-full text-sm font-display font-semibold transition-all duration-500"
-                      style={{
-                        background: m3Mind.frozen
-                          ? "rgba(255,255,255,0.03)"
-                          : learning
-                            ? `${accentColor}10`
-                            : `linear-gradient(135deg, ${accentColor}, ${accentColor}CC)`,
-                        color: m3Mind.frozen ? "#475569" : learning ? accentColor : "#000",
-                        border: `1px solid ${m3Mind.frozen ? "rgba(255,255,255,0.05)" : `${accentColor}60`}`,
-                        boxShadow: !m3Mind.frozen && !learning
-                          ? `0 0 50px ${accentColor}30, 0 0 100px ${accentColor}10, inset 0 1px 0 rgba(255,255,255,0.2)`
-                          : "none",
-                        cursor: learning ? "wait" : "pointer",
-                      }}
-                    >
-                      {learning ? (
-                        <span className="flex items-center gap-2">
-                          <motion.span
-                            animate={{ rotate: 360 }}
-                            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                          >
-                            <Zap size={14} />
-                          </motion.span>
-                          {t("m3.hub.learnButton")}...
-                        </span>
-                      ) : m3Mind.frozen ? (
-                        <span className="flex items-center gap-2">
-                          <Lock size={14} />
-                          {t("m3.hub.learnFrozen")}
-                        </span>
-                      ) : (
-                        <span className="flex items-center gap-2">
-                          <Brain size={14} />
-                          {t("m3.hub.learnButton")}
-                        </span>
-                      )}
-                    </button>
-                  </motion.div>
-
-                  {/* Epiphany result */}
-                  <AnimatePresence>
-                    {learnResult && (
-                      <motion.p
-                        initial={{ opacity: 0, y: 12, scale: 0.9 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: -10, scale: 0.9 }}
-                        transition={{ duration: 0.5, ease }}
-                        className="text-xs font-display font-light mt-5"
-                        style={{ color: accentColor }}
-                      >
-                        {learnResult}
-                      </motion.p>
-                    )}
-                  </AnimatePresence>
-
-                  {/* Vital Signs — breathing numbers */}
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 1.1, duration: 0.8 }}
-                    className="flex items-center gap-10 mt-6"
-                  >
-                    {[
-                      { value: m3Mind.totalListens, label: t("m3.hub.listens") },
-                      { value: m3Mind.totalMinutes, label: t("m3.hub.minutes") },
-                      { value: m3Mind.previousPersonaIds.length, label: t("m3.hub.shifts") },
-                    ].map((stat, i) => (
-                      <div key={i} className="text-center">
-                        <motion.span
-                          className="text-lg font-mono text-slate-300 block tabular-nums"
-                          animate={{ opacity: [0.65, 1, 0.65] }}
-                          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: i * 0.6 }}
-                        >
-                          {stat.value}
-                        </motion.span>
-                        <span className="text-[7px] font-display text-slate-600 tracking-[0.2em] uppercase">
-                          {stat.label}
-                        </span>
-                      </div>
-                    ))}
-                  </motion.div>
+                  <MindVisualizer accentColor={accentColor} />
                 </motion.div>
               )}
             </AnimatePresence>
+
+            {/* Neural Nexus — Learn Button (always visible) */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.6, filter: "blur(20px)" }}
+              animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+              transition={{ duration: 0.6, ease }}
+              className="flex flex-col items-center justify-center relative w-full h-full z-10"
+            >
+              {/* Concentric neural rings — only when idle */}
+              {audioMode !== "playing" && [90, 140, 200, 270].map((size, i) => (
+                <motion.div
+                  key={`ring-${i}`}
+                  className="absolute rounded-full pointer-events-none top-1/2 left-1/2"
+                  style={{
+                    width: size,
+                    height: size,
+                    marginTop: -size / 2,
+                    marginLeft: -size / 2,
+                    border: `1px solid ${accentColor}${(8 - i * 2).toString(16).padStart(2, "0")}`,
+                  }}
+                  animate={{
+                    scale: [1, 1.04 - i * 0.005, 1],
+                    opacity: [0.2 + i * 0.05, 0.6 - i * 0.08, 0.2 + i * 0.05],
+                  }}
+                  transition={{
+                    duration: 5 + i * 1.8,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: i * 0.5,
+                  }}
+                />
+              ))}
+
+              {/* Ambient radial glow — only when idle */}
+              {audioMode !== "playing" && (
+                <motion.div
+                  className="absolute w-48 h-48 rounded-full pointer-events-none top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                  style={{
+                    background: `radial-gradient(circle, ${accentColor}0A, transparent 70%)`,
+                  }}
+                  animate={{
+                    scale: [1, 1.3, 1],
+                    opacity: [0.3, 0.6, 0.3],
+                  }}
+                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                />
+              )}
+
+              {/* Learn Button — the beating heart of the mind */}
+              <motion.div
+                className="relative z-10"
+                animate={learning ? {} : { scale: [1, 1.025, 1] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              >
+                {/* Glow aura */}
+                {!m3Mind.frozen && !learning && (
+                  <motion.div
+                    className="absolute rounded-full pointer-events-none"
+                    style={{
+                      inset: "-28px",
+                      background: `radial-gradient(circle, ${accentColor}0C, transparent 65%)`,
+                    }}
+                    animate={{
+                      scale: [1, 1.25, 1],
+                      opacity: [0.3, 0.7, 0.3],
+                    }}
+                    transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
+                  />
+                )}
+
+                <button
+                  onClick={m3Mind.frozen ? () => setShowPricing(true) : handleLearn}
+                  disabled={learning}
+                  className="relative px-10 py-4 rounded-full text-sm font-display font-semibold transition-all duration-500"
+                  style={{
+                    background: m3Mind.frozen
+                      ? "rgba(255,255,255,0.03)"
+                      : learning
+                        ? `${accentColor}10`
+                        : `linear-gradient(135deg, ${accentColor}, ${accentColor}CC)`,
+                    color: m3Mind.frozen ? "#475569" : learning ? accentColor : "#000",
+                    border: `1px solid ${m3Mind.frozen ? "rgba(255,255,255,0.05)" : `${accentColor}60`}`,
+                    boxShadow: !m3Mind.frozen && !learning
+                      ? `0 0 50px ${accentColor}30, 0 0 100px ${accentColor}10, inset 0 1px 0 rgba(255,255,255,0.2)`
+                      : "none",
+                    cursor: learning ? "wait" : "pointer",
+                  }}
+                >
+                  {learning ? (
+                    <span className="flex items-center gap-2">
+                      <motion.span
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                      >
+                        <Zap size={14} />
+                      </motion.span>
+                      {t("m3.hub.learnButton")}...
+                    </span>
+                  ) : m3Mind.frozen ? (
+                    <span className="flex items-center gap-2">
+                      <Lock size={14} />
+                      {t("m3.hub.learnFrozen")}
+                    </span>
+                  ) : (
+                    <span className="flex items-center gap-2">
+                      <Brain size={14} />
+                      {t("m3.hub.learnButton")}
+                    </span>
+                  )}
+                </button>
+              </motion.div>
+
+              {/* Epiphany result */}
+              <AnimatePresence>
+                {learnResult && (
+                  <motion.p
+                    initial={{ opacity: 0, y: 12, scale: 0.9 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -10, scale: 0.9 }}
+                    transition={{ duration: 0.5, ease }}
+                    className="text-xs font-display font-light mt-5"
+                    style={{ color: accentColor }}
+                  >
+                    {learnResult}
+                  </motion.p>
+                )}
+              </AnimatePresence>
+
+              {/* Vital Signs — breathing numbers */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.1, duration: 0.8 }}
+                className="flex items-center gap-10 mt-6"
+              >
+                {[
+                  { value: m3Mind.totalListens, label: t("m3.hub.listens") },
+                  { value: m3Mind.totalMinutes, label: t("m3.hub.minutes") },
+                  { value: m3Mind.previousPersonaIds.length, label: t("m3.hub.shifts") },
+                ].map((stat, i) => (
+                  <div key={i} className="text-center">
+                    <motion.span
+                      className="text-lg font-mono text-slate-300 block tabular-nums"
+                      animate={{ opacity: [0.65, 1, 0.65] }}
+                      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: i * 0.6 }}
+                    >
+                      {stat.value}
+                    </motion.span>
+                    <span className="text-[7px] font-display text-slate-600 tracking-[0.2em] uppercase">
+                      {stat.label}
+                    </span>
+                  </div>
+                ))}
+              </motion.div>
+            </motion.div>
           </div>
 
           {/* ── RIGHT HEMISPHERE: Consciousness + Cortex Map ────── */}
@@ -782,12 +793,12 @@ export function M3Hub() {
                   <Sparkles size={11} style={{ color: accentColor }} />
                 </motion.div>
                 <span
-                  className="text-[9px] font-display font-light tracking-[0.15em] uppercase"
+                  className="text-[11px] font-display font-light tracking-[0.15em] uppercase"
                   style={{ color: `${accentColor}80` }}
                 >
                   {t("m3.hub.currentObservation")}
                 </span>
-                <span className="text-[7px] font-mono text-slate-700 ml-auto">
+                <span className="text-[9px] font-mono text-slate-700 ml-auto">
                   {unlockedTypes.length}/{9}
                 </span>
               </div>
@@ -842,12 +853,12 @@ export function M3Hub() {
                       animate={{ opacity: [0.4, 1, 0.4] }}
                       transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: i * 0.5 }}
                     />
-                    <p className="text-[10px] text-slate-400 font-body font-light leading-relaxed">
+                    <p className="text-[13px] text-slate-400 font-body font-light leading-relaxed">
                       {obs.text}
                     </p>
                   </motion.div>
                 )) : (
-                  <p className="text-[9px] text-slate-600 font-body font-light italic">
+                  <p className="text-[12px] text-slate-600 font-body font-light italic">
                     {t("m3.hub.noObservations")}
                   </p>
                 )}

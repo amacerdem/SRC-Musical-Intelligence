@@ -1,4 +1,5 @@
 import { useState, useCallback, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import { Wand2, Share2, Play, Loader2, Check, Brain } from "lucide-react";
 import { useUserStore } from "@/stores/useUserStore";
@@ -20,22 +21,18 @@ const DURATION_OPTIONS = [
 ];
 
 const BELIEF_NAMES = ["consonance", "tempo", "salience", "familiarity", "reward"] as const;
-const BELIEF_LABELS: Record<string, string> = {
-  consonance: "Harmony", tempo: "Rhythm", salience: "Attention", familiarity: "Memory", reward: "Pleasure",
-};
 
-/** Generation phases — what your mind is doing */
-const GEN_PHASES = [
-  { at: 5, text: "Reading your musical DNA...", belief: null },
-  { at: 15, text: "Chaos appetite → choosing harmonic vocabulary", belief: "consonance" as const },
-  { at: 25, text: "Need for closure → how often the music resolves", belief: "consonance" as const },
-  { at: 35, text: "Tension love → designing the build-ups", belief: "reward" as const },
-  { at: 45, text: "Surprise sensitivity → shaping dynamic range", belief: "salience" as const },
-  { at: 55, text: "Repetition comfort → how deep the patterns go", belief: "familiarity" as const },
-  { at: 65, text: "Building 97 perceptual targets...", belief: null },
-  { at: 75, text: "Shaping the time feel across scales...", belief: "tempo" as const },
-  { at: 85, text: "Optimizing for maximum pleasure...", belief: "reward" as const },
-  { at: 92, text: "Rendering waveform...", belief: null },
+const GEN_PHASE_KEYS = [
+  { at: 5, key: "readingDNA", belief: null },
+  { at: 15, key: "chaosAppetite", belief: "consonance" as const },
+  { at: 25, key: "closureNeed", belief: "consonance" as const },
+  { at: 35, key: "tensionLove", belief: "reward" as const },
+  { at: 45, key: "surpriseSensitivity", belief: "salience" as const },
+  { at: 55, key: "repetitionComfort", belief: "familiarity" as const },
+  { at: 65, key: "building97", belief: null },
+  { at: 75, key: "shapingTime", belief: "tempo" as const },
+  { at: 85, key: "optimizing", belief: "reward" as const },
+  { at: 92, key: "rendering", belief: null },
 ];
 
 /** Generate mock belief influence values based on user params */
@@ -68,6 +65,7 @@ function generateWaveform(style: number, complexity: number, duration: number): 
 }
 
 export function Compose() {
+  const { t } = useTranslation();
   const { mind } = useUserStore();
   const persona = mind ? getPersona(mind.personaId) : null;
 
@@ -116,7 +114,7 @@ export function Compose() {
     setTimeout(() => setShared(false), 3000);
   };
 
-  const activePhases = GEN_PHASES.filter((p) => progress > p.at);
+  const activePhases = GEN_PHASE_KEYS.filter((p) => progress > p.at);
 
   return (
     <motion.div {...pageTransition} className="min-h-screen bg-black relative overflow-hidden pb-16">
@@ -132,13 +130,13 @@ export function Compose() {
 
       {/* Header */}
       <motion.div variants={fadeIn} initial="initial" animate="animate" className="relative z-10 text-center mb-12 pt-8">
-        <span className="hud-label mb-3 block">Composition</span>
-        <h1 className="text-4xl md:text-5xl font-display font-bold text-slate-100 tracking-tight mb-3">Compose</h1>
-        <p className="hud-label text-xs">Compose music shaped by your mind</p>
+        <span className="hud-label mb-3 block">{t("compose.hudLabel")}</span>
+        <h1 className="text-4xl md:text-5xl font-display font-bold text-slate-100 tracking-tight mb-3">{t("compose.title")}</h1>
+        <p className="hud-label text-xs">{t("compose.subtitle")}</p>
         {persona && (
           <div className="flex items-center justify-center gap-3 mt-4">
             <Badge label={persona.name} color={accentColor} size="md" />
-            <span className="text-xs text-slate-700 font-body font-light">shapes every note</span>
+            <span className="text-xs text-slate-700 font-body font-light">{t("compose.shapesEveryNote")}</span>
           </div>
         )}
       </motion.div>
@@ -152,25 +150,25 @@ export function Compose() {
               <div className="flex items-center justify-between mb-5">
                 <div className="flex items-center gap-2">
                   <NucleusDot color={beliefColors.salience.primary} size={3} active />
-                  <span className="hud-label">Style</span>
+                  <span className="hud-label">{t("compose.style")}</span>
                 </div>
                 <span className="hud-value text-sm" style={{ color: beliefColors.salience.primary }}>{style}%</span>
               </div>
               <div className="flex items-center justify-between text-[10px] text-slate-700 mb-2 font-mono">
-                <span>Calm</span><span>Intense</span>
+                <span>{t("compose.calm")}</span><span>{t("compose.intense")}</span>
               </div>
               <input type="range" min={0} max={100} value={style} onChange={(e) => setStyle(Number(e.target.value))}
                 className="w-full h-[3px] rounded-full bg-white/5 appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer"
                 style={{ accentColor: beliefColors.salience.primary, background: `linear-gradient(90deg, ${beliefColors.salience.primary}40 ${style}%, rgba(255,255,255,0.05) ${style}%)` }}
               />
               <p className="text-[9px] text-slate-700 font-mono mt-2">
-                Controls how dramatic the dynamics are — quiet vs loud, subtle vs bold
+                {t("compose.styleHelp")}
               </p>
             </div>
 
             {/* Duration */}
             <div className="spatial-card p-7">
-              <span className="hud-label mb-5 block">Duration</span>
+              <span className="hud-label mb-5 block">{t("compose.duration")}</span>
               <div className="flex gap-3">
                 {DURATION_OPTIONS.map((opt) => (
                   <button key={opt.value} onClick={() => setDuration(opt.value)}
@@ -191,19 +189,19 @@ export function Compose() {
               <div className="flex items-center justify-between mb-5">
                 <div className="flex items-center gap-2">
                   <NucleusDot color={beliefColors.consonance.primary} size={3} active />
-                  <span className="hud-label">Complexity</span>
+                  <span className="hud-label">{t("compose.complexity")}</span>
                 </div>
                 <span className="hud-value text-sm" style={{ color: beliefColors.consonance.primary }}>{complexity}%</span>
               </div>
               <div className="flex items-center justify-between text-[10px] text-slate-700 mb-2 font-mono">
-                <span>Simple</span><span>Complex</span>
+                <span>{t("compose.simple")}</span><span>{t("compose.complex")}</span>
               </div>
               <input type="range" min={0} max={100} value={complexity} onChange={(e) => setComplexity(Number(e.target.value))}
                 className="w-full h-[3px] rounded-full bg-white/5 appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer"
                 style={{ accentColor: beliefColors.consonance.primary, background: `linear-gradient(90deg, ${beliefColors.consonance.primary}40 ${complexity}%, rgba(255,255,255,0.05) ${complexity}%)` }}
               />
               <p className="text-[9px] text-slate-700 font-mono mt-2">
-                Controls harmonic richness — simple melodies vs dense chord structures
+                {t("compose.complexityHelp")}
               </p>
             </div>
 
@@ -212,20 +210,16 @@ export function Compose() {
               <div className="spatial-card p-5">
                 <div className="flex items-center gap-2 mb-3">
                   <Brain size={12} style={{ color: `${accentColor}60` }} />
-                  <span className="hud-label">Mind Influence</span>
+                  <span className="hud-label">{t("compose.mindInfluence")}</span>
                 </div>
                 <p className="text-[10px] text-slate-600 font-body font-light leading-relaxed">
-                  As a <span style={{ color: accentColor }}>{persona.name}</span>, your{" "}
-                  {persona.axes.tensionAppetite > 0.7 ? "love of tension means longer build-ups and delayed resolutions" :
-                   persona.axes.monotonyTolerance > 0.6 ? "comfort with repetition allows for deeper, evolving patterns" :
-                   persona.axes.entropyTolerance > 0.7 ? "chaos appetite opens up wilder harmonic choices" :
-                   "need for closure drives satisfying resolutions throughout"}.{" "}
-                  Your {identity.family} mind naturally leans toward{" "}
-                  {identity.family === "Alchemists" ? "tension-release cycles" :
-                   identity.family === "Architects" ? "structural precision" :
-                   identity.family === "Explorers" ? "novel sonic territories" :
-                   identity.family === "Anchors" ? "emotionally resonant textures" :
-                   "rhythmic drive"}.
+                  {t("compose.asA")} <span style={{ color: accentColor }}>{persona.name}</span>,{" "}
+                  {persona.axes.tensionAppetite > 0.7 ? t("compose.mindInfluenceText.tensionLove") :
+                   persona.axes.monotonyTolerance > 0.6 ? t("compose.mindInfluenceText.repetitionComfort") :
+                   persona.axes.entropyTolerance > 0.7 ? t("compose.mindInfluenceText.chaosAppetite") :
+                   t("compose.mindInfluenceText.closureNeed")}.{" "}
+                  {identity.family} {t("compose.mindLeansToward")}{" "}
+                  {t(`compose.familyLeans.${identity.family}`)}.
                 </p>
               </div>
             )}
@@ -233,11 +227,11 @@ export function Compose() {
             {/* Generate button */}
             <Button variant="primary" size="lg" className="w-full" onClick={handleGenerate} disabled={genState === "generating"}>
               {genState === "generating" ? (
-                <><Loader2 size={20} className="mr-2 animate-spin" />Generating...</>
+                <><Loader2 size={20} className="mr-2 animate-spin" />{t("compose.generating")}</>
               ) : genState === "done" ? (
-                <><Wand2 size={20} className="mr-2" />Compose Again</>
+                <><Wand2 size={20} className="mr-2" />{t("compose.composeAgain")}</>
               ) : (
-                <><Wand2 size={20} className="mr-2" />Compose</>
+                <><Wand2 size={20} className="mr-2" />{t("compose.compose")}</>
               )}
             </Button>
           </motion.div>
@@ -245,7 +239,7 @@ export function Compose() {
           {/* Output */}
           <motion.div variants={slideUp} className="col-span-12 lg:col-span-7">
             <div className="spatial-card p-8 min-h-[600px] flex flex-col glow-border">
-              <span className="hud-label mb-6">Output</span>
+              <span className="hud-label mb-6">{t("compose.output")}</span>
 
               <AnimatePresence mode="wait">
                 {genState === "idle" && (
@@ -257,9 +251,9 @@ export function Compose() {
                     >
                       <Play size={28} className="text-slate-600 ml-1" />
                     </div>
-                    <p className="text-slate-600 text-sm font-body font-light">Configure your parameters and hit Compose</p>
+                    <p className="text-slate-600 text-sm font-body font-light">{t("compose.configureAndCompose")}</p>
                     <p className="text-slate-700 text-xs mt-2 font-body font-light">
-                      Your {persona?.name ?? "mind"} profile will influence every harmonic decision
+                      {t("compose.profileInfluence", { name: persona?.name ?? "Mind" })}
                     </p>
                   </motion.div>
                 )}
@@ -270,7 +264,7 @@ export function Compose() {
                   >
                     <div className="w-full max-w-sm">
                       <div className="flex items-center justify-between text-sm mb-3">
-                        <span className="text-slate-500 font-body font-light">Processing through your mind...</span>
+                        <span className="text-slate-500 font-body font-light">{t("compose.processingMind")}</span>
                         <span className="hud-value text-sm" style={{ color: beliefColors.familiarity.primary }}>{Math.round(progress)}%</span>
                       </div>
                       <div className="w-full h-[2px] rounded-full bg-white/5 overflow-hidden">
@@ -281,14 +275,14 @@ export function Compose() {
 
                       {/* Pipeline phases — neuroscience-grounded */}
                       <div className="mt-6 space-y-2">
-                        {activePhases.slice(-4).map((phase, i) => (
+                        {activePhases.slice(-4).map((phase) => (
                           <motion.div key={phase.at} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }}
                             className="flex items-center gap-2"
                           >
                             {phase.belief && <NucleusDot color={beliefColors[phase.belief].primary} size={3} active />}
                             {!phase.belief && <div className="w-1.5 h-1.5 rounded-full bg-slate-700" />}
                             <span className="text-[10px] font-mono" style={{ color: phase.belief ? `${beliefColors[phase.belief].primary}80` : "#475569" }}>
-                              {phase.text}
+                              {t(`compose.genPhases.${phase.key}`)}
                             </span>
                           </motion.div>
                         ))}
@@ -336,7 +330,7 @@ export function Compose() {
 
                     {/* Belief contribution bars */}
                     <div className="border-t border-white/5 pt-5 mb-4">
-                      <span className="hud-label mb-3 block">How Your Mind Shaped This</span>
+                      <span className="hud-label mb-3 block">{t("compose.howMindShaped")}</span>
                       <div className="grid grid-cols-5 gap-2">
                         {BELIEF_NAMES.map((b) => {
                           const val = beliefInfluence[b];
@@ -351,7 +345,7 @@ export function Compose() {
                                 />
                               </div>
                               <div className="text-[9px] font-mono" style={{ color: bColor }}>{(val * 100).toFixed(0)}%</div>
-                              <div className="text-[8px] font-mono text-slate-700">{BELIEF_LABELS[b]}</div>
+                              <div className="text-[8px] font-mono text-slate-700">{t(`compose.beliefLabels.${b}`)}</div>
                             </div>
                           );
                         })}
@@ -363,25 +357,25 @@ export function Compose() {
                       <div className="flex items-center justify-between">
                         <div>
                           <h4 className="text-sm font-body font-medium text-slate-300 mb-2">
-                            {persona?.name ?? "Mind"} Generation #{generationCount}
+                            {t("compose.generation", { name: persona?.name ?? "Mind", count: generationCount })}
                           </h4>
                           <div className="flex items-center gap-2">
                             <span className="hud-label">{duration}s</span>
                             <span className="text-slate-700">·</span>
                             <span className="hud-label" style={{ color: `${beliefColors.salience.primary}80` }}>
-                              {style > 60 ? "Intense" : style > 30 ? "Balanced" : "Calm"}
+                              {style > 60 ? t("compose.intense") : style > 30 ? t("compose.balanced") : t("compose.calm")}
                             </span>
                             <span className="text-slate-700">·</span>
                             <span className="hud-label" style={{ color: `${beliefColors.consonance.primary}80` }}>
-                              {complexity > 60 ? "Complex" : complexity > 30 ? "Moderate" : "Simple"}
+                              {complexity > 60 ? t("compose.complex") : complexity > 30 ? t("compose.moderate") : t("compose.simple")}
                             </span>
                           </div>
                           <p className="text-[9px] font-mono text-slate-700 mt-1">
-                            Peak reward predicted at ~{Math.round(duration * 0.65)}s · Estimated PE: {(0.3 + style * 0.004 + complexity * 0.002).toFixed(2)}σ
+                            {t("compose.peakReward", { sec: Math.round(duration * 0.65), pe: (0.3 + style * 0.004 + complexity * 0.002).toFixed(2) })}
                           </p>
                         </div>
                         <Button variant="glass" size="sm" onClick={handleShare}>
-                          {shared ? <><Check size={14} className="mr-2 text-green-400" />Shared</> : <><Share2 size={14} className="mr-2" />Share</>}
+                          {shared ? <><Check size={14} className="mr-2 text-green-400" />{t("compose.shared")}</> : <><Share2 size={14} className="mr-2" />{t("compose.share")}</>}
                         </Button>
                       </div>
                     </div>

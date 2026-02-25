@@ -63,26 +63,38 @@ export function Overview() {
       {/* Pipeline Control Panel */}
       <div className="glass-card p-5 mt-4">
         <div className="text-xs text-text-tertiary uppercase tracking-wider mb-3">Pipeline Control</div>
-        <div className="flex items-end gap-4">
-          {/* Audio selector */}
-          <div className="flex-1">
-            <label className="text-xs text-text-secondary block mb-1">Audio Source</label>
-            <select
-              value={selectedAudio}
-              onChange={(e) => setSelectedAudio(e.target.value)}
-              disabled={isRunning}
-              className="w-full bg-bg-secondary border border-white/10 rounded-lg px-3 py-2 text-sm text-text-primary focus:outline-none focus:border-blue-500/50"
-            >
-              {catalogLoading && <option>Loading...</option>}
-              {audioCatalog.map((a) => (
-                <option key={a.name} value={a.name} disabled={!a.available}>
-                  {a.name} {a.duration_s ? `(${a.duration_s.toFixed(1)}s)` : ''} {a.available ? '' : ' [missing]'}
-                </option>
-              ))}
-            </select>
-          </div>
 
-          {/* Excerpt duration */}
+        {/* Audio source grid */}
+        <label className="text-xs text-text-secondary block mb-2">Audio Source</label>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4">
+          {catalogLoading && <div className="text-xs text-text-tertiary">Loading...</div>}
+          {audioCatalog.map((a) => {
+            const displayName = a.filename.replace(/\.(wav|mp3|flac|ogg)$/i, '')
+            const isSelected = selectedAudio === a.name
+            return (
+              <button
+                key={a.name}
+                onClick={() => !isRunning && a.available && setSelectedAudio(a.name)}
+                disabled={isRunning || !a.available}
+                className={`text-left px-3 py-2 rounded-lg text-sm transition-colors border ${
+                  isSelected
+                    ? 'bg-blue-500/15 text-blue-300 border-blue-500/40'
+                    : 'bg-white/[0.03] text-text-secondary border-white/5 hover:bg-white/[0.06] hover:border-white/10'
+                } disabled:opacity-30 disabled:cursor-not-allowed`}
+              >
+                <div className="truncate font-medium">{displayName}</div>
+                <div className="text-xs mt-0.5 text-text-tertiary">
+                  {a.format.toUpperCase()}
+                  {a.duration_s ? ` · ${(a.duration_s / 60).toFixed(1)} min` : ''}
+                  {!a.available ? ' · missing' : ''}
+                </div>
+              </button>
+            )
+          })}
+        </div>
+
+        {/* Duration + Run */}
+        <div className="flex items-end gap-4">
           <div className="w-32">
             <label className="text-xs text-text-secondary block mb-1">Duration</label>
             <select
@@ -90,6 +102,7 @@ export function Overview() {
               onChange={(e) => setExcerptS(Number(e.target.value))}
               disabled={isRunning}
               className="w-full bg-bg-secondary border border-white/10 rounded-lg px-3 py-2 text-sm text-text-primary focus:outline-none focus:border-blue-500/50"
+              style={{ colorScheme: 'dark' }}
             >
               <option value={0}>Full</option>
               <option value={5}>5s</option>
@@ -99,7 +112,6 @@ export function Overview() {
             </select>
           </div>
 
-          {/* Run button */}
           <button
             onClick={handleRun}
             disabled={isRunning || !selectedAudio}
@@ -153,19 +165,28 @@ export function Overview() {
             )}
           </div>
           <div className="flex flex-wrap gap-2">
-            {experiments.map((exp) => (
-              <button
-                key={exp.experiment_id}
-                onClick={() => selectExperiment(exp.experiment_id)}
-                className={`px-3 py-1.5 rounded-lg text-xs mono transition-colors border ${
-                  currentExperiment === exp.experiment_id
-                    ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30'
-                    : 'bg-white/5 text-text-secondary border-white/10 hover:bg-white/10'
-                }`}
-              >
-                {exp.audio_name} ({exp.n_frames}f @ {exp.fps?.toFixed(0)}fps)
-              </button>
-            ))}
+            {experiments.map((exp) => {
+              const catalogEntry = audioCatalog.find((a) => a.name === exp.audio_name)
+              const displayName = catalogEntry
+                ? catalogEntry.filename.replace(/\.(wav|mp3|flac|ogg)$/i, '')
+                : exp.audio_name
+              return (
+                <button
+                  key={exp.experiment_id}
+                  onClick={() => selectExperiment(exp.experiment_id)}
+                  className={`px-3 py-1.5 rounded-lg text-xs transition-colors border text-left ${
+                    currentExperiment === exp.experiment_id
+                      ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30'
+                      : 'bg-white/5 text-text-secondary border-white/10 hover:bg-white/10'
+                  }`}
+                >
+                  <span className="block truncate max-w-xs">{displayName}</span>
+                  <span className="block text-[10px] text-text-tertiary mono mt-0.5">
+                    {exp.n_frames}f @ {exp.fps?.toFixed(0)}fps · {exp.timestamp?.slice(0, 10)}
+                  </span>
+                </button>
+              )
+            })}
           </div>
         </div>
       )}

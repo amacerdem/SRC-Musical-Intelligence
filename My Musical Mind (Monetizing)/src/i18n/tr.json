@@ -1001,8 +1001,206 @@
         "frequency": "S\u0131n\u0131rs\u0131z e\u011fitim",
         "features": ["Seviye 12'ye kadar e\u011fitim", "3 g\u00f6zlem katman\u0131", "Tam zihin morfolojisi", "Tahminsel i\u00e7g\u00f6r\u00fcler", "Terap\u00f6tik g\u00f6zlemler", "M\u00fczikal dan\u0131\u015fmanl\u0131k", "Meta-fark\u0131ndal\u0131k"]
       },
-      "select": "Se\u00e7",
-      "secure": "G\u00fcvenli \u00f6deme \u00b7 \u0130stedi\u011fin zaman iptal"
+      "select": "Seç",
+      "secure": "Güvenli ödeme · İstediğin zaman iptal"
+    }
+  },
+  "compose": {
+    "hudLabel": "Beste",
+    "title": "Bestele",
+    "subtitle": "Zihnin tarafından şekillenen müzik bestele",
+    "style": "Stil",
+    "calm": "Sakin",
+    "intense": "Yoğun",
+    "styleHelp": "Dinamiklerin ne kadar dramatik olduğunu kontrol eder — sessiz vs yüksek, ince vs cesur",
+    "duration": "Süre",
+    "complexity": "Karmaşıklık",
+    "simple": "Basit",
+    "complex": "Karmaşık",
+    "complexityHelp": "Armonik zenginliği kontrol eder — basit melodiler vs yoğun akor yapıları",
+    "mindInfluence": "Zihin Etkisi",
+    "generating": "Üretiliyor...",
+    "composeAgain": "Tekrar Bestele",
+    "compose": "Bestele",
+    "output": "Çıktı",
+    "howMindShaped": "Zihninin Bunu Nasıl Şekillendirdiği",
+    "configureAndCompose": "Parametrelerini ayarla ve Bestele'ye bas",
+    "profileInfluence": "{{name}} profilin her armonik karara etki edecek",
+    "processingMind": "Zihninden işleniyor...",
+    "generation": "{{name}} Üretim #{{count}}",
+    "peakReward": "Zirve ödül ~{{sec}}s'de öngörülüyor · Tahmini PE: {{pe}}σ",
+    "shared": "Paylaşıldı",
+    "share": "Paylaş",
+    "balanced": "Dengeli",
+    "moderate": "Orta",
+    "shapesEveryNote": "her notayı şekillendirir",
+    "asA": "Bir",
+    "mindLeansToward": "zihniniz doğal olarak şuna eğilir:",
+    "mindInfluenceText": {
+      "tensionLove": "gerilim sevginiz daha uzun birikimler ve geciken çözümler anlamına gelir",
+      "repetitionComfort": "tekrar konforunuz daha derin, evrilen örüntülere izin verir",
+      "chaosAppetite": "kaos iştahınız daha vahşi armonik seçimler açar",
+      "closureNeed": "kapanış ihtiyacınız boyunca tatmin edici çözümler üretir"
+    },
+    "familyLeans": {
+      "Alchemists": "gerilim-bırakma döngüleri",
+      "Architects": "yapısal hassasiyet",
+      "Explorers": "yeni sonik bölgeler",
+      "Anchors": "duygusal rezonans dokuları",
+      "Kineticists": "ritmik itici güç"
+    },
+    "genPhases": {
+      "readingDNA": "Müzikal DNA'nız okunuyor...",
+      "chaosAppetite": "Kaos iştahı → armonik kelime hazinesi seçiliyor",
+      "closureNeed": "Kapanış ihtiyacı → müzik ne sıklıkla çözülüyor",
+      "tensionLove": "Gerilim sevgisi → birikimler tasarlanıyor",
+      "surpriseSensitivity": "Sürpriz duyarlılığı → dinamik aralık şekilleniyor",
+      "repetitionComfort": "Tekrar konforu → örüntüler ne kadar derin",
+      "building97": "97 algısal hedef oluşturuluyor...",
+      "shapingTime": "Zaman hissi ölçekler arasında şekilleniyor...",
+      "optimizing": "Maksimum haz için optimize ediliyor...",
+      "rendering": "Dalga formu oluşturuluyor..."
+    },
+    "beliefLabels": {
+      "consonance": "Armoni",
+      "tempo": "Ritim",
+      "salience": "Dikkat",
+      "familiarity": "Hafıza",
+      "reward": "Haz"
+    }
+  },
+  "live": {
+    "title": "Canlı Performans",
+    "solo": "Solo",
+    "duo": "Duo",
+    "strengthenEdge": "Güçlü Yanını Pekiştir",
+    "leanIntoPower": "seni güçlü kılan şeylere yaslan.",
+    "developGround": "Yeni Alan Geliştir",
+    "expandTerritory": "{{family}} zihnini yeni bölgelere genişlet.",
+    "startSolo": "Solo Başla",
+    "startDuo": "Duo Başla",
+    "endSession": "Oturumu Bitir",
+    "newSession": "Yeni Oturum",
+    "sendingInvite": "Performans daveti gönderiliyor...",
+    "waitingMind": "Diğer Zihin bekleniyor",
+    "sessionComplete": "Oturum Tamamlandı",
+    "duoSessionComplete": "Duo Oturumu Tamamlandı",
+    "totalScore": "Toplam Skor",
+    "peakReward": "Zirve Ödül",
+    "achievements": "Başarılar",
+    "duration": "Süre",
+    "choosePartner": "Partner Seç",
+    "emotional": "Duygusal",
+    "physical": "Fiziksel",
+    "activeCount": "{{count}} aktif",
+    "noControllers": "Kontrol yok",
+    "ready": "Hazır",
+    "axes": {
+      "entropyTolerance": "Kaos Toleransı",
+      "resolutionCraving": "Kapanış İhtiyacı",
+      "monotonyTolerance": "Tekrar Konforu",
+      "salienceSensitivity": "Dikkat Duyarlılığı",
+      "tensionAppetite": "Gerilim İştahı"
+    },
+    "controllers": {
+      "valence": { "label": "Valans", "description": "Ruh hali kutbu" },
+      "arousal": { "label": "Uyarılma", "description": "Sakin ↔ Coşkulu" },
+      "depth": { "label": "Derinlik", "description": "Yüzey ↔ Derin" },
+      "nostalgia": { "label": "Nostalji", "description": "Şimdi ↔ Anı" },
+      "tempo": { "label": "Tempo", "description": "Ritim hızı" },
+      "energy": { "label": "Enerji", "description": "Yoğunluk seviyesi" },
+      "dynamics": { "label": "Dinamik", "description": "Kontrast aralığı" },
+      "density": { "label": "Yoğunluk", "description": "Nota yoğunluğu" }
+    },
+    "duoTasks": {
+      "entropyTolerance": { "task": "Kaos Senkronu", "detail": "Biri kaosu kucaklar, diğeri düzen arar. Her iki zihnin de rezonans ettiği ortak frekansı bulun." },
+      "resolutionCraving": { "task": "Çözüm Müzakeresi", "detail": "Biri kapanış ister, diğeri direnir. Gerilimde gezinin ve her ikisinin de tamamlandığını hissettiği yeri bulun." },
+      "monotonyTolerance": { "task": "Tekrar Köprüsü", "detail": "Biri döngülerde gelişir, diğeri yenilik ister. Sabır ve keşif arasında köprü kurun." },
+      "salienceSensitivity": { "task": "Dikkat Füzyonu", "detail": "Dikkat zirveleriniz farklı. Belirginliğinizi senkronize edin — aynı anları birlikte fark edin." },
+      "tensionAppetite": { "task": "Gerilim Simyası", "detail": "Biri gerilimi daha yükseğe taşır, diğeri daha erken bırakmak ister. Simyasal denge noktasını bulun." }
+    },
+    "difficulty": { "Easy": "Kolay", "Medium": "Orta", "Hard": "Zor", "Legendary": "Efsanevi" },
+    "strengthen": {
+      "entropyTolerance": {
+        "Alchemists": "Kaosu dönüşüme kanalize edin — uyumsuzluk simyanızı beslesin",
+        "Architects": "Yapılarınızı test etmek için kontrollü kaos kullanın",
+        "Explorers": "Gürültüye daha derinden dalın — sınırınız başkalarının geri çekildiği yer",
+        "Anchors": "Kaotik dokuların duygusal paletinizi renklendirmesine izin verin",
+        "Kineticists": "Groove temelinizin üzerine poliritmik kaos katmanlayın"
+      },
+      "resolutionCraving": {
+        "Alchemists": "Ödülü maksimize edin — çözümden önce daha uzun yaylar kurun",
+        "Architects": "Karmaşık armonik ilerlemelerle kadans duyarlılığınızı mükemmelleştirin",
+        "Explorers": "Çözümü beklenmedik bağlamlarda bir sürpriz aracı olarak kullanın",
+        "Anchors": "Gecikmiş tatmin yoluyla duygusal doyumu derinleştirin",
+        "Kineticists": "Polimetrik yakınsama noktalarında ritmik çözüm bulun"
+      },
+      "monotonyTolerance": {
+        "Alchemists": "Tekrar içinde dönüşüm bulun — döngü sizi evriltiyor",
+        "Architects": "Tekrarın içinde gizlenen mikro-varyasyonları duyun",
+        "Explorers": "Tekrarın kendi tarzında bir yenilik yarattığını keşfedin",
+        "Anchors": "Tanıdık örüntülerin sizi duyguya daha derinden çapalamasına izin verin",
+        "Kineticists": "Groove'a kilitleyin — tekrar, cebin yaşadığı yerdir"
+      },
+      "salienceSensitivity": {
+        "Alchemists": "Dramatik zirvelere ve düşüşlere duyarlılığınızı artırın",
+        "Architects": "Yapısal dönüm noktalarını tespit etme keskinliğinizi artırın",
+        "Explorers": "En yeni anları anında yakalamak için kulağınızı eğitin",
+        "Anchors": "Kilit müzikal anların duygusal ağırlığına uyumlanın",
+        "Kineticists": "Yoğun poliritmik pasajlarla duyarlılığınızı zorlayın"
+      },
+      "tensionAppetite": {
+        "Alchemists": "Gerilimin ustasısınız — birikimleri daha da ileriye taşıyın",
+        "Architects": "Daha karmaşık katmanlamayla daha uzun askı yayları tasarlayın",
+        "Explorers": "Tanımadığınız armonik bölgelerde gerilim arayın",
+        "Anchors": "Gerilimin müziğe olan duygusal yatırımınızı derinleştirmesine izin verin",
+        "Kineticists": "Hızlanan yoğunlukla ritmik gerilim kurun"
+      }
+    },
+    "develop": {
+      "entropyTolerance": {
+        "Alchemists": "Düşüşü aramadan çözülmemiş kaosla daha uzun oturun",
+        "Architects": "Örüntü aramadan serbest biçimli dinlemeyi deneyin",
+        "Explorers": "Burada zaten gelişiyorsunuz — tanımadığınız türlerde kaosu keşfedin",
+        "Anchors": "Konfor alanınıza yavaş yavaş gürültülü dokular sokun",
+        "Kineticists": "Ritmik kaosu genişletmek için broken-beat ve glitch dinleyin"
+      },
+      "resolutionCraving": {
+        "Alchemists": "Gerilimi çözümsüz bırakmayı deneyin — açık sonu kucaklayın",
+        "Architects": "Geleneksel kadanslardan kaçınan ambient parçalar deneyin",
+        "Explorers": "Bir sona ihtiyaç duymayı bırakın — bazı yolculuklar kapanmaz",
+        "Anchors": "Çözülmek yerine solan müzik keşfedin",
+        "Kineticists": "Asla tam konmayan asimetrik ritimleri dinleyin"
+      },
+      "monotonyTolerance": {
+        "Alchemists": "Minimal tekno ve döngü tabanlı müzikle sabır geliştirin",
+        "Architects": "Steve Reich'ı çalışın — mimari malzeme olarak tekrar",
+        "Explorers": "Uzun drone parçalarıyla kendinize meydan okuyun",
+        "Anchors": "Tek bir tekrarlanan melodiyle oturun ve neyin değiştiğini fark edin",
+        "Kineticists": "Ritmik sabır geliştirmek için meditatif davul döngüleri deneyin"
+      },
+      "salienceSensitivity": {
+        "Alchemists": "Sadece belirgin zirveleri değil, ince kaymaları fark etme pratiği yapın",
+        "Architects": "Ambient müzikte sessiz yapısal değişiklikleri dinleyin",
+        "Explorers": "Yavaşlayın ve tanıdık alanda detaya dikkat edin",
+        "Anchors": "Dikkatinizi duygusal zirvelerden dokuya genişletin",
+        "Kineticists": "Sabırlı dikkati ödüllendiren dinamik parçalarla çalışın"
+      },
+      "tensionAppetite": {
+        "Alchemists": "Yavaş, nazik gerilim eğrilerine sahip müzik keşfedin",
+        "Architects": "Uzun süreler boyunca incelikle gerilim kuran parçalar deneyin",
+        "Explorers": "Aramak yerine gerilimin doğal olarak birikmesine izin verin",
+        "Anchors": "Sinematik birikimlerle toleransı kademeli olarak artırın",
+        "Kineticists": "Enerjiyi yavaş yavaş artıran progresif parçalar dinleyin"
+      }
+    },
+    "duoGoal": {
+      "sameFamily": "Ortak {{family}} güçlerinizi sınıra taşıyın — senkronize zirve %85 üstü",
+      "crossFamily": "{{myFamily}} × {{friendFamily}} perspektiflerini birleştirin — inanç uyumu %15 içinde"
+    },
+    "duoGoalMetric": {
+      "sameFamily": "Birleşik Zirve > %85",
+      "crossFamily": "İnanç Farkı < %15"
     }
   }
 }

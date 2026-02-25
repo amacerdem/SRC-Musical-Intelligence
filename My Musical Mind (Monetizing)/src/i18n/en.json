@@ -1004,5 +1004,203 @@
       "select": "Select",
       "secure": "Secure payment · Cancel anytime"
     }
+  },
+  "compose": {
+    "hudLabel": "Composition",
+    "title": "Compose",
+    "subtitle": "Compose music shaped by your mind",
+    "style": "Style",
+    "calm": "Calm",
+    "intense": "Intense",
+    "styleHelp": "Controls how dramatic the dynamics are — quiet vs loud, subtle vs bold",
+    "duration": "Duration",
+    "complexity": "Complexity",
+    "simple": "Simple",
+    "complex": "Complex",
+    "complexityHelp": "Controls harmonic richness — simple melodies vs dense chord structures",
+    "mindInfluence": "Mind Influence",
+    "generating": "Generating...",
+    "composeAgain": "Compose Again",
+    "compose": "Compose",
+    "output": "Output",
+    "howMindShaped": "How Your Mind Shaped This",
+    "configureAndCompose": "Configure your parameters and hit Compose",
+    "profileInfluence": "Your {{name}} profile will influence every harmonic decision",
+    "processingMind": "Processing through your mind...",
+    "generation": "{{name}} Generation #{{count}}",
+    "peakReward": "Peak reward predicted at ~{{sec}}s · Estimated PE: {{pe}}σ",
+    "shared": "Shared",
+    "share": "Share",
+    "balanced": "Balanced",
+    "moderate": "Moderate",
+    "shapesEveryNote": "shapes every note",
+    "asA": "As a",
+    "mindLeansToward": "mind naturally leans toward",
+    "mindInfluenceText": {
+      "tensionLove": "love of tension means longer build-ups and delayed resolutions",
+      "repetitionComfort": "comfort with repetition allows for deeper, evolving patterns",
+      "chaosAppetite": "chaos appetite opens up wilder harmonic choices",
+      "closureNeed": "need for closure drives satisfying resolutions throughout"
+    },
+    "familyLeans": {
+      "Alchemists": "tension-release cycles",
+      "Architects": "structural precision",
+      "Explorers": "novel sonic territories",
+      "Anchors": "emotionally resonant textures",
+      "Kineticists": "rhythmic drive"
+    },
+    "genPhases": {
+      "readingDNA": "Reading your musical DNA...",
+      "chaosAppetite": "Chaos appetite → choosing harmonic vocabulary",
+      "closureNeed": "Need for closure → how often the music resolves",
+      "tensionLove": "Tension love → designing the build-ups",
+      "surpriseSensitivity": "Surprise sensitivity → shaping dynamic range",
+      "repetitionComfort": "Repetition comfort → how deep the patterns go",
+      "building97": "Building 97 perceptual targets...",
+      "shapingTime": "Shaping the time feel across scales...",
+      "optimizing": "Optimizing for maximum pleasure...",
+      "rendering": "Rendering waveform..."
+    },
+    "beliefLabels": {
+      "consonance": "Harmony",
+      "tempo": "Rhythm",
+      "salience": "Attention",
+      "familiarity": "Memory",
+      "reward": "Pleasure"
+    }
+  },
+  "live": {
+    "title": "Live Performance",
+    "solo": "Solo",
+    "duo": "Duo",
+    "strengthenEdge": "Strengthen Your Edge",
+    "leanIntoPower": "lean into what makes you powerful.",
+    "developGround": "Develop New Ground",
+    "expandTerritory": "Expand your {{family}} mind into new territory.",
+    "startSolo": "Start Solo",
+    "startDuo": "Start Duo",
+    "endSession": "End Session",
+    "newSession": "New Session",
+    "sendingInvite": "Sending performance invite...",
+    "waitingMind": "Waiting for the other Mind",
+    "sessionComplete": "Session Complete",
+    "duoSessionComplete": "Duo Session Complete",
+    "totalScore": "Total Score",
+    "peakReward": "Peak Reward",
+    "achievements": "Achievements",
+    "duration": "Duration",
+    "choosePartner": "Choose Partner",
+    "emotional": "Emotional",
+    "physical": "Physical",
+    "activeCount": "{{count}} active",
+    "noControllers": "No controllers",
+    "ready": "Ready",
+    "axes": {
+      "entropyTolerance": "Chaos Tolerance",
+      "resolutionCraving": "Need for Closure",
+      "monotonyTolerance": "Repetition Comfort",
+      "salienceSensitivity": "Attention Sensitivity",
+      "tensionAppetite": "Tension Appetite"
+    },
+    "controllers": {
+      "valence": { "label": "Valence", "description": "Mood polarity" },
+      "arousal": { "label": "Arousal", "description": "Calm ↔ Excited" },
+      "depth": { "label": "Depth", "description": "Surface ↔ Deep" },
+      "nostalgia": { "label": "Nostalgia", "description": "Present ↔ Memory" },
+      "tempo": { "label": "Tempo", "description": "Rhythm speed" },
+      "energy": { "label": "Energy", "description": "Intensity level" },
+      "dynamics": { "label": "Dynamics", "description": "Contrast range" },
+      "density": { "label": "Density", "description": "Note density" }
+    },
+    "duoTasks": {
+      "entropyTolerance": { "task": "Chaos Sync", "detail": "One embraces chaos, the other seeks order. Find the shared frequency where both minds resonate." },
+      "resolutionCraving": { "task": "Resolution Negotiation", "detail": "One craves closure, the other resists. Navigate the tension and find where both feel complete." },
+      "monotonyTolerance": { "task": "Repetition Bridge", "detail": "One thrives in loops, the other needs novelty. Build a bridge between patience and exploration." },
+      "salienceSensitivity": { "task": "Attention Fusion", "detail": "Your attention peaks differ. Synchronize your salience — notice the same moments together." },
+      "tensionAppetite": { "task": "Tension Alchemy", "detail": "One builds tension higher, the other seeks release sooner. Find the alchemical balance point." }
+    },
+    "difficulty": { "Easy": "Easy", "Medium": "Medium", "Hard": "Hard", "Legendary": "Legendary" },
+    "strengthen": {
+      "entropyTolerance": {
+        "Alchemists": "Channel chaos into transformation — let dissonance fuel your alchemy",
+        "Architects": "Use controlled chaos to stress-test your structures",
+        "Explorers": "Push deeper into the noise — your edge is where others retreat",
+        "Anchors": "Let chaotic textures color your emotional palette",
+        "Kineticists": "Layer polyrhythmic chaos over your groove foundation"
+      },
+      "resolutionCraving": {
+        "Alchemists": "Maximize the payoff — build longer arcs before resolution",
+        "Architects": "Perfect your cadence sensitivity with complex harmonic progressions",
+        "Explorers": "Use resolution as a surprise tool in unexpected contexts",
+        "Anchors": "Deepen emotional satisfaction through delayed gratification",
+        "Kineticists": "Find rhythmic resolution in polymetric convergence points"
+      },
+      "monotonyTolerance": {
+        "Alchemists": "Find transformation within repetition — the loop evolves you",
+        "Architects": "Hear the micro-variations that hide inside repetition",
+        "Explorers": "Discover how repetition creates its own kind of novelty",
+        "Anchors": "Let familiar patterns anchor you deeper into feeling",
+        "Kineticists": "Lock into the groove — repetition is where pocket lives"
+      },
+      "salienceSensitivity": {
+        "Alchemists": "Amplify your sensitivity to dramatic peaks and drops",
+        "Architects": "Sharpen your detection of structural turning points",
+        "Explorers": "Train your ear to catch the most novel moments instantly",
+        "Anchors": "Attune to the emotional weight of key musical moments",
+        "Kineticists": "Push your sensitivity with dense polyrhythmic passages"
+      },
+      "tensionAppetite": {
+        "Alchemists": "You are the master of tension — push build-ups even further",
+        "Architects": "Engineer longer suspension arcs with more complex layering",
+        "Explorers": "Seek tension in unfamiliar harmonic territories",
+        "Anchors": "Let tension deepen your emotional investment in the music",
+        "Kineticists": "Build rhythmic tension through accelerating density"
+      }
+    },
+    "develop": {
+      "entropyTolerance": {
+        "Alchemists": "Sit with unresolved chaos longer before seeking the drop",
+        "Architects": "Try free-form listening without seeking patterns",
+        "Explorers": "You already thrive here — explore chaos in unfamiliar genres",
+        "Anchors": "Gradually introduce noisy textures into your comfort zone",
+        "Kineticists": "Listen to broken-beat and glitch to expand rhythmic chaos"
+      },
+      "resolutionCraving": {
+        "Alchemists": "Practice leaving tension unresolved — embrace the open ending",
+        "Architects": "Try ambient pieces that avoid traditional cadences",
+        "Explorers": "Let go of needing an ending — some journeys don't close",
+        "Anchors": "Explore music that fades rather than resolves",
+        "Kineticists": "Listen to asymmetric rhythms that never fully land"
+      },
+      "monotonyTolerance": {
+        "Alchemists": "Build patience with minimal techno and loop-based music",
+        "Architects": "Study Steve Reich — repetition as architectural material",
+        "Explorers": "Challenge yourself with long drone pieces",
+        "Anchors": "Sit with a single repeated melody and notice what shifts",
+        "Kineticists": "Try meditative drum loops to build rhythmic patience"
+      },
+      "salienceSensitivity": {
+        "Alchemists": "Practice noticing subtle shifts, not just the obvious peaks",
+        "Architects": "Listen for quiet structural changes in ambient music",
+        "Explorers": "Slow down and attend to detail within familiar territory",
+        "Anchors": "Expand your attention beyond emotional peaks to texture",
+        "Kineticists": "Train with dynamic pieces that reward patient attention"
+      },
+      "tensionAppetite": {
+        "Alchemists": "Explore music with slow, gentle tension curves",
+        "Architects": "Try pieces that build tension subtly over long durations",
+        "Explorers": "Let tension accumulate naturally instead of seeking it",
+        "Anchors": "Gradually increase tolerance with cinematic build-ups",
+        "Kineticists": "Listen to progressive pieces that build energy slowly"
+      }
+    },
+    "duoGoal": {
+      "sameFamily": "Push your shared {{family}} strengths to the limit — synchronized peak above 85%",
+      "crossFamily": "Fuse {{myFamily}} × {{friendFamily}} perspectives — achieve belief alignment within 15%"
+    },
+    "duoGoalMetric": {
+      "sameFamily": "Combined Peak > 85%",
+      "crossFamily": "Belief Delta < 15%"
+    }
   }
 }
