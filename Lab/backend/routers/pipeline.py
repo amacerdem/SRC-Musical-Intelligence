@@ -6,7 +6,7 @@ from datetime import datetime
 from typing import Any, Dict
 
 import numpy as np
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, HTTPException, Query, Request
 from fastapi.responses import JSONResponse, Response
 from pydantic import BaseModel
 
@@ -152,6 +152,49 @@ async def get_h3(experiment_id: str):
         content=buf,
         media_type="application/octet-stream",
         headers={"X-H3-Count": str(tuples.shape[0])},
+    )
+
+
+@router.get("/results/{experiment_id}/h3/registry")
+async def get_h3_registry(experiment_id: str):
+    """Return just the H³ tuple addresses (N×4) as Int32 binary."""
+    _require_experiment(experiment_id)
+    tuples = storage.load_dataset(experiment_id, "h3/tuples")  # (N, 4) int32
+    return Response(
+        content=tuples.astype(np.int32).tobytes(),
+        media_type="application/octet-stream",
+        headers={"X-H3-Count": str(tuples.shape[0])},
+    )
+
+
+@router.get("/results/{experiment_id}/h3/select")
+async def get_h3_select(
+    experiment_id: str,
+    indices: str = Query(..., description="Comma-separated row indices into h3/tuples"),
+):
+    """Return selected H³ tuple data rows as Float32 (K×T).
+
+    Only fetches the requested rows, keeping wire size small.
+    """
+    _require_experiment(experiment_id)
+    idx_list = [int(i) for i in indices.split(",") if i.strip()]
+    if not idx_list:
+        raise HTTPException(status_code=400, detail="No indices provided")
+
+    data = storage.load_dataset(experiment_id, "h3/data")  # (N, T) float32
+    n_tuples = data.shape[0]
+    for idx in idx_list:
+        if idx < 0 or idx >= n_tuples:
+            raise HTTPException(status_code=400, detail=f"Index {idx} out of range [0, {n_tuples})")
+
+    selected = data[idx_list, :]  # (K, T)
+    return Response(
+        content=selected.astype(np.float32).tobytes(),
+        media_type="application/octet-stream",
+        headers={
+            "X-H3-Count": str(len(idx_list)),
+            "X-H3-Frames": str(data.shape[1]),
+        },
     )
 
 

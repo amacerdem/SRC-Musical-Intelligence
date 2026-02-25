@@ -51,7 +51,7 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
-    expose_headers=["X-Relay-Dim", "X-H3-Count", "X-Mel-Bins", "X-Frames"],
+    expose_headers=["X-Relay-Dim", "X-H3-Count", "X-H3-Frames", "X-Mel-Bins", "X-Frames"],
 )
 
 # Import and mount routers
