@@ -47,6 +47,11 @@ _X_L4L5_START = 33
 _X_L4L5_END = 41
 
 
+def _wsig(x: Tensor) -> Tensor:
+    """Wide sigmoid — full [0, 1] dynamic range (gain=5, center=0.35)."""
+    return (1.0 + torch.exp(-5.0 * (x - 0.35))).reciprocal()
+
+
 def compute_temporal_integration(
     h3_features: Dict[Tuple[int, int, int, int], Tensor],
     r3_features: Tensor,
@@ -101,7 +106,7 @@ def compute_temporal_integration(
     # vmPFC value computation (Koelsch 2014). NAcc/caudate reward signal
     # (Menon & Levitin 2005). The interaction (E2) contributes most because
     # aesthetic response is supra-additive.
-    m0 = torch.sigmoid(
+    m0 = _wsig(
         0.35 * e2 * consonance.clamp(min=0.1)
         + 0.30 * e0 * e1
         + 0.20 * pleasantness * amplitude
@@ -116,7 +121,7 @@ def compute_temporal_integration(
     # modulated by connectivity strength.
     spectral_temporal_coupling = e0 * e1  # multiplicative interaction
 
-    m1 = torch.sigmoid(
+    m1 = _wsig(
         0.40 * spectral_temporal_coupling
         + 0.30 * e3 * e2.clamp(min=0.1)
         + 0.30 * x_l4l5_mean * consonance

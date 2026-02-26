@@ -25,6 +25,11 @@ _CLARITY = 15         # clarity (C group, was "spectral_flatness" inverted)
 _SPECTRAL_AUTO = 17   # spectral_autocorrelation (C group, replaces x_l5l7)
 
 
+def _wsig(x: Tensor) -> Tensor:
+    """Wide sigmoid — full [0, 1] dynamic range (gain=5, center=0.35)."""
+    return (1.0 + torch.exp(-5.0 * (x - 0.35))).reciprocal()
+
+
 def compute_extraction(
     r3_features: Tensor,
     h3_features: Dict[Tuple[int, int, int, int], Tensor],
@@ -65,7 +70,7 @@ def compute_extraction(
     #     Spectral autocorrelation captures cross-band binding.
     #     Coefficients: 0.40 + 0.30 + 0.30 = 1.0
     tonalness_val = h3(14, 2, 0, 2)   # tonalness at gamma-rate
-    e0 = torch.sigmoid(
+    e0 = _wsig(
         0.40 * tonalness_val * trist_balance   # tonal identity
         + 0.30 * trist_balance                 # spectral envelope
         + 0.30 * r3(_SPECTRAL_AUTO)            # cross-band binding
@@ -79,7 +84,7 @@ def compute_extraction(
     #     Coefficients: 0.40 + 0.30 + 0.30 = 1.0
     tonalness_mean = h3(14, 5, 1, 0)  # tonalness mean at alpha-beta
     warmth_mean = h3(12, 5, 1, 0)     # warmth mean at alpha-beta
-    e1 = torch.sigmoid(
+    e1 = _wsig(
         0.40 * r3(_CLARITY) * tonalness_mean   # template clarity
         + 0.30 * warmth_mean                   # timbre richness
         + 0.30 * r3(_SPECTRAL_AUTO)            # spectral coherence
@@ -92,7 +97,7 @@ def compute_extraction(
     #     Loudness context modulates overall activation level.
     #     Coefficients: 0.40 + 0.30 + 0.30 = 1.0
     loudness_mean = h3(10, 8, 1, 0)    # loudness mean at syllable-rate
-    e2 = torch.sigmoid(
+    e2 = _wsig(
         0.40 * (1.0 - r3(_INHARM)) * r3(_TONALNESS)  # harmonic + tonal
         + 0.30 * trist_balance                         # spectral envelope
         + 0.30 * loudness_mean                         # intensity context

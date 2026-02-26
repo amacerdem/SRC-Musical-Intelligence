@@ -37,6 +37,11 @@ _TONALNESS_MEAN = (14, 3, 1, 0)
 _STUMPF = 3
 
 
+def _wsig(x: Tensor) -> Tensor:
+    """Wide sigmoid — full [0, 1] dynamic range (gain=5, center=0.35)."""
+    return (1.0 + torch.exp(-5.0 * (x - 0.35))).reciprocal()
+
+
 def compute_extraction(
     r3_features: Tensor,
     h3_features: Dict[Tuple[int, int, int, int], Tensor],
@@ -63,7 +68,7 @@ def compute_extraction(
     # E0: Early Detection (pre-attentive, universal)
     # Roughness * pitch clarity + psychoacoustic dissonance + (1 - consonance)
     # Crespo-Bojorque 2018: early MMN 152-258ms universal across expertise
-    e0 = torch.sigmoid(
+    e0 = _wsig(
         0.40 * roughness_h0 * tonalness_mean
         + 0.30 * sethares_h0
         + 0.30 * (1.0 - helmholtz_h0)
@@ -73,7 +78,7 @@ def compute_extraction(
     # Detection * pitch salience + roughness deviation from context
     # Fishman 2001: A1 oscillatory activity correlates with dissonance
     roughness_dev = torch.abs(roughness_h0 - roughness_mean)
-    e1 = torch.sigmoid(
+    e1 = _wsig(
         0.50 * e0 * stumpf
         + 0.50 * roughness_dev
     )

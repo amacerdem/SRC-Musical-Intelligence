@@ -34,6 +34,11 @@ _SPECTRAL_AUTO_H3 = (17, 3, 0, 2)
 _HELMHOLTZ_MEAN = (2, 3, 1, 2)
 
 
+def _wsig(x: Tensor) -> Tensor:
+    """Wide sigmoid — full [0, 1] dynamic range (gain=5, center=0.35)."""
+    return (1.0 + torch.exp(-5.0 * (x - 0.35))).reciprocal()
+
+
 def compute_cognitive_present(
     h3_features: Dict[Tuple[int, int, int, int], Tensor],
     e_outputs: Tuple[Tensor, Tensor, Tensor],
@@ -64,7 +69,7 @@ def compute_cognitive_present(
     # P0: Roughness detection — spectral clarity modulates roughness quality
     # Spectral Clarity Index: (1-inharmonicity)*tristimulus1 + tonalness
     # Fishman 2001: A1 phase-locked oscillatory activity for roughness
-    p0 = torch.sigmoid(
+    p0 = _wsig(
         0.30 * roughness_h0
         + 0.25 * (1.0 - inharm_h0) * trist1_h0
         + 0.25 * tonalness_mean
@@ -77,7 +82,7 @@ def compute_cognitive_present(
 
     # P2: Behavioral response — detection + roughness + consonance context
     # Crespo-Bojorque 2018: behavioral accuracy varies with expertise
-    p2 = torch.sigmoid(
+    p2 = _wsig(
         0.40 * m0 + 0.30 * p0 + 0.30 * helmholtz_mean
     )
 

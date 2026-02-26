@@ -26,10 +26,7 @@ import { getPrimaryObservation } from "@/data/m3-observations";
 import { getNextStage } from "@/data/m3-stages";
 import { levelToOrganismStage } from "@/types/m3";
 import { useActiveIdentity } from "@/hooks/useActiveIdentity";
-import { DimensionRadar } from "@/components/mind/DimensionRadar";
-import { DimensionPanel } from "@/components/mind/DimensionPanel";
-import { useDimensions } from "@/hooks/useDimensions";
-import { getPersonaDimensions } from "@/data/persona-dimensions";
+import { DimensionSunburst } from "@/components/mind/DimensionSunburst";
 
 const BELIEF_NAMES = ["consonance", "tempo", "salience", "familiarity", "reward"] as const;
 const BELIEF_LABELS: Record<string, string> = {
@@ -151,7 +148,7 @@ export function Dashboard() {
           {/* ═ LEFT COLUMN (3 cols): Radar + DNA + Signals ═════ */}
           <div className="col-span-3 flex flex-col gap-3 min-h-0">
 
-            {/* 6D Dimension Radar (primary) */}
+            {/* Dimension Sunburst — 6D / 12D / 24D concentric rings */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -159,19 +156,9 @@ export function Dashboard() {
               className="spatial-card p-3 flex flex-col items-center flex-1 min-h-0"
             >
               <div className="w-full h-full flex items-center justify-center">
-                <DimensionRadar
-                  profile={getPersonaDimensions(m3Mind?.activePersonaId ?? mind?.personaId ?? 1)}
-                  color={color}
-                  coloredAxes
-                  size={280}
-                />
+                <DimensionSunburst color={color} size={300} />
               </div>
             </motion.div>
-
-            {/* Dimension legend */}
-            <div className="px-3 py-2 flex-shrink-0 -mt-1">
-              <DimensionPanel accentColor={color} compact />
-            </div>
 
             {/* Belief Signals */}
             <motion.div variants={fadeIn} initial="initial" animate="animate" className="spatial-card p-3 flex-shrink-0">

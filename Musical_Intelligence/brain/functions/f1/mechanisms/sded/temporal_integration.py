@@ -17,6 +17,11 @@ import torch
 from torch import Tensor
 
 
+def _wsig(x: Tensor) -> Tensor:
+    """Wide sigmoid — full [0, 1] dynamic range (gain=5, center=0.35)."""
+    return (1.0 + torch.exp(-5.0 * (x - 0.35))).reciprocal()
+
+
 def compute_temporal_integration(
     e_outputs: Tuple[Tensor, Tensor, Tensor],
 ) -> Tuple[Tensor]:
@@ -34,6 +39,6 @@ def compute_temporal_integration(
     # Integrates early detection (0.60) with MMN deviation (0.40).
     # Conservative sigmoid: max input ~1.0, output ~[0.50, 0.73].
     # Bidelman 2013: brainstem encodes consonance hierarchy innately
-    m0 = torch.sigmoid(0.60 * e0 + 0.40 * e1)
+    m0 = _wsig(0.60 * e0 + 0.40 * e1)
 
     return (m0,)

@@ -31,6 +31,11 @@ _PITCH_SAL = 39       # pitch_salience (replaces dissolved x_l4l5)
 _EPS = 1e-6
 
 
+def _wsig(x: Tensor) -> Tensor:
+    """Wide sigmoid — full [0, 1] dynamic range (gain=5, center=0.35)."""
+    return (1.0 + torch.exp(-5.0 * (x - 0.35))).reciprocal()
+
+
 def compute_extraction(
     r3_features: Tensor,
     h3_features: Dict[Tuple[int, int, int, int], Tensor],
@@ -59,7 +64,7 @@ def compute_extraction(
     # E0: Onset Posterior — posterior AC dominance at sequence onset
     #     Rupp 2022: posterior regions process onset; Patterson 2002: pitch in HG
     #     Coefficients: 0.40 + 0.35 + 0.25 = 1.0
-    e0 = torch.sigmoid(
+    e0 = _wsig(
         0.40 * h3(_ONSET, 0, 0, 2)          # onset_strength instant
         + 0.35 * h3(_SPECTRAL_FLUX, 3, 0, 2)  # spectral_flux at ~100ms
         + 0.25 * h3(_AMPLITUDE, 3, 0, 2)    # amplitude at ~100ms
@@ -68,7 +73,7 @@ def compute_extraction(
     # E1: Sequence Anterior — anterior AC activation for contour tracking
     #     Rupp 2022: anterior regions process subsequent notes & pitch variation
     #     Coefficients: 0.35 + 0.35 + 0.30 = 1.0
-    e1 = torch.sigmoid(
+    e1 = _wsig(
         0.35 * h3(_SHARPNESS, 4, 8, 0)      # sharpness velocity ~125ms
         + 0.35 * h3(_PITCH_HEIGHT, 4, 18, 2)  # pitch_height trend ~125ms
         + 0.30 * h3(_PITCH_HEIGHT, 3, 0, 2)  # pitch_height value ~100ms
@@ -77,7 +82,7 @@ def compute_extraction(
     # E2: Contour Complexity — melodic unpredictability
     #     Briley 2013: IRN sources show spectral complexity sensitivity
     #     Coefficients: 0.35 + 0.35 + 0.30 = 1.0
-    e2 = torch.sigmoid(
+    e2 = _wsig(
         0.35 * h3(_PITCH_HEIGHT, 4, 18, 2)   # pitch_height trend ~125ms
         + 0.35 * h3(_SHARPNESS, 3, 2, 2)     # sharpness std ~100ms
         + 0.30 * h3(_PITCH_SAL, 3, 8, 0)     # pitch_salience velocity ~100ms

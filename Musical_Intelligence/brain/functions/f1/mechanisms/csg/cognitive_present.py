@@ -44,6 +44,11 @@ _LOUDNESS_MEAN_1S = (10, 16, 1, 2)
 _PLEAS = 4
 
 
+def _wsig(x: Tensor) -> Tensor:
+    """Wide sigmoid — full [0, 1] dynamic range (gain=5, center=0.35)."""
+    return (1.0 + torch.exp(-5.0 * (x - 0.35))).reciprocal()
+
+
 def compute_cognitive_present(
     r3_features: Tensor,
     h3_features: Dict[Tuple[int, int, int, int], Tensor],
@@ -79,7 +84,7 @@ def compute_cognitive_present(
 
     # P0: Salience network — attention-gated consonance salience
     # Koelsch: dissonant -> amygdala/hippocampus; consonant -> AI/HG/NAc
-    p0 = torch.sigmoid(
+    p0 = _wsig(
         0.30 * m0 + 0.25 * spectral_auto_h3
         + 0.25 * loudness_h3 + 0.20 * energy_vel
     )
@@ -94,7 +99,7 @@ def compute_cognitive_present(
 
     # P2: Sensory load — processing demand
     # Bravo 2017: intermediate dissonance -> increased HG load
-    p2 = torch.sigmoid(
+    p2 = _wsig(
         0.30 * ambiguity + 0.25 * sethares_vel
         + 0.25 * spectral_auto_h8 + 0.20 * loudness_mean_1s
     )

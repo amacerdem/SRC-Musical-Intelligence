@@ -26,6 +26,11 @@ _TRIST2 = 19          # tristimulus2
 _TRIST3 = 20          # tristimulus3
 
 
+def _wsig(x: Tensor) -> Tensor:
+    """Wide sigmoid — full [0, 1] dynamic range (gain=5, center=0.35)."""
+    return (1.0 + torch.exp(-5.0 * (x - 0.35))).reciprocal()
+
+
 def compute_cognitive_present(
     r3_features: Tensor,
     h3_features: Dict[Tuple[int, int, int, int], Tensor],
@@ -78,7 +83,7 @@ def compute_cognitive_present(
     tonalness_mean = h3(14, 5, 1, 0)   # tonalness mean at alpha-beta
     trist_stack = torch.stack([r3(_TRIST1), r3(_TRIST2), r3(_TRIST3)], dim=-1)
     trist_balance = 1.0 - torch.std(trist_stack, dim=-1, correction=0)
-    p1 = torch.sigmoid(
+    p1 = _wsig(
         0.50 * tonalness_mean
         + 0.50 * trist_balance
     )
@@ -87,6 +92,6 @@ def compute_cognitive_present(
     #     Spectral change entropy proxies for structural transitions.
     #     High entropy = uncertain spectral evolution = boundary approaching.
     spectral_flux_entropy = h3(21, 8, 13, 0)  # spectral flux entropy at 300ms
-    p2 = torch.sigmoid(spectral_flux_entropy)
+    p2 = _wsig(spectral_flux_entropy)
 
     return p0, p1, p2

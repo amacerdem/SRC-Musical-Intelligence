@@ -24,10 +24,7 @@ import { pageTransition, staggerChildren, slideUp, cinematicReveal } from "@/des
 import { useM3Store } from "@/stores/useM3Store";
 import { FAMILY_MORPHOLOGY, levelToOrganismStage, GENE_NAMES, GENE_COLORS } from "@/types/m3";
 import type { FamilyMorphology } from "@/canvas/mind-organism";
-import { DimensionRadar } from "@/components/mind/DimensionRadar";
-import { DimensionPanel } from "@/components/mind/DimensionPanel";
-import { getPersonaDimensions } from "@/data/persona-dimensions";
-import { useDimensions } from "@/hooks/useDimensions";
+import { DimensionSunburst } from "@/components/mind/DimensionSunburst";
 import { CharacterAvatar } from "@/svg/characters";
 
 export function PersonaDetail() {
@@ -165,25 +162,10 @@ export function PersonaDetail() {
               <div className="sticky top-24">
                 <PersonaSidebar color={persona.color} />
 
-                {/* 6D Dimension Radar */}
-                <div className="mt-6 p-4 rounded-xl" style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.04)" }}>
-                  <span className="hud-label mb-3 block">{t("dimensions.title", "Dimensions")}</span>
-                  <div className="flex justify-center">
-                    <DimensionRadar
-                      profile={getPersonaDimensions(persona.id)}
-                      color={persona.color}
-                      coloredAxes
-                      size={200}
-                    />
-                  </div>
+                {/* Dimension Sunburst — 6D / 12D / 24D concentric rings */}
+                <div className="mt-6">
+                  <DimensionSunburst color={persona.color} size={240} />
                 </div>
-
-                {/* Dimension Layers (tier-gated) */}
-                {isMyPersona && (
-                  <div className="mt-4">
-                    <DimensionPanel accentColor={persona.color} compact />
-                  </div>
-                )}
 
                 {/* Gene DNA — 5 genes */}
                 <div className="mt-6 p-4 rounded-xl" style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.04)" }}>

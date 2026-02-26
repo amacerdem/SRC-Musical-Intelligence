@@ -85,6 +85,11 @@ _X_L4L5_START = 33
 _X_L4L5_END = 41
 
 
+def _wsig(x: Tensor) -> Tensor:
+    """Wide sigmoid — full [0, 1] dynamic range (gain=5, center=0.35)."""
+    return (1.0 + torch.exp(-5.0 * (x - 0.35))).reciprocal()
+
+
 def compute_extraction(
     h3_features: Dict[Tuple[int, int, int, int], Tensor],
     r3_features: Tensor,
@@ -165,7 +170,7 @@ def compute_extraction(
     # Consonance quality of harmonic content. A-group features at micro and
     # integration horizons. Heschl's gyrus / STG spectral encoding.
     # Blood & Zatorre 2001: pleasure correlates with consonance quality.
-    e0 = torch.sigmoid(
+    e0 = _wsig(
         0.30 * helm_val * (1.0 - rough_val).clamp(min=0.1)
         + 0.30 * helm_mean * pleas_val
         + 0.20 * consonance
@@ -175,7 +180,7 @@ def compute_extraction(
     # -- E1: Temporal Integrity --
     # Forward flow quality. Energy dynamics and change rates at phrase horizon.
     # Koelsch 2014: temporal expectation resolution engages reward circuit.
-    e1 = torch.sigmoid(
+    e1 = _wsig(
         0.30 * spec_change_mean * energy_vel.clamp(min=0.1)
         + 0.30 * temporal_flow
         + 0.20 * onset * amplitude
@@ -191,7 +196,7 @@ def compute_extraction(
     temporal_quality = 0.50 * e1 + 0.50 * temporal_flow
     interaction = spectral_quality * temporal_quality  # supra-additive
 
-    e2 = torch.sigmoid(
+    e2 = _wsig(
         0.50 * interaction
         + 0.30 * pleas_val * spec_change_mean.clamp(min=0.1)
         + 0.20 * (1.0 - rough_mean) * energy_vel.clamp(min=0.1)
@@ -201,7 +206,7 @@ def compute_extraction(
     # Functional coupling mediating the spectral-temporal interaction.
     # x_l4l5 aesthetic binding signal proxies inter-region connectivity.
     # Kim 2019: vmPFC-IFG connectivity is the interaction locus (T=6.852).
-    e3 = torch.sigmoid(
+    e3 = _wsig(
         0.35 * binding_val * interaction.clamp(min=0.1)
         + 0.35 * binding_period * x_l4l5_mean
         + 0.30 * e2 * consonance.clamp(min=0.1)

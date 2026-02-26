@@ -34,6 +34,11 @@ _PLEAS_VEL = (4, 3, 8, 2)
 _PLEAS_MEAN_1S = (4, 16, 1, 2)
 
 
+def _wsig(x: Tensor) -> Tensor:
+    """Wide sigmoid — full [0, 1] dynamic range (gain=5, center=0.35)."""
+    return (1.0 + torch.exp(-5.0 * (x - 0.35))).reciprocal()
+
+
 def compute_extraction(
     h3_features: Dict[Tuple[int, int, int, int], Tensor],
 ) -> Tuple[Tensor, Tensor, Tensor]:
@@ -59,13 +64,13 @@ def compute_extraction(
 
     # E0: Salience activation — ACC/AI driven by dissonance
     # Bravo 2017: strong dissonance -> ACC/AI, d=5.16
-    e0 = torch.sigmoid(
+    e0 = _wsig(
         0.40 * dissonance + 0.35 * roughness_h0 + 0.25 * loud_entropy
     )
 
     # E1: Sensory evidence — Heschl's gyrus intermediate processing
     # Bravo 2017: intermediate dissonance -> HG load, d=1.9
-    e1 = torch.sigmoid(
+    e1 = _wsig(
         0.40 * ambiguity + 0.35 * sethares_h3 + 0.25 * roughness_std
     )
 

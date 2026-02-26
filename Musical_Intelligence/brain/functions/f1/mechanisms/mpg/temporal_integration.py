@@ -31,6 +31,11 @@ _ALPHA = 0.70         # posterior weighting
 _BETA = 0.30          # anterior weighting
 
 
+def _wsig(x: Tensor) -> Tensor:
+    """Wide sigmoid — full [0, 1] dynamic range (gain=5, center=0.35)."""
+    return (1.0 + torch.exp(-5.0 * (x - 0.35))).reciprocal()
+
+
 def compute_temporal_integration(
     r3_features: Tensor,
     h3_features: Dict[Tuple[int, int, int, int], Tensor],
@@ -66,7 +71,7 @@ def compute_temporal_integration(
 
     # M1: Posterior Activity — onset-locked processing in posterior AC
     #     Briley 2013: medial HG responds to onset/pitch extraction
-    m1 = torch.sigmoid(
+    m1 = _wsig(
         0.40 * h3(_ONSET, 0, 0, 2)           # onset_strength instant
         + 0.30 * h3(_SPECTRAL_FLUX, 0, 0, 2)  # spectral_flux instant
         + 0.30 * r3(_AMPLITUDE)               # raw amplitude energy
@@ -74,7 +79,7 @@ def compute_temporal_integration(
 
     # M2: Anterior Activity — contour processing in anterior AC
     #     Norman-Haignere 2013: anterior nonprimary AC for pitch sensitivity
-    m2 = torch.sigmoid(
+    m2 = _wsig(
         0.35 * h3(_SHARPNESS, 4, 8, 0)       # sharpness velocity ~125ms
         + 0.35 * h3(_PITCH_HEIGHT, 3, 0, 2)   # pitch_height value ~100ms
         + 0.30 * e2                            # contour_complexity from E-layer

@@ -68,6 +68,11 @@ _TRISTIMULUS2 = 19
 _TRISTIMULUS3 = 20
 
 
+def _wsig(x: Tensor) -> Tensor:
+    """Wide sigmoid — full [0, 1] dynamic range (gain=5, center=0.35)."""
+    return (1.0 + torch.exp(-5.0 * (x - 0.35))).reciprocal()
+
+
 def compute_cognitive_present(
     h3_features: Dict[Tuple[int, int, int, int], Tensor],
     r3_features: Tensor,
@@ -144,7 +149,7 @@ def compute_cognitive_present(
     # -- P0: Spectral Quality --
     # Present-time spectral encoding quality. Consonance x timbral richness.
     # STG + Heschl's gyrus spectral encoding (Koelsch 2014).
-    p0 = torch.sigmoid(
+    p0 = _wsig(
         0.35 * e0 * timbral_richness.clamp(min=0.1)
         + 0.30 * consonance * tonalness
         + 0.20 * warmth * tonal_mean
@@ -155,7 +160,7 @@ def compute_cognitive_present(
     # Present-time temporal structure quality. Temporal integrity (E1)
     # combined with interaction strength (M1) and energy dynamics.
     # Forward flow coherence drives reward circuit engagement.
-    p1 = torch.sigmoid(
+    p1 = _wsig(
         0.35 * e1 * m1.clamp(min=0.1)
         + 0.30 * m0 * amplitude.clamp(min=0.1)
         + 0.20 * e2 * loudness
@@ -169,7 +174,7 @@ def compute_cognitive_present(
     # signal routed to aesthetic_judgment belief.
     # Kim 2019: both dimensions required (disrupting either -> ~35%).
     # Blood & Zatorre 2001: vmPFC activation = aesthetic response.
-    p2 = torch.sigmoid(
+    p2 = _wsig(
         0.40 * p0 * p1  # spectral x temporal interaction
         + 0.30 * e2 * m0.clamp(min=0.1)
         + 0.30 * m1 * consonance
