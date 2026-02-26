@@ -57,6 +57,9 @@ class ExperimentResult:
     neuro: np.ndarray = field(default_factory=lambda: np.empty(0))  # (T, 4)
     reward: np.ndarray = field(default_factory=lambda: np.empty(0))  # (T,)
     psi: Dict[str, np.ndarray] = field(default_factory=dict)     # domain → (T, D)
+    dim_6d: np.ndarray = field(default_factory=lambda: np.empty(0))   # (T, 6)
+    dim_12d: np.ndarray = field(default_factory=lambda: np.empty(0))  # (T, 12)
+    dim_24d: np.ndarray = field(default_factory=lambda: np.empty(0))  # (T, 24)
 
 
 # ---------------------------------------------------------------------------
@@ -322,6 +325,11 @@ class MIPipeline:
         from .beliefs import compute_beliefs
         beliefs_131 = compute_beliefs(relays, self.nuclei)  # (T, 131)
 
+        # Phase 8: Hierarchical dimensions (131 → 24 → 12 → 6)
+        from Musical_Intelligence.brain.dimensions import DimensionInterpreter
+        dim_interp = DimensionInterpreter()
+        dim_result = dim_interp.interpret_numpy(beliefs_131)
+
         # Ψ³ domains
         psi_dict = {
             "affect": psi.affect[0].cpu().numpy(),
@@ -346,6 +354,9 @@ class MIPipeline:
             neuro=neuro[0].cpu().numpy(),               # (T, 4)
             reward=reward[0].cpu().numpy(),             # (T,)
             psi=psi_dict,
+            dim_6d=dim_result["dim_6d"],                # (T, 6)
+            dim_12d=dim_result["dim_12d"],              # (T, 12)
+            dim_24d=dim_result["dim_24d"],              # (T, 24)
         )
 
     def _assemble_tensor(self, outputs: Dict[str, Tensor]) -> Tensor:

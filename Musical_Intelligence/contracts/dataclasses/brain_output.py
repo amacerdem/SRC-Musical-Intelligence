@@ -1,9 +1,12 @@
-"""BrainOutput and PsiState dataclasses for C³ cognitive architecture.
+"""BrainOutput, PsiState, and DimensionState dataclasses for C³.
 
 BrainOutput is the top-level output of the BrainOrchestrator, containing
 four channels: tensor, RAM, neuro, and Psi state.
 
 PsiState holds the 6 cognitive domains produced by the PsiInterpreter.
+
+DimensionState holds hierarchical 6D/12D/24D aggregations of 131 beliefs
+produced by the DimensionInterpreter.
 """
 from __future__ import annotations
 
@@ -49,6 +52,39 @@ class PsiState:
             t = getattr(self, name)
             dims.append(f"{name}={tuple(t.shape)}")
         return f"PsiState({', '.join(dims)})"
+
+
+class DimensionState:
+    """Hierarchical dimension state — 131 beliefs at 3 zoom levels.
+
+    Binary tree: 6D (psychology) → 12D (cognition) → 24D (neuroscience).
+    Each node is the mean of its child beliefs.
+
+    Attributes:
+        psychology:   ``(B, T, 6)``  — experiential dimensions.
+        cognition:    ``(B, T, 12)`` — music cognition dimensions.
+        neuroscience: ``(B, T, 24)`` — neuroscience dimensions.
+    """
+
+    __slots__ = ("psychology", "cognition", "neuroscience")
+
+    def __init__(
+        self,
+        psychology: Tensor,
+        cognition: Tensor,
+        neuroscience: Tensor,
+    ) -> None:
+        self.psychology = psychology
+        self.cognition = cognition
+        self.neuroscience = neuroscience
+
+    def __repr__(self) -> str:
+        return (
+            f"DimensionState("
+            f"psychology={tuple(self.psychology.shape)}, "
+            f"cognition={tuple(self.cognition.shape)}, "
+            f"neuroscience={tuple(self.neuroscience.shape)})"
+        )
 
 
 class BrainOutput:

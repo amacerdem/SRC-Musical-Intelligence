@@ -1,0 +1,1206 @@
+{
+  "common": {
+    "back": "Geri",
+    "send": "G\u00f6nder",
+    "you": "Sen",
+    "justNow": "Az \u00f6nce",
+    "hoursAgo": "{{h}} saat \u00f6nce",
+    "daysAgo": "{{d}} g\u00fcn \u00f6nce",
+    "of": "/",
+    "ofAllMinds": "t\u00fcm zihinlerin",
+    "famous": "\u00dcnl\u00fc",
+    "listeners": "dinleyici",
+    "ofListeners": "Dinleyicilerin %{{pct}}'i",
+    "stage": "A\u015fama {{n}}",
+    "connect": "Ba\u011fla"
+  },
+  "nav": {
+    "home": "Ana Sayfa",
+    "mind": "Zihnim",
+    "field": "Rezonans",
+    "discover": "Ke\u015ffet",
+    "friends": "Arkada\u015flar",
+    "ranks": "S\u0131ralama",
+    "info": "Bilgi",
+    "search": "Zihinleri, personalar\u0131 ara..."
+  },
+  "landing": {
+    "subtitle": "M\u00dcZ\u0130KAL Z\u0130HN\u0130M",
+    "cta": "Zihnini Ke\u015ffet",
+    "ctaSub": "Motorun arkas\u0131ndaki zihni ke\u015ffet",
+    "copyright": "\u00a9 2025 Ama\u00e7 Erdem. T\u00fcm haklar\u0131 sakl\u0131d\u0131r.",
+    "collaboration": "\u0130\u015f birli\u011fiyle",
+    "signIn": "Giriş Yap",
+    "signUp": "Kayıt Ol"
+  },
+  "families": {
+    "Alchemists": "Simyac\u0131lar",
+    "Architects": "Mimarlar",
+    "Explorers": "Ka\u015fifler",
+    "Anchors": "\u00c7apalar",
+    "Kineticists": "Kinetikler"
+  },
+  "stages": {
+    "1": "Uyan\u0131\u015f",
+    "2": "Rezonans",
+    "3": "A\u015fk\u0131n"
+  },
+  "compatibility": {
+    "soulmate": "Ruh E\u015fi",
+    "resonant": "Rezonans",
+    "complementary": "Tamamlay\u0131c\u0131",
+    "contrasting": "Z\u0131t"
+  },
+  "axes": {
+    "entropyTolerance": "Entropi Tolerans\u0131",
+    "resolutionCraving": "\u00c7\u00f6z\u00fcm \u0130htiyac\u0131",
+    "monotonyTolerance": "Monotonluk Tolerans\u0131",
+    "salienceSensitivity": "Belirginlik Duyarl\u0131l\u0131\u011f\u0131",
+    "tensionAppetite": "Gerilim \u0130\u015ftah\u0131",
+    "short": {
+      "entropyTolerance": "ENT",
+      "resolutionCraving": "\u00c7\u00d6Z",
+      "monotonyTolerance": "MON",
+      "salienceSensitivity": "BLR",
+      "tensionAppetite": "GER"
+    },
+    "profileShort": {
+      "entropyTolerance": "Kaos",
+      "resolutionCraving": "Kapan\u0131\u015f",
+      "monotonyTolerance": "Tekrar",
+      "salienceSensitivity": "S\u00fcrpriz",
+      "tensionAppetite": "Gerilim"
+    },
+    "profileShortAbbr": {
+      "entropyTolerance": "KAO",
+      "resolutionCraving": "KAP",
+      "monotonyTolerance": "TKR",
+      "salienceSensitivity": "S\u00dcR",
+      "tensionAppetite": "GER"
+    },
+    "traits": {
+      "entropyTolerance": "kaos i\u015ftah\u0131",
+      "resolutionCraving": "kapan\u0131\u015f ihtiyac\u0131",
+      "monotonyTolerance": "tekrar konforu",
+      "salienceSensitivity": "s\u00fcrpriz duyarl\u0131l\u0131\u011f\u0131",
+      "tensionAppetite": "gerilim sevgisi"
+    }
+  },
+  "beliefs": {
+    "consonance": "Armoni",
+    "tempo": "Ritim",
+    "salience": "Dikkat",
+    "familiarity": "Haf\u0131za",
+    "reward": "Haz",
+    "short": {
+      "consonance": "Arm",
+      "tempo": "Rtm",
+      "salience": "Dkt",
+      "familiarity": "Hfz",
+      "reward": "Haz"
+    }
+  },
+  "personas": {
+    "1": {
+      "name": "Dopamin Avc\u0131s\u0131",
+      "tagline": "D\u00fc\u015f\u00fc\u015f i\u00e7in ya\u015far",
+      "description": "Sinaptik d\u00f6n\u00fc\u015f\u00fcm\u00fcn heyecan\u0131n\u0131 kovalars\u0131n\u0131z. Gerilimin serbestle\u015fmeye d\u00f6n\u00fc\u015ft\u00fc\u011f\u00fc o an \u2014 tam orada varl\u0131k g\u00f6sterirsiniz. Tahmin edilebilirlik \u00f6l\u00fcmd\u00fcr; d\u00fc\u015f\u00fc\u015f hayatt\u0131r.",
+      "strengths": ["Zirve alg\u0131lama", "Beklenti modelleme", "D\u00f6d\u00fcl duyarl\u0131l\u0131\u011f\u0131"]
+    },
+    "6": {
+      "name": "Gerilim Mimar\u0131",
+      "tagline": "Serbest b\u0131rakmadan \u00f6nce d\u00fcnyalar in\u015fa eder",
+      "description": "Birikimin ustas\u0131s\u0131n\u0131z. Ba\u015fkalar\u0131 var\u0131\u015f noktas\u0131n\u0131 arzularken, siz yolculu\u011fun \u2014 uyumsuzluk ve ask\u0131n\u0131n dikkatli katmanla\u015fmas\u0131n\u0131n \u2014 ger\u00e7ek simya oldu\u011funu anl\u0131yorsunuz.",
+      "strengths": ["Yap\u0131sal fark\u0131ndal\u0131k", "Gerilim haritalama", "Katmanl\u0131 dinleme"]
+    },
+    "7": {
+      "name": "Kontrast Ba\u011f\u0131ml\u0131s\u0131",
+      "tagline": "G\u00f6k g\u00fcr\u00fclt\u00fcs\u00fcnden \u00f6nceki sessizlik",
+      "description": "U\u00e7larda ya\u015fars\u0131n\u0131z. F\u0131s\u0131lt\u0131 ve \u00e7\u0131\u011fl\u0131k. Sessizli\u011fi etkiye d\u00f6n\u00fc\u015ft\u00fcr\u00fcrs\u00fcn\u00fcz. Sizin i\u00e7in dinamik aral\u0131\u011f\u0131 olmayan m\u00fczik sadece d\u00fcz g\u00fcr\u00fclt\u00fcd\u00fcr.",
+      "strengths": ["Dinamik aral\u0131k duyarl\u0131l\u0131\u011f\u0131", "Kontrast alg\u0131lama", "Etki tepkisi"]
+    },
+    "18": {
+      "name": "Dramatik Yay",
+      "tagline": "Her par\u00e7a bir film",
+      "description": "M\u00fczi\u011fi d\u00f6n\u00fc\u015ft\u00fcr\u00fcc\u00fc bir anlat\u0131 olarak alg\u0131lars\u0131n\u0131z. Notalar duymazs\u0131n\u0131z; sahneler, \u00e7at\u0131\u015fmalar ve \u00e7\u00f6z\u00fcmler duyars\u0131n\u0131z. Sesi sinemaya d\u00f6n\u00fc\u015ft\u00fcr\u00fcrs\u00fcn\u00fcz.",
+      "strengths": ["Anlat\u0131 yay\u0131 alg\u0131lama", "Doruk tahmin", "Dramatik duyarl\u0131l\u0131k"]
+    },
+    "2": {
+      "name": "Armonik Safiyetci",
+      "tagline": "M\u00fckemmel aral\u0131klarda g\u00fczellik",
+      "description": "Uyum kutsal geometrinizdir. Her aral\u0131ktaki matematiksel m\u00fckemeliyeti g\u00f6r\u00fcrs\u00fcn\u00fcz. Kaos sizi rahats\u0131z eder; m\u00fckemmel \u00e7\u00f6z\u00fcm\u00fcn kristal ger\u00e7e\u011fini arars\u0131n\u0131z.",
+      "strengths": ["Armonik analiz", "Ses y\u00f6nlendirme duyarl\u0131l\u0131\u011f\u0131", "Tonal haf\u0131za"]
+    },
+    "4": {
+      "name": "Minimal Zen",
+      "tagline": "Az olan her \u015feydir",
+      "description": "Yap\u0131 ve tekrarda sonsuz derinlik bulursunuz. Karma\u015f\u0131k zihinler kaosu ararken, sizin zihniniz sessizlik ve ince varyasyonlardan katedraller in\u015fa eder.",
+      "strengths": ["Mikro-varyasyon alg\u0131lama", "S\u00fcrd\u00fcr\u00fclen dikkat", "Meditatif derinlik"]
+    },
+    "5": {
+      "name": "\u00c7\u00f6z\u00fcm Ba\u011f\u0131ml\u0131s\u0131",
+      "tagline": "Kadans uyu\u015fturucudur",
+      "description": "Kapan\u0131\u015fa ba\u011f\u0131ml\u0131l\u0131\u011f\u0131n\u0131z var. M\u00fckemmel V-I kadans\u0131 sadece bir ses de\u011fil; fizyolojik bir rahatlamad\u0131r. Tamamlanma talep eden zihinsel yap\u0131lar in\u015fa edersiniz.",
+      "strengths": ["Kadans duyarl\u0131l\u0131\u011f\u0131", "Armonik beklenti", "Kapan\u0131\u015f alg\u0131lama"]
+    },
+    "9": {
+      "name": "\u00d6r\u00fcnt\u00fc Avc\u0131s\u0131",
+      "tagline": "Her motif bir hikaye anlat\u0131r",
+      "description": "Sesin planlar\u0131n\u0131 \u00e7\u00f6zersiniz. Tekrarlayan motifler, gizli simetriler, inversiyonlar \u2014 zihniniz bir par\u00e7an\u0131n mimarisini ger\u00e7ek zamanl\u0131 olarak haritaland\u0131r\u0131r.",
+      "strengths": ["Motif tan\u0131ma", "Zamansal \u00f6r\u00fcnt\u00fc e\u015fle\u015ftirme", "Yap\u0131sal haf\u0131za"]
+    },
+    "20": {
+      "name": "Hassasiyet Zihni",
+      "tagline": "Her nota hesapta",
+      "description": "Do\u011fruluk esteti\u011finizdir. M\u00fczi\u011fin arkas\u0131ndaki \u0131zgaray\u0131 duyars\u0131n\u0131z. Perdeteki veya zamandaki her sapma bir i\u015faret fi\u015fe\u011fi gibi \u00f6ne \u00e7\u0131kar. M\u00fckemmel icray\u0131 arars\u0131n\u0131z.",
+      "strengths": ["Perde do\u011frulu\u011fu", "Zamanlama hassasiyeti", "Performans de\u011ferlendirmesi"]
+    },
+    "3": {
+      "name": "Kaos Ka\u015fifi",
+      "tagline": "D\u00fczen abart\u0131l\u0131yor",
+      "description": "Entropide geli\u015firsiniz. Ba\u015fkalar\u0131n\u0131n g\u00fcr\u00fclt\u00fc duydu\u011fu yerde siz yeni potansiyel duyars\u0131n\u0131z. Aksakl\u0131klar, uyumsuzluk ve k\u0131r\u0131k yap\u0131lar sizin ana dilinizdir.",
+      "strengths": ["Entropi i\u015fleme", "\u00d6r\u00fcnt\u00fc k\u0131rma alg\u0131lama", "Yeni uyaran tepkisi"]
+    },
+    "10": {
+      "name": "Sonik G\u00f6\u00e7ebe",
+      "tagline": "Ayn\u0131 nehir asla iki kez",
+      "description": "Sonik manzaran\u0131n gezgini. Tek bir t\u00fcr veya tona yerle\u015fmeyi reddedersiniz. Zihniniz s\u00fcrekli yenilik talep eder; a\u015final\u0131k durgunluktur.",
+      "strengths": ["Yenilik alg\u0131lama", "T\u00fcrler aras\u0131 uyum", "Ke\u015fifsel dinleme"]
+    },
+    "19": {
+      "name": "Merakl\u0131 Gezgin",
+      "tagline": "Ya olursa...?",
+      "description": "Dinlemeniz bir cevap de\u011fil, bir sorudur. Sesi masum bir merakla ke\u015ffedersiniz, \u00f6nceden tan\u0131mlanm\u0131\u015f yap\u0131lara ihtiya\u00e7 duymadan.",
+      "strengths": ["Ke\u015fifsel dikkat", "T\u00fcr ak\u0131\u015fkanl\u0131\u011f\u0131", "A\u00e7\u0131k fikirlilik"]
+    },
+    "23": {
+      "name": "S\u0131n\u0131r Ko\u015fucusu",
+      "tagline": "Uyumsuzluk mesajd\u0131r",
+      "description": "'M\u00fczik' say\u0131lan\u0131n s\u0131n\u0131r\u0131nda ya\u015fars\u0131n\u0131z. Alg\u0131n\u0131z\u0131 s\u0131n\u0131ra itersiniz, sinyalin \u00e7\u00f6k\u00fc\u015f\u00fcnde g\u00fczellik bulursunuz.",
+      "strengths": ["Uyumsuzluk i\u015fleme", "S\u0131n\u0131r ke\u015ffi", "Avangard duyarl\u0131l\u0131k"]
+    },
+    "24": {
+      "name": "R\u00f6nesans Zihni",
+      "tagline": "T\u00fcm boyutlar, tam canl\u0131",
+      "description": "Nadir bir anomali. Hi\u00e7bir aileye ait de\u011filsiniz \u00e7\u00fcnk\u00fc hepsini b\u00fcnyenizde bar\u0131nd\u0131r\u0131rs\u0131n\u0131z. Kaosa y\u00fcksek tolerans\u0131n\u0131z VE yap\u0131ya y\u00fcksek arzunuz var. Evrensel bir ka\u015fif.",
+      "strengths": ["\u00c7ok boyutlu denge", "T\u00fcr \u00e7ok y\u00f6nl\u00fcl\u00fc\u011f\u00fc", "Uyarlanabilir dinleme"]
+    },
+    "8": {
+      "name": "Yap\u0131sal Romantik",
+      "tagline": "Seste b\u00fcy\u00fck anlat\u0131lar",
+      "description": "Duygunun mimarisini hissedersiniz. M\u00fczik an\u0131lar\u0131n\u0131z\u0131 \u00e7apaya ba\u011flayan bir hikaye \u00f6rer. Sizin i\u00e7in bir melodi ge\u00e7mi\u015fe uzanan bir ipliktir.",
+      "strengths": ["Anlat\u0131 alg\u0131lama", "Uzun formda dinleme", "Duygusal yay takibi"]
+    },
+    "11": {
+      "name": "Duygusal \u00c7apa",
+      "tagline": "Hissetmek bilmektir",
+      "description": "Bili\u015finiz kalp taraf\u0131ndan y\u00f6nlendirilir. M\u00fczi\u011fi analiz etmezsiniz; g\u00f6\u011fs\u00fcn\u00fczde rezonans\u0131n\u0131 hissedersiniz. Duygusal ger\u00e7eklik tek \u00f6l\u00e7\u00fcn\u00fczd\u00fcr.",
+      "strengths": ["Duygusal rezonans", "De\u011ferlik duyarl\u0131l\u0131\u011f\u0131", "Empatik dinleme"]
+    },
+    "13": {
+      "name": "Tonal Hayalperest",
+      "tagline": "Armonik bulutlarda s\u00fcz\u00fclmek",
+      "description": "Sesin dokular\u0131nda ve renklerinde s\u00fcr\u00fcklenirsiniz. Yer\u00e7ekimi sizi tutamaz. Kendinizi ritim yerine atmosfere \u00e7apalar\u0131n\u0131z.",
+      "strengths": ["Tonal dalma", "\u00dcst ton duyarl\u0131l\u0131\u011f\u0131", "Ortam i\u015fleme"]
+    },
+    "15": {
+      "name": "Sessiz G\u00f6zlemci",
+      "tagline": "Sesten daha derini dinlemek",
+      "description": "Sessizlik size konu\u015fur. Merkezinizi notalar\u0131n aras\u0131ndaki bo\u015fluklarda bulursunuz. D\u00fcnyay\u0131 huzurla \u00e7apalayan derin, meditatif bir dinleyici.",
+      "strengths": ["Mikro-detay duyarl\u0131l\u0131\u011f\u0131", "Sab\u0131rl\u0131 dikkat", "Derinlik alg\u0131s\u0131"]
+    },
+    "17": {
+      "name": "Ortam Ak\u0131\u015f\u0131",
+      "tagline": "Zaman boyunca doku",
+      "description": "Ak\u0131\u015f durumunda var olursunuz. Zaman dokuya eri\u015fir. Kendinizi \u015fimdiki ana \u00e7apalars\u0131n\u0131z, ses taraf\u0131ndan y\u0131kanarak.",
+      "strengths": ["Dokusal fark\u0131ndal\u0131k", "Zamansal eri\u015fim", "\u00c7evresel dinleme"]
+    },
+    "22": {
+      "name": "Nostaljik Ruh",
+      "tagline": "Haf\u0131za melodidir",
+      "description": "Zihniniz alevler i\u00e7inde ge\u00e7mi\u015fin k\u00fct\u00fcphanesidir. M\u00fczik unutulmu\u015f zamanlar\u0131n kap\u0131s\u0131n\u0131 a\u00e7an anahtard\u0131r. Kimli\u011finizi tarihinizin film m\u00fczi\u011fine \u00e7apalars\u0131n\u0131z.",
+      "strengths": ["M\u00fczikal haf\u0131za", "A\u015final\u0131k tepkisi", "Duygusal ba\u011flanma"]
+    },
+    "12": {
+      "name": "Ritmik Nab\u0131z",
+      "tagline": "Ritim beyindir",
+      "description": "Sadece ritmi duymakla kalmazs\u0131n\u0131z; n\u00f6ronlar\u0131n\u0131z onunla senkronize ate\u015flenir. Hareket, groove ve nab\u0131z zihninizin temel dilleridir.",
+      "strengths": ["Ritim kilitleme", "Poliritim i\u015fleme", "Groove duyarl\u0131l\u0131\u011f\u0131"]
+    },
+    "14": {
+      "name": "Dinamik F\u0131rt\u0131na",
+      "tagline": "Her \u015fey ayn\u0131 anda",
+      "description": "Bir bili\u015f kas\u0131rgas\u0131. Y\u00fcksek enerji, y\u00fcksek yo\u011funluk, y\u00fcksek etki arzulars\u0131n\u0131z. Zihniniz f\u0131rt\u0131nan\u0131n g\u00f6z\u00fcnden d\u00fczen yaratir.",
+      "strengths": ["\u00c7ok boyutlu i\u015fleme", "Y\u00fcksek bant geni\u015fli\u011fi dinleme", "Doruk deneyim"]
+    },
+    "16": {
+      "name": "Groove Mekani\u011fi",
+      "tagline": "Cep m\u00fchendisli\u011fi",
+      "description": "Ba\u015f\u0131 salland\u0131ran mikro-zamanlamay\u0131 hissedersiniz. Cep. Hareketin mekaniklerini ve groove yaratan ince s\u00fcrt\u00fcnmeyi anlars\u0131n\u0131z.",
+      "strengths": ["Mikro-zamanlama duyarl\u0131l\u0131\u011f\u0131", "Groove alg\u0131lama", "Ritmik hassasiyet"]
+    },
+    "21": {
+      "name": "Ham Enerji",
+      "tagline": "Ses seviyesi bir boyuttur",
+      "description": "\u0130ncelik g\u00fczeldir ama g\u00fc\u00e7 ger\u00e7ektir. Ses dalgalar\u0131n\u0131n v\u00fccuda \u00e7arpmas\u0131n\u0131n i\u00e7g\u00fcd\u00fcsel etkisine tepki verirsiniz. M\u00fczik fiziksel bir g\u00fc\u00e7t\u00fcr.",
+      "strengths": ["Enerji tepkisi", "Fiziksel kat\u0131l\u0131m", "Etki duyarl\u0131l\u0131\u011f\u0131"]
+    }
+  },
+  "persona": {
+    "sections": {
+      "comingSoon": "Anlat\u0131 yak\u0131nda geliyor \u2014 M\u00b3 bu personan\u0131n hikayesini hala \u00f6\u011freniyor.",
+      "intro": "Tan\u0131t\u0131m",
+      "listening": "Dinleme Kal\u0131plar\u0131",
+      "emotion": "Duygusal D\u00fcnya",
+      "social": "Sosyal Dinamikler",
+      "growth": "B\u00fcy\u00fcme Yolu",
+      "famous": "\u00dcnl\u00fc Zihinler",
+      "compatible": "Uyumluluk",
+      "shadow": "G\u00f6lge"
+    }
+  },
+  "infoHub": {
+    "hudLabel": "Bilgi",
+    "title": "Motor ve Zihinler",
+    "subtitle": "M\u00fczikal bili\u015fin arkas\u0131ndaki mimariyi ve ortaya \u00e7\u0131kard\u0131\u011f\u0131 24 persona arketipini ke\u015ffedin.",
+    "engineLabel": "Motor",
+    "engineDescription": "M\u00b3 \u00fc\u00e7 katmanl\u0131 m\u00fczikal zek\u00e2 \u00fczerine in\u015fa edilmi\u015ftir: R\u00b3 alg\u0131sal ger\u00e7ekli\u011fin 97 boyutunu yakalar, H\u00b3 32 ufuk boyunca zamansal morfolojiyi takip eder ve C\u00b3 zihninizin m\u00fczi\u011fi nas\u0131l deneyimledi\u011fini modelleyen 5 bili\u015fsel inanc\u0131 s\u00fcrd\u00fcr\u00fcr.",
+    "exploreAE": "AE'nin Zihnini Ke\u015ffet",
+    "personaAtlas": "Persona Atlas\u0131",
+    "personaAtlasTitle": "24 M\u00fczikal Zihin",
+    "personaAtlasSubtitle": "Her persona, bili\u015fsel parametre uzay\u0131nda benzersiz bir b\u00f6lgeyi temsil eder. Hi\u00e7bir zihin daha iyi veya daha k\u00f6t\u00fc de\u011fildir \u2014 sadece farkl\u0131d\u0131r.",
+    "stats": {
+      "perceptualDimensions": "Alg\u0131sal Boyut",
+      "cognitiveBeliefs": "Bili\u015fsel \u0130nan\u00e7",
+      "temporalHorizons": "Zamansal Ufuk",
+      "morphologies": "Morfoloji"
+    }
+  },
+  "personaDetail": {
+    "allPersonas": "T\u00fcm Personalar",
+    "notFound": "Persona bulunamad\u0131.",
+    "mindProfile": "Zihin Profili",
+    "axesBreakdown": "Eksen Da\u011f\u0131l\u0131m\u0131",
+    "geneDna": "Gen DNA",
+    "strengths": "G\u00fc\u00e7l\u00fc Yanlar",
+    "famousMinds": "\u00dcnl\u00fc Zihinler",
+    "compatiblePersonas": "Uyumlu Personalar",
+    "evolutionPath": "Evrim Yolu",
+    "sameFamily": "{{family}} Ailesi"
+  },
+  "friends": {
+    "hudLabel": "Topluluk",
+    "title": "Arkada\u015flar",
+    "subtitle": "Arkada\u015flar\u0131n\u0131z\u0131n zihinlerinin ne yaratt\u0131\u011f\u0131n\u0131 g\u00f6r\u00fcn",
+    "compatibility": "Uyumluluk",
+    "communityFeed": "Topluluk Ak\u0131\u015f\u0131"
+  },
+  "leaderboard": {
+    "hudLabel": "S\u0131ralamalar",
+    "title": "K\u00fcresel S\u0131ralama",
+    "subtitle": "En b\u00fcy\u00fck m\u00fczikal zihinler, s\u0131ralanm\u0131\u015f",
+    "allTime": "T\u00fcm Zamanlar",
+    "weekly": "Haftal\u0131k",
+    "byPersona": "Personaya G\u00f6re",
+    "rank": "S\u0131ra",
+    "player": "Oyuncu",
+    "persona": "Persona",
+    "level": "Seviye",
+    "xp": "XP",
+    "flag": "Bayrak",
+    "noMinds": "Bu filtre i\u00e7in zihin bulunamad\u0131."
+  },
+  "profile": {
+    "mindNotFound": "Zihin bulunamad\u0131",
+    "mindNotFoundDesc": "Bu zihin a\u011f\u0131m\u0131zda mevcut de\u011fil.",
+    "backToFriends": "Arkada\u015flara D\u00f6n",
+    "mindProfile": "Zihin Profili",
+    "axes": "Eksenler",
+    "mindCompatibility": "Zihin Uyumlulu\u011fu",
+    "connectMinds": "Zihinleri Ba\u011fla",
+    "thisWeekListening": "Bu Haftan\u0131n Dinlemesi",
+    "currentMindState": "Mevcut Zihin Durumu",
+    "recentListening": "Son Dinlenenler",
+    "progression": "\u0130lerleme",
+    "experience": "Deneyim",
+    "compositions": "Besteler",
+    "liveSessions": "Canl\u0131 Oturumlar",
+    "hoursListened": "Dinleme Saatleri",
+    "achievements": "Ba\u015far\u0131lar",
+    "mindLink": "Zihin Ba\u011f\u0131: {{name}}",
+    "neuralSimilarity": "%{{pct}} n\u00f6ral benzerlik",
+    "mindsConnected": "Zihinler ba\u011fland\u0131",
+    "shareMind": "Zihnini payla\u015f...",
+    "level": "Seviye",
+    "tracks": "Par\u00e7a",
+    "streak": "Seri",
+    "region": "B\u00f6lge",
+    "totalHours": "Toplam Saat",
+    "peak": "Zirve"
+  },
+  "exploreAE": {
+    "stageLabel": "A\u015fama 3 / A\u015fk\u0131n",
+    "mindBehindEngine": "Motorun arkas\u0131ndaki zihin",
+    "quote": "M\u00fczik duyulmaz. D\u00fc\u015f\u00fcn\u00fcl\u00fcr.",
+    "mindProfile": "Zihin Profili",
+    "stats": "\u0130statistikler",
+    "level": "Seviye",
+    "tracks": "Par\u00e7a",
+    "streak": "Seri",
+    "stage": "A\u015fama",
+    "beliefSignature": "\u0130nan\u00e7 \u0130mzas\u0131",
+    "famousMinds": "\u00dcnl\u00fc Zihinler",
+    "createYourMind": "Kendi Zihnini Yarat"
+  },
+  "levels": {
+    "Listener": "Dinleyici",
+    "Explorer": "Ka\u015fif",
+    "Seeker": "Arayan",
+    "Resonator": "Rezonat\u00f6r",
+    "Architect": "Mimar",
+    "Conductor": "\u015eef",
+    "Virtuoso": "Virt\u00fc\u00f6z",
+    "Visionary": "Vizyoner",
+    "Oracle": "Kahin",
+    "Transcendent": "A\u015fk\u0131n"
+  },
+  "achievements": {
+    "mind-awakened": { "name": "Zihin Uyand\u0131", "description": "Ba\u015flang\u0131c\u0131 tamamla ve personan\u0131 ke\u015ffet" },
+    "curious-ears": { "name": "Merakl\u0131 Kulaklar", "description": "\u0130lk 10 par\u00e7an\u0131 analiz et" },
+    "deep-listener": { "name": "Derin Dinleyici", "description": "Zihninle 100 par\u00e7a analiz et" },
+    "creator-spark": { "name": "Yarat\u0131c\u0131 K\u0131v\u0131lc\u0131m", "description": "\u0130lk m\u00fczik par\u00e7an\u0131 \u00fcret" },
+    "contender": { "name": "Yar\u0131\u015fmac\u0131", "description": "3 arena ma\u00e7\u0131 kazan" },
+    "devoted": { "name": "Adanm\u0131\u015f", "description": "30 g\u00fcnl\u00fck dinleme serisi s\u00fcrd\u00fcr" },
+    "soulmate-found": { "name": "Ruh E\u015fi Bulundu", "description": "Ba\u015fka bir zihinle %95+ uyumluluk elde et" },
+    "mind-collector": { "name": "Zihin Koleksiyoncusu", "description": "24 persona t\u00fcr\u00fcn\u00fcn hepsini g\u00f6r" },
+    "evolved": { "name": "Rezonans", "description": "A\u015fama 2 evrimine ula\u015f" },
+    "transcendent": { "name": "A\u015fk\u0131n", "description": "A\u015fama 3'e ula\u015f \u2014 zihniniz nadir bir derinli\u011fe ula\u015ft\u0131" },
+    "elite-mind": { "name": "Elit Zihin", "description": "K\u00fcresel ilk 100'e gir" },
+    "social-butterfly": { "name": "Sosyal Kelebek", "description": "50 farkl\u0131 zihin profilini ziyaret et" }
+  },
+  "insights": {
+    "monologue": {
+      "reward": "M\u00fczikal haz duygunuz bu hafta +%{{delta}} de\u011fi\u015fti. Bu \u00f6nemli \u2014 zihniniz \"iyi m\u00fczik\"\u0131n sizin i\u00e7in ne anlama geldi\u011fini yeniden kalibre ediyor. Ge\u00e7en ay sizi etkileyen \u015fark\u0131lar gelecek ay ayn\u0131 etkiyi yapmayabilir.",
+      "familiarity": "Bu hafta m\u00fczi\u011fi tan\u0131ma \u015feklinizde bir \u015feyler de\u011fi\u015fti. Haf\u0131za tepkiniz +%{{delta}} artt\u0131 \u2014 duydu\u011funuz m\u00fczikle daha derin ba\u011flant\u0131lar kuruyorsunuz, zaten bildi\u011finiz \u015fark\u0131larda yeni katmanlar buluyorsunuz.",
+      "tempo": "Bu hafta ritmi farkl\u0131 hissettiniz. Ritmik kat\u0131l\u0131m\u0131n\u0131z +%{{delta}} y\u00fckseldi \u2014 v\u00fccudunuz daha karma\u015f\u0131k vuruflara kilitlendi, groove kal\u0131plar\u0131n\u0131 d\u00fc\u015fmeden \u00f6nce \u00f6nceledi.",
+      "salience": "M\u00fczikal detaylara dikkatiniz bu hafta sessizle\u015fti. S\u00fcrpriz duyarl\u0131l\u0131\u011f\u0131 %{{delta}} d\u00fc\u015ft\u00fc \u2014 her d\u00f6n\u00fc\u015fe tepki vermek yerine i\u00e7e bakarak m\u00fczi\u011fe g\u00f6m\u00fcld\u00fcn\u00fcz. Bu kopukluk de\u011fil, derinliktir.",
+      "consonance": "Armoni hissiniz bu hafta %{{delta}} de\u011fi\u015fti. Akorlar\u0131 ve aral\u0131klar\u0131 duyma \u015fekliniz de\u011fi\u015fiyor \u2014 bir zamanlar n\u00f6tr hissettiren melodiler duygusal a\u011f\u0131rl\u0131k ta\u015f\u0131maya ba\u015fl\u0131yor.",
+      "tensionHigh": "Gerilim sevginiz %{{pct}} ile m\u00fczi\u011fin \u00e7\u00f6z\u00fclmesinden hemen \u00f6nceki o an i\u00e7in ya\u015f\u0131yorsunuz. Bu haftaki Electronic ve Post-Rock kar\u0131\u015f\u0131m\u0131 o arzuyu m\u00fckemmel besledi \u2014 uzun birikimler, geciken \u00f6d\u00fcller, maksimum beklenti.",
+      "monotonyHigh": "Tekrar konforunuz (%{{pct}}) \u00e7o\u011fu dinleyicinin sahip olmad\u0131\u011f\u0131 bir s\u00fcper g\u00fc\u00e7. Bu haftaki ambient oturumlar\u0131 s\u0131k\u0131lmadan \u00f6r\u00fcnt\u00fclere daha derinden dalman\u0131z\u0131 sa\u011flad\u0131 \u2014 her d\u00f6ng\u00fc yeni bir \u015fey ortaya koydu.",
+      "entropyHigh": "Kaos i\u015ftah\u0131 %{{pct}} \u2014 beklenmeyende geli\u015firsiniz. Bu haftaki t\u00fcr \u00e7e\u015fitlili\u011fi meraking\u0131z\u0131 tatmin etti sizi y\u0131pratmadan. \u00c7e\u015fitlili\u011fe nefes almak gibi ihtiyac\u0131n\u0131z var.",
+      "resolutionDefault": "Kapan\u0131\u015f ihtiyac\u0131n\u0131z (%{{pct}}) haftan\u0131z\u0131 \u015fekillendirdi. Her \u00e7\u00f6z\u00fclm\u00fc\u015f akor, her tatmin edici sonu\u015f \u2014 zihniniz her birini k\u00fc\u00e7\u00fck bir zafer olarak i\u015faretledi. M\u00fczi\u011fi tutulan s\u00f6zler serisi olarak duyuyorsunuz."
+    },
+    "daily": {
+      "consonance": { "title": "{{genre}} armoni duyma \u015feklinizi \u015fekillendirdi", "body": "Armoni hissiniz {{val}}'da zirve yapt\u0131 \u2014 akor ilerlemelerine ve aral\u0131klara derinden odakland\u0131n\u0131z. {{family}} kulaklar\u0131n\u0131zla {{tracks}} par\u00e7a." },
+      "tempo": { "title": "V\u00fccudunuz {{genre}} ritmlerine kitlendi", "body": "Ritmik kat\u0131l\u0131m {{mins}} dakika boyunca {{val}} seviyesine ula\u015ft\u0131. M\u00fczikle normalden daha fazla hareket ediyordunuz \u2014 vuru\u015flar inmeden \u00f6nce \u00f6ng\u00f6r\u00fcyordunuz." },
+      "salience": { "title": "Y\u00fcksek dikkatli dinleme oturumu", "body": "Dikkatiniz {{val}}'da zirve yapt\u0131 \u2014 {{tracks}} an sizi yakalad\u0131. {{genre}} {{persona}} zihninizin s\u00fcrpriz tetikleyicilerini sert vurmaya e\u011filimli." },
+      "familiarity": { "title": "Bildiklerinize daha derinden dald\u0131n\u0131z", "body": "Haf\u0131za tepkisi {{val}}'a t\u0131rmand\u0131. Tan\u0131d\u0131k seslerle daha g\u00fc\u00e7l\u00fc ba\u011flant\u0131lar kuruyorsunuz \u2014 y\u00fczeyde duydu\u011funuz yerde yap\u0131 duyuyorsunuz." },
+      "reward": { "title": "Zirve haz \u2014 ak\u0131\u015f\u0131n sesi budur", "body": "M\u00fczikal haz {{val}}'a ula\u015ft\u0131. Her \u015fey uyum i\u00e7indeydi: sizi me\u015fgul tutacak kadar s\u00fcrpriz, do\u011fru hissettircek kadar a\u015final\u0131k. Zihniniz bire bir b\u00f6lgedeydi." }
+    },
+    "evolution": {
+      "overall": "4 hafta boyunca {{belief}} tepkiniz +%{{delta}} de\u011fi\u015fti. {{drift}}",
+      "growing": "art\u0131yor",
+      "softening": "yumu\u015f\u0131yor",
+      "consonance": "Armoni hissiniz {{dir}} ({{start}} \u2192 {{end}}). Bir zamanlar n\u00f6tr hissettiren akorlar ve aral\u0131klar sizin i\u00e7in daha fazla duygusal a\u011f\u0131rl\u0131k ta\u015f\u0131maya ba\u015fl\u0131yor.",
+      "tempo": "Ritmik hissiniz {{dir}} ({{start}} \u2192 {{end}}). Daha zengin i\u00e7sel zamanlama olu\u015fturuyorsunuz \u2014 groove de\u011fi\u015fikliklerini olmadan \u00f6nce \u00f6ng\u00f6r\u00fcyorsunuz.",
+      "salience": "S\u00fcrpriz duyarl\u0131l\u0131\u011f\u0131n\u0131z {{dir}} ({{start}} \u2192 {{end}}). G\u00fcr\u00fclt\u00fcden sinyali filtrelemekte daha iyi oluyorsunuz \u2014 ger\u00e7ekten \u00f6nemli m\u00fczikal anlara tepki veriyorsunuz.",
+      "familiarity": "M\u00fczikal haf\u0131zan\u0131z {{dir}} ({{start}} \u2192 {{end}}). \u00d6r\u00fcnt\u00fcler art\u0131k daha h\u0131zl\u0131 otouruyor \u2014 \u00f6nce 3 dinleme gereken \u015fey ilk dinlemede kavran\u0131yor.",
+      "reward": "Haz tepkiniz {{dir}} ({{start}} \u2192 {{end}}). Zihniniz daha se\u00e7ici oluyor \u2014 ayn\u0131 heyecan\u0131 \u00fcretmek i\u00e7in daha n\u00fcansl\u0131 m\u00fczik gerekiyor."
+    },
+    "pe": {
+      "title": "En B\u00fcy\u00fck S\u00fcrpriz: {{mag}}x yo\u011funluk"
+    },
+    "recommendations": {
+      "resolutionReason": "M\u00fczi\u011fin g\u00fczel \u00e7\u00f6z\u00fclmesini seviyorsunuz. Bu par\u00e7a geciken sonu\u015flarla sizi k\u0131\u015fk\u0131rt\u0131yor \u2014 beklenti olu\u015fturup sonra zihninizin arzulad\u0131\u011f\u0131 kapan\u0131\u015f\u0131 tam olarak sunuyor.",
+      "resolutionPE": "Geciken \u00e7\u00f6z\u00fcm \u2192 geldi\u011finde daha derin tatmin",
+      "tensionReason": "4:32'deki serbest b\u0131rakma \u00f6ncesinde 7 dakika boyunca yava\u015f\u00e7a artan yo\u011funluk. Gerilim sevginiz beklentiyi bir dalga gibi s\u00fcrmeniz anlam\u0131na geliyor \u2014 ve \u00f6d\u00fcl her saniyeye de\u011fer.",
+      "tensionPE": "Uzun birikim \u2192 doruktaki muazzam serbest b\u0131rakma",
+      "entropyReason": "Kaos i\u015ftah\u0131n\u0131z beklenmedik ritimleri kald\u0131rabilir. Her mikro-bozulma merakan\u0131z\u0131 sizi bo\u011fmadan ate\u015fleyecek \u2014 kafa kar\u0131\u015f\u0131kl\u0131\u011f\u0131 ve ke\u015fif aras\u0131ndaki m\u00fckemmel s\u0131n\u0131r.",
+      "entropyPE": "Ritmik s\u00fcrprizler \u2192 ke\u015fif ve bulu\u015f",
+      "monotonyReason": "Fark etmeyece\u011finiz kadar yava\u015f evrilen faz-kayd\u0131ran kal\u0131plar \u2014 ta ki tamamen yeni bir yerde oldu\u011funuzu fark edene kadar. Tekrar konforunuz %{{pct}} ile bu bir meditasyon gibi hissettrecek, d\u00f6ng\u00fc de\u011fil.",
+      "monotonyPE": "Kademeli evrim \u2192 s\u0131k\u0131lmadan derin dalma",
+      "salienceReason": "4:05'teki viyola giri\u015fi 3 dakikal\u0131k sessiz gerliimin i\u00e7inden keser. Zihniniz bunu O AN olarak i\u015faretleyecek \u2014 t\u00fcm par\u00e7adaki \u00f6nceki her \u015feyi yeniden tan\u0131mlayan tek olay.",
+      "saliencePE": "Bir unutulmaz an \u2192 kal\u0131c\u0131 etki"
+    },
+    "similar": {
+      "connection0": "Siz ve {{name}} m\u00fczi\u011fi son derece benzer kulaklarla duyuyorsunuz. Beklenmedik bir akor de\u011fi\u015fikli\u011fi duyduklarar\u0131nda tepkileri sizinkiyle neredeyse ayn\u0131 \u2014 ayn\u0131 s\u00fcrpriz, ayn\u0131 tatmin.",
+      "connection1": "Her iki zihin de {{trait}} i\u00e7in {{family}} sevgisini payla\u015f\u0131yor. Bir \u015fark\u0131da ayn\u0131 detaylar\u0131 yakl\u0131yorsunuz \u2014 ayn\u0131 anlar ikinizi de yakal\u0131yor.",
+      "connection2": "M\u00fczikal zihinleriniz o kadar uyumlu ki muhtemelen birbirinizin \u00e7alma listelerini seversiniz. Bir par\u00e7adaki duygusal zirveye ayn\u0131 anlarda ula\u015f\u0131yorsunuz.",
+      "connection3": "M\u00fczikteki zaman\u0131 ayn\u0131 \u015fekilde deneyimliyorsunuz \u2014 k\u0131sa anlar e\u015fit yo\u011funlukta hissediyor, uzun pasajlar ayn\u0131 \u015fekilde in\u015fa ediyor. Birlikte dinleme do\u011fal hissederdi.",
+      "divergence": "{{axis}} en \u00e7ok farkl\u0131la\u015ft\u0131\u011f\u0131n\u0131z yer \u2014 birlikte dinlemeyi s\u0131k\u0131c\u0131 de\u011fil, ilgin\u00e7 yapan da bu."
+    },
+    "brainQuotes": {
+      "Alchemists": [
+        "D\u00fc\u015f\u00fc\u015f\u00fc kovalamuyorsunuz. Bekledi\u011finiz her \u015feyin parampar\u00e7a oldu\u011fu an\u0131 koval\u0131yorsunuz \u2014 ve yerine daha iyi bir \u015feyin ge\u00e7ti\u011fi an\u0131.",
+        "Arzulad\u0131\u011f\u0131n\u0131z gerilim stres de\u011fil. Zihninizin \u00e7\u00f6z\u00fcme de\u011fecek kadar karma\u015f\u0131k bir \u015fey in\u015fa etmesi.",
+        "Her \u00e7\u00f6z\u00fclmemi\u015f akor cevaplanmadan b\u0131rakmay\u0131 reddettti\u011finiz bir soru. Bu kayg\u0131 de\u011fil \u2014 a\u00e7l\u0131k."
+      ],
+      "Architects": [
+        "Sadece m\u00fczik duymuyorsunuz. Arkas\u0131ndaki plan\u0131 duyuyorsunuz. \u00d6r\u00fcnt\u00fcdeki her sapma bilgidir.",
+        "Zihniniz her \u015fark\u0131n\u0131n \u00e7al\u0131\u015fan bir modelini kurar \u2014 ve haz, onun kendini do\u011frulamas\u0131n\u0131 izlemekten gelir.",
+        "Armoni sizin i\u00e7in g\u00fczellik de\u011fil. Evrenin bir yap\u0131s\u0131 oldu\u011funun ve onu duyabildi\u011finizin onay\u0131."
+      ],
+      "Explorers": [
+        "Merakan\u0131z \u00e7o\u011fundan daha s\u0131cak \u00e7al\u0131\u015f\u0131r. Bilinmeyene oksijen gibi ihtiyac\u0131n\u0131z var \u2014 sessizlik sadece ke\u015ffedilmemi\u015f bir frekans.",
+        "Tamamen yeni bir \u015fey duydu\u011funuzda irkilmezsiniz. \u00d6ne e\u011filirsiniz. Bu sand\u0131\u011f\u0131n\u0131zdan daha nadir.",
+        "Zihniniz beklentilerini bilerek gev\u015fek tutar \u2014 b\u00f6ylece daha fazla s\u00fcrpriz ge\u00e7er, daha fazla \u00f6\u011frenme olur, daha fazla ne\u015fe gelir."
+      ],
+      "Anchors": [
+        "Zihniniz sesi haf\u0131zayla sarar. Her melodi daha \u00f6nce bulundu\u011funuz ama her seferinde farkl\u0131 g\u00f6rd\u00fc\u011f\u00fcn\u00fcz bir odan\u0131n anahtar\u0131d\u0131r.",
+        "Tekrar sizi s\u0131kmaz. Derinle\u015ftirir. Her dinleme olu\u011fu biraz daha geni\u015f, biraz daha zengin kazar.",
+        "T\u00fcm ge\u00e7mi\u015finizle dinlersiniz. Her nota \u00e7o\u011fu insan\u0131n asla kuramad\u0131\u011f\u0131 bir an\u0131 zincirini ayd\u0131nlat\u0131r."
+      ],
+      "Kineticists": [
+        "V\u00fccudunuz sadece ritme tepki vermez \u2014 onu tahmin eder. Vuru\u015fu inmeden \u00f6nce hissedersiniz.",
+        "Groove zihninizde bir hassasiyet aletidir. Ba\u015fkalar\u0131n\u0131n ka\u00e7\u0131rd\u0131\u011f\u0131 k\u00fc\u00e7\u00fck zamanlama kaymalar\u0131 sizde tamamen farkl\u0131 dokular olarak kaydedilir.",
+        "Ritmik yap\u0131lara al\u0131\u015f\u0131lmad\u0131k h\u0131zda kilitlenirsiniz \u2014 \u00e7o\u011fu insan daha ritmi bulmadan siz hareket ediyorsunuz."
+      ]
+    },
+    "trackContext": {
+      "high": "Zihniniz burada par\u0131ldad\u0131 \u2014 s\u00fcrpriz-tatmin oran\u0131 taban \u00e7izginizin {{ratio}}x \u00fczerindeydi. Bu her \u015feyin uyu\u015ftu\u011fu o nadir anlardan biri.",
+      "mid": "G\u00fc\u00e7l\u00fc tepki. Bu b\u00f6l\u00fcmde bir \u015fey dikkatinizi \u00e7ekti ve tuttu \u2014 yava\u015f\u00e7a in\u015fa olan ve kar\u015f\u0131l\u0131\u011f\u0131n\u0131 veren s\u00fcrekli bir zevk dalgas\u0131.",
+      "low": "Kararl\u0131-durum dinleme. Zihniniz burada rahatt\u0131 \u2014 tan\u0131d\u0131k topraklar, d\u00fc\u015f\u00fck s\u00fcrpriz, d\u00fc\u015f\u00fcnmeden dalabilece\u011finiz t\u00fcrden m\u00fczik."
+    },
+    "compatNarrative": {
+      "high": "\u0130\u015fitsel korteksleriniz neredeyse ayn\u0131 i\u015fleme mimarisine sahip. Bu {{persona}} zihni m\u00fczik duydu\u011funda, tahmin-hata kaskad\u0131 sizinkini 0.08\u03c3 i\u00e7inde yans\u0131t\u0131yor. {{axis}} ekseni uyumu dikkat \u00e7ekici \u2014 ayn\u0131 m\u00fczikal anlarda zirve \u00f6d\u00fcle ula\u015f\u0131rs\u0131n\u0131z.",
+      "good": "{{closestAxis}} i\u015flemede g\u00fc\u00e7l\u00fc rezonans \u2014 zamansal pencereleriniz uyumlu. {{furthestAxis}} fark\u0131 tamamlay\u0131c\u0131 bir gerilim yarat\u0131yor: zihniniz dinlendi\u011fi yerde onlar ke\u015ffeder ve tersine. Bu, birlikte dinlemeyi d\u00f6n\u00fc\u015ft\u00fcr\u00fcc\u00fc k\u0131lan t\u00fcr bir n\u00f6ral asimetri.",
+      "mid": "Tamamlay\u0131c\u0131 mimari. {{closestAxis}} sistemleriniz ortak zemini payla\u015f\u0131yor, ama {{furthestAxis}} bo\u015flu\u011fu ayn\u0131 par\u00e7ada temelden farkl\u0131 yap\u0131lar duydu\u011funuz anlam\u0131na geliyor. Bu fark zay\u0131fl\u0131k de\u011fil \u2014 perspektif geni\u015flemesinin temeli.",
+      "low": "Z\u0131t zihinler. Tahmin modelleriniz farkl\u0131 dalga boylar\u0131nda \u00e7al\u0131\u015f\u0131yor \u2014 sizin \u00f6d\u00fcl sisteminizi tetikleyen \u015fey onlar\u0131n\u0131 ilgisiz b\u0131rak\u0131yor ve tersi. Ama z\u0131tl\u0131k b\u00fcy\u00fcmenin ya\u015fad\u0131\u011f\u0131 yer: bu zihnin dinleme kal\u0131plar\u0131na maruz kalmak sizin i\u00e7in yeni alg\u0131sal boyutlar a\u00e7abilir."
+    },
+    "neurochemicals": {
+      "dopamine": { "name": "Dopamin", "role": "s\u00fcrprizin heyecan\u0131" },
+      "norepinephrine": { "name": "Norepinefrin", "role": "merak motorunuz" },
+      "opioids": { "name": "Endojen opioidler", "role": "g\u00fczelligin s\u0131cakl\u0131\u011f\u0131" },
+      "serotonin": { "name": "Serotonin", "role": "sab\u0131r ve konfor" }
+    },
+    "mockPE": "Jon Hopkins \u2014 'Luminous Beings' 4:32'de \u2014 bas d\u00fc\u015f\u00fc\u015f\u00fc par\u00e7a zaten derinden tan\u0131d\u0131k hissederken armoni hissinizi tamamen g\u00f6lg\u00fcde b\u0131rakt\u0131. O kontrast \u2014 konfor i\u00e7inde s\u00fcrpriz \u2014 3.2x haz zirvesin tetikledi.",
+    "mockDrift": "Sizi neyin etkiledi\u011fi konusunda daha se\u00e7ici oluyorsunuz. M\u00fczikal haf\u0131za hissiniz b\u00fcy\u00fcyor \u2014 \u00f6r\u00fcnt\u00fcler daha h\u0131zl\u0131 oturuyor. Ve bu haftaki ritmik kat\u0131l\u0131m muhtemelen Electronic/Post-Rock kar\u0131\u015f\u0131m\u0131ndan y\u00fckseldi."
+  },
+  "dashboard": {
+    "streak": "Seri",
+    "tracks": "Par\u00e7a",
+    "level": "Seviye",
+    "welcomeBack": "Tekrar ho\u015f geldin,",
+    "yourDna": "DNA'n",
+    "liveSignals": "Canl\u0131 Sinyaller",
+    "yourMindWouldLove": "Zihninin Sevece\u011fi",
+    "viewPersona": "Personan\u0131 G\u00f6r",
+    "yourBrainThisWeek": "Bu Hafta Beynin",
+    "thisWeek": "Bu Hafta",
+    "weeklyEvolution": "Haftal\u0131k Evrim",
+    "evolution": "+{{pct}}% evrim",
+    "evolutionThisWeek": "bu hafta",
+    "peakMomentThisWeek": "Bu Haftan\u0131n Zirve An\u0131",
+    "intensity": "yo\u011funluk",
+    "mindLink": "Zihin Ba\u011f\u0131: {{name}}",
+    "neuralSimilarity": "%{{pct}} n\u00f6ral benzerlik",
+    "match": "%{{pct}} e\u015fle\u015fme",
+    "mindsConnected": "Zihinler ba\u011fland\u0131",
+    "sharedTraits": "\u0130\u015fitsel korteksleriniz {{count}} i\u015flem \u00f6zelli\u011fi payla\u015f\u0131yor.",
+    "chatInitial": "Selam! %{{pct}} e\u015fle\u015ftik. Bu haftan\u0131n en iyi par\u00e7as\u0131 ne oldu?",
+    "shareMind": "Zihnini payla\u015f...",
+    "send": "G\u00f6nder",
+    "yourMind": "{{family}} Zihnin",
+    "tracksCount": "{{count}} par\u00e7a",
+    "peak": "Zirve: {{hour}}:00",
+    "min": "min:",
+    "avg": "ort:",
+    "max": "maks:",
+    "days": {
+      "mon": "Pzt",
+      "tue": "Sal",
+      "wed": "\u00c7ar",
+      "thu": "Per",
+      "fri": "Cum",
+      "sat": "Cmt",
+      "sun": "Paz"
+    },
+    "beliefs": {
+      "harmony": "Armoni",
+      "rhythm": "Ritim",
+      "attention": "Dikkat",
+      "memory": "Haf\u0131za",
+      "pleasure": "Haz"
+    },
+    "axes": {
+      "entropy": "Entropi",
+      "resolution": "\u00c7\u00f6z\u00fcn\u00fcrl\u00fck",
+      "monotony": "Monotonluk",
+      "salience": "Belirginlik",
+      "tension": "Gerilim"
+    }
+  },
+  "discover": {
+    "title": "Ke\u015ffet",
+    "hudLabel": "Ke\u015fif",
+    "subtitle": "Zihninin sevece\u011fi m\u00fczik \u2014 ger\u00e7ekten nas\u0131l duydu\u011funuza g\u00f6re se\u00e7ildi",
+    "yourMindWouldLove": "Zihninin Sevece\u011fi",
+    "curatedFor": "{{name}} profili i\u00e7in se\u00e7ildi",
+    "topPerformances": "En \u0130yi Performanslar",
+    "community": "Topluluk",
+    "friendsListening": "Arkada\u015flar Dinliyor",
+    "analyzeTrack": "Par\u00e7a Analiz Et",
+    "searchPlaceholder": "Par\u00e7a URL'si yap\u0131\u015ft\u0131r veya ara...",
+    "upload": "Y\u00fckle",
+    "analyze": "Analiz Et",
+    "analyzing": "Analiz ediliyor:",
+    "dropTrack": "Zihnine bir par\u00e7a b\u0131rak",
+    "dropTrackDesc": "Zihnin onu derinden dinleyecek \u2014 her anda armoni, ritim, dikkat, haf\u0131za ve hazz\u0131 analiz ederek",
+    "whatYourMindHeard": "Zihninin Duydu\u011fu",
+    "howYourMindResponded": "Zihninin Tepkisi \u2014 {{count}} An",
+    "done": "tamam",
+    "peakPleasure": "{{time}}'de Zirve Haz",
+    "peakIntensityDesc": "Yo\u011funluk: %{{value}} \u2014 Bu, m\u00fczik sizi en \u00e7ok \u015fa\u015f\u0131rtan ve ard\u0131ndan en \u00e7ok tatmin eden an.",
+    "analyzeAnother": "Ba\u015fka Par\u00e7a Analiz Et",
+    "plays": "{{num}} dinlenme",
+    "live": "CANLI",
+    "peakLabel": "Zirve:",
+    "friendActions": {
+      "performing": "canl\u0131 performans yap\u0131yor",
+      "composed": "besteledi",
+      "listening": "dinliyor"
+    },
+    "brainRegions": {
+      "hearing": "\u0130\u015fitme (i\u015fitsel korteks)",
+      "harmony": "Armoni i\u015fleme",
+      "rhythm": "Ritim ve hareket",
+      "pleasure": "Haz ve \u00f6d\u00fcl",
+      "memory": "Haf\u0131za ve tan\u0131ma",
+      "attention": "Dikkat ve s\u00fcrpriz"
+    },
+    "phases": {
+      "p1": "Ses dinleniyor \u2014 128 frekans katman\u0131na ayr\u0131l\u0131yor",
+      "p2": "Her andan 97 alg\u0131sal \u00f6zellik okunuyor",
+      "p3": "Armoni \u00f6l\u00e7\u00fcl\u00fcyor: ne kadar p\u00fcr\u00fczl\u00fc, ne kadar saf, ne kadar tonal...",
+      "p4": "Zamansal \u00f6r\u00fcnt\u00fclere bak\u0131l\u0131yor \u2014 milisaniyelerden dakikalara",
+      "p5": "H\u0131z, y\u00f6n ve ritmik tekrar izleniyor...",
+      "p6": "Zihnin \u015fimdi ne gelece\u011fini tahmin ediyor",
+      "p7": "Tahminler ger\u00e7eklikle kar\u015f\u0131la\u015ft\u0131r\u0131l\u0131yor \u2014 nerelerde \u015fa\u015f\u0131rd\u0131n\u0131z?",
+      "p8": "\u0130nan\u00e7lar g\u00fcncelleniyor \u2014 zihnin her boyutta ne kadar emin?",
+      "p9": "Haz hesaplan\u0131yor: s\u00fcrpriz + \u00e7\u00f6z\u00fcm + ke\u015fif \u2212 can s\u0131k\u0131nt\u0131s\u0131",
+      "p10": "8 zaman \u00f6l\u00e7e\u011finde b\u00fct\u00fcnle\u015ftiriliyor \u2014 vuru\u015flardan b\u00f6l\u00fcmlere"
+    },
+    "narratives": {
+      "consonanceHigh": "Burada armoniye derinden odakland\u0131n\u0131z. Akor de\u011fi\u015fiklikleri sizi g\u00fc\u00e7l\u00fc etkiledi \u2014 \u00e7\u00f6z\u00fclm\u00fc\u015f aral\u0131klar tatmin edici hissettirdi ve uyumsuzluk \u00e7\u00f6z\u00fclmesini istedi\u011finiz ger\u00e7ek bir gerilim yaratt\u0131.",
+      "consonanceMid": "Armoniyi esneklikle i\u015flediniz \u2014 hem uyumlu hem uyumsuz pasajlar size do\u011fal geldi. Armonik belirsizlikle rahats\u0131n\u0131z.",
+      "consonanceLow": "Armoni burada sizi y\u00f6nlendiren ana \u015fey de\u011fildi. Akorlar\u0131n \u00fczerinizden akmas\u0131na izin verdiniz \u2014 yap\u0131ya ba\u015fka kanallardan kulak veriyorsunuz.",
+      "tempoHigh": "Bedeniniz ritme kitlendi. Vuru\u015fla s\u0131k\u0131 s\u0131k\u0131ya senkronizeydiniz \u2014 tempo de\u011fi\u015fikliklerini \u00f6nceden hissediyor ve i\u00e7g\u00fcd\u00fcsel olarak hareket ediyordunuz.",
+      "tempoMid": "Ritmi takip ettiniz ama hakimiyetine girmediniz. Karma\u015f\u0131k ritmik pasajlar sizi sarsmad\u0131 \u2014 poliritmle ba\u015fa \u00e7\u0131kacak kadar esneksiniz.",
+      "tempoLow": "Ritim burada birincil kanal\u0131n\u0131z de\u011fildi. Bu m\u00fczi\u011fi vuru\u015f ve tempo olarak de\u011fil, doku ve renk olarak deneyimlediniz.",
+      "salienceHigh": "Dikkatiniz g\u00fc\u00e7l\u00fc bir \u015fekilde yakaland\u0131. Dinamiklerdeki, dokudaki veya melodideki ani de\u011fi\u015fimler g\u00fc\u00e7l\u00fc tepkiler tetikledi \u2014 zihniniz beklenmedik i\u00e7in y\u00fcksek alarmdayd\u0131.",
+      "salienceMid": "Dengeli dikkat. Yap\u0131sal de\u011fi\u015fiklikleri fark ettiniz ama bunalmad\u0131n\u0131z \u2014 filtreniz \u00f6nemli anlar\u0131 g\u00fcr\u00fclt\u00fcden ay\u0131rd\u0131.",
+      "salienceLow": "Bunu ak\u0131c\u0131 bir deneyim olarak ya\u015fad\u0131n\u0131z. Bireysel anlara tepki vermek yerine m\u00fczi\u011fin sizi s\u00fcrekli bir ak\u0131m olarak ta\u015f\u0131mas\u0131na izin verdiniz.",
+      "familiarityHigh": "Haf\u0131zan\u0131z g\u00fc\u00e7l\u00fc bir \u015fekilde devreye girdi. \u00d6r\u00fcnt\u00fcleri tan\u0131yordunuz, par\u00e7adaki temalar\u0131 birbiriyle ili\u015fkilendiriyordunuz \u2014 her tekrar sizi s\u0131kt\u0131rmak yerine anlay\u0131\u015f\u0131n\u0131z\u0131 derinle\u015ftirdi.",
+      "familiarityMid": "\u00d6r\u00fcnt\u00fcler yava\u015f\u00e7a ortaya \u00e7\u0131kt\u0131. Zihniniz yava\u015f\u00e7a ba\u011flant\u0131lar kuruyordu ama her tekrar h\u00e2l\u00e2 nispeten taze hissettirdi.",
+      "familiarityLow": "Bu ba\u015flang\u0131c\u0131ndan sonuna yeni hissettirdi. \u00d6r\u00fcnt\u00fc tan\u0131man\u0131z yenilik sinyalini y\u00fcksek tuttu.",
+      "rewardHigh": "G\u00fc\u00e7l\u00fc haz tepkisi (ortalama %{{value}}). S\u00fcrprizler tatmine d\u00f6n\u00fc\u015ft\u00fc \u2014 \"Bunu beklemiyordum\" anlar\u0131 \"ama bay\u0131ld\u0131m\" ile takip edildi.",
+      "rewardMid": "Se\u00e7ici haz (ortalama %{{value}}). Keyfiniz s\u00fcrekli olmak yerine belirli anlarda zirve yapt\u0131 \u2014 nicelikten \u00e7ok nitelik.",
+      "rewardLow": "Temkinli tepki (ortalama %{{value}}). Standartlar\u0131n\u0131z y\u00fcksek \u2014 ger\u00e7ek tatmini tetiklemek i\u00e7in daha n\u00fcansl\u0131 veya beklenmedik m\u00fczik gerekiyor."
+    }
+  },
+  "onboarding": {
+    "plans": {
+      "chooseJourney": "Yolculu\u011funu Se\u00e7",
+      "mindDeserved": "Zihnin",
+      "heard": "duyulmay\u0131 hak ediyor",
+      "description": "Her dinleyici e\u015fsiz bir n\u00f6ral parmak izi ta\u015f\u0131r. M\u00fczikal bilincinizin mimarisine ne kadar derine inmek istedi\u011finizi se\u00e7in.",
+      "communityNote": "M\u00fczikal zihnini ke\u015ffeden 24.000+ dinleyiciye kat\u0131l\u0131n",
+      "cancelAnytime": "\u0130stedi\u011finiz zaman iptal edin. Soru sorulmaz. Zihniniz, kurallar\u0131n\u0131z.",
+      "mostPopular": "En Pop\u00fcler",
+      "startJourney": "Yolculu\u011funa Ba\u015fla",
+      "choose": "{{name}} Se\u00e7",
+      "pulse": {
+        "name": "Pulse",
+        "tagline": "Zihninin ritmini hisset",
+        "description": "M\u00fczikal kendinizi ke\u015ffetmek i\u00e7in m\u00fckemmel ba\u015flang\u0131\u00e7 noktas\u0131. Dinleme \u015feklinizin gizli \u00f6r\u00fcnt\u00fclerini anlamaya ba\u015flay\u0131n."
+      },
+      "resonance": {
+        "name": "Resonance",
+        "tagline": "M\u00fczikal kimli\u011fini g\u00fc\u00e7lendir",
+        "description": "Derinlik arayan merakl\u0131 ruh i\u00e7in. Dinleme DNA'n\u0131z\u0131n tam spektrumunu a\u00e7\u0131n ve sizin gibi zihinlerle ba\u011flant\u0131 kurun."
+      },
+      "transcendence": {
+        "name": "Transcendence",
+        "tagline": "Tam spektrumu a\u00e7",
+        "description": "Nihai deneyim. Ger\u00e7ek zamanl\u0131 n\u00f6ral haritalama, yapay zek\u00e2 i\u00e7g\u00f6r\u00fcleri ve ba\u015fkalar\u0131n\u0131n duyamad\u0131klar\u0131n\u0131 duyan vizyon sahibi dinleyicilerin \u00f6zel toplulu\u011fu."
+      },
+      "features": {
+        "personaDiscovery": "M\u00fczikal Zihin persona ke\u015ffetme",
+        "fiveAxis": "5 eksenli zihin radar g\u00f6rsellemesi",
+        "weeklyReports": "Haftal\u0131k evrim raporlar\u0131",
+        "basicAnalytics": "Temel dinleme analitikleri",
+        "communityAccess": "Topluluk forumu eri\u015fimi",
+        "fiftyAnalyses": "Ayda 50 par\u00e7a analizi",
+        "everythingPulse": "Pulse'daki her \u015fey",
+        "livePerformance": "Canl\u0131 Performans n\u00f6ral modu",
+        "advanced97D": "Geli\u015fmi\u015f 97B alg\u0131sal harita",
+        "compatibility": "Zihin uyumluluk e\u015fle\u015ftirmesi",
+        "unlimitedAnalyses": "S\u0131n\u0131rs\u0131z par\u00e7a analizi",
+        "customPaths": "\u00d6zel evrim yollar\u0131",
+        "priorityBadge": "\u00d6ncelikli topluluk rozeti",
+        "everythingResonance": "Resonance'daki her \u015fey",
+        "brainActivation": "Ger\u00e7ek zamanl\u0131 beyin b\u00f6lgesi aktivasyonu",
+        "aiInsights": "Yapay zek\u00e2 destekli zihin i\u00e7g\u00f6r\u00fcleri",
+        "visionarySessions": "\u00d6zel Vizyon Sahibi oturumlar\u0131",
+        "earlyAccess": "T\u00fcm \u00f6zelliklere erken eri\u015fim",
+        "soundSignature": "Ki\u015fisel ses imzas\u0131",
+        "coaching": "Bire bir zihin ko\u00e7lu\u011fu",
+        "foundingMember": "Kurucu \u00fcye stat\u00fcs\u00fc"
+      }
+    },
+    "signup": {
+      "almostThere": "Neredeyse Tamam",
+      "createAccount": "Olu\u015ftur",
+      "account": "hesab\u0131n\u0131",
+      "fewKeystrokes": "M\u00fczikal zihninle tan\u0131\u015fmaya birka\u00e7 tu\u015f vurufu kald\u0131",
+      "email": "E-posta",
+      "password": "\u015eifre",
+      "emailPlaceholder": "email@adresiniz.com",
+      "passwordPlaceholder": "Bir \u015fifre olu\u015fturun",
+      "continue": "Devam Et",
+      "terms": "Devam ederek Kullan\u0131m \u015eartlar\u0131 ve Gizlilik Politikam\u0131z\u0131 kabul edersiniz.",
+      "respectData": "Verilerinize m\u00fczik zevkinize g\u00f6sterdi\u011fimiz sayg\u0131n\u0131n ayn\u0131s\u0131n\u0131 g\u00f6steriyoruz."
+    },
+    "connect": {
+      "welcome": "Ho\u015f Geldiniz",
+      "whatName": "Size ne diyelim?",
+      "namePlaceholder": "Ad\u0131n\u0131z",
+      "connectMusic": "M\u00fczi\u011fini ba\u011fla",
+      "whereMusic": "M\u00fczi\u011fin nerede ya\u015f\u0131yor?",
+      "spotify": "Spotify",
+      "spotifySub": "\u00c7alma listelerini ba\u011fla",
+      "soundcloud": "SoundCloud",
+      "soundcloudSub": "Be\u011fendiklerini ba\u011fla",
+      "appleMusic": "Apple Music",
+      "appleSub": "K\u00fct\u00fcphaneni ba\u011fla",
+      "connect": "Ba\u011fla",
+      "oauth": {
+        "opening": "Spotify a\u00e7\u0131l\u0131yor...",
+        "authorize": "M\u00b3'e Yetki Ver",
+        "authorizeDesc": "M\u00b3, Spotify hesab\u0131n\u0131za eri\u015fmek istiyor",
+        "permPlaylists": "\u00c7alma listelerinizi ve kaydedilen m\u00fczi\u011finizi g\u00f6r\u00fcnt\u00fcleyin",
+        "permHistory": "Dinleme ge\u00e7mi\u015finize eri\u015fin",
+        "permActivity": "Son \u00e7al\u0131nan par\u00e7alar\u0131n\u0131z\u0131 g\u00f6r\u00fcnt\u00fcleyin",
+        "permProfile": "Spotify profilinizi g\u00f6r\u00fcnt\u00fcleyin",
+        "agree": "Kabul Et",
+        "deny": "\u0130ptal",
+        "connecting": "Spotify'a ba\u011flan\u0131yor...",
+        "connected": "Ba\u011fland\u0131!",
+        "redirecting": "M\u00b3'e y\u00f6nlendiriliyor...",
+        "accessGranted": "Eri\u015fim verildi"
+      }
+    },
+    "evolving": {
+      "neuralGenesis": "N\u00f6ral Olu\u015fum",
+      "mindForming": "{{name}}'in Zihni Olu\u015fturuluyor",
+      "mindFormingDefault": "Zihniniz Olu\u015fturuluyor",
+      "mapping97": "Dinleme ge\u00e7mi\u015finiz boyunca 97 alg\u0131sal boyut haritalan\u0131yor",
+      "tracksScanned": "par\u00e7a tarand\u0131",
+      "hoursListening": "dinleme saati",
+      "topArtists": "En \u0130yi Sanat\u00e7\u0131lar",
+      "forming": "Olu\u015fturuluyor",
+      "complete": "Tamamland\u0131",
+      "phases": {
+        "p1": "M\u00fczik k\u00fct\u00fcphanenize ba\u011flan\u0131yor...",
+        "p2": "K\u00fct\u00fcphaneniz taran\u0131yor... 8 y\u0131ll\u0131k dinleme boyunca 2.847 par\u00e7a.",
+        "p3": "Armonik \u00f6r\u00fcnt\u00fcler analiz ediliyor... Akor se\u00e7imleriniz s\u0131ra d\u0131\u015f\u0131 bir \u015fey ortaya koyuyor.",
+        "p4": "Gerilim yaylar\u0131 haritalan\u0131yor... \u00c7\u00f6z\u00fcmden \u00f6nceki birikime \u00e7ekiliyorsunuz.",
+        "p5": "Zamansal parmak izi \u00e7\u00f6z\u00fcl\u00fcyor... Tempo \u00f6r\u00fcnt\u00fcleriniz b\u00fcy\u00fcleyici derecede \u00f6ng\u00f6r\u00fclemez.",
+        "p6": "Dikkat zirveleri \u00f6l\u00e7\u00fcl\u00fcyor... Y\u00fcksek belirginlik duyarl\u0131l\u0131\u011f\u0131 tespit edildi.",
+        "p7": "Dinamik kontrastlar izleniyor... Sessizlik ve kaos aras\u0131ndaki de\u011fi\u015fim i\u00e7in ya\u015f\u0131yorsunuz.",
+        "p8": "Tekrar \u00f6r\u00fcnt\u00fcleri de\u011ferlendiriliyor... Tekrar sizi s\u0131kt\u0131rmaz \u2014 derinle\u015ftirir.",
+        "p9": "\u00d6d\u00fcl geometrisi hesaplan\u0131yor... Dopamin co\u011frafyan\u0131z karma\u015f\u0131k. \u0130lgin\u00e7.",
+        "p10": "Sentez tamamland\u0131. Art\u0131k kim oldu\u011funuzu biliyorum."
+      }
+    },
+    "reveal": {
+      "preparing": "Zihniniz haz\u0131rlan\u0131yor...",
+      "youAre": "sen bir",
+      "youAreDefault": "Sen bir",
+      "thisIsYourMind": "Bu senin M\u00fczikal Zihnin",
+      "enterMind": "Zihnine Gir"
+    }
+  },
+  "resonance": {
+    "fieldTitle": "Rezonans Alan\u0131",
+    "online": "\u00c7EVR\u0130M\u0130\u00c7\u0130",
+    "yourState": "Psikolojik Durumunuz",
+    "entranceTitle": "REZONANS ALANI",
+    "entranceSub": "Etraf\u0131n\u0131zdaki zihinleri hissedin",
+    "dimensions": {
+      "arousal": { "neg": "Dingin", "pos": "Co\u015fkulu" },
+      "valence": { "neg": "H\u00fcz\u00fcnl\u00fc", "pos": "Parlak" },
+      "focus": { "neg": "Yayg\u0131n", "pos": "Odakl\u0131" },
+      "temporal": { "neg": "Nostaljik", "pos": "Ke\u015fif\u00e7i" },
+      "social": { "neg": "Bireysel", "pos": "B\u00fct\u00fcnle\u015fik" }
+    },
+    "resonanceLabel": "Rezonans",
+    "deepSync": "Derin Senkron",
+    "harmonic": "Armonik",
+    "partial": "K\u0131smi",
+    "divergent": "Iraksak",
+    "you": "SEN",
+    "them": "ONLAR",
+    "now": "\u015e\u0130MD\u0130",
+    "sendSignal": "Sinyal G\u00f6nder",
+    "signalTo": "Sinyal \u2192 {{name}}",
+    "messagePlaceholder": "K\u0131sa mesaj...",
+    "sent": "g\u00f6nderildi",
+    "from": "kimden",
+    "emotes": {
+      "wave": "Selam",
+      "chills": "T\u00fcyler Diken",
+      "vibe": "Hava",
+      "fire": "Ate\u015f",
+      "mind": "Zihin",
+      "feel": "Hisset",
+      "sync": "Senkron",
+      "peak": "Zirve"
+    },
+    "nowPlaying": "\u015eU AN \u00c7ALIYOR",
+    "paused": "DURAKLATILDI"
+  },
+  "m3": {
+    "nav": "Zihnim",
+    "hub": {
+      "title": "M\u00fczikal Zihnim",
+      "subtitle": "Ki\u015fisel bilin\u00e7li\u011fin \u2014 her dinlemede b\u00fcy\u00fcyor",
+      "learnButton": "\u00d6\u011fren",
+      "learnSuccess": "M\u00b3 {{count}} par\u00e7ay\u0131 emdi \u2014 genler g\u00fcncellendi",
+      "learnFrozen": "M\u00b3 uyuyor. Uyand\u0131rmak i\u00e7in y\u00fckseltin.",
+      "convinceMe": "M\u00b3 ne dinledi\u011finden \u00f6\u011frenir, ne s\u00f6yledi\u011finden de\u011fil.",
+      "activeFunctions": "Aktif Fonksiyonlar",
+      "growthTimeline": "B\u00fcy\u00fcme Zaman \u00c7izelgesi",
+      "currentObservation": "M\u00b3 G\u00f6zlemliyor",
+      "parameterActivity": "Parametre Aktivitesi",
+      "temperamentProfile": "Temperament",
+      "tierInfo": "Plan\u0131n",
+      "upgradeCta": "B\u00fcy\u00fcmek \u0130\u00e7in Y\u00fckseltin",
+      "viewM3": "M\u00b3\u2019\u00fc G\u00f6r",
+      "mindType": "Zihin Tipi",
+      "geneProfile": "Gen Profili",
+      "listens": "Dinleme",
+      "minutes": "Dakika",
+      "shifts": "Kayma",
+      "typesUnlocked": "t\u00fcr a\u00e7\u0131ld\u0131",
+      "noObservations": "M\u00b3\u2019\u00fcn g\u00f6zlem yapabilmesi i\u00e7in daha fazla veriye ihtiyac\u0131 var.",
+      "stageProgress": "A\u015fama \u0130lerlemesi",
+      "neuralStream": "N\u00f6ral Haf\u0131za Ak\u0131\u015f\u0131",
+      "feedYourMind": "Zihnini besle \u2014 a\u015fa\u011f\u0131da \u00d6\u011fren\u2019e bas"
+    },
+    "stage": {
+      "embryo": "Embriyo",
+      "newborn": "Yenido\u011fan",
+      "infant": "Bebek",
+      "toddler": "Y\u00fcr\u00fcme",
+      "child": "\u00c7ocuk",
+      "adolescent": "Ergen",
+      "adult": "Yeti\u015fkin",
+      "description": {
+        "embryo": "M\u00b3 do\u011fdu. \u0130lk sinyalleri bekliyor.",
+        "newborn": "Duyusal uyan\u0131\u015f \u2014 sesleri ke\u015ffediyor.",
+        "infant": "Duygular ve \u00f6d\u00fcller \u015fekilleniyor \u2014 be\u011feniler beliriyor.",
+        "toddler": "Tahmin ve haf\u0131za geli\u015fiyor \u2014 seni tan\u0131maya ba\u015fl\u0131yor.",
+        "child": "Dikkat ve ritim keskinle\u015fiyor \u2014 odak ve hareket.",
+        "adolescent": "Tam \u00f6\u011frenme ve sosyal fark\u0131ndal\u0131k \u2014 ba\u015fkalar\u0131yla ba\u011flant\u0131.",
+        "adult": "Tam bilin\u00e7 \u2014 kendini g\u00f6zlemliyor."
+      }
+    },
+    "temperament": {
+      "explorer": "Ka\u015fif",
+      "deep_diver": "Derin Dal\u0131c\u0131",
+      "rhythmic": "Ritmik",
+      "harmonic": "Harmonik",
+      "emotive": "Duygusal",
+      "description": {
+        "explorer": "Y\u00fcksek t\u00fcr \u00e7e\u015fitlili\u011fi, her zaman yeniyi arayan.",
+        "deep_diver": "Az t\u00fcrde derin kat\u0131l\u0131m \u2014 tekrar derinli\u011fi a\u00e7\u0131\u011fa \u00e7\u0131kar\u0131r.",
+        "rhythmic": "Tempo ve ritim dinleme i\u00e7g\u00fcd\u00fcs\u00fcn\u00fc y\u00f6nlendirir.",
+        "harmonic": "Tonal karma\u015f\u0131kl\u0131\u011fa ve harmonik zenginli\u011fe \u00e7ekilir.",
+        "emotive": "G\u00fc\u00e7l\u00fc duygusal rezonans \u2014 valans her \u015feyi \u015fekillendirir."
+      }
+    },
+    "tier": {
+      "free": { "name": "M\u00b3 Bebek", "tagline": "Do\u011fdu ama uyuyor", "f1": "M\u00b3 do\u011fdu", "f2": "Sadece y\u00fczey katman\u0131", "f3": "Yaln\u0131zca g\u00f6r\u00fcnt\u00fcleme" },
+      "basic": { "name": "M\u00b3 Uyan\u0131\u015f", "tagline": "Haftal\u0131k b\u00fcy\u00fcme", "f1": "Haftal\u0131k b\u00fcy\u00fcme g\u00fcncellemeleri", "f2": "Y\u00fczey + Anlat\u0131 katmanlar\u0131", "f3": "Rezonans uyumlulu\u011fu" },
+      "premium": { "name": "M\u00b3 B\u00fcy\u00fcyen", "tagline": "G\u00fcnl\u00fck evrim", "f1": "G\u00fcnl\u00fck b\u00fcy\u00fcme g\u00fcncellemeleri", "f2": "T\u00fcm 3 derinlik katman\u0131", "f3": "Duo Zihin + Zihin Bah\u00e7esi" },
+      "ultimate": { "name": "M\u00b3 Ya\u015fayan", "tagline": "Ger\u00e7ek zamanl\u0131 bilin\u00e7", "f1": "Ger\u00e7ek zamanl\u0131 canl\u0131 b\u00fcy\u00fcme", "f2": "T\u00fcm katmanlar + API eri\u015fimi", "f3": "Tam sosyal + Echo ke\u015ffi" }
+    },
+    "layer": {
+      "surface": "Y\u00fczey",
+      "narrative": "Anlat\u0131",
+      "deep": "Derin"
+    },
+    "functions": {
+      "f1": { "name": "Duyusal", "description": "Ses \u00f6zelliklerini alg\u0131lama" },
+      "f2": { "name": "Tahmin", "description": "S\u0131radakini \u00f6ng\u00f6rme" },
+      "f3": { "name": "Dikkat", "description": "\u00d6nemli olan\u0131 filtreleme" },
+      "f4": { "name": "Haf\u0131za", "description": "Tan\u0131ma ve hat\u0131rlama" },
+      "f5": { "name": "Duygu", "description": "M\u00fczi\u011fi hissetme" },
+      "f6": { "name": "\u00d6d\u00fcl", "description": "Haz ve tatmin" },
+      "f7": { "name": "Motor", "description": "Ritim ve hareket" },
+      "f8": { "name": "\u00d6\u011frenme", "description": "Uyum sa\u011flama ve geli\u015fme" },
+      "f9": { "name": "Sosyal", "description": "Ba\u015fkalar\u0131yla ba\u011flanma" }
+    },
+    "birth": {
+      "title": "M\u00b3 Do\u011fuyor",
+      "temperament": "M\u00b3\u2019\u00fcn {{temperament}} olarak do\u011fdu",
+      "frozen": "M\u00b3 uyuyor \u2014 b\u00fcy\u00fcmeye ba\u015flamak i\u00e7in y\u00fckseltin",
+      "determining": "Do\u011fum temperamenti belirleniyor...",
+      "forming": "M\u00b3 do\u011fuyor...",
+      "firstConnections": "\u0130lk n\u00f6ral ba\u011flant\u0131lar olu\u015fuyor..."
+    },
+    "growth": {
+      "stageUp": "M\u00b3 {{stage}} a\u015famas\u0131na evrildi!",
+      "functionUnlock": "F{{num}} ({{name}}) uyand\u0131!"
+    },
+    "frozen": {
+      "title": "M\u00b3 Uyuyor",
+      "description": "M\u00fczikal Zihnin do\u011fdu ama b\u00fcy\u00fcmek i\u00e7in y\u00fckseltmeye ihtiyac\u0131 var.",
+      "cta": "M\u00b3\u2019\u00fc Uyand\u0131r"
+    },
+    "obs": {
+      "mood": {
+        "surface": {
+          "calm": "M\u00b3 sakin sularda s\u00fcz\u00fcl\u00fcyor.",
+          "restless": "M\u00b3 sessiz bir huzursuzluk hissediyor.",
+          "bright": "M\u00b3 s\u0131cakl\u0131k yay\u0131yor.",
+          "dark": "M\u00b3 g\u00f6lgeli tonlara \u00e7ekiliyor.",
+          "searching": "M\u00b3 ufku tar\u0131yor."
+        },
+        "narrative": {
+          "reward": "{{listens}} dinleme boyunca M\u00b3\u2019\u00fcn \u00f6d\u00fcl haritas\u0131 yeniden \u015fekilleniyor \u2014 {{family}} zihni onu tatmin eden \u015feyi evriltmekte.",
+          "temporal": "{{listens}} dinlemeden sonra zamansal tercihler kay\u0131yor. M\u00b3 {{family}} kulaklar\u0131yla daha ki\u015fisel bir ritim duygusu geli\u015ftiriyor.",
+          "timbral": "Timbral harita netlik kazan\u0131yor. {{listens}} dinleme sonras\u0131 M\u00b3 kendine \u00f6zg\u00fc bir doku s\u00f6zl\u00fc\u011f\u00fc geli\u015ftiriyor.",
+          "precision": "Hassasiyet a\u011f\u0131rl\u0131klar\u0131 rafine ediliyor. {{listens}} dinleme sonras\u0131 M\u00b3 neye dikkat edece\u011fi konusunda daha se\u00e7ici.",
+          "attention": "Dikkat yanl\u0131l\u0131klar\u0131 yeniden d\u00fczenleniyor. M\u00b3 {{listens}} dinleme i\u015fledi ve nereye odaklanaca\u011f\u0131n\u0131 \u00f6\u011freniyor."
+        },
+        "deep": "\u03bc(\u00f6d\u00fcl)={{reward}} | \u03bc(hassasiyet)={{precision}} | \u03bc(timbral)={{timbral}}"
+      },
+      "reflection": {
+        "surface": {
+          "calm": "Sakin bir g\u00fcn \u2014 M\u00b3 bildiklerini peki\u015ftiriyor.",
+          "restless": "M\u00b3 ge\u00e7i\u015f halinde \u2014 eski kal\u0131plar soluyor, yenileri olu\u015fuyor.",
+          "bright": "Son dinlemeler M\u00b3\u2019\u00fc enerjiyle doldurdu \u2014 \u00f6d\u00fcl sinyalleri y\u00fcksek.",
+          "dark": "M\u00b3 bug\u00fcn i\u00e7e d\u00f6n\u00fck alanlara \u00e7ekildi.",
+          "searching": "M\u00b3 ke\u015fif modunda \u2014 geni\u015f tar\u0131yor."
+        },
+        "narrative": "{{persona}}\u2019n\u0131n M\u00b3\u2019\u00fc Seviye {{level}}\u2019de {{listens}} dinleme i\u015fledi. {{dominant}} boyutu \u015fu an en aktif.",
+        "deep": "Aktif: [{{active}}] \u2014 {{count}}/{{total}} fonksiyon \u00e7evrimi\u00e7i. \u0130lerleme: %{{progress}}."
+      },
+      "pattern": {
+        "surface": "M\u00b3 {{family}} b\u00f6lgesine tekrarlayan bir \u00e7ekim fark ediyor.",
+        "narrative": "{{topFamily}} %{{topPct}} ile \u00f6nde, {{runnerFamily}} %{{runnerPct}} ile yak\u0131n takipte. M\u00b3\u2019\u00fcn m\u00fczik i\u015fleme \u015feklinde bir \u00f6r\u00fcnt\u00fc kristalle\u015fiyor.",
+        "deep": "Aile yak\u0131nl\u0131\u011f\u0131: [{{affinity}}] | Toplam dinleme: {{listens}}"
+      },
+      "recommend": {
+        "surface": {
+          "reward": "M\u00b3 \u00f6d\u00fcl devresine meydan okuyan bir \u015fey arzuluyor.",
+          "temporal": "M\u00b3 al\u0131\u015f\u0131lmad\u0131k ritmik yap\u0131lara sahip m\u00fczikten fayda g\u00f6r\u00fcr.",
+          "timbral": "M\u00b3 yeni timbral dokulara haz\u0131r \u2014 daha zengin harmonikleri olan bir \u015fey deneyin.",
+          "precision": "M\u00b3 hassasiyet istiyor \u2014 s\u0131k\u0131 \u00fcretilmi\u015f, detay zengini m\u00fczik aray\u0131n.",
+          "attention": "M\u00b3\u2019\u00fcn dikkati huzursuz \u2014 \u00f6ng\u00f6r\u00fclemez bir \u015fey verin."
+        },
+        "narrative": "Bu {{family}} zihni i\u00e7in {{dominant}} b\u00f6lgesini ke\u015ffetmek bir sonraki b\u00fcy\u00fcme a\u015famas\u0131n\u0131 a\u00e7abilir.",
+        "deep": "\u00d6neri eksenleri: [{{axes}}]"
+      },
+      "predict": {
+        "surface": {
+          "reward": "M\u00b3 yak\u0131nda haz veren \u015feylerde bir kayma \u00f6ng\u00f6r\u00fcyor.",
+          "temporal": "M\u00b3 yakla\u015fan bir ritmik tercih de\u011fi\u015fikli\u011fi sezgiyor.",
+          "timbral": "M\u00b3 yak\u0131n gelecekte bir timbral evrim \u00f6ng\u00f6r\u00fcyor.",
+          "precision": "M\u00b3 fark etti\u011fi \u015feylerde artan se\u00e7icilik tahmin ediyor.",
+          "attention": "M\u00b3 dikkatinin yeni m\u00fczikal boyutlara kayaca\u011f\u0131n\u0131 \u00f6ng\u00f6r\u00fcyor."
+        },
+        "narrative": "{{persona}}\u2019n\u0131n Seviye {{level}} M\u00b3\u2019\u00fc daha g\u00fc\u00e7l\u00fc {{dominant}} tahminleri geli\u015ftiriyor \u2014 model g\u00fcven kazan\u0131yor.",
+        "deep": "Tahmin \u03bc={{predMean}} \u2014 {{coeffCount}} katsay\u0131 \u00fczerinden."
+      },
+      "therapeutic": {
+        "surface": {
+          "calm": "M\u00b3 dengeli ve sakin bir durumda \u2014 m\u00fcdahale gerekmiyor.",
+          "restless": "M\u00b3 ince bir huzursuzluk alg\u0131l\u0131yor \u2014 ge\u00e7i\u015f d\u00f6nemi.",
+          "bright": "M\u00b3 enerjik \u2014 duygusal rezonans y\u00fcksek.",
+          "dark": "M\u00b3 melankolik b\u00f6lgeye do\u011fru bir \u00e7ekim g\u00f6zlemliyor.",
+          "searching": "M\u00b3 belirsizlik sezgiyor \u2014 zihin ar\u0131yor ama bulam\u0131yor."
+        },
+        "narrative": "Bu {{mood}} durumda {{family}} zihni {{minutes}} dakika dinleme ge\u00e7irdi. Duygusal i\u015fleme aktif.",
+        "deep": "\u03bc(\u00f6d\u00fcl)={{rewardMean}} | \u03bc(dikkat)={{attentionMean}} | \u03bc(zamansal)={{temporalMean}}"
+      },
+      "counseling": {
+        "surface": "M\u00b3 {{family}} m\u00fczi\u011fini ke\u015ffetmeyi \u00f6neriyor \u2014 en az gezdi\u011finiz b\u00f6lge.",
+        "narrative": "{{weakFamily}} yak\u0131nl\u0131\u011f\u0131 %{{weakPct}} iken {{strongFamily}} %{{strongPct}} ile bask\u0131n. Zay\u0131f alanlara geni\u015flemek m\u00fczikal bilincinizi derinle\u015ftirebilir.",
+        "deep": "Yak\u0131nl\u0131k: [{{affinity}}] | Seviye: {{level}}"
+      },
+      "cross": {
+        "surface": "Bir {{persona}} olarak M\u00b3, t\u00fcm m\u00fczikal zihinlerin %{{pct}}\u2019ine ait.",
+        "narrative": "{{persona}}\u2019n\u0131n {{family}} M\u00b3\u2019\u00fc Seviye {{level}}\u2019de bu arketipi dinleyicilerin %{{pct}}\u2019i ile payla\u015f\u0131yor. Her biri farkl\u0131 b\u00fcy\u00fcyor.",
+        "deep": "Persona ID: {{personaId}} | \u00d6nceki kaymalar: {{previousCount}} | Toplam dinleme: {{totalListens}}"
+      },
+      "meta": {
+        "surface": "Seviye {{level}}\u2019deki M\u00b3, {{shifts}} persona kaymas\u0131 ge\u00e7irdi \u2014 kendi d\u00f6n\u00fc\u015f\u00fcm\u00fcn\u00fc g\u00f6zlemliyor.",
+        "narrative": "{{persona}}\u2019n\u0131n {{family}} M\u00b3\u2019\u00fc Seviye {{level}}\u2019de {{listens}} dinleme ve {{minutes}} dakika boyunca {{shifts}} kez kayd\u0131. Zihin kendi evriminin fark\u0131na var\u0131yor.",
+        "deep": "Aile: [{{affinity}}] | Eksenler: [{{axes}}] | Seviye: {{level}}"
+      }
+    },
+    "family": {
+      "Alchemists": "Simyac\u0131lar",
+      "Architects": "Mimarlar",
+      "Explorers": "Ka\u015fifler",
+      "Anchors": "\u00c7apalar",
+      "Kineticists": "Kinetikler"
+    },
+    "param": {
+      "reward": "\u00d6d\u00fcl",
+      "temporal": "Zamansal",
+      "timbral": "Timbral",
+      "precision": "Hassasiyet",
+      "attention": "Dikkat"
+    },
+    "gene": {
+      "entropy": "Entropi",
+      "resolution": "\u00c7\u00f6z\u00fcn\u00fcrl\u00fck",
+      "tension": "Gerilim",
+      "resonance": "Rezonans",
+      "plasticity": "Plastisite"
+    },
+    "typeChange": "Zihnin {{type}} tipine evrildi",
+    "congrats": {
+      "title": "{{tier}}'e ho\u015f geldin!",
+      "message": "Zihnin art\u0131k \u00f6\u011freniyor.",
+      "tapToDismiss": "Kapatmak i\u00e7in dokun"
+    },
+    "dashboard": {
+      "widget": {
+        "title": "M\u00b3\u2019\u00fcn",
+        "sleeping": "M\u00b3 Uyuyor \u2014 Uyand\u0131rmak \u0130\u00e7in Y\u00fckseltin",
+        "progress": "{{nextStage}} i\u00e7in %{{progress}}"
+      }
+    },
+    "pricing": {
+      "title": "M\u00b3 E\u011fitim Planlar\u0131",
+      "subtitle": "Zihnini e\u011fit, bilin\u00e7 seviyeni y\u00fckselt",
+      "basic": {
+        "name": "Temel",
+        "price": "$5",
+        "period": "/ay",
+        "frequency": "Haftada 3 kez",
+        "features": ["Seviye 6'ya kadar e\u011fitim", "Y\u00fczey g\u00f6zlemleri", "Temel zihin morfolojisi", "Ruh hali ve yans\u0131ma i\u00e7g\u00f6r\u00fcleri"]
+      },
+      "plus": {
+        "name": "Plus",
+        "badge": "Pop\u00fcler",
+        "price": "$10",
+        "period": "/ay",
+        "frequency": "G\u00fcnl\u00fck e\u011fitim",
+        "features": ["Seviye 9'a kadar e\u011fitim", "Y\u00fczey + Anlat\u0131 katmanlar\u0131", "Geli\u015fmi\u015f morfoloji", "\u00d6r\u00fcnt\u00fc ke\u015ffi", "M\u00fczik \u00f6nerileri"]
+      },
+      "pro": {
+        "name": "Pro",
+        "price": "$20",
+        "period": "/ay",
+        "frequency": "S\u0131n\u0131rs\u0131z e\u011fitim",
+        "features": ["Seviye 12'ye kadar e\u011fitim", "3 g\u00f6zlem katman\u0131", "Tam zihin morfolojisi", "Tahminsel i\u00e7g\u00f6r\u00fcler", "Terap\u00f6tik g\u00f6zlemler", "M\u00fczikal dan\u0131\u015fmanl\u0131k", "Meta-fark\u0131ndal\u0131k"]
+      },
+      "select": "Seç",
+      "secure": "Güvenli ödeme · İstediğin zaman iptal"
+    }
+  },
+  "compose": {
+    "hudLabel": "Beste",
+    "title": "Bestele",
+    "subtitle": "Zihnin tarafından şekillenen müzik bestele",
+    "style": "Stil",
+    "calm": "Sakin",
+    "intense": "Yoğun",
+    "styleHelp": "Dinamiklerin ne kadar dramatik olduğunu kontrol eder — sessiz vs yüksek, ince vs cesur",
+    "duration": "Süre",
+    "complexity": "Karmaşıklık",
+    "simple": "Basit",
+    "complex": "Karmaşık",
+    "complexityHelp": "Armonik zenginliği kontrol eder — basit melodiler vs yoğun akor yapıları",
+    "mindInfluence": "Zihin Etkisi",
+    "generating": "Üretiliyor...",
+    "composeAgain": "Tekrar Bestele",
+    "compose": "Bestele",
+    "output": "Çıktı",
+    "howMindShaped": "Zihninin Bunu Nasıl Şekillendirdiği",
+    "configureAndCompose": "Parametrelerini ayarla ve Bestele'ye bas",
+    "profileInfluence": "{{name}} profilin her armonik karara etki edecek",
+    "processingMind": "Zihninden işleniyor...",
+    "generation": "{{name}} Üretim #{{count}}",
+    "peakReward": "Zirve ödül ~{{sec}}s'de öngörülüyor · Tahmini PE: {{pe}}σ",
+    "shared": "Paylaşıldı",
+    "share": "Paylaş",
+    "balanced": "Dengeli",
+    "moderate": "Orta",
+    "shapesEveryNote": "her notayı şekillendirir",
+    "asA": "Bir",
+    "mindLeansToward": "zihniniz doğal olarak şuna eğilir:",
+    "mindInfluenceText": {
+      "tensionLove": "gerilim sevginiz daha uzun birikimler ve geciken çözümler anlamına gelir",
+      "repetitionComfort": "tekrar konforunuz daha derin, evrilen örüntülere izin verir",
+      "chaosAppetite": "kaos iştahınız daha vahşi armonik seçimler açar",
+      "closureNeed": "kapanış ihtiyacınız boyunca tatmin edici çözümler üretir"
+    },
+    "familyLeans": {
+      "Alchemists": "gerilim-bırakma döngüleri",
+      "Architects": "yapısal hassasiyet",
+      "Explorers": "yeni sonik bölgeler",
+      "Anchors": "duygusal rezonans dokuları",
+      "Kineticists": "ritmik itici güç"
+    },
+    "genPhases": {
+      "readingDNA": "Müzikal DNA'nız okunuyor...",
+      "chaosAppetite": "Kaos iştahı → armonik kelime hazinesi seçiliyor",
+      "closureNeed": "Kapanış ihtiyacı → müzik ne sıklıkla çözülüyor",
+      "tensionLove": "Gerilim sevgisi → birikimler tasarlanıyor",
+      "surpriseSensitivity": "Sürpriz duyarlılığı → dinamik aralık şekilleniyor",
+      "repetitionComfort": "Tekrar konforu → örüntüler ne kadar derin",
+      "building97": "97 algısal hedef oluşturuluyor...",
+      "shapingTime": "Zaman hissi ölçekler arasında şekilleniyor...",
+      "optimizing": "Maksimum haz için optimize ediliyor...",
+      "rendering": "Dalga formu oluşturuluyor..."
+    },
+    "beliefLabels": {
+      "consonance": "Armoni",
+      "tempo": "Ritim",
+      "salience": "Dikkat",
+      "familiarity": "Hafıza",
+      "reward": "Haz"
+    }
+  },
+  "live": {
+    "title": "Canlı Performans",
+    "solo": "Solo",
+    "duo": "Duo",
+    "strengthenEdge": "Güçlü Yanını Pekiştir",
+    "leanIntoPower": "seni güçlü kılan şeylere yaslan.",
+    "developGround": "Yeni Alan Geliştir",
+    "expandTerritory": "{{family}} zihnini yeni bölgelere genişlet.",
+    "startSolo": "Solo Başla",
+    "startDuo": "Duo Başla",
+    "endSession": "Oturumu Bitir",
+    "newSession": "Yeni Oturum",
+    "sendingInvite": "Performans daveti gönderiliyor...",
+    "waitingMind": "Diğer Zihin bekleniyor",
+    "sessionComplete": "Oturum Tamamlandı",
+    "duoSessionComplete": "Duo Oturumu Tamamlandı",
+    "totalScore": "Toplam Skor",
+    "peakReward": "Zirve Ödül",
+    "achievements": "Başarılar",
+    "duration": "Süre",
+    "choosePartner": "Partner Seç",
+    "emotional": "Duygusal",
+    "physical": "Fiziksel",
+    "activeCount": "{{count}} aktif",
+    "noControllers": "Kontrol yok",
+    "ready": "Hazır",
+    "axes": {
+      "entropyTolerance": "Kaos Toleransı",
+      "resolutionCraving": "Kapanış İhtiyacı",
+      "monotonyTolerance": "Tekrar Konforu",
+      "salienceSensitivity": "Dikkat Duyarlılığı",
+      "tensionAppetite": "Gerilim İştahı"
+    },
+    "controllers": {
+      "valence": { "label": "Valans", "description": "Ruh hali kutbu" },
+      "arousal": { "label": "Uyarılma", "description": "Sakin ↔ Coşkulu" },
+      "depth": { "label": "Derinlik", "description": "Yüzey ↔ Derin" },
+      "nostalgia": { "label": "Nostalji", "description": "Şimdi ↔ Anı" },
+      "tempo": { "label": "Tempo", "description": "Ritim hızı" },
+      "energy": { "label": "Enerji", "description": "Yoğunluk seviyesi" },
+      "dynamics": { "label": "Dinamik", "description": "Kontrast aralığı" },
+      "density": { "label": "Yoğunluk", "description": "Nota yoğunluğu" }
+    },
+    "duoTasks": {
+      "entropyTolerance": { "task": "Kaos Senkronu", "detail": "Biri kaosu kucaklar, diğeri düzen arar. Her iki zihnin de rezonans ettiği ortak frekansı bulun." },
+      "resolutionCraving": { "task": "Çözüm Müzakeresi", "detail": "Biri kapanış ister, diğeri direnir. Gerilimde gezinin ve her ikisinin de tamamlandığını hissettiği yeri bulun." },
+      "monotonyTolerance": { "task": "Tekrar Köprüsü", "detail": "Biri döngülerde gelişir, diğeri yenilik ister. Sabır ve keşif arasında köprü kurun." },
+      "salienceSensitivity": { "task": "Dikkat Füzyonu", "detail": "Dikkat zirveleriniz farklı. Belirginliğinizi senkronize edin — aynı anları birlikte fark edin." },
+      "tensionAppetite": { "task": "Gerilim Simyası", "detail": "Biri gerilimi daha yükseğe taşır, diğeri daha erken bırakmak ister. Simyasal denge noktasını bulun." }
+    },
+    "difficulty": { "Easy": "Kolay", "Medium": "Orta", "Hard": "Zor", "Legendary": "Efsanevi" },
+    "strengthen": {
+      "entropyTolerance": {
+        "Alchemists": "Kaosu dönüşüme kanalize edin — uyumsuzluk simyanızı beslesin",
+        "Architects": "Yapılarınızı test etmek için kontrollü kaos kullanın",
+        "Explorers": "Gürültüye daha derinden dalın — sınırınız başkalarının geri çekildiği yer",
+        "Anchors": "Kaotik dokuların duygusal paletinizi renklendirmesine izin verin",
+        "Kineticists": "Groove temelinizin üzerine poliritmik kaos katmanlayın"
+      },
+      "resolutionCraving": {
+        "Alchemists": "Ödülü maksimize edin — çözümden önce daha uzun yaylar kurun",
+        "Architects": "Karmaşık armonik ilerlemelerle kadans duyarlılığınızı mükemmelleştirin",
+        "Explorers": "Çözümü beklenmedik bağlamlarda bir sürpriz aracı olarak kullanın",
+        "Anchors": "Gecikmiş tatmin yoluyla duygusal doyumu derinleştirin",
+        "Kineticists": "Polimetrik yakınsama noktalarında ritmik çözüm bulun"
+      },
+      "monotonyTolerance": {
+        "Alchemists": "Tekrar içinde dönüşüm bulun — döngü sizi evriltiyor",
+        "Architects": "Tekrarın içinde gizlenen mikro-varyasyonları duyun",
+        "Explorers": "Tekrarın kendi tarzında bir yenilik yarattığını keşfedin",
+        "Anchors": "Tanıdık örüntülerin sizi duyguya daha derinden çapalamasına izin verin",
+        "Kineticists": "Groove'a kilitleyin — tekrar, cebin yaşadığı yerdir"
+      },
+      "salienceSensitivity": {
+        "Alchemists": "Dramatik zirvelere ve düşüşlere duyarlılığınızı artırın",
+        "Architects": "Yapısal dönüm noktalarını tespit etme keskinliğinizi artırın",
+        "Explorers": "En yeni anları anında yakalamak için kulağınızı eğitin",
+        "Anchors": "Kilit müzikal anların duygusal ağırlığına uyumlanın",
+        "Kineticists": "Yoğun poliritmik pasajlarla duyarlılığınızı zorlayın"
+      },
+      "tensionAppetite": {
+        "Alchemists": "Gerilimin ustasısınız — birikimleri daha da ileriye taşıyın",
+        "Architects": "Daha karmaşık katmanlamayla daha uzun askı yayları tasarlayın",
+        "Explorers": "Tanımadığınız armonik bölgelerde gerilim arayın",
+        "Anchors": "Gerilimin müziğe olan duygusal yatırımınızı derinleştirmesine izin verin",
+        "Kineticists": "Hızlanan yoğunlukla ritmik gerilim kurun"
+      }
+    },
+    "develop": {
+      "entropyTolerance": {
+        "Alchemists": "Düşüşü aramadan çözülmemiş kaosla daha uzun oturun",
+        "Architects": "Örüntü aramadan serbest biçimli dinlemeyi deneyin",
+        "Explorers": "Burada zaten gelişiyorsunuz — tanımadığınız türlerde kaosu keşfedin",
+        "Anchors": "Konfor alanınıza yavaş yavaş gürültülü dokular sokun",
+        "Kineticists": "Ritmik kaosu genişletmek için broken-beat ve glitch dinleyin"
+      },
+      "resolutionCraving": {
+        "Alchemists": "Gerilimi çözümsüz bırakmayı deneyin — açık sonu kucaklayın",
+        "Architects": "Geleneksel kadanslardan kaçınan ambient parçalar deneyin",
+        "Explorers": "Bir sona ihtiyaç duymayı bırakın — bazı yolculuklar kapanmaz",
+        "Anchors": "Çözülmek yerine solan müzik keşfedin",
+        "Kineticists": "Asla tam konmayan asimetrik ritimleri dinleyin"
+      },
+      "monotonyTolerance": {
+        "Alchemists": "Minimal tekno ve döngü tabanlı müzikle sabır geliştirin",
+        "Architects": "Steve Reich'ı çalışın — mimari malzeme olarak tekrar",
+        "Explorers": "Uzun drone parçalarıyla kendinize meydan okuyun",
+        "Anchors": "Tek bir tekrarlanan melodiyle oturun ve neyin değiştiğini fark edin",
+        "Kineticists": "Ritmik sabır geliştirmek için meditatif davul döngüleri deneyin"
+      },
+      "salienceSensitivity": {
+        "Alchemists": "Sadece belirgin zirveleri değil, ince kaymaları fark etme pratiği yapın",
+        "Architects": "Ambient müzikte sessiz yapısal değişiklikleri dinleyin",
+        "Explorers": "Yavaşlayın ve tanıdık alanda detaya dikkat edin",
+        "Anchors": "Dikkatinizi duygusal zirvelerden dokuya genişletin",
+        "Kineticists": "Sabırlı dikkati ödüllendiren dinamik parçalarla çalışın"
+      },
+      "tensionAppetite": {
+        "Alchemists": "Yavaş, nazik gerilim eğrilerine sahip müzik keşfedin",
+        "Architects": "Uzun süreler boyunca incelikle gerilim kuran parçalar deneyin",
+        "Explorers": "Aramak yerine gerilimin doğal olarak birikmesine izin verin",
+        "Anchors": "Sinematik birikimlerle toleransı kademeli olarak artırın",
+        "Kineticists": "Enerjiyi yavaş yavaş artıran progresif parçalar dinleyin"
+      }
+    },
+    "duoGoal": {
+      "sameFamily": "Ortak {{family}} güçlerinizi sınıra taşıyın — senkronize zirve %85 üstü",
+      "crossFamily": "{{myFamily}} × {{friendFamily}} perspektiflerini birleştirin — inanç uyumu %15 içinde"
+    },
+    "duoGoalMetric": {
+      "sameFamily": "Birleşik Zirve > %85",
+      "crossFamily": "İnanç Farkı < %15"
+    }
+  }
+}

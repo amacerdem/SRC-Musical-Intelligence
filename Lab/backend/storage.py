@@ -18,10 +18,14 @@ Layout::
     │   ├── ram       dataset (T, 26) float32
     │   ├── neuro     dataset (T, 4) float32
     │   ├── reward    dataset (T,) float32
-    │   └── psi/
-    │       ├── affect    (T, 4)
-    │       ├── emotion   (T, 7)
-    │       └── ...
+    │   ├── psi/
+    │   │   ├── affect    (T, 4)
+    │   │   ├── emotion   (T, 7)
+    │   │   └── ...
+    │   └── dimensions/
+    │       ├── dim_6d    (T, 6)   — psychology layer
+    │       ├── dim_12d   (T, 12)  — cognition layer
+    │       └── dim_24d   (T, 24)  — neuroscience layer
 """
 from __future__ import annotations
 
@@ -103,6 +107,13 @@ def save(experiment_id: str, result) -> Path:
         psi_g = c3g.create_group("psi")
         for domain, arr in result.psi.items():
             psi_g.create_dataset(domain, data=arr.astype(np.float32), compression="gzip")
+
+        # Hierarchical dimensions (6D/12D/24D)
+        if hasattr(result, "dim_6d") and result.dim_6d.size > 0:
+            dim_g = c3g.create_group("dimensions")
+            dim_g.create_dataset("dim_6d", data=result.dim_6d.astype(np.float32), compression="gzip")
+            dim_g.create_dataset("dim_12d", data=result.dim_12d.astype(np.float32), compression="gzip")
+            dim_g.create_dataset("dim_24d", data=result.dim_24d.astype(np.float32), compression="gzip")
 
     return path
 
