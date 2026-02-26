@@ -283,31 +283,31 @@ DISCOVERY = Dimension(
 )
 INTENSITY = Dimension(
     index=1, key="intensity",
-    name="Intensity", name_tr="Yoğunluk",
+    name="Intensity", name_tr="Gerilim",
     layer="psychology", parent_key=None,
     belief_indices=TENSION_ARC.belief_indices + SONIC_IMPACT.belief_indices,
 )
 FLOW = Dimension(
     index=2, key="flow",
-    name="Flow", name_tr="Akış",
+    name="Flow", name_tr="Ritim",
     layer="psychology", parent_key=None,
     belief_indices=ENTRAINMENT.belief_indices + GROOVE.belief_indices,
 )
 DEPTH = Dimension(
     index=3, key="depth",
-    name="Depth", name_tr="Derinlik",
+    name="Depth", name_tr="Duygu",
     layer="psychology", parent_key=None,
     belief_indices=CONTAGION.belief_indices + REWARD.belief_indices,
 )
 TRACE = Dimension(
     index=4, key="trace",
-    name="Trace", name_tr="İz",
+    name="Trace", name_tr="Hafıza",
     layer="psychology", parent_key=None,
     belief_indices=EPISODIC_RESONANCE.belief_indices + RECOGNITION.belief_indices,
 )
 SHARING = Dimension(
     index=5, key="sharing",
-    name="Sharing", name_tr="Paylaşım",
+    name="Sharing", name_tr="Bağ",
     layer="psychology", parent_key=None,
     belief_indices=SYNCHRONY.belief_indices + BONDING.belief_indices,
 )

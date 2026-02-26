@@ -8,6 +8,7 @@
 
 import type { NeuralFamily } from "./mind";
 export type { NeuralFamily } from "./mind";
+export type { DimensionLayer, DimensionProfile, DimensionState } from "./dimensions";
 
 /* ── Growth Stages (Human Development) ─────────────────────────────── */
 

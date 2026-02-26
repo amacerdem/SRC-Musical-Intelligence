@@ -73,6 +73,7 @@ export interface Persona {
   famousMinds: string[];      // e.g. "Beethoven"
   populationPct: number;      // % of users
   starterArtifact?: FocusArtifact; // [NEW] The artifact they begin with
+  dimensionProfile?: import("./dimensions").DimensionProfile; // [NEW] 6D radar fingerprint
 }
 
 /** A user's mind profile */

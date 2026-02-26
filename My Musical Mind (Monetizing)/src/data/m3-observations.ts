@@ -21,6 +21,8 @@ import type {
 } from "@/types/m3";
 import { OBSERVATION_LEVEL_GATE, GENE_NAMES, GENE_TO_TYPE, getDominantType } from "@/types/m3";
 import { personas } from "@/data/personas";
+import { computeDimensions, ALL_PSYCHOLOGY } from "@/data/dimensions";
+import { DIMENSION_KEYS_6D } from "@/types/dimensions";
 
 /* ── Helpers ───────────────────────────────────────────────────────── */
 
@@ -75,6 +77,29 @@ function activePersonaName(mind: M3Mind): string {
 /** Check if observation type is unlocked at given level */
 function isUnlocked(type: ObservationType, level: PersonaLevel): boolean {
   return level >= OBSERVATION_LEVEL_GATE[type];
+}
+
+/** Compute the dominant 6D dimension from belief priors */
+function dominantDimension(mind: M3Mind): { key: string; name: string; value: number } {
+  const dims = computeDimensions(mind.parameters.beliefPriors);
+  let maxIdx = 0;
+  let maxVal = -1;
+  for (let i = 0; i < dims.psychology.length; i++) {
+    if (Math.abs(dims.psychology[i]) > maxVal) {
+      maxVal = Math.abs(dims.psychology[i]);
+      maxIdx = i;
+    }
+  }
+  const key = DIMENSION_KEYS_6D[maxIdx];
+  return { key, name: ALL_PSYCHOLOGY[maxIdx]?.name ?? key, value: dims.psychology[maxIdx] };
+}
+
+/** Get 6D dimension values as formatted string */
+function dimensionSummary(mind: M3Mind): string {
+  const dims = computeDimensions(mind.parameters.beliefPriors);
+  return DIMENSION_KEYS_6D.map((key, i) =>
+    `${key}: ${(Math.abs(dims.psychology[i]) * 100).toFixed(0)}%`
+  ).join(", ");
 }
 
 /* ── Observation Generators ────────────────────────────────────────── */
@@ -198,11 +223,12 @@ function genPatternDiscovery(mind: M3Mind, layer: PresentationLayer, t: TFunctio
     });
   } else {
     const affinityStr = ranked.map(f => `${f.name}: ${(f.value * 100).toFixed(1)}%`).join(", ");
+    const dimStr = dimensionSummary(mind);
     obs.push({
       id: "pd-deep",
       type: "pattern_discovery",
       layer: "deep",
-      text: t("m3.obs.pattern.deep", { affinity: affinityStr, listens: mind.totalListens }),
+      text: t("m3.obs.pattern.deep", { affinity: affinityStr, listens: mind.totalListens }) + ` | 6D: ${dimStr}`,
       intensity: 0.8,
       functionSource: 4,
     });
@@ -483,11 +509,13 @@ function genMetaAwareness(mind: M3Mind, layer: PresentationLayer, t: TFunction):
       `RSN=${mind.genes.resonance.toFixed(3)}`,
       `PLS=${mind.genes.plasticity.toFixed(3)}`,
     ].join(", ");
+    const dom6D = dominantDimension(mind);
+    const dimStr = dimensionSummary(mind);
     obs.push({
       id: "ma-deep",
       type: "meta_awareness",
       layer: "deep",
-      text: t("m3.obs.meta.deep", { affinity: affinityStr, axes: genesStr, level: mind.level }),
+      text: t("m3.obs.meta.deep", { affinity: affinityStr, axes: genesStr, level: mind.level }) + ` | Dominant: ${dom6D.name} (${(dom6D.value * 100).toFixed(0)}%) | 6D: ${dimStr}`,
       intensity: 1.0,
       functionSource: 8,
     });

@@ -6,6 +6,8 @@
 import { useM3Store } from "@/stores/useM3Store";
 import { M3_STAGE_ORDER } from "@/types/m3";
 import type { M3Stage, M3Tier, PresentationLayer } from "@/types/m3";
+import type { DimensionLayer } from "@/types/dimensions";
+import { TIER_DIMENSION_ACCESS } from "@/types/dimensions";
 
 /** Numeric stage comparison */
 function stageIndex(stage: M3Stage): number {
@@ -55,6 +57,11 @@ export function useM3Gate() {
 
     /* Therapeutic observations */
     canSeeTherapeutic: isAlive && stageIndex(stage) >= stageIndex("child"),
+
+    /* Dimension layer access (tier-gated) */
+    visibleDimensionLayers: (TIER_DIMENSION_ACCESS[tier] ?? ["psychology"]) as DimensionLayer[],
+    canSeeDimensionLayer: (layer: DimensionLayer): boolean =>
+      (TIER_DIMENSION_ACCESS[tier] ?? ["psychology"]).includes(layer),
 
     /* Upgrade needed? */
     needsUpgrade: tier === "free",

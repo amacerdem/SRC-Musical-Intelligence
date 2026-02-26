@@ -44,7 +44,7 @@ L³ (Lexical LOGOS Lattice) is the 104D semantic interpretation layer in the MI 
          ┌─ Tension Arc ─┤
          │               └─ Autonomic Arousal (6 beliefs)
 INTENSITY ─┤
-(Yoğunluk)  │              ┌─ Sensory Salience (6 beliefs)
+(Gerilim)  │              ┌─ Sensory Salience (6 beliefs)
          └─ Sonic Impact ─┤
                           └─ Aesthetic Appraisal (6 beliefs)
 
@@ -52,7 +52,7 @@ INTENSITY ─┤
          ┌─ Entrainment ─┤
          │               └─ Motor Period-Locking (5 beliefs)
   FLOW ────┤
-  (Akış)    │         ┌─ Auditory-Motor Integration (5 beliefs)
+  (Ritim)    │         ┌─ Auditory-Motor Integration (5 beliefs)
          └─ Groove ─┤
                     └─ Hierarchical Context (5 beliefs)
 
@@ -60,7 +60,7 @@ INTENSITY ─┤
            ┌─ Emotional Contagion ─┤
            │                       └─ Nostalgia Circuitry (5 beliefs)
   DEPTH ────┤
- (Derinlik)  │         ┌─ Dopaminergic Drive (5 beliefs)
+ (Duygu)  │         ┌─ Dopaminergic Drive (5 beliefs)
            └─ Reward ─┤
                       └─ Hedonic Valuation (6 beliefs)
 
@@ -68,7 +68,7 @@ INTENSITY ─┤
               ┌─ Episodic Resonance ─┤
               │                      └─ Autobiographical Network (6 beliefs)
   TRACE ───────┤
-   (İz)        │              ┌─ Pitch-Melody Processing (6 beliefs)
+   (Hafıza)        │              ┌─ Pitch-Melody Processing (6 beliefs)
               └─ Recognition ─┤
                               └─ Perceptual Learning (7 beliefs)
 
@@ -76,7 +76,7 @@ INTENSITY ─┤
            ┌─ Synchrony ─┤
            │              └─ Expertise Network (5 beliefs)
  SHARING ───┤
-(Paylaşım)  │           ┌─ Interpersonal Synchrony (5 beliefs)
+(Bağ)  │           ┌─ Interpersonal Synchrony (5 beliefs)
            └─ Bonding ─┤
                        └─ Social Reward (5 beliefs)
 
@@ -116,14 +116,14 @@ The 6 experiential dimensions are self-evident: a user needs no musical training
 
 ---
 
-### 3.2 Yoğunluk (Intensity)
+### 3.2 Gerilim (Intensity)
 
 | Property | Value |
 |----------|-------|
 | Index | 1 |
 | Key | `intensity` |
 | EN | Intensity |
-| TR | Yoğunluk |
+| TR | Gerilim |
 | Beliefs | 24 (F2 Prediction + F3 Attention + F5 Emotion) |
 | Gene affinity | tension |
 | Persona family | Alchemists |
@@ -144,14 +144,14 @@ The 6 experiential dimensions are self-evident: a user needs no musical training
 
 ---
 
-### 3.3 Akış (Flow)
+### 3.3 Ritim (Flow)
 
 | Property | Value |
 |----------|-------|
 | Index | 2 |
 | Key | `flow` |
 | EN | Flow |
-| TR | Akış |
+| TR | Ritim |
 | Beliefs | 20 (F3 Attention + F7 Motor) |
 | Gene affinity | plasticity |
 | Persona family | Kineticists |
@@ -172,14 +172,14 @@ The 6 experiential dimensions are self-evident: a user needs no musical training
 
 ---
 
-### 3.4 Derinlik (Depth)
+### 3.4 Duygu (Depth)
 
 | Property | Value |
 |----------|-------|
 | Index | 3 |
 | Key | `depth` |
 | EN | Depth |
-| TR | Derinlik |
+| TR | Duygu |
 | Beliefs | 21 (F5 Emotion + F6 Reward) |
 | Gene affinity | resonance (emotional) + tension (reward) |
 | Persona family | Anchors / Alchemists |
@@ -201,14 +201,14 @@ The 6 experiential dimensions are self-evident: a user needs no musical training
 
 ---
 
-### 3.5 İz (Trace)
+### 3.5 Hafıza (Trace)
 
 | Property | Value |
 |----------|-------|
 | Index | 4 |
 | Key | `trace` |
 | EN | Trace |
-| TR | İz |
+| TR | Hafıza |
 | Beliefs | 26 (F1 Sensory + F4 Memory + F8 Learning) |
 | Gene affinity | resonance (memory) |
 | Persona family | Anchors |
@@ -230,14 +230,14 @@ The 6 experiential dimensions are self-evident: a user needs no musical training
 
 ---
 
-### 3.6 Paylaşım (Sharing)
+### 3.6 Bağ (Sharing)
 
 | Property | Value |
 |----------|-------|
 | Index | 5 |
 | Key | `sharing` |
 | EN | Sharing |
-| TR | Paylaşım |
+| TR | Bağ |
 | Beliefs | 19 (F7 Motor + F8 Learning + F9 Social) |
 | Gene affinity | plasticity + resonance |
 | Persona family | Kineticists |

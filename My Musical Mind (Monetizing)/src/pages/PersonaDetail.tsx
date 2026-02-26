@@ -24,6 +24,11 @@ import { pageTransition, staggerChildren, slideUp, cinematicReveal } from "@/des
 import { useM3Store } from "@/stores/useM3Store";
 import { FAMILY_MORPHOLOGY, levelToOrganismStage, GENE_NAMES, GENE_COLORS } from "@/types/m3";
 import type { FamilyMorphology } from "@/canvas/mind-organism";
+import { DimensionRadar } from "@/components/mind/DimensionRadar";
+import { DimensionPanel } from "@/components/mind/DimensionPanel";
+import { getPersonaDimensions } from "@/data/persona-dimensions";
+import { useDimensions } from "@/hooks/useDimensions";
+import { CharacterAvatar } from "@/svg/characters";
 
 export function PersonaDetail() {
   const { id } = useParams<{ id: string }>();
@@ -86,18 +91,42 @@ export function PersonaDetail() {
       {/* Hero — Persona Identity */}
       <motion.div variants={staggerChildren} initial="initial" animate="animate" className="relative z-10">
         <motion.div variants={cinematicReveal} className="text-center mb-10 pt-4">
-          {/* Organism avatar */}
-          <div className="relative w-24 h-24 mx-auto mb-6">
-            <MindOrganismCanvas
-              color={persona.color}
-              stage={organismStage}
-              intensity={0.8}
-              breathRate={4}
-              familyMorphology={morphology}
-              variant="micro"
-              className="w-full h-full"
-              interactive={false}
-            />
+          {/* Character Avatar + Organism side by side */}
+          <div className="flex items-center justify-center gap-6 mb-6">
+            {/* 2D Character */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <CharacterAvatar
+                personaId={persona.id}
+                color={persona.color}
+                family={persona.family}
+                size={120}
+                level={personaLevel}
+                showAura
+              />
+            </motion.div>
+
+            {/* Organism avatar */}
+            <motion.div
+              className="relative w-24 h-24"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <MindOrganismCanvas
+                color={persona.color}
+                stage={organismStage}
+                intensity={0.8}
+                breathRate={4}
+                familyMorphology={morphology}
+                variant="micro"
+                className="w-full h-full"
+                interactive={false}
+              />
+            </motion.div>
           </div>
 
           {/* Family badge */}
@@ -135,6 +164,26 @@ export function PersonaDetail() {
             <motion.div variants={slideUp} className="hidden lg:block col-span-3">
               <div className="sticky top-24">
                 <PersonaSidebar color={persona.color} />
+
+                {/* 6D Dimension Radar */}
+                <div className="mt-6 p-4 rounded-xl" style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.04)" }}>
+                  <span className="hud-label mb-3 block">{t("dimensions.title", "Dimensions")}</span>
+                  <div className="flex justify-center">
+                    <DimensionRadar
+                      profile={getPersonaDimensions(persona.id)}
+                      color={persona.color}
+                      coloredAxes
+                      size={200}
+                    />
+                  </div>
+                </div>
+
+                {/* Dimension Layers (tier-gated) */}
+                {isMyPersona && (
+                  <div className="mt-4">
+                    <DimensionPanel accentColor={persona.color} compact />
+                  </div>
+                )}
 
                 {/* Gene DNA — 5 genes */}
                 <div className="mt-6 p-4 rounded-xl" style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.04)" }}>

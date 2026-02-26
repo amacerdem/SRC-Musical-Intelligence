@@ -9,7 +9,6 @@ import {
 import { useUserStore } from "@/stores/useUserStore";
 import { getPersona } from "@/data/personas";
 import { MindOrganismCanvas } from "@/components/mind/MindOrganismCanvas";
-import { MindRadar } from "@/components/mind/MindRadar";
 import { NucleusDot } from "@/components/mind/NucleusDot";
 import { BeliefMiniTrace } from "@/components/dashboard/BeliefMiniTrace";
 import { MindTypeRing } from "@/components/mind/MindTypeRing";
@@ -20,7 +19,6 @@ import {
 } from "@/data/mind-insights";
 import { beliefColors } from "@/design/tokens";
 import { pageTransition, fadeIn, cinematicReveal } from "@/design/animations";
-import type { MindAxes } from "@/types/mind";
 import { weeklyStats, lastWeekDays, monthlyEvolution } from "@/data/mock-listening";
 import { useM3Store } from "@/stores/useM3Store";
 import { M3_STAGES } from "@/data/m3-stages";
@@ -28,15 +26,10 @@ import { getPrimaryObservation } from "@/data/m3-observations";
 import { getNextStage } from "@/data/m3-stages";
 import { levelToOrganismStage } from "@/types/m3";
 import { useActiveIdentity } from "@/hooks/useActiveIdentity";
-
-/* ── Axis metadata ──────────────────────────────────────────── */
-const AXIS_META: { key: keyof MindAxes; shortLabel: string; belief: keyof typeof beliefColors }[] = [
-  { key: "entropyTolerance", shortLabel: "Entropy", belief: "consonance" },
-  { key: "resolutionCraving", shortLabel: "Resolution", belief: "tempo" },
-  { key: "monotonyTolerance", shortLabel: "Monotony", belief: "familiarity" },
-  { key: "salienceSensitivity", shortLabel: "Salience", belief: "salience" },
-  { key: "tensionAppetite", shortLabel: "Tension", belief: "reward" },
-];
+import { DimensionRadar } from "@/components/mind/DimensionRadar";
+import { DimensionPanel } from "@/components/mind/DimensionPanel";
+import { useDimensions } from "@/hooks/useDimensions";
+import { getPersonaDimensions } from "@/data/persona-dimensions";
 
 const BELIEF_NAMES = ["consonance", "tempo", "salience", "familiarity", "reward"] as const;
 const BELIEF_LABELS: Record<string, string> = {
@@ -56,14 +49,6 @@ const DAY_I18N_KEYS = [
   "dashboard.days.mon", "dashboard.days.tue", "dashboard.days.wed", "dashboard.days.thu",
   "dashboard.days.fri", "dashboard.days.sat", "dashboard.days.sun",
 ];
-
-const AXIS_I18N_KEY: Record<string, string> = {
-  entropyTolerance: "dashboard.axes.entropy",
-  resolutionCraving: "dashboard.axes.resolution",
-  monotonyTolerance: "dashboard.axes.monotony",
-  salienceSensitivity: "dashboard.axes.salience",
-  tensionAppetite: "dashboard.axes.tension",
-};
 
 /* ── Evolution % calculation ─────────────────────────────────── */
 function computeEvolution(): { pct: string; direction: "up" | "down" } {
@@ -166,7 +151,7 @@ export function Dashboard() {
           {/* ═ LEFT COLUMN (3 cols): Radar + DNA + Signals ═════ */}
           <div className="col-span-3 flex flex-col gap-3 min-h-0">
 
-            {/* Mind Radar */}
+            {/* 6D Dimension Radar (primary) */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -174,33 +159,18 @@ export function Dashboard() {
               className="spatial-card p-3 flex flex-col items-center flex-1 min-h-0"
             >
               <div className="w-full h-full flex items-center justify-center">
-                <MindRadar axes={mind.axes} color={color} size={280} />
+                <DimensionRadar
+                  profile={getPersonaDimensions(m3Mind?.activePersonaId ?? mind?.personaId ?? 1)}
+                  color={color}
+                  coloredAxes
+                  size={280}
+                />
               </div>
             </motion.div>
 
-            {/* Radar legend — integrated with radar above */}
+            {/* Dimension legend */}
             <div className="px-3 py-2 flex-shrink-0 -mt-1">
-              <div className="space-y-1.5">
-                {AXIS_META.map((axis, i) => {
-                  const value = mind.axes[axis.key];
-                  const pct = Math.round(value * 100);
-                  return (
-                    <div key={axis.key} className="flex items-center gap-2">
-                      <span className="text-[10px] font-display text-slate-500 w-20 truncate">{t(AXIS_I18N_KEY[axis.key])}</span>
-                      <div className="flex-1 h-[2px] rounded-full bg-white/5 overflow-hidden">
-                        <motion.div
-                          className="h-full rounded-full"
-                          style={{ backgroundColor: color, opacity: 0.5 }}
-                          initial={{ width: 0 }}
-                          animate={{ width: `${pct}%` }}
-                          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.3 + i * 0.08 }}
-                        />
-                      </div>
-                      <span className="text-[10px] font-mono w-7 text-right" style={{ color: `${color}90` }}>{pct}</span>
-                    </div>
-                  );
-                })}
-              </div>
+              <DimensionPanel accentColor={color} compact />
             </div>
 
             {/* Belief Signals */}

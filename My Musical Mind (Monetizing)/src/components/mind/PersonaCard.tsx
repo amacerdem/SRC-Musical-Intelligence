@@ -2,7 +2,11 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { MiniOrganism } from "./MiniOrganism";
+import { CharacterAvatar } from "@/svg/characters";
 import type { Persona } from "@/types/mind";
+import { getPersonaDimensions } from "@/data/persona-dimensions";
+import { DIMENSION_KEYS_6D } from "@/types/dimensions";
+import { PSYCHOLOGY_COLORS } from "@/data/dimensions";
 
 interface Props {
   persona: Persona;
@@ -21,15 +25,13 @@ export function PersonaCard({ persona, compact = false }: Props) {
         onClick={() => navigate(`/info/${persona.id}`)}
       >
         <div className="flex items-center gap-3">
-          <div
-            className="w-8 h-8 rounded-lg flex items-center justify-center font-display font-bold text-xs"
-            style={{
-              background: `${persona.color}10`,
-              color: persona.color,
-              border: `1px solid ${persona.color}15`,
-            }}
-          >
-            {persona.id}
+          <div className="w-10 h-10 flex-shrink-0">
+            <CharacterAvatar
+              personaId={persona.id}
+              color={persona.color}
+              family={persona.family}
+              size={28}
+            />
           </div>
           <div>
             <div className="text-sm font-medium text-slate-300">{t(`personas.${persona.id}.name`)}</div>
@@ -60,18 +62,28 @@ export function PersonaCard({ persona, compact = false }: Props) {
       }}
       onClick={() => navigate(`/info/${persona.id}`)}
     >
-      {/* Header with MiniOrganism badge */}
-      <div className="flex items-start justify-between mb-4">
-        <div className="relative w-10 h-10 rounded-xl flex items-center justify-center overflow-hidden">
-          <div className="absolute inset-0 opacity-60 group-hover:opacity-100 transition-opacity duration-500">
-            <MiniOrganism color={persona.color} stage={1} size={40} />
-          </div>
-          <span
-            className="relative z-10 font-display font-bold text-sm"
-            style={{ color: persona.color }}
-          >
-            {persona.id}
-          </span>
+      {/* Character Avatar — centered visual */}
+      <div className="flex justify-center mb-3 -mt-1">
+        <CharacterAvatar
+          personaId={persona.id}
+          color={persona.color}
+          family={persona.family}
+          size={90}
+          showAura
+        />
+      </div>
+
+      {/* Header row — ID badge + population */}
+      <div className="flex items-center justify-between mb-2">
+        <div
+          className="w-6 h-6 rounded-md flex items-center justify-center font-display font-bold text-[10px]"
+          style={{
+            background: `${persona.color}10`,
+            color: persona.color,
+            border: `1px solid ${persona.color}15`,
+          }}
+        >
+          {persona.id}
         </div>
         <span className="text-[10px] font-mono text-slate-700">
           {persona.populationPct}%
@@ -84,25 +96,29 @@ export function PersonaCard({ persona, compact = false }: Props) {
       </h3>
       <p className="text-xs text-slate-600 mb-4 font-light">{t(`personas.${persona.id}.tagline`)}</p>
 
-      {/* Mini axes — thin bars */}
+      {/* 6D Dimension bars */}
       <div className="space-y-1.5">
-        {Object.entries(persona.axes).map(([key, val]) => (
-          <div key={key} className="flex items-center gap-2">
-            <div className="w-14 text-[9px] text-slate-700 capitalize truncate">
-              {t(`axes.${key}`)}
+        {DIMENSION_KEYS_6D.map((key) => {
+          const dimProfile = getPersonaDimensions(persona.id);
+          const val = dimProfile[key];
+          return (
+            <div key={key} className="flex items-center gap-2">
+              <div className="w-14 text-[9px] text-slate-700 capitalize truncate">
+                {t(`dimensions.6d.${key}`, key)}
+              </div>
+              <div className="flex-1 h-[2px] rounded-full bg-white/[0.03] overflow-hidden">
+                <div
+                  className="h-full rounded-full transition-all duration-700"
+                  style={{
+                    width: `${val * 100}%`,
+                    backgroundColor: PSYCHOLOGY_COLORS[key],
+                    opacity: 0.5,
+                  }}
+                />
+              </div>
             </div>
-            <div className="flex-1 h-[2px] rounded-full bg-white/[0.03] overflow-hidden">
-              <div
-                className="h-full rounded-full transition-all duration-700"
-                style={{
-                  width: `${val * 100}%`,
-                  backgroundColor: persona.color,
-                  opacity: 0.4,
-                }}
-              />
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </motion.div>
   );

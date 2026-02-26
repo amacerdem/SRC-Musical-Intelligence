@@ -1202,5 +1202,69 @@
       "sameFamily": "Combined Peak > 85%",
       "crossFamily": "Belief Delta < 15%"
     }
+  },
+  "dimensions": {
+    "title": "Dimensions",
+    "subtitle": "Your musical mind in {{count}}D",
+    "6d": {
+      "discovery": "Discovery",
+      "intensity": "Intensity",
+      "flow": "Flow",
+      "depth": "Depth",
+      "trace": "Trace",
+      "sharing": "Sharing"
+    },
+    "12d": {
+      "expectancy": "Expectancy",
+      "information_rate": "Information Rate",
+      "tension_arc": "Tension Arc",
+      "sonic_impact": "Sonic Impact",
+      "entrainment": "Entrainment",
+      "groove": "Groove",
+      "contagion": "Emotional Contagion",
+      "reward": "Reward",
+      "episodic_resonance": "Episodic Resonance",
+      "recognition": "Recognition",
+      "synchrony": "Synchrony",
+      "bonding": "Bonding"
+    },
+    "24d": {
+      "predictive_processing": "Predictive Processing",
+      "information_entropy": "Information Entropy",
+      "sequence_learning": "Sequence Learning",
+      "sensory_encoding": "Sensory Encoding",
+      "harmonic_tension": "Harmonic Tension",
+      "autonomic_arousal": "Autonomic Arousal",
+      "sensory_salience": "Sensory Salience",
+      "aesthetic_appraisal": "Aesthetic Appraisal",
+      "oscillation_coupling": "Oscillation Coupling",
+      "motor_period_locking": "Motor Period-Locking",
+      "auditory_motor": "Auditory-Motor Integration",
+      "hierarchical_context": "Hierarchical Context",
+      "valence_mode": "Valence-Mode Circuitry",
+      "nostalgia_circuitry": "Nostalgia Circuitry",
+      "dopaminergic_drive": "Dopaminergic Drive",
+      "hedonic_valuation": "Hedonic Valuation",
+      "hippocampal_binding": "Hippocampal Binding",
+      "autobiographical": "Autobiographical Network",
+      "pitch_melody": "Pitch-Melody Processing",
+      "perceptual_learning": "Perceptual Learning",
+      "structural_prediction": "Structural Prediction",
+      "expertise_network": "Expertise Network",
+      "interpersonal_sync": "Interpersonal Synchrony",
+      "social_reward": "Social Reward"
+    },
+    "layers": {
+      "psychology": "Psychology",
+      "cognition": "Music Cognition",
+      "neuroscience": "Neuroscience",
+      "research": "Research"
+    },
+    "tierGate": {
+      "upgrade": "Upgrade to unlock",
+      "basicRequired": "Basic tier required",
+      "premiumRequired": "Premium tier required",
+      "ultimateRequired": "Ultimate tier required"
+    }
   }
 }

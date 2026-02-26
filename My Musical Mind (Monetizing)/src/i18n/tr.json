@@ -1202,5 +1202,69 @@
       "sameFamily": "Birleşik Zirve > %85",
       "crossFamily": "İnanç Farkı < %15"
     }
+  },
+  "dimensions": {
+    "title": "Boyutlar",
+    "subtitle": "Müzikal zihniniz {{count}}D'de",
+    "6d": {
+      "discovery": "Keşif",
+      "intensity": "Gerilim",
+      "flow": "Ritim",
+      "depth": "Duygu",
+      "trace": "Hafıza",
+      "sharing": "Bağ"
+    },
+    "12d": {
+      "expectancy": "Beklenti",
+      "information_rate": "Bilgi Hızı",
+      "tension_arc": "Gerilim Yayı",
+      "sonic_impact": "Sonik Etki",
+      "entrainment": "Senkronizasyon",
+      "groove": "Groove",
+      "contagion": "Duygusal Bulaşma",
+      "reward": "Ödül",
+      "episodic_resonance": "Epizodik Rezonans",
+      "recognition": "Tanıma",
+      "synchrony": "Senkroni",
+      "bonding": "Bağlanma"
+    },
+    "24d": {
+      "predictive_processing": "Tahminsel İşleme",
+      "information_entropy": "Bilgi Entropisi",
+      "sequence_learning": "Dizi Öğrenme",
+      "sensory_encoding": "Duyusal Kodlama",
+      "harmonic_tension": "Harmonik Gerilim",
+      "autonomic_arousal": "Otonom Uyarılma",
+      "sensory_salience": "Duyusal Belirginlik",
+      "aesthetic_appraisal": "Estetik Değerlendirme",
+      "oscillation_coupling": "Osilasyon Eşleşmesi",
+      "motor_period_locking": "Motor Periyot Kilidi",
+      "auditory_motor": "İşitsel-Motor Entegrasyon",
+      "hierarchical_context": "Hiyerarşik Bağlam",
+      "valence_mode": "Valans-Mod Devresi",
+      "nostalgia_circuitry": "Nostalji Devresi",
+      "dopaminergic_drive": "Dopaminerjik Dürtü",
+      "hedonic_valuation": "Hedonik Değerleme",
+      "hippocampal_binding": "Hipokampal Bağlama",
+      "autobiographical": "Otobiyografik Ağ",
+      "pitch_melody": "Perde-Melodi İşleme",
+      "perceptual_learning": "Algısal Öğrenme",
+      "structural_prediction": "Yapısal Tahmin",
+      "expertise_network": "Uzmanlık Ağı",
+      "interpersonal_sync": "Kişilerarası Senkronizasyon",
+      "social_reward": "Sosyal Ödül"
+    },
+    "layers": {
+      "psychology": "Psikoloji",
+      "cognition": "Müzik Bilişi",
+      "neuroscience": "Nörobilim",
+      "research": "Araştırma"
+    },
+    "tierGate": {
+      "upgrade": "Açmak için yükseltin",
+      "basicRequired": "Temel üyelik gerekli",
+      "premiumRequired": "Premium üyelik gerekli",
+      "ultimateRequired": "Ultimate üyelik gerekli"
+    }
   }
 }
