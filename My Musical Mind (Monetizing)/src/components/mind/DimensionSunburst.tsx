@@ -1,12 +1,11 @@
-/* ── DimensionSunburst — Concentric Ring Dimension Visualization ────
- *  Shows 6D → 12D → 24D as 3 concentric rings in a single SVG.
- *  Binary tree alignment: each 6D (60°) → 2×12D (30°) → 2×24D (15°).
- *
- *  Unlocked rings show colored data fill arcs.
- *  Locked rings show muted structural outlines + upgrade indicator.
+/* ── DimensionSunburst — 3 Nested Radar Charts ────────────────────
+ *  Three concentric radar rings: 6D (inner) → 12D → 24D (outer).
+ *  Each layer occupies its own radial band with gaps for labels.
+ *  Binary-tree aligned axes: each 6D splits into 2×12D, 2×24D.
+ *  Locked layers show muted grid structure, no data polygon.
  *  ──────────────────────────────────────────────────────────────── */
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { Lock } from "lucide-react";
 import { useDimensions } from "@/hooks/useDimensions";
@@ -17,175 +16,167 @@ import {
   ALL_COGNITION,
   ALL_NEUROSCIENCE,
   PSYCHOLOGY_COLORS,
-  COGNITION_CHILDREN,
-  NEUROSCIENCE_CHILDREN,
 } from "@/data/dimensions";
 
-/* ── Props ─────────────────────────────────────────────────────── */
+/* ── Props ───────────────────────────────────────────────────────── */
 
 interface DimensionSunburstProps {
-  /** Primary accent color (persona color) */
   color?: string;
-  /** Chart diameter in pixels */
   size?: number;
-  /** Called when user clicks a locked ring */
   onUpgrade?: () => void;
 }
 
-/* ── Geometry constants ────────────────────────────────────────── */
+/* ── Geometry constants ──────────────────────────────────────────── */
 
 const VB = 400;
 const CX = VB / 2;
 const CY = VB / 2;
-
-// Ring radii (innerR, outerR) — 3 rings with gaps
-const RING_6D  = { innerR: 58,  outerR: 98  };
-const RING_12D = { innerR: 106, outerR: 146 };
-const RING_24D = { innerR: 154, outerR: 194 };
-
-// Gaps in degrees
-const GAP_6D  = 2;
-const GAP_12D = 1.5;
-const GAP_24D = 1;
-
 const DEG = Math.PI / 180;
-const START_OFFSET = -90 * DEG; // 12 o'clock
 
-/* ── SVG arc path helpers ──────────────────────────────────────── */
+// Each layer occupies a radial band:
+//   6D:  center → 62   (classic radar from center)
+//   gap: 62 → 82       (6D labels here)
+//   12D: 82 → 126      (ring-radar)
+//   gap: 126 → 146     (12D labels here)
+//   24D: 146 → 192     (ring-radar)
+const R6_MAX = 62;
+const R12_BASE = 82;
+const R12_MAX = 126;
+const R24_BASE = 146;
+const R24_MAX = 192;
 
-function arcPath(
-  cx: number, cy: number,
-  innerR: number, outerR: number,
-  startRad: number, endRad: number,
-): string {
-  const x1o = cx + Math.cos(startRad) * outerR;
-  const y1o = cy + Math.sin(startRad) * outerR;
-  const x2o = cx + Math.cos(endRad) * outerR;
-  const y2o = cy + Math.sin(endRad) * outerR;
-  const x1i = cx + Math.cos(endRad) * innerR;
-  const y1i = cy + Math.sin(endRad) * innerR;
-  const x2i = cx + Math.cos(startRad) * innerR;
-  const y2i = cy + Math.sin(startRad) * innerR;
-  const sweep = endRad - startRad;
-  const la = sweep > Math.PI ? 1 : 0;
-  return [
-    `M ${x1o} ${y1o}`,
-    `A ${outerR} ${outerR} 0 ${la} 1 ${x2o} ${y2o}`,
-    `L ${x1i} ${y1i}`,
-    `A ${innerR} ${innerR} 0 ${la} 0 ${x2i} ${y2i}`,
-    `Z`,
-  ].join(" ");
+// Label positions (center of each gap)
+const R6_LABEL = (R6_MAX + R12_BASE) / 2;   // 72
+const R12_LABEL = (R12_MAX + R24_BASE) / 2;  // 136
+
+// Binary-tree-aligned axis angles (degrees), starting at -90° (top)
+const ANGLES_6D = Array.from({ length: 6 }, (_, i) => -90 + i * 60);
+
+const ANGLES_12D: number[] = [];
+for (let i = 0; i < 6; i++) {
+  ANGLES_12D.push(ANGLES_6D[i] - 15, ANGLES_6D[i] + 15);
 }
 
-/** Label position at radial center of a segment */
-function labelPos(
-  cx: number, cy: number,
-  r: number,
-  startRad: number, endRad: number,
-): { x: number; y: number; angle: number } {
-  const mid = (startRad + endRad) / 2;
-  return {
-    x: cx + Math.cos(mid) * r,
-    y: cy + Math.sin(mid) * r,
-    angle: (mid * 180) / Math.PI,
-  };
+const ANGLES_24D: number[] = [];
+for (const a of ANGLES_12D) {
+  ANGLES_24D.push(a - 7.5, a + 7.5);
 }
 
-/** Lighten a hex color by mixing with white */
-function lighten(hex: string, amount: number): string {
+// Grid circles: zone boundaries + midpoints
+const GRID_RADII = [
+  R6_MAX * 0.5,  // 6D midpoint
+  R6_MAX,        // 6D outer boundary
+  R12_BASE,      // 12D inner boundary
+  (R12_BASE + R12_MAX) / 2, // 12D midpoint
+  R12_MAX,       // 12D outer boundary
+  R24_BASE,      // 24D inner boundary
+  (R24_BASE + R24_MAX) / 2, // 24D midpoint
+  R24_MAX,       // 24D outer boundary
+];
+
+/* ── Helpers ─────────────────────────────────────────────────────── */
+
+function polar(deg: number, r: number) {
+  const rad = deg * DEG;
+  return { x: CX + Math.cos(rad) * r, y: CY + Math.sin(rad) * r };
+}
+
+function clamp01(v: number) {
+  return Math.max(0, Math.min(1, v));
+}
+
+function colorOf6D(i: number): string {
+  return PSYCHOLOGY_COLORS[ALL_PSYCHOLOGY[i]?.key as DimensionKey6D] ?? "#888";
+}
+
+function parent6Dof12D(i: number) {
+  return Math.floor(i / 2);
+}
+function parent6Dof24D(i: number) {
+  return Math.floor(i / 4);
+}
+
+function lighten(hex: string, amt: number): string {
   const r = parseInt(hex.slice(1, 3), 16);
   const g = parseInt(hex.slice(3, 5), 16);
   const b = parseInt(hex.slice(5, 7), 16);
-  const nr = Math.round(r + (255 - r) * amount);
-  const ng = Math.round(g + (255 - g) * amount);
-  const nb = Math.round(b + (255 - b) * amount);
-  return `#${nr.toString(16).padStart(2, "0")}${ng.toString(16).padStart(2, "0")}${nb.toString(16).padStart(2, "0")}`;
+  return `#${[r, g, b]
+    .map((c) =>
+      Math.round(c + (255 - c) * amt)
+        .toString(16)
+        .padStart(2, "0"),
+    )
+    .join("")}`;
 }
 
-/* ── Segment data structure ────────────────────────────────────── */
-
-interface Segment {
-  key: string;
-  name: string;
-  nameTr: string;
-  layer: "psychology" | "cognition" | "neuroscience";
-  parentColor: string;   // inherited 6D color
-  color: string;         // segment-specific color
-  startRad: number;
-  endRad: number;
-  innerR: number;
-  outerR: number;
-  value: number;
-  index: number;
-}
-
-/* ── Build ordered segment list ────────────────────────────────── */
-
-function buildSegments(
-  psych: number[],
-  cog: number[],
-  neuro: number[],
-): Segment[] {
-  const segments: Segment[] = [];
-
-  ALL_PSYCHOLOGY.forEach((p, pi) => {
-    const pColor = PSYCHOLOGY_COLORS[p.key as DimensionKey6D] ?? "#888";
-    const pStart = START_OFFSET + pi * 60 * DEG + (GAP_6D / 2) * DEG;
-    const pEnd = START_OFFSET + (pi + 1) * 60 * DEG - (GAP_6D / 2) * DEG;
-
-    // 6D segment
-    segments.push({
-      key: p.key, name: p.name, nameTr: p.nameTr,
-      layer: "psychology", parentColor: pColor, color: pColor,
-      startRad: pStart, endRad: pEnd,
-      innerR: RING_6D.innerR, outerR: RING_6D.outerR,
-      value: psych[pi] ?? 0, index: pi,
-    });
-
-    // 12D children (2 per 6D)
-    const cogChildren = COGNITION_CHILDREN[p.key];
-    if (!cogChildren) return;
-    cogChildren.forEach((c, ci) => {
-      const halfAngle = (pEnd - pStart) / 2;
-      const cStart = pStart + ci * halfAngle + (GAP_12D / 2) * DEG;
-      const cEnd = pStart + (ci + 1) * halfAngle - (GAP_12D / 2) * DEG;
-      const cColor = lighten(pColor, 0.15);
-
-      segments.push({
-        key: c.key, name: c.name, nameTr: c.nameTr,
-        layer: "cognition", parentColor: pColor, color: cColor,
-        startRad: cStart, endRad: cEnd,
-        innerR: RING_12D.innerR, outerR: RING_12D.outerR,
-        value: cog[c.index] ?? 0, index: c.index,
-      });
-
-      // 24D children (2 per 12D)
-      const neuroChildren = NEUROSCIENCE_CHILDREN[c.key];
-      if (!neuroChildren) return;
-      neuroChildren.forEach((n, ni) => {
-        const qAngle = (cEnd - cStart) / 2;
-        const nStart = cStart + ni * qAngle + (GAP_24D / 2) * DEG;
-        const nEnd = cStart + (ni + 1) * qAngle - (GAP_24D / 2) * DEG;
-        const nColor = lighten(pColor, 0.3);
-
-        segments.push({
-          key: n.key, name: n.name, nameTr: n.nameTr,
-          layer: "neuroscience", parentColor: pColor, color: nColor,
-          startRad: nStart, endRad: nEnd,
-          innerR: RING_24D.innerR, outerR: RING_24D.outerR,
-          value: neuro[n.index] ?? 0, index: n.index,
-        });
-      });
-    });
+/** Build center-based sector triangles (for 6D inner radar) */
+function mkCenterSectors(
+  angles: number[],
+  values: number[],
+  maxR: number,
+  colorFn: (i: number) => string,
+) {
+  const N = angles.length;
+  return values.map((v, i) => {
+    const next = (i + 1) % N;
+    const p1 = polar(angles[i], maxR * clamp01(v));
+    const p2 = polar(angles[next], maxR * clamp01(values[next] ?? 0));
+    return {
+      path: `M ${CX},${CY} L ${p1.x},${p1.y} L ${p2.x},${p2.y} Z`,
+      color: colorFn(i),
+    };
   });
-
-  return segments;
 }
 
-/* ── Component ─────────────────────────────────────────────────── */
+/** Build ring-based sector trapezoids (for 12D/24D ring-radars) */
+function mkRingSectors(
+  angles: number[],
+  values: number[],
+  baseR: number,
+  maxR: number,
+  colorFn: (i: number) => string,
+  lightenAmt: number,
+) {
+  const N = angles.length;
+  const span = maxR - baseR;
+  return values.map((v, i) => {
+    const next = (i + 1) % N;
+    const r1 = baseR + span * clamp01(v);
+    const r2 = baseR + span * clamp01(values[next] ?? 0);
+    const d1 = polar(angles[i], r1);
+    const d2 = polar(angles[next], r2);
+    const b1 = polar(angles[i], baseR);
+    const b2 = polar(angles[next], baseR);
+    return {
+      path: `M ${b1.x},${b1.y} L ${d1.x},${d1.y} L ${d2.x},${d2.y} L ${b2.x},${b2.y} Z`,
+      color: lightenAmt > 0 ? lighten(colorFn(i), lightenAmt) : colorFn(i),
+    };
+  });
+}
+
+/** Build center-based polygon outline */
+function centerOutline(angles: number[], values: number[], maxR: number): string {
+  const pts = angles.map((a, i) => {
+    const p = polar(a, maxR * clamp01(values[i] ?? 0));
+    return `${p.x},${p.y}`;
+  });
+  return `M ${pts.join(" L ")} Z`;
+}
+
+/** Build ring-based polygon outline */
+function ringOutline(angles: number[], values: number[], baseR: number, maxR: number): string {
+  const span = maxR - baseR;
+  const pts = angles.map((a, i) => {
+    const r = baseR + span * clamp01(values[i] ?? 0);
+    const p = polar(a, r);
+    return `${p.x},${p.y}`;
+  });
+  return `M ${pts.join(" L ")} Z`;
+}
+
+/* ── Component ───────────────────────────────────────────────────── */
 
 export function DimensionSunburst({
-  color: _accentColor,
   size = 300,
   onUpgrade,
 }: DimensionSunburstProps) {
@@ -194,68 +185,63 @@ export function DimensionSunburst({
   const { state } = useDimensions(isTr ? "tr" : "en");
   const { canSeeDimensionLayer } = useM3Gate();
 
-  const [hovered, setHovered] = useState<string | null>(null);
-  const [tooltip, setTooltip] = useState<{
-    x: number; y: number; text: string; locked: boolean;
-  } | null>(null);
-
   const canSeeCog = canSeeDimensionLayer("cognition");
   const canSeeNeuro = canSeeDimensionLayer("neuroscience");
 
-  const segments = useMemo(
-    () => buildSegments(state.psychology, state.cognition, state.neuroscience),
-    [state.psychology, state.cognition, state.neuroscience],
+  const [tip, setTip] = useState<{
+    x: number;
+    y: number;
+    name: string;
+    value: number;
+    locked: boolean;
+  } | null>(null);
+
+  const d6 = state.psychology;
+  const d12 = state.cognition;
+  const d24 = state.neuroscience;
+
+  // 6D: center-based sectors
+  const sectors6D = useMemo(
+    () => mkCenterSectors(ANGLES_6D, d6, R6_MAX, colorOf6D),
+    [d6],
+  );
+  // 12D: ring-based sectors
+  const sectors12D = useMemo(
+    () => mkRingSectors(ANGLES_12D, d12, R12_BASE, R12_MAX, (i) => colorOf6D(parent6Dof12D(i)), 0.15),
+    [d12],
+  );
+  // 24D: ring-based sectors
+  const sectors24D = useMemo(
+    () => mkRingSectors(ANGLES_24D, d24, R24_BASE, R24_MAX, (i) => colorOf6D(parent6Dof24D(i)), 0.25),
+    [d24],
   );
 
-  const isLayerLocked = (layer: string) => {
-    if (layer === "psychology") return false;
-    if (layer === "cognition") return !canSeeCog;
-    if (layer === "neuroscience") return !canSeeNeuro;
-    return true;
-  };
+  // Polygon outlines
+  const path6D = useMemo(() => centerOutline(ANGLES_6D, d6, R6_MAX), [d6]);
+  const path12D = useMemo(() => ringOutline(ANGLES_12D, d12, R12_BASE, R12_MAX), [d12]);
+  const path24D = useMemo(() => ringOutline(ANGLES_24D, d24, R24_BASE, R24_MAX), [d24]);
 
-  const handleHover = (seg: Segment, e: React.MouseEvent<SVGPathElement>) => {
-    setHovered(seg.key);
-    const locked = isLayerLocked(seg.layer);
-    const name = isTr ? seg.nameTr : seg.name;
-    const valStr = locked ? "" : ` ${Math.round(seg.value * 100)}%`;
-    const rect = e.currentTarget.closest("svg")!.getBoundingClientRect();
-    const svgX = ((e.clientX - rect.left) / rect.width) * VB;
-    const svgY = ((e.clientY - rect.top) / rect.height) * VB;
-    setTooltip({
-      x: svgX,
-      y: svgY - 12,
-      text: locked ? `${name}` : `${name}${valStr}`,
-      locked,
-    });
-  };
+  const onHover = useCallback(
+    (e: React.MouseEvent<SVGElement>, name: string, value: number, locked: boolean) => {
+      const svg = e.currentTarget.closest("svg")!;
+      const rect = svg.getBoundingClientRect();
+      setTip({
+        x: ((e.clientX - rect.left) / rect.width) * VB,
+        y: ((e.clientY - rect.top) / rect.height) * VB - 18,
+        name,
+        value,
+        locked,
+      });
+    },
+    [],
+  );
 
-  const handleLeave = () => {
-    setHovered(null);
-    setTooltip(null);
-  };
+  const offHover = useCallback(() => setTip(null), []);
 
-  const handleLockedClick = (layer: string) => {
-    if (isLayerLocked(layer) && onUpgrade) onUpgrade();
-  };
-
-  // 12D lock icon positions (6 pairs → center of each 6D's cognition span)
-  const lockPositions12D = !canSeeCog
-    ? ALL_PSYCHOLOGY.map((_, pi) => {
-        const midAngle = START_OFFSET + (pi + 0.5) * 60 * DEG;
-        const midR = (RING_12D.innerR + RING_12D.outerR) / 2;
-        return { x: CX + Math.cos(midAngle) * midR, y: CY + Math.sin(midAngle) * midR };
-      })
-    : [];
-
-  // 24D lock icon: one per 6D sector if locked
-  const lockPositions24D = !canSeeNeuro
-    ? ALL_PSYCHOLOGY.map((_, pi) => {
-        const midAngle = START_OFFSET + (pi + 0.5) * 60 * DEG;
-        const midR = (RING_24D.innerR + RING_24D.outerR) / 2;
-        return { x: CX + Math.cos(midAngle) * midR, y: CY + Math.sin(midAngle) * midR };
-      })
-    : [];
+  /** Is a grid circle in a locked zone? */
+  const isLockedGrid = (r: number) =>
+    (r >= R12_BASE && r <= R12_MAX && !canSeeCog) ||
+    (r >= R24_BASE && r <= R24_MAX && !canSeeNeuro);
 
   return (
     <div className="relative flex flex-col items-center">
@@ -265,231 +251,322 @@ export function DimensionSunburst({
         viewBox={`0 0 ${VB} ${VB}`}
         className="overflow-visible"
       >
-        {/* ── Ring backgrounds (subtle circular guides) ────── */}
-        <circle cx={CX} cy={CY} r={RING_6D.outerR} fill="none" stroke="rgba(255,255,255,0.02)" strokeWidth={0.5} />
-        <circle cx={CX} cy={CY} r={RING_12D.outerR} fill="none" stroke="rgba(255,255,255,0.02)" strokeWidth={0.5} />
-        <circle cx={CX} cy={CY} r={RING_24D.outerR} fill="none" stroke="rgba(255,255,255,0.02)" strokeWidth={0.5} />
+        <defs>
+          <style>{`@keyframes dimFadeIn{from{opacity:0}to{opacity:1}}`}</style>
+        </defs>
 
-        {/* ── Segment tracks + fills ──────────────────────── */}
-        {segments.map((seg) => {
-          const locked = isLayerLocked(seg.layer);
-          const isHov = hovered === seg.key;
-          const trackPath = arcPath(CX, CY, seg.innerR, seg.outerR, seg.startRad, seg.endRad);
-
-          // Fill: proportional radius
-          const clampedVal = Math.max(0, Math.min(1, seg.value));
-          const fillOuterR = seg.innerR + (seg.outerR - seg.innerR) * clampedVal;
-          const fillPath = clampedVal > 0.01
-            ? arcPath(CX, CY, seg.innerR, fillOuterR, seg.startRad, seg.endRad)
-            : null;
-
-          // Stagger index for animation delay
-          const layerOffset = seg.layer === "psychology" ? 0 : seg.layer === "cognition" ? 6 : 18;
-          const animDelay = (layerOffset + seg.index) * 20;
-
-          // Fill opacity by layer
-          const fillOpacity = seg.layer === "psychology" ? 0.7
-            : seg.layer === "cognition" ? 0.5 : 0.4;
-
-          return (
-            <g key={`${seg.layer}-${seg.key}`}>
-              {/* Track (background arc) */}
-              <path
-                d={trackPath}
-                fill={locked ? "rgba(255,255,255,0.015)" : "rgba(255,255,255,0.04)"}
-                stroke={locked ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.06)"}
-                strokeWidth={0.5}
-                strokeDasharray={locked ? "3 3" : undefined}
-                opacity={isHov ? 1.2 : 1}
-                onMouseEnter={(e) => handleHover(seg, e)}
-                onMouseLeave={handleLeave}
-                onClick={() => handleLockedClick(seg.layer)}
-                style={{ cursor: locked ? "pointer" : "default" }}
-              />
-
-              {/* Data fill arc (only for unlocked layers) */}
-              {!locked && fillPath && (
-                <path
-                  d={fillPath}
-                  fill={seg.color}
-                  opacity={fillOpacity}
-                  stroke={seg.parentColor}
-                  strokeWidth={0.5}
-                  strokeOpacity={0.3}
-                  style={{
-                    transition: `opacity 0.6s ease ${animDelay}ms`,
-                  }}
-                  onMouseEnter={(e) => handleHover(seg, e)}
-                  onMouseLeave={handleLeave}
-                >
-                  {/* Animate the fill arc growing from inner to target */}
-                  <animate
-                    attributeName="d"
-                    from={arcPath(CX, CY, seg.innerR, seg.innerR + 1, seg.startRad, seg.endRad)}
-                    to={fillPath}
-                    dur="0.6s"
-                    begin={`${animDelay}ms`}
-                    fill="freeze"
-                    calcMode="spline"
-                    keySplines="0.22 1 0.36 1"
-                    keyTimes="0;1"
-                  />
-                </path>
-              )}
-            </g>
-          );
-        })}
-
-        {/* ── 6D Labels (always visible) ─────────────────── */}
-        {ALL_PSYCHOLOGY.map((p, pi) => {
-          const pStart = START_OFFSET + pi * 60 * DEG + (GAP_6D / 2) * DEG;
-          const pEnd = START_OFFSET + (pi + 1) * 60 * DEG - (GAP_6D / 2) * DEG;
-          const midR = (RING_6D.innerR + RING_6D.outerR) / 2;
-          const pos = labelPos(CX, CY, midR, pStart, pEnd);
-          const pColor = PSYCHOLOGY_COLORS[p.key as DimensionKey6D] ?? "#888";
-
-          // Rotate text to follow the arc, flip if on bottom half
-          let textAngle = pos.angle + 90;
-          if (textAngle > 90 && textAngle < 270) textAngle += 180;
-          // For 6D with only 6 segments and wide arcs, just center horizontally
-          return (
-            <text
-              key={p.key}
-              x={pos.x}
-              y={pos.y}
-              textAnchor="middle"
-              dominantBaseline="middle"
-              fill={pColor}
-              fontSize={11}
-              fontFamily="var(--font-display)"
-              fontWeight="600"
-              style={{ pointerEvents: "none" }}
-            >
-              {isTr ? p.nameTr : p.name}
-            </text>
-          );
-        })}
-
-        {/* ── 12D Labels (smaller, visible) ──────────────── */}
-        {ALL_PSYCHOLOGY.map((p, pi) => {
-          const cogChildren = COGNITION_CHILDREN[p.key];
-          if (!cogChildren) return null;
-          const pStart = START_OFFSET + pi * 60 * DEG + (GAP_6D / 2) * DEG;
-          const pEnd = START_OFFSET + (pi + 1) * 60 * DEG - (GAP_6D / 2) * DEG;
-          const halfAngle = (pEnd - pStart) / 2;
-          const locked = !canSeeCog;
-
-          return cogChildren.map((c, ci) => {
-            const cStart = pStart + ci * halfAngle + (GAP_12D / 2) * DEG;
-            const cEnd = pStart + (ci + 1) * halfAngle - (GAP_12D / 2) * DEG;
-            const midR = (RING_12D.innerR + RING_12D.outerR) / 2;
-            const pos = labelPos(CX, CY, midR, cStart, cEnd);
-
-            // Abbreviated name: first word only for tight fit
-            const shortName = (isTr ? c.nameTr : c.name).split(" ")[0];
-
-            return (
-              <text
-                key={c.key}
-                x={pos.x}
-                y={pos.y}
-                textAnchor="middle"
-                dominantBaseline="middle"
-                fill={locked ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.45)"}
-                fontSize={7.5}
-                fontFamily="var(--font-mono)"
-                style={{ pointerEvents: "none" }}
-              >
-                {shortName}
-              </text>
-            );
-          });
-        })}
-
-        {/* ── Lock icons for locked rings ─────────────────── */}
-        {lockPositions12D.map((pos, i) => (
-          <g key={`lock12-${i}`} transform={`translate(${pos.x - 5}, ${pos.y - 5})`} opacity={0.25}>
-            <rect x={0} y={0} width={10} height={10} rx={2} fill="rgba(0,0,0,0.6)" />
-            <foreignObject x={1} y={1} width={8} height={8}>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: 8, height: 8 }}>
-                <Lock size={6} color="rgba(255,255,255,0.5)" />
-              </div>
-            </foreignObject>
-          </g>
+        {/* ── Grid circles ──────────────────────────────── */}
+        {GRID_RADII.map((r) => (
+          <circle
+            key={r}
+            cx={CX}
+            cy={CY}
+            r={r}
+            fill="none"
+            stroke={isLockedGrid(r) ? "rgba(255,255,255,0.03)" : "rgba(255,255,255,0.06)"}
+            strokeWidth={
+              r === R6_MAX || r === R12_BASE || r === R12_MAX || r === R24_BASE || r === R24_MAX
+                ? 0.8
+                : 0.4
+            }
+            strokeDasharray={isLockedGrid(r) ? "4 3" : undefined}
+          />
         ))}
 
-        {lockPositions24D.map((pos, i) => (
-          <g key={`lock24-${i}`} transform={`translate(${pos.x - 5}, ${pos.y - 5})`} opacity={0.25}>
-            <rect x={0} y={0} width={10} height={10} rx={2} fill="rgba(0,0,0,0.6)" />
-            <foreignObject x={1} y={1} width={8} height={8}>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: 8, height: 8 }}>
-                <Lock size={6} color="rgba(255,255,255,0.5)" />
-              </div>
-            </foreignObject>
-          </g>
-        ))}
-
-        {/* ── Tooltip ────────────────────────────────────── */}
-        {tooltip && (
-          <g style={{ pointerEvents: "none" }}>
-            <rect
-              x={tooltip.x - 60}
-              y={tooltip.y - 14}
-              width={120}
-              height={20}
-              rx={6}
-              fill="rgba(0,0,0,0.85)"
-              stroke="rgba(255,255,255,0.08)"
-              strokeWidth={0.5}
+        {/* ── 6D axis lines (center → R6_MAX) ───────────── */}
+        {ANGLES_6D.map((a, i) => {
+          const end = polar(a, R6_MAX);
+          return (
+            <line
+              key={`a6-${i}`}
+              x1={CX}
+              y1={CY}
+              x2={end.x}
+              y2={end.y}
+              stroke="rgba(255,255,255,0.06)"
+              strokeWidth={0.6}
             />
-            {tooltip.locked && (
-              <foreignObject x={tooltip.x - 56} y={tooltip.y - 11} width={12} height={14}>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: 12, height: 14 }}>
-                  <Lock size={8} color="rgba(255,255,255,0.4)" />
-                </div>
-              </foreignObject>
-            )}
-            <text
-              x={tooltip.locked ? tooltip.x + 2 : tooltip.x}
-              y={tooltip.y}
-              textAnchor="middle"
-              dominantBaseline="middle"
-              fill={tooltip.locked ? "rgba(255,255,255,0.4)" : "rgba(255,255,255,0.8)"}
-              fontSize={8}
-              fontFamily="var(--font-mono)"
-            >
-              {tooltip.text}
-            </text>
+          );
+        })}
+
+        {/* ── 12D axis lines (R12_BASE → R12_MAX) ───────── */}
+        {ANGLES_12D.map((a, i) => {
+          const s = polar(a, R12_BASE);
+          const e = polar(a, R12_MAX);
+          return (
+            <line
+              key={`a12-${i}`}
+              x1={s.x}
+              y1={s.y}
+              x2={e.x}
+              y2={e.y}
+              stroke={canSeeCog ? "rgba(255,255,255,0.05)" : "rgba(255,255,255,0.02)"}
+              strokeWidth={0.5}
+              strokeDasharray={canSeeCog ? undefined : "3 3"}
+            />
+          );
+        })}
+
+        {/* ── 24D axis lines (R24_BASE → R24_MAX) ───────── */}
+        {ANGLES_24D.map((a, i) => {
+          const s = polar(a, R24_BASE);
+          const e = polar(a, R24_MAX);
+          return (
+            <line
+              key={`a24-${i}`}
+              x1={s.x}
+              y1={s.y}
+              x2={e.x}
+              y2={e.y}
+              stroke={canSeeNeuro ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.015)"}
+              strokeWidth={0.4}
+              strokeDasharray={canSeeNeuro ? undefined : "2 2"}
+            />
+          );
+        })}
+
+        {/* ── 24D data polygon (outer ring) ─────────────── */}
+        {canSeeNeuro && (
+          <g style={{ animation: "dimFadeIn 0.7s ease 0.4s both" }}>
+            {sectors24D.map((s, i) => (
+              <path key={i} d={s.path} fill={s.color} fillOpacity={0.2} />
+            ))}
+            <path d={path24D} fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth={0.8} />
           </g>
         )}
 
-        {/* ── Center label ───────────────────────────────── */}
-        <text
-          x={CX}
-          y={CY - 6}
-          textAnchor="middle"
-          dominantBaseline="middle"
-          fill="rgba(255,255,255,0.25)"
-          fontSize={9}
-          fontFamily="var(--font-display)"
-          fontWeight="500"
-        >
-          {t("dimensions.title", "Dimensions")}
-        </text>
-        <text
-          x={CX}
-          y={CY + 8}
-          textAnchor="middle"
-          dominantBaseline="middle"
-          fill="rgba(255,255,255,0.12)"
-          fontSize={7}
-          fontFamily="var(--font-mono)"
-        >
-          6 · 12 · 24
-        </text>
+        {/* ── 12D data polygon (middle ring) ────────────── */}
+        {canSeeCog && (
+          <g style={{ animation: "dimFadeIn 0.6s ease 0.2s both" }}>
+            {sectors12D.map((s, i) => (
+              <path key={i} d={s.path} fill={s.color} fillOpacity={0.25} />
+            ))}
+            <path d={path12D} fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth={1} />
+          </g>
+        )}
+
+        {/* ── 6D data polygon (inner radar) ─────────────── */}
+        <g style={{ animation: "dimFadeIn 0.5s ease both" }}>
+          {sectors6D.map((s, i) => (
+            <path key={i} d={s.path} fill={s.color} fillOpacity={0.35} />
+          ))}
+          <path d={path6D} fill="none" stroke="rgba(255,255,255,0.35)" strokeWidth={1.5} />
+        </g>
+
+        {/* ── Data point dots — 6D ──────────────────────── */}
+        {d6.map((v, i) => {
+          const p = polar(ANGLES_6D[i], R6_MAX * clamp01(v));
+          return (
+            <circle
+              key={`d6-${i}`}
+              cx={p.x}
+              cy={p.y}
+              r={3.5}
+              fill={colorOf6D(i)}
+              stroke="#0a0a0f"
+              strokeWidth={1}
+              className="cursor-pointer"
+              onMouseEnter={(e) =>
+                onHover(e, isTr ? ALL_PSYCHOLOGY[i].nameTr : ALL_PSYCHOLOGY[i].name, v, false)
+              }
+              onMouseLeave={offHover}
+            />
+          );
+        })}
+
+        {/* ── Data point dots — 12D ─────────────────────── */}
+        {canSeeCog &&
+          d12.map((v, i) => {
+            const r = R12_BASE + (R12_MAX - R12_BASE) * clamp01(v);
+            const p = polar(ANGLES_12D[i], r);
+            return (
+              <circle
+                key={`d12-${i}`}
+                cx={p.x}
+                cy={p.y}
+                r={2.5}
+                fill={lighten(colorOf6D(parent6Dof12D(i)), 0.15)}
+                stroke="#0a0a0f"
+                strokeWidth={0.8}
+                className="cursor-pointer"
+                onMouseEnter={(e) =>
+                  onHover(e, isTr ? ALL_COGNITION[i].nameTr : ALL_COGNITION[i].name, v, false)
+                }
+                onMouseLeave={offHover}
+              />
+            );
+          })}
+
+        {/* ── Data point dots — 24D ─────────────────────── */}
+        {canSeeNeuro &&
+          d24.map((v, i) => {
+            const r = R24_BASE + (R24_MAX - R24_BASE) * clamp01(v);
+            const p = polar(ANGLES_24D[i], r);
+            return (
+              <circle
+                key={`d24-${i}`}
+                cx={p.x}
+                cy={p.y}
+                r={2}
+                fill={lighten(colorOf6D(parent6Dof24D(i)), 0.25)}
+                stroke="#0a0a0f"
+                strokeWidth={0.6}
+                className="cursor-pointer"
+                onMouseEnter={(e) =>
+                  onHover(e, isTr ? ALL_NEUROSCIENCE[i].nameTr : ALL_NEUROSCIENCE[i].name, v, false)
+                }
+                onMouseLeave={offHover}
+              />
+            );
+          })}
+
+        {/* ── Locked axis hover targets ─────────────────── */}
+        {!canSeeCog &&
+          ANGLES_12D.map((a, i) => {
+            const p = polar(a, (R12_BASE + R12_MAX) / 2);
+            return (
+              <circle
+                key={`lk12-${i}`}
+                cx={p.x}
+                cy={p.y}
+                r={8}
+                fill="transparent"
+                className="cursor-pointer"
+                onMouseEnter={(e) =>
+                  onHover(e, isTr ? ALL_COGNITION[i].nameTr : ALL_COGNITION[i].name, 0, true)
+                }
+                onMouseLeave={offHover}
+                onClick={onUpgrade}
+              />
+            );
+          })}
+        {!canSeeNeuro &&
+          ANGLES_24D.map((a, i) => {
+            const p = polar(a, (R24_BASE + R24_MAX) / 2);
+            return (
+              <circle
+                key={`lk24-${i}`}
+                cx={p.x}
+                cy={p.y}
+                r={6}
+                fill="transparent"
+                className="cursor-pointer"
+                onMouseEnter={(e) =>
+                  onHover(e, isTr ? ALL_NEUROSCIENCE[i].nameTr : ALL_NEUROSCIENCE[i].name, 0, true)
+                }
+                onMouseLeave={offHover}
+                onClick={onUpgrade}
+              />
+            );
+          })}
+
+        {/* ── 6D axis labels (in gap between 6D and 12D) ── */}
+        {ALL_PSYCHOLOGY.map((dim, i) => {
+          const p = polar(ANGLES_6D[i], R6_LABEL);
+          return (
+            <text
+              key={`lbl6-${i}`}
+              x={p.x}
+              y={p.y}
+              textAnchor="middle"
+              dominantBaseline="middle"
+              fill={colorOf6D(i)}
+              fontSize={9}
+              fontWeight="600"
+              fontFamily="var(--font-display)"
+              style={{ pointerEvents: "none" }}
+            >
+              {isTr ? dim.nameTr : dim.name}
+            </text>
+          );
+        })}
+
+        {/* ── 12D axis labels (in gap between 12D and 24D) */}
+        {ALL_COGNITION.map((dim, i) => {
+          const p = polar(ANGLES_12D[i], R12_LABEL);
+          const name = (isTr ? dim.nameTr : dim.name).split(" ")[0];
+          return (
+            <text
+              key={`lbl12-${i}`}
+              x={p.x}
+              y={p.y}
+              textAnchor="middle"
+              dominantBaseline="middle"
+              fill={
+                canSeeCog ? `${colorOf6D(parent6Dof12D(i))}88` : "rgba(255,255,255,0.08)"
+              }
+              fontSize={6.5}
+              fontFamily="var(--font-mono)"
+              style={{ pointerEvents: "none" }}
+            >
+              {name}
+            </text>
+          );
+        })}
+
+        {/* ── Lock icons ────────────────────────────────── */}
+        {!canSeeCog && (
+          <foreignObject x={CX - 8} y={CY - (R12_BASE + R12_MAX) / 2 - 8} width={16} height={16}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: 16,
+                height: 16,
+              }}
+            >
+              <Lock size={11} color="rgba(255,255,255,0.3)" />
+            </div>
+          </foreignObject>
+        )}
+        {!canSeeNeuro && (
+          <foreignObject x={CX - 8} y={CY - (R24_BASE + R24_MAX) / 2 - 8} width={16} height={16}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: 16,
+                height: 16,
+              }}
+            >
+              <Lock size={11} color="rgba(255,255,255,0.3)" />
+            </div>
+          </foreignObject>
+        )}
+
+        {/* ── Tooltip ───────────────────────────────────── */}
+        {tip && (
+          <g style={{ pointerEvents: "none" }}>
+            <rect
+              x={tip.x - 58}
+              y={tip.y - 12}
+              width={116}
+              height={20}
+              rx={6}
+              fill="rgba(0,0,0,0.88)"
+              stroke="rgba(255,255,255,0.08)"
+              strokeWidth={0.5}
+            />
+            <text
+              x={tip.x}
+              y={tip.y + 1}
+              textAnchor="middle"
+              dominantBaseline="middle"
+              fill={tip.locked ? "rgba(255,255,255,0.4)" : "rgba(255,255,255,0.8)"}
+              fontSize={8}
+              fontFamily="var(--font-mono)"
+            >
+              {tip.locked
+                ? `\uD83D\uDD12 ${tip.name}`
+                : `${tip.name} ${Math.round(tip.value * 100)}%`}
+            </text>
+          </g>
+        )}
       </svg>
 
-      {/* ── Upgrade CTA below chart (if any ring is locked) ── */}
+      {/* ── Upgrade CTA ─────────────────────────────────── */}
       {(!canSeeCog || !canSeeNeuro) && (
         <button
           onClick={onUpgrade}

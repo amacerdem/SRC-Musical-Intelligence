@@ -4,68 +4,53 @@ import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import {
   Flame, ChevronRight, Sparkles, Brain,
-  TrendingUp, Activity, Clock, Music,
+  TrendingUp,
 } from "lucide-react";
 import { useUserStore } from "@/stores/useUserStore";
 import { getPersona } from "@/data/personas";
 import { MindOrganismCanvas } from "@/components/mind/MindOrganismCanvas";
-import { NucleusDot } from "@/components/mind/NucleusDot";
-import { BeliefMiniTrace } from "@/components/dashboard/BeliefMiniTrace";
-import { MindTypeRing } from "@/components/mind/MindTypeRing";
+import { NeuronBrainCanvas } from "@/components/mind/NeuronBrainCanvas";
+import { DimensionSunburst } from "@/components/mind/DimensionSunburst";
 import {
   generateWeeklyMonologue,
-  generatePEInsight,
   generateBrainQuote,
 } from "@/data/mind-insights";
 import { beliefColors } from "@/design/tokens";
 import { pageTransition, fadeIn, cinematicReveal } from "@/design/animations";
-import { weeklyStats, lastWeekDays, monthlyEvolution } from "@/data/mock-listening";
+import { weeklyStats } from "@/data/mock-listening";
 import { useM3Store } from "@/stores/useM3Store";
-import { M3_STAGES } from "@/data/m3-stages";
-import { getPrimaryObservation } from "@/data/m3-observations";
-import { getNextStage } from "@/data/m3-stages";
 import { levelToOrganismStage } from "@/types/m3";
 import { useActiveIdentity } from "@/hooks/useActiveIdentity";
-import { DimensionSunburst } from "@/components/mind/DimensionSunburst";
+import { useDimensions } from "@/hooks/useDimensions";
+import { ALL_PSYCHOLOGY, PSYCHOLOGY_COLORS } from "@/data/dimensions";
+import type { DimensionKey6D } from "@/types/dimensions";
 
-const BELIEF_NAMES = ["consonance", "tempo", "salience", "familiarity", "reward"] as const;
-const BELIEF_LABELS: Record<string, string> = {
-  consonance: "Harmony", tempo: "Rhythm", salience: "Attention", familiarity: "Memory", reward: "Pleasure",
-};
-const DAY_LABELS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-
-const BELIEF_I18N_KEY: Record<string, string> = {
-  consonance: "dashboard.beliefs.harmony",
-  tempo: "dashboard.beliefs.rhythm",
-  salience: "dashboard.beliefs.attention",
-  familiarity: "dashboard.beliefs.memory",
-  reward: "dashboard.beliefs.pleasure",
+/* ── 6D Dimension weekly deltas (mock — matches sunburst order) ── */
+const DIM_DELTAS_6D: Record<string, number> = {
+  discovery: +0.08,
+  intensity: +0.14,
+  flow:      -0.03,
+  depth:     +0.22,
+  trace:     +0.11,
+  sharing:   +0.05,
 };
 
-const DAY_I18N_KEYS = [
-  "dashboard.days.mon", "dashboard.days.tue", "dashboard.days.wed", "dashboard.days.thu",
-  "dashboard.days.fri", "dashboard.days.sat", "dashboard.days.sun",
-];
-
-/* ── Evolution % calculation ─────────────────────────────────── */
-function computeEvolution(): { pct: string; direction: "up" | "down" } {
-  const snaps = monthlyEvolution.weeklySnapshots;
-  const prev = snaps[snaps.length - 2];
-  const curr = snaps[snaps.length - 1];
-  const totalDelta = curr.reduce((sum, v, i) => sum + Math.abs(v - prev[i]), 0);
-  const avgPrev = prev.reduce((a, b) => a + b, 0) / prev.length;
-  const pct = ((totalDelta / prev.length) / avgPrev) * 100;
-  const net = curr.reduce((a, b) => a + b, 0) - prev.reduce((a, b) => a + b, 0);
-  return { pct: pct.toFixed(1), direction: net >= 0 ? "up" : "down" };
+/* ── Evolution % from 6D deltas ─────────────────────────────────── */
+function computeEvolution6D(): { pct: string; direction: "up" | "down" } {
+  const vals = Object.values(DIM_DELTAS_6D);
+  const avg = vals.reduce((a, b) => a + Math.abs(b), 0) / vals.length;
+  const net = vals.reduce((a, b) => a + b, 0);
+  return { pct: (avg * 100).toFixed(1), direction: net >= 0 ? "up" : "down" };
 }
 
 export function Dashboard() {
   const navigate = useNavigate();
-  const { t } = useTranslation();
-  const { mind, level, xp, streak, tracksAnalyzed, displayName } = useUserStore();
+  const { t, i18n } = useTranslation();
+  const isTr = i18n.language === "tr";
+  const { mind, level, xp, streak, displayName } = useUserStore();
   const m3Mind = useM3Store((s) => s.mind);
   const identity = useActiveIdentity();
-  // Use M3's active persona (evolved through training), fall back to onboarding persona
+  const { state: dimState } = useDimensions(isTr ? "tr" : "en");
   const activePersonaId = m3Mind?.activePersonaId ?? mind?.personaId;
   const persona = activePersonaId ? getPersona(activePersonaId) : null;
 
@@ -74,12 +59,11 @@ export function Dashboard() {
   const color = identity.color;
   const xpForNext = level * 200;
   const xpProgress = Math.min(100, (xp % xpForNext) / xpForNext * 100);
-  const evolution = useMemo(() => computeEvolution(), []);
+  const evolution = useMemo(() => computeEvolution6D(), []);
 
   const monologue = useMemo(() => generateWeeklyMonologue(persona, mind.axes, t), [persona, mind.axes, t]);
   const brainQuote = useMemo(() => generateBrainQuote(identity.family, persona.id, t), [identity.family, persona.id, t]);
 
-  // Family morphology from active identity (gene-derived)
   const family = identity.family;
   const morphology = identity.morphology;
   const organismStage = m3Mind ? levelToOrganismStage(m3Mind.level) : mind.stage;
@@ -114,7 +98,6 @@ export function Dashboard() {
         className="fixed top-10 left-6 z-30 flex items-center gap-5"
       >
         <HUDStat label={t("dashboard.streak")} value={`${streak}d`} icon={<Flame size={14} />} accent={color} />
-        <HUDStat label={t("dashboard.tracks")} value={String(tracksAnalyzed)} icon={<Music size={13} />} />
         <HUDStat label={t("dashboard.level")} value={`L${personaLevel}/12`} icon={<TrendingUp size={13} />} />
         <div className="flex items-center gap-2.5">
           <div className="w-24 h-1.5 rounded-full overflow-hidden" style={{ background: `${color}15` }}>
@@ -145,48 +128,66 @@ export function Dashboard() {
         {/* ── MAIN GRID ───────────────────────────────────────── */}
         <div className="flex-1 grid grid-cols-12 gap-4 min-h-0 overflow-hidden mt-1">
 
-          {/* ═ LEFT COLUMN (3 cols): Radar + DNA + Signals ═════ */}
+          {/* ═ LEFT COLUMN (3 cols): Sunburst + Weekly Evolution (6D) ═ */}
           <div className="col-span-3 flex flex-col gap-3 min-h-0">
 
-            {/* Dimension Sunburst — 6D / 12D / 24D concentric rings */}
+            {/* Dimension Sunburst */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1, delay: 0.2 }}
-              className="spatial-card p-3 flex flex-col items-center flex-1 min-h-0"
+              className="spatial-card p-3 flex flex-col items-center flex-shrink-0"
             >
-              <div className="w-full h-full flex items-center justify-center">
-                <DimensionSunburst color={color} size={300} />
+              <div className="w-full flex items-center justify-center">
+                <DimensionSunburst color={color} size={260} />
               </div>
             </motion.div>
 
-            {/* Belief Signals */}
-            <motion.div variants={fadeIn} initial="initial" animate="animate" className="spatial-card p-3 flex-shrink-0">
-              <span className="text-xs font-display font-light tracking-[0.15em] uppercase text-slate-500 block mb-2">{t("dashboard.liveSignals")}</span>
-              <BeliefMiniTrace height={55} />
-              <div className="flex justify-center gap-3 mt-2">
-                {BELIEF_NAMES.map((b) => (
-                  <div key={b} className="flex items-center gap-1">
-                    <div className="w-2 h-2 rounded-full" style={{ background: beliefColors[b].primary }} />
-                    <span className="text-[10px] font-mono capitalize" style={{ color: `${beliefColors[b].primary}90` }}>
-                      {t(BELIEF_I18N_KEY[b])}
-                    </span>
-                  </div>
-                ))}
+            {/* Weekly Evolution — 6D Psychological Dimensions */}
+            <div className="spatial-card p-3 flex-1 min-h-0 overflow-hidden">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-display font-light tracking-[0.15em] uppercase text-slate-500">{t("dashboard.weeklyEvolution")}</span>
+                <div className="flex items-center gap-1.5">
+                  <TrendingUp size={13} style={{ color }} />
+                  <span className="text-sm font-mono font-medium" style={{ color }}>+{evolution.pct}%</span>
+                </div>
               </div>
-            </motion.div>
-
-            {/* Mind Type (compact) */}
-            {m3Mind && (
-              <motion.div variants={fadeIn} initial="initial" animate="animate" className="spatial-card p-3 flex-shrink-0 flex flex-col items-center">
-                <span className="text-xs font-display font-light tracking-[0.15em] uppercase text-slate-500 block mb-2 w-full">{t("m3.hub.mindType")}</span>
-                <MindTypeRing genes={m3Mind.genes} size={80} showLabels={false} />
-              </motion.div>
-            )}
+              <div className="space-y-2">
+                {ALL_PSYCHOLOGY.map((dim, i) => {
+                  const key = dim.key as DimensionKey6D;
+                  const delta = DIM_DELTAS_6D[key] ?? 0;
+                  const isPositive = delta >= 0;
+                  const dimColor = PSYCHOLOGY_COLORS[key];
+                  const absDelta = Math.abs(delta);
+                  return (
+                    <div key={key} className="flex items-center gap-3">
+                      <div className="flex items-center gap-1.5 w-20">
+                        <div className="w-2 h-2 rounded-full" style={{ background: dimColor }} />
+                        <span className="text-[11px] font-display text-slate-400">
+                          {isTr ? dim.nameTr : dim.name}
+                        </span>
+                      </div>
+                      <div className="flex-1 h-[4px] rounded-full bg-white/5 overflow-hidden">
+                        <motion.div
+                          className="h-full rounded-full"
+                          style={{ backgroundColor: dimColor, opacity: 0.8 }}
+                          initial={{ width: 0 }}
+                          animate={{ width: `${Math.min(absDelta * 400, 100)}%` }}
+                          transition={{ duration: 1, delay: 0.5 + i * 0.1 }}
+                        />
+                      </div>
+                      <span className="text-[12px] font-mono w-12 text-right" style={{ color: isPositive ? dimColor : "#EF4444" }}>
+                        {isPositive ? "+" : ""}{(delta * 100).toFixed(0)}%
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
           </div>
 
-          {/* ═ CENTER COLUMN (5 cols): Persona + Quote + PE ═══ */}
-          <div className="col-span-5 flex flex-col items-center justify-center gap-4 min-h-0">
+          {/* ═ CENTER COLUMN (5 cols): Persona + Neuron Brain ═══ */}
+          <div className="col-span-5 flex flex-col items-center justify-center gap-3 min-h-0">
 
             {/* View Persona button */}
             <motion.button
@@ -225,21 +226,6 @@ export function Dashboard() {
               </p>
             </motion.div>
 
-            {/* Brain evolution stat */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.8 }}
-              className="flex items-center gap-3 px-5 py-2.5 rounded-full"
-              style={{ background: `${color}08`, border: `1px solid ${color}15` }}
-            >
-              <Activity size={16} style={{ color }} />
-              <span className="text-sm font-display font-medium" style={{ color }}>
-                {t("dashboard.evolution", { pct: evolution.pct })}
-              </span>
-              <span className="text-xs text-slate-500 font-display font-light">{t("dashboard.evolutionThisWeek")}</span>
-            </motion.div>
-
             {/* Brain quote */}
             <motion.div
               initial={{ opacity: 0 }}
@@ -250,18 +236,30 @@ export function Dashboard() {
               <p className="text-sm text-slate-400 font-display font-light italic leading-relaxed">
                 "{brainQuote}"
               </p>
-              <p className="text-xs font-mono text-slate-600 mt-2">— {t("dashboard.yourMind", { family: identity.family.slice(0, -1) })}</p>
+              <p className="text-xs font-mono text-slate-600 mt-1">— {t("dashboard.yourMind", { family: identity.family.slice(0, -1) })}</p>
             </motion.div>
 
-            {/* M³ Widget */}
-            <M3Widget color={color} />
+            {/* Neuron Brain Visualization */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.85 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.5, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+              className="w-full flex-1 min-h-0 max-h-[340px] spatial-card overflow-hidden relative"
+              style={{ border: `1px solid ${color}10` }}
+            >
+              <NeuronBrainCanvas color={color} />
+            </motion.div>
+          </div>
 
-            {/* PE Insight */}
+          {/* ═ RIGHT COLUMN (4 cols): Peak Moment + Brain Narrative + Genres ═ */}
+          <div className="col-span-4 flex flex-col gap-2 min-h-0">
+
+            {/* Peak Moment This Week — TOP */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.8 }}
-              className="w-full max-w-lg"
+              transition={{ delay: 0.3, duration: 0.8 }}
+              className="flex-shrink-0"
             >
               <div className="spatial-card p-4 glow-border" style={{ "--glow-color": beliefColors.reward.primary } as React.CSSProperties}>
                 <div className="flex items-start gap-3">
@@ -270,7 +268,7 @@ export function Dashboard() {
                     <span className="text-[11px] font-display font-light tracking-[0.1em] uppercase" style={{ color: `${beliefColors.reward.primary}90` }}>
                       {t("dashboard.peakMomentThisWeek")}
                     </span>
-                    <p className="text-[13px] text-slate-400 font-body font-light mt-1 leading-relaxed">
+                    <p className="text-[12px] text-slate-400 font-body font-light mt-1 leading-relaxed">
                       {t("insights.mockPE").slice(0, 120)}...
                     </p>
                     <div className="flex items-center gap-2 mt-2">
@@ -289,106 +287,21 @@ export function Dashboard() {
               </div>
             </motion.div>
 
-            {/* Persona link */}
-            <motion.div variants={fadeIn} initial="initial" animate="animate">
-              <button
-                onClick={() => navigate(`/info/${persona.id}`)}
-                className="flex items-center gap-2 px-4 py-2 rounded-full transition-colors text-xs font-display text-slate-500 hover:text-slate-300"
-                style={{ background: `${color}08`, border: `1px solid ${color}15` }}
-              >
-                {t("dashboard.viewPersona")} <ChevronRight size={14} />
-              </button>
-            </motion.div>
-          </div>
-
-          {/* ═ RIGHT COLUMN (4 cols): Weekly + Deltas + Brain ═ */}
-          <div className="col-span-4 flex flex-col gap-2 min-h-0">
-
-            {/* Weekly Listening Chart */}
-            <div className="spatial-card p-3 flex-shrink-0">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-display font-light tracking-[0.15em] uppercase text-slate-500">{t("dashboard.thisWeek")}</span>
-                <div className="flex items-center gap-2">
-                  <Clock size={12} className="text-slate-600" />
-                  <span className="text-xs font-mono text-slate-400">{Math.floor(weeklyStats.totalMinutes / 60)}h {weeklyStats.totalMinutes % 60}m</span>
-                </div>
-              </div>
-              <div className="flex items-end gap-1.5 h-20">
-                {lastWeekDays.map((day, i) => {
-                  const maxMin = Math.max(...lastWeekDays.map(d => d.minutesListened));
-                  const height = (day.minutesListened / maxMin) * 100;
-                  const bColor = beliefColors[day.dominantBelief].primary;
-                  return (
-                    <div key={day.date} className="flex-1 flex flex-col items-center gap-1">
-                      <span className="text-[10px] font-mono text-slate-500">{day.minutesListened}m</span>
-                      <motion.div
-                        className="w-full rounded-sm"
-                        style={{ backgroundColor: bColor, opacity: 0.7 }}
-                        initial={{ height: 0 }}
-                        animate={{ height: `${height}%` }}
-                        transition={{ duration: 0.8, delay: i * 0.06 }}
-                      />
-                      <span className="text-[10px] font-mono text-slate-500">{t(DAY_I18N_KEYS[i])}</span>
-                    </div>
-                  );
-                })}
-              </div>
-              <div className="flex justify-between mt-2 text-[11px] font-mono text-slate-500">
-                <span>{t("dashboard.tracksCount", { count: weeklyStats.totalTracks })}</span>
-                <span>{t("dashboard.peak", { hour: weeklyStats.peakListeningHour })}</span>
-              </div>
-            </div>
-
-            {/* Belief Evolution Deltas */}
-            <div className="spatial-card p-3 flex-shrink-0">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-display font-light tracking-[0.15em] uppercase text-slate-500">{t("dashboard.weeklyEvolution")}</span>
-                <div className="flex items-center gap-1.5">
-                  <TrendingUp size={13} style={{ color }} />
-                  <span className="text-sm font-mono font-medium" style={{ color }}>+{evolution.pct}%</span>
-                </div>
-              </div>
-              <div className="space-y-2">
-                {BELIEF_NAMES.map((b, i) => {
-                  const delta = weeklyStats.beliefDeltas[i];
-                  const isPositive = delta >= 0;
-                  const bColor = beliefColors[b].primary;
-                  const absDelta = Math.abs(delta);
-                  return (
-                    <div key={b} className="flex items-center gap-3">
-                      <div className="flex items-center gap-1.5 w-20">
-                        <div className="w-2 h-2 rounded-full" style={{ background: bColor }} />
-                        <span className="text-[11px] font-display text-slate-400">{t(BELIEF_I18N_KEY[b])}</span>
-                      </div>
-                      <div className="flex-1 h-[4px] rounded-full bg-white/5 overflow-hidden">
-                        <motion.div
-                          className="h-full rounded-full"
-                          style={{ backgroundColor: bColor, opacity: 0.8 }}
-                          initial={{ width: 0 }}
-                          animate={{ width: `${Math.min(absDelta * 500, 100)}%` }}
-                          transition={{ duration: 1, delay: 0.5 + i * 0.1 }}
-                        />
-                      </div>
-                      <span className="text-[12px] font-mono w-12 text-right" style={{ color: isPositive ? bColor : "#EF4444" }}>
-                        {isPositive ? "+" : ""}{(delta * 100).toFixed(0)}%
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-              <p className="text-[11px] text-slate-500 font-display font-light mt-3 leading-relaxed">
-                {t("insights.mockDrift").slice(0, 100)}...
-              </p>
-            </div>
-
-            {/* Brain Monologue */}
-            <div className="spatial-card p-3 flex-shrink-0 overflow-hidden">
-              <div className="flex items-center gap-2 mb-1.5">
+            {/* Your Brain This Week — Narrative */}
+            <div className="spatial-card p-4 flex-shrink-0">
+              <div className="flex items-center gap-2 mb-2.5">
                 <Brain size={14} style={{ color: beliefColors.reward.primary }} />
                 <span className="text-xs font-display font-light tracking-[0.15em] uppercase text-slate-500">{t("dashboard.yourBrainThisWeek")}</span>
               </div>
-              <p className="text-[12px] text-slate-400 leading-relaxed font-body font-light line-clamp-3">
-                {monologue}
+              <p className="text-[12px] text-slate-300 leading-relaxed font-body font-light">
+                Your sense of musical pleasure shifted <span className="font-mono font-medium" style={{ color: PSYCHOLOGY_COLORS.depth }}>+22%</span> this week.
+                That's significant — your mind is recalibrating what "good music" means to you.
+                The songs that moved you last month might not hit the same way next month.
+              </p>
+              <p className="text-[12px] text-slate-400 leading-relaxed font-body font-light mt-2">
+                Your need for closure (<span className="font-mono" style={{ color: PSYCHOLOGY_COLORS.discovery }}>75%</span>) shaped your week.
+                Every resolved chord, every satisfying ending — your mind marked each one as a small victory.
+                You hear music as a series of promises kept.
               </p>
             </div>
 
@@ -402,6 +315,13 @@ export function Dashboard() {
                   </div>
                 ))}
               </div>
+            </div>
+
+            {/* Brain Monologue */}
+            <div className="spatial-card p-3 flex-1 min-h-0 overflow-hidden">
+              <p className="text-[11px] text-slate-500 font-display font-light leading-relaxed line-clamp-4">
+                {monologue}
+              </p>
             </div>
           </div>
 
@@ -423,80 +343,5 @@ function HUDStat({ label, value, icon, accent }: { label: string; value: string;
         <span className="text-base font-mono text-slate-300">{value}</span>
       </div>
     </div>
-  );
-}
-
-function M3Widget({ color }: { color: string }) {
-  const { t } = useTranslation();
-  const navigate = useNavigate();
-  const m3Mind = useM3Store((s) => s.mind);
-
-  if (!m3Mind) return null;
-
-  const stageDef = M3_STAGES[m3Mind.stage];
-  const stageColor = stageDef.color;
-  const nextStage = getNextStage(m3Mind.stage);
-  const obs = getPrimaryObservation(m3Mind, t);
-  const activePersona = getPersona(m3Mind.activePersonaId);
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.4, duration: 0.8 }}
-      className="w-full max-w-lg"
-    >
-      <button
-        onClick={() => navigate("/m3")}
-        className="w-full spatial-card p-4 text-left transition-all duration-500 hover:scale-[1.01] group"
-        style={{ border: `1px solid ${stageColor}15` }}
-      >
-        <div className="flex items-center gap-3">
-          <div
-            className="w-10 h-10 rounded-xl flex items-center justify-center text-sm"
-            style={{ background: `${stageColor}12`, border: `1px solid ${stageColor}20` }}
-          >
-            <span style={{ color: stageColor }}>{stageDef.icon}</span>
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2">
-              <span className="text-[11px] font-display font-light tracking-[0.1em] uppercase" style={{ color: `${stageColor}90` }}>
-                {t("m3.dashboard.widget.title")}
-              </span>
-              <span className="text-[9px] font-mono px-1.5 py-0.5 rounded-full" style={{ background: `${stageColor}10`, color: stageColor }}>
-                L{m3Mind.level}/12
-              </span>
-              {m3Mind.frozen && (
-                <span className="text-[9px] font-mono px-1.5 py-0.5 rounded-full bg-white/[0.04] text-slate-600">
-                  {t("m3.dashboard.widget.sleeping")}
-                </span>
-              )}
-            </div>
-            <p className="text-[12px] text-slate-400 font-body font-light mt-0.5 truncate">
-              {obs.text}
-            </p>
-          </div>
-          <ChevronRight size={14} className="text-slate-700 group-hover:text-slate-400 transition-colors" />
-        </div>
-        {/* Progress bar */}
-        <div className="mt-2.5 flex items-center gap-2">
-          <span className="text-[10px] font-display" style={{ color: stageColor }}>{t(`m3.stage.${m3Mind.stage}`)}</span>
-          <div className="flex-1 h-[2px] rounded-full bg-white/[0.04] overflow-hidden">
-            <motion.div
-              className="h-full rounded-full"
-              style={{ background: stageColor, opacity: 0.7 }}
-              initial={{ width: 0 }}
-              animate={{ width: `${m3Mind.stageProgress * 100}%` }}
-              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-            />
-          </div>
-          {nextStage && (
-            <span className="text-[10px] font-mono text-slate-600">
-              {t("m3.dashboard.widget.progress", { progress: Math.round(m3Mind.stageProgress * 100), nextStage: t(`m3.stage.${nextStage}`) })}
-            </span>
-          )}
-        </div>
-      </button>
-    </motion.div>
   );
 }
