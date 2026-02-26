@@ -337,12 +337,28 @@ def main():
                         help="Process a single file (e.g., bch/01_unison_rich.wav)")
     parser.add_argument("--compact", action="store_true",
                         help="Compact output (skip near-zero dimensions)")
+    parser.add_argument("--source", choices=["synthetic", "midi", "both"],
+                        default="synthetic",
+                        help="Audio source: synthetic (f1/), midi (f1_midi/), both")
     args = parser.parse_args()
 
-    if not AUDIO_DIR.exists():
-        print(f"Audio directory not found: {AUDIO_DIR}")
-        print("Run generate_f1_audio.py first to create test audio files.")
+    # Determine audio directory based on source
+    source_dirs = []
+    if args.source in ("synthetic", "both"):
+        source_dirs.append(("synthetic", AUDIO_DIR))
+    if args.source in ("midi", "both"):
+        midi_dir = _ROOT / "Test-Audio" / "micro_beliefs" / "f1_midi"
+        source_dirs.append(("midi", midi_dir))
+
+    if not source_dirs:
+        print("No source selected.")
         sys.exit(1)
+
+    for label, d in source_dirs:
+        if not d.exists():
+            print(f"Audio directory not found: {d}")
+            print(f"Run the appropriate generate script first.")
+            sys.exit(1)
 
     print(f"Initialising pipeline (R³→H³→C³) ...")
     t0 = time.time()
@@ -353,49 +369,57 @@ def main():
     print(f"  Beliefs: {len(runner._beliefs_by_name)}")
     print(f"  H³ demands: {len(runner.h3_demands)} tuples")
 
-    # Collect WAV files
-    if args.file:
-        wav_files = [(AUDIO_DIR / args.file,
-                      args.file.split("/")[0] if "/" in args.file else "unknown")]
-    elif args.relay:
-        relay_dir = AUDIO_DIR / args.relay
-        if not relay_dir.exists():
-            print(f"Relay directory not found: {relay_dir}")
-            sys.exit(1)
-        wav_files = [(f, args.relay) for f in sorted(relay_dir.glob("*.wav"))]
-    else:
-        wav_files = []
-        for relay in F1_BELIEFS:
-            relay_dir = AUDIO_DIR / relay
-            if relay_dir.exists():
-                for f in sorted(relay_dir.glob("*.wav")):
-                    wav_files.append((f, relay))
-
-    if not wav_files:
-        print("No WAV files found. Run generate_f1_audio.py first.")
-        sys.exit(1)
-
-    print(f"\nProcessing {len(wav_files)} WAV files ...")
-
-    # Group results by relay for comparison tables
-    results_by_relay: dict[str, list[dict]] = {}
+    total_files = 0
     total_time = 0.0
 
-    for wav_path, relay in wav_files:
-        t0 = time.time()
-        result = diagnose_file(runner, wav_path, relay, compact=args.compact)
-        elapsed = time.time() - t0
-        total_time += elapsed
-        print(f"\n  ⏱ {elapsed:.2f}s")
+    for source_label, audio_dir in source_dirs:
+        print(f"\n{'#'*80}")
+        print(f"  SOURCE: {source_label.upper()} — {audio_dir.relative_to(_ROOT)}")
+        print(f"{'#'*80}")
 
-        results_by_relay.setdefault(relay, []).append(result)
+        # Collect WAV files
+        if args.file:
+            wav_files = [(audio_dir / args.file,
+                          args.file.split("/")[0] if "/" in args.file else "unknown")]
+        elif args.relay:
+            relay_dir = audio_dir / args.relay
+            if not relay_dir.exists():
+                print(f"Relay directory not found: {relay_dir}")
+                continue
+            wav_files = [(f, args.relay) for f in sorted(relay_dir.glob("*.wav"))]
+        else:
+            wav_files = []
+            for relay in F1_BELIEFS:
+                relay_dir = audio_dir / relay
+                if relay_dir.exists():
+                    for f in sorted(relay_dir.glob("*.wav")):
+                        wav_files.append((f, relay))
 
-    # Print comparison tables
-    for relay, results in results_by_relay.items():
-        print_comparison_table(results, relay)
+        if not wav_files:
+            print("No WAV files found.")
+            continue
+
+        print(f"\nProcessing {len(wav_files)} WAV files ...")
+
+        # Group results by relay for comparison tables
+        results_by_relay: dict[str, list[dict]] = {}
+
+        for wav_path, relay in wav_files:
+            t0 = time.time()
+            result = diagnose_file(runner, wav_path, relay, compact=args.compact)
+            elapsed = time.time() - t0
+            total_time += elapsed
+            print(f"\n  ⏱ {elapsed:.2f}s")
+            results_by_relay.setdefault(relay, []).append(result)
+
+        # Print comparison tables
+        for relay, results in results_by_relay.items():
+            print_comparison_table(results, relay)
+
+        total_files += len(wav_files)
 
     print(f"\n\n{'='*80}")
-    print(f"  DONE — {len(wav_files)} files processed in {total_time:.1f}s")
+    print(f"  DONE — {total_files} files processed in {total_time:.1f}s")
     print(f"{'='*80}")
 
 
