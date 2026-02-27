@@ -85,13 +85,13 @@ def route_message(
     """
     text = message.strip()
 
-    # 1. Simple greetings in early conversation → Haiku
-    if turn_count < 3 and _matches_any(text, SIMPLE_PATTERNS):
-        return MODELS["fast"]
-
-    # 2. Premium/Research users always get Sonnet
+    # 1. Premium/Research users always get Sonnet (quality matters)
     if user_tier in ("premium", "research"):
         return MODELS["deep"]
+
+    # 2. Simple greetings in early conversation → Haiku
+    if turn_count < 3 and _matches_any(text, SIMPLE_PATTERNS):
+        return MODELS["fast"]
 
     # 3. Deep science questions → Sonnet
     if _matches_any(text, DEEP_PATTERNS):

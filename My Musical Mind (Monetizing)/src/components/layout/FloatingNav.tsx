@@ -6,6 +6,7 @@ import {
   Radio,
   BookOpen,
   Search,
+  Headphones,
 } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -19,12 +20,13 @@ import { MiniOrganism } from "@/components/mind/MiniOrganism";
 import { useDesktop, useMobile } from "@/hooks/useMediaQuery";
 import { LanguageToggle } from "./LanguageToggle";
 
-/* 4 main pages */
+/* 5 main pages */
 const mainNav = [
-  { to: "/m3",        icon: Brain,      labelKey: "nav.mind",      belief: "reward" as const },
-  { to: "/dashboard", icon: LayoutGrid, labelKey: "nav.home",      belief: "consonance" as const },
-  { to: "/live",      icon: Radio,      labelKey: "nav.field",     belief: "tempo" as const },
-  { to: "/info",      icon: BookOpen,   labelKey: "nav.info",      belief: "salience" as const },
+  { to: "/m3",        icon: Brain,       labelKey: "nav.mind",      belief: "reward" as const },
+  { to: "/dashboard", icon: LayoutGrid,  labelKey: "nav.home",      belief: "consonance" as const },
+  { to: "/live",      icon: Radio,       labelKey: "nav.field",     belief: "tempo" as const },
+  { to: "/spotify",   icon: Headphones,  labelKey: "nav.spotify",   belief: "prediction" as const },
+  { to: "/info",      icon: BookOpen,    labelKey: "nav.info",      belief: "salience" as const },
 ];
 
 export function FloatingNav() {

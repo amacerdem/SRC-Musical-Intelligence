@@ -230,6 +230,24 @@ async function apiFetch<T>(path: string): Promise<T> {
   return res.json() as Promise<T>;
 }
 
+/**
+ * Try to fetch audio features; returns null array on 403 (deprecated endpoint).
+ * Caches the 403 result so subsequent calls skip the network request entirely.
+ */
+let _audioFeaturesBlocked = false;
+async function fetchAudioFeatures(ids: string): Promise<(SpotifyAudioFeatures | null)[]> {
+  if (_audioFeaturesBlocked) return ids.split(",").map(() => null);
+  try {
+    const data = await apiFetch<{ audio_features: (SpotifyAudioFeatures | null)[] }>(
+      `/audio-features?ids=${ids}`,
+    );
+    return data.audio_features;
+  } catch {
+    _audioFeaturesBlocked = true;
+    return ids.split(",").map(() => null);
+  }
+}
+
 /* ── Spotify API Types (minimal) ────────────────────────────────────── */
 
 interface SpotifyTrack {
@@ -281,6 +299,7 @@ const GENRE_FAMILY_MAP: Record<string, NeuralFamily> = {
 
 function guessFamily(genres: string[]): NeuralFamily {
   for (const g of genres) {
+    if (!g) continue;
     const lower = g.toLowerCase();
     for (const [key, family] of Object.entries(GENRE_FAMILY_MAP)) {
       if (lower.includes(key)) return family;
@@ -290,7 +309,7 @@ function guessFamily(genres: string[]): NeuralFamily {
 }
 
 function guessGenre(genres: string[]): string {
-  return genres[0] ?? "Unknown";
+  return genres.find((g) => !!g) ?? "Unknown";
 }
 
 /* ── Convert Spotify data → MockTrack ───────────────────────────────── */
@@ -344,17 +363,16 @@ export async function getTopTracks(
   if (data.items.length === 0) return [];
 
   const ids = data.items.map((t) => t.id).join(",");
-  const featuresData = await apiFetch<{
-    audio_features: (SpotifyAudioFeatures | null)[];
-  }>(`/audio-features?ids=${ids}`);
-
-  const artistData = await apiFetch<{
-    items: { genres: string[] }[];
-  }>(`/me/top/artists?time_range=${timeRange}&limit=20`);
-  const topGenres = artistData.items.flatMap((a) => a.genres);
+  const [features, artistData] = await Promise.all([
+    fetchAudioFeatures(ids),
+    apiFetch<{ items: { genres: string[] }[] }>(
+      `/me/top/artists?time_range=${timeRange}&limit=20`,
+    ),
+  ]);
+  const topGenres = artistData.items.flatMap((a) => a.genres ?? []).filter(Boolean);
 
   return data.items.map((track, i) =>
-    toMockTrack(track, featuresData.audio_features[i], topGenres),
+    toMockTrack(track, features[i], topGenres),
   );
 }
 
@@ -368,12 +386,10 @@ export async function getRecentlyPlayed(limit = 50): Promise<MockTrack[]> {
 
   const tracks = data.items.map((i) => i.track);
   const ids = tracks.map((t) => t.id).join(",");
-  const featuresData = await apiFetch<{
-    audio_features: (SpotifyAudioFeatures | null)[];
-  }>(`/audio-features?ids=${ids}`);
+  const features = await fetchAudioFeatures(ids);
 
   return tracks.map((track, i) =>
-    toMockTrack(track, featuresData.audio_features[i], []),
+    toMockTrack(track, features[i], []),
   );
 }
 
@@ -387,11 +403,8 @@ export async function getCurrentlyPlaying(): Promise<MockTrack | null> {
 
     if (!data.item) return null;
 
-    const featuresData = await apiFetch<{
-      audio_features: (SpotifyAudioFeatures | null)[];
-    }>(`/audio-features?ids=${data.item.id}`);
-
-    return toMockTrack(data.item, featuresData.audio_features[0], []);
+    const features = await fetchAudioFeatures(data.item.id);
+    return toMockTrack(data.item, features[0], []);
   } catch {
     return null;
   }
@@ -407,12 +420,10 @@ export async function getSavedTracks(limit = 50): Promise<MockTrack[]> {
 
   const tracks = data.items.map((i) => i.track);
   const ids = tracks.map((t) => t.id).join(",");
-  const featuresData = await apiFetch<{
-    audio_features: (SpotifyAudioFeatures | null)[];
-  }>(`/audio-features?ids=${ids}`);
+  const features = await fetchAudioFeatures(ids);
 
   return tracks.map((track, i) =>
-    toMockTrack(track, featuresData.audio_features[i], []),
+    toMockTrack(track, features[i], []),
   );
 }
 

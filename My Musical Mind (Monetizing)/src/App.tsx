@@ -14,6 +14,7 @@ import { ResonanceField } from "@/pages/ResonanceField";
 import { InfoHub } from "@/pages/InfoHub";
 import { M3Hub } from "@/pages/M3Hub";
 import { Callback } from "@/pages/Callback";
+import { SpotifyProfile } from "@/pages/SpotifyProfile";
 
 export default function App() {
   const { hasCompletedOnboarding } = useUserStore();
@@ -46,6 +47,12 @@ export default function App() {
             <Route path="/live" element={<ResonanceField />} />
             <Route path="/info" element={<InfoHub />} />
             <Route path="/info/:id" element={<PersonaDetail />} />
+            <Route
+              path="/spotify"
+              element={
+                hasCompletedOnboarding ? <SpotifyProfile /> : <Navigate to="/" />
+              }
+            />
           </Route>
 
           {/* Redirects for removed/old routes */}

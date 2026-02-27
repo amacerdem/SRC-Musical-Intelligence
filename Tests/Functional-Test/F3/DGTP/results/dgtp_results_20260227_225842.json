@@ -1,0 +1,459 @@
+{
+  "mechanism": "DGTP",
+  "function": "F3",
+  "timestamp": "20260227_225842",
+  "total": 64,
+  "passed": 64,
+  "failed": 0,
+  "elapsed_s": 175.2,
+  "results": [
+    {
+      "name": "T1_ndim",
+      "group": "T1",
+      "passed": true,
+      "message": "ndim=2",
+      "values": {}
+    },
+    {
+      "name": "T1_dim",
+      "group": "T1",
+      "passed": true,
+      "message": "D=9",
+      "values": {}
+    },
+    {
+      "name": "T1_frames",
+      "group": "T1",
+      "passed": true,
+      "message": "T=862",
+      "values": {}
+    },
+    {
+      "name": "T2_g1_01_single",
+      "group": "T2",
+      "passed": true,
+      "message": "[0.4971,0.6943]",
+      "values": {}
+    },
+    {
+      "name": "T2_g1_05_minor_2nd",
+      "group": "T2",
+      "passed": true,
+      "message": "[0.4723,0.7131]",
+      "values": {}
+    },
+    {
+      "name": "T2_g2_01_low",
+      "group": "T2",
+      "passed": true,
+      "message": "[0.5048,0.6946]",
+      "values": {}
+    },
+    {
+      "name": "T2_g2_03_high",
+      "group": "T2",
+      "passed": true,
+      "message": "[0.5122,0.6939]",
+      "values": {}
+    },
+    {
+      "name": "T2_g3_04_dense",
+      "group": "T2",
+      "passed": true,
+      "message": "[0.4364,0.7090]",
+      "values": {}
+    },
+    {
+      "name": "T2_g4_03_arpeggio",
+      "group": "T2",
+      "passed": true,
+      "message": "[0.4225,0.7296]",
+      "values": {}
+    },
+    {
+      "name": "T2_g5_01_piano",
+      "group": "T2",
+      "passed": true,
+      "message": "[0.4971,0.6943]",
+      "values": {}
+    },
+    {
+      "name": "T2_g5_02_organ",
+      "group": "T2",
+      "passed": true,
+      "message": "[0.4999,0.6953]",
+      "values": {}
+    },
+    {
+      "name": "T3_E0:music_timing",
+      "group": "T3",
+      "passed": true,
+      "message": "std=0.0115>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_E1:speech_timing",
+      "group": "T3",
+      "passed": true,
+      "message": "std=0.0010>0.0003",
+      "values": {}
+    },
+    {
+      "name": "T3_E2:shared_mech",
+      "group": "T3",
+      "passed": true,
+      "message": "std=0.0014>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_M0:domain_corr",
+      "group": "T3",
+      "passed": true,
+      "message": "std=0.0136>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_M1:shared_var",
+      "group": "T3",
+      "passed": true,
+      "message": "std=0.0010>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_P0:music_beat",
+      "group": "T3",
+      "passed": true,
+      "message": "std=0.0010>0.0003",
+      "values": {}
+    },
+    {
+      "name": "T3_P1:domain_general",
+      "group": "T3",
+      "passed": true,
+      "message": "std=0.0007>0.0003",
+      "values": {}
+    },
+    {
+      "name": "T3_F0:cross_domain",
+      "group": "T3",
+      "passed": true,
+      "message": "std=0.0135>0.0003",
+      "values": {}
+    },
+    {
+      "name": "T3_F1:training_transfer",
+      "group": "T3",
+      "passed": true,
+      "message": "std=0.0015>0.0003",
+      "values": {}
+    },
+    {
+      "name": "T4_E0_g1_01_single",
+      "group": "T4",
+      "passed": true,
+      "message": "E0(0.5388)>0",
+      "values": {}
+    },
+    {
+      "name": "T4_E2_g1_01_single",
+      "group": "T4",
+      "passed": true,
+      "message": "E2(0.6368)>0 (sqrt(E0*E1))",
+      "values": {}
+    },
+    {
+      "name": "T4_E0_g4_02_melody",
+      "group": "T4",
+      "passed": true,
+      "message": "E0(0.5585)>0",
+      "values": {}
+    },
+    {
+      "name": "T4_E2_g4_02_melody",
+      "group": "T4",
+      "passed": true,
+      "message": "E2(0.6388)>0 (sqrt(E0*E1))",
+      "values": {}
+    },
+    {
+      "name": "T4_E0_g4_03_arpeggio",
+      "group": "T4",
+      "passed": true,
+      "message": "E0(0.5639)>0",
+      "values": {}
+    },
+    {
+      "name": "T4_E2_g4_03_arpeggio",
+      "group": "T4",
+      "passed": true,
+      "message": "E2(0.6395)>0 (sqrt(E0*E1))",
+      "values": {}
+    },
+    {
+      "name": "T5_P0_g1_01_single",
+      "group": "T5",
+      "passed": true,
+      "message": "P0(0.6445)>0",
+      "values": {}
+    },
+    {
+      "name": "T5_P1_g1_01_single",
+      "group": "T5",
+      "passed": true,
+      "message": "P1(0.6813)>0",
+      "values": {}
+    },
+    {
+      "name": "T5_P0_g1_05_minor_2nd",
+      "group": "T5",
+      "passed": true,
+      "message": "P0(0.6446)>0",
+      "values": {}
+    },
+    {
+      "name": "T5_P1_g1_05_minor_2nd",
+      "group": "T5",
+      "passed": true,
+      "message": "P1(0.6808)>0",
+      "values": {}
+    },
+    {
+      "name": "T5_P0_g3_04_dense",
+      "group": "T5",
+      "passed": true,
+      "message": "P0(0.6441)>0",
+      "values": {}
+    },
+    {
+      "name": "T5_P1_g3_04_dense",
+      "group": "T5",
+      "passed": true,
+      "message": "P1(0.6810)>0",
+      "values": {}
+    },
+    {
+      "name": "T5_P0_g4_01_sustained",
+      "group": "T5",
+      "passed": true,
+      "message": "P0(0.6435)>0",
+      "values": {}
+    },
+    {
+      "name": "T5_P1_g4_01_sustained",
+      "group": "T5",
+      "passed": true,
+      "message": "P1(0.6815)>0",
+      "values": {}
+    },
+    {
+      "name": "T5_P0_g4_03_arpeggio",
+      "group": "T5",
+      "passed": true,
+      "message": "P0(0.6455)>0",
+      "values": {}
+    },
+    {
+      "name": "T5_P1_g4_03_arpeggio",
+      "group": "T5",
+      "passed": true,
+      "message": "P1(0.6801)>0",
+      "values": {}
+    },
+    {
+      "name": "T6_F0_E2",
+      "group": "T6",
+      "passed": true,
+      "message": "|r(F0,E2)|=0.4205>0.10 (E2 feeds F0 50%)",
+      "values": {}
+    },
+    {
+      "name": "T7_E0:music_timing",
+      "group": "T7",
+      "passed": true,
+      "message": "p=0.5388,o=0.5654>0",
+      "values": {}
+    },
+    {
+      "name": "T7_E1:speech_timing",
+      "group": "T7",
+      "passed": true,
+      "message": "p=0.5858,o=0.5871>0",
+      "values": {}
+    },
+    {
+      "name": "T7_E2:shared_mech",
+      "group": "T7",
+      "passed": true,
+      "message": "p=0.6368,o=0.6400>0",
+      "values": {}
+    },
+    {
+      "name": "T7_M0:domain_corr",
+      "group": "T7",
+      "passed": true,
+      "message": "p=0.5565,o=0.5594>0",
+      "values": {}
+    },
+    {
+      "name": "T7_M1:shared_var",
+      "group": "T7",
+      "passed": true,
+      "message": "p=0.6929,o=0.6929>0",
+      "values": {}
+    },
+    {
+      "name": "T7_P0:music_beat",
+      "group": "T7",
+      "passed": true,
+      "message": "p=0.6445,o=0.6468>0",
+      "values": {}
+    },
+    {
+      "name": "T7_P1:domain_general",
+      "group": "T7",
+      "passed": true,
+      "message": "p=0.6813,o=0.6814>0",
+      "values": {}
+    },
+    {
+      "name": "T7_F0:cross_domain",
+      "group": "T7",
+      "passed": true,
+      "message": "p=0.5957,o=0.5969>0",
+      "values": {}
+    },
+    {
+      "name": "T7_F1:training_transfer",
+      "group": "T7",
+      "passed": true,
+      "message": "p=0.6513,o=0.6516>0",
+      "values": {}
+    },
+    {
+      "name": "T8_0_1",
+      "group": "T8",
+      "passed": true,
+      "message": "|r|=0.515<0.99",
+      "values": {}
+    },
+    {
+      "name": "T8_0_4",
+      "group": "T8",
+      "passed": true,
+      "message": "|r|=0.125<0.99",
+      "values": {}
+    },
+    {
+      "name": "T8_0_6",
+      "group": "T8",
+      "passed": true,
+      "message": "|r|=0.083<0.99",
+      "values": {}
+    },
+    {
+      "name": "T8_0_8",
+      "group": "T8",
+      "passed": true,
+      "message": "|r|=0.234<0.99",
+      "values": {}
+    },
+    {
+      "name": "T8_1_4",
+      "group": "T8",
+      "passed": true,
+      "message": "|r|=0.708<0.99",
+      "values": {}
+    },
+    {
+      "name": "T8_1_5",
+      "group": "T8",
+      "passed": true,
+      "message": "|r|=0.055<0.99",
+      "values": {}
+    },
+    {
+      "name": "T8_1_6",
+      "group": "T8",
+      "passed": true,
+      "message": "|r|=0.734<0.99",
+      "values": {}
+    },
+    {
+      "name": "T8_1_8",
+      "group": "T8",
+      "passed": true,
+      "message": "|r|=0.622<0.99",
+      "values": {}
+    },
+    {
+      "name": "T8_2_5",
+      "group": "T8",
+      "passed": true,
+      "message": "|r|=0.576<0.99",
+      "values": {}
+    },
+    {
+      "name": "T8_2_6",
+      "group": "T8",
+      "passed": true,
+      "message": "|r|=0.002<0.99",
+      "values": {}
+    },
+    {
+      "name": "T8_2_8",
+      "group": "T8",
+      "passed": true,
+      "message": "|r|=0.257<0.99",
+      "values": {}
+    },
+    {
+      "name": "T8_3_4",
+      "group": "T8",
+      "passed": true,
+      "message": "|r|=0.720<0.99",
+      "values": {}
+    },
+    {
+      "name": "T8_3_6",
+      "group": "T8",
+      "passed": true,
+      "message": "|r|=0.730<0.99",
+      "values": {}
+    },
+    {
+      "name": "T8_4_5",
+      "group": "T8",
+      "passed": true,
+      "message": "|r|=0.593<0.99",
+      "values": {}
+    },
+    {
+      "name": "T8_5_6",
+      "group": "T8",
+      "passed": true,
+      "message": "|r|=0.569<0.99",
+      "values": {}
+    },
+    {
+      "name": "T8_5_8",
+      "group": "T8",
+      "passed": true,
+      "message": "|r|=0.638<0.99",
+      "values": {}
+    },
+    {
+      "name": "T8_6_7",
+      "group": "T8",
+      "passed": true,
+      "message": "|r|=0.717<0.99",
+      "values": {}
+    },
+    {
+      "name": "T8_6_8",
+      "group": "T8",
+      "passed": true,
+      "message": "|r|=0.689<0.99",
+      "values": {}
+    }
+  ]
+}

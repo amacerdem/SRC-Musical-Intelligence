@@ -59,11 +59,13 @@ from .routers.audio import router as audio_router
 from .routers.pipeline import router as pipeline_router
 from .routers.experiments import router as experiments_router
 from .routers.c3_compat import router as c3_compat_router
+from .routers.agent import router as agent_router
 
 app.include_router(audio_router, prefix="/api/audio")
 app.include_router(pipeline_router, prefix="/api/pipeline")
 app.include_router(experiments_router, prefix="/api/experiments")
 app.include_router(c3_compat_router, prefix="/api/c3")
+app.include_router(agent_router, prefix="/api/agent")
 
 
 @app.get("/api/health")
