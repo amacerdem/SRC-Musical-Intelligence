@@ -1,0 +1,53 @@
+{
+  "mechanism": "SRP",
+  "function": "F5",
+  "timestamp": "20260227_234004",
+  "total": 6,
+  "passed": 0,
+  "failed": 6,
+  "elapsed_s": 0.5,
+  "results": [
+    {
+      "name": "test_T1_dimensionality_exc",
+      "group": "test_T1_dimensionality",
+      "passed": false,
+      "message": "EXCEPTION: Error opening '/Volumes/SRC-9/SRC Musical Intelligence/Tests/Functional-Test/F5/SRP/stimuli/g1_01_single.wav': System error.",
+      "values": {}
+    },
+    {
+      "name": "test_T2_bounds_exc",
+      "group": "test_T2_bounds",
+      "passed": false,
+      "message": "EXCEPTION: Error opening '/Volumes/SRC-9/SRC Musical Intelligence/Tests/Functional-Test/F5/SRP/stimuli/g1_01_single.wav': System error.",
+      "values": {}
+    },
+    {
+      "name": "test_T3_nondegeneracy_exc",
+      "group": "test_T3_nondegeneracy",
+      "passed": false,
+      "message": "EXCEPTION: Error opening '/Volumes/SRC-9/SRC Musical Intelligence/Tests/Functional-Test/F5/SRP/stimuli/g1_01_single.wav': System error.",
+      "values": {}
+    },
+    {
+      "name": "test_T4_positive_exc",
+      "group": "test_T4_positive",
+      "passed": false,
+      "message": "EXCEPTION: Error opening '/Volumes/SRC-9/SRC Musical Intelligence/Tests/Functional-Test/F5/SRP/stimuli/g1_01_single.wav': System error.",
+      "values": {}
+    },
+    {
+      "name": "test_T5_instrument_exc",
+      "group": "test_T5_instrument",
+      "passed": false,
+      "message": "EXCEPTION: Error opening '/Volumes/SRC-9/SRC Musical Intelligence/Tests/Functional-Test/F5/SRP/stimuli/g5_01_piano.wav': System error.",
+      "values": {}
+    },
+    {
+      "name": "test_T6_redundancy_exc",
+      "group": "test_T6_redundancy",
+      "passed": false,
+      "message": "EXCEPTION: Error opening '/Volumes/SRC-9/SRC Musical Intelligence/Tests/Functional-Test/F5/SRP/stimuli/g1_01_single.wav': System error.",
+      "values": {}
+    }
+  ]
+}
