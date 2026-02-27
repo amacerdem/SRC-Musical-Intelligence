@@ -278,11 +278,16 @@ def _handle_search_knowledge(
     inputs: dict[str, Any], tier: str
 ) -> dict[str, Any]:
     """Search knowledge base via RAG retriever."""
+    import os
+
     query = inputs.get("query", "")
     collection = inputs.get("collection", "knowledge_cards")
 
     if not query:
         return {"error": "Query is required."}
+
+    # Use local embeddings if no OpenAI key is set
+    use_local = not bool(os.environ.get("OPENAI_API_KEY"))
 
     try:
         from Musical_Intelligence.brain.llm.rag.retriever import retrieve
@@ -292,6 +297,7 @@ def _handle_search_knowledge(
             user_tier=tier,
             collections=[collection],
             top_k=5,
+            use_local_embeddings=use_local,
         )
         return {
             "results": [

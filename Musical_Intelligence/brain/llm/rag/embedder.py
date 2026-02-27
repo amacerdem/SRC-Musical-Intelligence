@@ -140,11 +140,13 @@ def embed_texts_local(texts: list[str]) -> list[list[float]]:
     results: list[list[float]] = []
     for text in texts:
         h = hashlib.sha256(text.encode()).digest()
-        # Extend hash to fill EMBEDDING_DIM floats
+        # Extend hash to fill EMBEDDING_DIM unsigned ints
         seed_bytes = b""
         for i in range(EMBEDDING_DIM * 4 // 32 + 1):
             seed_bytes += hashlib.sha256(h + i.to_bytes(4, "big")).digest()
-        floats = list(struct.unpack(f"{EMBEDDING_DIM}f", seed_bytes[: EMBEDDING_DIM * 4]))
+        # Unpack as unsigned 32-bit ints and map to [-1, 1] (avoids NaN/inf)
+        ints = struct.unpack(f"{EMBEDDING_DIM}I", seed_bytes[: EMBEDDING_DIM * 4])
+        floats = [(v / 2147483648.0) - 1.0 for v in ints]
         # Normalize to unit vector
         norm = sum(x * x for x in floats) ** 0.5
         if norm > 0:

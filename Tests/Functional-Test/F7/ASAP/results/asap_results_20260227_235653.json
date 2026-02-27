@@ -1,0 +1,900 @@
+{
+  "mechanism": "ASAP",
+  "function": "F7",
+  "timestamp": "20260227_235653",
+  "total": 127,
+  "passed": 121,
+  "failed": 6,
+  "elapsed_s": 21.6,
+  "results": [
+    {
+      "name": "T1_ndim",
+      "group": "T1_dimensionality",
+      "passed": true,
+      "message": "ndim=2",
+      "values": {}
+    },
+    {
+      "name": "T1_dim_count",
+      "group": "T1_dimensionality",
+      "passed": true,
+      "message": "D=11",
+      "values": {}
+    },
+    {
+      "name": "T1_frames",
+      "group": "T1_dimensionality",
+      "passed": true,
+      "message": "T=862",
+      "values": {}
+    },
+    {
+      "name": "T2_g1_01_single_d0",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d0[0.5164,0.6129]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g1_01_single_d1",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d1[0.5075,0.6053]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g1_01_single_d2",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d2[0.5676,0.6075]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g1_01_single_d3",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d3[0.5164,0.6129]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g1_01_single_d4",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d4[0.5075,0.6053]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g1_01_single_d5",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d5[0.6324,0.6470]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g1_01_single_d6",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d6[0.5738,0.5936]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g1_01_single_d7",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d7[0.5588,0.5698]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g1_01_single_d8",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d8[0.5676,0.6075]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g1_01_single_d9",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d9[0.6702,0.6868]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g1_01_single_d10",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d10[0.6342,0.6803]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g1_05_minor_2nd_d0",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d0[0.5140,0.6161]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g1_05_minor_2nd_d1",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d1[0.5068,0.6047]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g1_05_minor_2nd_d2",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d2[0.5699,0.6110]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g1_05_minor_2nd_d3",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d3[0.5140,0.6161]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g1_05_minor_2nd_d4",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d4[0.5068,0.6047]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g1_05_minor_2nd_d5",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d5[0.6317,0.6474]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g1_05_minor_2nd_d6",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d6[0.5729,0.5941]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g1_05_minor_2nd_d7",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d7[0.5589,0.5700]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g1_05_minor_2nd_d8",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d8[0.5699,0.6110]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g1_05_minor_2nd_d9",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d9[0.6467,0.6870]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g1_05_minor_2nd_d10",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d10[0.6536,0.6791]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g2_01_low_d0",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d0[0.5166,0.6138]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g2_01_low_d1",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d1[0.5075,0.6046]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g2_01_low_d2",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d2[0.5905,0.6113]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g2_01_low_d3",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d3[0.5166,0.6138]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g2_01_low_d4",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d4[0.5075,0.6046]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g2_01_low_d5",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d5[0.6341,0.6472]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g2_01_low_d6",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d6[0.5742,0.5937]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g2_01_low_d7",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d7[0.5585,0.5699]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g2_01_low_d8",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d8[0.5905,0.6113]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g2_01_low_d9",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d9[0.6704,0.6893]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g2_01_low_d10",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d10[0.6532,0.6861]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g2_03_high_d0",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d0[0.5151,0.6179]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g2_03_high_d1",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d1[0.5077,0.6074]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g2_03_high_d2",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d2[0.5568,0.6111]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g2_03_high_d3",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d3[0.5151,0.6179]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g2_03_high_d4",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d4[0.5077,0.6074]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g2_03_high_d5",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d5[0.6344,0.6478]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g2_03_high_d6",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d6[0.5737,0.5945]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g2_03_high_d7",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d7[0.5592,0.5703]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g2_03_high_d8",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d8[0.5568,0.6111]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g2_03_high_d9",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d9[0.6702,0.6851]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g2_03_high_d10",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d10[0.6374,0.6820]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g3_04_dense_d0",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d0[0.5136,0.6279]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g3_04_dense_d1",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d1[0.5069,0.6034]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g3_04_dense_d2",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d2[0.5655,0.6097]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g3_04_dense_d3",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d3[0.5136,0.6279]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g3_04_dense_d4",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d4[0.5069,0.6034]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g3_04_dense_d5",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d5[0.6316,0.6470]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g3_04_dense_d6",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d6[0.5727,0.5950]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g3_04_dense_d7",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d7[0.5574,0.5699]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g3_04_dense_d8",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d8[0.5655,0.6097]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g3_04_dense_d9",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d9[0.6356,0.6885]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g3_04_dense_d10",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d10[0.6465,0.6799]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g4_03_arpeggio_d0",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d0[0.5191,0.6264]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g4_03_arpeggio_d1",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d1[0.5063,0.5936]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g4_03_arpeggio_d2",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d2[0.5925,0.6211]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g4_03_arpeggio_d3",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d3[0.5191,0.6264]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g4_03_arpeggio_d4",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d4[0.5063,0.5936]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g4_03_arpeggio_d5",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d5[0.6344,0.6471]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g4_03_arpeggio_d6",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d6[0.5745,0.5941]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g4_03_arpeggio_d7",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d7[0.5570,0.5696]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g4_03_arpeggio_d8",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d8[0.5925,0.6211]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g4_03_arpeggio_d9",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d9[0.6621,0.6812]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g4_03_arpeggio_d10",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d10[0.6519,0.6847]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g5_01_piano_d0",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d0[0.5164,0.6129]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g5_01_piano_d1",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d1[0.5075,0.6053]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g5_01_piano_d2",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d2[0.5676,0.6075]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g5_01_piano_d3",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d3[0.5164,0.6129]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g5_01_piano_d4",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d4[0.5075,0.6053]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g5_01_piano_d5",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d5[0.6324,0.6470]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g5_01_piano_d6",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d6[0.5738,0.5936]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g5_01_piano_d7",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d7[0.5588,0.5698]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g5_01_piano_d8",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d8[0.5676,0.6075]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g5_01_piano_d9",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d9[0.6702,0.6868]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g5_01_piano_d10",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d10[0.6342,0.6803]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g5_02_organ_d0",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d0[0.5211,0.6050]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g5_02_organ_d1",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d1[0.5195,0.5927]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g5_02_organ_d2",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d2[0.5626,0.6091]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g5_02_organ_d3",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d3[0.5211,0.6050]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g5_02_organ_d4",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d4[0.5195,0.5927]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g5_02_organ_d5",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d5[0.6323,0.6435]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g5_02_organ_d6",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d6[0.5758,0.5899]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g5_02_organ_d7",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d7[0.5576,0.5698]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g5_02_organ_d8",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d8[0.5626,0.6091]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g5_02_organ_d9",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d9[0.6320,0.6898]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g5_02_organ_d10",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "d10[0.6111,0.6803]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T3_d0",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0150>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_d1",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0081>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_d2",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0040>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_d3",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0150>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_d4",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0081>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_d5",
+      "group": "T3_nondegeneracy",
+      "passed": false,
+      "message": "std=0.0008>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_d6",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0017>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_d7",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0021>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_d8",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0040>0.0003",
+      "values": {}
+    },
+    {
+      "name": "T3_d9",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0053>0.0003",
+      "values": {}
+    },
+    {
+      "name": "T3_d10",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0040>0.0003",
+      "values": {}
+    },
+    {
+      "name": "T4_d0_g1_01_single",
+      "group": "T4_positive",
+      "passed": true,
+      "message": "d0(0.5531)>0",
+      "values": {}
+    },
+    {
+      "name": "T4_d1_g1_01_single",
+      "group": "T4_positive",
+      "passed": true,
+      "message": "d1(0.5164)>0",
+      "values": {}
+    },
+    {
+      "name": "T4_d2_g1_01_single",
+      "group": "T4_positive",
+      "passed": true,
+      "message": "d2(0.5989)>0",
+      "values": {}
+    },
+    {
+      "name": "T4_d0_g4_02_melody",
+      "group": "T4_positive",
+      "passed": true,
+      "message": "d0(0.5737)>0",
+      "values": {}
+    },
+    {
+      "name": "T4_d1_g4_02_melody",
+      "group": "T4_positive",
+      "passed": true,
+      "message": "d1(0.5151)>0",
+      "values": {}
+    },
+    {
+      "name": "T4_d2_g4_02_melody",
+      "group": "T4_positive",
+      "passed": true,
+      "message": "d2(0.6035)>0",
+      "values": {}
+    },
+    {
+      "name": "T4_d0_g4_03_arpeggio",
+      "group": "T4_positive",
+      "passed": true,
+      "message": "d0(0.5754)>0",
+      "values": {}
+    },
+    {
+      "name": "T4_d1_g4_03_arpeggio",
+      "group": "T4_positive",
+      "passed": true,
+      "message": "d1(0.5188)>0",
+      "values": {}
+    },
+    {
+      "name": "T4_d2_g4_03_arpeggio",
+      "group": "T4_positive",
+      "passed": true,
+      "message": "d2(0.6008)>0",
+      "values": {}
+    },
+    {
+      "name": "T5_d0",
+      "group": "T5_instrument",
+      "passed": true,
+      "message": "piano=0.5531,organ=0.5878>0",
+      "values": {}
+    },
+    {
+      "name": "T5_d1",
+      "group": "T5_instrument",
+      "passed": true,
+      "message": "piano=0.5164,organ=0.5228>0",
+      "values": {}
+    },
+    {
+      "name": "T5_d2",
+      "group": "T5_instrument",
+      "passed": true,
+      "message": "piano=0.5989,organ=0.6022>0",
+      "values": {}
+    },
+    {
+      "name": "T5_d3",
+      "group": "T5_instrument",
+      "passed": true,
+      "message": "piano=0.5531,organ=0.5878>0",
+      "values": {}
+    },
+    {
+      "name": "T5_d4",
+      "group": "T5_instrument",
+      "passed": true,
+      "message": "piano=0.5164,organ=0.5228>0",
+      "values": {}
+    },
+    {
+      "name": "T5_d5",
+      "group": "T5_instrument",
+      "passed": true,
+      "message": "piano=0.6359,organ=0.6370>0",
+      "values": {}
+    },
+    {
+      "name": "T5_d6",
+      "group": "T5_instrument",
+      "passed": true,
+      "message": "piano=0.5783,organ=0.5825>0",
+      "values": {}
+    },
+    {
+      "name": "T5_d7",
+      "group": "T5_instrument",
+      "passed": true,
+      "message": "piano=0.5648,organ=0.5602>0",
+      "values": {}
+    },
+    {
+      "name": "T5_d8",
+      "group": "T5_instrument",
+      "passed": true,
+      "message": "piano=0.5989,organ=0.6022>0",
+      "values": {}
+    },
+    {
+      "name": "T5_d9",
+      "group": "T5_instrument",
+      "passed": true,
+      "message": "piano=0.6808,organ=0.6840>0",
+      "values": {}
+    },
+    {
+      "name": "T5_d10",
+      "group": "T5_instrument",
+      "passed": true,
+      "message": "piano=0.6690,organ=0.6717>0",
+      "values": {}
+    },
+    {
+      "name": "T6_0_3",
+      "group": "T6_redundancy",
+      "passed": false,
+      "message": "|r(d0,d3)|=1.000>=0.99 (COUPLED?)",
+      "values": {}
+    },
+    {
+      "name": "T6_0_7",
+      "group": "T6_redundancy",
+      "passed": false,
+      "message": "|r(d0,d7)|=0.991>=0.99 (COUPLED?)",
+      "values": {}
+    },
+    {
+      "name": "T6_1_4",
+      "group": "T6_redundancy",
+      "passed": false,
+      "message": "|r(d1,d4)|=1.000>=0.99 (COUPLED?)",
+      "values": {}
+    },
+    {
+      "name": "T6_2_8",
+      "group": "T6_redundancy",
+      "passed": false,
+      "message": "|r(d2,d8)|=1.000>=0.99 (COUPLED?)",
+      "values": {}
+    },
+    {
+      "name": "T6_3_7",
+      "group": "T6_redundancy",
+      "passed": false,
+      "message": "|r(d3,d7)|=0.991>=0.99 (COUPLED?)",
+      "values": {}
+    }
+  ]
+}
