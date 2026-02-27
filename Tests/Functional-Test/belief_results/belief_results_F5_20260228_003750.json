@@ -1,0 +1,1127 @@
+{
+  "test": "beliefs",
+  "functions": "F5",
+  "timestamp": "20260228_003750",
+  "total": 186,
+  "passed": 186,
+  "failed": 0,
+  "elapsed_s": 10.2,
+  "results": [
+    {
+      "name": "B1_ndim",
+      "group": "B1_shape",
+      "passed": true,
+      "message": "ndim=2"
+    },
+    {
+      "name": "B1_n_beliefs",
+      "group": "B1_shape",
+      "passed": true,
+      "message": "N=131 (expected 131)"
+    },
+    {
+      "name": "B1_frames",
+      "group": "B1_shape",
+      "passed": true,
+      "message": "T=862"
+    },
+    {
+      "name": "B2_g1_01_single_b60_ans_dominance",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5635,0.6086]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b61_chills_intensity",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6084,0.6179]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b62_driving_signal",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5944,0.6884]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b63_emotional_arousal",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4556,0.5358]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b64_emotion_certainty",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5306,0.5967]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b65_happy_pathway",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5945,0.6120]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b66_mode_detection",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6348,0.6505]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b67_perceived_happy",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4369,0.4498]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b68_perceived_sad",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3641,0.3781]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b69_sad_pathway",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5973,0.6729]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b70_nostalgia_affect",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3859,0.4068]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b71_nostalgia_peak_pred",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5814,0.5865]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b72_self_referential_nostalgia",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5392,0.5799]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b73_wellbeing_enhancement",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5712,0.6123]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b60_ans_dominance",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4802,0.6704]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b61_chills_intensity",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6043,0.6217]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b62_driving_signal",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5838,0.7167]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b63_emotional_arousal",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4521,0.5343]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b64_emotion_certainty",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5515,0.5945]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b65_happy_pathway",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5437,0.5721]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b66_mode_detection",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6321,0.6530]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b67_perceived_happy",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4116,0.4263]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b68_perceived_sad",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3753,0.3886]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b69_sad_pathway",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6000,0.6874]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b70_nostalgia_affect",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3763,0.3925]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b71_nostalgia_peak_pred",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5673,0.5702]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b72_self_referential_nostalgia",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5236,0.5544]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b73_wellbeing_enhancement",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5692,0.5795]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b60_ans_dominance",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5494,0.6143]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b61_chills_intensity",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6082,0.6180]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b62_driving_signal",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5981,0.6947]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b63_emotional_arousal",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4559,0.5343]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b64_emotion_certainty",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5391,0.5996]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b65_happy_pathway",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5905,0.6078]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b66_mode_detection",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6374,0.6528]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b67_perceived_happy",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4361,0.4466]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b68_perceived_sad",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3654,0.3782]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b69_sad_pathway",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5861,0.6723]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b70_nostalgia_affect",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3874,0.4008]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b71_nostalgia_peak_pred",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5783,0.5817]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b72_self_referential_nostalgia",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5420,0.5690]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b73_wellbeing_enhancement",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5722,0.6129]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b60_ans_dominance",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5600,0.6094]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b61_chills_intensity",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6085,0.6170]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b62_driving_signal",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5894,0.6884]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b63_emotional_arousal",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4549,0.5337]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b64_emotion_certainty",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5374,0.6093]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b65_happy_pathway",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5494,0.5853]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b66_mode_detection",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6298,0.6605]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b67_perceived_happy",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4237,0.4412]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b68_perceived_sad",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3631,0.3818]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b69_sad_pathway",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5610,0.6214]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b70_nostalgia_affect",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3783,0.4139]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b71_nostalgia_peak_pred",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5881,0.5977]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b72_self_referential_nostalgia",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5400,0.6153]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b73_wellbeing_enhancement",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5700,0.6102]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b60_ans_dominance",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4761,0.6818]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b61_chills_intensity",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6021,0.6234]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b62_driving_signal",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5758,0.7192]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b63_emotional_arousal",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4488,0.5381]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b64_emotion_certainty",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5610,0.5853]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b65_happy_pathway",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5388,0.5617]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b66_mode_detection",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6329,0.6504]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b67_perceived_happy",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4027,0.4172]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b68_perceived_sad",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3807,0.3883]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b69_sad_pathway",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6215,0.6766]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b70_nostalgia_affect",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3749,0.3924]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b71_nostalgia_peak_pred",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5624,0.5645]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b72_self_referential_nostalgia",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5204,0.5504]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b73_wellbeing_enhancement",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5671,0.5727]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b60_ans_dominance",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4831,0.7052]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b61_chills_intensity",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6074,0.6262]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b62_driving_signal",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6256,0.7077]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b63_emotional_arousal",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4575,0.5589]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b64_emotion_certainty",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5542,0.5749]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b65_happy_pathway",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5823,0.6053]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b66_mode_detection",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6359,0.6509]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b67_perceived_happy",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4318,0.4461]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b68_perceived_sad",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3702,0.3786]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b69_sad_pathway",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5935,0.6682]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b70_nostalgia_affect",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3841,0.4036]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b71_nostalgia_peak_pred",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5735,0.5788]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b72_self_referential_nostalgia",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5385,0.5586]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b73_wellbeing_enhancement",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5825,0.6087]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b60_ans_dominance",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5635,0.6086]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b61_chills_intensity",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6084,0.6179]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b62_driving_signal",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5944,0.6884]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b63_emotional_arousal",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4556,0.5358]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b64_emotion_certainty",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5306,0.5967]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b65_happy_pathway",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5945,0.6120]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b66_mode_detection",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6348,0.6505]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b67_perceived_happy",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4369,0.4498]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b68_perceived_sad",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3641,0.3781]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b69_sad_pathway",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5973,0.6729]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b70_nostalgia_affect",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3859,0.4068]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b71_nostalgia_peak_pred",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5814,0.5865]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b72_self_referential_nostalgia",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5392,0.5799]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b73_wellbeing_enhancement",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5712,0.6123]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b60_ans_dominance",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5018,0.6021]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b61_chills_intensity",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6086,0.6193]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b62_driving_signal",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6135,0.6973]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b63_emotional_arousal",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4574,0.5296]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b64_emotion_certainty",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5759,0.5952]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b65_happy_pathway",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5893,0.6091]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b66_mode_detection",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6374,0.6504]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b67_perceived_happy",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4421,0.4504]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b68_perceived_sad",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3597,0.3688]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b69_sad_pathway",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5518,0.6317]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b70_nostalgia_affect",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3910,0.4069]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b71_nostalgia_peak_pred",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5783,0.5827]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b72_self_referential_nostalgia",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5421,0.5701]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b73_wellbeing_enhancement",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5967,0.6179]\u2282[0,1]"
+    },
+    {
+      "name": "B3_b60_ans_dominance",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0039>0.001 (appraisal, w=1.00)"
+    },
+    {
+      "name": "B3_b61_chills_intensity",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0025>0.001 (appraisal, w=1.00)"
+    },
+    {
+      "name": "B3_b62_driving_signal",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0136>0.001 (appraisal, w=1.00)"
+    },
+    {
+      "name": "B3_b63_emotional_arousal",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0207>0.001 (core, w=0.80)"
+    },
+    {
+      "name": "B3_b64_emotion_certainty",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0080>0.001 (appraisal, w=1.00)"
+    },
+    {
+      "name": "B3_b65_happy_pathway",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0209>0.001 (appraisal, w=1.00)"
+    },
+    {
+      "name": "B3_b66_mode_detection",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0030>0.001 (appraisal, w=1.00)"
+    },
+    {
+      "name": "B3_b67_perceived_happy",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0143>0.0005 (core, w=0.70)"
+    },
+    {
+      "name": "B3_b68_perceived_sad",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0068>0.0005 (core, w=0.70)"
+    },
+    {
+      "name": "B3_b69_sad_pathway",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0307>0.001 (appraisal, w=1.00)"
+    },
+    {
+      "name": "B3_b70_nostalgia_affect",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0083>0.0005 (core, w=0.70)"
+    },
+    {
+      "name": "B3_b71_nostalgia_peak_pred",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0091>0.0002 (anticipation, w=1.00)"
+    },
+    {
+      "name": "B3_b72_self_referential_nostalgia",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0150>0.001 (appraisal, w=1.00)"
+    },
+    {
+      "name": "B3_b73_wellbeing_enhancement",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0155>0.0002 (anticipation, w=1.00)"
+    },
+    {
+      "name": "B4_g1_01_single_b60_ans_dominance",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.5775>0"
+    },
+    {
+      "name": "B4_g1_01_single_b61_chills_intensity",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.6099>0"
+    },
+    {
+      "name": "B4_g1_01_single_b62_driving_signal",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.6615>0"
+    },
+    {
+      "name": "B4_g1_01_single_b63_emotional_arousal",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.4679>0"
+    },
+    {
+      "name": "B4_g1_01_single_b64_emotion_certainty",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.5663>0"
+    },
+    {
+      "name": "B4_g1_01_single_b65_happy_pathway",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.6028>0"
+    },
+    {
+      "name": "B4_g1_01_single_b66_mode_detection",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.6437>0"
+    },
+    {
+      "name": "B4_g1_01_single_b67_perceived_happy",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.4461>0"
+    },
+    {
+      "name": "B4_g1_01_single_b68_perceived_sad",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.3710>0"
+    },
+    {
+      "name": "B4_g1_01_single_b69_sad_pathway",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.6230>0"
+    },
+    {
+      "name": "B4_g1_01_single_b70_nostalgia_affect",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.3933>0"
+    },
+    {
+      "name": "B4_g1_01_single_b71_nostalgia_peak_pred",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.5833>0"
+    },
+    {
+      "name": "B4_g1_01_single_b72_self_referential_nostalgia",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.5641>0"
+    },
+    {
+      "name": "B4_g1_01_single_b73_wellbeing_enhancement",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.5958>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b60_ans_dominance",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.5791>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b61_chills_intensity",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.6152>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b62_driving_signal",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.6677>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b63_emotional_arousal",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.5121>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b64_emotion_certainty",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.5612>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b65_happy_pathway",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.5967>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b66_mode_detection",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.6390>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b67_perceived_happy",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.4412>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b68_perceived_sad",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.3735>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b69_sad_pathway",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.6097>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b70_nostalgia_affect",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.3969>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b71_nostalgia_peak_pred",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.5767>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b72_self_referential_nostalgia",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.5489>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b73_wellbeing_enhancement",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.6005>0"
+    },
+    {
+      "name": "B5_b60_ans_dominance",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.5775, expected=0.5775, diff=0.0000"
+    },
+    {
+      "name": "B5_b61_chills_intensity",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.6099, expected=0.6099, diff=0.0000"
+    },
+    {
+      "name": "B5_b62_driving_signal",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.6615, expected=0.6615, diff=0.0000"
+    },
+    {
+      "name": "B5_b63_emotional_arousal",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.4679, expected=0.4679, diff=0.0000"
+    },
+    {
+      "name": "B5_b64_emotion_certainty",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.5663, expected=0.5663, diff=0.0000"
+    },
+    {
+      "name": "B5_b65_happy_pathway",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.6028, expected=0.6028, diff=0.0000"
+    },
+    {
+      "name": "B5_b66_mode_detection",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.6437, expected=0.6437, diff=0.0000"
+    },
+    {
+      "name": "B5_b67_perceived_happy",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.4461, expected=0.4461, diff=0.0000"
+    },
+    {
+      "name": "B5_b68_perceived_sad",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.3710, expected=0.3710, diff=0.0000"
+    },
+    {
+      "name": "B5_b69_sad_pathway",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.6230, expected=0.6230, diff=0.0000"
+    },
+    {
+      "name": "B5_b70_nostalgia_affect",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.3933, expected=0.3933, diff=0.0000"
+    },
+    {
+      "name": "B5_b71_nostalgia_peak_pred",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.5833, expected=0.5833, diff=0.0000"
+    },
+    {
+      "name": "B5_b72_self_referential_nostalgia",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.5641, expected=0.5641, diff=0.0000"
+    },
+    {
+      "name": "B5_b73_wellbeing_enhancement",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.5958, expected=0.5958, diff=0.0000"
+    },
+    {
+      "name": "B6_b60_ans_dominance",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.5775,organ=0.5798>0"
+    },
+    {
+      "name": "B6_b61_chills_intensity",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.6099,organ=0.6153>0"
+    },
+    {
+      "name": "B6_b62_driving_signal",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.6615,organ=0.6831>0"
+    },
+    {
+      "name": "B6_b63_emotional_arousal",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.4679,organ=0.5143>0"
+    },
+    {
+      "name": "B6_b64_emotion_certainty",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.5663,organ=0.5883>0"
+    },
+    {
+      "name": "B6_b65_happy_pathway",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.6028,organ=0.6024>0"
+    },
+    {
+      "name": "B6_b66_mode_detection",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.6437,organ=0.6403>0"
+    },
+    {
+      "name": "B6_b67_perceived_happy",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.4461,organ=0.4481>0"
+    },
+    {
+      "name": "B6_b68_perceived_sad",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.3710,organ=0.3638>0"
+    },
+    {
+      "name": "B6_b69_sad_pathway",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.6230,organ=0.5650>0"
+    },
+    {
+      "name": "B6_b70_nostalgia_affect",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.3933,organ=0.4043>0"
+    },
+    {
+      "name": "B6_b71_nostalgia_peak_pred",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.5833,organ=0.5820>0"
+    },
+    {
+      "name": "B6_b72_self_referential_nostalgia",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.5641,organ=0.5623>0"
+    },
+    {
+      "name": "B6_b73_wellbeing_enhancement",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.5958,organ=0.6126>0"
+    },
+    {
+      "name": "B7_F5_ok",
+      "group": "B7_redundancy",
+      "passed": true,
+      "message": "No redundant belief pairs in F5"
+    }
+  ]
+}

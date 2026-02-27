@@ -1,0 +1,1361 @@
+{
+  "test": "beliefs",
+  "functions": "F1",
+  "timestamp": "20260228_003656",
+  "total": 225,
+  "passed": 225,
+  "failed": 0,
+  "elapsed_s": 9.6,
+  "results": [
+    {
+      "name": "B1_ndim",
+      "group": "B1_shape",
+      "passed": true,
+      "message": "ndim=2"
+    },
+    {
+      "name": "B1_n_beliefs",
+      "group": "B1_shape",
+      "passed": true,
+      "message": "N=131 (expected 131)"
+    },
+    {
+      "name": "B1_frames",
+      "group": "B1_shape",
+      "passed": true,
+      "message": "T=862"
+    },
+    {
+      "name": "B2_g1_01_single_b0_consonance_salience_gradient",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3307,0.6188]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b1_contour_continuation",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5277,0.7141]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b2_melodic_contour_tracking",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.1508,0.6818]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b3_consonance_trajectory",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.2560,0.6273]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b4_harmonic_stability",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3131,0.7948]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b5_harmonic_template_match",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5170,0.8044]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b6_interval_quality",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4359,0.7964]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b7_pitch_continuation",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.0000,0.7671]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b8_pitch_prominence",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4653,0.5905]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b9_octave_equivalence",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.2864,0.4152]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b10_pitch_identity",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.2105,0.3413]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b11_aesthetic_quality",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.1416,0.2802]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b12_reward_response_pred",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3137,0.3835]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b13_spectral_temporal_synergy",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.1829,0.3376]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b14_imagery_recognition",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6074,0.6501]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b15_timbral_character",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4786,0.6030]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b16_spectral_complexity",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.2885,0.5446]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b0_consonance_salience_gradient",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4307,0.6167]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b1_contour_continuation",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5143,0.6965]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b2_melodic_contour_tracking",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.1527,0.6814]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b3_consonance_trajectory",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.2492,0.5103]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b4_harmonic_stability",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.2387,0.6560]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b5_harmonic_template_match",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4172,0.7407]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b6_interval_quality",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.0114,0.7964]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b7_pitch_continuation",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.0000,0.7686]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b8_pitch_prominence",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4479,0.5848]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b9_octave_equivalence",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.0281,0.4152]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b10_pitch_identity",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.2101,0.3438]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b11_aesthetic_quality",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.1267,0.2106]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b12_reward_response_pred",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3075,0.3453]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b13_spectral_temporal_synergy",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.1534,0.2711]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b14_imagery_recognition",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6070,0.6561]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b15_timbral_character",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3935,0.6034]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b16_spectral_complexity",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3654,0.5547]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b0_consonance_salience_gradient",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.2918,0.6188]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b1_contour_continuation",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5380,0.7142]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b2_melodic_contour_tracking",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.1508,0.6850]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b3_consonance_trajectory",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.2673,0.5714]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b4_harmonic_stability",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.2863,0.7455]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b5_harmonic_template_match",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5191,0.7335]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b6_interval_quality",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4830,0.7993]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b7_pitch_continuation",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.0000,0.7620]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b8_pitch_prominence",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4617,0.5633]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b9_octave_equivalence",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.2229,0.4157]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b10_pitch_identity",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.2108,0.2965]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b11_aesthetic_quality",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.1418,0.2575]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b12_reward_response_pred",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3138,0.3751]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b13_spectral_temporal_synergy",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.1837,0.3190]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b14_imagery_recognition",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5979,0.6404]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b15_timbral_character",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4513,0.6021]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b16_spectral_complexity",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3130,0.5245]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b0_consonance_salience_gradient",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3417,0.6184]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b1_contour_continuation",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5315,0.7143]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b2_melodic_contour_tracking",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.1623,0.6857]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b3_consonance_trajectory",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.2394,0.6910]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b4_harmonic_stability",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3082,0.8272]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b5_harmonic_template_match",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5072,0.8436]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b6_interval_quality",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4420,0.7955]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b7_pitch_continuation",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.0000,0.8144]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b8_pitch_prominence",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4668,0.6150]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b9_octave_equivalence",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.1966,0.4521]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b10_pitch_identity",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.2124,0.4331]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b11_aesthetic_quality",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.1396,0.2570]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b12_reward_response_pred",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3130,0.3715]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b13_spectral_temporal_synergy",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.1804,0.3203]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b14_imagery_recognition",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5745,0.6339]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b15_timbral_character",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4358,0.6032]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b16_spectral_complexity",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3044,0.5894]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b0_consonance_salience_gradient",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4867,0.6256]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b1_contour_continuation",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5220,0.6920]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b2_melodic_contour_tracking",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.1482,0.6911]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b3_consonance_trajectory",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.2199,0.4304]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b4_harmonic_stability",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.1443,0.4590]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b5_harmonic_template_match",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.2819,0.6447]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b6_interval_quality",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.0025,0.7969]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b7_pitch_continuation",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.0000,0.7572]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b8_pitch_prominence",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4317,0.5590]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b9_octave_equivalence",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.0211,0.3922]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b10_pitch_identity",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.2031,0.3035]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b11_aesthetic_quality",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.1160,0.1542]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b12_reward_response_pred",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3045,0.3195]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b13_spectral_temporal_synergy",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.1371,0.2045]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b14_imagery_recognition",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6095,0.6600]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b15_timbral_character",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3894,0.5961]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b16_spectral_complexity",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4345,0.5614]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b0_consonance_salience_gradient",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3011,0.5789]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b1_contour_continuation",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5287,0.6878]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b2_melodic_contour_tracking",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.1499,0.5633]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b3_consonance_trajectory",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.2622,0.5531]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b4_harmonic_stability",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3162,0.7640]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b5_harmonic_template_match",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3305,0.7233]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b6_interval_quality",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.0124,0.7218]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b7_pitch_continuation",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.0000,0.7725]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b8_pitch_prominence",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4351,0.5528]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b9_octave_equivalence",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.0232,0.3811]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b10_pitch_identity",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.1976,0.3117]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b11_aesthetic_quality",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.1368,0.2865]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b12_reward_response_pred",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3118,0.3794]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b13_spectral_temporal_synergy",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.1719,0.3515]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b14_imagery_recognition",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6068,0.6363]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b15_timbral_character",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4074,0.5214]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b16_spectral_complexity",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.2831,0.4872]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b0_consonance_salience_gradient",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3307,0.6188]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b1_contour_continuation",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5277,0.7141]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b2_melodic_contour_tracking",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.1508,0.6818]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b3_consonance_trajectory",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.2560,0.6273]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b4_harmonic_stability",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3131,0.7948]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b5_harmonic_template_match",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5170,0.8044]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b6_interval_quality",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4359,0.7964]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b7_pitch_continuation",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.0000,0.7671]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b8_pitch_prominence",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4653,0.5905]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b9_octave_equivalence",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.2864,0.4152]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b10_pitch_identity",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.2105,0.3413]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b11_aesthetic_quality",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.1416,0.2802]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b12_reward_response_pred",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3137,0.3835]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b13_spectral_temporal_synergy",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.1829,0.3376]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b14_imagery_recognition",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6074,0.6501]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b15_timbral_character",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4786,0.6030]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b16_spectral_complexity",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.2885,0.5446]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b0_consonance_salience_gradient",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.2703,0.5636]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b1_contour_continuation",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5194,0.6784]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b2_melodic_contour_tracking",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.1510,0.4738]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b3_consonance_trajectory",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3848,0.6162]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b4_harmonic_stability",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4414,0.7593]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b5_harmonic_template_match",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5529,0.7535]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b6_interval_quality",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3710,0.7506]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b7_pitch_continuation",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.0000,0.7988]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b8_pitch_prominence",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4666,0.5670]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b9_octave_equivalence",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.1821,0.3289]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b10_pitch_identity",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.2160,0.3565]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b11_aesthetic_quality",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.1558,0.2650]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b12_reward_response_pred",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3183,0.3840]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b13_spectral_temporal_synergy",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.1987,0.3250]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b14_imagery_recognition",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5852,0.6269]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b15_timbral_character",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4312,0.5314]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b16_spectral_complexity",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.2763,0.5263]\u2282[0,1]"
+    },
+    {
+      "name": "B3_b0_consonance_salience_gradient",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0769>0.0005 (appraisal, w=0.70)"
+    },
+    {
+      "name": "B3_b1_contour_continuation",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0126>0.0002 (anticipation, w=1.00)"
+    },
+    {
+      "name": "B3_b2_melodic_contour_tracking",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0565>0.0005 (appraisal, w=0.75)"
+    },
+    {
+      "name": "B3_b3_consonance_trajectory",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0799>0.0002 (anticipation, w=1.00)"
+    },
+    {
+      "name": "B3_b4_harmonic_stability",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.1473>0.001 (core, w=1.00)"
+    },
+    {
+      "name": "B3_b5_harmonic_template_match",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.1122>0.001 (appraisal, w=1.00)"
+    },
+    {
+      "name": "B3_b6_interval_quality",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.2097>0.001 (appraisal, w=1.00)"
+    },
+    {
+      "name": "B3_b7_pitch_continuation",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0659>0.0002 (anticipation, w=1.00)"
+    },
+    {
+      "name": "B3_b8_pitch_prominence",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0264>0.001 (core, w=0.85)"
+    },
+    {
+      "name": "B3_b9_octave_equivalence",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0792>0.001 (appraisal, w=1.00)"
+    },
+    {
+      "name": "B3_b10_pitch_identity",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0426>0.001 (core, w=0.80)"
+    },
+    {
+      "name": "B3_b11_aesthetic_quality",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0396>0.0005 (core, w=0.70)"
+    },
+    {
+      "name": "B3_b12_reward_response_pred",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0211>0.0002 (anticipation, w=0.80)"
+    },
+    {
+      "name": "B3_b13_spectral_temporal_synergy",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0524>0.001 (appraisal, w=0.80)"
+    },
+    {
+      "name": "B3_b14_imagery_recognition",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0149>0.0002 (anticipation, w=1.00)"
+    },
+    {
+      "name": "B3_b15_timbral_character",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0217>0.001 (core, w=0.80)"
+    },
+    {
+      "name": "B3_b16_spectral_complexity",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0769>0.0005 (appraisal, w=0.70)"
+    },
+    {
+      "name": "B4_g1_01_single_b0_consonance_salience_gradient",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.3834>0"
+    },
+    {
+      "name": "B4_g1_01_single_b1_contour_continuation",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.6013>0"
+    },
+    {
+      "name": "B4_g1_01_single_b2_melodic_contour_tracking",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.2684>0"
+    },
+    {
+      "name": "B4_g1_01_single_b3_consonance_trajectory",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.5055>0"
+    },
+    {
+      "name": "B4_g1_01_single_b4_harmonic_stability",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.6453>0"
+    },
+    {
+      "name": "B4_g1_01_single_b5_harmonic_template_match",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.7309>0"
+    },
+    {
+      "name": "B4_g1_01_single_b6_interval_quality",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.7084>0"
+    },
+    {
+      "name": "B4_g1_01_single_b7_pitch_continuation",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.4238>0"
+    },
+    {
+      "name": "B4_g1_01_single_b8_pitch_prominence",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.5596>0"
+    },
+    {
+      "name": "B4_g1_01_single_b9_octave_equivalence",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.3495>0"
+    },
+    {
+      "name": "B4_g1_01_single_b10_pitch_identity",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.3002>0"
+    },
+    {
+      "name": "B4_g1_01_single_b11_aesthetic_quality",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.2157>0"
+    },
+    {
+      "name": "B4_g1_01_single_b12_reward_response_pred",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.3505>0"
+    },
+    {
+      "name": "B4_g1_01_single_b13_spectral_temporal_synergy",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.2790>0"
+    },
+    {
+      "name": "B4_g1_01_single_b14_imagery_recognition",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.6422>0"
+    },
+    {
+      "name": "B4_g1_01_single_b15_timbral_character",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.4953>0"
+    },
+    {
+      "name": "B4_g1_01_single_b16_spectral_complexity",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.3750>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b0_consonance_salience_gradient",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.4222>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b1_contour_continuation",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.5997>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b2_melodic_contour_tracking",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.3383>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b3_consonance_trajectory",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.4652>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b4_harmonic_stability",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.6093>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b5_harmonic_template_match",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.6380>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b6_interval_quality",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.5244>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b7_pitch_continuation",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.3875>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b8_pitch_prominence",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.5230>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b9_octave_equivalence",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.2873>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b10_pitch_identity",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.2527>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b11_aesthetic_quality",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.2179>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b12_reward_response_pred",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.3520>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b13_spectral_temporal_synergy",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.2757>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b14_imagery_recognition",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.6268>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b15_timbral_character",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.4809>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b16_spectral_complexity",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.3418>0"
+    },
+    {
+      "name": "B5_b0_consonance_salience_gradient",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.3834, expected=0.3834, diff=0.0000"
+    },
+    {
+      "name": "B5_b1_contour_continuation",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.6013, expected=0.6013, diff=0.0000"
+    },
+    {
+      "name": "B5_b2_melodic_contour_tracking",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.2684, expected=0.2684, diff=0.0000"
+    },
+    {
+      "name": "B5_b3_consonance_trajectory",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.5055, expected=0.5055, diff=0.0000"
+    },
+    {
+      "name": "B5_b4_harmonic_stability",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.6453, expected=0.6453, diff=0.0000"
+    },
+    {
+      "name": "B5_b5_harmonic_template_match",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.7309, expected=0.7309, diff=0.0000"
+    },
+    {
+      "name": "B5_b6_interval_quality",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.7084, expected=0.7084, diff=0.0000"
+    },
+    {
+      "name": "B5_b7_pitch_continuation",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.4238, expected=0.4238, diff=0.0000"
+    },
+    {
+      "name": "B5_b8_pitch_prominence",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.5596, expected=0.5596, diff=0.0000"
+    },
+    {
+      "name": "B5_b9_octave_equivalence",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.3495, expected=0.3495, diff=0.0000"
+    },
+    {
+      "name": "B5_b10_pitch_identity",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.3002, expected=0.3002, diff=0.0000"
+    },
+    {
+      "name": "B5_b11_aesthetic_quality",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.2157, expected=0.2157, diff=0.0000"
+    },
+    {
+      "name": "B5_b12_reward_response_pred",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.3505, expected=0.3505, diff=0.0000"
+    },
+    {
+      "name": "B5_b13_spectral_temporal_synergy",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.2790, expected=0.2790, diff=0.0000"
+    },
+    {
+      "name": "B5_b14_imagery_recognition",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.6422, expected=0.6422, diff=0.0000"
+    },
+    {
+      "name": "B5_b15_timbral_character",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.4953, expected=0.4953, diff=0.0000"
+    },
+    {
+      "name": "B5_b16_spectral_complexity",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.3750, expected=0.3750, diff=0.0000"
+    },
+    {
+      "name": "B6_b0_consonance_salience_gradient",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.3834,organ=0.3540>0"
+    },
+    {
+      "name": "B6_b1_contour_continuation",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.6013,organ=0.5813>0"
+    },
+    {
+      "name": "B6_b2_melodic_contour_tracking",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.2684,organ=0.2164>0"
+    },
+    {
+      "name": "B6_b3_consonance_trajectory",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.5055,organ=0.5606>0"
+    },
+    {
+      "name": "B6_b4_harmonic_stability",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.6453,organ=0.6971>0"
+    },
+    {
+      "name": "B6_b5_harmonic_template_match",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.7309,organ=0.7069>0"
+    },
+    {
+      "name": "B6_b6_interval_quality",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.7084,organ=0.7016>0"
+    },
+    {
+      "name": "B6_b7_pitch_continuation",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.4238,organ=0.2806>0"
+    },
+    {
+      "name": "B6_b8_pitch_prominence",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.5596,organ=0.5126>0"
+    },
+    {
+      "name": "B6_b9_octave_equivalence",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.3495,organ=0.2990>0"
+    },
+    {
+      "name": "B6_b10_pitch_identity",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.3002,organ=0.2604>0"
+    },
+    {
+      "name": "B6_b11_aesthetic_quality",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.2157,organ=0.2401>0"
+    },
+    {
+      "name": "B6_b12_reward_response_pred",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.3505,organ=0.3713>0"
+    },
+    {
+      "name": "B6_b13_spectral_temporal_synergy",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.2790,organ=0.3013>0"
+    },
+    {
+      "name": "B6_b14_imagery_recognition",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.6422,organ=0.6110>0"
+    },
+    {
+      "name": "B6_b15_timbral_character",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.4953,organ=0.4786>0"
+    },
+    {
+      "name": "B6_b16_spectral_complexity",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.3750,organ=0.2891>0"
+    },
+    {
+      "name": "B7_F1_ok",
+      "group": "B7_redundancy",
+      "passed": true,
+      "message": "No redundant belief pairs in F1"
+    }
+  ]
+}

@@ -1,0 +1,1049 @@
+{
+  "test": "beliefs",
+  "functions": "F4",
+  "timestamp": "20260228_003736",
+  "total": 173,
+  "passed": 173,
+  "failed": 0,
+  "elapsed_s": 9.8,
+  "results": [
+    {
+      "name": "B1_ndim",
+      "group": "B1_shape",
+      "passed": true,
+      "message": "ndim=2"
+    },
+    {
+      "name": "B1_n_beliefs",
+      "group": "B1_shape",
+      "passed": true,
+      "message": "N=131 (expected 131)"
+    },
+    {
+      "name": "B1_frames",
+      "group": "B1_shape",
+      "passed": true,
+      "message": "T=862"
+    },
+    {
+      "name": "B2_g1_01_single_b47_melodic_recognition",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5314,0.5502]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b48_memory_preservation",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5499,0.5773]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b49_memory_scaffold_pred",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5939,0.6005]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b50_autobiographical_retrieval",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4023,0.4059]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b51_emotional_coloring",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3840,0.4294]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b52_memory_vividness",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5494,0.5755]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b53_nostalgia_intensity",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4036,0.4100]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b54_retrieval_probability",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6218,0.6324]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b55_self_relevance",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6636,0.6642]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b56_vividness_trajectory",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6693,0.6713]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b57_consolidation_strength",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6708,0.6728]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b58_episodic_boundary",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6577,0.6853]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_01_single_b59_episodic_encoding",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4099,0.4356]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b47_melodic_recognition",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5313,0.5520]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b48_memory_preservation",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5436,0.5779]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b49_memory_scaffold_pred",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6011,0.6059]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b50_autobiographical_retrieval",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3926,0.3970]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b51_emotional_coloring",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3780,0.4091]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b52_memory_vividness",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5349,0.5624]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b53_nostalgia_intensity",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3932,0.3998]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b54_retrieval_probability",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6047,0.6144]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b55_self_relevance",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6645,0.6653]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b56_vividness_trajectory",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6676,0.6683]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b57_consolidation_strength",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6719,0.6791]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b58_episodic_boundary",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6575,0.6862]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g1_05_minor_2nd_b59_episodic_encoding",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3858,0.4210]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b47_melodic_recognition",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5277,0.5395]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b48_memory_preservation",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5472,0.5717]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b49_memory_scaffold_pred",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5948,0.5998]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b50_autobiographical_retrieval",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4016,0.4045]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b51_emotional_coloring",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3813,0.4262]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b52_memory_vividness",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5460,0.5707]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b53_nostalgia_intensity",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4043,0.4107]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b54_retrieval_probability",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6217,0.6266]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b55_self_relevance",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6657,0.6664]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b56_vividness_trajectory",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6711,0.6726]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b57_consolidation_strength",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6712,0.6732]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b58_episodic_boundary",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6577,0.6850]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_01_low_b59_episodic_encoding",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4096,0.4360]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b47_melodic_recognition",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5406,0.5764]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b48_memory_preservation",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5499,0.5743]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b49_memory_scaffold_pred",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5894,0.5950]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b50_autobiographical_retrieval",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4028,0.4128]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b51_emotional_coloring",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3891,0.4287]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b52_memory_vividness",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5553,0.5809]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b53_nostalgia_intensity",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3979,0.3982]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b54_retrieval_probability",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6217,0.6454]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b55_self_relevance",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6572,0.6590]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b56_vividness_trajectory",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6678,0.6703]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b57_consolidation_strength",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6670,0.6692]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b58_episodic_boundary",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6576,0.6783]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g2_03_high_b59_episodic_encoding",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4081,0.4396]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b47_melodic_recognition",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5307,0.5495]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b48_memory_preservation",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5425,0.5761]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b49_memory_scaffold_pred",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6074,0.6109]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b50_autobiographical_retrieval",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3894,0.3938]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b51_emotional_coloring",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3746,0.3884]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b52_memory_vividness",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5308,0.5499]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b53_nostalgia_intensity",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3909,0.3979]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b54_retrieval_probability",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5979,0.6074]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b55_self_relevance",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6654,0.6662]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b56_vividness_trajectory",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6668,0.6675]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b57_consolidation_strength",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6728,0.6799]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b58_episodic_boundary",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6574,0.6864]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g3_04_dense_b59_episodic_encoding",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3856,0.4149]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b47_melodic_recognition",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5267,0.5429]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b48_memory_preservation",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5370,0.5631]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b49_memory_scaffold_pred",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6046,0.6081]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b50_autobiographical_retrieval",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3968,0.4043]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b51_emotional_coloring",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3790,0.4262]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b52_memory_vividness",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5412,0.5711]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b53_nostalgia_intensity",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4303,0.4363]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b54_retrieval_probability",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6161,0.6242]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b55_self_relevance",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6598,0.6614]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b56_vividness_trajectory",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6709,0.6724]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b57_consolidation_strength",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6674,0.6734]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b58_episodic_boundary",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6462,0.6713]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g4_03_arpeggio_b59_episodic_encoding",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3890,0.4348]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b47_melodic_recognition",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5314,0.5502]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b48_memory_preservation",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5499,0.5773]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b49_memory_scaffold_pred",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5939,0.6005]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b50_autobiographical_retrieval",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4023,0.4059]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b51_emotional_coloring",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3840,0.4294]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b52_memory_vividness",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5494,0.5755]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b53_nostalgia_intensity",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4036,0.4100]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b54_retrieval_probability",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6218,0.6324]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b55_self_relevance",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6636,0.6642]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b56_vividness_trajectory",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6693,0.6713]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b57_consolidation_strength",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6708,0.6728]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b58_episodic_boundary",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6577,0.6853]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_01_piano_b59_episodic_encoding",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4099,0.4356]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b47_melodic_recognition",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5273,0.5415]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b48_memory_preservation",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5474,0.5629]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b49_memory_scaffold_pred",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5947,0.5988]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b50_autobiographical_retrieval",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4020,0.4062]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b51_emotional_coloring",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.3841,0.4303]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b52_memory_vividness",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.5487,0.5728]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b53_nostalgia_intensity",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4079,0.4095]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b54_retrieval_probability",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6211,0.6291]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b55_self_relevance",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6675,0.6683]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b56_vividness_trajectory",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6716,0.6722]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b57_consolidation_strength",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6736,0.6758]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b58_episodic_boundary",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.6577,0.6835]\u2282[0,1]"
+    },
+    {
+      "name": "B2_g5_02_organ_b59_episodic_encoding",
+      "group": "B2_bounds",
+      "passed": true,
+      "message": "[0.4076,0.4286]\u2282[0,1]"
+    },
+    {
+      "name": "B3_b47_melodic_recognition",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0109>0.001 (appraisal, w=1.00)"
+    },
+    {
+      "name": "B3_b48_memory_preservation",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0067>0.001 (appraisal, w=1.00)"
+    },
+    {
+      "name": "B3_b49_memory_scaffold_pred",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0056>0.0002 (anticipation, w=1.00)"
+    },
+    {
+      "name": "B3_b50_autobiographical_retrieval",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0055>0.0005 (core, w=0.70)"
+    },
+    {
+      "name": "B3_b51_emotional_coloring",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0145>0.0005 (core, w=0.70)"
+    },
+    {
+      "name": "B3_b52_memory_vividness",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0117>0.001 (appraisal, w=1.00)"
+    },
+    {
+      "name": "B3_b53_nostalgia_intensity",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0114>0.0005 (core, w=0.70)"
+    },
+    {
+      "name": "B3_b54_retrieval_probability",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0104>0.001 (appraisal, w=1.00)"
+    },
+    {
+      "name": "B3_b55_self_relevance",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0031>0.001 (appraisal, w=1.00)"
+    },
+    {
+      "name": "B3_b56_vividness_trajectory",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0018>0.0002 (anticipation, w=1.00)"
+    },
+    {
+      "name": "B3_b57_consolidation_strength",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0032>0.001 (appraisal, w=1.00)"
+    },
+    {
+      "name": "B3_b58_episodic_boundary",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0033>0.001 (appraisal, w=1.00)"
+    },
+    {
+      "name": "B3_b59_episodic_encoding",
+      "group": "B3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0104>0.0005 (core, w=0.70)"
+    },
+    {
+      "name": "B4_g1_01_single_b47_melodic_recognition",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.5427>0"
+    },
+    {
+      "name": "B4_g1_01_single_b48_memory_preservation",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.5716>0"
+    },
+    {
+      "name": "B4_g1_01_single_b49_memory_scaffold_pred",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.5985>0"
+    },
+    {
+      "name": "B4_g1_01_single_b50_autobiographical_retrieval",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.4048>0"
+    },
+    {
+      "name": "B4_g1_01_single_b51_emotional_coloring",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.4077>0"
+    },
+    {
+      "name": "B4_g1_01_single_b52_memory_vividness",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.5661>0"
+    },
+    {
+      "name": "B4_g1_01_single_b53_nostalgia_intensity",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.4083>0"
+    },
+    {
+      "name": "B4_g1_01_single_b54_retrieval_probability",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.6278>0"
+    },
+    {
+      "name": "B4_g1_01_single_b55_self_relevance",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.6641>0"
+    },
+    {
+      "name": "B4_g1_01_single_b56_vividness_trajectory",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.6706>0"
+    },
+    {
+      "name": "B4_g1_01_single_b57_consolidation_strength",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.6714>0"
+    },
+    {
+      "name": "B4_g1_01_single_b58_episodic_boundary",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.6596>0"
+    },
+    {
+      "name": "B4_g1_01_single_b59_episodic_encoding",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.4158>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b47_melodic_recognition",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.5294>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b48_memory_preservation",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.5534>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b49_memory_scaffold_pred",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.6062>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b50_autobiographical_retrieval",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.4016>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b51_emotional_coloring",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.4148>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b52_memory_vividness",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.5637>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b53_nostalgia_intensity",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.4318>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b54_retrieval_probability",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.6186>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b55_self_relevance",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.6609>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b56_vividness_trajectory",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.6714>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b57_consolidation_strength",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.6684>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b58_episodic_boundary",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.6513>0"
+    },
+    {
+      "name": "B4_g4_03_arpeggio_b59_episodic_encoding",
+      "group": "B4_positive",
+      "passed": true,
+      "message": "val=0.4117>0"
+    },
+    {
+      "name": "B5_b47_melodic_recognition",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.5427, expected=0.5427, diff=0.0000"
+    },
+    {
+      "name": "B5_b48_memory_preservation",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.5716, expected=0.5716, diff=0.0000"
+    },
+    {
+      "name": "B5_b49_memory_scaffold_pred",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.5985, expected=0.5985, diff=0.0000"
+    },
+    {
+      "name": "B5_b50_autobiographical_retrieval",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.4048, expected=0.4048, diff=0.0000"
+    },
+    {
+      "name": "B5_b51_emotional_coloring",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.4077, expected=0.4077, diff=0.0000"
+    },
+    {
+      "name": "B5_b52_memory_vividness",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.5661, expected=0.5661, diff=0.0000"
+    },
+    {
+      "name": "B5_b53_nostalgia_intensity",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.4083, expected=0.4083, diff=0.0000"
+    },
+    {
+      "name": "B5_b54_retrieval_probability",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.6278, expected=0.6278, diff=0.0000"
+    },
+    {
+      "name": "B5_b55_self_relevance",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.6641, expected=0.6641, diff=0.0000"
+    },
+    {
+      "name": "B5_b56_vividness_trajectory",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.6706, expected=0.6706, diff=0.0000"
+    },
+    {
+      "name": "B5_b57_consolidation_strength",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.6714, expected=0.6714, diff=0.0000"
+    },
+    {
+      "name": "B5_b58_episodic_boundary",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.6596, expected=0.6596, diff=0.0000"
+    },
+    {
+      "name": "B5_b59_episodic_encoding",
+      "group": "B5_source_dim",
+      "passed": true,
+      "message": "belief=0.4158, expected=0.4158, diff=0.0000"
+    },
+    {
+      "name": "B6_b47_melodic_recognition",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.5427,organ=0.5300>0"
+    },
+    {
+      "name": "B6_b48_memory_preservation",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.5716,organ=0.5520>0"
+    },
+    {
+      "name": "B6_b49_memory_scaffold_pred",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.5985,organ=0.5979>0"
+    },
+    {
+      "name": "B6_b50_autobiographical_retrieval",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.4048,organ=0.4041>0"
+    },
+    {
+      "name": "B6_b51_emotional_coloring",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.4077,organ=0.4239>0"
+    },
+    {
+      "name": "B6_b52_memory_vividness",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.5661,organ=0.5710>0"
+    },
+    {
+      "name": "B6_b53_nostalgia_intensity",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.4083,organ=0.4082>0"
+    },
+    {
+      "name": "B6_b54_retrieval_probability",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.6278,organ=0.6235>0"
+    },
+    {
+      "name": "B6_b55_self_relevance",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.6641,organ=0.6679>0"
+    },
+    {
+      "name": "B6_b56_vividness_trajectory",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.6706,organ=0.6717>0"
+    },
+    {
+      "name": "B6_b57_consolidation_strength",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.6714,organ=0.6738>0"
+    },
+    {
+      "name": "B6_b58_episodic_boundary",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.6596,organ=0.6617>0"
+    },
+    {
+      "name": "B6_b59_episodic_encoding",
+      "group": "B6_instrument",
+      "passed": true,
+      "message": "piano=0.4158,organ=0.4163>0"
+    },
+    {
+      "name": "B7_F4_ok",
+      "group": "B7_redundancy",
+      "passed": true,
+      "message": "No redundant belief pairs in F4"
+    }
+  ]
+}
