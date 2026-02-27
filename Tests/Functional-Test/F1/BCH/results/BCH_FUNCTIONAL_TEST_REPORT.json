@@ -1,0 +1,548 @@
+{
+  "version": "1.0",
+  "mechanism": "BCH",
+  "timestamp": "2026-02-27T20:52:40.219426",
+  "stimuli_count": 23,
+  "tests_total": 76,
+  "tests_passed": 76,
+  "tests_failed": 0,
+  "elapsed_s": 24.82629270805046,
+  "results": [
+    {
+      "name": "T1_E2_fifth>tritone",
+      "group": "T1_consonance_hierarchy",
+      "passed": true,
+      "message": "P5(0.5488) > TT(0.5386)",
+      "values": {}
+    },
+    {
+      "name": "T1_E2_fifth>minor2nd",
+      "group": "T1_consonance_hierarchy",
+      "passed": true,
+      "message": "P5(0.5488) > m2(0.2909)",
+      "values": {}
+    },
+    {
+      "name": "T1_E2_octave>tritone",
+      "group": "T1_consonance_hierarchy",
+      "passed": true,
+      "message": "P8(0.6706) > TT(0.5386)",
+      "values": {}
+    },
+    {
+      "name": "T1_E2_fourth>minor2nd",
+      "group": "T1_consonance_hierarchy",
+      "passed": true,
+      "message": "P4(0.5133) > m2(0.2909)",
+      "values": {}
+    },
+    {
+      "name": "T1_E2_tritone>minor2nd",
+      "group": "T1_consonance_hierarchy",
+      "passed": true,
+      "message": "TT(0.5386) > m2(0.2909)",
+      "values": {}
+    },
+    {
+      "name": "T1_E2_full_hierarchy",
+      "group": "T1_consonance_hierarchy",
+      "passed": true,
+      "message": "E2: P1=0.7084, P8=0.6706, P5=0.5488, P4=0.5133, M3=0.3302, m6=0.5378, TT=0.5386, m2=0.2909",
+      "values": {}
+    },
+    {
+      "name": "T2_E0_single_approx_cluster",
+      "group": "T2_neural_pitch_salience",
+      "passed": true,
+      "message": "|single(0.5038) - cluster(0.5070)| = 0.0033 < 0.10",
+      "values": {}
+    },
+    {
+      "name": "T2_E0_octave_approx_cluster",
+      "group": "T2_neural_pitch_salience",
+      "passed": true,
+      "message": "|octave(0.5007) - cluster(0.5070)| = 0.0063 < 0.10",
+      "values": {}
+    },
+    {
+      "name": "T2_E0_single_bounded",
+      "group": "T2_neural_pitch_salience",
+      "passed": true,
+      "message": "E0(single) = 0.5038 in [0, 1]",
+      "values": {}
+    },
+    {
+      "name": "T2_E0_chord_bounded",
+      "group": "T2_neural_pitch_salience",
+      "passed": true,
+      "message": "E0(chord) = 0.4865 in [0, 1]",
+      "values": {}
+    },
+    {
+      "name": "T2_E0_cluster_bounded",
+      "group": "T2_neural_pitch_salience",
+      "passed": true,
+      "message": "E0(cluster) = 0.5070 in [0, 1]",
+      "values": {}
+    },
+    {
+      "name": "T2_E0_octave_bounded",
+      "group": "T2_neural_pitch_salience",
+      "passed": true,
+      "message": "E0(octave) = 0.5007 in [0, 1]",
+      "values": {}
+    },
+    {
+      "name": "T3_E1_single>cluster",
+      "group": "T3_harmonicity",
+      "passed": true,
+      "message": "single(0.2632) > cluster(0.1229)",
+      "values": {}
+    },
+    {
+      "name": "T3_E1_octave>cluster",
+      "group": "T3_harmonicity",
+      "passed": true,
+      "message": "octave(0.2624) > cluster(0.1229)",
+      "values": {}
+    },
+    {
+      "name": "T3_E1_chord>cluster",
+      "group": "T3_harmonicity",
+      "passed": true,
+      "message": "chord(0.1479) > cluster(0.1229)",
+      "values": {}
+    },
+    {
+      "name": "T3_E1_hierarchy",
+      "group": "T3_harmonicity",
+      "passed": true,
+      "message": "E1: single=0.2632, octave=0.2624, chord=0.1479, cluster=0.1229",
+      "values": {}
+    },
+    {
+      "name": "T4_P0_fifth>tritone",
+      "group": "T4_consonance_signal",
+      "passed": true,
+      "message": "fifth(0.5763) > tritone(0.4808)",
+      "values": {}
+    },
+    {
+      "name": "T4_P0_fifth>minor2nd",
+      "group": "T4_consonance_signal",
+      "passed": true,
+      "message": "fifth(0.5763) > minor_2nd(0.2970)",
+      "values": {}
+    },
+    {
+      "name": "T4_P0_chord>cluster",
+      "group": "T4_consonance_signal",
+      "passed": true,
+      "message": "chord(0.4997) > cluster(0.2542)",
+      "values": {}
+    },
+    {
+      "name": "T4_P0_tritone>minor2nd",
+      "group": "T4_consonance_signal",
+      "passed": true,
+      "message": "tritone(0.4808) > minor_2nd(0.2970)",
+      "values": {}
+    },
+    {
+      "name": "T5_P1_octave>tritone",
+      "group": "T5_template_match",
+      "passed": true,
+      "message": "octave(0.7083) > tritone(0.6465)",
+      "values": {}
+    },
+    {
+      "name": "T5_P1_fifth>tritone",
+      "group": "T5_template_match",
+      "passed": true,
+      "message": "fifth(0.6626) > tritone(0.6465)",
+      "values": {}
+    },
+    {
+      "name": "T5_P1_fifth>minor2nd",
+      "group": "T5_template_match",
+      "passed": true,
+      "message": "fifth(0.6626) > minor_2nd(0.5242)",
+      "values": {}
+    },
+    {
+      "name": "T6_P3_scale>chromatic",
+      "group": "T6_tonal_context",
+      "passed": true,
+      "message": "scale(0.3309) > chromatic(0.3124)",
+      "values": {}
+    },
+    {
+      "name": "T6_P3_held>chromatic",
+      "group": "T6_tonal_context",
+      "passed": true,
+      "message": "held(0.3728) > chromatic(0.3124)",
+      "values": {}
+    },
+    {
+      "name": "T6_P3_random_note",
+      "group": "T6_tonal_context",
+      "passed": true,
+      "message": "random P3=0.3976 (may exceed diatonic by chance)",
+      "values": {}
+    },
+    {
+      "name": "T6_P3_hierarchy",
+      "group": "T6_tonal_context",
+      "passed": true,
+      "message": "P3: held=0.3728, scale=0.3309, chromatic=0.3124, random=0.3976",
+      "values": {}
+    },
+    {
+      "name": "T7_M0_fifth>minor2nd",
+      "group": "T7_memory_integration",
+      "passed": true,
+      "message": "M0: fifth(0.6193) > m2(0.4116)",
+      "values": {}
+    },
+    {
+      "name": "T7_M1_single>cluster",
+      "group": "T7_memory_integration",
+      "passed": true,
+      "message": "M1: single(0.8618) > cluster(0.7806)",
+      "values": {}
+    },
+    {
+      "name": "T7_M2_scale>chromatic",
+      "group": "T7_memory_integration",
+      "passed": true,
+      "message": "M2: scale(0.3309) > chromatic(0.3119)",
+      "values": {}
+    },
+    {
+      "name": "T7_M3_bounded",
+      "group": "T7_memory_integration",
+      "passed": true,
+      "message": "M3(mid_chord) = 0.5567 in (0, 1)",
+      "values": {}
+    },
+    {
+      "name": "T8_F0_P0_corr",
+      "group": "T8_forecast",
+      "passed": true,
+      "message": "r(F0,P0) = +0.996 > 0.3 (forecast tracks signal)",
+      "values": {
+        "r": 0.9956143323937705
+      }
+    },
+    {
+      "name": "T8_F1_P2_corr",
+      "group": "T8_forecast",
+      "passed": true,
+      "message": "r(F1,P2) = +0.944 > 0.3 (pitch forecast tracks neural pitch)",
+      "values": {
+        "r": 0.9443309739236248
+      }
+    },
+    {
+      "name": "T8_F3_fifth>minor2nd",
+      "group": "T8_forecast",
+      "passed": true,
+      "message": "F3: fifth(0.7006) > m2(0.6352)",
+      "values": {}
+    },
+    {
+      "name": "T8_F0:consonance_forecast_bounded_g1_01_unis",
+      "group": "T8_forecast",
+      "passed": "True",
+      "message": "[0.2560, 0.6273] OK",
+      "values": {}
+    },
+    {
+      "name": "T8_F1:pitch_forecast_bounded_g1_01_unis",
+      "group": "T8_forecast",
+      "passed": "True",
+      "message": "[0.4493, 0.6104] OK",
+      "values": {}
+    },
+    {
+      "name": "T8_F2:tonal_forecast_bounded_g1_01_unis",
+      "group": "T8_forecast",
+      "passed": "True",
+      "message": "[0.1761, 0.4799] OK",
+      "values": {}
+    },
+    {
+      "name": "T8_F3:interval_forecast_bounded_g1_01_unis",
+      "group": "T8_forecast",
+      "passed": "True",
+      "message": "[0.5027, 1.0000] OK",
+      "values": {}
+    },
+    {
+      "name": "T8_F0:consonance_forecast_bounded_g1_03_fift",
+      "group": "T8_forecast",
+      "passed": "True",
+      "message": "[0.2475, 0.6194] OK",
+      "values": {}
+    },
+    {
+      "name": "T8_F1:pitch_forecast_bounded_g1_03_fift",
+      "group": "T8_forecast",
+      "passed": "True",
+      "message": "[0.4112, 0.6155] OK",
+      "values": {}
+    },
+    {
+      "name": "T8_F2:tonal_forecast_bounded_g1_03_fift",
+      "group": "T8_forecast",
+      "passed": "True",
+      "message": "[0.1779, 0.4908] OK",
+      "values": {}
+    },
+    {
+      "name": "T8_F3:interval_forecast_bounded_g1_03_fift",
+      "group": "T8_forecast",
+      "passed": "True",
+      "message": "[0.4655, 0.9989] OK",
+      "values": {}
+    },
+    {
+      "name": "T8_F0:consonance_forecast_bounded_g1_07_trit",
+      "group": "T8_forecast",
+      "passed": "True",
+      "message": "[0.2492, 0.5588] OK",
+      "values": {}
+    },
+    {
+      "name": "T8_F1:pitch_forecast_bounded_g1_07_trit",
+      "group": "T8_forecast",
+      "passed": "True",
+      "message": "[0.4332, 0.5900] OK",
+      "values": {}
+    },
+    {
+      "name": "T8_F2:tonal_forecast_bounded_g1_07_trit",
+      "group": "T8_forecast",
+      "passed": "True",
+      "message": "[0.1688, 0.4416] OK",
+      "values": {}
+    },
+    {
+      "name": "T8_F3:interval_forecast_bounded_g1_07_trit",
+      "group": "T8_forecast",
+      "passed": "True",
+      "message": "[0.4412, 0.9816] OK",
+      "values": {}
+    },
+    {
+      "name": "T8_F0:consonance_forecast_bounded_g1_08_mino",
+      "group": "T8_forecast",
+      "passed": "True",
+      "message": "[0.2492, 0.5103] OK",
+      "values": {}
+    },
+    {
+      "name": "T8_F1:pitch_forecast_bounded_g1_08_mino",
+      "group": "T8_forecast",
+      "passed": "True",
+      "message": "[0.4074, 0.6389] OK",
+      "values": {}
+    },
+    {
+      "name": "T8_F2:tonal_forecast_bounded_g1_08_mino",
+      "group": "T8_forecast",
+      "passed": "True",
+      "message": "[0.1543, 0.4641] OK",
+      "values": {}
+    },
+    {
+      "name": "T8_F3:interval_forecast_bounded_g1_08_mino",
+      "group": "T8_forecast",
+      "passed": "True",
+      "message": "[0.3619, 0.9831] OK",
+      "values": {}
+    },
+    {
+      "name": "T8_F0:consonance_forecast_bounded_g2_02_majo",
+      "group": "T8_forecast",
+      "passed": "True",
+      "message": "[0.2798, 0.5497] OK",
+      "values": {}
+    },
+    {
+      "name": "T8_F1:pitch_forecast_bounded_g2_02_majo",
+      "group": "T8_forecast",
+      "passed": "True",
+      "message": "[0.4350, 0.5743] OK",
+      "values": {}
+    },
+    {
+      "name": "T8_F2:tonal_forecast_bounded_g2_02_majo",
+      "group": "T8_forecast",
+      "passed": "True",
+      "message": "[0.1733, 0.4382] OK",
+      "values": {}
+    },
+    {
+      "name": "T8_F3:interval_forecast_bounded_g2_02_majo",
+      "group": "T8_forecast",
+      "passed": "True",
+      "message": "[0.4433, 1.0000] OK",
+      "values": {}
+    },
+    {
+      "name": "T8_F0:consonance_forecast_bounded_g2_03_clus",
+      "group": "T8_forecast",
+      "passed": "True",
+      "message": "[0.2398, 0.4754] OK",
+      "values": {}
+    },
+    {
+      "name": "T8_F1:pitch_forecast_bounded_g2_03_clus",
+      "group": "T8_forecast",
+      "passed": "True",
+      "message": "[0.4087, 0.6360] OK",
+      "values": {}
+    },
+    {
+      "name": "T8_F2:tonal_forecast_bounded_g2_03_clus",
+      "group": "T8_forecast",
+      "passed": "True",
+      "message": "[0.1648, 0.4627] OK",
+      "values": {}
+    },
+    {
+      "name": "T8_F3:interval_forecast_bounded_g2_03_clus",
+      "group": "T8_forecast",
+      "passed": "True",
+      "message": "[0.3662, 0.9743] OK",
+      "values": {}
+    },
+    {
+      "name": "T9_shape_g1_01_unison",
+      "group": "T9_bounds_shape",
+      "passed": true,
+      "message": "shape=(862, 16) OK",
+      "values": {}
+    },
+    {
+      "name": "T9_bounds_g1_01_unison",
+      "group": "T9_bounds_shape",
+      "passed": "True",
+      "message": "range=[0.076599, 1.000000] OK",
+      "values": {}
+    },
+    {
+      "name": "T9_shape_g1_08_minor_2nd",
+      "group": "T9_bounds_shape",
+      "passed": true,
+      "message": "shape=(862, 16) OK",
+      "values": {}
+    },
+    {
+      "name": "T9_bounds_g1_08_minor_2nd",
+      "group": "T9_bounds_shape",
+      "passed": "True",
+      "message": "range=[0.005929, 0.983090] OK",
+      "values": {}
+    },
+    {
+      "name": "T9_shape_g2_03_cluster",
+      "group": "T9_bounds_shape",
+      "passed": true,
+      "message": "shape=(862, 16) OK",
+      "values": {}
+    },
+    {
+      "name": "T9_bounds_g2_03_cluster",
+      "group": "T9_bounds_shape",
+      "passed": "True",
+      "message": "range=[0.005589, 0.974326] OK",
+      "values": {}
+    },
+    {
+      "name": "T9_shape_g3_01_c_major_scale",
+      "group": "T9_bounds_shape",
+      "passed": true,
+      "message": "shape=(858, 16) OK",
+      "values": {}
+    },
+    {
+      "name": "T9_bounds_g3_01_c_major_scale",
+      "group": "T9_bounds_shape",
+      "passed": "True",
+      "message": "range=[0.016723, 0.999489] OK",
+      "values": {}
+    },
+    {
+      "name": "T9_shape_g4_02_mid_chord",
+      "group": "T9_bounds_shape",
+      "passed": true,
+      "message": "shape=(862, 16) OK",
+      "values": {}
+    },
+    {
+      "name": "T9_bounds_g4_02_mid_chord",
+      "group": "T9_bounds_shape",
+      "passed": "True",
+      "message": "range=[0.068796, 1.000000] OK",
+      "values": {}
+    },
+    {
+      "name": "T9_shape_g5_01_stable_chord",
+      "group": "T9_bounds_shape",
+      "passed": true,
+      "message": "shape=(1034, 16) OK",
+      "values": {}
+    },
+    {
+      "name": "T9_bounds_g5_01_stable_chord",
+      "group": "T9_bounds_shape",
+      "passed": "True",
+      "message": "range=[0.068089, 1.000000] OK",
+      "values": {}
+    },
+    {
+      "name": "T9_shape_g5_03_rapid_changes",
+      "group": "T9_bounds_shape",
+      "passed": true,
+      "message": "shape=(1000, 16) OK",
+      "values": {}
+    },
+    {
+      "name": "T9_bounds_g5_03_rapid_changes",
+      "group": "T9_bounds_shape",
+      "passed": "True",
+      "message": "range=[0.064035, 0.946674] OK",
+      "values": {}
+    },
+    {
+      "name": "T10_M0_rapid>stable",
+      "group": "T10_temporal_stability",
+      "passed": true,
+      "message": "rapid_std(0.1859) > stable_std(0.1486)",
+      "values": {}
+    },
+    {
+      "name": "T10_M0_rapid>prog",
+      "group": "T10_temporal_stability",
+      "passed": true,
+      "message": "rapid_std(0.1859) > prog_std(0.1444)",
+      "values": {}
+    },
+    {
+      "name": "T10_P0_rapid>stable",
+      "group": "T10_temporal_stability",
+      "passed": true,
+      "message": "P0: rapid_std(0.2076) > stable_std(0.1902)",
+      "values": {}
+    },
+    {
+      "name": "T10_M0_stable>rapid_mean",
+      "group": "T10_temporal_stability",
+      "passed": true,
+      "message": "stable_mean(0.6048) > rapid_mean(0.4417)",
+      "values": {}
+    }
+  ]
+}
