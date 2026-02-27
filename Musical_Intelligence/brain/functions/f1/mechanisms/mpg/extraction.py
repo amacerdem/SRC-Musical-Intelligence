@@ -72,11 +72,13 @@ def compute_extraction(
 
     # E1: Sequence Anterior — anterior AC activation for contour tracking
     #     Rupp 2022: anterior regions process subsequent notes & pitch variation
-    #     Coefficients: 0.35 + 0.35 + 0.30 = 1.0
+    #     Emphasize pitch CHANGE (velocity/trend) over pitch PRESENCE (value)
+    #     to avoid inflated E1 for sustained chords.
+    #     Coefficients: 0.40 + 0.45 + 0.15 = 1.0
     e1 = _wsig(
-        0.35 * h3(_SHARPNESS, 4, 8, 0)      # sharpness velocity ~125ms
-        + 0.35 * h3(_PITCH_HEIGHT, 4, 18, 2)  # pitch_height trend ~125ms
-        + 0.30 * h3(_PITCH_HEIGHT, 3, 0, 2)  # pitch_height value ~100ms
+        0.40 * h3(_SHARPNESS, 4, 8, 0)      # sharpness velocity ~125ms
+        + 0.45 * h3(_PITCH_HEIGHT, 4, 18, 2)  # pitch_height trend ~125ms
+        + 0.15 * h3(_PITCH_HEIGHT, 3, 0, 2)  # pitch_height value ~100ms (reduced)
     )
 
     # E2: Contour Complexity — melodic unpredictability

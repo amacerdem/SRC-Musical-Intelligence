@@ -62,13 +62,14 @@ def compute_cognitive_present(
     )
 
     # P1: contour_state — pitch-processing contour tracking activity
-    #     High when anterior dominance is strong (gradient_ratio → 0.0)
+    #     High when actual pitch variation is strong, not merely onset absence.
+    #     E2 (contour_complexity) weighted highest — captures pitch change.
     #     Rupp 2022: anterior AC response to melodic contour
     p1 = (
-        0.35 * e1                           # sequence_anterior
+        0.30 * e1                           # sequence_anterior
         + 0.25 * m2                         # anterior_activity
-        + 0.20 * e2                         # contour_complexity
-        + 0.20 * (1.0 - e3)                # inverse gradient (anterior dominance)
+        + 0.35 * e2                         # contour_complexity (primary driver)
+        + 0.10 * (1.0 - e3)                # inverse gradient (reduced)
     )
 
     return p0, p1

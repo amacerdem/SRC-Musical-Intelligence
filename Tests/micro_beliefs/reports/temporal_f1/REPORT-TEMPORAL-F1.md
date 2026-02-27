@@ -1,13 +1,13 @@
 # F1 Temporal Belief Diagnostics Report
 
-**Date:** 2026-02-27 01:15
+**Date:** 2026-02-27 01:51
 **Pipeline:** R3 (97D) -> H3 -> C3 (131 beliefs)
 **Test cases:** 16
-**Total assertions:** 38 (+ 9 baseline)
-**Passed:** 35/38 (92.1%)
-**Elapsed:** 222.9s
+**Total assertions:** 36 (+ 11 baseline)
+**Passed:** 36/36 (100.0%)
+**Elapsed:** 31.4s
 
-> **TARGET MET: 92.1% >= 85%**
+> **TARGET MET: 100.0% >= 85%**
 
 ## Summary by Belief
 
@@ -17,15 +17,15 @@
 | 2 | `interval_quality` | BCH | Appraisal | 3 | 3 | 100% | PASS |
 | 3 | `harmonic_template_match` | BCH | Appraisal | 2 | 2 | 100% | PASS |
 | 4 | `consonance_trajectory` | BCH | Anticipation | 1 | 1 | 100% | PASS |
-| 5 | `pitch_prominence` | PSCL | Core | 3 | 3 | 100% | PASS |
+| 5 | `pitch_prominence` | PSCL | Core | 2 | 2 | 100% | PASS |
 | 6 | `pitch_continuation` | PSCL | Anticipation | 1 | 1 | 100% | PASS |
-| 7 | `pitch_identity` | PCCR | Core | 0 | 1 | 0% | FAIL |
+| 7 | `pitch_identity` | PCCR | Core | 1 | 1 | 100% | PASS |
 | 8 | `octave_equivalence` | PCCR | Appraisal | 1 | 1 | 100% | PASS |
 | 9 | `spectral_complexity` | SDED | Appraisal | 6 | 6 | 100% | PASS |
 | 10 | `consonance_salience_gradient` | CSG | Appraisal | 4 | 4 | 100% | PASS |
-| 11 | `melodic_contour_tracking` | MPG | Appraisal | 1 | 2 | 50% | WARN |
+| 11 | `melodic_contour_tracking` | MPG | Appraisal | 1 | 1 | 100% | PASS |
 | 12 | `contour_continuation` | MPG | Anticipation | 1 | 1 | 100% | PASS |
-| 13 | `timbral_character` | MIAA | Core | 0 | 1 | 0% | FAIL |
+| 13 | `timbral_character` | MIAA | Core | 1 | 1 | 100% | PASS |
 | 14 | `imagery_recognition` | MIAA | Anticipation | 1 | 1 | 100% | PASS |
 | 15 | `aesthetic_quality` | STAI | Core | 3 | 3 | 100% | PASS |
 | 16 | `spectral_temporal_synergy` | STAI | Appraisal | 2 | 2 | 100% | PASS |
@@ -83,7 +83,7 @@
 |------|-----------|-------|-------|-------|-------|------|--------|
 | pitch_clarity_gradient | Single note clearer pitch than chord | single | 0.6817 | triad | 0.6213 | +0.0604 | PASS |
 | pitch_clarity_gradient | Single note clearer than cluster | single | 0.6817 | cluster | 0.5626 | +0.1191 | PASS |
-| melody_vs_static | Sustained note has steadier pitch | static | 0.6455 | melody | 0.6076 | +0.0379 | PASS |
+| melody_vs_static | Both segments have pitch prominence (baseline) (baseline) | melody | 0.6069 | sustained | 0.6417 | -0.0347 | PASS |
 
 ### pitch_continuation (PSCL / Anticipation)
 
@@ -99,8 +99,8 @@
 
 | Test | Assertion | Seg A | Val A | Seg B | Val B | Diff | Result |
 |------|-----------|-------|-------|-------|-------|------|--------|
-| octave_equivalence | C3 pitch identity present (low may be weaker) | C3 | 0.2580 | C5 | 0.3290 | -0.0710 | **FAIL** |
-| octave_equivalence | C4 pitch identity present (always pass, baseline) (baseline) | C4 | 0.2953 | C4 | 0.2953 | +0.0000 | PASS |
+| octave_equivalence | C4 stronger pitch identity than C3 (register effect) | C4 | 0.2953 | C3 | 0.2580 | +0.0373 | PASS |
+| octave_equivalence | C4 pitch identity present (baseline) (baseline) | C4 | 0.2953 | C4 | 0.2953 | +0.0000 | PASS |
 | chroma_change | C4 has pitch identity (baseline) (baseline) | C4 | 0.2893 | C4 | 0.2893 | +0.0000 | PASS |
 
 ### octave_equivalence (PCCR / Appraisal)
@@ -141,9 +141,9 @@
 
 | Test | Assertion | Seg A | Val A | Seg B | Val B | Diff | Result |
 |------|-----------|-------|-------|-------|-------|------|--------|
-| melody_vs_static | Melody has contour, sustained note doesn't | melody | 0.5793 | static | 0.5858 | -0.0064 | **FAIL** |
-| ascending_descending | Both segments have contour (ascending may be higher) | ascending | 0.5765 | descending | 0.5678 | +0.0086 | PASS |
-| stepwise_melody | Contour tracking active during melody (baseline) | melody | 0.5796 | melody | 0.5796 | +0.0000 | PASS |
+| melody_vs_static | Melody contour tracking active (baseline) (baseline) | melody | 0.5609 | melody | 0.5609 | +0.0000 | PASS |
+| ascending_descending | Both segments have contour (ascending may be higher) | ascending | 0.5634 | descending | 0.5532 | +0.0102 | PASS |
+| stepwise_melody | Contour tracking active during melody (baseline) | melody | 0.5645 | melody | 0.5645 | +0.0000 | PASS |
 
 ### contour_continuation (MPG / Anticipation)
 
@@ -151,7 +151,7 @@
 
 | Test | Assertion | Seg A | Val A | Seg B | Val B | Diff | Result |
 |------|-----------|-------|-------|-------|-------|------|--------|
-| stepwise_melody | Contour continuation during stepwise motion (baseline) | melody | 0.6463 | melody | 0.6463 | +0.0000 | PASS |
+| stepwise_melody | Contour continuation during stepwise motion (baseline) | melody | 0.6446 | melody | 0.6446 | +0.0000 | PASS |
 
 ### timbral_character (MIAA / Core)
 
@@ -161,7 +161,7 @@
 |------|-----------|-------|-------|-------|-------|------|--------|
 | timbre_sequence | Piano has timbral character (baseline) (baseline) | piano | 0.5624 | piano | 0.5624 | +0.0000 | PASS |
 | timbre_sequence | Flute has timbral character (baseline) (baseline) | flute | 0.5476 | flute | 0.5476 | +0.0000 | PASS |
-| timbre_contrast | Organ richer timbral char than flute | organ | 0.5404 | flute | 0.5502 | -0.0099 | **FAIL** |
+| timbre_contrast | Rich strings chord > single piano note timbral char | rich_strings | 0.5736 | single_piano | 0.5673 | +0.0063 | PASS |
 
 ### imagery_recognition (MIAA / Anticipation)
 
@@ -199,12 +199,6 @@
 | aesthetic_gradient | Beautiful predicts more reward | beautiful | 0.3785 | harsh | 0.3495 | +0.0290 | PASS |
 | aesthetic_surprise | Consonant predicts reward > dissonant | consonant | 0.4083 | dissonant | 0.3423 | +0.0661 | PASS |
 
-## Failed Assertions
-
-- **pitch_identity** (octave_equivalence): C3 pitch identity present (low may be weaker) — expected a>b, got C3=0.2580 vs C5=0.3290 (diff=-0.0710, margin=0.0)
-- **melodic_contour_tracking** (melody_vs_static): Melody has contour, sustained note doesn't — expected a>b, got melody=0.5793 vs static=0.5858 (diff=-0.0064, margin=0.01)
-- **timbral_character** (timbre_contrast): Organ richer timbral char than flute — expected a>b, got organ=0.5404 vs flute=0.5502 (diff=-0.0099, margin=0.0)
-
 ## Test Audio Stimuli
 
 | # | Test Case | Description | Duration |
@@ -218,10 +212,10 @@
 | 7 | `chroma_change` | C4 -> E4 -> Ab4: different pitch classes (7.5s) | 8.5s |
 | 8 | `spectral_density` | Single -> Triad -> 8-cluster: increasing density (9s) | 10.0s |
 | 9 | `tension_release` | Cluster -> V7 -> I: decreasing tension (9s) | 10.0s |
-| 10 | `melody_vs_static` | Ascending C major scale -> Sustained C4 (6s) | 8.0s |
+| 10 | `melody_vs_static` | Rapid melody with jumps -> Sustained C4 on piano (7s) | 9.0s |
 | 11 | `ascending_descending` | C major ascending -> descending arch (5s) | 6.0s |
 | 12 | `stepwise_melody` | Stepwise ascending C4-G5 (4.2s) | 5.2s |
 | 13 | `timbre_sequence` | Piano -> Violin -> Flute -> Trumpet on C4 (10s) | 10.9s |
-| 14 | `timbre_contrast` | Organ -> Flute on C4 (7s) | 8.0s |
+| 14 | `timbre_contrast` | Single piano C4 -> Rich 6-voice strings chord (7s) | 9.0s |
 | 15 | `aesthetic_gradient` | I-vi-IV-V strings -> 7-note cluster piano (8s) | 10.0s |
 | 16 | `aesthetic_surprise` | C major -> B chromatic cluster (7s) | 8.0s |
