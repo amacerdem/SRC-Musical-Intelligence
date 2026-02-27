@@ -33,9 +33,9 @@ async def run_pipeline(req: RunRequest, request: Request):
 
     Returns the experiment_id immediately; poll ``/status/{id}`` for progress.
     """
-    from ..config import AUDIO_CATALOG
+    from ..config import AUDIO_CATALOG, MIDI_CATALOG
 
-    if req.audio_name not in AUDIO_CATALOG:
+    if req.audio_name not in AUDIO_CATALOG and req.audio_name not in MIDI_CATALOG:
         raise HTTPException(status_code=400, detail=f"Unknown audio: {req.audio_name}")
 
     experiment_id = datetime.now().strftime("%Y%m%d_%H%M%S")

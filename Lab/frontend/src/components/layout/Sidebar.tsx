@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import {
   LayoutDashboard, AudioWaveform, Clock, Brain,
-  Award, MapPin, Play, Globe,
+  Award, MapPin, Play, Globe, Music,
 } from 'lucide-react'
 import { useUiStore } from '../../stores/uiStore'
 import { FUNCTIONS } from '../../data/functions'
@@ -38,6 +38,7 @@ const NAV_SECTIONS = [
   {
     title: 'TOOLS',
     items: [
+      { to: '/library', label: 'Library', icon: Music },
       { to: '/pipeline', label: 'Pipeline', icon: Play },
       { to: '/atlas', label: 'Atlas', icon: Globe },
     ],

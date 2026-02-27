@@ -16,7 +16,8 @@ Execution phases
 
 For efficiency, tuples sharing (horizon, r3_idx, law) reuse the same
 window slice.  Steady-state frames (full-size windows) are vectorized
-via ``torch.Tensor.unfold``; boundary frames are left as zero.
+via ``torch.Tensor.unfold``; boundary frames are filled via edge
+replication (nearest valid value) to prevent zero artifacts.
 
 Source of truth
 ---------------
@@ -100,8 +101,10 @@ class H3Executor:
           across all tuples at that horizon.
         - Steady-state frames (full-size windows) are computed in batch
           via ``unfold``.  Boundary frames (truncated windows at sequence
-          edges) are left as zero -- these correspond to warm-up regions
-          where morph values have reduced reliability.
+          edges) are filled via edge replication -- the nearest valid
+          steady-state value is copied into boundary positions to prevent
+          zero-artifacts in downstream layers that use semantic inversions
+          (e.g. ``1.0 - value``).
         """
         # Phase 1 & 2: demand collection / tree ready (inputs)
         if not demand_tree:
@@ -185,6 +188,13 @@ class H3Executor:
                     # Place into full output at the right offset
                     end = offset + n_steady
                     morph_results[morph_idx][:, offset:end] = normed
+
+                    # Edge replication: fill boundary frames with the
+                    # nearest valid value instead of leaving them as zero.
+                    if offset > 0:
+                        morph_results[morph_idx][:, :offset] = normed[:, :1]
+                    if end < T:
+                        morph_results[morph_idx][:, end:] = normed[:, -1:]
 
                 # Pack into results dict
                 for morph_idx in morph_indices:

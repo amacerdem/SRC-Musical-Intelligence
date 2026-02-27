@@ -27,6 +27,7 @@ from .config import (
     AUDIO_DIR,
     FRAME_RATE,
     HOP_LENGTH,
+    MIDI_CATALOG,
     N_FFT,
     N_MELS,
     PROJECT_ROOT,
@@ -131,8 +132,12 @@ def _load_audio(
     import soundfile as sf
     import torchaudio
 
-    filename = AUDIO_CATALOG[name]
-    filepath = AUDIO_DIR / filename
+    if name in AUDIO_CATALOG:
+        filepath = AUDIO_DIR / AUDIO_CATALOG[name]
+    elif name in MIDI_CATALOG:
+        filepath = MIDI_CATALOG[name]["path"]
+    else:
+        raise FileNotFoundError(f"Unknown audio: {name}")
 
     if not filepath.exists():
         raise FileNotFoundError(f"Audio file not found: {filepath}")
@@ -161,6 +166,17 @@ def _load_audio(
 
     duration_s = waveform.shape[-1] / SAMPLE_RATE
 
+    # Pad waveform edges to prevent mel spectrogram boundary artifacts.
+    # torchaudio's MelSpectrogram uses center=True (reflection padding of
+    # N_FFT//2 samples).  For audio that starts/ends abruptly, the reflected
+    # content differs from the real signal, causing ~4-frame edge artifacts
+    # that propagate through R³→H³→C³.  We replicate the first/last sample
+    # by N_FFT//2 so the STFT boundary frames see real audio content.
+    pad_len = N_FFT // 2
+    edge_pad = waveform[:, :1].expand(-1, pad_len)   # first sample repeated
+    edge_pad_r = waveform[:, -1:].expand(-1, pad_len) # last sample repeated
+    waveform_padded = torch.cat([edge_pad, waveform, edge_pad_r], dim=-1)
+
     # Mel spectrogram
     mel_transform = torchaudio.transforms.MelSpectrogram(
         sample_rate=SAMPLE_RATE,
@@ -169,7 +185,12 @@ def _load_audio(
         n_mels=N_MELS,
         power=2.0,
     )
-    mel = mel_transform(waveform)  # (1, 128, T)
+    mel = mel_transform(waveform_padded)  # (1, 128, T_padded)
+
+    # Trim the padding frames: pad_len samples → pad_len // HOP_LENGTH frames
+    pad_frames = pad_len // HOP_LENGTH
+    mel = mel[:, :, pad_frames: mel.shape[-1] - pad_frames]
+
     mel = torch.log1p(mel)
     mel_max = mel.amax(dim=(-2, -1), keepdim=True).clamp(min=1e-8)
     mel = mel / mel_max
@@ -274,7 +295,9 @@ class MIPipeline:
         if status_callback:
             status_callback("r3", 0.1)
         with torch.no_grad():
-            r3_output = self.r3_extractor.extract(mel)
+            r3_output = self.r3_extractor.extract(
+                mel, audio=waveform, sr=SAMPLE_RATE,
+            )
         r3_features = r3_output.features  # (1, T, 97)
 
         # Phase 3: H³ extraction

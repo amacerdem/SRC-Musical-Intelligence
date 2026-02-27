@@ -2,11 +2,11 @@
 
 export const colors = {
   bg: "#000000",
-  surface: "rgba(255,255,255,0.03)",
-  surfaceRaised: "rgba(255,255,255,0.05)",
-  surfaceHover: "rgba(255,255,255,0.07)",
-  border: "rgba(255,255,255,0.06)",
-  borderHover: "rgba(255,255,255,0.10)",
+  surface: "rgba(255,255,255,0.04)",
+  surfaceRaised: "rgba(255,255,255,0.06)",
+  surfaceHover: "rgba(255,255,255,0.09)",
+  border: "rgba(255,255,255,0.08)",
+  borderHover: "rgba(255,255,255,0.14)",
 
   accent: {
     indigo: "#6366F1",
@@ -35,27 +35,37 @@ export const beliefColors = {
   consonance: {
     primary: "#C084FC",
     gradient: "linear-gradient(135deg, #C084FC, #F472B6, #EC4899)",
-    glow: "rgba(192, 132, 252, 0.15)",
+    glow: "rgba(192, 132, 252, 0.25)",
   },
   tempo: {
     primary: "#F97316",
     gradient: "linear-gradient(135deg, #EF4444, #F97316, #FDE047)",
-    glow: "rgba(249, 115, 22, 0.15)",
+    glow: "rgba(249, 115, 22, 0.25)",
   },
   salience: {
     primary: "#84CC16",
     gradient: "linear-gradient(135deg, #FDE047, #84CC16, #22C55E)",
-    glow: "rgba(132, 204, 22, 0.15)",
+    glow: "rgba(132, 204, 22, 0.25)",
   },
   familiarity: {
     primary: "#38BDF8",
     gradient: "linear-gradient(135deg, #22D3EE, #3B82F6, #6366F1)",
-    glow: "rgba(56, 189, 248, 0.15)",
+    glow: "rgba(56, 189, 248, 0.25)",
   },
   reward: {
     primary: "#FBBF24",
     gradient: "linear-gradient(135deg, #F59E0B, #FDE047, #FFFFFF)",
-    glow: "rgba(251, 191, 36, 0.15)",
+    glow: "rgba(251, 191, 36, 0.25)",
+  },
+  prediction: {
+    primary: "#06B6D4",
+    gradient: "linear-gradient(135deg, #06B6D4, #22D3EE, #67E8F9)",
+    glow: "rgba(6, 182, 212, 0.25)",
+  },
+  emotion: {
+    primary: "#F43F5E",
+    gradient: "linear-gradient(135deg, #F43F5E, #EC4899, #F472B6)",
+    glow: "rgba(244, 63, 94, 0.25)",
   },
 } as const;
 
@@ -63,8 +73,8 @@ export const gradients = {
   accent: "linear-gradient(135deg, #6366F1, #A855F7, #EC4899)",
   accentH: "linear-gradient(90deg, #6366F1, #A855F7, #EC4899)",
   surface: "linear-gradient(180deg, rgba(255,255,255,0.02), transparent)",
-  glow: "radial-gradient(ellipse at center, rgba(99,102,241,0.08), transparent 70%)",
-  warmGlow: "radial-gradient(ellipse at center, rgba(168,85,247,0.06), transparent 60%)",
+  glow: "radial-gradient(ellipse at center, rgba(99,102,241,0.14), transparent 70%)",
+  warmGlow: "radial-gradient(ellipse at center, rgba(168,85,247,0.10), transparent 60%)",
 } as const;
 
 /* ── SRC⁹ Orbital timings ─────────────────────────────────────── */

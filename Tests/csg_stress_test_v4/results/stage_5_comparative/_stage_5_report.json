@@ -1,0 +1,1182 @@
+{
+  "stage": "5_comparative",
+  "timestamp": "2026-02-27T11:57:14.009593",
+  "n_midi": 6,
+  "n_real": 7,
+  "midi_keys": [
+    "midi/csg/01_major_triad",
+    "midi/csg/02_m2_dyad",
+    "midi/csg/03_cluster",
+    "midi/csg/04_V7_I_resolution",
+    "midi/csg/05_I_V7_tension",
+    "midi/csg/06_single_note"
+  ],
+  "real_keys": [
+    "bach",
+    "beethoven",
+    "duel",
+    "enigma",
+    "herald",
+    "swan",
+    "yang"
+  ],
+  "midi_analysis": {
+    "midi/csg/01_major_triad": {
+      "description": "Consonant chord — low salience expected",
+      "n_frames": 862,
+      "checks": [
+        {
+          "test": "valence_positive",
+          "e2_mean": 0.5579,
+          "pass": true
+        }
+      ],
+      "dim_means": {
+        "E0:salience_activation": 0.3955,
+        "E1:sensory_evidence": 0.3951,
+        "E2:consonance_valence": 0.5579,
+        "M0:salience_response": 0.5965,
+        "M1:rt_valence_judgment": 0.6074,
+        "M2:aesthetic_appreciation": 0.6789,
+        "P0:salience_network": 0.7904,
+        "P1:affective_evaluation": 0.4524,
+        "P2:sensory_load": 0.7345,
+        "F0:valence_pred": 0.584,
+        "F1:processing_pred": 0.598,
+        "F2:aesthetic_pred": 0.6712
+      },
+      "first_half_means": {
+        "E0:salience_activation": 0.4269,
+        "E1:sensory_evidence": 0.5071,
+        "E2:consonance_valence": 0.5301,
+        "M0:salience_response": 0.6082,
+        "M1:rt_valence_judgment": 0.6245,
+        "M2:aesthetic_appreciation": 0.6714,
+        "P0:salience_network": 0.8324,
+        "P1:affective_evaluation": 0.4208,
+        "P2:sensory_load": 0.7929,
+        "F0:valence_pred": 0.5598,
+        "F1:processing_pred": 0.6155,
+        "F2:aesthetic_pred": 0.6612
+      },
+      "second_half_means": {
+        "E0:salience_activation": 0.3641,
+        "E1:sensory_evidence": 0.2832,
+        "E2:consonance_valence": 0.5858,
+        "M0:salience_response": 0.5847,
+        "M1:rt_valence_judgment": 0.5904,
+        "M2:aesthetic_appreciation": 0.6864,
+        "P0:salience_network": 0.7483,
+        "P1:affective_evaluation": 0.484,
+        "P2:sensory_load": 0.6761,
+        "F0:valence_pred": 0.6083,
+        "F1:processing_pred": 0.5805,
+        "F2:aesthetic_pred": 0.6811
+      }
+    },
+    "midi/csg/02_m2_dyad": {
+      "description": "Minor 2nd — high roughness, high salience",
+      "n_frames": 862,
+      "checks": [
+        {
+          "test": "valence_negative",
+          "e2_mean": 0.5597,
+          "pass": false
+        }
+      ],
+      "dim_means": {
+        "E0:salience_activation": 0.4946,
+        "E1:sensory_evidence": 0.3741,
+        "E2:consonance_valence": 0.5597,
+        "M0:salience_response": 0.6067,
+        "M1:rt_valence_judgment": 0.6027,
+        "M2:aesthetic_appreciation": 0.6789,
+        "P0:salience_network": 0.7912,
+        "P1:affective_evaluation": 0.4522,
+        "P2:sensory_load": 0.7246,
+        "F0:valence_pred": 0.5839,
+        "F1:processing_pred": 0.5935,
+        "F2:aesthetic_pred": 0.6718
+      },
+      "first_half_means": {
+        "E0:salience_activation": 0.5546,
+        "E1:sensory_evidence": 0.4711,
+        "E2:consonance_valence": 0.532,
+        "M0:salience_response": 0.6207,
+        "M1:rt_valence_judgment": 0.6164,
+        "M2:aesthetic_appreciation": 0.6706,
+        "P0:salience_network": 0.8316,
+        "P1:affective_evaluation": 0.4198,
+        "P2:sensory_load": 0.7774,
+        "F0:valence_pred": 0.5592,
+        "F1:processing_pred": 0.6079,
+        "F2:aesthetic_pred": 0.6619
+      },
+      "second_half_means": {
+        "E0:salience_activation": 0.4346,
+        "E1:sensory_evidence": 0.2771,
+        "E2:consonance_valence": 0.5873,
+        "M0:salience_response": 0.5928,
+        "M1:rt_valence_judgment": 0.5889,
+        "M2:aesthetic_appreciation": 0.6872,
+        "P0:salience_network": 0.7508,
+        "P1:affective_evaluation": 0.4847,
+        "P2:sensory_load": 0.6719,
+        "F0:valence_pred": 0.6085,
+        "F1:processing_pred": 0.5791,
+        "F2:aesthetic_pred": 0.6817
+      }
+    },
+    "midi/csg/03_cluster": {
+      "description": "4-note cluster — maximum dissonance",
+      "n_frames": 862,
+      "checks": [],
+      "dim_means": {
+        "E0:salience_activation": 0.54,
+        "E1:sensory_evidence": 0.3858,
+        "E2:consonance_valence": 0.5588,
+        "M0:salience_response": 0.613,
+        "M1:rt_valence_judgment": 0.6044,
+        "M2:aesthetic_appreciation": 0.6803,
+        "P0:salience_network": 0.7973,
+        "P1:affective_evaluation": 0.4512,
+        "P2:sensory_load": 0.7314,
+        "F0:valence_pred": 0.5881,
+        "F1:processing_pred": 0.5953,
+        "F2:aesthetic_pred": 0.6716
+      },
+      "first_half_means": {
+        "E0:salience_activation": 0.5803,
+        "E1:sensory_evidence": 0.4963,
+        "E2:consonance_valence": 0.5279,
+        "M0:salience_response": 0.6255,
+        "M1:rt_valence_judgment": 0.621,
+        "M2:aesthetic_appreciation": 0.6703,
+        "P0:salience_network": 0.8413,
+        "P1:affective_evaluation": 0.4153,
+        "P2:sensory_load": 0.7914,
+        "F0:valence_pred": 0.5631,
+        "F1:processing_pred": 0.6124,
+        "F2:aesthetic_pred": 0.6605
+      },
+      "second_half_means": {
+        "E0:salience_activation": 0.4997,
+        "E1:sensory_evidence": 0.2753,
+        "E2:consonance_valence": 0.5897,
+        "M0:salience_response": 0.6005,
+        "M1:rt_valence_judgment": 0.5878,
+        "M2:aesthetic_appreciation": 0.6903,
+        "P0:salience_network": 0.7533,
+        "P1:affective_evaluation": 0.4871,
+        "P2:sensory_load": 0.6715,
+        "F0:valence_pred": 0.613,
+        "F1:processing_pred": 0.5782,
+        "F2:aesthetic_pred": 0.6827
+      }
+    },
+    "midi/csg/04_V7_I_resolution": {
+      "description": "V7→I — tension then release",
+      "n_frames": 1206,
+      "checks": [
+        {
+          "test": "salience_decrease",
+          "e0_diff": 0.183,
+          "pass": true
+        }
+      ],
+      "dim_means": {
+        "E0:salience_activation": 0.4706,
+        "E1:sensory_evidence": 0.4363,
+        "E2:consonance_valence": 0.549,
+        "M0:salience_response": 0.6084,
+        "M1:rt_valence_judgment": 0.6146,
+        "M2:aesthetic_appreciation": 0.6773,
+        "P0:salience_network": 0.8108,
+        "P1:affective_evaluation": 0.4434,
+        "P2:sensory_load": 0.7648,
+        "F0:valence_pred": 0.579,
+        "F1:processing_pred": 0.6051,
+        "F2:aesthetic_pred": 0.6684
+      },
+      "first_half_means": {
+        "E0:salience_activation": 0.5621,
+        "E1:sensory_evidence": 0.4971,
+        "E2:consonance_valence": 0.5311,
+        "M0:salience_response": 0.6235,
+        "M1:rt_valence_judgment": 0.6224,
+        "M2:aesthetic_appreciation": 0.6719,
+        "P0:salience_network": 0.8445,
+        "P1:affective_evaluation": 0.4224,
+        "P2:sensory_load": 0.8009,
+        "F0:valence_pred": 0.5673,
+        "F1:processing_pred": 0.6136,
+        "F2:aesthetic_pred": 0.6619
+      },
+      "second_half_means": {
+        "E0:salience_activation": 0.3791,
+        "E1:sensory_evidence": 0.3755,
+        "E2:consonance_valence": 0.5668,
+        "M0:salience_response": 0.5932,
+        "M1:rt_valence_judgment": 0.6068,
+        "M2:aesthetic_appreciation": 0.6827,
+        "P0:salience_network": 0.7771,
+        "P1:affective_evaluation": 0.4644,
+        "P2:sensory_load": 0.7286,
+        "F0:valence_pred": 0.5908,
+        "F1:processing_pred": 0.5967,
+        "F2:aesthetic_pred": 0.675
+      }
+    },
+    "midi/csg/05_I_V7_tension": {
+      "description": "I→V7 — consonance then tension",
+      "n_frames": 1206,
+      "checks": [
+        {
+          "test": "salience_increase",
+          "e0_diff": 0.0847,
+          "pass": true
+        }
+      ],
+      "dim_means": {
+        "E0:salience_activation": 0.4826,
+        "E1:sensory_evidence": 0.4351,
+        "E2:consonance_valence": 0.5499,
+        "M0:salience_response": 0.6097,
+        "M1:rt_valence_judgment": 0.6142,
+        "M2:aesthetic_appreciation": 0.678,
+        "P0:salience_network": 0.8137,
+        "P1:affective_evaluation": 0.4442,
+        "P2:sensory_load": 0.7666,
+        "F0:valence_pred": 0.5809,
+        "F1:processing_pred": 0.6047,
+        "F2:aesthetic_pred": 0.6687
+      },
+      "first_half_means": {
+        "E0:salience_activation": 0.4402,
+        "E1:sensory_evidence": 0.4915,
+        "E2:consonance_valence": 0.5328,
+        "M0:salience_response": 0.6085,
+        "M1:rt_valence_judgment": 0.6207,
+        "M2:aesthetic_appreciation": 0.673,
+        "P0:salience_network": 0.8281,
+        "P1:affective_evaluation": 0.424,
+        "P2:sensory_load": 0.7823,
+        "F0:valence_pred": 0.5636,
+        "F1:processing_pred": 0.612,
+        "F2:aesthetic_pred": 0.6624
+      },
+      "second_half_means": {
+        "E0:salience_activation": 0.5249,
+        "E1:sensory_evidence": 0.3787,
+        "E2:consonance_valence": 0.5669,
+        "M0:salience_response": 0.6109,
+        "M1:rt_valence_judgment": 0.6076,
+        "M2:aesthetic_appreciation": 0.6829,
+        "P0:salience_network": 0.7993,
+        "P1:affective_evaluation": 0.4643,
+        "P2:sensory_load": 0.751,
+        "F0:valence_pred": 0.5981,
+        "F1:processing_pred": 0.5975,
+        "F2:aesthetic_pred": 0.6749
+      }
+    },
+    "midi/csg/06_single_note": {
+      "description": "Single C4 — baseline, minimal salience",
+      "n_frames": 862,
+      "checks": [
+        {
+          "test": "temporal_flatness",
+          "e0_std": 0.1123,
+          "pass": false
+        }
+      ],
+      "dim_means": {
+        "E0:salience_activation": 0.3763,
+        "E1:sensory_evidence": 0.3741,
+        "E2:consonance_valence": 0.5611,
+        "M0:salience_response": 0.5926,
+        "M1:rt_valence_judgment": 0.6041,
+        "M2:aesthetic_appreciation": 0.6785,
+        "P0:salience_network": 0.7824,
+        "P1:affective_evaluation": 0.4549,
+        "P2:sensory_load": 0.7203,
+        "F0:valence_pred": 0.5783,
+        "F1:processing_pred": 0.5946,
+        "F2:aesthetic_pred": 0.6721
+      },
+      "first_half_means": {
+        "E0:salience_activation": 0.3986,
+        "E1:sensory_evidence": 0.4652,
+        "E2:consonance_valence": 0.5382,
+        "M0:salience_response": 0.6018,
+        "M1:rt_valence_judgment": 0.617,
+        "M2:aesthetic_appreciation": 0.6729,
+        "P0:salience_network": 0.8156,
+        "P1:affective_evaluation": 0.4274,
+        "P2:sensory_load": 0.7642,
+        "F0:valence_pred": 0.555,
+        "F1:processing_pred": 0.6081,
+        "F2:aesthetic_pred": 0.6639
+      },
+      "second_half_means": {
+        "E0:salience_activation": 0.3541,
+        "E1:sensory_evidence": 0.2831,
+        "E2:consonance_valence": 0.5839,
+        "M0:salience_response": 0.5834,
+        "M1:rt_valence_judgment": 0.5912,
+        "M2:aesthetic_appreciation": 0.684,
+        "P0:salience_network": 0.7492,
+        "P1:affective_evaluation": 0.4824,
+        "P2:sensory_load": 0.6763,
+        "F0:valence_pred": 0.6016,
+        "F1:processing_pred": 0.581,
+        "F2:aesthetic_pred": 0.6804
+      }
+    }
+  },
+  "real_comparison": {
+    "E0:salience_activation": {
+      "per_audio": {
+        "bach": {
+          "mean": 0.593,
+          "std": 0.11,
+          "min": 0.268,
+          "max": 0.8447
+        },
+        "beethoven": {
+          "mean": 0.5031,
+          "std": 0.1144,
+          "min": 0.2532,
+          "max": 0.8195
+        },
+        "duel": {
+          "mean": 0.5997,
+          "std": 0.099,
+          "min": 0.2869,
+          "max": 0.8593
+        },
+        "enigma": {
+          "mean": 0.5508,
+          "std": 0.1055,
+          "min": 0.322,
+          "max": 0.8053
+        },
+        "herald": {
+          "mean": 0.5364,
+          "std": 0.1163,
+          "min": 0.294,
+          "max": 0.7923
+        },
+        "swan": {
+          "mean": 0.6129,
+          "std": 0.1026,
+          "min": 0.2744,
+          "max": 0.8245
+        },
+        "yang": {
+          "mean": 0.5851,
+          "std": 0.1065,
+          "min": 0.2694,
+          "max": 0.8227
+        }
+      },
+      "cross_mean": 0.5687,
+      "cross_std": 0.0367,
+      "cross_range": [
+        0.5031,
+        0.6129
+      ]
+    },
+    "E1:sensory_evidence": {
+      "per_audio": {
+        "bach": {
+          "mean": 0.6405,
+          "std": 0.1234,
+          "min": 0.1539,
+          "max": 0.8116
+        },
+        "beethoven": {
+          "mean": 0.3958,
+          "std": 0.1991,
+          "min": 0.1486,
+          "max": 0.8118
+        },
+        "duel": {
+          "mean": 0.6485,
+          "std": 0.1407,
+          "min": 0.1781,
+          "max": 0.7861
+        },
+        "enigma": {
+          "mean": 0.6636,
+          "std": 0.1184,
+          "min": 0.172,
+          "max": 0.8119
+        },
+        "herald": {
+          "mean": 0.4835,
+          "std": 0.1233,
+          "min": 0.1545,
+          "max": 0.8063
+        },
+        "swan": {
+          "mean": 0.6497,
+          "std": 0.1228,
+          "min": 0.1521,
+          "max": 0.8079
+        },
+        "yang": {
+          "mean": 0.576,
+          "std": 0.1983,
+          "min": 0.1696,
+          "max": 0.8069
+        }
+      },
+      "cross_mean": 0.5797,
+      "cross_std": 0.0952,
+      "cross_range": [
+        0.3958,
+        0.6636
+      ]
+    },
+    "E2:consonance_valence": {
+      "per_audio": {
+        "bach": {
+          "mean": 0.4949,
+          "std": 0.0449,
+          "min": 0.296,
+          "max": 0.6909
+        },
+        "beethoven": {
+          "mean": 0.5652,
+          "std": 0.0502,
+          "min": 0.2617,
+          "max": 0.6357
+        },
+        "duel": {
+          "mean": 0.4728,
+          "std": 0.0605,
+          "min": 0.2078,
+          "max": 0.6618
+        },
+        "enigma": {
+          "mean": 0.4958,
+          "std": 0.0464,
+          "min": 0.3084,
+          "max": 0.6912
+        },
+        "herald": {
+          "mean": 0.5478,
+          "std": 0.0291,
+          "min": 0.4036,
+          "max": 0.692
+        },
+        "swan": {
+          "mean": 0.4956,
+          "std": 0.0387,
+          "min": 0.3247,
+          "max": 0.6877
+        },
+        "yang": {
+          "mean": 0.5139,
+          "std": 0.0563,
+          "min": 0.3243,
+          "max": 0.6403
+        }
+      },
+      "cross_mean": 0.5123,
+      "cross_std": 0.0304,
+      "cross_range": [
+        0.4728,
+        0.5652
+      ]
+    },
+    "M0:salience_response": {
+      "per_audio": {
+        "bach": {
+          "mean": 0.6372,
+          "std": 0.0179,
+          "min": 0.5647,
+          "max": 0.6697
+        },
+        "beethoven": {
+          "mean": 0.6094,
+          "std": 0.023,
+          "min": 0.5614,
+          "max": 0.67
+        },
+        "duel": {
+          "mean": 0.6386,
+          "std": 0.0174,
+          "min": 0.5682,
+          "max": 0.6683
+        },
+        "enigma": {
+          "mean": 0.6339,
+          "std": 0.0184,
+          "min": 0.5745,
+          "max": 0.6697
+        },
+        "herald": {
+          "mean": 0.6196,
+          "std": 0.0183,
+          "min": 0.5747,
+          "max": 0.6688
+        },
+        "swan": {
+          "mean": 0.6402,
+          "std": 0.0164,
+          "min": 0.5661,
+          "max": 0.6715
+        },
+        "yang": {
+          "mean": 0.6318,
+          "std": 0.022,
+          "min": 0.5658,
+          "max": 0.6688
+        }
+      },
+      "cross_mean": 0.6301,
+      "cross_std": 0.0106,
+      "cross_range": [
+        0.6094,
+        0.6402
+      ]
+    },
+    "M1:rt_valence_judgment": {
+      "per_audio": {
+        "bach": {
+          "mean": 0.6545,
+          "std": 0.0227,
+          "min": 0.5502,
+          "max": 0.6879
+        },
+        "beethoven": {
+          "mean": 0.6044,
+          "std": 0.0404,
+          "min": 0.5487,
+          "max": 0.6883
+        },
+        "duel": {
+          "mean": 0.6561,
+          "std": 0.0275,
+          "min": 0.5585,
+          "max": 0.6866
+        },
+        "enigma": {
+          "mean": 0.6595,
+          "std": 0.0223,
+          "min": 0.5573,
+          "max": 0.688
+        },
+        "herald": {
+          "mean": 0.6237,
+          "std": 0.0242,
+          "min": 0.5492,
+          "max": 0.6878
+        },
+        "swan": {
+          "mean": 0.6579,
+          "std": 0.0243,
+          "min": 0.55,
+          "max": 0.6881
+        },
+        "yang": {
+          "mean": 0.6412,
+          "std": 0.0396,
+          "min": 0.5531,
+          "max": 0.6883
+        }
+      },
+      "cross_mean": 0.6425,
+      "cross_std": 0.0195,
+      "cross_range": [
+        0.6044,
+        0.6595
+      ]
+    },
+    "M2:aesthetic_appreciation": {
+      "per_audio": {
+        "bach": {
+          "mean": 0.6515,
+          "std": 0.0241,
+          "min": 0.5836,
+          "max": 0.713
+        },
+        "beethoven": {
+          "mean": 0.6923,
+          "std": 0.0295,
+          "min": 0.5972,
+          "max": 0.7309
+        },
+        "duel": {
+          "mean": 0.6328,
+          "std": 0.0305,
+          "min": 0.5664,
+          "max": 0.7214
+        },
+        "enigma": {
+          "mean": 0.654,
+          "std": 0.0234,
+          "min": 0.6035,
+          "max": 0.7064
+        },
+        "herald": {
+          "mean": 0.6837,
+          "std": 0.0195,
+          "min": 0.6047,
+          "max": 0.7131
+        },
+        "swan": {
+          "mean": 0.6508,
+          "std": 0.021,
+          "min": 0.5993,
+          "max": 0.7107
+        },
+        "yang": {
+          "mean": 0.6629,
+          "std": 0.032,
+          "min": 0.595,
+          "max": 0.7273
+        }
+      },
+      "cross_mean": 0.6611,
+      "cross_std": 0.019,
+      "cross_range": [
+        0.6328,
+        0.6923
+      ]
+    },
+    "P0:salience_network": {
+      "per_audio": {
+        "bach": {
+          "mean": 0.8347,
+          "std": 0.0862,
+          "min": 0.3343,
+          "max": 0.8897
+        },
+        "beethoven": {
+          "mean": 0.8107,
+          "std": 0.0506,
+          "min": 0.6069,
+          "max": 0.9025
+        },
+        "duel": {
+          "mean": 0.847,
+          "std": 0.0739,
+          "min": 0.2991,
+          "max": 0.8973
+        },
+        "enigma": {
+          "mean": 0.8509,
+          "std": 0.0943,
+          "min": 0.2981,
+          "max": 0.8967
+        },
+        "herald": {
+          "mean": 0.8307,
+          "std": 0.0625,
+          "min": 0.4154,
+          "max": 0.8939
+        },
+        "swan": {
+          "mean": 0.8249,
+          "std": 0.0325,
+          "min": 0.3478,
+          "max": 0.8874
+        },
+        "yang": {
+          "mean": 0.8531,
+          "std": 0.02,
+          "min": 0.7818,
+          "max": 0.9068
+        }
+      },
+      "cross_mean": 0.836,
+      "cross_std": 0.0143,
+      "cross_range": [
+        0.8107,
+        0.8531
+      ]
+    },
+    "P1:affective_evaluation": {
+      "per_audio": {
+        "bach": {
+          "mean": 0.3874,
+          "std": 0.0641,
+          "min": 0.1685,
+          "max": 0.552
+        },
+        "beethoven": {
+          "mean": 0.4634,
+          "std": 0.0663,
+          "min": 0.1545,
+          "max": 0.591
+        },
+        "duel": {
+          "mean": 0.3631,
+          "std": 0.0726,
+          "min": 0.1083,
+          "max": 0.5828
+        },
+        "enigma": {
+          "mean": 0.3886,
+          "std": 0.0587,
+          "min": 0.1814,
+          "max": 0.5341
+        },
+        "herald": {
+          "mean": 0.444,
+          "std": 0.0618,
+          "min": 0.2036,
+          "max": 0.5761
+        },
+        "swan": {
+          "mean": 0.3881,
+          "std": 0.0674,
+          "min": 0.184,
+          "max": 0.5665
+        },
+        "yang": {
+          "mean": 0.4079,
+          "std": 0.0745,
+          "min": 0.2031,
+          "max": 0.5999
+        }
+      },
+      "cross_mean": 0.4061,
+      "cross_std": 0.0328,
+      "cross_range": [
+        0.3631,
+        0.4634
+      ]
+    },
+    "P2:sensory_load": {
+      "per_audio": {
+        "bach": {
+          "mean": 0.8437,
+          "std": 0.0739,
+          "min": 0.4727,
+          "max": 0.9345
+        },
+        "beethoven": {
+          "mean": 0.7399,
+          "std": 0.1091,
+          "min": 0.5074,
+          "max": 0.9437
+        },
+        "duel": {
+          "mean": 0.8571,
+          "std": 0.0744,
+          "min": 0.4421,
+          "max": 0.9512
+        },
+        "enigma": {
+          "mean": 0.8657,
+          "std": 0.0785,
+          "min": 0.5187,
+          "max": 0.9532
+        },
+        "herald": {
+          "mean": 0.7977,
+          "std": 0.0533,
+          "min": 0.4944,
+          "max": 0.9161
+        },
+        "swan": {
+          "mean": 0.8419,
+          "std": 0.0422,
+          "min": 0.6119,
+          "max": 0.9334
+        },
+        "yang": {
+          "mean": 0.8368,
+          "std": 0.0697,
+          "min": 0.657,
+          "max": 0.9408
+        }
+      },
+      "cross_mean": 0.8261,
+      "cross_std": 0.0404,
+      "cross_range": [
+        0.7399,
+        0.8657
+      ]
+    },
+    "F0:valence_pred": {
+      "per_audio": {
+        "bach": {
+          "mean": 0.5158,
+          "std": 0.0382,
+          "min": 0.3945,
+          "max": 0.6026
+        },
+        "beethoven": {
+          "mean": 0.5919,
+          "std": 0.0388,
+          "min": 0.4316,
+          "max": 0.6591
+        },
+        "duel": {
+          "mean": 0.5142,
+          "std": 0.0457,
+          "min": 0.3558,
+          "max": 0.6345
+        },
+        "enigma": {
+          "mean": 0.5336,
+          "std": 0.0399,
+          "min": 0.4055,
+          "max": 0.6125
+        },
+        "herald": {
+          "mean": 0.5619,
+          "std": 0.0267,
+          "min": 0.4689,
+          "max": 0.6078
+        },
+        "swan": {
+          "mean": 0.5113,
+          "std": 0.0352,
+          "min": 0.3937,
+          "max": 0.6178
+        },
+        "yang": {
+          "mean": 0.5441,
+          "std": 0.0505,
+          "min": 0.4278,
+          "max": 0.6607
+        }
+      },
+      "cross_mean": 0.539,
+      "cross_std": 0.0275,
+      "cross_range": [
+        0.5113,
+        0.5919
+      ]
+    },
+    "F1:processing_pred": {
+      "per_audio": {
+        "bach": {
+          "mean": 0.6438,
+          "std": 0.022,
+          "min": 0.5451,
+          "max": 0.676
+        },
+        "beethoven": {
+          "mean": 0.5957,
+          "std": 0.0388,
+          "min": 0.5432,
+          "max": 0.6763
+        },
+        "duel": {
+          "mean": 0.6453,
+          "std": 0.0263,
+          "min": 0.5517,
+          "max": 0.6742
+        },
+        "enigma": {
+          "mean": 0.6485,
+          "std": 0.0215,
+          "min": 0.5505,
+          "max": 0.6761
+        },
+        "herald": {
+          "mean": 0.614,
+          "std": 0.0233,
+          "min": 0.5439,
+          "max": 0.6752
+        },
+        "swan": {
+          "mean": 0.6467,
+          "std": 0.0234,
+          "min": 0.5444,
+          "max": 0.6759
+        },
+        "yang": {
+          "mean": 0.6311,
+          "std": 0.0381,
+          "min": 0.5478,
+          "max": 0.6759
+        }
+      },
+      "cross_mean": 0.6322,
+      "cross_std": 0.0187,
+      "cross_range": [
+        0.5957,
+        0.6485
+      ]
+    },
+    "F2:aesthetic_pred": {
+      "per_audio": {
+        "bach": {
+          "mean": 0.6501,
+          "std": 0.0165,
+          "min": 0.5985,
+          "max": 0.7019
+        },
+        "beethoven": {
+          "mean": 0.6766,
+          "std": 0.0219,
+          "min": 0.5994,
+          "max": 0.7037
+        },
+        "duel": {
+          "mean": 0.6415,
+          "std": 0.021,
+          "min": 0.5883,
+          "max": 0.6989
+        },
+        "enigma": {
+          "mean": 0.6506,
+          "std": 0.0137,
+          "min": 0.6078,
+          "max": 0.6975
+        },
+        "herald": {
+          "mean": 0.6697,
+          "std": 0.0128,
+          "min": 0.6011,
+          "max": 0.7019
+        },
+        "swan": {
+          "mean": 0.6504,
+          "std": 0.0145,
+          "min": 0.6108,
+          "max": 0.701
+        },
+        "yang": {
+          "mean": 0.6573,
+          "std": 0.0226,
+          "min": 0.5964,
+          "max": 0.7019
+        }
+      },
+      "cross_mean": 0.6566,
+      "cross_std": 0.0114,
+      "cross_range": [
+        0.6415,
+        0.6766
+      ]
+    }
+  },
+  "consonance_hierarchy": {
+    "expected_order": [
+      "midi/csg/06_single_note",
+      "midi/csg/01_major_triad",
+      "midi/csg/05_I_V7_tension",
+      "midi/csg/04_V7_I_resolution",
+      "midi/csg/02_m2_dyad",
+      "midi/csg/03_cluster"
+    ],
+    "actual_order": [
+      "midi/csg/06_single_note",
+      "midi/csg/02_m2_dyad",
+      "midi/csg/03_cluster",
+      "midi/csg/01_major_triad",
+      "midi/csg/05_I_V7_tension",
+      "midi/csg/04_V7_I_resolution"
+    ],
+    "values": {
+      "midi/csg/06_single_note": 0.5611,
+      "midi/csg/02_m2_dyad": 0.5597,
+      "midi/csg/03_cluster": 0.5588,
+      "midi/csg/01_major_triad": 0.5579,
+      "midi/csg/05_I_V7_tension": 0.5499,
+      "midi/csg/04_V7_I_resolution": 0.549
+    }
+  },
+  "correlation_matrix": {
+    "labels": [
+      "E0:salience_activation",
+      "E1:sensory_evidence",
+      "E2:consonance_valence",
+      "M0:salience_response",
+      "M1:rt_valence_judgment",
+      "M2:aesthetic_appreciation",
+      "P0:salience_network",
+      "P1:affective_evaluation",
+      "P2:sensory_load",
+      "F0:valence_pred",
+      "F1:processing_pred",
+      "F2:aesthetic_pred"
+    ],
+    "values": [
+      [
+        1.0,
+        0.439,
+        -0.393,
+        0.857,
+        0.403,
+        -0.41,
+        0.295,
+        -0.277,
+        0.398,
+        -0.367,
+        0.411,
+        -0.444
+      ],
+      [
+        0.439,
+        1.0,
+        -0.749,
+        0.838,
+        0.981,
+        -0.849,
+        0.404,
+        -0.725,
+        0.859,
+        -0.75,
+        0.988,
+        -0.913
+      ],
+      [
+        -0.393,
+        -0.749,
+        1.0,
+        -0.667,
+        -0.715,
+        0.789,
+        -0.268,
+        0.733,
+        -0.642,
+        0.89,
+        -0.725,
+        0.768
+      ],
+      [
+        0.857,
+        0.838,
+        -0.667,
+        1.0,
+        0.806,
+        -0.734,
+        0.411,
+        -0.583,
+        0.735,
+        -0.652,
+        0.815,
+        -0.791
+      ],
+      [
+        0.403,
+        0.981,
+        -0.715,
+        0.806,
+        1.0,
+        -0.837,
+        0.301,
+        -0.685,
+        0.828,
+        -0.753,
+        0.999,
+        -0.871
+      ],
+      [
+        -0.41,
+        -0.849,
+        0.789,
+        -0.734,
+        -0.837,
+        1.0,
+        -0.073,
+        0.756,
+        -0.592,
+        0.89,
+        -0.843,
+        0.97
+      ],
+      [
+        0.295,
+        0.404,
+        -0.268,
+        0.411,
+        0.301,
+        -0.073,
+        1.0,
+        -0.23,
+        0.713,
+        0.012,
+        0.324,
+        -0.244
+      ],
+      [
+        -0.277,
+        -0.725,
+        0.733,
+        -0.583,
+        -0.685,
+        0.756,
+        -0.23,
+        1.0,
+        -0.59,
+        0.713,
+        -0.696,
+        0.774
+      ],
+      [
+        0.398,
+        0.859,
+        -0.642,
+        0.735,
+        0.828,
+        -0.592,
+        0.713,
+        -0.59,
+        1.0,
+        -0.495,
+        0.837,
+        -0.696
+      ],
+      [
+        -0.367,
+        -0.75,
+        0.89,
+        -0.652,
+        -0.753,
+        0.89,
+        0.012,
+        0.713,
+        -0.495,
+        1.0,
+        -0.755,
+        0.826
+      ],
+      [
+        0.411,
+        0.988,
+        -0.725,
+        0.815,
+        0.999,
+        -0.843,
+        0.324,
+        -0.696,
+        0.837,
+        -0.755,
+        1.0,
+        -0.883
+      ],
+      [
+        -0.444,
+        -0.913,
+        0.768,
+        -0.791,
+        -0.871,
+        0.97,
+        -0.244,
+        0.774,
+        -0.696,
+        0.826,
+        -0.883,
+        1.0
+      ]
+    ]
+  },
+  "final_summary": {
+    "total_midi_checks": 5,
+    "passed_midi_checks": 3,
+    "midi_pass_rate": 60.0,
+    "n_audio_processed": 13,
+    "status": "PARTIAL"
+  }
+}

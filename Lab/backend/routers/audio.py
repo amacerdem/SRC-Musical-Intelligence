@@ -1,4 +1,4 @@
-"""Audio router — list, stream, waveform, spectrogram endpoints."""
+"""Audio router — list, stream, waveform, spectrogram, MIDI events."""
 from __future__ import annotations
 
 from pathlib import Path
@@ -7,7 +7,7 @@ import numpy as np
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import FileResponse, Response
 
-from ..config import AUDIO_CATALOG, AUDIO_DIR, HOP_LENGTH, N_FFT, N_MELS, SAMPLE_RATE
+from ..config import AUDIO_CATALOG, AUDIO_DIR, HOP_LENGTH, MIDI_CATALOG, N_FFT, N_MELS, SAMPLE_RATE
 
 router = APIRouter(tags=["audio"])
 
@@ -16,11 +16,14 @@ _waveform_cache: dict[str, np.ndarray] = {}
 
 
 def _get_filepath(name: str) -> Path:
-    if name not in AUDIO_CATALOG:
+    if name in AUDIO_CATALOG:
+        filepath = AUDIO_DIR / AUDIO_CATALOG[name]
+    elif name in MIDI_CATALOG:
+        filepath = MIDI_CATALOG[name]["path"]
+    else:
         raise HTTPException(status_code=404, detail=f"Unknown audio: {name}")
-    filepath = AUDIO_DIR / AUDIO_CATALOG[name]
     if not filepath.exists():
-        raise HTTPException(status_code=404, detail=f"File not found: {AUDIO_CATALOG[name]}")
+        raise HTTPException(status_code=404, detail=f"File not found: {name}")
     return filepath
 
 
@@ -61,8 +64,10 @@ def _load_waveform(name: str) -> np.ndarray:
 
 @router.get("/list")
 async def list_audio():
-    """List available audio files."""
+    """List available audio files (real music + MIDI tests)."""
     items = []
+
+    # Regular music catalog
     for name, filename in AUDIO_CATALOG.items():
         filepath = AUDIO_DIR / filename
         ext = filepath.suffix.lstrip(".")
@@ -77,14 +82,53 @@ async def list_audio():
         items.append({
             "name": name,
             "filename": filename,
+            "category": "music",
+            "relay": None,
+            "displayName": filename.rsplit(".", 1)[0],
+            "description": None,
             "format": ext,
             "duration_s": duration_s,
             "available": filepath.exists(),
+            "relatedBeliefs": [],
         })
+
+    # MIDI test catalog
+    for name, meta in MIDI_CATALOG.items():
+        items.append({
+            "name": name,
+            "filename": meta["filename"],
+            "category": "midi_test",
+            "relay": meta["relay"],
+            "displayName": meta["displayName"],
+            "description": meta["description"],
+            "format": "wav",
+            "duration_s": meta["duration_s"],
+            "available": meta["path"].exists(),
+            "relatedBeliefs": meta.get("relatedBeliefs", []),
+        })
+
     return items
 
 
-@router.get("/stream/{name}")
+@router.get("/midi-events/{name:path}")
+async def get_midi_events(name: str):
+    """Return MIDI event metadata for a MIDI test file."""
+    if name not in MIDI_CATALOG:
+        raise HTTPException(status_code=404, detail=f"No MIDI metadata for: {name}")
+
+    meta = MIDI_CATALOG[name]
+    return {
+        "displayName": meta["displayName"],
+        "description": meta["description"],
+        "duration_s": meta["duration_s"],
+        "instrument": meta.get("instrument", "Unknown"),
+        "segments": meta["segments"],
+        "expectedBehavior": meta.get("expectedBehavior", ""),
+        "relatedBeliefs": meta.get("relatedBeliefs", []),
+    }
+
+
+@router.get("/stream/{name:path}")
 async def stream_audio(name: str):
     """Stream audio file as WAV/MP3."""
     filepath = _get_filepath(name)
@@ -92,7 +136,7 @@ async def stream_audio(name: str):
     return FileResponse(str(filepath), media_type=media_type, filename=filepath.name)
 
 
-@router.get("/waveform/{name}")
+@router.get("/waveform/{name:path}")
 async def get_waveform(name: str):
     """Return downsampled waveform envelope as binary Float32.
 
@@ -121,7 +165,7 @@ async def get_waveform(name: str):
     )
 
 
-@router.get("/spectrogram/{name}")
+@router.get("/spectrogram/{name:path}")
 async def get_spectrogram(name: str):
     """Return mel spectrogram as binary Float32 (128 × T).
 

@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { useAudioStore } from './audioStore'
 import { useC3Store } from './c3Store'
 import { useH3Store } from './h3Store'
 
@@ -129,6 +130,30 @@ export const usePipelineStore = create<PipelineState>((set, get) => ({
 
   selectExperiment: async (experimentId: string) => {
     set({ currentExperiment: experimentId })
+
+    // Resolve audio_name — check experiments list first, then fetch summary
+    let audioName: string | undefined
+    const exp = get().experiments.find((e) => e.experiment_id === experimentId)
+    if (exp) {
+      audioName = exp.audio_name
+    } else {
+      try {
+        const res = await fetch(`/api/pipeline/results/${experimentId}/summary`)
+        if (res.ok) {
+          const meta = await res.json()
+          audioName = meta.audio_name
+        }
+      } catch { /* ignore */ }
+    }
+
+    // Auto-load audio into audioStore for playback
+    if (audioName) {
+      useAudioStore.getState().loadAudio(
+        `/api/audio/stream/${audioName}`,
+        audioName,
+      )
+    }
+
     // Auto-load beliefs into c3Store
     useC3Store.getState().clear()
     useH3Store.getState().clear()

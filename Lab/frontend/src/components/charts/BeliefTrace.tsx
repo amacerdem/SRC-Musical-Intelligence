@@ -50,6 +50,10 @@ export function BeliefTrace({
   const panRef = useRef({ active: false, startX: 0, startZoom: { start: 0, end: 1 } })
   const drawRef = useRef<() => void>(() => {})
 
+  // Store cursor in ref so draw doesn't need it as a dep
+  const cursorRef = useRef({ frame: cursorFrame, total: totalFrames })
+  cursorRef.current = { frame: cursorFrame, total: totalFrames }
+
   // Reset zoom when data changes
   useEffect(() => {
     zoomRef.current = { start: 0, end: 1 }
@@ -220,9 +224,11 @@ export function BeliefTrace({
     ctx.fillText(yMax.toFixed(3), width - 2, pad.top + 8)
     ctx.fillText(yMin.toFixed(3), width - 2, pad.top + plotH)
 
-    // Playback cursor
-    if (cursorFrame != null && totalFrames && totalFrames > 0 && data.length > 1) {
-      const dataFrac = cursorFrame / totalFrames
+    // Playback cursor — read from ref for stable draw fn
+    const cf = cursorRef.current.frame
+    const tf = cursorRef.current.total
+    if (cf != null && tf && tf > 0 && data.length > 1) {
+      const dataFrac = cf / tf
       if (dataFrac >= zs && dataFrac <= ze) {
         const cx = pad.left + ((dataFrac - zs) / (ze - zs)) * plotW
         ctx.beginPath()
@@ -268,13 +274,18 @@ export function BeliefTrace({
   // Keep drawRef current
   drawRef.current = draw
 
-  // Initial draw + resize observer
+  // Initial draw + resize observer (stable — no cursor in deps)
   useEffect(() => {
     draw()
     const observer = new ResizeObserver(() => drawRef.current())
     if (containerRef.current) observer.observe(containerRef.current)
     return () => observer.disconnect()
-  }, [data, height, stats, baseline, traceColor, name, cursorFrame, totalFrames])
+  }, [data, height, stats, baseline, traceColor, name])
+
+  // Lightweight cursor redraw — no observer teardown
+  useEffect(() => {
+    drawRef.current()
+  }, [cursorFrame])
 
   // Wheel zoom
   useEffect(() => {

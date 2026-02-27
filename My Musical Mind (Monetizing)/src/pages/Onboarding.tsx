@@ -1,5 +1,5 @@
 import { useCallback, useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Check, Crown, Sparkles, Zap, Music, Brain, Radio, Users, Star, Shield, Headphones, Eye, CheckCircle2, Loader2 } from "lucide-react";
@@ -164,6 +164,7 @@ function useTicker(target: number, duration: number, active: boolean) {
 
 export function Onboarding() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { step, setStep, setPersona, setProgress, analysisProgress, analysisPhase, selectedPersonaId } =
     useOnboardingStore();
   const { completeOnboarding, displayName, setDisplayName, mind } = useUserStore();
@@ -171,6 +172,7 @@ export function Onboarding() {
   const [userName, setUserName] = useState(displayName || "");
   const [showOAuth, setShowOAuth] = useState(false);
   const [oAuthPlatform, setOAuthPlatform] = useState<"spotify" | "soundcloud" | "apple">("spotify");
+  const didAutoConnect = useRef(false);
 
   const startEvolution = useCallback((name: string) => {
     setDisplayName(name);
@@ -221,6 +223,18 @@ export function Onboarding() {
     startEvolution(userName);
   }, [startEvolution, userName]);
 
+  // Auto-trigger OAuth when arriving from Landing with platform + userName in navigation state
+  useEffect(() => {
+    if (didAutoConnect.current) return;
+    const navState = location.state as { platform?: string; userName?: string } | null;
+    if (navState?.platform && navState?.userName) {
+      didAutoConnect.current = true;
+      setUserName(navState.userName);
+      setDisplayName(navState.userName);
+      handlePlatformConnect(navState.platform as "spotify" | "soundcloud" | "apple");
+    }
+  }, [location.state, handlePlatformConnect, setDisplayName]);
+
   return (
     <div className="fixed inset-0 bg-black overflow-hidden">
       <div className="cinematic-vignette" />
@@ -242,9 +256,6 @@ export function Onboarding() {
       </AnimatePresence>
 
       <AnimatePresence mode="wait">
-        {step === "signup" && (
-          <SignupStep key="signup" onComplete={() => setStep("connect")} />
-        )}
         {step === "connect" && (
           <ConnectStep
             key="connect"

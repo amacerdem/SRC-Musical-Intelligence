@@ -1,0 +1,5955 @@
+{
+  "stage": "4_boundary",
+  "timestamp": "2026-02-27T11:57:13.945292",
+  "edge_frames_analyzed": 8,
+  "artifact_threshold": 0.05,
+  "per_audio": {
+    "bach": {
+      "n_frames": 5168,
+      "dimensions": {
+        "E0:salience_activation": {
+          "interior_mean": 0.593032,
+          "interior_std": 0.109839,
+          "interior_range": 0.576689,
+          "first_edge": {
+            "mean": 0.428174,
+            "values": [
+              0.428174,
+              0.428174,
+              0.428174,
+              0.428174,
+              0.428174,
+              0.428174,
+              0.428174,
+              0.428174
+            ],
+            "deviation": -0.164858,
+            "deviation_pct": 28.59,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.719111,
+            "values": [
+              0.757656,
+              0.715027,
+              0.754958,
+              0.574202,
+              0.758363,
+              0.742094,
+              0.725295,
+              0.725295
+            ],
+            "deviation": 0.126079,
+            "deviation_pct": 21.86,
+            "artifact": true
+          }
+        },
+        "E1:sensory_evidence": {
+          "interior_mean": 0.640623,
+          "interior_std": 0.123321,
+          "interior_range": 0.657717,
+          "first_edge": {
+            "mean": 0.46257,
+            "values": [
+              0.46257,
+              0.46257,
+              0.46257,
+              0.46257,
+              0.46257,
+              0.46257,
+              0.46257,
+              0.46257
+            ],
+            "deviation": -0.178053,
+            "deviation_pct": 27.07,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.762767,
+            "values": [
+              0.79235,
+              0.79396,
+              0.79812,
+              0.803006,
+              0.79568,
+              0.745109,
+              0.686955,
+              0.686955
+            ],
+            "deviation": 0.122144,
+            "deviation_pct": 18.57,
+            "artifact": true
+          }
+        },
+        "E2:consonance_valence": {
+          "interior_mean": 0.494878,
+          "interior_std": 0.044937,
+          "interior_range": 0.394954,
+          "first_edge": {
+            "mean": 0.50052,
+            "values": [
+              0.50052,
+              0.50052,
+              0.50052,
+              0.50052,
+              0.50052,
+              0.50052,
+              0.50052,
+              0.50052
+            ],
+            "deviation": 0.005642,
+            "deviation_pct": 1.43,
+            "artifact": false
+          },
+          "last_edge": {
+            "mean": 0.524494,
+            "values": [
+              0.478203,
+              0.496554,
+              0.483628,
+              0.475492,
+              0.529761,
+              0.598648,
+              0.566831,
+              0.566831
+            ],
+            "deviation": 0.029616,
+            "deviation_pct": 7.5,
+            "artifact": true
+          }
+        },
+        "M0:salience_response": {
+          "interior_mean": 0.637241,
+          "interior_std": 0.017857,
+          "interior_range": 0.105036,
+          "first_edge": {
+            "mean": 0.605483,
+            "values": [
+              0.605483,
+              0.605483,
+              0.605483,
+              0.605483,
+              0.605483,
+              0.605483,
+              0.605483,
+              0.605483
+            ],
+            "deviation": -0.031757,
+            "deviation_pct": 30.23,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.660103,
+            "values": [
+              0.666421,
+              0.661774,
+              0.666506,
+              0.646459,
+              0.666721,
+              0.661523,
+              0.655712,
+              0.655712
+            ],
+            "deviation": 0.022863,
+            "deviation_pct": 21.77,
+            "artifact": true
+          }
+        },
+        "M1:rt_valence_judgment": {
+          "interior_mean": 0.654468,
+          "interior_std": 0.022696,
+          "interior_range": 0.137715,
+          "first_edge": {
+            "mean": 0.64766,
+            "values": [
+              0.64766,
+              0.64766,
+              0.64766,
+              0.64766,
+              0.64766,
+              0.64766,
+              0.64766,
+              0.64766
+            ],
+            "deviation": -0.006808,
+            "deviation_pct": 4.94,
+            "artifact": false
+          },
+          "last_edge": {
+            "mean": 0.680235,
+            "values": [
+              0.685621,
+              0.686858,
+              0.686897,
+              0.687936,
+              0.686566,
+              0.682062,
+              0.666715,
+              0.659227
+            ],
+            "deviation": 0.025767,
+            "deviation_pct": 18.71,
+            "artifact": true
+          }
+        },
+        "M2:aesthetic_appreciation": {
+          "interior_mean": 0.651621,
+          "interior_std": 0.024093,
+          "interior_range": 0.12939,
+          "first_edge": {
+            "mean": 0.603483,
+            "values": [
+              0.603483,
+              0.603483,
+              0.603483,
+              0.603483,
+              0.603483,
+              0.603483,
+              0.603483,
+              0.603483
+            ],
+            "deviation": -0.048137,
+            "deviation_pct": 37.2,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.647794,
+            "values": [
+              0.646289,
+              0.644695,
+              0.6445,
+              0.64453,
+              0.644356,
+              0.646932,
+              0.653375,
+              0.657677
+            ],
+            "deviation": -0.003826,
+            "deviation_pct": 2.96,
+            "artifact": false
+          }
+        },
+        "P0:salience_network": {
+          "interior_mean": 0.835312,
+          "interior_std": 0.084672,
+          "interior_range": 0.555335,
+          "first_edge": {
+            "mean": 0.415378,
+            "values": [
+              0.415378,
+              0.415378,
+              0.415378,
+              0.415378,
+              0.415378,
+              0.415378,
+              0.415378,
+              0.415378
+            ],
+            "deviation": -0.419934,
+            "deviation_pct": 75.62,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.875439,
+            "values": [
+              0.873078,
+              0.869425,
+              0.867433,
+              0.864405,
+              0.870927,
+              0.885083,
+              0.888452,
+              0.884709
+            ],
+            "deviation": 0.040127,
+            "deviation_pct": 7.23,
+            "artifact": true
+          }
+        },
+        "P1:affective_evaluation": {
+          "interior_mean": 0.38736,
+          "interior_std": 0.064195,
+          "interior_range": 0.383493,
+          "first_edge": {
+            "mean": 0.394398,
+            "values": [
+              0.394398,
+              0.394398,
+              0.394398,
+              0.394398,
+              0.394398,
+              0.394398,
+              0.394398,
+              0.394398
+            ],
+            "deviation": 0.007038,
+            "deviation_pct": 1.84,
+            "artifact": false
+          },
+          "last_edge": {
+            "mean": 0.403298,
+            "values": [
+              0.4306,
+              0.389623,
+              0.341039,
+              0.367964,
+              0.362273,
+              0.500242,
+              0.499489,
+              0.335156
+            ],
+            "deviation": 0.015938,
+            "deviation_pct": 4.16,
+            "artifact": false
+          }
+        },
+        "P2:sensory_load": {
+          "interior_mean": 0.844111,
+          "interior_std": 0.07282,
+          "interior_range": 0.461762,
+          "first_edge": {
+            "mean": 0.518741,
+            "values": [
+              0.518741,
+              0.518741,
+              0.518741,
+              0.518741,
+              0.518741,
+              0.518741,
+              0.518741,
+              0.518741
+            ],
+            "deviation": -0.32537,
+            "deviation_pct": 70.46,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.893029,
+            "values": [
+              0.928576,
+              0.914177,
+              0.907958,
+              0.918623,
+              0.921893,
+              0.895169,
+              0.825137,
+              0.832703
+            ],
+            "deviation": 0.048919,
+            "deviation_pct": 10.59,
+            "artifact": true
+          }
+        },
+        "F0:valence_pred": {
+          "interior_mean": 0.515906,
+          "interior_std": 0.037989,
+          "interior_range": 0.208038,
+          "first_edge": {
+            "mean": 0.405539,
+            "values": [
+              0.405539,
+              0.405539,
+              0.405539,
+              0.405539,
+              0.405539,
+              0.405539,
+              0.405539,
+              0.405539
+            ],
+            "deviation": -0.110367,
+            "deviation_pct": 53.05,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.538862,
+            "values": [
+              0.52243,
+              0.529069,
+              0.5244,
+              0.521444,
+              0.54092,
+              0.564831,
+              0.5539,
+              0.5539
+            ],
+            "deviation": 0.022956,
+            "deviation_pct": 11.03,
+            "artifact": true
+          }
+        },
+        "F1:processing_pred": {
+          "interior_mean": 0.643772,
+          "interior_std": 0.022016,
+          "interior_range": 0.13099,
+          "first_edge": {
+            "mean": 0.631415,
+            "values": [
+              0.631415,
+              0.631415,
+              0.631415,
+              0.631415,
+              0.631415,
+              0.631415,
+              0.631415,
+              0.631415
+            ],
+            "deviation": -0.012358,
+            "deviation_pct": 9.43,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.668234,
+            "values": [
+              0.67341,
+              0.674472,
+              0.674489,
+              0.675465,
+              0.674357,
+              0.668736,
+              0.655321,
+              0.649622
+            ],
+            "deviation": 0.024462,
+            "deviation_pct": 18.67,
+            "artifact": true
+          }
+        },
+        "F2:aesthetic_pred": {
+          "interior_mean": 0.650114,
+          "interior_std": 0.016504,
+          "interior_range": 0.10345,
+          "first_edge": {
+            "mean": 0.646055,
+            "values": [
+              0.646055,
+              0.646055,
+              0.646055,
+              0.646055,
+              0.646055,
+              0.646055,
+              0.646055,
+              0.646055
+            ],
+            "deviation": -0.004059,
+            "deviation_pct": 3.92,
+            "artifact": false
+          },
+          "last_edge": {
+            "mean": 0.642898,
+            "values": [
+              0.640747,
+              0.639759,
+              0.640041,
+              0.639565,
+              0.638578,
+              0.641257,
+              0.648997,
+              0.65424
+            ],
+            "deviation": -0.007216,
+            "deviation_pct": 6.98,
+            "artifact": true
+          }
+        }
+      },
+      "artifacts_found": 11,
+      "r3_pleasantness_edge": {
+        "interior_mean": 0.589022,
+        "first_edge_mean": 0.6,
+        "last_edge_mean": 0.528287,
+        "first_deviation": 0.010978,
+        "last_deviation": -0.060735
+      }
+    },
+    "beethoven": {
+      "n_frames": 5168,
+      "dimensions": {
+        "E0:salience_activation": {
+          "interior_mean": 0.503118,
+          "interior_std": 0.114324,
+          "interior_range": 0.566284,
+          "first_edge": {
+            "mean": 0.431475,
+            "values": [
+              0.2666,
+              0.2666,
+              0.2666,
+              0.499637,
+              0.540771,
+              0.540766,
+              0.530159,
+              0.540671
+            ],
+            "deviation": -0.071643,
+            "deviation_pct": 12.65,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.588114,
+            "values": [
+              0.459111,
+              0.439014,
+              0.534002,
+              0.565077,
+              0.655116,
+              0.694644,
+              0.678973,
+              0.678973
+            ],
+            "deviation": 0.084996,
+            "deviation_pct": 15.01,
+            "artifact": true
+          }
+        },
+        "E1:sensory_evidence": {
+          "interior_mean": 0.395838,
+          "interior_std": 0.198987,
+          "interior_range": 0.663127,
+          "first_edge": {
+            "mean": 0.14875,
+            "values": [
+              0.148707,
+              0.148707,
+              0.148707,
+              0.148709,
+              0.148854,
+              0.148833,
+              0.148754,
+              0.148726
+            ],
+            "deviation": -0.247089,
+            "deviation_pct": 37.26,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.587219,
+            "values": [
+              0.630818,
+              0.622658,
+              0.608374,
+              0.600546,
+              0.606558,
+              0.579976,
+              0.524413,
+              0.524413
+            ],
+            "deviation": 0.191381,
+            "deviation_pct": 28.86,
+            "artifact": true
+          }
+        },
+        "E2:consonance_valence": {
+          "interior_mean": 0.565152,
+          "interior_std": 0.050136,
+          "interior_range": 0.373998,
+          "first_edge": {
+            "mean": 0.63476,
+            "values": [
+              0.634846,
+              0.634846,
+              0.634846,
+              0.634588,
+              0.634135,
+              0.635019,
+              0.635104,
+              0.634697
+            ],
+            "deviation": 0.069607,
+            "deviation_pct": 18.61,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.541136,
+            "values": [
+              0.511614,
+              0.524843,
+              0.532676,
+              0.515604,
+              0.495555,
+              0.568363,
+              0.590217,
+              0.590217
+            ],
+            "deviation": -0.024016,
+            "deviation_pct": 6.42,
+            "artifact": true
+          }
+        },
+        "M0:salience_response": {
+          "interior_mean": 0.609392,
+          "interior_std": 0.022962,
+          "interior_range": 0.108588,
+          "first_edge": {
+            "mean": 0.583106,
+            "values": [
+              0.563018,
+              0.563018,
+              0.563018,
+              0.591444,
+              0.596415,
+              0.596413,
+              0.59513,
+              0.596394
+            ],
+            "deviation": -0.026285,
+            "deviation_pct": 24.21,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.633095,
+            "values": [
+              0.621121,
+              0.618176,
+              0.628321,
+              0.631396,
+              0.642225,
+              0.644929,
+              0.639298,
+              0.639298
+            ],
+            "deviation": 0.023704,
+            "deviation_pct": 21.83,
+            "artifact": true
+          }
+        },
+        "M1:rt_valence_judgment": {
+          "interior_mean": 0.604409,
+          "interior_std": 0.040418,
+          "interior_range": 0.139661,
+          "first_edge": {
+            "mean": 0.548729,
+            "values": [
+              0.548693,
+              0.548705,
+              0.548698,
+              0.548689,
+              0.548733,
+              0.548821,
+              0.548779,
+              0.548717
+            ],
+            "deviation": -0.05568,
+            "deviation_pct": 39.87,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.645701,
+            "values": [
+              0.653161,
+              0.652584,
+              0.650143,
+              0.647266,
+              0.647351,
+              0.647975,
+              0.6378,
+              0.629327
+            ],
+            "deviation": 0.041292,
+            "deviation_pct": 29.57,
+            "artifact": true
+          }
+        },
+        "M2:aesthetic_appreciation": {
+          "interior_mean": 0.692306,
+          "interior_std": 0.029489,
+          "interior_range": 0.133697,
+          "first_edge": {
+            "mean": 0.730759,
+            "values": [
+              0.73077,
+              0.730782,
+              0.730799,
+              0.730803,
+              0.730765,
+              0.730677,
+              0.730709,
+              0.730766
+            ],
+            "deviation": 0.038453,
+            "deviation_pct": 28.76,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.666494,
+            "values": [
+              0.662852,
+              0.662865,
+              0.663962,
+              0.66552,
+              0.665773,
+              0.665089,
+              0.670151,
+              0.675741
+            ],
+            "deviation": -0.025811,
+            "deviation_pct": 19.31,
+            "artifact": true
+          }
+        },
+        "P0:salience_network": {
+          "interior_mean": 0.81076,
+          "interior_std": 0.05056,
+          "interior_range": 0.295546,
+          "first_edge": {
+            "mean": 0.739257,
+            "values": [
+              0.778659,
+              0.778659,
+              0.778659,
+              0.780217,
+              0.695019,
+              0.679146,
+              0.712203,
+              0.711498
+            ],
+            "deviation": -0.071503,
+            "deviation_pct": 24.19,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.836959,
+            "values": [
+              0.823445,
+              0.823619,
+              0.827916,
+              0.82722,
+              0.826338,
+              0.842469,
+              0.868336,
+              0.856326
+            ],
+            "deviation": 0.026198,
+            "deviation_pct": 8.86,
+            "artifact": true
+          }
+        },
+        "P1:affective_evaluation": {
+          "interior_mean": 0.463316,
+          "interior_std": 0.06634,
+          "interior_range": 0.436496,
+          "first_edge": {
+            "mean": 0.539407,
+            "values": [
+              0.539357,
+              0.539357,
+              0.539357,
+              0.539254,
+              0.539033,
+              0.539349,
+              0.539239,
+              0.540311
+            ],
+            "deviation": 0.076091,
+            "deviation_pct": 17.43,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.424819,
+            "values": [
+              0.394904,
+              0.409449,
+              0.411198,
+              0.407173,
+              0.398967,
+              0.469935,
+              0.532474,
+              0.374453
+            ],
+            "deviation": -0.038497,
+            "deviation_pct": 8.82,
+            "artifact": true
+          }
+        },
+        "P2:sensory_load": {
+          "interior_mean": 0.740067,
+          "interior_std": 0.108905,
+          "interior_range": 0.43628,
+          "first_edge": {
+            "mean": 0.536883,
+            "values": [
+              0.536795,
+              0.536839,
+              0.536811,
+              0.536763,
+              0.536845,
+              0.537152,
+              0.537018,
+              0.536842
+            ],
+            "deviation": -0.203184,
+            "deviation_pct": 46.57,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.818052,
+            "values": [
+              0.83399,
+              0.842935,
+              0.8333,
+              0.822395,
+              0.831196,
+              0.849711,
+              0.793272,
+              0.737618
+            ],
+            "deviation": 0.077985,
+            "deviation_pct": 17.88,
+            "artifact": true
+          }
+        },
+        "F0:valence_pred": {
+          "interior_mean": 0.591852,
+          "interior_std": 0.038772,
+          "interior_range": 0.227488,
+          "first_edge": {
+            "mean": 0.658847,
+            "values": [
+              0.658871,
+              0.658871,
+              0.658871,
+              0.658798,
+              0.65867,
+              0.65892,
+              0.658944,
+              0.658829
+            ],
+            "deviation": 0.066995,
+            "deviation_pct": 29.45,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.550437,
+            "values": [
+              0.54018,
+              0.544848,
+              0.547596,
+              0.541591,
+              0.534469,
+              0.559967,
+              0.567421,
+              0.567421
+            ],
+            "deviation": -0.041416,
+            "deviation_pct": 18.21,
+            "artifact": true
+          }
+        },
+        "F1:processing_pred": {
+          "interior_mean": 0.595718,
+          "interior_std": 0.038814,
+          "interior_range": 0.133055,
+          "first_edge": {
+            "mean": 0.543258,
+            "values": [
+              0.543236,
+              0.543245,
+              0.543239,
+              0.54323,
+              0.543261,
+              0.54332,
+              0.543285,
+              0.543247
+            ],
+            "deviation": -0.05246,
+            "deviation_pct": 39.43,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.634767,
+            "values": [
+              0.642362,
+              0.641558,
+              0.639189,
+              0.636807,
+              0.637008,
+              0.635689,
+              0.625977,
+              0.619547
+            ],
+            "deviation": 0.039049,
+            "deviation_pct": 29.35,
+            "artifact": true
+          }
+        },
+        "F2:aesthetic_pred": {
+          "interior_mean": 0.676575,
+          "interior_std": 0.021947,
+          "interior_range": 0.104279,
+          "first_edge": {
+            "mean": 0.703661,
+            "values": [
+              0.703675,
+              0.70367,
+              0.703675,
+              0.703682,
+              0.703667,
+              0.703615,
+              0.703637,
+              0.703668
+            ],
+            "deviation": 0.027086,
+            "deviation_pct": 25.97,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.659847,
+            "values": [
+              0.656573,
+              0.656618,
+              0.6576,
+              0.659122,
+              0.659438,
+              0.658437,
+              0.662644,
+              0.668344
+            ],
+            "deviation": -0.016728,
+            "deviation_pct": 16.04,
+            "artifact": true
+          }
+        }
+      },
+      "artifacts_found": 12,
+      "r3_pleasantness_edge": {
+        "interior_mean": 0.787208,
+        "first_edge_mean": 0.998827,
+        "last_edge_mean": 0.658819,
+        "first_deviation": 0.211619,
+        "last_deviation": -0.128389
+      }
+    },
+    "duel": {
+      "n_frames": 5168,
+      "dimensions": {
+        "E0:salience_activation": {
+          "interior_mean": 0.599925,
+          "interior_std": 0.098816,
+          "interior_range": 0.572364,
+          "first_edge": {
+            "mean": 0.428174,
+            "values": [
+              0.428174,
+              0.428174,
+              0.428174,
+              0.428174,
+              0.428174,
+              0.428174,
+              0.428174,
+              0.428174
+            ],
+            "deviation": -0.171751,
+            "deviation_pct": 30.01,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.644031,
+            "values": [
+              0.683453,
+              0.778239,
+              0.550568,
+              0.624251,
+              0.584946,
+              0.468248,
+              0.731272,
+              0.731271
+            ],
+            "deviation": 0.044106,
+            "deviation_pct": 7.71,
+            "artifact": true
+          }
+        },
+        "E1:sensory_evidence": {
+          "interior_mean": 0.648623,
+          "interior_std": 0.14065,
+          "interior_range": 0.607953,
+          "first_edge": {
+            "mean": 0.46257,
+            "values": [
+              0.46257,
+              0.46257,
+              0.46257,
+              0.46257,
+              0.46257,
+              0.46257,
+              0.46257,
+              0.46257
+            ],
+            "deviation": -0.186052,
+            "deviation_pct": 30.6,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.728895,
+            "values": [
+              0.757003,
+              0.762554,
+              0.7708,
+              0.755311,
+              0.735395,
+              0.707387,
+              0.671354,
+              0.671354
+            ],
+            "deviation": 0.080272,
+            "deviation_pct": 13.2,
+            "artifact": true
+          }
+        },
+        "E2:consonance_valence": {
+          "interior_mean": 0.472695,
+          "interior_std": 0.060538,
+          "interior_range": 0.453966,
+          "first_edge": {
+            "mean": 0.49749,
+            "values": [
+              0.49749,
+              0.49749,
+              0.49749,
+              0.49749,
+              0.49749,
+              0.49749,
+              0.49749,
+              0.49749
+            ],
+            "deviation": 0.024795,
+            "deviation_pct": 5.46,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.516051,
+            "values": [
+              0.469375,
+              0.533051,
+              0.541702,
+              0.528735,
+              0.488465,
+              0.519693,
+              0.523694,
+              0.523694
+            ],
+            "deviation": 0.043356,
+            "deviation_pct": 9.55,
+            "artifact": true
+          }
+        },
+        "M0:salience_response": {
+          "interior_mean": 0.63863,
+          "interior_std": 0.017381,
+          "interior_range": 0.100115,
+          "first_edge": {
+            "mean": 0.6055,
+            "values": [
+              0.6055,
+              0.6055,
+              0.6055,
+              0.6055,
+              0.6055,
+              0.6055,
+              0.6055,
+              0.6055
+            ],
+            "deviation": -0.03313,
+            "deviation_pct": 33.09,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.649272,
+            "values": [
+              0.655733,
+              0.666722,
+              0.641535,
+              0.648905,
+              0.643044,
+              0.62758,
+              0.65533,
+              0.65533
+            ],
+            "deviation": 0.010643,
+            "deviation_pct": 10.63,
+            "artifact": true
+          }
+        },
+        "M1:rt_valence_judgment": {
+          "interior_mean": 0.656065,
+          "interior_std": 0.027514,
+          "interior_range": 0.128088,
+          "first_edge": {
+            "mean": 0.64766,
+            "values": [
+              0.64766,
+              0.64766,
+              0.64766,
+              0.64766,
+              0.64766,
+              0.64766,
+              0.64766,
+              0.64766
+            ],
+            "deviation": -0.008405,
+            "deviation_pct": 6.56,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.67439,
+            "values": [
+              0.673389,
+              0.673902,
+              0.680344,
+              0.684864,
+              0.678164,
+              0.674825,
+              0.667238,
+              0.662392
+            ],
+            "deviation": 0.018325,
+            "deviation_pct": 14.31,
+            "artifact": true
+          }
+        },
+        "M2:aesthetic_appreciation": {
+          "interior_mean": 0.632859,
+          "interior_std": 0.030537,
+          "interior_range": 0.154959,
+          "first_edge": {
+            "mean": 0.602904,
+            "values": [
+              0.602904,
+              0.602904,
+              0.602904,
+              0.602904,
+              0.602904,
+              0.602904,
+              0.602904,
+              0.602904
+            ],
+            "deviation": -0.029955,
+            "deviation_pct": 19.33,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.631987,
+            "values": [
+              0.623561,
+              0.62337,
+              0.626849,
+              0.631159,
+              0.634535,
+              0.635914,
+              0.638952,
+              0.641556
+            ],
+            "deviation": -0.000872,
+            "deviation_pct": 0.56,
+            "artifact": false
+          }
+        },
+        "P0:salience_network": {
+          "interior_mean": 0.847636,
+          "interior_std": 0.072025,
+          "interior_range": 0.598187,
+          "first_edge": {
+            "mean": 0.415384,
+            "values": [
+              0.415384,
+              0.415384,
+              0.415384,
+              0.415384,
+              0.415384,
+              0.415384,
+              0.415384,
+              0.415384
+            ],
+            "deviation": -0.432251,
+            "deviation_pct": 72.26,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.875375,
+            "values": [
+              0.872628,
+              0.873668,
+              0.871132,
+              0.874507,
+              0.8758,
+              0.875033,
+              0.880574,
+              0.879661
+            ],
+            "deviation": 0.027739,
+            "deviation_pct": 4.64,
+            "artifact": false
+          }
+        },
+        "P1:affective_evaluation": {
+          "interior_mean": 0.36302,
+          "interior_std": 0.07271,
+          "interior_range": 0.474409,
+          "first_edge": {
+            "mean": 0.393118,
+            "values": [
+              0.393118,
+              0.393118,
+              0.393118,
+              0.393118,
+              0.393118,
+              0.393118,
+              0.393118,
+              0.393118
+            ],
+            "deviation": 0.030098,
+            "deviation_pct": 6.34,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.384048,
+            "values": [
+              0.378912,
+              0.436434,
+              0.317984,
+              0.368171,
+              0.357642,
+              0.4218,
+              0.479647,
+              0.311789
+            ],
+            "deviation": 0.021027,
+            "deviation_pct": 4.43,
+            "artifact": false
+          }
+        },
+        "P2:sensory_load": {
+          "interior_mean": 0.85747,
+          "interior_std": 0.073673,
+          "interior_range": 0.509026,
+          "first_edge": {
+            "mean": 0.576666,
+            "values": [
+              0.576666,
+              0.576666,
+              0.576666,
+              0.576666,
+              0.576666,
+              0.576666,
+              0.576666,
+              0.576666
+            ],
+            "deviation": -0.280804,
+            "deviation_pct": 55.16,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.880211,
+            "values": [
+              0.860482,
+              0.89958,
+              0.87689,
+              0.884273,
+              0.881322,
+              0.900994,
+              0.877158,
+              0.860989
+            ],
+            "deviation": 0.022741,
+            "deviation_pct": 4.47,
+            "artifact": false
+          }
+        },
+        "F0:valence_pred": {
+          "interior_mean": 0.514267,
+          "interior_std": 0.045715,
+          "interior_range": 0.278736,
+          "first_edge": {
+            "mean": 0.45031,
+            "values": [
+              0.45031,
+              0.45031,
+              0.45031,
+              0.45031,
+              0.45031,
+              0.45031,
+              0.45031,
+              0.45031
+            ],
+            "deviation": -0.063957,
+            "deviation_pct": 22.95,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.537659,
+            "values": [
+              0.520911,
+              0.543724,
+              0.546763,
+              0.542202,
+              0.527831,
+              0.539002,
+              0.54042,
+              0.54042
+            ],
+            "deviation": 0.023392,
+            "deviation_pct": 8.39,
+            "artifact": true
+          }
+        },
+        "F1:processing_pred": {
+          "interior_mean": 0.645345,
+          "interior_std": 0.026338,
+          "interior_range": 0.122451,
+          "first_edge": {
+            "mean": 0.631415,
+            "values": [
+              0.631415,
+              0.631415,
+              0.631415,
+              0.631415,
+              0.631415,
+              0.631415,
+              0.631415,
+              0.631415
+            ],
+            "deviation": -0.01393,
+            "deviation_pct": 11.38,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.662535,
+            "values": [
+              0.663005,
+              0.663276,
+              0.668333,
+              0.671279,
+              0.665527,
+              0.661924,
+              0.655313,
+              0.65162
+            ],
+            "deviation": 0.01719,
+            "deviation_pct": 14.04,
+            "artifact": true
+          }
+        },
+        "F2:aesthetic_pred": {
+          "interior_mean": 0.641497,
+          "interior_std": 0.021018,
+          "interior_range": 0.110587,
+          "first_edge": {
+            "mean": 0.645988,
+            "values": [
+              0.645988,
+              0.645988,
+              0.645988,
+              0.645988,
+              0.645988,
+              0.645988,
+              0.645988,
+              0.645988
+            ],
+            "deviation": 0.004491,
+            "deviation_pct": 4.06,
+            "artifact": false
+          },
+          "last_edge": {
+            "mean": 0.638756,
+            "values": [
+              0.629247,
+              0.629029,
+              0.633203,
+              0.638015,
+              0.641857,
+              0.642961,
+              0.646171,
+              0.649569
+            ],
+            "deviation": -0.002741,
+            "deviation_pct": 2.48,
+            "artifact": false
+          }
+        }
+      },
+      "artifacts_found": 11,
+      "r3_pleasantness_edge": {
+        "interior_mean": 0.53331,
+        "first_edge_mean": 0.6,
+        "last_edge_mean": 0.508224,
+        "first_deviation": 0.06669,
+        "last_deviation": -0.025086
+      }
+    },
+    "enigma": {
+      "n_frames": 5168,
+      "dimensions": {
+        "E0:salience_activation": {
+          "interior_mean": 0.550762,
+          "interior_std": 0.105397,
+          "interior_range": 0.483347,
+          "first_edge": {
+            "mean": 0.428174,
+            "values": [
+              0.428174,
+              0.428174,
+              0.428174,
+              0.428174,
+              0.428174,
+              0.428174,
+              0.428174,
+              0.428174
+            ],
+            "deviation": -0.122587,
+            "deviation_pct": 25.36,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.67601,
+            "values": [
+              0.760699,
+              0.764932,
+              0.648562,
+              0.519646,
+              0.559241,
+              0.696809,
+              0.729094,
+              0.729094
+            ],
+            "deviation": 0.125248,
+            "deviation_pct": 25.91,
+            "artifact": true
+          }
+        },
+        "E1:sensory_evidence": {
+          "interior_mean": 0.663748,
+          "interior_std": 0.118213,
+          "interior_range": 0.639838,
+          "first_edge": {
+            "mean": 0.46257,
+            "values": [
+              0.46257,
+              0.46257,
+              0.46257,
+              0.46257,
+              0.46257,
+              0.46257,
+              0.46257,
+              0.46257
+            ],
+            "deviation": -0.201178,
+            "deviation_pct": 31.44,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.793986,
+            "values": [
+              0.802088,
+              0.804417,
+              0.80108,
+              0.798511,
+              0.797438,
+              0.800496,
+              0.773927,
+              0.773927
+            ],
+            "deviation": 0.130237,
+            "deviation_pct": 20.35,
+            "artifact": true
+          }
+        },
+        "E2:consonance_valence": {
+          "interior_mean": 0.495817,
+          "interior_std": 0.046396,
+          "interior_range": 0.382801,
+          "first_edge": {
+            "mean": 0.50052,
+            "values": [
+              0.50052,
+              0.50052,
+              0.50052,
+              0.50052,
+              0.50052,
+              0.50052,
+              0.50052,
+              0.50052
+            ],
+            "deviation": 0.004704,
+            "deviation_pct": 1.23,
+            "artifact": false
+          },
+          "last_edge": {
+            "mean": 0.480072,
+            "values": [
+              0.421539,
+              0.432526,
+              0.400692,
+              0.440882,
+              0.473839,
+              0.532309,
+              0.569395,
+              0.569395
+            ],
+            "deviation": -0.015745,
+            "deviation_pct": 4.11,
+            "artifact": false
+          }
+        },
+        "M0:salience_response": {
+          "interior_mean": 0.633946,
+          "interior_std": 0.018329,
+          "interior_range": 0.095155,
+          "first_edge": {
+            "mean": 0.605483,
+            "values": [
+              0.605483,
+              0.605483,
+              0.605483,
+              0.605483,
+              0.605483,
+              0.605483,
+              0.605483,
+              0.605483
+            ],
+            "deviation": -0.028462,
+            "deviation_pct": 29.91,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.657331,
+            "values": [
+              0.667408,
+              0.668032,
+              0.654779,
+              0.63989,
+              0.644365,
+              0.660172,
+              0.662003,
+              0.662003
+            ],
+            "deviation": 0.023386,
+            "deviation_pct": 24.58,
+            "artifact": true
+          }
+        },
+        "M1:rt_valence_judgment": {
+          "interior_mean": 0.659514,
+          "interior_std": 0.022278,
+          "interior_range": 0.1307,
+          "first_edge": {
+            "mean": 0.64766,
+            "values": [
+              0.64766,
+              0.64766,
+              0.64766,
+              0.64766,
+              0.64766,
+              0.64766,
+              0.64766,
+              0.64766
+            ],
+            "deviation": -0.011854,
+            "deviation_pct": 9.07,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.682268,
+            "values": [
+              0.685801,
+              0.687759,
+              0.685035,
+              0.679794,
+              0.678153,
+              0.679907,
+              0.684739,
+              0.676954
+            ],
+            "deviation": 0.022754,
+            "deviation_pct": 17.41,
+            "artifact": true
+          }
+        },
+        "M2:aesthetic_appreciation": {
+          "interior_mean": 0.654115,
+          "interior_std": 0.023293,
+          "interior_range": 0.102911,
+          "first_edge": {
+            "mean": 0.603483,
+            "values": [
+              0.603483,
+              0.603483,
+              0.603483,
+              0.603483,
+              0.603483,
+              0.603483,
+              0.603483,
+              0.603483
+            ],
+            "deviation": -0.050631,
+            "deviation_pct": 49.2,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.638257,
+            "values": [
+              0.640023,
+              0.639221,
+              0.638639,
+              0.636007,
+              0.634986,
+              0.635124,
+              0.638199,
+              0.643859
+            ],
+            "deviation": -0.015857,
+            "deviation_pct": 15.41,
+            "artifact": true
+          }
+        },
+        "P0:salience_network": {
+          "interior_mean": 0.851527,
+          "interior_std": 0.092857,
+          "interior_range": 0.598609,
+          "first_edge": {
+            "mean": 0.415378,
+            "values": [
+              0.415378,
+              0.415378,
+              0.415378,
+              0.415378,
+              0.415378,
+              0.415378,
+              0.415378,
+              0.415378
+            ],
+            "deviation": -0.436149,
+            "deviation_pct": 72.86,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.871564,
+            "values": [
+              0.871994,
+              0.87129,
+              0.868079,
+              0.864446,
+              0.867394,
+              0.873661,
+              0.87978,
+              0.87587
+            ],
+            "deviation": 0.020037,
+            "deviation_pct": 3.35,
+            "artifact": false
+          }
+        },
+        "P1:affective_evaluation": {
+          "interior_mean": 0.388601,
+          "interior_std": 0.058678,
+          "interior_range": 0.352695,
+          "first_edge": {
+            "mean": 0.394398,
+            "values": [
+              0.394398,
+              0.394398,
+              0.394398,
+              0.394398,
+              0.394398,
+              0.394398,
+              0.394398,
+              0.394398
+            ],
+            "deviation": 0.005797,
+            "deviation_pct": 1.64,
+            "artifact": false
+          },
+          "last_edge": {
+            "mean": 0.366799,
+            "values": [
+              0.243164,
+              0.421997,
+              0.279511,
+              0.261447,
+              0.378517,
+              0.391242,
+              0.473682,
+              0.484837
+            ],
+            "deviation": -0.021802,
+            "deviation_pct": 6.18,
+            "artifact": true
+          }
+        },
+        "P2:sensory_load": {
+          "interior_mean": 0.866144,
+          "interior_std": 0.077385,
+          "interior_range": 0.434469,
+          "first_edge": {
+            "mean": 0.518741,
+            "values": [
+              0.518741,
+              0.518741,
+              0.518741,
+              0.518741,
+              0.518741,
+              0.518741,
+              0.518741,
+              0.518741
+            ],
+            "deviation": -0.347402,
+            "deviation_pct": 79.96,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.900692,
+            "values": [
+              0.914238,
+              0.932106,
+              0.924658,
+              0.927207,
+              0.909051,
+              0.893611,
+              0.87222,
+              0.832443
+            ],
+            "deviation": 0.034548,
+            "deviation_pct": 7.95,
+            "artifact": true
+          }
+        },
+        "F0:valence_pred": {
+          "interior_mean": 0.533841,
+          "interior_std": 0.039599,
+          "interior_range": 0.206962,
+          "first_edge": {
+            "mean": 0.405539,
+            "values": [
+              0.405539,
+              0.405539,
+              0.405539,
+              0.405539,
+              0.405539,
+              0.405539,
+              0.405539,
+              0.405539
+            ],
+            "deviation": -0.128303,
+            "deviation_pct": 61.99,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.51037,
+            "values": [
+              0.488797,
+              0.492967,
+              0.480824,
+              0.496123,
+              0.508444,
+              0.529798,
+              0.543004,
+              0.543004
+            ],
+            "deviation": -0.023471,
+            "deviation_pct": 11.34,
+            "artifact": true
+          }
+        },
+        "F1:processing_pred": {
+          "interior_mean": 0.648539,
+          "interior_std": 0.021538,
+          "interior_range": 0.125595,
+          "first_edge": {
+            "mean": 0.631415,
+            "values": [
+              0.631415,
+              0.631415,
+              0.631415,
+              0.631415,
+              0.631415,
+              0.631415,
+              0.631415,
+              0.631415
+            ],
+            "deviation": -0.017124,
+            "deviation_pct": 13.63,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.670999,
+            "values": [
+              0.673704,
+              0.675462,
+              0.67343,
+              0.669416,
+              0.668115,
+              0.669396,
+              0.672209,
+              0.666261
+            ],
+            "deviation": 0.022461,
+            "deviation_pct": 17.88,
+            "artifact": true
+          }
+        },
+        "F2:aesthetic_pred": {
+          "interior_mean": 0.650672,
+          "interior_std": 0.013739,
+          "interior_range": 0.089708,
+          "first_edge": {
+            "mean": 0.646055,
+            "values": [
+              0.646055,
+              0.646055,
+              0.646055,
+              0.646055,
+              0.646055,
+              0.646055,
+              0.646055,
+              0.646055
+            ],
+            "deviation": -0.004617,
+            "deviation_pct": 5.15,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.637019,
+            "values": [
+              0.640516,
+              0.638282,
+              0.636689,
+              0.633068,
+              0.631895,
+              0.632795,
+              0.637663,
+              0.645241
+            ],
+            "deviation": -0.013653,
+            "deviation_pct": 15.22,
+            "artifact": true
+          }
+        }
+      },
+      "artifacts_found": 11,
+      "r3_pleasantness_edge": {
+        "interior_mean": 0.590983,
+        "first_edge_mean": 0.6,
+        "last_edge_mean": 0.486729,
+        "first_deviation": 0.009017,
+        "last_deviation": -0.104254
+      }
+    },
+    "herald": {
+      "n_frames": 5168,
+      "dimensions": {
+        "E0:salience_activation": {
+          "interior_mean": 0.536665,
+          "interior_std": 0.116345,
+          "interior_range": 0.49825,
+          "first_edge": {
+            "mean": 0.428174,
+            "values": [
+              0.428174,
+              0.428174,
+              0.428174,
+              0.428174,
+              0.428174,
+              0.428174,
+              0.428174,
+              0.428174
+            ],
+            "deviation": -0.108491,
+            "deviation_pct": 21.77,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.474326,
+            "values": [
+              0.674357,
+              0.458219,
+              0.556867,
+              0.476182,
+              0.429473,
+              0.457748,
+              0.37088,
+              0.37088
+            ],
+            "deviation": -0.06234,
+            "deviation_pct": 12.51,
+            "artifact": true
+          }
+        },
+        "E1:sensory_evidence": {
+          "interior_mean": 0.48353,
+          "interior_std": 0.123519,
+          "interior_range": 0.651853,
+          "first_edge": {
+            "mean": 0.46257,
+            "values": [
+              0.46257,
+              0.46257,
+              0.46257,
+              0.46257,
+              0.46257,
+              0.46257,
+              0.46257,
+              0.46257
+            ],
+            "deviation": -0.02096,
+            "deviation_pct": 3.22,
+            "artifact": false
+          },
+          "last_edge": {
+            "mean": 0.493835,
+            "values": [
+              0.516423,
+              0.52875,
+              0.537719,
+              0.535409,
+              0.522861,
+              0.48192,
+              0.413798,
+              0.413798
+            ],
+            "deviation": 0.010305,
+            "deviation_pct": 1.58,
+            "artifact": false
+          }
+        },
+        "E2:consonance_valence": {
+          "interior_mean": 0.547714,
+          "interior_std": 0.029019,
+          "interior_range": 0.288351,
+          "first_edge": {
+            "mean": 0.533422,
+            "values": [
+              0.533422,
+              0.533422,
+              0.533422,
+              0.533422,
+              0.533422,
+              0.533422,
+              0.533422,
+              0.533422
+            ],
+            "deviation": -0.014292,
+            "deviation_pct": 4.96,
+            "artifact": false
+          },
+          "last_edge": {
+            "mean": 0.585553,
+            "values": [
+              0.541296,
+              0.545928,
+              0.547616,
+              0.565585,
+              0.577851,
+              0.617912,
+              0.644118,
+              0.644118
+            ],
+            "deviation": 0.037839,
+            "deviation_pct": 13.12,
+            "artifact": true
+          }
+        },
+        "M0:salience_response": {
+          "interior_mean": 0.619673,
+          "interior_std": 0.018321,
+          "interior_range": 0.094049,
+          "first_edge": {
+            "mean": 0.605483,
+            "values": [
+              0.605483,
+              0.605483,
+              0.605483,
+              0.605483,
+              0.605483,
+              0.605483,
+              0.605483,
+              0.605483
+            ],
+            "deviation": -0.01419,
+            "deviation_pct": 15.09,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.61312,
+            "values": [
+              0.638212,
+              0.613783,
+              0.626038,
+              0.616383,
+              0.60995,
+              0.610391,
+              0.5951,
+              0.5951
+            ],
+            "deviation": -0.006554,
+            "deviation_pct": 6.97,
+            "artifact": true
+          }
+        },
+        "M1:rt_valence_judgment": {
+          "interior_mean": 0.623652,
+          "interior_std": 0.02419,
+          "interior_range": 0.138519,
+          "first_edge": {
+            "mean": 0.64766,
+            "values": [
+              0.64766,
+              0.64766,
+              0.64766,
+              0.64766,
+              0.64766,
+              0.64766,
+              0.64766,
+              0.64766
+            ],
+            "deviation": 0.024009,
+            "deviation_pct": 17.33,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.626723,
+            "values": [
+              0.628955,
+              0.631584,
+              0.633655,
+              0.634782,
+              0.633189,
+              0.628302,
+              0.616744,
+              0.606569
+            ],
+            "deviation": 0.003071,
+            "deviation_pct": 2.22,
+            "artifact": false
+          }
+        },
+        "M2:aesthetic_appreciation": {
+          "interior_mean": 0.683819,
+          "interior_std": 0.019351,
+          "interior_range": 0.108421,
+          "first_edge": {
+            "mean": 0.609914,
+            "values": [
+              0.609914,
+              0.609914,
+              0.609914,
+              0.609914,
+              0.609914,
+              0.609914,
+              0.609914,
+              0.609914
+            ],
+            "deviation": -0.073905,
+            "deviation_pct": 68.16,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.685289,
+            "values": [
+              0.685801,
+              0.684691,
+              0.683327,
+              0.681859,
+              0.681815,
+              0.683092,
+              0.687587,
+              0.694138
+            ],
+            "deviation": 0.00147,
+            "deviation_pct": 1.36,
+            "artifact": false
+          }
+        },
+        "P0:salience_network": {
+          "interior_mean": 0.831346,
+          "interior_std": 0.060418,
+          "interior_range": 0.478501,
+          "first_edge": {
+            "mean": 0.415378,
+            "values": [
+              0.415378,
+              0.415378,
+              0.415378,
+              0.415378,
+              0.415378,
+              0.415378,
+              0.415378,
+              0.415378
+            ],
+            "deviation": -0.415967,
+            "deviation_pct": 86.93,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.853522,
+            "values": [
+              0.850093,
+              0.840689,
+              0.842024,
+              0.844253,
+              0.848285,
+              0.857267,
+              0.877664,
+              0.867905
+            ],
+            "deviation": 0.022177,
+            "deviation_pct": 4.63,
+            "artifact": false
+          }
+        },
+        "P1:affective_evaluation": {
+          "interior_mean": 0.444038,
+          "interior_std": 0.061848,
+          "interior_range": 0.372457,
+          "first_edge": {
+            "mean": 0.4082,
+            "values": [
+              0.4082,
+              0.4082,
+              0.4082,
+              0.4082,
+              0.4082,
+              0.4082,
+              0.4082,
+              0.4082
+            ],
+            "deviation": -0.035838,
+            "deviation_pct": 9.62,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.466987,
+            "values": [
+              0.455177,
+              0.380841,
+              0.445559,
+              0.412022,
+              0.403464,
+              0.505976,
+              0.566427,
+              0.566427
+            ],
+            "deviation": 0.022949,
+            "deviation_pct": 6.16,
+            "artifact": true
+          }
+        },
+        "P2:sensory_load": {
+          "interior_mean": 0.798056,
+          "interior_std": 0.052706,
+          "interior_range": 0.421664,
+          "first_edge": {
+            "mean": 0.591439,
+            "values": [
+              0.591439,
+              0.591439,
+              0.591439,
+              0.591439,
+              0.591439,
+              0.591439,
+              0.591439,
+              0.591439
+            ],
+            "deviation": -0.206616,
+            "deviation_pct": 49.0,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.787717,
+            "values": [
+              0.822487,
+              0.823606,
+              0.818361,
+              0.818037,
+              0.804765,
+              0.794313,
+              0.741124,
+              0.679045
+            ],
+            "deviation": -0.010338,
+            "deviation_pct": 2.45,
+            "artifact": false
+          }
+        },
+        "F0:valence_pred": {
+          "interior_mean": 0.562009,
+          "interior_std": 0.026546,
+          "interior_range": 0.138933,
+          "first_edge": {
+            "mean": 0.482426,
+            "values": [
+              0.482426,
+              0.482426,
+              0.482426,
+              0.482426,
+              0.482426,
+              0.482426,
+              0.482426,
+              0.482426
+            ],
+            "deviation": -0.079583,
+            "deviation_pct": 57.28,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.581243,
+            "values": [
+              0.566566,
+              0.568137,
+              0.568708,
+              0.574756,
+              0.578848,
+              0.592013,
+              0.600457,
+              0.600457
+            ],
+            "deviation": 0.019234,
+            "deviation_pct": 13.84,
+            "artifact": true
+          }
+        },
+        "F1:processing_pred": {
+          "interior_mean": 0.613977,
+          "interior_std": 0.023349,
+          "interior_range": 0.131274,
+          "first_edge": {
+            "mean": 0.631415,
+            "values": [
+              0.631415,
+              0.631415,
+              0.631415,
+              0.631415,
+              0.631415,
+              0.631415,
+              0.631415,
+              0.631415
+            ],
+            "deviation": 0.017438,
+            "deviation_pct": 13.28,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.61677,
+            "values": [
+              0.619406,
+              0.621998,
+              0.623897,
+              0.6246,
+              0.622876,
+              0.61744,
+              0.605819,
+              0.598121
+            ],
+            "deviation": 0.002793,
+            "deviation_pct": 2.13,
+            "artifact": false
+          }
+        },
+        "F2:aesthetic_pred": {
+          "interior_mean": 0.669756,
+          "interior_std": 0.012772,
+          "interior_range": 0.100766,
+          "first_edge": {
+            "mean": 0.64679,
+            "values": [
+              0.64679,
+              0.64679,
+              0.64679,
+              0.64679,
+              0.64679,
+              0.64679,
+              0.64679,
+              0.64679
+            ],
+            "deviation": -0.022967,
+            "deviation_pct": 22.79,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.669273,
+            "values": [
+              0.668979,
+              0.667733,
+              0.666749,
+              0.66586,
+              0.666286,
+              0.667668,
+              0.672159,
+              0.678747
+            ],
+            "deviation": -0.000484,
+            "deviation_pct": 0.48,
+            "artifact": false
+          }
+        }
+      },
+      "artifacts_found": 11,
+      "r3_pleasantness_edge": {
+        "interior_mean": 0.731427,
+        "first_edge_mean": 0.6,
+        "last_edge_mean": 0.72462,
+        "first_deviation": -0.131427,
+        "last_deviation": -0.006806
+      }
+    },
+    "swan": {
+      "n_frames": 5168,
+      "dimensions": {
+        "E0:salience_activation": {
+          "interior_mean": 0.613312,
+          "interior_std": 0.102466,
+          "interior_range": 0.550062,
+          "first_edge": {
+            "mean": 0.433514,
+            "values": [
+              0.428174,
+              0.428174,
+              0.428174,
+              0.428174,
+              0.428174,
+              0.428174,
+              0.438604,
+              0.460465
+            ],
+            "deviation": -0.179798,
+            "deviation_pct": 32.69,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.538913,
+            "values": [
+              0.483423,
+              0.518661,
+              0.510385,
+              0.486533,
+              0.473508,
+              0.497872,
+              0.670461,
+              0.670461
+            ],
+            "deviation": -0.074399,
+            "deviation_pct": 13.53,
+            "artifact": true
+          }
+        },
+        "E1:sensory_evidence": {
+          "interior_mean": 0.650137,
+          "interior_std": 0.122649,
+          "interior_range": 0.655743,
+          "first_edge": {
+            "mean": 0.448106,
+            "values": [
+              0.46257,
+              0.46257,
+              0.46257,
+              0.46257,
+              0.46257,
+              0.46257,
+              0.462513,
+              0.346912
+            ],
+            "deviation": -0.202031,
+            "deviation_pct": 30.81,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.542334,
+            "values": [
+              0.549851,
+              0.556682,
+              0.556549,
+              0.561542,
+              0.568848,
+              0.562737,
+              0.491233,
+              0.491233
+            ],
+            "deviation": -0.107802,
+            "deviation_pct": 16.44,
+            "artifact": true
+          }
+        },
+        "E2:consonance_valence": {
+          "interior_mean": 0.495425,
+          "interior_std": 0.038511,
+          "interior_range": 0.363039,
+          "first_edge": {
+            "mean": 0.551891,
+            "values": [
+              0.532467,
+              0.532467,
+              0.532467,
+              0.532467,
+              0.532467,
+              0.532467,
+              0.532626,
+              0.687702
+            ],
+            "deviation": 0.056467,
+            "deviation_pct": 15.55,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.539728,
+            "values": [
+              0.502758,
+              0.509489,
+              0.521139,
+              0.507159,
+              0.503447,
+              0.527025,
+              0.623401,
+              0.623401
+            ],
+            "deviation": 0.044303,
+            "deviation_pct": 12.2,
+            "artifact": true
+          }
+        },
+        "M0:salience_response": {
+          "interior_mean": 0.640266,
+          "interior_std": 0.016336,
+          "interior_range": 0.105372,
+          "first_edge": {
+            "mean": 0.605084,
+            "values": [
+              0.605484,
+              0.605484,
+              0.605484,
+              0.605484,
+              0.605484,
+              0.605484,
+              0.606725,
+              0.601043
+            ],
+            "deviation": -0.035183,
+            "deviation_pct": 33.39,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.624233,
+            "values": [
+              0.618261,
+              0.622892,
+              0.621911,
+              0.619456,
+              0.618436,
+              0.620875,
+              0.636015,
+              0.636015
+            ],
+            "deviation": -0.016034,
+            "deviation_pct": 15.22,
+            "artifact": true
+          }
+        },
+        "M1:rt_valence_judgment": {
+          "interior_mean": 0.657921,
+          "interior_std": 0.024334,
+          "interior_range": 0.13812,
+          "first_edge": {
+            "mean": 0.646663,
+            "values": [
+              0.64766,
+              0.64766,
+              0.64766,
+              0.64766,
+              0.64766,
+              0.64766,
+              0.647657,
+              0.639686
+            ],
+            "deviation": -0.011258,
+            "deviation_pct": 8.15,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.635805,
+            "values": [
+              0.635904,
+              0.637782,
+              0.638352,
+              0.638066,
+              0.639333,
+              0.640169,
+              0.6344,
+              0.622437
+            ],
+            "deviation": -0.022116,
+            "deviation_pct": 16.01,
+            "artifact": true
+          }
+        },
+        "M2:aesthetic_appreciation": {
+          "interior_mean": 0.650872,
+          "interior_std": 0.02098,
+          "interior_range": 0.111463,
+          "first_edge": {
+            "mean": 0.609726,
+            "values": [
+              0.609723,
+              0.609723,
+              0.609723,
+              0.609723,
+              0.609723,
+              0.609723,
+              0.609723,
+              0.609748
+            ],
+            "deviation": -0.041146,
+            "deviation_pct": 36.91,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.673585,
+            "values": [
+              0.67435,
+              0.673325,
+              0.672933,
+              0.673416,
+              0.673053,
+              0.671884,
+              0.671747,
+              0.677969
+            ],
+            "deviation": 0.022713,
+            "deviation_pct": 20.38,
+            "artifact": true
+          }
+        },
+        "P0:salience_network": {
+          "interior_mean": 0.825527,
+          "interior_std": 0.028237,
+          "interior_range": 0.539519,
+          "first_edge": {
+            "mean": 0.41531,
+            "values": [
+              0.415378,
+              0.415378,
+              0.415378,
+              0.415378,
+              0.415378,
+              0.415378,
+              0.415878,
+              0.414332
+            ],
+            "deviation": -0.410217,
+            "deviation_pct": 76.03,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.853061,
+            "values": [
+              0.845603,
+              0.850078,
+              0.853178,
+              0.854418,
+              0.8513,
+              0.850496,
+              0.862774,
+              0.856639
+            ],
+            "deviation": 0.027534,
+            "deviation_pct": 5.1,
+            "artifact": true
+          }
+        },
+        "P1:affective_evaluation": {
+          "interior_mean": 0.387968,
+          "interior_std": 0.0674,
+          "interior_range": 0.38245,
+          "first_edge": {
+            "mean": 0.4191,
+            "values": [
+              0.407802,
+              0.407802,
+              0.407802,
+              0.407802,
+              0.407802,
+              0.407802,
+              0.407882,
+              0.498108
+            ],
+            "deviation": 0.031132,
+            "deviation_pct": 8.14,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.44632,
+            "values": [
+              0.376731,
+              0.411571,
+              0.472345,
+              0.410336,
+              0.465362,
+              0.434653,
+              0.451225,
+              0.548339
+            ],
+            "deviation": 0.058353,
+            "deviation_pct": 15.26,
+            "artifact": true
+          }
+        },
+        "P2:sensory_load": {
+          "interior_mean": 0.841977,
+          "interior_std": 0.0422,
+          "interior_range": 0.321468,
+          "first_edge": {
+            "mean": 0.84175,
+            "values": [
+              0.841754,
+              0.841754,
+              0.841754,
+              0.841754,
+              0.841754,
+              0.841754,
+              0.841754,
+              0.841719
+            ],
+            "deviation": -0.000227,
+            "deviation_pct": 0.07,
+            "artifact": false
+          },
+          "last_edge": {
+            "mean": 0.798251,
+            "values": [
+              0.820001,
+              0.821452,
+              0.820321,
+              0.812053,
+              0.824232,
+              0.824359,
+              0.800187,
+              0.663401
+            ],
+            "deviation": -0.043726,
+            "deviation_pct": 13.6,
+            "artifact": true
+          }
+        },
+        "F0:valence_pred": {
+          "interior_mean": 0.511135,
+          "interior_std": 0.035221,
+          "interior_range": 0.224056,
+          "first_edge": {
+            "mean": 0.562477,
+            "values": [
+              0.556058,
+              0.556058,
+              0.556058,
+              0.556058,
+              0.556058,
+              0.556058,
+              0.556113,
+              0.607359
+            ],
+            "deviation": 0.051343,
+            "deviation_pct": 22.92,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.534529,
+            "values": [
+              0.521429,
+              0.523876,
+              0.528089,
+              0.52303,
+              0.52168,
+              0.530208,
+              0.563961,
+              0.563961
+            ],
+            "deviation": 0.023394,
+            "deviation_pct": 10.44,
+            "artifact": true
+          }
+        },
+        "F1:processing_pred": {
+          "interior_mean": 0.646783,
+          "interior_std": 0.023411,
+          "interior_range": 0.131518,
+          "first_edge": {
+            "mean": 0.630059,
+            "values": [
+              0.631415,
+              0.631415,
+              0.631415,
+              0.631415,
+              0.631415,
+              0.631415,
+              0.631409,
+              0.620571
+            ],
+            "deviation": -0.016725,
+            "deviation_pct": 12.72,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.625561,
+            "values": [
+              0.626001,
+              0.627619,
+              0.628078,
+              0.628125,
+              0.629454,
+              0.629808,
+              0.622237,
+              0.613162
+            ],
+            "deviation": -0.021223,
+            "deviation_pct": 16.14,
+            "artifact": true
+          }
+        },
+        "F2:aesthetic_pred": {
+          "interior_mean": 0.650382,
+          "interior_std": 0.014507,
+          "interior_range": 0.090269,
+          "first_edge": {
+            "mean": 0.646769,
+            "values": [
+              0.646768,
+              0.646768,
+              0.646768,
+              0.646768,
+              0.646768,
+              0.646768,
+              0.646768,
+              0.646781
+            ],
+            "deviation": -0.003613,
+            "deviation_pct": 4.0,
+            "artifact": false
+          },
+          "last_edge": {
+            "mean": 0.664676,
+            "values": [
+              0.664986,
+              0.664094,
+              0.663676,
+              0.664063,
+              0.663508,
+              0.662639,
+              0.66332,
+              0.671121
+            ],
+            "deviation": 0.014294,
+            "deviation_pct": 15.83,
+            "artifact": true
+          }
+        }
+      },
+      "artifacts_found": 12,
+      "r3_pleasantness_edge": {
+        "interior_mean": 0.591823,
+        "first_edge_mean": 0.600011,
+        "last_edge_mean": 0.694864,
+        "first_deviation": 0.008188,
+        "last_deviation": 0.103041
+      }
+    },
+    "yang": {
+      "n_frames": 5168,
+      "dimensions": {
+        "E0:salience_activation": {
+          "interior_mean": 0.585079,
+          "interior_std": 0.106509,
+          "interior_range": 0.55332,
+          "first_edge": {
+            "mean": 0.521366,
+            "values": [
+              0.554439,
+              0.554439,
+              0.554439,
+              0.55443,
+              0.55398,
+              0.55326,
+              0.554467,
+              0.29147
+            ],
+            "deviation": -0.063714,
+            "deviation_pct": 11.51,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.667173,
+            "values": [
+              0.484173,
+              0.705906,
+              0.662067,
+              0.628265,
+              0.611989,
+              0.761895,
+              0.741545,
+              0.741545
+            ],
+            "deviation": 0.082094,
+            "deviation_pct": 14.84,
+            "artifact": true
+          }
+        },
+        "E1:sensory_evidence": {
+          "interior_mean": 0.576362,
+          "interior_std": 0.197825,
+          "interior_range": 0.637305,
+          "first_edge": {
+            "mean": 0.173951,
+            "values": [
+              0.173759,
+              0.173759,
+              0.173759,
+              0.173749,
+              0.173054,
+              0.171879,
+              0.174479,
+              0.177169
+            ],
+            "deviation": -0.402411,
+            "deviation_pct": 63.14,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.764698,
+            "values": [
+              0.773144,
+              0.773382,
+              0.786692,
+              0.781737,
+              0.778867,
+              0.784513,
+              0.719624,
+              0.719624
+            ],
+            "deviation": 0.188336,
+            "deviation_pct": 29.55,
+            "artifact": true
+          }
+        },
+        "E2:consonance_valence": {
+          "interior_mean": 0.513767,
+          "interior_std": 0.056188,
+          "interior_range": 0.316036,
+          "first_edge": {
+            "mean": 0.621424,
+            "values": [
+              0.618537,
+              0.618537,
+              0.618537,
+              0.627609,
+              0.625744,
+              0.626214,
+              0.61655,
+              0.619667
+            ],
+            "deviation": 0.107657,
+            "deviation_pct": 34.06,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.479294,
+            "values": [
+              0.439255,
+              0.452316,
+              0.406255,
+              0.400788,
+              0.45205,
+              0.532582,
+              0.575554,
+              0.575554
+            ],
+            "deviation": -0.034473,
+            "deviation_pct": 10.91,
+            "artifact": true
+          }
+        },
+        "M0:salience_response": {
+          "interior_mean": 0.631771,
+          "interior_std": 0.021977,
+          "interior_range": 0.103024,
+          "first_edge": {
+            "mean": 0.595852,
+            "values": [
+              0.599854,
+              0.599854,
+              0.599854,
+              0.599852,
+              0.599748,
+              0.599577,
+              0.599909,
+              0.568171
+            ],
+            "deviation": -0.035919,
+            "deviation_pct": 34.86,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.654359,
+            "values": [
+              0.634029,
+              0.659368,
+              0.65533,
+              0.651165,
+              0.649118,
+              0.66637,
+              0.659747,
+              0.659747
+            ],
+            "deviation": 0.022588,
+            "deviation_pct": 21.93,
+            "artifact": true
+          }
+        },
+        "M1:rt_valence_judgment": {
+          "interior_mean": 0.641309,
+          "interior_std": 0.039484,
+          "interior_range": 0.133803,
+          "first_edge": {
+            "mean": 0.555426,
+            "values": [
+              0.553108,
+              0.554256,
+              0.555659,
+              0.556803,
+              0.556319,
+              0.555737,
+              0.55529,
+              0.556234
+            ],
+            "deviation": -0.085883,
+            "deviation_pct": 64.19,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.681215,
+            "values": [
+              0.68405,
+              0.684679,
+              0.68494,
+              0.684829,
+              0.68065,
+              0.682069,
+              0.680335,
+              0.668167
+            ],
+            "deviation": 0.039906,
+            "deviation_pct": 29.82,
+            "artifact": true
+          }
+        },
+        "M2:aesthetic_appreciation": {
+          "interior_mean": 0.662832,
+          "interior_std": 0.031925,
+          "interior_range": 0.131688,
+          "first_edge": {
+            "mean": 0.726399,
+            "values": [
+              0.727328,
+              0.726793,
+              0.726158,
+              0.725837,
+              0.726074,
+              0.72629,
+              0.726521,
+              0.726193
+            ],
+            "deviation": 0.063567,
+            "deviation_pct": 48.27,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.631286,
+            "values": [
+              0.631177,
+              0.631521,
+              0.63228,
+              0.630151,
+              0.627214,
+              0.626718,
+              0.631647,
+              0.639578
+            ],
+            "deviation": -0.031547,
+            "deviation_pct": 23.96,
+            "artifact": true
+          }
+        },
+        "P0:salience_network": {
+          "interior_mean": 0.853111,
+          "interior_std": 0.019952,
+          "interior_range": 0.124965,
+          "first_edge": {
+            "mean": 0.819686,
+            "values": [
+              0.808734,
+              0.808734,
+              0.808734,
+              0.812454,
+              0.81544,
+              0.83707,
+              0.841252,
+              0.825075
+            ],
+            "deviation": -0.033424,
+            "deviation_pct": 26.75,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.879459,
+            "values": [
+              0.871697,
+              0.877446,
+              0.877875,
+              0.87666,
+              0.876476,
+              0.883645,
+              0.887676,
+              0.8842
+            ],
+            "deviation": 0.026348,
+            "deviation_pct": 21.08,
+            "artifact": true
+          }
+        },
+        "P1:affective_evaluation": {
+          "interior_mean": 0.407748,
+          "interior_std": 0.074383,
+          "interior_range": 0.396722,
+          "first_edge": {
+            "mean": 0.545241,
+            "values": [
+              0.550797,
+              0.550797,
+              0.550797,
+              0.553952,
+              0.553496,
+              0.553962,
+              0.540083,
+              0.508048
+            ],
+            "deviation": 0.137493,
+            "deviation_pct": 34.66,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.365588,
+            "values": [
+              0.429605,
+              0.29531,
+              0.32268,
+              0.319812,
+              0.294357,
+              0.441619,
+              0.493379,
+              0.327939
+            ],
+            "deviation": -0.04216,
+            "deviation_pct": 10.63,
+            "artifact": true
+          }
+        },
+        "P2:sensory_load": {
+          "interior_mean": 0.836979,
+          "interior_std": 0.069398,
+          "interior_range": 0.283835,
+          "first_edge": {
+            "mean": 0.672128,
+            "values": [
+              0.664846,
+              0.668716,
+              0.673422,
+              0.675663,
+              0.673998,
+              0.67314,
+              0.672076,
+              0.675168
+            ],
+            "deviation": -0.164851,
+            "deviation_pct": 58.08,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.900988,
+            "values": [
+              0.91128,
+              0.922279,
+              0.915939,
+              0.929889,
+              0.924794,
+              0.90548,
+              0.875558,
+              0.822689
+            ],
+            "deviation": 0.064009,
+            "deviation_pct": 22.55,
+            "artifact": true
+          }
+        },
+        "F0:valence_pred": {
+          "interior_mean": 0.544006,
+          "interior_std": 0.050361,
+          "interior_range": 0.23294,
+          "first_edge": {
+            "mean": 0.656068,
+            "values": [
+              0.655247,
+              0.655247,
+              0.655247,
+              0.657828,
+              0.657298,
+              0.657432,
+              0.65468,
+              0.655569
+            ],
+            "deviation": 0.112063,
+            "deviation_pct": 48.11,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.498484,
+            "values": [
+              0.483719,
+              0.488706,
+              0.470979,
+              0.468849,
+              0.488605,
+              0.51865,
+              0.534181,
+              0.534181
+            ],
+            "deviation": -0.045522,
+            "deviation_pct": 19.54,
+            "artifact": true
+          }
+        },
+        "F1:processing_pred": {
+          "interior_mean": 0.631131,
+          "interior_std": 0.038015,
+          "interior_range": 0.127127,
+          "first_edge": {
+            "mean": 0.549428,
+            "values": [
+              0.547779,
+              0.548642,
+              0.549698,
+              0.550202,
+              0.549757,
+              0.549448,
+              0.549466,
+              0.550429
+            ],
+            "deviation": -0.081703,
+            "deviation_pct": 64.27,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.669014,
+            "values": [
+              0.671287,
+              0.671908,
+              0.672818,
+              0.672733,
+              0.669404,
+              0.67015,
+              0.666556,
+              0.657257
+            ],
+            "deviation": 0.037883,
+            "deviation_pct": 29.8,
+            "artifact": true
+          }
+        },
+        "F2:aesthetic_pred": {
+          "interior_mean": 0.65726,
+          "interior_std": 0.022524,
+          "interior_range": 0.104549,
+          "first_edge": {
+            "mean": 0.700623,
+            "values": [
+              0.70187,
+              0.701206,
+              0.700394,
+              0.700004,
+              0.700294,
+              0.700453,
+              0.700646,
+              0.70012
+            ],
+            "deviation": 0.043364,
+            "deviation_pct": 41.48,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.638632,
+            "values": [
+              0.639381,
+              0.638898,
+              0.639215,
+              0.636589,
+              0.633558,
+              0.633715,
+              0.639426,
+              0.648276
+            ],
+            "deviation": -0.018628,
+            "deviation_pct": 17.82,
+            "artifact": true
+          }
+        }
+      },
+      "artifacts_found": 12,
+      "r3_pleasantness_edge": {
+        "interior_mean": 0.642589,
+        "first_edge_mean": 0.974139,
+        "last_edge_mean": 0.507676,
+        "first_deviation": 0.33155,
+        "last_deviation": -0.134913
+      }
+    },
+    "midi/csg/01_major_triad": {
+      "n_frames": 862,
+      "dimensions": {
+        "E0:salience_activation": {
+          "interior_mean": 0.390659,
+          "interior_std": 0.089569,
+          "interior_range": 0.442919,
+          "first_edge": {
+            "mean": 0.76534,
+            "values": [
+              0.792614,
+              0.792614,
+              0.792614,
+              0.814153,
+              0.816014,
+              0.764528,
+              0.634435,
+              0.715747
+            ],
+            "deviation": 0.374681,
+            "deviation_pct": 84.59,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.539564,
+            "values": [
+              0.464879,
+              0.443087,
+              0.473294,
+              0.466522,
+              0.518025,
+              0.683827,
+              0.633444,
+              0.633434
+            ],
+            "deviation": 0.148905,
+            "deviation_pct": 33.62,
+            "artifact": true
+          }
+        },
+        "E1:sensory_evidence": {
+          "interior_mean": 0.392004,
+          "interior_std": 0.195181,
+          "interior_range": 0.625565,
+          "first_edge": {
+            "mean": 0.722815,
+            "values": [
+              0.740049,
+              0.740049,
+              0.740049,
+              0.72599,
+              0.715458,
+              0.708532,
+              0.705696,
+              0.706699
+            ],
+            "deviation": 0.330811,
+            "deviation_pct": 52.88,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.398745,
+            "values": [
+              0.457202,
+              0.457103,
+              0.457563,
+              0.457266,
+              0.442481,
+              0.370995,
+              0.273677,
+              0.273677
+            ],
+            "deviation": 0.006741,
+            "deviation_pct": 1.08,
+            "artifact": false
+          }
+        },
+        "E2:consonance_valence": {
+          "interior_mean": 0.559551,
+          "interior_std": 0.054622,
+          "interior_range": 0.20356,
+          "first_edge": {
+            "mean": 0.345071,
+            "values": [
+              0.293685,
+              0.293685,
+              0.293685,
+              0.283334,
+              0.341843,
+              0.382349,
+              0.418765,
+              0.453218
+            ],
+            "deviation": -0.214481,
+            "deviation_pct": 105.36,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.598882,
+            "values": [
+              0.537658,
+              0.535269,
+              0.534508,
+              0.537252,
+              0.575686,
+              0.690227,
+              0.690227,
+              0.690227
+            ],
+            "deviation": 0.03933,
+            "deviation_pct": 19.32,
+            "artifact": true
+          }
+        },
+        "M0:salience_response": {
+          "interior_mean": 0.595664,
+          "interior_std": 0.023774,
+          "interior_range": 0.090183,
+          "first_edge": {
+            "mean": 0.662591,
+            "values": [
+              0.666818,
+              0.666818,
+              0.666818,
+              0.668272,
+              0.667778,
+              0.661577,
+              0.64667,
+              0.655971
+            ],
+            "deviation": 0.066926,
+            "deviation_pct": 74.21,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.614161,
+            "values": [
+              0.609478,
+              0.606875,
+              0.610505,
+              0.609678,
+              0.614739,
+              0.629187,
+              0.616411,
+              0.61641
+            ],
+            "deviation": 0.018496,
+            "deviation_pct": 20.51,
+            "artifact": true
+          }
+        },
+        "M1:rt_valence_judgment": {
+          "interior_mean": 0.606759,
+          "interior_std": 0.039207,
+          "interior_range": 0.130381,
+          "first_edge": {
+            "mean": 0.654867,
+            "values": [
+              0.673001,
+              0.68054,
+              0.672789,
+              0.66036,
+              0.647321,
+              0.639026,
+              0.633932,
+              0.631969
+            ],
+            "deviation": 0.048108,
+            "deviation_pct": 36.9,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.632442,
+            "values": [
+              0.646371,
+              0.646184,
+              0.646281,
+              0.646403,
+              0.645249,
+              0.636076,
+              0.609169,
+              0.583803
+            ],
+            "deviation": 0.025683,
+            "deviation_pct": 19.7,
+            "artifact": true
+          }
+        },
+        "M2:aesthetic_appreciation": {
+          "interior_mean": 0.680081,
+          "interior_std": 0.042335,
+          "interior_range": 0.126895,
+          "first_edge": {
+            "mean": 0.607069,
+            "values": [
+              0.626286,
+              0.619157,
+              0.614439,
+              0.607904,
+              0.601394,
+              0.597467,
+              0.595204,
+              0.594702
+            ],
+            "deviation": -0.073012,
+            "deviation_pct": 57.54,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.625677,
+            "values": [
+              0.611827,
+              0.612094,
+              0.611994,
+              0.61178,
+              0.611988,
+              0.61826,
+              0.646816,
+              0.68066
+            ],
+            "deviation": -0.054404,
+            "deviation_pct": 42.87,
+            "artifact": true
+          }
+        },
+        "P0:salience_network": {
+          "interior_mean": 0.790114,
+          "interior_std": 0.052741,
+          "interior_range": 0.236091,
+          "first_edge": {
+            "mean": 0.891552,
+            "values": [
+              0.897696,
+              0.897696,
+              0.897696,
+              0.895448,
+              0.891646,
+              0.886948,
+              0.882549,
+              0.882736
+            ],
+            "deviation": 0.101438,
+            "deviation_pct": 42.97,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.715279,
+            "values": [
+              0.725286,
+              0.725452,
+              0.726119,
+              0.724995,
+              0.728602,
+              0.752597,
+              0.704674,
+              0.634503
+            ],
+            "deviation": -0.074836,
+            "deviation_pct": 31.7,
+            "artifact": true
+          }
+        },
+        "P1:affective_evaluation": {
+          "interior_mean": 0.454344,
+          "interior_std": 0.070587,
+          "interior_range": 0.347364,
+          "first_edge": {
+            "mean": 0.247614,
+            "values": [
+              0.279222,
+              0.279222,
+              0.279222,
+              0.25541,
+              0.267559,
+              0.276027,
+              0.164028,
+              0.180222
+            ],
+            "deviation": -0.20673,
+            "deviation_pct": 59.51,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.451185,
+            "values": [
+              0.411289,
+              0.410324,
+              0.409967,
+              0.411203,
+              0.430662,
+              0.493319,
+              0.520514,
+              0.522199
+            ],
+            "deviation": -0.003159,
+            "deviation_pct": 0.91,
+            "artifact": false
+          }
+        },
+        "P2:sensory_load": {
+          "interior_mean": 0.733077,
+          "interior_std": 0.096359,
+          "interior_range": 0.385306,
+          "first_edge": {
+            "mean": 0.853732,
+            "values": [
+              0.890199,
+              0.90221,
+              0.889846,
+              0.868368,
+              0.84164,
+              0.82233,
+              0.809982,
+              0.805283
+            ],
+            "deviation": 0.120656,
+            "deviation_pct": 31.31,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.768916,
+            "values": [
+              0.798589,
+              0.798057,
+              0.798229,
+              0.798625,
+              0.798274,
+              0.786905,
+              0.728506,
+              0.644144
+            ],
+            "deviation": 0.035839,
+            "deviation_pct": 9.3,
+            "artifact": true
+          }
+        },
+        "F0:valence_pred": {
+          "interior_mean": 0.585308,
+          "interior_std": 0.048357,
+          "interior_range": 0.163182,
+          "first_edge": {
+            "mean": 0.441373,
+            "values": [
+              0.420798,
+              0.420798,
+              0.420798,
+              0.41653,
+              0.440411,
+              0.456589,
+              0.47088,
+              0.484178
+            ],
+            "deviation": -0.143935,
+            "deviation_pct": 88.21,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.589697,
+            "values": [
+              0.569884,
+              0.569077,
+              0.568819,
+              0.569747,
+              0.582584,
+              0.619156,
+              0.619156,
+              0.619156
+            ],
+            "deviation": 0.00439,
+            "deviation_pct": 2.69,
+            "artifact": false
+          }
+        },
+        "F1:processing_pred": {
+          "interior_mean": 0.597344,
+          "interior_std": 0.037466,
+          "interior_range": 0.124567,
+          "first_edge": {
+            "mean": 0.6481,
+            "values": [
+              0.663227,
+              0.668977,
+              0.663067,
+              0.652683,
+              0.641853,
+              0.634829,
+              0.63074,
+              0.629423
+            ],
+            "deviation": 0.050756,
+            "deviation_pct": 40.75,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.617186,
+            "values": [
+              0.630214,
+              0.630066,
+              0.630159,
+              0.630241,
+              0.628756,
+              0.618801,
+              0.594223,
+              0.575026
+            ],
+            "deviation": 0.019841,
+            "deviation_pct": 15.93,
+            "artifact": true
+          }
+        },
+        "F2:aesthetic_pred": {
+          "interior_mean": 0.67181,
+          "interior_std": 0.025941,
+          "interior_range": 0.098597,
+          "first_edge": {
+            "mean": 0.61863,
+            "values": [
+              0.64324,
+              0.635251,
+              0.629555,
+              0.620879,
+              0.611591,
+              0.605634,
+              0.602082,
+              0.600813
+            ],
+            "deviation": -0.053179,
+            "deviation_pct": 53.94,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.654978,
+            "values": [
+              0.647584,
+              0.647727,
+              0.647675,
+              0.647561,
+              0.647671,
+              0.651008,
+              0.666224,
+              0.684377
+            ],
+            "deviation": -0.016831,
+            "deviation_pct": 17.07,
+            "artifact": true
+          }
+        }
+      },
+      "artifacts_found": 12,
+      "r3_pleasantness_edge": {
+        "interior_mean": 0.757136,
+        "first_edge_mean": 0.361394,
+        "last_edge_mean": 0.657342,
+        "first_deviation": -0.395742,
+        "last_deviation": -0.099794
+      }
+    },
+    "midi/csg/02_m2_dyad": {
+      "n_frames": 862,
+      "dimensions": {
+        "E0:salience_activation": {
+          "interior_mean": 0.491902,
+          "interior_std": 0.13162,
+          "interior_range": 0.544733,
+          "first_edge": {
+            "mean": 0.736187,
+            "values": [
+              0.771534,
+              0.771534,
+              0.771534,
+              0.788132,
+              0.784827,
+              0.66585,
+              0.655009,
+              0.681075
+            ],
+            "deviation": 0.244285,
+            "deviation_pct": 44.84,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.540834,
+            "values": [
+              0.486683,
+              0.437879,
+              0.480083,
+              0.447876,
+              0.524949,
+              0.683186,
+              0.633012,
+              0.633
+            ],
+            "deviation": 0.048932,
+            "deviation_pct": 8.98,
+            "artifact": true
+          }
+        },
+        "E1:sensory_evidence": {
+          "interior_mean": 0.37043,
+          "interior_std": 0.193249,
+          "interior_range": 0.609487,
+          "first_edge": {
+            "mean": 0.737219,
+            "values": [
+              0.758823,
+              0.758823,
+              0.758823,
+              0.746078,
+              0.730687,
+              0.720583,
+              0.713429,
+              0.710509
+            ],
+            "deviation": 0.36679,
+            "deviation_pct": 60.18,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.398158,
+            "values": [
+              0.457627,
+              0.457112,
+              0.456941,
+              0.45639,
+              0.441442,
+              0.36967,
+              0.273043,
+              0.273043
+            ],
+            "deviation": 0.027729,
+            "deviation_pct": 4.55,
+            "artifact": false
+          }
+        },
+        "E2:consonance_valence": {
+          "interior_mean": 0.561366,
+          "interior_std": 0.061376,
+          "interior_range": 0.260128,
+          "first_edge": {
+            "mean": 0.339827,
+            "values": [
+              0.315606,
+              0.315606,
+              0.315606,
+              0.330717,
+              0.278491,
+              0.366081,
+              0.37484,
+              0.421674
+            ],
+            "deviation": -0.221539,
+            "deviation_pct": 85.17,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.598728,
+            "values": [
+              0.536908,
+              0.535999,
+              0.53529,
+              0.536753,
+              0.575377,
+              0.689832,
+              0.689832,
+              0.689832
+            ],
+            "deviation": 0.037361,
+            "deviation_pct": 14.36,
+            "artifact": true
+          }
+        },
+        "M0:salience_response": {
+          "interior_mean": 0.60616,
+          "interior_std": 0.026442,
+          "interior_range": 0.101768,
+          "first_edge": {
+            "mean": 0.660294,
+            "values": [
+              0.665727,
+              0.665727,
+              0.665727,
+              0.666722,
+              0.665328,
+              0.651266,
+              0.649545,
+              0.652308
+            ],
+            "deviation": 0.054134,
+            "deviation_pct": 53.19,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.614269,
+            "values": [
+              0.612101,
+              0.606254,
+              0.611268,
+              0.607395,
+              0.615485,
+              0.62902,
+              0.616316,
+              0.616314
+            ],
+            "deviation": 0.008109,
+            "deviation_pct": 7.97,
+            "artifact": true
+          }
+        },
+        "M1:rt_valence_judgment": {
+          "interior_mean": 0.601816,
+          "interior_std": 0.038927,
+          "interior_range": 0.128827,
+          "first_edge": {
+            "mean": 0.662964,
+            "values": [
+              0.664872,
+              0.673858,
+              0.683284,
+              0.673898,
+              0.665474,
+              0.652925,
+              0.647168,
+              0.642236
+            ],
+            "deviation": 0.061149,
+            "deviation_pct": 47.47,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.632282,
+            "values": [
+              0.646456,
+              0.646262,
+              0.646185,
+              0.646155,
+              0.644985,
+              0.635769,
+              0.608804,
+              0.583641
+            ],
+            "deviation": 0.030466,
+            "deviation_pct": 23.65,
+            "artifact": true
+          }
+        },
+        "M2:aesthetic_appreciation": {
+          "interior_mean": 0.680038,
+          "interior_std": 0.046339,
+          "interior_range": 0.136406,
+          "first_edge": {
+            "mean": 0.612068,
+            "values": [
+              0.633443,
+              0.626441,
+              0.619426,
+              0.613676,
+              0.608456,
+              0.601169,
+              0.598167,
+              0.595764
+            ],
+            "deviation": -0.06797,
+            "deviation_pct": 49.83,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.62576,
+            "values": [
+              0.61165,
+              0.611887,
+              0.611983,
+              0.611966,
+              0.612179,
+              0.618482,
+              0.647179,
+              0.680753
+            ],
+            "deviation": -0.054278,
+            "deviation_pct": 39.79,
+            "artifact": true
+          }
+        },
+        "P0:salience_network": {
+          "interior_mean": 0.790942,
+          "interior_std": 0.0519,
+          "interior_range": 0.30939,
+          "first_edge": {
+            "mean": 0.893178,
+            "values": [
+              0.899827,
+              0.899827,
+              0.899827,
+              0.897515,
+              0.892933,
+              0.887443,
+              0.884772,
+              0.883281
+            ],
+            "deviation": 0.102235,
+            "deviation_pct": 33.04,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.717901,
+            "values": [
+              0.72533,
+              0.724177,
+              0.729034,
+              0.728849,
+              0.731534,
+              0.755698,
+              0.709219,
+              0.639364
+            ],
+            "deviation": -0.073042,
+            "deviation_pct": 23.61,
+            "artifact": true
+          }
+        },
+        "P1:affective_evaluation": {
+          "interior_mean": 0.454671,
+          "interior_std": 0.091341,
+          "interior_range": 0.43169,
+          "first_edge": {
+            "mean": 0.193999,
+            "values": [
+              0.183977,
+              0.183977,
+              0.183977,
+              0.177253,
+              0.133892,
+              0.164836,
+              0.160228,
+              0.363851
+            ],
+            "deviation": -0.260672,
+            "deviation_pct": 60.38,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.451852,
+            "values": [
+              0.410897,
+              0.410641,
+              0.410456,
+              0.411296,
+              0.430769,
+              0.493599,
+              0.522203,
+              0.524952
+            ],
+            "deviation": -0.002819,
+            "deviation_pct": 0.65,
+            "artifact": false
+          }
+        },
+        "P2:sensory_load": {
+          "interior_mean": 0.722694,
+          "interior_std": 0.096418,
+          "interior_range": 0.384136,
+          "first_edge": {
+            "mean": 0.883989,
+            "values": [
+              0.887618,
+              0.901935,
+              0.915366,
+              0.902493,
+              0.889901,
+              0.868199,
+              0.857897,
+              0.848505
+            ],
+            "deviation": 0.161295,
+            "deviation_pct": 41.99,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.771622,
+            "values": [
+              0.801504,
+              0.801057,
+              0.800872,
+              0.800854,
+              0.800536,
+              0.789205,
+              0.731009,
+              0.647935
+            ],
+            "deviation": 0.048928,
+            "deviation_pct": 12.74,
+            "artifact": true
+          }
+        },
+        "F0:valence_pred": {
+          "interior_mean": 0.585276,
+          "interior_std": 0.054057,
+          "interior_range": 0.194257,
+          "first_edge": {
+            "mean": 0.428135,
+            "values": [
+              0.41835,
+              0.41835,
+              0.41835,
+              0.424564,
+              0.402923,
+              0.438949,
+              0.442478,
+              0.461114
+            ],
+            "deviation": -0.157141,
+            "deviation_pct": 80.89,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.589693,
+            "values": [
+              0.569675,
+              0.569368,
+              0.569129,
+              0.569623,
+              0.582525,
+              0.619075,
+              0.619075,
+              0.619075
+            ],
+            "deviation": 0.004417,
+            "deviation_pct": 2.27,
+            "artifact": false
+          }
+        },
+        "F1:processing_pred": {
+          "interior_mean": 0.592704,
+          "interior_std": 0.037146,
+          "interior_range": 0.122628,
+          "first_edge": {
+            "mean": 0.654541,
+            "values": [
+              0.6574,
+              0.664226,
+              0.671416,
+              0.66337,
+              0.655904,
+              0.645686,
+              0.641028,
+              0.637299
+            ],
+            "deviation": 0.061837,
+            "deviation_pct": 50.43,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.61704,
+            "values": [
+              0.630297,
+              0.630128,
+              0.630062,
+              0.630017,
+              0.628513,
+              0.618512,
+              0.593916,
+              0.574874
+            ],
+            "deviation": 0.024336,
+            "deviation_pct": 19.85,
+            "artifact": true
+          }
+        },
+        "F2:aesthetic_pred": {
+          "interior_mean": 0.67239,
+          "interior_std": 0.028543,
+          "interior_range": 0.102348,
+          "first_edge": {
+            "mean": 0.626922,
+            "values": [
+              0.650433,
+              0.643838,
+              0.635963,
+              0.629262,
+              0.623365,
+              0.614463,
+              0.610658,
+              0.607395
+            ],
+            "deviation": -0.045468,
+            "deviation_pct": 44.43,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.65506,
+            "values": [
+              0.647529,
+              0.647655,
+              0.647707,
+              0.6477,
+              0.647813,
+              0.651166,
+              0.666453,
+              0.684454
+            ],
+            "deviation": -0.017331,
+            "deviation_pct": 16.93,
+            "artifact": true
+          }
+        }
+      },
+      "artifacts_found": 12,
+      "r3_pleasantness_edge": {
+        "interior_mean": 0.763334,
+        "first_edge_mean": 0.427023,
+        "last_edge_mean": 0.657984,
+        "first_deviation": -0.336311,
+        "last_deviation": -0.10535
+      }
+    },
+    "midi/csg/03_cluster": {
+      "n_frames": 862,
+      "dimensions": {
+        "E0:salience_activation": {
+          "interior_mean": 0.538267,
+          "interior_std": 0.11185,
+          "interior_range": 0.558319,
+          "first_edge": {
+            "mean": 0.721871,
+            "values": [
+              0.78745,
+              0.78745,
+              0.78745,
+              0.536053,
+              0.80916,
+              0.700029,
+              0.665958,
+              0.701421
+            ],
+            "deviation": 0.183604,
+            "deviation_pct": 32.89,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.538613,
+            "values": [
+              0.459516,
+              0.441437,
+              0.477448,
+              0.463963,
+              0.517323,
+              0.683642,
+              0.632788,
+              0.632782
+            ],
+            "deviation": 0.000345,
+            "deviation_pct": 0.06,
+            "artifact": false
+          }
+        },
+        "E1:sensory_evidence": {
+          "interior_mean": 0.382382,
+          "interior_std": 0.193663,
+          "interior_range": 0.628305,
+          "first_edge": {
+            "mean": 0.738271,
+            "values": [
+              0.752751,
+              0.752751,
+              0.752751,
+              0.742608,
+              0.730614,
+              0.727535,
+              0.724053,
+              0.723104
+            ],
+            "deviation": 0.355889,
+            "deviation_pct": 56.64,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.39806,
+            "values": [
+              0.457123,
+              0.456719,
+              0.456733,
+              0.456335,
+              0.441927,
+              0.370588,
+              0.272528,
+              0.272528
+            ],
+            "deviation": 0.015678,
+            "deviation_pct": 2.5,
+            "artifact": false
+          }
+        },
+        "E2:consonance_valence": {
+          "interior_mean": 0.559873,
+          "interior_std": 0.062998,
+          "interior_range": 0.334672,
+          "first_edge": {
+            "mean": 0.396631,
+            "values": [
+              0.404931,
+              0.404931,
+              0.404931,
+              0.355789,
+              0.329947,
+              0.442423,
+              0.395073,
+              0.435021
+            ],
+            "deviation": -0.163242,
+            "deviation_pct": 48.78,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.605979,
+            "values": [
+              0.545355,
+              0.544067,
+              0.543364,
+              0.54495,
+              0.582032,
+              0.696021,
+              0.696021,
+              0.696021
+            ],
+            "deviation": 0.046106,
+            "deviation_pct": 13.78,
+            "artifact": true
+          }
+        },
+        "M0:salience_response": {
+          "interior_mean": 0.612601,
+          "interior_std": 0.022759,
+          "interior_range": 0.103356,
+          "first_edge": {
+            "mean": 0.658725,
+            "values": [
+              0.667091,
+              0.667091,
+              0.667091,
+              0.637913,
+              0.668026,
+              0.655608,
+              0.651515,
+              0.655465
+            ],
+            "deviation": 0.046124,
+            "deviation_pct": 44.63,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.613997,
+            "values": [
+              0.608833,
+              0.606649,
+              0.610938,
+              0.609306,
+              0.614615,
+              0.629136,
+              0.616251,
+              0.61625
+            ],
+            "deviation": 0.001396,
+            "deviation_pct": 1.35,
+            "artifact": false
+          }
+        },
+        "M1:rt_valence_judgment": {
+          "interior_mean": 0.603537,
+          "interior_std": 0.038079,
+          "interior_range": 0.13109,
+          "first_edge": {
+            "mean": 0.665399,
+            "values": [
+              0.680871,
+              0.677129,
+              0.670974,
+              0.668513,
+              0.662329,
+              0.654498,
+              0.655705,
+              0.653175
+            ],
+            "deviation": 0.061862,
+            "deviation_pct": 47.19,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.632265,
+            "values": [
+              0.646341,
+              0.646152,
+              0.646126,
+              0.646144,
+              0.645035,
+              0.635986,
+              0.609012,
+              0.583326
+            ],
+            "deviation": 0.028728,
+            "deviation_pct": 21.91,
+            "artifact": true
+          }
+        },
+        "M2:aesthetic_appreciation": {
+          "interior_mean": 0.681442,
+          "interior_std": 0.04454,
+          "interior_range": 0.135025,
+          "first_edge": {
+            "mean": 0.610426,
+            "values": [
+              0.627155,
+              0.618617,
+              0.613773,
+              0.611637,
+              0.607118,
+              0.60167,
+              0.602517,
+              0.600924
+            ],
+            "deviation": -0.071016,
+            "deviation_pct": 52.59,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.62741,
+            "values": [
+              0.613446,
+              0.613685,
+              0.613726,
+              0.613657,
+              0.613834,
+              0.619921,
+              0.648424,
+              0.682591
+            ],
+            "deviation": -0.054032,
+            "deviation_pct": 40.02,
+            "artifact": true
+          }
+        },
+        "P0:salience_network": {
+          "interior_mean": 0.797134,
+          "interior_std": 0.058533,
+          "interior_range": 0.332424,
+          "first_edge": {
+            "mean": 0.897249,
+            "values": [
+              0.899602,
+              0.899602,
+              0.899602,
+              0.895647,
+              0.898105,
+              0.895217,
+              0.895265,
+              0.894952
+            ],
+            "deviation": 0.100115,
+            "deviation_pct": 30.12,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.711014,
+            "values": [
+              0.720969,
+              0.720445,
+              0.720831,
+              0.719758,
+              0.72471,
+              0.750389,
+              0.701729,
+              0.629283
+            ],
+            "deviation": -0.08612,
+            "deviation_pct": 25.91,
+            "artifact": true
+          }
+        },
+        "P1:affective_evaluation": {
+          "interior_mean": 0.45334,
+          "interior_std": 0.086964,
+          "interior_range": 0.452016,
+          "first_edge": {
+            "mean": 0.219616,
+            "values": [
+              0.213527,
+              0.213527,
+              0.213527,
+              0.181657,
+              0.157802,
+              0.209614,
+              0.183199,
+              0.384076
+            ],
+            "deviation": -0.233723,
+            "deviation_pct": 51.71,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.453959,
+            "values": [
+              0.414536,
+              0.414092,
+              0.413855,
+              0.414626,
+              0.43336,
+              0.495548,
+              0.5222,
+              0.523459
+            ],
+            "deviation": 0.00062,
+            "deviation_pct": 0.14,
+            "artifact": false
+          }
+        },
+        "P2:sensory_load": {
+          "interior_mean": 0.729687,
+          "interior_std": 0.096389,
+          "interior_range": 0.411519,
+          "first_edge": {
+            "mean": 0.877669,
+            "values": [
+              0.903313,
+              0.897542,
+              0.88747,
+              0.884371,
+              0.873786,
+              0.858159,
+              0.861077,
+              0.855638
+            ],
+            "deviation": 0.147983,
+            "deviation_pct": 35.96,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.767795,
+            "values": [
+              0.79784,
+              0.797383,
+              0.797313,
+              0.797434,
+              0.797121,
+              0.786039,
+              0.727449,
+              0.641778
+            ],
+            "deviation": 0.038108,
+            "deviation_pct": 9.26,
+            "artifact": true
+          }
+        },
+        "F0:valence_pred": {
+          "interior_mean": 0.589173,
+          "interior_std": 0.051656,
+          "interior_range": 0.202131,
+          "first_edge": {
+            "mean": 0.463071,
+            "values": [
+              0.466436,
+              0.466436,
+              0.466436,
+              0.446992,
+              0.436593,
+              0.480975,
+              0.462571,
+              0.478125
+            ],
+            "deviation": -0.126102,
+            "deviation_pct": 62.39,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.595389,
+            "values": [
+              0.575966,
+              0.575536,
+              0.575301,
+              0.575831,
+              0.588092,
+              0.624128,
+              0.624128,
+              0.624128
+            ],
+            "deviation": 0.006215,
+            "deviation_pct": 3.07,
+            "artifact": false
+          }
+        },
+        "F1:processing_pred": {
+          "interior_mean": 0.594502,
+          "interior_std": 0.036538,
+          "interior_range": 0.125056,
+          "first_edge": {
+            "mean": 0.656354,
+            "values": [
+              0.66906,
+              0.666202,
+              0.661514,
+              0.659229,
+              0.653653,
+              0.647244,
+              0.64803,
+              0.645899
+            ],
+            "deviation": 0.061852,
+            "deviation_pct": 49.46,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.617024,
+            "values": [
+              0.630186,
+              0.630024,
+              0.630005,
+              0.630003,
+              0.628567,
+              0.618716,
+              0.594063,
+              0.574625
+            ],
+            "deviation": 0.022521,
+            "deviation_pct": 18.01,
+            "artifact": true
+          }
+        },
+        "F2:aesthetic_pred": {
+          "interior_mean": 0.672202,
+          "interior_std": 0.027743,
+          "interior_range": 0.101887,
+          "first_edge": {
+            "mean": 0.62391,
+            "values": [
+              0.639286,
+              0.631787,
+              0.627138,
+              0.625692,
+              0.621263,
+              0.615319,
+              0.616373,
+              0.61442
+            ],
+            "deviation": -0.048293,
+            "deviation_pct": 47.4,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.655249,
+            "values": [
+              0.647784,
+              0.647912,
+              0.647934,
+              0.647897,
+              0.647992,
+              0.651233,
+              0.666439,
+              0.684797
+            ],
+            "deviation": -0.016954,
+            "deviation_pct": 16.64,
+            "artifact": true
+          }
+        }
+      },
+      "artifacts_found": 12,
+      "r3_pleasantness_edge": {
+        "interior_mean": 0.759929,
+        "first_edge_mean": 0.402234,
+        "last_edge_mean": 0.658011,
+        "first_deviation": -0.357695,
+        "last_deviation": -0.101919
+      }
+    },
+    "midi/csg/04_V7_I_resolution": {
+      "n_frames": 1206,
+      "dimensions": {
+        "E0:salience_activation": {
+          "interior_mean": 0.468089,
+          "interior_std": 0.124137,
+          "interior_range": 0.545127,
+          "first_edge": {
+            "mean": 0.769244,
+            "values": [
+              0.776187,
+              0.776187,
+              0.776187,
+              0.792787,
+              0.809238,
+              0.821764,
+              0.615214,
+              0.786384
+            ],
+            "deviation": 0.301154,
+            "deviation_pct": 55.24,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.545182,
+            "values": [
+              0.47213,
+              0.462475,
+              0.459881,
+              0.561144,
+              0.496345,
+              0.586414,
+              0.661538,
+              0.66153
+            ],
+            "deviation": 0.077093,
+            "deviation_pct": 14.14,
+            "artifact": true
+          }
+        },
+        "E1:sensory_evidence": {
+          "interior_mean": 0.434354,
+          "interior_std": 0.199071,
+          "interior_range": 0.630309,
+          "first_edge": {
+            "mean": 0.744477,
+            "values": [
+              0.76049,
+              0.76049,
+              0.76049,
+              0.749366,
+              0.736345,
+              0.72663,
+              0.72905,
+              0.732956
+            ],
+            "deviation": 0.310123,
+            "deviation_pct": 49.2,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.417419,
+            "values": [
+              0.451532,
+              0.452431,
+              0.454799,
+              0.457148,
+              0.455736,
+              0.417489,
+              0.325109,
+              0.325109
+            ],
+            "deviation": -0.016935,
+            "deviation_pct": 2.69,
+            "artifact": false
+          }
+        },
+        "E2:consonance_valence": {
+          "interior_mean": 0.549683,
+          "interior_std": 0.050181,
+          "interior_range": 0.308749,
+          "first_edge": {
+            "mean": 0.397194,
+            "values": [
+              0.351655,
+              0.351655,
+              0.351655,
+              0.366385,
+              0.35574,
+              0.398521,
+              0.518842,
+              0.483094
+            ],
+            "deviation": -0.15249,
+            "deviation_pct": 49.39,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.596452,
+            "values": [
+              0.548595,
+              0.54387,
+              0.541855,
+              0.543368,
+              0.553542,
+              0.643147,
+              0.69862,
+              0.69862
+            ],
+            "deviation": 0.046769,
+            "deviation_pct": 15.15,
+            "artifact": true
+          }
+        },
+        "M0:salience_response": {
+          "interior_mean": 0.607924,
+          "interior_std": 0.025361,
+          "interior_range": 0.103021,
+          "first_edge": {
+            "mean": 0.664478,
+            "values": [
+              0.666356,
+              0.666356,
+              0.666356,
+              0.667458,
+              0.668416,
+              0.669158,
+              0.646075,
+              0.665653
+            ],
+            "deviation": 0.056555,
+            "deviation_pct": 54.9,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.616153,
+            "values": [
+              0.609935,
+              0.60885,
+              0.608711,
+              0.620867,
+              0.613111,
+              0.621041,
+              0.623356,
+              0.623355
+            ],
+            "deviation": 0.00823,
+            "deviation_pct": 7.99,
+            "artifact": true
+          }
+        },
+        "M1:rt_valence_judgment": {
+          "interior_mean": 0.614152,
+          "interior_std": 0.038153,
+          "interior_range": 0.131719,
+          "first_edge": {
+            "mean": 0.663655,
+            "values": [
+              0.668091,
+              0.67457,
+              0.680648,
+              0.670769,
+              0.662129,
+              0.652905,
+              0.647518,
+              0.652606
+            ],
+            "deviation": 0.049503,
+            "deviation_pct": 37.58,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.637111,
+            "values": [
+              0.644886,
+              0.644819,
+              0.645345,
+              0.646078,
+              0.646396,
+              0.643119,
+              0.625652,
+              0.600594
+            ],
+            "deviation": 0.02296,
+            "deviation_pct": 17.43,
+            "artifact": true
+          }
+        },
+        "M2:aesthetic_appreciation": {
+          "interior_mean": 0.678026,
+          "interior_std": 0.0366,
+          "interior_range": 0.112143,
+          "first_edge": {
+            "mean": 0.619702,
+            "values": [
+              0.635111,
+              0.632217,
+              0.62622,
+              0.620989,
+              0.615972,
+              0.610054,
+              0.606706,
+              0.61035
+            ],
+            "deviation": -0.058323,
+            "deviation_pct": 52.01,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.623387,
+            "values": [
+              0.615749,
+              0.61594,
+              0.615402,
+              0.614554,
+              0.613935,
+              0.6149,
+              0.630991,
+              0.665623
+            ],
+            "deviation": -0.054639,
+            "deviation_pct": 48.72,
+            "artifact": true
+          }
+        },
+        "P0:salience_network": {
+          "interior_mean": 0.810916,
+          "interior_std": 0.054684,
+          "interior_range": 0.279958,
+          "first_edge": {
+            "mean": 0.89409,
+            "values": [
+              0.897843,
+              0.897843,
+              0.897843,
+              0.895699,
+              0.892519,
+              0.891459,
+              0.887399,
+              0.89211
+            ],
+            "deviation": 0.083174,
+            "deviation_pct": 29.71,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.710234,
+            "values": [
+              0.720764,
+              0.720845,
+              0.713288,
+              0.706358,
+              0.708166,
+              0.731355,
+              0.757524,
+              0.623573
+            ],
+            "deviation": -0.100682,
+            "deviation_pct": 35.96,
+            "artifact": true
+          }
+        },
+        "P1:affective_evaluation": {
+          "interior_mean": 0.444423,
+          "interior_std": 0.066442,
+          "interior_range": 0.34647,
+          "first_edge": {
+            "mean": 0.291113,
+            "values": [
+              0.283091,
+              0.283091,
+              0.283091,
+              0.275877,
+              0.256386,
+              0.265259,
+              0.330248,
+              0.35186
+            ],
+            "deviation": -0.15331,
+            "deviation_pct": 44.25,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.444819,
+            "values": [
+              0.417264,
+              0.415078,
+              0.413709,
+              0.41377,
+              0.41822,
+              0.463737,
+              0.507958,
+              0.508818
+            ],
+            "deviation": 0.000396,
+            "deviation_pct": 0.11,
+            "artifact": false
+          }
+        },
+        "P2:sensory_load": {
+          "interior_mean": 0.763909,
+          "interior_std": 0.089469,
+          "interior_range": 0.432195,
+          "first_edge": {
+            "mean": 0.876271,
+            "values": [
+              0.885332,
+              0.896045,
+              0.90537,
+              0.89036,
+              0.875531,
+              0.857225,
+              0.844743,
+              0.855563
+            ],
+            "deviation": 0.112362,
+            "deviation_pct": 26.0,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.77888,
+            "values": [
+              0.79494,
+              0.794616,
+              0.79561,
+              0.797153,
+              0.798218,
+              0.79647,
+              0.766021,
+              0.68801
+            ],
+            "deviation": 0.014971,
+            "deviation_pct": 3.46,
+            "artifact": false
+          }
+        },
+        "F0:valence_pred": {
+          "interior_mean": 0.579599,
+          "interior_std": 0.042219,
+          "interior_range": 0.158669,
+          "first_edge": {
+            "mean": 0.483821,
+            "values": [
+              0.46656,
+              0.46656,
+              0.46656,
+              0.472302,
+              0.468156,
+              0.484691,
+              0.529361,
+              0.516375
+            ],
+            "deviation": -0.095778,
+            "deviation_pct": 60.36,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.590448,
+            "values": [
+              0.575082,
+              0.573499,
+              0.572823,
+              0.57333,
+              0.576736,
+              0.605863,
+              0.623124,
+              0.623124
+            ],
+            "deviation": 0.010849,
+            "deviation_pct": 6.84,
+            "artifact": true
+          }
+        },
+        "F1:processing_pred": {
+          "interior_mean": 0.604695,
+          "interior_std": 0.036905,
+          "interior_range": 0.125781,
+          "first_edge": {
+            "mean": 0.65569,
+            "values": [
+              0.660483,
+              0.665404,
+              0.670034,
+              0.661749,
+              0.654111,
+              0.646024,
+              0.641729,
+              0.645984
+            ],
+            "deviation": 0.050995,
+            "deviation_pct": 40.54,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.621514,
+            "values": [
+              0.628845,
+              0.62883,
+              0.62933,
+              0.629988,
+              0.630174,
+              0.626103,
+              0.608935,
+              0.589909
+            ],
+            "deviation": 0.016819,
+            "deviation_pct": 13.37,
+            "artifact": true
+          }
+        },
+        "F2:aesthetic_pred": {
+          "interior_mean": 0.668795,
+          "interior_std": 0.024771,
+          "interior_range": 0.096879,
+          "first_edge": {
+            "mean": 0.627385,
+            "values": [
+              0.648145,
+              0.643617,
+              0.635413,
+              0.628449,
+              0.622252,
+              0.615329,
+              0.611039,
+              0.614831
+            ],
+            "deviation": -0.04141,
+            "deviation_pct": 42.74,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.652794,
+            "values": [
+              0.648714,
+              0.648816,
+              0.648528,
+              0.648075,
+              0.647745,
+              0.64826,
+              0.656837,
+              0.675373
+            ],
+            "deviation": -0.016001,
+            "deviation_pct": 16.52,
+            "artifact": true
+          }
+        }
+      },
+      "artifacts_found": 12,
+      "r3_pleasantness_edge": {
+        "interior_mean": 0.731436,
+        "first_edge_mean": 0.423126,
+        "last_edge_mean": 0.639802,
+        "first_deviation": -0.30831,
+        "last_deviation": -0.091634
+      }
+    },
+    "midi/csg/05_I_V7_tension": {
+      "n_frames": 1206,
+      "dimensions": {
+        "E0:salience_activation": {
+          "interior_mean": 0.480281,
+          "interior_std": 0.123256,
+          "interior_range": 0.544038,
+          "first_edge": {
+            "mean": 0.767759,
+            "values": [
+              0.792787,
+              0.792787,
+              0.792787,
+              0.814732,
+              0.821586,
+              0.770427,
+              0.635223,
+              0.721746
+            ],
+            "deviation": 0.287479,
+            "deviation_pct": 52.84,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.53969,
+            "values": [
+              0.461083,
+              0.462454,
+              0.470277,
+              0.548954,
+              0.471732,
+              0.579978,
+              0.661526,
+              0.661518
+            ],
+            "deviation": 0.05941,
+            "deviation_pct": 10.92,
+            "artifact": true
+          }
+        },
+        "E1:sensory_evidence": {
+          "interior_mean": 0.43325,
+          "interior_std": 0.200233,
+          "interior_range": 0.631864,
+          "first_edge": {
+            "mean": 0.724077,
+            "values": [
+              0.74141,
+              0.74141,
+              0.74141,
+              0.727112,
+              0.716488,
+              0.709678,
+              0.706971,
+              0.708139
+            ],
+            "deviation": 0.290827,
+            "deviation_pct": 46.03,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.417517,
+            "values": [
+              0.453488,
+              0.453735,
+              0.454946,
+              0.456441,
+              0.454707,
+              0.416648,
+              0.325087,
+              0.325087
+            ],
+            "deviation": -0.015733,
+            "deviation_pct": 2.49,
+            "artifact": false
+          }
+        },
+        "E2:consonance_valence": {
+          "interior_mean": 0.550864,
+          "interior_std": 0.049967,
+          "interior_range": 0.297272,
+          "first_edge": {
+            "mean": 0.350695,
+            "values": [
+              0.299532,
+              0.299532,
+              0.299532,
+              0.285027,
+              0.347232,
+              0.389479,
+              0.424932,
+              0.460296
+            ],
+            "deviation": -0.200168,
+            "deviation_pct": 67.34,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.602003,
+            "values": [
+              0.553394,
+              0.55161,
+              0.549834,
+              0.549975,
+              0.558949,
+              0.647079,
+              0.70259,
+              0.70259
+            ],
+            "deviation": 0.051139,
+            "deviation_pct": 17.2,
+            "artifact": true
+          }
+        },
+        "M0:salience_response": {
+          "interior_mean": 0.609312,
+          "interior_std": 0.024553,
+          "interior_range": 0.103132,
+          "first_edge": {
+            "mean": 0.662946,
+            "values": [
+              0.666928,
+              0.666928,
+              0.666928,
+              0.668411,
+              0.668464,
+              0.662314,
+              0.646848,
+              0.656745
+            ],
+            "deviation": 0.053634,
+            "deviation_pct": 52.01,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.61551,
+            "values": [
+              0.60876,
+              0.608941,
+              0.609958,
+              0.619381,
+              0.610114,
+              0.620224,
+              0.623353,
+              0.623352
+            ],
+            "deviation": 0.006198,
+            "deviation_pct": 6.01,
+            "artifact": true
+          }
+        },
+        "M1:rt_valence_judgment": {
+          "interior_mean": 0.613734,
+          "interior_std": 0.038361,
+          "interior_range": 0.132706,
+          "first_edge": {
+            "mean": 0.654636,
+            "values": [
+              0.672554,
+              0.680582,
+              0.67277,
+              0.660307,
+              0.646912,
+              0.638587,
+              0.633632,
+              0.63174
+            ],
+            "deviation": 0.040901,
+            "deviation_pct": 30.82,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.637162,
+            "values": [
+              0.645363,
+              0.645317,
+              0.645525,
+              0.645938,
+              0.646115,
+              0.642847,
+              0.625511,
+              0.600678
+            ],
+            "deviation": 0.023428,
+            "deviation_pct": 17.65,
+            "artifact": true
+          }
+        },
+        "M2:aesthetic_appreciation": {
+          "interior_mean": 0.678795,
+          "interior_std": 0.036416,
+          "interior_range": 0.121394,
+          "first_edge": {
+            "mean": 0.608402,
+            "values": [
+              0.627989,
+              0.620518,
+              0.615774,
+              0.609257,
+              0.602574,
+              0.598634,
+              0.596462,
+              0.59601
+            ],
+            "deviation": -0.070392,
+            "deviation_pct": 57.99,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.624419,
+            "values": [
+              0.616346,
+              0.616438,
+              0.616256,
+              0.615797,
+              0.615358,
+              0.616325,
+              0.63228,
+              0.66655
+            ],
+            "deviation": -0.054376,
+            "deviation_pct": 44.79,
+            "artifact": true
+          }
+        },
+        "P0:salience_network": {
+          "interior_mean": 0.813931,
+          "interior_std": 0.048265,
+          "interior_range": 0.238809,
+          "first_edge": {
+            "mean": 0.887296,
+            "values": [
+              0.893958,
+              0.893958,
+              0.893958,
+              0.891437,
+              0.887215,
+              0.882269,
+              0.877617,
+              0.877957
+            ],
+            "deviation": 0.073365,
+            "deviation_pct": 30.72,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.708897,
+            "values": [
+              0.720779,
+              0.718637,
+              0.711039,
+              0.706496,
+              0.709234,
+              0.728553,
+              0.753755,
+              0.622685
+            ],
+            "deviation": -0.105034,
+            "deviation_pct": 43.98,
+            "artifact": true
+          }
+        },
+        "P1:affective_evaluation": {
+          "interior_mean": 0.445458,
+          "interior_std": 0.066217,
+          "interior_range": 0.305103,
+          "first_edge": {
+            "mean": 0.248856,
+            "values": [
+              0.263307,
+              0.263307,
+              0.263307,
+              0.23693,
+              0.250763,
+              0.260189,
+              0.2162,
+              0.236844
+            ],
+            "deviation": -0.196602,
+            "deviation_pct": 64.44,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.447012,
+            "values": [
+              0.418755,
+              0.417967,
+              0.416962,
+              0.416657,
+              0.420718,
+              0.465493,
+              0.509398,
+              0.510148
+            ],
+            "deviation": 0.001554,
+            "deviation_pct": 0.51,
+            "artifact": false
+          }
+        },
+        "P2:sensory_load": {
+          "interior_mean": 0.765986,
+          "interior_std": 0.084329,
+          "interior_range": 0.381521,
+          "first_edge": {
+            "mean": 0.848514,
+            "values": [
+              0.8857,
+              0.898907,
+              0.886072,
+              0.86394,
+              0.835696,
+              0.815727,
+              0.803363,
+              0.79871
+            ],
+            "deviation": 0.082528,
+            "deviation_pct": 21.63,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.781507,
+            "values": [
+              0.798224,
+              0.798081,
+              0.798456,
+              0.799274,
+              0.800039,
+              0.79829,
+              0.768257,
+              0.691435
+            ],
+            "deviation": 0.015521,
+            "deviation_pct": 4.07,
+            "artifact": false
+          }
+        },
+        "F0:valence_pred": {
+          "interior_mean": 0.581618,
+          "interior_std": 0.044023,
+          "interior_range": 0.159948,
+          "first_edge": {
+            "mean": 0.445765,
+            "values": [
+              0.425393,
+              0.425393,
+              0.425393,
+              0.419435,
+              0.444727,
+              0.461513,
+              0.475349,
+              0.48892
+            ],
+            "deviation": -0.135853,
+            "deviation_pct": 84.94,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.601897,
+            "values": [
+              0.586596,
+              0.58601,
+              0.585427,
+              0.585473,
+              0.588415,
+              0.616477,
+              0.63339,
+              0.63339
+            ],
+            "deviation": 0.020279,
+            "deviation_pct": 12.68,
+            "artifact": true
+          }
+        },
+        "F1:processing_pred": {
+          "interior_mean": 0.604331,
+          "interior_std": 0.037125,
+          "interior_range": 0.126486,
+          "first_edge": {
+            "mean": 0.647974,
+            "values": [
+              0.662941,
+              0.669061,
+              0.663105,
+              0.652688,
+              0.641586,
+              0.634543,
+              0.630562,
+              0.62931
+            ],
+            "deviation": 0.043643,
+            "deviation_pct": 34.5,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.621557,
+            "values": [
+              0.62929,
+              0.629265,
+              0.629474,
+              0.629852,
+              0.629917,
+              0.625861,
+              0.608827,
+              0.589972
+            ],
+            "deviation": 0.017226,
+            "deviation_pct": 13.62,
+            "artifact": true
+          }
+        },
+        "F2:aesthetic_pred": {
+          "interior_mean": 0.669098,
+          "interior_std": 0.024809,
+          "interior_range": 0.098774,
+          "first_edge": {
+            "mean": 0.618668,
+            "values": [
+              0.643784,
+              0.635377,
+              0.629639,
+              0.620955,
+              0.61142,
+              0.605436,
+              0.601978,
+              0.600757
+            ],
+            "deviation": -0.05043,
+            "deviation_pct": 51.06,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.652883,
+            "values": [
+              0.648569,
+              0.648619,
+              0.64852,
+              0.648274,
+              0.648039,
+              0.648556,
+              0.657066,
+              0.675425
+            ],
+            "deviation": -0.016215,
+            "deviation_pct": 16.42,
+            "artifact": true
+          }
+        }
+      },
+      "artifacts_found": 12,
+      "r3_pleasantness_edge": {
+        "interior_mean": 0.733424,
+        "first_edge_mean": 0.360408,
+        "last_edge_mean": 0.639563,
+        "first_deviation": -0.373016,
+        "last_deviation": -0.093861
+      }
+    },
+    "midi/csg/06_single_note": {
+      "n_frames": 862,
+      "dimensions": {
+        "E0:salience_activation": {
+          "interior_mean": 0.371324,
+          "interior_std": 0.106155,
+          "interior_range": 0.426942,
+          "first_edge": {
+            "mean": 0.730088,
+            "values": [
+              0.701834,
+              0.701834,
+              0.701834,
+              0.781847,
+              0.804661,
+              0.69494,
+              0.749856,
+              0.703902
+            ],
+            "deviation": 0.358764,
+            "deviation_pct": 84.03,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.553225,
+            "values": [
+              0.508347,
+              0.442452,
+              0.499573,
+              0.456992,
+              0.565667,
+              0.683548,
+              0.634626,
+              0.634592
+            ],
+            "deviation": 0.181901,
+            "deviation_pct": 42.61,
+            "artifact": true
+          }
+        },
+        "E1:sensory_evidence": {
+          "interior_mean": 0.370384,
+          "interior_std": 0.190348,
+          "interior_range": 0.593902,
+          "first_edge": {
+            "mean": 0.747223,
+            "values": [
+              0.763299,
+              0.763299,
+              0.763299,
+              0.752022,
+              0.742836,
+              0.735356,
+              0.730482,
+              0.727196
+            ],
+            "deviation": 0.37684,
+            "deviation_pct": 63.45,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.39933,
+            "values": [
+              0.458137,
+              0.457608,
+              0.457402,
+              0.456826,
+              0.44176,
+              0.370613,
+              0.276146,
+              0.276146
+            ],
+            "deviation": 0.028946,
+            "deviation_pct": 4.87,
+            "artifact": false
+          }
+        },
+        "E2:consonance_valence": {
+          "interior_mean": 0.562618,
+          "interior_std": 0.054652,
+          "interior_range": 0.225859,
+          "first_edge": {
+            "mean": 0.361764,
+            "values": [
+              0.353749,
+              0.353749,
+              0.353749,
+              0.298083,
+              0.346038,
+              0.371228,
+              0.401526,
+              0.415986
+            ],
+            "deviation": -0.200855,
+            "deviation_pct": 88.93,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.594708,
+            "values": [
+              0.532366,
+              0.531462,
+              0.530789,
+              0.532238,
+              0.571369,
+              0.686479,
+              0.686479,
+              0.686479
+            ],
+            "deviation": 0.032089,
+            "deviation_pct": 14.21,
+            "artifact": true
+          }
+        },
+        "M0:salience_response": {
+          "interior_mean": 0.591743,
+          "interior_std": 0.025401,
+          "interior_range": 0.087047,
+          "first_edge": {
+            "mean": 0.660306,
+            "values": [
+              0.65823,
+              0.65823,
+              0.65823,
+              0.66642,
+              0.668341,
+              0.655563,
+              0.661409,
+              0.656022
+            ],
+            "deviation": 0.068562,
+            "deviation_pct": 78.76,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.615826,
+            "values": [
+              0.614712,
+              0.606842,
+              0.61362,
+              0.608519,
+              0.620321,
+              0.629135,
+              0.616733,
+              0.616729
+            ],
+            "deviation": 0.024083,
+            "deviation_pct": 27.67,
+            "artifact": true
+          }
+        },
+        "M1:rt_valence_judgment": {
+          "interior_mean": 0.603238,
+          "interior_std": 0.038893,
+          "interior_range": 0.124104,
+          "first_edge": {
+            "mean": 0.665244,
+            "values": [
+              0.666902,
+              0.675751,
+              0.683785,
+              0.676485,
+              0.665071,
+              0.657017,
+              0.650482,
+              0.646463
+            ],
+            "deviation": 0.062007,
+            "deviation_pct": 49.96,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.632553,
+            "values": [
+              0.646543,
+              0.646347,
+              0.646267,
+              0.646229,
+              0.645046,
+              0.635858,
+              0.609273,
+              0.584865
+            ],
+            "deviation": 0.029315,
+            "deviation_pct": 23.62,
+            "artifact": true
+          }
+        },
+        "M2:aesthetic_appreciation": {
+          "interior_mean": 0.679541,
+          "interior_std": 0.043638,
+          "interior_range": 0.125392,
+          "first_edge": {
+            "mean": 0.616885,
+            "values": [
+              0.633518,
+              0.627586,
+              0.622771,
+              0.618929,
+              0.612894,
+              0.609026,
+              0.605994,
+              0.604364
+            ],
+            "deviation": -0.062656,
+            "deviation_pct": 49.97,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.624695,
+            "values": [
+              0.610719,
+              0.610957,
+              0.611054,
+              0.611041,
+              0.611259,
+              0.61761,
+              0.646103,
+              0.678816
+            ],
+            "deviation": -0.054846,
+            "deviation_pct": 43.74,
+            "artifact": true
+          }
+        },
+        "P0:salience_network": {
+          "interior_mean": 0.781937,
+          "interior_std": 0.041801,
+          "interior_range": 0.201585,
+          "first_edge": {
+            "mean": 0.88159,
+            "values": [
+              0.893453,
+              0.893453,
+              0.893453,
+              0.889143,
+              0.880593,
+              0.871086,
+              0.867768,
+              0.863774
+            ],
+            "deviation": 0.099654,
+            "deviation_pct": 49.44,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.729582,
+            "values": [
+              0.736213,
+              0.734473,
+              0.739735,
+              0.739276,
+              0.742972,
+              0.765955,
+              0.723873,
+              0.654159
+            ],
+            "deviation": -0.052355,
+            "deviation_pct": 25.97,
+            "artifact": true
+          }
+        },
+        "P1:affective_evaluation": {
+          "interior_mean": 0.457451,
+          "interior_std": 0.072572,
+          "interior_range": 0.361998,
+          "first_edge": {
+            "mean": 0.184188,
+            "values": [
+              0.205014,
+              0.205014,
+              0.205014,
+              0.161155,
+              0.169846,
+              0.170526,
+              0.177457,
+              0.179481
+            ],
+            "deviation": -0.273263,
+            "deviation_pct": 75.49,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.452138,
+            "values": [
+              0.408845,
+              0.408579,
+              0.408542,
+              0.409567,
+              0.429043,
+              0.492622,
+              0.527364,
+              0.532541
+            ],
+            "deviation": -0.005313,
+            "deviation_pct": 1.47,
+            "artifact": false
+          }
+        },
+        "P2:sensory_load": {
+          "interior_mean": 0.718442,
+          "interior_std": 0.091807,
+          "interior_range": 0.351581,
+          "first_edge": {
+            "mean": 0.855187,
+            "values": [
+              0.859842,
+              0.877006,
+              0.891173,
+              0.879026,
+              0.856064,
+              0.838477,
+              0.824277,
+              0.815627
+            ],
+            "deviation": 0.136744,
+            "deviation_pct": 38.89,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.778732,
+            "values": [
+              0.807552,
+              0.807082,
+              0.806882,
+              0.806811,
+              0.806546,
+              0.795382,
+              0.739192,
+              0.66041
+            ],
+            "deviation": 0.06029,
+            "deviation_pct": 17.15,
+            "artifact": true
+          }
+        },
+        "F0:valence_pred": {
+          "interior_mean": 0.579633,
+          "interior_std": 0.051441,
+          "interior_range": 0.183492,
+          "first_edge": {
+            "mean": 0.430033,
+            "values": [
+              0.426862,
+              0.426862,
+              0.426862,
+              0.403832,
+              0.423703,
+              0.433982,
+              0.446196,
+              0.451968
+            ],
+            "deviation": -0.1496,
+            "deviation_pct": 81.53,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.584751,
+            "values": [
+              0.564384,
+              0.564076,
+              0.563846,
+              0.56434,
+              0.577527,
+              0.614612,
+              0.614612,
+              0.614612
+            ],
+            "deviation": 0.005118,
+            "deviation_pct": 2.79,
+            "artifact": false
+          }
+        },
+        "F1:processing_pred": {
+          "interior_mean": 0.593782,
+          "interior_std": 0.037027,
+          "interior_range": 0.118508,
+          "first_edge": {
+            "mean": 0.656748,
+            "values": [
+              0.659311,
+              0.666035,
+              0.672164,
+              0.665871,
+              0.656073,
+              0.649227,
+              0.64415,
+              0.641157
+            ],
+            "deviation": 0.062966,
+            "deviation_pct": 53.13,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.617293,
+            "values": [
+              0.630394,
+              0.630223,
+              0.630153,
+              0.630101,
+              0.628584,
+              0.618619,
+              0.594374,
+              0.5759
+            ],
+            "deviation": 0.023511,
+            "deviation_pct": 19.84,
+            "artifact": true
+          }
+        },
+        "F2:aesthetic_pred": {
+          "interior_mean": 0.672702,
+          "interior_std": 0.026584,
+          "interior_range": 0.096721,
+          "first_edge": {
+            "mean": 0.628014,
+            "values": [
+              0.649169,
+              0.642758,
+              0.636888,
+              0.63159,
+              0.623082,
+              0.617286,
+              0.612928,
+              0.610415
+            ],
+            "deviation": -0.044687,
+            "deviation_pct": 46.2,
+            "artifact": true
+          },
+          "last_edge": {
+            "mean": 0.65484,
+            "values": [
+              0.64739,
+              0.647517,
+              0.64757,
+              0.647567,
+              0.647683,
+              0.651061,
+              0.666218,
+              0.683718
+            ],
+            "deviation": -0.017861,
+            "deviation_pct": 18.47,
+            "artifact": true
+          }
+        }
+      },
+      "artifacts_found": 12,
+      "r3_pleasantness_edge": {
+        "interior_mean": 0.76599,
+        "first_edge_mean": 0.431379,
+        "last_edge_mean": 0.657075,
+        "first_deviation": -0.334612,
+        "last_deviation": -0.108915
+      }
+    }
+  },
+  "summary": {
+    "total_checks": 156,
+    "total_artifacts": 152,
+    "artifact_rate": 97.44,
+    "status": "FAIL"
+  }
+}

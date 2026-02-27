@@ -20,11 +20,36 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     min-height: 100vh;
+    min-height: 100dvh;
     overflow-x: hidden;
+    overscroll-behavior: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
   }
 
   #root {
     min-height: 100vh;
+    min-height: 100dvh;
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+
+  /* ── Mobile app-like behavior ────────────────────────────────── */
+  @media (max-width: 768px) {
+    body {
+      -webkit-user-select: none;
+      user-select: none;
+      position: fixed;
+      width: 100%;
+      height: 100%;
+    }
+    #root {
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      height: 100%;
+    }
+    ::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   /* ── Animated film grain — SRC⁹ pattern ─────────────────────── */
@@ -84,7 +109,7 @@
     background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.10);
     border-radius: 1rem;
   }
 
@@ -92,7 +117,7 @@
     background: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 1rem;
   }
 
@@ -101,9 +126,9 @@
     transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   }
   .glass-hover:hover {
-    background: rgba(255, 255, 255, 0.04);
-    border-color: rgba(255, 255, 255, 0.10);
-    box-shadow: 0 8px 40px -12px rgba(99, 102, 241, 0.08);
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.14);
+    box-shadow: 0 8px 40px -12px rgba(99, 102, 241, 0.14);
   }
 
   /* ── Glow border — animated gradient rim ─────────────────────── */
@@ -111,7 +136,7 @@
     border: 1px solid transparent;
     border-radius: 1rem;
     background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
-                      linear-gradient(135deg, rgba(99,102,241,0.4), rgba(168,85,247,0.4), rgba(236,72,153,0.4));
+                      linear-gradient(135deg, rgba(99,102,241,0.55), rgba(168,85,247,0.55), rgba(236,72,153,0.55));
     background-origin: border-box;
     background-clip: padding-box, border-box;
   }
@@ -135,7 +160,7 @@
     content: "";
     position: absolute;
     inset: -40%;
-    background: radial-gradient(ellipse at center, var(--glow-color, rgba(99,102,241,0.06)), transparent 70%);
+    background: radial-gradient(ellipse at center, var(--glow-color, rgba(99,102,241,0.12)), transparent 70%);
     pointer-events: none;
     z-index: -1;
   }
@@ -146,7 +171,7 @@
     border-radius: 50%;
     background: conic-gradient(
       from var(--orbit-start, 0deg),
-      var(--orbit-color, rgba(168, 85, 247, 0.3)),
+      var(--orbit-color, rgba(168, 85, 247, 0.45)),
       transparent 30%,
       transparent 100%
     );
@@ -159,10 +184,10 @@
     background: rgba(0, 0, 0, 0.75);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 9999px;
     box-shadow: 0 4px 30px -4px rgba(0, 0, 0, 0.6),
-                0 0 80px -30px rgba(99, 102, 241, 0.1);
+                0 0 80px -30px rgba(99, 102, 241, 0.18);
   }
 
   .nav-dock-item {
@@ -187,7 +212,7 @@
     text-transform: uppercase;
     letter-spacing: 0.2em;
     font-weight: 500;
-    color: rgba(148, 163, 184, 0.4);
+    color: rgba(148, 163, 184, 0.55);
   }
 
   .hud-value {
@@ -202,14 +227,14 @@
     background: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.07);
     border-radius: 1rem;
     padding: 1.25rem;
     transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   }
   .spatial-card:hover {
-    background: rgba(255, 255, 255, 0.03);
-    border-color: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.12);
     transform: translateY(-2px);
   }
 
@@ -219,7 +244,7 @@
     inset: 0;
     pointer-events: none;
     z-index: 40;
-    background: radial-gradient(ellipse at center, transparent 50%, rgba(0, 0, 0, 0.4) 100%);
+    background: radial-gradient(ellipse at center, transparent 50%, rgba(0, 0, 0, 0.3) 100%);
   }
 
   /* ── Organism border spin animation ──────────────────────────── */
@@ -237,6 +262,11 @@
   @keyframes organismBorderPulse {
     0%, 100% { opacity: 0.3; }
     50% { opacity: 0.6; }
+  }
+
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(200%); }
   }
 
   /* ── Scroll section — for GSAP pinning ───────────────────────── */

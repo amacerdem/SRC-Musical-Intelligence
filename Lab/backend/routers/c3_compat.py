@@ -3,6 +3,7 @@
 The frontend's Zustand stores use:
     GET /api/c3/beliefs?experiment={id}
     GET /api/c3/relays/{name}?experiment={id}
+    GET /api/c3/mechanism-meta
 
 This router translates these to the canonical HDF5 storage reads,
 so the frontend works without URL changes.
@@ -10,12 +11,41 @@ so the frontend works without URL changes.
 from __future__ import annotations
 
 import numpy as np
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query, Request
 from fastapi.responses import Response
 
 from .. import storage
 
 router = APIRouter(tags=["c3-compat"])
+
+
+@router.get("/mechanism-meta")
+async def get_mechanism_meta(request: Request):
+    """Return dimension names and layer structure for all mechanisms.
+
+    Used by the frontend to label per-dimension traces in MechanismDimensionPanel.
+    """
+    nuclei = request.app.state.pipeline.nuclei
+    result = {}
+    for n in nuclei:
+        layers = []
+        for ls in n.LAYERS:
+            layers.append({
+                "code": ls.code,
+                "name": ls.name,
+                "start": ls.start,
+                "end": ls.end,
+                "scope": ls.scope,
+            })
+        result[n.NAME] = {
+            "fullName": n.FULL_NAME,
+            "function": n.FUNCTION,
+            "unit": n.UNIT,
+            "outputDim": n.OUTPUT_DIM,
+            "dimensions": list(n.dimension_names),
+            "layers": layers,
+        }
+    return result
 
 
 @router.get("/beliefs")

@@ -19,7 +19,7 @@ export function AppShell() {
     <div className="min-h-screen bg-black relative">
       {/* Persistent ambient organism background (hidden on immersive pages) */}
       {!isMobile && !isImmersive && (
-        <div className="fixed inset-0 z-0 opacity-[0.06] pointer-events-none">
+        <div className="fixed inset-0 z-0 opacity-[0.10] pointer-events-none">
           <MindOrganismCanvas
             color={color}
             stage={stage as 1 | 2 | 3}
@@ -33,7 +33,9 @@ export function AppShell() {
         </div>
       )}
 
-      <main className={`relative z-10 min-h-screen ${isImmersive ? "" : "overflow-y-auto pb-24 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 pt-16"}`}>
+      <main className={`relative z-10 min-h-screen ${isImmersive ? "" : `overflow-y-auto ${isMobile ? "pb-20" : "pb-24"} px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 pt-16`}`}
+        style={isMobile && !isImmersive ? { paddingBottom: "calc(56px + env(safe-area-inset-bottom, 0px))" } : undefined}
+      >
         <Outlet />
       </main>
       <FloatingNav />

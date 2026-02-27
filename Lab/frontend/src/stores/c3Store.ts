@@ -1,5 +1,24 @@
 import { create } from 'zustand'
 
+export interface LayerMeta {
+  code: string
+  name: string
+  start: number
+  end: number
+  scope: string
+}
+
+export interface MechanismMeta {
+  fullName: string
+  function: string
+  unit: string
+  outputDim: number
+  dimensions: string[]
+  layers: LayerMeta[]
+}
+
+export type MechanismMetaMap = Record<string, MechanismMeta>
+
 interface C3State {
   beliefsData: Float32Array | null
   nBeliefs: number
@@ -7,8 +26,11 @@ interface C3State {
   beliefsLoading: boolean
   relayCache: Record<string, { data: Float32Array; dim: number }>
   relayLoading: Record<string, boolean>
+  mechanismMeta: MechanismMetaMap | null
+  mechanismMetaLoading: boolean
   loadBeliefs: (experimentId: string) => Promise<void>
   loadRelay: (experimentId: string, relayName: string) => Promise<void>
+  loadMechanismMeta: () => Promise<void>
   clear: () => void
 }
 
@@ -19,6 +41,8 @@ export const useC3Store = create<C3State>((set, get) => ({
   beliefsLoading: false,
   relayCache: {},
   relayLoading: {},
+  mechanismMeta: null,
+  mechanismMetaLoading: false,
 
   loadBeliefs: async (experimentId: string) => {
     set({ beliefsLoading: true })
@@ -51,6 +75,18 @@ export const useC3Store = create<C3State>((set, get) => ({
       })
     } catch {
       set({ relayLoading: { ...get().relayLoading, [relayName]: false } })
+    }
+  },
+
+  loadMechanismMeta: async () => {
+    if (get().mechanismMeta || get().mechanismMetaLoading) return
+    set({ mechanismMetaLoading: true })
+    try {
+      const res = await fetch('/api/c3/mechanism-meta')
+      const data: MechanismMetaMap = await res.json()
+      set({ mechanismMeta: data, mechanismMetaLoading: false })
+    } catch {
+      set({ mechanismMetaLoading: false })
     }
   },
 

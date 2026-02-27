@@ -8,6 +8,7 @@ import { RewardAnalyzer } from './pages/output/RewardAnalyzer'
 import { RamViewer } from './pages/output/RamViewer'
 import { PipelineRunner } from './pages/tools/PipelineRunner'
 import { NeuroacousticAtlas } from './pages/tools/NeuroacousticAtlas'
+import { Library } from './pages/tools/Library'
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
           <Route path="brain/:fId" element={<FunctionPage />} />
           <Route path="reward" element={<RewardAnalyzer />} />
           <Route path="ram" element={<RamViewer />} />
+          <Route path="library" element={<Library />} />
           <Route path="pipeline" element={<PipelineRunner />} />
           <Route path="atlas" element={<NeuroacousticAtlas />} />
           <Route path="*" element={<Navigate to="/" replace />} />
