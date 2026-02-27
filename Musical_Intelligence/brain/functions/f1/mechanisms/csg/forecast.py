@@ -8,7 +8,8 @@ Three forward predictions for consonance-salience dynamics:
 
 H3 consumed:
     (4, 16, 1, 2)   sensory_pleas mean H16 L2    — sustained pleasantness (reused)
-    (17, 16, 1, 2)  spectral_auto mean H16 L2    — long-range coupling
+    (4, 3, 8, 2)    sensory_pleas velocity H3 L2 — pleasantness direction (reused)
+    (1, 8, 8, 0)    sethares velocity H8 L0      — dissonance dynamics (reused)
     (0, 3, 1, 2)    roughness mean H3 L2          — roughness context (reused)
 
 R3 consumed:
@@ -25,7 +26,8 @@ from torch import Tensor
 
 # -- H3 tuples ----------------------------------------------------------------
 _PLEAS_MEAN_1S = (4, 16, 1, 2)
-_SPECTRAL_AUTO_H16 = (17, 16, 1, 2)
+_PLEAS_VEL = (4, 3, 8, 2)
+_SETHARES_VEL = (1, 8, 8, 0)
 _ROUGHNESS_MEAN = (0, 3, 1, 2)
 
 # -- R3 indices ----------------------------------------------------------------
@@ -53,18 +55,27 @@ def compute_forecast(
     (_m0, _m1, m2) = m_outputs
 
     pleas_mean_1s = h3_features[_PLEAS_MEAN_1S]
-    spectral_auto_h16 = h3_features[_SPECTRAL_AUTO_H16]
+    pleas_vel = h3_features[_PLEAS_VEL]
+    sethares_vel = h3_features[_SETHARES_VEL]
     roughness_mean = h3_features[_ROUGHNESS_MEAN]
 
     consonance = r3_features[:, :, _PLEAS]
     ambiguity = 1.0 - torch.abs(consonance - 0.5) * 2
 
+    # Center velocity morphs (H³ signed norm maps 0→0.5)
+    pleas_vel_c = (pleas_vel - 0.5) * 2.0
+    sethares_vel_c = (sethares_vel - 0.5) * 2.0
+
     # F0: Valence prediction [-1, 1]
     # Cheung: amygdala/hippocampus integrate uncertainty x surprise
-    # Center pleasantness → dissonant prediction=negative
+    # Diversified: reduced E2 echo (0.25), added velocity trend (0.25)
+    # and dissonance dynamics (0.15) for temporal prediction
     centered_pleas = (pleas_mean_1s - 0.5) * 2.0
     f0 = torch.tanh(
-        0.50 * e2 + 0.30 * centered_pleas + 0.20 * spectral_auto_h16
+        0.25 * e2
+        + 0.25 * pleas_vel_c
+        + 0.35 * centered_pleas
+        - 0.15 * sethares_vel_c
     )
 
     # F1: Processing load prediction

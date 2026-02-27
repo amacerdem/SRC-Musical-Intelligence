@@ -1,0 +1,2225 @@
+{
+  "version": "5.0",
+  "timestamp": "2026-02-27T13:38:34.685935",
+  "n_stimuli": 36,
+  "processing_time_s": 112.0,
+  "groups": {
+    "T1: Consonance Gradient": {
+      "description": "E2 monotonicity across 10 intervals",
+      "pass": 4,
+      "total": 4,
+      "status": "PASS",
+      "results": [
+        {
+          "name": "E2_monotonicity",
+          "passed": 1,
+          "detail": "Spearman \u03c1 = -0.794 (p=0.0061), expect \u03c1 < -0.7",
+          "values": {
+            "rho": -0.7939393939393938,
+            "p": 0.0060999233136969115,
+            "e2_values": {
+              "g1_01_unison": 0.4065,
+              "g1_02_octave": 0.4099,
+              "g1_03_p5": 0.3761,
+              "g1_04_p4": 0.2925,
+              "g1_05_m3rd": 0.1556,
+              "g1_06_min3rd": 0.0421,
+              "g1_07_m6": 0.2656,
+              "g1_08_tritone": 0.2659,
+              "g1_09_M7": 0.2554,
+              "g1_10_m2": -0.2581
+            }
+          }
+        },
+        {
+          "name": "perfect_consonances_positive",
+          "passed": true,
+          "detail": "P1=0.406, P8=0.410, P5=0.376 \u2014 all should be > 0",
+          "values": {}
+        },
+        {
+          "name": "m2_strongly_negative",
+          "passed": true,
+          "detail": "m2=-0.258 \u2014 expect < -0.15 (highest roughness dyad)",
+          "values": {}
+        },
+        {
+          "name": "E2_spread",
+          "passed": true,
+          "detail": "Spread = 0.665 (most consonant - most dissonant), expect > 0.3",
+          "values": {
+            "spread": 0.664605975151062
+          }
+        }
+      ]
+    },
+    "T2: Chord Types": {
+      "description": "E2 discrimination across chord types",
+      "pass": 3,
+      "total": 3,
+      "status": "PASS",
+      "results": [
+        {
+          "name": "major_gt_cluster",
+          "passed": true,
+          "detail": "Major(0.073) - Cluster(-0.486) = 0.560, expect > 0.2",
+          "values": {}
+        },
+        {
+          "name": "major_gt_minor",
+          "passed": true,
+          "detail": "Major(0.073) > Minor(-0.035), diff=0.109",
+          "values": {}
+        },
+        {
+          "name": "M2_major_gt_cluster",
+          "passed": true,
+          "detail": "M2: Major(0.663) > Cluster(0.584), diff=0.078",
+          "values": {}
+        }
+      ]
+    },
+    "T3: Dynamic Transitions": {
+      "description": "E0/E2 shift at transitions",
+      "pass": 4,
+      "total": 4,
+      "status": "PASS",
+      "results": [
+        {
+          "name": "cons_to_diss_E0_increase",
+          "passed": true,
+          "detail": "E0: first_half=0.532, second_half=0.915, change=+0.383",
+          "values": {
+            "e0_first": 0.5324708819389343,
+            "e0_second": 0.9153514504432678
+          }
+        },
+        {
+          "name": "diss_to_cons_E0_decrease",
+          "passed": true,
+          "detail": "E0: first_half=0.820, second_half=0.420, change=-0.400",
+          "values": {}
+        },
+        {
+          "name": "gradual_E2_decrease",
+          "passed": true,
+          "detail": "E2 segments: ['+0.049', '-0.088', '-0.266', '-0.427'] \u2014 should be decreasing",
+          "values": {
+            "e2_segments": [
+              0.049196552485227585,
+              -0.08812445402145386,
+              -0.26591524481773376,
+              -0.42669662833213806
+            ]
+          }
+        },
+        {
+          "name": "tension_resolution_oscillation",
+          "passed": true,
+          "detail": "V7 mean E2=-0.132, I mean E2=+0.083",
+          "values": {
+            "e2_segments": [
+              -0.15775242447853088,
+              0.040111999958753586,
+              -0.10689231008291245,
+              0.12501631677150726
+            ]
+          }
+        }
+      ]
+    },
+    "T4: Register Invariance": {
+      "description": "E2 sign preserved across octaves",
+      "pass": 3,
+      "total": 3,
+      "status": "PASS",
+      "results": [
+        {
+          "name": "m2_negative_all_registers",
+          "passed": true,
+          "detail": "m2 E2: g4_01_m2_low=-0.297, g4_02_m2_mid=-0.258, g4_03_m2_high=-0.212",
+          "values": {}
+        },
+        {
+          "name": "major_mid_high_positive",
+          "passed": true,
+          "detail": "Major E2 mid/high: g4_05_major_mid=+0.073, g4_06_major_high=+0.206",
+          "values": {}
+        },
+        {
+          "name": "low_register_less_consonant",
+          "passed": true,
+          "detail": "Major E2: low=-0.335 < mid=+0.073 (critical band physics)",
+          "values": {}
+        }
+      ]
+    },
+    "T5: Density Response": {
+      "description": "E0/P2 increase with density",
+      "pass": 3,
+      "total": 3,
+      "status": "PASS",
+      "results": [
+        {
+          "name": "E0_increases_with_density",
+          "passed": true,
+          "detail": "E0: 1-note=0.276 \u2192 8-note=0.933",
+          "values": {}
+        },
+        {
+          "name": "simple_consonant_E2",
+          "passed": true,
+          "detail": "E2 (1-3 note consonant): +0.406, +0.376, +0.073",
+          "values": {}
+        },
+        {
+          "name": "octad_strongly_negative",
+          "passed": true,
+          "detail": "Octad E2 = -0.445, expect < -0.2",
+          "values": {}
+        }
+      ]
+    },
+    "T6: Timbral Invariance": {
+      "description": "E2 stable across instruments",
+      "pass": 3,
+      "total": 3,
+      "status": "PASS",
+      "results": [
+        {
+          "name": "mean_timbre_E2_positive",
+          "passed": 1,
+          "detail": "Mean E2 = +0.030: piano=+0.073, strings=-0.054, organ=+0.190, brass=-0.088",
+          "values": {}
+        },
+        {
+          "name": "E2_timbre_range",
+          "passed": true,
+          "detail": "E2 range = 0.278 across timbres, expect < 0.3",
+          "values": {}
+        },
+        {
+          "name": "P0_timbre_variation",
+          "passed": true,
+          "detail": "P0 range = 0.112 across timbres (informational)",
+          "values": {}
+        }
+      ]
+    },
+    "T7: Correlation Health": {
+      "description": "Cross-dimension correlations",
+      "pass": 4,
+      "total": 4,
+      "status": "PASS",
+      "results": [
+        {
+          "name": "E0_M0_not_redundant",
+          "passed": true,
+          "detail": "r(E0,M0) = 0.967, expect < 0.99 (non-redundant)",
+          "values": {}
+        },
+        {
+          "name": "E2_F0_not_redundant",
+          "passed": true,
+          "detail": "r(E2,F0) = 0.984, expect < 0.99 (non-redundant)",
+          "values": {}
+        },
+        {
+          "name": "E2_P1_positive",
+          "passed": true,
+          "detail": "r(E2,P1) = 0.949, expect > 0.5 (both valence)",
+          "values": {}
+        },
+        {
+          "name": "M2_F2_positive",
+          "passed": true,
+          "detail": "r(M2,F2) = 0.920, expect > 0.5 (aesthetic prediction)",
+          "values": {}
+        }
+      ]
+    },
+    "T8: Valence Signs": {
+      "description": "Sign correctness for valence dims",
+      "pass": 6,
+      "total": 6,
+      "status": "PASS",
+      "results": [
+        {
+          "name": "E2_consonant_positive",
+          "passed": true,
+          "detail": "E2 consonant: +0.406, +0.410, +0.376, +0.073",
+          "values": {}
+        },
+        {
+          "name": "E2_dissonant_negative",
+          "passed": true,
+          "detail": "E2 dissonant: -0.258, -0.486",
+          "values": {}
+        },
+        {
+          "name": "P1_consonant_positive",
+          "passed": true,
+          "detail": "P1 consonant: +0.364, +0.377, +0.362, +0.125",
+          "values": {}
+        },
+        {
+          "name": "P1_dissonant_negative",
+          "passed": true,
+          "detail": "P1 dissonant: -0.271, -0.463",
+          "values": {}
+        },
+        {
+          "name": "F0_consonant_positive",
+          "passed": true,
+          "detail": "F0 consonant: +0.320, +0.323, +0.297, +0.057",
+          "values": {}
+        },
+        {
+          "name": "F0_dissonant_negative",
+          "passed": true,
+          "detail": "F0 dissonant: -0.203, -0.385",
+          "values": {}
+        }
+      ]
+    },
+    "T9: Inverted-U Processing": {
+      "description": "M1 peaks for ambiguous stimuli",
+      "pass": 2,
+      "total": 2,
+      "status": "PASS",
+      "results": [
+        {
+          "name": "M1_inverted_U",
+          "passed": 1,
+          "detail": "M1: consonant=0.620, ambiguous=0.658, dissonant=0.621",
+          "values": {
+            "consonant": 0.6197983026504517,
+            "ambiguous": 0.6577100952466329,
+            "dissonant": 0.6210172176361084
+          }
+        },
+        {
+          "name": "E1_diss_gt_cons",
+          "passed": 1,
+          "detail": "E1: consonant=0.478, dissonant=0.689 \u2014 HG load should increase",
+          "values": {}
+        }
+      ]
+    }
+  },
+  "stimulus_data": {
+    "g1_01_unison": {
+      "n_frames": 1034,
+      "dimensions": {
+        "E0:salience_activation": {
+          "mean": 0.275511,
+          "std": 0.083234
+        },
+        "E1:sensory_evidence": {
+          "mean": 0.375944,
+          "std": 0.140716
+        },
+        "E2:consonance_valence": {
+          "mean": 0.406474,
+          "std": 0.130096
+        },
+        "M0:salience_response": {
+          "mean": 0.570283,
+          "std": 0.027294
+        },
+        "M1:rt_valence_judgment": {
+          "mean": 0.595208,
+          "std": 0.023876
+        },
+        "M2:aesthetic_appreciation": {
+          "mean": 0.706072,
+          "std": 0.01139
+        },
+        "P0:salience_network": {
+          "mean": 0.641218,
+          "std": 0.029951
+        },
+        "P1:affective_evaluation": {
+          "mean": 0.364435,
+          "std": 0.101634
+        },
+        "P2:sensory_load": {
+          "mean": 0.516642,
+          "std": 0.140945
+        },
+        "F0:valence_pred": {
+          "mean": 0.320159,
+          "std": 0.127188
+        },
+        "F1:processing_pred": {
+          "mean": 0.577431,
+          "std": 0.032316
+        },
+        "F2:aesthetic_pred": {
+          "mean": 0.684625,
+          "std": 0.00966
+        }
+      }
+    },
+    "g1_02_octave": {
+      "n_frames": 1034,
+      "dimensions": {
+        "E0:salience_activation": {
+          "mean": 0.261817,
+          "std": 0.053007
+        },
+        "E1:sensory_evidence": {
+          "mean": 0.349829,
+          "std": 0.107785
+        },
+        "E2:consonance_valence": {
+          "mean": 0.40989,
+          "std": 0.118285
+        },
+        "M0:salience_response": {
+          "mean": 0.563881,
+          "std": 0.018835
+        },
+        "M1:rt_valence_judgment": {
+          "mean": 0.592741,
+          "std": 0.022556
+        },
+        "M2:aesthetic_appreciation": {
+          "mean": 0.700675,
+          "std": 0.009775
+        },
+        "P0:salience_network": {
+          "mean": 0.654329,
+          "std": 0.027123
+        },
+        "P1:affective_evaluation": {
+          "mean": 0.376637,
+          "std": 0.077936
+        },
+        "P2:sensory_load": {
+          "mean": 0.526849,
+          "std": 0.12347
+        },
+        "F0:valence_pred": {
+          "mean": 0.32348,
+          "std": 0.11447
+        },
+        "F1:processing_pred": {
+          "mean": 0.572117,
+          "std": 0.025196
+        },
+        "F2:aesthetic_pred": {
+          "mean": 0.684403,
+          "std": 0.010608
+        }
+      }
+    },
+    "g1_03_p5": {
+      "n_frames": 1034,
+      "dimensions": {
+        "E0:salience_activation": {
+          "mean": 0.263799,
+          "std": 0.0332
+        },
+        "E1:sensory_evidence": {
+          "mean": 0.372911,
+          "std": 0.069073
+        },
+        "E2:consonance_valence": {
+          "mean": 0.376092,
+          "std": 0.081441
+        },
+        "M0:salience_response": {
+          "mean": 0.564783,
+          "std": 0.012799
+        },
+        "M1:rt_valence_judgment": {
+          "mean": 0.60093,
+          "std": 0.011634
+        },
+        "M2:aesthetic_appreciation": {
+          "mean": 0.70079,
+          "std": 0.005103
+        },
+        "P0:salience_network": {
+          "mean": 0.645298,
+          "std": 0.032752
+        },
+        "P1:affective_evaluation": {
+          "mean": 0.361738,
+          "std": 0.050269
+        },
+        "P2:sensory_load": {
+          "mean": 0.544023,
+          "std": 0.089222
+        },
+        "F0:valence_pred": {
+          "mean": 0.296595,
+          "std": 0.082379
+        },
+        "F1:processing_pred": {
+          "mean": 0.577439,
+          "std": 0.014744
+        },
+        "F2:aesthetic_pred": {
+          "mean": 0.680918,
+          "std": 0.004496
+        }
+      }
+    },
+    "g1_04_p4": {
+      "n_frames": 1034,
+      "dimensions": {
+        "E0:salience_activation": {
+          "mean": 0.305595,
+          "std": 0.032914
+        },
+        "E1:sensory_evidence": {
+          "mean": 0.488416,
+          "std": 0.064296
+        },
+        "E2:consonance_valence": {
+          "mean": 0.292469,
+          "std": 0.078667
+        },
+        "M0:salience_response": {
+          "mean": 0.580426,
+          "std": 0.01202
+        },
+        "M1:rt_valence_judgment": {
+          "mean": 0.623284,
+          "std": 0.011146
+        },
+        "M2:aesthetic_appreciation": {
+          "mean": 0.690083,
+          "std": 0.005195
+        },
+        "P0:salience_network": {
+          "mean": 0.660085,
+          "std": 0.037762
+        },
+        "P1:affective_evaluation": {
+          "mean": 0.301954,
+          "std": 0.048285
+        },
+        "P2:sensory_load": {
+          "mean": 0.606894,
+          "std": 0.099324
+        },
+        "F0:valence_pred": {
+          "mean": 0.230083,
+          "std": 0.077866
+        },
+        "F1:processing_pred": {
+          "mean": 0.600239,
+          "std": 0.013349
+        },
+        "F2:aesthetic_pred": {
+          "mean": 0.671597,
+          "std": 0.004699
+        }
+      }
+    },
+    "g1_05_m3rd": {
+      "n_frames": 1034,
+      "dimensions": {
+        "E0:salience_activation": {
+          "mean": 0.361213,
+          "std": 0.027439
+        },
+        "E1:sensory_evidence": {
+          "mean": 0.586192,
+          "std": 0.033817
+        },
+        "E2:consonance_valence": {
+          "mean": 0.155556,
+          "std": 0.051679
+        },
+        "M0:salience_response": {
+          "mean": 0.586947,
+          "std": 0.006281
+        },
+        "M1:rt_valence_judgment": {
+          "mean": 0.65145,
+          "std": 0.006832
+        },
+        "M2:aesthetic_appreciation": {
+          "mean": 0.672328,
+          "std": 0.003003
+        },
+        "P0:salience_network": {
+          "mean": 0.68415,
+          "std": 0.031428
+        },
+        "P1:affective_evaluation": {
+          "mean": 0.210914,
+          "std": 0.033928
+        },
+        "P2:sensory_load": {
+          "mean": 0.704384,
+          "std": 0.051108
+        },
+        "F0:valence_pred": {
+          "mean": 0.122301,
+          "std": 0.048306
+        },
+        "F1:processing_pred": {
+          "mean": 0.624781,
+          "std": 0.006956
+        },
+        "F2:aesthetic_pred": {
+          "mean": 0.656746,
+          "std": 0.003142
+        }
+      }
+    },
+    "g1_06_min3rd": {
+      "n_frames": 1034,
+      "dimensions": {
+        "E0:salience_activation": {
+          "mean": 0.618302,
+          "std": 0.087825
+        },
+        "E1:sensory_evidence": {
+          "mean": 0.723798,
+          "std": 0.017143
+        },
+        "E2:consonance_valence": {
+          "mean": 0.042121,
+          "std": 0.040591
+        },
+        "M0:salience_response": {
+          "mean": 0.621129,
+          "std": 0.008055
+        },
+        "M1:rt_valence_judgment": {
+          "mean": 0.676379,
+          "std": 0.003394
+        },
+        "M2:aesthetic_appreciation": {
+          "mean": 0.65971,
+          "std": 0.003428
+        },
+        "P0:salience_network": {
+          "mean": 0.706182,
+          "std": 0.026208
+        },
+        "P1:affective_evaluation": {
+          "mean": 0.129345,
+          "std": 0.06565
+        },
+        "P2:sensory_load": {
+          "mean": 0.765881,
+          "std": 0.043897
+        },
+        "F0:valence_pred": {
+          "mean": 0.032986,
+          "std": 0.040738
+        },
+        "F1:processing_pred": {
+          "mean": 0.649716,
+          "std": 0.003734
+        },
+        "F2:aesthetic_pred": {
+          "mean": 0.645076,
+          "std": 0.002554
+        }
+      }
+    },
+    "g1_07_m6": {
+      "n_frames": 1034,
+      "dimensions": {
+        "E0:salience_activation": {
+          "mean": 0.445347,
+          "std": 0.058402
+        },
+        "E1:sensory_evidence": {
+          "mean": 0.539906,
+          "std": 0.068779
+        },
+        "E2:consonance_valence": {
+          "mean": 0.265576,
+          "std": 0.072033
+        },
+        "M0:salience_response": {
+          "mean": 0.607862,
+          "std": 0.01246
+        },
+        "M1:rt_valence_judgment": {
+          "mean": 0.631307,
+          "std": 0.011639
+        },
+        "M2:aesthetic_appreciation": {
+          "mean": 0.686364,
+          "std": 0.004564
+        },
+        "P0:salience_network": {
+          "mean": 0.663076,
+          "std": 0.033062
+        },
+        "P1:affective_evaluation": {
+          "mean": 0.225618,
+          "std": 0.064196
+        },
+        "P2:sensory_load": {
+          "mean": 0.617073,
+          "std": 0.090055
+        },
+        "F0:valence_pred": {
+          "mean": 0.208423,
+          "std": 0.068871
+        },
+        "F1:processing_pred": {
+          "mean": 0.622993,
+          "std": 0.015729
+        },
+        "F2:aesthetic_pred": {
+          "mean": 0.668573,
+          "std": 0.004649
+        }
+      }
+    },
+    "g1_08_tritone": {
+      "n_frames": 1034,
+      "dimensions": {
+        "E0:salience_activation": {
+          "mean": 0.421479,
+          "std": 0.056132
+        },
+        "E1:sensory_evidence": {
+          "mean": 0.537627,
+          "std": 0.070734
+        },
+        "E2:consonance_valence": {
+          "mean": 0.265917,
+          "std": 0.077229
+        },
+        "M0:salience_response": {
+          "mean": 0.604925,
+          "std": 0.012886
+        },
+        "M1:rt_valence_judgment": {
+          "mean": 0.630777,
+          "std": 0.011542
+        },
+        "M2:aesthetic_appreciation": {
+          "mean": 0.686591,
+          "std": 0.004758
+        },
+        "P0:salience_network": {
+          "mean": 0.664677,
+          "std": 0.035283
+        },
+        "P1:affective_evaluation": {
+          "mean": 0.234069,
+          "std": 0.059791
+        },
+        "P2:sensory_load": {
+          "mean": 0.618852,
+          "std": 0.093094
+        },
+        "F0:valence_pred": {
+          "mean": 0.208498,
+          "std": 0.074103
+        },
+        "F1:processing_pred": {
+          "mean": 0.620626,
+          "std": 0.015481
+        },
+        "F2:aesthetic_pred": {
+          "mean": 0.668813,
+          "std": 0.004621
+        }
+      }
+    },
+    "g1_09_M7": {
+      "n_frames": 1034,
+      "dimensions": {
+        "E0:salience_activation": {
+          "mean": 0.575038,
+          "std": 0.103008
+        },
+        "E1:sensory_evidence": {
+          "mean": 0.653063,
+          "std": 0.061524
+        },
+        "E2:consonance_valence": {
+          "mean": 0.255449,
+          "std": 0.087657
+        },
+        "M0:salience_response": {
+          "mean": 0.635342,
+          "std": 0.01326
+        },
+        "M1:rt_valence_judgment": {
+          "mean": 0.640583,
+          "std": 0.011401
+        },
+        "M2:aesthetic_appreciation": {
+          "mean": 0.682415,
+          "std": 0.004973
+        },
+        "P0:salience_network": {
+          "mean": 0.67122,
+          "std": 0.03407
+        },
+        "P1:affective_evaluation": {
+          "mean": 0.175173,
+          "std": 0.113098
+        },
+        "P2:sensory_load": {
+          "mean": 0.619197,
+          "std": 0.111498
+        },
+        "F0:valence_pred": {
+          "mean": 0.200453,
+          "std": 0.093327
+        },
+        "F1:processing_pred": {
+          "mean": 0.644664,
+          "std": 0.015661
+        },
+        "F2:aesthetic_pred": {
+          "mean": 0.667237,
+          "std": 0.005323
+        }
+      }
+    },
+    "g1_10_m2": {
+      "n_frames": 1034,
+      "dimensions": {
+        "E0:salience_activation": {
+          "mean": 0.835681,
+          "std": 0.083771
+        },
+        "E1:sensory_evidence": {
+          "mean": 0.767977,
+          "std": 0.076744
+        },
+        "E2:consonance_valence": {
+          "mean": -0.258132,
+          "std": 0.149357
+        },
+        "M0:salience_response": {
+          "mean": 0.689242,
+          "std": 0.011447
+        },
+        "M1:rt_valence_judgment": {
+          "mean": 0.644799,
+          "std": 0.014631
+        },
+        "M2:aesthetic_appreciation": {
+          "mean": 0.619653,
+          "std": 0.010665
+        },
+        "P0:salience_network": {
+          "mean": 0.71324,
+          "std": 0.050008
+        },
+        "P1:affective_evaluation": {
+          "mean": -0.27141,
+          "std": 0.163818
+        },
+        "P2:sensory_load": {
+          "mean": 0.62418,
+          "std": 0.147101
+        },
+        "F0:valence_pred": {
+          "mean": -0.202789,
+          "std": 0.148079
+        },
+        "F1:processing_pred": {
+          "mean": 0.670869,
+          "std": 0.014965
+        },
+        "F2:aesthetic_pred": {
+          "mean": 0.611568,
+          "std": 0.01389
+        }
+      }
+    },
+    "g2_01_major_triad": {
+      "n_frames": 1034,
+      "dimensions": {
+        "E0:salience_activation": {
+          "mean": 0.439268,
+          "std": 0.035094
+        },
+        "E1:sensory_evidence": {
+          "mean": 0.707161,
+          "std": 0.029616
+        },
+        "E2:consonance_valence": {
+          "mean": 0.073419,
+          "std": 0.044147
+        },
+        "M0:salience_response": {
+          "mean": 0.613156,
+          "std": 0.005397
+        },
+        "M1:rt_valence_judgment": {
+          "mean": 0.671446,
+          "std": 0.006384
+        },
+        "M2:aesthetic_appreciation": {
+          "mean": 0.662676,
+          "std": 0.002457
+        },
+        "P0:salience_network": {
+          "mean": 0.691636,
+          "std": 0.036487
+        },
+        "P1:affective_evaluation": {
+          "mean": 0.125075,
+          "std": 0.029058
+        },
+        "P2:sensory_load": {
+          "mean": 0.745219,
+          "std": 0.041683
+        },
+        "F0:valence_pred": {
+          "mean": 0.057472,
+          "std": 0.041644
+        },
+        "F1:processing_pred": {
+          "mean": 0.651503,
+          "std": 0.006528
+        },
+        "F2:aesthetic_pred": {
+          "mean": 0.648116,
+          "std": 0.003167
+        }
+      }
+    },
+    "g2_02_minor_triad": {
+      "n_frames": 1034,
+      "dimensions": {
+        "E0:salience_activation": {
+          "mean": 0.647951,
+          "std": 0.085308
+        },
+        "E1:sensory_evidence": {
+          "mean": 0.757746,
+          "std": 0.015755
+        },
+        "E2:consonance_valence": {
+          "mean": -0.035208,
+          "std": 0.043995
+        },
+        "M0:salience_response": {
+          "mean": 0.629121,
+          "std": 0.007123
+        },
+        "M1:rt_valence_judgment": {
+          "mean": 0.680432,
+          "std": 0.003973
+        },
+        "M2:aesthetic_appreciation": {
+          "mean": 0.65043,
+          "std": 0.003257
+        },
+        "P0:salience_network": {
+          "mean": 0.699432,
+          "std": 0.030244
+        },
+        "P1:affective_evaluation": {
+          "mean": 0.073336,
+          "std": 0.054801
+        },
+        "P2:sensory_load": {
+          "mean": 0.76642,
+          "std": 0.033156
+        },
+        "F0:valence_pred": {
+          "mean": -0.027982,
+          "std": 0.043994
+        },
+        "F1:processing_pred": {
+          "mean": 0.654241,
+          "std": 0.003623
+        },
+        "F2:aesthetic_pred": {
+          "mean": 0.637003,
+          "std": 0.002616
+        }
+      }
+    },
+    "g2_03_augmented": {
+      "n_frames": 1034,
+      "dimensions": {
+        "E0:salience_activation": {
+          "mean": 0.47655,
+          "std": 0.043999
+        },
+        "E1:sensory_evidence": {
+          "mean": 0.739584,
+          "std": 0.028506
+        },
+        "E2:consonance_valence": {
+          "mean": 0.021046,
+          "std": 0.063547
+        },
+        "M0:salience_response": {
+          "mean": 0.617379,
+          "std": 0.005015
+        },
+        "M1:rt_valence_judgment": {
+          "mean": 0.679826,
+          "std": 0.00656
+        },
+        "M2:aesthetic_appreciation": {
+          "mean": 0.656181,
+          "std": 0.002674
+        },
+        "P0:salience_network": {
+          "mean": 0.684495,
+          "std": 0.036185
+        },
+        "P1:affective_evaluation": {
+          "mean": 0.085354,
+          "std": 0.04216
+        },
+        "P2:sensory_load": {
+          "mean": 0.755901,
+          "std": 0.0509
+        },
+        "F0:valence_pred": {
+          "mean": 0.016269,
+          "std": 0.062039
+        },
+        "F1:processing_pred": {
+          "mean": 0.659655,
+          "std": 0.006612
+        },
+        "F2:aesthetic_pred": {
+          "mean": 0.642758,
+          "std": 0.00381
+        }
+      }
+    },
+    "g2_04_diminished": {
+      "n_frames": 1034,
+      "dimensions": {
+        "E0:salience_activation": {
+          "mean": 0.754775,
+          "std": 0.071551
+        },
+        "E1:sensory_evidence": {
+          "mean": 0.739259,
+          "std": 0.017785
+        },
+        "E2:consonance_valence": {
+          "mean": -0.157638,
+          "std": 0.022005
+        },
+        "M0:salience_response": {
+          "mean": 0.655912,
+          "std": 0.005858
+        },
+        "M1:rt_valence_judgment": {
+          "mean": 0.662528,
+          "std": 0.003843
+        },
+        "M2:aesthetic_appreciation": {
+          "mean": 0.635009,
+          "std": 0.003643
+        },
+        "P0:salience_network": {
+          "mean": 0.713877,
+          "std": 0.029748
+        },
+        "P1:affective_evaluation": {
+          "mean": -0.074654,
+          "std": 0.042588
+        },
+        "P2:sensory_load": {
+          "mean": 0.719154,
+          "std": 0.029101
+        },
+        "F0:valence_pred": {
+          "mean": -0.12448,
+          "std": 0.023269
+        },
+        "F1:processing_pred": {
+          "mean": 0.653012,
+          "std": 0.003706
+        },
+        "F2:aesthetic_pred": {
+          "mean": 0.62405,
+          "std": 0.002224
+        }
+      }
+    },
+    "g2_05_dom7": {
+      "n_frames": 1034,
+      "dimensions": {
+        "E0:salience_activation": {
+          "mean": 0.818306,
+          "std": 0.070796
+        },
+        "E1:sensory_evidence": {
+          "mean": 0.732492,
+          "std": 0.021588
+        },
+        "E2:consonance_valence": {
+          "mean": -0.235962,
+          "std": 0.057132
+        },
+        "M0:salience_response": {
+          "mean": 0.678786,
+          "std": 0.005519
+        },
+        "M1:rt_valence_judgment": {
+          "mean": 0.650163,
+          "std": 0.00702
+        },
+        "M2:aesthetic_appreciation": {
+          "mean": 0.623031,
+          "std": 0.005313
+        },
+        "P0:salience_network": {
+          "mean": 0.731031,
+          "std": 0.032548
+        },
+        "P1:affective_evaluation": {
+          "mean": -0.193889,
+          "std": 0.057021
+        },
+        "P2:sensory_load": {
+          "mean": 0.685963,
+          "std": 0.027025
+        },
+        "F0:valence_pred": {
+          "mean": -0.186211,
+          "std": 0.053857
+        },
+        "F1:processing_pred": {
+          "mean": 0.657717,
+          "std": 0.006412
+        },
+        "F2:aesthetic_pred": {
+          "mean": 0.614869,
+          "std": 0.004266
+        }
+      }
+    },
+    "g2_06_cluster_6note": {
+      "n_frames": 1034,
+      "dimensions": {
+        "E0:salience_activation": {
+          "mean": 0.934322,
+          "std": 0.030377
+        },
+        "E1:sensory_evidence": {
+          "mean": 0.610677,
+          "std": 0.050276
+        },
+        "E2:consonance_valence": {
+          "mean": -0.48611,
+          "std": 0.146466
+        },
+        "M0:salience_response": {
+          "mean": 0.708982,
+          "std": 0.002421
+        },
+        "M1:rt_valence_judgment": {
+          "mean": 0.597235,
+          "std": 0.013925
+        },
+        "M2:aesthetic_appreciation": {
+          "mean": 0.584489,
+          "std": 0.005824
+        },
+        "P0:salience_network": {
+          "mean": 0.73404,
+          "std": 0.044128
+        },
+        "P1:affective_evaluation": {
+          "mean": -0.462508,
+          "std": 0.107031
+        },
+        "P2:sensory_load": {
+          "mean": 0.514174,
+          "std": 0.065233
+        },
+        "F0:valence_pred": {
+          "mean": -0.384952,
+          "std": 0.148204
+        },
+        "F1:processing_pred": {
+          "mean": 0.640548,
+          "std": 0.011233
+        },
+        "F2:aesthetic_pred": {
+          "mean": 0.58184,
+          "std": 0.008199
+        }
+      }
+    },
+    "g3_01_cons_to_diss": {
+      "n_frames": 1206,
+      "dimensions": {
+        "E0:salience_activation": {
+          "mean": 0.723911,
+          "std": 0.234059
+        },
+        "E1:sensory_evidence": {
+          "mean": 0.683375,
+          "std": 0.062428
+        },
+        "E2:consonance_valence": {
+          "mean": -0.227895,
+          "std": 0.263137
+        },
+        "M0:salience_response": {
+          "mean": 0.670409,
+          "std": 0.044888
+        },
+        "M1:rt_valence_judgment": {
+          "mean": 0.635558,
+          "std": 0.031956
+        },
+        "M2:aesthetic_appreciation": {
+          "mean": 0.616688,
+          "std": 0.037317
+        },
+        "P0:salience_network": {
+          "mean": 0.753694,
+          "std": 0.042963
+        },
+        "P1:affective_evaluation": {
+          "mean": -0.206136,
+          "std": 0.270537
+        },
+        "P2:sensory_load": {
+          "mean": 0.666722,
+          "std": 0.102842
+        },
+        "F0:valence_pred": {
+          "mean": -0.180337,
+          "std": 0.220039
+        },
+        "F1:processing_pred": {
+          "mean": 0.651793,
+          "std": 0.012293
+        },
+        "F2:aesthetic_pred": {
+          "mean": 0.612583,
+          "std": 0.029872
+        }
+      }
+    },
+    "g3_02_diss_to_cons": {
+      "n_frames": 1206,
+      "dimensions": {
+        "E0:salience_activation": {
+          "mean": 0.619876,
+          "std": 0.248905
+        },
+        "E1:sensory_evidence": {
+          "mean": 0.669946,
+          "std": 0.065695
+        },
+        "E2:consonance_valence": {
+          "mean": -0.101505,
+          "std": 0.273718
+        },
+        "M0:salience_response": {
+          "mean": 0.649494,
+          "std": 0.046865
+        },
+        "M1:rt_valence_judgment": {
+          "mean": 0.641891,
+          "std": 0.030275
+        },
+        "M2:aesthetic_appreciation": {
+          "mean": 0.634578,
+          "std": 0.033375
+        },
+        "P0:salience_network": {
+          "mean": 0.745582,
+          "std": 0.033112
+        },
+        "P1:affective_evaluation": {
+          "mean": -0.078807,
+          "std": 0.281016
+        },
+        "P2:sensory_load": {
+          "mean": 0.686327,
+          "std": 0.100378
+        },
+        "F0:valence_pred": {
+          "mean": -0.079423,
+          "std": 0.226217
+        },
+        "F1:processing_pred": {
+          "mean": 0.646793,
+          "std": 0.013895
+        },
+        "F2:aesthetic_pred": {
+          "mean": 0.626865,
+          "std": 0.031924
+        }
+      }
+    },
+    "g3_03_gradual_increase": {
+      "n_frames": 1551,
+      "dimensions": {
+        "E0:salience_activation": {
+          "mean": 0.685443,
+          "std": 0.179612
+        },
+        "E1:sensory_evidence": {
+          "mean": 0.700113,
+          "std": 0.053527
+        },
+        "E2:consonance_valence": {
+          "mean": -0.181726,
+          "std": 0.195502
+        },
+        "M0:salience_response": {
+          "mean": 0.653129,
+          "std": 0.037028
+        },
+        "M1:rt_valence_judgment": {
+          "mean": 0.65007,
+          "std": 0.026983
+        },
+        "M2:aesthetic_appreciation": {
+          "mean": 0.619917,
+          "std": 0.028777
+        },
+        "P0:salience_network": {
+          "mean": 0.770461,
+          "std": 0.036162
+        },
+        "P1:affective_evaluation": {
+          "mean": -0.120569,
+          "std": 0.213714
+        },
+        "P2:sensory_load": {
+          "mean": 0.731091,
+          "std": 0.086158
+        },
+        "F0:valence_pred": {
+          "mean": -0.143521,
+          "std": 0.164943
+        },
+        "F1:processing_pred": {
+          "mean": 0.649661,
+          "std": 0.00999
+        },
+        "F2:aesthetic_pred": {
+          "mean": 0.618612,
+          "std": 0.022027
+        }
+      }
+    },
+    "g3_04_tension_resolution_cycle": {
+      "n_frames": 1551,
+      "dimensions": {
+        "E0:salience_activation": {
+          "mean": 0.571893,
+          "std": 0.197583
+        },
+        "E1:sensory_evidence": {
+          "mean": 0.684053,
+          "std": 0.06371
+        },
+        "E2:consonance_valence": {
+          "mean": -0.027074,
+          "std": 0.181618
+        },
+        "M0:salience_response": {
+          "mean": 0.637015,
+          "std": 0.031894
+        },
+        "M1:rt_valence_judgment": {
+          "mean": 0.652821,
+          "std": 0.013208
+        },
+        "M2:aesthetic_appreciation": {
+          "mean": 0.640252,
+          "std": 0.023799
+        },
+        "P0:salience_network": {
+          "mean": 0.766928,
+          "std": 0.032188
+        },
+        "P1:affective_evaluation": {
+          "mean": 0.009138,
+          "std": 0.174209
+        },
+        "P2:sensory_load": {
+          "mean": 0.746457,
+          "std": 0.041103
+        },
+        "F0:valence_pred": {
+          "mean": -0.020927,
+          "std": 0.149171
+        },
+        "F1:processing_pred": {
+          "mean": 0.645572,
+          "std": 0.013278
+        },
+        "F2:aesthetic_pred": {
+          "mean": 0.635909,
+          "std": 0.021755
+        }
+      }
+    },
+    "g4_01_m2_low": {
+      "n_frames": 1034,
+      "dimensions": {
+        "E0:salience_activation": {
+          "mean": 0.846057,
+          "std": 0.069158
+        },
+        "E1:sensory_evidence": {
+          "mean": 0.749471,
+          "std": 0.043267
+        },
+        "E2:consonance_valence": {
+          "mean": -0.297228,
+          "std": 0.134957
+        },
+        "M0:salience_response": {
+          "mean": 0.69094,
+          "std": 0.006015
+        },
+        "M1:rt_valence_judgment": {
+          "mean": 0.6416,
+          "std": 0.010835
+        },
+        "M2:aesthetic_appreciation": {
+          "mean": 0.604775,
+          "std": 0.005396
+        },
+        "P0:salience_network": {
+          "mean": 0.749802,
+          "std": 0.02788
+        },
+        "P1:affective_evaluation": {
+          "mean": -0.285935,
+          "std": 0.094985
+        },
+        "P2:sensory_load": {
+          "mean": 0.654219,
+          "std": 0.117918
+        },
+        "F0:valence_pred": {
+          "mean": -0.234469,
+          "std": 0.142734
+        },
+        "F1:processing_pred": {
+          "mean": 0.664087,
+          "std": 0.00878
+        },
+        "F2:aesthetic_pred": {
+          "mean": 0.606394,
+          "std": 0.006376
+        }
+      }
+    },
+    "g4_02_m2_mid": {
+      "n_frames": 1034,
+      "dimensions": {
+        "E0:salience_activation": {
+          "mean": 0.835681,
+          "std": 0.083771
+        },
+        "E1:sensory_evidence": {
+          "mean": 0.767977,
+          "std": 0.076744
+        },
+        "E2:consonance_valence": {
+          "mean": -0.258132,
+          "std": 0.149357
+        },
+        "M0:salience_response": {
+          "mean": 0.689242,
+          "std": 0.011447
+        },
+        "M1:rt_valence_judgment": {
+          "mean": 0.644799,
+          "std": 0.014631
+        },
+        "M2:aesthetic_appreciation": {
+          "mean": 0.619653,
+          "std": 0.010665
+        },
+        "P0:salience_network": {
+          "mean": 0.71324,
+          "std": 0.050008
+        },
+        "P1:affective_evaluation": {
+          "mean": -0.27141,
+          "std": 0.163818
+        },
+        "P2:sensory_load": {
+          "mean": 0.62418,
+          "std": 0.147101
+        },
+        "F0:valence_pred": {
+          "mean": -0.202789,
+          "std": 0.148079
+        },
+        "F1:processing_pred": {
+          "mean": 0.670869,
+          "std": 0.014965
+        },
+        "F2:aesthetic_pred": {
+          "mean": 0.611568,
+          "std": 0.01389
+        }
+      }
+    },
+    "g4_03_m2_high": {
+      "n_frames": 1034,
+      "dimensions": {
+        "E0:salience_activation": {
+          "mean": 0.783053,
+          "std": 0.042019
+        },
+        "E1:sensory_evidence": {
+          "mean": 0.757238,
+          "std": 0.044984
+        },
+        "E2:consonance_valence": {
+          "mean": -0.21192,
+          "std": 0.11345
+        },
+        "M0:salience_response": {
+          "mean": 0.694547,
+          "std": 0.010159
+        },
+        "M1:rt_valence_judgment": {
+          "mean": 0.654734,
+          "std": 0.016339
+        },
+        "M2:aesthetic_appreciation": {
+          "mean": 0.557911,
+          "std": 0.009162
+        },
+        "P0:salience_network": {
+          "mean": 0.689171,
+          "std": 0.043768
+        },
+        "P1:affective_evaluation": {
+          "mean": -0.258614,
+          "std": 0.073751
+        },
+        "P2:sensory_load": {
+          "mean": 0.64895,
+          "std": 0.086782
+        },
+        "F0:valence_pred": {
+          "mean": -0.167199,
+          "std": 0.109478
+        },
+        "F1:processing_pred": {
+          "mean": 0.681245,
+          "std": 0.012765
+        },
+        "F2:aesthetic_pred": {
+          "mean": 0.609284,
+          "std": 0.010669
+        }
+      }
+    },
+    "g4_04_major_low": {
+      "n_frames": 1034,
+      "dimensions": {
+        "E0:salience_activation": {
+          "mean": 0.821397,
+          "std": 0.074513
+        },
+        "E1:sensory_evidence": {
+          "mean": 0.726573,
+          "std": 0.041721
+        },
+        "E2:consonance_valence": {
+          "mean": -0.335301,
+          "std": 0.090117
+        },
+        "M0:salience_response": {
+          "mean": 0.67714,
+          "std": 0.006302
+        },
+        "M1:rt_valence_judgment": {
+          "mean": 0.634261,
+          "std": 0.008088
+        },
+        "M2:aesthetic_appreciation": {
+          "mean": 0.602686,
+          "std": 0.004994
+        },
+        "P0:salience_network": {
+          "mean": 0.752394,
+          "std": 0.027634
+        },
+        "P1:affective_evaluation": {
+          "mean": -0.258117,
+          "std": 0.11857
+        },
+        "P2:sensory_load": {
+          "mean": 0.644555,
+          "std": 0.079926
+        },
+        "F0:valence_pred": {
+          "mean": -0.264194,
+          "std": 0.093324
+        },
+        "F1:processing_pred": {
+          "mean": 0.644684,
+          "std": 0.007487
+        },
+        "F2:aesthetic_pred": {
+          "mean": 0.602408,
+          "std": 0.004812
+        }
+      }
+    },
+    "g4_05_major_mid": {
+      "n_frames": 1034,
+      "dimensions": {
+        "E0:salience_activation": {
+          "mean": 0.439268,
+          "std": 0.035094
+        },
+        "E1:sensory_evidence": {
+          "mean": 0.707161,
+          "std": 0.029616
+        },
+        "E2:consonance_valence": {
+          "mean": 0.073419,
+          "std": 0.044147
+        },
+        "M0:salience_response": {
+          "mean": 0.613156,
+          "std": 0.005397
+        },
+        "M1:rt_valence_judgment": {
+          "mean": 0.671446,
+          "std": 0.006384
+        },
+        "M2:aesthetic_appreciation": {
+          "mean": 0.662676,
+          "std": 0.002457
+        },
+        "P0:salience_network": {
+          "mean": 0.691636,
+          "std": 0.036487
+        },
+        "P1:affective_evaluation": {
+          "mean": 0.125075,
+          "std": 0.029058
+        },
+        "P2:sensory_load": {
+          "mean": 0.745219,
+          "std": 0.041683
+        },
+        "F0:valence_pred": {
+          "mean": 0.057472,
+          "std": 0.041644
+        },
+        "F1:processing_pred": {
+          "mean": 0.651503,
+          "std": 0.006528
+        },
+        "F2:aesthetic_pred": {
+          "mean": 0.648116,
+          "std": 0.003167
+        }
+      }
+    },
+    "g4_06_major_high": {
+      "n_frames": 1034,
+      "dimensions": {
+        "E0:salience_activation": {
+          "mean": 0.414832,
+          "std": 0.190204
+        },
+        "E1:sensory_evidence": {
+          "mean": 0.55655,
+          "std": 0.221364
+        },
+        "E2:consonance_valence": {
+          "mean": 0.206481,
+          "std": 0.214723
+        },
+        "M0:salience_response": {
+          "mean": 0.606434,
+          "std": 0.055405
+        },
+        "M1:rt_valence_judgment": {
+          "mean": 0.633763,
+          "std": 0.034382
+        },
+        "M2:aesthetic_appreciation": {
+          "mean": 0.614948,
+          "std": 0.025377
+        },
+        "P0:salience_network": {
+          "mean": 0.537428,
+          "std": 0.061924
+        },
+        "P1:affective_evaluation": {
+          "mean": 0.178931,
+          "std": 0.220885
+        },
+        "P2:sensory_load": {
+          "mean": 0.507748,
+          "std": 0.129615
+        },
+        "F0:valence_pred": {
+          "mean": 0.160349,
+          "std": 0.185582
+        },
+        "F1:processing_pred": {
+          "mean": 0.624427,
+          "std": 0.053248
+        },
+        "F2:aesthetic_pred": {
+          "mean": 0.655116,
+          "std": 0.020839
+        }
+      }
+    },
+    "g5_01_single": {
+      "n_frames": 1034,
+      "dimensions": {
+        "E0:salience_activation": {
+          "mean": 0.275893,
+          "std": 0.083578
+        },
+        "E1:sensory_evidence": {
+          "mean": 0.376418,
+          "std": 0.141521
+        },
+        "E2:consonance_valence": {
+          "mean": 0.406245,
+          "std": 0.131075
+        },
+        "M0:salience_response": {
+          "mean": 0.570364,
+          "std": 0.027445
+        },
+        "M1:rt_valence_judgment": {
+          "mean": 0.595276,
+          "std": 0.024001
+        },
+        "M2:aesthetic_appreciation": {
+          "mean": 0.703939,
+          "std": 0.011343
+        },
+        "P0:salience_network": {
+          "mean": 0.671211,
+          "std": 0.022637
+        },
+        "P1:affective_evaluation": {
+          "mean": 0.364078,
+          "std": 0.102948
+        },
+        "P2:sensory_load": {
+          "mean": 0.541548,
+          "std": 0.139889
+        },
+        "F0:valence_pred": {
+          "mean": 0.320283,
+          "std": 0.127943
+        },
+        "F1:processing_pred": {
+          "mean": 0.577519,
+          "std": 0.032475
+        },
+        "F2:aesthetic_pred": {
+          "mean": 0.684374,
+          "std": 0.009683
+        }
+      }
+    },
+    "g5_02_dyad": {
+      "n_frames": 1034,
+      "dimensions": {
+        "E0:salience_activation": {
+          "mean": 0.263799,
+          "std": 0.0332
+        },
+        "E1:sensory_evidence": {
+          "mean": 0.372911,
+          "std": 0.069073
+        },
+        "E2:consonance_valence": {
+          "mean": 0.376092,
+          "std": 0.081441
+        },
+        "M0:salience_response": {
+          "mean": 0.564783,
+          "std": 0.012799
+        },
+        "M1:rt_valence_judgment": {
+          "mean": 0.60093,
+          "std": 0.011634
+        },
+        "M2:aesthetic_appreciation": {
+          "mean": 0.70079,
+          "std": 0.005103
+        },
+        "P0:salience_network": {
+          "mean": 0.645298,
+          "std": 0.032752
+        },
+        "P1:affective_evaluation": {
+          "mean": 0.361738,
+          "std": 0.050269
+        },
+        "P2:sensory_load": {
+          "mean": 0.544023,
+          "std": 0.089222
+        },
+        "F0:valence_pred": {
+          "mean": 0.296595,
+          "std": 0.082379
+        },
+        "F1:processing_pred": {
+          "mean": 0.577439,
+          "std": 0.014744
+        },
+        "F2:aesthetic_pred": {
+          "mean": 0.680918,
+          "std": 0.004496
+        }
+      }
+    },
+    "g5_03_triad": {
+      "n_frames": 1034,
+      "dimensions": {
+        "E0:salience_activation": {
+          "mean": 0.439268,
+          "std": 0.035094
+        },
+        "E1:sensory_evidence": {
+          "mean": 0.707161,
+          "std": 0.029616
+        },
+        "E2:consonance_valence": {
+          "mean": 0.073419,
+          "std": 0.044147
+        },
+        "M0:salience_response": {
+          "mean": 0.613156,
+          "std": 0.005397
+        },
+        "M1:rt_valence_judgment": {
+          "mean": 0.671446,
+          "std": 0.006384
+        },
+        "M2:aesthetic_appreciation": {
+          "mean": 0.662676,
+          "std": 0.002457
+        },
+        "P0:salience_network": {
+          "mean": 0.691636,
+          "std": 0.036487
+        },
+        "P1:affective_evaluation": {
+          "mean": 0.125075,
+          "std": 0.029058
+        },
+        "P2:sensory_load": {
+          "mean": 0.745219,
+          "std": 0.041683
+        },
+        "F0:valence_pred": {
+          "mean": 0.057472,
+          "std": 0.041644
+        },
+        "F1:processing_pred": {
+          "mean": 0.651503,
+          "std": 0.006528
+        },
+        "F2:aesthetic_pred": {
+          "mean": 0.648116,
+          "std": 0.003167
+        }
+      }
+    },
+    "g5_04_tetrad": {
+      "n_frames": 1034,
+      "dimensions": {
+        "E0:salience_activation": {
+          "mean": 0.548026,
+          "std": 0.059668
+        },
+        "E1:sensory_evidence": {
+          "mean": 0.792152,
+          "std": 0.019631
+        },
+        "E2:consonance_valence": {
+          "mean": -0.00202,
+          "std": 0.050736
+        },
+        "M0:salience_response": {
+          "mean": 0.636692,
+          "std": 0.006237
+        },
+        "M1:rt_valence_judgment": {
+          "mean": 0.683525,
+          "std": 0.004732
+        },
+        "M2:aesthetic_appreciation": {
+          "mean": 0.653183,
+          "std": 0.002581
+        },
+        "P0:salience_network": {
+          "mean": 0.682596,
+          "std": 0.042665
+        },
+        "P1:affective_evaluation": {
+          "mean": 0.039292,
+          "std": 0.066902
+        },
+        "P2:sensory_load": {
+          "mean": 0.752178,
+          "std": 0.050028
+        },
+        "F0:valence_pred": {
+          "mean": -0.00173,
+          "std": 0.052894
+        },
+        "F1:processing_pred": {
+          "mean": 0.671097,
+          "std": 0.005259
+        },
+        "F2:aesthetic_pred": {
+          "mean": 0.640354,
+          "std": 0.003812
+        }
+      }
+    },
+    "g5_05_hexad": {
+      "n_frames": 1034,
+      "dimensions": {
+        "E0:salience_activation": {
+          "mean": 0.672027,
+          "std": 0.069865
+        },
+        "E1:sensory_evidence": {
+          "mean": 0.748888,
+          "std": 0.029562
+        },
+        "E2:consonance_valence": {
+          "mean": -0.210084,
+          "std": 0.051096
+        },
+        "M0:salience_response": {
+          "mean": 0.660307,
+          "std": 0.005033
+        },
+        "M1:rt_valence_judgment": {
+          "mean": 0.655423,
+          "std": 0.008236
+        },
+        "M2:aesthetic_appreciation": {
+          "mean": 0.626129,
+          "std": 0.003377
+        },
+        "P0:salience_network": {
+          "mean": 0.686456,
+          "std": 0.048743
+        },
+        "P1:affective_evaluation": {
+          "mean": -0.129365,
+          "std": 0.055148
+        },
+        "P2:sensory_load": {
+          "mean": 0.662917,
+          "std": 0.060216
+        },
+        "F0:valence_pred": {
+          "mean": -0.165943,
+          "std": 0.051131
+        },
+        "F1:processing_pred": {
+          "mean": 0.65176,
+          "std": 0.006308
+        },
+        "F2:aesthetic_pred": {
+          "mean": 0.617958,
+          "std": 0.004615
+        }
+      }
+    },
+    "g5_06_octad": {
+      "n_frames": 1034,
+      "dimensions": {
+        "E0:salience_activation": {
+          "mean": 0.932712,
+          "std": 0.031887
+        },
+        "E1:sensory_evidence": {
+          "mean": 0.632104,
+          "std": 0.05734
+        },
+        "E2:consonance_valence": {
+          "mean": -0.445237,
+          "std": 0.164176
+        },
+        "M0:salience_response": {
+          "mean": 0.710652,
+          "std": 0.002538
+        },
+        "M1:rt_valence_judgment": {
+          "mean": 0.605953,
+          "std": 0.016851
+        },
+        "M2:aesthetic_appreciation": {
+          "mean": 0.590764,
+          "std": 0.00726
+        },
+        "P0:salience_network": {
+          "mean": 0.737175,
+          "std": 0.046106
+        },
+        "P1:affective_evaluation": {
+          "mean": -0.442144,
+          "std": 0.09408
+        },
+        "P2:sensory_load": {
+          "mean": 0.546073,
+          "std": 0.06763
+        },
+        "F0:valence_pred": {
+          "mean": -0.351242,
+          "std": 0.163969
+        },
+        "F1:processing_pred": {
+          "mean": 0.648615,
+          "std": 0.013401
+        },
+        "F2:aesthetic_pred": {
+          "mean": 0.587166,
+          "std": 0.009853
+        }
+      }
+    },
+    "g6_brass_major": {
+      "n_frames": 1034,
+      "dimensions": {
+        "E0:salience_activation": {
+          "mean": 0.556507,
+          "std": 0.06196
+        },
+        "E1:sensory_evidence": {
+          "mean": 0.759429,
+          "std": 0.044231
+        },
+        "E2:consonance_valence": {
+          "mean": -0.088263,
+          "std": 0.129038
+        },
+        "M0:salience_response": {
+          "mean": 0.636445,
+          "std": 0.00759
+        },
+        "M1:rt_valence_judgment": {
+          "mean": 0.670833,
+          "std": 0.012155
+        },
+        "M2:aesthetic_appreciation": {
+          "mean": 0.598283,
+          "std": 0.007584
+        },
+        "P0:salience_network": {
+          "mean": 0.798746,
+          "std": 0.004458
+        },
+        "P1:affective_evaluation": {
+          "mean": -0.02794,
+          "std": 0.105595
+        },
+        "P2:sensory_load": {
+          "mean": 0.793401,
+          "std": 0.087668
+        },
+        "F0:valence_pred": {
+          "mean": -0.068837,
+          "std": 0.13312
+        },
+        "F1:processing_pred": {
+          "mean": 0.661035,
+          "std": 0.01042
+        },
+        "F2:aesthetic_pred": {
+          "mean": 0.626011,
+          "std": 0.009467
+        }
+      }
+    },
+    "g6_organ_major": {
+      "n_frames": 1034,
+      "dimensions": {
+        "E0:salience_activation": {
+          "mean": 0.430859,
+          "std": 0.082127
+        },
+        "E1:sensory_evidence": {
+          "mean": 0.571797,
+          "std": 0.103538
+        },
+        "E2:consonance_valence": {
+          "mean": 0.189649,
+          "std": 0.062691
+        },
+        "M0:salience_response": {
+          "mean": 0.599041,
+          "std": 0.010934
+        },
+        "M1:rt_valence_judgment": {
+          "mean": 0.645049,
+          "std": 0.026475
+        },
+        "M2:aesthetic_appreciation": {
+          "mean": 0.644588,
+          "std": 0.011277
+        },
+        "P0:salience_network": {
+          "mean": 0.787563,
+          "std": 0.003738
+        },
+        "P1:affective_evaluation": {
+          "mean": 0.203988,
+          "std": 0.115223
+        },
+        "P2:sensory_load": {
+          "mean": 0.763434,
+          "std": 0.056961
+        },
+        "F0:valence_pred": {
+          "mean": 0.149454,
+          "std": 0.05615
+        },
+        "F1:processing_pred": {
+          "mean": 0.626228,
+          "std": 0.025201
+        },
+        "F2:aesthetic_pred": {
+          "mean": 0.656462,
+          "std": 0.013496
+        }
+      }
+    },
+    "g6_piano_major": {
+      "n_frames": 1034,
+      "dimensions": {
+        "E0:salience_activation": {
+          "mean": 0.439268,
+          "std": 0.035094
+        },
+        "E1:sensory_evidence": {
+          "mean": 0.707161,
+          "std": 0.029616
+        },
+        "E2:consonance_valence": {
+          "mean": 0.073419,
+          "std": 0.044147
+        },
+        "M0:salience_response": {
+          "mean": 0.613156,
+          "std": 0.005397
+        },
+        "M1:rt_valence_judgment": {
+          "mean": 0.671446,
+          "std": 0.006384
+        },
+        "M2:aesthetic_appreciation": {
+          "mean": 0.662676,
+          "std": 0.002457
+        },
+        "P0:salience_network": {
+          "mean": 0.691636,
+          "std": 0.036487
+        },
+        "P1:affective_evaluation": {
+          "mean": 0.125075,
+          "std": 0.029058
+        },
+        "P2:sensory_load": {
+          "mean": 0.745219,
+          "std": 0.041683
+        },
+        "F0:valence_pred": {
+          "mean": 0.057472,
+          "std": 0.041644
+        },
+        "F1:processing_pred": {
+          "mean": 0.651503,
+          "std": 0.006528
+        },
+        "F2:aesthetic_pred": {
+          "mean": 0.648116,
+          "std": 0.003167
+        }
+      }
+    },
+    "g6_strings_major": {
+      "n_frames": 1034,
+      "dimensions": {
+        "E0:salience_activation": {
+          "mean": 0.572944,
+          "std": 0.098689
+        },
+        "E1:sensory_evidence": {
+          "mean": 0.768593,
+          "std": 0.054604
+        },
+        "E2:consonance_valence": {
+          "mean": -0.054337,
+          "std": 0.156767
+        },
+        "M0:salience_response": {
+          "mean": 0.637639,
+          "std": 0.012601
+        },
+        "M1:rt_valence_judgment": {
+          "mean": 0.670105,
+          "std": 0.013148
+        },
+        "M2:aesthetic_appreciation": {
+          "mean": 0.609253,
+          "std": 0.009932
+        },
+        "P0:salience_network": {
+          "mean": 0.803433,
+          "std": 0.007083
+        },
+        "P1:affective_evaluation": {
+          "mean": -0.000337,
+          "std": 0.116404
+        },
+        "P2:sensory_load": {
+          "mean": 0.791086,
+          "std": 0.099721
+        },
+        "F0:valence_pred": {
+          "mean": -0.041616,
+          "std": 0.161208
+        },
+        "F1:processing_pred": {
+          "mean": 0.660273,
+          "std": 0.012633
+        },
+        "F2:aesthetic_pred": {
+          "mean": 0.630389,
+          "std": 0.012889
+        }
+      }
+    }
+  },
+  "summary": {
+    "total_pass": 32,
+    "total_tests": 32,
+    "overall": "ALL PASS"
+  }
+}

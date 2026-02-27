@@ -10,6 +10,7 @@ H3 consumed:
     (0, 16, 1, 2)  roughness mean H16 L2      — long-range roughness context
     (9, 3, 0, 2)   spectral_centroid H3 L2    — brightness for RT
     (4, 16, 1, 2)  sensory_pleas mean H16 L2  — sustained pleasantness (reused)
+    (1, 3, 0, 2)   sethares value H3 L2       — psychoacoustic dissonance (reused)
 
 R3 consumed:
     [4]  sensory_pleasantness — consonance proxy
@@ -28,6 +29,7 @@ from torch import Tensor
 _ROUGHNESS_MEAN_1S = (0, 16, 1, 2)
 _CENTROID_H3 = (9, 3, 0, 2)
 _PLEAS_MEAN_1S = (4, 16, 1, 2)
+_SETHARES_H3 = (1, 3, 0, 2)
 
 # -- R3 indices ----------------------------------------------------------------
 _PLEAS = 4
@@ -54,6 +56,7 @@ def compute_temporal_integration(
     roughness_mean_1s = h3_features[_ROUGHNESS_MEAN_1S]
     centroid_h3 = h3_features[_CENTROID_H3]
     pleas_mean_1s = h3_features[_PLEAS_MEAN_1S]
+    sethares_h3 = h3_features[_SETHARES_H3]
 
     consonance = r3_features[:, :, _PLEAS]
     warmth = r3_features[:, :, _WARMTH]
@@ -61,8 +64,10 @@ def compute_temporal_integration(
 
     # M0: Graded salience response
     # Bravo 2017: graded ACC/AI -> HG -> baseline across consonance levels
+    # Diversified: reduced E0/E1 echo, added direct sethares dissonance
     m0 = torch.sigmoid(
-        0.50 * e0 + 0.30 * e1 + 0.20 * roughness_mean_1s
+        0.30 * e0 + 0.20 * e1
+        + 0.25 * roughness_mean_1s + 0.25 * sethares_h3
     )
 
     # M1: RT valence judgment — inverted-U (intermediate = longest RT)

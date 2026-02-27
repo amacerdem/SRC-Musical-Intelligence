@@ -102,7 +102,7 @@ _SPECTRAL_FLUX = 21       # spectral_flux (D, was spectral_change)
 _ENERGY_CHANGE = 22       # energy_change (D group, unchanged)
 
 
-# -- 18 H3 Demand Specifications ----------------------------------------------
+# -- 17 H3 Demand Specifications ----------------------------------------------
 # Multi-scale: H0(25ms) -> H3(100ms) -> H4(125ms) -> H8(500ms) -> H16(1000ms)
 
 _CSG_H3_DEMANDS: Tuple[H3DemandSpec, ...] = (
@@ -155,16 +155,13 @@ _CSG_H3_DEMANDS: Tuple[H3DemandSpec, ...] = (
         "Spectral change velocity at 125ms — processing demand",
         "Bravo 2017"),
 
-    # === Spectral Autocorrelation (3 tuples: replaces dissolved x_l0l5) ===
+    # === Spectral Autocorrelation (2 tuples: replaces dissolved x_l0l5) ===
     _h3(_SPECTRAL_AUTO, "spectral_autocorrelation", 3, 0, 2,
         "Cross-band salience coupling at 100ms (replaces x_l0l5)",
         "Koelsch"),
     _h3(_SPECTRAL_AUTO, "spectral_autocorrelation", 8, 0, 2,
         "Cross-band coupling at 500ms — medium-term integration",
         "Kim"),
-    _h3(_SPECTRAL_AUTO, "spectral_autocorrelation", 16, 1, 2,
-        "Mean cross-band coupling over 1s — long-range structure",
-        "Cheung 2019"),
 
     # === Energy Change (1 tuple: H3 velocity) ===
     _h3(_ENERGY_CHANGE, "energy_change", 3, 8, 0,
@@ -177,7 +174,7 @@ _CSG_H3_DEMANDS: Tuple[H3DemandSpec, ...] = (
         "Bravo 2017"),
 )
 
-assert len(_CSG_H3_DEMANDS) == 18
+assert len(_CSG_H3_DEMANDS) == 17
 
 
 class CSG(Relay):

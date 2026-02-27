@@ -709,7 +709,9 @@ def stage_4_boundary_analysis(
 
     H3_WARMUP = 180   # H16=172 + STFT margin
     EDGE_FRAMES = 8   # for edge statistics
-    DISCONTINUITY_THRESHOLD = 0.5  # max allowed frame-to-frame jump at warmup boundary
+    DISCONTINUITY_THRESHOLD = 0.5  # max allowed frame-to-frame jump at warmup boundary (sigmoid dims)
+    # tanh dims have 2x range [-1,1]=2.0 vs [0,1]=1.0, so threshold is range-proportional
+    DISCONTINUITY_THRESHOLD_TANH = 1.0
 
     report: Dict[str, Any] = {
         "stage": "4_boundary",
@@ -760,7 +762,8 @@ def stage_4_boundary_analysis(
             warmup_frame = min(H3_WARMUP, T - 2)
             warmup_jump = abs(float(trace[warmup_frame] - trace[warmup_frame - 1]))
             warmup_jump_last = abs(float(trace[T - warmup_frame] - trace[T - warmup_frame - 1])) if T > warmup_frame * 2 else 0.0
-            has_discontinuity = warmup_jump > DISCONTINUITY_THRESHOLD or warmup_jump_last > DISCONTINUITY_THRESHOLD
+            disc_thresh = DISCONTINUITY_THRESHOLD_TANH if is_tanh else DISCONTINUITY_THRESHOLD
+            has_discontinuity = warmup_jump > disc_thresh or warmup_jump_last > disc_thresh
 
             # --- (d) Dead signal ---
             trace_std = float(np.std(trace))

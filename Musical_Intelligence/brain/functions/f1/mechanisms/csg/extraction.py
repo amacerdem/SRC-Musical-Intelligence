@@ -77,9 +77,11 @@ def compute_extraction(
     # E2: Consonance-valence mapping [-1, 1]
     # Bravo 2017: linear consonance-valence trend, d=3.31
     # Center pleasantness around 0.5 → dissonant=negative, consonant=positive
+    # Center velocity around 0.5 → H³ signed norm maps 0→0.5
     centered_pleas = (pleas_mean_1s - 0.5) * 2.0
+    centered_vel = (pleas_vel - 0.5) * 2.0
     e2 = torch.tanh(
-        0.35 * pleas_vel + 0.65 * centered_pleas
+        0.35 * centered_vel + 0.65 * centered_pleas
     )
 
     return e0, e1, e2
