@@ -1,0 +1,297 @@
+{
+  "mechanism": "TPRD",
+  "tests_total": 58,
+  "tests_passed": 58,
+  "results": [
+    {
+      "name": "T1_pitch_positive_g1_01_single",
+      "passed": true,
+      "message": "T1(0.5284) > 0.10 (tonal \u2192 pitch representation)"
+    },
+    {
+      "name": "T1_pitch_positive_g1_02_octave",
+      "passed": true,
+      "message": "T1(0.5274) > 0.10 (tonal \u2192 pitch representation)"
+    },
+    {
+      "name": "T1_pitch_positive_g1_03_fifth",
+      "passed": true,
+      "message": "T1(0.5246) > 0.10 (tonal \u2192 pitch representation)"
+    },
+    {
+      "name": "T1_pitch_positive_g3_01_low",
+      "passed": true,
+      "message": "T1(0.5126) > 0.10 (tonal \u2192 pitch representation)"
+    },
+    {
+      "name": "T1_pitch_positive_g3_02_mid",
+      "passed": true,
+      "message": "T1(0.5284) > 0.10 (tonal \u2192 pitch representation)"
+    },
+    {
+      "name": "T1_pitch_positive_g3_03_high",
+      "passed": true,
+      "message": "T1(0.5548) > 0.10 (tonal \u2192 pitch representation)"
+    },
+    {
+      "name": "T1_single>dense_T1",
+      "passed": true,
+      "message": "single T1(0.5284) > dense(0.5266)-0.05"
+    },
+    {
+      "name": "T2_T0_single_positive",
+      "passed": true,
+      "message": "single T0(0.5341) > 0.05"
+    },
+    {
+      "name": "T2_T0_minor2>=single",
+      "passed": true,
+      "message": "m2 T0(0.5664) >= single(0.5341)-0.05"
+    },
+    {
+      "name": "T2_T0_report",
+      "passed": true,
+      "message": "T0: single=0.5341, m2=0.5664, dense=0.5747"
+    },
+    {
+      "name": "T3_T2_positive_g1_01_single",
+      "passed": true,
+      "message": "T2(0.5306) > 0.05 (some dissociation always present)"
+    },
+    {
+      "name": "T3_T2_positive_g1_03_fifth",
+      "passed": true,
+      "message": "T2(0.5370) > 0.05 (some dissociation always present)"
+    },
+    {
+      "name": "T3_T2_positive_g1_05_minor_2nd",
+      "passed": true,
+      "message": "T2(0.5661) > 0.05 (some dissociation always present)"
+    },
+    {
+      "name": "T3_T2_positive_g2_04_dense",
+      "passed": true,
+      "message": "T2(0.5747) > 0.05 (some dissociation always present)"
+    },
+    {
+      "name": "T3_T2_dense>=single",
+      "passed": true,
+      "message": "dense(0.5747) >= single(0.5306)-0.05"
+    },
+    {
+      "name": "T4_M0_single_bounded",
+      "passed": true,
+      "message": "M0 single=0.5025 in [0,1]"
+    },
+    {
+      "name": "T4_M0_dense_bounded",
+      "passed": true,
+      "message": "M0 dense=0.5218 in [0,1]"
+    },
+    {
+      "name": "T4_M0_dense>=single",
+      "passed": true,
+      "message": "dense M0(0.5218) >= single M0(0.5025)-0.10"
+    },
+    {
+      "name": "T4_M0_report",
+      "passed": true,
+      "message": "M0: single=0.5025, fifth=0.5032, m2=0.5172, dense=0.5218"
+    },
+    {
+      "name": "T5_M1_bounded_g1_01_single",
+      "passed": true,
+      "message": "M1(0.5949) in [0,1]"
+    },
+    {
+      "name": "T5_M1_bounded_g1_03_fifth",
+      "passed": true,
+      "message": "M1(0.5870) in [0,1]"
+    },
+    {
+      "name": "T5_M1_bounded_g1_05_minor_2nd",
+      "passed": true,
+      "message": "M1(0.5574) in [0,1]"
+    },
+    {
+      "name": "T5_M1_bounded_g2_04_dense",
+      "passed": true,
+      "message": "M1(0.5456) in [0,1]"
+    },
+    {
+      "name": "T6_P1_nonneg_g1_01_single",
+      "passed": true,
+      "message": "P1(0.0388) >= 0.0 (pitch state non-negative)"
+    },
+    {
+      "name": "T6_P1_nonneg_g1_02_octave",
+      "passed": true,
+      "message": "P1(0.0370) >= 0.0 (pitch state non-negative)"
+    },
+    {
+      "name": "T6_P1_nonneg_g1_03_fifth",
+      "passed": true,
+      "message": "P1(0.0305) >= 0.0 (pitch state non-negative)"
+    },
+    {
+      "name": "T6_P1_single>=dense",
+      "passed": true,
+      "message": "single P1(0.0388) >= dense(0.0320)-0.05"
+    },
+    {
+      "name": "T7_P0_single_positive",
+      "passed": true,
+      "message": "single P0(0.3070) > 0.05"
+    },
+    {
+      "name": "T7_P0_m2>=single",
+      "passed": true,
+      "message": "m2 P0(0.4603) >= single(0.3070)-0.05"
+    },
+    {
+      "name": "T7_P0_report",
+      "passed": true,
+      "message": "P0: single=0.3070, m2=0.4603, dense=0.4631"
+    },
+    {
+      "name": "T8_F0_P1_corr",
+      "passed": true,
+      "message": "r(F0,P1) = +0.961 > 0.3"
+    },
+    {
+      "name": "T8_F1_P0_corr",
+      "passed": true,
+      "message": "r(F1,P0) = +0.892 > 0.3"
+    },
+    {
+      "name": "T8_F0_positive_g1_01_single",
+      "passed": true,
+      "message": "F0(0.5602) > 0.05"
+    },
+    {
+      "name": "T8_F1_positive_g1_01_single",
+      "passed": true,
+      "message": "F1(0.5687) > 0.05"
+    },
+    {
+      "name": "T8_F2_positive_g1_01_single",
+      "passed": true,
+      "message": "F2(0.6245) > 0.05"
+    },
+    {
+      "name": "T8_F0_positive_g1_03_fifth",
+      "passed": true,
+      "message": "F0(0.5640) > 0.05"
+    },
+    {
+      "name": "T8_F1_positive_g1_03_fifth",
+      "passed": true,
+      "message": "F1(0.5660) > 0.05"
+    },
+    {
+      "name": "T8_F2_positive_g1_03_fifth",
+      "passed": true,
+      "message": "F2(0.6325) > 0.05"
+    },
+    {
+      "name": "T8_F0_positive_g1_05_minor_2nd",
+      "passed": true,
+      "message": "F0(0.5589) > 0.05"
+    },
+    {
+      "name": "T8_F1_positive_g1_05_minor_2nd",
+      "passed": true,
+      "message": "F1(0.6114) > 0.05"
+    },
+    {
+      "name": "T8_F2_positive_g1_05_minor_2nd",
+      "passed": true,
+      "message": "F2(0.6550) > 0.05"
+    },
+    {
+      "name": "T9_T1_positive_g3_01_low",
+      "passed": true,
+      "message": "T1(0.5126) > 0.10"
+    },
+    {
+      "name": "T9_P1_nonneg_g3_01_low",
+      "passed": true,
+      "message": "P1(0.0080) >= 0.0"
+    },
+    {
+      "name": "T9_T1_positive_g3_02_mid",
+      "passed": true,
+      "message": "T1(0.5284) > 0.10"
+    },
+    {
+      "name": "T9_P1_nonneg_g3_02_mid",
+      "passed": true,
+      "message": "P1(0.0388) >= 0.0"
+    },
+    {
+      "name": "T9_T1_positive_g3_03_high",
+      "passed": true,
+      "message": "T1(0.5548) > 0.10"
+    },
+    {
+      "name": "T9_P1_nonneg_g3_03_high",
+      "passed": true,
+      "message": "P1(0.1808) >= 0.0"
+    },
+    {
+      "name": "T10_shape_g1_01_single",
+      "passed": true,
+      "message": "shape=(862, 10)"
+    },
+    {
+      "name": "T10_bounds_g1_01_single",
+      "passed": "True",
+      "message": "[0.000833, 0.915306]"
+    },
+    {
+      "name": "T10_shape_g1_05_minor_2nd",
+      "passed": true,
+      "message": "shape=(862, 10)"
+    },
+    {
+      "name": "T10_bounds_g1_05_minor_2nd",
+      "passed": "True",
+      "message": "[0.000661, 0.916194]"
+    },
+    {
+      "name": "T10_shape_g2_04_dense",
+      "passed": true,
+      "message": "shape=(862, 10)"
+    },
+    {
+      "name": "T10_bounds_g2_04_dense",
+      "passed": "True",
+      "message": "[0.000647, 0.914265]"
+    },
+    {
+      "name": "T10_shape_g3_01_low",
+      "passed": true,
+      "message": "shape=(862, 10)"
+    },
+    {
+      "name": "T10_bounds_g3_01_low",
+      "passed": "True",
+      "message": "[0.000829, 0.920486]"
+    },
+    {
+      "name": "T10_shape_g4_03_arpeggio",
+      "passed": true,
+      "message": "shape=(996, 10)"
+    },
+    {
+      "name": "T10_bounds_g4_03_arpeggio",
+      "passed": "True",
+      "message": "[0.000809, 0.648161]"
+    },
+    {
+      "name": "T11_no_redundancy",
+      "passed": true,
+      "message": "No unexpected redundant dimension pairs"
+    }
+  ]
+}

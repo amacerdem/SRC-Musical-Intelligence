@@ -3,6 +3,7 @@
     "name": "M3 Musical Mind",
     "slug": "m3-musical-mind",
     "version": "1.0.0",
+    "scheme": "m3mind",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",

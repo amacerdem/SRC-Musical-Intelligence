@@ -1,0 +1,641 @@
+{
+  "metadata": {
+    "paper_id": "jiao_2025_advancing_personalized_digital_therapeutics_music_therapy_brainwave_entrainment_ai",
+    "title": "Advancing personalized digital therapeutics: integrating music therapy, brainwave entrainment methods, and AI-driven biofeedback",
+    "authors": [
+      "Dian Jiao"
+    ],
+    "year": 2025,
+    "journal": "Frontiers in Digital Health",
+    "doi": "10.3389/fdgth.2025.1552396",
+    "schema_version": "3.0",
+    "extraction_run_id": "v3.0-window-2-034",
+    "extraction_date": "2025-01-25T14:00:00Z",
+    "tooling": {
+      "extractor": "cursor-ai-claude",
+      "model": "claude-3.5-sonnet",
+      "registry_version": "R3_Schema_v2"
+    },
+    "paper_type": "mini_review",
+    "note": "This is a mini review that synthesizes evidence on music therapy, brainwave entrainment (binaural beats, isochronic tones), and multisensory stimulation, proposing an integrative framework with AI-driven biofeedback. Claims extracted represent synthesis of existing literature rather than original experimental results."
+  },
+  "claims": [
+    {
+      "claim_id": "jiao_2025.C01",
+      "claim_text": "Music therapy modulates affect, reduces stress, and enhances cognition by engaging limbic, prefrontal, and reward circuits, with dopamine release in mesolimbic pathway and cortisol reduction",
+      "relation_type": "association",
+      "causal_strength": "moderate",
+      "evidence_level": "systematic_review",
+      "independent_variable": {
+        "name": "Music therapy intervention",
+        "r3_axis": null,
+        "levels": ["music_therapy", "control"],
+        "values": null,
+        "unit": "categorical"
+      },
+      "dependent_variable": {
+        "name": "Neurochemical and neural circuit activation",
+        "r3_axis": "r3:UNMAPPED",
+        "axis_proposal": {
+          "suggested_id": "r3:X31.music_therapy_neurochemical_response",
+          "definition": "Magnitude of neurochemical changes (dopamine, cortisol, serotonin) and neural circuit activation following music therapy",
+          "expected_range": [0.0, 1.0],
+          "unit": "normalized_response",
+          "psychoacoustic_basis": "fMRI/EEG-derived measures of limbic, prefrontal, and reward circuit activation, combined with neurochemical markers"
+        },
+        "levels": ["modulated", "not_modulated"],
+        "values": null,
+        "unit": "categorical"
+      },
+      "statistics": {
+        "reported": false,
+        "note": "Mini review synthesizing existing literature; no original statistics reported"
+      },
+      "brain_regions": [
+        {
+          "region": "Limbic system",
+          "brodmann_area": null,
+          "mni_coordinates": null,
+          "hemisphere": "bilateral",
+          "evidence_type": "literature_inference",
+          "context": "Emotional regulation and processing"
+        },
+        {
+          "region": "Prefrontal cortex",
+          "brodmann_area": "BA9|BA10|BA46",
+          "mni_coordinates": null,
+          "hemisphere": "bilateral",
+          "evidence_type": "literature_inference",
+          "context": "Executive functioning and cognitive control"
+        },
+        {
+          "region": "Mesolimbic pathway",
+          "brodmann_area": null,
+          "mni_coordinates": null,
+          "hemisphere": "bilateral",
+          "evidence_type": "literature_inference",
+          "context": "Dopaminergic reward circuits"
+        },
+        {
+          "region": "Auditory cortex",
+          "brodmann_area": "BA41|BA42|BA22",
+          "mni_coordinates": null,
+          "hemisphere": "bilateral",
+          "evidence_type": "literature_inference",
+          "context": "Sound processing"
+        },
+        {
+          "region": "Amygdala",
+          "brodmann_area": null,
+          "mni_coordinates": null,
+          "hemisphere": "bilateral",
+          "evidence_type": "literature_inference",
+          "context": "Emotional relevance and processing"
+        },
+        {
+          "region": "Hippocampus",
+          "brodmann_area": null,
+          "mni_coordinates": null,
+          "hemisphere": "bilateral",
+          "evidence_type": "literature_inference",
+          "context": "Memory encoding and emotional contextualization"
+        }
+      ],
+      "methodology": {
+        "techniques": ["fMRI", "EEG", "neurochemical_assays"],
+        "task": "Music therapy interventions (active or passive listening, group singing, drumming)",
+        "control_conditions": "Control conditions vary across studies",
+        "sample_size": "Multiple studies reviewed",
+        "participant_characteristics": "Diverse populations including mood disorders, cognitive impairment, stroke survivors"
+      }
+    },
+    {
+      "claim_id": "jiao_2025.C02",
+      "claim_text": "Brainwave entrainment within gamma frequency range (30-100 Hz), particularly 40 Hz, facilitates neural oscillatory patterns linked to relaxation, concentration, and memory, with 40 Hz showing promise for cognitive enhancement",
+      "relation_type": "association",
+      "causal_strength": "moderate",
+      "evidence_level": "systematic_review",
+      "independent_variable": {
+        "name": "Brainwave entrainment frequency",
+        "r3_axis": "r3:L4.rate_hz",
+        "levels": ["alpha_8-12Hz", "theta_4-7Hz", "gamma_30-100Hz", "40Hz"],
+        "values": [8, 5.5, 65, 40],
+        "unit": "Hz"
+      },
+      "dependent_variable": {
+        "name": "Neural oscillatory patterns and cognitive outcomes",
+        "r3_axis": "r3:UNMAPPED",
+        "axis_proposal": {
+          "suggested_id": "r3:X32.brainwave_entrainment_effectiveness",
+          "definition": "Magnitude of neural entrainment and associated cognitive/emotional outcomes following brainwave entrainment",
+          "expected_range": [0.0, 1.0],
+          "unit": "normalized_effectiveness",
+          "psychoacoustic_basis": "EEG-derived measures of oscillatory power in target frequency bands, combined with behavioral cognitive/emotional measures"
+        },
+        "levels": ["entrained", "not_entrained"],
+        "values": null,
+        "unit": "categorical"
+      },
+      "statistics": {
+        "reported": false,
+        "note": "Mini review; evidence is mixed with individual variability. Some studies support brainwave entrainment, others find no significant effects."
+      },
+      "brain_regions": [
+        {
+          "region": "Auditory pathways",
+          "brodmann_area": null,
+          "mni_coordinates": null,
+          "hemisphere": "bilateral",
+          "evidence_type": "literature_inference",
+          "context": "Brainstem (inferior colliculus, superior olivary complex) for binaural beats processing"
+        },
+        {
+          "region": "Prefrontal cortex",
+          "brodmann_area": "BA9|BA10|BA46",
+          "mni_coordinates": null,
+          "hemisphere": "bilateral",
+          "evidence_type": "literature_inference",
+          "context": "Attention and higher-order cognitive processing (gamma frequencies)"
+        }
+      ],
+      "methodology": {
+        "techniques": ["EEG", "binaural_beats", "isochronic_tones"],
+        "task": "Binaural beats or isochronic tones at target frequencies",
+        "control_conditions": "Control conditions vary across studies",
+        "sample_size": "Multiple studies reviewed",
+        "participant_characteristics": "Diverse populations with varying baseline neural states"
+      }
+    },
+    {
+      "claim_id": "jiao_2025.C03",
+      "claim_text": "Synchronized multisensory stimulation combining auditory and visual inputs at gamma frequencies (particularly 40 Hz) demonstrates potential in enhancing memory and supporting neural integrity, particularly in Alzheimer's disease",
+      "relation_type": "association",
+      "causal_strength": "moderate",
+      "evidence_level": "systematic_review",
+      "independent_variable": {
+        "name": "Multisensory stimulation (40 Hz gamma)",
+        "r3_axis": "r3:L4.rate_hz",
+        "levels": ["40Hz_audiovisual", "control"],
+        "values": [40, null],
+        "unit": "Hz"
+      },
+      "dependent_variable": {
+        "name": "Memory performance and neural integrity",
+        "r3_axis": "r3:UNMAPPED",
+        "axis_proposal": {
+          "suggested_id": "r3:X33.multisensory_gamma_effectiveness",
+          "definition": "Magnitude of memory enhancement and neural integrity improvements following 40 Hz multisensory stimulation",
+          "expected_range": [0.0, 1.0],
+          "unit": "normalized_improvement",
+          "psychoacoustic_basis": "Behavioral memory measures combined with neuroimaging markers of neural integrity (e.g., amyloid clearance, neurogenesis)"
+        },
+        "levels": ["enhanced", "not_enhanced"],
+        "values": null,
+        "unit": "categorical"
+      },
+      "statistics": {
+        "reported": false,
+        "note": "Mini review; recent empirical studies demonstrate improvements in memory and possible mitigation of neuropathological changes in Alzheimer's disease"
+      },
+      "brain_regions": [
+        {
+          "region": "Multisensory integration areas",
+          "brodmann_area": null,
+          "mni_coordinates": null,
+          "hemisphere": "bilateral",
+          "evidence_type": "literature_inference",
+          "context": "Superior colliculus, visual cortex, auditory cortex, somatosensory cortex"
+        },
+        {
+          "region": "Hippocampus",
+          "brodmann_area": null,
+          "mni_coordinates": null,
+          "hemisphere": "bilateral",
+          "evidence_type": "literature_inference",
+          "context": "Memory-related processing and neurogenesis"
+        },
+        {
+          "region": "Prefrontal cortex",
+          "brodmann_area": "BA9|BA10|BA46",
+          "mni_coordinates": null,
+          "hemisphere": "bilateral",
+          "evidence_type": "literature_inference",
+          "context": "Cognitive control, decision-making, attention"
+        }
+      ],
+      "methodology": {
+        "techniques": ["EEG", "fMRI", "multisensory_stimulation"],
+        "task": "Synchronized auditory and visual stimulation at 40 Hz gamma frequency",
+        "control_conditions": "Control conditions vary across studies",
+        "sample_size": "Multiple studies reviewed, including Alzheimer's disease patients",
+        "participant_characteristics": "Alzheimer's disease patients, mild cognitive impairment, healthy controls"
+      }
+    },
+    {
+      "claim_id": "jiao_2025.C04",
+      "claim_text": "Synergistic application of music therapy, brainwave entrainment, and multisensory stimulation may optimize therapeutic outcomes by leveraging complementary mechanisms, with AI-driven biofeedback enabling real-time physiological assessment and individualized adjustments",
+      "relation_type": "association",
+      "causal_strength": "weak",
+      "evidence_level": "proposed_framework",
+      "independent_variable": {
+        "name": "Integrative intervention with AI-driven biofeedback",
+        "r3_axis": null,
+        "levels": ["integrated_ai_feedback", "individual_modalities", "control"],
+        "values": null,
+        "unit": "categorical"
+      },
+      "dependent_variable": {
+        "name": "Therapeutic outcomes",
+        "r3_axis": "r3:UNMAPPED",
+        "axis_proposal": {
+          "suggested_id": "r3:X34.integrative_therapy_effectiveness",
+          "definition": "Magnitude of therapeutic improvement (cognitive, emotional, neural) from integrated music therapy, brainwave entrainment, and multisensory stimulation with AI-driven personalization",
+          "expected_range": [0.0, 1.0],
+          "unit": "normalized_improvement",
+          "psychoacoustic_basis": "Combined behavioral and neuroimaging measures of cognitive, emotional, and neural outcomes"
+        },
+        "levels": ["optimized", "not_optimized"],
+        "values": null,
+        "unit": "categorical"
+      },
+      "statistics": {
+        "reported": false,
+        "note": "Proposed framework; preliminary evidence highlights transformative potential but remains in early stages. Few studies have systematically examined combinations of these modalities."
+      },
+      "brain_regions": [
+        {
+          "region": "Multiple regions",
+          "brodmann_area": null,
+          "mni_coordinates": null,
+          "hemisphere": "bilateral",
+          "evidence_type": "literature_inference",
+          "context": "Multi-regional targeting with real-time neural adaptation: prefrontal cortex (cognitive control), anterior cingulate cortex (attention, error monitoring), limbic structures (emotional regulation)"
+        }
+      ],
+      "methodology": {
+        "techniques": ["AI_driven_biofeedback", "EEG", "HRV", "real_time_adaptation"],
+        "task": "Integrated music therapy + brainwave entrainment + multisensory stimulation with AI-driven real-time adjustments",
+        "control_conditions": "Individual modalities or control conditions",
+        "sample_size": "Preliminary/pilot studies",
+        "participant_characteristics": "Diverse populations with mental health or cognitive challenges"
+      }
+    }
+  ],
+  "c3_associations": [
+    {
+      "unit": "ARU",
+      "process": "Music therapy engages limbic and reward circuits, modulating affect and reducing stress through dopaminergic pathways and cortisol reduction",
+      "confidence": 0.90,
+      "supported_claim_ids": [
+        "jiao_2025.C01"
+      ],
+      "brain_regions": [
+        {
+          "region": "Limbic system",
+          "role": "Emotional regulation",
+          "evidence_type": "literature_inference"
+        },
+        {
+          "region": "Mesolimbic pathway",
+          "role": "Dopaminergic reward",
+          "evidence_type": "literature_inference"
+        },
+        {
+          "region": "Amygdala",
+          "role": "Emotional processing",
+          "evidence_type": "literature_inference"
+        }
+      ],
+      "r3_layers": ["L5"],
+      "r3_dimensions": [
+        "r3:L5.sensory_consonance",
+        "r3:L5.sensory_dissonance"
+      ],
+      "evidence": "Music therapy activates limbic, prefrontal, and reward circuits, influencing mood through dopaminergic reward pathways and stress-related hormonal responses. Dopamine release in mesolimbic pathway, cortisol reduction, serotonin elevation.",
+      "evidence_source": "literature_inference"
+    },
+    {
+      "unit": "IMU",
+      "process": "Music therapy enhances memory consolidation and encoding through hippocampal activation and neuroplasticity",
+      "confidence": 0.85,
+      "supported_claim_ids": [
+        "jiao_2025.C01",
+        "jiao_2025.C03"
+      ],
+      "brain_regions": [
+        {
+          "region": "Hippocampus",
+          "role": "Memory encoding and consolidation",
+          "evidence_type": "literature_inference"
+        },
+        {
+          "region": "Prefrontal cortex",
+          "role": "Executive functions and memory",
+          "evidence_type": "literature_inference"
+        }
+      ],
+      "r3_layers": ["L5", "L6"],
+      "r3_dimensions": [
+        "r3:L5.pitch_hz",
+        "r3:L6.tempo_bpm"
+      ],
+      "evidence": "Music therapy fosters neuroplasticity and encoding of memories. Multisensory stimulation at 40 Hz gamma enhances memory and supports neural integrity, with hippocampus involved in memory-related processing.",
+      "evidence_source": "literature_inference"
+    },
+    {
+      "unit": "SPU",
+      "process": "Brainwave entrainment and multisensory stimulation modulate neural oscillations, particularly gamma frequencies (30-100 Hz, with emphasis on 40 Hz) for cognitive enhancement",
+      "confidence": 0.80,
+      "supported_claim_ids": [
+        "jiao_2025.C02",
+        "jiao_2025.C03"
+      ],
+      "brain_regions": [
+        {
+          "region": "Auditory pathways",
+          "role": "Binaural beats and isochronic tones processing",
+          "evidence_type": "literature_inference"
+        },
+        {
+          "region": "Multisensory integration areas",
+          "role": "Synchronized auditory and visual processing",
+          "evidence_type": "literature_inference"
+        }
+      ],
+      "r3_layers": ["L4"],
+      "r3_dimensions": [
+        "r3:L4.rate_hz"
+      ],
+      "evidence": "Brainwave entrainment (binaural beats, isochronic tones) modulates neural oscillations toward frequency bands associated with specific mental states. Multisensory stimulation at 40 Hz gamma enhances cognitive functions through neural entrainment.",
+      "evidence_source": "literature_inference"
+    },
+    {
+      "unit": "PCU",
+      "process": "AI-driven biofeedback enables real-time adaptive adjustments to therapeutic parameters based on physiological feedback, optimizing intervention effectiveness",
+      "confidence": 0.75,
+      "supported_claim_ids": [
+        "jiao_2025.C04"
+      ],
+      "brain_regions": [
+        {
+          "region": "Prefrontal cortex",
+          "role": "Cognitive control and decision-making",
+          "evidence_type": "literature_inference"
+        },
+        {
+          "region": "Anterior cingulate cortex",
+          "role": "Attention and error monitoring",
+          "evidence_type": "literature_inference"
+        }
+      ],
+      "r3_layers": ["L4", "L5", "L6"],
+      "r3_dimensions": [
+        "r3:L4.rate_hz",
+        "r3:L5.pitch_hz",
+        "r3:L6.tempo_bpm"
+      ],
+      "evidence": "AI-driven biofeedback systems enable real-time physiological monitoring (EEG, HRV) with adaptive stimulus adjustment. Can dynamically tailor musical complexity, entrainment frequencies, and multisensory components to individual needs.",
+      "evidence_source": "literature_inference"
+    },
+    {
+      "unit": "STU",
+      "process": "Structured musical rhythms entrain motor networks, enhancing motor recovery and sensorimotor integration, particularly in stroke survivors",
+      "confidence": 0.70,
+      "supported_claim_ids": [
+        "jiao_2025.C01"
+      ],
+      "brain_regions": [
+        {
+          "region": "Motor networks",
+          "role": "Motor recovery and sensorimotor integration",
+          "evidence_type": "literature_inference"
+        }
+      ],
+      "r3_layers": ["L4", "L6"],
+      "r3_dimensions": [
+        "r3:L4.rate_hz",
+        "r3:L6.tempo_bpm",
+        "r3:L6.beat_strength"
+      ],
+      "evidence": "Structured musical rhythms may assist stroke survivors by entraining motor networks, enhancing motor recovery and improving sensorimotor integration.",
+      "evidence_source": "literature_inference"
+    }
+  ],
+  "r3_coordinates": {
+    "primary_axes": [
+      {
+        "axis_id": "r3:L4.rate_hz",
+        "values": [4, 5.5, 8, 10, 12, 30, 40, 100],
+        "unit": "Hz",
+        "role": "IV",
+        "note": "Brainwave entrainment frequencies: theta (4-7 Hz), alpha (8-12 Hz), gamma (30-100 Hz), with emphasis on 40 Hz for cognitive enhancement"
+      }
+    ],
+    "derived_coordinates": [],
+    "note": "Music therapy engages multiple R³ dimensions (pitch, tempo, rhythm, consonance). Brainwave entrainment targets specific frequency bands. Multisensory stimulation emphasizes 40 Hz gamma for memory and cognitive enhancement."
+  },
+  "brain_regions_summary": {
+    "regions_mentioned": [
+      {
+        "region": "Limbic system",
+        "full_name": "Limbic system",
+        "mentions": [
+          {
+            "claim_id": "jiao_2025.C01",
+            "context": "Emotional regulation and processing in music therapy",
+            "evidence_type": "literature_inference"
+          },
+          {
+            "c3_association": "ARU",
+            "context": "Emotional regulation",
+            "evidence_type": "literature_inference"
+          }
+        ],
+        "total_mentions": 2
+      },
+      {
+        "region": "Prefrontal cortex",
+        "full_name": "Prefrontal cortex (BA9/BA10/BA46)",
+        "mentions": [
+          {
+            "claim_id": "jiao_2025.C01",
+            "context": "Executive functioning and cognitive control in music therapy",
+            "evidence_type": "literature_inference"
+          },
+          {
+            "claim_id": "jiao_2025.C02",
+            "context": "Attention and higher-order cognitive processing (gamma frequencies)",
+            "evidence_type": "literature_inference"
+          },
+          {
+            "claim_id": "jiao_2025.C03",
+            "context": "Cognitive control, decision-making, attention in multisensory stimulation",
+            "evidence_type": "literature_inference"
+          },
+          {
+            "c3_association": "IMU",
+            "context": "Executive functions and memory",
+            "evidence_type": "literature_inference"
+          },
+          {
+            "c3_association": "PCU",
+            "context": "Cognitive control and decision-making",
+            "evidence_type": "literature_inference"
+          }
+        ],
+        "total_mentions": 5
+      },
+      {
+        "region": "Hippocampus",
+        "full_name": "Hippocampus",
+        "mentions": [
+          {
+            "claim_id": "jiao_2025.C01",
+            "context": "Memory encoding and emotional contextualization",
+            "evidence_type": "literature_inference"
+          },
+          {
+            "claim_id": "jiao_2025.C03",
+            "context": "Memory-related processing and neurogenesis in multisensory stimulation",
+            "evidence_type": "literature_inference"
+          },
+          {
+            "c3_association": "IMU",
+            "context": "Memory encoding and consolidation",
+            "evidence_type": "literature_inference"
+          }
+        ],
+        "total_mentions": 3
+      },
+      {
+        "region": "Mesolimbic pathway",
+        "full_name": "Mesolimbic dopaminergic pathway",
+        "mentions": [
+          {
+            "claim_id": "jiao_2025.C01",
+            "context": "Dopaminergic reward circuits activated by enjoyable music",
+            "evidence_type": "literature_inference"
+          },
+          {
+            "c3_association": "ARU",
+            "context": "Dopaminergic reward",
+            "evidence_type": "literature_inference"
+          }
+        ],
+        "total_mentions": 2
+      },
+      {
+        "region": "Auditory cortex",
+        "full_name": "Auditory cortex (BA41/BA42/BA22)",
+        "mentions": [
+          {
+            "claim_id": "jiao_2025.C01",
+            "context": "Sound processing in music therapy",
+            "evidence_type": "literature_inference"
+          },
+          {
+            "c3_association": "SPU",
+            "context": "Binaural beats and isochronic tones processing",
+            "evidence_type": "literature_inference"
+          }
+        ],
+        "total_mentions": 2
+      },
+      {
+        "region": "Multisensory integration areas",
+        "full_name": "Multisensory integration areas (superior colliculus, visual cortex, auditory cortex, somatosensory cortex)",
+        "mentions": [
+          {
+            "claim_id": "jiao_2025.C03",
+            "context": "Synchronized auditory and visual processing at 40 Hz gamma",
+            "evidence_type": "literature_inference"
+          },
+          {
+            "c3_association": "SPU",
+            "context": "Synchronized auditory and visual processing",
+            "evidence_type": "literature_inference"
+          }
+        ],
+        "total_mentions": 2
+      }
+    ],
+    "total_unique_regions": 6,
+    "evidence_types": {
+      "literature_inference": 16,
+      "direct_measurement": 0
+    },
+    "note": "This is a mini review synthesizing existing literature. All brain region mentions are from literature inference based on reviewed studies. No original experimental data reported."
+  },
+  "validation": {
+    "r3_registry_checked": true,
+    "registry_version": "R3_Schema_v2",
+    "registry_check_date": "2025-01-25T14:00:00Z",
+    "unmapped_axes_count": 4,
+    "unmapped_axes": [
+      {
+        "claim_id": "jiao_2025.C01",
+        "variable": "dependent_variable",
+        "axis_proposal": {
+          "suggested_id": "r3:X31.music_therapy_neurochemical_response",
+          "status": "proposed"
+        }
+      },
+      {
+        "claim_id": "jiao_2025.C02",
+        "variable": "dependent_variable",
+        "axis_proposal": {
+          "suggested_id": "r3:X32.brainwave_entrainment_effectiveness",
+          "status": "proposed"
+        }
+      },
+      {
+        "claim_id": "jiao_2025.C03",
+        "variable": "dependent_variable",
+        "axis_proposal": {
+          "suggested_id": "r3:X33.multisensory_gamma_effectiveness",
+          "status": "proposed"
+        }
+      },
+      {
+        "claim_id": "jiao_2025.C04",
+        "variable": "dependent_variable",
+        "axis_proposal": {
+          "suggested_id": "r3:X34.integrative_therapy_effectiveness",
+          "status": "proposed"
+        }
+      }
+    ],
+    "c3_unit_validation": {
+      "all_units_valid": true,
+      "units_checked": ["ARU", "IMU", "SPU", "PCU", "STU"],
+      "invalid_units": []
+    },
+    "claim_id_format_validation": {
+      "all_valid": true,
+      "format": "paper_id.C##"
+    },
+    "schema_compliance": {
+      "version": "3.0",
+      "compliant": true,
+      "warnings": [
+        "All DV r3_axis unmapped (axis_proposal provided for all)",
+        "Mini review paper with no original experimental data (scope: literature_inference)",
+        "C04 represents proposed framework rather than established finding (weak causal strength)"
+      ],
+      "errors": []
+    },
+    "data_quality": {
+      "statistics_structured": false,
+      "effect_sizes_present": 0,
+      "effect_sizes_missing": 4,
+      "sample_characteristics_complete": false,
+      "r3_coordinates_complete": true,
+      "brain_regions_collected": true,
+      "brain_regions_count": 6,
+      "brain_regions_with_context": 6,
+      "roi_mentions": 0,
+      "note": "Mini review synthesizing existing literature. All brain regions collected with full context from literature synthesis. R³ coordinates mapped for brainwave entrainment frequencies (L4.rate_hz). No original statistics as this is a review paper."
+    }
+  }
+}
+

@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Animated, {
@@ -19,6 +20,9 @@ import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import type { OnboardingStackParamList } from "../../navigation/types";
 import { useOnboardingStore } from "../../stores/useOnboardingStore";
+import { useUserStore } from "../../stores/useUserStore";
+import { SpotifyService } from "../../services/spotify";
+import { SpotifySimulator } from "../../services/SpotifySimulator";
 import { Button } from "../../components/ui/Button";
 import { GlassCard } from "../../components/ui/GlassCard";
 import { ProgressBar } from "../../components/ui/ProgressBar";
@@ -252,10 +256,9 @@ export function ListeningImportScreen() {
     }, TYPEWRITER_SPEED);
   }, []);
 
-  /* -- Progress Engine ------------------------------------------------------ */
-  const startAnalysis = useCallback(
-    (platformId: string) => {
-      setSelectedPlatform(platformId);
+  /* -- Progress Animation --------------------------------------------------- */
+  const runProgressAnimation = useCallback(
+    (realTrackCount?: number, realGenres?: string[]) => {
       setAnalyzing(true);
       setLocalProgress(0);
       phaseQueueRef.current = 0;
@@ -282,12 +285,13 @@ export function ListeningImportScreen() {
         if (p === 15) setShowTracks(true);
         if (p === 30) setShowHours(true);
         if (p >= 50 && p <= 70) {
-          // Reveal genres one by one across 50-70%
-          const genreIdx = Math.floor(((p - 50) / 20) * GENRES.length);
-          setVisibleGenres(GENRES.slice(0, Math.min(genreIdx + 1, GENRES.length)));
+          const genreChips = realGenres?.length ? realGenres.slice(0, 5) : GENRES;
+          const genreIdx = Math.floor(((p - 50) / 20) * genreChips.length);
+          setVisibleGenres(genreChips.slice(0, Math.min(genreIdx + 1, genreChips.length)));
         }
         if (p >= 70) {
-          setVisibleGenres([...GENRES]);
+          const genreChips = realGenres?.length ? realGenres.slice(0, 5) : GENRES;
+          setVisibleGenres([...genreChips]);
         }
 
         /* -- Completion --------------------------------------------------- */
@@ -298,10 +302,8 @@ export function ListeningImportScreen() {
           setLocalProgress(100);
           setProgress(100, PHASES[PHASES.length - 1]);
 
-          // Ensure final phase text shows
           startTypewriter(PHASES[PHASES.length - 1]);
 
-          // Show continue button after delay
           setTimeout(() => setShowContinue(true), 500);
         } else {
           setLocalProgress(p);
@@ -310,6 +312,53 @@ export function ListeningImportScreen() {
       }, PROGRESS_INTERVAL);
     },
     [setProgress, startTypewriter]
+  );
+
+  /* -- Spotify OAuth Flow -------------------------------------------------- */
+  const startSpotifyAuth = useCallback(async () => {
+    try {
+      const request = SpotifyService.getAuthRequest();
+      await request.makeAuthUrlAsync(SpotifyService.discovery);
+
+      const result = await request.promptAsync(SpotifyService.discovery);
+
+      if (result.type === "success" && result.params.code) {
+        await SpotifyService.exchangeCode(result.params.code, request);
+        useUserStore.getState().setSpotifyConnected(true);
+
+        setSelectedPlatform("spotify");
+
+        // Fetch real data in the background while the animation runs
+        const tracksPromise = SpotifyService.getInitialBatch();
+        runProgressAnimation();
+
+        const tracks = await tracksPromise;
+        // Extract unique genres from real tracks
+        const uniqueGenres = [...new Set(tracks.map((t) => t.genre).filter((g) => g !== "Unknown"))];
+        if (uniqueGenres.length > 0) {
+          setVisibleGenres(uniqueGenres.slice(0, 5));
+        }
+      } else if (result.type === "error") {
+        Alert.alert("Spotify Error", result.error?.message ?? "Authentication failed");
+      }
+      // result.type === "dismiss" → user closed the browser, do nothing
+    } catch (err: any) {
+      Alert.alert("Connection Error", err.message ?? "Could not connect to Spotify");
+    }
+  }, [runProgressAnimation]);
+
+  /* -- Start Analysis (entry point) ---------------------------------------- */
+  const startAnalysis = useCallback(
+    (platformId: string) => {
+      if (platformId === "spotify") {
+        startSpotifyAuth();
+        return;
+      }
+      // Other platforms: use mock analysis
+      setSelectedPlatform(platformId);
+      runProgressAnimation();
+    },
+    [startSpotifyAuth, runProgressAnimation]
   );
 
   /* -- Cleanup -------------------------------------------------------------- */

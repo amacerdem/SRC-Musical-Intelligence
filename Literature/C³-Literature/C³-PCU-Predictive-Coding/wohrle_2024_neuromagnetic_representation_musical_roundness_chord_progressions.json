@@ -1,0 +1,501 @@
+{
+  "metadata": {
+    "paper_id": "wohrle_2024_neuromagnetic_representation_musical_roundness_chord_progressions",
+    "title": "Neuromagnetic representation of musical roundness in chord progressions",
+    "authors": [
+      "Sophie D. Wöhrle",
+      "Christoph Reuter",
+      "André Rupp",
+      "Martin Andermann"
+    ],
+    "year": 2024,
+    "journal": "Frontiers in Neuroscience",
+    "doi": "10.3389/fnins.2024.1383554",
+    "schema_version": "3.0",
+    "extraction_run_id": "v3.0-window-2-040",
+    "extraction_date": "2025-01-25T20:00:00Z",
+    "tooling": {
+      "extractor": "cursor-ai-claude",
+      "model": "claude-3.5-sonnet",
+      "registry_version": "R3_Schema_v2"
+    },
+    "paper_type": "original_research",
+    "note": "Original MEG study examining neuromagnetic representation of musical roundness in cadence-like four-chord progressions. 30 participants listened to chord progressions while cortical activity was measured with MEG, then rated roundness. Chord progressions varied in consonance/dissonance and harmonic function based on Western music theory."
+  },
+  "claims": [
+    {
+      "claim_id": "wohrle_2024.C01",
+      "claim_text": "Roundness ratings differed according to the degree of dissonance in the dominant chord at the progression's third position (CHORD3: D7 > D9/5 > D7/5> > Tristan), with this effect pronounced in listeners with high musical aptitude (CHORD3*MUS interaction: F(3,84)=5.031, p=0.014, ηp²=0.152)",
+      "relation_type": "effect",
+      "causal_strength": "moderate",
+      "evidence_level": "behavioral_experiment",
+      "independent_variable": {
+        "name": "Degree of dissonance in dominant chord (CHORD3)",
+        "r3_axis": "r3:L5.sensory_consonance",
+        "levels": ["D7", "D9/5", "D7/5>", "Tristan"],
+        "values": null,
+        "unit": "categorical"
+      },
+      "dependent_variable": {
+        "name": "Roundness ratings (1-7 Likert scale)",
+        "r3_axis": "r3:UNMAPPED",
+        "axis_proposal": {
+          "suggested_id": "r3:X51.musical_roundness_perception",
+          "definition": "Perceived roundness of chord progressions measured on 1-7 Likert scale, where roundness captures closure, cohesion, and gestalt-like understanding of chord relations in Western music",
+          "expected_range": [1.0, 7.0],
+          "unit": "likert_scale_points",
+          "psychoacoustic_basis": "Roundness ratings reflect holistic perception of chord progressions, incorporating consonance/dissonance, harmonic function, and musical context. Higher ratings indicate greater perceived closure and cohesion."
+        },
+        "levels": ["not_round", "somewhat_round", "very_round"],
+        "values": null,
+        "unit": "likert_scale_points"
+      },
+      "statistics": {
+        "reported": true,
+        "test_type": "repeated_measures_ANOVA",
+        "f_value": "F(3,84)=40.602, p<0.001, ηp²=0.592 (CHORD3 main effect); F(3,84)=5.031, p=0.014, ηp²=0.152 (CHORD3*MUS interaction)",
+        "p_value": "CHORD3: p<0.001; CHORD3*MUS: p=0.014",
+        "post_hoc": "D7 > D9/5 > D7/5> > Tristan (all pairwise comparisons p<0.001 except D7/5> vs Tristan). High AMMA listeners showed greater rating graduations: D7-D9/5 (p=0.023), D7-D7/5 (p=0.020), D7-Tristan (p=0.007), D9/5-Tristan (p=0.012)",
+        "effect_size": "CHORD3: ηp²=0.592 (large); CHORD3*MUS: ηp²=0.152 (medium)",
+        "note": "Roundness ratings sorted in predicted order: D7 > D9/5 > D7/5> > Tristan. High AMMA listeners showed greater differentiation between dissonant chords. Both groups rated D7 rounder than Tristan, but difference stronger in high AMMA listeners (low AMMA: p=0.0058; high AMMA: p<0.001)."
+      },
+      "brain_regions": [],
+      "methodology": {
+        "techniques": ["psychoacoustic_rating", "Likert_scale"],
+        "task": "After MEG measurements, participants rated each of 192 chord progressions on 1-7 Likert scale for roundness (1=not round at all, 7=very round). One replay allowed until rating mandatory. Ratings based on personal subjective impression.",
+        "control_conditions": "Within-subjects design with multiple factors: INSTRUMENT (IRN, piano, cello), CHORD1 (major, minor), CHORD2 (SD, T3), CHORD3 (D7, D9/5, D7/5>, Tristan), CHORD4 (major, minor). Musical aptitude (MUS: high vs low AMMA) as between-subject factor.",
+        "sample_size": 30,
+        "participant_characteristics": "30 adult subjects (15 female, 15 male, 23 right-handed, 7 left-handed), mean age 28.8 years (std=11.3, min=18, max=58). Normal hearing (<25 dB loss below 4 kHz). Musical aptitude measured with AMMA (mean=56.2, std=8.0, median=56). Participants sorted into high vs low AMMA groups along median."
+      }
+    },
+    {
+      "claim_id": "wohrle_2024.C02",
+      "claim_text": "CHORD3 had a significant main effect on N1m amplitude at the fourth chord position (Cadences IV: F(3,84)=3.159, p=0.031, ηp²=0.101), with greater amplitudes for D7 compared to Tristan (p=0.003) and D7/5> (p=0.012), and the order of amplitudes confirmed the a priori hypothesis D7 > D9/5 > D7/5> > Tristan",
+      "relation_type": "effect",
+      "causal_strength": "moderate",
+      "evidence_level": "MEG",
+      "independent_variable": {
+        "name": "Degree of dissonance in dominant chord (CHORD3)",
+        "r3_axis": "r3:L5.sensory_consonance",
+        "levels": ["D7", "D9/5", "D7/5>", "Tristan"],
+        "values": null,
+        "unit": "categorical"
+      },
+      "dependent_variable": {
+        "name": "N1m amplitude at fourth chord position",
+        "r3_axis": "r3:UNMAPPED",
+        "axis_proposal": {
+          "suggested_id": "r3:X52.n1m_amplitude_resolution",
+          "definition": "N1m (auditory evoked field) amplitude at the fourth chord position (resolution) in response to chord progressions, measured in femtotesla (fT), reflecting cortical processing of musical roundness and harmonic resolution",
+          "expected_range": [-500.0, 500.0],
+          "unit": "femtotesla",
+          "psychoacoustic_basis": "N1m amplitude reflects early cortical processing of auditory stimuli. Larger amplitudes to resolution chord (fourth position) after less dissonant dominant chords (third position) indicate better processing of round chord progressions."
+        },
+        "levels": ["low_amplitude", "medium_amplitude", "high_amplitude"],
+        "values": null,
+        "unit": "femtotesla"
+      },
+      "statistics": {
+        "reported": true,
+        "test_type": "repeated_measures_ANOVA",
+        "f_value": "F(3,84)=3.159, p=0.031, ηp²=0.101",
+        "p_value": "0.031",
+        "post_hoc": "D7 > Tristan (p=0.003), D7 > D7/5> (p=0.012). Order confirmed: D7 > D9/5 > D7/5> > Tristan",
+        "effect_size": "ηp²=0.101 (small-medium)",
+        "note": "N1m amplitude differences expected at third chord position actually occurred at fourth chord position (resolution). This suggests delayed representation of dissonant chords, possibly reflecting roundness perception rather than absolute consonance/dissonance."
+      },
+      "brain_regions": [
+        {
+          "region": "Auditory cortex (Heschl's Gyrus)",
+          "brodmann_area": "BA41|BA42",
+          "mni_coordinates": "Talairach coordinates: |x|=30-60, y=+5 to -45, z=+18 to -20",
+          "hemisphere": "bilateral",
+          "evidence_type": "MEG_source_localization",
+          "context": "Four-dipole model on neuromagnetic responses to second, third, and fourth chord (PCR). N1m dipoles fitted in each hemisphere. Only dipole models with Talairach coordinates between |x|=30-60, y=+5 to -45, z=+18 to -20 were accepted. Sources situated in auditory cortex (Heschl's Gyrus)."
+        }
+      ],
+      "methodology": {
+        "techniques": ["MEG", "source_localization", "four_dipole_model"],
+        "task": "Participants listened passively to cadence-like four-chord progressions while watching silent movie with subtitles. MEG recordings with 122-channel whole-head system (Elekta Neuromag). Source analysis using BESA 5.2 with spherical head model. Four-dipole model on PCR (pitch change response) to second, third, and fourth chord.",
+        "control_conditions": "Within-subjects design. Multiple factors: INSTRUMENT (IRN, piano, cello), CHORD1 (major, minor), CHORD2 (SD, T3), CHORD3 (D7, D9/5, D7/5>, Tristan), CHORD4 (major, minor). Musical aptitude (MUS: high vs low AMMA) as between-subject factor.",
+        "sample_size": 30,
+        "participant_characteristics": "Same as C01",
+        "analysis_details": "Epochs -500 to 5000 ms, baseline -100 to 0 ms. Bandpass filter 2-30 Hz. Four-dipole model: one pair for N1m in each hemisphere, one pair for P2m. N1m dipoles fitted first, then switched off to fit P2m independently. Source waveforms exported for each condition separately."
+      }
+    },
+    {
+      "claim_id": "wohrle_2024.C03",
+      "claim_text": "The factor MUS (musical aptitude) had a significant impact on N1m amplitude differences at fourth chord position (CHORD3*MUS interaction: F(3,84)=2.933, p=0.041, ηp²=0.095), with N1m amplitudes differing significantly between D7 and Tristan for high AMMA listeners (p=0.004) but not for low AMMA listeners (p=0.171 n.s.)",
+      "relation_type": "effect",
+      "causal_strength": "moderate",
+      "evidence_level": "MEG",
+      "independent_variable": {
+        "name": "Musical aptitude (MUS: high vs low AMMA)",
+        "r3_axis": null,
+        "levels": ["low_AMMA", "high_AMMA"],
+        "values": null,
+        "unit": "categorical"
+      },
+      "dependent_variable": {
+        "name": "N1m amplitude difference (D7 vs Tristan) at fourth chord position",
+        "r3_axis": "r3:UNMAPPED",
+        "axis_proposal": {
+          "suggested_id": "r3:X53.musical_aptitude_roundness_differentiation",
+          "definition": "N1m amplitude differentiation between round and unround chord progressions, measured as difference between D7 and Tristan conditions, reflecting musical aptitude-dependent cortical sensitivity to musical roundness",
+          "expected_range": [-500.0, 500.0],
+          "unit": "femtotesla",
+          "psychoacoustic_basis": "High AMMA listeners show greater N1m amplitude differentiation between round (D7) and unround (Tristan) chord progressions, indicating more precise cortical representation of musical roundness."
+        },
+        "levels": ["low_differentiation", "high_differentiation"],
+        "values": null,
+        "unit": "femtotesla"
+      },
+      "statistics": {
+        "reported": true,
+        "test_type": "repeated_measures_ANOVA",
+        "f_value": "F(3,84)=2.933, p=0.041, ηp²=0.095",
+        "p_value": "0.041",
+        "post_hoc": "High AMMA: D7 vs Tristan p=0.004; Low AMMA: D7 vs Tristan p=0.171 n.s.",
+        "effect_size": "ηp²=0.095 (small)",
+        "note": "Order of amplitudes in high AMMA group matched musicological expectations (D7 > D9/5 > D7/5> > Tristan), but not in low AMMA group. High AMMA listeners showed more distinct representation of roundness in neuromagnetic responses."
+      },
+      "brain_regions": [
+        {
+          "region": "Auditory cortex (Heschl's Gyrus)",
+          "brodmann_area": "BA41|BA42",
+          "mni_coordinates": "Talairach coordinates: |x|=30-60, y=+5 to -45, z=+18 to -20",
+          "hemisphere": "bilateral",
+          "evidence_type": "MEG_source_localization",
+          "context": "Same as C02. N1m dipoles in auditory cortex showing musical aptitude-dependent differentiation."
+        }
+      ],
+      "methodology": {
+        "techniques": ["MEG", "source_localization"],
+        "task": "Same as C02",
+        "control_conditions": "Same as C02. Musical aptitude (MUS: high vs low AMMA) as between-subject factor.",
+        "sample_size": 30,
+        "participant_characteristics": "Same as C01. Participants sorted into high vs low AMMA groups along median (56 points).",
+        "analysis_details": "Same as C02. CHORD3*MUS interaction examined at fourth chord position."
+      }
+    },
+    {
+      "claim_id": "wohrle_2024.C04",
+      "claim_text": "N1m magnitude increased during chord progressions that were considered particularly round, with the maximum difference after the final chord (fourth position). N1m amplitudes did not differ between round and unround sequences at first two chords, began to segregate on third chord, and reached maximal difference on fourth chord",
+      "relation_type": "effect",
+      "causal_strength": "moderate",
+      "evidence_level": "MEG",
+      "independent_variable": {
+        "name": "Roundness rating (round vs unround)",
+        "r3_axis": null,
+        "levels": ["unround", "round"],
+        "values": null,
+        "unit": "categorical"
+      },
+      "dependent_variable": {
+        "name": "N1m amplitude across chord positions",
+        "r3_axis": "r3:UNMAPPED",
+        "axis_proposal": {
+          "suggested_id": "r3:X54.n1m_roundness_evolution",
+          "definition": "N1m amplitude evolution across four-chord progression, measured separately for round and unround sequences, reflecting dynamic cortical processing of musical roundness as acoustic gestalt emerges over time",
+          "expected_range": [-500.0, 500.0],
+          "unit": "femtotesla",
+          "psychoacoustic_basis": "N1m amplitude increases during round chord progressions, with maximum difference at final chord (resolution). This reflects roundness perception as gestalt-like understanding that evolves over time, rather than absolute consonance/dissonance."
+        },
+        "levels": ["low_amplitude", "medium_amplitude", "high_amplitude"],
+        "values": null,
+        "unit": "femtotesla"
+      },
+      "statistics": {
+        "reported": true,
+        "test_type": "bootstrapping_analysis",
+        "f_value": null,
+        "p_value": "Significant difference at fourth chord position (specific p-value not reported)",
+        "post_hoc": null,
+        "effect_size": null,
+        "note": "For each participant, 32 chord progressions sorted by individual roundness ratings. Four roundest and four least round progressions separately averaged. Bootstrapping analyses (2000 resamples) on N1m and P2m amplitudes for each chord. First two chords: no differences. Third chord: begins to segregate. Fourth chord: maximal difference. High AMMA listeners tended to show greater differences (p=0.0615 n.s., just missed significance)."
+      },
+      "brain_regions": [
+        {
+          "region": "Auditory cortex (Heschl's Gyrus)",
+          "brodmann_area": "BA41|BA42",
+          "mni_coordinates": "Talairach coordinates: |x|=30-60, y=+5 to -45, z=+18 to -20",
+          "hemisphere": "bilateral",
+          "evidence_type": "MEG_source_localization",
+          "context": "Same as C02. N1m amplitude evolution across chord progression showing roundness-related differences."
+        }
+      ],
+      "methodology": {
+        "techniques": ["MEG", "source_localization", "bootstrapping"],
+        "task": "Same as C02. After MEG, participants rated roundness. Chord progressions sorted by individual ratings.",
+        "control_conditions": "Within-subjects design. Round vs unround sequences determined by individual participant ratings (four roundest vs four least round for each participant).",
+        "sample_size": 30,
+        "participant_characteristics": "Same as C01",
+        "analysis_details": "For each participant, 32 chord progressions sorted by individual roundness ratings. Four roundest and four least round progressions separately averaged. Bootstrapping analyses (2000 resamples) on N1m and P2m amplitudes for each chord position."
+      }
+    },
+    {
+      "claim_id": "wohrle_2024.C05",
+      "claim_text": "Mode-coherent chord progressions (major-major, minor-minor) evoked larger P2m amplitudes than incoherent sequences (major-minor, minor-major) at the fourth chord position (CHORD1*CHORD4 interaction: F(1,28)=9.307, p=0.005, ηp²=0.249), with post hoc tests revealing greater P2m amplitudes for coherent sequences (p=0.008)",
+      "relation_type": "effect",
+      "causal_strength": "moderate",
+      "evidence_level": "MEG",
+      "independent_variable": {
+        "name": "Mode coherence (CHORD1*CHORD4)",
+        "r3_axis": null,
+        "levels": ["coherent_major-major", "coherent_minor-minor", "incoherent_major-minor", "incoherent_minor-major"],
+        "values": null,
+        "unit": "categorical"
+      },
+      "dependent_variable": {
+        "name": "P2m amplitude at fourth chord position",
+        "r3_axis": "r3:UNMAPPED",
+        "axis_proposal": {
+          "suggested_id": "r3:X55.p2m_mode_coherence",
+          "definition": "P2m (auditory evoked field) amplitude at fourth chord position, measured in femtotesla (fT), reflecting cortical processing of mode coherence (major-major, minor-minor) vs incoherence (major-minor, minor-major) in chord progressions",
+          "expected_range": [-500.0, 500.0],
+          "unit": "femtotesla",
+          "psychoacoustic_basis": "P2m amplitude reflects later cortical processing of auditory stimuli. Larger amplitudes for mode-coherent progressions indicate better processing of harmonic relationships and closure, consistent with Western music theory conventions."
+        },
+        "levels": ["low_amplitude", "high_amplitude"],
+        "values": null,
+        "unit": "femtotesla"
+      },
+      "statistics": {
+        "reported": true,
+        "test_type": "repeated_measures_ANOVA",
+        "f_value": "F(1,28)=9.307, p=0.005, ηp²=0.249",
+        "p_value": "0.005",
+        "post_hoc": "Coherent sequences > incoherent sequences (p=0.008). Two incoherent sequences did not differ (p=0.774 n.s.)",
+        "effect_size": "ηp²=0.249 (medium-large)",
+        "note": "Mode-coherent chord progressions (major-major, minor-minor) led to higher roundness ratings than incoherent progressions (p=0.008 in psychoacoustics). P2m amplitudes mirrored this pattern. This reflects Western music theory conventions (e.g., Picardy third era) where mode coherence creates stronger impression of closure."
+      },
+      "brain_regions": [
+        {
+          "region": "Auditory cortex (Heschl's Gyrus)",
+          "brodmann_area": "BA41|BA42",
+          "mni_coordinates": "Talairach coordinates: |x|=30-60, y=+5 to -45, z=+18 to -20",
+          "hemisphere": "bilateral",
+          "evidence_type": "MEG_source_localization",
+          "context": "Same as C02. P2m dipoles in auditory cortex showing mode coherence effects."
+        }
+      ],
+      "methodology": {
+        "techniques": ["MEG", "source_localization"],
+        "task": "Same as C02",
+        "control_conditions": "Same as C02. CHORD1*CHORD4 interaction examined at fourth chord position.",
+        "sample_size": 30,
+        "participant_characteristics": "Same as C01",
+        "analysis_details": "Same as C02. CHORD1*CHORD4 interaction examined in Cadences V ANOVA at fourth chord position."
+      }
+    }
+  ],
+  "c3_associations": [
+    {
+      "unit": "SPU",
+      "process": "Neuromagnetic representation of musical roundness in chord progressions, with N1m amplitude differences reflecting cortical sensitivity to consonance/dissonance and harmonic function in Western music theory context",
+      "confidence": 0.95,
+      "supported_claim_ids": [
+        "wohrle_2024.C01",
+        "wohrle_2024.C02",
+        "wohrle_2024.C03",
+        "wohrle_2024.C04"
+      ],
+      "brain_regions": [
+        {
+          "region": "Auditory cortex (Heschl's Gyrus)",
+          "role": "N1m and P2m responses to chord progressions, reflecting cortical processing of musical roundness, consonance/dissonance, and harmonic relationships",
+          "evidence_type": "MEG_source_localization"
+        }
+      ],
+      "r3_layers": ["L5", "L6"],
+      "r3_dimensions": [
+        "r3:L5.sensory_consonance",
+        "r3:L5.pitch_hz",
+        "r3:L6.harmonic_complexity"
+      ],
+      "evidence": "Roundness ratings differed according to degree of dissonance in dominant chord (CHORD3: D7 > D9/5 > D7/5> > Tristan), with effect pronounced in high musical aptitude listeners. N1m amplitude at fourth chord position showed corresponding pattern, with greater amplitudes for D7 compared to Tristan and D7/5>, and order confirmed hypothesis. N1m magnitude increased during round chord progressions, with maximum difference at final chord. High AMMA listeners showed more distinct representation of roundness in neuromagnetic responses.",
+      "evidence_source": "direct_measurement"
+    },
+    {
+      "unit": "PCU",
+      "process": "Predictive coding of musical roundness, with N1m amplitude evolution across chord progression reflecting gestalt-like understanding that emerges over time, and P2m amplitudes reflecting mode coherence and harmonic expectations",
+      "confidence": 0.85,
+      "supported_claim_ids": [
+        "wohrle_2024.C04",
+        "wohrle_2024.C05"
+      ],
+      "brain_regions": [
+        {
+          "region": "Auditory cortex (Heschl's Gyrus)",
+          "role": "Predictive processing of chord progressions, with N1m reflecting roundness evolution and P2m reflecting mode coherence and harmonic expectations",
+          "evidence_type": "MEG_source_localization"
+        }
+      ],
+      "r3_layers": ["L5", "L6"],
+      "r3_dimensions": [
+        "r3:L5.sensory_consonance",
+        "r3:L6.harmonic_complexity"
+      ],
+      "evidence": "N1m amplitude evolution across chord progression: no differences at first two chords, begins to segregate on third chord, reaches maximal difference on fourth chord. This reflects roundness perception as gestalt-like understanding that evolves over time. P2m amplitudes larger for mode-coherent progressions (major-major, minor-minor) than incoherent sequences, reflecting harmonic expectations and closure.",
+      "evidence_source": "direct_measurement"
+    },
+    {
+      "unit": "ARU",
+      "process": "Affective resonance to musical roundness, with roundness ratings reflecting perceived closure, cohesion, and gestalt-like understanding of chord relations, and mode coherence creating stronger impression of closure",
+      "confidence": 0.75,
+      "supported_claim_ids": [
+        "wohrle_2024.C01",
+        "wohrle_2024.C05"
+      ],
+      "brain_regions": [],
+      "r3_layers": ["L5", "L6"],
+      "r3_dimensions": [
+        "r3:L5.sensory_consonance",
+        "r3:L6.harmonic_complexity"
+      ],
+      "evidence": "Roundness ratings reflect holistic perception of chord progressions, incorporating consonance/dissonance, harmonic function, and musical context. Mode-coherent progressions (major-major, minor-minor) received higher roundness ratings than incoherent progressions, reflecting Western music theory conventions where mode coherence creates stronger impression of closure (e.g., Picardy third era).",
+      "evidence_source": "direct_measurement"
+    }
+  ],
+  "r3_coordinates": {
+    "primary_axes": [
+      {
+        "axis_id": "r3:L5.sensory_consonance",
+        "values": null,
+        "unit": "categorical",
+        "role": "IV",
+        "note": "Degree of dissonance in dominant chord (CHORD3): D7 (most consonant) > D9/5 > D7/5> > Tristan (most dissonant). This categorical variable reflects sensory consonance based on Western music theory."
+      }
+    ],
+    "derived_coordinates": [],
+    "note": "Chord progressions based on Western music theory with four-chord cadence structure. CHORD3 (dominant chord) varied in dissonance: D7 (dominant seventh), D9/5 (major dominant ninth), D7/5> (dominant seventh with lowered fifth), Tristan (Tristan chord). No specific frequency or tempo parameters reported, as study focuses on harmonic relationships and roundness perception rather than spectral or temporal features. Chord durations: first three chords 750 ms, last chord 950 ms. Total sequence duration 3200 ms followed by 1300-1350 ms silence."
+  },
+  "brain_regions_summary": {
+    "regions_mentioned": [
+      {
+        "region": "Auditory cortex (Heschl's Gyrus)",
+        "full_name": "Auditory cortex (Heschl's Gyrus, BA41/BA42)",
+        "mentions": [
+          {
+            "claim_id": "wohrle_2024.C02",
+            "context": "Four-dipole model on neuromagnetic responses. N1m dipoles fitted in each hemisphere. Sources situated in auditory cortex (Heschl's Gyrus). Talairach coordinates: |x|=30-60, y=+5 to -45, z=+18 to -20",
+            "evidence_type": "MEG_source_localization"
+          },
+          {
+            "claim_id": "wohrle_2024.C03",
+            "context": "N1m dipoles in auditory cortex showing musical aptitude-dependent differentiation",
+            "evidence_type": "MEG_source_localization"
+          },
+          {
+            "claim_id": "wohrle_2024.C04",
+            "context": "N1m amplitude evolution across chord progression showing roundness-related differences",
+            "evidence_type": "MEG_source_localization"
+          },
+          {
+            "claim_id": "wohrle_2024.C05",
+            "context": "P2m dipoles in auditory cortex showing mode coherence effects",
+            "evidence_type": "MEG_source_localization"
+          },
+          {
+            "c3_association": "SPU",
+            "context": "N1m and P2m responses to chord progressions, reflecting cortical processing of musical roundness",
+            "evidence_type": "MEG_source_localization"
+          },
+          {
+            "c3_association": "PCU",
+            "context": "Predictive processing of chord progressions, with N1m reflecting roundness evolution and P2m reflecting mode coherence",
+            "evidence_type": "MEG_source_localization"
+          }
+        ],
+        "total_mentions": 6
+      }
+    ],
+    "total_unique_regions": 1,
+    "evidence_types": {
+      "MEG_source_localization": 6,
+      "direct_measurement": 6
+    },
+    "note": "All brain regions identified through MEG source localization using four-dipole model. Sources situated in auditory cortex (Heschl's Gyrus, BA41/BA42) based on Talairach coordinates: |x|=30-60, y=+5 to -45, z=+18 to -20. Four-dipole model: one pair for N1m in each hemisphere, one pair for P2m. N1m dipoles fitted first, then switched off to fit P2m independently. Only dipole models with coordinates in specified range were accepted."
+  },
+  "validation": {
+    "r3_registry_checked": true,
+    "registry_version": "R3_Schema_v2",
+    "registry_check_date": "2025-01-25T20:00:00Z",
+    "unmapped_axes_count": 5,
+    "unmapped_axes": [
+      {
+        "claim_id": "wohrle_2024.C01",
+        "variable": "dependent_variable",
+        "axis_proposal": {
+          "suggested_id": "r3:X51.musical_roundness_perception",
+          "status": "proposed"
+        }
+      },
+      {
+        "claim_id": "wohrle_2024.C02",
+        "variable": "dependent_variable",
+        "axis_proposal": {
+          "suggested_id": "r3:X52.n1m_amplitude_resolution",
+          "status": "proposed"
+        }
+      },
+      {
+        "claim_id": "wohrle_2024.C03",
+        "variable": "dependent_variable",
+        "axis_proposal": {
+          "suggested_id": "r3:X53.musical_aptitude_roundness_differentiation",
+          "status": "proposed"
+        }
+      },
+      {
+        "claim_id": "wohrle_2024.C04",
+        "variable": "dependent_variable",
+        "axis_proposal": {
+          "suggested_id": "r3:X54.n1m_roundness_evolution",
+          "status": "proposed"
+        }
+      },
+      {
+        "claim_id": "wohrle_2024.C05",
+        "variable": "dependent_variable",
+        "axis_proposal": {
+          "suggested_id": "r3:X55.p2m_mode_coherence",
+          "status": "proposed"
+        }
+      }
+    ],
+    "c3_unit_validation": {
+      "all_units_valid": true,
+      "units_checked": ["SPU", "PCU", "ARU"],
+      "invalid_units": []
+    },
+    "claim_id_format_validation": {
+      "all_valid": true,
+      "format": "paper_id.C##"
+    },
+    "schema_compliance": {
+      "version": "3.0",
+      "compliant": true,
+      "warnings": [
+        "5 DV r3_axis unmapped (axis_proposal provided for all)",
+        "MEG source localization with Talairach coordinates (not MNI, but acceptable)",
+        "Chord progressions based on Western music theory (cultural specificity)",
+        "No specific frequency or tempo parameters (focus on harmonic relationships)"
+      ],
+      "errors": []
+    },
+    "data_quality": {
+      "statistics_structured": true,
+      "effect_sizes_present": 5,
+      "effect_sizes_missing": 0,
+      "sample_characteristics_complete": true,
+      "r3_coordinates_complete": true,
+      "brain_regions_collected": true,
+      "brain_regions_count": 1,
+      "brain_regions_with_context": 1,
+      "roi_mentions": 0,
+      "note": "Original MEG study with 30 participants. All statistics reported (repeated measures ANOVA, bootstrapping, p-values, effect sizes ηp²). Brain regions identified through MEG source localization (Talairach coordinates). R³ coordinates mapped for L5.sensory_consonance (categorical: D7 > D9/5 > D7/5> > Tristan). No specific frequency or tempo parameters as study focuses on harmonic relationships and roundness perception."
+    }
+  }
+}
+

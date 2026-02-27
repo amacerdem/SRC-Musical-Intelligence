@@ -1,0 +1,708 @@
+{
+  "metadata": {
+    "paper_id": "zatorre_halpern_2005_mental_concerts_musical_imagery_auditory_cortex",
+    "title": "Mental Concerts: Musical Imagery and Auditory Cortex",
+    "authors": [
+      "Robert J. Zatorre",
+      "Andrea R. Halpern"
+    ],
+    "year": 2005,
+    "journal": "Neuron",
+    "doi": "10.1016/j.neuron.2005.06.013",
+    "schema_version": "3.0",
+    "extraction_run_id": "v3.0-window-2-030",
+    "extraction_date": "2025-01-25T12:00:00Z",
+    "tooling": {
+      "extractor": "cursor-ai-claude",
+      "model": "claude-3.5-sonnet",
+      "registry_version": "R3_Schema_v2"
+    },
+    "paper_type": "minireview",
+    "note": "This is a minireview paper summarizing existing literature on musical imagery. Claims extracted represent the paper's synthesis of findings rather than original experimental results."
+  },
+  "claims": [
+    {
+      "claim_id": "zatorre_halpern_2005.C01",
+      "claim_text": "Neural activity in auditory cortex can occur in the absence of sound and corresponds to the phenomenological experience of imagining music",
+      "relation_type": "association",
+      "causal_strength": "strong",
+      "evidence_level": "fMRI|PET|MEG|behavioral",
+      "independent_variable": {
+        "name": "Musical imagery task",
+        "r3_axis": null,
+        "levels": ["imagery", "control"],
+        "values": null,
+        "unit": "categorical"
+      },
+      "dependent_variable": {
+        "name": "Auditory cortex activation",
+        "r3_axis": "r3:UNMAPPED",
+        "axis_proposal": {
+          "suggested_id": "r3:X15.imagery_activation_strength",
+          "definition": "Hemodynamic or electrophysiological response magnitude in auditory cortical regions during musical imagery relative to baseline",
+          "expected_range": [0.0, 1.0],
+          "unit": "normalized_activation",
+          "psychoacoustic_basis": "BOLD signal or MEG/EEG power in auditory cortex during silent imagery tasks"
+        },
+        "levels": ["activated", "not_activated"],
+        "values": null,
+        "unit": "categorical"
+      },
+      "statistics": {
+        "reported": false,
+        "note": "Minireview summarizing multiple studies; no original statistics reported"
+      },
+      "brain_regions": [
+        {
+          "region": "Superior temporal gyrus (posterior)",
+          "brodmann_area": "BA22",
+          "mni_coordinates": null,
+          "hemisphere": "bilateral",
+          "evidence_type": "literature_inference",
+          "context": "Activation observed in posterior aspect of superior temporal gyrus during auditory imagery tasks"
+        },
+        {
+          "region": "Secondary/belt auditory cortex",
+          "brodmann_area": "BA22",
+          "mni_coordinates": null,
+          "hemisphere": "bilateral",
+          "evidence_type": "literature_inference",
+          "context": "Most studies agree that activation in secondary, or belt, auditory cortex is reliably found during musical imagery"
+        }
+      ],
+      "methodology": {
+        "techniques": ["fMRI", "PET", "MEG", "behavioral"],
+        "task": "Musical imagery tasks (imagining familiar songs, judging pitch relationships in imagined melodies)",
+        "control_conditions": "Silent baseline, visual imagery, rest",
+        "sample_size": "Multiple studies reviewed (sample sizes not specified in minireview)",
+        "participant_characteristics": "Mixed (musicians and non-musicians across studies)"
+      }
+    },
+    {
+      "claim_id": "zatorre_halpern_2005.C02",
+      "claim_text": "Primary auditory cortex participation in musical imagery is uncertain; most studies report activation in secondary/belt auditory cortex rather than primary cortex",
+      "relation_type": "association",
+      "causal_strength": "moderate",
+      "evidence_level": "fMRI|PET|MEG",
+      "independent_variable": {
+        "name": "Task demands",
+        "r3_axis": null,
+        "levels": ["various_imagery_tasks"],
+        "values": null,
+        "unit": "categorical"
+      },
+      "dependent_variable": {
+        "name": "Primary vs secondary auditory cortex activation",
+        "r3_axis": "r3:UNMAPPED",
+        "axis_proposal": {
+          "suggested_id": "r3:X16.primary_vs_belt_activation_ratio",
+          "definition": "Ratio of activation in primary (core) auditory cortex relative to secondary (belt) auditory cortex during musical imagery",
+          "expected_range": [0.0, 2.0],
+          "unit": "ratio",
+          "psychoacoustic_basis": "Spatial distribution of hemodynamic or electrophysiological responses across auditory cortical hierarchy"
+        },
+        "levels": ["primary", "secondary_belt"],
+        "values": null,
+        "unit": "categorical"
+      },
+      "statistics": {
+        "reported": false,
+        "note": "Minireview; precise location of core areas difficult to determine due to intersubject variability and partial volume effects"
+      },
+      "brain_regions": [
+        {
+          "region": "Primary auditory cortex (core)",
+          "brodmann_area": "BA41|BA42",
+          "mni_coordinates": null,
+          "hemisphere": "bilateral",
+          "evidence_type": "literature_inference",
+          "context": "Uncertain participation; some authors report activation but precise location difficult to determine"
+        },
+        {
+          "region": "Secondary/belt auditory cortex",
+          "brodmann_area": "BA22",
+          "mni_coordinates": null,
+          "hemisphere": "bilateral",
+          "evidence_type": "literature_inference",
+          "context": "Reliably found across studies"
+        }
+      ],
+      "methodology": {
+        "techniques": ["fMRI", "PET", "MEG"],
+        "task": "Various musical imagery tasks",
+        "control_conditions": "Rest, control tasks",
+        "sample_size": "Multiple studies reviewed",
+        "participant_characteristics": "Mixed"
+      }
+    },
+    {
+      "claim_id": "zatorre_halpern_2005.C03",
+      "claim_text": "Top-down mechanisms from frontal cortical areas reactivate neural traces encoded in sensory cortex, with tight anatomical connectivity between frontal and auditory regions",
+      "relation_type": "effect",
+      "causal_strength": "strong",
+      "evidence_level": "fMRI|PET|anatomical",
+      "independent_variable": {
+        "name": "Frontal cortex activation",
+        "r3_axis": null,
+        "levels": ["active", "inactive"],
+        "values": null,
+        "unit": "categorical"
+      },
+      "dependent_variable": {
+        "name": "Auditory cortex activation during imagery",
+        "r3_axis": "r3:UNMAPPED",
+        "axis_proposal": {
+          "suggested_id": "r3:X17.top_down_reactivation_strength",
+          "definition": "Magnitude of auditory cortical activation driven by frontal top-down signals during imagery",
+          "expected_range": [0.0, 1.0],
+          "unit": "normalized_activation",
+          "psychoacoustic_basis": "Functional connectivity or effective connectivity between frontal and auditory regions during imagery tasks"
+        },
+        "levels": ["reactivated", "not_reactivated"],
+        "values": null,
+        "unit": "categorical"
+      },
+      "statistics": {
+        "reported": false,
+        "note": "Minireview; most whole-brain studies find frontal cortex to be important component"
+      },
+      "brain_regions": [
+        {
+          "region": "Frontal cortex",
+          "brodmann_area": null,
+          "mni_coordinates": null,
+          "hemisphere": "bilateral",
+          "evidence_type": "literature_inference",
+          "context": "Frontal-based retrieval mechanisms called upon when conjuring up a song in one's mind"
+        },
+        {
+          "region": "Auditory cortex",
+          "brodmann_area": "BA22",
+          "mni_coordinates": null,
+          "hemisphere": "bilateral",
+          "evidence_type": "literature_inference",
+          "context": "Feedback signals from auditory cortex could be important in distinguishing between imagery and real sound"
+        }
+      ],
+      "methodology": {
+        "techniques": ["fMRI", "PET", "anatomical_connectivity"],
+        "task": "Musical imagery generation tasks",
+        "control_conditions": "Rest, perception tasks",
+        "sample_size": "Multiple studies reviewed",
+        "participant_characteristics": "Mixed"
+      }
+    },
+    {
+      "claim_id": "zatorre_halpern_2005.C04",
+      "claim_text": "Auditory and motor imagery can be integrated in the brain, with musicians showing activation in motor regions corresponding to finger movements when listening to pieces they know how to perform",
+      "relation_type": "association",
+      "causal_strength": "moderate",
+      "evidence_level": "fMRI|MEG",
+      "independent_variable": {
+        "name": "Musical expertise and familiarity",
+        "r3_axis": null,
+        "levels": ["musician_familiar", "non_musician"],
+        "values": null,
+        "unit": "categorical"
+      },
+      "dependent_variable": {
+        "name": "Motor cortex activation during auditory imagery",
+        "r3_axis": "r3:UNMAPPED",
+        "axis_proposal": {
+          "suggested_id": "r3:X18.auditory_motor_coupling_strength",
+          "definition": "Degree of co-activation between auditory and motor regions during musical imagery or listening",
+          "expected_range": [0.0, 1.0],
+          "unit": "normalized_coupling",
+          "psychoacoustic_basis": "Functional connectivity or joint activation patterns between auditory and motor cortices"
+        },
+        "levels": ["integrated", "not_integrated"],
+        "values": null,
+        "unit": "categorical"
+      },
+      "statistics": {
+        "reported": false,
+        "note": "Minireview; Haueisen & Knösche (2001) found pianists showed activation in primary motor regions corresponding to finger that would have produced a given note"
+      },
+      "brain_regions": [
+        {
+          "region": "Primary motor cortex (M1)",
+          "brodmann_area": "BA4",
+          "mni_coordinates": null,
+          "hemisphere": "bilateral",
+          "evidence_type": "literature_inference",
+          "context": "Pianists showed activation in primary motor regions corresponding to finger movements when listening to familiar pieces"
+        },
+        {
+          "region": "Secondary motor areas (SMA)",
+          "brodmann_area": "BA6",
+          "mni_coordinates": null,
+          "hemisphere": "bilateral",
+          "evidence_type": "literature_inference",
+          "context": "Often activated during motor imagery for musical routines"
+        },
+        {
+          "region": "Area Spt (parietal-temporal boundary)",
+          "brodmann_area": null,
+          "mni_coordinates": null,
+          "hemisphere": "bilateral",
+          "evidence_type": "literature_inference",
+          "context": "Responded to both imagined auditory (speech and music) and covertly produced sequences"
+        },
+        {
+          "region": "Auditory cortex",
+          "brodmann_area": "BA22",
+          "mni_coordinates": null,
+          "hemisphere": "bilateral",
+          "evidence_type": "literature_inference",
+          "context": "Activation in auditory areas when musicians watched silent video of someone fingering piano keys"
+        }
+      ],
+      "methodology": {
+        "techniques": ["fMRI", "MEG"],
+        "task": "Listening to familiar pieces, imagining musical performance, watching silent piano fingering",
+        "control_conditions": "Rest, unfamiliar pieces",
+        "sample_size": "Multiple studies reviewed",
+        "participant_characteristics": "Musicians (pianists, string players)"
+      }
+    },
+    {
+      "claim_id": "zatorre_halpern_2005.C05",
+      "claim_text": "Cross-modal interactions occur in auditory imagery, with visual imagery suppressing activity in right secondary auditory cortex to levels below silent baseline",
+      "relation_type": "effect",
+      "causal_strength": "moderate",
+      "evidence_level": "fMRI",
+      "independent_variable": {
+        "name": "Imagery modality",
+        "r3_axis": null,
+        "levels": ["visual_imagery", "auditory_imagery", "silent_baseline"],
+        "values": null,
+        "unit": "categorical"
+      },
+      "dependent_variable": {
+        "name": "Right secondary auditory cortex activation",
+        "r3_axis": "r3:UNMAPPED",
+        "axis_proposal": {
+          "suggested_id": "r3:X19.cross_modal_suppression_strength",
+          "definition": "Magnitude of suppression in auditory cortex during visual imagery relative to baseline",
+          "expected_range": [-1.0, 0.0],
+          "unit": "normalized_suppression",
+          "psychoacoustic_basis": "Reduction in hemodynamic response in auditory regions during cross-modal imagery tasks"
+        },
+        "levels": ["suppressed", "baseline", "activated"],
+        "values": null,
+        "unit": "categorical"
+      },
+      "statistics": {
+        "reported": false,
+        "note": "Minireview; Halpern et al. (2004) found visual imagery task suppressed activity in right secondary auditory cortex to levels below silent baseline"
+      },
+      "brain_regions": [
+        {
+          "region": "Right secondary auditory cortex",
+          "brodmann_area": "BA22",
+          "mni_coordinates": null,
+          "hemisphere": "right",
+          "evidence_type": "literature_inference",
+          "context": "Suppressed to levels below silent baseline during visual imagery task"
+        }
+      ],
+      "methodology": {
+        "techniques": ["fMRI", "sparse_sampling"],
+        "task": "Visual imagery vs auditory imagery vs silent baseline",
+        "control_conditions": "Silent baseline",
+        "sample_size": "Multiple studies reviewed",
+        "participant_characteristics": "Mixed"
+      }
+    }
+  ],
+  "c3_associations": [
+    {
+      "unit": "IMU",
+      "process": "Musical imagery involves memory retrieval and reactivation of encoded auditory traces",
+      "confidence": 0.90,
+      "supported_claim_ids": [
+        "zatorre_halpern_2005.C01",
+        "zatorre_halpern_2005.C03"
+      ],
+      "brain_regions": [
+        {
+          "region": "Frontal cortex",
+          "role": "Retrieval mechanisms",
+          "evidence_type": "literature_inference"
+        },
+        {
+          "region": "Auditory cortex",
+          "role": "Storage and reactivation of sensory traces",
+          "evidence_type": "literature_inference"
+        }
+      ],
+      "r3_layers": ["L5", "L6"],
+      "r3_dimensions": [
+        "r3:L5.pitch_hz",
+        "r3:L5.timbre",
+        "r3:L6.tempo_bpm"
+      ],
+      "evidence": "Top-down mechanisms from frontal cortex reactivate neural traces encoded in sensory cortex. Musical imagery requires accessing stored representations of pitch, timbre, rhythm, and other musical attributes.",
+      "evidence_source": "literature_inference"
+    },
+    {
+      "unit": "MPU",
+      "process": "Motor imagery and auditory imagery are integrated, with musicians showing motor cortex activation during auditory imagery",
+      "confidence": 0.85,
+      "supported_claim_ids": [
+        "zatorre_halpern_2005.C04"
+      ],
+      "brain_regions": [
+        {
+          "region": "Primary motor cortex (M1)",
+          "role": "Finger movement representation",
+          "evidence_type": "literature_inference"
+        },
+        {
+          "region": "SMA",
+          "role": "Motor planning for musical routines",
+          "evidence_type": "literature_inference"
+        },
+        {
+          "region": "Area Spt",
+          "role": "Auditory-motor integration",
+          "evidence_type": "literature_inference"
+        }
+      ],
+      "r3_layers": ["L4", "L6"],
+      "r3_dimensions": [
+        "r3:L4.rate_hz",
+        "r3:L6.tempo_bpm",
+        "r3:L6.beat_strength"
+      ],
+      "evidence": "Pianists showed activation in primary motor regions corresponding to finger movements when listening to familiar pieces. Mental practice involves motor/kinesthetic imagery alongside auditory imagery.",
+      "evidence_source": "literature_inference"
+    },
+    {
+      "unit": "SPU",
+      "process": "Auditory cortex activation during musical imagery in absence of sound",
+      "confidence": 0.95,
+      "supported_claim_ids": [
+        "zatorre_halpern_2005.C01",
+        "zatorre_halpern_2005.C02"
+      ],
+      "brain_regions": [
+        {
+          "region": "Secondary/belt auditory cortex",
+          "role": "Primary site of imagery-related activation",
+          "evidence_type": "literature_inference"
+        },
+        {
+          "region": "Primary auditory cortex",
+          "role": "Uncertain participation",
+          "evidence_type": "literature_inference"
+        }
+      ],
+      "r3_layers": ["L5"],
+      "r3_dimensions": [
+        "r3:L5.pitch_hz",
+        "r3:L5.timbre",
+        "r3:L5.loudness_sone"
+      ],
+      "evidence": "Neural activity in auditory cortex occurs in absence of sound and corresponds to phenomenological experience of imagining music. Most studies report activation in secondary/belt auditory cortex.",
+      "evidence_source": "literature_inference"
+    },
+    {
+      "unit": "PCU",
+      "process": "Top-down predictive mechanisms from frontal cortex to auditory cortex during imagery",
+      "confidence": 0.80,
+      "supported_claim_ids": [
+        "zatorre_halpern_2005.C03"
+      ],
+      "brain_regions": [
+        {
+          "region": "Frontal cortex",
+          "role": "Top-down control and retrieval",
+          "evidence_type": "literature_inference"
+        },
+        {
+          "region": "Auditory cortex",
+          "role": "Prediction target",
+          "evidence_type": "literature_inference"
+        }
+      ],
+      "r3_layers": ["L5", "L6"],
+      "r3_dimensions": [
+        "r3:L5.pitch_hz",
+        "r3:L6.tempo_bpm",
+        "r3:L6.chord_quality_maj"
+      ],
+      "evidence": "Frontal-based retrieval mechanisms reactivate neural traces in sensory cortex. Feedback signals from auditory cortex could distinguish between imagery and real sound (predictive coding).",
+      "evidence_source": "literature_inference"
+    },
+    {
+      "unit": "STU",
+      "process": "Sensorimotor integration during musical imagery, linking auditory and motor representations",
+      "confidence": 0.75,
+      "supported_claim_ids": [
+        "zatorre_halpern_2005.C04"
+      ],
+      "brain_regions": [
+        {
+          "region": "Area Spt",
+          "role": "Auditory-motor interface",
+          "evidence_type": "literature_inference"
+        },
+        {
+          "region": "SMA",
+          "role": "Timing and sequencing",
+          "evidence_type": "literature_inference"
+        }
+      ],
+      "r3_layers": ["L4", "L6"],
+      "r3_dimensions": [
+        "r3:L4.rate_hz",
+        "r3:L6.tempo_bpm",
+        "r3:L6.beat_phase"
+      ],
+      "evidence": "Area Spt responds to both imagined auditory and covertly produced sequences. Motor imagery for musical routines activates SMA.",
+      "evidence_source": "literature_inference"
+    }
+  ],
+  "r3_coordinates": {
+    "primary_axes": [],
+    "derived_coordinates": [],
+    "note": "This is a minireview paper; no specific experimental variables mapped to R³ coordinates. However, the paper discusses musical attributes (pitch, timbre, rhythm, tempo) that could be mapped to L5 and L6 dimensions."
+  },
+  "brain_regions_summary": {
+    "regions_mentioned": [
+      {
+        "region": "Superior temporal gyrus (posterior)",
+        "full_name": "Posterior superior temporal gyrus",
+        "mentions": [
+          {
+            "claim_id": "zatorre_halpern_2005.C01",
+            "context": "Activation observed in posterior aspect during auditory imagery tasks",
+            "evidence_type": "literature_inference"
+          }
+        ],
+        "total_mentions": 1
+      },
+      {
+        "region": "Secondary/belt auditory cortex",
+        "full_name": "Secondary auditory cortex (belt areas)",
+        "mentions": [
+          {
+            "claim_id": "zatorre_halpern_2005.C01",
+            "context": "Reliably found across studies",
+            "evidence_type": "literature_inference"
+          },
+          {
+            "claim_id": "zatorre_halpern_2005.C02",
+            "context": "Most studies report activation here rather than primary cortex",
+            "evidence_type": "literature_inference"
+          },
+          {
+            "c3_association": "SPU",
+            "context": "Primary site of imagery-related activation",
+            "evidence_type": "literature_inference"
+          }
+        ],
+        "total_mentions": 3
+      },
+      {
+        "region": "Primary auditory cortex",
+        "full_name": "Primary auditory cortex (core areas, BA41/BA42)",
+        "mentions": [
+          {
+            "claim_id": "zatorre_halpern_2005.C02",
+            "context": "Uncertain participation; precise location difficult to determine",
+            "evidence_type": "literature_inference"
+          },
+          {
+            "c3_association": "SPU",
+            "context": "Uncertain participation in imagery",
+            "evidence_type": "literature_inference"
+          }
+        ],
+        "total_mentions": 2
+      },
+      {
+        "region": "Frontal cortex",
+        "full_name": "Frontal cortical areas",
+        "mentions": [
+          {
+            "claim_id": "zatorre_halpern_2005.C03",
+            "context": "Frontal-based retrieval mechanisms called upon when conjuring up a song",
+            "evidence_type": "literature_inference"
+          },
+          {
+            "c3_association": "IMU",
+            "context": "Retrieval mechanisms for memory access",
+            "evidence_type": "literature_inference"
+          },
+          {
+            "c3_association": "PCU",
+            "context": "Top-down control and retrieval",
+            "evidence_type": "literature_inference"
+          }
+        ],
+        "total_mentions": 3
+      },
+      {
+        "region": "Primary motor cortex (M1)",
+        "full_name": "Primary motor cortex (BA4)",
+        "mentions": [
+          {
+            "claim_id": "zatorre_halpern_2005.C04",
+            "context": "Pianists showed activation corresponding to finger movements when listening to familiar pieces",
+            "evidence_type": "literature_inference"
+          },
+          {
+            "c3_association": "MPU",
+            "context": "Finger movement representation during auditory imagery",
+            "evidence_type": "literature_inference"
+          }
+        ],
+        "total_mentions": 2
+      },
+      {
+        "region": "SMA",
+        "full_name": "Supplementary Motor Area (BA6)",
+        "mentions": [
+          {
+            "claim_id": "zatorre_halpern_2005.C04",
+            "context": "Often activated during motor imagery for musical routines",
+            "evidence_type": "literature_inference"
+          },
+          {
+            "c3_association": "MPU",
+            "context": "Motor planning for musical routines",
+            "evidence_type": "literature_inference"
+          },
+          {
+            "c3_association": "STU",
+            "context": "Timing and sequencing",
+            "evidence_type": "literature_inference"
+          }
+        ],
+        "total_mentions": 3
+      },
+      {
+        "region": "Area Spt",
+        "full_name": "Area Spt (parietal-temporal boundary)",
+        "mentions": [
+          {
+            "claim_id": "zatorre_halpern_2005.C04",
+            "context": "Responded to both imagined auditory and covertly produced sequences",
+            "evidence_type": "literature_inference"
+          },
+          {
+            "c3_association": "MPU",
+            "context": "Auditory-motor integration",
+            "evidence_type": "literature_inference"
+          },
+          {
+            "c3_association": "STU",
+            "context": "Auditory-motor interface",
+            "evidence_type": "literature_inference"
+          }
+        ],
+        "total_mentions": 3
+      },
+      {
+        "region": "Right secondary auditory cortex",
+        "full_name": "Right secondary auditory cortex (BA22)",
+        "mentions": [
+          {
+            "claim_id": "zatorre_halpern_2005.C05",
+            "context": "Suppressed to levels below silent baseline during visual imagery task",
+            "evidence_type": "literature_inference"
+          }
+        ],
+        "total_mentions": 1
+      }
+    ],
+    "total_unique_regions": 8,
+    "evidence_types": {
+      "literature_inference": 18,
+      "direct_measurement": 0
+    },
+    "note": "This is a minireview paper; all brain region mentions are from literature inference based on reviewed studies. No original experimental data reported."
+  },
+  "validation": {
+    "r3_registry_checked": true,
+    "registry_version": "R3_Schema_v2",
+    "registry_check_date": "2025-01-25T12:00:00Z",
+    "unmapped_axes_count": 5,
+    "unmapped_axes": [
+      {
+        "claim_id": "zatorre_halpern_2005.C01",
+        "variable": "dependent_variable",
+        "axis_proposal": {
+          "suggested_id": "r3:X15.imagery_activation_strength",
+          "status": "proposed"
+        }
+      },
+      {
+        "claim_id": "zatorre_halpern_2005.C02",
+        "variable": "dependent_variable",
+        "axis_proposal": {
+          "suggested_id": "r3:X16.primary_vs_belt_activation_ratio",
+          "status": "proposed"
+        }
+      },
+      {
+        "claim_id": "zatorre_halpern_2005.C03",
+        "variable": "dependent_variable",
+        "axis_proposal": {
+          "suggested_id": "r3:X17.top_down_reactivation_strength",
+          "status": "proposed"
+        }
+      },
+      {
+        "claim_id": "zatorre_halpern_2005.C04",
+        "variable": "dependent_variable",
+        "axis_proposal": {
+          "suggested_id": "r3:X18.auditory_motor_coupling_strength",
+          "status": "proposed"
+        }
+      },
+      {
+        "claim_id": "zatorre_halpern_2005.C05",
+        "variable": "dependent_variable",
+        "axis_proposal": {
+          "suggested_id": "r3:X19.cross_modal_suppression_strength",
+          "status": "proposed"
+        }
+      }
+    ],
+    "c3_unit_validation": {
+      "all_units_valid": true,
+      "units_checked": ["IMU", "MPU", "SPU", "PCU", "STU"],
+      "invalid_units": []
+    },
+    "claim_id_format_validation": {
+      "all_valid": true,
+      "format": "paper_id.C##"
+    },
+    "schema_compliance": {
+      "version": "3.0",
+      "compliant": true,
+      "warnings": [
+        "All DV r3_axis unmapped (axis_proposal provided for all)",
+        "Minireview paper with no original experimental data (scope: literature_inference)",
+        "No specific R³ coordinates mapped (discusses musical attributes but no experimental variables)"
+      ],
+      "errors": []
+    },
+    "data_quality": {
+      "statistics_structured": false,
+      "effect_sizes_present": 0,
+      "effect_sizes_missing": 5,
+      "sample_characteristics_complete": false,
+      "r3_coordinates_complete": false,
+      "brain_regions_collected": true,
+      "brain_regions_count": 8,
+      "brain_regions_with_context": 8,
+      "roi_mentions": 0,
+      "note": "Minireview paper; no original statistics or experimental data. All brain regions collected with full context from literature synthesis."
+    }
+  }
+}
+

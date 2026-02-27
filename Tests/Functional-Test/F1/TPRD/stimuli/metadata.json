@@ -1,0 +1,82 @@
+{
+  "g1_01_single": {
+    "group": "consonance",
+    "interval": "unison",
+    "notes": "C4 alone",
+    "expected": "T1 dominant \u2014 clear pitch, minimal roughness"
+  },
+  "g1_02_octave": {
+    "group": "consonance",
+    "interval": "octave",
+    "notes": "C4+C5 (2:1)",
+    "expected": "T1 dominant \u2014 most consonant interval"
+  },
+  "g1_03_fifth": {
+    "group": "consonance",
+    "interval": "fifth",
+    "notes": "C4+G4 (3:2)",
+    "expected": "T1 dominant \u2014 consonant"
+  },
+  "g1_04_tritone": {
+    "group": "consonance",
+    "interval": "tritone",
+    "notes": "C4+Gb4 (sqrt2:1)",
+    "expected": "more balanced T0/T1 \u2014 dissonant"
+  },
+  "g1_05_minor_2nd": {
+    "group": "consonance",
+    "interval": "minor_2nd",
+    "notes": "C4+Db4 (16:15)",
+    "expected": "T0 increases \u2014 maximum roughness/beating"
+  },
+  "g1_06_major_7th": {
+    "group": "consonance",
+    "interval": "major_7th",
+    "notes": "C4+B4 (15:8)",
+    "expected": "T0 increases \u2014 dissonant with beating"
+  },
+  "g2_01_single": {
+    "group": "complexity",
+    "pattern": "single",
+    "notes": "C4"
+  },
+  "g2_02_dyad": {
+    "group": "complexity",
+    "pattern": "dyad",
+    "notes": "C4+G4 (consonant)"
+  },
+  "g2_03_triad": {
+    "group": "complexity",
+    "pattern": "triad",
+    "notes": "C4+E4+G4 (major triad)"
+  },
+  "g2_04_dense": {
+    "group": "complexity",
+    "pattern": "dense",
+    "notes": "C4+Db4+D4+Eb4 (4 adjacent semitones)"
+  },
+  "g3_01_low": {
+    "group": "register",
+    "notes": "C3 (130 Hz)"
+  },
+  "g3_02_mid": {
+    "group": "register",
+    "notes": "C4 (262 Hz)"
+  },
+  "g3_03_high": {
+    "group": "register",
+    "notes": "C6 (1047 Hz)"
+  },
+  "g4_01_sustained": {
+    "group": "temporal",
+    "pattern": "sustained"
+  },
+  "g4_02_melody": {
+    "group": "temporal",
+    "pattern": "melody"
+  },
+  "g4_03_arpeggio": {
+    "group": "temporal",
+    "pattern": "arpeggio"
+  }
+}

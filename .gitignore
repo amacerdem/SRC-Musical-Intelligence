@@ -41,3 +41,6 @@ node_modules/
 # Misc
 *.log
 .env
+
+# Repetuare
+Repetuare/

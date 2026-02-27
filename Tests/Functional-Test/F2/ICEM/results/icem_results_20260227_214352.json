@@ -1,0 +1,872 @@
+{
+  "mechanism": "ICEM",
+  "function": "F2",
+  "timestamp": "20260227_214352",
+  "total": 123,
+  "passed": 121,
+  "failed": 2,
+  "elapsed_s": 29.5,
+  "results": [
+    {
+      "name": "T1_ndim",
+      "group": "T1_dimensionality",
+      "passed": true,
+      "message": "ndim=2, expected 2 (T, D)",
+      "values": {}
+    },
+    {
+      "name": "T1_dim_count",
+      "group": "T1_dimensionality",
+      "passed": true,
+      "message": "D=13, expected 13",
+      "values": {}
+    },
+    {
+      "name": "T1_frames_positive",
+      "group": "T1_dimensionality",
+      "passed": true,
+      "message": "T=862 > 100 frames",
+      "values": {}
+    },
+    {
+      "name": "T2_bounds_g1_01_single",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.4937, 0.7017] \u2282 [0,1] (sigmoid)",
+      "values": {}
+    },
+    {
+      "name": "T2_bounds_g1_02_octave",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.4669, 0.7015] \u2282 [0,1] (sigmoid)",
+      "values": {}
+    },
+    {
+      "name": "T2_bounds_g1_03_fifth",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.4417, 0.6981] \u2282 [0,1] (sigmoid)",
+      "values": {}
+    },
+    {
+      "name": "T2_bounds_g1_04_tritone",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.4407, 0.7010] \u2282 [0,1] (sigmoid)",
+      "values": {}
+    },
+    {
+      "name": "T2_bounds_g1_05_minor_2nd",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.4428, 0.7021] \u2282 [0,1] (sigmoid)",
+      "values": {}
+    },
+    {
+      "name": "T2_bounds_g1_06_major_7th",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.4423, 0.7010] \u2282 [0,1] (sigmoid)",
+      "values": {}
+    },
+    {
+      "name": "T2_bounds_g2_01_low",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.4922, 0.6950] \u2282 [0,1] (sigmoid)",
+      "values": {}
+    },
+    {
+      "name": "T2_bounds_g2_02_mid",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.4937, 0.7017] \u2282 [0,1] (sigmoid)",
+      "values": {}
+    },
+    {
+      "name": "T2_bounds_g2_03_high",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.4624, 0.7024] \u2282 [0,1] (sigmoid)",
+      "values": {}
+    },
+    {
+      "name": "T2_bounds_g3_01_single",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.4937, 0.7017] \u2282 [0,1] (sigmoid)",
+      "values": {}
+    },
+    {
+      "name": "T2_bounds_g3_02_dyad",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.4417, 0.6981] \u2282 [0,1] (sigmoid)",
+      "values": {}
+    },
+    {
+      "name": "T2_bounds_g3_03_triad",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.4342, 0.6962] \u2282 [0,1] (sigmoid)",
+      "values": {}
+    },
+    {
+      "name": "T2_bounds_g3_04_dense",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.4298, 0.7034] \u2282 [0,1] (sigmoid)",
+      "values": {}
+    },
+    {
+      "name": "T2_bounds_g4_01_sustained",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.4918, 0.6962] \u2282 [0,1] (sigmoid)",
+      "values": {}
+    },
+    {
+      "name": "T2_bounds_g4_02_melody",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.4940, 0.7112] \u2282 [0,1] (sigmoid)",
+      "values": {}
+    },
+    {
+      "name": "T2_bounds_g4_03_arpeggio",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.4945, 0.7060] \u2282 [0,1] (sigmoid)",
+      "values": {}
+    },
+    {
+      "name": "T2_bounds_g5_01_piano",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.4937, 0.7017] \u2282 [0,1] (sigmoid)",
+      "values": {}
+    },
+    {
+      "name": "T2_bounds_g5_02_organ",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.4940, 0.7007] \u2282 [0,1] (sigmoid)",
+      "values": {}
+    },
+    {
+      "name": "T3_variance_E0:information_content",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std_across_stims=0.0236 > 0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_variance_E1:arousal_response",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std_across_stims=0.0038 > 0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_variance_E2:valence_response",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std_across_stims=0.0179 > 0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_variance_E3:defense_cascade",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std_across_stims=0.0040 > 0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_variance_M0:ic_value",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std_across_stims=0.0180 > 0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_variance_M1:arousal_pred",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std_across_stims=0.0032 > 0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_variance_M2:valence_pred",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std_across_stims=0.0043 > 0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_variance_M3:scr_pred",
+      "group": "T3_nondegeneracy",
+      "passed": false,
+      "message": "std_across_stims=0.0005 > 0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_variance_M4:hr_pred",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std_across_stims=0.0076 > 0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_variance_P0:surprise_signal",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std_across_stims=0.0175 > 0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_variance_P1:emotional_evaluation",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std_across_stims=0.0080 > 0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_variance_F0:arousal_change_1_3s",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std_across_stims=0.0021 > 0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_variance_F1:valence_shift_2_5s",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std_across_stims=0.0125 > 0.001",
+      "values": {}
+    },
+    {
+      "name": "T4_E0_positive_g1_01_single",
+      "group": "T4_information_content",
+      "passed": true,
+      "message": "E0(0.5566) > 0.05",
+      "values": {}
+    },
+    {
+      "name": "T4_E0_positive_g1_03_fifth",
+      "group": "T4_information_content",
+      "passed": true,
+      "message": "E0(0.5448) > 0.05",
+      "values": {}
+    },
+    {
+      "name": "T4_E0_positive_g1_05_minor_2nd",
+      "group": "T4_information_content",
+      "passed": true,
+      "message": "E0(0.5791) > 0.05",
+      "values": {}
+    },
+    {
+      "name": "T4_E0_positive_g3_04_dense",
+      "group": "T4_information_content",
+      "passed": true,
+      "message": "E0(0.5814) > 0.05",
+      "values": {}
+    },
+    {
+      "name": "T4_E0_positive_g4_03_arpeggio",
+      "group": "T4_information_content",
+      "passed": true,
+      "message": "E0(0.5893) > 0.05",
+      "values": {}
+    },
+    {
+      "name": "T4_dense_vs_single",
+      "group": "T4_information_content",
+      "passed": true,
+      "message": "dense(0.5814) >= single(0.5566)-0.05",
+      "values": {}
+    },
+    {
+      "name": "T5_E1_E0_positive_corr",
+      "group": "T5_arousal_valence",
+      "passed": true,
+      "message": "r(E1,E0)=0.9440 > 0.20 (40% direct feed)",
+      "values": {}
+    },
+    {
+      "name": "T5_E2_E0_negative_corr",
+      "group": "T5_arousal_valence",
+      "passed": true,
+      "message": "r(E2,E0)=-0.6568 < 0.50 (uses 1-E0)",
+      "values": {}
+    },
+    {
+      "name": "T5_E1_E2_positive_g1_01_single",
+      "group": "T5_arousal_valence",
+      "passed": true,
+      "message": "E1=0.5557, E2=0.6278 > 0",
+      "values": {}
+    },
+    {
+      "name": "T5_E1_E2_positive_g1_03_fifth",
+      "group": "T5_arousal_valence",
+      "passed": true,
+      "message": "E1=0.5544, E2=0.6261 > 0",
+      "values": {}
+    },
+    {
+      "name": "T5_E1_E2_positive_g1_05_minor_2nd",
+      "group": "T5_arousal_valence",
+      "passed": true,
+      "message": "E1=0.5591, E2=0.5912 > 0",
+      "values": {}
+    },
+    {
+      "name": "T5_E1_E2_positive_g2_01_low",
+      "group": "T5_arousal_valence",
+      "passed": true,
+      "message": "E1=0.5543, E2=0.6193 > 0",
+      "values": {}
+    },
+    {
+      "name": "T5_E1_E2_positive_g2_03_high",
+      "group": "T5_arousal_valence",
+      "passed": true,
+      "message": "E1=0.5513, E2=0.6276 > 0",
+      "values": {}
+    },
+    {
+      "name": "T5_E1_E2_positive_g3_04_dense",
+      "group": "T5_arousal_valence",
+      "passed": true,
+      "message": "E1=0.5597, E2=0.5802 > 0",
+      "values": {}
+    },
+    {
+      "name": "T5_E1_E2_positive_g4_01_sustained",
+      "group": "T5_arousal_valence",
+      "passed": true,
+      "message": "E1=0.5552, E2=0.6108 > 0",
+      "values": {}
+    },
+    {
+      "name": "T5_E1_E2_positive_g4_03_arpeggio",
+      "group": "T5_arousal_valence",
+      "passed": true,
+      "message": "E1=0.5645, E2=0.6166 > 0",
+      "values": {}
+    },
+    {
+      "name": "T6_E3_bounded_g1_01_single",
+      "group": "T6_defense_cascade",
+      "passed": true,
+      "message": "E3=0.5460 in [0,1], E0*E1=0.3093",
+      "values": {}
+    },
+    {
+      "name": "T6_E3_bounded_g1_03_fifth",
+      "group": "T6_defense_cascade",
+      "passed": true,
+      "message": "E3=0.5435 in [0,1], E0*E1=0.3020",
+      "values": {}
+    },
+    {
+      "name": "T6_E3_bounded_g1_05_minor_2nd",
+      "group": "T6_defense_cascade",
+      "passed": true,
+      "message": "E3=0.5460 in [0,1], E0*E1=0.3238",
+      "values": {}
+    },
+    {
+      "name": "T6_E3_bounded_g3_04_dense",
+      "group": "T6_defense_cascade",
+      "passed": true,
+      "message": "E3=0.5448 in [0,1], E0*E1=0.3254",
+      "values": {}
+    },
+    {
+      "name": "T6_E3_bounded_g4_03_arpeggio",
+      "group": "T6_defense_cascade",
+      "passed": true,
+      "message": "E3=0.5376 in [0,1], E0*E1=0.3327",
+      "values": {}
+    },
+    {
+      "name": "T7_M0_E0_corr",
+      "group": "T7_M_E_coupling",
+      "passed": true,
+      "message": "r(M0,E0)=0.9364 > 0.30 (40% direct)",
+      "values": {}
+    },
+    {
+      "name": "T7_M1_pred_corr",
+      "group": "T7_M_E_coupling",
+      "passed": true,
+      "message": "r(M1, 0.5*E0+0.5*E1)=1.0000 > 0.40",
+      "values": {}
+    },
+    {
+      "name": "T8_P0_positive_g1_01_single",
+      "group": "T8_surprise",
+      "passed": true,
+      "message": "P0(0.6414) > 0.05",
+      "values": {}
+    },
+    {
+      "name": "T8_P0_positive_g1_03_fifth",
+      "group": "T8_surprise",
+      "passed": true,
+      "message": "P0(0.6330) > 0.05",
+      "values": {}
+    },
+    {
+      "name": "T8_P0_positive_g1_05_minor_2nd",
+      "group": "T8_surprise",
+      "passed": true,
+      "message": "P0(0.6513) > 0.05",
+      "values": {}
+    },
+    {
+      "name": "T8_P0_positive_g3_04_dense",
+      "group": "T8_surprise",
+      "passed": true,
+      "message": "P0(0.6515) > 0.05",
+      "values": {}
+    },
+    {
+      "name": "T8_P0_positive_g4_01_sustained",
+      "group": "T8_surprise",
+      "passed": true,
+      "message": "P0(0.6387) > 0.05",
+      "values": {}
+    },
+    {
+      "name": "T8_P0_positive_g4_03_arpeggio",
+      "group": "T8_surprise",
+      "passed": true,
+      "message": "P0(0.6721) > 0.05",
+      "values": {}
+    },
+    {
+      "name": "T8_P0_E0_corr",
+      "group": "T8_surprise",
+      "passed": true,
+      "message": "r(P0,E0)=0.9225 > 0.30 (25% direct + 35% M0)",
+      "values": {}
+    },
+    {
+      "name": "T9_P1_positive_g1_01_single",
+      "group": "T9_emotion",
+      "passed": true,
+      "message": "P1(0.6269) > 0.10 (tonal \u2192 emotional signal)",
+      "values": {}
+    },
+    {
+      "name": "T9_P1_positive_g1_03_fifth",
+      "group": "T9_emotion",
+      "passed": true,
+      "message": "P1(0.6264) > 0.10 (tonal \u2192 emotional signal)",
+      "values": {}
+    },
+    {
+      "name": "T9_P1_positive_g2_02_mid",
+      "group": "T9_emotion",
+      "passed": true,
+      "message": "P1(0.6269) > 0.10 (tonal \u2192 emotional signal)",
+      "values": {}
+    },
+    {
+      "name": "T9_P1_positive_g3_03_triad",
+      "group": "T9_emotion",
+      "passed": true,
+      "message": "P1(0.6241) > 0.10 (tonal \u2192 emotional signal)",
+      "values": {}
+    },
+    {
+      "name": "T9_P1_positive_g4_01_sustained",
+      "group": "T9_emotion",
+      "passed": true,
+      "message": "P1(0.6261) > 0.10 (tonal \u2192 emotional signal)",
+      "values": {}
+    },
+    {
+      "name": "T9_P1_varies",
+      "group": "T9_emotion",
+      "passed": true,
+      "message": "P1 std=0.0027 > 0.001",
+      "values": {}
+    },
+    {
+      "name": "T10_F0_E1_corr",
+      "group": "T10_forecast",
+      "passed": true,
+      "message": "r(F0,E1)=0.9652 > 0.30 (50% direct)",
+      "values": {}
+    },
+    {
+      "name": "T10_F1_E2_corr",
+      "group": "T10_forecast",
+      "passed": true,
+      "message": "r(F1,E2)=0.3537 > 0.30 (40% direct)",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_1_2",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(E1:arousal_response,E2:valence_response)|=0.445 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_1_4",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(E1:arousal_response,M0:ic_value)|=0.870 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_1_6",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(E1:arousal_response,M2:valence_pred)|=0.822 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_1_8",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(E1:arousal_response,M4:hr_pred)|=0.651 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_1_9",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(E1:arousal_response,P0:surprise_signal)|=0.915 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_1_12",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(E1:arousal_response,F1:valence_shift_2_5s)|=0.564 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_2_3",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(E2:valence_response,E3:defense_cascade)|=0.351 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_2_4",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(E2:valence_response,M0:ic_value)|=0.701 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_2_5",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(E2:valence_response,M1:arousal_pred)|=0.543 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_2_7",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(E2:valence_response,M3:scr_pred)|=0.632 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_2_9",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(E2:valence_response,P0:surprise_signal)|=0.246 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_2_11",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(E2:valence_response,F0:arousal_change_1_3s)|=0.502 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_3_4",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(E3:defense_cascade,M0:ic_value)|=0.179 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_3_5",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(E3:defense_cascade,M1:arousal_pred)|=0.161 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_3_6",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(E3:defense_cascade,M2:valence_pred)|=0.076 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_3_8",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(E3:defense_cascade,M4:hr_pred)|=0.209 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_3_9",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(E3:defense_cascade,P0:surprise_signal)|=0.414 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_3_10",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(E3:defense_cascade,P1:emotional_evaluation)|=0.013 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_3_11",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(E3:defense_cascade,F0:arousal_change_1_3s)|=0.069 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_3_12",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(E3:defense_cascade,F1:valence_shift_2_5s)|=0.005 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_4_5",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(M0:ic_value,M1:arousal_pred)|=0.915 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_4_6",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(M0:ic_value,M2:valence_pred)|=0.931 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_4_7",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(M0:ic_value,M3:scr_pred)|=0.494 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_4_8",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(M0:ic_value,M4:hr_pred)|=0.469 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_4_10",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(M0:ic_value,P1:emotional_evaluation)|=0.563 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_4_11",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(M0:ic_value,F0:arousal_change_1_3s)|=0.711 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_4_12",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(M0:ic_value,F1:valence_shift_2_5s)|=0.650 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_5_7",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(M1:arousal_pred,M3:scr_pred)|=0.574 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_5_8",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(M1:arousal_pred,M4:hr_pred)|=0.489 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_5_9",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(M1:arousal_pred,P0:surprise_signal)|=0.930 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_5_11",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(M1:arousal_pred,F0:arousal_change_1_3s)|=0.685 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_5_12",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(M1:arousal_pred,F1:valence_shift_2_5s)|=0.617 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_6_7",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(M2:valence_pred,M3:scr_pred)|=0.678 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_6_9",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(M2:valence_pred,P0:surprise_signal)|=0.714 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_6_11",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(M2:valence_pred,F0:arousal_change_1_3s)|=0.669 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_6_12",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(M2:valence_pred,F1:valence_shift_2_5s)|=0.557 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_7_8",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(M3:scr_pred,M4:hr_pred)|=0.664 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_7_9",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(M3:scr_pred,P0:surprise_signal)|=0.327 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_7_10",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(M3:scr_pred,P1:emotional_evaluation)|=0.382 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_7_11",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(M3:scr_pred,F0:arousal_change_1_3s)|=0.670 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_7_12",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(M3:scr_pred,F1:valence_shift_2_5s)|=0.424 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_8_9",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(M4:hr_pred,P0:surprise_signal)|=0.320 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_8_10",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(M4:hr_pred,P1:emotional_evaluation)|=0.028 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_8_11",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(M4:hr_pred,F0:arousal_change_1_3s)|=0.900 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_8_12",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(M4:hr_pred,F1:valence_shift_2_5s)|=0.062 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_9_10",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(P0:surprise_signal,P1:emotional_evaluation)|=0.580 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_9_11",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(P0:surprise_signal,F0:arousal_change_1_3s)|=0.533 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_9_12",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(P0:surprise_signal,F1:valence_shift_2_5s)|=0.637 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_10_11",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(P1:emotional_evaluation,F0:arousal_change_1_3s)|=0.341 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_10_12",
+      "group": "T11_redundancy",
+      "passed": false,
+      "message": "|r(P1:emotional_evaluation,F1:valence_shift_2_5s)|=0.992 < 0.99",
+      "values": {}
+    },
+    {
+      "name": "T11_redundancy_11_12",
+      "group": "T11_redundancy",
+      "passed": true,
+      "message": "|r(F0:arousal_change_1_3s,F1:valence_shift_2_5s)|=0.382 < 0.99",
+      "values": {}
+    }
+  ]
+}

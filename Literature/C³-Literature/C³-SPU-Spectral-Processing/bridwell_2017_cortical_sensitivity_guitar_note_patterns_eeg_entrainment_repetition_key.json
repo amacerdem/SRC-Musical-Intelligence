@@ -1,0 +1,375 @@
+{
+  "metadata": {
+    "paper_id": "bridwell_2017_cortical_sensitivity_guitar_note_patterns_eeg_entrainment_repetition_key",
+    "title": "Cortical Sensitivity to Guitar Note Patterns: EEG Entrainment to Repetition and Key",
+    "authors": [
+      "David A. Bridwell",
+      "Emily Leslie",
+      "Dakarai Q. McCoy",
+      "Sergey M. Plis",
+      "Vince D. Calhoun"
+    ],
+    "year": 2017,
+    "journal": "Frontiers in Human Neuroscience",
+    "doi": "10.3389/fnhum.2017.00090",
+    "schema_version": "3.0",
+    "extraction_run_id": "v3.0-window-2-039",
+    "extraction_date": "2025-01-25T19:00:00Z",
+    "tooling": {
+      "extractor": "cursor-ai-claude",
+      "model": "claude-3.5-sonnet",
+      "registry_version": "R3_Schema_v2"
+    },
+    "paper_type": "original_research",
+    "note": "Original EEG study examining cortical sensitivity to guitar note patterns using ERP responses. 13 healthy non-musicians listened to structured (within musical keys with repetition) or random sequences of guitar notes at 4 Hz (250 ms inter-stimulus interval). ERP responses showed entrainment to 8 Hz oscillations."
+  },
+  "claims": [
+    {
+      "claim_id": "bridwell_2017.C01",
+      "claim_text": "ERP responses to guitar notes presented at 4 Hz showed entrainment to 8 Hz cortical oscillations, with four peaks appearing within the 250 ms interval (0-250 ms), suggesting phase alignment of 8 Hz alpha rhythms to each input",
+      "relation_type": "effect",
+      "causal_strength": "strong",
+      "evidence_level": "EEG",
+      "independent_variable": {
+        "name": "Guitar note presentation rate",
+        "r3_axis": "r3:L4.rate_hz",
+        "levels": ["4Hz"],
+        "values": [4],
+        "unit": "Hz"
+      },
+      "dependent_variable": {
+        "name": "ERP response frequency (entrained oscillations)",
+        "r3_axis": "r3:L4.rate_hz",
+        "levels": ["8Hz_entrainment"],
+        "values": [8],
+        "unit": "Hz"
+      },
+      "statistics": {
+        "reported": false,
+        "note": "Qualitative observation: four peaks within 250 ms interval suggest 8 Hz oscillations (2 periods per 250 ms = 8 Hz). Periodic structure present when ERP plotted using every other stimulus, confirming distinct stimuli used."
+      },
+      "brain_regions": [
+        {
+          "region": "Frontal region (Fz)",
+          "brodmann_area": "BA6|BA8|BA9",
+          "mni_coordinates": null,
+          "hemisphere": "bilateral",
+          "evidence_type": "EEG_electrodes",
+          "context": "Largest peak response observed over electrode Fz, consistent with previous studies. 24-channel EEG system (10-20 International System)."
+        }
+      ],
+      "methodology": {
+        "techniques": ["EEG", "ERP"],
+        "task": "Listening to guitar notes presented at 4 Hz (250 ms inter-stimulus interval) in structured (musical keys with repetition) or random sequences. Five 5-minute blocks: blocks 1-2 musical sequence, blocks 3-4 random sequence, block 5 oddball sequence.",
+        "control_conditions": "Within-subjects design: structured (musical pattern) vs random sequence. Same stimuli physically identical across conditions, only order differed.",
+        "sample_size": 13,
+        "participant_characteristics": "Healthy non-musicians, 9 males, 1 left-handed, ages 23-36, normal audition, no family history of mental illness",
+        "analysis_details": "EEG recorded at 500 Hz using 24-channel SMARTING amp. ERP epochs -250 to 500 ms surrounding each stimulus. Four peaks identified within 0-250 ms interval."
+      }
+    },
+    {
+      "claim_id": "bridwell_2017.C02",
+      "claim_text": "The positive peak at ~200 ms showed statistically significant differences between music and random conditions, with a 45.41% increase in response to random notes compared to musical notes (T=2.63, p=0.022), indicating reduced ERP amplitudes for notes within musical context",
+      "relation_type": "effect",
+      "causal_strength": "moderate",
+      "evidence_level": "EEG",
+      "independent_variable": {
+        "name": "Note sequence type",
+        "r3_axis": null,
+        "levels": ["musical_pattern", "random_sequence"],
+        "values": null,
+        "unit": "categorical"
+      },
+      "dependent_variable": {
+        "name": "ERP positive peak amplitude at ~200 ms",
+        "r3_axis": "r3:UNMAPPED",
+        "axis_proposal": {
+          "suggested_id": "r3:X49.musical_pattern_sensitivity",
+          "definition": "Cortical sensitivity to musical patterns measured by ERP positive peak amplitude at ~200 ms, with reduced amplitudes indicating better prediction and processing of notes within musical context",
+          "expected_range": [-50.0, 50.0],
+          "unit": "microvolts",
+          "psychoacoustic_basis": "ERP positive peak amplitude at ~200 ms reflects cortical processing of musical structure. Reduced amplitudes to musical notes indicate better prediction and reduced processing resources required."
+        },
+        "levels": ["reduced_amplitude", "increased_amplitude"],
+        "values": null,
+        "unit": "microvolts"
+      },
+      "statistics": {
+        "reported": true,
+        "test_type": "paired_t_test",
+        "f_value": null,
+        "p_value": "0.022",
+        "post_hoc": null,
+        "effect_size": null,
+        "note": "Positive peak at ~200 ms: 45.41% increase in response to random notes (T=2.63, p=0.022). Negative peak at ~175 ms showed 56.42% reduction for random notes (T=2.35, p=0.036) but did not pass Holm-Bonferroni correction. Peaks 1 (~20 ms) and 2 (~100 ms) did not show significant differences."
+      },
+      "brain_regions": [
+        {
+          "region": "Frontal region (Fz)",
+          "brodmann_area": "BA6|BA8|BA9",
+          "mni_coordinates": null,
+          "hemisphere": "bilateral",
+          "evidence_type": "EEG_electrodes",
+          "context": "Largest peak response observed over electrode Fz. Statistical tests conducted on electrode Fz since it contained largest peak response averaged across conditions."
+        }
+      ],
+      "methodology": {
+        "techniques": ["EEG", "ERP"],
+        "task": "Listening to guitar notes presented at 4 Hz in structured (musical keys with repetition) or random sequences. ERP amplitudes measured at ~200 ms positive peak.",
+        "control_conditions": "Within-subjects design: structured (musical pattern) vs random sequence. Same stimuli physically identical across conditions.",
+        "sample_size": 13,
+        "participant_characteristics": "Same as C01",
+        "analysis_details": "ERP amplitudes calculated by identifying peak within group-averaged data region, then averaging amplitudes surrounding full width half maximum (fwhm) for each individual subject. Statistical tests on electrode Fz."
+      }
+    },
+    {
+      "claim_id": "bridwell_2017.C03",
+      "claim_text": "Response amplitudes to the negative peak at ~175 ms are statistically correlated with the mismatch negativity (MMN) response measured to a rare note in traditional oddball sequence (r=0.65, p=0.015), but responses to the positive peak at ~200 ms do not show statistical relationship with P300 response (r=0.38, p=0.195)",
+      "relation_type": "association",
+      "causal_strength": "moderate",
+      "evidence_level": "EEG",
+      "independent_variable": {
+        "name": "MMN amplitude (oddball sequence)",
+        "r3_axis": null,
+        "levels": ["low_MMN", "medium_MMN", "high_MMN"],
+        "values": null,
+        "unit": "microvolts"
+      },
+      "dependent_variable": {
+        "name": "ERP amplitude difference (music minus random) at ~175 ms",
+        "r3_axis": "r3:UNMAPPED",
+        "axis_proposal": {
+          "suggested_id": "r3:X50.musical_structure_sensitivity",
+          "definition": "Cortical sensitivity to musical structure measured by ERP amplitude difference between musical and random conditions at ~175 ms negative peak",
+          "expected_range": [-50.0, 50.0],
+          "unit": "microvolts",
+          "psychoacoustic_basis": "Amplitude difference between musical and random conditions reflects cortical sensitivity to complex musical patterns. Correlation with MMN suggests overlap with sensitivity to statistical regularities."
+        },
+        "levels": ["low_difference", "medium_difference", "high_difference"],
+        "values": null,
+        "unit": "microvolts"
+      },
+      "statistics": {
+        "reported": true,
+        "test_type": "Pearson_correlation",
+        "f_value": null,
+        "p_value": "Negative peak ~175 ms: r=0.65, p=0.015; Positive peak ~200 ms: r=0.38, p=0.195",
+        "post_hoc": null,
+        "effect_size": null,
+        "note": "Negative peak at ~175 ms (music minus random) significantly correlated with MMN amplitudes (r=0.65, p=0.015). Positive peak at ~200 ms did not correlate with P300 (r=0.38, p=0.195). Suggests partial overlap between sensitivity to musical patterns and sensitivity to statistical regularities."
+      },
+      "brain_regions": [
+        {
+          "region": "Frontal region (Fz)",
+          "brodmann_area": "BA6|BA8|BA9",
+          "mni_coordinates": null,
+          "hemisphere": "bilateral",
+          "evidence_type": "EEG_electrodes",
+          "context": "ERP responses measured at electrode Fz. MMN and P300 responses also measured at Fz in oddball sequence (block 5)."
+        }
+      ],
+      "methodology": {
+        "techniques": ["EEG", "ERP", "correlation_analysis"],
+        "task": "Listening to guitar notes at 4 Hz: blocks 1-2 musical sequence, blocks 3-4 random sequence, block 5 oddball sequence (90% frequent, 10% rare note). ERP amplitudes compared between conditions and correlated with oddball responses.",
+        "control_conditions": "Within-subjects design. Oddball sequence (block 5) provides measure of cortical sensitivity to rare stimuli. Musical vs random sequence provides measure of sensitivity to complex patterns.",
+        "sample_size": 13,
+        "participant_characteristics": "Same as C01",
+        "analysis_details": "Pearson correlation between ERP amplitude differences (music minus random) and ERP amplitudes to rare stimulus in oddball sequence. Correlation tests for negative peak at ~175 ms and positive peak at ~200 ms."
+      }
+    }
+  ],
+  "c3_associations": [
+    {
+      "unit": "STU",
+      "process": "Guitar notes presented at 4 Hz entrain cortical oscillations to 8 Hz, with ERP responses showing four peaks within 250 ms interval, suggesting phase alignment of alpha rhythms to periodic input",
+      "confidence": 0.90,
+      "supported_claim_ids": [
+        "bridwell_2017.C01"
+      ],
+      "brain_regions": [
+        {
+          "region": "Frontal region (Fz)",
+          "role": "Neural entrainment to 4 Hz note presentation rate, showing 8 Hz oscillations",
+          "evidence_type": "EEG_electrodes"
+        }
+      ],
+      "r3_layers": ["L4", "L6"],
+      "r3_dimensions": [
+        "r3:L4.rate_hz",
+        "r3:L6.tempo_bpm"
+      ],
+      "evidence": "Guitar notes presented at 4 Hz (250 ms inter-stimulus interval, 240 bpm) entrain cortical oscillations to 8 Hz. Four peaks within 250 ms interval suggest 2 periods of 8 Hz oscillations per stimulus. This steady-state entrainment reflects phase alignment of endogenous alpha rhythms to periodic input.",
+      "evidence_source": "direct_measurement"
+    },
+    {
+      "unit": "SPU",
+      "process": "Cortical sensitivity to guitar note patterns measured by ERP amplitude differences between musical and random sequences, with reduced amplitudes to musical notes indicating better prediction and processing of musical structure",
+      "confidence": 0.85,
+      "supported_claim_ids": [
+        "bridwell_2017.C02",
+        "bridwell_2017.C03"
+      ],
+      "brain_regions": [
+        {
+          "region": "Frontal region (Fz)",
+          "role": "ERP responses to musical vs random note sequences",
+          "evidence_type": "EEG_electrodes"
+        }
+      ],
+      "r3_layers": ["L4", "L5"],
+      "r3_dimensions": [
+        "r3:L4.rate_hz",
+        "r3:L5.pitch_hz"
+      ],
+      "evidence": "Positive peak at ~200 ms showed 45.41% increase in response to random notes (T=2.63, p=0.022), indicating reduced ERP amplitudes for notes within musical context. This suggests greater processing resources required for random sequences, and better ability to detect acoustic regularities in musical sequences. Negative peak at ~175 ms correlated with MMN (r=0.65, p=0.015), suggesting partial overlap with sensitivity to statistical regularities.",
+      "evidence_source": "direct_measurement"
+    },
+    {
+      "unit": "PCU",
+      "process": "ERP amplitude differences between musical and random sequences reflect predictive coding mechanisms, with reduced amplitudes to musical notes indicating better prediction and reduced processing resources required",
+      "confidence": 0.80,
+      "supported_claim_ids": [
+        "bridwell_2017.C02",
+        "bridwell_2017.C03"
+      ],
+      "brain_regions": [
+        {
+          "region": "Frontal region (Fz)",
+          "role": "Predictive processing of musical structure",
+          "evidence_type": "EEG_electrodes"
+        }
+      ],
+      "r3_layers": ["L4", "L5"],
+      "r3_dimensions": [
+        "r3:L4.rate_hz",
+        "r3:L5.pitch_hz"
+      ],
+      "evidence": "Reduced ERP amplitudes to musical notes compared to random notes suggest better prediction of notes within musical context. Negative peak at ~175 ms correlated with MMN, suggesting overlap with statistical regularity detection. Positive peak at ~200 ms did not correlate with P300, suggesting distinct processes for complex musical patterns vs simple statistical regularities.",
+      "evidence_source": "direct_measurement"
+    }
+  ],
+  "r3_coordinates": {
+    "primary_axes": [
+      {
+        "axis_id": "r3:L4.rate_hz",
+        "values": [4, 8],
+        "unit": "Hz",
+        "role": "IV_DV",
+        "note": "Guitar notes presented at 4 Hz (250 ms inter-stimulus interval) entrain cortical oscillations to 8 Hz. Four peaks within 250 ms interval suggest 2 periods of 8 Hz oscillations per stimulus. This represents steady-state evoked potential (SSEP) or frequency-tagging response."
+      },
+      {
+        "axis_id": "r3:L6.tempo_bpm",
+        "values": [240],
+        "unit": "bpm",
+        "role": "IV",
+        "note": "4 Hz note presentation rate corresponds to 240 bpm (4 notes per second = 240 beats per minute). This fast presentation rate facilitates entrainment of EEG oscillations to periodic stimuli."
+      }
+    ],
+    "derived_coordinates": [],
+    "note": "4 Hz presentation rate (240 bpm) is primary independent variable. Cortical oscillations entrain to 8 Hz (2× the presentation rate), showing four peaks within 250 ms interval. Musical pattern condition (notes within keys with repetition) vs random sequence condition. Reduced ERP amplitudes to musical notes indicate better prediction and processing of musical structure."
+  },
+  "brain_regions_summary": {
+    "regions_mentioned": [
+      {
+        "region": "Frontal region (Fz)",
+        "full_name": "Frontal region (Fz, BA6/BA8/BA9)",
+        "mentions": [
+          {
+            "claim_id": "bridwell_2017.C01",
+            "context": "Largest peak response observed over electrode Fz, consistent with previous studies",
+            "evidence_type": "EEG_electrodes"
+          },
+          {
+            "claim_id": "bridwell_2017.C02",
+            "context": "Largest peak response observed over electrode Fz. Statistical tests conducted on electrode Fz",
+            "evidence_type": "EEG_electrodes"
+          },
+          {
+            "claim_id": "bridwell_2017.C03",
+            "context": "ERP responses measured at electrode Fz. MMN and P300 responses also measured at Fz",
+            "evidence_type": "EEG_electrodes"
+          },
+          {
+            "c3_association": "STU",
+            "context": "Neural entrainment to 4 Hz note presentation rate, showing 8 Hz oscillations",
+            "evidence_type": "EEG_electrodes"
+          },
+          {
+            "c3_association": "SPU",
+            "context": "ERP responses to musical vs random note sequences",
+            "evidence_type": "EEG_electrodes"
+          },
+          {
+            "c3_association": "PCU",
+            "context": "Predictive processing of musical structure",
+            "evidence_type": "EEG_electrodes"
+          }
+        ],
+        "total_mentions": 6
+      }
+    ],
+    "total_unique_regions": 1,
+    "evidence_types": {
+      "EEG_electrodes": 6,
+      "direct_measurement": 6
+    },
+    "note": "All brain regions identified through EEG electrode placement in 10-20 International System (24 electrodes). Frontal region (Fz) identified as region with largest peak response. No specific MNI coordinates or precise Brodmann area confirmation, but Fz typically corresponds to BA6 (premotor/supplementary motor), BA8 (frontal eye fields), and BA9 (dorsolateral prefrontal cortex)."
+  },
+  "validation": {
+    "r3_registry_checked": true,
+    "registry_version": "R3_Schema_v2",
+    "registry_check_date": "2025-01-25T19:00:00Z",
+    "unmapped_axes_count": 2,
+    "unmapped_axes": [
+      {
+        "claim_id": "bridwell_2017.C02",
+        "variable": "dependent_variable",
+        "axis_proposal": {
+          "suggested_id": "r3:X49.musical_pattern_sensitivity",
+          "status": "proposed"
+        }
+      },
+      {
+        "claim_id": "bridwell_2017.C03",
+        "variable": "dependent_variable",
+        "axis_proposal": {
+          "suggested_id": "r3:X50.musical_structure_sensitivity",
+          "status": "proposed"
+        }
+      }
+    ],
+    "c3_unit_validation": {
+      "all_units_valid": true,
+      "units_checked": ["STU", "SPU", "PCU"],
+      "invalid_units": []
+    },
+    "claim_id_format_validation": {
+      "all_valid": true,
+      "format": "paper_id.C##"
+    },
+    "schema_compliance": {
+      "version": "3.0",
+      "compliant": true,
+      "warnings": [
+        "2 DV r3_axis unmapped (axis_proposal provided for all)",
+        "EEG electrode-based brain region identification (no MNI coordinates or precise Brodmann area confirmation)",
+        "Small sample size (n=13)",
+        "Negative peak at ~175 ms did not pass Holm-Bonferroni correction (p=0.036, but correction threshold was 0.005 for first comparison)"
+      ],
+      "errors": []
+    },
+    "data_quality": {
+      "statistics_structured": true,
+      "effect_sizes_present": 0,
+      "effect_sizes_missing": 3,
+      "sample_characteristics_complete": true,
+      "r3_coordinates_complete": true,
+      "brain_regions_collected": true,
+      "brain_regions_count": 1,
+      "brain_regions_with_context": 1,
+      "roi_mentions": 0,
+      "note": "Original EEG study with 13 healthy non-musicians. Statistics reported (t-tests, p-values, correlation coefficients). Brain regions identified through EEG electrode placement. R³ coordinates mapped for presentation rate (L4.rate_hz: 4 Hz) and entrained oscillations (8 Hz), and tempo (L6.tempo_bpm: 240 bpm). Effect sizes not reported but could be calculated from provided statistics."
+    }
+  }
+}
+
