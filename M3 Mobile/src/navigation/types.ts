@@ -3,6 +3,7 @@ export type RootStackParamList = {
   Onboarding: undefined;
   MindReveal: undefined;
   MainTabs: undefined;
+  Paywall: undefined;
 };
 
 export type OnboardingStackParamList = {
@@ -23,4 +24,6 @@ export type MainTabParamList = {
 export type InfoStackParamList = {
   InfoList: undefined;
   PersonaDetail: { personaId: number };
+  Leaderboard: undefined;
+  SocialFeed: undefined;
 };

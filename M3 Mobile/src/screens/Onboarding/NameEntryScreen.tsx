@@ -1,7 +1,10 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, ScrollView, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View, Text, TextInput, ScrollView, TouchableOpacity, StyleSheet, Dimensions,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Animated, { FadeInDown } from "react-native-reanimated";
+import { Ionicons } from "@expo/vector-icons";
 import { useNavigation, CommonActions } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import type { RootStackParamList } from "../../navigation/types";
@@ -13,19 +16,12 @@ import { GlassCard } from "../../components/ui/GlassCard";
 import { Button } from "../../components/ui/Button";
 import { Badge } from "../../components/ui/Badge";
 import { colors, familyColors } from "../../design/tokens";
-import type { M3Tier } from "../../types/m3";
 
-const PLANS = [
-  { id: "pulse", tier: "basic" as M3Tier, name: "Pulse", price: "$5/mo", features: ["Weekly M³ updates", "Gene tracking", "Observations"] },
-  { id: "resonance", tier: "premium" as M3Tier, name: "Resonance", price: "$10/mo", features: ["Daily updates", "Full C³ functions", "Predictions"] },
-  { id: "transcendence", tier: "ultimate" as M3Tier, name: "Transcendence", price: "$20/mo", features: ["Real-time evolution", "Cross-mind", "Meta-layer"] },
-];
+const { width } = Dimensions.get("window");
 
 export function NameEntryScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const selectedPersonaId = useOnboardingStore((s) => s.selectedPersonaId);
-  const setSelectedPlan = useOnboardingStore((s) => s.setSelectedPlan);
-  const selectedPlan = useOnboardingStore((s) => s.selectedPlan);
   const selectedTier = useOnboardingStore((s) => s.selectedTier);
   const birthM3 = useM3Store((s) => s.birthM3);
   const completeOnboarding = useUserStore((s) => s.completeOnboarding);
@@ -34,6 +30,8 @@ export function NameEntryScreen() {
 
   const persona = personas.find((p) => p.id === selectedPersonaId) ?? personas[0];
   const fColor = familyColors[persona.family] ?? colors.violet;
+
+  const hasPlan = selectedTier !== "free";
 
   const onBirth = () => {
     birthM3(persona, selectedTier);
@@ -59,9 +57,16 @@ export function NameEntryScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scroll}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scroll}
+        keyboardShouldPersistTaps="handled"
+      >
         <Animated.View entering={FadeInDown.duration(500)}>
           <Text style={styles.title}>Name Your Mind</Text>
+          <Text style={styles.subtitle}>
+            Give your musical mind an identity
+          </Text>
         </Animated.View>
 
         {/* Name input */}
@@ -72,10 +77,12 @@ export function NameEntryScreen() {
               style={styles.input}
               value={name}
               onChangeText={setName}
-              placeholder="Enter your name"
+              placeholder="What shall we call you?"
               placeholderTextColor="rgba(255,255,255,0.2)"
               maxLength={24}
               selectionColor={colors.violet}
+              autoCapitalize="words"
+              returnKeyType="done"
             />
           </GlassCard>
         </Animated.View>
@@ -83,44 +90,57 @@ export function NameEntryScreen() {
         {/* Persona preview */}
         <Animated.View entering={FadeInDown.delay(200).duration(500)} style={styles.section}>
           <GlassCard style={{ borderLeftWidth: 3, borderLeftColor: fColor }}>
-            <Text style={[styles.personaName, { color: fColor }]}>{persona.name}</Text>
-            <Badge label={persona.family} color={fColor} />
-            <Text style={styles.personaTagline}>{persona.tagline}</Text>
+            <View style={styles.personaRow}>
+              <View style={[styles.personaAvatar, { backgroundColor: `${fColor}20`, borderColor: fColor }]}>
+                <Text style={[styles.personaLetter, { color: fColor }]}>
+                  {persona.name.charAt(0)}
+                </Text>
+              </View>
+              <View style={styles.personaInfo}>
+                <Text style={[styles.personaName, { color: fColor }]}>{persona.name}</Text>
+                <Badge label={persona.family} color={fColor} />
+              </View>
+            </View>
+            <Text style={styles.personaTagline}>"{persona.tagline}"</Text>
           </GlassCard>
         </Animated.View>
 
-        {/* Plan selection */}
-        <Text style={styles.sectionTitle}>Choose Your Plan</Text>
-        {PLANS.map((plan, i) => {
-          const isSelected = selectedPlan === plan.id;
-          return (
-            <Animated.View key={plan.id} entering={FadeInDown.delay(300 + i * 100).duration(500)}>
-              <TouchableOpacity activeOpacity={0.8} onPress={() => setSelectedPlan(plan.id)}>
-                <GlassCard
-                  style={[styles.planCard, isSelected && { borderColor: colors.violet, borderWidth: 1.5 }]}
-                >
-                  <View style={styles.planHeader}>
-                    <Text style={styles.planName}>{plan.name}</Text>
-                    <Text style={styles.planPrice}>{plan.price}</Text>
-                  </View>
-                  {plan.features.map((f) => (
-                    <Text key={f} style={styles.planFeature}>• {f}</Text>
-                  ))}
-                </GlassCard>
-              </TouchableOpacity>
-            </Animated.View>
-          );
-        })}
+        {/* Subscription Section */}
+        <Animated.View entering={FadeInDown.delay(300).duration(500)}>
+          <Text style={styles.sectionTitle}>Subscription</Text>
 
-        {/* Free option */}
-        <TouchableOpacity
-          onPress={() => setSelectedPlan("")}
-          style={[styles.freeOption, !selectedPlan && styles.freeOptionActive]}
-        >
-          <Text style={[styles.freeText, !selectedPlan && { color: colors.violet }]}>
-            Start Free (frozen mind)
-          </Text>
-        </TouchableOpacity>
+          {/* Choose Plan Button */}
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => navigation.navigate("Paywall")}
+          >
+            <GlassCard style={styles.planBtn}>
+              <View style={styles.planBtnRow}>
+                <View style={styles.planBtnLeft}>
+                  <Ionicons name="diamond-outline" size={24} color={colors.violet} />
+                  <View style={styles.planBtnText}>
+                    <Text style={styles.planBtnTitle}>
+                      {hasPlan ? `${selectedTier.charAt(0).toUpperCase() + selectedTier.slice(1)} Plan` : "Choose a Plan"}
+                    </Text>
+                    <Text style={styles.planBtnDesc}>
+                      {hasPlan
+                        ? "Tap to change your subscription"
+                        : "Unlock your mind's full potential"}
+                    </Text>
+                  </View>
+                </View>
+                <Ionicons name="chevron-forward" size={20} color="rgba(255,255,255,0.3)" />
+              </View>
+            </GlassCard>
+          </TouchableOpacity>
+
+          {/* Free option */}
+          {!hasPlan && (
+            <Text style={styles.freeHint}>
+              Or continue free with limited features
+            </Text>
+          )}
+        </Animated.View>
       </ScrollView>
 
       <View style={styles.footer}>
@@ -133,27 +153,52 @@ export function NameEntryScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#000000" },
   scroll: { paddingHorizontal: 16, paddingBottom: 100 },
-  title: { fontSize: 28, fontFamily: "Saira_700Bold", color: "#fff", marginTop: 16, marginBottom: 20 },
-  label: { fontSize: 12, fontFamily: "Inter_500Medium", color: "rgba(255,255,255,0.5)", marginBottom: 8 },
+  title: {
+    fontSize: 28, fontFamily: "Saira_700Bold", color: "#fff", marginTop: 16,
+  },
+  subtitle: {
+    fontSize: 14, fontFamily: "Inter_400Regular",
+    color: "rgba(255,255,255,0.5)", marginTop: 6, marginBottom: 20,
+  },
+  label: {
+    fontSize: 12, fontFamily: "Inter_500Medium",
+    color: "rgba(255,255,255,0.5)", marginBottom: 8,
+  },
   input: {
     fontSize: 18, fontFamily: "Saira_500Medium", color: "#fff",
     borderBottomWidth: 1, borderBottomColor: "rgba(255,255,255,0.1)",
     paddingVertical: 8,
   },
   section: { marginTop: 16 },
-  personaName: { fontSize: 18, fontFamily: "Saira_700Bold", marginBottom: 8 },
-  personaTagline: { fontSize: 12, fontFamily: "Inter_400Regular", color: "rgba(255,255,255,0.5)", marginTop: 8 },
-  sectionTitle: { fontSize: 17, fontFamily: "Saira_600SemiBold", color: "#fff", marginTop: 24, marginBottom: 12 },
-  planCard: { marginBottom: 12, paddingVertical: 16 },
-  planHeader: { flexDirection: "row", justifyContent: "space-between", marginBottom: 8 },
-  planName: { fontSize: 16, fontFamily: "Saira_600SemiBold", color: "#fff" },
-  planPrice: { fontSize: 16, fontFamily: "JetBrainsMono_500Medium", color: colors.violet },
-  planFeature: { fontSize: 12, fontFamily: "Inter_400Regular", color: "rgba(255,255,255,0.5)", marginTop: 4 },
-  freeOption: {
-    paddingVertical: 14, alignItems: "center", marginTop: 8,
-    borderRadius: 12, borderWidth: 1, borderColor: "rgba(255,255,255,0.08)",
+  personaRow: { flexDirection: "row", alignItems: "center", gap: 12 },
+  personaAvatar: {
+    width: 48, height: 48, borderRadius: 24,
+    borderWidth: 1.5, alignItems: "center", justifyContent: "center",
   },
-  freeOptionActive: { borderColor: colors.violet, backgroundColor: "rgba(139,92,246,0.1)" },
-  freeText: { fontSize: 14, fontFamily: "Inter_500Medium", color: "rgba(255,255,255,0.4)" },
+  personaLetter: { fontSize: 22, fontFamily: "Saira_700Bold" },
+  personaInfo: { gap: 6 },
+  personaName: { fontSize: 18, fontFamily: "Saira_700Bold" },
+  personaTagline: {
+    fontSize: 12, fontFamily: "Inter_400Regular",
+    color: "rgba(255,255,255,0.4)", marginTop: 12, fontStyle: "italic",
+  },
+  sectionTitle: {
+    fontSize: 17, fontFamily: "Saira_600SemiBold", color: "#fff",
+    marginTop: 24, marginBottom: 12,
+  },
+  planBtn: { paddingVertical: 16 },
+  planBtnRow: {
+    flexDirection: "row", alignItems: "center", justifyContent: "space-between",
+  },
+  planBtnLeft: { flexDirection: "row", alignItems: "center", gap: 14, flex: 1 },
+  planBtnText: { gap: 4, flex: 1 },
+  planBtnTitle: { fontSize: 16, fontFamily: "Saira_600SemiBold", color: "#fff" },
+  planBtnDesc: {
+    fontSize: 12, fontFamily: "Inter_400Regular", color: "rgba(255,255,255,0.4)",
+  },
+  freeHint: {
+    fontSize: 13, fontFamily: "Inter_400Regular",
+    color: "rgba(255,255,255,0.3)", textAlign: "center", marginTop: 12,
+  },
   footer: { paddingHorizontal: 16, paddingVertical: 16 },
 });

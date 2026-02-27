@@ -53,6 +53,14 @@ def _filter_h3_by_band(
     return {k: v for k, v in h3_features.items() if k[1] in band_horizons}
 
 
+def _filter_h3_by_horizon(
+    h3_features: Dict[Tuple[int, int, int, int], Tensor],
+    horizon_idx: int,
+) -> Dict[Tuple[int, int, int, int], Tensor]:
+    """Keep only H³ tuples with a specific horizon index."""
+    return {k: v for k, v in h3_features.items() if k[1] == horizon_idx}
+
+
 def _filter_h3_by_law(
     h3_features: Dict[Tuple[int, int, int, int], Tensor],
     law_idx: int,
@@ -79,6 +87,23 @@ def _filter_h3_for_mechanism(
 ) -> Dict[Tuple[int, int, int, int], Tensor]:
     """Keep only H³ tuples that a mechanism actually demands."""
     return {k: v for k, v in h3_features.items() if k in mech_keys}
+
+
+def _zero_pad_missing(
+    filtered: Dict[Tuple[int, int, int, int], Tensor],
+    all_keys: Set[Tuple[int, int, int, int]],
+    ref_tensor: Tensor,
+) -> Dict[Tuple[int, int, int, int], Tensor]:
+    """Add zero tensors for mechanism keys missing from a filtered dict.
+
+    Some mechanisms access h3_features[key] directly (not .get()),
+    so we must provide zeros for missing keys to avoid KeyError.
+    """
+    result = dict(filtered)
+    for k in all_keys:
+        if k not in result:
+            result[k] = torch.zeros_like(ref_tensor)
+    return result
 
 
 # ---------------------------------------------------------------------------
@@ -165,10 +190,25 @@ def compute_belief_decomposition(
         # Scope H³ to this mechanism's demands for efficiency
         mech_h3 = _filter_h3_for_mechanism(h3_features, mech_keys)
 
+        # Determine which individual horizons are used
+        horizons_used = sorted({k[1] for k in mech_keys})
+
+        # Reference tensor for creating zeros (same B, T shape)
+        ref = next(iter(mech_h3.values()))
+
         # Full run (baseline)
         with torch.no_grad():
             full_output = mechanism.compute(mech_h3, r3_features)
         full_np = full_output[0].cpu().numpy()  # (T, D)
+
+        # Per-horizon ablated runs
+        horizon_outputs: Dict[str, np.ndarray] = {}
+        for h_idx in horizons_used:
+            filtered = _filter_h3_by_horizon(mech_h3, h_idx)
+            padded = _zero_pad_missing(filtered, mech_keys, ref)
+            with torch.no_grad():
+                out = mechanism.compute(padded, r3_features)
+            horizon_outputs[f"h{h_idx}"] = out[0].cpu().numpy()
 
         # Band-ablated runs
         band_outputs: Dict[str, np.ndarray] = {}
@@ -176,10 +216,9 @@ def compute_belief_decomposition(
             if not active_bands[band_name]:
                 continue
             filtered = _filter_h3_by_band(mech_h3, HORIZON_BANDS[band_name])
-            if not filtered:
-                continue
+            padded = _zero_pad_missing(filtered, mech_keys, ref)
             with torch.no_grad():
-                out = mechanism.compute(filtered, r3_features)
+                out = mechanism.compute(padded, r3_features)
             band_outputs[f"band_{band_name}"] = out[0].cpu().numpy()
 
         # Law-ablated runs
@@ -188,10 +227,9 @@ def compute_belief_decomposition(
             if not active_laws[law_idx]:
                 continue
             filtered = _filter_h3_by_law(mech_h3, law_idx)
-            if not filtered:
-                continue
+            padded = _zero_pad_missing(filtered, mech_keys, ref)
             with torch.no_grad():
-                out = mechanism.compute(filtered, r3_features)
+                out = mechanism.compute(padded, r3_features)
             law_outputs[f"law_{law_idx}"] = out[0].cpu().numpy()
 
         # Compute belief values from each variant's mechanism output
@@ -224,6 +262,10 @@ def compute_belief_decomposition(
 
             # Full
             variants["full"] = _belief_from_output(full_np)
+
+            # Per-horizon
+            for key, arr in horizon_outputs.items():
+                variants[key] = _belief_from_output(arr)
 
             # Bands
             for key, arr in band_outputs.items():

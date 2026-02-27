@@ -40,8 +40,14 @@ import { Badge } from "../../components/ui/Badge";
 import { ProgressBar } from "../../components/ui/ProgressBar";
 import { MindRadar } from "../../components/mind/MindRadar";
 import { MindTypeRing } from "../../components/mind/MindTypeRing";
+import { MindOrganismCanvas } from "../../components/mind/MindOrganismCanvas";
 import { WeeklyChart } from "../../components/dashboard/WeeklyChart";
 import { FunctionsGrid } from "../../components/dashboard/FunctionsGrid";
+import { MindGardenView } from "../../components/gamification/MindGardenView";
+import { QuestCard } from "../../components/gamification/QuestCard";
+import { ChallengeCard } from "../../components/gamification/ChallengeCard";
+import { useGamificationStore } from "../../stores/useGamificationStore";
+import { challenges } from "../../data/challenges";
 import { colors, fonts, spacing, familyColors } from "../../design/tokens";
 import { getDominantType } from "../../types/m3";
 import type { BeliefTrace } from "../../types/mind";
@@ -185,6 +191,8 @@ export function DashboardScreen() {
   const tracksAnalyzed = useUserStore((s) => s.tracksAnalyzed);
   const xp = useUserStore((s) => s.xp);
   const level = useUserStore((s) => s.level);
+  const activeQuests = useGamificationStore((s) => s.activeQuests);
+  const completeQuest = useGamificationStore((s) => s.completeQuest);
 
   /* Persona + level name */
   const persona = mind ? getPersona(mind.activePersonaId) : null;
@@ -315,6 +323,16 @@ export function DashboardScreen() {
           </GlassCard>
         </Animated.View>
 
+        {/* ── Organism Canvas ── */}
+        <Animated.View entering={FadeInDown.delay(150).duration(500)} style={{ alignItems: "center" }}>
+          <MindOrganismCanvas
+            genes={mind.genes}
+            color={familyColor}
+            size={240}
+            opacity={0.5}
+          />
+        </Animated.View>
+
         {/* ── 3. Mind Radar ── */}
         <Animated.View entering={FadeInDown.delay(200).duration(500)}>
           <GlassCard style={styles.radarCard}>
@@ -381,6 +399,41 @@ export function DashboardScreen() {
             <Text style={styles.sectionTitle}>Mind Speaks</Text>
             <BrainMonologue text={monologueText} />
           </GlassCard>
+        </Animated.View>
+
+        {/* ── 9. Mind Garden ── */}
+        <Animated.View entering={FadeInDown.delay(800).duration(500)}>
+          <MindGardenView />
+        </Animated.View>
+
+        {/* ── 10. Active Quests ── */}
+        {activeQuests.length > 0 && (
+          <Animated.View entering={FadeInDown.delay(900).duration(500)}>
+            <Text style={[styles.sectionTitle, { marginBottom: spacing.md }]}>
+              Active Quests
+            </Text>
+            <View style={{ gap: spacing.md, marginBottom: spacing.lg }}>
+              {activeQuests.filter((q) => q.status === "active").map((quest) => (
+                <QuestCard
+                  key={quest.id}
+                  quest={quest}
+                  onComplete={() => completeQuest(quest.id)}
+                />
+              ))}
+            </View>
+          </Animated.View>
+        )}
+
+        {/* ── 11. Challenges ── */}
+        <Animated.View entering={FadeInDown.delay(1000).duration(500)}>
+          <Text style={[styles.sectionTitle, { marginBottom: spacing.md }]}>
+            Challenges
+          </Text>
+          <View style={{ gap: spacing.md, marginBottom: spacing.lg }}>
+            {challenges.slice(0, 3).map((ch) => (
+              <ChallengeCard key={ch.id} challenge={ch} />
+            ))}
+          </View>
         </Animated.View>
 
         {/* Bottom spacer */}

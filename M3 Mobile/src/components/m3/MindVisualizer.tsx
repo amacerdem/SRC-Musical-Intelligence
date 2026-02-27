@@ -1,12 +1,13 @@
-/* -- MindVisualizer -- Simulated audio visualization bars -------------------
- *  12 vertical bars that respond to vizParams from the M3 audio store.
- *  Uses sine-wave simulation when no real audio analysis is available.
- *  Colors follow the consonance gradient palette.
- *  Reanimated for smooth bar height changes.
+/* -- MindVisualizer -- Circular radial audio visualization --------------------
+ *  16 bars arranged radially around a central glowing nucleus.
+ *  Each bar extends outward from the center like a starburst.
+ *  Bars respond to vizParams from the M3 audio store.
+ *  Color gradient cycles: violet -> cyan -> amber -> pink -> violet.
+ *  Reanimated for smooth bar height changes and nucleus breathing.
  *  ----------------------------------------------------------------------- */
 
 import React, { useEffect } from "react";
-import { View, StyleSheet, Dimensions } from "react-native";
+import { View, StyleSheet } from "react-native";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -19,37 +20,90 @@ import Animated, {
 import { useM3AudioStore, type VizParams } from "../../stores/useM3AudioStore";
 import { colors } from "../../design/tokens";
 
-const BAR_COUNT = 12;
-const { width: SCREEN_WIDTH } = Dimensions.get("window");
-const VIZ_WIDTH = SCREEN_WIDTH - 64;
-const BAR_GAP = 6;
-const BAR_WIDTH = (VIZ_WIDTH - BAR_GAP * (BAR_COUNT - 1)) / BAR_COUNT;
-const MAX_BAR_HEIGHT = 160;
+const BAR_COUNT = 16;
+const DEFAULT_SIZE = 200;
+const NUCLEUS_RADIUS = 12;
+const BAR_WIDTH = 3.5;
+const MAX_BAR_HEIGHT = 60;
+const INNER_OFFSET = NUCLEUS_RADIUS + 4; // gap between nucleus edge and bar start
 
-/* -- Bar colors: gradient from consonance purple through reward gold -- */
+/* -- 16-color gradient: violet -> cyan -> amber -> pink -> violet ---------- */
 const BAR_COLORS = [
-  "#C084FC", "#B47AFA", "#A872F8", "#9C6AF6",
-  "#9065F4", "#8B5CF6", "#A06AE0", "#B878CA",
-  "#D08AB4", "#E89C9E", "#F0AE88", "#FBBF24",
+  "#8B5CF6", // 0   violet
+  "#7C6AEE", // 1
+  "#5E8DE6", // 2
+  "#3AA5DE", // 3
+  "#06B6D4", // 4   cyan
+  "#2EBE9E", // 5
+  "#6CC468", // 6
+  "#B0CA3C", // 7
+  "#FBBF24", // 8   amber
+  "#F5A235", // 9
+  "#EF8546", // 10
+  "#EA6857", // 11
+  "#EC4899", // 12  pink
+  "#C84EAA", // 13
+  "#A453BB", // 14
+  "#8B58D0", // 15  back toward violet
 ];
 
-interface BarProps {
+/* -- Nucleus (center glow) ------------------------------------------------ */
+
+function Nucleus() {
+  const opacity = useSharedValue(0.4);
+
+  useEffect(() => {
+    opacity.value = withRepeat(
+      withSequence(
+        withTiming(0.8, { duration: 2000, easing: Easing.inOut(Easing.sin) }),
+        withTiming(0.4, { duration: 2000, easing: Easing.inOut(Easing.sin) }),
+      ),
+      -1,
+      true,
+    );
+  }, []);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    opacity: opacity.value,
+  }));
+
+  return (
+    <Animated.View style={[styles.nucleus, animatedStyle]} />
+  );
+}
+
+/* -- Radial Bar ----------------------------------------------------------- */
+
+interface RadialBarProps {
   index: number;
   vizParams: VizParams;
   isPlaying: boolean;
+  size: number;
 }
 
-function VizBar({ index, vizParams, isPlaying }: BarProps) {
-  const height = useSharedValue(10);
+function RadialBar({ index, vizParams, isPlaying, size }: RadialBarProps) {
+  const barHeight = useSharedValue(20);
+  const angleDeg = (index / BAR_COUNT) * 360;
+  const center = size / 2;
 
   useEffect(() => {
     if (!isPlaying) {
-      // Idle: gentle breathing animation
-      const baseHeight = 10 + Math.sin(index * 0.7) * 8;
-      height.value = withRepeat(
+      // Idle: gentle breathing animation (20-40px range)
+      const base = 20 + Math.sin(index * 0.9) * 6;
+      const peak = base + 14 + Math.sin(index * 1.3) * 6;
+      barHeight.value = withRepeat(
         withSequence(
-          withTiming(baseHeight + 15, { duration: 1200 + index * 100, easing: Easing.inOut(Easing.sin) }),
-          withTiming(baseHeight, { duration: 1200 + index * 100, easing: Easing.inOut(Easing.sin) }),
+          withDelay(
+            index * 80,
+            withTiming(peak, {
+              duration: 1400 + index * 60,
+              easing: Easing.inOut(Easing.sin),
+            }),
+          ),
+          withTiming(base, {
+            duration: 1400 + index * 60,
+            easing: Easing.inOut(Easing.sin),
+          }),
         ),
         -1,
         true,
@@ -57,89 +111,135 @@ function VizBar({ index, vizParams, isPlaying }: BarProps) {
       return;
     }
 
-    // Playing: derive height from vizParams
+    // Playing: derive height from vizParams by frequency band
     const { energy, bass, mid, treble, brightness, loudness } = vizParams;
 
-    // Each bar responds to different frequency ranges
     let barValue: number;
-    if (index < 3) {
-      // Low bars: bass-heavy
+    if (index < 4) {
+      // Bars 0-3: bass-heavy
       barValue = bass * 0.7 + energy * 0.3;
-    } else if (index < 6) {
-      // Low-mid bars
+    } else if (index < 8) {
+      // Bars 4-7: low-mid
       barValue = bass * 0.3 + mid * 0.5 + energy * 0.2;
-    } else if (index < 9) {
-      // Mid-high bars
+    } else if (index < 12) {
+      // Bars 8-11: mid-high
       barValue = mid * 0.4 + treble * 0.4 + brightness * 0.2;
     } else {
-      // High bars: treble + brightness
+      // Bars 12-15: treble + brightness
       barValue = treble * 0.5 + brightness * 0.3 + loudness * 0.2;
     }
 
-    // Add per-bar variation with sine offset
-    const variation = Math.sin(Date.now() * 0.003 + index * 0.8) * 0.15;
-    const targetHeight = Math.max(8, (barValue + variation) * MAX_BAR_HEIGHT);
+    const targetHeight = Math.max(6, Math.min(barValue * MAX_BAR_HEIGHT, MAX_BAR_HEIGHT));
 
-    height.value = withTiming(targetHeight, {
-      duration: 150,
-      easing: Easing.out(Easing.quad),
+    barHeight.value = withTiming(targetHeight, {
+      duration: 120,
     });
   }, [vizParams, isPlaying]);
 
   const animatedStyle = useAnimatedStyle(() => ({
-    height: height.value,
+    height: barHeight.value,
   }));
 
   return (
-    <Animated.View
+    <View
       style={[
-        styles.bar,
+        styles.barAnchor,
         {
-          width: BAR_WIDTH,
-          backgroundColor: BAR_COLORS[index],
-          opacity: isPlaying ? 0.9 : 0.4,
+          left: center - BAR_WIDTH / 2,
+          top: center,
+          transform: [{ rotate: `${angleDeg}deg` }],
         },
-        animatedStyle,
       ]}
-    />
+    >
+      <Animated.View
+        style={[
+          styles.bar,
+          {
+            width: BAR_WIDTH,
+            backgroundColor: BAR_COLORS[index],
+            opacity: isPlaying ? 0.9 : 0.5,
+            // translateY moves bar outward from center (negative = upward in pre-rotated space)
+            transform: [{ translateY: -(INNER_OFFSET) }],
+          },
+          animatedStyle,
+        ]}
+      />
+    </View>
   );
 }
 
-export function MindVisualizer() {
+/* -- Main Component ------------------------------------------------------- */
+
+interface MindVisualizerProps {
+  size?: number;
+}
+
+export function MindVisualizer({ size = DEFAULT_SIZE }: MindVisualizerProps) {
   const vizParams = useM3AudioStore((s) => s.vizParams);
   const isPlaying = useM3AudioStore((s) => s.isPlaying);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.barsRow}>
-        {Array.from({ length: BAR_COUNT }, (_, i) => (
-          <VizBar
-            key={i}
-            index={i}
-            vizParams={vizParams}
-            isPlaying={isPlaying}
-          />
-        ))}
+    <View style={[styles.container, { width: size, height: size }]}>
+      {/* Radial bars */}
+      {Array.from({ length: BAR_COUNT }, (_, i) => (
+        <RadialBar
+          key={i}
+          index={i}
+          vizParams={vizParams}
+          isPlaying={isPlaying}
+          size={size}
+        />
+      ))}
+
+      {/* Center nucleus */}
+      <View
+        style={[
+          styles.nucleusContainer,
+          {
+            left: size / 2 - NUCLEUS_RADIUS,
+            top: size / 2 - NUCLEUS_RADIUS,
+          },
+        ]}
+      >
+        <Nucleus />
       </View>
     </View>
   );
 }
 
+/* -- Styles --------------------------------------------------------------- */
+
 const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 24,
+    alignSelf: "center",
+    position: "relative",
   },
-  barsRow: {
-    flexDirection: "row",
-    alignItems: "flex-end",
-    justifyContent: "center",
-    height: MAX_BAR_HEIGHT + 20,
-    gap: BAR_GAP,
+  barAnchor: {
+    position: "absolute",
+    alignItems: "center",
+    // The anchor sits at center; rotation fans bars out.
+    // transformOrigin defaults to center of the element.
+    // The bar inside uses translateY to push outward from this anchor.
   },
   bar: {
-    borderRadius: 3,
-    minHeight: 6,
+    borderRadius: BAR_WIDTH / 2,
+    // Bar grows upward (in its local rotated coordinate space) = outward from center
+    // The anchor origin is at center, translateY on bar pushes it out
+  },
+  nucleusContainer: {
+    position: "absolute",
+    width: NUCLEUS_RADIUS * 2,
+    height: NUCLEUS_RADIUS * 2,
+  },
+  nucleus: {
+    width: NUCLEUS_RADIUS * 2,
+    height: NUCLEUS_RADIUS * 2,
+    borderRadius: NUCLEUS_RADIUS,
+    backgroundColor: colors.violet,
+    shadowColor: colors.violet,
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.8,
+    shadowRadius: 10,
+    elevation: 8,
   },
 });

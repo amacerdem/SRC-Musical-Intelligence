@@ -4,10 +4,11 @@ import { GlassBadge } from '../glass/GlassBadge'
 import { GlassChip } from '../glass/GlassChip'
 import { SparkLine } from '../charts/SparkLine'
 import { BeliefTrace } from '../charts/BeliefTrace'
-import { H3TemporalPanel } from './H3TemporalPanel'
+import { HorizonDecompositionPanel } from './HorizonDecompositionPanel'
 import { extractBeliefTrace } from '../../hooks/useBeliefData'
 import { useAudioCursor } from '../../stores/audioStore'
 import { usePipelineStore } from '../../stores/pipelineStore'
+import { BELIEF_HORIZON_ATLAS } from '../../data/beliefHorizonAtlas'
 import { ChevronDown, ChevronRight } from 'lucide-react'
 
 interface BeliefCardProps {
@@ -20,6 +21,7 @@ export function BeliefCard({ belief, data, color }: BeliefCardProps) {
   const [expanded, setExpanded] = useState(false)
   const { currentFrame, totalFrames } = useAudioCursor()
   const currentExperiment = usePipelineStore((s) => s.currentExperiment)
+  const hasHorizonAtlas = belief.index in BELIEF_HORIZON_ATLAS
 
   const trace = useMemo(
     () => (data ? extractBeliefTrace(data, belief.index) : []),
@@ -55,21 +57,21 @@ export function BeliefCard({ belief, data, color }: BeliefCardProps) {
           />
         )}
         {belief.tau !== null && (
-          <span className="mono text-[10px] text-text-tertiary">\u03c4={belief.tau}</span>
+          <span className="mono text-[10px] text-text-tertiary">{'\u03c4'}={belief.tau}</span>
         )}
       </div>
 
-      {/* Expanded view */}
+      {/* Expanded view — no tabs, everything inline */}
       {expanded && (
         <div className="border-t border-border-subtle px-4 py-3 space-y-3" onClick={(e) => e.stopPropagation()}>
-          {/* Full belief trace */}
+          {/* Aggregate belief trace */}
           <BeliefTrace
             data={trace}
             name={belief.name}
             type={belief.type}
             color={color}
             baseline={belief.baseline}
-            height={140}
+            height={100}
             cursorFrame={currentFrame}
             totalFrames={totalFrames}
           />
@@ -78,13 +80,10 @@ export function BeliefCard({ belief, data, color }: BeliefCardProps) {
           {belief.type === 'core' && belief.tau !== null && (
             <div className="flex gap-4 text-xs">
               <span className="text-text-secondary">
-                \u03c4 = <span className="mono text-core">{belief.tau}</span>
+                {'\u03c4'} = <span className="mono text-core">{belief.tau}</span>
               </span>
               <span className="text-text-secondary">
-                \u03b2\u2080 = <span className="mono text-core">{belief.baseline}</span>
-              </span>
-              <span className="text-text-secondary">
-                type: <span className="text-core">Bayesian PE update</span>
+                {'\u03b2\u2080'} = <span className="mono text-core">{belief.baseline}</span>
               </span>
             </div>
           )}
@@ -114,15 +113,16 @@ export function BeliefCard({ belief, data, color }: BeliefCardProps) {
             </div>
           </div>
 
-          {/* H³ Temporal Inputs */}
-          <H3TemporalPanel
-            beliefIndex={belief.index}
-            mechanismName={belief.mechanism}
-            experimentId={currentExperiment}
-            color={color}
-            cursorFrame={currentFrame}
-            totalFrames={totalFrames}
-          />
+          {/* Per-horizon decomposition — each horizon as its own chart */}
+          {hasHorizonAtlas && (
+            <HorizonDecompositionPanel
+              beliefIndex={belief.index}
+              beliefName={belief.name}
+              experimentId={currentExperiment}
+              cursorFrame={currentFrame}
+              totalFrames={totalFrames}
+            />
+          )}
         </div>
       )}
     </div>

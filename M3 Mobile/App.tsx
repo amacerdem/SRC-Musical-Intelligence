@@ -24,7 +24,11 @@ import {
 
 import { RootNavigator } from "./src/navigation/RootNavigator";
 import { M3DarkTheme } from "./src/design/theme";
+import { RevenueCatService } from "./src/services/RevenueCatService";
 import "./src/i18n";
+
+// Initialize RevenueCat on app startup
+RevenueCatService.configure();
 
 SplashScreen.preventAutoHideAsync();
 

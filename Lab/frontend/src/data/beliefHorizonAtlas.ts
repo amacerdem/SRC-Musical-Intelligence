@@ -756,3 +756,39 @@ export const LAW_DECOMP_LABELS: Record<number, string> = {
   1: 'L1 Prediction',
   2: 'L2 Integration',
 }
+
+/** Per-horizon time labels (H³ FROZEN v1.0.0 T_char values) */
+export const HORIZON_LABELS: Record<number, string> = {
+  0: 'H0 5.8ms',
+  1: 'H1 12ms',
+  3: 'H3 23ms',
+  4: 'H4 47ms',
+  6: 'H6 200ms',
+  8: 'H8 300ms',
+  9: 'H9 400ms',
+  12: 'H12 525ms',
+  16: 'H16 1s',
+  18: 'H18 2s',
+  19: 'H19 3s',
+  20: 'H20 4.7s',
+  22: 'H22 10s',
+  24: 'H24 36s',
+}
+
+/** Distinct colors for individual horizons — cool-to-warm gradient */
+export const HORIZON_COLORS: Record<number, string> = {
+  0: '#00e5ff',   // cyan
+  1: '#00bcd4',   // dark cyan
+  3: '#26c6da',   // teal
+  4: '#00e676',   // green
+  6: '#76ff03',   // lime
+  8: '#c6ff00',   // yellow-green
+  9: '#ffeb3b',   // yellow
+  12: '#ffc107',  // amber
+  16: '#ff9800',  // orange
+  18: '#ff5722',  // deep orange
+  19: '#f44336',  // red
+  20: '#e91e63',  // pink
+  22: '#9c27b0',  // purple
+  24: '#7c4dff',  // deep purple
+}

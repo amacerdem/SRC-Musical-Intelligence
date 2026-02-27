@@ -19,6 +19,7 @@ import { personas } from "../../data/personas";
 import type { Persona } from "../../types/mind";
 import type { NeuralFamily } from "../../types/mind";
 import { getDominantGene, GENE_NAMES, GENE_TO_TYPE } from "../../types/m3";
+import { Ionicons } from "@expo/vector-icons";
 import { GlassCard } from "../../components/ui/GlassCard";
 import { Badge } from "../../components/ui/Badge";
 import { colors, familyColors, fonts, spacing, radii } from "../../design/tokens";
@@ -131,10 +132,30 @@ export function InfoScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <Animated.View entering={FadeIn.duration(600)} style={styles.header}>
-        <Text style={styles.title}>Mind Library</Text>
-        <Text style={styles.subtitle}>
-          {personas.length} neural personas
-        </Text>
+        <View style={styles.headerRow}>
+          <View>
+            <Text style={styles.title}>Mind Library</Text>
+            <Text style={styles.subtitle}>
+              {personas.length} neural personas
+            </Text>
+          </View>
+          <View style={styles.socialButtons}>
+            <TouchableOpacity
+              style={styles.socialButton}
+              onPress={() => navigation.navigate("Leaderboard")}
+              activeOpacity={0.7}
+            >
+              <Ionicons name="podium" size={18} color={colors.reward} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.socialButton}
+              onPress={() => navigation.navigate("SocialFeed")}
+              activeOpacity={0.7}
+            >
+              <Ionicons name="people" size={18} color={colors.consonance} />
+            </TouchableOpacity>
+          </View>
+        </View>
       </Animated.View>
 
       {/* Family filter chips */}
@@ -199,6 +220,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.lg,
     paddingTop: spacing.md,
     paddingBottom: spacing.sm,
+  },
+  headerRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  socialButtons: {
+    flexDirection: "row",
+    gap: spacing.sm,
+  },
+  socialButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: colors.surfaceHigh,
+    alignItems: "center",
+    justifyContent: "center",
   },
   title: {
     fontFamily: fonts.display,
