@@ -108,6 +108,18 @@ def save(experiment_id: str, result) -> Path:
         for domain, arr in result.psi.items():
             psi_g.create_dataset(domain, data=arr.astype(np.float32), compression="gzip")
 
+        # Belief horizon decomposition
+        if hasattr(result, "belief_decomposition") and result.belief_decomposition:
+            decomp_g = c3g.create_group("belief_decomposition")
+            for belief_name, variants in result.belief_decomposition.items():
+                bg = decomp_g.create_group(belief_name)
+                for variant_name, trace in variants.items():
+                    bg.create_dataset(
+                        variant_name,
+                        data=trace.astype(np.float32),
+                        compression="gzip",
+                    )
+
         # Hierarchical dimensions (6D/12D/24D)
         if hasattr(result, "dim_6d") and result.dim_6d.size > 0:
             dim_g = c3g.create_group("dimensions")

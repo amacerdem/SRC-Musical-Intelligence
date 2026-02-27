@@ -57,3 +57,49 @@ async def get_relay(
         media_type="application/octet-stream",
         headers={"X-Relay-Dim": str(dim)},
     )
+
+
+@router.get("/beliefs/{belief_name}/decomposition")
+async def get_belief_decomposition(
+    belief_name: str,
+    experiment: str = Query(..., description="Experiment ID"),
+):
+    """Return per-band and per-law decomposition traces for a belief.
+
+    Response: Binary Float32Array (T × N_variants), column-major.
+    Headers indicate variant names and frame count.
+    """
+    import h5py
+
+    if not storage.exists(experiment):
+        raise HTTPException(status_code=404, detail=f"Experiment not found: {experiment}")
+
+    h5_path = storage._h5_path(experiment)
+    group_path = f"c3/belief_decomposition/{belief_name}"
+
+    with h5py.File(h5_path, "r") as f:
+        if group_path not in f:
+            raise HTTPException(
+                status_code=404,
+                detail=f"Decomposition not found for '{belief_name}'",
+            )
+
+        group = f[group_path]
+        variant_names = sorted(group.keys())
+        arrays = [group[v][:].astype(np.float32) for v in variant_names]
+
+    if not arrays:
+        raise HTTPException(status_code=404, detail="No decomposition variants found")
+
+    T = arrays[0].shape[0]
+    # Stack as columns: (T, N_variants)
+    stacked = np.column_stack(arrays)
+
+    return Response(
+        content=stacked.tobytes(),
+        media_type="application/octet-stream",
+        headers={
+            "X-Decomposition-Variants": ",".join(variant_names),
+            "X-Decomposition-Frames": str(T),
+        },
+    )

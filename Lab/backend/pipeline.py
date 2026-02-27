@@ -60,6 +60,7 @@ class ExperimentResult:
     dim_6d: np.ndarray = field(default_factory=lambda: np.empty(0))   # (T, 6)
     dim_12d: np.ndarray = field(default_factory=lambda: np.empty(0))  # (T, 12)
     dim_24d: np.ndarray = field(default_factory=lambda: np.empty(0))  # (T, 24)
+    belief_decomposition: Dict[str, Dict[str, np.ndarray]] = field(default_factory=dict)
 
 
 # ---------------------------------------------------------------------------
@@ -325,7 +326,13 @@ class MIPipeline:
         from .beliefs import compute_beliefs
         beliefs_131 = compute_beliefs(relays, self.nuclei)  # (T, 131)
 
-        # Phase 8: Hierarchical dimensions (131 → 24 → 12 → 6)
+        # Phase 8: Belief horizon decomposition (band/law ablation)
+        from .belief_decomposition import compute_belief_decomposition
+        belief_decomp = compute_belief_decomposition(
+            self.nuclei, h3_output.features, r3_features,
+        )
+
+        # Phase 9: Hierarchical dimensions (131 → 24 → 12 → 6)
         from Musical_Intelligence.brain.dimensions import DimensionInterpreter
         dim_interp = DimensionInterpreter()
         dim_result = dim_interp.interpret_numpy(beliefs_131)
@@ -357,6 +364,7 @@ class MIPipeline:
             dim_6d=dim_result["dim_6d"],                # (T, 6)
             dim_12d=dim_result["dim_12d"],              # (T, 12)
             dim_24d=dim_result["dim_24d"],              # (T, 24)
+            belief_decomposition=belief_decomp,
         )
 
     def _assemble_tensor(self, outputs: Dict[str, Tensor]) -> Tensor:

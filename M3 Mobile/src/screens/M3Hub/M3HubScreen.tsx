@@ -55,6 +55,7 @@ import { GeneStrands } from "../../components/m3/GeneStrands";
 import { MindVisualizer } from "../../components/m3/MindVisualizer";
 import { PlaylistView } from "../../components/m3/PlaylistView";
 import { NowPlayingBar } from "../../components/m3/NowPlayingBar";
+import { useAudioBridge } from "../../hooks/useAudioBridge";
 import { colors, fonts, spacing, familyColors } from "../../design/tokens";
 import type { M3Milestone } from "../../types/m3";
 
@@ -167,6 +168,9 @@ export function M3HubScreen() {
   const stopPlayback = useM3AudioStore((s) => s.stopPlayback);
 
   const [isLearning, setIsLearning] = useState(false);
+
+  // Bridge AudioPlayer ↔ store (handles play/pause/skip/time/viz)
+  useAudioBridge();
 
   // Current persona info
   const persona = mind ? getPersona(mind.activePersonaId) : null;

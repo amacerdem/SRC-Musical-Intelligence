@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Musical Intelligence — The Engine Behind M³</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  @page {
+    size: A4 landscape;
+    margin: 0;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #000;
+    color: #e2e8f0;
+    width: 297mm;
+    height: 210mm;
+    overflow: hidden;
+    position: relative;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Ambient glow effects */
+  .glow-1 {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(124,58,237,0.12) 0%, transparent 70%);
+    top: -100px;
+    left: -100px;
+    pointer-events: none;
+  }
+  .glow-2 {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 70%);
+    bottom: -150px;
+    right: -100px;
+    pointer-events: none;
+  }
+  .glow-3 {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(139,92,246,0.06) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .page {
+    width: 100%;
+    height: 100%;
+    padding: 28px 36px 24px 36px;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    grid-template-rows: auto 1fr auto;
+    gap: 0 32px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ─── HEADER ─── */
+  .header {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(139,92,246,0.15);
+  }
+
+  .brand {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+  }
+
+  .brand-m3 {
+    font-size: 36px;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(139,92,246,0.7) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .brand-sub {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(139,92,246,0.6);
+  }
+
+  .header-tagline {
+    font-size: 10px;
+    color: rgba(148,163,184,0.5);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  /* ─── LEFT COLUMN ─── */
+  .left {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .hero-statement {
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.55;
+    color: #cbd5e1;
+  }
+
+  .hero-statement strong {
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .hero-statement em {
+    color: rgba(167,139,250,0.9);
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  /* Three layers visual */
+  .layers {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .layer {
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(139,92,246,0.12);
+    background: rgba(139,92,246,0.04);
+  }
+
+  .layer-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+
+  .layer-icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .layer-name {
+    font-size: 11px;
+    font-weight: 700;
+    color: #e2e8f0;
+    letter-spacing: 0.03em;
+  }
+
+  .layer-dim {
+    font-size: 9px;
+    color: rgba(148,163,184,0.5);
+    margin-left: auto;
+    font-weight: 500;
+  }
+
+  .layer-desc {
+    font-size: 9.5px;
+    color: rgba(148,163,184,0.7);
+    line-height: 1.45;
+    padding-left: 30px;
+  }
+
+  .l-ear { background: rgba(249,115,22,0.15); }
+  .l-time { background: rgba(59,130,246,0.15); }
+  .l-brain { background: rgba(139,92,246,0.15); }
+
+  /* ─── RIGHT COLUMN ─── */
+  .right {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  /* Brain functions grid */
+  .functions-label {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(139,92,246,0.5);
+    margin-bottom: 2px;
+  }
+
+  .functions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+
+  .fn-card {
+    padding: 7px 10px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .fn-id {
+    font-size: 8px;
+    font-weight: 700;
+    color: rgba(167,139,250,0.6);
+    letter-spacing: 0.1em;
+  }
+
+  .fn-name {
+    font-size: 10.5px;
+    font-weight: 600;
+    color: #e2e8f0;
+    margin-top: 1px;
+  }
+
+  .fn-desc {
+    font-size: 8px;
+    color: rgba(148,163,184,0.5);
+    margin-top: 1px;
+  }
+
+  /* Stats row */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+  }
+
+  .stat {
+    text-align: center;
+    padding: 8px 4px;
+    border-radius: 8px;
+    background: rgba(139,92,246,0.04);
+    border: 1px solid rgba(139,92,246,0.1);
+  }
+
+  .stat-value {
+    font-size: 18px;
+    font-weight: 800;
+    background: linear-gradient(180deg, #fff 0%, rgba(167,139,250,0.8) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.2;
+  }
+
+  .stat-label {
+    font-size: 7.5px;
+    color: rgba(148,163,184,0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 2px;
+    line-height: 1.3;
+  }
+
+  /* How it thinks */
+  .think-section {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .think-block {
+    flex: 1;
+  }
+
+  .think-label {
+    font-size: 8px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(139,92,246,0.45);
+    margin-bottom: 5px;
+  }
+
+  .think-content {
+    font-size: 9px;
+    color: rgba(148,163,184,0.65);
+    line-height: 1.5;
+  }
+
+  .think-content strong {
+    color: rgba(226,232,240,0.8);
+    font-weight: 600;
+  }
+
+  .cycle-flow {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+    margin-top: 3px;
+  }
+
+  .cycle-step {
+    font-size: 8.5px;
+    font-weight: 600;
+    color: rgba(167,139,250,0.7);
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: rgba(139,92,246,0.08);
+    white-space: nowrap;
+  }
+
+  .cycle-arrow {
+    font-size: 10px;
+    color: rgba(139,92,246,0.25);
+  }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 12px;
+    border-top: 1px solid rgba(139,92,246,0.1);
+    margin-top: auto;
+  }
+
+  .footer-left {
+    font-size: 8.5px;
+    color: rgba(148,163,184,0.35);
+    line-height: 1.5;
+  }
+
+  .footer-right {
+    text-align: right;
+  }
+
+  .footer-quote {
+    font-size: 10px;
+    font-style: italic;
+    color: rgba(167,139,250,0.4);
+  }
+
+  .footer-author {
+    font-size: 7.5px;
+    color: rgba(148,163,184,0.3);
+    margin-top: 2px;
+  }
+
+  /* Comparison bar */
+  .comparison {
+    display: flex;
+    gap: 6px;
+    align-items: stretch;
+  }
+
+  .comp-item {
+    flex: 1;
+    padding: 7px 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.04);
+    background: rgba(255,255,255,0.02);
+  }
+
+  .comp-label {
+    font-size: 7.5px;
+    font-weight: 600;
+    color: rgba(148,163,184,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .comp-bar-track {
+    width: 100%;
+    height: 3px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 2px;
+    margin-top: 5px;
+    overflow: hidden;
+  }
+
+  .comp-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+  }
+
+  .comp-value {
+    font-size: 12px;
+    font-weight: 700;
+    color: #e2e8f0;
+    margin-top: 3px;
+  }
+
+  .fill-mi { background: linear-gradient(90deg, #7c3aed, #6366f1); width: 95%; }
+  .fill-typical { background: rgba(148,163,184,0.3); width: 12%; }
+  .fill-neuro { background: rgba(59,130,246,0.5); width: 25%; }
+
+  .versus {
+    font-size: 7px;
+    color: rgba(148,163,184,0.3);
+    margin-top: 1px;
+  }
+</style>
+</head>
+<body>
+  <div class="glow-1"></div>
+  <div class="glow-2"></div>
+  <div class="glow-3"></div>
+
+  <div class="page">
+    <!-- HEADER -->
+    <div class="header">
+      <div class="brand">
+        <span class="brand-m3">M³</span>
+        <span class="brand-sub">Musical Intelligence</span>
+      </div>
+      <span class="header-tagline">The mind behind the music &mdash; computed</span>
+    </div>
+
+    <!-- LEFT COLUMN -->
+    <div class="left">
+      <div class="hero-statement">
+        We built a system that <em>listens like a brain</em>.<br>
+        Not a neural network guessing patterns &mdash; a <strong>glass-box cognitive architecture</strong> that computes what happens inside your mind when you hear music.
+        Every prediction, every surprise, every shiver &mdash; <em>calculated in real time</em>.
+      </div>
+
+      <!-- Three Layers -->
+      <div class="layers">
+        <div class="layer">
+          <div class="layer-header">
+            <div class="layer-icon l-ear">R³</div>
+            <span class="layer-name">The Ear</span>
+            <span class="layer-dim">97 dimensions &middot; 5.8ms</span>
+          </div>
+          <div class="layer-desc">Breaks sound into 97 perceptual features every 5.8 milliseconds. Consonance, roughness, brightness, timbre, rhythm, harmony. Pure physics. No memory, no opinion. Frozen.</div>
+        </div>
+
+        <div class="layer">
+          <div class="layer-header">
+            <div class="layer-icon l-time">H³</div>
+            <span class="layer-name">Temporal Memory</span>
+            <span class="layer-dim">8,600 active &middot; 32 time scales</span>
+          </div>
+          <div class="layer-desc">Watches how every feature evolves across 32 time windows &mdash; from 25ms (a single note) to 60 seconds (an entire section). Speed, acceleration, periodicity, trend, entropy. Frozen.</div>
+        </div>
+
+        <div class="layer">
+          <div class="layer-header">
+            <div class="layer-icon l-brain">C³</div>
+            <span class="layer-name">The Cognitive Brain</span>
+            <span class="layer-dim">1,006 dimensions &middot; 96 models</span>
+          </div>
+          <div class="layer-desc">
+            96 computational models, 131 beliefs, 26 brain regions, 4 neurochemicals. Predicts what comes next, measures surprise when reality differs, updates beliefs, computes pleasure. Every frame.
+          </div>
+        </div>
+      </div>
+
+      <!-- Comparison -->
+      <div class="comparison">
+        <div class="comp-item">
+          <div class="comp-label">Musical Intelligence</div>
+          <div class="comp-value">1,006D</div>
+          <div class="comp-bar-track"><div class="comp-bar-fill fill-mi"></div></div>
+        </div>
+        <div class="comp-item">
+          <div class="comp-label">Typical MIR</div>
+          <div class="comp-value">~50D</div>
+          <div class="versus">Spotify, Shazam</div>
+          <div class="comp-bar-track"><div class="comp-bar-fill fill-typical"></div></div>
+        </div>
+        <div class="comp-item">
+          <div class="comp-label">Neuro Research</div>
+          <div class="comp-value">~150D</div>
+          <div class="versus">Academic labs</div>
+          <div class="comp-bar-track"><div class="comp-bar-fill fill-neuro"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="right">
+      <!-- 9 Functions -->
+      <div>
+        <div class="functions-label">9 cognitive functions &mdash; running in parallel</div>
+        <div class="functions-grid">
+          <div class="fn-card">
+            <div class="fn-id">F1</div>
+            <div class="fn-name">Sensory</div>
+            <div class="fn-desc">Perceiving sound</div>
+          </div>
+          <div class="fn-card">
+            <div class="fn-id">F2</div>
+            <div class="fn-name">Prediction</div>
+            <div class="fn-desc">What comes next?</div>
+          </div>
+          <div class="fn-card">
+            <div class="fn-id">F3</div>
+            <div class="fn-name">Attention</div>
+            <div class="fn-desc">Filtering what matters</div>
+          </div>
+          <div class="fn-card">
+            <div class="fn-id">F4</div>
+            <div class="fn-name">Memory</div>
+            <div class="fn-desc">Have I heard this?</div>
+          </div>
+          <div class="fn-card">
+            <div class="fn-id">F5</div>
+            <div class="fn-name">Emotion</div>
+            <div class="fn-desc">How does this feel?</div>
+          </div>
+          <div class="fn-card">
+            <div class="fn-id">F6</div>
+            <div class="fn-name">Reward</div>
+            <div class="fn-desc">Pleasure & dopamine</div>
+          </div>
+          <div class="fn-card">
+            <div class="fn-id">F7</div>
+            <div class="fn-name">Motor</div>
+            <div class="fn-desc">Body responds</div>
+          </div>
+          <div class="fn-card">
+            <div class="fn-id">F8</div>
+            <div class="fn-name">Learning</div>
+            <div class="fn-desc">Adapting over time</div>
+          </div>
+          <div class="fn-card">
+            <div class="fn-id">F9</div>
+            <div class="fn-name">Social</div>
+            <div class="fn-desc">Shared experience</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-row">
+        <div class="stat">
+          <div class="stat-value">448</div>
+          <div class="stat-label">peer-reviewed<br>studies</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">1,116</div>
+          <div class="stat-label">empirical<br>claims</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">634</div>
+          <div class="stat-label">effect<br>sizes</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">756</div>
+          <div class="stat-label">python<br>files</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">249</div>
+          <div class="stat-label">frames per<br>second</div>
+        </div>
+      </div>
+
+      <!-- How it thinks -->
+      <div class="think-section">
+        <div class="think-block">
+          <div class="think-label">Every 5.8 milliseconds</div>
+          <div class="cycle-flow">
+            <span class="cycle-step">Predict</span>
+            <span class="cycle-arrow">&rarr;</span>
+            <span class="cycle-step">Observe</span>
+            <span class="cycle-arrow">&rarr;</span>
+            <span class="cycle-step">Surprise</span>
+            <span class="cycle-arrow">&rarr;</span>
+            <span class="cycle-step">Update</span>
+            <span class="cycle-arrow">&rarr;</span>
+            <span class="cycle-step">Reward</span>
+          </div>
+          <div class="think-content" style="margin-top: 6px;">
+            The brain predicts what sound comes next. When reality differs, <strong>prediction error</strong> fires. Beliefs update through <strong>Bayesian inference</strong>. Pleasure = surprise that resolves beautifully.
+          </div>
+        </div>
+
+        <div class="think-block">
+          <div class="think-label">Why it matters</div>
+          <div class="think-content">
+            Current music AI (Spotify, Magenta, Jukebox) uses <strong>black-box neural networks</strong> &mdash; billions of parameters, no understanding of <em>why</em> a song moves you.<br><br>
+            We built a <strong>glass box</strong>: every parameter named, every decision traceable, every computation grounded in <strong>published neuroscience</strong>. When you get chills from a chord change, we can tell you exactly which brain region fired, which neurochemical shifted, and why.
+          </div>
+        </div>
+      </div>
+
+      <!-- Neurochem -->
+      <div style="display:flex; gap:8px;">
+        <div style="flex:1; display:flex; align-items:center; gap:6px; padding:5px 10px; border-radius:6px; background:rgba(239,68,68,0.06); border:1px solid rgba(239,68,68,0.1);">
+          <span style="font-size:13px;">DA</span>
+          <span style="font-size:8px; color:rgba(148,163,184,0.5);">Dopamine &mdash; the thrill of surprise</span>
+        </div>
+        <div style="flex:1; display:flex; align-items:center; gap:6px; padding:5px 10px; border-radius:6px; background:rgba(59,130,246,0.06); border:1px solid rgba(59,130,246,0.1);">
+          <span style="font-size:13px;">NE</span>
+          <span style="font-size:8px; color:rgba(148,163,184,0.5);">Norepinephrine &mdash; your curiosity engine</span>
+        </div>
+        <div style="flex:1; display:flex; align-items:center; gap:6px; padding:5px 10px; border-radius:6px; background:rgba(249,115,22,0.06); border:1px solid rgba(249,115,22,0.1);">
+          <span style="font-size:13px;">OPI</span>
+          <span style="font-size:8px; color:rgba(148,163,184,0.5);">Opioids &mdash; the warmth of beauty</span>
+        </div>
+        <div style="flex:1; display:flex; align-items:center; gap:6px; padding:5px 10px; border-radius:6px; background:rgba(16,185,129,0.06); border:1px solid rgba(16,185,129,0.1);">
+          <span style="font-size:13px;">5HT</span>
+          <span style="font-size:8px; color:rgba(148,163,184,0.5);">Serotonin &mdash; patience & comfort</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <div class="footer-left">
+        Manuscript target: Nature Neuroscience &middot; 416 references &middot; PRISMA 2020<br>
+        26 brain regions (MNI152) &middot; 131 beliefs &middot; 96 models &middot; 4 neurochemicals
+      </div>
+      <div class="footer-right">
+        <div class="footer-quote">"Music is not heard. It is thought."</div>
+        <div class="footer-author">&mdash; Amac Erdem, 2025</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
