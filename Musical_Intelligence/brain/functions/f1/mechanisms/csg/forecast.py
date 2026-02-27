@@ -61,8 +61,10 @@ def compute_forecast(
 
     # F0: Valence prediction [-1, 1]
     # Cheung: amygdala/hippocampus integrate uncertainty x surprise
+    # Center pleasantness → dissonant prediction=negative
+    centered_pleas = (pleas_mean_1s - 0.5) * 2.0
     f0 = torch.tanh(
-        0.50 * e2 + 0.30 * pleas_mean_1s + 0.20 * spectral_auto_h16
+        0.50 * e2 + 0.30 * centered_pleas + 0.20 * spectral_auto_h16
     )
 
     # F1: Processing load prediction

@@ -545,12 +545,262 @@ export function Landing() {
         )}
       </AnimatePresence>
 
+      {/* ── OAuth Overlay ──────────────────────────────────────────── */}
+      <AnimatePresence>
+        {showOAuth && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center"
+            style={{ background: "rgba(0,0,0,0.85)", backdropFilter: "blur(20px)" }}
+          >
+            <AnimatePresence mode="wait">
+              {oAuthPhase === "opening" && (
+                <motion.div key="opening" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.5 }} className="text-center">
+                  <Loader2 size={32} className="animate-spin mx-auto mb-4" style={{ color: platformColor }} />
+                  <p className="text-lg font-display font-medium text-slate-300">{t("onboarding.connect.oauth.opening")}</p>
+                  <p className="text-sm text-slate-600 font-display font-light mt-2">accounts.spotify.com</p>
+                </motion.div>
+              )}
+              {oAuthPhase === "authorize" && (
+                <motion.div key="authorize" initial={{ opacity: 0, y: 20, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.5 }} className="w-full max-w-sm mx-4">
+                  <div className="rounded-t-xl px-4 py-2.5 flex items-center gap-2" style={{ background: "rgba(255,255,255,0.06)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+                    <div className="flex gap-1.5">
+                      <div className="w-2.5 h-2.5 rounded-full bg-red-500/60" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
+                    </div>
+                    <div className="flex-1 mx-3">
+                      <div className="px-3 py-1 rounded-md text-[11px] font-mono text-slate-500 truncate" style={{ background: "rgba(255,255,255,0.04)" }}>
+                        accounts.spotify.com/authorize?client_id=m3&scope=...
+                      </div>
+                    </div>
+                  </div>
+                  <div className="rounded-b-xl p-6" style={{ background: "rgba(15,15,15,0.95)", border: "1px solid rgba(255,255,255,0.06)", borderTop: "none" }}>
+                    <div className="text-center mb-6">
+                      <div className="w-12 h-12 rounded-full mx-auto mb-4 flex items-center justify-center" style={{ background: `${platformColor}15` }}>
+                        <svg viewBox="0 0 24 24" width={28} height={28} fill={platformColor}><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" /></svg>
+                      </div>
+                      <h2 className="text-xl font-display font-bold text-slate-200 mb-1">{t("onboarding.connect.oauth.authorize")}</h2>
+                      <p className="text-sm text-slate-500 font-display font-light">{t("onboarding.connect.oauth.authorizeDesc")}</p>
+                    </div>
+                    <div className="space-y-3 mb-8">
+                      {OAUTH_PERMISSIONS.map((perm, i) => (
+                        <motion.div key={perm} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 + i * 0.1, duration: 0.4 }} className="flex items-center gap-3">
+                          <Check size={14} className="flex-shrink-0" style={{ color: platformColor }} />
+                          <span className="text-sm text-slate-400 font-display font-light">{t(perm)}</span>
+                        </motion.div>
+                      ))}
+                    </div>
+                    <div className="flex gap-3">
+                      <button onClick={() => { setShowOAuth(false); setShowConnect(true); }} className="flex-1 py-3 rounded-xl text-sm font-display font-medium text-slate-500 transition-all duration-300 hover:text-slate-300" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}>
+                        {t("onboarding.connect.oauth.deny")}
+                      </button>
+                      <motion.button initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }} onClick={() => setOAuthPhase("connecting")} className="flex-1 py-3 rounded-xl text-sm font-display font-semibold text-black transition-all duration-300 hover:brightness-110" style={{ background: platformColor }}>
+                        {t("onboarding.connect.oauth.agree")}
+                      </motion.button>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+              {oAuthPhase === "connecting" && (
+                <motion.div key="connecting" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 1.05 }} transition={{ duration: 0.5 }} className="text-center">
+                  <Loader2 size={32} className="animate-spin mx-auto mb-4" style={{ color: platformColor }} />
+                  <p className="text-lg font-display font-medium text-slate-300">{t("onboarding.connect.oauth.connecting")}</p>
+                  <p className="text-sm text-slate-600 font-display font-light mt-2">{t("onboarding.connect.oauth.redirecting")}</p>
+                </motion.div>
+              )}
+              {oAuthPhase === "connected" && (
+                <motion.div key="connected" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 1.1, filter: "blur(10px)" }} transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }} className="text-center">
+                  <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 300, damping: 20, delay: 0.1 }}>
+                    <CheckCircle2 size={48} className="mx-auto mb-4" style={{ color: platformColor }} />
+                  </motion.div>
+                  <p className="text-xl font-display font-bold" style={{ color: platformColor }}>{t("onboarding.connect.oauth.connected")}</p>
+                  <p className="text-sm text-slate-500 font-display font-light mt-2">{t("onboarding.connect.oauth.accessGranted")}</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ── Evolution UI ───────────────────────────────────────────── */}
+      <AnimatePresence>
+        {evolving && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, scale: 1.05, filter: "blur(10px)" }}
+            transition={{ duration: 1 }}
+            className="fixed inset-0 z-30 flex flex-col items-center justify-center px-6"
+          >
+            <div className="relative z-10 text-center max-w-2xl mx-auto">
+              {/* Title */}
+              <motion.div initial={{ opacity: 0, y: 30, filter: "blur(10px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} transition={{ duration: 1.2 }} className="mb-6">
+                <p className="text-sm font-display font-light text-slate-600 tracking-[0.2em] uppercase mb-3">{t("onboarding.evolving.neuralGenesis")}</p>
+                <h2 className="text-3xl md:text-4xl font-display font-bold text-slate-200 mb-2">
+                  {userName ? t("onboarding.evolving.mindForming", { name: userName }) : t("onboarding.evolving.mindFormingDefault")}
+                </h2>
+                <p className="text-base font-display font-light text-slate-500">{t("onboarding.evolving.mapping97")}</p>
+              </motion.div>
+
+              {/* Belief indicators */}
+              <div className="flex justify-center gap-6 mb-8">
+                {(["consonance", "tempo", "salience", "familiarity", "reward"] as const).map((b) => {
+                  const isActive = uniqueBeliefs.includes(b);
+                  const bColor = beliefColors[b].primary;
+                  return (
+                    <motion.div key={b} initial={{ opacity: 0.1 }} animate={{ opacity: isActive ? 0.9 : 0.1 }} transition={{ duration: 0.6 }} className="flex flex-col items-center gap-2">
+                      <div className="w-3 h-3 rounded-full transition-all duration-500" style={{ background: bColor, boxShadow: isActive ? `0 0 14px ${bColor}70, 0 0 30px ${bColor}25` : "none" }} />
+                      <span className="text-[10px] font-display font-light uppercase tracking-[0.15em]" style={{ color: isActive ? `${bColor}CC` : "#1E293B" }}>{b}</span>
+                    </motion.div>
+                  );
+                })}
+              </div>
+
+              {/* Phase text */}
+              <div className="h-8 mb-8">
+                <p className="text-base text-slate-400 font-body font-light italic leading-relaxed">
+                  {typedPhase}
+                  <motion.span animate={{ opacity: [1, 0] }} transition={{ repeat: Infinity, duration: 0.6 }} className="inline-block w-[2px] h-4 bg-slate-500 ml-1 align-text-bottom" />
+                </p>
+              </div>
+
+              {/* Stats panel */}
+              <AnimatePresence>
+                {progress > 10 && (
+                  <motion.div initial={{ opacity: 0, y: 20, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }} className="mb-10 mx-auto max-w-md">
+                    <div className="rounded-2xl p-6" style={{ background: "rgba(0,0,0,0.6)", backdropFilter: "blur(16px)", border: "1px solid rgba(255,255,255,0.05)" }}>
+                      <div className="flex justify-center gap-12 mb-5">
+                        <div className="text-center">
+                          <div className="text-2xl font-mono font-medium text-slate-200">{songCount.toLocaleString()}</div>
+                          <div className="text-[11px] uppercase tracking-widest text-slate-600 font-display">{t("onboarding.evolving.tracksScanned")}</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-2xl font-mono font-medium text-slate-200">{totalHours.toLocaleString()}</div>
+                          <div className="text-[11px] uppercase tracking-widest text-slate-600 font-display">{t("onboarding.evolving.hoursListening")}</div>
+                        </div>
+                      </div>
+                      <AnimatePresence>
+                        {showGenres && (
+                          <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.5 }} className="flex flex-wrap justify-center gap-2 mb-4">
+                            {MOCK_STATS.topGenres.map((genre, i) => (
+                              <motion.span key={genre} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.15, duration: 0.4 }} className="px-3 py-1.5 rounded-full text-xs font-display font-light text-slate-400" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}>
+                                {genre}
+                              </motion.span>
+                            ))}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                      <AnimatePresence>
+                        {showArtists && (
+                          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }} className="text-center">
+                            <span className="text-[10px] uppercase tracking-[0.15em] text-slate-700 block mb-2 font-display">{t("onboarding.evolving.topArtists")}</span>
+                            <p className="text-sm text-slate-500 font-body font-light">
+                              {MOCK_STATS.topArtists.map((artist, i) => (
+                                <motion.span key={artist} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.2, duration: 0.4 }}>
+                                  {i > 0 && <span className="text-slate-700 mx-1.5">&middot;</span>}
+                                  {artist}
+                                </motion.span>
+                              ))}
+                            </p>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Progress bar */}
+              <div className="w-80 mx-auto">
+                <div className="w-full h-[3px] rounded-full bg-white/[0.04] overflow-hidden">
+                  <motion.div className="h-full rounded-full" style={{ background: `linear-gradient(90deg, ${orgColor}80, ${orgColor})`, boxShadow: `0 0 24px ${orgColor}40` }} animate={{ width: `${progress}%` }} transition={{ duration: 0.3 }} />
+                </div>
+                <div className="mt-3 flex justify-between items-center">
+                  <span className="text-[10px] font-display font-light text-slate-700 tracking-wider uppercase">{t("onboarding.evolving.forming")}</span>
+                  <span className="text-xs font-mono text-slate-600 tracking-wider">{progress}%</span>
+                  <span className="text-[10px] font-display font-light text-slate-700 tracking-wider uppercase">{t("onboarding.evolving.complete")}</span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ── Reveal UI ──────────────────────────────────────────────── */}
+      <AnimatePresence>
+        {revealPhase !== "void" && persona && (
+          <motion.div
+            initial={{ opacity: 0, filter: "blur(10px)" }}
+            animate={{ opacity: 1, filter: "blur(0px)" }}
+            transition={{ duration: 1.5 }}
+            className="fixed inset-0 z-30 flex flex-col items-center justify-center px-6"
+          >
+            {/* Persona name */}
+            <AnimatePresence>
+              {(revealPhase === "name" || revealPhase === "radar" || revealPhase === "ready") && (
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }} className="text-center">
+                  <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 0.4, y: 0 }} transition={{ duration: 1 }} className="text-sm font-display font-light text-slate-500 tracking-[0.2em] uppercase mb-6">
+                    {userName ? `${userName}, ${t("onboarding.reveal.youAre")}` : t("onboarding.reveal.youAreDefault")}
+                  </motion.p>
+                  <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold mb-5 leading-none flex justify-center flex-wrap">
+                    {persona.name.split("").map((char, i) => (
+                      <motion.span key={i} initial={{ opacity: 0, y: 50, scale: 0.3, filter: "blur(15px)" }} animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }} transition={{ duration: 0.7, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }} style={{ color: persona.color, display: "inline-block" }}>
+                        {char === " " ? "\u00A0" : char}
+                      </motion.span>
+                    ))}
+                  </h1>
+                  <motion.p initial={{ opacity: 0 }} animate={{ opacity: 0.5 }} transition={{ delay: persona.name.length * 0.06 + 0.5, duration: 1 }} className="text-xl text-slate-500 font-display font-light italic">
+                    "{persona.tagline}"
+                  </motion.p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Radar */}
+            <AnimatePresence>
+              {(revealPhase === "radar" || revealPhase === "ready") && mind && (
+                <motion.div initial={{ opacity: 0, scale: 0.6, filter: "blur(15px)" }} animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }} transition={{ duration: 1.2, delay: 0.3, ease: [0.22, 1, 0.36, 1] }} className="mt-10">
+                  <MindRadar axes={mind.axes} color={persona.color} size={400} />
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Enter CTA */}
+            <AnimatePresence>
+              {revealPhase === "ready" && (
+                <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.5 }} className="mt-10 text-center max-w-lg">
+                  <p className="text-base text-slate-500 mb-3 leading-relaxed font-light">{persona.description}</p>
+                  <motion.p initial={{ opacity: 0 }} animate={{ opacity: 0.3 }} transition={{ delay: 1, duration: 1.5 }} className="text-xs font-display font-light text-slate-600 tracking-[0.2em] uppercase mb-8">
+                    {t("onboarding.reveal.thisIsYourMind")}
+                  </motion.p>
+                  <button
+                    onClick={() => navigate("/dashboard")}
+                    className="group relative px-10 py-4 rounded-full transition-all duration-500 hover:scale-[1.03]"
+                    style={{ background: `${persona.color}08`, border: `1px solid ${persona.color}20` }}
+                    onMouseEnter={(e) => { e.currentTarget.style.background = `${persona.color}18`; e.currentTarget.style.boxShadow = `0 0 50px ${persona.color}20`; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = `${persona.color}08`; e.currentTarget.style.boxShadow = "none"; }}
+                  >
+                    <span className="text-base font-display font-medium text-slate-200">{t("onboarding.reveal.enterMind")}</span>
+                    <ArrowRight size={18} className="inline ml-2 text-slate-400 group-hover:translate-x-1 transition-transform" />
+                  </button>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* ── Bottom bar: compact footer ───────────────────────────── */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2.5, duration: 2 }}
+        animate={{ opacity: evolving || revealPhase !== "void" ? 0 : 1 }}
+        transition={{ delay: evolving || revealPhase !== "void" ? 0 : 2.5, duration: evolving || revealPhase !== "void" ? 0.5 : 2 }}
         className="absolute bottom-0 left-0 right-0 z-10 px-6 pb-3 pt-2"
+        style={{ pointerEvents: evolving || revealPhase !== "void" ? "none" : "auto" }}
       >
         <div className="flex items-center justify-between max-w-2xl mx-auto">
           <span className="text-[10px] font-display font-light text-slate-500 tracking-[0.15em]">

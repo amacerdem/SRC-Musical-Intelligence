@@ -1,0 +1,55 @@
+{
+  "test_name": "CSG Mechanism Stress Test v4.0",
+  "timestamp": "2026-02-27T12:50:44.990519",
+  "total_elapsed_s": 126.8,
+  "n_audio_files": 13,
+  "audio_files": [
+    "bach",
+    "beethoven",
+    "duel",
+    "enigma",
+    "herald",
+    "swan",
+    "yang",
+    "midi/csg/01_major_triad",
+    "midi/csg/02_m2_dyad",
+    "midi/csg/03_cluster",
+    "midi/csg/04_V7_I_resolution",
+    "midi/csg/05_I_V7_tension",
+    "midi/csg/06_single_note"
+  ],
+  "pipeline_version": "v4.0",
+  "frame_rate_hz": 172.265625,
+  "csg_output_dim": 12,
+  "csg_h3_demands": 18,
+  "csg_beliefs": [
+    "consonance_salience_gradient",
+    "salience_network_activation",
+    "sensory_load",
+    "consonance_valence_mapping",
+    "processing_load_pred"
+  ],
+  "stages": {
+    "1_extraction": {
+      "status": "COMPLETE",
+      "n_processed": 13
+    },
+    "2_dimensions": {
+      "status": "PASS",
+      "total_violations": 0
+    },
+    "3_h3_decomposition": {
+      "status": "COMPLETE"
+    },
+    "4_boundary": {
+      "status": "PASS",
+      "total_artifacts": 0,
+      "artifact_rate_pct": 0.0
+    },
+    "5_comparative": {
+      "status": "PASS",
+      "midi_pass_rate_pct": 100.0
+    }
+  },
+  "overall_status": "ALL PASS"
+}

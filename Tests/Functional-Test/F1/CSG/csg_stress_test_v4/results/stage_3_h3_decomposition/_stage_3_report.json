@@ -1,0 +1,312 @@
+{
+  "stage": "3_h3_decomposition",
+  "timestamp": "2026-02-27T12:49:50.902454",
+  "n_tuples": 18,
+  "tuples_sorted": [
+    [
+      0,
+      0,
+      0,
+      2
+    ],
+    [
+      0,
+      3,
+      1,
+      2
+    ],
+    [
+      0,
+      3,
+      2,
+      2
+    ],
+    [
+      0,
+      16,
+      1,
+      2
+    ],
+    [
+      1,
+      3,
+      0,
+      2
+    ],
+    [
+      1,
+      8,
+      8,
+      0
+    ],
+    [
+      4,
+      3,
+      0,
+      2
+    ],
+    [
+      4,
+      3,
+      8,
+      2
+    ],
+    [
+      4,
+      16,
+      1,
+      2
+    ],
+    [
+      9,
+      3,
+      0,
+      2
+    ],
+    [
+      10,
+      3,
+      0,
+      2
+    ],
+    [
+      10,
+      3,
+      13,
+      2
+    ],
+    [
+      10,
+      16,
+      1,
+      2
+    ],
+    [
+      17,
+      3,
+      0,
+      2
+    ],
+    [
+      17,
+      8,
+      0,
+      2
+    ],
+    [
+      17,
+      16,
+      1,
+      2
+    ],
+    [
+      21,
+      4,
+      8,
+      0
+    ],
+    [
+      22,
+      3,
+      8,
+      0
+    ]
+  ],
+  "per_audio": {
+    "bach": {
+      "summary": {
+        "n_frames": 5168,
+        "n_horizons": 5,
+        "horizons_used": [
+          0,
+          3,
+          4,
+          8,
+          16
+        ],
+        "n_bands_active": 3,
+        "n_laws_active": 2
+      }
+    },
+    "beethoven": {
+      "summary": {
+        "n_frames": 5168,
+        "n_horizons": 5,
+        "horizons_used": [
+          0,
+          3,
+          4,
+          8,
+          16
+        ],
+        "n_bands_active": 3,
+        "n_laws_active": 2
+      }
+    },
+    "duel": {
+      "summary": {
+        "n_frames": 5168,
+        "n_horizons": 5,
+        "horizons_used": [
+          0,
+          3,
+          4,
+          8,
+          16
+        ],
+        "n_bands_active": 3,
+        "n_laws_active": 2
+      }
+    },
+    "enigma": {
+      "summary": {
+        "n_frames": 5168,
+        "n_horizons": 5,
+        "horizons_used": [
+          0,
+          3,
+          4,
+          8,
+          16
+        ],
+        "n_bands_active": 3,
+        "n_laws_active": 2
+      }
+    },
+    "herald": {
+      "summary": {
+        "n_frames": 5168,
+        "n_horizons": 5,
+        "horizons_used": [
+          0,
+          3,
+          4,
+          8,
+          16
+        ],
+        "n_bands_active": 3,
+        "n_laws_active": 2
+      }
+    },
+    "swan": {
+      "summary": {
+        "n_frames": 5168,
+        "n_horizons": 5,
+        "horizons_used": [
+          0,
+          3,
+          4,
+          8,
+          16
+        ],
+        "n_bands_active": 3,
+        "n_laws_active": 2
+      }
+    },
+    "yang": {
+      "summary": {
+        "n_frames": 5168,
+        "n_horizons": 5,
+        "horizons_used": [
+          0,
+          3,
+          4,
+          8,
+          16
+        ],
+        "n_bands_active": 3,
+        "n_laws_active": 2
+      }
+    },
+    "midi/csg/01_major_triad": {
+      "summary": {
+        "n_frames": 862,
+        "n_horizons": 5,
+        "horizons_used": [
+          0,
+          3,
+          4,
+          8,
+          16
+        ],
+        "n_bands_active": 3,
+        "n_laws_active": 2
+      }
+    },
+    "midi/csg/02_m2_dyad": {
+      "summary": {
+        "n_frames": 862,
+        "n_horizons": 5,
+        "horizons_used": [
+          0,
+          3,
+          4,
+          8,
+          16
+        ],
+        "n_bands_active": 3,
+        "n_laws_active": 2
+      }
+    },
+    "midi/csg/03_cluster": {
+      "summary": {
+        "n_frames": 862,
+        "n_horizons": 5,
+        "horizons_used": [
+          0,
+          3,
+          4,
+          8,
+          16
+        ],
+        "n_bands_active": 3,
+        "n_laws_active": 2
+      }
+    },
+    "midi/csg/04_V7_I_resolution": {
+      "summary": {
+        "n_frames": 1206,
+        "n_horizons": 5,
+        "horizons_used": [
+          0,
+          3,
+          4,
+          8,
+          16
+        ],
+        "n_bands_active": 3,
+        "n_laws_active": 2
+      }
+    },
+    "midi/csg/05_I_V7_tension": {
+      "summary": {
+        "n_frames": 1206,
+        "n_horizons": 5,
+        "horizons_used": [
+          0,
+          3,
+          4,
+          8,
+          16
+        ],
+        "n_bands_active": 3,
+        "n_laws_active": 2
+      }
+    },
+    "midi/csg/06_single_note": {
+      "summary": {
+        "n_frames": 862,
+        "n_horizons": 5,
+        "horizons_used": [
+          0,
+          3,
+          4,
+          8,
+          16
+        ],
+        "n_bands_active": 3,
+        "n_laws_active": 2
+      }
+    }
+  }
+}

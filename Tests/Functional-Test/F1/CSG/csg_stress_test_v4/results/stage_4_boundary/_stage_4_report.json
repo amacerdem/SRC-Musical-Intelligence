@@ -1,0 +1,2906 @@
+{
+  "stage": "4_boundary",
+  "timestamp": "2026-02-27T12:50:43.930865",
+  "h3_warmup_frames": 180,
+  "edge_frames_analyzed": 8,
+  "checks": [
+    "nan_inf",
+    "saturation",
+    "discontinuity",
+    "dead_signal"
+  ],
+  "per_audio": {
+    "bach": {
+      "n_frames": 5168,
+      "dimensions": {
+        "E0:salience_activation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.0,
+          "warmup_jump_last": 0.117195,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.170127,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.618133,
+            "interior_range": 0.720262,
+            "first_edge_dev_pct": 36.57,
+            "last_edge_dev_pct": 12.42
+          }
+        },
+        "E1:sensory_evidence": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.0,
+          "warmup_jump_last": 0.03104,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.117276,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.71779,
+            "interior_range": 0.621818,
+            "first_edge_dev_pct": 21.3,
+            "last_edge_dev_pct": 14.73
+          }
+        },
+        "E2:consonance_valence": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.000318,
+          "warmup_jump_last": 0.178521,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.113204,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.191899,
+            "interior_range": 0.715767,
+            "first_edge_dev_pct": 2.38,
+            "last_edge_dev_pct": 21.59
+          }
+        },
+        "M0:salience_response": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 1.1e-05,
+          "warmup_jump_last": 0.014919,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.027308,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.645081,
+            "interior_range": 0.122864,
+            "first_edge_dev_pct": 42.31,
+            "last_edge_dev_pct": 17.77
+          }
+        },
+        "M1:rt_valence_judgment": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.0,
+          "warmup_jump_last": 0.003282,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.022578,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.657865,
+            "interior_range": 0.107394,
+            "first_edge_dev_pct": 10.19,
+            "last_edge_dev_pct": 9.68
+          }
+        },
+        "M2:aesthetic_appreciation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 1.9e-05,
+          "warmup_jump_last": 0.000749,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.019416,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.642002,
+            "interior_range": 0.111407,
+            "first_edge_dev_pct": 45.38,
+            "last_edge_dev_pct": 1.0
+          }
+        },
+        "P0:salience_network": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 4e-06,
+          "warmup_jump_last": 0.00574,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.087234,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.850217,
+            "interior_range": 0.538511,
+            "first_edge_dev_pct": 81.58,
+            "last_edge_dev_pct": 4.85
+          }
+        },
+        "P1:affective_evaluation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.000142,
+          "warmup_jump_last": 0.039027,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.124055,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.230696,
+            "interior_range": 0.761495,
+            "first_edge_dev_pct": 11.21,
+            "last_edge_dev_pct": 5.67
+          }
+        },
+        "P2:sensory_load": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.00956,
+          "warmup_jump_last": 0.001065,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.072701,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.847553,
+            "interior_range": 0.325499,
+            "first_edge_dev_pct": 84.69,
+            "last_edge_dev_pct": 11.44
+          }
+        },
+        "F0:valence_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.000595,
+          "warmup_jump_last": 0.084087,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.083443,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.251013,
+            "interior_range": 0.501414,
+            "first_edge_dev_pct": 25.94,
+            "last_edge_dev_pct": 23.73
+          }
+        },
+        "F1:processing_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.0,
+          "warmup_jump_last": 0.006033,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.025225,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.649176,
+            "interior_range": 0.140675,
+            "first_edge_dev_pct": 10.23,
+            "last_edge_dev_pct": 9.24
+          }
+        },
+        "F2:aesthetic_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 2e-06,
+          "warmup_jump_last": 0.000891,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.020708,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.640675,
+            "interior_range": 0.103797,
+            "first_edge_dev_pct": 4.08,
+            "last_edge_dev_pct": 6.71
+          }
+        }
+      },
+      "artifacts_found": 0
+    },
+    "beethoven": {
+      "n_frames": 5168,
+      "dimensions": {
+        "E0:salience_activation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.092006,
+          "warmup_jump_last": 0.051982,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.163312,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.698609,
+            "interior_range": 0.691302,
+            "first_edge_dev_pct": 30.52,
+            "last_edge_dev_pct": 2.74
+          }
+        },
+        "E1:sensory_evidence": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.014135,
+          "warmup_jump_last": 0.047625,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.085363,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.749134,
+            "interior_range": 0.537752,
+            "first_edge_dev_pct": 0.44,
+            "last_edge_dev_pct": 19.29
+          }
+        },
+        "E2:consonance_valence": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.074608,
+          "warmup_jump_last": 0.064115,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.153556,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.007656,
+            "interior_range": 0.975753,
+            "first_edge_dev_pct": 34.38,
+            "last_edge_dev_pct": 8.76
+          }
+        },
+        "M0:salience_response": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.010728,
+          "warmup_jump_last": 0.009088,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.024344,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.660072,
+            "interior_range": 0.124606,
+            "first_edge_dev_pct": 29.78,
+            "last_edge_dev_pct": 2.54
+          }
+        },
+        "M1:rt_valence_judgment": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.005463,
+          "warmup_jump_last": 0.008532,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.02574,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.655802,
+            "interior_range": 0.117985,
+            "first_edge_dev_pct": 42.99,
+            "last_edge_dev_pct": 17.31
+          }
+        },
+        "M2:aesthetic_appreciation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.003295,
+          "warmup_jump_last": 0.002852,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.02074,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.627739,
+            "interior_range": 0.108329,
+            "first_edge_dev_pct": 38.62,
+            "last_edge_dev_pct": 10.12
+          }
+        },
+        "P0:salience_network": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.031708,
+          "warmup_jump_last": 0.003233,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.043963,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.824911,
+            "interior_range": 0.245084,
+            "first_edge_dev_pct": 22.29,
+            "last_edge_dev_pct": 7.32
+          }
+        },
+        "P1:affective_evaluation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.042318,
+          "warmup_jump_last": 0.116403,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.154602,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.075755,
+            "interior_range": 0.831735,
+            "first_edge_dev_pct": 43.85,
+            "last_edge_dev_pct": 5.83
+          }
+        },
+        "P2:sensory_load": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.075158,
+          "warmup_jump_last": 0.02836,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.080411,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.818118,
+            "interior_range": 0.501105,
+            "first_edge_dev_pct": 31.26,
+            "last_edge_dev_pct": 12.34
+          }
+        },
+        "F0:valence_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.034784,
+          "warmup_jump_last": 0.031866,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.132178,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.08877,
+            "interior_range": 0.748995,
+            "first_edge_dev_pct": 44.21,
+            "last_edge_dev_pct": 12.8
+          }
+        },
+        "F1:processing_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.006763,
+          "warmup_jump_last": 0.007026,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.02026,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.654577,
+            "interior_range": 0.120034,
+            "first_edge_dev_pct": 9.28,
+            "last_edge_dev_pct": 19.88
+          }
+        },
+        "F2:aesthetic_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.004491,
+          "warmup_jump_last": 0.003925,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.020496,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.622207,
+            "interior_range": 0.102228,
+            "first_edge_dev_pct": 40.51,
+            "last_edge_dev_pct": 12.94
+          }
+        }
+      },
+      "artifacts_found": 0
+    },
+    "duel": {
+      "n_frames": 5168,
+      "dimensions": {
+        "E0:salience_activation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.12687,
+          "warmup_jump_last": 0.027098,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.137926,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.761555,
+            "interior_range": 0.662182,
+            "first_edge_dev_pct": 61.44,
+            "last_edge_dev_pct": 5.26
+          }
+        },
+        "E1:sensory_evidence": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.003014,
+          "warmup_jump_last": 8.9e-05,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.074875,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.785296,
+            "interior_range": 0.437035,
+            "first_edge_dev_pct": 45.76,
+            "last_edge_dev_pct": 4.92
+          }
+        },
+        "E2:consonance_valence": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.102815,
+          "warmup_jump_last": 0.056465,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.126744,
+          "artifact": false,
+          "info": {
+            "interior_mean": -0.05045,
+            "interior_range": 0.728113,
+            "first_edge_dev_pct": 23.41,
+            "last_edge_dev_pct": 11.92
+          }
+        },
+        "M0:salience_response": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.014286,
+          "warmup_jump_last": 0.002961,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.019122,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.677712,
+            "interior_range": 0.108519,
+            "first_edge_dev_pct": 69.38,
+            "last_edge_dev_pct": 6.37
+          }
+        },
+        "M1:rt_valence_judgment": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.005822,
+          "warmup_jump_last": 0.008754,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.024229,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.65292,
+            "interior_range": 0.118638,
+            "first_edge_dev_pct": 13.4,
+            "last_edge_dev_pct": 5.55
+          }
+        },
+        "M2:aesthetic_appreciation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.003435,
+          "warmup_jump_last": 0.003889,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.014847,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.599866,
+            "interior_range": 0.09336,
+            "first_edge_dev_pct": 14.49,
+            "last_edge_dev_pct": 10.43
+          }
+        },
+        "P0:salience_network": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.003172,
+          "warmup_jump_last": 0.00129,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.072551,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.863768,
+            "interior_range": 0.235509,
+            "first_edge_dev_pct": 190.87,
+            "last_edge_dev_pct": 7.33
+          }
+        },
+        "P1:affective_evaluation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.176665,
+          "warmup_jump_last": 0.146715,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.136077,
+          "artifact": false,
+          "info": {
+            "interior_mean": -0.018754,
+            "interior_range": 0.78318,
+            "first_edge_dev_pct": 37.57,
+            "last_edge_dev_pct": 4.41
+          }
+        },
+        "P2:sensory_load": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.023201,
+          "warmup_jump_last": 0.062285,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.068749,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.836301,
+            "interior_range": 0.403647,
+            "first_edge_dev_pct": 51.6,
+            "last_edge_dev_pct": 0.8
+          }
+        },
+        "F0:valence_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.049896,
+          "warmup_jump_last": 0.027876,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.098162,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.04696,
+            "interior_range": 0.539757,
+            "first_edge_dev_pct": 8.6,
+            "last_edge_dev_pct": 13.35
+          }
+        },
+        "F1:processing_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.004041,
+          "warmup_jump_last": 0.005697,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.017405,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.666165,
+            "interior_range": 0.111513,
+            "first_edge_dev_pct": 28.14,
+            "last_edge_dev_pct": 7.74
+          }
+        },
+        "F2:aesthetic_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.004543,
+          "warmup_jump_last": 0.006061,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.017837,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.61359,
+            "interior_range": 0.094606,
+            "first_edge_dev_pct": 23.53,
+            "last_edge_dev_pct": 8.88
+          }
+        }
+      },
+      "artifacts_found": 0
+    },
+    "enigma": {
+      "n_frames": 5168,
+      "dimensions": {
+        "E0:salience_activation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.0,
+          "warmup_jump_last": 0.025111,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.119505,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.714422,
+            "interior_range": 0.64757,
+            "first_edge_dev_pct": 55.55,
+            "last_edge_dev_pct": 13.93
+          }
+        },
+        "E1:sensory_evidence": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.0,
+          "warmup_jump_last": 0.018382,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.068801,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.731557,
+            "interior_range": 0.436557,
+            "first_edge_dev_pct": 33.5,
+            "last_edge_dev_pct": 15.06
+          }
+        },
+        "E2:consonance_valence": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.001232,
+          "warmup_jump_last": 0.025497,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.090145,
+          "artifact": false,
+          "info": {
+            "interior_mean": -0.105487,
+            "interior_range": 0.609481,
+            "first_edge_dev_pct": 51.58,
+            "last_edge_dev_pct": 0.64
+          }
+        },
+        "M0:salience_response": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.000142,
+          "warmup_jump_last": 0.001603,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.018439,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.660717,
+            "interior_range": 0.107991,
+            "first_edge_dev_pct": 62.61,
+            "last_edge_dev_pct": 14.02
+          }
+        },
+        "M1:rt_valence_judgment": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.0,
+          "warmup_jump_last": 0.007655,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.018338,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.644445,
+            "interior_range": 0.101061,
+            "first_edge_dev_pct": 24.11,
+            "last_edge_dev_pct": 13.39
+          }
+        },
+        "M2:aesthetic_appreciation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 7e-05,
+          "warmup_jump_last": 0.003982,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.011388,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.606161,
+            "interior_range": 0.069281,
+            "first_edge_dev_pct": 21.24,
+            "last_edge_dev_pct": 4.63
+          }
+        },
+        "P0:salience_network": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 5.2e-05,
+          "warmup_jump_last": 0.001724,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.095699,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.870676,
+            "interior_range": 0.578568,
+            "first_edge_dev_pct": 79.47,
+            "last_edge_dev_pct": 0.69
+          }
+        },
+        "P1:affective_evaluation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.000566,
+          "warmup_jump_last": 0.005284,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.098989,
+          "artifact": false,
+          "info": {
+            "interior_mean": -0.003489,
+            "interior_range": 0.665367,
+            "first_edge_dev_pct": 48.02,
+            "last_edge_dev_pct": 2.33
+          }
+        },
+        "P2:sensory_load": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.001075,
+          "warmup_jump_last": 0.058006,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.06469,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.840756,
+            "interior_range": 0.338327,
+            "first_edge_dev_pct": 79.47,
+            "last_edge_dev_pct": 5.74
+          }
+        },
+        "F0:valence_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.000115,
+          "warmup_jump_last": 0.012857,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.052289,
+          "artifact": false,
+          "info": {
+            "interior_mean": -0.005027,
+            "interior_range": 0.33473,
+            "first_edge_dev_pct": 37.63,
+            "last_edge_dev_pct": 1.06
+          }
+        },
+        "F1:processing_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.0,
+          "warmup_jump_last": 0.00648,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.016306,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.645032,
+            "interior_range": 0.097507,
+            "first_edge_dev_pct": 10.51,
+            "last_edge_dev_pct": 24.09
+          }
+        },
+        "F2:aesthetic_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 8e-06,
+          "warmup_jump_last": 0.004695,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.011849,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.609363,
+            "interior_range": 0.094448,
+            "first_edge_dev_pct": 28.67,
+            "last_edge_dev_pct": 6.45
+          }
+        }
+      },
+      "artifacts_found": 0
+    },
+    "herald": {
+      "n_frames": 5168,
+      "dimensions": {
+        "E0:salience_activation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.003976,
+          "warmup_jump_last": 0.20866,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.197024,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.616597,
+            "interior_range": 0.748437,
+            "first_edge_dev_pct": 34.99,
+            "last_edge_dev_pct": 7.41
+          }
+        },
+        "E1:sensory_evidence": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.0002,
+          "warmup_jump_last": 0.003529,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.166294,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.694539,
+            "interior_range": 0.686806,
+            "first_edge_dev_pct": 15.9,
+            "last_edge_dev_pct": 14.13
+          }
+        },
+        "E2:consonance_valence": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.001043,
+          "warmup_jump_last": 0.026806,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.143352,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.254946,
+            "interior_range": 0.791806,
+            "first_edge_dev_pct": 14.89,
+            "last_edge_dev_pct": 35.29
+          }
+        },
+        "M0:salience_response": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.000494,
+          "warmup_jump_last": 0.02241,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.036242,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.645109,
+            "interior_range": 0.150816,
+            "first_edge_dev_pct": 34.21,
+            "last_edge_dev_pct": 17.88
+          }
+        },
+        "M1:rt_valence_judgment": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.000117,
+          "warmup_jump_last": 0.00131,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.029285,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.65111,
+            "interior_range": 0.120035,
+            "first_edge_dev_pct": 14.75,
+            "last_edge_dev_pct": 5.16
+          }
+        },
+        "M2:aesthetic_appreciation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 9e-05,
+          "warmup_jump_last": 0.000124,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.023447,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.659963,
+            "interior_range": 0.109857,
+            "first_edge_dev_pct": 53.29,
+            "last_edge_dev_pct": 30.52
+          }
+        },
+        "P0:salience_network": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.00022,
+          "warmup_jump_last": 0.003872,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.06388,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.845319,
+            "interior_range": 0.146846,
+            "first_edge_dev_pct": 295.75,
+            "last_edge_dev_pct": 12.79
+          }
+        },
+        "P1:affective_evaluation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.000747,
+          "warmup_jump_last": 0.103927,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.156737,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.259594,
+            "interior_range": 0.874606,
+            "first_edge_dev_pct": 14.66,
+            "last_edge_dev_pct": 21.73
+          }
+        },
+        "P2:sensory_load": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.000924,
+          "warmup_jump_last": 0.008703,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.073361,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.828295,
+            "interior_range": 0.388446,
+            "first_edge_dev_pct": 47.93,
+            "last_edge_dev_pct": 4.82
+          }
+        },
+        "F0:valence_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.001668,
+          "warmup_jump_last": 0.01265,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.10938,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.301314,
+            "interior_range": 0.561662,
+            "first_edge_dev_pct": 4.49,
+            "last_edge_dev_pct": 47.34
+          }
+        },
+        "F1:processing_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.000141,
+          "warmup_jump_last": 1.4e-05,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.037448,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.645935,
+            "interior_range": 0.163943,
+            "first_edge_dev_pct": 6.8,
+            "last_edge_dev_pct": 9.15
+          }
+        },
+        "F2:aesthetic_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 6.5e-05,
+          "warmup_jump_last": 0.000599,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.023914,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.648605,
+            "interior_range": 0.11426,
+            "first_edge_dev_pct": 9.63,
+            "last_edge_dev_pct": 21.52
+          }
+        }
+      },
+      "artifacts_found": 0
+    },
+    "swan": {
+      "n_frames": 5168,
+      "dimensions": {
+        "E0:salience_activation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.040801,
+          "warmup_jump_last": 0.016575,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.137662,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.652324,
+            "interior_range": 0.657859,
+            "first_edge_dev_pct": 29.68,
+            "last_edge_dev_pct": 5.24
+          }
+        },
+        "E1:sensory_evidence": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.00247,
+          "warmup_jump_last": 0.054238,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.083084,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.75544,
+            "interior_range": 0.515661,
+            "first_edge_dev_pct": 3.28,
+            "last_edge_dev_pct": 2.64
+          }
+        },
+        "E2:consonance_valence": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.053264,
+          "warmup_jump_last": 0.049931,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.131859,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.139987,
+            "interior_range": 0.770491,
+            "first_edge_dev_pct": 22.09,
+            "last_edge_dev_pct": 13.39
+          }
+        },
+        "M0:salience_response": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.004384,
+          "warmup_jump_last": 0.001869,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.01976,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.651309,
+            "interior_range": 0.114918,
+            "first_edge_dev_pct": 13.98,
+            "last_edge_dev_pct": 4.8
+          }
+        },
+        "M1:rt_valence_judgment": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.003409,
+          "warmup_jump_last": 0.002609,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.018824,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.665186,
+            "interior_range": 0.092531,
+            "first_edge_dev_pct": 10.86,
+            "last_edge_dev_pct": 13.59
+          }
+        },
+        "M2:aesthetic_appreciation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.000686,
+          "warmup_jump_last": 0.001269,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.01395,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.632275,
+            "interior_range": 0.087672,
+            "first_edge_dev_pct": 61.63,
+            "last_edge_dev_pct": 5.06
+          }
+        },
+        "P0:salience_network": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.002168,
+          "warmup_jump_last": 0.005227,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.031229,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.829394,
+            "interior_range": 0.13554,
+            "first_edge_dev_pct": 297.35,
+            "last_edge_dev_pct": 21.88
+          }
+        },
+        "P1:affective_evaluation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.075966,
+          "warmup_jump_last": 0.060246,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.120995,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.196871,
+            "interior_range": 0.698272,
+            "first_edge_dev_pct": 7.06,
+            "last_edge_dev_pct": 10.33
+          }
+        },
+        "P2:sensory_load": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.008717,
+          "warmup_jump_last": 0.104844,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.061278,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.838058,
+            "interior_range": 0.357855,
+            "first_edge_dev_pct": 4.8,
+            "last_edge_dev_pct": 1.38
+          }
+        },
+        "F0:valence_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.026849,
+          "warmup_jump_last": 0.024147,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.094502,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.191713,
+            "interior_range": 0.519034,
+            "first_edge_dev_pct": 25.74,
+            "last_edge_dev_pct": 11.69
+          }
+        },
+        "F1:processing_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.001925,
+          "warmup_jump_last": 0.010466,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.019557,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.655679,
+            "interior_range": 0.118035,
+            "first_edge_dev_pct": 2.65,
+            "last_edge_dev_pct": 10.31
+          }
+        },
+        "F2:aesthetic_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.002062,
+          "warmup_jump_last": 0.001225,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.017672,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.63484,
+            "interior_range": 0.095148,
+            "first_edge_dev_pct": 1.54,
+            "last_edge_dev_pct": 19.11
+          }
+        }
+      },
+      "artifacts_found": 0
+    },
+    "yang": {
+      "n_frames": 5168,
+      "dimensions": {
+        "E0:salience_activation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.028686,
+          "warmup_jump_last": 0.073859,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.172776,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.686889,
+            "interior_range": 0.726281,
+            "first_edge_dev_pct": 34.41,
+            "last_edge_dev_pct": 13.19
+          }
+        },
+        "E1:sensory_evidence": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.119415,
+          "warmup_jump_last": 0.019283,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.120426,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.738937,
+            "interior_range": 0.678548,
+            "first_edge_dev_pct": 20.46,
+            "last_edge_dev_pct": 15.77
+          }
+        },
+        "E2:consonance_valence": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.08639,
+          "warmup_jump_last": 0.251393,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.191181,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.097453,
+            "interior_range": 1.013927,
+            "first_edge_dev_pct": 40.73,
+            "last_edge_dev_pct": 3.62
+          }
+        },
+        "M0:salience_response": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.004678,
+          "warmup_jump_last": 0.007066,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.02781,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.659034,
+            "interior_range": 0.138511,
+            "first_edge_dev_pct": 24.03,
+            "last_edge_dev_pct": 13.65
+          }
+        },
+        "M1:rt_valence_judgment": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.014338,
+          "warmup_jump_last": 0.009123,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.028714,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.654031,
+            "interior_range": 0.117848,
+            "first_edge_dev_pct": 52.4,
+            "last_edge_dev_pct": 15.07
+          }
+        },
+        "M2:aesthetic_appreciation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.003603,
+          "warmup_jump_last": 0.003737,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.022779,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.631408,
+            "interior_range": 0.106969,
+            "first_edge_dev_pct": 40.65,
+            "last_edge_dev_pct": 10.01
+          }
+        },
+        "P0:salience_network": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.014987,
+          "warmup_jump_last": 0.000887,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.017442,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.858051,
+            "interior_range": 0.113502,
+            "first_edge_dev_pct": 15.87,
+            "last_edge_dev_pct": 22.11
+          }
+        },
+        "P1:affective_evaluation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.162593,
+          "warmup_jump_last": 0.115283,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.185581,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.133802,
+            "interior_range": 0.952362,
+            "first_edge_dev_pct": 43.97,
+            "last_edge_dev_pct": 6.51
+          }
+        },
+        "P2:sensory_load": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.005272,
+          "warmup_jump_last": 0.002005,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.071189,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.838724,
+            "interior_range": 0.356047,
+            "first_edge_dev_pct": 37.73,
+            "last_edge_dev_pct": 17.68
+          }
+        },
+        "F0:valence_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.043413,
+          "warmup_jump_last": 0.122351,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.160298,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.171121,
+            "interior_range": 0.768437,
+            "first_edge_dev_pct": 48.0,
+            "last_edge_dev_pct": 0.07
+          }
+        },
+        "F1:processing_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.005669,
+          "warmup_jump_last": 0.010957,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.027316,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.654173,
+            "interior_range": 0.153389,
+            "first_edge_dev_pct": 13.36,
+            "last_edge_dev_pct": 16.75
+          }
+        },
+        "F2:aesthetic_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.004642,
+          "warmup_jump_last": 0.005598,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.025989,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.630987,
+            "interior_range": 0.11343,
+            "first_edge_dev_pct": 45.28,
+            "last_edge_dev_pct": 5.43
+          }
+        }
+      },
+      "artifacts_found": 0
+    },
+    "midi/csg/01_major_triad": {
+      "n_frames": 862,
+      "dimensions": {
+        "E0:salience_activation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.028298,
+          "warmup_jump_last": 0.007471,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.145522,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.436738,
+            "interior_range": 0.170554,
+            "first_edge_dev_pct": 140.66,
+            "last_edge_dev_pct": 240.5
+          }
+        },
+        "E1:sensory_evidence": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.007684,
+          "warmup_jump_last": 0.008273,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.075485,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.707028,
+            "interior_range": 0.178879,
+            "first_edge_dev_pct": 58.36,
+            "last_edge_dev_pct": 68.35
+          }
+        },
+        "E2:consonance_valence": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.010905,
+          "warmup_jump_last": 0.018408,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.097558,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.245734,
+            "interior_range": 0.221395,
+            "first_edge_dev_pct": 81.21,
+            "last_edge_dev_pct": 87.86
+          }
+        },
+        "M0:salience_response": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.003913,
+          "warmup_jump_last": 0.00127,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.029362,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.618814,
+            "interior_range": 0.032264,
+            "first_edge_dev_pct": 111.42,
+            "last_edge_dev_pct": 248.54
+          }
+        },
+        "M1:rt_valence_judgment": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.002277,
+          "warmup_jump_last": 1.9e-05,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.012495,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.671397,
+            "interior_range": 0.038014,
+            "first_edge_dev_pct": 0.63,
+            "last_edge_dev_pct": 0.5
+          }
+        },
+        "M2:aesthetic_appreciation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.000648,
+          "warmup_jump_last": 0.000305,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.032097,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.662466,
+            "interior_range": 0.013715,
+            "first_edge_dev_pct": 170.95,
+            "last_edge_dev_pct": 603.22
+          }
+        },
+        "P0:salience_network": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.00157,
+          "warmup_jump_last": 0.000343,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.044081,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.802287,
+            "interior_range": 0.069364,
+            "first_edge_dev_pct": 126.82,
+            "last_edge_dev_pct": 89.21
+          }
+        },
+        "P1:affective_evaluation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.00287,
+          "warmup_jump_last": 0.008689,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.138001,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.302077,
+            "interior_range": 0.138472,
+            "first_edge_dev_pct": 21.92,
+            "last_edge_dev_pct": 257.62
+          }
+        },
+        "P2:sensory_load": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.016056,
+          "warmup_jump_last": 0.015955,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.033332,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.854307,
+            "interior_range": 0.108708,
+            "first_edge_dev_pct": 25.3,
+            "last_edge_dev_pct": 51.84
+          }
+        },
+        "F0:valence_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.004298,
+          "warmup_jump_last": 0.008178,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.085032,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.308464,
+            "interior_range": 0.176343,
+            "first_edge_dev_pct": 73.89,
+            "last_edge_dev_pct": 97.17
+          }
+        },
+        "F1:processing_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.002308,
+          "warmup_jump_last": 0.000373,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.022909,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.651501,
+            "interior_range": 0.038822,
+            "first_edge_dev_pct": 47.16,
+            "last_edge_dev_pct": 135.72
+          }
+        },
+        "F2:aesthetic_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.00113,
+          "warmup_jump_last": 0.000376,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.013716,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.648118,
+            "interior_range": 0.021164,
+            "first_edge_dev_pct": 19.6,
+            "last_edge_dev_pct": 136.1
+          }
+        }
+      },
+      "artifacts_found": 0
+    },
+    "midi/csg/02_m2_dyad": {
+      "n_frames": 862,
+      "dimensions": {
+        "E0:salience_activation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.247233,
+          "warmup_jump_last": 0.010712,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.091861,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.832417,
+            "interior_range": 0.506347,
+            "first_edge_dev_pct": 7.65,
+            "last_edge_dev_pct": 3.04
+          }
+        },
+        "E1:sensory_evidence": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.180061,
+          "warmup_jump_last": 0.001521,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.073617,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.771257,
+            "interior_range": 0.344369,
+            "first_edge_dev_pct": 2.22,
+            "last_edge_dev_pct": 17.09
+          }
+        },
+        "E2:consonance_valence": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.103586,
+          "warmup_jump_last": 0.062633,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.126805,
+          "artifact": false,
+          "info": {
+            "interior_mean": -0.088398,
+            "interior_range": 0.558346,
+            "first_edge_dev_pct": 50.41,
+            "last_edge_dev_pct": 10.83
+          }
+        },
+        "M0:salience_response": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.03912,
+          "warmup_jump_last": 0.001107,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.012608,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.691653,
+            "interior_range": 0.07819,
+            "first_edge_dev_pct": 0.67,
+            "last_edge_dev_pct": 15.69
+          }
+        },
+        "M1:rt_valence_judgment": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.039917,
+          "warmup_jump_last": 0.005296,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.018884,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.64542,
+            "interior_range": 0.079812,
+            "first_edge_dev_pct": 2.7,
+            "last_edge_dev_pct": 33.02
+          }
+        },
+        "M2:aesthetic_appreciation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.023887,
+          "warmup_jump_last": 0.002333,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.02295,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.620378,
+            "interior_range": 0.054019,
+            "first_edge_dev_pct": 33.17,
+            "last_edge_dev_pct": 82.7
+          }
+        },
+        "P0:salience_network": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.006535,
+          "warmup_jump_last": 0.029184,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.045527,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.816408,
+            "interior_range": 0.099234,
+            "first_edge_dev_pct": 81.75,
+            "last_edge_dev_pct": 72.71
+          }
+        },
+        "P1:affective_evaluation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.005548,
+          "warmup_jump_last": 0.085004,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.128401,
+          "artifact": false,
+          "info": {
+            "interior_mean": -0.09577,
+            "interior_range": 0.579162,
+            "first_edge_dev_pct": 9.84,
+            "last_edge_dev_pct": 0.55
+          }
+        },
+        "P2:sensory_load": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.063694,
+          "warmup_jump_last": 0.086368,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.074694,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.771051,
+            "interior_range": 0.345252,
+            "first_edge_dev_pct": 19.47,
+            "last_edge_dev_pct": 9.17
+          }
+        },
+        "F0:valence_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.049998,
+          "warmup_jump_last": 0.030308,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.107141,
+          "artifact": false,
+          "info": {
+            "interior_mean": -0.008273,
+            "interior_range": 0.380048,
+            "first_edge_dev_pct": 64.32,
+            "last_edge_dev_pct": 18.58
+          }
+        },
+        "F1:processing_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.043495,
+          "warmup_jump_last": 0.004079,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.017674,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.670951,
+            "interior_range": 0.072175,
+            "first_edge_dev_pct": 6.74,
+            "last_edge_dev_pct": 46.65
+          }
+        },
+        "F2:aesthetic_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.032235,
+          "warmup_jump_last": 0.003612,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.015757,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.612242,
+            "interior_range": 0.073343,
+            "first_edge_dev_pct": 4.3,
+            "last_edge_dev_pct": 9.46
+          }
+        }
+      },
+      "artifacts_found": 0
+    },
+    "midi/csg/03_cluster": {
+      "n_frames": 862,
+      "dimensions": {
+        "E0:salience_activation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.088554,
+          "warmup_jump_last": 0.005344,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.051745,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.922063,
+            "interior_range": 0.189436,
+            "first_edge_dev_pct": 3.1,
+            "last_edge_dev_pct": 38.92
+          }
+        },
+        "E1:sensory_evidence": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.062041,
+          "warmup_jump_last": 0.049459,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.078037,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.664569,
+            "interior_range": 0.323879,
+            "first_edge_dev_pct": 1.37,
+            "last_edge_dev_pct": 49.03
+          }
+        },
+        "E2:consonance_valence": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.082089,
+          "warmup_jump_last": 0.322143,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.108253,
+          "artifact": false,
+          "info": {
+            "interior_mean": -0.293737,
+            "interior_range": 0.35476,
+            "first_edge_dev_pct": 2.51,
+            "last_edge_dev_pct": 54.16
+          }
+        },
+        "M0:salience_response": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.013407,
+          "warmup_jump_last": 0.003728,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.005031,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.700061,
+            "interior_range": 0.026231,
+            "first_edge_dev_pct": 4.67,
+            "last_edge_dev_pct": 14.71
+          }
+        },
+        "M1:rt_valence_judgment": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.005336,
+          "warmup_jump_last": 0.048168,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.023671,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.610192,
+            "interior_range": 0.094027,
+            "first_edge_dev_pct": 7.77,
+            "last_edge_dev_pct": 62.69
+          }
+        },
+        "M2:aesthetic_appreciation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.00077,
+          "warmup_jump_last": 0.026302,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.015086,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.593481,
+            "interior_range": 0.041461,
+            "first_edge_dev_pct": 57.22,
+            "last_edge_dev_pct": 55.87
+          }
+        },
+        "P0:salience_network": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.004028,
+          "warmup_jump_last": 0.005816,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.052505,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.824084,
+            "interior_range": 0.094464,
+            "first_edge_dev_pct": 83.19,
+            "last_edge_dev_pct": 91.29
+          }
+        },
+        "P1:affective_evaluation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.044486,
+          "warmup_jump_last": 0.232681,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.086492,
+          "artifact": false,
+          "info": {
+            "interior_mean": -0.281846,
+            "interior_range": 0.421829,
+            "first_edge_dev_pct": 16.51,
+            "last_edge_dev_pct": 35.15
+          }
+        },
+        "P2:sensory_load": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.005833,
+          "warmup_jump_last": 0.151963,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.063775,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.698209,
+            "interior_range": 0.30909,
+            "first_edge_dev_pct": 29.98,
+            "last_edge_dev_pct": 30.6
+          }
+        },
+        "F0:valence_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.03977,
+          "warmup_jump_last": 0.155588,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.075416,
+          "artifact": false,
+          "info": {
+            "interior_mean": -0.19948,
+            "interior_range": 0.192346,
+            "first_edge_dev_pct": 14.68,
+            "last_edge_dev_pct": 98.23
+          }
+        },
+        "F1:processing_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.006688,
+          "warmup_jump_last": 0.03268,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.019924,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.650463,
+            "interior_range": 0.080547,
+            "first_edge_dev_pct": 9.32,
+            "last_edge_dev_pct": 64.63
+          }
+        },
+        "F2:aesthetic_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 5.1e-05,
+          "warmup_jump_last": 0.036071,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.012323,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.588723,
+            "interior_range": 0.052295,
+            "first_edge_dev_pct": 4.31,
+            "last_edge_dev_pct": 54.25
+          }
+        }
+      },
+      "artifacts_found": 0
+    },
+    "midi/csg/04_V7_I_resolution": {
+      "n_frames": 1206,
+      "dimensions": {
+        "E0:salience_activation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.004732,
+          "warmup_jump_last": 0.062259,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.195384,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.578254,
+            "interior_range": 0.565779,
+            "first_edge_dev_pct": 44.17,
+            "last_edge_dev_pct": 48.07
+          }
+        },
+        "E1:sensory_evidence": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.000655,
+          "warmup_jump_last": 0.00254,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.063505,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.69345,
+            "interior_range": 0.337406,
+            "first_edge_dev_pct": 46.54,
+            "last_edge_dev_pct": 35.95
+          }
+        },
+        "E2:consonance_valence": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.002443,
+          "warmup_jump_last": 0.00098,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.166317,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.138456,
+            "interior_range": 0.757733,
+            "first_edge_dev_pct": 20.11,
+            "last_edge_dev_pct": 10.37
+          }
+        },
+        "M0:salience_response": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.000564,
+          "warmup_jump_last": 0.007634,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.03147,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.639774,
+            "interior_range": 0.090745,
+            "first_edge_dev_pct": 49.46,
+            "last_edge_dev_pct": 60.77
+          }
+        },
+        "M1:rt_valence_judgment": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 8.7e-05,
+          "warmup_jump_last": 0.000673,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.014016,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.656286,
+            "interior_range": 0.059679,
+            "first_edge_dev_pct": 0.56,
+            "last_edge_dev_pct": 17.0
+          }
+        },
+        "M2:aesthetic_appreciation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 1.9e-05,
+          "warmup_jump_last": 0.00034,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.029784,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.644634,
+            "interior_range": 0.0616,
+            "first_edge_dev_pct": 82.18,
+            "last_edge_dev_pct": 111.41
+          }
+        },
+        "P0:salience_network": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.000395,
+          "warmup_jump_last": 0.003519,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.048832,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.829182,
+            "interior_range": 0.130525,
+            "first_edge_dev_pct": 51.86,
+            "last_edge_dev_pct": 73.08
+          }
+        },
+        "P1:affective_evaluation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.007341,
+          "warmup_jump_last": 0.001471,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.169214,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.185388,
+            "interior_range": 0.573967,
+            "first_edge_dev_pct": 30.49,
+            "last_edge_dev_pct": 42.07
+          }
+        },
+        "P2:sensory_load": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.004772,
+          "warmup_jump_last": 0.001121,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.035618,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.839787,
+            "interior_range": 0.24409,
+            "first_edge_dev_pct": 9.74,
+            "last_edge_dev_pct": 22.08
+          }
+        },
+        "F0:valence_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.001294,
+          "warmup_jump_last": 0.001196,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.147724,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.213242,
+            "interior_range": 0.551518,
+            "first_edge_dev_pct": 29.22,
+            "last_edge_dev_pct": 12.17
+          }
+        },
+        "F1:processing_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.000159,
+          "warmup_jump_last": 0.000696,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.017897,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.648577,
+            "interior_range": 0.064421,
+            "first_edge_dev_pct": 32.2,
+            "last_edge_dev_pct": 79.47
+          }
+        },
+        "F2:aesthetic_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.000175,
+          "warmup_jump_last": 0.000355,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.020141,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.636226,
+            "interior_range": 0.063867,
+            "first_edge_dev_pct": 39.94,
+            "last_edge_dev_pct": 31.11
+          }
+        }
+      },
+      "artifacts_found": 0
+    },
+    "midi/csg/05_I_V7_tension": {
+      "n_frames": 1206,
+      "dimensions": {
+        "E0:salience_activation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.030971,
+          "warmup_jump_last": 0.048173,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.200281,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.653666,
+            "interior_range": 0.535092,
+            "first_edge_dev_pct": 4.76,
+            "last_edge_dev_pct": 36.26
+          }
+        },
+        "E1:sensory_evidence": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.007695,
+          "warmup_jump_last": 0.006307,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.059741,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.717677,
+            "interior_range": 0.309775,
+            "first_edge_dev_pct": 30.26,
+            "last_edge_dev_pct": 33.62
+          }
+        },
+        "E2:consonance_valence": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.010897,
+          "warmup_jump_last": 0.004151,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.180935,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.04788,
+            "interior_range": 0.584752,
+            "first_edge_dev_pct": 64.58,
+            "last_edge_dev_pct": 16.34
+          }
+        },
+        "M0:salience_response": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.004232,
+          "warmup_jump_last": 0.00553,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.033198,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.652164,
+            "interior_range": 0.085448,
+            "first_edge_dev_pct": 3.38,
+            "last_edge_dev_pct": 53.88
+          }
+        },
+        "M1:rt_valence_judgment": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.002279,
+          "warmup_jump_last": 0.000409,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.013199,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.656476,
+            "interior_range": 0.062544,
+            "first_edge_dev_pct": 23.48,
+            "last_edge_dev_pct": 18.84
+          }
+        },
+        "M2:aesthetic_appreciation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.000665,
+          "warmup_jump_last": 1.5e-05,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.030808,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.633149,
+            "interior_range": 0.073084,
+            "first_edge_dev_pct": 8.67,
+            "last_edge_dev_pct": 87.4
+          }
+        },
+        "P0:salience_network": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.001607,
+          "warmup_jump_last": 0.001305,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.041899,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.833741,
+            "interior_range": 0.127683,
+            "first_edge_dev_pct": 40.89,
+            "last_edge_dev_pct": 78.37
+          }
+        },
+        "P1:affective_evaluation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.00363,
+          "warmup_jump_last": 0.005235,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.180851,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.107143,
+            "interior_range": 0.495831,
+            "first_edge_dev_pct": 45.21,
+            "last_edge_dev_pct": 43.39
+          }
+        },
+        "P2:sensory_load": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.016374,
+          "warmup_jump_last": 0.002589,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.03917,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.839376,
+            "interior_range": 0.195652,
+            "first_edge_dev_pct": 19.92,
+            "last_edge_dev_pct": 23.96
+          }
+        },
+        "F0:valence_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.004302,
+          "warmup_jump_last": 0.00265,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.162473,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.131634,
+            "interior_range": 0.464564,
+            "first_edge_dev_pct": 65.88,
+            "last_edge_dev_pct": 19.03
+          }
+        },
+        "F1:processing_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.00231,
+          "warmup_jump_last": 0.000785,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.017059,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.653018,
+            "interior_range": 0.057091,
+            "first_edge_dev_pct": 29.41,
+            "last_edge_dev_pct": 85.37
+          }
+        },
+        "F2:aesthetic_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.001132,
+          "warmup_jump_last": 8e-06,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.020371,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.626427,
+            "interior_range": 0.064794,
+            "first_edge_dev_pct": 27.16,
+            "last_edge_dev_pct": 15.41
+          }
+        }
+      },
+      "artifacts_found": 0
+    },
+    "midi/csg/06_single_note": {
+      "n_frames": 862,
+      "dimensions": {
+        "E0:salience_activation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.00214,
+          "warmup_jump_last": 0.030124,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.224318,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.240532,
+            "interior_range": 0.214072,
+            "first_edge_dev_pct": 175.89,
+            "last_edge_dev_pct": 287.09
+          }
+        },
+        "E1:sensory_evidence": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.001824,
+          "warmup_jump_last": 0.04674,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.218,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.314945,
+            "interior_range": 0.40882,
+            "first_edge_dev_pct": 87.65,
+            "last_edge_dev_pct": 125.76
+          }
+        },
+        "E2:consonance_valence": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.002728,
+          "warmup_jump_last": 0.009383,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.182225,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.570895,
+            "interior_range": 0.417424,
+            "first_edge_dev_pct": 15.95,
+            "last_edge_dev_pct": 116.32
+          }
+        },
+        "M0:salience_response": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.000393,
+          "warmup_jump_last": 0.007234,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.053286,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.563207,
+            "interior_range": 0.060936,
+            "first_edge_dev_pct": 111.67,
+            "last_edge_dev_pct": 229.41
+          }
+        },
+        "M1:rt_valence_judgment": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.000177,
+          "warmup_jump_last": 0.007608,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.036958,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.584903,
+            "interior_range": 0.070729,
+            "first_edge_dev_pct": 93.69,
+            "last_edge_dev_pct": 122.34
+          }
+        },
+        "M2:aesthetic_appreciation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.000133,
+          "warmup_jump_last": 0.002085,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.047545,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.708625,
+            "interior_range": 0.026083,
+            "first_edge_dev_pct": 156.63,
+            "last_edge_dev_pct": 486.12
+          }
+        },
+        "P0:salience_network": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.002727,
+          "warmup_jump_last": 0.003376,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.030472,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.779546,
+            "interior_range": 0.060647,
+            "first_edge_dev_pct": 160.16,
+            "last_edge_dev_pct": 41.22
+          }
+        },
+        "P1:affective_evaluation": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.001868,
+          "warmup_jump_last": 0.015254,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.213935,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.53211,
+            "interior_range": 0.255988,
+            "first_edge_dev_pct": 60.65,
+            "last_edge_dev_pct": 221.02
+          }
+        },
+        "P2:sensory_load": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.005195,
+          "warmup_jump_last": 0.076472,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.067785,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.679066,
+            "interior_range": 0.349779,
+            "first_edge_dev_pct": 43.85,
+            "last_edge_dev_pct": 36.69
+          }
+        },
+        "F0:valence_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.000813,
+          "warmup_jump_last": 0.005242,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.149354,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.573135,
+            "interior_range": 0.23869,
+            "first_edge_dev_pct": 14.55,
+            "last_edge_dev_pct": 169.67
+          }
+        },
+        "F1:processing_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 0.000232,
+          "warmup_jump_last": 0.008147,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.057748,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.563168,
+            "interior_range": 0.087567,
+            "first_edge_dev_pct": 94.13,
+            "last_edge_dev_pct": 161.2
+          }
+        },
+        "F2:aesthetic_pred": {
+          "nan": false,
+          "inf": false,
+          "first_saturated": false,
+          "last_saturated": false,
+          "warmup_jump": 3.7e-05,
+          "warmup_jump_last": 0.002626,
+          "discontinuity": false,
+          "dead_signal": false,
+          "trace_std": 0.02681,
+          "artifact": false,
+          "info": {
+            "interior_mean": 0.688389,
+            "interior_range": 0.027562,
+            "first_edge_dev_pct": 109.16,
+            "last_edge_dev_pct": 249.18
+          }
+        }
+      },
+      "artifacts_found": 0
+    }
+  },
+  "summary": {
+    "total_checks": 156,
+    "total_artifacts": 0,
+    "artifact_rate": 0.0,
+    "status": "PASS"
+  }
+}
