@@ -1,22 +1,25 @@
-"""UDP Functional Test — v1.0
+"""CHPI Functional Test — v1.0
 
-Tests UDP 10D output: E0-E1, M0-M1, P0-P2, F0-F2.
+Tests CHPI 11D output: E0-E1, M0-M1, P0-P2, F0-F3.
 
-UDP models uncertainty-driven pleasure (Cheung 2019):
-  E0: uncertainty_level (1-tonalness + 1-periodicity)
-  E1: confirmation_reward (pleasantness + tristimulus + E0)
-  M0: error_reward (E0 + spectral change + h_coupling entropy)
-  M1: pleasure_index (pleasantness integration)
-  P0: context_assessment (reads PWUP[3], WMED[1])
-  P1: prediction_accuracy (1-spectral_change + WM)
-  P2: reward_computation (P0*P1 multiplicative + E1 + M0)
-  F0-F2: forecasts (reward_expect, model_improve, pleasure_antic)
+CHPI models cross-modal harmonic predictive integration:
+  E0: crossmodal_prediction_gain (harmonic_change multi-scale + onset)
+  E1: voiceleading_parsimony (pleasantness + tristimulus + (1-roughness) + (1-spec_vel))
+  M0: visual_motor_lead (E0 + onset_periodicity + tonalness + chroma_C)
+  M1: harmonic_surprise_mod (E1 + pleasantness_1s + (1-roughness) + dist_conc_vel)
+  P0: harmonic_context_strength (HTP[3] + tonalness + chroma_C + (1-PWUP[3]) + M1)
+  P1: crossmodal_convergence (E0 + M0 + WMED[0] + HTP[3] + pleas_entropy)
+  P2: voiceleading_smoothness (E1 + tristimulus + (1-spec_change) + (1-chroma_vel) + (1-ICEM[0]))
+  F0: next_chord_prediction (P0 + tonalness + chroma_C + pleasantness)
+  F1: crossmodal_anticipation (P1 + E0 + periodicity_trend + chroma_I)
+  F2: harmonic_trajectory (P2 + spec_change_vel + chroma_I + E1)
+  F3: integration_confidence (P0 + P1 + P2 + pleasantness — meta-layer)
 
-UDP is an Integrator (depth 3), reads PWUP and WMED.
+CHPI is an Integrator (depth 3), reads HTP, ICEM, PWUP, WMED.
 
 Usage:
     cd "SRC Musical Intelligence"
-    python Tests/Functional-Test/F2/UDP/run_udp_functional_test.py
+    python Tests/Functional-Test/F2/CHPI/run_chpi_functional_test.py
 """
 from __future__ import annotations
 
@@ -48,15 +51,17 @@ N_MELS = 128
 N_FFT = 2048
 H3_WARMUP = 180
 
-E0 = 0; E1 = 1; M0 = 2; M1 = 3; P0 = 4; P1 = 5; P2 = 6; F0 = 7; F1 = 8; F2 = 9
+E0 = 0; E1 = 1; M0 = 2; M1 = 3; P0 = 4; P1 = 5; P2 = 6
+F0 = 7; F1 = 8; F2 = 9; F3 = 10
 
 DIM_NAMES = [
-    "E0:uncertainty", "E1:confirmation_reward",
-    "M0:error_reward", "M1:pleasure_index",
-    "P0:context_assess", "P1:pred_accuracy", "P2:reward_compute",
-    "F0:reward_expect", "F1:model_improve", "F2:pleasure_antic",
+    "E0:crossmodal_pred_gain", "E1:voiceleading_parsimony",
+    "M0:visual_motor_lead", "M1:harmonic_surprise_mod",
+    "P0:harmonic_context", "P1:crossmodal_convergence", "P2:voiceleading_smooth",
+    "F0:next_chord_pred", "F1:crossmodal_antic", "F2:harmonic_trajectory",
+    "F3:integration_confidence",
 ]
-OUTPUT_DIM = 10
+OUTPUT_DIM = 11
 
 
 @dataclass
@@ -68,7 +73,7 @@ class TestResult:
     values: Dict[str, Any] = field(default_factory=dict)
 
 
-class UDPTestRunner:
+class CHPITestRunner:
     def __init__(self):
         self.results: List[TestResult] = []
         self.relay_cache: Dict[str, np.ndarray] = {}
@@ -110,9 +115,9 @@ class UDPTestRunner:
             r3 = self.pipeline.r3_extractor.extract(mel, audio=waveform, sr=SAMPLE_RATE)
             h3 = self.pipeline.h3_extractor.extract(r3.features, self.pipeline.h3_demand)
             outputs, _, _ = self.pipeline._execute(self.pipeline.nuclei, h3.features, r3.features)
-        relay = outputs.get("UDP")
+        relay = outputs.get("CHPI")
         if relay is None:
-            raise RuntimeError(f"UDP not found for '{name}'")
+            raise RuntimeError(f"CHPI not found for '{name}'")
         r = relay.squeeze(0).numpy() if isinstance(relay, torch.Tensor) else relay
         if r.ndim == 3:
             r = r[0]
@@ -159,87 +164,125 @@ class UDPTestRunner:
         means = np.array([[self._mean(s, d) for d in range(OUTPUT_DIM)] for s in stims])
         for d in range(OUTPUT_DIM):
             v = float(means[:, d].std())
-            self._test(G, f"T3_{DIM_NAMES[d]}", v > 0.001,
-                       f"std={v:.4f}>0.001")
+            # F3 aggregates all P-layer + pleasantness — may have low variance
+            thresh = 0.0003 if d == F3 else 0.001
+            self._test(G, f"T3_{DIM_NAMES[d]}", v > thresh,
+                       f"std={v:.4f}>{thresh}")
 
-    def test_T4_uncertainty(self):
-        G = "T4_uncertainty"
-        # E0 = σ(0.50*(1-tonalness) + 0.50*(1-periodicity))
-        # Should be higher for dense/atonal
-        e0_single = self._mean("g1_01_single", E0)
-        e0_dense = self._mean("g3_04_dense", E0)
-        self._test(G, "T4_dense>=single",
-                   e0_dense >= e0_single - 0.10,
-                   f"dense({e0_dense:.4f})>=single({e0_single:.4f})-0.10")
+    def test_T4_voiceleading(self):
+        """E1 = voiceleading_parsimony: consonant stimuli should score higher
+        (pleasantness + low roughness + low spectral change)."""
+        G = "T4_voiceleading"
+        e1_single = self._mean("g1_01_single", E1)
+        e1_fifth = self._mean("g1_03_fifth", E1)
+        e1_dense = self._mean("g3_04_dense", E1)
+        # Consonant ≥ dissonant (with tolerance)
+        self._test(G, "T4_single>=dense",
+                   e1_single >= e1_dense - 0.05,
+                   f"single({e1_single:.4f})>=dense({e1_dense:.4f})-0.05")
+        self._test(G, "T4_fifth>=dense",
+                   e1_fifth >= e1_dense - 0.05,
+                   f"fifth({e1_fifth:.4f})>=dense({e1_dense:.4f})-0.05")
 
-        for stim in ["g1_01_single", "g1_05_minor_2nd", "g3_04_dense"]:
+        # E1 bounded
+        for stim in ["g1_01_single", "g1_03_fifth", "g3_04_dense"]:
+            e1 = self._mean(stim, E1)
+            self._test(G, f"T4_E1_bounded_{stim}", 0.0 <= e1 <= 1.0,
+                       f"E1({e1:.4f}) in [0,1]")
+
+    def test_T5_crossmodal_gain(self):
+        """E0 = crossmodal_prediction_gain: responds to harmonic change.
+        Temporal stimuli (arpeggio/melody) should show higher E0 than sustained."""
+        G = "T5_crossmodal"
+        e0_sustained = self._mean("g4_01_sustained", E0)
+        e0_arpeggio = self._mean("g4_03_arpeggio", E0)
+        self._test(G, "T5_arpeggio>=sustained",
+                   e0_arpeggio >= e0_sustained - 0.05,
+                   f"arpeggio({e0_arpeggio:.4f})>=sustained({e0_sustained:.4f})-0.05")
+
+        # E0 bounded
+        for stim in ["g1_01_single", "g4_01_sustained", "g4_03_arpeggio"]:
             e0 = self._mean(stim, E0)
-            self._test(G, f"T4_E0_bounded_{stim}", 0.0 <= e0 <= 1.0,
+            self._test(G, f"T5_E0_bounded_{stim}", 0.0 <= e0 <= 1.0,
                        f"E0({e0:.4f}) in [0,1]")
 
-    def test_T5_reward_inversion(self):
-        G = "T5_reward_inversion"
-        # P2 = σ(0.30*P0*P1 + 0.25*E1 + 0.20*M0 + ...)
-        # Multiplicative: P0*P1 interaction
+    def test_T6_m_layer(self):
+        """M0 integrates E0 (30%), M1 integrates E1 (30%). Both should correlate."""
+        G = "T6_m_layer"
+        stims = ["g1_01_single", "g1_05_minor_2nd", "g3_04_dense",
+                 "g4_01_sustained", "g4_03_arpeggio"]
+        e0s = np.array([self._mean(s, E0) for s in stims])
+        m0s = np.array([self._mean(s, M0) for s in stims])
+        r = float(np.corrcoef(e0s, m0s)[0, 1])
+        self._test(G, "T6_M0_E0_corr", abs(r) > 0.20,
+                   f"|r(M0,E0)|={abs(r):.4f}>0.20 (E0→M0 at 30%)")
+
+        e1s = np.array([self._mean(s, E1) for s in stims])
+        m1s = np.array([self._mean(s, M1) for s in stims])
+        r2 = float(np.corrcoef(e1s, m1s)[0, 1])
+        self._test(G, "T6_M1_E1_corr", abs(r2) > 0.20,
+                   f"|r(M1,E1)|={abs(r2):.4f}>0.20 (E1→M1 at 30%)")
+
+    def test_T7_p_layer(self):
+        """P-layer reads upstream relays. All P dims should be positive and bounded."""
+        G = "T7_p_layer"
         stims = ["g1_01_single", "g1_05_minor_2nd", "g3_04_dense",
                  "g4_01_sustained", "g4_03_arpeggio"]
         for stim in stims:
-            p0 = self._mean(stim, P0)
-            p1 = self._mean(stim, P1)
-            p2 = self._mean(stim, P2)
-            self._test(G, f"T5_P2_bounded_{stim}",
-                       0.0 <= p2 <= 1.0,
-                       f"P2={p2:.4f}, P0={p0:.4f}, P1={p1:.4f}")
+            for d, nm in [(P0, "P0"), (P1, "P1"), (P2, "P2")]:
+                val = self._mean(stim, d)
+                self._test(G, f"T7_{nm}_pos_{stim}", val > 0.0,
+                           f"{nm}({val:.4f})>0")
 
-    def test_T6_confirmation_reward(self):
-        G = "T6_confirmation"
-        # E1 = σ(0.40*pleasantness + 0.30*trist_mean + 0.30*E0)
-        stims = ["g1_01_single", "g1_03_fifth", "g3_04_dense"]
-        e0s = np.array([self._mean(s, E0) for s in stims])
-        e1s = np.array([self._mean(s, E1) for s in stims])
-        # E1 includes E0 at 30%, should correlate
-        r = float(np.corrcoef(e0s, e1s)[0, 1])
-        self._test(G, "T6_E1_E0_corr", abs(r) > 0.10,
-                   f"|r(E1,E0)|={abs(r):.4f}>0.10 (30% direct)")
-
-    def test_T7_forecast(self):
-        G = "T7_forecast"
+    def test_T8_forecast(self):
+        """F0↔P0, F1↔P1, F3 is meta (P0+P1+P2)."""
+        G = "T8_forecast"
         stims = ["g1_01_single", "g1_03_fifth", "g1_05_minor_2nd",
                  "g2_01_low", "g2_03_high", "g3_04_dense",
                  "g4_01_sustained", "g4_03_arpeggio"]
-        p2s = np.array([self._mean(s, P2) for s in stims])
+        p0s = np.array([self._mean(s, P0) for s in stims])
         f0s = np.array([self._mean(s, F0) for s in stims])
-        r = float(np.corrcoef(p2s, f0s)[0, 1])
-        self._test(G, "T7_F0_P2_corr", abs(r) > 0.05,
-                   f"|r(F0,P2)|={abs(r):.4f}>0.05 (P2 feeds F0 at 35%)")
+        r = float(np.corrcoef(p0s, f0s)[0, 1])
+        self._test(G, "T8_F0_P0_corr", r > 0.20,
+                   f"r(F0,P0)={r:.4f}>0.20 (P0 feeds F0 at 30%)")
 
-    def test_T8_instrument(self):
-        G = "T8_instrument"
+        p1s = np.array([self._mean(s, P1) for s in stims])
+        f1s = np.array([self._mean(s, F1) for s in stims])
+        r2 = float(np.corrcoef(p1s, f1s)[0, 1])
+        self._test(G, "T8_F1_P1_corr", r2 > 0.20,
+                   f"r(F1,P1)={r2:.4f}>0.20 (P1 feeds F1 at 35%)")
+
+        # F3 = meta-integration: should correlate with P0 (at 30%)
+        f3s = np.array([self._mean(s, F3) for s in stims])
+        r3 = float(np.corrcoef(p0s, f3s)[0, 1])
+        self._test(G, "T8_F3_P0_corr", abs(r3) > 0.10,
+                   f"|r(F3,P0)|={abs(r3):.4f}>0.10 (P0 feeds F3 at 30%)")
+
+    def test_T9_instrument(self):
+        G = "T9_instrument"
         for d in range(OUTPUT_DIM):
             p = self._mean("g5_01_piano", d)
             o = self._mean("g5_02_organ", d)
-            self._test(G, f"T8_{DIM_NAMES[d]}", p > 0.0 and o > 0.0,
+            self._test(G, f"T9_{DIM_NAMES[d]}", p > 0.0 and o > 0.0,
                        f"piano={p:.4f},organ={o:.4f}>0")
 
-    def test_T9_redundancy(self):
-        G = "T9_redundancy"
+    def test_T10_redundancy(self):
+        G = "T10_redundancy"
         COUPLED = {
-            # E0 is central: feeds E1(30%), M0(25%), P0(25%), F0(25%), F1(25%)
-            (0, 1), (0, 2), (0, 4), (0, 7), (0, 8),
-            # E1 feeds P2(25%), F2(30%)
-            (1, 6), (1, 9),
-            # M0 feeds P2(20%)
-            (2, 6),
-            # M1 feeds P1(15%), P2(10%), F2 indirectly
-            (3, 5), (3, 6),
-            # P0*P1→P2
-            (4, 6), (5, 6),
-            # P → F
-            (4, 9), (5, 7), (5, 8), (6, 7), (6, 9),
-            # Transitive
-            (0, 6), (0, 9),
-            # F0↔F2 (both use P2)
-            (7, 9),
+            # Direct E→M feeds
+            (0, 2), (1, 3),
+            # E→P feeds
+            (0, 5), (1, 6),
+            # E→F feeds
+            (0, 8), (1, 9),
+            # M→P feeds
+            (2, 5), (3, 4),
+            # P→F feeds
+            (4, 7), (4, 10), (5, 8), (5, 10), (6, 9), (6, 10),
+            # Transitive E→M→P→F
+            (0, 10), (1, 10), (2, 8), (2, 10), (3, 7), (3, 10),
+            # F-F shared P inputs
+            (7, 10), (8, 10), (9, 10),
         }
         stims = ["g1_01_single", "g1_03_fifth", "g1_05_minor_2nd",
                  "g2_01_low", "g2_03_high", "g3_04_dense",
@@ -250,17 +293,17 @@ class UDPTestRunner:
                 if (i, j) in COUPLED:
                     continue
                 r = abs(float(np.corrcoef(means[:, i], means[:, j])[0, 1]))
-                self._test(G, f"T9_{i}_{j}", r < 0.99,
+                self._test(G, f"T10_{i}_{j}", r < 0.99,
                            f"|r({DIM_NAMES[i]},{DIM_NAMES[j]})|={r:.3f}<0.99")
 
     def run_all(self):
         t0 = time.time()
         self._init_pipeline()
         for t in [self.test_T1_dimensionality, self.test_T2_bounds,
-                  self.test_T3_nondegeneracy, self.test_T4_uncertainty,
-                  self.test_T5_reward_inversion, self.test_T6_confirmation_reward,
-                  self.test_T7_forecast, self.test_T8_instrument,
-                  self.test_T9_redundancy]:
+                  self.test_T3_nondegeneracy, self.test_T4_voiceleading,
+                  self.test_T5_crossmodal_gain, self.test_T6_m_layer,
+                  self.test_T7_p_layer, self.test_T8_forecast,
+                  self.test_T9_instrument, self.test_T10_redundancy]:
             name = t.__name__
             print(f"\n{'='*60}\n  {name}\n{'='*60}")
             try:
@@ -275,7 +318,7 @@ class UDPTestRunner:
         passed = sum(1 for r in self.results if r.passed)
         total = len(self.results)
         failed = total - passed
-        print(f"\n{'='*60}\n  UDP FUNCTIONAL TEST RESULTS\n{'='*60}")
+        print(f"\n{'='*60}\n  CHPI FUNCTIONAL TEST RESULTS\n{'='*60}")
         print(f"  Total : {total}\n  Passed: {passed}\n  Failed: {failed}\n  Time  : {elapsed:.1f}s")
         print(f"{'='*60}")
         if failed:
@@ -284,15 +327,15 @@ class UDPTestRunner:
                 if not r.passed:
                     print(f"    FAIL {r.name}: {r.message}")
         ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-        report = {"mechanism": "UDP", "function": "F2", "timestamp": ts,
+        report = {"mechanism": "CHPI", "function": "F2", "timestamp": ts,
                   "total": total, "passed": passed, "failed": failed,
                   "elapsed_s": round(elapsed, 1),
                   "results": [{"name": r.name, "group": r.group, "passed": r.passed,
                                "message": r.message, "values": r.values} for r in self.results]}
-        out = RESULTS_DIR / f"udp_results_{ts}.json"
+        out = RESULTS_DIR / f"chpi_results_{ts}.json"
         with open(out, "w") as f:
             json.dump(report, f, indent=2)
         print(f"\n  Report: {out}")
 
 if __name__ == "__main__":
-    UDPTestRunner().run_all()
+    CHPITestRunner().run_all()
