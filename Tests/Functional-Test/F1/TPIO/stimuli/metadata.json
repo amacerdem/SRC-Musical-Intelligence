@@ -1,0 +1,81 @@
+{
+  "g1_01_single": {
+    "group": "tonal",
+    "pattern": "single",
+    "notes": "C4 alone"
+  },
+  "g1_02_fifth": {
+    "group": "tonal",
+    "pattern": "fifth",
+    "notes": "C4+G4 (3:2)"
+  },
+  "g1_03_triad": {
+    "group": "tonal",
+    "pattern": "triad",
+    "notes": "C4+E4+G4 major triad"
+  },
+  "g1_04_cluster": {
+    "group": "tonal",
+    "pattern": "cluster",
+    "notes": "C4+Db4+D4 semitone cluster"
+  },
+  "g2_01_low_c3": {
+    "group": "register",
+    "pattern": "low",
+    "notes": "C3 (130 Hz)"
+  },
+  "g2_02_mid_c4": {
+    "group": "register",
+    "pattern": "mid",
+    "notes": "C4 (262 Hz)"
+  },
+  "g2_03_high_c6": {
+    "group": "register",
+    "pattern": "high",
+    "notes": "C6 (1047 Hz)"
+  },
+  "g3_01_piano": {
+    "group": "instrument",
+    "instrument": "piano"
+  },
+  "g3_02_organ": {
+    "group": "instrument",
+    "instrument": "organ"
+  },
+  "g3_03_violin": {
+    "group": "instrument",
+    "instrument": "violin"
+  },
+  "g3_04_flute": {
+    "group": "instrument",
+    "instrument": "flute"
+  },
+  "g4_01_sustained": {
+    "group": "temporal",
+    "pattern": "sustained"
+  },
+  "g4_02_melody": {
+    "group": "temporal",
+    "pattern": "melody"
+  },
+  "g4_03_arpeggio": {
+    "group": "temporal",
+    "pattern": "arpeggio"
+  },
+  "g4_04_chord_progression": {
+    "group": "temporal",
+    "pattern": "chord_progression"
+  },
+  "g5_01_static": {
+    "group": "timbre_change",
+    "pattern": "static"
+  },
+  "g5_02_register_sweep": {
+    "group": "timbre_change",
+    "pattern": "register_sweep"
+  },
+  "g5_03_alternating": {
+    "group": "timbre_change",
+    "pattern": "alternating"
+  }
+}

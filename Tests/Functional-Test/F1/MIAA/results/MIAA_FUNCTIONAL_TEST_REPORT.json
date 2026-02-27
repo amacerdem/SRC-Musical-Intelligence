@@ -1,0 +1,322 @@
+{
+  "mechanism": "MIAA",
+  "tests_total": 63,
+  "tests_passed": 63,
+  "results": [
+    {
+      "name": "T1_E0_positive_g1_01_single",
+      "passed": true,
+      "message": "E0(0.6190) > 0.15 (tonal \u2192 imagery activation)"
+    },
+    {
+      "name": "T1_E0_positive_g1_02_fifth",
+      "passed": true,
+      "message": "E0(0.5955) > 0.15 (tonal \u2192 imagery activation)"
+    },
+    {
+      "name": "T1_E0_positive_g1_03_triad",
+      "passed": true,
+      "message": "E0(0.6135) > 0.15 (tonal \u2192 imagery activation)"
+    },
+    {
+      "name": "T1_E0_positive_g2_01_low_c3",
+      "passed": true,
+      "message": "E0(0.5727) > 0.15 (tonal \u2192 imagery activation)"
+    },
+    {
+      "name": "T1_E0_positive_g2_02_mid_c4",
+      "passed": true,
+      "message": "E0(0.6190) > 0.15 (tonal \u2192 imagery activation)"
+    },
+    {
+      "name": "T1_E0_positive_g2_03_high_c6",
+      "passed": true,
+      "message": "E0(0.6511) > 0.15 (tonal \u2192 imagery activation)"
+    },
+    {
+      "name": "T1_E0_cluster_positive",
+      "passed": true,
+      "message": "cluster E0(0.6309) > 0.10 (still auditory input)"
+    },
+    {
+      "name": "T1_E0_single>=cluster",
+      "passed": true,
+      "message": "single(0.6190) >= cluster(0.6309)-0.05"
+    },
+    {
+      "name": "T2_E2_positive_g1_01_single",
+      "passed": true,
+      "message": "E2(0.5649) > 0.15 (instrumental \u2192 A1 modulation)"
+    },
+    {
+      "name": "T2_E2_positive_g1_02_fifth",
+      "passed": true,
+      "message": "E2(0.5300) > 0.15 (instrumental \u2192 A1 modulation)"
+    },
+    {
+      "name": "T2_E2_positive_g1_03_triad",
+      "passed": true,
+      "message": "E2(0.4988) > 0.15 (instrumental \u2192 A1 modulation)"
+    },
+    {
+      "name": "T2_E2_positive_g2_01_low_c3",
+      "passed": true,
+      "message": "E2(0.5420) > 0.15 (instrumental \u2192 A1 modulation)"
+    },
+    {
+      "name": "T2_E2_positive_g2_02_mid_c4",
+      "passed": true,
+      "message": "E2(0.5649) > 0.15 (instrumental \u2192 A1 modulation)"
+    },
+    {
+      "name": "T2_E2_single>=cluster",
+      "passed": true,
+      "message": "single(0.5649) >= cluster(0.4996)-0.05"
+    },
+    {
+      "name": "T3_E1_positive_g1_01_single",
+      "passed": true,
+      "message": "E1(0.6414) > 0.15 (clear tonal \u2192 familiarity)"
+    },
+    {
+      "name": "T3_E1_positive_g1_02_fifth",
+      "passed": true,
+      "message": "E1(0.6328) > 0.15 (clear tonal \u2192 familiarity)"
+    },
+    {
+      "name": "T3_E1_positive_g1_03_triad",
+      "passed": true,
+      "message": "E1(0.6592) > 0.15 (clear tonal \u2192 familiarity)"
+    },
+    {
+      "name": "T3_E1_positive_g2_02_mid_c4",
+      "passed": true,
+      "message": "E1(0.6414) > 0.15 (clear tonal \u2192 familiarity)"
+    },
+    {
+      "name": "T3_E1_cluster_positive",
+      "passed": true,
+      "message": "cluster E1(0.6709) > 0.10"
+    },
+    {
+      "name": "T4_M0_bounded_g1_01_single",
+      "passed": true,
+      "message": "M0(0.5973) in [0.5149, 0.6690] (E0=0.6190, E2=0.5649)"
+    },
+    {
+      "name": "T4_M1_gating_g1_01_single",
+      "passed": true,
+      "message": "M1(0.3951) \u2264 min(E0,E1)+0.02 = 0.6390 (multiplicative gating)"
+    },
+    {
+      "name": "T4_M0_bounded_g1_02_fifth",
+      "passed": true,
+      "message": "M0(0.5693) in [0.4800, 0.6455] (E0=0.5955, E2=0.5300)"
+    },
+    {
+      "name": "T4_M1_gating_g1_02_fifth",
+      "passed": true,
+      "message": "M1(0.3739) \u2264 min(E0,E1)+0.02 = 0.6155 (multiplicative gating)"
+    },
+    {
+      "name": "T4_M0_bounded_g1_03_triad",
+      "passed": true,
+      "message": "M0(0.5676) in [0.4488, 0.6635] (E0=0.6135, E2=0.4988)"
+    },
+    {
+      "name": "T4_M1_gating_g1_03_triad",
+      "passed": true,
+      "message": "M1(0.4021) \u2264 min(E0,E1)+0.02 = 0.6335 (multiplicative gating)"
+    },
+    {
+      "name": "T4_M0_bounded_g1_04_cluster",
+      "passed": true,
+      "message": "M0(0.5784) in [0.4496, 0.6809] (E0=0.6309, E2=0.4996)"
+    },
+    {
+      "name": "T4_M1_gating_g1_04_cluster",
+      "passed": true,
+      "message": "M1(0.4217) \u2264 min(E0,E1)+0.02 = 0.6509 (multiplicative gating)"
+    },
+    {
+      "name": "T4_M0_bounded_g4_04_dense_cluster",
+      "passed": true,
+      "message": "M0(0.5725) in [0.4344, 0.6813] (E0=0.6313, E2=0.4844)"
+    },
+    {
+      "name": "T4_M1_gating_g4_04_dense_cluster",
+      "passed": true,
+      "message": "M1(0.4259) \u2264 min(E0,E1)+0.02 = 0.6513 (multiplicative gating)"
+    },
+    {
+      "name": "T5_P2_positive_g3_01_sustained",
+      "passed": true,
+      "message": "P2(0.8069) > 0.10 (spectral flux present)"
+    },
+    {
+      "name": "T5_P2_positive_g3_02_melody",
+      "passed": true,
+      "message": "P2(0.8597) > 0.10 (spectral flux present)"
+    },
+    {
+      "name": "T5_P2_positive_g3_03_chord_progression",
+      "passed": true,
+      "message": "P2(0.8247) > 0.10 (spectral flux present)"
+    },
+    {
+      "name": "T5_P2_positive_g3_04_arpeggio",
+      "passed": true,
+      "message": "P2(0.9382) > 0.10 (spectral flux present)"
+    },
+    {
+      "name": "T5_P2_var_report",
+      "passed": true,
+      "message": "P2 std: sustained=0.2803, melody=0.2353, prog=0.2625, arp=0.1058"
+    },
+    {
+      "name": "T6_P1_positive_g1_01_single",
+      "passed": true,
+      "message": "P1(0.5404) > 0.15 (tonal \u2192 continuation prediction)"
+    },
+    {
+      "name": "T6_P1_positive_g1_02_fifth",
+      "passed": true,
+      "message": "P1(0.5204) > 0.15 (tonal \u2192 continuation prediction)"
+    },
+    {
+      "name": "T6_P1_positive_g1_03_triad",
+      "passed": true,
+      "message": "P1(0.4930) > 0.15 (tonal \u2192 continuation prediction)"
+    },
+    {
+      "name": "T6_P1_positive_g2_02_mid_c4",
+      "passed": true,
+      "message": "P1(0.5404) > 0.15 (tonal \u2192 continuation prediction)"
+    },
+    {
+      "name": "T7_P0_positive_g1_01_single",
+      "passed": true,
+      "message": "P0(0.6192) > 0.15 (tonal \u2192 melody retrieval)"
+    },
+    {
+      "name": "T7_P0_positive_g1_02_fifth",
+      "passed": true,
+      "message": "P0(0.5875) > 0.15 (tonal \u2192 melody retrieval)"
+    },
+    {
+      "name": "T7_P0_positive_g1_03_triad",
+      "passed": true,
+      "message": "P0(0.5485) > 0.15 (tonal \u2192 melody retrieval)"
+    },
+    {
+      "name": "T7_P0_single>=cluster",
+      "passed": true,
+      "message": "single(0.6192) >= cluster(0.5168)-0.05"
+    },
+    {
+      "name": "T8_F1_E1_corr",
+      "passed": true,
+      "message": "r(F1,E1) = +0.984 > 0.3"
+    },
+    {
+      "name": "T8_F0_positive",
+      "passed": true,
+      "message": "F0 range [0.6381, 0.6464] all > 0.10"
+    },
+    {
+      "name": "T8_F2_E1_corr",
+      "passed": true,
+      "message": "r(F2,E1) = +0.986 > 0.3"
+    },
+    {
+      "name": "T9_E0_low>0.10",
+      "passed": true,
+      "message": "C3 E0=0.5727"
+    },
+    {
+      "name": "T9_E0_mid>0.10",
+      "passed": true,
+      "message": "C4 E0=0.6190"
+    },
+    {
+      "name": "T9_E0_high>0.10",
+      "passed": true,
+      "message": "C6 E0=0.6511"
+    },
+    {
+      "name": "T9_register_report",
+      "passed": true,
+      "message": "E0: low=0.5727, mid=0.6190, high=0.6511"
+    },
+    {
+      "name": "T10_E2_piano>0.10",
+      "passed": true,
+      "message": "piano E2=0.5649"
+    },
+    {
+      "name": "T10_E2_organ>0.10",
+      "passed": true,
+      "message": "organ E2=0.6925"
+    },
+    {
+      "name": "T10_instrument_report",
+      "passed": true,
+      "message": "piano: E0=0.6190 E2=0.5649, organ: E0=0.5984 E2=0.6925"
+    },
+    {
+      "name": "T11_shape_g1_01_single",
+      "passed": true,
+      "message": "shape=(862, 11)"
+    },
+    {
+      "name": "T11_bounds_g1_01_single",
+      "passed": "True",
+      "message": "[0.231463, 0.962673]"
+    },
+    {
+      "name": "T11_shape_g1_04_cluster",
+      "passed": true,
+      "message": "shape=(862, 11)"
+    },
+    {
+      "name": "T11_bounds_g1_04_cluster",
+      "passed": "True",
+      "message": "[0.164473, 0.962673]"
+    },
+    {
+      "name": "T11_shape_g2_01_low_c3",
+      "passed": true,
+      "message": "shape=(862, 11)"
+    },
+    {
+      "name": "T11_bounds_g2_01_low_c3",
+      "passed": "True",
+      "message": "[0.220140, 0.962673]"
+    },
+    {
+      "name": "T11_shape_g3_04_arpeggio",
+      "passed": true,
+      "message": "shape=(996, 11)"
+    },
+    {
+      "name": "T11_bounds_g3_04_arpeggio",
+      "passed": "True",
+      "message": "[0.287541, 0.962673]"
+    },
+    {
+      "name": "T11_shape_g4_04_dense_cluster",
+      "passed": true,
+      "message": "shape=(862, 11)"
+    },
+    {
+      "name": "T11_bounds_g4_04_dense_cluster",
+      "passed": "True",
+      "message": "[0.158615, 0.962673]"
+    },
+    {
+      "name": "T12_no_redundancy",
+      "passed": true,
+      "message": "No unexpected redundant dimension pairs"
+    }
+  ]
+}
