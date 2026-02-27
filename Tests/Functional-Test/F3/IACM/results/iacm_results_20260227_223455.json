@@ -1,0 +1,641 @@
+{
+  "mechanism": "IACM",
+  "function": "F3",
+  "timestamp": "20260227_223455",
+  "total": 90,
+  "passed": 88,
+  "failed": 2,
+  "elapsed_s": 12.2,
+  "results": [
+    {
+      "name": "T1_ndim",
+      "group": "T1_dimensionality",
+      "passed": true,
+      "message": "ndim=2",
+      "values": {}
+    },
+    {
+      "name": "T1_dim_count",
+      "group": "T1_dimensionality",
+      "passed": true,
+      "message": "D=11",
+      "values": {}
+    },
+    {
+      "name": "T1_frames",
+      "group": "T1_dimensionality",
+      "passed": true,
+      "message": "T=862",
+      "values": {}
+    },
+    {
+      "name": "T2_g1_01_single",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.5032,0.7063]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g1_05_minor_2nd",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.5035,0.7129]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g2_01_low",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.5026,0.7058]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g2_03_high",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.5035,0.7039]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g3_04_dense",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.5036,0.7128]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g4_03_arpeggio",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.5028,0.7052]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g5_01_piano",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.5032,0.7063]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g5_02_organ",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.5026,0.6945]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T3_E0:inharmonic_capture",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0164>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_E1:object_segregation",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0334>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_E2:precision_weight",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0171>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_M0:attention_capture",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0131>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_M1:approx_entropy",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0198>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_M2:object_perception",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0049>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_P0:p3a_capture",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0079>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_P1:spectral_encoding",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0404>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_F0:object_segreg_pred",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0049>0.0003",
+      "values": {}
+    },
+    {
+      "name": "T3_F1:attention_shift_pred",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0026>0.0003",
+      "values": {}
+    },
+    {
+      "name": "T3_F2:multi_objects_pred",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0043>0.0003",
+      "values": {}
+    },
+    {
+      "name": "T4_minor2>=single-0.10",
+      "group": "T4_inharmonic",
+      "passed": true,
+      "message": "minor2nd(0.6472)>=single(0.6351)-0.10",
+      "values": {}
+    },
+    {
+      "name": "T4_E0_bounded_g1_01_single",
+      "group": "T4_inharmonic",
+      "passed": true,
+      "message": "E0(0.6351) in [0,1]",
+      "values": {}
+    },
+    {
+      "name": "T4_E0_bounded_g1_05_minor_2nd",
+      "group": "T4_inharmonic",
+      "passed": true,
+      "message": "E0(0.6472) in [0,1]",
+      "values": {}
+    },
+    {
+      "name": "T4_E0_bounded_g3_04_dense",
+      "group": "T4_inharmonic",
+      "passed": true,
+      "message": "E0(0.6500) in [0,1]",
+      "values": {}
+    },
+    {
+      "name": "T5_E1_pos_g1_01_single",
+      "group": "T5_object",
+      "passed": true,
+      "message": "E1(0.5103)>0",
+      "values": {}
+    },
+    {
+      "name": "T5_E1_pos_g1_03_fifth",
+      "group": "T5_object",
+      "passed": true,
+      "message": "E1(0.5183)>0",
+      "values": {}
+    },
+    {
+      "name": "T5_E1_pos_g4_02_melody",
+      "group": "T5_object",
+      "passed": true,
+      "message": "E1(0.5088)>0",
+      "values": {}
+    },
+    {
+      "name": "T6_M0_E0_corr",
+      "group": "T6_attention",
+      "passed": true,
+      "message": "|r(M0,E0)|=0.7961>0.20 (E0 feeds M0 at 50%)",
+      "values": {}
+    },
+    {
+      "name": "T7_P0_pos_g1_01_single",
+      "group": "T7_p_layer",
+      "passed": true,
+      "message": "P0(0.6198)>0",
+      "values": {}
+    },
+    {
+      "name": "T7_P1_pos_g1_01_single",
+      "group": "T7_p_layer",
+      "passed": true,
+      "message": "P1(0.5162)>0",
+      "values": {}
+    },
+    {
+      "name": "T7_P0_pos_g1_05_minor_2nd",
+      "group": "T7_p_layer",
+      "passed": true,
+      "message": "P0(0.6290)>0",
+      "values": {}
+    },
+    {
+      "name": "T7_P1_pos_g1_05_minor_2nd",
+      "group": "T7_p_layer",
+      "passed": true,
+      "message": "P1(0.6033)>0",
+      "values": {}
+    },
+    {
+      "name": "T7_P0_pos_g3_04_dense",
+      "group": "T7_p_layer",
+      "passed": true,
+      "message": "P0(0.6358)>0",
+      "values": {}
+    },
+    {
+      "name": "T7_P1_pos_g3_04_dense",
+      "group": "T7_p_layer",
+      "passed": true,
+      "message": "P1(0.6087)>0",
+      "values": {}
+    },
+    {
+      "name": "T7_P0_pos_g4_01_sustained",
+      "group": "T7_p_layer",
+      "passed": true,
+      "message": "P0(0.6198)>0",
+      "values": {}
+    },
+    {
+      "name": "T7_P1_pos_g4_01_sustained",
+      "group": "T7_p_layer",
+      "passed": true,
+      "message": "P1(0.5468)>0",
+      "values": {}
+    },
+    {
+      "name": "T7_P0_pos_g4_03_arpeggio",
+      "group": "T7_p_layer",
+      "passed": true,
+      "message": "P0(0.6303)>0",
+      "values": {}
+    },
+    {
+      "name": "T7_P1_pos_g4_03_arpeggio",
+      "group": "T7_p_layer",
+      "passed": true,
+      "message": "P1(0.5280)>0",
+      "values": {}
+    },
+    {
+      "name": "T8_F1_E0_corr",
+      "group": "T8_forecast",
+      "passed": true,
+      "message": "|r(F1,E0)|=0.9829>0.10 (E0 feeds F1 at 50%)",
+      "values": {}
+    },
+    {
+      "name": "T8_F0_E1_corr",
+      "group": "T8_forecast",
+      "passed": true,
+      "message": "|r(F0,E1)|=0.8990>0.10 (E1 feeds F0 at 50%)",
+      "values": {}
+    },
+    {
+      "name": "T9_E0:inharmonic_capture",
+      "group": "T9_instrument",
+      "passed": true,
+      "message": "piano=0.6351,organ=0.6434>0",
+      "values": {}
+    },
+    {
+      "name": "T9_E1:object_segregation",
+      "group": "T9_instrument",
+      "passed": true,
+      "message": "piano=0.5103,organ=0.5119>0",
+      "values": {}
+    },
+    {
+      "name": "T9_E2:precision_weight",
+      "group": "T9_instrument",
+      "passed": true,
+      "message": "piano=0.6200,organ=0.6035>0",
+      "values": {}
+    },
+    {
+      "name": "T9_M0:attention_capture",
+      "group": "T9_instrument",
+      "passed": true,
+      "message": "piano=0.6739,organ=0.6869>0",
+      "values": {}
+    },
+    {
+      "name": "T9_M1:approx_entropy",
+      "group": "T9_instrument",
+      "passed": true,
+      "message": "piano=0.6332,organ=0.6462>0",
+      "values": {}
+    },
+    {
+      "name": "T9_M2:object_perception",
+      "group": "T9_instrument",
+      "passed": true,
+      "message": "piano=0.6392,organ=0.6408>0",
+      "values": {}
+    },
+    {
+      "name": "T9_P0:p3a_capture",
+      "group": "T9_instrument",
+      "passed": true,
+      "message": "piano=0.6198,organ=0.6163>0",
+      "values": {}
+    },
+    {
+      "name": "T9_P1:spectral_encoding",
+      "group": "T9_instrument",
+      "passed": true,
+      "message": "piano=0.5162,organ=0.5074>0",
+      "values": {}
+    },
+    {
+      "name": "T9_F0:object_segreg_pred",
+      "group": "T9_instrument",
+      "passed": true,
+      "message": "piano=0.6392,organ=0.6408>0",
+      "values": {}
+    },
+    {
+      "name": "T9_F1:attention_shift_pred",
+      "group": "T9_instrument",
+      "passed": true,
+      "message": "piano=0.6519,organ=0.6525>0",
+      "values": {}
+    },
+    {
+      "name": "T9_F2:multi_objects_pred",
+      "group": "T9_instrument",
+      "passed": true,
+      "message": "piano=0.6399,organ=0.6402>0",
+      "values": {}
+    },
+    {
+      "name": "T10_0_1",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(E0:inharmonic_capture,E1:object_segregation)|=0.295<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_0_2",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(E0:inharmonic_capture,E2:precision_weight)|=0.225<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_0_5",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(E0:inharmonic_capture,M2:object_perception)|=0.679<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_0_7",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(E0:inharmonic_capture,P1:spectral_encoding)|=0.277<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_0_8",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(E0:inharmonic_capture,F0:object_segreg_pred)|=0.679<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_0_10",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(E0:inharmonic_capture,F2:multi_objects_pred)|=0.348<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_1_2",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(E1:object_segregation,E2:precision_weight)|=0.708<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_1_3",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(E1:object_segregation,M0:attention_capture)|=0.106<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_1_6",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(E1:object_segregation,P0:p3a_capture)|=0.737<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_1_7",
+      "group": "T10_redundancy",
+      "passed": false,
+      "message": "|r(E1:object_segregation,P1:spectral_encoding)|=0.996<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_1_9",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(E1:object_segregation,F1:attention_shift_pred)|=0.464<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_2_3",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(E2:precision_weight,M0:attention_capture)|=0.007<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_2_4",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(E2:precision_weight,M1:approx_entropy)|=0.246<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_2_5",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(E2:precision_weight,M2:object_perception)|=0.661<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_2_6",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(E2:precision_weight,P0:p3a_capture)|=0.453<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_2_7",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(E2:precision_weight,P1:spectral_encoding)|=0.727<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_2_8",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(E2:precision_weight,F0:object_segreg_pred)|=0.661<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_2_9",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(E2:precision_weight,F1:attention_shift_pred)|=0.318<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_2_10",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(E2:precision_weight,F2:multi_objects_pred)|=0.710<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_3_4",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(M0:attention_capture,M1:approx_entropy)|=0.912<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_3_5",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(M0:attention_capture,M2:object_perception)|=0.339<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_3_7",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(M0:attention_capture,P1:spectral_encoding)|=0.125<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_3_8",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(M0:attention_capture,F0:object_segreg_pred)|=0.339<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_3_10",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(M0:attention_capture,F2:multi_objects_pred)|=0.049<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_4_6",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(M1:approx_entropy,P0:p3a_capture)|=0.712<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_4_7",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(M1:approx_entropy,P1:spectral_encoding)|=0.254<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_5_6",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(M2:object_perception,P0:p3a_capture)|=0.897<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_5_7",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(M2:object_perception,P1:spectral_encoding)|=0.886<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_5_9",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(M2:object_perception,F1:attention_shift_pred)|=0.795<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_6_7",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(P0:p3a_capture,P1:spectral_encoding)|=0.737<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_6_8",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(P0:p3a_capture,F0:object_segreg_pred)|=0.897<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_6_10",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(P0:p3a_capture,F2:multi_objects_pred)|=0.767<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_7_8",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(P1:spectral_encoding,F0:object_segreg_pred)|=0.886<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_7_9",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(P1:spectral_encoding,F1:attention_shift_pred)|=0.451<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_7_10",
+      "group": "T10_redundancy",
+      "passed": false,
+      "message": "|r(P1:spectral_encoding,F2:multi_objects_pred)|=0.994<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_8_9",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(F0:object_segreg_pred,F1:attention_shift_pred)|=0.795<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_9_10",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(F1:attention_shift_pred,F2:multi_objects_pred)|=0.512<0.99",
+      "values": {}
+    }
+  ]
+}

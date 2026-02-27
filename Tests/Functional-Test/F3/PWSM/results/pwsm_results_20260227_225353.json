@@ -1,0 +1,438 @@
+{
+  "mechanism": "PWSM",
+  "function": "F3",
+  "timestamp": "20260227_225353",
+  "total": 61,
+  "passed": 61,
+  "failed": 0,
+  "elapsed_s": 18.9,
+  "results": [
+    {
+      "name": "T1_ndim",
+      "group": "T1",
+      "passed": true,
+      "message": "ndim=2",
+      "values": {}
+    },
+    {
+      "name": "T1_dim",
+      "group": "T1",
+      "passed": true,
+      "message": "D=9",
+      "values": {}
+    },
+    {
+      "name": "T1_frames",
+      "group": "T1",
+      "passed": true,
+      "message": "T=862",
+      "values": {}
+    },
+    {
+      "name": "T2_g1_01_single",
+      "group": "T2",
+      "passed": true,
+      "message": "[0.5226,0.6867]",
+      "values": {}
+    },
+    {
+      "name": "T2_g1_05_minor_2nd",
+      "group": "T2",
+      "passed": true,
+      "message": "[0.5192,0.6720]",
+      "values": {}
+    },
+    {
+      "name": "T2_g2_01_low",
+      "group": "T2",
+      "passed": true,
+      "message": "[0.5409,0.6811]",
+      "values": {}
+    },
+    {
+      "name": "T2_g2_03_high",
+      "group": "T2",
+      "passed": true,
+      "message": "[0.5090,0.6985]",
+      "values": {}
+    },
+    {
+      "name": "T2_g3_04_dense",
+      "group": "T2",
+      "passed": true,
+      "message": "[0.5210,0.6721]",
+      "values": {}
+    },
+    {
+      "name": "T2_g4_03_arpeggio",
+      "group": "T2",
+      "passed": true,
+      "message": "[0.5432,0.6731]",
+      "values": {}
+    },
+    {
+      "name": "T2_g5_01_piano",
+      "group": "T2",
+      "passed": true,
+      "message": "[0.5226,0.6867]",
+      "values": {}
+    },
+    {
+      "name": "T2_g5_02_organ",
+      "group": "T2",
+      "passed": true,
+      "message": "[0.5365,0.6856]",
+      "values": {}
+    },
+    {
+      "name": "T3_E0:precision_weight",
+      "group": "T3",
+      "passed": true,
+      "message": "std=0.0065>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_E1:error_suppress",
+      "group": "T3",
+      "passed": true,
+      "message": "std=0.0148>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_E2:stability_encode",
+      "group": "T3",
+      "passed": true,
+      "message": "std=0.0126>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_M0:pe_weighted",
+      "group": "T3",
+      "passed": true,
+      "message": "std=0.0171>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_M1:precision",
+      "group": "T3",
+      "passed": true,
+      "message": "std=0.0035>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_P0:weighted_error",
+      "group": "T3",
+      "passed": true,
+      "message": "std=0.0021>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_P1:precision_est",
+      "group": "T3",
+      "passed": true,
+      "message": "std=0.0007>0.0003",
+      "values": {}
+    },
+    {
+      "name": "T3_F0:mmn_presence",
+      "group": "T3",
+      "passed": true,
+      "message": "std=0.0117>0.0003",
+      "values": {}
+    },
+    {
+      "name": "T3_F1:context_reliability",
+      "group": "T3",
+      "passed": true,
+      "message": "std=0.0014>0.0003",
+      "values": {}
+    },
+    {
+      "name": "T4_E0_g1_01_single",
+      "group": "T4",
+      "passed": true,
+      "message": "E0(0.5515)>0",
+      "values": {}
+    },
+    {
+      "name": "T4_E0_g4_02_melody",
+      "group": "T4",
+      "passed": true,
+      "message": "E0(0.5522)>0",
+      "values": {}
+    },
+    {
+      "name": "T4_E0_g4_03_arpeggio",
+      "group": "T4",
+      "passed": true,
+      "message": "E0(0.5709)>0",
+      "values": {}
+    },
+    {
+      "name": "T5_M0_M1_sep",
+      "group": "T5",
+      "passed": true,
+      "message": "|r(M0,M1)|=0.8535<0.99",
+      "values": {}
+    },
+    {
+      "name": "T6_P0_g1_01_single",
+      "group": "T6",
+      "passed": true,
+      "message": "P0(0.5666)>0",
+      "values": {}
+    },
+    {
+      "name": "T6_P1_g1_01_single",
+      "group": "T6",
+      "passed": true,
+      "message": "P1(0.6468)>0",
+      "values": {}
+    },
+    {
+      "name": "T6_P0_g1_05_minor_2nd",
+      "group": "T6",
+      "passed": true,
+      "message": "P0(0.5687)>0",
+      "values": {}
+    },
+    {
+      "name": "T6_P1_g1_05_minor_2nd",
+      "group": "T6",
+      "passed": true,
+      "message": "P1(0.6467)>0",
+      "values": {}
+    },
+    {
+      "name": "T6_P0_g3_04_dense",
+      "group": "T6",
+      "passed": true,
+      "message": "P0(0.5689)>0",
+      "values": {}
+    },
+    {
+      "name": "T6_P1_g3_04_dense",
+      "group": "T6",
+      "passed": true,
+      "message": "P1(0.6469)>0",
+      "values": {}
+    },
+    {
+      "name": "T6_P0_g4_01_sustained",
+      "group": "T6",
+      "passed": true,
+      "message": "P0(0.5661)>0",
+      "values": {}
+    },
+    {
+      "name": "T6_P1_g4_01_sustained",
+      "group": "T6",
+      "passed": true,
+      "message": "P1(0.6472)>0",
+      "values": {}
+    },
+    {
+      "name": "T6_P0_g4_03_arpeggio",
+      "group": "T6",
+      "passed": true,
+      "message": "P0(0.5722)>0",
+      "values": {}
+    },
+    {
+      "name": "T6_P1_g4_03_arpeggio",
+      "group": "T6",
+      "passed": true,
+      "message": "P1(0.6450)>0",
+      "values": {}
+    },
+    {
+      "name": "T7_F0_P0",
+      "group": "T7",
+      "passed": true,
+      "message": "|r(F0,P0)|=0.6350>0.10",
+      "values": {}
+    },
+    {
+      "name": "T8_E0:precision_weight",
+      "group": "T8",
+      "passed": true,
+      "message": "p=0.5515,o=0.5585>0",
+      "values": {}
+    },
+    {
+      "name": "T8_E1:error_suppress",
+      "group": "T8",
+      "passed": true,
+      "message": "p=0.6771,o=0.6773>0",
+      "values": {}
+    },
+    {
+      "name": "T8_E2:stability_encode",
+      "group": "T8",
+      "passed": true,
+      "message": "p=0.6207,o=0.6214>0",
+      "values": {}
+    },
+    {
+      "name": "T8_M0:pe_weighted",
+      "group": "T8",
+      "passed": true,
+      "message": "p=0.6041,o=0.6422>0",
+      "values": {}
+    },
+    {
+      "name": "T8_M1:precision",
+      "group": "T8",
+      "passed": true,
+      "message": "p=0.6095,o=0.6142>0",
+      "values": {}
+    },
+    {
+      "name": "T8_P0:weighted_error",
+      "group": "T8",
+      "passed": true,
+      "message": "p=0.5666,o=0.5680>0",
+      "values": {}
+    },
+    {
+      "name": "T8_P1:precision_est",
+      "group": "T8",
+      "passed": true,
+      "message": "p=0.6468,o=0.6461>0",
+      "values": {}
+    },
+    {
+      "name": "T8_F0:mmn_presence",
+      "group": "T8",
+      "passed": true,
+      "message": "p=0.6293,o=0.6058>0",
+      "values": {}
+    },
+    {
+      "name": "T8_F1:context_reliability",
+      "group": "T8",
+      "passed": true,
+      "message": "p=0.6193,o=0.6170>0",
+      "values": {}
+    },
+    {
+      "name": "T9_0_1",
+      "group": "T9",
+      "passed": true,
+      "message": "|r|=0.928<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_0_2",
+      "group": "T9",
+      "passed": true,
+      "message": "|r|=0.855<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_1_2",
+      "group": "T9",
+      "passed": true,
+      "message": "|r|=0.947<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_1_6",
+      "group": "T9",
+      "passed": true,
+      "message": "|r|=0.418<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_1_8",
+      "group": "T9",
+      "passed": true,
+      "message": "|r|=0.347<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_2_3",
+      "group": "T9",
+      "passed": true,
+      "message": "|r|=0.396<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_2_5",
+      "group": "T9",
+      "passed": true,
+      "message": "|r|=0.929<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_2_7",
+      "group": "T9",
+      "passed": true,
+      "message": "|r|=0.639<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_3_4",
+      "group": "T9",
+      "passed": true,
+      "message": "|r|=0.508<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_3_6",
+      "group": "T9",
+      "passed": true,
+      "message": "|r|=0.638<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_3_8",
+      "group": "T9",
+      "passed": true,
+      "message": "|r|=0.595<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_4_5",
+      "group": "T9",
+      "passed": true,
+      "message": "|r|=0.195<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_4_7",
+      "group": "T9",
+      "passed": true,
+      "message": "|r|=0.133<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_5_6",
+      "group": "T9",
+      "passed": true,
+      "message": "|r|=0.504<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_5_8",
+      "group": "T9",
+      "passed": true,
+      "message": "|r|=0.299<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_6_7",
+      "group": "T9",
+      "passed": true,
+      "message": "|r|=0.086<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_7_8",
+      "group": "T9",
+      "passed": true,
+      "message": "|r|=0.477<0.99",
+      "values": {}
+    }
+  ]
+}

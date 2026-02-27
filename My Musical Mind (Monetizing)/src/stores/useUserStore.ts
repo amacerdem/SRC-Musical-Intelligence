@@ -11,6 +11,9 @@ interface UserState {
   mind: MindProfile | null;
   hasCompletedOnboarding: boolean;
 
+  /* spotify */
+  spotifyConnected: boolean;
+
   /* progression */
   level: number;
   xp: number;
@@ -27,6 +30,7 @@ interface UserState {
   /* actions */
   setMind: (mind: MindProfile) => void;
   setDisplayName: (name: string) => void;
+  setSpotifyConnected: (connected: boolean) => void;
   completeOnboarding: (mind: MindProfile, displayName?: string) => void;
   addXP: (amount: number) => void;
   evolve: (stage: EvolutionStage, subTrait?: SubTrait) => void;
@@ -40,6 +44,7 @@ const INITIAL_STATE = {
   avatarUrl: "",
   mind: null as MindProfile | null,
   hasCompletedOnboarding: false,
+  spotifyConnected: false,
   level: 1,
   xp: 0,
   streak: 0,
@@ -58,6 +63,7 @@ export const useUserStore = create<UserState>()(
 
       setMind: (mind) => set({ mind }),
       setDisplayName: (displayName) => set({ displayName }),
+      setSpotifyConnected: (spotifyConnected) => set({ spotifyConnected }),
 
       completeOnboarding: (mind, displayName) =>
         set((s) => ({
@@ -126,6 +132,7 @@ export const useUserStore = create<UserState>()(
         avatarUrl: state.avatarUrl,
         mind: state.mind,
         hasCompletedOnboarding: state.hasCompletedOnboarding,
+        spotifyConnected: state.spotifyConnected,
         level: state.level,
         xp: state.xp,
         streak: state.streak,

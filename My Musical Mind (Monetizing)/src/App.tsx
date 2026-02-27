@@ -13,6 +13,7 @@ import { ExploreAE } from "@/pages/ExploreAE";
 import { ResonanceField } from "@/pages/ResonanceField";
 import { InfoHub } from "@/pages/InfoHub";
 import { M3Hub } from "@/pages/M3Hub";
+import { Callback } from "@/pages/Callback";
 
 export default function App() {
   const { hasCompletedOnboarding } = useUserStore();
@@ -26,6 +27,7 @@ export default function App() {
           <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/reveal" element={<MindReveal />} />
           <Route path="/explore-ae" element={<ExploreAE />} />
+          <Route path="/callback" element={<Callback />} />
 
           {/* App routes (with shell) — 4 main pages */}
           <Route element={<AppShell />}>

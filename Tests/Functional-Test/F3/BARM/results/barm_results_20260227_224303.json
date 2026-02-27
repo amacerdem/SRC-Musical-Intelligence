@@ -1,0 +1,515 @@
+{
+  "mechanism": "BARM",
+  "function": "F3",
+  "timestamp": "20260227_224303",
+  "total": 72,
+  "passed": 72,
+  "failed": 0,
+  "elapsed_s": 13.0,
+  "results": [
+    {
+      "name": "T1_ndim",
+      "group": "T1",
+      "passed": true,
+      "message": "ndim=2",
+      "values": {}
+    },
+    {
+      "name": "T1_dim",
+      "group": "T1",
+      "passed": true,
+      "message": "D=10",
+      "values": {}
+    },
+    {
+      "name": "T1_frames",
+      "group": "T1",
+      "passed": true,
+      "message": "T=862",
+      "values": {}
+    },
+    {
+      "name": "T2_g1_01_single",
+      "group": "T2",
+      "passed": true,
+      "message": "[0.5010,0.7145]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g1_05_minor_2nd",
+      "group": "T2",
+      "passed": true,
+      "message": "[0.4998,0.7179]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g2_01_low",
+      "group": "T2",
+      "passed": true,
+      "message": "[0.5061,0.7207]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g2_03_high",
+      "group": "T2",
+      "passed": true,
+      "message": "[0.5147,0.7208]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g3_04_dense",
+      "group": "T2",
+      "passed": true,
+      "message": "[0.4957,0.7082]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g4_03_arpeggio",
+      "group": "T2",
+      "passed": true,
+      "message": "[0.5637,0.7137]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g5_01_piano",
+      "group": "T2",
+      "passed": true,
+      "message": "[0.5010,0.7145]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g5_02_organ",
+      "group": "T2",
+      "passed": true,
+      "message": "[0.5446,0.7212]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T3_E0:regularization",
+      "group": "T3",
+      "passed": true,
+      "message": "std=0.0113>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_E1:beat_alignment",
+      "group": "T3",
+      "passed": true,
+      "message": "std=0.0107>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_E2:sync_benefit",
+      "group": "T3",
+      "passed": true,
+      "message": "std=0.0094>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_M0:veridical_percept",
+      "group": "T3",
+      "passed": true,
+      "message": "std=0.0012>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_M1:regularization_eff",
+      "group": "T3",
+      "passed": true,
+      "message": "std=0.0174>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_P0:beat_accuracy",
+      "group": "T3",
+      "passed": true,
+      "message": "std=0.0018>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_P1:regularization_str",
+      "group": "T3",
+      "passed": true,
+      "message": "std=0.0177>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_F0:beat_acc_pred",
+      "group": "T3",
+      "passed": true,
+      "message": "std=0.0048>0.0003",
+      "values": {}
+    },
+    {
+      "name": "T3_F1:sync_benefit_pred",
+      "group": "T3",
+      "passed": true,
+      "message": "std=0.0051>0.0003",
+      "values": {}
+    },
+    {
+      "name": "T3_F2:individual_diff",
+      "group": "T3",
+      "passed": true,
+      "message": "std=0.0022>0.0003",
+      "values": {}
+    },
+    {
+      "name": "T4_E1_pos_g1_01_single",
+      "group": "T4",
+      "passed": true,
+      "message": "E1(0.6965)>0",
+      "values": {}
+    },
+    {
+      "name": "T4_E1_pos_g4_02_melody",
+      "group": "T4",
+      "passed": true,
+      "message": "E1(0.6925)>0",
+      "values": {}
+    },
+    {
+      "name": "T4_E1_pos_g4_03_arpeggio",
+      "group": "T4",
+      "passed": true,
+      "message": "E1(0.6917)>0",
+      "values": {}
+    },
+    {
+      "name": "T5_M0_E1_corr",
+      "group": "T5",
+      "passed": true,
+      "message": "|r(M0,E1)|=0.9733>0.10 (E1 feeds M0 at 50%)",
+      "values": {}
+    },
+    {
+      "name": "T6_P0_g1_01_single",
+      "group": "T6",
+      "passed": true,
+      "message": "P0(0.6587)>0",
+      "values": {}
+    },
+    {
+      "name": "T6_P1_g1_01_single",
+      "group": "T6",
+      "passed": true,
+      "message": "P1(0.6214)>0",
+      "values": {}
+    },
+    {
+      "name": "T6_P0_g1_05_minor_2nd",
+      "group": "T6",
+      "passed": true,
+      "message": "P0(0.6595)>0",
+      "values": {}
+    },
+    {
+      "name": "T6_P1_g1_05_minor_2nd",
+      "group": "T6",
+      "passed": true,
+      "message": "P1(0.6194)>0",
+      "values": {}
+    },
+    {
+      "name": "T6_P0_g3_04_dense",
+      "group": "T6",
+      "passed": true,
+      "message": "P0(0.6581)>0",
+      "values": {}
+    },
+    {
+      "name": "T6_P1_g3_04_dense",
+      "group": "T6",
+      "passed": true,
+      "message": "P1(0.6218)>0",
+      "values": {}
+    },
+    {
+      "name": "T6_P0_g4_01_sustained",
+      "group": "T6",
+      "passed": true,
+      "message": "P0(0.6573)>0",
+      "values": {}
+    },
+    {
+      "name": "T6_P1_g4_01_sustained",
+      "group": "T6",
+      "passed": true,
+      "message": "P1(0.6242)>0",
+      "values": {}
+    },
+    {
+      "name": "T6_P0_g4_03_arpeggio",
+      "group": "T6",
+      "passed": true,
+      "message": "P0(0.6605)>0",
+      "values": {}
+    },
+    {
+      "name": "T6_P1_g4_03_arpeggio",
+      "group": "T6",
+      "passed": true,
+      "message": "P1(0.6605)>0",
+      "values": {}
+    },
+    {
+      "name": "T7_F0_P0_corr",
+      "group": "T7",
+      "passed": true,
+      "message": "|r(F0,P0)|=0.6364>0.10 (P0 feeds F0 at 50%)",
+      "values": {}
+    },
+    {
+      "name": "T7_F2_P0_corr",
+      "group": "T7",
+      "passed": true,
+      "message": "|r(F2,P0)|=0.7158>0.10 (P0 feeds F2 at 50%)",
+      "values": {}
+    },
+    {
+      "name": "T8_E0:regularization",
+      "group": "T8",
+      "passed": true,
+      "message": "piano=0.6728,organ=0.6653>0",
+      "values": {}
+    },
+    {
+      "name": "T8_E1:beat_alignment",
+      "group": "T8",
+      "passed": true,
+      "message": "piano=0.6965,organ=0.7131>0",
+      "values": {}
+    },
+    {
+      "name": "T8_E2:sync_benefit",
+      "group": "T8",
+      "passed": true,
+      "message": "piano=0.5864,organ=0.5938>0",
+      "values": {}
+    },
+    {
+      "name": "T8_M0:veridical_percept",
+      "group": "T8",
+      "passed": true,
+      "message": "piano=0.6551,organ=0.6578>0",
+      "values": {}
+    },
+    {
+      "name": "T8_M1:regularization_eff",
+      "group": "T8",
+      "passed": true,
+      "message": "piano=0.6263,organ=0.6081>0",
+      "values": {}
+    },
+    {
+      "name": "T8_P0:beat_accuracy",
+      "group": "T8",
+      "passed": true,
+      "message": "piano=0.6587,organ=0.6630>0",
+      "values": {}
+    },
+    {
+      "name": "T8_P1:regularization_str",
+      "group": "T8",
+      "passed": true,
+      "message": "piano=0.6214,organ=0.6624>0",
+      "values": {}
+    },
+    {
+      "name": "T8_F0:beat_acc_pred",
+      "group": "T8",
+      "passed": true,
+      "message": "piano=0.6916,organ=0.6925>0",
+      "values": {}
+    },
+    {
+      "name": "T8_F1:sync_benefit_pred",
+      "group": "T8",
+      "passed": true,
+      "message": "piano=0.6740,organ=0.6807>0",
+      "values": {}
+    },
+    {
+      "name": "T8_F2:individual_diff",
+      "group": "T8",
+      "passed": true,
+      "message": "piano=0.6548,organ=0.6599>0",
+      "values": {}
+    },
+    {
+      "name": "T9_0_1",
+      "group": "T9",
+      "passed": true,
+      "message": "|r(E0:regularization,E1:beat_alignment)|=0.799<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_0_2",
+      "group": "T9",
+      "passed": true,
+      "message": "|r(E0:regularization,E2:sync_benefit)|=0.104<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_0_3",
+      "group": "T9",
+      "passed": true,
+      "message": "|r(E0:regularization,M0:veridical_percept)|=0.593<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_0_8",
+      "group": "T9",
+      "passed": true,
+      "message": "|r(E0:regularization,F1:sync_benefit_pred)|=0.249<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_0_9",
+      "group": "T9",
+      "passed": true,
+      "message": "|r(E0:regularization,F2:individual_diff)|=0.145<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_1_2",
+      "group": "T9",
+      "passed": true,
+      "message": "|r(E1:beat_alignment,E2:sync_benefit)|=0.207<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_1_4",
+      "group": "T9",
+      "passed": true,
+      "message": "|r(E1:beat_alignment,M1:regularization_eff)|=0.853<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_1_6",
+      "group": "T9",
+      "passed": true,
+      "message": "|r(E1:beat_alignment,P1:regularization_str)|=0.462<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_1_8",
+      "group": "T9",
+      "passed": true,
+      "message": "|r(E1:beat_alignment,F1:sync_benefit_pred)|=0.097<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_2_4",
+      "group": "T9",
+      "passed": true,
+      "message": "|r(E2:sync_benefit,M1:regularization_eff)|=0.096<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_2_5",
+      "group": "T9",
+      "passed": true,
+      "message": "|r(E2:sync_benefit,P0:beat_accuracy)|=0.017<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_2_6",
+      "group": "T9",
+      "passed": true,
+      "message": "|r(E2:sync_benefit,P1:regularization_str)|=0.098<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_2_7",
+      "group": "T9",
+      "passed": true,
+      "message": "|r(E2:sync_benefit,F0:beat_acc_pred)|=0.268<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_2_9",
+      "group": "T9",
+      "passed": true,
+      "message": "|r(E2:sync_benefit,F2:individual_diff)|=0.087<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_3_4",
+      "group": "T9",
+      "passed": true,
+      "message": "|r(M0:veridical_percept,M1:regularization_eff)|=0.787<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_3_6",
+      "group": "T9",
+      "passed": true,
+      "message": "|r(M0:veridical_percept,P1:regularization_str)|=0.461<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_3_8",
+      "group": "T9",
+      "passed": true,
+      "message": "|r(M0:veridical_percept,F1:sync_benefit_pred)|=0.600<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_4_7",
+      "group": "T9",
+      "passed": true,
+      "message": "|r(M1:regularization_eff,F0:beat_acc_pred)|=0.126<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_4_8",
+      "group": "T9",
+      "passed": true,
+      "message": "|r(M1:regularization_eff,F1:sync_benefit_pred)|=0.010<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_4_9",
+      "group": "T9",
+      "passed": true,
+      "message": "|r(M1:regularization_eff,F2:individual_diff)|=0.243<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_5_6",
+      "group": "T9",
+      "passed": true,
+      "message": "|r(P0:beat_accuracy,P1:regularization_str)|=0.835<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_5_8",
+      "group": "T9",
+      "passed": true,
+      "message": "|r(P0:beat_accuracy,F1:sync_benefit_pred)|=0.391<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_6_8",
+      "group": "T9",
+      "passed": true,
+      "message": "|r(P1:regularization_str,F1:sync_benefit_pred)|=0.573<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_7_8",
+      "group": "T9",
+      "passed": true,
+      "message": "|r(F0:beat_acc_pred,F1:sync_benefit_pred)|=0.175<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_8_9",
+      "group": "T9",
+      "passed": true,
+      "message": "|r(F1:sync_benefit_pred,F2:individual_diff)|=0.563<0.99",
+      "values": {}
+    }
+  ]
+}

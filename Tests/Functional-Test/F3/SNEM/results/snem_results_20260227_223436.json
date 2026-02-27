@@ -1,0 +1,683 @@
+{
+  "mechanism": "SNEM",
+  "function": "F3",
+  "timestamp": "20260227_223436",
+  "total": 96,
+  "passed": 96,
+  "failed": 0,
+  "elapsed_s": 12.1,
+  "results": [
+    {
+      "name": "T1_ndim",
+      "group": "T1_dimensionality",
+      "passed": true,
+      "message": "ndim=2",
+      "values": {}
+    },
+    {
+      "name": "T1_dim_count",
+      "group": "T1_dimensionality",
+      "passed": true,
+      "message": "D=12",
+      "values": {}
+    },
+    {
+      "name": "T1_frames",
+      "group": "T1_dimensionality",
+      "passed": true,
+      "message": "T=862",
+      "values": {}
+    },
+    {
+      "name": "T2_g1_01_single",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.4469,0.6950]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g1_05_minor_2nd",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.4488,0.6972]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g2_01_low",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.4479,0.6961]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g2_03_high",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.4471,0.6959]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g3_04_dense",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.4484,0.6942]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g4_03_arpeggio",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.4481,0.6940]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g5_01_piano",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.4469,0.6950]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g5_02_organ",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.4816,0.7212]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T3_E0:beat_entrainment",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0232>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_E1:meter_entrainment",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0152>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_E2:selective_enhance",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0058>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_M0:ssep_enhancement",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0221>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_M1:enhancement_idx",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0027>0.0003",
+      "values": {}
+    },
+    {
+      "name": "T3_M2:beat_salience",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0035>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_P0:beat_locked",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0032>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_P1:entrainment_str",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0175>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_P2:selective_gain",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0184>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_F0:beat_onset_pred",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0052>0.0003",
+      "values": {}
+    },
+    {
+      "name": "T3_F1:meter_pos_pred",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0031>0.0003",
+      "values": {}
+    },
+    {
+      "name": "T3_F2:enhancement_pred",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0049>0.0003",
+      "values": {}
+    },
+    {
+      "name": "T4_E0_pos_g1_01_single",
+      "group": "T4_beat",
+      "passed": true,
+      "message": "E0(0.6543)>0",
+      "values": {}
+    },
+    {
+      "name": "T4_E0_pos_g4_02_melody",
+      "group": "T4_beat",
+      "passed": true,
+      "message": "E0(0.6647)>0",
+      "values": {}
+    },
+    {
+      "name": "T4_E0_pos_g4_03_arpeggio",
+      "group": "T4_beat",
+      "passed": true,
+      "message": "E0(0.6731)>0",
+      "values": {}
+    },
+    {
+      "name": "T5_E2_bounded_g1_01_single",
+      "group": "T5_selective",
+      "passed": true,
+      "message": "E2(0.5404) in [0,1]",
+      "values": {}
+    },
+    {
+      "name": "T5_E2_bounded_g4_02_melody",
+      "group": "T5_selective",
+      "passed": true,
+      "message": "E2(0.5353) in [0,1]",
+      "values": {}
+    },
+    {
+      "name": "T5_E2_bounded_g4_03_arpeggio",
+      "group": "T5_selective",
+      "passed": true,
+      "message": "E2(0.5350) in [0,1]",
+      "values": {}
+    },
+    {
+      "name": "T5_E2_bounded_g3_04_dense",
+      "group": "T5_selective",
+      "passed": true,
+      "message": "E2(0.5518) in [0,1]",
+      "values": {}
+    },
+    {
+      "name": "T6_M1_M0_corr",
+      "group": "T6_m_layer",
+      "passed": true,
+      "message": "|r(M1,M0)|=1.0000>0.10 (M0 feeds M1 at 50%)",
+      "values": {}
+    },
+    {
+      "name": "T7_P0_pos_g1_01_single",
+      "group": "T7_p_layer",
+      "passed": true,
+      "message": "P0(0.6722)>0",
+      "values": {}
+    },
+    {
+      "name": "T7_P1_pos_g1_01_single",
+      "group": "T7_p_layer",
+      "passed": true,
+      "message": "P1(0.6143)>0",
+      "values": {}
+    },
+    {
+      "name": "T7_P2_pos_g1_01_single",
+      "group": "T7_p_layer",
+      "passed": true,
+      "message": "P2(0.6280)>0",
+      "values": {}
+    },
+    {
+      "name": "T7_P0_pos_g1_05_minor_2nd",
+      "group": "T7_p_layer",
+      "passed": true,
+      "message": "P0(0.6693)>0",
+      "values": {}
+    },
+    {
+      "name": "T7_P1_pos_g1_05_minor_2nd",
+      "group": "T7_p_layer",
+      "passed": true,
+      "message": "P1(0.6148)>0",
+      "values": {}
+    },
+    {
+      "name": "T7_P2_pos_g1_05_minor_2nd",
+      "group": "T7_p_layer",
+      "passed": true,
+      "message": "P2(0.6233)>0",
+      "values": {}
+    },
+    {
+      "name": "T7_P0_pos_g3_04_dense",
+      "group": "T7_p_layer",
+      "passed": true,
+      "message": "P0(0.6665)>0",
+      "values": {}
+    },
+    {
+      "name": "T7_P1_pos_g3_04_dense",
+      "group": "T7_p_layer",
+      "passed": true,
+      "message": "P1(0.6136)>0",
+      "values": {}
+    },
+    {
+      "name": "T7_P2_pos_g3_04_dense",
+      "group": "T7_p_layer",
+      "passed": true,
+      "message": "P2(0.6201)>0",
+      "values": {}
+    },
+    {
+      "name": "T7_P0_pos_g4_01_sustained",
+      "group": "T7_p_layer",
+      "passed": true,
+      "message": "P0(0.6710)>0",
+      "values": {}
+    },
+    {
+      "name": "T7_P1_pos_g4_01_sustained",
+      "group": "T7_p_layer",
+      "passed": true,
+      "message": "P1(0.6113)>0",
+      "values": {}
+    },
+    {
+      "name": "T7_P2_pos_g4_01_sustained",
+      "group": "T7_p_layer",
+      "passed": true,
+      "message": "P2(0.6245)>0",
+      "values": {}
+    },
+    {
+      "name": "T7_P0_pos_g4_03_arpeggio",
+      "group": "T7_p_layer",
+      "passed": true,
+      "message": "P0(0.6638)>0",
+      "values": {}
+    },
+    {
+      "name": "T7_P1_pos_g4_03_arpeggio",
+      "group": "T7_p_layer",
+      "passed": true,
+      "message": "P1(0.6470)>0",
+      "values": {}
+    },
+    {
+      "name": "T7_P2_pos_g4_03_arpeggio",
+      "group": "T7_p_layer",
+      "passed": true,
+      "message": "P2(0.6545)>0",
+      "values": {}
+    },
+    {
+      "name": "T8_F0_E0_corr",
+      "group": "T8_forecast",
+      "passed": true,
+      "message": "|r(F0,E0)|=0.4437>0.10 (E0 feeds F0 at 50%)",
+      "values": {}
+    },
+    {
+      "name": "T8_F1_E1_corr",
+      "group": "T8_forecast",
+      "passed": true,
+      "message": "|r(F1,E1)|=0.4610>0.10 (E1 feeds F1 at 50%)",
+      "values": {}
+    },
+    {
+      "name": "T9_E0:beat_entrainment",
+      "group": "T9_instrument",
+      "passed": true,
+      "message": "piano=0.6543,organ=0.7044>0",
+      "values": {}
+    },
+    {
+      "name": "T9_E1:meter_entrainment",
+      "group": "T9_instrument",
+      "passed": true,
+      "message": "piano=0.6343,organ=0.6224>0",
+      "values": {}
+    },
+    {
+      "name": "T9_E2:selective_enhance",
+      "group": "T9_instrument",
+      "passed": true,
+      "message": "piano=0.5404,organ=0.5459>0",
+      "values": {}
+    },
+    {
+      "name": "T9_M0:ssep_enhancement",
+      "group": "T9_instrument",
+      "passed": true,
+      "message": "piano=0.5647,organ=0.5177>0",
+      "values": {}
+    },
+    {
+      "name": "T9_M1:enhancement_idx",
+      "group": "T9_instrument",
+      "passed": true,
+      "message": "piano=0.5700,organ=0.5642>0",
+      "values": {}
+    },
+    {
+      "name": "T9_M2:beat_salience",
+      "group": "T9_instrument",
+      "passed": true,
+      "message": "piano=0.5004,organ=0.5011>0",
+      "values": {}
+    },
+    {
+      "name": "T9_P0:beat_locked",
+      "group": "T9_instrument",
+      "passed": true,
+      "message": "piano=0.6722,organ=0.6738>0",
+      "values": {}
+    },
+    {
+      "name": "T9_P1:entrainment_str",
+      "group": "T9_instrument",
+      "passed": true,
+      "message": "piano=0.6143,organ=0.6569>0",
+      "values": {}
+    },
+    {
+      "name": "T9_P2:selective_gain",
+      "group": "T9_instrument",
+      "passed": true,
+      "message": "piano=0.6280,organ=0.6727>0",
+      "values": {}
+    },
+    {
+      "name": "T9_F0:beat_onset_pred",
+      "group": "T9_instrument",
+      "passed": true,
+      "message": "piano=0.6911,organ=0.6969>0",
+      "values": {}
+    },
+    {
+      "name": "T9_F1:meter_pos_pred",
+      "group": "T9_instrument",
+      "passed": true,
+      "message": "piano=0.6793,organ=0.6838>0",
+      "values": {}
+    },
+    {
+      "name": "T9_F2:enhancement_pred",
+      "group": "T9_instrument",
+      "passed": true,
+      "message": "piano=0.6789,organ=0.6799>0",
+      "values": {}
+    },
+    {
+      "name": "T10_0_1",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(E0:beat_entrainment,E1:meter_entrainment)|=0.098<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_0_5",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(E0:beat_entrainment,M2:beat_salience)|=0.364<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_1_5",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(E1:meter_entrainment,M2:beat_salience)|=0.215<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_1_9",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(E1:meter_entrainment,F0:beat_onset_pred)|=0.320<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_2_3",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(E2:selective_enhance,M0:ssep_enhancement)|=0.354<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_2_4",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(E2:selective_enhance,M1:enhancement_idx)|=0.350<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_2_5",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(E2:selective_enhance,M2:beat_salience)|=0.018<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_2_6",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(E2:selective_enhance,P0:beat_locked)|=0.145<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_2_7",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(E2:selective_enhance,P1:entrainment_str)|=0.150<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_2_9",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(E2:selective_enhance,F0:beat_onset_pred)|=0.063<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_2_10",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(E2:selective_enhance,F1:meter_pos_pred)|=0.424<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_3_5",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(M0:ssep_enhancement,M2:beat_salience)|=0.360<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_3_10",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(M0:ssep_enhancement,F1:meter_pos_pred)|=0.666<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_3_11",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(M0:ssep_enhancement,F2:enhancement_pred)|=0.206<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_4_5",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(M1:enhancement_idx,M2:beat_salience)|=0.361<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_4_8",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(M1:enhancement_idx,P2:selective_gain)|=0.966<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_4_9",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(M1:enhancement_idx,F0:beat_onset_pred)|=0.240<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_4_10",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(M1:enhancement_idx,F1:meter_pos_pred)|=0.664<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_4_11",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(M1:enhancement_idx,F2:enhancement_pred)|=0.207<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_5_6",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(M2:beat_salience,P0:beat_locked)|=0.852<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_5_7",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(M2:beat_salience,P1:entrainment_str)|=0.390<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_5_8",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(M2:beat_salience,P2:selective_gain)|=0.224<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_5_9",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(M2:beat_salience,F0:beat_onset_pred)|=0.744<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_5_10",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(M2:beat_salience,F1:meter_pos_pred)|=0.221<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_5_11",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(M2:beat_salience,F2:enhancement_pred)|=0.963<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_6_8",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(P0:beat_locked,P2:selective_gain)|=0.099<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_6_10",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(P0:beat_locked,F1:meter_pos_pred)|=0.036<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_6_11",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(P0:beat_locked,F2:enhancement_pred)|=0.935<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_7_8",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(P1:entrainment_str,P2:selective_gain)|=0.983<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_7_10",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(P1:entrainment_str,F1:meter_pos_pred)|=0.578<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_7_11",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(P1:entrainment_str,F2:enhancement_pred)|=0.232<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_8_9",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(P2:selective_gain,F0:beat_onset_pred)|=0.410<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_8_10",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(P2:selective_gain,F1:meter_pos_pred)|=0.595<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_9_10",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(F0:beat_onset_pred,F1:meter_pos_pred)|=0.209<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_9_11",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(F0:beat_onset_pred,F2:enhancement_pred)|=0.872<0.99",
+      "values": {}
+    },
+    {
+      "name": "T10_10_11",
+      "group": "T10_redundancy",
+      "passed": true,
+      "message": "|r(F1:meter_pos_pred,F2:enhancement_pred)|=0.058<0.99",
+      "values": {}
+    }
+  ]
+}

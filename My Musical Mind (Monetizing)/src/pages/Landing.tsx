@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { ArrowRight, Check, CheckCircle2, Loader2, Brain } from "lucide-react";
@@ -11,6 +11,7 @@ import { useUserStore } from "@/stores/useUserStore";
 import { useM3Store } from "@/stores/useM3Store";
 import { personas, getPersona } from "@/data/personas";
 import { beliefColors } from "@/design/tokens";
+import { SpotifyService } from "@/services/spotify";
 
 const INSTITUTIONS = [
   { name: "MIT", dept: "Media Lab" },
@@ -89,10 +90,12 @@ type RevealPhase = "void" | "birth" | "name" | "radar" | "ready";
 
 export function Landing() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { t } = useTranslation();
   const { completeOnboarding, setDisplayName } = useUserStore();
   const birthM3 = useM3Store((s) => s.birthM3);
   const mind = useUserStore((s) => s.mind);
+  const didAutoConnect = useRef(false);
 
   // UI flow state
   const [showAuth, setShowAuth] = useState(false);
@@ -175,13 +178,34 @@ export function Landing() {
     }, 200);
   }, [setDisplayName, completeOnboarding, birthM3]);
 
+  // Auto-start evolution when returning from Spotify OAuth callback
+  useEffect(() => {
+    if (didAutoConnect.current) return;
+    const navState = location.state as { spotifyConnected?: boolean; userName?: string } | null;
+    if (navState?.spotifyConnected && navState?.userName) {
+      didAutoConnect.current = true;
+      setUserName(navState.userName);
+      startEvolution(navState.userName);
+    }
+  }, [location.state, startEvolution]);
+
   // Platform connect → trigger OAuth
   const handlePlatformConnect = useCallback((platform: "spotify" | "soundcloud" | "apple") => {
+    if (platform === "spotify") {
+      // Real Spotify OAuth — redirects the browser to Spotify
+      SpotifyService.startAuthFlow({
+        userName,
+        fromPath: "/",
+        platform: "spotify",
+      });
+      return;
+    }
+    // Other platforms: use fake OAuth overlay
     setOAuthPlatform(platform);
     setOAuthPhase("opening");
     setShowOAuth(true);
     setShowConnect(false);
-  }, []);
+  }, [userName]);
 
   // OAuth phase progression
   useEffect(() => {

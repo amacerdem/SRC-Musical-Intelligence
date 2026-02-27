@@ -1,0 +1,480 @@
+{
+  "mechanism": "UDP",
+  "function": "F2",
+  "timestamp": "20260227_222203",
+  "total": 67,
+  "passed": 67,
+  "failed": 0,
+  "elapsed_s": 44.8,
+  "results": [
+    {
+      "name": "T1_ndim",
+      "group": "T1_dimensionality",
+      "passed": true,
+      "message": "ndim=2",
+      "values": {}
+    },
+    {
+      "name": "T1_dim_count",
+      "group": "T1_dimensionality",
+      "passed": true,
+      "message": "D=10",
+      "values": {}
+    },
+    {
+      "name": "T1_frames",
+      "group": "T1_dimensionality",
+      "passed": true,
+      "message": "T=862",
+      "values": {}
+    },
+    {
+      "name": "T2_g1_01_single",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.5250,0.7270]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g1_05_minor_2nd",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.5217,0.7269]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g2_01_low",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.5577,0.7277]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g2_03_high",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.5575,0.7266]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g3_04_dense",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.5208,0.7269]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g4_03_arpeggio",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.5209,0.7261]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g5_01_piano",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.5250,0.7270]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T2_g5_02_organ",
+      "group": "T2_bounds",
+      "passed": true,
+      "message": "[0.5237,0.7277]\u2282[0,1]",
+      "values": {}
+    },
+    {
+      "name": "T3_E0:uncertainty",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0292>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_E1:confirmation_reward",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0255>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_M0:error_reward",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0080>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_M1:pleasure_index",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0142>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_P0:context_assess",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0064>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_P1:pred_accuracy",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0092>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_P2:reward_compute",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0025>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_F0:reward_expect",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0095>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_F1:model_improve",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0095>0.001",
+      "values": {}
+    },
+    {
+      "name": "T3_F2:pleasure_antic",
+      "group": "T3_nondegeneracy",
+      "passed": true,
+      "message": "std=0.0090>0.001",
+      "values": {}
+    },
+    {
+      "name": "T4_dense>=single",
+      "group": "T4_uncertainty",
+      "passed": true,
+      "message": "dense(0.6467)>=single(0.7119)-0.10",
+      "values": {}
+    },
+    {
+      "name": "T4_E0_bounded_g1_01_single",
+      "group": "T4_uncertainty",
+      "passed": true,
+      "message": "E0(0.7119) in [0,1]",
+      "values": {}
+    },
+    {
+      "name": "T4_E0_bounded_g1_05_minor_2nd",
+      "group": "T4_uncertainty",
+      "passed": true,
+      "message": "E0(0.6555) in [0,1]",
+      "values": {}
+    },
+    {
+      "name": "T4_E0_bounded_g3_04_dense",
+      "group": "T4_uncertainty",
+      "passed": true,
+      "message": "E0(0.6467) in [0,1]",
+      "values": {}
+    },
+    {
+      "name": "T5_P2_bounded_g1_01_single",
+      "group": "T5_reward_inversion",
+      "passed": true,
+      "message": "P2=0.6167, P0=0.6395, P1=0.6865",
+      "values": {}
+    },
+    {
+      "name": "T5_P2_bounded_g1_05_minor_2nd",
+      "group": "T5_reward_inversion",
+      "passed": true,
+      "message": "P2=0.6134, P0=0.6387, P1=0.6714",
+      "values": {}
+    },
+    {
+      "name": "T5_P2_bounded_g3_04_dense",
+      "group": "T5_reward_inversion",
+      "passed": true,
+      "message": "P2=0.6128, P0=0.6385, P1=0.6706",
+      "values": {}
+    },
+    {
+      "name": "T5_P2_bounded_g4_01_sustained",
+      "group": "T5_reward_inversion",
+      "passed": true,
+      "message": "P2=0.6152, P0=0.6397, P1=0.6871",
+      "values": {}
+    },
+    {
+      "name": "T5_P2_bounded_g4_03_arpeggio",
+      "group": "T5_reward_inversion",
+      "passed": true,
+      "message": "P2=0.6194, P0=0.6507, P1=0.6632",
+      "values": {}
+    },
+    {
+      "name": "T6_E1_E0_corr",
+      "group": "T6_confirmation",
+      "passed": true,
+      "message": "|r(E1,E0)|=0.9990>0.10 (30% direct)",
+      "values": {}
+    },
+    {
+      "name": "T7_F0_P2_corr",
+      "group": "T7_forecast",
+      "passed": true,
+      "message": "|r(F0,P2)|=0.0701>0.05 (P2 feeds F0 at 35%)",
+      "values": {}
+    },
+    {
+      "name": "T8_E0:uncertainty",
+      "group": "T8_instrument",
+      "passed": true,
+      "message": "piano=0.7119,organ=0.7229>0",
+      "values": {}
+    },
+    {
+      "name": "T8_E1:confirmation_reward",
+      "group": "T8_instrument",
+      "passed": true,
+      "message": "piano=0.6498,organ=0.6621>0",
+      "values": {}
+    },
+    {
+      "name": "T8_M0:error_reward",
+      "group": "T8_instrument",
+      "passed": true,
+      "message": "piano=0.5761,organ=0.5838>0",
+      "values": {}
+    },
+    {
+      "name": "T8_M1:pleasure_index",
+      "group": "T8_instrument",
+      "passed": true,
+      "message": "piano=0.6557,organ=0.6573>0",
+      "values": {}
+    },
+    {
+      "name": "T8_P0:context_assess",
+      "group": "T8_instrument",
+      "passed": true,
+      "message": "piano=0.6395,organ=0.6444>0",
+      "values": {}
+    },
+    {
+      "name": "T8_P1:pred_accuracy",
+      "group": "T8_instrument",
+      "passed": true,
+      "message": "piano=0.6865,organ=0.6845>0",
+      "values": {}
+    },
+    {
+      "name": "T8_P2:reward_compute",
+      "group": "T8_instrument",
+      "passed": true,
+      "message": "piano=0.6167,organ=0.6182>0",
+      "values": {}
+    },
+    {
+      "name": "T8_F0:reward_expect",
+      "group": "T8_instrument",
+      "passed": true,
+      "message": "piano=0.6701,organ=0.6785>0",
+      "values": {}
+    },
+    {
+      "name": "T8_F1:model_improve",
+      "group": "T8_instrument",
+      "passed": true,
+      "message": "piano=0.6033,organ=0.6072>0",
+      "values": {}
+    },
+    {
+      "name": "T8_F2:pleasure_antic",
+      "group": "T8_instrument",
+      "passed": true,
+      "message": "piano=0.6608,organ=0.6642>0",
+      "values": {}
+    },
+    {
+      "name": "T9_0_3",
+      "group": "T9_redundancy",
+      "passed": true,
+      "message": "|r(E0:uncertainty,M1:pleasure_index)|=0.831<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_0_5",
+      "group": "T9_redundancy",
+      "passed": true,
+      "message": "|r(E0:uncertainty,P1:pred_accuracy)|=0.431<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_1_2",
+      "group": "T9_redundancy",
+      "passed": true,
+      "message": "|r(E1:confirmation_reward,M0:error_reward)|=0.054<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_1_3",
+      "group": "T9_redundancy",
+      "passed": true,
+      "message": "|r(E1:confirmation_reward,M1:pleasure_index)|=0.844<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_1_4",
+      "group": "T9_redundancy",
+      "passed": true,
+      "message": "|r(E1:confirmation_reward,P0:context_assess)|=0.461<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_1_5",
+      "group": "T9_redundancy",
+      "passed": true,
+      "message": "|r(E1:confirmation_reward,P1:pred_accuracy)|=0.429<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_1_7",
+      "group": "T9_redundancy",
+      "passed": true,
+      "message": "|r(E1:confirmation_reward,F0:reward_expect)|=0.111<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_1_8",
+      "group": "T9_redundancy",
+      "passed": true,
+      "message": "|r(E1:confirmation_reward,F1:model_improve)|=0.328<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_2_3",
+      "group": "T9_redundancy",
+      "passed": true,
+      "message": "|r(M0:error_reward,M1:pleasure_index)|=0.169<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_2_4",
+      "group": "T9_redundancy",
+      "passed": true,
+      "message": "|r(M0:error_reward,P0:context_assess)|=0.879<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_2_5",
+      "group": "T9_redundancy",
+      "passed": true,
+      "message": "|r(M0:error_reward,P1:pred_accuracy)|=0.776<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_2_7",
+      "group": "T9_redundancy",
+      "passed": true,
+      "message": "|r(M0:error_reward,F0:reward_expect)|=0.221<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_2_8",
+      "group": "T9_redundancy",
+      "passed": true,
+      "message": "|r(M0:error_reward,F1:model_improve)|=0.240<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_2_9",
+      "group": "T9_redundancy",
+      "passed": true,
+      "message": "|r(M0:error_reward,F2:pleasure_antic)|=0.232<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_3_4",
+      "group": "T9_redundancy",
+      "passed": true,
+      "message": "|r(M1:pleasure_index,P0:context_assess)|=0.602<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_3_7",
+      "group": "T9_redundancy",
+      "passed": true,
+      "message": "|r(M1:pleasure_index,F0:reward_expect)|=0.553<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_3_8",
+      "group": "T9_redundancy",
+      "passed": true,
+      "message": "|r(M1:pleasure_index,F1:model_improve)|=0.245<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_3_9",
+      "group": "T9_redundancy",
+      "passed": true,
+      "message": "|r(M1:pleasure_index,F2:pleasure_antic)|=0.271<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_4_5",
+      "group": "T9_redundancy",
+      "passed": true,
+      "message": "|r(P0:context_assess,P1:pred_accuracy)|=0.428<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_4_7",
+      "group": "T9_redundancy",
+      "passed": true,
+      "message": "|r(P0:context_assess,F0:reward_expect)|=0.368<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_4_8",
+      "group": "T9_redundancy",
+      "passed": true,
+      "message": "|r(P0:context_assess,F1:model_improve)|=0.136<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_5_9",
+      "group": "T9_redundancy",
+      "passed": true,
+      "message": "|r(P1:pred_accuracy,F2:pleasure_antic)|=0.515<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_6_8",
+      "group": "T9_redundancy",
+      "passed": true,
+      "message": "|r(P2:reward_compute,F1:model_improve)|=0.163<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_7_8",
+      "group": "T9_redundancy",
+      "passed": true,
+      "message": "|r(F0:reward_expect,F1:model_improve)|=0.155<0.99",
+      "values": {}
+    },
+    {
+      "name": "T9_8_9",
+      "group": "T9_redundancy",
+      "passed": true,
+      "message": "|r(F1:model_improve,F2:pleasure_antic)|=0.233<0.99",
+      "values": {}
+    }
+  ]
+}

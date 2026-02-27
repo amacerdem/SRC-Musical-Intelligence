@@ -11,7 +11,7 @@ import { MindRadar } from "@/components/mind/MindRadar";
 import { personas, getPersona } from "@/data/personas";
 import { beliefColors } from "@/design/tokens";
 import { LanguageToggle } from "@/components/layout/LanguageToggle";
-import { SpotifySimulator } from "@/services/SpotifySimulator";
+import { SpotifyService } from "@/services/spotify";
 
 /* ── Platform SVG logos (inline, no dependencies) ────────────────── */
 function SpotifyLogo({ size = 28 }: { size?: number }) {
@@ -214,9 +214,19 @@ export function Onboarding() {
   }, [setStep, setProgress, setPersona, completeOnboarding, setDisplayName, birthM3]);
 
   const handlePlatformConnect = useCallback((platform: "spotify" | "soundcloud" | "apple") => {
+    if (platform === "spotify") {
+      // Real Spotify OAuth — redirects the browser to Spotify
+      SpotifyService.startAuthFlow({
+        userName,
+        fromPath: "/onboarding",
+        platform: "spotify",
+      });
+      return;
+    }
+    // Other platforms: use fake OAuth overlay
     setOAuthPlatform(platform);
     setShowOAuth(true);
-  }, []);
+  }, [userName]);
 
   const handleOAuthComplete = useCallback(() => {
     setShowOAuth(false);
@@ -224,16 +234,28 @@ export function Onboarding() {
   }, [startEvolution, userName]);
 
   // Auto-trigger OAuth when arriving from Landing with platform + userName in navigation state
+  // OR when returning from Spotify OAuth callback with spotifyConnected
   useEffect(() => {
     if (didAutoConnect.current) return;
-    const navState = location.state as { platform?: string; userName?: string } | null;
+    const navState = location.state as { platform?: string; userName?: string; spotifyConnected?: boolean } | null;
+
+    // Returning from Spotify OAuth callback — skip OAuth, go straight to evolution
+    if (navState?.spotifyConnected && navState?.userName) {
+      didAutoConnect.current = true;
+      setUserName(navState.userName);
+      setDisplayName(navState.userName);
+      startEvolution(navState.userName);
+      return;
+    }
+
+    // Coming from Landing with platform selection
     if (navState?.platform && navState?.userName) {
       didAutoConnect.current = true;
       setUserName(navState.userName);
       setDisplayName(navState.userName);
       handlePlatformConnect(navState.platform as "spotify" | "soundcloud" | "apple");
     }
-  }, [location.state, handlePlatformConnect, setDisplayName]);
+  }, [location.state, handlePlatformConnect, setDisplayName, startEvolution]);
 
   return (
     <div className="fixed inset-0 bg-black overflow-hidden">
