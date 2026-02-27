@@ -6,8 +6,12 @@ from .....contracts.bases.base_spectral_group import BaseSpectralGroup
 
 
 def _build_mel_center_freqs(n_mels: int = 128) -> Tensor:
-    """Compute mel-scale center frequencies for n_mels bins."""
-    f_min, f_max = 20.0, 8000.0
+    """Compute mel-scale center frequencies for n_mels bins.
+
+    Uses f_min=0, f_max=22050 to match torchaudio MelSpectrogram defaults
+    (sr=44100, f_min=0.0, f_max=None → sr/2).
+    """
+    f_min, f_max = 0.0, 22050.0
     mel_min = 2595.0 * math.log10(1.0 + f_min / 700.0)
     mel_max = 2595.0 * math.log10(1.0 + f_max / 700.0)
     mels = torch.linspace(mel_min, mel_max, n_mels)

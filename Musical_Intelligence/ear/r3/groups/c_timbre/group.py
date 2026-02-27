@@ -34,9 +34,12 @@ class TimbreGroup(BaseSpectralGroup):
         centroid = (mt * bins).sum(dim=-1) / total
         clarity = centroid / N
 
-        # [16] spectral_smoothness: 1 - mean(|diff(mel)|)/max (== 1-sethares, known dup)
-        spec_diff = torch.diff(mt, dim=-1).abs().mean(dim=-1)
-        smoothness = 1.0 - spec_diff / spec_diff.amax(dim=-1, keepdim=True).clamp(min=eps)
+        # [16] spectral_smoothness: 1 - mean(|diff|)/frame_energy
+        # Per-frame normalization: smooth spectrum (small diffs relative to
+        # energy) scores high; peaked/jagged spectrum scores low.
+        spec_diff = torch.diff(mt, dim=-1).abs().mean(dim=-1)   # (B, T)
+        frame_energy = mt.mean(dim=-1).clamp(min=eps)            # (B, T)
+        smoothness = (1.0 - (spec_diff / frame_energy).clamp(0, 1)).clamp(0, 1)
 
         # [17] spectral_autocorrelation: lag-1 autocorr (== helmholtz, known dup)
         m1 = mt[:, :, :-1]

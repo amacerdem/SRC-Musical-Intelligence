@@ -1,7 +1,7 @@
 {
   "test_name": "CSG Mechanism Stress Test v4.0",
-  "timestamp": "2026-02-27T13:16:02.905025",
-  "total_elapsed_s": 126.7,
+  "timestamp": "2026-02-27T20:18:53.845753",
+  "total_elapsed_s": 112.7,
   "n_audio_files": 13,
   "audio_files": [
     "bach",

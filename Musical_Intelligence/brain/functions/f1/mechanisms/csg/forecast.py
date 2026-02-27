@@ -62,9 +62,7 @@ def compute_forecast(
     consonance = r3_features[:, :, _PLEAS]
     ambiguity = 1.0 - torch.abs(consonance - 0.5) * 2
 
-    # Center velocity morphs (H³ signed norm maps 0→0.5)
-    pleas_vel_c = (pleas_vel - 0.5) * 2.0
-    sethares_vel_c = (sethares_vel - 0.5) * 2.0
+    # Velocity morphs are H³ signed, already [-1, 1] with 0 at origin
 
     # F0: Valence prediction [-1, 1]
     # Cheung: amygdala/hippocampus integrate uncertainty x surprise
@@ -73,9 +71,9 @@ def compute_forecast(
     centered_pleas = (pleas_mean_1s - 0.5) * 2.0
     f0 = torch.tanh(
         0.25 * e2
-        + 0.25 * pleas_vel_c
+        + 0.25 * pleas_vel
         + 0.35 * centered_pleas
-        - 0.15 * sethares_vel_c
+        - 0.15 * sethares_vel
     )
 
     # F1: Processing load prediction

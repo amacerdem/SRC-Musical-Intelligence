@@ -98,11 +98,12 @@ def compute_cognitive_present(
     # Evaluates the current uncertainty context by combining upstream
     # precision-weighted uncertainty with local tonal/coupling signals.
     # Koelsch 2019: musical syntax expectations modulate emotional context.
+    # abs() on skewness: coupling asymmetry magnitude, not direction
     p0 = torch.sigmoid(
         0.30 * uncertainty_index
         + 0.25 * e0
         + 0.20 * (1.0 - tonal_mean_500ms)
-        + 0.15 * h_coupling_skew
+        + 0.15 * torch.abs(h_coupling_skew)
         + 0.10 * wm_contribution
     )
 
@@ -111,9 +112,10 @@ def compute_cognitive_present(
     # spectral change. Low spectral change + low onset velocity = high
     # accuracy (prediction confirmed). Gated by working memory.
     # Pearce 2005: IC = -log2(P(event|context)).
+    # abs() on velocity: low MAGNITUDE of change = accurate prediction
     p1 = torch.sigmoid(
         0.30 * (1.0 - spec_change_max)
-        + 0.25 * (1.0 - onset_vel_100ms)
+        + 0.25 * (1.0 - torch.abs(onset_vel_100ms))
         + 0.20 * wm_contribution
         + 0.15 * m1
         + 0.10 * trist_mean

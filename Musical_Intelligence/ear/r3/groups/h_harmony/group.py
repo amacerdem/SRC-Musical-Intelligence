@@ -75,10 +75,12 @@ class HarmonyGroup(BaseSpectralGroup):
         # Normalize chroma per-frame
         chroma_norm = chroma / chroma.norm(dim=-1, keepdim=True).clamp(min=eps)
         key_corrs = torch.matmul(chroma_norm, key_profiles.T)  # (B, T, 24)
-        key_clarity = key_corrs.max(dim=-1).values
-        # Min-max [0.3, 0.95] -> [0, 1]
-        key_clarity = (key_clarity - 0.3) / (0.95 - 0.3)
-        key_clarity = key_clarity.clamp(0, 1)
+        best_corr = key_corrs.max(dim=-1).values
+        mean_corr = key_corrs.mean(dim=-1)
+        # Clarity = how much the best key stands out from the average.
+        # Uniform chroma → all correlations equal → difference ≈ 0.
+        # Strong tonal → best ≫ mean → difference ≈ 0.2-0.3.
+        key_clarity = ((best_corr - mean_corr) * 5.0).clamp(0, 1)
 
         # [76-81] tonnetz: chroma @ tonnetz_matrix, then (x+1)/2
         tonnetz = torch.matmul(chroma, tonnetz_mat)  # (B, T, 6)

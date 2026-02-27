@@ -82,16 +82,14 @@ def compute_cognitive_present(
     consonance = r3_features[:, :, _PLEAS]
     ambiguity = 1.0 - torch.abs(consonance - 0.5) * 2
 
-    # Center velocity morphs (H³ signed norm maps 0→0.5)
-    energy_vel_c = (energy_vel - 0.5) * 2.0
-    flux_vel_c = (spectral_flux_vel - 0.5) * 2.0
-    sethares_vel_c = (sethares_vel - 0.5) * 2.0
+    # Velocity morphs are H³ signed, already [-1, 1] with 0 at origin
 
     # P0: Salience network — attention-gated consonance salience
     # Koelsch: dissonant -> amygdala/hippocampus; consonant -> AI/HG/NAc
+    # abs(): both energy onset and offset are salient events
     p0 = _wsig(
         0.30 * m0 + 0.25 * spectral_auto_h3
-        + 0.25 * loudness_h3 + 0.20 * energy_vel_c
+        + 0.25 * loudness_h3 + 0.20 * torch.abs(energy_vel)
     )
 
     # P1: Affective evaluation — consonance-weighted valence [-1, 1]
@@ -99,13 +97,13 @@ def compute_cognitive_present(
     p1 = torch.tanh(
         0.50 * e2
         + 0.30 * (pleas_h3 - roughness_mean)
-        + 0.20 * flux_vel_c
+        + 0.20 * spectral_flux_vel
     )
 
     # P2: Sensory load — processing demand
     # Bravo 2017: intermediate dissonance -> increased HG load
     p2 = _wsig(
-        0.30 * ambiguity + 0.25 * sethares_vel_c
+        0.30 * ambiguity + 0.25 * sethares_vel
         + 0.25 * spectral_auto_h8 + 0.20 * loudness_mean_1s
     )
 

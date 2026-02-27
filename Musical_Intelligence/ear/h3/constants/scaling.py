@@ -1,4 +1,4 @@
-"""H3 morph scaling -- per-morph normalization to [0, 1].
+"""H3 morph scaling -- per-morph normalization to [0, 1] or [-1, 1].
 
 Provides the MORPH_SCALE array and two normalization helpers that work with
 both plain floats and ``torch.Tensor`` inputs.
@@ -92,16 +92,16 @@ def normalize_unsigned(raw: Union[float, "torch.Tensor"], scale: float) -> Union
 
 
 def normalize_signed(raw: Union[float, "torch.Tensor"], scale: float) -> Union[float, "torch.Tensor"]:  # noqa: F821
-    """Normalize a signed morph value to [0, 1] with zero mapped to 0.5.
+    """Normalize a signed morph value to [-1, 1] with zero mapped to 0.
 
     Formula::
 
-        output = clamp((raw / scale + 1) / 2, 0, 1)
+        output = clamp(raw / scale, -1, 1)
 
     This maps:
-    - ``raw =  0``       to ``0.5``
-    - ``raw = +scale``   to ``1.0``
-    - ``raw = -scale``   to ``0.0``
+    - ``raw =  0``       to ``0.0``
+    - ``raw = +scale``   to ``+1.0``
+    - ``raw = -scale``   to ``-1.0``
 
     Parameters
     ----------
@@ -113,6 +113,6 @@ def normalize_signed(raw: Union[float, "torch.Tensor"], scale: float) -> Union[f
     Returns
     -------
     float or torch.Tensor
-        Value(s) in [0, 1], with zero centred at 0.5.
+        Value(s) in [-1, 1], with zero at origin.
     """
-    return _clamp((raw / scale + 1.0) / 2.0, 0.0, 1.0)
+    return _clamp(raw / scale, -1.0, 1.0)

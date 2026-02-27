@@ -18,7 +18,7 @@ _MOD_BINS = [round(r / _FREQ_RES) for r in _MOD_RATES]  # [1, 3, 6, 12, 24, 48]
 
 def _build_bark_matrix(n_mels: int = 128) -> Tensor:
     """Build mel-to-24-Bark-band rebinning matrix."""
-    f_min, f_max = 20.0, 8000.0
+    f_min, f_max = 0.0, 22050.0
     mel_min = 2595.0 * math.log10(1.0 + f_min / 700.0)
     mel_max = 2595.0 * math.log10(1.0 + f_max / 700.0)
     mels = torch.linspace(mel_min, mel_max, n_mels)
@@ -39,7 +39,7 @@ def _build_bark_matrix(n_mels: int = 128) -> Tensor:
 
 def _build_a_weights(n_mels: int = 128) -> Tensor:
     """Build A-weighting curve per mel bin (IEC 61672-1)."""
-    f_min, f_max = 20.0, 8000.0
+    f_min, f_max = 0.0, 22050.0
     mel_min = 2595.0 * math.log10(1.0 + f_min / 700.0)
     mel_max = 2595.0 * math.log10(1.0 + f_max / 700.0)
     mels = torch.linspace(mel_min, mel_max, n_mels)

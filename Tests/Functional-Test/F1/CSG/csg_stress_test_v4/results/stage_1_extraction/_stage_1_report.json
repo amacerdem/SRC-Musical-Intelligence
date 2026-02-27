@@ -1,6 +1,6 @@
 {
   "stage": "1_extraction",
-  "timestamp": "2026-02-27T13:13:56.703674",
+  "timestamp": "2026-02-27T20:17:01.487092",
   "n_audio": 13,
   "audio_keys": [
     "bach",
@@ -21,8 +21,8 @@
     "bach": {
       "n_frames": 5168,
       "duration_s": 30.0,
-      "fps": 745.6,
-      "elapsed_s": 7.61,
+      "fps": 1010.2,
+      "elapsed_s": 5.71,
       "dim_stats": {
         "E0:salience_activation": {
           "mean": 0.611748,
@@ -73,10 +73,10 @@
           ]
         },
         "P0:salience_network": {
-          "mean": 0.757738,
-          "std": 0.097724,
+          "mean": 0.763913,
+          "std": 0.097736,
           "range": [
-            0.185771,
+            0.290172,
             0.845818
           ]
         },
@@ -125,8 +125,8 @@
     "beethoven": {
       "n_frames": 5168,
       "duration_s": 30.0,
-      "fps": 603.7,
-      "elapsed_s": 9.2,
+      "fps": 767.0,
+      "elapsed_s": 7.44,
       "dim_stats": {
         "E0:salience_activation": {
           "mean": 0.70183,
@@ -177,10 +177,10 @@
           ]
         },
         "P0:salience_network": {
-          "mean": 0.738668,
-          "std": 0.059943,
+          "mean": 0.748822,
+          "std": 0.052193,
           "range": [
-            0.471925,
+            0.574338,
             0.900889
           ]
         },
@@ -229,8 +229,8 @@
     "duel": {
       "n_frames": 5168,
       "duration_s": 30.0,
-      "fps": 921.9,
-      "elapsed_s": 6.22,
+      "fps": 1043.6,
+      "elapsed_s": 5.5,
       "dim_stats": {
         "E0:salience_activation": {
           "mean": 0.754634,
@@ -281,10 +281,10 @@
           ]
         },
         "P0:salience_network": {
-          "mean": 0.783997,
-          "std": 0.084384,
+          "mean": 0.789578,
+          "std": 0.08198,
           "range": [
-            0.149524,
+            0.293839,
             0.86031
           ]
         },
@@ -333,8 +333,8 @@
     "enigma": {
       "n_frames": 5168,
       "duration_s": 30.0,
-      "fps": 770.4,
-      "elapsed_s": 7.26,
+      "fps": 903.8,
+      "elapsed_s": 6.29,
       "dim_stats": {
         "E0:salience_activation": {
           "mean": 0.702826,
@@ -385,10 +385,10 @@
           ]
         },
         "P0:salience_network": {
-          "mean": 0.7874,
-          "std": 0.107701,
+          "mean": 0.791608,
+          "std": 0.10745,
           "range": [
-            0.146,
+            0.290172,
             0.858406
           ]
         },
@@ -437,8 +437,8 @@
     "herald": {
       "n_frames": 5168,
       "duration_s": 30.0,
-      "fps": 801.1,
-      "elapsed_s": 7.15,
+      "fps": 1090.1,
+      "elapsed_s": 5.32,
       "dim_stats": {
         "E0:salience_activation": {
           "mean": 0.613167,
@@ -489,10 +489,10 @@
           ]
         },
         "P0:salience_network": {
-          "mean": 0.755251,
-          "std": 0.072504,
+          "mean": 0.764176,
+          "std": 0.072336,
           "range": [
-            0.266376,
+            0.290335,
             0.89279
           ]
         },
@@ -541,8 +541,8 @@
     "swan": {
       "n_frames": 5168,
       "duration_s": 30.0,
-      "fps": 933.2,
-      "elapsed_s": 6.16,
+      "fps": 1070.1,
+      "elapsed_s": 5.4,
       "dim_stats": {
         "E0:salience_activation": {
           "mean": 0.655548,
@@ -593,11 +593,11 @@
           ]
         },
         "P0:salience_network": {
-          "mean": 0.742125,
-          "std": 0.042778,
+          "mean": 0.752296,
+          "std": 0.035825,
           "range": [
-            0.202262,
-            0.849528
+            0.29702,
+            0.866409
           ]
         },
         "P1:affective_evaluation": {
@@ -645,8 +645,8 @@
     "yang": {
       "n_frames": 5168,
       "duration_s": 30.0,
-      "fps": 711.4,
-      "elapsed_s": 7.87,
+      "fps": 721.3,
+      "elapsed_s": 7.76,
       "dim_stats": {
         "E0:salience_activation": {
           "mean": 0.694496,
@@ -697,10 +697,10 @@
           ]
         },
         "P0:salience_network": {
-          "mean": 0.785254,
-          "std": 0.025568,
+          "mean": 0.791207,
+          "std": 0.02346,
           "range": [
-            0.68581,
+            0.717154,
             0.887892
           ]
         },
@@ -749,8 +749,8 @@
     "midi/csg/01_major_triad": {
       "n_frames": 862,
       "duration_s": 5.0,
-      "fps": 752.2,
-      "elapsed_s": 1.38,
+      "fps": 898.2,
+      "elapsed_s": 1.2,
       "dim_stats": {
         "E0:salience_activation": {
           "mean": 0.490336,
@@ -801,11 +801,11 @@
           ]
         },
         "P0:salience_network": {
-          "mean": 0.708539,
-          "std": 0.05543,
+          "mean": 0.71353,
+          "std": 0.054147,
           "range": [
-            0.4243,
-            0.841113
+            0.560405,
+            0.844862
           ]
         },
         "P1:affective_evaluation": {
@@ -853,7 +853,7 @@
     "midi/csg/02_m2_dyad": {
       "n_frames": 862,
       "duration_s": 5.0,
-      "fps": 764.1,
+      "fps": 787.0,
       "elapsed_s": 1.43,
       "dim_stats": {
         "E0:salience_activation": {
@@ -905,10 +905,10 @@
           ]
         },
         "P0:salience_network": {
-          "mean": 0.724079,
-          "std": 0.063431,
+          "mean": 0.742669,
+          "std": 0.049556,
           "range": [
-            0.373618,
+            0.569667,
             0.850886
           ]
         },
@@ -957,8 +957,8 @@
     "midi/csg/03_cluster": {
       "n_frames": 862,
       "duration_s": 5.0,
-      "fps": 787.8,
-      "elapsed_s": 1.39,
+      "fps": 851.9,
+      "elapsed_s": 1.34,
       "dim_stats": {
         "E0:salience_activation": {
           "mean": 0.9011,
@@ -1009,11 +1009,11 @@
           ]
         },
         "P0:salience_network": {
-          "mean": 0.735224,
-          "std": 0.074005,
+          "mean": 0.755553,
+          "std": 0.056529,
           "range": [
-            0.357967,
-            0.854274
+            0.588414,
+            0.854715
           ]
         },
         "P1:affective_evaluation": {
@@ -1061,8 +1061,8 @@
     "midi/csg/04_V7_I_resolution": {
       "n_frames": 1206,
       "duration_s": 7.0,
-      "fps": 775.6,
-      "elapsed_s": 1.85,
+      "fps": 888.6,
+      "elapsed_s": 1.64,
       "dim_stats": {
         "E0:salience_activation": {
           "mean": 0.62139,
@@ -1113,10 +1113,10 @@
           ]
         },
         "P0:salience_network": {
-          "mean": 0.736651,
-          "std": 0.062024,
+          "mean": 0.741145,
+          "std": 0.061097,
           "range": [
-            0.408164,
+            0.532104,
             0.914885
           ]
         },
@@ -1124,7 +1124,7 @@
           "mean": -0.04066,
           "std": 0.177212,
           "range": [
-            -0.389077,
+            -0.389076,
             0.366436
           ]
         },
@@ -1165,8 +1165,8 @@
     "midi/csg/05_I_V7_tension": {
       "n_frames": 1206,
       "duration_s": 7.0,
-      "fps": 662.7,
-      "elapsed_s": 2.16,
+      "fps": 858.5,
+      "elapsed_s": 1.71,
       "dim_stats": {
         "E0:salience_activation": {
           "mean": 0.641729,
@@ -1217,10 +1217,10 @@
           ]
         },
         "P0:salience_network": {
-          "mean": 0.740406,
-          "std": 0.054665,
+          "mean": 0.745797,
+          "std": 0.051428,
           "range": [
-            0.409226,
+            0.599733,
             0.91296
           ]
         },
@@ -1269,8 +1269,8 @@
     "midi/csg/06_single_note": {
       "n_frames": 862,
       "duration_s": 5.0,
-      "fps": 702.7,
-      "elapsed_s": 1.52,
+      "fps": 755.2,
+      "elapsed_s": 1.42,
       "dim_stats": {
         "E0:salience_activation": {
           "mean": 0.344343,
@@ -1321,11 +1321,11 @@
           ]
         },
         "P0:salience_network": {
-          "mean": 0.685418,
-          "std": 0.037208,
+          "mean": 0.691602,
+          "std": 0.037451,
           "range": [
-            0.446745,
-            0.831201
+            0.583836,
+            0.856457
           ]
         },
         "P1:affective_evaluation": {

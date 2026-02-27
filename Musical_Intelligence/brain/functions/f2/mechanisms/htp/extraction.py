@@ -82,10 +82,11 @@ def compute_extraction(
     # -- E1: Mid-Level Lead (~200ms) --
     # Perceptual prediction: brightness dynamics + pitch salience velocity.
     # de Vries & Wurm 2023: view-dependent predicted ~200ms ahead.
+    # abs() on velocity: perceptual activity from change magnitude
     e1 = torch.sigmoid(
         0.40 * sharpness_mean_500ms
-        + 0.30 * sharpness_vel_125ms
-        + 0.30 * pitch_sal_vel
+        + 0.30 * torch.abs(sharpness_vel_125ms)
+        + 0.30 * torch.abs(pitch_sal_vel)
     )
 
     # -- E2: Low-Level Lead (~110ms) --

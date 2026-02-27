@@ -74,20 +74,22 @@ def compute_extraction(
     #     Rupp 2022: anterior regions process subsequent notes & pitch variation
     #     Emphasize pitch CHANGE (velocity/trend) over pitch PRESENCE (value)
     #     to avoid inflated E1 for sustained chords.
+    #     abs() on signed morphs: contour detection is direction-agnostic
     #     Coefficients: 0.40 + 0.45 + 0.15 = 1.0
     e1 = _wsig(
-        0.40 * h3(_SHARPNESS, 4, 8, 0)      # sharpness velocity ~125ms
-        + 0.45 * h3(_PITCH_HEIGHT, 4, 18, 2)  # pitch_height trend ~125ms
-        + 0.15 * h3(_PITCH_HEIGHT, 3, 0, 2)  # pitch_height value ~100ms (reduced)
+        0.40 * torch.abs(h3(_SHARPNESS, 4, 8, 0))      # |sharpness velocity| ~125ms
+        + 0.45 * torch.abs(h3(_PITCH_HEIGHT, 4, 18, 2))  # |pitch_height trend| ~125ms
+        + 0.15 * h3(_PITCH_HEIGHT, 3, 0, 2)              # pitch_height value ~100ms
     )
 
     # E2: Contour Complexity — melodic unpredictability
     #     Briley 2013: IRN sources show spectral complexity sensitivity
+    #     abs() on signed morphs: complexity is direction-agnostic
     #     Coefficients: 0.35 + 0.35 + 0.30 = 1.0
     e2 = _wsig(
-        0.35 * h3(_PITCH_HEIGHT, 4, 18, 2)   # pitch_height trend ~125ms
-        + 0.35 * h3(_SHARPNESS, 3, 2, 2)     # sharpness std ~100ms
-        + 0.30 * h3(_PITCH_SAL, 3, 8, 0)     # pitch_salience velocity ~100ms
+        0.35 * torch.abs(h3(_PITCH_HEIGHT, 4, 18, 2))   # |pitch_height trend| ~125ms
+        + 0.35 * h3(_SHARPNESS, 3, 2, 2)                 # sharpness std ~100ms
+        + 0.30 * torch.abs(h3(_PITCH_SAL, 3, 8, 0))     # |pitch_salience velocity| ~100ms
     )
 
     # E3: Gradient Ratio — posterior/anterior balance

@@ -22,8 +22,6 @@ Scientific sources:
 """
 from __future__ import annotations
 
-import math
-
 import torch
 from torch import Tensor
 
@@ -155,10 +153,12 @@ class ConsonanceGroup(BaseSpectralGroup):
             mel_high.var(dim=-1) / mt.mean(dim=-1).clamp(min=eps) - 0.5
         )
 
-        # [1] sethares_dissonance: mean(|diff(mel)|) / max
-        spec_diff = torch.diff(mt, dim=-1)
-        sethares = spec_diff.abs().mean(dim=-1)
-        sethares = sethares / sethares.amax(dim=-1, keepdim=True).clamp(min=eps)
+        # [1] sethares_dissonance: fraction of active mel bins
+        # More active bins → more close-frequency partial pairs → higher
+        # dissonance.  Threshold = 10% of per-frame peak.
+        frame_peak = mt.max(dim=-1, keepdim=True).values.clamp(min=eps)
+        active_frac = (mt > 0.1 * frame_peak).float().mean(dim=-1)  # (B, T)
+        sethares = active_frac.clamp(0, 1)
 
         # [2] helmholtz_kang: lag-1 autocorrelation of spectrum
         m1 = mt[:, :, :-1]

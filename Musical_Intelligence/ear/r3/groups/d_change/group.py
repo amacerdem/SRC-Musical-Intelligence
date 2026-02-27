@@ -37,11 +37,10 @@ class ChangeGroup(BaseSpectralGroup):
         arith_mean = p.mean(dim=-1).clamp(min=eps)
         flatness = log_mean.exp() / arith_mean
 
-        # [24] distribution_concentration: HHI * N, clamped to [0,1]
-        # KNOWN BUG: Both uniform and concentrated distributions map to 1.0
-        # See Docs/R3/Pipeline/Normalization.md Section 4.2
-        # Phase 6 fix: (HHI - 1/N) / (1 - 1/N)
-        concentration = (p.pow(2).sum(dim=-1) * N).clamp(0, 1)
+        # [24] distribution_concentration: normalized HHI
+        # (HHI - 1/N) / (1 - 1/N) maps uniform→0, single-bin→1
+        hhi = p.pow(2).sum(dim=-1)              # [1/N, 1]
+        concentration = ((hhi - 1.0 / N) / (1.0 - 1.0 / N)).clamp(0, 1)
 
         return torch.stack([
             flux, entropy, flatness, concentration

@@ -152,10 +152,12 @@ def compute_extraction(
 
     # -- f03: Arousal Index --
     # Chabin 2020: beta/alpha ratio F(2,15) = 4.77, p = 0.014.
-    # sigma(0.35 * energy_velocity_500ms + 0.30 * rms_energy_100ms)
+    # sigma(0.35 * |energy_velocity_500ms| + 0.30 * rms_energy_100ms)
     # Physiological arousal from sympathetic activation.
+    # abs(): both energy increase (crescendo) and decrease (dramatic silence)
+    # trigger physiological arousal
     f03 = torch.sigmoid(
-        0.35 * rms_vel_500
+        0.35 * torch.abs(rms_vel_500)
         + 0.30 * rms_val_100
     )
 

@@ -35,8 +35,9 @@ class H3Output:
 
     Attributes:
         features: Sparse dictionary mapping each demanded 4-tuple
-            ``(r3_idx, horizon, morph, law)`` to a ``(B, T)`` tensor
-            with values in ``[0, 1]``.
+            ``(r3_idx, horizon, morph, law)`` to a ``(B, T)`` tensor.
+            Unsigned morphs are in ``[0, 1]``; signed morphs
+            (M6, M8, M9, M11, M12, M16, M18, M23) are in ``[-1, 1]``.
         n_tuples: Number of demanded tuples that were computed.
     """
 

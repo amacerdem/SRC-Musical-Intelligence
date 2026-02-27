@@ -79,10 +79,11 @@ def compute_temporal_integration(
 
     # M2: Anterior Activity — contour processing in anterior AC
     #     Norman-Haignere 2013: anterior nonprimary AC for pitch sensitivity
+    #     abs() on velocity: contour activation is direction-agnostic
     m2 = _wsig(
-        0.35 * h3(_SHARPNESS, 4, 8, 0)       # sharpness velocity ~125ms
-        + 0.35 * h3(_PITCH_HEIGHT, 3, 0, 2)   # pitch_height value ~100ms
-        + 0.30 * e2                            # contour_complexity from E-layer
+        0.35 * torch.abs(h3(_SHARPNESS, 4, 8, 0))  # |sharpness velocity| ~125ms
+        + 0.35 * h3(_PITCH_HEIGHT, 3, 0, 2)          # pitch_height value ~100ms
+        + 0.30 * e2                                   # contour_complexity from E-layer
     )
 
     return m0, m1, m2

@@ -1,8 +1,8 @@
 {
   "version": "5.0",
-  "timestamp": "2026-02-27T13:38:34.685935",
+  "timestamp": "2026-02-27T20:19:52.521561",
   "n_stimuli": 36,
-  "processing_time_s": 112.0,
+  "processing_time_s": 43.6,
   "groups": {
     "T1: Consonance Gradient": {
       "description": "E2 monotonicity across 10 intervals",
@@ -201,7 +201,7 @@
         {
           "name": "P0_timbre_variation",
           "passed": true,
-          "detail": "P0 range = 0.112 across timbres (informational)",
+          "detail": "P0 range = 0.110 across timbres (informational)",
           "values": {}
         }
       ]
@@ -336,8 +336,8 @@
           "std": 0.01139
         },
         "P0:salience_network": {
-          "mean": 0.641218,
-          "std": 0.029951
+          "mean": 0.644938,
+          "std": 0.030587
         },
         "P1:affective_evaluation": {
           "mean": 0.364435,
@@ -389,8 +389,8 @@
           "std": 0.009775
         },
         "P0:salience_network": {
-          "mean": 0.654329,
-          "std": 0.027123
+          "mean": 0.659388,
+          "std": 0.027956
         },
         "P1:affective_evaluation": {
           "mean": 0.376637,
@@ -442,8 +442,8 @@
           "std": 0.005103
         },
         "P0:salience_network": {
-          "mean": 0.645298,
-          "std": 0.032752
+          "mean": 0.649196,
+          "std": 0.032897
         },
         "P1:affective_evaluation": {
           "mean": 0.361738,
@@ -495,8 +495,8 @@
           "std": 0.005195
         },
         "P0:salience_network": {
-          "mean": 0.660085,
-          "std": 0.037762
+          "mean": 0.6635,
+          "std": 0.037841
         },
         "P1:affective_evaluation": {
           "mean": 0.301954,
@@ -548,8 +548,8 @@
           "std": 0.003003
         },
         "P0:salience_network": {
-          "mean": 0.68415,
-          "std": 0.031428
+          "mean": 0.687677,
+          "std": 0.032128
         },
         "P1:affective_evaluation": {
           "mean": 0.210914,
@@ -601,8 +601,8 @@
           "std": 0.003428
         },
         "P0:salience_network": {
-          "mean": 0.706182,
-          "std": 0.026208
+          "mean": 0.71276,
+          "std": 0.023709
         },
         "P1:affective_evaluation": {
           "mean": 0.129345,
@@ -654,8 +654,8 @@
           "std": 0.004564
         },
         "P0:salience_network": {
-          "mean": 0.663076,
-          "std": 0.033062
+          "mean": 0.667507,
+          "std": 0.032478
         },
         "P1:affective_evaluation": {
           "mean": 0.225618,
@@ -707,8 +707,8 @@
           "std": 0.004758
         },
         "P0:salience_network": {
-          "mean": 0.664677,
-          "std": 0.035283
+          "mean": 0.668409,
+          "std": 0.034949
         },
         "P1:affective_evaluation": {
           "mean": 0.234069,
@@ -760,8 +760,8 @@
           "std": 0.004973
         },
         "P0:salience_network": {
-          "mean": 0.67122,
-          "std": 0.03407
+          "mean": 0.67867,
+          "std": 0.029896
         },
         "P1:affective_evaluation": {
           "mean": 0.175173,
@@ -813,8 +813,8 @@
           "std": 0.010665
         },
         "P0:salience_network": {
-          "mean": 0.71324,
-          "std": 0.050008
+          "mean": 0.740598,
+          "std": 0.027839
         },
         "P1:affective_evaluation": {
           "mean": -0.27141,
@@ -866,8 +866,8 @@
           "std": 0.002457
         },
         "P0:salience_network": {
-          "mean": 0.691636,
-          "std": 0.036487
+          "mean": 0.695038,
+          "std": 0.036741
         },
         "P1:affective_evaluation": {
           "mean": 0.125075,
@@ -919,8 +919,8 @@
           "std": 0.003257
         },
         "P0:salience_network": {
-          "mean": 0.699432,
-          "std": 0.030244
+          "mean": 0.706823,
+          "std": 0.026466
         },
         "P1:affective_evaluation": {
           "mean": 0.073336,
@@ -972,8 +972,8 @@
           "std": 0.002674
         },
         "P0:salience_network": {
-          "mean": 0.684495,
-          "std": 0.036185
+          "mean": 0.688802,
+          "std": 0.03583
         },
         "P1:affective_evaluation": {
           "mean": 0.085354,
@@ -1025,8 +1025,8 @@
           "std": 0.003643
         },
         "P0:salience_network": {
-          "mean": 0.713877,
-          "std": 0.029748
+          "mean": 0.721269,
+          "std": 0.025528
         },
         "P1:affective_evaluation": {
           "mean": -0.074654,
@@ -1078,8 +1078,8 @@
           "std": 0.005313
         },
         "P0:salience_network": {
-          "mean": 0.731031,
-          "std": 0.032548
+          "mean": 0.736278,
+          "std": 0.031156
         },
         "P1:affective_evaluation": {
           "mean": -0.193889,
@@ -1131,8 +1131,8 @@
           "std": 0.005824
         },
         "P0:salience_network": {
-          "mean": 0.73404,
-          "std": 0.044128
+          "mean": 0.757389,
+          "std": 0.027841
         },
         "P1:affective_evaluation": {
           "mean": -0.462508,
@@ -1184,8 +1184,8 @@
           "std": 0.037317
         },
         "P0:salience_network": {
-          "mean": 0.753694,
-          "std": 0.042963
+          "mean": 0.761436,
+          "std": 0.042653
         },
         "P1:affective_evaluation": {
           "mean": -0.206136,
@@ -1237,8 +1237,8 @@
           "std": 0.033375
         },
         "P0:salience_network": {
-          "mean": 0.745582,
-          "std": 0.033112
+          "mean": 0.753383,
+          "std": 0.033344
         },
         "P1:affective_evaluation": {
           "mean": -0.078807,
@@ -1290,8 +1290,8 @@
           "std": 0.028777
         },
         "P0:salience_network": {
-          "mean": 0.770461,
-          "std": 0.036162
+          "mean": 0.775365,
+          "std": 0.035911
         },
         "P1:affective_evaluation": {
           "mean": -0.120569,
@@ -1343,8 +1343,8 @@
           "std": 0.023799
         },
         "P0:salience_network": {
-          "mean": 0.766928,
-          "std": 0.032188
+          "mean": 0.770847,
+          "std": 0.03208
         },
         "P1:affective_evaluation": {
           "mean": 0.009138,
@@ -1396,8 +1396,8 @@
           "std": 0.005396
         },
         "P0:salience_network": {
-          "mean": 0.749802,
-          "std": 0.02788
+          "mean": 0.756138,
+          "std": 0.024944
         },
         "P1:affective_evaluation": {
           "mean": -0.285935,
@@ -1449,8 +1449,8 @@
           "std": 0.010665
         },
         "P0:salience_network": {
-          "mean": 0.71324,
-          "std": 0.050008
+          "mean": 0.740598,
+          "std": 0.027839
         },
         "P1:affective_evaluation": {
           "mean": -0.27141,
@@ -1502,8 +1502,8 @@
           "std": 0.009162
         },
         "P0:salience_network": {
-          "mean": 0.689171,
-          "std": 0.043768
+          "mean": 0.691055,
+          "std": 0.043129
         },
         "P1:affective_evaluation": {
           "mean": -0.258614,
@@ -1555,8 +1555,8 @@
           "std": 0.004994
         },
         "P0:salience_network": {
-          "mean": 0.752394,
-          "std": 0.027634
+          "mean": 0.759895,
+          "std": 0.02406
         },
         "P1:affective_evaluation": {
           "mean": -0.258117,
@@ -1608,8 +1608,8 @@
           "std": 0.002457
         },
         "P0:salience_network": {
-          "mean": 0.691636,
-          "std": 0.036487
+          "mean": 0.695038,
+          "std": 0.036741
         },
         "P1:affective_evaluation": {
           "mean": 0.125075,
@@ -1661,8 +1661,8 @@
           "std": 0.025377
         },
         "P0:salience_network": {
-          "mean": 0.537428,
-          "std": 0.061924
+          "mean": 0.539613,
+          "std": 0.060883
         },
         "P1:affective_evaluation": {
           "mean": 0.178931,
@@ -1714,8 +1714,8 @@
           "std": 0.011343
         },
         "P0:salience_network": {
-          "mean": 0.671211,
-          "std": 0.022637
+          "mean": 0.676071,
+          "std": 0.023216
         },
         "P1:affective_evaluation": {
           "mean": 0.364078,
@@ -1767,8 +1767,8 @@
           "std": 0.005103
         },
         "P0:salience_network": {
-          "mean": 0.645298,
-          "std": 0.032752
+          "mean": 0.649196,
+          "std": 0.032897
         },
         "P1:affective_evaluation": {
           "mean": 0.361738,
@@ -1820,8 +1820,8 @@
           "std": 0.002457
         },
         "P0:salience_network": {
-          "mean": 0.691636,
-          "std": 0.036487
+          "mean": 0.695038,
+          "std": 0.036741
         },
         "P1:affective_evaluation": {
           "mean": 0.125075,
@@ -1873,8 +1873,8 @@
           "std": 0.002581
         },
         "P0:salience_network": {
-          "mean": 0.682596,
-          "std": 0.042665
+          "mean": 0.689953,
+          "std": 0.039512
         },
         "P1:affective_evaluation": {
           "mean": 0.039292,
@@ -1926,8 +1926,8 @@
           "std": 0.003377
         },
         "P0:salience_network": {
-          "mean": 0.686456,
-          "std": 0.048743
+          "mean": 0.692384,
+          "std": 0.046196
         },
         "P1:affective_evaluation": {
           "mean": -0.129365,
@@ -1979,8 +1979,8 @@
           "std": 0.00726
         },
         "P0:salience_network": {
-          "mean": 0.737175,
-          "std": 0.046106
+          "mean": 0.760467,
+          "std": 0.029173
         },
         "P1:affective_evaluation": {
           "mean": -0.442144,
@@ -2032,8 +2032,8 @@
           "std": 0.007584
         },
         "P0:salience_network": {
-          "mean": 0.798746,
-          "std": 0.004458
+          "mean": 0.800285,
+          "std": 0.004101
         },
         "P1:affective_evaluation": {
           "mean": -0.02794,
@@ -2085,8 +2085,8 @@
           "std": 0.011277
         },
         "P0:salience_network": {
-          "mean": 0.787563,
-          "std": 0.003738
+          "mean": 0.788434,
+          "std": 0.003744
         },
         "P1:affective_evaluation": {
           "mean": 0.203988,
@@ -2138,8 +2138,8 @@
           "std": 0.002457
         },
         "P0:salience_network": {
-          "mean": 0.691636,
-          "std": 0.036487
+          "mean": 0.695038,
+          "std": 0.036741
         },
         "P1:affective_evaluation": {
           "mean": 0.125075,
@@ -2191,8 +2191,8 @@
           "std": 0.009932
         },
         "P0:salience_network": {
-          "mean": 0.803433,
-          "std": 0.007083
+          "mean": 0.805512,
+          "std": 0.006603
         },
         "P1:affective_evaluation": {
           "mean": -0.000337,
