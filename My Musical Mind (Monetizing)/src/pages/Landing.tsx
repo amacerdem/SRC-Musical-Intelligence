@@ -37,7 +37,7 @@ const INSTITUTIONS = [
   { name: "CMU", dept: "School of Music" },
 ];
 
-/* ── Analysis phases (from Onboarding) ────────────────────────────── */
+/* ── Analysis phases ──────────────────────────────────────────────── */
 const ANALYSIS_PHASES = [
   { key: "onboarding.evolving.phases.p1", belief: null },
   { key: "onboarding.evolving.phases.p2", belief: null },
@@ -46,17 +46,59 @@ const ANALYSIS_PHASES = [
   { key: "onboarding.evolving.phases.p5", belief: "tempo" as const },
   { key: "onboarding.evolving.phases.p6", belief: "salience" as const },
   { key: "onboarding.evolving.phases.p7", belief: "salience" as const },
-  { key: "m3.birth.determining", belief: "familiarity" as const },
-  { key: "m3.birth.forming", belief: "reward" as const },
-  { key: "m3.birth.firstConnections", belief: "reward" as const },
+  { key: "onboarding.evolving.phases.p8", belief: "familiarity" as const },
+  { key: "onboarding.evolving.phases.p9", belief: "reward" as const },
+  { key: "onboarding.evolving.phases.p10", belief: "reward" as const },
 ];
 
-const MOCK_STATS = {
-  songCount: 2847,
-  totalMinutes: 186420,
-  topGenres: ["Electronic", "Jazz", "Ambient", "Post-Rock", "Neo-Classical"],
-  topArtists: ["Nils Frahm", "Aphex Twin", "Radiohead", "Max Richter"],
-};
+/* ── Real stats from MI dataset ──────────────────────────────────── */
+function getRealStats() {
+  if (!miDataService.isReady()) {
+    return { trackCount: 0, artistCount: 0, hours: 0, avgTempo: 0, topArtists: [] as string[], topCategories: [] as string[] };
+  }
+  const tracks = miDataService.getAllTracks();
+  const totalSec = tracks.reduce((s, t) => s + t.duration_s, 0);
+  const artists = [...new Set(tracks.map(t => t.artist))];
+  const avgTempo = Math.round(tracks.reduce((s, t) => s + t.signal.tempo, 0) / tracks.length);
+  const artistCounts = new Map<string, number>();
+  for (const t of tracks) artistCounts.set(t.artist, (artistCounts.get(t.artist) || 0) + 1);
+  const topArtists = [...artistCounts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5).map(([name]) => name);
+  const catCounts = new Map<string, number>();
+  for (const t of tracks) for (const c of t.categories) catCounts.set(c, (catCounts.get(c) || 0) + 1);
+  const topCategories = [...catCounts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5).map(([name]) => name);
+  return { trackCount: tracks.length, artistCount: artists.length, hours: Math.round(totalSec / 3600 * 10) / 10, avgTempo, topArtists, topCategories };
+}
+
+function getGeneInsights(genes: MindGenes, lang: string) {
+  const isEN = lang.startsWith("en");
+  return {
+    resolutionInsight: genes.resolution > 0.6
+      ? (isEN ? "harmonic architecture is central to your experience." : "armonik mimari deneyiminizin merkezinde.")
+      : genes.resolution > 0.4
+        ? (isEN ? "you balance structure with spontaneity." : "yap\u0131 ile spontanl\u0131\u011f\u0131 dengeliyorsunuz.")
+        : (isEN ? "you prefer raw, unresolved textures." : "ham, \u00e7\u00f6z\u00fcms\u00fcz dokular\u0131 tercih ediyorsunuz."),
+    tensionInsight: genes.tension > 0.5
+      ? (isEN ? "you crave dramatic build-ups and explosive contrasts." : "dramatik birikimlere ve patlay\u0131c\u0131 kontrastlara \u00e7ekiliyorsunuz.")
+      : genes.tension > 0.3
+        ? (isEN ? "subtle tension weaves through your choices." : "se\u00e7imlerinize ince bir gerilim i\u015fleniyor.")
+        : (isEN ? "you prefer steady, contemplative textures." : "sakin, d\u00fc\u015f\u00fcnceye dayal\u0131 dokular\u0131 tercih ediyorsunuz."),
+    entropyInsight: genes.entropy > 0.5
+      ? (isEN ? "you seek novelty and unpredictability." : "yenilik ve \u00f6ng\u00f6r\u00fclemezlik ar\u0131yorsunuz.")
+      : genes.entropy > 0.3
+        ? (isEN ? "a balanced explorer \u2014 curious but grounded." : "dengeli bir ka\u015fif \u2014 merakl\u0131 ama sa\u011flam.")
+        : (isEN ? "you find comfort in familiar sonic landscapes." : "al\u0131\u015f\u0131k ses manzaralar\u0131nda huzur buluyorsunuz."),
+    resonanceInsight: genes.resonance > 0.5
+      ? (isEN ? "music anchors deep emotional memory." : "m\u00fczik derin duygusal haf\u0131zay\u0131 demirliyor.")
+      : genes.resonance > 0.3
+        ? (isEN ? "selective emotional bonding with music." : "m\u00fczikle se\u00e7ici duygusal ba\u011f.")
+        : (isEN ? "you engage analytically more than emotionally." : "duygusaldan \u00e7ok analitik yakla\u015f\u0131yorsunuz."),
+    plasticityInsight: genes.plasticity > 0.5
+      ? (isEN ? "your mind adapts quickly to new sonic textures." : "zihniniz yeni ses dokular\u0131na h\u0131zla adapte oluyor.")
+      : genes.plasticity > 0.3
+        ? (isEN ? "gradual adaptation \u2014 you let new sounds grow on you." : "kademeli adaptasyon \u2014 yeni seslerin i\u00e7inizde b\u00fcy\u00fcmesine izin veriyorsunuz.")
+        : (isEN ? "deep loyalty to your sonic preferences." : "ses tercihlerinize derin sadakat."),
+  };
+}
 
 /* ── OAuth permissions ────────────────────────────────────────────── */
 const OAUTH_PERMISSIONS = [
@@ -109,11 +151,31 @@ type RevealPhase = "void" | "birth" | "name" | "radar" | "ready";
 export function Landing() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { completeOnboarding, setDisplayName } = useUserStore();
   const birthFromDataset = useM3Store((s) => s.birthFromDataset);
   const mind = useUserStore((s) => s.mind);
   const didAutoConnect = useRef(false);
+
+  // Real data from MI dataset
+  const stats = getRealStats();
+  const profile = miDataService.isReady() ? miDataService.computeAggregateProfile() : null;
+  const genes = profile?.genes ?? { entropy: 0.5, resolution: 0.5, tension: 0.5, resonance: 0.5, plasticity: 0.5 };
+  const insights = getGeneInsights(genes, i18n.language);
+  const phaseVars = {
+    trackCount: String(stats.trackCount),
+    artistCount: String(stats.artistCount),
+    hours: String(stats.hours),
+    avgTempo: String(stats.avgTempo),
+    resolution: genes.resolution.toFixed(2),
+    tension: genes.tension.toFixed(2),
+    entropy: genes.entropy.toFixed(2),
+    resonance: genes.resonance.toFixed(2),
+    plasticity: genes.plasticity.toFixed(2),
+    dominantGene: profile?.dominantGene ?? "resolution",
+    dominantFamily: profile?.dominantFamily ?? "Architects",
+    ...insights,
+  };
 
   // UI flow state
   const [showAuth, setShowAuth] = useState(false);
@@ -136,9 +198,9 @@ export function Landing() {
   const [revealPhase, setRevealPhase] = useState<RevealPhase>("void");
 
   const active = showAuth || showConnect;
-  const typedPhase = useTypewriter(t(phaseKey), 22);
-  const songCount = useTicker(MOCK_STATS.songCount, 6000, progress > 5);
-  const totalHours = useTicker(Math.floor(MOCK_STATS.totalMinutes / 60), 8000, progress > 5);
+  const typedPhase = useTypewriter(t(phaseKey, phaseVars), 22);
+  const songCount = useTicker(stats.trackCount, 6000, progress > 5);
+  const totalHours = useTicker(Math.round(stats.hours), 8000, progress > 5);
 
   const activeBeliefs = ANALYSIS_PHASES
     .slice(0, Math.floor((progress / 100) * ANALYSIS_PHASES.length) + 1)
@@ -729,12 +791,33 @@ export function Landing() {
                           <div className="text-[11px] uppercase tracking-widest text-slate-600 font-display">{t("onboarding.evolving.hoursListening")}</div>
                         </div>
                       </div>
+                      {/* Gene bars */}
+                      <AnimatePresence>
+                        {progress > 25 && (
+                          <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.6 }} className="space-y-2 mb-5">
+                            {GENE_NAMES.map((g, i) => {
+                              const val = genes[g];
+                              const geneColors: Record<string, string> = { entropy: "#F59E0B", resolution: "#6366F1", tension: "#EF4444", resonance: "#10B981", plasticity: "#8B5CF6" };
+                              const unlocked = progress > 25 + i * 12;
+                              return (
+                                <motion.div key={g} initial={{ opacity: 0, x: -10 }} animate={{ opacity: unlocked ? 1 : 0.15, x: 0 }} transition={{ delay: i * 0.15, duration: 0.4 }} className="flex items-center gap-3">
+                                  <span className="text-[10px] font-display font-light uppercase tracking-[0.1em] w-20 text-right" style={{ color: unlocked ? `${geneColors[g]}CC` : "#1E293B" }}>{g}</span>
+                                  <div className="flex-1 h-[3px] rounded-full" style={{ background: "rgba(255,255,255,0.04)" }}>
+                                    <motion.div className="h-full rounded-full" initial={{ width: 0 }} animate={{ width: unlocked ? `${val * 100}%` : "0%" }} transition={{ duration: 1.2, delay: i * 0.15, ease: [0.22, 1, 0.36, 1] }} style={{ background: geneColors[g], boxShadow: unlocked ? `0 0 8px ${geneColors[g]}40` : "none" }} />
+                                  </div>
+                                  <span className="text-[10px] font-mono w-8" style={{ color: unlocked ? "#94A3B8" : "#0F172A" }}>{unlocked ? val.toFixed(2) : "—"}</span>
+                                </motion.div>
+                              );
+                            })}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
                       <AnimatePresence>
                         {showGenres && (
                           <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.5 }} className="flex flex-wrap justify-center gap-2 mb-4">
-                            {MOCK_STATS.topGenres.map((genre, i) => (
-                              <motion.span key={genre} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.15, duration: 0.4 }} className="px-3 py-1.5 rounded-full text-xs font-display font-light text-slate-400" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}>
-                                {genre}
+                            {stats.topCategories.map((cat, i) => (
+                              <motion.span key={cat} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.15, duration: 0.4 }} className="px-3 py-1.5 rounded-full text-xs font-display font-light text-slate-400" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}>
+                                {cat}
                               </motion.span>
                             ))}
                           </motion.div>
@@ -745,7 +828,7 @@ export function Landing() {
                           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }} className="text-center">
                             <span className="text-[10px] uppercase tracking-[0.15em] text-slate-700 block mb-2 font-display">{t("onboarding.evolving.topArtists")}</span>
                             <p className="text-sm text-slate-500 font-body font-light">
-                              {MOCK_STATS.topArtists.map((artist, i) => (
+                              {stats.topArtists.map((artist, i) => (
                                 <motion.span key={artist} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.2, duration: 0.4 }}>
                                   {i > 0 && <span className="text-slate-700 mx-1.5">&middot;</span>}
                                   {artist}

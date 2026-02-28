@@ -1,15 +1,14 @@
-import { useMemo } from "react";
+import { useMemo, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import {
   Flame, ChevronRight, Sparkles, Brain,
-  TrendingUp,
+  TrendingUp, Send,
 } from "lucide-react";
 import { useUserStore } from "@/stores/useUserStore";
 import { getPersona } from "@/data/personas";
 import { MindOrganismCanvas } from "@/components/mind/MindOrganismCanvas";
-import { NeuronBrainCanvas } from "@/components/mind/NeuronBrainCanvas";
 import { DimensionSunburst } from "@/components/mind/DimensionSunburst";
 import {
   generateWeeklyMonologue,
@@ -24,6 +23,9 @@ import { useActiveIdentity } from "@/hooks/useActiveIdentity";
 import { useDimensions } from "@/hooks/useDimensions";
 import { ALL_PSYCHOLOGY, PSYCHOLOGY_COLORS } from "@/data/dimensions";
 import type { DimensionKey6D } from "@/types/dimensions";
+import { useChatStore } from "@/stores/useChatStore";
+import { MiniOrganism } from "@/components/mind/MiniOrganism";
+import { ChatMessage, TypingIndicator } from "@/components/chat/ChatMessage";
 
 /* ── 6D Dimension weekly deltas (mock — matches sunburst order) ── */
 const DIM_DELTAS_6D: Record<string, number> = {
@@ -50,9 +52,22 @@ export function Dashboard() {
   const { mind, level, xp, streak, displayName } = useUserStore();
   const m3Mind = useM3Store((s) => s.mind);
   const identity = useActiveIdentity();
-  const { state: dimState } = useDimensions(isTr ? "tr" : "en");
+  useDimensions(isTr ? "tr" : "en");
   const activePersonaId = m3Mind?.activePersonaId ?? mind?.personaId;
   const persona = activePersonaId ? getPersona(activePersonaId) : null;
+
+  // Chat state
+  const messages = useChatStore((s) => s.messages);
+  const isLoading = useChatStore((s) => s.isLoading);
+  const error = useChatStore((s) => s.error);
+  const sendMessage = useChatStore((s) => s.sendMessage);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
+  }, [messages.length, isLoading]);
 
   if (!mind || !persona) return null;
 
@@ -64,30 +79,57 @@ export function Dashboard() {
   const monologue = useMemo(() => generateWeeklyMonologue(persona, mind.axes, t), [persona, mind.axes, t]);
   const brainQuote = useMemo(() => generateBrainQuote(identity.family, persona.id, t), [identity.family, persona.id, t]);
 
-  const family = identity.family;
   const morphology = identity.morphology;
   const organismStage = m3Mind ? levelToOrganismStage(m3Mind.level) : mind.stage;
   const personaLevel = m3Mind?.level ?? 1;
 
+  const handleSend = () => {
+    const el = inputRef.current;
+    if (!el) return;
+    const text = el.value.trim();
+    if (!text || isLoading) return;
+    sendMessage(text);
+    el.value = "";
+    el.style.height = "auto";
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
+    }
+  };
+
+  const handleInput = () => {
+    const el = inputRef.current;
+    if (!el) return;
+    el.style.height = "auto";
+    el.style.height = Math.min(el.scrollHeight, 100) + "px";
+  };
+
   return (
     <motion.div {...pageTransition} className="relative h-screen overflow-hidden">
-      {/* Organism background — enlarged */}
-      <div className="absolute inset-0 z-0" style={{ transform: "scale(1.4)", transformOrigin: "center center" }}>
-        <MindOrganismCanvas
-          color={color}
-          secondaryColor={beliefColors.reward.primary}
-          stage={organismStage}
-          intensity={0.7}
-          breathRate={4}
-          familyMorphology={morphology}
-          className="w-full h-full"
-          variant="hero"
-          interactive
+      {/* Subtle persona-colored ambient background — no WebGL */}
+      <div className="absolute inset-0 z-0">
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `radial-gradient(ellipse 80% 60% at 50% 30%, ${color}08 0%, transparent 60%)`,
+          }}
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `radial-gradient(ellipse 50% 40% at 20% 80%, ${color}05 0%, transparent 50%)`,
+          }}
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `radial-gradient(ellipse 40% 35% at 80% 70%, ${beliefColors.reward.primary}04 0%, transparent 50%)`,
+          }}
         />
       </div>
-      <div className="absolute inset-0 z-[1] pointer-events-none"
-        style={{ background: `radial-gradient(ellipse 60% 60% at 50% 45%, transparent 15%, rgba(0,0,0,0.7) 55%, rgba(0,0,0,0.92) 100%)` }}
-      />
       <div className="cinematic-vignette z-[2]" />
 
       {/* ── TOP-LEFT: HUD Stats ──────────────────────────────────── */}
@@ -113,16 +155,47 @@ export function Dashboard() {
       {/* ═══ MAIN LAYOUT ══════════════════════════════════════════ */}
       <div className="relative z-10 h-full flex flex-col px-5 sm:px-8 md:px-10 pt-10 pb-24">
 
-        {/* ── TOP: Identity ───────────────────────────────────── */}
-        <motion.div {...cinematicReveal} className="text-center py-0.5">
-          <span className="text-xs font-display font-light tracking-[0.25em] uppercase" style={{ color: `${color}90` }}>
-            {t(`stages.${mind.stage}`)}
-          </span>
+        {/* ── TOP: Persona Identity — prominent, personal ──────── */}
+        <motion.div {...cinematicReveal} className="text-center pt-1 pb-2">
           {displayName && displayName !== "You" && (
-            <span className="text-sm text-slate-500 font-display font-light ml-4">
+            <motion.p
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 0.5, y: 0 }}
+              transition={{ delay: 0.1, duration: 0.8 }}
+              className="text-sm text-slate-500 font-display font-light mb-1"
+            >
               {t("dashboard.welcomeBack")} <span className="text-slate-300 font-medium">{displayName}</span>
-            </span>
+            </motion.p>
           )}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.92 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+            className="flex items-center justify-center gap-3"
+          >
+            <h1
+              className="text-3xl md:text-4xl lg:text-5xl font-display font-bold tracking-tight leading-none"
+              style={{ color }}
+            >
+              {t(`personas.${persona.id}.name`)}
+            </h1>
+            <motion.button
+              onClick={() => navigate(`/info/${persona.id}`)}
+              className="group p-1.5 rounded-full transition-all duration-500 hover:scale-110"
+              style={{ background: `${color}10`, border: `1px solid ${color}15` }}
+              whileHover={{ boxShadow: `0 0 20px ${color}20` }}
+            >
+              <ChevronRight size={16} style={{ color }} className="group-hover:translate-x-0.5 transition-transform" />
+            </motion.button>
+          </motion.div>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.45 }}
+            transition={{ delay: 0.4, duration: 1 }}
+            className="text-sm text-slate-500 font-display font-light italic mt-1"
+          >
+            "{t(`personas.${persona.id}.tagline`)}"
+          </motion.p>
         </motion.div>
 
         {/* ── MAIN GRID ───────────────────────────────────────── */}
@@ -186,70 +259,171 @@ export function Dashboard() {
             </div>
           </div>
 
-          {/* ═ CENTER COLUMN (5 cols): Persona + Neuron Brain ═══ */}
-          <div className="col-span-5 flex flex-col items-center justify-center gap-3 min-h-0">
+          {/* ═ CENTER COLUMN (5 cols): Embedded Chat with Organism ═ */}
+          <motion.div
+            initial={{ opacity: 0, y: 20, filter: "blur(12px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="col-span-5 flex flex-col min-h-0 rounded-2xl overflow-hidden relative"
+          >
+            {/* Living organism background — persona-specific */}
+            <div
+              className="absolute inset-0 z-0"
+              style={{ transform: "scale(1.3)", transformOrigin: "center 40%" }}
+            >
+              <MindOrganismCanvas
+                color={color}
+                secondaryColor={`${color}80`}
+                stage={organismStage}
+                intensity={0.65}
+                breathRate={4}
+                familyMorphology={morphology}
+                className="w-full h-full"
+                variant="hero"
+                constellations
+                interactive
+              />
+            </div>
 
-            {/* View Persona button */}
-            <motion.button
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              onClick={() => navigate(`/info/${persona.id}`)}
-              className="group relative px-6 py-2 rounded-full overflow-hidden transition-all duration-500 hover:scale-[1.05]"
-              style={{ background: `${color}08`, border: `1px solid ${color}20` }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = `${color}15`; e.currentTarget.style.boxShadow = `0 0 30px ${color}15`; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = `${color}08`; e.currentTarget.style.boxShadow = "none"; }}
+            {/* Glassmorphism overlay */}
+            <div
+              className="absolute inset-0 z-[1] rounded-2xl"
+              style={{
+                background: "rgba(0, 0, 0, 0.55)",
+                backdropFilter: "blur(20px)",
+                WebkitBackdropFilter: "blur(20px)",
+                border: `1px solid ${color}12`,
+                boxShadow: `0 0 60px ${color}06, 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.04)`,
+              }}
+            />
+
+            {/* Content layer above glass */}
+            <div className="relative z-[2] flex flex-col min-h-0 h-full">
+            {/* Chat Header — persona identity */}
+            <div
+              className="flex items-center gap-3 px-4 py-3 border-b border-white/[0.06]"
+              style={{ background: `${color}06` }}
             >
               <motion.div
-                className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"
-                style={{ background: `radial-gradient(ellipse at 50% 50%, ${color}12, transparent 70%)` }}
+                animate={{ scale: [1, 1.05, 1] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <MiniOrganism color={color} size={32} animated />
+              </motion.div>
+              <div className="flex-1">
+                <div className="text-sm font-display font-medium text-white/90">
+                  {t(`personas.${persona.id}.name`)}
+                </div>
+                <div className="text-[10px] font-mono" style={{ color: `${color}70` }}>
+                  {t("chat.title")}
+                </div>
+              </div>
+              <div
+                className="px-2.5 py-1 rounded-full text-[8px] font-display font-medium tracking-wider uppercase"
+                style={{
+                  background: `${color}10`,
+                  color: `${color}90`,
+                  border: `1px solid ${color}15`,
+                }}
+              >
+                {identity.family}
+              </div>
+            </div>
+
+            {/* Chat Messages */}
+            <div
+              ref={scrollRef}
+              className="flex-1 overflow-y-auto px-4 py-4 space-y-3 scroll-smooth"
+              style={{ scrollbarWidth: "none" }}
+            >
+              {messages.length === 0 && !isLoading && (
+                <div className="flex flex-col items-center justify-center h-full gap-4 py-8">
+                  <motion.div
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    <MiniOrganism color={color} size={56} animated />
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3, duration: 0.8 }}
+                    className="text-center max-w-[280px]"
+                  >
+                    <p className="text-sm text-slate-400 font-body leading-relaxed">
+                      I am your musical mind. Talk to me about your music experiences, emotions, and discoveries.
+                    </p>
+                  </motion.div>
+
+                  {/* Brain quote as conversation starter */}
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.6, duration: 1 }}
+                    className="max-w-[300px] mt-2"
+                  >
+                    <div
+                      className="rounded-2xl rounded-bl-md px-4 py-3 text-[13px] font-body leading-relaxed"
+                      style={{
+                        background: "rgba(255,255,255,0.04)",
+                        border: "1px solid rgba(255,255,255,0.06)",
+                        color: "#cbd5e1",
+                      }}
+                    >
+                      <p className="italic">"{brainQuote}"</p>
+                      <p className="text-[10px] font-mono mt-2" style={{ color: `${color}60` }}>
+                        — {t("dashboard.yourMind", { family: identity.family.slice(0, -1) })}
+                      </p>
+                    </div>
+                  </motion.div>
+                </div>
+              )}
+
+              {messages.map((msg) => (
+                <ChatMessage
+                  key={msg.id}
+                  role={msg.role}
+                  content={msg.content}
+                  accentColor={color}
+                />
+              ))}
+
+              {isLoading && <TypingIndicator accentColor={color} />}
+
+              {error && (
+                <div className="text-center py-2">
+                  <p className="text-xs text-red-400/70 font-body">{t("chat.error")}</p>
+                </div>
+              )}
+            </div>
+
+            {/* Chat Input */}
+            <div className="flex items-end gap-2 px-3 py-3 border-t border-white/[0.06]">
+              <textarea
+                ref={inputRef}
+                onChange={handleInput}
+                onKeyDown={handleKeyDown}
+                placeholder={t("chat.placeholder")}
+                disabled={isLoading}
+                rows={1}
+                className="flex-1 resize-none bg-white/[0.04] border border-white/[0.08] rounded-xl px-3.5 py-2.5 text-sm text-slate-200 placeholder:text-slate-600 outline-none focus:border-white/[0.15] transition-colors font-body"
+                style={{ maxHeight: 100 }}
               />
-              <span className="relative z-10 flex items-center gap-2 text-sm font-display font-medium tracking-wide" style={{ color }}>
-                <Sparkles size={14} className="group-hover:animate-pulse" />
-                {t("dashboard.viewPersona")}
-                <ChevronRight size={14} className="group-hover:translate-x-0.5 transition-transform duration-300" />
-              </span>
-            </motion.button>
-
-            {/* Persona identity */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
-              className="text-center"
-            >
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight leading-none" style={{ color }}>
-                {t(`personas.${persona.id}.name`)}
-              </h1>
-              <p className="text-sm text-slate-500 mt-2 font-display font-light italic">
-                {t(`personas.${persona.id}.tagline`)}
-              </p>
-            </motion.div>
-
-            {/* Brain quote */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.8, duration: 1 }}
-              className="text-center max-w-lg px-4"
-            >
-              <p className="text-sm text-slate-400 font-display font-light italic leading-relaxed">
-                "{brainQuote}"
-              </p>
-              <p className="text-xs font-mono text-slate-600 mt-1">— {t("dashboard.yourMind", { family: identity.family.slice(0, -1) })}</p>
-            </motion.div>
-
-            {/* Neuron Brain Visualization */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.85 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.5, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-              className="w-full flex-1 min-h-0 max-h-[340px] spatial-card overflow-hidden relative"
-              style={{ border: `1px solid ${color}10` }}
-            >
-              <NeuronBrainCanvas color={color} />
-            </motion.div>
-          </div>
+              <button
+                onClick={handleSend}
+                disabled={isLoading}
+                className="flex-shrink-0 w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-200 disabled:opacity-30"
+                style={{
+                  background: `${color}20`,
+                  border: `1px solid ${color}30`,
+                }}
+              >
+                <Send size={16} style={{ color }} />
+              </button>
+            </div>
+            </div>{/* /content layer */}
+          </motion.div>
 
           {/* ═ RIGHT COLUMN (4 cols): Peak Moment + Brain Narrative + Genres ═ */}
           <div className="col-span-4 flex flex-col gap-2 min-h-0">

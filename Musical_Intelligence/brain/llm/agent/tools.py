@@ -15,18 +15,59 @@ from typing import Any
 
 TOOLS = [
     {
-        "name": "get_current_dimensions",
+        "name": "search_tracks",
         "description": (
-            "Get the user's current 6D/12D/24D dimension values "
-            "from their most recent listening session. Use this when "
-            "the user asks about their current state or profile."
+            "Search the user's music library for tracks by artist name, "
+            "song title, or keywords. Returns matching tracks with IDs. "
+            "ALWAYS use this first to find a track before calling analyze_track."
         ),
         "input_schema": {
             "type": "object",
             "properties": {
-                "session_id": {
+                "query": {
                     "type": "string",
-                    "description": "Session ID (optional, defaults to most recent)",
+                    "description": "Artist name, song title, or keywords to search for",
+                },
+                "limit": {
+                    "type": "integer",
+                    "description": "Max results to return (default 10)",
+                },
+            },
+            "required": ["query"],
+        },
+    },
+    {
+        "name": "analyze_track",
+        "description": (
+            "Get the full MI brain analysis for a specific track — dimensions, "
+            "beliefs, functions, neurochemicals, temporal profile. Use when the "
+            "user asks about a specific song. Use search_tracks first to find "
+            "the track_id."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "track_id": {
+                    "type": "string",
+                    "description": "Track ID from search_tracks results (e.g. 'tool__lateralus')",
+                },
+            },
+            "required": ["track_id"],
+        },
+    },
+    {
+        "name": "get_current_dimensions",
+        "description": (
+            "Get the user's current 6D/12D/24D dimension values "
+            "from a specific track analysis. Use this when "
+            "the user asks about their current state or a track's dimensions."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "track_id": {
+                    "type": "string",
+                    "description": "Track ID to get dimensions for",
                 },
                 "layer": {
                     "type": "string",
@@ -40,91 +81,48 @@ TOOLS = [
     {
         "name": "get_beliefs",
         "description": (
-            "Get specific belief values from the user's most recent "
-            "analysis session. Only use for Premium/Research tier users "
-            "who ask about specific beliefs."
-        ),
-        "input_schema": {
-            "type": "object",
-            "properties": {
-                "session_id": {
-                    "type": "string",
-                    "description": "Session ID (optional, defaults to most recent)",
-                },
-                "belief_keys": {
-                    "type": "array",
-                    "items": {"type": "string"},
-                    "description": "List of belief keys to retrieve (e.g., ['wanting_ramp', 'prediction_accuracy'])",
-                },
-            },
-            "required": ["belief_keys"],
-        },
-    },
-    {
-        "name": "compare_sessions",
-        "description": (
-            "Compare two listening sessions — show dimension and belief "
-            "deltas. Use when the user asks 'how was this different from last time?'"
-        ),
-        "input_schema": {
-            "type": "object",
-            "properties": {
-                "session_a": {
-                    "type": "string",
-                    "description": "First session ID (earlier)",
-                },
-                "session_b": {
-                    "type": "string",
-                    "description": "Second session ID (later, or 'latest')",
-                },
-                "layer": {
-                    "type": "string",
-                    "enum": ["6d", "12d", "24d"],
-                    "description": "Comparison depth",
-                },
-            },
-            "required": ["session_a", "session_b"],
-        },
-    },
-    {
-        "name": "get_belief_trajectory",
-        "description": (
-            "Get time-series trajectory of specific beliefs or dimensions "
-            "across multiple sessions. Use for trend analysis and evolution insights."
-        ),
-        "input_schema": {
-            "type": "object",
-            "properties": {
-                "keys": {
-                    "type": "array",
-                    "items": {"type": "string"},
-                    "description": "Belief keys or dimension keys to track",
-                },
-                "period": {
-                    "type": "string",
-                    "enum": ["week", "month", "all"],
-                    "description": "Time period to retrieve",
-                },
-            },
-            "required": ["keys", "period"],
-        },
-    },
-    {
-        "name": "analyze_track",
-        "description": (
-            "Run MI analysis on a specific track and return a summary "
-            "of dimensions and notable belief patterns. Use when the user "
-            "shares a song and asks 'what does this music do to my brain?'"
+            "Get specific belief values from a track analysis. "
+            "Beliefs are the 131 neural computations the C³ brain performs. "
+            "Can request specific belief keys or get the most notable ones."
         ),
         "input_schema": {
             "type": "object",
             "properties": {
                 "track_id": {
                     "type": "string",
-                    "description": "Track identifier or Spotify URI",
+                    "description": "Track ID to get beliefs for",
+                },
+                "belief_keys": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                    "description": (
+                        "Specific belief keys (e.g. ['wanting', 'harmonic_stability', "
+                        "'beat_entrainment']). If omitted, returns top 15 most notable."
+                    ),
                 },
             },
-            "required": ["track_id"],
+        },
+    },
+    {
+        "name": "compare_tracks",
+        "description": (
+            "Compare the MI analysis of two tracks — show dimension and "
+            "belief differences. Use when the user asks 'what's the difference "
+            "between these songs?' or 'how do they compare?'"
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "track_a": {
+                    "type": "string",
+                    "description": "First track ID",
+                },
+                "track_b": {
+                    "type": "string",
+                    "description": "Second track ID",
+                },
+            },
+            "required": ["track_a", "track_b"],
         },
     },
     {
@@ -184,10 +182,6 @@ def handle_tool_call(
 ) -> dict[str, Any]:
     """Route a tool call to the appropriate handler.
 
-    In production, these handlers connect to the Lab backend API
-    or directly to the MI analysis pipeline. For now, they return
-    structured placeholder responses.
-
     Args:
         tool_name: Name of the tool being called.
         tool_input: Input parameters from the LLM.
@@ -197,11 +191,11 @@ def handle_tool_call(
         Tool result dict to feed back to the LLM.
     """
     handlers = {
+        "search_tracks": _handle_search_tracks,
+        "analyze_track": _handle_analyze_track,
         "get_current_dimensions": _handle_get_dimensions,
         "get_beliefs": _handle_get_beliefs,
-        "compare_sessions": _handle_compare_sessions,
-        "get_belief_trajectory": _handle_get_trajectory,
-        "analyze_track": _handle_analyze_track,
+        "compare_tracks": _handle_compare_tracks,
         "search_knowledge": _handle_search_knowledge,
         "get_persona_info": _handle_get_persona,
     }
@@ -213,65 +207,179 @@ def handle_tool_call(
     return handler(tool_input, user_tier)
 
 
-# ── Placeholder Handlers ───────────────────────────────────────────
-# These will be connected to the Lab backend in Phase 5.
+# ── Track Data Handlers ────────────────────────────────────────────
 
 
-def _handle_get_dimensions(
+def _handle_search_tracks(
     inputs: dict[str, Any], tier: str
 ) -> dict[str, Any]:
-    """Placeholder: Returns mock dimension data."""
-    return {
-        "status": "not_connected",
-        "message": "MI analysis pipeline not yet connected. Connect via Lab backend API.",
-        "expected_format": {
-            "session_id": "str",
-            "dimensions": {"dim_key": "float (0-1)"},
-            "timestamp": "ISO 8601",
-        },
-    }
+    """Search the user's track library."""
+    from .track_data import list_tracks, search_tracks
 
+    query = inputs.get("query", "")
+    limit = inputs.get("limit", 10)
 
-def _handle_get_beliefs(
-    inputs: dict[str, Any], tier: str
-) -> dict[str, Any]:
-    """Placeholder: Returns mock belief data."""
-    if tier not in ("premium", "research"):
-        return {"error": "Belief-level access requires Premium or Research tier."}
-    return {
-        "status": "not_connected",
-        "message": "MI analysis pipeline not yet connected.",
-    }
+    if not query:
+        tracks = list_tracks()
+        return {"tracks": tracks[:limit], "total": len(tracks)}
 
-
-def _handle_compare_sessions(
-    inputs: dict[str, Any], tier: str
-) -> dict[str, Any]:
-    """Placeholder: Returns mock comparison."""
-    return {
-        "status": "not_connected",
-        "message": "Session comparison requires connected MI pipeline.",
-    }
-
-
-def _handle_get_trajectory(
-    inputs: dict[str, Any], tier: str
-) -> dict[str, Any]:
-    """Placeholder: Returns mock trajectory."""
-    return {
-        "status": "not_connected",
-        "message": "Trajectory analysis requires historical session data.",
-    }
+    results = search_tracks(query, limit=limit)
+    if not results:
+        return {
+            "results": [],
+            "message": f"No tracks found matching '{query}'. Try a different search term.",
+        }
+    return {"results": results, "count": len(results)}
 
 
 def _handle_analyze_track(
     inputs: dict[str, Any], tier: str
 ) -> dict[str, Any]:
-    """Placeholder: Returns mock analysis."""
-    return {
-        "status": "not_connected",
-        "message": "Track analysis requires connected MI pipeline and audio processing.",
+    """Get full MI analysis for a track."""
+    from .track_data import format_track_for_llm, load_track, search_tracks
+
+    track_id = inputs.get("track_id", "")
+    if not track_id:
+        return {"error": "track_id is required. Use search_tracks first to find it."}
+
+    track = load_track(track_id)
+
+    # If exact ID not found, try fuzzy search
+    if not track:
+        results = search_tracks(track_id, limit=1)
+        if results:
+            track = load_track(results[0]["id"])
+
+    if not track:
+        return {
+            "error": f"Track '{track_id}' not found in the analysis database.",
+            "suggestion": "Use search_tracks to find available tracks.",
+        }
+
+    return format_track_for_llm(track, tier=tier)
+
+
+def _handle_get_dimensions(
+    inputs: dict[str, Any], tier: str
+) -> dict[str, Any]:
+    """Get dimension values for a track."""
+    from .track_data import format_dimensions_for_llm, load_track, search_tracks
+
+    track_id = inputs.get("track_id")
+    layer = inputs.get("layer", "6d")
+
+    if layer == "12d" and tier == "free":
+        return {"error": "12D dimensions require Basic tier or higher."}
+    if layer == "24d" and tier not in ("premium", "research"):
+        return {"error": "24D dimensions require Premium tier or higher."}
+
+    if not track_id:
+        return {"error": "track_id is required. Use search_tracks to find a track first."}
+
+    track = load_track(track_id)
+    if not track:
+        results = search_tracks(track_id, limit=1)
+        if results:
+            track = load_track(results[0]["id"])
+
+    if not track:
+        return {"error": f"Track '{track_id}' not found."}
+
+    return format_dimensions_for_llm(track, layer=layer, tier=tier)
+
+
+def _handle_get_beliefs(
+    inputs: dict[str, Any], tier: str
+) -> dict[str, Any]:
+    """Get belief values for a track."""
+    from .track_data import format_beliefs_for_llm, load_track, search_tracks
+
+    track_id = inputs.get("track_id")
+    belief_keys = inputs.get("belief_keys")
+
+    if not track_id:
+        return {"error": "track_id is required. Use search_tracks to find a track first."}
+
+    track = load_track(track_id)
+    if not track:
+        results = search_tracks(track_id, limit=1)
+        if results:
+            track = load_track(results[0]["id"])
+
+    if not track:
+        return {"error": f"Track '{track_id}' not found."}
+
+    return format_beliefs_for_llm(track, belief_keys=belief_keys, tier=tier)
+
+
+def _handle_compare_tracks(
+    inputs: dict[str, Any], tier: str
+) -> dict[str, Any]:
+    """Compare two tracks."""
+    from .track_data import DIM_6D, load_track
+
+    track_a_id = inputs.get("track_a", "")
+    track_b_id = inputs.get("track_b", "")
+
+    track_a = load_track(track_a_id)
+    track_b = load_track(track_b_id)
+
+    if not track_a:
+        return {"error": f"Track A '{track_a_id}' not found."}
+    if not track_b:
+        return {"error": f"Track B '{track_b_id}' not found."}
+
+    result: dict[str, Any] = {
+        "track_a": {"artist": track_a["artist"], "title": track_a["title"]},
+        "track_b": {"artist": track_b["artist"], "title": track_b["title"]},
     }
+
+    # Compare 6D
+    dims_a = track_a.get("dimensions", {}).get("psychology_6d", [])
+    dims_b = track_b.get("dimensions", {}).get("psychology_6d", [])
+    if dims_a and dims_b:
+        deltas = {}
+        for i, key in enumerate(DIM_6D):
+            if i < len(dims_a) and i < len(dims_b):
+                delta = round(dims_b[i] - dims_a[i], 3)
+                deltas[key] = {
+                    "a": round(dims_a[i], 3),
+                    "b": round(dims_b[i], 3),
+                    "delta": delta,
+                    "direction": "higher" if delta > 0.05 else ("lower" if delta < -0.05 else "similar"),
+                }
+        result["psychology_6d_comparison"] = deltas
+
+    # Compare functions
+    func_a = track_a.get("functions", {})
+    func_b = track_b.get("functions", {})
+    if func_a and func_b:
+        func_deltas = {}
+        for f in ["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9"]:
+            va = func_a.get(f, 0)
+            vb = func_b.get(f, 0)
+            func_deltas[f] = {
+                "a": round(va, 3), "b": round(vb, 3), "delta": round(vb - va, 3),
+            }
+        result["function_comparison"] = func_deltas
+
+    # Compare neurochemicals
+    neuro_a = track_a.get("neuro_4d", {})
+    neuro_b = track_b.get("neuro_4d", {})
+    if neuro_a and neuro_b:
+        neuro_deltas = {}
+        for key in ["DA", "NE", "OPI", "5HT"]:
+            va = neuro_a.get(key, 0)
+            vb = neuro_b.get(key, 0)
+            neuro_deltas[key] = {
+                "a": round(va, 3), "b": round(vb, 3), "delta": round(vb - va, 3),
+            }
+        result["neurochemical_comparison"] = neuro_deltas
+
+    return result
+
+
+# ── Knowledge & Persona Handlers ──────────────────────────────────
 
 
 def _handle_search_knowledge(
@@ -286,7 +394,6 @@ def _handle_search_knowledge(
     if not query:
         return {"error": "Query is required."}
 
-    # Use local embeddings if no OpenAI key is set
     use_local = not bool(os.environ.get("OPENAI_API_KEY"))
 
     try:

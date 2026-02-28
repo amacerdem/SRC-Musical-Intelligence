@@ -42,6 +42,17 @@ function mapTier(tier: string): string {
   return tier; // free, basic, premium pass through
 }
 
+/** Detect language from message text — Turkish if it contains
+ *  Turkish-specific characters or common Turkish words, else English. */
+function detectLanguage(text: string): "tr" | "en" {
+  // Turkish-specific characters
+  if (/[şŞçÇğĞüÜöÖıİ]/.test(text)) return "tr";
+  // Common Turkish words (case-insensitive)
+  const trWords = /\b(ve|bir|bu|da|de|ben|sen|ne|mi|mı|için|ile|var|yok|nasıl|neden|ama|çok|gibi|benim|senin|müzik|şarkı|dinle)\b/i;
+  if (trWords.test(text)) return "tr";
+  return "en";
+}
+
 /** Build a ChatRequest from current store state */
 function buildChatRequest(
   message: string,
@@ -59,7 +70,7 @@ function buildChatRequest(
     user_id: userStore.displayName || "anonymous",
     session_id: sessionId ?? undefined,
     message,
-    language: i18next.language?.startsWith("tr") ? "tr" : "en",
+    language: detectLanguage(message),
     persona_id: personaId,
     persona_name: persona?.name ?? "Dopamine Seeker",
     family,
