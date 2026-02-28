@@ -1,7 +1,10 @@
+import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { AppShell } from "@/components/layout/AppShell";
 import { useUserStore } from "@/stores/useUserStore";
+import { miDataService } from "@/services/MIDataService";
+import { initLibraryTracks } from "@/data/track-library";
 
 /* Pages */
 import { Landing } from "@/pages/Landing";
@@ -18,6 +21,22 @@ import { SpotifyProfile } from "@/pages/SpotifyProfile";
 
 export default function App() {
   const { hasCompletedOnboarding } = useUserStore();
+  const [dataReady, setDataReady] = useState(false);
+
+  useEffect(() => {
+    miDataService.init().then(() => {
+      initLibraryTracks();
+      setDataReady(true);
+    });
+  }, []);
+
+  if (!dataReady) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="text-white/60 text-sm animate-pulse">Loading MI data...</div>
+      </div>
+    );
+  }
 
   return (
     <BrowserRouter>
