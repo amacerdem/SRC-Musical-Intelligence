@@ -874,33 +874,38 @@ function FlowDimLabels({ values, dims, animated }: {
   const fontSize = dims.length <= 6 ? 11 : dims.length <= 12 ? 9 : 7;
   const dotSize = dims.length <= 6 ? 7 : dims.length <= 12 ? 5 : 4;
 
+  /* Sort by value descending so highest-value label is at top,
+     matching the Y-axis order of curves in the flow graph */
+  const sorted = useMemo(() => {
+    const items = dims.map((dim, i) => ({ dim, value: values[i] ?? 0 }));
+    items.sort((a, b) => b.value - a.value);
+    return items;
+  }, [dims, values]);
+
   return (
     <div
       className="flex flex-col justify-around py-2 flex-shrink-0 border-r border-white/[0.04]"
       style={{ width: dims.length <= 6 ? 90 : dims.length <= 12 ? 76 : 62 }}
     >
-      {dims.map((dim, i) => {
-        const value = values[i] ?? 0;
-        return (
-          <div key={dim.key} className="flex items-center gap-1.5 px-2">
-            <div
-              className="flex-shrink-0 rounded-full"
-              style={{
-                width: dotSize,
-                height: dotSize,
-                background: dim.color,
-                boxShadow: animated ? `0 0 5px ${dim.color}60` : "none",
-              }}
-            />
-            <span
-              className="font-display truncate leading-none font-medium"
-              style={{ fontSize, color: dim.color, opacity: animated ? 0.9 : 0.7 }}
-            >
-              {dim.name}
-            </span>
-          </div>
-        );
-      })}
+      {sorted.map(({ dim }) => (
+        <div key={dim.key} className="flex items-center gap-1.5 px-2">
+          <div
+            className="flex-shrink-0 rounded-full"
+            style={{
+              width: dotSize,
+              height: dotSize,
+              background: dim.color,
+              boxShadow: animated ? `0 0 5px ${dim.color}60` : "none",
+            }}
+          />
+          <span
+            className="font-display truncate leading-none font-medium"
+            style={{ fontSize, color: dim.color, opacity: animated ? 0.9 : 0.7 }}
+          >
+            {dim.name}
+          </span>
+        </div>
+      ))}
     </div>
   );
 }

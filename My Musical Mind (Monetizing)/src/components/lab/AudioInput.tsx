@@ -82,7 +82,7 @@ function DatasetSearch({ accentColor, onSelect }: { accentColor: string; onSelec
 
   useEffect(() => {
     const labTracks = miDataService.getAllTracks().filter(
-      (t) => t.id.includes("swan_lake")
+      (t) => t.id.includes("swan_lake") && t.duration_s > 60
     );
     if (!query.trim()) {
       setResults(labTracks);

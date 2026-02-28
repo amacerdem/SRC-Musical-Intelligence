@@ -67,7 +67,7 @@ export default function App() {
             <Route
               path="/lab"
               element={
-                hasCompletedOnboarding ? <Lab /> : <Navigate to="/" />
+                hasCompletedOnboarding ? <Dashboard /> : <Navigate to="/" />
               }
             />
             <Route
