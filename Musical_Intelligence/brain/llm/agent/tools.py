@@ -15,6 +15,20 @@ from typing import Any
 
 TOOLS = [
     {
+        "name": "get_listening_profile",
+        "description": (
+            "Get the user's complete listening profile — recently played tracks, "
+            "saved/liked tracks, top tracks, persona family distribution across "
+            "their library, and average gene profile. Use this when the user asks "
+            "about their listening habits, favorite music, library summary, or "
+            "when you want to personalize a recommendation based on their taste."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {},
+        },
+    },
+    {
         "name": "search_tracks",
         "description": (
             "Search the user's music library for tracks by artist name, "
@@ -237,6 +251,7 @@ def handle_tool_call(
         Tool result dict to feed back to the LLM.
     """
     handlers = {
+        "get_listening_profile": _handle_listening_profile,
         "search_tracks": _handle_search_tracks,
         "analyze_track": _handle_analyze_track,
         "get_current_dimensions": _handle_get_dimensions,
@@ -253,6 +268,18 @@ def handle_tool_call(
         return {"error": f"Unknown tool: {tool_name}"}
 
     return handler(tool_input, user_tier)
+
+
+# ── Listening Profile Handler ──────────────────────────────────────
+
+
+def _handle_listening_profile(
+    inputs: dict[str, Any], tier: str
+) -> dict[str, Any]:
+    """Get user's listening profile."""
+    from .track_data import get_listening_profile
+
+    return get_listening_profile()
 
 
 # ── Track Data Handlers ────────────────────────────────────────────

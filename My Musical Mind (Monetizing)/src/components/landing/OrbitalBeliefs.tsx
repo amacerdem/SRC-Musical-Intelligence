@@ -1,15 +1,17 @@
 import { motion } from "framer-motion";
-import { beliefColors } from "@/design/tokens";
+import { ALL_PSYCHOLOGY } from "@/data/dimensions";
 
-const beliefs = [
-  { name: "Consonance", key: "consonance" as const, orbit: 90, speed: 24, startAngle: 330 },
-  { name: "Prediction", key: "prediction" as const, orbit: 105, speed: 27, startAngle: 21 },
-  { name: "Tempo", key: "tempo" as const, orbit: 120, speed: 30, startAngle: 73 },
-  { name: "Salience", key: "salience" as const, orbit: 135, speed: 36, startAngle: 124 },
-  { name: "Emotion", key: "emotion" as const, orbit: 150, speed: 22, startAngle: 176 },
-  { name: "Familiarity", key: "familiarity" as const, orbit: 165, speed: 28, startAngle: 227 },
-  { name: "Reward", key: "reward" as const, orbit: 180, speed: 32, startAngle: 279 },
+const dimensions = [
+  { key: "discovery",  orbit: 90,  speed: 24, startAngle: 330 },
+  { key: "intensity",  orbit: 110, speed: 28, startAngle: 55 },
+  { key: "flow",       orbit: 130, speed: 32, startAngle: 120 },
+  { key: "depth",      orbit: 150, speed: 26, startAngle: 185 },
+  { key: "trace",      orbit: 170, speed: 30, startAngle: 250 },
+  { key: "sharing",    orbit: 190, speed: 34, startAngle: 315 },
 ];
+
+const dimColors: Record<string, string> = {};
+for (const d of ALL_PSYCHOLOGY) dimColors[d.key] = d.color;
 
 interface Props {
   visible: boolean;
@@ -21,9 +23,8 @@ export function OrbitalBeliefs({ visible, size = 500 }: Props) {
 
   return (
     <div className="relative" style={{ width: size, height: size }}>
-      {/* Orbital rings */}
-      {beliefs.map((b, i) => {
-        const colors = beliefColors[b.key];
+      {dimensions.map((b, i) => {
+        const color = dimColors[b.key] ?? "#A855F7";
         return (
           <motion.div
             key={b.key}
@@ -40,7 +41,7 @@ export function OrbitalBeliefs({ visible, size = 500 }: Props) {
                 height: b.orbit * 2,
                 left: center - b.orbit,
                 top: center - b.orbit,
-                background: `conic-gradient(from ${b.startAngle}deg, ${colors.primary}50, ${colors.primary}44 5%, ${colors.primary}38 10%, ${colors.primary}2C 16%, ${colors.primary}1E 22%, ${colors.primary}12 30%, ${colors.primary}08 38%, ${colors.primary}03 46%, transparent 55%, transparent 100%)`,
+                background: `conic-gradient(from ${b.startAngle}deg, ${color}50, ${color}44 5%, ${color}38 10%, ${color}2C 16%, ${color}1E 22%, ${color}12 30%, ${color}08 38%, ${color}03 46%, transparent 55%, transparent 100%)`,
                 maskImage: `radial-gradient(transparent ${b.orbit - 2}px, black ${b.orbit - 1}px, black ${b.orbit + 1}px, transparent ${b.orbit + 2}px)`,
                 WebkitMaskImage: `radial-gradient(transparent ${b.orbit - 2}px, black ${b.orbit - 1}px, black ${b.orbit + 1}px, transparent ${b.orbit + 2}px)`,
                 animation: `orbit ${b.speed}s linear infinite`,
@@ -55,11 +56,11 @@ export function OrbitalBeliefs({ visible, size = 500 }: Props) {
                 height: b.orbit * 2,
                 left: center - b.orbit,
                 top: center - b.orbit,
-                border: `1px solid ${colors.primary}06`,
+                border: `1px solid ${color}06`,
               }}
             />
 
-            {/* Belief dot */}
+            {/* Dimension dot */}
             <motion.div
               className="absolute"
               style={{
@@ -68,8 +69,8 @@ export function OrbitalBeliefs({ visible, size = 500 }: Props) {
                 left: center + b.orbit - 4,
                 top: center - 4,
                 borderRadius: "50%",
-                background: colors.primary,
-                boxShadow: `0 0 14px ${colors.primary}80, 0 0 35px ${colors.primary}40`,
+                background: color,
+                boxShadow: `0 0 14px ${color}80, 0 0 35px ${color}40`,
                 animation: `orbit ${b.speed}s linear infinite`,
                 transformOrigin: `${-b.orbit + 4}px 4px`,
               }}

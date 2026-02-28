@@ -30,7 +30,7 @@ import { ALL_PSYCHOLOGY } from "@/data/dimensions";
 
 import { AudioInput } from "@/components/lab/AudioInput";
 import { DepthSelector } from "@/components/lab/DepthSelector";
-import { WaveformOverlay } from "@/components/lab/WaveformOverlay";
+import { FlowTimeline } from "@/components/lab/FlowTimeline";
 import { AnalysisSummary } from "@/components/lab/AnalysisSummary";
 import { ChatMessage, TypingIndicator } from "@/components/chat/ChatMessage";
 import { MiniOrganism } from "@/components/mind/MiniOrganism";
@@ -288,19 +288,22 @@ export function Lab() {
           </div>
         </motion.div>
 
-        {/* ── 3-COL × 2-ROW GRID ─────────────────────────────────── */}
+        {/* ── 3-COL × 3-ROW GRID — Flow centered vertically ────── */}
+        {/*  Col 1 (240px): Source+Summary — spans all rows         */}
+        {/*  Col 2 (1fr):   Row1=Radar  Row2=FLOW  Row3=spacer     */}
+        {/*  Col 3 (280px): Chat — spans all rows                   */}
         <div
           className="flex-1 min-h-0 grid gap-0"
           style={{
             gridTemplateColumns: "240px 1fr 280px",
-            gridTemplateRows: "1fr minmax(200px, 260px)",
+            gridTemplateRows: "1fr 4fr 0.5fr",
           }}
         >
 
-          {/* ═ COL 1 — Source + Summary ═══════════════════════════ */}
+          {/* ═ COL 1 — Source + Summary (spans all rows) ═════════ */}
           <div
             className="flex flex-col min-h-0 overflow-hidden border-r border-white/[0.04]"
-            style={{ gridRow: "1 / 2", gridColumn: "1 / 2" }}
+            style={{ gridRow: "1 / -1", gridColumn: "1 / 2" }}
           >
             <motion.div
               initial={{ opacity: 0, x: -12 }}
@@ -327,7 +330,7 @@ export function Lab() {
             </motion.div>
           </div>
 
-          {/* ═ COL 2 — Animated Radar (center stage) ══════════════ */}
+          {/* ═ COL 2, ROW 1 — Animated Radar (above flow) ═══════ */}
           <div
             ref={radarCellRef}
             className="flex items-center justify-center min-h-0 overflow-hidden relative"
@@ -335,18 +338,18 @@ export function Lab() {
           >
             {/* ── Idle state ────────────────────────── */}
             {phase === "idle" && (
-              <div className="flex flex-col items-center justify-center gap-5 relative">
+              <div className="flex flex-col items-center justify-center gap-4 relative">
                 <motion.div
                   animate={{ scale: [1, 1.08, 1], opacity: [0.25, 0.45, 0.25] }}
                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                 >
-                  <FlaskConical size={48} className="text-slate-700" />
+                  <FlaskConical size={40} className="text-slate-700" />
                 </motion.div>
-                <p className="text-sm font-body text-slate-600 text-center max-w-[240px] leading-relaxed">
+                <p className="text-xs font-body text-slate-600 text-center max-w-[200px] leading-relaxed">
                   Select a track to begin analysis.
                 </p>
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03]">
-                  {[70, 110, 150, 190].map((r) => (
+                  {[60, 100, 140].map((r) => (
                     <div key={r} className="absolute rounded-full border border-white/40" style={{ width: r * 2, height: r * 2 }} />
                   ))}
                 </div>
@@ -355,11 +358,11 @@ export function Lab() {
 
             {/* ── Analyzing state ───────────────────── */}
             {phase === "analyzing" && (
-              <div className="flex flex-col items-center justify-center gap-5 relative">
+              <div className="flex flex-col items-center justify-center gap-4 relative">
                 <motion.div animate={{ rotate: 360 }} transition={{ duration: 4, repeat: Infinity, ease: "linear" }}>
-                  <FlaskConical size={36} style={{ color: `${color}50` }} />
+                  <FlaskConical size={32} style={{ color: `${color}50` }} />
                 </motion.div>
-                <div className="w-48">
+                <div className="w-40">
                   <div className="h-1.5 rounded-full bg-white/5 overflow-hidden">
                     <motion.div className="h-full rounded-full"
                       style={{ background: color, boxShadow: `0 0 12px ${color}60` }}
@@ -367,24 +370,15 @@ export function Lab() {
                     />
                   </div>
                 </div>
-                <span className="text-xs font-mono text-slate-500">Analyzing... {Math.round(progress)}%</span>
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  {[100, 150, 200].map((r, i) => (
-                    <motion.div key={r} className="absolute rounded-full"
-                      style={{ width: r * 2, height: r * 2, border: `1px solid ${color}` }}
-                      animate={{ opacity: [0.03, 0.08, 0.03], scale: [1, 1.02, 1] }}
-                      transition={{ duration: 3, delay: i * 0.5, repeat: Infinity, ease: "easeInOut" }}
-                    />
-                  ))}
-                </div>
+                <span className="text-[10px] font-mono text-slate-500">Analyzing... {Math.round(progress)}%</span>
               </div>
             )}
 
             {/* ── Error state ───────────────────────── */}
             {phase === "error" && (
-              <div className="flex flex-col items-center justify-center gap-4">
-                <FlaskConical size={40} className="text-red-400/20" />
-                <p className="text-xs font-body text-slate-600 text-center max-w-[200px]">
+              <div className="flex flex-col items-center justify-center gap-3">
+                <FlaskConical size={32} className="text-red-400/20" />
+                <p className="text-[10px] font-body text-slate-600 text-center max-w-[180px]">
                   Waiting for audio input...
                 </p>
               </div>
@@ -408,7 +402,7 @@ export function Lab() {
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.5, duration: 0.6 }}
                       onClick={togglePlay}
-                      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full flex items-center justify-center z-10"
+                      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full flex items-center justify-center z-10"
                       style={{
                         background: `${color}15`,
                         border: `2px solid ${color}40`,
@@ -416,33 +410,104 @@ export function Lab() {
                         backdropFilter: "blur(4px)",
                       }}
                     >
-                      <Play size={24} style={{ color }} className="ml-1" />
+                      <Play size={20} style={{ color }} className="ml-0.5" />
                     </motion.button>
                   )}
                 </div>
-
-                {/* Flow progress bar below radar */}
-                {showFlow && (
-                  <div style={{ width: Math.min(radarSize - 40, 280) }} className="mt-2">
-                    <div className="h-[2px] rounded-full bg-white/5 overflow-hidden">
-                      <motion.div className="h-full rounded-full" style={{ background: color, opacity: 0.6 }}
-                        animate={{ width: `${((flowIdx + 1) / Math.max(1, segments6D.length)) * 100}%` }}
-                        transition={{ duration: 0.3 }}
-                      />
-                    </div>
-                  </div>
-                )}
               </div>
             )}
           </div>
 
-          {/* ═ COL 3 — Lab Assistant Chat ══════════════════════════ */}
+          {/* ═ COL 2, ROW 2 — FLOW TIMELINE (vertically centered) ═ */}
+          <div
+            className="min-h-0 overflow-visible border-t border-white/[0.04] border-b border-b-white/[0.04]"
+            style={{ gridRow: "2 / 3", gridColumn: "2 / 3" }}
+          >
+            {hasAnalysis ? (
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.6 }}
+                className="h-full flex flex-col px-2 py-1"
+              >
+                {/* Timeline header with play/pause */}
+                <div className="flex items-center gap-2 mb-0.5 flex-shrink-0">
+                  <button
+                    onClick={togglePlay}
+                    className="w-6 h-6 rounded-full flex items-center justify-center transition-all"
+                    style={{
+                      background: isPlaying ? `${color}20` : `${color}12`,
+                      border: `1px solid ${isPlaying ? `${color}40` : `${color}25`}`,
+                      boxShadow: isPlaying ? `0 0 12px ${color}15` : "none",
+                    }}
+                  >
+                    {isPlaying ? (
+                      <Pause size={11} style={{ color }} />
+                    ) : (
+                      <Play size={11} style={{ color }} className="ml-0.5" />
+                    )}
+                  </button>
+                  <Activity size={10} className="text-slate-600" />
+                  <span className="text-[9px] font-display font-light tracking-[0.12em] uppercase text-slate-500">
+                    Temporal Flow
+                  </span>
+                  <span className="text-[7px] font-mono text-slate-700">
+                    {temporal.source === "full" ? `${temporal.frameCount} frames` : "64 seg"}
+                  </span>
+                  {hasEverPlayed && flowTime && (
+                    <span className="text-[9px] font-mono ml-auto" style={{ color: `${color}60` }}>
+                      {flowTime} / {totalTime}
+                    </span>
+                  )}
+                </div>
+                <div className="flex-1 min-h-0">
+                  <FlowTimeline
+                    temporal={temporal}
+                    trackDetail={trackDetail}
+                    depth={depth}
+                    accentColor={color}
+                    audioRef={audioRef}
+                    isPlaying={isPlaying}
+                    onSeek={handleSeek}
+                  />
+                </div>
+              </motion.div>
+            ) : (
+              <div className="h-full flex items-center justify-center">
+                <div className="flex items-center gap-2 text-slate-700">
+                  <Activity size={13} />
+                  <span className="text-[9px] font-display font-light tracking-[0.12em] uppercase">
+                    Temporal Flow
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* ═ COL 2, ROW 3 — Spacer / Flow progress ════════════ */}
+          <div
+            className="flex items-start justify-center pt-2 min-h-0 overflow-hidden"
+            style={{ gridRow: "3 / 4", gridColumn: "2 / 3" }}
+          >
+            {hasAnalysis && showFlow && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="flex items-center gap-3 text-slate-600"
+              >
+                <span className="text-[8px] font-mono">Scroll to navigate</span>
+                <span className="text-[8px] font-mono">Click to seek</span>
+              </motion.div>
+            )}
+          </div>
+
+          {/* ═ COL 3 — Lab Assistant Chat (spans all rows) ═══════ */}
           <motion.div
             initial={{ opacity: 0, x: 12 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             className="flex flex-col min-h-0 overflow-hidden relative border-l border-white/[0.04]"
-            style={{ gridRow: "1 / 2", gridColumn: "3 / 4" }}
+            style={{ gridRow: "1 / -1", gridColumn: "3 / 4" }}
           >
             {/* Organism background */}
             <div className="absolute inset-0 z-0 pointer-events-none" style={{ transform: "scale(1.3)", transformOrigin: "center 40%" }}>
@@ -566,69 +631,6 @@ export function Lab() {
               </div>
             </div>
           </motion.div>
-
-          {/* ═ ROW 2 — Waveform (spans all 3 columns) ═════════════ */}
-          <div
-            className="min-h-0 overflow-hidden border-t border-white/[0.06]"
-            style={{ gridRow: "2 / 3", gridColumn: "1 / -1" }}
-          >
-            {hasAnalysis ? (
-              <motion.div
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.6 }}
-                className="h-full flex flex-col px-4 py-2"
-              >
-                {/* Waveform header with play/pause */}
-                <div className="flex items-center gap-2.5 mb-1 flex-shrink-0">
-                  <button
-                    onClick={togglePlay}
-                    className="w-7 h-7 rounded-full flex items-center justify-center transition-all"
-                    style={{
-                      background: isPlaying ? `${color}20` : `${color}12`,
-                      border: `1px solid ${isPlaying ? `${color}40` : `${color}25`}`,
-                      boxShadow: isPlaying ? `0 0 12px ${color}15` : "none",
-                    }}
-                  >
-                    {isPlaying ? (
-                      <Pause size={12} style={{ color }} />
-                    ) : (
-                      <Play size={12} style={{ color }} className="ml-0.5" />
-                    )}
-                  </button>
-                  <Activity size={11} className="text-slate-600" />
-                  <span className="text-[10px] font-display font-light tracking-[0.12em] uppercase text-slate-500">
-                    Temporal Flow
-                  </span>
-                  {hasEverPlayed && flowTime && (
-                    <span className="text-[10px] font-mono ml-auto" style={{ color: `${color}60` }}>
-                      {flowTime} / {totalTime}
-                    </span>
-                  )}
-                </div>
-                <div className="flex-1 min-h-0">
-                  <WaveformOverlay
-                    temporal={temporal}
-                    depth={depth}
-                    duration={trackDetail.duration_s}
-                    accentColor={color}
-                    compact
-                    playheadRatio={hasEverPlayed ? playheadRatio : undefined}
-                    onSeek={handleSeek}
-                  />
-                </div>
-              </motion.div>
-            ) : (
-              <div className="h-full flex items-center justify-center">
-                <div className="flex items-center gap-2 text-slate-700">
-                  <Activity size={14} />
-                  <span className="text-[10px] font-display font-light tracking-[0.12em] uppercase">
-                    Temporal Flow
-                  </span>
-                </div>
-              </div>
-            )}
-          </div>
 
         </div>
       </div>
@@ -788,20 +790,20 @@ function LabRadar({ overall, flow, color, size }: {
         );
       })}
 
-      {/* Percentage labels on total dots */}
+      {/* Value labels on total dots (0-1 normalized) */}
       {overall.map((v, i) => {
-        const pct = Math.round(Math.max(0, Math.min(1, v)) * 100);
-        const pctR = maxR * Math.max(0, Math.min(1, v)) - 12;
-        if (pctR < 10) return null;
-        const x = cx + Math.cos(RADAR_ANGLES[i]) * pctR;
-        const y = cy + Math.sin(RADAR_ANGLES[i]) * pctR;
+        const val = Math.max(0, Math.min(1, v));
+        const valR = maxR * val - 14;
+        if (valR < 10) return null;
+        const x = cx + Math.cos(RADAR_ANGLES[i]) * valR;
+        const y = cy + Math.sin(RADAR_ANGLES[i]) * valR;
         return (
-          <text key={`pct${i}`} x={x} y={y}
+          <text key={`val${i}`} x={x} y={y}
             textAnchor="middle" dominantBaseline="middle"
             fill="rgba(239,68,68,0.5)" fontSize={7}
             fontFamily="monospace" style={{ pointerEvents: "none" }}
           >
-            {pct}
+            {val.toFixed(2)}
           </text>
         );
       })}

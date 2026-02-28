@@ -85,6 +85,9 @@ export interface MITrackDetail {
   temporal_profile: {
     segments: number;
     belief_means_per_segment: number[][];  // segments × 131
+    neuro_per_segment?: number[][];        // segments × 4 (DA, NE, OPI, 5HT)
+    ram_per_segment?: number[][];          // segments × 26
+    reward_per_segment?: number[];         // segments × 1 scalar
   };
 }
 

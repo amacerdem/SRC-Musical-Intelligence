@@ -143,30 +143,48 @@ def main():
         "duration": round(float(result.duration_s), 1),
     }
 
-    # ── Step 7: Compute genes from dimensions ─────────────────────
+    # ── Step 7: Compute genes from signal (mirrors useM3Store.ts) ──
     dims_6d = result.dim_6d.mean(axis=0)   # (6,)
     dims_12d = result.dim_12d.mean(axis=0)  # (12,)
     dims_24d = result.dim_24d.mean(axis=0)  # (24,)
 
+    GENE_TO_FAMILY = {
+        "entropy": "Explorers",
+        "resolution": "Architects",
+        "tension": "Alchemists",
+        "resonance": "Anchors",
+        "plasticity": "Kineticists",
+    }
+
+    energy = signal["energy"]
+    valence = signal["valence"]
+    tempo = signal["tempo"]
+    danceability = signal["danceability"]
+    acousticness = signal["acousticness"]
+    harmonic_complexity = signal["harmonicComplexity"]
+    tempo_norm = min(1.0, tempo / 200.0)
+
     genes = {
-        "entropy": round(float(dims_12d[1]) if len(dims_12d) > 1 else 0.5, 4),
-        "resolution": round(float(dims_12d[7]) if len(dims_12d) > 7 else 0.5, 4),
-        "tension": round(float(dims_12d[2]) if len(dims_12d) > 2 else 0.5, 4),
-        "resonance": round(float(dims_12d[8]) if len(dims_12d) > 8 else 0.5, 4),
-        "plasticity": round(float(dims_12d[5]) if len(dims_12d) > 5 else 0.5, 4),
+        "entropy": round(float(np.clip(
+            (1 - acousticness) * 0.25 + energy * 0.15 + danceability * 0.15 + 0.05
+            + (0.15 if tempo_norm > 0.6 else 0.05) + harmonic_complexity * 0.1, 0, 1)), 4),
+        "resolution": round(float(np.clip(
+            (1 - energy) * 0.25 + acousticness * 0.25 + harmonic_complexity * 0.2
+            + (1 - abs(valence - 0.5) * 2) * 0.2 + (0.1 if tempo_norm < 0.5 else 0.0), 0, 1)), 4),
+        "tension": round(float(np.clip(
+            energy * 0.2 + (1 - valence) * 0.15 + abs(energy - 0.5) * 2 * 0.25
+            + harmonic_complexity * 0.15 + (0.15 if tempo_norm > 0.5 else 0.05), 0, 1)), 4),
+        "resonance": round(float(np.clip(
+            valence * 0.15 + acousticness * 0.25 + (1 - energy) * 0.2
+            + (0.2 if tempo_norm < 0.45 else 0.1) + 0.05, 0, 1)), 4),
+        "plasticity": round(float(np.clip(
+            danceability * 0.3 + energy * 0.2 + (0.2 if tempo_norm > 0.55 else 0.1)
+            + (1 - acousticness) * 0.1 + (1 - abs(valence - 0.5) * 2) * 0.1, 0, 1)), 4),
     }
 
     gene_names = list(genes.keys())
     gene_vals = list(genes.values())
     dominant_gene = gene_names[np.argmax(gene_vals)]
-
-    GENE_TO_FAMILY = {
-        "entropy": "Explorers",
-        "resolution": "Architects",
-        "tension": "Seekers",
-        "resonance": "Resonants",
-        "plasticity": "Kineticists",
-    }
     dominant_family = GENE_TO_FAMILY[dominant_gene]
 
     # ── Step 8: Compute function scores (F1-F9) ──────────────────

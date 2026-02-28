@@ -47,7 +47,7 @@ export function AnalysisSummary({ detail, depth, accentColor, temporal }: Props)
           {dominant?.name ?? ""}
         </span>
         <span className="text-[10px] font-mono ml-auto flex-shrink-0" style={{ color: `${dominantColor}90` }}>
-          {Math.round(dims[maxIdx] * 100)}%
+          {dims[maxIdx].toFixed(2)}
         </span>
       </motion.div>
 
@@ -61,7 +61,7 @@ export function AnalysisSummary({ detail, depth, accentColor, temporal }: Props)
       >
         <span className="text-[9px] font-display text-slate-600 uppercase tracking-wider">Low</span>
         <span className="text-[11px] font-display text-slate-500 truncate">{weakest?.name ?? ""}</span>
-        <span className="text-[10px] font-mono text-slate-600 ml-auto flex-shrink-0">{Math.round(dims[minIdx] * 100)}%</span>
+        <span className="text-[10px] font-mono text-slate-600 ml-auto flex-shrink-0">{dims[minIdx].toFixed(2)}</span>
       </motion.div>
 
       {/* Gene family badge */}
@@ -89,7 +89,7 @@ export function AnalysisSummary({ detail, depth, accentColor, temporal }: Props)
           <div
             key={fn}
             className="flex flex-col items-center gap-0.5 flex-1"
-            title={`${fn}: ${Math.round((val as number) * 100)}%`}
+            title={`${fn}: ${(val as number).toFixed(2)}`}
           >
             <div
               className="w-full max-w-[14px] rounded-sm"

@@ -15,6 +15,8 @@ import { SpotifyService } from "@/services/spotify";
 import { miDataService } from "@/services/MIDataService";
 import type { MindGenes } from "@/types/m3";
 import { GENE_NAMES, TYPE_TO_GENE } from "@/types/m3";
+import { ALL_PSYCHOLOGY, genesToDimensions, arrayToProfile } from "@/data/dimensions";
+import type { DimensionKey6D } from "@/types/dimensions";
 
 /** Derive persona from genes (same algorithm as useM3Store) */
 function derivePersonaFromGenes(genes: MindGenes): number {
@@ -37,18 +39,18 @@ const INSTITUTIONS = [
   { name: "CMU", dept: "School of Music" },
 ];
 
-/* ── Analysis phases ──────────────────────────────────────────────── */
-const ANALYSIS_PHASES = [
-  { key: "onboarding.evolving.phases.p1", belief: null },
-  { key: "onboarding.evolving.phases.p2", belief: null },
-  { key: "onboarding.evolving.phases.p3", belief: "consonance" as const },
-  { key: "onboarding.evolving.phases.p4", belief: "consonance" as const },
-  { key: "onboarding.evolving.phases.p5", belief: "tempo" as const },
-  { key: "onboarding.evolving.phases.p6", belief: "salience" as const },
-  { key: "onboarding.evolving.phases.p7", belief: "salience" as const },
-  { key: "onboarding.evolving.phases.p8", belief: "familiarity" as const },
-  { key: "onboarding.evolving.phases.p9", belief: "reward" as const },
-  { key: "onboarding.evolving.phases.p10", belief: "reward" as const },
+/* ── Analysis phases — mapped to 6D dimensions ──────────────────── */
+const ANALYSIS_PHASES: { key: string; dimension: DimensionKey6D | null }[] = [
+  { key: "onboarding.evolving.phases.p1", dimension: null },
+  { key: "onboarding.evolving.phases.p2", dimension: null },
+  { key: "onboarding.evolving.phases.p3", dimension: "discovery" },
+  { key: "onboarding.evolving.phases.p4", dimension: "discovery" },
+  { key: "onboarding.evolving.phases.p5", dimension: "flow" },
+  { key: "onboarding.evolving.phases.p6", dimension: "intensity" },
+  { key: "onboarding.evolving.phases.p7", dimension: "depth" },
+  { key: "onboarding.evolving.phases.p8", dimension: "trace" },
+  { key: "onboarding.evolving.phases.p9", dimension: "sharing" },
+  { key: "onboarding.evolving.phases.p10", dimension: "sharing" },
 ];
 
 /* ── Real stats from MI dataset ──────────────────────────────────── */
@@ -161,6 +163,7 @@ export function Landing() {
   const stats = getRealStats();
   const profile = miDataService.isReady() ? miDataService.computeAggregateProfile() : null;
   const genes = profile?.genes ?? { entropy: 0.5, resolution: 0.5, tension: 0.5, resonance: 0.5, plasticity: 0.5 };
+  const dimensionProfile = arrayToProfile(genesToDimensions(genes).psychology);
   const insights = getGeneInsights(genes, i18n.language);
   const phaseVars = {
     trackCount: String(stats.trackCount),
@@ -202,11 +205,11 @@ export function Landing() {
   const songCount = useTicker(stats.trackCount, 6000, progress > 5);
   const totalHours = useTicker(Math.round(stats.hours), 8000, progress > 5);
 
-  const activeBeliefs = ANALYSIS_PHASES
+  const activeDimensions = ANALYSIS_PHASES
     .slice(0, Math.floor((progress / 100) * ANALYSIS_PHASES.length) + 1)
-    .map(p => p.belief)
-    .filter((b): b is keyof typeof beliefColors => b !== null);
-  const uniqueBeliefs = [...new Set(activeBeliefs)];
+    .map(p => p.dimension)
+    .filter((d): d is DimensionKey6D => d !== null);
+  const uniqueDimensions = [...new Set(activeDimensions)];
 
   // Derived background props — evolve organism through flow stages
   const persona = selectedPersonaId ? getPersona(selectedPersonaId) : null;
@@ -754,15 +757,14 @@ export function Landing() {
                 <p className="text-base font-display font-light text-slate-500">{t("onboarding.evolving.mapping97")}</p>
               </motion.div>
 
-              {/* Belief indicators */}
-              <div className="flex justify-center gap-6 mb-8">
-                {(["consonance", "tempo", "salience", "familiarity", "reward"] as const).map((b) => {
-                  const isActive = uniqueBeliefs.includes(b);
-                  const bColor = beliefColors[b].primary;
+              {/* 6D Dimension indicators */}
+              <div className="flex justify-center gap-5 mb-8">
+                {ALL_PSYCHOLOGY.map((dim) => {
+                  const isActive = uniqueDimensions.includes(dim.key as DimensionKey6D);
                   return (
-                    <motion.div key={b} initial={{ opacity: 0.1 }} animate={{ opacity: isActive ? 0.9 : 0.1 }} transition={{ duration: 0.6 }} className="flex flex-col items-center gap-2">
-                      <div className="w-3 h-3 rounded-full transition-all duration-500" style={{ background: bColor, boxShadow: isActive ? `0 0 14px ${bColor}70, 0 0 30px ${bColor}25` : "none" }} />
-                      <span className="text-[10px] font-display font-light uppercase tracking-[0.15em]" style={{ color: isActive ? `${bColor}CC` : "#1E293B" }}>{b}</span>
+                    <motion.div key={dim.key} initial={{ opacity: 0.1 }} animate={{ opacity: isActive ? 0.9 : 0.1 }} transition={{ duration: 0.6 }} className="flex flex-col items-center gap-2">
+                      <div className="w-3 h-3 rounded-full transition-all duration-500" style={{ background: dim.color, boxShadow: isActive ? `0 0 14px ${dim.color}70, 0 0 30px ${dim.color}25` : "none" }} />
+                      <span className="text-[10px] font-display font-light uppercase tracking-[0.15em]" style={{ color: isActive ? `${dim.color}CC` : "#1E293B" }}>{dim.name}</span>
                     </motion.div>
                   );
                 })}
@@ -893,7 +895,7 @@ export function Landing() {
             <AnimatePresence>
               {(revealPhase === "radar" || revealPhase === "ready") && mind && (
                 <motion.div initial={{ opacity: 0, scale: 0.6, filter: "blur(15px)" }} animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }} transition={{ duration: 1.2, delay: 0.3, ease: [0.22, 1, 0.36, 1] }} className="mt-10">
-                  <MindRadar axes={mind.axes} color={persona.color} size={400} />
+                  <MindRadar profile={dimensionProfile} color={persona.color} size={400} />
                 </motion.div>
               )}
             </AnimatePresence>

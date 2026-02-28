@@ -160,6 +160,72 @@ def list_tracks() -> list[dict]:
     ]
 
 
+def get_listening_profile() -> dict[str, Any]:
+    """Build user's listening profile from catalog categories.
+
+    Returns summary of: recently played, saved/liked, top tracks,
+    genre/family distribution, and overall gene centroid.
+    """
+    catalog = load_catalog()
+    tracks = catalog.get("tracks", [])
+
+    recently_played: list[dict] = []
+    saved_tracks: list[dict] = []
+    top_tracks: list[dict] = []
+
+    family_counts: dict[str, int] = {}
+    gene_sums: dict[str, float] = {
+        "entropy": 0, "resolution": 0, "tension": 0,
+        "resonance": 0, "plasticity": 0,
+    }
+    n = 0
+
+    for t in tracks:
+        cats = t.get("categories", [])
+        entry = {
+            "id": t["id"],
+            "artist": t.get("artist", ""),
+            "title": t.get("title", ""),
+            "dominant_family": t.get("dominant_family", ""),
+            "dominant_gene": t.get("dominant_gene", ""),
+        }
+
+        if "Recently Played" in cats:
+            recently_played.append(entry)
+        if "Saved Tracks" in cats:
+            saved_tracks.append(entry)
+        if "Top Tracks" in cats:
+            top_tracks.append(entry)
+
+        fam = t.get("dominant_family", "")
+        if fam:
+            family_counts[fam] = family_counts.get(fam, 0) + 1
+
+        genes = t.get("genes", {})
+        if genes:
+            for g in gene_sums:
+                gene_sums[g] += genes.get(g, 0.5)
+            n += 1
+
+    # Compute average gene profile
+    avg_genes = {g: round(v / max(n, 1), 3) for g, v in gene_sums.items()}
+
+    # Sort families by count
+    top_families = sorted(family_counts.items(), key=lambda x: -x[1])
+
+    return {
+        "total_tracks": len(tracks),
+        "recently_played": recently_played[:20],
+        "recently_played_count": len(recently_played),
+        "saved_tracks": saved_tracks[:20],
+        "saved_count": len(saved_tracks),
+        "top_tracks": top_tracks[:20],
+        "top_count": len(top_tracks),
+        "family_distribution": dict(top_families),
+        "average_gene_profile": avg_genes,
+    }
+
+
 def search_tracks(query: str, limit: int = 10) -> list[dict]:
     """Search tracks by artist, title, or ID. Case-insensitive fuzzy match."""
     query_lower = query.lower().strip()

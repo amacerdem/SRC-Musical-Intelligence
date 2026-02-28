@@ -363,6 +363,7 @@ async def chat_stream(req: ChatRequest):
                 # Step 4: Tool use — show which tools
                 tool_names = [b.name for b in tool_use_blocks]
                 tool_labels = {
+                    "get_listening_profile": ("Dinleme profili yükleniyor...", "Loading listening profile..."),
                     "search_tracks": ("Müzik kütüphanesi aranıyor...", "Searching music library..."),
                     "analyze_track": ("Parça analiz ediliyor...", "Analyzing track..."),
                     "get_current_dimensions": ("Boyutlar okunuyor...", "Reading dimensions..."),

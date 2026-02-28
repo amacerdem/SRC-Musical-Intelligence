@@ -38,6 +38,9 @@ from Musical_Intelligence.brain.llm.processing.context_builder import (
 _GUIDE_CACHE: dict[str, dict[str, str]] | None = None
 
 _GUIDE_KEYS = [
+    "system_identity",
+    "scientific_methodology",
+    "key_references",
     "interpreting_6d",
     "interpreting_functions",
     "interpreting_notable_beliefs",
@@ -94,6 +97,9 @@ def build_layer2_5(language: str = "tr") -> str:
     header = "## Yorum Rehberi" if language == "tr" else "## Interpretation Guide"
 
     section_titles = {
+        "system_identity": ("Sistem Kimliği", "System Identity"),
+        "scientific_methodology": ("Bilimsel Metodoloji", "Scientific Methodology"),
+        "key_references": ("Temel Kaynaklar", "Key References"),
         "interpreting_6d": ("6D Boyutları Okuma", "Reading 6D Dimensions"),
         "interpreting_functions": ("F1-F9 Fonksiyon Karşılaştırma", "Comparing F1-F9 Functions"),
         "interpreting_notable_beliefs": ("İnanç Örüntüleri", "Belief Patterns"),

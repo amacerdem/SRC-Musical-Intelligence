@@ -139,7 +139,7 @@ export function Dashboard() {
         <div
           className="absolute inset-0"
           style={{
-            background: `radial-gradient(ellipse 40% 35% at 80% 70%, ${beliefColors.reward.primary}04 0%, transparent 50%)`,
+            background: `radial-gradient(ellipse 40% 35% at 80% 70%, ${PSYCHOLOGY_COLORS.trace}04 0%, transparent 50%)`,
           }}
         />
       </div>
@@ -442,16 +442,16 @@ export function Dashboard() {
               <div className="flex-1 flex items-center justify-center relative">
                 {/* Orbit rings — own overflow-hidden layer so radar labels aren't clipped */}
                 <div className="absolute inset-0 overflow-hidden">
-                  {(["consonance", "prediction", "tempo", "salience", "emotion"] as const).map((b, i) => {
-                    const bColor = beliefColors[b].primary;
-                    const radius = 185 + i * 30;
+                  {ALL_PSYCHOLOGY.map((dim, i) => {
+                    const bColor = dim.color;
+                    const radius = 185 + i * 25;
                     return (
-                      <div key={b} className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                      <div key={dim.key} className="absolute inset-0 flex items-center justify-center pointer-events-none">
                         <div
                           className="absolute rounded-full"
                           style={{
                             width: radius * 2, height: radius * 2,
-                            background: `conic-gradient(from ${i * 72}deg, ${bColor}30, ${bColor}18 8%, ${bColor}0A 20%, transparent 40%, transparent 100%)`,
+                            background: `conic-gradient(from ${i * 60}deg, ${bColor}30, ${bColor}18 8%, ${bColor}0A 20%, transparent 40%, transparent 100%)`,
                             maskImage: `radial-gradient(transparent ${radius - 2}px, black ${radius - 1}px, black ${radius + 1}px, transparent ${radius + 2}px)`,
                             WebkitMaskImage: `radial-gradient(transparent ${radius - 2}px, black ${radius - 1}px, black ${radius + 1}px, transparent ${radius + 2}px)`,
                             animation: `orbit ${26 + i * 5}s linear infinite`,
