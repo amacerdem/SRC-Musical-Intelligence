@@ -1,17 +1,22 @@
 /* ── Lab — MI Analysis Studio (Instrument Panel) ───────────────────────
  *  3-column + 2-row full-screen layout — no scroll.
+ *  Play-controlled flow: radar + waveform playhead synchronized.
+ *  Nothing animates until the user presses play.
  *
  *  ┌───────────┬─────────────────────────┬──────────────┐
  *  │  SOURCE   │     ANIMATED RADAR      │ LAB ASSIST   │  Row 1
- *  │  + SUMMARY│                         │ (chat)       │
+ *  │  + SUMMARY│     (play to start)     │ (chat)       │
  *  ├───────────┴─────────────────────────┴──────────────┤
- *  │            WAVEFORM OVERLAY (compact)              │  Row 2
+ *  │  [▶] Temporal Flow          playhead ──────▶       │  Row 2
  *  └────────────────────────────────────────────────────┘
  *  ──────────────────────────────────────────────────────────────────── */
 
 import { useRef, useEffect, useMemo, useState, useCallback } from "react";
 import { motion } from "framer-motion";
-import { FlaskConical, Send, Clock, Music2, Search, Activity } from "lucide-react";
+import {
+  FlaskConical, Send, Clock, Music2, Search,
+  Activity, Play, Pause,
+} from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import { useLabStore } from "@/stores/useLabStore";
@@ -30,6 +35,12 @@ import { AnalysisSummary } from "@/components/lab/AnalysisSummary";
 import { ChatMessage, TypingIndicator } from "@/components/chat/ChatMessage";
 import { MiniOrganism } from "@/components/mind/MiniOrganism";
 import { MindOrganismCanvas } from "@/components/mind/MindOrganismCanvas";
+
+/* ── Track ID → audio file mapping ──────────────── */
+const TRACK_AUDIO: Record<string, string> = {
+  "tchaikovsky__swan_lake_suite_op20a_scene": "/music/swan-lake.wav",
+  "pyotr_ilyich_tchaikovsky_berliner_philharmoniker_mstislav_rostropovich__swan_lake_suite_op_20a_i_scene_swan_theme_modera": "/music/swan-lake.wav",
+};
 
 export function Lab() {
   const { t } = useTranslation();
@@ -107,20 +118,90 @@ export function Lab() {
     [temporal],
   );
 
-  /* ── Flow animation — cycles through temporal segments ── */
+  /* ── Audio playback ─────────────────────────────── */
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const segCountRef = useRef(segments6D.length);
+  segCountRef.current = segments6D.length;
+
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [hasEverPlayed, setHasEverPlayed] = useState(false);
   const [flowIdx, setFlowIdx] = useState(0);
+
+  // Initialize audio element when track changes
   useEffect(() => {
-    if (!hasAnalysis || segments6D.length <= 1) return;
-    const stepMs = Math.max(180, 10000 / segments6D.length);
-    const timer = setInterval(() => {
-      setFlowIdx((prev) => (prev + 1) % segments6D.length);
-    }, stepMs);
-    return () => clearInterval(timer);
-  }, [hasAnalysis, segments6D.length]);
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.src = "";
+      audioRef.current = null;
+    }
+    setIsPlaying(false);
+    setHasEverPlayed(false);
+    setFlowIdx(0);
+
+    if (!trackDetail) return;
+    const audioUrl = TRACK_AUDIO[trackDetail.id];
+    if (!audioUrl) return;
+
+    const audio = new Audio(audioUrl);
+    audio.preload = "auto";
+    audioRef.current = audio;
+
+    const onTimeUpdate = () => {
+      if (!audio.duration || segCountRef.current <= 1) return;
+      const ratio = audio.currentTime / audio.duration;
+      const idx = Math.round(ratio * (segCountRef.current - 1));
+      setFlowIdx(Math.max(0, Math.min(segCountRef.current - 1, idx)));
+    };
+
+    const onEnded = () => {
+      setIsPlaying(false);
+      setFlowIdx(0);
+    };
+
+    audio.addEventListener("timeupdate", onTimeUpdate);
+    audio.addEventListener("ended", onEnded);
+
+    return () => {
+      audio.removeEventListener("timeupdate", onTimeUpdate);
+      audio.removeEventListener("ended", onEnded);
+      audio.pause();
+      audio.src = "";
+      audioRef.current = null;
+    };
+  }, [trackDetail]);
+
+  const togglePlay = useCallback(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (isPlaying) {
+      audio.pause();
+      setIsPlaying(false);
+    } else {
+      setHasEverPlayed(true);
+      audio.play().catch(() => { /* autoplay blocked */ });
+      setIsPlaying(true);
+    }
+  }, [isPlaying]);
 
   const flowValues = segments6D[flowIdx] ?? overall6D;
+  const showFlow = hasEverPlayed;
 
-  /* ── Flow time indicator ────────────────────────── */
+  /* ── Playhead ratio for waveform sync ──────────── */
+  const playheadRatio = segments6D.length > 1
+    ? flowIdx / (segments6D.length - 1)
+    : 0;
+
+  /* ── Seek handler (click on waveform) ──────────── */
+  const handleSeek = useCallback((ratio: number) => {
+    const audio = audioRef.current;
+    if (!audio || !audio.duration) return;
+    audio.currentTime = ratio * audio.duration;
+    const idx = Math.round(ratio * (segments6D.length - 1));
+    setFlowIdx(Math.max(0, Math.min(segments6D.length - 1, idx)));
+    if (!hasEverPlayed) setHasEverPlayed(true);
+  }, [segments6D.length, hasEverPlayed]);
+
+  /* ── Flow time indicators ──────────────────────── */
   const flowTime = useMemo(() => {
     if (!trackDetail || segments6D.length <= 1) return "";
     const secs = (flowIdx / Math.max(1, segments6D.length - 1)) * trackDetail.duration_s;
@@ -128,6 +209,13 @@ export function Lab() {
     const s = Math.floor(secs % 60);
     return `${m}:${s.toString().padStart(2, "0")}`;
   }, [flowIdx, segments6D.length, trackDetail]);
+
+  const totalTime = useMemo(() => {
+    if (!trackDetail) return "";
+    const m = Math.floor(trackDetail.duration_s / 60);
+    const s = Math.floor(trackDetail.duration_s % 60);
+    return `${m}:${s.toString().padStart(2, "0")}`;
+  }, [trackDetail]);
 
   /* ── Responsive radar sizing via ResizeObserver ── */
   const radarCellRef = useRef<HTMLDivElement>(null);
@@ -177,9 +265,7 @@ export function Lab() {
               <span className="text-[10px] text-slate-600">{trackDetail.artist}</span>
               <div className="flex items-center gap-1 text-slate-600">
                 <Clock size={10} />
-                <span className="text-[10px] font-mono">
-                  {Math.floor(trackDetail.duration_s / 60)}:{Math.floor(trackDetail.duration_s % 60).toString().padStart(2, "0")}
-                </span>
+                <span className="text-[10px] font-mono">{totalTime}</span>
               </div>
             </motion.div>
           )}
@@ -192,13 +278,10 @@ export function Lab() {
                   <div className="w-3 h-[2px] rounded-full bg-red-500" />
                   <span className="text-[9px] font-display text-slate-500">Total</span>
                 </div>
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-1.5" style={{ opacity: showFlow ? 1 : 0.35 }}>
                   <div className="w-3 h-[2px] rounded-full" style={{ background: color }} />
                   <span className="text-[9px] font-display text-slate-500">Flow</span>
                 </div>
-                {flowTime && (
-                  <span className="text-[10px] font-mono" style={{ color: `${color}60` }}>{flowTime}</span>
-                )}
               </div>
             )}
             <DepthSelector depth={depth} onChange={setDepth} accentColor={color} />
@@ -210,7 +293,7 @@ export function Lab() {
           className="flex-1 min-h-0 grid gap-0"
           style={{
             gridTemplateColumns: "240px 1fr 280px",
-            gridTemplateRows: "1fr minmax(140px, 200px)",
+            gridTemplateRows: "1fr minmax(200px, 260px)",
           }}
         >
 
@@ -262,7 +345,6 @@ export function Lab() {
                 <p className="text-sm font-body text-slate-600 text-center max-w-[240px] leading-relaxed">
                   Select a track to begin analysis.
                 </p>
-                {/* Faded grid placeholder */}
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03]">
                   {[70, 110, 150, 190].map((r) => (
                     <div key={r} className="absolute rounded-full border border-white/40" style={{ width: r * 2, height: r * 2 }} />
@@ -311,16 +393,45 @@ export function Lab() {
             {/* ── Analysis done — Animated Radar ───── */}
             {hasAnalysis && (
               <div className="flex flex-col items-center">
-                <LabRadar overall={overall6D} flow={flowValues} color={color} size={radarSize} />
-                {/* Flow progress bar below radar */}
-                <div style={{ width: Math.min(radarSize - 40, 280) }} className="mt-2">
-                  <div className="h-[2px] rounded-full bg-white/5 overflow-hidden">
-                    <motion.div className="h-full rounded-full" style={{ background: color, opacity: 0.6 }}
-                      animate={{ width: `${((flowIdx + 1) / Math.max(1, segments6D.length)) * 100}%` }}
-                      transition={{ duration: 0.3 }}
-                    />
-                  </div>
+                <div className="relative">
+                  <LabRadar
+                    overall={overall6D}
+                    flow={showFlow ? flowValues : undefined}
+                    color={color}
+                    size={radarSize}
+                  />
+
+                  {/* Play overlay — before first play */}
+                  {!hasEverPlayed && (
+                    <motion.button
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.5, duration: 0.6 }}
+                      onClick={togglePlay}
+                      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full flex items-center justify-center z-10"
+                      style={{
+                        background: `${color}15`,
+                        border: `2px solid ${color}40`,
+                        boxShadow: `0 0 30px ${color}20`,
+                        backdropFilter: "blur(4px)",
+                      }}
+                    >
+                      <Play size={24} style={{ color }} className="ml-1" />
+                    </motion.button>
+                  )}
                 </div>
+
+                {/* Flow progress bar below radar */}
+                {showFlow && (
+                  <div style={{ width: Math.min(radarSize - 40, 280) }} className="mt-2">
+                    <div className="h-[2px] rounded-full bg-white/5 overflow-hidden">
+                      <motion.div className="h-full rounded-full" style={{ background: color, opacity: 0.6 }}
+                        animate={{ width: `${((flowIdx + 1) / Math.max(1, segments6D.length)) * 100}%` }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -468,14 +579,43 @@ export function Lab() {
                 transition={{ delay: 0.3, duration: 0.6 }}
                 className="h-full flex flex-col px-4 py-2"
               >
-                <div className="flex items-center gap-2 mb-1 flex-shrink-0">
+                {/* Waveform header with play/pause */}
+                <div className="flex items-center gap-2.5 mb-1 flex-shrink-0">
+                  <button
+                    onClick={togglePlay}
+                    className="w-7 h-7 rounded-full flex items-center justify-center transition-all"
+                    style={{
+                      background: isPlaying ? `${color}20` : `${color}12`,
+                      border: `1px solid ${isPlaying ? `${color}40` : `${color}25`}`,
+                      boxShadow: isPlaying ? `0 0 12px ${color}15` : "none",
+                    }}
+                  >
+                    {isPlaying ? (
+                      <Pause size={12} style={{ color }} />
+                    ) : (
+                      <Play size={12} style={{ color }} className="ml-0.5" />
+                    )}
+                  </button>
                   <Activity size={11} className="text-slate-600" />
                   <span className="text-[10px] font-display font-light tracking-[0.12em] uppercase text-slate-500">
                     Temporal Flow
                   </span>
+                  {hasEverPlayed && flowTime && (
+                    <span className="text-[10px] font-mono ml-auto" style={{ color: `${color}60` }}>
+                      {flowTime} / {totalTime}
+                    </span>
+                  )}
                 </div>
                 <div className="flex-1 min-h-0">
-                  <WaveformOverlay temporal={temporal} depth={depth} duration={trackDetail.duration_s} accentColor={color} compact />
+                  <WaveformOverlay
+                    temporal={temporal}
+                    depth={depth}
+                    duration={trackDetail.duration_s}
+                    accentColor={color}
+                    compact
+                    playheadRatio={hasEverPlayed ? playheadRatio : undefined}
+                    onSeek={handleSeek}
+                  />
                 </div>
               </motion.div>
             ) : (
@@ -501,14 +641,14 @@ export function Lab() {
  *  LabRadar — Custom Animated 6D Hexagonal Radar
  *  Red polygon = overall average ("Total")
  *  Persona-color polygon = flow-synced segment ("Flow")
- *  Smooth animation via framer-motion SVG path morphing.
+ *  Flow polygon only renders when flow data is provided (after play).
  * ═══════════════════════════════════════════════════════════════════════ */
 
 const RADAR_ANGLES = Array.from({ length: 6 }, (_, i) => (-90 + i * 60) * (Math.PI / 180));
 
 function LabRadar({ overall, flow, color, size }: {
   overall: number[];
-  flow: number[];
+  flow?: number[];
   color: string;
   size: number;
 }) {
@@ -539,12 +679,13 @@ function LabRadar({ overall, flow, color, size }: {
     }),
   [overall, cx, cy, maxR]);
 
-  const flowPts = useMemo(() =>
-    RADAR_ANGLES.map((a, i) => {
+  const flowPts = useMemo(() => {
+    if (!flow) return [];
+    return RADAR_ANGLES.map((a, i) => {
       const r = maxR * Math.max(0, Math.min(1, flow[i] ?? 0));
       return { x: cx + Math.cos(a) * r, y: cy + Math.sin(a) * r };
-    }),
-  [flow, cx, cy, maxR]);
+    });
+  }, [flow, cx, cy, maxR]);
 
   const ease = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
@@ -582,17 +723,25 @@ function LabRadar({ overall, flow, color, size }: {
         opacity={0.85}
       />
 
-      {/* ── Animated flow polygon ────────────────── */}
-      <motion.path
-        initial={false}
-        animate={{ d: toPath(flow) }}
-        transition={{ duration: 0.35, ease }}
-        fill={`${color}12`}
-        stroke={color}
-        strokeWidth={2}
-        strokeLinejoin="round"
-        style={{ filter: `drop-shadow(0 0 10px ${color}40)` }}
-      />
+      {/* ── Animated flow polygon (appears after play) ── */}
+      {flow && flowPts.length > 0 && (
+        <motion.g
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <motion.path
+            initial={false}
+            animate={{ d: toPath(flow) }}
+            transition={{ duration: 0.35, ease }}
+            fill={`${color}12`}
+            stroke={color}
+            strokeWidth={2}
+            strokeLinejoin="round"
+            style={{ filter: `drop-shadow(0 0 10px ${color}40)` }}
+          />
+        </motion.g>
+      )}
 
       {/* Total data dots — red */}
       {totalPts.map((pt, i) => (
@@ -602,19 +751,27 @@ function LabRadar({ overall, flow, color, size }: {
         />
       ))}
 
-      {/* Flow data dots — animated, persona color */}
-      {RADAR_ANGLES.map((_, i) => (
-        <motion.circle key={`f${i}`}
-          initial={false}
-          animate={{ cx: flowPts[i].x, cy: flowPts[i].y }}
-          transition={{ duration: 0.35, ease }}
-          r={3.5}
-          fill={color}
-          stroke="#0a0a0f"
-          strokeWidth={1}
-          style={{ filter: `drop-shadow(0 0 6px ${color}80)` }}
-        />
-      ))}
+      {/* Flow data dots — animated (appears after play) */}
+      {flow && flowPts.length > 0 && (
+        <motion.g
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          {flowPts.map((pt, i) => (
+            <motion.circle key={`f${i}`}
+              initial={false}
+              animate={{ cx: pt.x, cy: pt.y }}
+              transition={{ duration: 0.35, ease }}
+              r={3.5}
+              fill={color}
+              stroke="#0a0a0f"
+              strokeWidth={1}
+              style={{ filter: `drop-shadow(0 0 6px ${color}80)` }}
+            />
+          ))}
+        </motion.g>
+      )}
 
       {/* Dimension labels */}
       {ALL_PSYCHOLOGY.map((dim, i) => {

@@ -29,6 +29,16 @@ import { ChatMessage, TypingIndicator } from "@/components/chat/ChatMessage";
 
 const DIM_KEYS: DimensionKey6D[] = [...DIMENSION_KEYS_6D];
 
+/** Concept-appropriate point labels for Weekly Evolution */
+const POINT_LABELS: Record<string, { en: string; tr: string }> = {
+  discovery: { en: "Spark",    tr: "Kıvılcım" },
+  intensity: { en: "Surge",    tr: "Dalga" },
+  flow:      { en: "Pulse",    tr: "Nabız" },
+  depth:     { en: "Bloom",    tr: "Çiçek" },
+  trace:     { en: "Echo",     tr: "Yankı" },
+  sharing:   { en: "Sync",     tr: "Senkron" },
+};
+
 export function Dashboard() {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
@@ -230,7 +240,7 @@ export function Dashboard() {
             {/* Living organism background — persona-specific */}
             <div
               className="absolute inset-0 z-0 pointer-events-none"
-              style={{ transform: "scale(1.3)", transformOrigin: "center 40%" }}
+              style={{ transform: "scale(1.6, 1.3)", transformOrigin: "center 40%" }}
             >
               <MindOrganismCanvas
                 color={color}
@@ -502,15 +512,16 @@ export function Dashboard() {
                   <span className="text-xs font-display font-light tracking-[0.15em] uppercase text-slate-500">{t("dashboard.weeklyEvolution")}</span>
                   <div className="flex items-center gap-1.5">
                     <TrendingUp size={13} style={{ color }} />
-                    <span className="text-sm font-mono font-medium" style={{ color }}>{Math.round(avgDimStrength * 100)}%</span>
+                    <span className="text-sm font-mono font-medium" style={{ color }}>+{DIM_KEYS.reduce((s, k) => s + Math.round(dim6D[k] * 100), 0)}</span>
                   </div>
                 </div>
                 <div className="space-y-1.5">
                   {ALL_PSYCHOLOGY.map((dim, i) => {
                     const key = dim.key as DimensionKey6D;
                     const value = dim6D[key];
-                    const pct = Math.round(value * 100);
+                    const pts = Math.round(value * 100);
                     const dimColor = PSYCHOLOGY_COLORS[key];
+                    const pointLabel = POINT_LABELS[key];
                     return (
                       <div key={key} className="flex items-center gap-2.5">
                         <div className="flex items-center gap-1.5 w-[72px]">
@@ -522,11 +533,14 @@ export function Dashboard() {
                             className="h-full rounded-full"
                             style={{ background: dimColor, opacity: 0.7 }}
                             initial={{ width: 0 }}
-                            animate={{ width: `${pct}%` }}
+                            animate={{ width: `${pts}%` }}
                             transition={{ duration: 1.2, delay: 0.5 + i * 0.08 }}
                           />
                         </div>
-                        <span className="text-[11px] font-mono w-8 text-right" style={{ color: dimColor }}>{pct}%</span>
+                        <div className="flex items-center gap-1 w-[72px] justify-end">
+                          <span className="text-[11px] font-mono font-medium" style={{ color: dimColor }}>+{pts}</span>
+                          <span className="text-[9px] font-display text-slate-600">{isTr ? pointLabel.tr : pointLabel.en}</span>
+                        </div>
                       </div>
                     );
                   })}

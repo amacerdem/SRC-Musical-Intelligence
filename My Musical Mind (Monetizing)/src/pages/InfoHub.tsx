@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
@@ -10,6 +10,8 @@ import { NucleusDot } from "@/components/mind/NucleusDot";
 import { pageTransition, fadeIn, staggerChildren, slideUp } from "@/design/animations";
 import { beliefColors } from "@/design/tokens";
 import { useScrollBatch } from "@/hooks/useScrollTrigger";
+import type { NeuralFamily } from "@/types/mind";
+import { FAMILY_COLORS } from "@/data/persona-levels";
 
 const ENGINE_COLOR = "#6C5CE7";
 
@@ -20,11 +22,32 @@ const ENGINE_STATS = [
   { value: "24", labelKey: "infoHub.stats.morphologies", color: beliefColors.salience.primary },
 ];
 
+const FAMILY_ORDER: NeuralFamily[] = [
+  "Alchemists", "Architects", "Explorers", "Anchors", "Kineticists",
+];
+
+const FAMILY_DESC: Record<NeuralFamily, string> = {
+  Alchemists:  "Transformation & tension — intensity and dramatic resolution",
+  Architects:  "Structure & order — patterns, intervals, and form",
+  Explorers:   "Novelty & chaos — the unexpected and uncharted",
+  Anchors:     "Emotion & memory — deep feeling and human connection",
+  Kineticists: "Drive & energy — rhythm-first, pulse-seeking",
+};
+
 export function InfoHub() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const gridRef = useRef<HTMLDivElement>(null);
   useScrollBatch(".scroll-item", gridRef, { stagger: 0.06 });
+
+  const familyGroups = useMemo(() =>
+    FAMILY_ORDER.map((family) => ({
+      family,
+      color: FAMILY_COLORS[family],
+      desc: FAMILY_DESC[family],
+      members: personas.filter((p) => p.family === family),
+    })),
+  []);
 
   return (
     <motion.div {...pageTransition} className="min-h-screen bg-black pb-16 relative overflow-hidden">
@@ -57,8 +80,66 @@ export function InfoHub() {
       </motion.div>
 
       <motion.div variants={staggerChildren} initial="initial" animate="animate" className="relative z-10">
-        {/* Engine Section */}
-        <motion.div variants={slideUp} className="max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto mb-16 px-4">
+        {/* Persona Atlas — grouped by family */}
+        <motion.div variants={slideUp} className="px-4">
+          <div className="text-center mb-10">
+            <span className="hud-label mb-2 block">{t("infoHub.personaAtlas")}</span>
+            <h2 className="text-2xl font-display font-bold text-slate-200 mb-2">
+              {t("infoHub.personaAtlasTitle")}
+            </h2>
+            <p className="hud-label max-w-md mx-auto leading-relaxed text-xs">
+              {t("infoHub.personaAtlasSubtitle")}
+            </p>
+          </div>
+
+          <div ref={gridRef} className="space-y-12 max-w-7xl mx-auto">
+            {familyGroups.map(({ family, color, desc, members }) => (
+              <div key={family}>
+                {/* Family header */}
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="w-2.5 h-2.5 rounded-full" style={{ background: color, boxShadow: `0 0 12px ${color}60` }} />
+                  <h3 className="text-lg font-display font-bold" style={{ color }}>
+                    {family}
+                  </h3>
+                  <div className="flex-1 h-px" style={{ background: `${color}15` }} />
+                  <span className="text-[10px] font-body text-slate-600 font-light max-w-xs text-right">
+                    {desc}
+                  </span>
+                </div>
+
+                {/* Persona grid for this family */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
+                  {members.map((persona) => (
+                    <div
+                      key={persona.id}
+                      className="scroll-item group"
+                    >
+                      <div
+                        className="spatial-card p-0 overflow-hidden transition-all duration-500 group-hover:shadow-lg"
+                        style={{
+                          "--glow-color": persona.color,
+                          boxShadow: "0 0 0 rgba(0,0,0,0)",
+                        } as React.CSSProperties}
+                        onMouseEnter={(e) => {
+                          (e.currentTarget as HTMLElement).style.boxShadow =
+                            `0 0 30px ${persona.color}20, 0 0 60px ${persona.color}15, 0 0 100px ${persona.color}08`;
+                        }}
+                        onMouseLeave={(e) => {
+                          (e.currentTarget as HTMLElement).style.boxShadow = "0 0 0 rgba(0,0,0,0)";
+                        }}
+                      >
+                        <PersonaCard persona={persona} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Engine Section — bottom */}
+        <motion.div variants={slideUp} className="max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto mt-16 px-4">
           <div
             className="spatial-card p-8 relative overflow-hidden"
             style={{ "--glow-color": ENGINE_COLOR } as React.CSSProperties}
@@ -119,51 +200,6 @@ export function InfoHub() {
                 />
               </button>
             </div>
-          </div>
-        </motion.div>
-
-        {/* Persona Atlas */}
-        <motion.div variants={slideUp} className="px-4">
-          <div className="text-center mb-10">
-            <span className="hud-label mb-2 block">{t("infoHub.personaAtlas")}</span>
-            <h2 className="text-2xl font-display font-bold text-slate-200 mb-2">
-              {t("infoHub.personaAtlasTitle")}
-            </h2>
-            <p className="hud-label max-w-md mx-auto leading-relaxed text-xs">
-              {t("infoHub.personaAtlasSubtitle")}
-            </p>
-          </div>
-
-          <div
-            ref={gridRef}
-            className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-5 space-y-5"
-          >
-            {personas.map((persona, index) => (
-              <div
-                key={persona.id}
-                className="scroll-item break-inside-avoid group"
-                style={{
-                  paddingTop: index % 3 === 1 ? "8px" : "0px",
-                }}
-              >
-                <div
-                  className="spatial-card p-0 overflow-hidden transition-all duration-500 group-hover:shadow-lg"
-                  style={{
-                    "--glow-color": persona.color,
-                    boxShadow: "0 0 0 rgba(0,0,0,0)",
-                  } as React.CSSProperties}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLElement).style.boxShadow =
-                      `0 0 30px ${persona.color}20, 0 0 60px ${persona.color}15, 0 0 100px ${persona.color}08`;
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.boxShadow = "0 0 0 rgba(0,0,0,0)";
-                  }}
-                >
-                  <PersonaCard persona={persona} />
-                </div>
-              </div>
-            ))}
           </div>
         </motion.div>
       </motion.div>

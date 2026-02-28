@@ -1,12 +1,12 @@
+import { useMemo } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { MiniOrganism } from "./MiniOrganism";
 import { CharacterAvatar } from "@/svg/characters";
 import type { Persona } from "@/types/mind";
 import { getPersonaDimensions } from "@/data/persona-dimensions";
 import { DIMENSION_KEYS_6D } from "@/types/dimensions";
-import { PSYCHOLOGY_COLORS } from "@/data/dimensions";
+import { ALL_PSYCHOLOGY } from "@/data/dimensions";
 
 interface Props {
   persona: Persona;
@@ -94,32 +94,82 @@ export function PersonaCard({ persona, compact = false }: Props) {
       <h3 className="text-base font-display font-bold text-slate-200 mb-1 group-hover:text-white transition-colors">
         {t(`personas.${persona.id}.name`)}
       </h3>
-      <p className="text-xs text-slate-600 mb-4 font-light">{t(`personas.${persona.id}.tagline`)}</p>
+      <p className="text-xs text-slate-600 mb-3 font-light">{t(`personas.${persona.id}.tagline`)}</p>
 
-      {/* 6D Dimension bars */}
-      <div className="space-y-1.5">
-        {DIMENSION_KEYS_6D.map((key) => {
-          const dimProfile = getPersonaDimensions(persona.id);
-          const val = dimProfile[key];
-          return (
-            <div key={key} className="flex items-center gap-2">
-              <div className="w-14 text-[9px] text-slate-700 capitalize truncate">
-                {t(`dimensions.6d.${key}`, key)}
-              </div>
-              <div className="flex-1 h-[2px] rounded-full bg-white/[0.03] overflow-hidden">
-                <div
-                  className="h-full rounded-full transition-all duration-700"
-                  style={{
-                    width: `${val * 100}%`,
-                    backgroundColor: PSYCHOLOGY_COLORS[key],
-                    opacity: 0.5,
-                  }}
-                />
-              </div>
-            </div>
-          );
-        })}
+      {/* 6D Mini Radar */}
+      <div className="flex justify-center">
+        <MiniRadar personaId={persona.id} color={persona.color} size={140} />
       </div>
     </motion.div>
+  );
+}
+
+/* ── MiniRadar — Compact 6D hexagonal radar for persona cards ──────── */
+
+const MINI_ANGLES = Array.from(
+  { length: 6 },
+  (_, i) => (-90 + i * 60) * (Math.PI / 180),
+);
+
+function MiniRadar({ personaId, color, size }: { personaId: number; color: string; size: number }) {
+  const cx = size / 2;
+  const cy = size / 2;
+  const maxR = size * 0.36;
+  const labelR = maxR + 14;
+
+  const profile = getPersonaDimensions(personaId);
+  const vals = DIMENSION_KEYS_6D.map((k) => profile[k]);
+
+  const pts = useMemo(
+    () =>
+      MINI_ANGLES.map((a, i) => {
+        const r = maxR * Math.max(0, Math.min(1, vals[i]));
+        return `${cx + Math.cos(a) * r} ${cy + Math.sin(a) * r}`;
+      }),
+    [vals, cx, cy, maxR],
+  );
+
+  const gridPath = (scale: number) => {
+    const gp = MINI_ANGLES.map(
+      (a) => `${cx + Math.cos(a) * maxR * scale} ${cy + Math.sin(a) * maxR * scale}`,
+    );
+    return `M ${gp.join(" L ")} Z`;
+  };
+
+  return (
+    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="overflow-visible">
+      {/* Grid */}
+      {[0.33, 0.66, 1].map((s) => (
+        <path key={s} d={gridPath(s)} fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth={0.5} />
+      ))}
+      {/* Axes */}
+      {MINI_ANGLES.map((a, i) => (
+        <line key={i} x1={cx} y1={cy} x2={cx + Math.cos(a) * maxR} y2={cy + Math.sin(a) * maxR}
+          stroke="rgba(255,255,255,0.04)" strokeWidth={0.5} />
+      ))}
+      {/* Filled polygon */}
+      <path d={`M ${pts.join(" L ")} Z`} fill={`${color}18`} stroke={color} strokeWidth={1.2}
+        strokeLinejoin="round" opacity={0.9} />
+      {/* Dots */}
+      {MINI_ANGLES.map((a, i) => {
+        const r = maxR * Math.max(0, Math.min(1, vals[i]));
+        return (
+          <circle key={i} cx={cx + Math.cos(a) * r} cy={cy + Math.sin(a) * r}
+            r={2} fill={color} stroke="#0a0a0f" strokeWidth={0.6} />
+        );
+      })}
+      {/* Labels */}
+      {ALL_PSYCHOLOGY.map((dim, i) => {
+        const x = cx + Math.cos(MINI_ANGLES[i]) * labelR;
+        const y = cy + Math.sin(MINI_ANGLES[i]) * labelR;
+        return (
+          <text key={dim.key} x={x} y={y} textAnchor="middle" dominantBaseline="middle"
+            fill={dim.color} fontSize={7} fontWeight="500" fontFamily="Inter"
+            style={{ pointerEvents: "none" }}>
+            {dim.name}
+          </text>
+        );
+      })}
+    </svg>
   );
 }

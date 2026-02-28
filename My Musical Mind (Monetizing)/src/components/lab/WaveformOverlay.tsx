@@ -61,11 +61,18 @@ interface Props {
   accentColor: string;
   /** Compact mode: shorter height, no inline legend */
   compact?: boolean;
+  /** Playhead position as 0–1 ratio for synchronized timeline */
+  playheadRatio?: number;
+  /** Callback when user clicks to seek */
+  onSeek?: (ratio: number) => void;
 }
 
 const SVG_W = 800;
 
-export function WaveformOverlay({ temporal, depth, duration, accentColor, compact = false }: Props) {
+export function WaveformOverlay({
+  temporal, depth, duration, accentColor,
+  compact = false, playheadRatio, onSeek,
+}: Props) {
   const SVG_H = compact ? 180 : 280;
   const PAD_L = 0;
   const PAD_R = 0;
@@ -73,6 +80,7 @@ export function WaveformOverlay({ temporal, depth, duration, accentColor, compac
   const PAD_B = compact ? 18 : 30;
   const CHART_W = SVG_W - PAD_L - PAD_R;
   const CHART_H = SVG_H - PAD_T - PAD_B;
+
   const [hoverX, setHoverX] = useState<number | null>(null);
   const svgRef = useRef<SVGSVGElement>(null);
 
@@ -130,6 +138,20 @@ export function WaveformOverlay({ temporal, depth, duration, accentColor, compac
     []
   );
 
+  /* ── Click to seek ─────────────────────────────────── */
+  const handleClick = useCallback(
+    (e: React.MouseEvent<SVGSVGElement>) => {
+      if (!onSeek) return;
+      const svg = svgRef.current;
+      if (!svg) return;
+      const rect = svg.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * SVG_W;
+      const ratio = Math.max(0, Math.min(1, x / CHART_W));
+      onSeek(ratio);
+    },
+    [onSeek]
+  );
+
   const hoverSegment = useMemo(() => {
     if (hoverX === null) return null;
     const ratio = (hoverX - PAD_L) / CHART_W;
@@ -169,9 +191,10 @@ export function WaveformOverlay({ temporal, depth, duration, accentColor, compac
         ref={svgRef}
         viewBox={`0 0 ${SVG_W} ${SVG_H}`}
         className="w-full"
-        style={{ overflow: "visible" }}
+        style={{ overflow: "visible", cursor: onSeek ? "pointer" : undefined }}
         onMouseMove={handleMouseMove}
         onMouseLeave={() => setHoverX(null)}
+        onClick={handleClick}
       >
         {/* Background grid lines */}
         {[0.25, 0.5, 0.75].map((v) => (
@@ -203,16 +226,16 @@ export function WaveformOverlay({ temporal, depth, duration, accentColor, compac
                 <path
                   d={areaPath}
                   fill={color}
-                  fillOpacity={0.06}
+                  fillOpacity={0.04}
                 />
                 <path
                   d={path}
                   fill="none"
                   stroke={color}
-                  strokeWidth={depth <= 6 ? 2 : depth <= 12 ? 1.5 : 1}
+                  strokeWidth={depth <= 6 ? 1.2 : depth <= 12 ? 0.8 : 0.6}
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  style={{ filter: `drop-shadow(0 0 4px ${color}40)` }}
+                  style={{ filter: `drop-shadow(0 0 3px ${color}30)` }}
                 />
               </g>
             ))}
@@ -233,6 +256,29 @@ export function WaveformOverlay({ temporal, depth, duration, accentColor, compac
           </text>
         ))}
 
+        {/* Playhead — animated timeline cursor */}
+        {playheadRatio != null && (
+          <motion.g
+            initial={false}
+            animate={{ x: PAD_L + playheadRatio * CHART_W }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <line
+              x1={0} y1={PAD_T - 2}
+              x2={0} y2={PAD_T + CHART_H + 2}
+              stroke={accentColor}
+              strokeWidth={1.5}
+              opacity={0.85}
+              style={{ filter: `drop-shadow(0 0 4px ${accentColor}60)` }}
+            />
+            <polygon
+              points={`-4,${PAD_T - 5} 4,${PAD_T - 5} 0,${PAD_T + 1}`}
+              fill={accentColor}
+              opacity={0.9}
+            />
+          </motion.g>
+        )}
+
         {/* Hover crosshair */}
         {hoverX !== null && (
           <>
@@ -240,9 +286,9 @@ export function WaveformOverlay({ temporal, depth, duration, accentColor, compac
               x1={hoverX} y1={PAD_T}
               x2={hoverX} y2={PAD_T + CHART_H}
               stroke={accentColor}
-              strokeWidth={1}
+              strokeWidth={0.8}
               strokeDasharray="3 3"
-              opacity={0.5}
+              opacity={0.4}
             />
             {/* Dots on each line at hover position */}
             {paths.map(({ points, color }, i) => {
@@ -253,11 +299,11 @@ export function WaveformOverlay({ temporal, depth, duration, accentColor, compac
                 <circle
                   key={i}
                   cx={pt.x} cy={pt.y}
-                  r={depth <= 6 ? 4 : 3}
+                  r={depth <= 6 ? 3 : 2.5}
                   fill={color}
                   stroke="black"
-                  strokeWidth={1}
-                  style={{ filter: `drop-shadow(0 0 6px ${color})` }}
+                  strokeWidth={0.8}
+                  style={{ filter: `drop-shadow(0 0 4px ${color})` }}
                 />
               );
             })}
