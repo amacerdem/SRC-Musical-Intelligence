@@ -23,6 +23,7 @@
     "ranks": "Ranks",
     "info": "Info",
     "spotify": "Spotify",
+    "lab": "Lab",
     "search": "Search minds, personas..."
   },
   "landing": {
@@ -1208,12 +1209,12 @@
     "title": "Dimensions",
     "subtitle": "Your musical mind in {{count}}D",
     "6d": {
-      "discovery": "Discovery",
-      "intensity": "Intensity",
-      "flow": "Flow",
-      "depth": "Depth",
-      "trace": "Trace",
-      "sharing": "Sharing"
+      "discovery": "Curiosity",
+      "intensity": "Energy",
+      "flow": "Groove",
+      "depth": "Emotion",
+      "trace": "Memory",
+      "sharing": "Connection"
     },
     "12d": {
       "expectancy": "Expectancy",

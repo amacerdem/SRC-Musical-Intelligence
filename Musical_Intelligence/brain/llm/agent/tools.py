@@ -169,6 +169,52 @@ TOOLS = [
             },
         },
     },
+    {
+        "name": "get_temporal_journey",
+        "description": (
+            "Get the temporal arc of a track — how the listening experience "
+            "evolves across 8 segments. Shows mood transitions, turning points, "
+            "and key belief changes over time. Use when asking 'what's the "
+            "journey of this song?' or 'how does the experience change?'"
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "track_id": {
+                    "type": "string",
+                    "description": "Track ID to analyze temporally",
+                },
+                "focus_beliefs": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                    "description": (
+                        "Optional belief keys to focus on "
+                        "(e.g. ['wanting', 'pleasure', 'harmonic_stability'])"
+                    ),
+                },
+            },
+            "required": ["track_id"],
+        },
+    },
+    {
+        "name": "get_brain_activation",
+        "description": (
+            "Get the brain region activation map (RAM 26D) for a track — "
+            "which brain areas are most engaged and what that means. "
+            "Shows cortical, subcortical, and brainstem activations. "
+            "Premium tier and above only."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "track_id": {
+                    "type": "string",
+                    "description": "Track ID to get brain activation for",
+                },
+            },
+            "required": ["track_id"],
+        },
+    },
 ]
 
 
@@ -198,6 +244,8 @@ def handle_tool_call(
         "compare_tracks": _handle_compare_tracks,
         "search_knowledge": _handle_search_knowledge,
         "get_persona_info": _handle_get_persona,
+        "get_temporal_journey": _handle_temporal_journey,
+        "get_brain_activation": _handle_brain_activation,
     }
 
     handler = handlers.get(tool_name)
@@ -256,7 +304,49 @@ def _handle_analyze_track(
             "suggestion": "Use search_tracks to find available tracks.",
         }
 
-    return format_track_for_llm(track, tier=tier)
+    result = format_track_for_llm(track, tier=tier)
+
+    # Enrich with interpreter insights
+    try:
+        from .interpreter import interpret_reward, interpret_genes
+
+        # Reward insight
+        signal = track.get("signal", {})
+        if signal:
+            reward_data = {
+                "total": signal.get("reward", signal.get("total_reward", 0.5)),
+                "surprise": signal.get("surprise", 0.5),
+                "resolution": signal.get("resolution", 0.5),
+                "exploration": signal.get("exploration", 0.5),
+                "monotony": signal.get("monotony", 0.0),
+                "familiarity": signal.get("familiarity", None),
+            }
+            reward_result = interpret_reward(reward_data, language="en", tier=tier)
+            result["reward_insight"] = reward_result.get("narrative", "")
+
+        # Temporal summary
+        tp = track.get("temporal_profile", {})
+        if tp.get("belief_means_per_segment"):
+            from .interpreter import interpret_temporal
+            beliefs = track.get("beliefs", {})
+            temp_result = interpret_temporal(
+                tp, beliefs.get("means", []), beliefs.get("stds", []),
+                language="en", tier=tier,
+            )
+            result["temporal_summary"] = temp_result.get("narrative", "")
+
+        # Gene match note
+        genes = track.get("genes", {})
+        if genes:
+            gene_result = interpret_genes(genes, language="en")
+            result["gene_match_note"] = (
+                f"Dominant: {gene_result.get('dominant_gene', '')} "
+                f"({gene_result.get('dominant_family', '')})"
+            )
+    except Exception:
+        pass  # Interpreter enrichment is best-effort
+
+    return result
 
 
 def _handle_get_dimensions(
@@ -376,6 +466,100 @@ def _handle_compare_tracks(
             }
         result["neurochemical_comparison"] = neuro_deltas
 
+    # Enrich with comparison narrative from interpreter
+    try:
+        from .interpreter import interpret_comparison as _interp_comp
+
+        comp_result = _interp_comp(track_a, track_b, tier=tier, language="en")
+        result["comparison_narrative"] = comp_result.get("narrative", "")
+        result["comparison_highlights"] = comp_result.get("highlights", [])
+    except Exception:
+        pass  # Enrichment is best-effort
+
+    return result
+
+
+# ── Temporal & Brain Activation Handlers ─────────────────────────
+
+
+def _handle_temporal_journey(
+    inputs: dict[str, Any], tier: str
+) -> dict[str, Any]:
+    """Get temporal arc for a track."""
+    from .track_data import load_track, search_tracks
+    from .interpreter import interpret_temporal
+
+    track_id = inputs.get("track_id", "")
+    focus_beliefs = inputs.get("focus_beliefs")
+
+    if not track_id:
+        return {"error": "track_id is required."}
+
+    track = load_track(track_id)
+    if not track:
+        results = search_tracks(track_id, limit=1)
+        if results:
+            track = load_track(results[0]["id"])
+
+    if not track:
+        return {"error": f"Track '{track_id}' not found."}
+
+    tp = track.get("temporal_profile", {})
+    if not tp.get("belief_means_per_segment"):
+        return {
+            "track_id": track_id,
+            "message": "No temporal profile available for this track.",
+        }
+
+    beliefs = track.get("beliefs", {})
+    result = interpret_temporal(
+        tp,
+        beliefs.get("means", []),
+        beliefs.get("stds", []),
+        language="en",
+        tier=tier,
+        focus_beliefs=focus_beliefs,
+    )
+    result["track_id"] = track_id
+    result["artist"] = track.get("artist", "")
+    result["title"] = track.get("title", "")
+    return result
+
+
+def _handle_brain_activation(
+    inputs: dict[str, Any], tier: str
+) -> dict[str, Any]:
+    """Get brain region activation map for a track."""
+    from .track_data import load_track, search_tracks
+    from .interpreter import interpret_brain_regions
+
+    if tier not in ("premium", "research"):
+        return {"error": "Brain activation map requires Premium tier or higher."}
+
+    track_id = inputs.get("track_id", "")
+    if not track_id:
+        return {"error": "track_id is required."}
+
+    track = load_track(track_id)
+    if not track:
+        results = search_tracks(track_id, limit=1)
+        if results:
+            track = load_track(results[0]["id"])
+
+    if not track:
+        return {"error": f"Track '{track_id}' not found."}
+
+    ram = track.get("ram_26d")
+    if not ram:
+        return {
+            "track_id": track_id,
+            "message": "No brain activation data available for this track.",
+        }
+
+    result = interpret_brain_regions(ram, language="en", tier=tier)
+    result["track_id"] = track_id
+    result["artist"] = track.get("artist", "")
+    result["title"] = track.get("title", "")
     return result
 
 

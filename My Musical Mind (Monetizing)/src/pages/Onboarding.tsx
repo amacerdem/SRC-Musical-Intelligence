@@ -7,7 +7,8 @@ import { useOnboardingStore } from "@/stores/useOnboardingStore";
 import { useUserStore } from "@/stores/useUserStore";
 import { useM3Store } from "@/stores/useM3Store";
 import { MindOrganismCanvas } from "@/components/mind/MindOrganismCanvas";
-import { MindRadar } from "@/components/mind/MindRadar";
+import { DimensionRadar } from "@/components/mind/DimensionRadar";
+import { genesToDimensions, arrayToProfile } from "@/data/dimensions";
 import { personas, getPersona } from "@/data/personas";
 import { beliefColors } from "@/design/tokens";
 import { LanguageToggle } from "@/components/layout/LanguageToggle";
@@ -365,7 +366,7 @@ export function Onboarding() {
           <EvolvingStep key="evolving" progress={analysisProgress} phase={analysisPhase} userName={userName} />
         )}
         {step === "reveal" && selectedPersonaId && mind && (
-          <RevealStep key="reveal" personaId={selectedPersonaId} mind={mind} displayName={userName} onEnter={() => navigate("/dashboard")} />
+          <RevealStep key="reveal" personaId={selectedPersonaId} mind={mind} displayName={userName} onEnter={() => navigate("/my-mind")} />
         )}
       </AnimatePresence>
     </div>
@@ -1377,6 +1378,8 @@ function RevealStep({ personaId, mind, displayName, onEnter }: {
   if (!persona) return null;
 
   const color = persona.color;
+  const genes = m3Mind?.genes ?? { entropy: 0.5, resolution: 0.5, tension: 0.5, resonance: 0.5, plasticity: 0.5 };
+  const dim6DProfile = arrayToProfile(genesToDimensions(genes).psychology);
 
   return (
     <motion.div
@@ -1525,7 +1528,7 @@ function RevealStep({ personaId, mind, displayName, onEnter }: {
               transition={{ duration: 1.2, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
               className="mt-10"
             >
-              <MindRadar axes={mind.axes} color={color} size={400} />
+              <DimensionRadar profile={dim6DProfile} color={color} size={400} />
             </motion.div>
           )}
         </AnimatePresence>

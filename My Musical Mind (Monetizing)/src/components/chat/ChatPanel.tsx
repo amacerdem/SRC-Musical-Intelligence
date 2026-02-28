@@ -18,6 +18,7 @@ export function ChatPanel({ personaName, accentColor }: Props) {
   const isMobile = useMobile();
   const messages = useChatStore((s) => s.messages);
   const isLoading = useChatStore((s) => s.isLoading);
+  const statusText = useChatStore((s) => s.statusText);
   const error = useChatStore((s) => s.error);
   const close = useChatStore((s) => s.close);
   const sendMessage = useChatStore((s) => s.sendMessage);
@@ -92,7 +93,7 @@ export function ChatPanel({ personaName, accentColor }: Props) {
           />
         ))}
 
-        {isLoading && <TypingIndicator accentColor={accentColor} />}
+        {isLoading && <TypingIndicator accentColor={accentColor} statusText={statusText} />}
 
         {error && (
           <div className="text-center py-2">

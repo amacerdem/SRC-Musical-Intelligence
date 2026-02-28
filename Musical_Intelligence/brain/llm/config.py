@@ -16,9 +16,9 @@ DOCS_DIR = PROJECT_ROOT / "Docs"
 # ── Model Configuration ─────────────────────────────────────────────
 
 MODELS = {
-    "primary": "claude-sonnet-4-5-20250929",
+    "primary": "claude-haiku-4-5-20251001",
     "fast": "claude-haiku-4-5-20251001",
-    "deep": "claude-sonnet-4-5-20250929",
+    "deep": "claude-haiku-4-5-20251001",
 }
 
 EMBEDDING_MODEL = "text-embedding-3-small"
@@ -46,6 +46,7 @@ CONTEXT_BUDGET = {
     "persona": 1500,
     "user_profile": 500,
     "vocabulary": 2000,
+    "interpretation_guide": 1200,
     "knowledge_rag": 2000,
     "literature_rag": 1500,
     "conversation": 2000,

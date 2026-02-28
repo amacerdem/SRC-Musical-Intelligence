@@ -21,6 +21,7 @@ import { M3Hub } from "@/pages/M3Hub";
 import { Callback } from "@/pages/Callback";
 import { LibraryAuth } from "@/pages/LibraryAuth";
 import { SpotifyProfile } from "@/pages/SpotifyProfile";
+import { Lab } from "@/pages/Lab";
 
 export default function App() {
   const { hasCompletedOnboarding } = useUserStore();
@@ -55,18 +56,24 @@ export default function App() {
           <Route path="/callback" element={<Callback />} />
           <Route path="/library" element={<LibraryAuth />} />
 
-          {/* App routes (with shell) — 4 main pages */}
+          {/* App routes (with shell) — 5 main pages */}
           <Route element={<AppShell />}>
+            <Route
+              path="/my-mind"
+              element={
+                hasCompletedOnboarding ? <Dashboard /> : <Navigate to="/" />
+              }
+            />
+            <Route
+              path="/lab"
+              element={
+                hasCompletedOnboarding ? <Lab /> : <Navigate to="/" />
+              }
+            />
             <Route
               path="/m3"
               element={
                 hasCompletedOnboarding ? <M3Hub /> : <Navigate to="/" />
-              }
-            />
-            <Route
-              path="/dashboard"
-              element={
-                hasCompletedOnboarding ? <Dashboard /> : <Navigate to="/" />
               }
             />
             <Route path="/live" element={<ResonanceField />} />
@@ -81,17 +88,18 @@ export default function App() {
           </Route>
 
           {/* Redirects for removed/old routes */}
-          <Route path="/discover" element={<Navigate to="/dashboard" replace />} />
-          <Route path="/friends" element={<Navigate to="/dashboard" replace />} />
-          <Route path="/friends/:userId" element={<Navigate to="/dashboard" replace />} />
-          <Route path="/leaderboard" element={<Navigate to="/dashboard" replace />} />
+          <Route path="/dashboard" element={<Navigate to="/my-mind" replace />} />
+          <Route path="/discover" element={<Navigate to="/my-mind" replace />} />
+          <Route path="/friends" element={<Navigate to="/my-mind" replace />} />
+          <Route path="/friends/:userId" element={<Navigate to="/my-mind" replace />} />
+          <Route path="/leaderboard" element={<Navigate to="/my-mind" replace />} />
           <Route path="/arena" element={<Navigate to="/live" replace />} />
-          <Route path="/listen" element={<Navigate to="/dashboard" replace />} />
-          <Route path="/social/:userId" element={<Navigate to="/dashboard" replace />} />
-          <Route path="/social" element={<Navigate to="/dashboard" replace />} />
+          <Route path="/listen" element={<Navigate to="/my-mind" replace />} />
+          <Route path="/social/:userId" element={<Navigate to="/my-mind" replace />} />
+          <Route path="/social" element={<Navigate to="/my-mind" replace />} />
           <Route path="/personas/:id" element={<Navigate to="/info" replace />} />
           <Route path="/personas" element={<Navigate to="/info" replace />} />
-          <Route path="/explorer" element={<Navigate to="/dashboard" replace />} />
+          <Route path="/explorer" element={<Navigate to="/my-mind" replace />} />
 
           {/* Fallback */}
           <Route path="*" element={<Navigate to="/" />} />

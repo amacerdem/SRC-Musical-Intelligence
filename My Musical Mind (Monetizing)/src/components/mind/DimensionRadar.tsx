@@ -15,7 +15,7 @@ import {
 import { useTranslation } from "react-i18next";
 import type { DimensionProfile } from "@/types/dimensions";
 import { DIMENSION_KEYS_6D } from "@/types/dimensions";
-import { PSYCHOLOGY_COLORS } from "@/data/dimensions";
+import { PSYCHOLOGY_COLORS, ALL_PSYCHOLOGY } from "@/data/dimensions";
 
 interface Props {
   /** Primary 6D profile to display */
@@ -43,8 +43,10 @@ export function DimensionRadar({
   const { t, i18n } = useTranslation();
   const isTr = i18n.language === "tr";
 
-  const data = DIMENSION_KEYS_6D.map((key) => ({
-    axis: isTr ? t(`dimensions.6d.${key}`) : key.charAt(0).toUpperCase() + key.slice(1),
+  const data = DIMENSION_KEYS_6D.map((key, idx) => ({
+    axis: isTr
+      ? (ALL_PSYCHOLOGY[idx]?.nameTr ?? t(`dimensions.6d.${key}`))
+      : (ALL_PSYCHOLOGY[idx]?.name ?? key),
     key,
     value: Math.round((profile[key] ?? 0) * 100),
     ...(compareProfile ? { compare: Math.round((compareProfile[key] ?? 0) * 100) } : {}),

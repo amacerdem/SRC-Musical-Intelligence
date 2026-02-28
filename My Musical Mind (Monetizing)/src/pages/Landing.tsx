@@ -907,7 +907,7 @@ export function Landing() {
                     {t("onboarding.reveal.thisIsYourMind")}
                   </motion.p>
                   <button
-                    onClick={() => navigate("/dashboard")}
+                    onClick={() => navigate("/my-mind")}
                     className="group relative px-10 py-4 rounded-full transition-all duration-500 hover:scale-[1.03]"
                     style={{ background: `${persona.color}08`, border: `1px solid ${persona.color}20` }}
                     onMouseEnter={(e) => { e.currentTarget.style.background = `${persona.color}18`; e.currentTarget.style.boxShadow = `0 0 50px ${persona.color}20`; }}

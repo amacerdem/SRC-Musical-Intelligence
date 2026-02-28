@@ -8,7 +8,7 @@ export function MindReveal() {
   const { hasCompletedOnboarding } = useUserStore();
 
   useEffect(() => {
-    navigate(hasCompletedOnboarding ? "/dashboard" : "/onboarding", { replace: true });
+    navigate(hasCompletedOnboarding ? "/my-mind" : "/onboarding", { replace: true });
   }, [hasCompletedOnboarding, navigate]);
 
   return null;

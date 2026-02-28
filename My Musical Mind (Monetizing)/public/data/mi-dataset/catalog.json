@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "generated": "2026-02-28T03:43:36.315536",
   "pipeline": "MI Pipeline v4.0 (R³→H³→C³, 88 mechanisms, 131 beliefs)",
-  "total_tracks": 138,
+  "total_tracks": 139,
   "categories": {
     "Recently Played": 48,
     "Saved Tracks": 46,
@@ -5122,6 +5122,43 @@
       ],
       "dominant_family": "Architects",
       "dominant_gene": "resolution"
+    },
+    {
+      "id": "tchaikovsky__swan_lake_suite_op20a_scene",
+      "filename": "Swan_Lake_Suite__Op._20a__I._Scene__Swan_Theme_._Moderato_-_Pyotr_Ilyich_Tchaikovsky_ccaa3171.wav",
+      "artist": "Pyotr Ilyich Tchaikovsky",
+      "title": "Swan Lake Suite, Op. 20a: I. Scene (Swan Theme)",
+      "categories": [
+        "Lab"
+      ],
+      "duration_s": 182.6,
+      "signal": {
+        "energy": 0.4638,
+        "valence": 0.3207,
+        "tempo": 127.3,
+        "danceability": 0.6363,
+        "acousticness": 0.6434,
+        "harmonicComplexity": 0.2263,
+        "timbralBrightness": 0.0616,
+        "duration": 182.6
+      },
+      "genes": {
+        "entropy": 0.4825,
+        "resolution": 0.5309,
+        "tension": 0.5011,
+        "resonance": 0.5375,
+        "plasticity": 0.566
+      },
+      "dimensions_6d": [
+        0.4766,
+        0.5098,
+        0.5532,
+        0.5306,
+        0.4771,
+        0.5658
+      ],
+      "dominant_family": "Kineticists",
+      "dominant_gene": "plasticity"
     }
   ]
 }

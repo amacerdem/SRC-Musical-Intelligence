@@ -68,6 +68,8 @@ def index_knowledge_cards(
         ("cross_references.jsonl", "cross_reference", "factor_key"),
         ("observations.jsonl", "observation", "type"),
         ("analysis_guide.jsonl", "analysis_guide", "key"),
+        ("functions.jsonl", "function", "key"),
+        ("ram_regions.jsonl", "ram_region", "key"),
     ]
 
     all_chunks: list[Chunk] = []

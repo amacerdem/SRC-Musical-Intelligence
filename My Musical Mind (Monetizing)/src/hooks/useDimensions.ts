@@ -14,6 +14,7 @@ import type { DimensionLayer, DimensionProfile, DimensionState } from "@/types/d
 import { TIER_DIMENSION_ACCESS } from "@/types/dimensions";
 import {
   computeDimensions,
+  genesToDimensions,
   arrayToProfile,
   ALL_PSYCHOLOGY,
   ALL_COGNITION,
@@ -66,9 +67,14 @@ export function useDimensions(locale: "en" | "tr" = "en"): UseDimensionsResult {
         neuroscience: new Array(24).fill(0),
       };
     }
-    // Compute from beliefPriors (131 values)
-    return computeDimensions(mind.parameters.beliefPriors);
-  }, [mind?.parameters.beliefPriors]);
+    // Try belief-based dimensions first
+    const fromBeliefs = computeDimensions(mind.parameters.beliefPriors);
+    // If beliefPriors are near-zero (not yet accumulated from listening),
+    // fall back to gene-derived dimensions for a meaningful display.
+    const avgPsych = fromBeliefs.psychology.reduce((a, b) => a + b, 0) / 6;
+    if (avgPsych > 0.05) return fromBeliefs;
+    return genesToDimensions(mind.genes);
+  }, [mind?.parameters.beliefPriors, mind?.genes]);
 
   const profile6D = useMemo<DimensionProfile>(
     () => arrayToProfile(state.psychology),

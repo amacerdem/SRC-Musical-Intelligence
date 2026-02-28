@@ -15,7 +15,7 @@ import { useUserStore } from "@/stores/useUserStore";
 import { ProgressBar } from "@/components/ui/ProgressBar";
 
 const navItems = [
-  { to: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
+  { to: "/my-mind", icon: LayoutDashboard, label: "My Mind" },
   { to: "/explorer", icon: Brain, label: "Mind Explorer" },
   { to: "/personas", icon: Sparkles, label: "Personas" },
   { to: "/social", icon: Users, label: "Social" },

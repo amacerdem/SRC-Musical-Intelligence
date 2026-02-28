@@ -25,7 +25,7 @@ export function LibraryAuth() {
         state: { spotifyConnected: true },
       });
     } else {
-      navigate(hasCompletedOnboarding ? "/dashboard" : "/", { replace: true });
+      navigate(hasCompletedOnboarding ? "/my-mind" : "/", { replace: true });
     }
   }, [searchParams, navigate, setSpotifyConnected, hasCompletedOnboarding]);
 

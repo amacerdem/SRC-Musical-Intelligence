@@ -7,7 +7,7 @@
 
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { sendMessage as apiSendMessage, type ChatRequest } from "@/services/agent";
+import { sendMessageStream as apiSendMessageStream, type ChatRequest } from "@/services/agent";
 import { useUserStore } from "./useUserStore";
 import { useM3Store } from "./useM3Store";
 import { personas } from "@/data/personas";
@@ -26,6 +26,7 @@ interface ChatState {
   messages: ChatMessage[];
   sessionId: string | null;
   isLoading: boolean;
+  statusText: string | null;
   hasUnread: boolean;
   error: string | null;
 
@@ -91,6 +92,7 @@ export const useChatStore = create<ChatState>()(
       messages: [],
       sessionId: null,
       isLoading: false,
+      statusText: null,
       hasUnread: false,
       error: null,
 
@@ -118,12 +120,15 @@ export const useChatStore = create<ChatState>()(
         set((s) => ({
           messages: [...s.messages, userMsg],
           isLoading: true,
+          statusText: null,
           error: null,
         }));
 
         try {
           const req = buildChatRequest(trimmed, get().sessionId);
-          const res = await apiSendMessage(req);
+          const res = await apiSendMessageStream(req, (status) => {
+            set({ statusText: status });
+          });
 
           const assistantMsg: ChatMessage = {
             id: uid(),
@@ -136,11 +141,12 @@ export const useChatStore = create<ChatState>()(
             messages: [...s.messages, assistantMsg],
             sessionId: res.session_id,
             isLoading: false,
+            statusText: null,
             hasUnread: !s.isOpen,
           }));
         } catch (err) {
           const errorMsg = err instanceof Error ? err.message : "Unknown error";
-          set({ isLoading: false, error: errorMsg });
+          set({ isLoading: false, statusText: null, error: errorMsg });
         }
       },
 

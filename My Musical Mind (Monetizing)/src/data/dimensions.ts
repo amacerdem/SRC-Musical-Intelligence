@@ -10,6 +10,7 @@
  *  ──────────────────────────────────────────────────────────────────── */
 
 import type { DimensionNode, DimensionProfile, DimensionKey6D } from "@/types/dimensions";
+import type { MindGenes } from "@/types/m3";
 
 // =====================================================================
 // 24D — NEUROSCIENCE LAYER (leaf nodes, each maps to belief indices)
@@ -271,37 +272,37 @@ const BONDING: DimensionNode = {
 
 const DISCOVERY: DimensionNode = {
   index: 0, key: "discovery",
-  name: "Discovery", nameTr: "Keşif",
+  name: "Curiosity", nameTr: "Merak",
   layer: "psychology", parentKey: null,
   beliefIndices: [...EXPECTANCY.beliefIndices, ...INFORMATION_RATE.beliefIndices],
 };
 const INTENSITY: DimensionNode = {
   index: 1, key: "intensity",
-  name: "Intensity", nameTr: "Gerilim",
+  name: "Energy", nameTr: "Enerji",
   layer: "psychology", parentKey: null,
   beliefIndices: [...TENSION_ARC.beliefIndices, ...SONIC_IMPACT.beliefIndices],
 };
 const FLOW: DimensionNode = {
   index: 2, key: "flow",
-  name: "Flow", nameTr: "Ritim",
+  name: "Groove", nameTr: "Ritim",
   layer: "psychology", parentKey: null,
   beliefIndices: [...ENTRAINMENT.beliefIndices, ...GROOVE.beliefIndices],
 };
 const DEPTH: DimensionNode = {
   index: 3, key: "depth",
-  name: "Depth", nameTr: "Duygu",
+  name: "Emotion", nameTr: "Duygu",
   layer: "psychology", parentKey: null,
   beliefIndices: [...CONTAGION.beliefIndices, ...REWARD.beliefIndices],
 };
 const TRACE: DimensionNode = {
   index: 4, key: "trace",
-  name: "Trace", nameTr: "Hafıza",
+  name: "Memory", nameTr: "Hafıza",
   layer: "psychology", parentKey: null,
   beliefIndices: [...EPISODIC_RESONANCE.beliefIndices, ...RECOGNITION.beliefIndices],
 };
 const SHARING: DimensionNode = {
   index: 5, key: "sharing",
-  name: "Sharing", nameTr: "Bağ",
+  name: "Connection", nameTr: "Bağ",
   layer: "psychology", parentKey: null,
   beliefIndices: [...SYNCHRONY.beliefIndices, ...BONDING.beliefIndices],
 };
@@ -447,6 +448,52 @@ export function profileToArray(profile: DimensionProfile): number[] {
     profile.trace,
     profile.sharing,
   ];
+}
+
+/**
+ * Derive 6D psychological dimensions from the user's 5-gene DNA profile.
+ * Used as fallback when beliefPriors haven't accumulated from listening.
+ *
+ * Mapping rationale (gene → primary dimension):
+ *   entropy    → discovery  (novelty seeking drives exploration)
+ *   tension    → intensity  (arousal preference drives tension response)
+ *   plasticity → flow       (adaptability drives entrainment/groove)
+ *   resonance  → depth      (emotional resonance drives reward/contagion)
+ *   resolution → trace      (pattern completion drives memory/recognition)
+ *   sharing    ← mean(resonance, plasticity)  (empathy + adaptability → social bonding)
+ *
+ * Each gene also feeds into 12D and 24D via the tree structure:
+ *   6D[i] splits into 2×12D children (slight jitter for shape variety)
+ *   12D[j] splits into 2×24D children (further jitter)
+ */
+export function genesToDimensions(genes: MindGenes): {
+  psychology: number[];
+  cognition: number[];
+  neuroscience: number[];
+} {
+  // 6D psychology from genes
+  const psych = [
+    genes.entropy,                              // discovery
+    genes.tension,                              // intensity
+    genes.plasticity,                           // flow
+    genes.resonance,                            // depth
+    genes.resolution,                           // trace
+    (genes.resonance + genes.plasticity) / 2,   // sharing
+  ];
+
+  // 12D cognition: split each 6D into 2 children with ±8% variation
+  const cog: number[] = [];
+  for (const v of psych) {
+    cog.push(Math.min(1, v * 1.08), Math.max(0, v * 0.92));
+  }
+
+  // 24D neuroscience: split each 12D into 2 children with ±5% variation
+  const neuro: number[] = [];
+  for (const v of cog) {
+    neuro.push(Math.min(1, v * 1.05), Math.max(0, v * 0.95));
+  }
+
+  return { psychology: psych, cognition: cog, neuroscience: neuro };
 }
 
 /**

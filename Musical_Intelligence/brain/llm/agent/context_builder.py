@@ -1,9 +1,10 @@
-"""Full 5-Layer Context Builder — assembles the complete system prompt.
+"""Full 6-Layer Context Builder — assembles the complete system prompt.
 
 Combines all layers:
   Layer 0: Persona (identity, guardrails)
   Layer 1: User Profile (persona, genes, tier)
   Layer 2: Vocabulary (M3-LOGOS terms, tier gates)
+  Layer 2.5: Interpretation Guide (always-on analysis framework)
   Layer 3: Knowledge RAG (retrieved cards)
   Layer 4: Literature RAG (retrieved papers)
   Layer 5: Live Data (injected via tool results, not built here)
@@ -20,15 +21,110 @@ Usage:
 
 from __future__ import annotations
 
+import json
 from typing import Any
 
-from Musical_Intelligence.brain.llm.config import CONTEXT_BUDGET, TIERS
+from Musical_Intelligence.brain.llm.config import CONTEXT_BUDGET, KNOWLEDGE_DIR, TIERS
 from Musical_Intelligence.brain.llm.processing.context_builder import (
     build_layer0,
     build_layer1,
     build_layer2,
     estimate_tokens,
 )
+
+
+# ── Layer 2.5 Cache ──────────────────────────────────────────────
+
+_GUIDE_CACHE: dict[str, dict[str, str]] | None = None
+
+_GUIDE_KEYS = [
+    "interpreting_6d",
+    "interpreting_functions",
+    "interpreting_notable_beliefs",
+    "neurochemicals_meaning",
+    "reward_formula",
+]
+
+
+def _load_guide_entries() -> dict[str, dict[str, str]]:
+    """Load the 5 critical interpretation guide entries from analysis_guide.jsonl."""
+    global _GUIDE_CACHE
+    if _GUIDE_CACHE is not None:
+        return _GUIDE_CACHE
+
+    entries: dict[str, dict[str, str]] = {}
+    guide_path = KNOWLEDGE_DIR / "analysis_guide.jsonl"
+    if guide_path.exists():
+        for line in guide_path.read_text(encoding="utf-8").strip().splitlines():
+            if not line.strip():
+                continue
+            entry = json.loads(line)
+            key = entry.get("key", "")
+            if key in _GUIDE_KEYS:
+                entries[key] = entry
+
+    _GUIDE_CACHE = entries
+    return entries
+
+# ── Layer 2.5: Interpretation Guide ──────────────────────────────────
+
+
+def build_layer2_5(language: str = "tr") -> str:
+    """Build the always-on interpretation guide layer.
+
+    Embeds 5 critical analysis framework entries directly in the system
+    prompt so the agent always has interpretation context — independent
+    of RAG retrieval quality.
+
+    Entries:
+        - interpreting_6d: How to read the 6 psychology dimensions
+        - interpreting_functions: How to compare F1-F9 activations
+        - interpreting_notable_beliefs: Cross-function belief patterns
+        - neurochemicals_meaning: DA/NE/OPI/5HT channels
+        - reward_formula: Reward decomposition (surprise/resolution/exploration/monotony)
+
+    Returns:
+        Formatted interpretation guide string.
+    """
+    entries = _load_guide_entries()
+    if not entries:
+        return ""
+
+    sfx = "tr" if language == "tr" else "en"
+    header = "## Yorum Rehberi" if language == "tr" else "## Interpretation Guide"
+
+    section_titles = {
+        "interpreting_6d": ("6D Boyutları Okuma", "Reading 6D Dimensions"),
+        "interpreting_functions": ("F1-F9 Fonksiyon Karşılaştırma", "Comparing F1-F9 Functions"),
+        "interpreting_notable_beliefs": ("İnanç Örüntüleri", "Belief Patterns"),
+        "neurochemicals_meaning": ("Nörokimyasallar", "Neurochemicals"),
+        "reward_formula": ("Ödül Formülü", "Reward Formula"),
+    }
+
+    parts = [header]
+    budget = CONTEXT_BUDGET.get("interpretation_guide", 1200)
+    total_tokens = 0
+
+    for key in _GUIDE_KEYS:
+        entry = entries.get(key)
+        if not entry:
+            continue
+
+        text = entry.get(f"what_{sfx}", entry.get("what_en", ""))
+        if not text:
+            continue
+
+        tokens = estimate_tokens(text)
+        if total_tokens + tokens > budget:
+            break
+
+        title_tr, title_en = section_titles.get(key, (key, key))
+        title = title_tr if language == "tr" else title_en
+        parts.append(f"\n### {title}\n{text}")
+        total_tokens += tokens
+
+    return "\n".join(parts) if len(parts) > 1 else ""
+
 
 # ── Layer 3: Knowledge RAG ──────────────────────────────────────────
 
@@ -134,6 +230,14 @@ def build_full_context(
 ) -> tuple[str, list[dict[str, str]]]:
     """Build the complete system prompt and message array.
 
+    Layers assembled:
+        0: Persona identity + guardrails
+        1: User profile (persona, genes, tier)
+        2: M3-LOGOS vocabulary + tier gates
+        2.5: Interpretation guide (always-on analysis framework)
+        3: Knowledge RAG (dynamic, per-query)
+        4: Literature RAG (premium+ only)
+
     Args:
         user_message: The current user message.
         user_profile: User profile dict (see processing.context_builder).
@@ -152,6 +256,11 @@ def build_full_context(
     layer2 = build_layer2(tier, language)
 
     static_context = f"{layer0}\n\n---\n\n{layer1}\n\n---\n\n{layer2}"
+
+    # Layer 2.5: Interpretation guide (always-on, not RAG-dependent)
+    layer2_5 = build_layer2_5(language)
+    if layer2_5:
+        static_context += f"\n\n---\n\n{layer2_5}"
 
     # Layer 3: Knowledge RAG (dynamic, per-query)
     layer3 = build_layer3(

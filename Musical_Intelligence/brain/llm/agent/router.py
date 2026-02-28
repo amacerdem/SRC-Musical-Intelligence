@@ -125,9 +125,8 @@ def estimate_cost(
       Haiku 4.5:  $0.80/$4 per 1M tokens (input/output)
     """
     prices = {
-        MODELS["primary"]: (3.0, 15.0),
-        MODELS["deep"]: (3.0, 15.0),
-        MODELS["fast"]: (0.80, 4.0),
+        "claude-sonnet-4-5-20250929": (3.0, 15.0),
+        "claude-haiku-4-5-20251001": (0.80, 4.0),
     }
-    input_price, output_price = prices.get(model, (3.0, 15.0))
+    input_price, output_price = prices.get(model, (0.80, 4.0))
     return (input_tokens * input_price + output_tokens * output_price) / 1_000_000

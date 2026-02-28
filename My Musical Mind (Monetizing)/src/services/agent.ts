@@ -49,6 +49,76 @@ export async function sendMessage(req: ChatRequest): Promise<ChatResponse> {
   return res.json();
 }
 
+/** SSE streaming chat — receives status updates + final response. */
+export async function sendMessageStream(
+  req: ChatRequest,
+  onStatus: (text: string) => void,
+): Promise<ChatResponse> {
+  const res = await fetch("/api/agent/chat/stream", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(req),
+  });
+
+  if (!res.ok) {
+    const detail = await res.text().catch(() => res.statusText);
+    throw new Error(`Agent chat failed (${res.status}): ${detail}`);
+  }
+
+  const reader = res.body?.getReader();
+  if (!reader) throw new Error("No response stream");
+
+  const decoder = new TextDecoder();
+  let buffer = "";
+  let result: ChatResponse | null = null;
+  let errorDetail: string | null = null;
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+
+    buffer += decoder.decode(value, { stream: true });
+
+    // Parse SSE events from buffer
+    const parts = buffer.split("\n\n");
+    buffer = parts.pop() ?? "";
+
+    for (const part of parts) {
+      if (!part.trim()) continue;
+
+      let eventType = "message";
+      let data = "";
+
+      for (const line of part.split("\n")) {
+        if (line.startsWith("event: ")) {
+          eventType = line.slice(7).trim();
+        } else if (line.startsWith("data: ")) {
+          data = line.slice(6);
+        }
+      }
+
+      if (!data) continue;
+
+      try {
+        const parsed = JSON.parse(data);
+        if (eventType === "status") {
+          onStatus(parsed.text ?? "");
+        } else if (eventType === "done") {
+          result = parsed as ChatResponse;
+        } else if (eventType === "error") {
+          errorDetail = parsed.detail ?? "Unknown error";
+        }
+      } catch {
+        // Ignore malformed SSE data
+      }
+    }
+  }
+
+  if (errorDetail) throw new Error(errorDetail);
+  if (!result) throw new Error("No response received");
+  return result;
+}
+
 export async function getHistory(
   userId: string,
   sessionId: string,

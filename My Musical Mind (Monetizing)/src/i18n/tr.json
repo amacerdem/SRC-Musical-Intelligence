@@ -23,6 +23,7 @@
     "ranks": "S\u0131ralama",
     "info": "Bilgi",
     "spotify": "Spotify",
+    "lab": "Lab",
     "search": "Zihinleri, personalar\u0131 ara..."
   },
   "landing": {
@@ -1208,8 +1209,8 @@
     "title": "Boyutlar",
     "subtitle": "Müzikal zihniniz {{count}}D'de",
     "6d": {
-      "discovery": "Keşif",
-      "intensity": "Gerilim",
+      "discovery": "Merak",
+      "intensity": "Enerji",
       "flow": "Ritim",
       "depth": "Duygu",
       "trace": "Hafıza",

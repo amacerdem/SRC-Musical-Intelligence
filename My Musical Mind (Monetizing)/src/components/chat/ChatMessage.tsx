@@ -7,13 +7,28 @@ interface Props {
   accentColor: string;
 }
 
-/** Simple markdown-lite: bold, italic, bullet lists */
+/** Simple markdown-lite: headers, bold, italic, bullet & numbered lists */
 function renderContent(text: string) {
   const lines = text.split("\n");
   return lines.map((line, i) => {
+    const trimmed = line.trimStart();
+
+    // Headers: ### → h3, ## → h2, # → h1
+    const headerMatch = trimmed.match(/^(#{1,3})\s+(.+)/);
+    if (headerMatch) {
+      const level = headerMatch[1].length;
+      const content = headerMatch[2];
+      const sizes = ["text-[15px]", "text-[14px]", "text-[13px]"];
+      return (
+        <p key={i} className={`${sizes[level - 1]} font-semibold text-white/90 mt-1`}>
+          {formatInline(content)}
+        </p>
+      );
+    }
+
     // Bullet list
-    if (line.startsWith("- ") || line.startsWith("• ")) {
-      const item = line.slice(2);
+    if (trimmed.startsWith("- ") || trimmed.startsWith("• ")) {
+      const item = trimmed.slice(2);
       return (
         <div key={i} className="flex gap-1.5 ml-1">
           <span className="text-slate-500 mt-0.5">•</span>
@@ -21,8 +36,25 @@ function renderContent(text: string) {
         </div>
       );
     }
+
+    // Numbered list: 1. text, 2. text, etc.
+    const numMatch = trimmed.match(/^(\d+)[.)]\s+(.+)/);
+    if (numMatch) {
+      return (
+        <div key={i} className="flex gap-1.5 ml-1">
+          <span className="text-slate-500 font-mono text-[11px] mt-0.5 w-4 text-right shrink-0">{numMatch[1]}.</span>
+          <span>{formatInline(numMatch[2])}</span>
+        </div>
+      );
+    }
+
+    // Horizontal rule
+    if (/^[-–—]{3,}$/.test(trimmed)) {
+      return <hr key={i} className="border-white/[0.06] my-1" />;
+    }
+
     // Empty line → spacer
-    if (!line.trim()) return <div key={i} className="h-2" />;
+    if (!trimmed) return <div key={i} className="h-2" />;
     return <p key={i}>{formatInline(line)}</p>;
   });
 }
@@ -81,8 +113,14 @@ export function ChatMessage({ role, content, accentColor }: Props) {
   );
 }
 
-/** Typing indicator — 3 pulsing dots */
-export function TypingIndicator({ accentColor }: { accentColor: string }) {
+/** Typing indicator — shows live status text or 3 pulsing dots */
+export function TypingIndicator({
+  accentColor,
+  statusText,
+}: {
+  accentColor: string;
+  statusText?: string | null;
+}) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 8 }}
@@ -99,19 +137,32 @@ export function TypingIndicator({ accentColor }: { accentColor: string }) {
           border: "1px solid rgba(255,255,255,0.06)",
         }}
       >
-        {[0, 1, 2].map((i) => (
-          <motion.div
-            key={i}
-            className="w-1.5 h-1.5 rounded-full"
-            style={{ background: accentColor }}
-            animate={{ opacity: [0.3, 1, 0.3] }}
-            transition={{
-              duration: 1.2,
-              repeat: Infinity,
-              delay: i * 0.2,
-            }}
-          />
-        ))}
+        {statusText ? (
+          <motion.span
+            key={statusText}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.2 }}
+            className="text-[12px] font-mono"
+            style={{ color: `${accentColor}cc` }}
+          >
+            {statusText}
+          </motion.span>
+        ) : (
+          [0, 1, 2].map((i) => (
+            <motion.div
+              key={i}
+              className="w-1.5 h-1.5 rounded-full"
+              style={{ background: accentColor }}
+              animate={{ opacity: [0.3, 1, 0.3] }}
+              transition={{
+                duration: 1.2,
+                repeat: Infinity,
+                delay: i * 0.2,
+              }}
+            />
+          ))
+        )}
       </div>
     </motion.div>
   );

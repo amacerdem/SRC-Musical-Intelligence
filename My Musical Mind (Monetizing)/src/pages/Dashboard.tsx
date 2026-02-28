@@ -3,25 +3,27 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import {
-  Flame, ChevronRight, Sparkles, Brain,
+  Flame, ChevronRight, Sparkles,
   TrendingUp, Send,
 } from "lucide-react";
 import { useUserStore } from "@/stores/useUserStore";
 import { getPersona } from "@/data/personas";
 import { MindOrganismCanvas } from "@/components/mind/MindOrganismCanvas";
-import {
-  generateWeeklyMonologue,
-  generateBrainQuote,
-} from "@/data/mind-insights";
+import { generateBrainQuote } from "@/data/mind-insights";
 import { beliefColors } from "@/design/tokens";
 import { pageTransition, fadeIn, cinematicReveal } from "@/design/animations";
 import { weeklyStats } from "@/data/mock-listening";
 import { useM3Store } from "@/stores/useM3Store";
-import { levelToOrganismStage, GENE_NAMES, GENE_COLORS, getDominantGene } from "@/types/m3";
+import { levelToOrganismStage } from "@/types/m3";
 import { useActiveIdentity } from "@/hooks/useActiveIdentity";
+import { ALL_PSYCHOLOGY, PSYCHOLOGY_COLORS, genesToDimensions, arrayToProfile } from "@/data/dimensions";
+import type { DimensionKey6D } from "@/types/dimensions";
+import { DimensionRadar } from "@/components/mind/DimensionRadar";
 import { useChatStore } from "@/stores/useChatStore";
 import { MiniOrganism } from "@/components/mind/MiniOrganism";
 import { ChatMessage, TypingIndicator } from "@/components/chat/ChatMessage";
+
+const DIM_KEYS: DimensionKey6D[] = ["discovery", "intensity", "flow", "depth", "trace", "sharing"];
 
 export function Dashboard() {
   const navigate = useNavigate();
@@ -36,6 +38,7 @@ export function Dashboard() {
   // Chat state
   const messages = useChatStore((s) => s.messages);
   const isLoading = useChatStore((s) => s.isLoading);
+  const statusText = useChatStore((s) => s.statusText);
   const error = useChatStore((s) => s.error);
   const sendMessage = useChatStore((s) => s.sendMessage);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -52,10 +55,13 @@ export function Dashboard() {
   const xpForNext = level * 200;
   const xpProgress = Math.min(100, (xp % xpForNext) / xpForNext * 100);
   const genes = m3Mind?.genes ?? { entropy: 0.5, resolution: 0.5, tension: 0.5, resonance: 0.5, plasticity: 0.5 };
-  const dominantGene = getDominantGene(genes);
-  const avgGeneStrength = useMemo(() => GENE_NAMES.reduce((s, g) => s + genes[g], 0) / 5, [genes]);
+  const dim6D = useMemo(() => {
+    const d = genesToDimensions(genes);
+    return Object.fromEntries(DIM_KEYS.map((k, i) => [k, d.psychology[i]])) as Record<DimensionKey6D, number>;
+  }, [genes]);
+  const avgDimStrength = useMemo(() => DIM_KEYS.reduce((s, k) => s + dim6D[k], 0) / 6, [dim6D]);
+  const dim6DProfile = useMemo(() => arrayToProfile(genesToDimensions(genes).psychology), [genes]);
 
-  const monologue = useMemo(() => generateWeeklyMonologue(persona, mind.axes, t), [persona, mind.axes, t]);
   const brainQuote = useMemo(() => generateBrainQuote(identity.family, persona.id, t), [identity.family, persona.id, t]);
 
   const morphology = identity.morphology;
@@ -84,6 +90,14 @@ export function Dashboard() {
     if (!el) return;
     el.style.height = "auto";
     el.style.height = Math.min(el.scrollHeight, 100) + "px";
+  };
+
+  // JS failsafe: explicitly scroll messages on wheel events
+  const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    e.stopPropagation();
+    el.scrollTop += e.deltaY;
   };
 
   return (
@@ -178,76 +192,18 @@ export function Dashboard() {
         </motion.div>
 
         {/* ── MAIN GRID ───────────────────────────────────────── */}
-        <div className="flex-1 grid grid-cols-12 gap-4 min-h-0 overflow-hidden mt-1">
+        <div className="flex-1 grid grid-cols-2 gap-4 min-h-0 overflow-hidden mt-1">
 
-          {/* ═ LEFT COLUMN (3 cols): Sunburst + Weekly Evolution (6D) ═ */}
-          <div className="col-span-3 flex flex-col gap-3 min-h-0">
-
-            {/* Dimension Sunburst */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, delay: 0.2 }}
-              className="spatial-card p-3 flex flex-col items-center flex-shrink-0"
-            >
-              <div className="w-full flex items-center justify-center">
-                <DimensionSunburst color={color} size={340} />
-              </div>
-            </motion.div>
-
-            {/* Weekly Evolution — 6D Psychological Dimensions */}
-            <div className="spatial-card p-3 flex-1 min-h-0 overflow-hidden">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-display font-light tracking-[0.15em] uppercase text-slate-500">{t("dashboard.weeklyEvolution")}</span>
-                <div className="flex items-center gap-1.5">
-                  <TrendingUp size={13} style={{ color }} />
-                  <span className="text-sm font-mono font-medium" style={{ color }}>+{evolution.pct}%</span>
-                </div>
-              </div>
-              <div className="space-y-2">
-                {ALL_PSYCHOLOGY.map((dim, i) => {
-                  const key = dim.key as DimensionKey6D;
-                  const delta = dimDeltas[key] ?? 0;
-                  const isPositive = delta >= 0;
-                  const dimColor = PSYCHOLOGY_COLORS[key];
-                  const absDelta = Math.abs(delta);
-                  return (
-                    <div key={key} className="flex items-center gap-3">
-                      <div className="flex items-center gap-1.5 w-20">
-                        <div className="w-2 h-2 rounded-full" style={{ background: dimColor }} />
-                        <span className="text-[11px] font-display text-slate-400">
-                          {isTr ? dim.nameTr : dim.name}
-                        </span>
-                      </div>
-                      <div className="flex-1 h-[4px] rounded-full bg-white/5 overflow-hidden">
-                        <motion.div
-                          className="h-full rounded-full"
-                          style={{ backgroundColor: dimColor, opacity: 0.8 }}
-                          initial={{ width: 0 }}
-                          animate={{ width: `${Math.min(absDelta * 400, 100)}%` }}
-                          transition={{ duration: 1, delay: 0.5 + i * 0.1 }}
-                        />
-                      </div>
-                      <span className="text-[12px] font-mono w-12 text-right" style={{ color: isPositive ? dimColor : "#EF4444" }}>
-                        {isPositive ? "+" : ""}{(delta * 100).toFixed(0)}%
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-
-          {/* ═ CENTER COLUMN (5 cols): Embedded Chat with Organism ═ */}
+          {/* ═ LEFT — Chat with Organism ═ */}
           <motion.div
             initial={{ opacity: 0, y: 20, filter: "blur(12px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="col-span-5 flex flex-col min-h-0 rounded-2xl overflow-hidden relative"
+            className="flex flex-col min-h-0 rounded-2xl overflow-hidden relative"
           >
             {/* Living organism background — persona-specific */}
             <div
-              className="absolute inset-0 z-0"
+              className="absolute inset-0 z-0 pointer-events-none"
               style={{ transform: "scale(1.3)", transformOrigin: "center 40%" }}
             >
               <MindOrganismCanvas
@@ -266,7 +222,7 @@ export function Dashboard() {
 
             {/* Glassmorphism overlay */}
             <div
-              className="absolute inset-0 z-[1] rounded-2xl"
+              className="absolute inset-0 z-[1] rounded-2xl pointer-events-none"
               style={{
                 background: "rgba(0, 0, 0, 0.55)",
                 backdropFilter: "blur(20px)",
@@ -276,11 +232,11 @@ export function Dashboard() {
               }}
             />
 
-            {/* Content layer above glass */}
-            <div className="relative z-[2] flex flex-col min-h-0 h-full">
+            {/* Content layer */}
+            <div className="absolute inset-0 z-[2] flex flex-col overflow-hidden">
             {/* Chat Header — persona identity */}
             <div
-              className="flex items-center gap-3 px-4 py-3 border-b border-white/[0.06]"
+              className="flex-shrink-0 flex items-center gap-3 px-4 py-3 border-b border-white/[0.06]"
               style={{ background: `${color}06` }}
             >
               <motion.div
@@ -312,8 +268,9 @@ export function Dashboard() {
             {/* Chat Messages */}
             <div
               ref={scrollRef}
-              className="flex-1 overflow-y-auto px-4 py-4 space-y-3 scroll-smooth"
-              style={{ scrollbarWidth: "none" }}
+              onWheel={handleWheel}
+              className="flex-1 min-h-0 overflow-y-scroll px-4 py-4 space-y-3"
+              style={{ scrollbarWidth: "thin", scrollbarColor: `${color}30 transparent`, overscrollBehavior: "contain" }}
             >
               {messages.length === 0 && !isLoading && (
                 <div className="flex flex-col items-center justify-center h-full gap-4 py-8">
@@ -328,10 +285,10 @@ export function Dashboard() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3, duration: 0.8 }}
-                    className="text-center max-w-[280px]"
+                    className="text-center max-w-[320px]"
                   >
                     <p className="text-sm text-slate-400 font-body leading-relaxed">
-                      I am your musical mind. Talk to me about your music experiences, emotions, and discoveries.
+                      {t("chat.welcome")}
                     </p>
                   </motion.div>
 
@@ -340,7 +297,7 @@ export function Dashboard() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.6, duration: 1 }}
-                    className="max-w-[300px] mt-2"
+                    className="max-w-[340px] mt-2"
                   >
                     <div
                       className="rounded-2xl rounded-bl-md px-4 py-3 text-[13px] font-body leading-relaxed"
@@ -368,7 +325,7 @@ export function Dashboard() {
                 />
               ))}
 
-              {isLoading && <TypingIndicator accentColor={color} />}
+              {isLoading && <TypingIndicator accentColor={color} statusText={statusText} />}
 
               {error && (
                 <div className="text-center py-2">
@@ -378,7 +335,7 @@ export function Dashboard() {
             </div>
 
             {/* Chat Input */}
-            <div className="flex items-end gap-2 px-3 py-3 border-t border-white/[0.06]">
+            <div className="flex-shrink-0 flex items-end gap-2 px-3 py-3 border-t border-white/[0.06]">
               <textarea
                 ref={inputRef}
                 onChange={handleInput}
@@ -404,105 +361,135 @@ export function Dashboard() {
             </div>{/* /content layer */}
           </motion.div>
 
-          {/* ═ RIGHT COLUMN (4 cols): Peak Moment + Brain Narrative + Genres ═ */}
-          <div className="col-span-4 flex flex-col gap-2 min-h-0">
+          {/* ═ RIGHT — Radar + Bars + Stats ═ */}
+          <div className="flex flex-col gap-3 min-h-0 overflow-hidden">
 
-            {/* Peak Moment This Week — TOP */}
+            {/* Peak Moment + Radar + Weekly Evolution — single unified card */}
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.8 }}
-              className="flex-shrink-0"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1, delay: 0.2 }}
+              className="spatial-card flex flex-col flex-1 min-h-0 overflow-hidden"
             >
-              <div className="spatial-card p-4 glow-border" style={{ "--glow-color": beliefColors.reward.primary } as React.CSSProperties}>
-                <div className="flex items-start gap-3">
-                  <Sparkles size={16} className="mt-0.5 shrink-0" style={{ color: beliefColors.reward.primary }} />
+              {/* Peak Moment — top strip */}
+              <div className="flex-shrink-0 px-4 py-2.5 border-b border-white/[0.06]">
+                <div className="flex items-start gap-2.5">
+                  <Sparkles size={14} className="mt-0.5 shrink-0" style={{ color: beliefColors.reward.primary }} />
                   <div className="flex-1 min-w-0">
-                    <span className="text-[11px] font-display font-light tracking-[0.1em] uppercase" style={{ color: `${beliefColors.reward.primary}90` }}>
+                    <span className="text-[10px] font-display font-light tracking-[0.1em] uppercase" style={{ color: `${beliefColors.reward.primary}90` }}>
                       {t("dashboard.peakMomentThisWeek")}
                     </span>
-                    <p className="text-[12px] text-slate-400 font-body font-light mt-1 leading-relaxed">
-                      {weeklyStats.peakPE.description.slice(0, 140)}
+                    <p className="text-[11px] text-slate-400 font-body font-light mt-0.5 leading-relaxed">
+                      {weeklyStats.peakPE.description.slice(0, 100)}
                     </p>
-                    <div className="flex items-center gap-2 mt-2">
+                    <div className="flex items-center gap-2 mt-1">
                       <div className="h-1 flex-1 rounded-full bg-white/5 overflow-hidden">
                         <motion.div className="h-full rounded-full" style={{ background: beliefColors.reward.primary }}
                           initial={{ width: 0 }} animate={{ width: `${weeklyStats.peakPE.magnitude * 100}%` }}
                           transition={{ duration: 1.2, delay: 1 }}
                         />
                       </div>
-                      <span className="text-[11px] font-mono" style={{ color: beliefColors.reward.primary }}>
-                        {(weeklyStats.peakPE.magnitude * 100).toFixed(0)}% {t("dashboard.intensity")}
+                      <span className="text-[10px] font-mono" style={{ color: beliefColors.reward.primary }}>
+                        {(weeklyStats.peakPE.magnitude * 100).toFixed(0)}%
                       </span>
                     </div>
                   </div>
                 </div>
               </div>
+
+              {/* Radar with orbital rings — fills remaining space */}
+              <div className="flex-1 flex items-center justify-center relative overflow-hidden">
+                {/* Orbit rings — matching Landing palette */}
+                {(["consonance", "prediction", "tempo", "salience", "emotion"] as const).map((b, i) => {
+                  const bColor = beliefColors[b].primary;
+                  const radius = 185 + i * 30;
+                  return (
+                    <div key={b} className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                      <div
+                        className="absolute rounded-full"
+                        style={{
+                          width: radius * 2, height: radius * 2,
+                          background: `conic-gradient(from ${i * 72}deg, ${bColor}30, ${bColor}18 8%, ${bColor}0A 20%, transparent 40%, transparent 100%)`,
+                          maskImage: `radial-gradient(transparent ${radius - 2}px, black ${radius - 1}px, black ${radius + 1}px, transparent ${radius + 2}px)`,
+                          WebkitMaskImage: `radial-gradient(transparent ${radius - 2}px, black ${radius - 1}px, black ${radius + 1}px, transparent ${radius + 2}px)`,
+                          animation: `orbit ${26 + i * 5}s linear infinite`,
+                        }}
+                      />
+                      <div
+                        className="absolute rounded-full"
+                        style={{
+                          width: radius * 2, height: radius * 2,
+                          border: `1px solid ${bColor}06`,
+                        }}
+                      />
+                      <motion.div
+                        className="absolute"
+                        style={{
+                          width: 5, height: 5, borderRadius: "50%",
+                          background: bColor,
+                          boxShadow: `0 0 10px ${bColor}80, 0 0 25px ${bColor}40`,
+                          left: `calc(50% + ${radius}px - 2.5px)`,
+                          top: "calc(50% - 2.5px)",
+                          transformOrigin: `${-radius + 2.5}px 2.5px`,
+                          animation: `orbit ${26 + i * 5}s linear infinite`,
+                        }}
+                      />
+                    </div>
+                  );
+                })}
+                {/* Radar chart — single persona color, neutral labels */}
+                <div className="relative z-10">
+                  <DimensionRadar profile={dim6DProfile} color={color} size={440} />
+                </div>
+              </div>
+
+              {/* Weekly Evolution bars — bottom strip */}
+              <div className="flex-shrink-0 px-4 pb-3 pt-1 border-t border-white/[0.06]">
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-xs font-display font-light tracking-[0.15em] uppercase text-slate-500">{t("dashboard.weeklyEvolution")}</span>
+                  <div className="flex items-center gap-1.5">
+                    <TrendingUp size={13} style={{ color }} />
+                    <span className="text-sm font-mono font-medium" style={{ color }}>{Math.round(avgDimStrength * 100)}%</span>
+                  </div>
+                </div>
+                <div className="space-y-1.5">
+                  {ALL_PSYCHOLOGY.map((dim, i) => {
+                    const key = dim.key as DimensionKey6D;
+                    const value = dim6D[key];
+                    const pct = Math.round(value * 100);
+                    const dimColor = PSYCHOLOGY_COLORS[key];
+                    return (
+                      <div key={key} className="flex items-center gap-2.5">
+                        <div className="flex items-center gap-1.5 w-[72px]">
+                          <div className="w-1.5 h-1.5 rounded-full" style={{ background: dimColor }} />
+                          <span className="text-[10px] font-display text-slate-400">{isTr ? dim.nameTr : dim.name}</span>
+                        </div>
+                        <div className="flex-1 h-[3px] rounded-full bg-white/5 overflow-hidden">
+                          <motion.div
+                            className="h-full rounded-full"
+                            style={{ background: dimColor, opacity: 0.7 }}
+                            initial={{ width: 0 }}
+                            animate={{ width: `${pct}%` }}
+                            transition={{ duration: 1.2, delay: 0.5 + i * 0.08 }}
+                          />
+                        </div>
+                        <span className="text-[11px] font-mono w-8 text-right" style={{ color: dimColor }}>{pct}%</span>
+                      </div>
+                    );
+                  })}
+                </div>
+                {/* Genres — inline */}
+                <div className="flex items-center flex-wrap gap-1.5 mt-2 pt-2 border-t border-white/[0.04]">
+                  {weeklyStats.topGenres.slice(0, 4).map((g) => (
+                    <div key={g.name} className="flex items-center gap-1 px-2 py-0.5 rounded-full" style={{ background: `${color}08`, border: `1px solid ${color}12` }}>
+                      <span className="text-[10px] font-display text-slate-400">{g.name}</span>
+                      <span className="text-[9px] font-mono" style={{ color }}>{g.pct}%</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </motion.div>
 
-            {/* Your Brain This Week — Narrative (data-driven) */}
-            <div className="spatial-card p-4 flex-shrink-0">
-              <div className="flex items-center gap-2 mb-2.5">
-                <Brain size={14} style={{ color: beliefColors.reward.primary }} />
-                <span className="text-xs font-display font-light tracking-[0.15em] uppercase text-slate-500">{t("dashboard.yourBrainThisWeek")}</span>
-              </div>
-              {(() => {
-                const genes = aggregateProfile?.genes;
-                const depthDelta = dimDeltas.depth ?? 0;
-                // Find strongest dimension shift
-                const dimEntries = Object.entries(dimDeltas).sort((a, b) => Math.abs(b[1]) - Math.abs(a[1]));
-                const strongestDim = dimEntries[0];
-                const strongestPct = strongestDim ? (Math.abs(strongestDim[1]) * 100).toFixed(0) : "0";
-                const strongestName = strongestDim?.[0] ?? "depth";
-                const strongestColor = PSYCHOLOGY_COLORS[strongestName as DimensionKey6D] ?? color;
-                return (
-                  <>
-                    <p className="text-[12px] text-slate-300 leading-relaxed font-body font-light">
-                      {isTr ? "En güçlü boyut kaymanız" : "Your strongest dimension shift"}: <span className="font-mono font-medium" style={{ color: strongestColor }}>{strongestDim?.[1] && strongestDim[1] >= 0 ? "+" : ""}{strongestPct}% {strongestName}</span>.
-                      {" "}{depthDelta > 0.1
-                        ? (isTr ? "Müzikal hazzınız güçleniyor — zihniniz 'iyi müzik'in ne olduğunu yeniden kalibre ediyor." : "Your sense of musical pleasure is strengthening — your mind is recalibrating what 'good music' means.")
-                        : depthDelta < -0.05
-                          ? (isTr ? "Duygusal derinliğiniz sakinleşiyor — dinleme tercihleriniz rafine ediliyor." : "Your emotional depth is settling — your listening preferences are becoming more refined.")
-                          : (isTr ? "Müzikal kimliğiniz dengeli bir evrimde." : "Your musical identity is in a balanced evolution.")}
-                    </p>
-                    <p className="text-[12px] text-slate-400 leading-relaxed font-body font-light mt-2">
-                      {genes ? (
-                        genes.resolution > 0.55
-                          ? (isTr
-                            ? <>Çözünürlük ihtiyacınız (<span className="font-mono" style={{ color: PSYCHOLOGY_COLORS.discovery }}>{(genes.resolution * 100).toFixed(0)}%</span>) haftanıza damgasını vurdu. Her çözülen akor, her tatmin edici son — zihniniz her birini küçük bir zafer olarak kaydetti.</>
-                            : <>Your resolution drive (<span className="font-mono" style={{ color: PSYCHOLOGY_COLORS.discovery }}>{(genes.resolution * 100).toFixed(0)}%</span>) shaped your week. Every resolved chord, every satisfying ending — your mind marked each one as a small victory.</>)
-                          : genes.entropy > 0.45
-                            ? (isTr
-                              ? <>Entropi toleransınız (<span className="font-mono" style={{ color: PSYCHOLOGY_COLORS.discovery }}>{(genes.entropy * 100).toFixed(0)}%</span>) sizi yeniliğe yöneltiyor. Keşfetme dürtünüz güçlü.</>
-                              : <>Your entropy tolerance (<span className="font-mono" style={{ color: PSYCHOLOGY_COLORS.discovery }}>{(genes.entropy * 100).toFixed(0)}%</span>) drives you toward novelty. Your exploration instinct is strong.</>)
-                            : (isTr
-                              ? <>Rezonans derinliğiniz (<span className="font-mono" style={{ color: PSYCHOLOGY_COLORS.depth }}>{(genes.resonance * 100).toFixed(0)}%</span>) müzikal hafızanızı şekillendiriyor.</>
-                              : <>Your resonance depth (<span className="font-mono" style={{ color: PSYCHOLOGY_COLORS.depth }}>{(genes.resonance * 100).toFixed(0)}%</span>) shapes your musical memory.</>)
-                      ) : null}
-                    </p>
-                  </>
-                );
-              })()}
-            </div>
-
-            {/* Top Genres */}
-            <div className="spatial-card p-3 flex-shrink-0">
-              <div className="flex items-center flex-wrap gap-2">
-                {weeklyStats.topGenres.slice(0, 4).map((g) => (
-                  <div key={g.name} className="flex items-center gap-1.5 px-2.5 py-1 rounded-full" style={{ background: `${color}08`, border: `1px solid ${color}12` }}>
-                    <span className="text-[11px] font-display text-slate-400">{g.name}</span>
-                    <span className="text-[10px] font-mono" style={{ color }}>{g.pct}%</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Brain Monologue */}
-            <div className="spatial-card p-3 flex-1 min-h-0 overflow-hidden">
-              <p className="text-[11px] text-slate-500 font-display font-light leading-relaxed line-clamp-4">
-                {monologue}
-              </p>
-            </div>
           </div>
 
         </div>
