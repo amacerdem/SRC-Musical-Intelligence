@@ -82,16 +82,22 @@ class InterpretResponse(BaseModel):
 # ── Chat Endpoint ───────────────────────────────────────────────────
 
 
+MAX_TOOL_ROUNDS = 5  # Safety limit for tool call loop
+
+
 @router.post("/chat", response_model=ChatResponse)
 async def chat(req: ChatRequest):
     """Send a message to the Musical Mind agent and get a response.
 
-    If ANTHROPIC_API_KEY is set, uses Claude API.
-    Otherwise, returns a knowledge-based fallback response.
+    Handles tool_use responses: when Claude calls a tool, we execute it
+    and send the result back, repeating until Claude produces a text response.
     """
+    import json as _json
+
     from Musical_Intelligence.brain.llm.agent.conversation import ConversationManager
     from Musical_Intelligence.brain.llm.agent.context_builder import build_api_request
     from Musical_Intelligence.brain.llm.agent.router import estimate_cost
+    from Musical_Intelligence.brain.llm.agent.tools import handle_tool_call
 
     # Build user profile dict
     user_profile = {
@@ -123,22 +129,82 @@ async def chat(req: ChatRequest):
     api_key = os.environ.get("ANTHROPIC_API_KEY")
 
     if api_key:
-        # Real Claude API call
         try:
             import anthropic
 
             client = anthropic.Anthropic(api_key=api_key)
-            response = client.messages.create(**api_request)
 
-            # Extract text response
+            # Tool call loop: keep sending until we get a final text response
+            total_in = 0
+            total_out = 0
             response_text = ""
-            for block in response.content:
-                if hasattr(block, "text"):
-                    response_text += block.text
+            messages = api_request.pop("messages")
 
-            tokens_in = response.usage.input_tokens
-            tokens_out = response.usage.output_tokens
-            cost = estimate_cost(api_request["model"], tokens_in, tokens_out)
+            for _round in range(MAX_TOOL_ROUNDS):
+                response = client.messages.create(
+                    messages=messages,
+                    **api_request,
+                )
+
+                total_in += response.usage.input_tokens
+                total_out += response.usage.output_tokens
+
+                # Check if response contains tool_use blocks
+                tool_use_blocks = [
+                    b for b in response.content if b.type == "tool_use"
+                ]
+                text_blocks = [
+                    b for b in response.content if hasattr(b, "text")
+                ]
+
+                # Collect any text produced alongside tool calls
+                for tb in text_blocks:
+                    response_text += tb.text
+
+                if not tool_use_blocks:
+                    # No tool calls — we have our final response
+                    break
+
+                # Process tool calls and build tool_result messages
+                # First, add the assistant's response (with tool_use) to messages
+                messages.append({
+                    "role": "assistant",
+                    "content": [
+                        {
+                            "type": b.type,
+                            **({"text": b.text} if b.type == "text" else {}),
+                            **({"id": b.id, "name": b.name, "input": b.input} if b.type == "tool_use" else {}),
+                        }
+                        for b in response.content
+                    ],
+                })
+
+                # Execute each tool and collect results
+                tool_results = []
+                for tool_block in tool_use_blocks:
+                    result = handle_tool_call(
+                        tool_name=tool_block.name,
+                        tool_input=tool_block.input,
+                        user_tier=req.tier,
+                    )
+                    tool_results.append({
+                        "type": "tool_result",
+                        "tool_use_id": tool_block.id,
+                        "content": _json.dumps(result, ensure_ascii=False),
+                    })
+
+                # Add tool results as a user message
+                messages.append({
+                    "role": "user",
+                    "content": tool_results,
+                })
+
+                # Clear text for the next round (we want the final response)
+                response_text = ""
+
+            cost = estimate_cost(api_request["model"], total_in, total_out)
+            tokens_in = total_in
+            tokens_out = total_out
 
         except Exception as e:
             raise HTTPException(status_code=502, detail=f"Claude API error: {e}")

@@ -5,15 +5,20 @@
  *  ──────────────────────────────────────────────────────────────── */
 
 import { useRef, useEffect } from "react";
-import { recentTracks, lastWeekDays } from "@/data/mock-listening";
+import { miDataService } from "@/services/MIDataService";
 
-/* ── Genre → Color map ──────────────────────────────────────────── */
-const GENRE_COLORS: Record<string, string> = {
-  Electronic: "#C084FC",
-  "Post-Rock": "#F97316",
-  "Neo-Classical": "#38BDF8",
-  Ambient: "#84CC16",
-  Jazz: "#FBBF24",
+/* ── Category/Family → Color map ──────────────────────────────────── */
+const FAMILY_COLORS: Record<string, string> = {
+  Explorers: "#38BDF8",
+  Architects: "#6366F1",
+  Wanderers: "#84CC16",
+  Guardians: "#FBBF24",
+  Seekers: "#C084FC",
+};
+const CATEGORY_COLORS: Record<string, string> = {
+  "Recently Played": "#C084FC",
+  "Top Tracks": "#F97316",
+  "Saved Tracks": "#38BDF8",
 };
 
 const DEFAULT_NEURON_COLOR = "#6366F1";
@@ -40,46 +45,47 @@ interface Synapse {
   color: string;
 }
 
-/* ── Generate mock neuron data from listening history ───────────── */
+/* ── Generate neurons from real MI dataset ─────────────────────── */
 function generateNeurons(width: number, height: number): Neuron[] {
   const neurons: Neuron[] = [];
   const cx = width / 2;
   const cy = height / 2;
   const spread = Math.min(width, height) * 0.38;
 
-  // Generate neurons from recent tracks + daily data
-  const sources = [
-    ...recentTracks.map((t) => ({ genre: t.genre, artist: t.artist, strength: t.rewardIntensity })),
-    ...lastWeekDays.map((d) => ({ genre: d.topGenre, artist: "", strength: 0.5 + Math.random() * 0.3 })),
-  ];
+  // Use real tracks from MI dataset
+  const tracks = miDataService.isReady() ? miDataService.getAllTracks() : [];
+  const sources = tracks.map((t) => ({
+    genre: t.categories[0] ?? "Unknown",
+    artist: t.artist,
+    family: t.dominant_family,
+    strength: t.genes.tension * 0.4 + t.genes.resolution * 0.6,
+  }));
 
-  // Add extra neurons for density (simulating full listening history)
-  const extraGenres = ["Electronic", "Post-Rock", "Neo-Classical", "Ambient", "Jazz"];
-  for (let i = 0; i < 35; i++) {
-    const g = extraGenres[i % extraGenres.length];
-    sources.push({ genre: g, artist: "", strength: 0.3 + Math.random() * 0.5 });
-  }
+  // Deterministic seeded pseudo-random (based on track index)
+  const seeded = (i: number) => {
+    const x = Math.sin(i * 127.1 + 311.7) * 43758.5453;
+    return x - Math.floor(x);
+  };
 
   // Position neurons in a brain-like oval cluster
   sources.forEach((src, i) => {
-    const angle = (i / sources.length) * Math.PI * 2 + (Math.random() - 0.5) * 0.8;
-    const dist = (0.3 + Math.random() * 0.7) * spread;
-    // Slight oval shape (wider than tall, brain-like)
+    const angle = (i / sources.length) * Math.PI * 2 + (seeded(i) - 0.5) * 0.8;
+    const dist = (0.3 + seeded(i + 100) * 0.7) * spread;
     const x = cx + Math.cos(angle) * dist * 1.15;
     const y = cy + Math.sin(angle) * dist * 0.85;
 
     neurons.push({
       x,
       y,
-      vx: (Math.random() - 0.5) * 0.15,
-      vy: (Math.random() - 0.5) * 0.15,
+      vx: (seeded(i + 200) - 0.5) * 0.15,
+      vy: (seeded(i + 300) - 0.5) * 0.15,
       radius: 1.5 + src.strength * 2.5,
-      color: GENRE_COLORS[src.genre] || DEFAULT_NEURON_COLOR,
+      color: FAMILY_COLORS[src.family] ?? CATEGORY_COLORS[src.genre] ?? DEFAULT_NEURON_COLOR,
       genre: src.genre,
       artist: src.artist,
       strength: src.strength,
-      phase: Math.random() * Math.PI * 2,
-      pulseSpeed: 0.5 + Math.random() * 1.5,
+      phase: seeded(i + 400) * Math.PI * 2,
+      pulseSpeed: 0.5 + seeded(i + 500) * 1.5,
     });
   });
 

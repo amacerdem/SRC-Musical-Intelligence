@@ -9,7 +9,6 @@ import {
 import { useUserStore } from "@/stores/useUserStore";
 import { getPersona } from "@/data/personas";
 import { MindOrganismCanvas } from "@/components/mind/MindOrganismCanvas";
-import { DimensionSunburst } from "@/components/mind/DimensionSunburst";
 import {
   generateWeeklyMonologue,
   generateBrainQuote,
@@ -18,32 +17,11 @@ import { beliefColors } from "@/design/tokens";
 import { pageTransition, fadeIn, cinematicReveal } from "@/design/animations";
 import { weeklyStats } from "@/data/mock-listening";
 import { useM3Store } from "@/stores/useM3Store";
-import { levelToOrganismStage } from "@/types/m3";
+import { levelToOrganismStage, GENE_NAMES, GENE_COLORS, getDominantGene } from "@/types/m3";
 import { useActiveIdentity } from "@/hooks/useActiveIdentity";
-import { useDimensions } from "@/hooks/useDimensions";
-import { ALL_PSYCHOLOGY, PSYCHOLOGY_COLORS } from "@/data/dimensions";
-import type { DimensionKey6D } from "@/types/dimensions";
 import { useChatStore } from "@/stores/useChatStore";
 import { MiniOrganism } from "@/components/mind/MiniOrganism";
 import { ChatMessage, TypingIndicator } from "@/components/chat/ChatMessage";
-
-/* ── 6D Dimension weekly deltas (mock — matches sunburst order) ── */
-const DIM_DELTAS_6D: Record<string, number> = {
-  discovery: +0.08,
-  intensity: +0.14,
-  flow:      -0.03,
-  depth:     +0.22,
-  trace:     +0.11,
-  sharing:   +0.05,
-};
-
-/* ── Evolution % from 6D deltas ─────────────────────────────────── */
-function computeEvolution6D(): { pct: string; direction: "up" | "down" } {
-  const vals = Object.values(DIM_DELTAS_6D);
-  const avg = vals.reduce((a, b) => a + Math.abs(b), 0) / vals.length;
-  const net = vals.reduce((a, b) => a + b, 0);
-  return { pct: (avg * 100).toFixed(1), direction: net >= 0 ? "up" : "down" };
-}
 
 export function Dashboard() {
   const navigate = useNavigate();
@@ -52,7 +30,6 @@ export function Dashboard() {
   const { mind, level, xp, streak, displayName } = useUserStore();
   const m3Mind = useM3Store((s) => s.mind);
   const identity = useActiveIdentity();
-  useDimensions(isTr ? "tr" : "en");
   const activePersonaId = m3Mind?.activePersonaId ?? mind?.personaId;
   const persona = activePersonaId ? getPersona(activePersonaId) : null;
 
@@ -74,7 +51,9 @@ export function Dashboard() {
   const color = identity.color;
   const xpForNext = level * 200;
   const xpProgress = Math.min(100, (xp % xpForNext) / xpForNext * 100);
-  const evolution = useMemo(() => computeEvolution6D(), []);
+  const genes = m3Mind?.genes ?? { entropy: 0.5, resolution: 0.5, tension: 0.5, resonance: 0.5, plasticity: 0.5 };
+  const dominantGene = getDominantGene(genes);
+  const avgGeneStrength = useMemo(() => GENE_NAMES.reduce((s, g) => s + genes[g], 0) / 5, [genes]);
 
   const monologue = useMemo(() => generateWeeklyMonologue(persona, mind.axes, t), [persona, mind.axes, t]);
   const brainQuote = useMemo(() => generateBrainQuote(identity.family, persona.id, t), [identity.family, persona.id, t]);
@@ -212,7 +191,7 @@ export function Dashboard() {
               className="spatial-card p-3 flex flex-col items-center flex-shrink-0"
             >
               <div className="w-full flex items-center justify-center">
-                <DimensionSunburst color={color} size={260} />
+                <DimensionSunburst color={color} size={340} />
               </div>
             </motion.div>
 
@@ -228,7 +207,7 @@ export function Dashboard() {
               <div className="space-y-2">
                 {ALL_PSYCHOLOGY.map((dim, i) => {
                   const key = dim.key as DimensionKey6D;
-                  const delta = DIM_DELTAS_6D[key] ?? 0;
+                  const delta = dimDeltas[key] ?? 0;
                   const isPositive = delta >= 0;
                   const dimColor = PSYCHOLOGY_COLORS[key];
                   const absDelta = Math.abs(delta);
@@ -443,7 +422,7 @@ export function Dashboard() {
                       {t("dashboard.peakMomentThisWeek")}
                     </span>
                     <p className="text-[12px] text-slate-400 font-body font-light mt-1 leading-relaxed">
-                      {t("insights.mockPE").slice(0, 120)}...
+                      {weeklyStats.peakPE.description.slice(0, 140)}
                     </p>
                     <div className="flex items-center gap-2 mt-2">
                       <div className="h-1 flex-1 rounded-full bg-white/5 overflow-hidden">
@@ -461,22 +440,49 @@ export function Dashboard() {
               </div>
             </motion.div>
 
-            {/* Your Brain This Week — Narrative */}
+            {/* Your Brain This Week — Narrative (data-driven) */}
             <div className="spatial-card p-4 flex-shrink-0">
               <div className="flex items-center gap-2 mb-2.5">
                 <Brain size={14} style={{ color: beliefColors.reward.primary }} />
                 <span className="text-xs font-display font-light tracking-[0.15em] uppercase text-slate-500">{t("dashboard.yourBrainThisWeek")}</span>
               </div>
-              <p className="text-[12px] text-slate-300 leading-relaxed font-body font-light">
-                Your sense of musical pleasure shifted <span className="font-mono font-medium" style={{ color: PSYCHOLOGY_COLORS.depth }}>+22%</span> this week.
-                That's significant — your mind is recalibrating what "good music" means to you.
-                The songs that moved you last month might not hit the same way next month.
-              </p>
-              <p className="text-[12px] text-slate-400 leading-relaxed font-body font-light mt-2">
-                Your need for closure (<span className="font-mono" style={{ color: PSYCHOLOGY_COLORS.discovery }}>75%</span>) shaped your week.
-                Every resolved chord, every satisfying ending — your mind marked each one as a small victory.
-                You hear music as a series of promises kept.
-              </p>
+              {(() => {
+                const genes = aggregateProfile?.genes;
+                const depthDelta = dimDeltas.depth ?? 0;
+                // Find strongest dimension shift
+                const dimEntries = Object.entries(dimDeltas).sort((a, b) => Math.abs(b[1]) - Math.abs(a[1]));
+                const strongestDim = dimEntries[0];
+                const strongestPct = strongestDim ? (Math.abs(strongestDim[1]) * 100).toFixed(0) : "0";
+                const strongestName = strongestDim?.[0] ?? "depth";
+                const strongestColor = PSYCHOLOGY_COLORS[strongestName as DimensionKey6D] ?? color;
+                return (
+                  <>
+                    <p className="text-[12px] text-slate-300 leading-relaxed font-body font-light">
+                      {isTr ? "En güçlü boyut kaymanız" : "Your strongest dimension shift"}: <span className="font-mono font-medium" style={{ color: strongestColor }}>{strongestDim?.[1] && strongestDim[1] >= 0 ? "+" : ""}{strongestPct}% {strongestName}</span>.
+                      {" "}{depthDelta > 0.1
+                        ? (isTr ? "Müzikal hazzınız güçleniyor — zihniniz 'iyi müzik'in ne olduğunu yeniden kalibre ediyor." : "Your sense of musical pleasure is strengthening — your mind is recalibrating what 'good music' means.")
+                        : depthDelta < -0.05
+                          ? (isTr ? "Duygusal derinliğiniz sakinleşiyor — dinleme tercihleriniz rafine ediliyor." : "Your emotional depth is settling — your listening preferences are becoming more refined.")
+                          : (isTr ? "Müzikal kimliğiniz dengeli bir evrimde." : "Your musical identity is in a balanced evolution.")}
+                    </p>
+                    <p className="text-[12px] text-slate-400 leading-relaxed font-body font-light mt-2">
+                      {genes ? (
+                        genes.resolution > 0.55
+                          ? (isTr
+                            ? <>Çözünürlük ihtiyacınız (<span className="font-mono" style={{ color: PSYCHOLOGY_COLORS.discovery }}>{(genes.resolution * 100).toFixed(0)}%</span>) haftanıza damgasını vurdu. Her çözülen akor, her tatmin edici son — zihniniz her birini küçük bir zafer olarak kaydetti.</>
+                            : <>Your resolution drive (<span className="font-mono" style={{ color: PSYCHOLOGY_COLORS.discovery }}>{(genes.resolution * 100).toFixed(0)}%</span>) shaped your week. Every resolved chord, every satisfying ending — your mind marked each one as a small victory.</>)
+                          : genes.entropy > 0.45
+                            ? (isTr
+                              ? <>Entropi toleransınız (<span className="font-mono" style={{ color: PSYCHOLOGY_COLORS.discovery }}>{(genes.entropy * 100).toFixed(0)}%</span>) sizi yeniliğe yöneltiyor. Keşfetme dürtünüz güçlü.</>
+                              : <>Your entropy tolerance (<span className="font-mono" style={{ color: PSYCHOLOGY_COLORS.discovery }}>{(genes.entropy * 100).toFixed(0)}%</span>) drives you toward novelty. Your exploration instinct is strong.</>)
+                            : (isTr
+                              ? <>Rezonans derinliğiniz (<span className="font-mono" style={{ color: PSYCHOLOGY_COLORS.depth }}>{(genes.resonance * 100).toFixed(0)}%</span>) müzikal hafızanızı şekillendiriyor.</>
+                              : <>Your resonance depth (<span className="font-mono" style={{ color: PSYCHOLOGY_COLORS.depth }}>{(genes.resonance * 100).toFixed(0)}%</span>) shapes your musical memory.</>)
+                      ) : null}
+                    </p>
+                  </>
+                );
+              })()}
             </div>
 
             {/* Top Genres */}

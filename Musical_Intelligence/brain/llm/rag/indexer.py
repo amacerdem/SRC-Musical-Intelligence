@@ -67,6 +67,7 @@ def index_knowledge_cards(
         ("neurochemicals.jsonl", "neurochemical", "key"),
         ("cross_references.jsonl", "cross_reference", "factor_key"),
         ("observations.jsonl", "observation", "type"),
+        ("analysis_guide.jsonl", "analysis_guide", "key"),
     ]
 
     all_chunks: list[Chunk] = []

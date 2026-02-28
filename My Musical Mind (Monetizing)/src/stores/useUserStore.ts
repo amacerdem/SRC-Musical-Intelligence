@@ -66,21 +66,33 @@ export const useUserStore = create<UserState>()(
       setSpotifyConnected: (spotifyConnected) => set({ spotifyConnected }),
 
       completeOnboarding: (mind, displayName) =>
-        set((s) => ({
-          mind,
-          hasCompletedOnboarding: true,
-          displayName: displayName || s.displayName || "You",
-          /* Simulate a user who has been listening for years */
-          level: 12,
-          xp: 14200,
-          streak: 23,
-          tracksAnalyzed: 847,
-          totalListeningHours: 3107,
-          songsScanned: 2847,
-          listeningYears: 8,
-          joinedAt: new Date().toISOString(),
-          achievements: ["mind-awakened", "deep-listener", "curious-ears"],
-        })),
+        set((s) => {
+          // Pull real stats from MI dataset if available
+          let realTracks = 138, realHours = 10, realMinutes = 598;
+          try {
+            const { miDataService } = require("@/services/MIDataService");
+            if (miDataService.isReady()) {
+              const tracks = miDataService.getAllTracks();
+              realTracks = tracks.length;
+              realMinutes = Math.round(tracks.reduce((sum: number, t: { duration_s: number }) => sum + t.duration_s, 0) / 60);
+              realHours = Math.round(realMinutes / 60 * 10) / 10;
+            }
+          } catch { /* fallback to defaults */ }
+          return {
+            mind,
+            hasCompletedOnboarding: true,
+            displayName: displayName || s.displayName || "You",
+            level: 12,
+            xp: 14200,
+            streak: 23,
+            tracksAnalyzed: realTracks,
+            totalListeningHours: realHours,
+            songsScanned: realTracks,
+            listeningYears: 8,
+            joinedAt: new Date().toISOString(),
+            achievements: ["mind-awakened", "deep-listener", "curious-ears"],
+          };
+        }),
 
       addXP: (amount) =>
         set((s) => {
