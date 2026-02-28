@@ -1,5 +1,6 @@
 import { Outlet, useLocation } from "react-router-dom";
 import { FloatingNav } from "./FloatingNav";
+import { MindChat } from "@/components/chat/MindChat";
 import { useSmoothScroll } from "@/hooks/useSmoothScroll";
 import { MindOrganismCanvas } from "@/components/mind/MindOrganismCanvas";
 import { useUserStore } from "@/stores/useUserStore";
@@ -39,6 +40,7 @@ export function AppShell() {
         <Outlet />
       </main>
       <FloatingNav />
+      <MindChat />
     </div>
   );
 }

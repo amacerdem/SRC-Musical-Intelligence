@@ -1,4 +1,8 @@
-/* ── Mock Track Data — Rich, interconnected with mock-users ──── */
+/* ── Track Recommendations — Real MI Dataset + Social Data ──────── */
+
+import { miDataService, MIDataService } from "@/services/MIDataService";
+import type { MICatalogTrack } from "@/types/mi-dataset";
+import { DEFAULT_GENES, type MindGenes } from "@/types/m3";
 
 export interface Track {
   id: string;
@@ -10,69 +14,59 @@ export interface Track {
   plays?: number;
   isLive?: boolean;
   creator?: string;
-  /** Belief domain that peaks during this track */
   peakBelief?: "consonance" | "tempo" | "salience" | "familiarity" | "reward";
-  /** Peak reward moment description */
   peakMoment?: string;
-  /** Brief PE-based reason for the recommendation */
   peReason?: string;
-  /** BPM for display */
   bpm?: number;
-  /** Key signature */
   key?: string;
 }
 
-/* ── Recommended for current user (PE-optimized) ────────────── */
-export const recommendedTracks: Track[] = [
-  {
-    id: "r1", title: "Neural Overdrive", artist: "SynthMind", genre: "Electronic",
-    match: 94, duration: "3:42", bpm: 128, key: "Dm",
-    peakBelief: "reward", peakMoment: "2:18 — filter sweep → harmonic lock",
-    peReason: "High consonance PE at sweep resolution → DA spike predicted",
-  },
-  {
-    id: "r2", title: "Deep Resonance", artist: "Harmonic Lab", genre: "Ambient",
-    match: 91, duration: "5:18", bpm: 72, key: "Eb",
-    peakBelief: "familiarity", peakMoment: "3:45 — overtone bloom deepens",
-    peReason: "Low PE amplitude + high recurrence → serotonin-mediated immersion",
-  },
-  {
-    id: "r3", title: "Entropy Garden", artist: "Kai T.", genre: "Post-Rock",
-    match: 88, duration: "4:55", bpm: 140, key: "Am",
-    peakBelief: "salience", peakMoment: "4:12 — crescendo breaks through noise floor",
-    peReason: "Salience-gated PE → attentional capture at dynamic peak",
-  },
-  {
-    id: "r4", title: "Cognitive Drift", artist: "Max Richter", genre: "Neo-Classical",
-    match: 85, duration: "6:02", bpm: 60, key: "F",
-    peakBelief: "consonance", peakMoment: "4:38 — viola resolves Neapolitan chord",
-    peReason: "Deceptive cadence → high PE → resolution reward at V-I",
-  },
-  {
-    id: "r5", title: "Tension Architecture", artist: "Nils Frahm", genre: "Minimal",
-    match: 82, duration: "4:33", bpm: 96, key: "Cm",
-    peakBelief: "reward", peakMoment: "3:20 — pedal tone finally releases",
-    peReason: "Sustained tension appetite → accumulated DA release at resolution",
-  },
-  {
-    id: "r6", title: "Midnight Signal", artist: "Aphex Twin", genre: "IDM",
-    match: 79, duration: "3:21", bpm: 135, key: "Bb",
-    peakBelief: "tempo", peakMoment: "1:48 — polyrhythm phase-locks",
-    peReason: "Rhythmic entropy → NE exploration → motor cortex entrainment",
-  },
-  {
-    id: "r7", title: "Gravity Well", artist: "Ólafur Arnalds", genre: "Neo-Classical",
-    match: 76, duration: "5:44", bpm: 66, key: "Ab",
-    peakBelief: "familiarity", peakMoment: "5:10 — main theme returns, transposed",
-    peReason: "Recurrence + transformation → hippocampal pattern match with novelty",
-  },
-  {
-    id: "r8", title: "Submerge", artist: "Jon Hopkins", genre: "Electronic",
-    match: 73, duration: "7:15", bpm: 110, key: "Em",
-    peakBelief: "salience", peakMoment: "5:42 — bass drop after 2min build",
-    peReason: "Extended PE accumulation → massive prediction violation → peak reward",
-  },
-];
+/* ── Helpers ──────────────────────────────────────────────────── */
+
+function formatDuration(seconds: number): string {
+  const m = Math.floor(seconds / 60);
+  const s = Math.floor(seconds % 60);
+  return `${m}:${s.toString().padStart(2, "0")}`;
+}
+
+const GENE_TO_BELIEF: Record<string, Track["peakBelief"]> = {
+  resolution: "consonance",
+  plasticity: "tempo",
+  entropy: "salience",
+  resonance: "familiarity",
+  tension: "reward",
+};
+
+function catalogToTrack(ct: MICatalogTrack, matchPct: number): Track {
+  const geneVal = ct.genes[ct.dominant_gene as keyof typeof ct.genes];
+  return {
+    id: ct.id,
+    title: ct.title,
+    artist: ct.artist,
+    genre: ct.categories[0] ?? "Unknown",
+    match: matchPct,
+    duration: formatDuration(ct.duration_s),
+    bpm: Math.round(ct.signal.tempo),
+    peakBelief: GENE_TO_BELIEF[ct.dominant_gene] ?? "reward",
+    peReason: `Dominant gene: ${ct.dominant_gene} (${(geneVal * 100).toFixed(0)}%)`,
+  };
+}
+
+/* ── Recommended for current user (gene-based) ────────────────── */
+
+export function getRecommendedTracks(userGenes?: MindGenes): Track[] {
+  if (!miDataService.isReady()) return [];
+  const recs = miDataService.getRecommendations(userGenes ?? DEFAULT_GENES, 8);
+  return recs.map((ct, i) => catalogToTrack(ct, 95 - i * 3));
+}
+
+/** Static fallback for backward compat (lazy computed) */
+export const recommendedTracks: Track[] = [];
+
+export function initRecommendedTracks(userGenes?: MindGenes): void {
+  recommendedTracks.length = 0;
+  recommendedTracks.push(...getRecommendedTracks(userGenes));
+}
 
 /* ── Top Community Performances ─────────────────────────────── */
 export const topPerformances: Track[] = [

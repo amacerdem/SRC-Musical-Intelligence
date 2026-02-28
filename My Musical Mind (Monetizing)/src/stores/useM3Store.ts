@@ -34,6 +34,7 @@ import type { Persona } from "@/types/mind";
 import { personas } from "@/data/personas";
 import { M3_STAGES } from "@/data/m3-stages";
 import { GENE_PARAM_BIASES } from "@/data/m3-stages";
+import type { MIAggregateProfile } from "@/services/MIDataService";
 
 /* ── Parameter Initialization ────────────────────────────────────── */
 
@@ -55,6 +56,35 @@ function initParameters(dominantGene: GeneName): M3Parameters {
   };
 }
 
+/** Create deterministic parameters seeded by the user's aggregate gene values.
+ *  Same genes → same seed → same parameters every time. */
+function initParametersSeeded(genes: MindGenes, dominantGene: GeneName): M3Parameters {
+  const bias = GENE_PARAM_BIASES[dominantGene];
+
+  // Simple LCG seeded from gene values (deterministic)
+  let seed = Math.round(
+    genes.entropy * 100000 + genes.resolution * 10000 +
+    genes.tension * 1000 + genes.resonance * 100 + genes.plasticity * 10
+  );
+  const next = () => {
+    seed = (seed * 1664525 + 1013904223) & 0x7fffffff;
+    return ((seed / 0x7fffffff) * 0.1 - 0.05);
+  };
+  const seededRand = (n: number, scale: number) =>
+    Array.from({ length: n }, () => next() * scale);
+
+  return {
+    beliefPriors:       seededRand(131, 1.0),
+    precisionWeights:   seededRand(131, bias.precision),
+    rewardWeights:      seededRand(131, bias.reward),
+    predictionCoeffs:   seededRand(524, 1.0),
+    attentionBiases:    seededRand(131, bias.attention),
+    temporalPrefs:      seededRand(50,  bias.temporal),
+    timbralMap:         seededRand(97,  bias.timbral),
+    crossCorrelations:  seededRand(100, 1.0),
+  };
+}
+
 /* ── Gene Engine ───────────────────────────────────────────────────── */
 
 const GENE_DECAY = 0.995;
@@ -68,7 +98,7 @@ function calculateGeneContribution(signal: M3TrackSignal): MindGenes {
   return {
     entropy:
       (1 - acousticness) * 0.25 + energy * 0.15 +
-      danceability * 0.15 + Math.random() * 0.1 +
+      danceability * 0.15 + 0.05 +
       (tempoNorm > 0.6 ? 0.15 : 0.05) + harmonicComplexity * 0.1,
 
     resolution:
@@ -162,11 +192,47 @@ function computeLevelProgress(totalListens: number, currentLevel: PersonaLevel):
 
 /* ── Parameter Update ──────────────────────────────────────────── */
 
-function updateParameters(params: M3Parameters, signal: M3TrackSignal): M3Parameters {
+function updateParameters(
+  params: M3Parameters,
+  signal: M3TrackSignal,
+  realBeliefs?: { means: number[]; stds: number[] },
+): M3Parameters {
   const lr = 0.02;
   const signalStrength = signal.wasSkipped ? 0.3 : signal.isRepeat ? 1.5 : 1.0;
   const rate = lr * signalStrength;
 
+  // When real belief data is available, use it to guide parameter updates
+  if (realBeliefs && realBeliefs.means.length === 131) {
+    const beliefRate = 0.01 * signalStrength;
+    return {
+      ...params,
+      beliefPriors: params.beliefPriors.map((w, i) =>
+        w + (realBeliefs.means[i] - 0.5) * beliefRate
+      ),
+      precisionWeights: params.precisionWeights.map((w, i) =>
+        w + realBeliefs.stds[i] * beliefRate
+      ),
+      rewardWeights: params.rewardWeights.map((w, i) =>
+        w + (realBeliefs.means[i] - 0.5) * beliefRate * 0.5
+      ),
+      attentionBiases: params.attentionBiases.map((w, i) =>
+        w + (realBeliefs.means[i] > 0.6 ? 1 : -1) * beliefRate * 0.3
+      ),
+      temporalPrefs: params.temporalPrefs.map((w, i) => {
+        const tempoNorm = signal.tempo / 200;
+        const nudge = (tempoNorm - 0.5) * rate * (((i * 3 + 7) % 50) / 50);
+        return w + nudge;
+      }),
+      timbralMap: params.timbralMap.map((w, i) => {
+        const nudge = (signal.timbralBrightness * 0.5 + (1 - signal.acousticness) * 0.5) * rate * (((i * 11 + 3) % 97) / 97);
+        return w + nudge;
+      }),
+      predictionCoeffs: params.predictionCoeffs,
+      crossCorrelations: params.crossCorrelations,
+    };
+  }
+
+  // Fallback: synthetic update from signal features only
   const newReward = params.rewardWeights.map((w, i) => {
     const nudge = (signal.valence * 0.5 + signal.energy * 0.5) * rate * (((i * 7 + 13) % 131) / 131);
     return w + nudge;
@@ -212,8 +278,11 @@ interface M3StoreState {
 
   /** Birth M³ from a persona */
   birthM3: (persona: Persona, tier: M3Tier) => void;
-  /** Learn from a track signal — updates all 5 genes, level, persona */
-  learnFromListening: (signal: M3TrackSignal) => M3Milestone[];
+  /** Birth M³ from the real MI dataset aggregate profile (deterministic) */
+  birthFromDataset: (profile: MIAggregateProfile, tier: M3Tier) => void;
+  /** Learn from a track signal — updates all 5 genes, level, persona.
+   *  Pass realGenes from MI dataset for real gene data instead of synthetic. */
+  learnFromListening: (signal: M3TrackSignal, realGenes?: MindGenes) => M3Milestone[];
   setTier: (tier: M3Tier) => void;
   setPreferredLayer: (layer: PresentationLayer) => void;
   resetM3: () => void;
@@ -272,7 +341,51 @@ export const useM3Store = create<M3StoreState>()(
         set({ mind, milestones: [milestone] });
       },
 
-      learnFromListening: (signal) => {
+      birthFromDataset: (profile, tier) => {
+        const now = new Date().toISOString();
+        const isFree = tier === "free";
+
+        // Derive persona from the REAL aggregate gene profile
+        const personaId = derivePersona(profile.genes);
+        const persona = personas.find(p => p.id === personaId) ?? personas[0];
+        const dominantGene = TYPE_TO_GENE[persona.family];
+
+        // Deterministic parameters seeded by gene values
+        const params = initParametersSeeded(profile.genes, dominantGene);
+
+        // Level from total tracks already analyzed
+        const level = deriveLevel(profile.totalTracks);
+        const stage = levelToStage(level);
+
+        const mind: M3Mind = {
+          stage,
+          level,
+          stageProgress: computeLevelProgress(profile.totalTracks, level),
+          totalListens: profile.totalTracks,
+          totalMinutes: profile.totalMinutes,
+          genes: { ...profile.genes },
+          activePersonaId: personaId,
+          previousPersonaIds: [],
+          parameters: params,
+          activeFunctions: [...M3_STAGES[stage].functions],
+          tier,
+          frozen: isFree,
+          bornAt: now,
+          lastUpdated: null,
+        };
+
+        const milestone: M3Milestone = {
+          type: "birth",
+          timestamp: now,
+          stage,
+          level,
+          detail: `Born as ${persona.name} (${persona.family}) from ${profile.totalTracks} analyzed tracks`,
+        };
+
+        set({ mind, milestones: [milestone] });
+      },
+
+      learnFromListening: (signal, realGenes?) => {
         const { mind, milestones } = get();
         if (!mind || mind.frozen) return [];
 
@@ -282,8 +395,8 @@ export const useM3Store = create<M3StoreState>()(
         // 0. Detect old Mind Type BEFORE gene update
         const oldType = getDominantType(mind.genes);
 
-        // 1. Update all 5 genes
-        const contribution = calculateGeneContribution(signal);
+        // 1. Update all 5 genes — use real genes from MI dataset when available
+        const contribution = realGenes ?? calculateGeneContribution(signal);
         const newGenes = updateGenes(mind.genes, contribution);
 
         // 2. Detect Mind Type change

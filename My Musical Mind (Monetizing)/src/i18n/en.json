@@ -703,15 +703,15 @@
       "complete": "Complete",
       "phases": {
         "p1": "Connecting to your music library...",
-        "p2": "Scanning your library... 2,847 tracks across 8 years of listening.",
-        "p3": "Analyzing harmonic patterns... Your chord choices reveal something unusual.",
-        "p4": "Mapping tension arcs... You're drawn to the build-up before resolution.",
-        "p5": "Decoding temporal fingerprint... Your tempo patterns are fascinatingly unpredictable.",
-        "p6": "Measuring attentional peaks... High salience sensitivity detected.",
-        "p7": "Tracing dynamic contrasts... You live for the shift between silence and chaos.",
-        "p8": "Evaluating recurrence patterns... Repetition doesn't bore you \u2014 it deepens.",
-        "p9": "Computing reward geometry... Your dopamine landscape is complex. Interesting.",
-        "p10": "Synthesis complete. I know who you are now."
+        "p2": "Scanning your library... {{trackCount}} tracks from {{artistCount}} artists detected.",
+        "p3": "Analyzing harmonic structure... Resolution index {{resolution}} — {{resolutionInsight}}",
+        "p4": "Mapping tension arcs... Tension appetite {{tension}} — {{tensionInsight}}",
+        "p5": "Decoding temporal fingerprint... Average {{avgTempo}} BPM across {{hours}} hours of listening.",
+        "p6": "Measuring perceptual entropy... {{entropy}} entropy — {{entropyInsight}}",
+        "p7": "Tracing resonance depth... {{resonance}} resonance — {{resonanceInsight}}",
+        "p8": "Evaluating neural plasticity... {{plasticity}} plasticity — {{plasticityInsight}}",
+        "p9": "Computing reward geometry... Dominant gene: {{dominantGene}}. A {{dominantFamily}} mind emerges.",
+        "p10": "Synthesis complete. {{trackCount}} tracks through 131 beliefs × 9 functions. I know who you are now."
       }
     },
     "reveal": {
@@ -1267,5 +1267,15 @@
       "premiumRequired": "Premium tier required",
       "ultimateRequired": "Ultimate tier required"
     }
+  },
+  "chat": {
+    "placeholder": "Ask your mind...",
+    "send": "Send",
+    "thinking": "Thinking...",
+    "welcome": "I am your musical mind. Talk to me about your music experiences, emotions, and discoveries.",
+    "error": "Connection error. Is the server running?",
+    "retry": "Retry",
+    "clear": "Clear chat",
+    "title": "Your Mind"
   }
 }

@@ -11,8 +11,12 @@ import sys
 from contextlib import asynccontextmanager
 from pathlib import Path
 
+from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+
+# Load .env file (for ANTHROPIC_API_KEY etc.)
+load_dotenv(Path(__file__).parent / ".env")
 
 # Ensure project root is on sys.path
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
@@ -43,8 +47,10 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
+        "http://localhost:5174",
         "http://localhost:5175",
         "http://localhost:5176",
+        "http://127.0.0.1:5174",
         "http://127.0.0.1:5175",
         "http://127.0.0.1:5176",
     ],
@@ -60,12 +66,14 @@ from .routers.pipeline import router as pipeline_router
 from .routers.experiments import router as experiments_router
 from .routers.c3_compat import router as c3_compat_router
 from .routers.agent import router as agent_router
+from .routers.spotify import router as spotify_router
 
 app.include_router(audio_router, prefix="/api/audio")
 app.include_router(pipeline_router, prefix="/api/pipeline")
 app.include_router(experiments_router, prefix="/api/experiments")
 app.include_router(c3_compat_router, prefix="/api/c3")
 app.include_router(agent_router, prefix="/api/agent")
+app.include_router(spotify_router, prefix="/api/spotify")
 
 
 @app.get("/api/health")

@@ -5,6 +5,8 @@ import { AppShell } from "@/components/layout/AppShell";
 import { useUserStore } from "@/stores/useUserStore";
 import { miDataService } from "@/services/MIDataService";
 import { initLibraryTracks } from "@/data/track-library";
+import { initListeningData } from "@/data/mock-listening";
+import { initRecommendedTracks } from "@/data/mock-tracks";
 
 /* Pages */
 import { Landing } from "@/pages/Landing";
@@ -17,6 +19,7 @@ import { ResonanceField } from "@/pages/ResonanceField";
 import { InfoHub } from "@/pages/InfoHub";
 import { M3Hub } from "@/pages/M3Hub";
 import { Callback } from "@/pages/Callback";
+import { LibraryAuth } from "@/pages/LibraryAuth";
 import { SpotifyProfile } from "@/pages/SpotifyProfile";
 
 export default function App() {
@@ -26,6 +29,8 @@ export default function App() {
   useEffect(() => {
     miDataService.init().then(() => {
       initLibraryTracks();
+      initListeningData();
+      initRecommendedTracks();
       setDataReady(true);
     });
   }, []);
@@ -48,6 +53,7 @@ export default function App() {
           <Route path="/reveal" element={<MindReveal />} />
           <Route path="/explore-ae" element={<ExploreAE />} />
           <Route path="/callback" element={<Callback />} />
+          <Route path="/library" element={<LibraryAuth />} />
 
           {/* App routes (with shell) — 4 main pages */}
           <Route element={<AppShell />}>

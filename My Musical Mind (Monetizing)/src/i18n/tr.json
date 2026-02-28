@@ -703,15 +703,15 @@
       "complete": "Tamamland\u0131",
       "phases": {
         "p1": "M\u00fczik k\u00fct\u00fcphanenize ba\u011flan\u0131yor...",
-        "p2": "K\u00fct\u00fcphaneniz taran\u0131yor... 8 y\u0131ll\u0131k dinleme boyunca 2.847 par\u00e7a.",
-        "p3": "Armonik \u00f6r\u00fcnt\u00fcler analiz ediliyor... Akor se\u00e7imleriniz s\u0131ra d\u0131\u015f\u0131 bir \u015fey ortaya koyuyor.",
-        "p4": "Gerilim yaylar\u0131 haritalan\u0131yor... \u00c7\u00f6z\u00fcmden \u00f6nceki birikime \u00e7ekiliyorsunuz.",
-        "p5": "Zamansal parmak izi \u00e7\u00f6z\u00fcl\u00fcyor... Tempo \u00f6r\u00fcnt\u00fcleriniz b\u00fcy\u00fcleyici derecede \u00f6ng\u00f6r\u00fclemez.",
-        "p6": "Dikkat zirveleri \u00f6l\u00e7\u00fcl\u00fcyor... Y\u00fcksek belirginlik duyarl\u0131l\u0131\u011f\u0131 tespit edildi.",
-        "p7": "Dinamik kontrastlar izleniyor... Sessizlik ve kaos aras\u0131ndaki de\u011fi\u015fim i\u00e7in ya\u015f\u0131yorsunuz.",
-        "p8": "Tekrar \u00f6r\u00fcnt\u00fcleri de\u011ferlendiriliyor... Tekrar sizi s\u0131kt\u0131rmaz \u2014 derinle\u015ftirir.",
-        "p9": "\u00d6d\u00fcl geometrisi hesaplan\u0131yor... Dopamin co\u011frafyan\u0131z karma\u015f\u0131k. \u0130lgin\u00e7.",
-        "p10": "Sentez tamamland\u0131. Art\u0131k kim oldu\u011funuzu biliyorum."
+        "p2": "K\u00fct\u00fcphaneniz taran\u0131yor... {{artistCount}} sanat\u00e7\u0131dan {{trackCount}} par\u00e7a tespit edildi.",
+        "p3": "Armonik yap\u0131 analiz ediliyor... \u00c7\u00f6z\u00fcn\u00fcrl\u00fck indeksi {{resolution}} \u2014 {{resolutionInsight}}",
+        "p4": "Gerilim yaylar\u0131 haritalan\u0131yor... Gerilim i\u015ftah\u0131 {{tension}} \u2014 {{tensionInsight}}",
+        "p5": "Zamansal parmak izi \u00e7\u00f6z\u00fcl\u00fcyor... Ortalama {{avgTempo}} BPM, {{hours}} saatlik dinleme boyunca.",
+        "p6": "Alg\u0131sal entropi \u00f6l\u00e7\u00fcl\u00fcyor... {{entropy}} entropi \u2014 {{entropyInsight}}",
+        "p7": "Rezonans derinli\u011fi izleniyor... {{resonance}} rezonans \u2014 {{resonanceInsight}}",
+        "p8": "N\u00f6ral plastisite de\u011ferlendiriliyor... {{plasticity}} plastisite \u2014 {{plasticityInsight}}",
+        "p9": "\u00d6d\u00fcl geometrisi hesaplan\u0131yor... Bask\u0131n gen: {{dominantGene}}. Bir {{dominantFamily}} zihni beliriyor.",
+        "p10": "Sentez tamamland\u0131. {{trackCount}} par\u00e7a, 131 inan\u00e7 \u00d7 9 fonksiyon. Art\u0131k kim oldu\u011funuzu biliyorum."
       }
     },
     "reveal": {
@@ -1267,5 +1267,15 @@
       "premiumRequired": "Premium üyelik gerekli",
       "ultimateRequired": "Ultimate üyelik gerekli"
     }
+  },
+  "chat": {
+    "placeholder": "Zihnine sor...",
+    "send": "Gönder",
+    "thinking": "Düşünüyor...",
+    "welcome": "Ben senin müzikal zihnin. Müzik deneyimlerin, duyguların, keşiflerin hakkında benimle konuşabilirsin.",
+    "error": "Bağlantı hatası. Sunucu çalışıyor mu?",
+    "retry": "Tekrar dene",
+    "clear": "Sohbeti temizle",
+    "title": "Zihnin"
   }
 }

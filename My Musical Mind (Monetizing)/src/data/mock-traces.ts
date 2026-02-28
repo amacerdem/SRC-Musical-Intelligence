@@ -1,6 +1,32 @@
 import type { BeliefTrace } from "@/types/mind";
+import { miDataService } from "@/services/MIDataService";
 
-/** Generate a realistic mock belief trace for a given persona style. */
+/* ── Belief display indices — maps C³ belief ordering to 5-belief display ── */
+const BELIEF_DISPLAY_INDICES = {
+  consonance: 0,    // BCH consonance (F1, first belief)
+  tempo: 17,        // HTP temporal prediction (F2, first belief)
+  salience: 32,     // SNEM salience (F3, first belief)
+  familiarity: 47,  // MEAMN familiarity (F4, first belief)
+  reward: 65,       // SRP reward (F6, first belief)
+} as const;
+
+/** Generate belief trace from real MI temporal_profile data */
+export async function generateTraceFromTrack(trackId: string): Promise<BeliefTrace[]> {
+  const detail = await miDataService.getTrackDetail(trackId);
+  const segments = detail.temporal_profile.belief_means_per_segment;
+  const segDuration = detail.duration_s / segments.length;
+
+  return segments.map((beliefs, seg) => ({
+    time: seg * segDuration,
+    consonance: clamp(beliefs[BELIEF_DISPLAY_INDICES.consonance] ?? 0.5),
+    tempo: clamp(beliefs[BELIEF_DISPLAY_INDICES.tempo] ?? 0.5),
+    salience: clamp(beliefs[BELIEF_DISPLAY_INDICES.salience] ?? 0.5),
+    familiarity: clamp(beliefs[BELIEF_DISPLAY_INDICES.familiarity] ?? 0.5),
+    reward: clamp(beliefs[BELIEF_DISPLAY_INDICES.reward] ?? 0.5, -0.5, 0.5),
+  }));
+}
+
+/** Generate a synthetic mock belief trace (fallback for non-dataset tracks). */
 export function generateTrace(
   durationSec: number,
   style: "calm" | "dramatic" | "chaotic" | "balanced" = "balanced",

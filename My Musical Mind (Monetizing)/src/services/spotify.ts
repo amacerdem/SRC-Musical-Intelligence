@@ -1,7 +1,8 @@
 /**
- * Spotify OAuth PKCE + Web API Service (Browser)
+ * Spotify OAuth + Web API Service (Browser)
  *
- * Uses standard browser redirect flow with PKCE (no client secret needed).
+ * Auth flow delegates to Repetuare backend (server-side OAuth with client secret).
+ * Tokens are stored in localStorage for direct Spotify API calls from the browser.
  * Returns data in MockTrack-compatible format so M³ pipeline works unchanged.
  */
 import type { NeuralFamily } from "@/types/mind";
@@ -9,148 +10,30 @@ import type { MockTrack } from "./SpotifySimulator";
 
 /* ── Config ─────────────────────────────────────────────────────────── */
 
-const SPOTIFY_CLIENT_ID = "8be4267057ac4bd69f18e63112a1a92f";
-
-const SCOPES = [
-  "user-read-recently-played",
-  "user-top-read",
-  "user-library-read",
-  "user-read-currently-playing",
-].join(" ");
-
-const REDIRECT_URI = "http://127.0.0.1:5174/callback";
-
 const STORAGE_KEYS = {
   accessToken: "spotify_access_token",
   refreshToken: "spotify_refresh_token",
   expiresAt: "spotify_expires_at",
-  codeVerifier: "spotify_code_verifier",
-  oauthState: "spotify_oauth_state",
   preAuthPath: "spotify_pre_auth_path",
   preAuthUserName: "spotify_pre_auth_username",
-  preAuthPlatform: "spotify_pre_auth_platform",
 } as const;
 
 const API_BASE = "https://api.spotify.com/v1";
 
-/* ── PKCE Helpers ───────────────────────────────────────────────────── */
-
-function generateRandomString(length: number): string {
-  const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~";
-  const values = crypto.getRandomValues(new Uint8Array(length));
-  return Array.from(values, (v) => possible[v % possible.length]).join("");
-}
-
-async function sha256(plain: string): Promise<ArrayBuffer> {
-  const encoder = new TextEncoder();
-  return crypto.subtle.digest("SHA-256", encoder.encode(plain));
-}
-
-function base64urlEncode(buffer: ArrayBuffer): string {
-  const bytes = new Uint8Array(buffer);
-  let str = "";
-  for (const b of bytes) str += String.fromCharCode(b);
-  return btoa(str).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
-}
-
-/* ── Auth Flow ──────────────────────────────────────────────────────── */
+/* ── Auth Flow (via Repetuare backend) ─────────────────────────────── */
 
 /**
- * Start the Spotify OAuth PKCE flow by redirecting to Spotify's authorize page.
- * Call this when the user taps the Spotify connect button.
+ * Start the Spotify OAuth flow via backend.
+ * Stores pre-auth context, then redirects to the backend login endpoint
+ * which generates the Spotify authorization URL.
  */
-export async function startAuthFlow(meta?: { userName?: string; fromPath?: string; platform?: string }): Promise<void> {
-  const codeVerifier = generateRandomString(128);
-  const codeChallenge = base64urlEncode(await sha256(codeVerifier));
-  const state = generateRandomString(32);
-
-  // Store PKCE verifier + state for the callback
-  sessionStorage.setItem(STORAGE_KEYS.codeVerifier, codeVerifier);
-  sessionStorage.setItem(STORAGE_KEYS.oauthState, state);
-
+export function startAuthFlow(meta?: { userName?: string; fromPath?: string; platform?: string }): void {
   // Store pre-auth context so callback can resume the flow
   if (meta?.userName) sessionStorage.setItem(STORAGE_KEYS.preAuthUserName, meta.userName);
   if (meta?.fromPath) sessionStorage.setItem(STORAGE_KEYS.preAuthPath, meta.fromPath);
-  if (meta?.platform) sessionStorage.setItem(STORAGE_KEYS.preAuthPlatform, meta.platform);
 
-  const params = new URLSearchParams({
-    client_id: SPOTIFY_CLIENT_ID,
-    response_type: "code",
-    redirect_uri: REDIRECT_URI,
-    scope: SCOPES,
-    state,
-    code_challenge_method: "S256",
-    code_challenge: codeChallenge,
-  });
-
-  window.location.href = `https://accounts.spotify.com/authorize?${params.toString()}`;
-}
-
-/**
- * Handle the OAuth callback. Call this from the /callback page.
- * Returns tokens + pre-auth context, or throws on error.
- */
-export async function handleCallback(searchParams: URLSearchParams): Promise<{
-  accessToken: string;
-  refreshToken: string;
-  expiresAt: number;
-  userName: string;
-  fromPath: string;
-  platform: string;
-}> {
-  const code = searchParams.get("code");
-  const state = searchParams.get("state");
-  const error = searchParams.get("error");
-
-  if (error) throw new Error(`Spotify auth error: ${error}`);
-  if (!code) throw new Error("No authorization code received");
-
-  // Verify state
-  const storedState = sessionStorage.getItem(STORAGE_KEYS.oauthState);
-  if (state !== storedState) throw new Error("State mismatch — possible CSRF attack");
-
-  const codeVerifier = sessionStorage.getItem(STORAGE_KEYS.codeVerifier);
-  if (!codeVerifier) throw new Error("No code verifier found");
-
-  // Exchange code for tokens
-  const res = await fetch("https://accounts.spotify.com/api/token", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: new URLSearchParams({
-      client_id: SPOTIFY_CLIENT_ID,
-      grant_type: "authorization_code",
-      code,
-      redirect_uri: REDIRECT_URI,
-      code_verifier: codeVerifier,
-    }),
-  });
-
-  if (!res.ok) {
-    const errBody = await res.text();
-    throw new Error(`Token exchange failed: ${res.status} ${errBody}`);
-  }
-
-  const data = await res.json();
-  const expiresAt = Date.now() + (data.expires_in ?? 3600) * 1000;
-
-  // Persist tokens
-  localStorage.setItem(STORAGE_KEYS.accessToken, data.access_token);
-  localStorage.setItem(STORAGE_KEYS.refreshToken, data.refresh_token ?? "");
-  localStorage.setItem(STORAGE_KEYS.expiresAt, String(expiresAt));
-
-  // Retrieve pre-auth context
-  const userName = sessionStorage.getItem(STORAGE_KEYS.preAuthUserName) ?? "";
-  const fromPath = sessionStorage.getItem(STORAGE_KEYS.preAuthPath) ?? "/onboarding";
-  const platform = sessionStorage.getItem(STORAGE_KEYS.preAuthPlatform) ?? "spotify";
-
-  // Clean up session storage
-  sessionStorage.removeItem(STORAGE_KEYS.codeVerifier);
-  sessionStorage.removeItem(STORAGE_KEYS.oauthState);
-  sessionStorage.removeItem(STORAGE_KEYS.preAuthUserName);
-  sessionStorage.removeItem(STORAGE_KEYS.preAuthPath);
-  sessionStorage.removeItem(STORAGE_KEYS.preAuthPlatform);
-
-  return { accessToken: data.access_token, refreshToken: data.refresh_token ?? "", expiresAt, userName, fromPath, platform };
+  // Redirect to backend login — it generates the Spotify auth URL and redirects
+  window.location.href = "/api/spotify/login";
 }
 
 /** Refresh the access token using the stored refresh token */
@@ -163,7 +46,7 @@ export async function refreshAccessToken(): Promise<string | null> {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams({
-        client_id: SPOTIFY_CLIENT_ID,
+        client_id: "8be4267057ac4bd69f18e63112a1a92f",
         grant_type: "refresh_token",
         refresh_token: refreshToken,
       }),
@@ -449,7 +332,6 @@ export async function getInitialBatch(): Promise<MockTrack[]> {
 
 export const SpotifyService = {
   startAuthFlow,
-  handleCallback,
   refreshAccessToken,
   getValidToken,
   clearTokens,

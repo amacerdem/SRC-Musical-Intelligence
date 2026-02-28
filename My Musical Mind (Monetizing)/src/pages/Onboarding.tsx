@@ -12,6 +12,24 @@ import { personas, getPersona } from "@/data/personas";
 import { beliefColors } from "@/design/tokens";
 import { LanguageToggle } from "@/components/layout/LanguageToggle";
 import { SpotifyService } from "@/services/spotify";
+import { miDataService } from "@/services/MIDataService";
+import type { MindGenes } from "@/types/m3";
+import { GENE_NAMES, TYPE_TO_GENE } from "@/types/m3";
+
+/** Derive the best-matching persona from genes (same algorithm as useM3Store) */
+function derivePersonaFromGenes(genes: MindGenes): number {
+  let bestId = 1;
+  let bestScore = -Infinity;
+  for (const p of personas) {
+    let d = 0;
+    for (const g of GENE_NAMES) d += (genes[g] - p.genes[g]) ** 2;
+    const geneSim = 1 - Math.sqrt(d) / Math.sqrt(5);
+    const familyBonus = genes[TYPE_TO_GENE[p.family]];
+    const score = geneSim * 0.85 + familyBonus * 0.15;
+    if (score > bestScore) { bestScore = score; bestId = p.id; }
+  }
+  return bestId;
+}
 
 /* ── Platform SVG logos (inline, no dependencies) ────────────────── */
 function SpotifyLogo({ size = 28 }: { size?: number }) {
@@ -38,14 +56,67 @@ function AppleMusicLogo({ size = 28 }: { size?: number }) {
   );
 }
 
-/* ── Mock listening stats ────────────────────────────────────────── */
-const MOCK_STATS = {
-  songCount: 2847,
-  totalMinutes: 186420,
-  topGenres: ["Electronic", "Jazz", "Ambient", "Post-Rock", "Neo-Classical"],
-  topArtists: ["Nils Frahm", "Aphex Twin", "Radiohead", "Max Richter"],
-  listeningYears: 8,
-};
+/* ── Real stats from MI dataset ──────────────────────────────────── */
+function getRealStats() {
+  if (!miDataService.isReady()) {
+    return { trackCount: 0, artistCount: 0, hours: 0, avgTempo: 0, topArtists: [] as string[], topCategories: [] as string[] };
+  }
+  const tracks = miDataService.getAllTracks();
+  const totalSec = tracks.reduce((s, t) => s + t.duration_s, 0);
+  const artists = [...new Set(tracks.map(t => t.artist))];
+  const avgTempo = Math.round(tracks.reduce((s, t) => s + t.signal.tempo, 0) / tracks.length);
+
+  // Top artists by track count
+  const artistCounts = new Map<string, number>();
+  for (const t of tracks) artistCounts.set(t.artist, (artistCounts.get(t.artist) || 0) + 1);
+  const topArtists = [...artistCounts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5).map(([name]) => name);
+
+  // Top categories
+  const catCounts = new Map<string, number>();
+  for (const t of tracks) for (const c of t.categories) catCounts.set(c, (catCounts.get(c) || 0) + 1);
+  const topCategories = [...catCounts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5).map(([name]) => name);
+
+  return {
+    trackCount: tracks.length,
+    artistCount: artists.length,
+    hours: Math.round(totalSec / 3600 * 10) / 10,
+    avgTempo,
+    topArtists,
+    topCategories,
+  };
+}
+
+/** Gene-level insight strings for phase interpolation */
+function getGeneInsights(genes: MindGenes, lang: string) {
+  const isEN = lang.startsWith("en");
+  return {
+    resolutionInsight: genes.resolution > 0.6
+      ? (isEN ? "harmonic architecture is central to your experience." : "armonik mimari deneyiminizin merkezinde.")
+      : genes.resolution > 0.4
+        ? (isEN ? "you balance structure with spontaneity." : "yap\u0131 ile spontanl\u0131\u011f\u0131 dengeliyorsunuz.")
+        : (isEN ? "you prefer raw, unresolved textures." : "ham, \u00e7\u00f6z\u00fcms\u00fcz dokular\u0131 tercih ediyorsunuz."),
+    tensionInsight: genes.tension > 0.5
+      ? (isEN ? "you crave dramatic build-ups and explosive contrasts." : "dramatik birikimlere ve patlay\u0131c\u0131 kontrastlara \u00e7ekiliyorsunuz.")
+      : genes.tension > 0.3
+        ? (isEN ? "subtle tension weaves through your choices." : "se\u00e7imlerinize ince bir gerilim i\u015fleniyor.")
+        : (isEN ? "you prefer steady, contemplative textures." : "sakin, d\u00fc\u015f\u00fcnceye dayal\u0131 dokular\u0131 tercih ediyorsunuz."),
+    entropyInsight: genes.entropy > 0.5
+      ? (isEN ? "you seek novelty and unpredictability." : "yenilik ve \u00f6ng\u00f6r\u00fclemezlik ar\u0131yorsunuz.")
+      : genes.entropy > 0.3
+        ? (isEN ? "a balanced explorer \u2014 curious but grounded." : "dengeli bir ka\u015fif \u2014 merakl\u0131 ama sa\u011flam.")
+        : (isEN ? "you find comfort in familiar sonic landscapes." : "al\u0131\u015f\u0131k ses manzaralar\u0131nda huzur buluyorsunuz."),
+    resonanceInsight: genes.resonance > 0.5
+      ? (isEN ? "music anchors deep emotional memory." : "m\u00fczik derin duygusal haf\u0131zay\u0131 demirliyor.")
+      : genes.resonance > 0.3
+        ? (isEN ? "selective emotional bonding with music." : "m\u00fczikle se\u00e7ici duygusal ba\u011f.")
+        : (isEN ? "you engage analytically more than emotionally." : "duygusaldan \u00e7ok analitik yakla\u015f\u0131yorsunuz."),
+    plasticityInsight: genes.plasticity > 0.5
+      ? (isEN ? "your mind adapts quickly to new sonic textures." : "zihniniz yeni ses dokular\u0131na h\u0131zla adapte oluyor.")
+      : genes.plasticity > 0.3
+        ? (isEN ? "gradual adaptation \u2014 you let new sounds grow on you." : "kademeli adaptasyon \u2014 yeni seslerin i\u00e7inizde b\u00fcy\u00fcmesine izin veriyorsunuz.")
+        : (isEN ? "deep loyalty to your sonic preferences." : "ses tercihlerinize derin sadakat."),
+  };
+}
 
 /* ── Conversational analysis phases — more descriptive ───────────── */
 const ANALYSIS_PHASES = [
@@ -56,9 +127,9 @@ const ANALYSIS_PHASES = [
   { key: "onboarding.evolving.phases.p5", belief: "tempo" as const },
   { key: "onboarding.evolving.phases.p6", belief: "salience" as const },
   { key: "onboarding.evolving.phases.p7", belief: "salience" as const },
-  { key: "m3.birth.determining", belief: "familiarity" as const },
-  { key: "m3.birth.forming", belief: "reward" as const },
-  { key: "m3.birth.firstConnections", belief: "reward" as const },
+  { key: "onboarding.evolving.phases.p8", belief: "familiarity" as const },
+  { key: "onboarding.evolving.phases.p9", belief: "reward" as const },
+  { key: "onboarding.evolving.phases.p10", belief: "reward" as const },
 ];
 
 /* ── Membership Plans ────────────────────────────────────────────── */
@@ -168,7 +239,7 @@ export function Onboarding() {
   const { step, setStep, setPersona, setProgress, analysisProgress, analysisPhase, selectedPersonaId } =
     useOnboardingStore();
   const { completeOnboarding, displayName, setDisplayName, mind } = useUserStore();
-  const birthM3 = useM3Store((s) => s.birthM3);
+  const birthFromDataset = useM3Store((s) => s.birthFromDataset);
   const [userName, setUserName] = useState(displayName || "");
   const [showOAuth, setShowOAuth] = useState(false);
   const [oAuthPlatform, setOAuthPlatform] = useState<"spotify" | "soundcloud" | "apple">("spotify");
@@ -191,18 +262,22 @@ export function Onboarding() {
 
       if (progress >= 100) {
         clearInterval(interval);
-        const randomPersona = personas[Math.floor(Math.random() * personas.length)];
-        setPersona(randomPersona.id);
+
+        // Deterministic persona from real MI dataset (not random)
+        const profile = miDataService.computeAggregateProfile();
+        const derivedPersonaId = derivePersonaFromGenes(profile.genes);
+        const derivedPersona = getPersona(derivedPersonaId);
+        setPersona(derivedPersona.id);
 
         completeOnboarding({
-          personaId: randomPersona.id,
-          axes: randomPersona.axes,
+          personaId: derivedPersona.id,
+          axes: derivedPersona.axes,
           stage: 1,
           subTrait: null,
         }, name);
 
-        // M³ birth: always start as free
-        birthM3(randomPersona, "free");
+        // M³ birth from real dataset — deterministic genes, level, parameters
+        birthFromDataset(profile, "free");
 
         setTimeout(() => {
           setStep("reveal");
@@ -211,7 +286,7 @@ export function Onboarding() {
     }, 200);
 
     return () => clearInterval(interval);
-  }, [setStep, setProgress, setPersona, completeOnboarding, setDisplayName, birthM3]);
+  }, [setStep, setProgress, setPersona, completeOnboarding, setDisplayName, birthFromDataset]);
 
   const handlePlatformConnect = useCallback((platform: "spotify" | "soundcloud" | "apple") => {
     if (platform === "spotify") {
@@ -1002,17 +1077,39 @@ function ConnectButton({ logo, name, sub, color, onClick, delay }: {
 
 /* ── Evolving Step — Mind Forming ────────────────────────────────── */
 function EvolvingStep({ progress, phase, userName }: { progress: number; phase: string; userName: string }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const hue = 260 + progress * 0.6;
   const color = `hsl(${hue}, 60%, 55%)`;
   const orgStage = progress > 70 ? 2 : 1 as const;
   const orgIntensity = 0.15 + progress * 0.007;
 
-  const typedPhase = useTypewriter(t(phase), 22);
-  const songCount = useTicker(MOCK_STATS.songCount, 6000, progress > 5);
-  const totalHours = useTicker(Math.floor(MOCK_STATS.totalMinutes / 60), 8000, progress > 5);
+  // Real data from MI dataset
+  const stats = getRealStats();
+  const profile = miDataService.isReady() ? miDataService.computeAggregateProfile() : null;
+  const genes = profile?.genes ?? { entropy: 0.5, resolution: 0.5, tension: 0.5, resonance: 0.5, plasticity: 0.5 };
+  const insights = getGeneInsights(genes, i18n.language);
 
-  const showGenres = progress > 30 && progress < 85;
+  // Interpolation values for phase texts
+  const phaseVars = {
+    trackCount: String(stats.trackCount),
+    artistCount: String(stats.artistCount),
+    hours: String(stats.hours),
+    avgTempo: String(stats.avgTempo),
+    resolution: genes.resolution.toFixed(2),
+    tension: genes.tension.toFixed(2),
+    entropy: genes.entropy.toFixed(2),
+    resonance: genes.resonance.toFixed(2),
+    plasticity: genes.plasticity.toFixed(2),
+    dominantGene: profile?.dominantGene ?? "resolution",
+    dominantFamily: profile?.dominantFamily ?? "Architects",
+    ...insights,
+  };
+
+  const typedPhase = useTypewriter(t(phase, phaseVars), 22);
+  const trackTicker = useTicker(stats.trackCount, 6000, progress > 5);
+  const hoursTicker = useTicker(Math.round(stats.hours), 8000, progress > 5);
+
+  const showCategories = progress > 30 && progress < 85;
   const showArtists = progress > 50 && progress < 90;
 
   const activeBeliefs = ANALYSIS_PHASES
@@ -1128,21 +1225,59 @@ function EvolvingStep({ progress, phase, userName }: { progress: number; phase: 
                 <div className="flex justify-center gap-12 mb-5">
                   <div className="text-center">
                     <div className="text-2xl font-mono font-medium text-slate-200">
-                      {songCount.toLocaleString()}
+                      {trackTicker.toLocaleString()}
                     </div>
                     <div className="text-[11px] uppercase tracking-widest text-slate-600 font-display">{t("onboarding.evolving.tracksScanned")}</div>
                   </div>
                   <div className="text-center">
                     <div className="text-2xl font-mono font-medium text-slate-200">
-                      {totalHours.toLocaleString()}
+                      {hoursTicker.toLocaleString()}
                     </div>
                     <div className="text-[11px] uppercase tracking-widest text-slate-600 font-display">{t("onboarding.evolving.hoursListening")}</div>
                   </div>
                 </div>
 
-                {/* Genres */}
+                {/* Gene bars — real values */}
                 <AnimatePresence>
-                  {showGenres && (
+                  {progress > 25 && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.5 }}
+                      className="space-y-2 mb-5"
+                    >
+                      {GENE_NAMES.map((gene, i) => {
+                        const val = genes[gene];
+                        const geneProgress = Math.min(1, (progress - 25) / 60);
+                        return (
+                          <motion.div
+                            key={gene}
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: i * 0.12, duration: 0.4 }}
+                            className="flex items-center gap-3"
+                          >
+                            <span className="text-[10px] font-mono text-slate-600 w-20 text-right uppercase tracking-wider">{gene}</span>
+                            <div className="flex-1 h-[3px] rounded-full bg-white/[0.04] overflow-hidden">
+                              <motion.div
+                                className="h-full rounded-full"
+                                style={{ background: `hsl(${260 + i * 20}, 60%, 55%)` }}
+                                animate={{ width: `${val * geneProgress * 100}%` }}
+                                transition={{ duration: 1.5, delay: i * 0.15 }}
+                              />
+                            </div>
+                            <span className="text-[10px] font-mono text-slate-500 w-8">{(val * geneProgress).toFixed(2)}</span>
+                          </motion.div>
+                        );
+                      })}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                {/* Categories */}
+                <AnimatePresence>
+                  {showCategories && (
                     <motion.div
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: "auto" }}
@@ -1150,16 +1285,16 @@ function EvolvingStep({ progress, phase, userName }: { progress: number; phase: 
                       transition={{ duration: 0.5 }}
                       className="flex flex-wrap justify-center gap-2 mb-4"
                     >
-                      {MOCK_STATS.topGenres.map((genre, i) => (
+                      {stats.topCategories.map((cat, i) => (
                         <motion.span
-                          key={genre}
+                          key={cat}
                           initial={{ opacity: 0, scale: 0.8 }}
                           animate={{ opacity: 1, scale: 1 }}
                           transition={{ delay: i * 0.15, duration: 0.4 }}
                           className="px-3 py-1.5 rounded-full text-xs font-display font-light text-slate-400"
                           style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}
                         >
-                          {genre}
+                          {cat}
                         </motion.span>
                       ))}
                     </motion.div>
@@ -1178,7 +1313,7 @@ function EvolvingStep({ progress, phase, userName }: { progress: number; phase: 
                     >
                       <span className="text-[10px] uppercase tracking-[0.15em] text-slate-700 block mb-2 font-display">{t("onboarding.evolving.topArtists")}</span>
                       <p className="text-sm text-slate-500 font-body font-light">
-                        {MOCK_STATS.topArtists.map((artist, i) => (
+                        {stats.topArtists.map((artist, i) => (
                           <motion.span
                             key={artist}
                             initial={{ opacity: 0 }}

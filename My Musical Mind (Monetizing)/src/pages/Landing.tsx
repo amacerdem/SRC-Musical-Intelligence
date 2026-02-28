@@ -12,6 +12,24 @@ import { useM3Store } from "@/stores/useM3Store";
 import { personas, getPersona } from "@/data/personas";
 import { beliefColors } from "@/design/tokens";
 import { SpotifyService } from "@/services/spotify";
+import { miDataService } from "@/services/MIDataService";
+import type { MindGenes } from "@/types/m3";
+import { GENE_NAMES, TYPE_TO_GENE } from "@/types/m3";
+
+/** Derive persona from genes (same algorithm as useM3Store) */
+function derivePersonaFromGenes(genes: MindGenes): number {
+  let bestId = 1;
+  let bestScore = -Infinity;
+  for (const p of personas) {
+    let d = 0;
+    for (const g of GENE_NAMES) d += (genes[g] - p.genes[g]) ** 2;
+    const geneSim = 1 - Math.sqrt(d) / Math.sqrt(5);
+    const familyBonus = genes[TYPE_TO_GENE[p.family]];
+    const score = geneSim * 0.85 + familyBonus * 0.15;
+    if (score > bestScore) { bestScore = score; bestId = p.id; }
+  }
+  return bestId;
+}
 
 const INSTITUTIONS = [
   { name: "MIT", dept: "Media Lab" },
@@ -93,7 +111,7 @@ export function Landing() {
   const location = useLocation();
   const { t } = useTranslation();
   const { completeOnboarding, setDisplayName } = useUserStore();
-  const birthM3 = useM3Store((s) => s.birthM3);
+  const birthFromDataset = useM3Store((s) => s.birthFromDataset);
   const mind = useUserStore((s) => s.mind);
   const didAutoConnect = useRef(false);
 
@@ -155,17 +173,21 @@ export function Landing() {
 
       if (prog >= 100) {
         clearInterval(interval);
-        const randomPersona = personas[Math.floor(Math.random() * personas.length)];
-        setSelectedPersonaId(randomPersona.id);
+
+        // Deterministic persona from real MI dataset
+        const profile = miDataService.computeAggregateProfile();
+        const derivedPersonaId = derivePersonaFromGenes(profile.genes);
+        const derivedPersona = getPersona(derivedPersonaId);
+        setSelectedPersonaId(derivedPersona.id);
 
         completeOnboarding({
-          personaId: randomPersona.id,
-          axes: randomPersona.axes,
+          personaId: derivedPersona.id,
+          axes: derivedPersona.axes,
           stage: 1,
           subTrait: null,
         }, name);
 
-        birthM3(randomPersona, "free");
+        birthFromDataset(profile, "free");
 
         setTimeout(() => {
           setEvolving(false);
@@ -176,7 +198,7 @@ export function Landing() {
         }, 1200);
       }
     }, 200);
-  }, [setDisplayName, completeOnboarding, birthM3]);
+  }, [setDisplayName, completeOnboarding, birthFromDataset]);
 
   // Auto-start evolution when returning from Spotify OAuth callback
   useEffect(() => {

@@ -10,7 +10,8 @@ import type {
 } from "@/types/mi-dataset";
 import type { NeuralFamily } from "@/types/mind";
 import type { M3TrackSignal, MindGenes } from "@/types/m3";
-import { DEFAULT_GENES, GENE_NAMES, getDominantType } from "@/types/m3";
+import { DEFAULT_GENES, GENE_NAMES, getDominantType, getDominantGene } from "@/types/m3";
+import type { GeneName } from "@/types/m3";
 import type { MockTrack } from "./SpotifySimulator";
 import type {
   LibraryTrack,
@@ -22,9 +23,19 @@ import type {
 const CATALOG_URL = "/data/mi-dataset/catalog.json";
 const TRACK_URL = (id: string) => `/data/mi-dataset/tracks/${id}.json`;
 
+/** Aggregate profile computed from the user's full listening history */
+export interface MIAggregateProfile {
+  genes: MindGenes;
+  totalTracks: number;
+  totalMinutes: number;
+  dominantFamily: NeuralFamily;
+  dominantGene: GeneName;
+}
+
 class MIDataService {
   private catalog: MICatalog | null = null;
   private trackCache = new Map<string, MITrackDetail>();
+  private sessionOffset = 0;
 
   /* ── Init ─────────────────────────────────────────────────────── */
 
@@ -58,40 +69,86 @@ class MIDataService {
     return detail;
   }
 
-  /* ── SpotifySimulator-compatible API ──────────────────────────── */
+  /* ── Aggregate Profile (deterministic) ───────────────────────── */
+
+  /** Compute the user's TRUE gene profile from their full listening library.
+   *  Duration-weighted average of all track genes → always the same result. */
+  computeAggregateProfile(): MIAggregateProfile {
+    const tracks = this.getAllTracks();
+    if (tracks.length === 0) {
+      return {
+        genes: { ...DEFAULT_GENES },
+        totalTracks: 0,
+        totalMinutes: 0,
+        dominantFamily: "Explorers" as NeuralFamily,
+        dominantGene: "entropy" as GeneName,
+      };
+    }
+
+    const totalDuration = tracks.reduce((s, t) => s + t.duration_s, 0);
+
+    // Duration-weighted gene average across all tracks
+    const genes: MindGenes = {
+      entropy: 0, resolution: 0, tension: 0, resonance: 0, plasticity: 0,
+    };
+    for (const t of tracks) {
+      const w = t.duration_s / totalDuration;
+      for (const g of GENE_NAMES) {
+        genes[g] += t.genes[g as keyof typeof t.genes] * w;
+      }
+    }
+
+    return {
+      genes,
+      totalTracks: tracks.length,
+      totalMinutes: Math.round(totalDuration / 60),
+      dominantFamily: getDominantType(genes),
+      dominantGene: getDominantGene(genes),
+    };
+  }
+
+  /* ── SpotifySimulator-compatible API (deterministic) ─────────── */
 
   getCurrentTrack(): Promise<MockTrack> {
     const tracks = this.getAllTracks();
-    const pick = tracks[Math.floor(Math.random() * tracks.length)];
-    return Promise.resolve(MIDataService.toMockTrack(pick));
+    if (tracks.length === 0) throw new Error("No tracks loaded");
+    return Promise.resolve(MIDataService.toMockTrack(tracks[0]));
   }
 
   getRecentHistory(): MockTrack[] {
     const tracks = this.getAllTracks();
-    return sample(tracks, 5).map(MIDataService.toMockTrack);
+    return tracks.slice(0, 5).map(MIDataService.toMockTrack);
   }
 
+  /** Return the next batch of tracks in catalog order (deterministic, sequential). */
   getListeningSession(): {
     track: MockTrack;
     listenedAt: string;
     wasSkipped: boolean;
   }[] {
     const tracks = this.getAllTracks();
-    const count = 5 + Math.floor(Math.random() * 6);
+    const count = 10;
     const now = Date.now();
-    return sample(tracks, count).map((ct, i) => ({
+    const start = this.sessionOffset % tracks.length;
+    this.sessionOffset += count;
+
+    const session: MICatalogTrack[] = [];
+    for (let i = 0; i < count && i < tracks.length; i++) {
+      session.push(tracks[(start + i) % tracks.length]);
+    }
+
+    return session.map((ct, i) => ({
       track: MIDataService.toMockTrack(ct),
       listenedAt: new Date(
         now - (count - i) * 4 * 60 * 1000
       ).toISOString(),
-      wasSkipped: Math.random() < 0.15,
+      wasSkipped: false,
     }));
   }
 
   getInitialBatch(): MockTrack[] {
     const tracks = this.getAllTracks();
-    const count = 15 + Math.floor(Math.random() * 6);
-    return sample(tracks, count).map(MIDataService.toMockTrack);
+    return tracks.slice(0, 20).map(MIDataService.toMockTrack);
   }
 
   /* ── Rich APIs ────────────────────────────────────────────────── */
@@ -233,11 +290,6 @@ class MIDataService {
 }
 
 /* ── Helpers ─────────────────────────────────────────────────────── */
-
-function sample<T>(arr: T[], n: number): T[] {
-  const shuffled = [...arr].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, Math.min(n, arr.length));
-}
 
 function cosineSimilarity(a: number[], b: number[]): number {
   let dot = 0,

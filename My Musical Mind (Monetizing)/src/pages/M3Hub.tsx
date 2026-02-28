@@ -28,8 +28,9 @@ import { PersonaLevelTrack } from "@/components/persona/PersonaLevelTrack";
 import { C3_FUNCTIONS, M3_STAGES, M3_TIERS } from "@/data/m3-stages";
 import { generateObservations, getUnlockedObservationTypes } from "@/data/m3-observations";
 import { SpotifySimulator, trackToM3Signal } from "@/services/SpotifySimulator";
+import { miDataService } from "@/services/MIDataService";
 import { GENE_COLORS, GENE_NAMES, getDominantType, levelToOrganismStage } from "@/types/m3";
-import type { M3Tier, PresentationLayer } from "@/types/m3";
+import type { M3Tier, PresentationLayer, MindGenes } from "@/types/m3";
 import { pageTransition } from "@/design/animations";
 import { useActiveIdentity } from "@/hooks/useActiveIdentity";
 import type { MockTrack } from "@/services/SpotifySimulator";
@@ -195,7 +196,12 @@ export function M3Hub() {
           wasSkipped: entry.wasSkipped,
           isRepeat: false,
         });
-        learnFromListening(signal);
+        // Pass real genes from MI dataset when available
+        const catalogTrack = miDataService.findTrack(entry.track.id);
+        const realGenes: MindGenes | undefined = catalogTrack
+          ? catalogTrack.genes as MindGenes
+          : undefined;
+        learnFromListening(signal, realGenes);
       }
 
       const currentMind = useM3Store.getState().mind;

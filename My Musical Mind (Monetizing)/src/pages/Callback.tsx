@@ -2,15 +2,22 @@
  * Spotify OAuth Callback Page
  *
  * Spotify redirects here after the user authorizes.
- * Exchanges the authorization code for tokens, then navigates
- * back to the onboarding/landing flow to continue evolution.
+ * Exchanges the authorization code via Repetuare backend,
+ * stores tokens in localStorage, then navigates back to the app.
  */
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Loader2, CheckCircle2, XCircle } from "lucide-react";
-import { SpotifyService } from "@/services/spotify";
 import { useUserStore } from "@/stores/useUserStore";
+
+const STORAGE_KEYS = {
+  accessToken: "spotify_access_token",
+  refreshToken: "spotify_refresh_token",
+  expiresAt: "spotify_expires_at",
+  preAuthPath: "spotify_pre_auth_path",
+  preAuthUserName: "spotify_pre_auth_username",
+};
 
 export function Callback() {
   const navigate = useNavigate();
@@ -23,25 +30,60 @@ export function Callback() {
     let cancelled = false;
 
     async function process() {
+      const code = searchParams.get("code");
+      const error = searchParams.get("error");
+
+      if (error) {
+        setStatus("error");
+        setErrorMsg(`Spotify auth error: ${error}`);
+        return;
+      }
+
+      if (!code) {
+        setStatus("error");
+        setErrorMsg("No authorization code received");
+        return;
+      }
+
       try {
-        const result = await SpotifyService.handleCallback(searchParams);
+        // Exchange code via Repetuare backend
+        const res = await fetch("/api/spotify/exchange", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ code }),
+        });
+
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({ detail: "Token exchange failed" }));
+          throw new Error(err.detail || "Token exchange failed");
+        }
+
+        const data = await res.json();
 
         if (cancelled) return;
+
+        // Store tokens in localStorage for client-side API calls
+        const expiresAt = Date.now() + (data.expires_in ?? 3600) * 1000;
+        localStorage.setItem(STORAGE_KEYS.accessToken, data.access_token);
+        localStorage.setItem(STORAGE_KEYS.refreshToken, data.refresh_token ?? "");
+        localStorage.setItem(STORAGE_KEYS.expiresAt, String(expiresAt));
+
+        // Retrieve pre-auth context
+        const fromPath = sessionStorage.getItem(STORAGE_KEYS.preAuthPath) ?? "/onboarding";
+        const userName = sessionStorage.getItem(STORAGE_KEYS.preAuthUserName) ?? "";
+
+        // Clean up
+        sessionStorage.removeItem(STORAGE_KEYS.preAuthPath);
+        sessionStorage.removeItem(STORAGE_KEYS.preAuthUserName);
 
         setSpotifyConnected(true);
         setStatus("success");
 
-        // Navigate back to the originating page with spotify-connected state
         setTimeout(() => {
           if (cancelled) return;
-          const target = result.fromPath || "/onboarding";
-          navigate(target, {
+          navigate(fromPath, {
             replace: true,
-            state: {
-              spotifyConnected: true,
-              userName: result.userName,
-              platform: result.platform,
-            },
+            state: { spotifyConnected: true, userName },
           });
         }, 1200);
       } catch (err: any) {
