@@ -27,6 +27,7 @@ interface ChatState {
   sessionId: string | null;
   isLoading: boolean;
   statusText: string | null;
+  streamingContent: string | null;
   hasUnread: boolean;
   error: string | null;
 
@@ -93,6 +94,7 @@ export const useChatStore = create<ChatState>()(
       sessionId: null,
       isLoading: false,
       statusText: null,
+      streamingContent: null,
       hasUnread: false,
       error: null,
 
@@ -126,9 +128,14 @@ export const useChatStore = create<ChatState>()(
 
         try {
           const req = buildChatRequest(trimmed, get().sessionId);
-          const res = await apiSendMessageStream(req, (status) => {
-            set({ statusText: status });
-          });
+          const res = await apiSendMessageStream(
+            req,
+            (status) => set({ statusText: status, streamingContent: null }),
+            (token) => set((s) => ({
+              streamingContent: (s.streamingContent ?? "") + token,
+              statusText: null,
+            })),
+          );
 
           const assistantMsg: ChatMessage = {
             id: uid(),
@@ -142,11 +149,12 @@ export const useChatStore = create<ChatState>()(
             sessionId: res.session_id,
             isLoading: false,
             statusText: null,
+            streamingContent: null,
             hasUnread: !s.isOpen,
           }));
         } catch (err) {
           const errorMsg = err instanceof Error ? err.message : "Unknown error";
-          set({ isLoading: false, statusText: null, error: errorMsg });
+          set({ isLoading: false, statusText: null, streamingContent: null, error: errorMsg });
         }
       },
 

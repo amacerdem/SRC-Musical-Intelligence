@@ -53,6 +53,7 @@ export async function sendMessage(req: ChatRequest): Promise<ChatResponse> {
 export async function sendMessageStream(
   req: ChatRequest,
   onStatus: (text: string) => void,
+  onToken: (text: string) => void,
 ): Promise<ChatResponse> {
   const res = await fetch("/api/agent/chat/stream", {
     method: "POST",
@@ -103,6 +104,8 @@ export async function sendMessageStream(
         const parsed = JSON.parse(data);
         if (eventType === "status") {
           onStatus(parsed.text ?? "");
+        } else if (eventType === "token") {
+          onToken(parsed.text ?? "");
         } else if (eventType === "done") {
           result = parsed as ChatResponse;
         } else if (eventType === "error") {

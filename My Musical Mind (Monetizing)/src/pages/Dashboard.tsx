@@ -39,6 +39,7 @@ export function Dashboard() {
   const messages = useChatStore((s) => s.messages);
   const isLoading = useChatStore((s) => s.isLoading);
   const statusText = useChatStore((s) => s.statusText);
+  const streamingContent = useChatStore((s) => s.streamingContent);
   const error = useChatStore((s) => s.error);
   const sendMessage = useChatStore((s) => s.sendMessage);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -47,7 +48,7 @@ export function Dashboard() {
   useEffect(() => {
     const el = scrollRef.current;
     if (el) el.scrollTop = el.scrollHeight;
-  }, [messages.length, isLoading]);
+  }, [messages.length, isLoading, streamingContent]);
 
   if (!mind || !persona) return null;
 
@@ -325,7 +326,12 @@ export function Dashboard() {
                 />
               ))}
 
-              {isLoading && <TypingIndicator accentColor={color} statusText={statusText} />}
+              {streamingContent && (
+                <ChatMessage role="assistant" content={streamingContent} accentColor={color} />
+              )}
+              {isLoading && !streamingContent && (
+                <TypingIndicator accentColor={color} statusText={statusText} />
+              )}
 
               {error && (
                 <div className="text-center py-2">

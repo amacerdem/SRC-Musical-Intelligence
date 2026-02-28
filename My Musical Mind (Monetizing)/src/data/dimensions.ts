@@ -509,3 +509,121 @@ export function arrayToProfile(values: number[]): DimensionProfile {
     sharing:   values[5] ?? 0,
   };
 }
+
+// =====================================================================
+// LAB DIMENSIONS — Direct belief mapping (no averaging)
+// Each dimension = exactly one belief value from the 131 C³ beliefs.
+// Tree: 6D(experiential) → 12D(cognitive) → 24D(neural)
+// =====================================================================
+
+export interface LabDimension {
+  index: number;
+  key: string;
+  name: string;
+  nameTr: string;
+  beliefIndex: number;       // index into beliefs[131]
+  color: string;
+  parentKey: string | null;  // parent at layer above
+}
+
+// ── 6D — "What is this music doing to you?" ────────────────────────
+
+export const LAB_6D: LabDimension[] = [
+  { index: 0, key: "harmony",   name: "Harmony",   nameTr: "Harmoni", beliefIndex: 3,  color: "#38BDF8", parentKey: null },
+  { index: 1, key: "melody",    name: "Melody",    nameTr: "Melodi",  beliefIndex: 8,  color: "#EF4444", parentKey: null },
+  { index: 2, key: "attention", name: "Attention", nameTr: "Dikkat",  beliefIndex: 34, color: "#22C55E", parentKey: null },
+  { index: 3, key: "feeling",   name: "Feeling",   nameTr: "Duygu",   beliefIndex: 63, color: "#A855F7", parentKey: null },
+  { index: 4, key: "pleasure",  name: "Pleasure",  nameTr: "Haz",     beliefIndex: 83, color: "#FBBF24", parentKey: null },
+  { index: 5, key: "groove",    name: "Groove",    nameTr: "Ritim",   beliefIndex: 92, color: "#EC4899", parentKey: null },
+];
+
+// ── 12D — "How is this happening?" (2 per 6D parent) ──────────────
+
+export const LAB_12D: LabDimension[] = [
+  // harmony children
+  { index: 0,  key: "stability",  name: "Stability",  nameTr: "Denge",        beliefIndex: 4,   color: "#38BDF8",   parentKey: "harmony" },
+  { index: 1,  key: "intervals",  name: "Intervals",  nameTr: "Aralıklar",    beliefIndex: 6,   color: "#38BDF8B0", parentKey: "harmony" },
+  // melody children
+  { index: 2,  key: "contour",    name: "Contour",    nameTr: "Kontur",       beliefIndex: 2,   color: "#EF4444",   parentKey: "melody" },
+  { index: 3,  key: "complexity", name: "Complexity", nameTr: "Karmaşıklık",  beliefIndex: 16,  color: "#EF4444B0", parentKey: "melody" },
+  // attention children
+  { index: 4,  key: "prediction", name: "Prediction", nameTr: "Öngörü",      beliefIndex: 20,  color: "#22C55E",   parentKey: "attention" },
+  { index: 5,  key: "beat_lock",  name: "Beat Lock",  nameTr: "Ritim Kilidi", beliefIndex: 42,  color: "#22C55EB0", parentKey: "attention" },
+  // feeling children
+  { index: 6,  key: "happiness",  name: "Happiness",  nameTr: "Mutluluk",     beliefIndex: 67,  color: "#A855F7",   parentKey: "feeling" },
+  { index: 7,  key: "sadness",    name: "Sadness",    nameTr: "Hüzün",        beliefIndex: 69,  color: "#A855F7B0", parentKey: "feeling" },
+  // pleasure children
+  { index: 8,  key: "wanting",    name: "Wanting",    nameTr: "İstek",        beliefIndex: 89,  color: "#FBBF24",   parentKey: "pleasure" },
+  { index: 9,  key: "resolution", name: "Resolution", nameTr: "Çözülme",      beliefIndex: 86,  color: "#FBBF24B0", parentKey: "pleasure" },
+  // groove children
+  { index: 10, key: "rhythm_lock", name: "Rhythm Lock", nameTr: "Periyot Kilidi", beliefIndex: 99,  color: "#EC4899",   parentKey: "groove" },
+  { index: 11, key: "sync",        name: "Sync",        nameTr: "Senkron",        beliefIndex: 122, color: "#EC4899B0", parentKey: "groove" },
+];
+
+// ── 24D — "Where in the brain?" (2 per 12D parent) ────────────────
+
+export const LAB_24D: LabDimension[] = [
+  // stability children
+  { index: 0,  key: "template_match",    name: "Template Match",    nameTr: "Şablon Eşleşmesi",  beliefIndex: 5,   color: "#38BDF8",   parentKey: "stability" },
+  { index: 1,  key: "consonance_map",    name: "Consonance Map",    nameTr: "Uyum Haritası",      beliefIndex: 0,   color: "#38BDF8CC", parentKey: "stability" },
+  // intervals children
+  { index: 2,  key: "pitch_continue",    name: "Pitch Continue",    nameTr: "Perde Devamı",       beliefIndex: 7,   color: "#38BDF899", parentKey: "intervals" },
+  { index: 3,  key: "octave_equiv",      name: "Octave Equiv.",     nameTr: "Oktav Eşleniği",     beliefIndex: 9,   color: "#38BDF877", parentKey: "intervals" },
+  // contour children
+  { index: 4,  key: "pitch_identity",    name: "Pitch Identity",    nameTr: "Perde Kimliği",      beliefIndex: 10,  color: "#EF4444",   parentKey: "contour" },
+  { index: 5,  key: "contour_continue",  name: "Contour Continue",  nameTr: "Kontur Devamı",      beliefIndex: 1,   color: "#EF4444CC", parentKey: "contour" },
+  // complexity children
+  { index: 6,  key: "spectral_synergy",  name: "Spectral Synergy",  nameTr: "Spektral Sinerji",   beliefIndex: 13,  color: "#EF444499", parentKey: "complexity" },
+  { index: 7,  key: "valence_bridge",    name: "Mood Bridge",       nameTr: "Duygu Köprüsü",      beliefIndex: 32,  color: "#EF444477", parentKey: "complexity" },
+  // prediction children
+  { index: 8,  key: "abstract_future",   name: "Abstract Future",   nameTr: "Soyut Gelecek",      beliefIndex: 17,  color: "#22C55E",   parentKey: "prediction" },
+  { index: 9,  key: "sensory_load",      name: "Sensory Load",      nameTr: "Duyusal Yük",        beliefIndex: 35,  color: "#22C55ECC", parentKey: "prediction" },
+  // beat_lock children
+  { index: 10, key: "selective_gain",    name: "Selective Gain",    nameTr: "Seçici Kazanç",      beliefIndex: 46,  color: "#22C55E99", parentKey: "beat_lock" },
+  { index: 11, key: "multisensory",      name: "Multisensory",      nameTr: "Çoklu-Duyu",         beliefIndex: 108, color: "#22C55E77", parentKey: "beat_lock" },
+  // happiness children
+  { index: 12, key: "happy_path",        name: "Happy Pathway",     nameTr: "Mutluluk Yolu",      beliefIndex: 65,  color: "#A855F7",   parentKey: "happiness" },
+  { index: 13, key: "nostalgia",         name: "Nostalgia",         nameTr: "Nostalji",            beliefIndex: 53,  color: "#A855F7CC", parentKey: "happiness" },
+  // sadness children
+  { index: 14, key: "nostalgia_affect",  name: "Nostalgia Affect",  nameTr: "Nostalji Etkisi",    beliefIndex: 70,  color: "#A855F799", parentKey: "sadness" },
+  { index: 15, key: "memory",            name: "Memory Trace",      nameTr: "Hafıza İzi",          beliefIndex: 48,  color: "#A855F777", parentKey: "sadness" },
+  // wanting children
+  { index: 16, key: "tension",           name: "Tension",           nameTr: "Gerilim",             beliefIndex: 80,  color: "#FBBF24",   parentKey: "wanting" },
+  { index: 17, key: "temporal_phase",    name: "Temporal Phase",    nameTr: "Zamansal Faz",        beliefIndex: 77,  color: "#FBBF24CC", parentKey: "wanting" },
+  // resolution children
+  { index: 18, key: "reward_forecast",   name: "Reward Forecast",   nameTr: "Ödül Tahmini",       beliefIndex: 87,  color: "#FBBF2499", parentKey: "resolution" },
+  { index: 19, key: "prediction_match",  name: "Prediction Match",  nameTr: "Öngörü Eşleşmesi",  beliefIndex: 85,  color: "#FBBF2477", parentKey: "resolution" },
+  // rhythm_lock children
+  { index: 20, key: "medium_context",    name: "Musical Context",   nameTr: "Müzikal Bağlam",     beliefIndex: 103, color: "#EC4899",   parentKey: "rhythm_lock" },
+  { index: 21, key: "motor_coupling",    name: "Motor Coupling",    nameTr: "Motor Bağlantı",     beliefIndex: 90,  color: "#EC4899CC", parentKey: "rhythm_lock" },
+  // sync children
+  { index: 22, key: "neural_sync",       name: "Neural Sync",       nameTr: "Nöral Senkron",      beliefIndex: 128, color: "#EC489999", parentKey: "sync" },
+  { index: 23, key: "group_flow",        name: "Group Flow",        nameTr: "Grup Akışı",          beliefIndex: 123, color: "#EC489977", parentKey: "sync" },
+];
+
+/** Lab 6D color lookup */
+export const LAB_6D_COLORS: Record<string, string> = {};
+for (const d of LAB_6D) LAB_6D_COLORS[d.key] = d.color;
+
+/**
+ * Compute Lab dimensions from 131 belief values.
+ * Each dimension = direct belief value (no averaging).
+ */
+export function computeLabDimensions(beliefs: number[]): {
+  psychology: number[];
+  cognition: number[];
+  neuroscience: number[];
+} {
+  return {
+    psychology:   LAB_6D.map((d) => beliefs[d.beliefIndex] ?? 0),
+    cognition:    LAB_12D.map((d) => beliefs[d.beliefIndex] ?? 0),
+    neuroscience: LAB_24D.map((d) => beliefs[d.beliefIndex] ?? 0),
+  };
+}
+
+/** Get Lab dimension info for a given depth and index */
+export function getLabDim(depth: 6 | 12 | 24, index: number): LabDimension | undefined {
+  if (depth === 6) return LAB_6D[index];
+  if (depth === 12) return LAB_12D[index];
+  return LAB_24D[index];
+}

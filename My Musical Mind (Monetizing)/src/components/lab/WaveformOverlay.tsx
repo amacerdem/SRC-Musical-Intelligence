@@ -5,46 +5,16 @@ import { motion, AnimatePresence } from "framer-motion";
 import type { DepthLevel } from "@/stores/useLabStore";
 import type { TemporalDimensions } from "@/stores/useLabStore";
 import type { DimensionState } from "@/types/dimensions";
-import {
-  ALL_PSYCHOLOGY,
-  ALL_COGNITION,
-  ALL_NEUROSCIENCE,
-  PSYCHOLOGY_COLORS,
-  COGNITION_CHILDREN,
-} from "@/data/dimensions";
-import type { DimensionKey6D } from "@/types/dimensions";
+import { getLabDim } from "@/data/dimensions";
 
-/* ── Colors for 12D and 24D ─────────────────────────────── */
+/* ── Color & label helpers from Lab dimension system ────── */
 
 function getDimColor(depth: DepthLevel, index: number): string {
-  if (depth === 6) {
-    const key = ALL_PSYCHOLOGY[index]?.key as DimensionKey6D;
-    return PSYCHOLOGY_COLORS[key] ?? "#94A3B8";
-  }
-  if (depth === 12) {
-    const node = ALL_COGNITION[index];
-    if (!node) return "#94A3B8";
-    const parentKey = node.parentKey as DimensionKey6D;
-    const color = PSYCHOLOGY_COLORS[parentKey] ?? "#94A3B8";
-    // Alternate brightness for children of same parent
-    const siblings = Object.values(COGNITION_CHILDREN).find(
-      ([a, b]) => a.key === node.key || b.key === node.key
-    );
-    const isSecond = siblings?.[1]?.key === node.key;
-    return isSecond ? `${color}B0` : color;
-  }
-  // 24D: inherit from 6D grandparent via modular index
-  const parentIdx = Math.floor(index / 4);
-  const parentKey = ALL_PSYCHOLOGY[parentIdx]?.key as DimensionKey6D;
-  const base = PSYCHOLOGY_COLORS[parentKey] ?? "#94A3B8";
-  const opacity = ["FF", "CC", "99", "77"][index % 4];
-  return `${base}${opacity}`;
+  return getLabDim(depth, index)?.color ?? "#94A3B8";
 }
 
 function getDimLabel(depth: DepthLevel, index: number): string {
-  if (depth === 6) return ALL_PSYCHOLOGY[index]?.name ?? "";
-  if (depth === 12) return ALL_COGNITION[index]?.name ?? "";
-  return ALL_NEUROSCIENCE[index]?.name ?? "";
+  return getLabDim(depth, index)?.name ?? "";
 }
 
 /* ── Spline interpolation (Catmull-Rom) ─────────────────── */

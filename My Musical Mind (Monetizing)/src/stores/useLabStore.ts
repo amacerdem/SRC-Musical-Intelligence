@@ -6,14 +6,14 @@
 import { create } from "zustand";
 import type { MITrackDetail } from "@/types/mi-dataset";
 import type { DimensionState } from "@/types/dimensions";
-import { computeDimensions } from "@/data/dimensions";
+import { computeLabDimensions } from "@/data/dimensions";
 
 export type AudioSource = "dataset" | "upload" | "mic";
 export type DepthLevel = 6 | 12 | 24;
 export type AnalysisPhase = "idle" | "loading" | "analyzing" | "done" | "error";
 
 export interface TemporalDimensions {
-  /** Per-segment dimension states (8 segments) */
+  /** Per-segment dimension states */
   segments: DimensionState[];
   /** Overall (mean) dimension state */
   overall: DimensionState;
@@ -49,9 +49,9 @@ export interface LabState {
 
 function computeTemporalDimensions(detail: MITrackDetail): TemporalDimensions {
   const segments = detail.temporal_profile.belief_means_per_segment.map(
-    (beliefs) => computeDimensions(beliefs)
+    (beliefs) => computeLabDimensions(beliefs)
   );
-  const overall = computeDimensions(detail.beliefs.means);
+  const overall = computeLabDimensions(detail.beliefs.means);
   return { segments, overall };
 }
 

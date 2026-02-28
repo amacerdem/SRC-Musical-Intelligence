@@ -333,17 +333,22 @@ async def chat_stream(req: ChatRequest):
         try:
             import anthropic
 
-            client = anthropic.Anthropic(api_key=api_key)
+            client = anthropic.AsyncAnthropic(api_key=api_key)
             total_in = 0
             total_out = 0
             response_text = ""
             messages = api_request.pop("messages")
 
             for _round in range(MAX_TOOL_ROUNDS):
-                response = client.messages.create(
+                # Stream tokens to client in real-time
+                async with client.messages.stream(
                     messages=messages,
                     **api_request,
-                )
+                ) as stream:
+                    async for text in stream.text_stream:
+                        yield _sse_event("token", {"text": text})
+                        response_text += text
+                    response = await stream.get_final_message()
 
                 total_in += response.usage.input_tokens
                 total_out += response.usage.output_tokens
@@ -351,12 +356,6 @@ async def chat_stream(req: ChatRequest):
                 tool_use_blocks = [
                     b for b in response.content if b.type == "tool_use"
                 ]
-                text_blocks = [
-                    b for b in response.content if hasattr(b, "text")
-                ]
-
-                for tb in text_blocks:
-                    response_text += tb.text
 
                 if not tool_use_blocks:
                     break

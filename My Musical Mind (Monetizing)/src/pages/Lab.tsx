@@ -41,6 +41,7 @@ export function Lab() {
   const messages = useChatStore((s) => s.messages);
   const isLoading = useChatStore((s) => s.isLoading);
   const statusText = useChatStore((s) => s.statusText);
+  const streamingContent = useChatStore((s) => s.streamingContent);
   const error = useChatStore((s) => s.error);
   const sendMessage = useChatStore((s) => s.sendMessage);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -49,7 +50,7 @@ export function Lab() {
   useEffect(() => {
     const el = scrollRef.current;
     if (el) el.scrollTop = el.scrollHeight;
-  }, [messages.length, isLoading]);
+  }, [messages.length, isLoading, streamingContent]);
 
   const handleSend = () => {
     const el = inputRef.current;
@@ -230,7 +231,7 @@ export function Lab() {
                 transition={{ delay: 0.35, duration: 0.6 }}
                 className="spatial-card p-3"
               >
-                <AnalysisSummary detail={trackDetail} depth={depth} accentColor={color} />
+                <AnalysisSummary detail={trackDetail} depth={depth} accentColor={color} temporal={temporal} />
               </motion.div>
             </>
           )}
@@ -318,7 +319,12 @@ export function Lab() {
                 />
               ))}
 
-              {isLoading && <TypingIndicator accentColor={color} statusText={statusText} />}
+              {streamingContent && (
+                <ChatMessage role="assistant" content={streamingContent} accentColor={color} />
+              )}
+              {isLoading && !streamingContent && (
+                <TypingIndicator accentColor={color} statusText={statusText} />
+              )}
 
               {error && (
                 <div className="text-center py-2">

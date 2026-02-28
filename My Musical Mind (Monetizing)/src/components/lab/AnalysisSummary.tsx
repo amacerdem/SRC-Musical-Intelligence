@@ -3,34 +3,23 @@
 import { motion } from "framer-motion";
 import type { MITrackDetail } from "@/types/mi-dataset";
 import type { DepthLevel } from "@/stores/useLabStore";
-import {
-  ALL_PSYCHOLOGY,
-  ALL_COGNITION,
-  ALL_NEUROSCIENCE,
-  PSYCHOLOGY_COLORS,
-} from "@/data/dimensions";
-import type { DimensionKey6D } from "@/types/dimensions";
+import type { TemporalDimensions } from "@/stores/useLabStore";
+import { getLabDim } from "@/data/dimensions";
 
 interface Props {
   detail: MITrackDetail;
   depth: DepthLevel;
   accentColor: string;
+  temporal: TemporalDimensions;
 }
 
-export function AnalysisSummary({ detail, depth, accentColor }: Props) {
+export function AnalysisSummary({ detail, depth, accentColor, temporal }: Props) {
   const dims =
     depth === 6
-      ? detail.dimensions.psychology_6d
+      ? temporal.overall.psychology
       : depth === 12
-        ? detail.dimensions.cognition_12d
-        : detail.dimensions.neuroscience_24d;
-
-  const nodes =
-    depth === 6
-      ? ALL_PSYCHOLOGY
-      : depth === 12
-        ? ALL_COGNITION
-        : ALL_NEUROSCIENCE;
+        ? temporal.overall.cognition
+        : temporal.overall.neuroscience;
 
   // Find dominant & weakest
   let maxIdx = 0, minIdx = 0;
@@ -38,13 +27,9 @@ export function AnalysisSummary({ detail, depth, accentColor }: Props) {
     if (dims[i] > dims[maxIdx]) maxIdx = i;
     if (dims[i] < dims[minIdx]) minIdx = i;
   }
-  const dominant = nodes[maxIdx];
-  const weakest = nodes[minIdx];
-
-  const dominantColor =
-    depth === 6
-      ? PSYCHOLOGY_COLORS[dominant.key as DimensionKey6D] ?? accentColor
-      : accentColor;
+  const dominant = getLabDim(depth, maxIdx);
+  const weakest = getLabDim(depth, minIdx);
+  const dominantColor = dominant?.color ?? accentColor;
 
   return (
     <div className="flex items-center gap-4 flex-wrap">
@@ -59,7 +44,7 @@ export function AnalysisSummary({ detail, depth, accentColor }: Props) {
         <div className="w-2 h-2 rounded-full" style={{ background: dominantColor }} />
         <span className="text-[10px] font-display text-slate-500 uppercase tracking-wider">Dominant</span>
         <span className="text-xs font-display font-medium" style={{ color: dominantColor }}>
-          {dominant.name}
+          {dominant?.name ?? ""}
         </span>
         <span className="text-xs font-mono" style={{ color: `${dominantColor}90` }}>
           {Math.round(dims[maxIdx] * 100)}%
@@ -75,7 +60,7 @@ export function AnalysisSummary({ detail, depth, accentColor }: Props) {
         style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
       >
         <span className="text-[10px] font-display text-slate-600 uppercase tracking-wider">Weakest</span>
-        <span className="text-xs font-display text-slate-500">{weakest.name}</span>
+        <span className="text-xs font-display text-slate-500">{weakest?.name ?? ""}</span>
         <span className="text-xs font-mono text-slate-600">{Math.round(dims[minIdx] * 100)}%</span>
       </motion.div>
 

@@ -19,6 +19,7 @@ export function ChatPanel({ personaName, accentColor }: Props) {
   const messages = useChatStore((s) => s.messages);
   const isLoading = useChatStore((s) => s.isLoading);
   const statusText = useChatStore((s) => s.statusText);
+  const streamingContent = useChatStore((s) => s.streamingContent);
   const error = useChatStore((s) => s.error);
   const close = useChatStore((s) => s.close);
   const sendMessage = useChatStore((s) => s.sendMessage);
@@ -31,7 +32,7 @@ export function ChatPanel({ personaName, accentColor }: Props) {
     if (el) {
       el.scrollTop = el.scrollHeight;
     }
-  }, [messages.length, isLoading]);
+  }, [messages.length, isLoading, streamingContent]);
 
   const panelContent = (
     <>
@@ -93,7 +94,12 @@ export function ChatPanel({ personaName, accentColor }: Props) {
           />
         ))}
 
-        {isLoading && <TypingIndicator accentColor={accentColor} statusText={statusText} />}
+        {streamingContent && (
+          <ChatMessage role="assistant" content={streamingContent} accentColor={accentColor} />
+        )}
+        {isLoading && !streamingContent && (
+          <TypingIndicator accentColor={accentColor} statusText={statusText} />
+        )}
 
         {error && (
           <div className="text-center py-2">
