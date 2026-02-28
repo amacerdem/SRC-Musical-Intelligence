@@ -1,7 +1,6 @@
 /* ── DimensionRadar — 6D Psychology Radar Chart ──────────────────
  *  Displays the 6D dimension profile as a radar visualization.
  *  Supports comparison mode (persona canonical vs. live M³ state).
- *  Follows the same pattern as MindRadar.tsx.
  *  ──────────────────────────────────────────────────────────────── */
 
 import {
@@ -58,13 +57,9 @@ export function DimensionRadar({
     const fillColor = coloredAxes && dimKey ? PSYCHOLOGY_COLORS[dimKey] : "#94A3B8";
     return (
       <text
-        x={x}
-        y={y}
-        fill={fillColor}
-        fontSize={11}
-        fontFamily="Inter"
-        textAnchor="middle"
-        dominantBaseline="middle"
+        x={x} y={y}
+        fill={fillColor} fontSize={11} fontFamily="Inter"
+        textAnchor="middle" dominantBaseline="middle"
       >
         {payload.value}
       </text>
@@ -79,29 +74,18 @@ export function DimensionRadar({
           dataKey="axis"
           tick={renderTick as unknown as React.ComponentProps<typeof PolarAngleAxis>["tick"]}
         />
-        <PolarRadiusAxis
-          angle={90}
-          domain={[0, 100]}
-          tick={false}
-          axisLine={false}
-        />
+        <PolarRadiusAxis angle={90} domain={[0, 100]} tick={false} axisLine={false} />
         {compareProfile && (
           <Radar
-            name="Canonical"
-            dataKey="compare"
-            stroke={compareColor}
-            fill={compareColor}
-            fillOpacity={0.15}
-            strokeWidth={1.5}
+            name="Canonical" dataKey="compare"
+            stroke={compareColor} fill={compareColor}
+            fillOpacity={0.15} strokeWidth={1.5}
           />
         )}
         <Radar
-          name="Dimensions"
-          dataKey="value"
-          stroke={color}
-          fill={color}
-          fillOpacity={0.25}
-          strokeWidth={2}
+          name="Dimensions" dataKey="value"
+          stroke={color} fill={color}
+          fillOpacity={0.25} strokeWidth={2}
         />
       </RadarChart>
     </ResponsiveContainer>

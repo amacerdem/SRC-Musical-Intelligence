@@ -87,3 +87,30 @@ export interface MITrackDetail {
     belief_means_per_segment: number[][];  // segments × 131
   };
 }
+
+/* ── Full Beliefs JSON (_beliefs_full.json) ─────────────────────── */
+
+/** Single belief entry in the full beliefs file */
+export interface MIBeliefEntry {
+  index: number;           // 0-130, position in 131-belief vector
+  mechanism: string;       // e.g. "BCH", "CSG"
+  type: string;            // "Core" | "Appraisal" | "Anticipation"
+  frames: number[];        // one value per frame (n_frames length)
+}
+
+/** Function group in full beliefs file */
+export interface MIFunctionBeliefs {
+  beliefs: Record<string, MIBeliefEntry>;
+}
+
+/** Root structure of _beliefs_full.json */
+export interface MIBeliefsFull {
+  track_id: string;
+  artist: string;
+  title: string;
+  n_frames: number;
+  fps: number;
+  duration_s: number;
+  frame_interval_ms: number;
+  functions: Record<string, MIFunctionBeliefs>;
+}

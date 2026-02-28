@@ -18,12 +18,9 @@ import type { DimensionLayer } from "@/types/dimensions";
 import {
   ALL_PSYCHOLOGY,
   ALL_COGNITION,
-  ALL_NEUROSCIENCE,
-  PSYCHOLOGY_COLORS,
   COGNITION_CHILDREN,
-  NEUROSCIENCE_CHILDREN,
+  getLabDim,
 } from "@/data/dimensions";
-import type { DimensionKey6D } from "@/types/dimensions";
 
 interface Props {
   /** Persona color for accent theming */
@@ -42,7 +39,7 @@ export function DimensionPanel({ accentColor = "#A855F7", compact = false }: Pro
   const { t, i18n } = useTranslation();
   const isTr = i18n.language === "tr";
   const { state, canSeeLayer, names } = useDimensions(isTr ? "tr" : "en");
-  const { tier, canSeeDimensionLayer } = useM3Gate();
+  const { canSeeDimensionLayer } = useM3Gate();
   const [expandedLayer, setExpandedLayer] = useState<DimensionLayer | null>(
     compact ? null : "psychology",
   );
@@ -124,9 +121,9 @@ export function DimensionPanel({ accentColor = "#A855F7", compact = false }: Pro
                   <div className="px-4 pb-3 space-y-1.5">
                     {layerValues.map((val, i) => {
                       const dimName = layerNames[i] ?? `D${i}`;
-                      const barColor = key === "psychology"
-                        ? PSYCHOLOGY_COLORS[ALL_PSYCHOLOGY[i]?.key as DimensionKey6D] ?? accentColor
-                        : accentColor;
+                      const depth = key === "psychology" ? 6 : key === "cognition" ? 12 : 24;
+                      const dim = getLabDim(depth as 6 | 12 | 24, i);
+                      const barColor = dim?.color ?? accentColor;
 
                       return (
                         <div key={i} className="flex items-center gap-2">

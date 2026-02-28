@@ -32,21 +32,21 @@ export function AnalysisSummary({ detail, depth, accentColor, temporal }: Props)
   const dominantColor = dominant?.color ?? accentColor;
 
   return (
-    <div className="flex items-center gap-4 flex-wrap">
+    <div className="flex flex-col gap-1.5">
       {/* Dominant dimension */}
       <motion.div
         initial={{ opacity: 0, y: 6 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2, duration: 0.6 }}
-        className="flex items-center gap-2 px-3 py-1.5 rounded-lg"
+        className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg"
         style={{ background: `${dominantColor}12`, border: `1px solid ${dominantColor}20` }}
       >
-        <div className="w-2 h-2 rounded-full" style={{ background: dominantColor }} />
-        <span className="text-[10px] font-display text-slate-500 uppercase tracking-wider">Dominant</span>
-        <span className="text-xs font-display font-medium" style={{ color: dominantColor }}>
+        <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: dominantColor }} />
+        <span className="text-[9px] font-display text-slate-500 uppercase tracking-wider">Dom</span>
+        <span className="text-[11px] font-display font-medium truncate" style={{ color: dominantColor }}>
           {dominant?.name ?? ""}
         </span>
-        <span className="text-xs font-mono" style={{ color: `${dominantColor}90` }}>
+        <span className="text-[10px] font-mono ml-auto flex-shrink-0" style={{ color: `${dominantColor}90` }}>
           {Math.round(dims[maxIdx] * 100)}%
         </span>
       </motion.div>
@@ -56,12 +56,12 @@ export function AnalysisSummary({ detail, depth, accentColor, temporal }: Props)
         initial={{ opacity: 0, y: 6 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3, duration: 0.6 }}
-        className="flex items-center gap-2 px-3 py-1.5 rounded-lg"
+        className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg"
         style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
       >
-        <span className="text-[10px] font-display text-slate-600 uppercase tracking-wider">Weakest</span>
-        <span className="text-xs font-display text-slate-500">{weakest?.name ?? ""}</span>
-        <span className="text-xs font-mono text-slate-600">{Math.round(dims[minIdx] * 100)}%</span>
+        <span className="text-[9px] font-display text-slate-600 uppercase tracking-wider">Low</span>
+        <span className="text-[11px] font-display text-slate-500 truncate">{weakest?.name ?? ""}</span>
+        <span className="text-[10px] font-mono text-slate-600 ml-auto flex-shrink-0">{Math.round(dims[minIdx] * 100)}%</span>
       </motion.div>
 
       {/* Gene family badge */}
@@ -69,37 +69,37 @@ export function AnalysisSummary({ detail, depth, accentColor, temporal }: Props)
         initial={{ opacity: 0, y: 6 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4, duration: 0.6 }}
-        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg"
+        className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg"
         style={{ background: `${accentColor}08`, border: `1px solid ${accentColor}12` }}
       >
-        <span className="text-[10px] font-display text-slate-600 uppercase tracking-wider">Family</span>
-        <span className="text-xs font-display font-medium" style={{ color: `${accentColor}90` }}>
+        <span className="text-[9px] font-display text-slate-600 uppercase tracking-wider">Family</span>
+        <span className="text-[11px] font-display font-medium truncate" style={{ color: `${accentColor}90` }}>
           {detail.dominant_family}
         </span>
       </motion.div>
 
-      {/* F1-F9 mini overview */}
+      {/* F1-F9 mini overview — horizontal strip */}
       <motion.div
         initial={{ opacity: 0, y: 6 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.6 }}
-        className="flex items-center gap-1"
+        className="flex items-end gap-0.5 px-1 pt-1"
       >
         {Object.entries(detail.functions).map(([fn, val]) => (
           <div
             key={fn}
-            className="flex flex-col items-center gap-0.5"
+            className="flex flex-col items-center gap-0.5 flex-1"
             title={`${fn}: ${Math.round((val as number) * 100)}%`}
           >
             <div
-              className="w-3 rounded-sm"
+              className="w-full max-w-[14px] rounded-sm"
               style={{
                 height: Math.max(4, (val as number) * 20),
                 background: accentColor,
                 opacity: 0.3 + (val as number) * 0.5,
               }}
             />
-            <span className="text-[7px] font-mono text-slate-700">{fn}</span>
+            <span className="text-[6px] font-mono text-slate-700">{fn}</span>
           </div>
         ))}
       </motion.div>

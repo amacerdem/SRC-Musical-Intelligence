@@ -1,41 +1,26 @@
-/* ── Dimension Types — Hierarchical 131 → 24 → 12 → 6 ────────────
- *  Binary tree structure mapping C³ beliefs to user-facing dimensions.
- *  Three tiers: Psychology (6D, free) → Cognition (12D, basic) →
- *  Neuroscience (24D, premium) → Research (131D, ultimate).
+/* ── Dimension Types — Hierarchical 6D → 12D → 24D ───────────────
+ *  Binary tree: 6 Psychology → 12 Cognition → 24 Neuroscience.
+ *  Each leaf (24D) aggregates 5-7 beliefs by mean.
+ *  Parents = mean of their 2 children.
  *
- *  Source of truth: Musical_Intelligence/brain/dimensions/
- *  Vocabulary spec: Docs/L³/M3-LOGOS.md
+ *  6D:  Discovery, Intensity, Flow, Depth, Trace, Sharing
+ *  12D: 2 children per 6D parent
+ *  24D: 2 children per 12D parent
+ *
+ *  Source of truth: Musical_Intelligence/brain/dimensions/tree.py
  *  ──────────────────────────────────────────────────────────────── */
 
 /** The three user-facing dimension layers + raw research layer */
 export type DimensionLayer = "psychology" | "cognition" | "neuroscience" | "research";
 
-/** A single node in the dimension hierarchy */
-export interface DimensionNode {
-  /** Position within its layer tensor (0-based) */
-  index: number;
-  /** Machine key (e.g. "discovery", "expectancy", "predictive_processing") */
-  key: string;
-  /** English display name */
-  name: string;
-  /** Turkish display name */
-  nameTr: string;
-  /** Which layer this node belongs to */
-  layer: DimensionLayer;
-  /** Parent node key (null for 6D roots) */
-  parentKey: string | null;
-  /** Which of the 131 belief indices aggregate into this node */
-  beliefIndices: number[];
-}
-
 /** 6D radar profile — one value per psychology dimension */
 export interface DimensionProfile {
   discovery: number;    // 0-1 — Keşif
-  intensity: number;    // 0-1 — Yoğunluk
-  flow: number;         // 0-1 — Akış
-  depth: number;        // 0-1 — Derinlik
-  trace: number;        // 0-1 — İz
-  sharing: number;      // 0-1 — Paylaşım
+  intensity: number;    // 0-1 — Gerilim
+  flow: number;         // 0-1 — Ritim
+  depth: number;        // 0-1 — Duygu
+  trace: number;        // 0-1 — Hafıza
+  sharing: number;      // 0-1 — Bağ
 }
 
 export const DIMENSION_KEYS_6D = [

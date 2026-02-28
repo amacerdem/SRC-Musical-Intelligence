@@ -59,18 +59,20 @@ interface Props {
   depth: DepthLevel;
   duration: number;
   accentColor: string;
+  /** Compact mode: shorter height, no inline legend */
+  compact?: boolean;
 }
 
 const SVG_W = 800;
-const SVG_H = 280;
-const PAD_L = 0;
-const PAD_R = 0;
-const PAD_T = 20;
-const PAD_B = 30;
-const CHART_W = SVG_W - PAD_L - PAD_R;
-const CHART_H = SVG_H - PAD_T - PAD_B;
 
-export function WaveformOverlay({ temporal, depth, duration, accentColor }: Props) {
+export function WaveformOverlay({ temporal, depth, duration, accentColor, compact = false }: Props) {
+  const SVG_H = compact ? 180 : 280;
+  const PAD_L = 0;
+  const PAD_R = 0;
+  const PAD_T = compact ? 10 : 20;
+  const PAD_B = compact ? 18 : 30;
+  const CHART_W = SVG_W - PAD_L - PAD_R;
+  const CHART_H = SVG_H - PAD_T - PAD_B;
   const [hoverX, setHoverX] = useState<number | null>(null);
   const svgRef = useRef<SVGSVGElement>(null);
 
@@ -307,18 +309,20 @@ export function WaveformOverlay({ temporal, depth, duration, accentColor }: Prop
         )}
       </AnimatePresence>
 
-      {/* Legend */}
-      <div className="flex flex-wrap gap-x-3 gap-y-1 mt-2">
-        {paths.slice(0, Math.min(dimCount, depth <= 12 ? dimCount : 12)).map(({ color, label }, i) => (
-          <div key={i} className="flex items-center gap-1">
-            <div className="w-2 h-[2px] rounded-full" style={{ background: color }} />
-            <span className="text-[9px] font-display text-slate-500">{label}</span>
-          </div>
-        ))}
-        {depth === 24 && dimCount > 12 && (
-          <span className="text-[8px] font-mono text-slate-600">+{dimCount - 12} more</span>
-        )}
-      </div>
+      {/* Legend (hidden in compact mode) */}
+      {!compact && (
+        <div className="flex flex-wrap gap-x-3 gap-y-1 mt-2">
+          {paths.slice(0, Math.min(dimCount, depth <= 12 ? dimCount : 12)).map(({ color, label }, i) => (
+            <div key={i} className="flex items-center gap-1">
+              <div className="w-2 h-[2px] rounded-full" style={{ background: color }} />
+              <span className="text-[9px] font-display text-slate-500">{label}</span>
+            </div>
+          ))}
+          {depth === 24 && dimCount > 12 && (
+            <span className="text-[8px] font-mono text-slate-600">+{dimCount - 12} more</span>
+          )}
+        </div>
+      )}
     </div>
   );
 }

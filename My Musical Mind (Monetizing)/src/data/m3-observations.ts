@@ -23,6 +23,7 @@ import { OBSERVATION_LEVEL_GATE, GENE_NAMES, GENE_TO_TYPE, getDominantType } fro
 import { personas } from "@/data/personas";
 import { computeDimensions, ALL_PSYCHOLOGY } from "@/data/dimensions";
 import { DIMENSION_KEYS_6D } from "@/types/dimensions";
+import type { DimensionKey6D } from "@/types/dimensions";
 
 /* ── Helpers ───────────────────────────────────────────────────────── */
 

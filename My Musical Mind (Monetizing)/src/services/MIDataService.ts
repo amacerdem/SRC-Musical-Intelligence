@@ -7,6 +7,7 @@ import type {
   MICatalog,
   MICatalogTrack,
   MITrackDetail,
+  MIBeliefsFull,
 } from "@/types/mi-dataset";
 import type { NeuralFamily } from "@/types/mind";
 import type { M3TrackSignal, MindGenes } from "@/types/m3";
@@ -22,6 +23,7 @@ import type {
 
 const CATALOG_URL = "/data/mi-dataset/catalog.json";
 const TRACK_URL = (id: string) => `/data/mi-dataset/tracks/${id}.json`;
+const BELIEFS_FULL_URL = (id: string) => `/data/mi-dataset/tracks/${id}_beliefs_full.json`;
 
 /** Aggregate profile computed from the user's full listening history */
 export interface MIAggregateProfile {
@@ -35,6 +37,7 @@ export interface MIAggregateProfile {
 class MIDataService {
   private catalog: MICatalog | null = null;
   private trackCache = new Map<string, MITrackDetail>();
+  private beliefsFullCache = new Map<string, MIBeliefsFull>();
   private sessionOffset = 0;
 
   /* ── Init ─────────────────────────────────────────────────────── */
@@ -67,6 +70,72 @@ class MIDataService {
     const detail = (await res.json()) as MITrackDetail;
     this.trackCache.set(id, detail);
     return detail;
+  }
+
+  /* ── Full beliefs (frame-level, lazy) ────────────────────────── */
+
+  async getTrackBeliefsFull(id: string): Promise<MIBeliefsFull> {
+    const cached = this.beliefsFullCache.get(id);
+    if (cached) return cached;
+    const res = await fetch(BELIEFS_FULL_URL(id));
+    const full = (await res.json()) as MIBeliefsFull;
+    this.beliefsFullCache.set(id, full);
+    return full;
+  }
+
+  /**
+   * Convert full beliefs JSON to a frame×belief matrix.
+   * Returns [n_frames][131] ordered by belief index.
+   */
+  static beliefsFullToMatrix(full: MIBeliefsFull): number[][] {
+    const nFrames = full.n_frames;
+    // Collect all belief entries sorted by index
+    const entries: { index: number; frames: number[] }[] = [];
+    for (const func of Object.values(full.functions)) {
+      for (const belief of Object.values(func.beliefs)) {
+        entries.push({ index: belief.index, frames: belief.frames });
+      }
+    }
+    entries.sort((a, b) => a.index - b.index);
+
+    // Build [n_frames][131] matrix
+    const matrix: number[][] = new Array(nFrames);
+    for (let t = 0; t < nFrames; t++) {
+      const row = new Array(131);
+      for (let b = 0; b < 131; b++) {
+        row[b] = entries[b].frames[t];
+      }
+      matrix[t] = row;
+    }
+    return matrix;
+  }
+
+  /**
+   * Downsample frame×belief matrix to N temporal segments.
+   * Each segment = mean of all frames in that window.
+   */
+  static downsampleMatrix(
+    matrix: number[][],
+    numSegments: number,
+  ): number[][] {
+    const nFrames = matrix.length;
+    const segSize = nFrames / numSegments;
+    const result: number[][] = new Array(numSegments);
+
+    for (let s = 0; s < numSegments; s++) {
+      const start = Math.floor(s * segSize);
+      const end = Math.floor((s + 1) * segSize);
+      const count = end - start;
+      const avg = new Array(131).fill(0);
+      for (let t = start; t < end; t++) {
+        for (let b = 0; b < 131; b++) {
+          avg[b] += matrix[t][b];
+        }
+      }
+      for (let b = 0; b < 131; b++) avg[b] /= count;
+      result[s] = avg;
+    }
+    return result;
   }
 
   /* ── Aggregate Profile (deterministic) ───────────────────────── */

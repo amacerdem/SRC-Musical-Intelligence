@@ -18,7 +18,7 @@ export function AudioInput({ accentColor }: Props) {
   const { activeTab, setActiveTab, selectTrack, setPhase, setExperimentId, setProgress } = useLabStore();
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 h-full">
       {/* Tab selector */}
       <div className="flex items-center gap-1">
         {([
@@ -117,7 +117,7 @@ function DatasetSearch({ accentColor, onSelect }: { accentColor: string; onSelec
         )}
       </div>
 
-      <div className="max-h-40 overflow-y-auto space-y-0.5" style={{ scrollbarWidth: "thin", scrollbarColor: `${accentColor}30 transparent` }}>
+      <div className="flex-1 min-h-0 overflow-y-auto space-y-0.5" style={{ scrollbarWidth: "thin", scrollbarColor: `${accentColor}30 transparent` }}>
         {results.map((track) => (
           <button
             key={track.id}

@@ -10,12 +10,10 @@ import { useTranslation } from "react-i18next";
 import { Lock } from "lucide-react";
 import { useDimensions } from "@/hooks/useDimensions";
 import { useM3Gate } from "@/hooks/useM3Gate";
-import type { DimensionKey6D } from "@/types/dimensions";
 import {
   ALL_PSYCHOLOGY,
   ALL_COGNITION,
   ALL_NEUROSCIENCE,
-  PSYCHOLOGY_COLORS,
 } from "@/data/dimensions";
 
 /* ── Props ───────────────────────────────────────────────────────── */
@@ -33,23 +31,15 @@ const CX = VB / 2;
 const CY = VB / 2;
 const DEG = Math.PI / 180;
 
-// Each layer occupies a radial band:
-//   6D:  center → 62   (classic radar from center)
-//   gap: 62 → 82       (6D labels here)
-//   12D: 82 → 126      (ring-radar)
-//   gap: 126 → 146     (12D labels here)
-//   24D: 146 → 192     (ring-radar)
 const R6_MAX = 62;
 const R12_BASE = 82;
 const R12_MAX = 126;
 const R24_BASE = 146;
 const R24_MAX = 192;
 
-// Label positions (center of each gap)
-const R6_LABEL = (R6_MAX + R12_BASE) / 2;   // 72
-const R12_LABEL = (R12_MAX + R24_BASE) / 2;  // 136
+const R6_LABEL = (R6_MAX + R12_BASE) / 2;
+const R12_LABEL = (R12_MAX + R24_BASE) / 2;
 
-// Binary-tree-aligned axis angles (degrees), starting at -90° (top)
 const ANGLES_6D = Array.from({ length: 6 }, (_, i) => -90 + i * 60);
 
 const ANGLES_12D: number[] = [];
@@ -62,16 +52,10 @@ for (const a of ANGLES_12D) {
   ANGLES_24D.push(a - 7.5, a + 7.5);
 }
 
-// Grid circles: zone boundaries + midpoints
 const GRID_RADII = [
-  R6_MAX * 0.5,  // 6D midpoint
-  R6_MAX,        // 6D outer boundary
-  R12_BASE,      // 12D inner boundary
-  (R12_BASE + R12_MAX) / 2, // 12D midpoint
-  R12_MAX,       // 12D outer boundary
-  R24_BASE,      // 24D inner boundary
-  (R24_BASE + R24_MAX) / 2, // 24D midpoint
-  R24_MAX,       // 24D outer boundary
+  R6_MAX * 0.5, R6_MAX,
+  R12_BASE, (R12_BASE + R12_MAX) / 2, R12_MAX,
+  R24_BASE, (R24_BASE + R24_MAX) / 2, R24_MAX,
 ];
 
 /* ── Helpers ─────────────────────────────────────────────────────── */
@@ -86,7 +70,7 @@ function clamp01(v: number) {
 }
 
 function colorOf6D(i: number): string {
-  return PSYCHOLOGY_COLORS[ALL_PSYCHOLOGY[i]?.key as DimensionKey6D] ?? "#888";
+  return ALL_PSYCHOLOGY[i]?.color ?? "#888";
 }
 
 function parent6Dof12D(i: number) {
@@ -97,9 +81,11 @@ function parent6Dof24D(i: number) {
 }
 
 function lighten(hex: string, amt: number): string {
-  const r = parseInt(hex.slice(1, 3), 16);
-  const g = parseInt(hex.slice(3, 5), 16);
-  const b = parseInt(hex.slice(5, 7), 16);
+  // Handle hex with alpha suffix (e.g. "#38BDF8B0")
+  const cleanHex = hex.length > 7 ? hex.slice(0, 7) : hex;
+  const r = parseInt(cleanHex.slice(1, 3), 16);
+  const g = parseInt(cleanHex.slice(3, 5), 16);
+  const b = parseInt(cleanHex.slice(5, 7), 16);
   return `#${[r, g, b]
     .map((c) =>
       Math.round(c + (255 - c) * amt)
@@ -109,7 +95,6 @@ function lighten(hex: string, amt: number): string {
     .join("")}`;
 }
 
-/** Build center-based sector triangles (for 6D inner radar) */
 function mkCenterSectors(
   angles: number[],
   values: number[],
@@ -128,7 +113,6 @@ function mkCenterSectors(
   });
 }
 
-/** Build ring-based sector trapezoids (for 12D/24D ring-radars) */
 function mkRingSectors(
   angles: number[],
   values: number[],
@@ -154,7 +138,6 @@ function mkRingSectors(
   });
 }
 
-/** Build center-based polygon outline */
 function centerOutline(angles: number[], values: number[], maxR: number): string {
   const pts = angles.map((a, i) => {
     const p = polar(a, maxR * clamp01(values[i] ?? 0));
@@ -163,7 +146,6 @@ function centerOutline(angles: number[], values: number[], maxR: number): string
   return `M ${pts.join(" L ")} Z`;
 }
 
-/** Build ring-based polygon outline */
 function ringOutline(angles: number[], values: number[], baseR: number, maxR: number): string {
   const span = maxR - baseR;
   const pts = angles.map((a, i) => {
@@ -200,23 +182,19 @@ export function DimensionSunburst({
   const d12 = state.cognition;
   const d24 = state.neuroscience;
 
-  // 6D: center-based sectors
   const sectors6D = useMemo(
     () => mkCenterSectors(ANGLES_6D, d6, R6_MAX, colorOf6D),
     [d6],
   );
-  // 12D: ring-based sectors
   const sectors12D = useMemo(
     () => mkRingSectors(ANGLES_12D, d12, R12_BASE, R12_MAX, (i) => colorOf6D(parent6Dof12D(i)), 0.15),
     [d12],
   );
-  // 24D: ring-based sectors
   const sectors24D = useMemo(
     () => mkRingSectors(ANGLES_24D, d24, R24_BASE, R24_MAX, (i) => colorOf6D(parent6Dof24D(i)), 0.25),
     [d24],
   );
 
-  // Polygon outlines
   const path6D = useMemo(() => centerOutline(ANGLES_6D, d6, R6_MAX), [d6]);
   const path12D = useMemo(() => ringOutline(ANGLES_12D, d12, R12_BASE, R12_MAX), [d12]);
   const path24D = useMemo(() => ringOutline(ANGLES_24D, d24, R24_BASE, R24_MAX), [d24]);
@@ -238,7 +216,6 @@ export function DimensionSunburst({
 
   const offHover = useCallback(() => setTip(null), []);
 
-  /** Is a grid circle in a locked zone? */
   const isLockedGrid = (r: number) =>
     (r >= R12_BASE && r <= R12_MAX && !canSeeCog) ||
     (r >= R24_BASE && r <= R24_MAX && !canSeeNeuro);
@@ -255,51 +232,37 @@ export function DimensionSunburst({
           <style>{`@keyframes dimFadeIn{from{opacity:0}to{opacity:1}}`}</style>
         </defs>
 
-        {/* ── Grid circles ──────────────────────────────── */}
+        {/* Grid circles */}
         {GRID_RADII.map((r) => (
           <circle
             key={r}
-            cx={CX}
-            cy={CY}
-            r={r}
+            cx={CX} cy={CY} r={r}
             fill="none"
             stroke={isLockedGrid(r) ? "rgba(255,255,255,0.03)" : "rgba(255,255,255,0.06)"}
             strokeWidth={
               r === R6_MAX || r === R12_BASE || r === R12_MAX || r === R24_BASE || r === R24_MAX
-                ? 0.8
-                : 0.4
+                ? 0.8 : 0.4
             }
             strokeDasharray={isLockedGrid(r) ? "4 3" : undefined}
           />
         ))}
 
-        {/* ── 6D axis lines (center → R6_MAX) ───────────── */}
+        {/* 6D axis lines */}
         {ANGLES_6D.map((a, i) => {
           const end = polar(a, R6_MAX);
           return (
-            <line
-              key={`a6-${i}`}
-              x1={CX}
-              y1={CY}
-              x2={end.x}
-              y2={end.y}
-              stroke="rgba(255,255,255,0.06)"
-              strokeWidth={0.6}
+            <line key={`a6-${i}`} x1={CX} y1={CY} x2={end.x} y2={end.y}
+              stroke="rgba(255,255,255,0.06)" strokeWidth={0.6}
             />
           );
         })}
 
-        {/* ── 12D axis lines (R12_BASE → R12_MAX) ───────── */}
+        {/* 12D axis lines */}
         {ANGLES_12D.map((a, i) => {
           const s = polar(a, R12_BASE);
           const e = polar(a, R12_MAX);
           return (
-            <line
-              key={`a12-${i}`}
-              x1={s.x}
-              y1={s.y}
-              x2={e.x}
-              y2={e.y}
+            <line key={`a12-${i}`} x1={s.x} y1={s.y} x2={e.x} y2={e.y}
               stroke={canSeeCog ? "rgba(255,255,255,0.05)" : "rgba(255,255,255,0.02)"}
               strokeWidth={0.5}
               strokeDasharray={canSeeCog ? undefined : "3 3"}
@@ -307,17 +270,12 @@ export function DimensionSunburst({
           );
         })}
 
-        {/* ── 24D axis lines (R24_BASE → R24_MAX) ───────── */}
+        {/* 24D axis lines */}
         {ANGLES_24D.map((a, i) => {
           const s = polar(a, R24_BASE);
           const e = polar(a, R24_MAX);
           return (
-            <line
-              key={`a24-${i}`}
-              x1={s.x}
-              y1={s.y}
-              x2={e.x}
-              y2={e.y}
+            <line key={`a24-${i}`} x1={s.x} y1={s.y} x2={e.x} y2={e.y}
               stroke={canSeeNeuro ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.015)"}
               strokeWidth={0.4}
               strokeDasharray={canSeeNeuro ? undefined : "2 2"}
@@ -325,7 +283,7 @@ export function DimensionSunburst({
           );
         })}
 
-        {/* ── 24D data polygon (outer ring) ─────────────── */}
+        {/* 24D data polygon */}
         {canSeeNeuro && (
           <g style={{ animation: "dimFadeIn 0.7s ease 0.4s both" }}>
             {sectors24D.map((s, i) => (
@@ -335,7 +293,7 @@ export function DimensionSunburst({
           </g>
         )}
 
-        {/* ── 12D data polygon (middle ring) ────────────── */}
+        {/* 12D data polygon */}
         {canSeeCog && (
           <g style={{ animation: "dimFadeIn 0.6s ease 0.2s both" }}>
             {sectors12D.map((s, i) => (
@@ -345,7 +303,7 @@ export function DimensionSunburst({
           </g>
         )}
 
-        {/* ── 6D data polygon (inner radar) ─────────────── */}
+        {/* 6D data polygon */}
         <g style={{ animation: "dimFadeIn 0.5s ease both" }}>
           {sectors6D.map((s, i) => (
             <path key={i} d={s.path} fill={s.color} fillOpacity={0.35} />
@@ -353,18 +311,13 @@ export function DimensionSunburst({
           <path d={path6D} fill="none" stroke="rgba(255,255,255,0.35)" strokeWidth={1.5} />
         </g>
 
-        {/* ── Data point dots — 6D ──────────────────────── */}
+        {/* Data dots — 6D */}
         {d6.map((v, i) => {
           const p = polar(ANGLES_6D[i], R6_MAX * clamp01(v));
           return (
             <circle
-              key={`d6-${i}`}
-              cx={p.x}
-              cy={p.y}
-              r={3.5}
-              fill={colorOf6D(i)}
-              stroke="#0a0a0f"
-              strokeWidth={1}
+              key={`d6-${i}`} cx={p.x} cy={p.y} r={3.5}
+              fill={colorOf6D(i)} stroke="#0a0a0f" strokeWidth={1}
               className="cursor-pointer"
               onMouseEnter={(e) =>
                 onHover(e, isTr ? ALL_PSYCHOLOGY[i].nameTr : ALL_PSYCHOLOGY[i].name, v, false)
@@ -374,20 +327,16 @@ export function DimensionSunburst({
           );
         })}
 
-        {/* ── Data point dots — 12D ─────────────────────── */}
+        {/* Data dots — 12D */}
         {canSeeCog &&
           d12.map((v, i) => {
             const r = R12_BASE + (R12_MAX - R12_BASE) * clamp01(v);
             const p = polar(ANGLES_12D[i], r);
             return (
               <circle
-                key={`d12-${i}`}
-                cx={p.x}
-                cy={p.y}
-                r={2.5}
+                key={`d12-${i}`} cx={p.x} cy={p.y} r={2.5}
                 fill={lighten(colorOf6D(parent6Dof12D(i)), 0.15)}
-                stroke="#0a0a0f"
-                strokeWidth={0.8}
+                stroke="#0a0a0f" strokeWidth={0.8}
                 className="cursor-pointer"
                 onMouseEnter={(e) =>
                   onHover(e, isTr ? ALL_COGNITION[i].nameTr : ALL_COGNITION[i].name, v, false)
@@ -397,20 +346,16 @@ export function DimensionSunburst({
             );
           })}
 
-        {/* ── Data point dots — 24D ─────────────────────── */}
+        {/* Data dots — 24D */}
         {canSeeNeuro &&
           d24.map((v, i) => {
             const r = R24_BASE + (R24_MAX - R24_BASE) * clamp01(v);
             const p = polar(ANGLES_24D[i], r);
             return (
               <circle
-                key={`d24-${i}`}
-                cx={p.x}
-                cy={p.y}
-                r={2}
+                key={`d24-${i}`} cx={p.x} cy={p.y} r={2}
                 fill={lighten(colorOf6D(parent6Dof24D(i)), 0.25)}
-                stroke="#0a0a0f"
-                strokeWidth={0.6}
+                stroke="#0a0a0f" strokeWidth={0.6}
                 className="cursor-pointer"
                 onMouseEnter={(e) =>
                   onHover(e, isTr ? ALL_NEUROSCIENCE[i].nameTr : ALL_NEUROSCIENCE[i].name, v, false)
@@ -420,18 +365,14 @@ export function DimensionSunburst({
             );
           })}
 
-        {/* ── Locked axis hover targets ─────────────────── */}
+        {/* Locked axis hover targets */}
         {!canSeeCog &&
           ANGLES_12D.map((a, i) => {
             const p = polar(a, (R12_BASE + R12_MAX) / 2);
             return (
               <circle
-                key={`lk12-${i}`}
-                cx={p.x}
-                cy={p.y}
-                r={8}
-                fill="transparent"
-                className="cursor-pointer"
+                key={`lk12-${i}`} cx={p.x} cy={p.y} r={8}
+                fill="transparent" className="cursor-pointer"
                 onMouseEnter={(e) =>
                   onHover(e, isTr ? ALL_COGNITION[i].nameTr : ALL_COGNITION[i].name, 0, true)
                 }
@@ -445,12 +386,8 @@ export function DimensionSunburst({
             const p = polar(a, (R24_BASE + R24_MAX) / 2);
             return (
               <circle
-                key={`lk24-${i}`}
-                cx={p.x}
-                cy={p.y}
-                r={6}
-                fill="transparent"
-                className="cursor-pointer"
+                key={`lk24-${i}`} cx={p.x} cy={p.y} r={6}
+                fill="transparent" className="cursor-pointer"
                 onMouseEnter={(e) =>
                   onHover(e, isTr ? ALL_NEUROSCIENCE[i].nameTr : ALL_NEUROSCIENCE[i].name, 0, true)
                 }
@@ -460,19 +397,14 @@ export function DimensionSunburst({
             );
           })}
 
-        {/* ── 6D axis labels (in gap between 6D and 12D) ── */}
+        {/* 6D axis labels */}
         {ALL_PSYCHOLOGY.map((dim, i) => {
           const p = polar(ANGLES_6D[i], R6_LABEL);
           return (
             <text
-              key={`lbl6-${i}`}
-              x={p.x}
-              y={p.y}
-              textAnchor="middle"
-              dominantBaseline="middle"
-              fill={colorOf6D(i)}
-              fontSize={9}
-              fontWeight="600"
+              key={`lbl6-${i}`} x={p.x} y={p.y}
+              textAnchor="middle" dominantBaseline="middle"
+              fill={colorOf6D(i)} fontSize={9} fontWeight="600"
               fontFamily="var(--font-display)"
               style={{ pointerEvents: "none" }}
             >
@@ -481,22 +413,16 @@ export function DimensionSunburst({
           );
         })}
 
-        {/* ── 12D axis labels (in gap between 12D and 24D) */}
+        {/* 12D axis labels */}
         {ALL_COGNITION.map((dim, i) => {
           const p = polar(ANGLES_12D[i], R12_LABEL);
           const name = (isTr ? dim.nameTr : dim.name).split(" ")[0];
           return (
             <text
-              key={`lbl12-${i}`}
-              x={p.x}
-              y={p.y}
-              textAnchor="middle"
-              dominantBaseline="middle"
-              fill={
-                canSeeCog ? `${colorOf6D(parent6Dof12D(i))}88` : "rgba(255,255,255,0.08)"
-              }
-              fontSize={6.5}
-              fontFamily="var(--font-mono)"
+              key={`lbl12-${i}`} x={p.x} y={p.y}
+              textAnchor="middle" dominantBaseline="middle"
+              fill={canSeeCog ? `${colorOf6D(parent6Dof12D(i))}88` : "rgba(255,255,255,0.08)"}
+              fontSize={6.5} fontFamily="var(--font-mono)"
               style={{ pointerEvents: "none" }}
             >
               {name}
@@ -504,59 +430,31 @@ export function DimensionSunburst({
           );
         })}
 
-        {/* ── Lock icons ────────────────────────────────── */}
+        {/* Lock icons */}
         {!canSeeCog && (
           <foreignObject x={CX - 8} y={CY - (R12_BASE + R12_MAX) / 2 - 8} width={16} height={16}>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: 16,
-                height: 16,
-              }}
-            >
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: 16, height: 16 }}>
               <Lock size={11} color="rgba(255,255,255,0.3)" />
             </div>
           </foreignObject>
         )}
         {!canSeeNeuro && (
           <foreignObject x={CX - 8} y={CY - (R24_BASE + R24_MAX) / 2 - 8} width={16} height={16}>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: 16,
-                height: 16,
-              }}
-            >
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: 16, height: 16 }}>
               <Lock size={11} color="rgba(255,255,255,0.3)" />
             </div>
           </foreignObject>
         )}
 
-        {/* ── Tooltip ───────────────────────────────────── */}
+        {/* Tooltip */}
         {tip && (
           <g style={{ pointerEvents: "none" }}>
-            <rect
-              x={tip.x - 58}
-              y={tip.y - 12}
-              width={116}
-              height={20}
-              rx={6}
-              fill="rgba(0,0,0,0.88)"
-              stroke="rgba(255,255,255,0.08)"
-              strokeWidth={0.5}
+            <rect x={tip.x - 58} y={tip.y - 12} width={116} height={20} rx={6}
+              fill="rgba(0,0,0,0.88)" stroke="rgba(255,255,255,0.08)" strokeWidth={0.5}
             />
-            <text
-              x={tip.x}
-              y={tip.y + 1}
-              textAnchor="middle"
-              dominantBaseline="middle"
+            <text x={tip.x} y={tip.y + 1} textAnchor="middle" dominantBaseline="middle"
               fill={tip.locked ? "rgba(255,255,255,0.4)" : "rgba(255,255,255,0.8)"}
-              fontSize={8}
-              fontFamily="var(--font-mono)"
+              fontSize={8} fontFamily="var(--font-mono)"
             >
               {tip.locked
                 ? `\uD83D\uDD12 ${tip.name}`
@@ -566,7 +464,7 @@ export function DimensionSunburst({
         )}
       </svg>
 
-      {/* ── Upgrade CTA ─────────────────────────────────── */}
+      {/* Upgrade CTA */}
       {(!canSeeCog || !canSeeNeuro) && (
         <button
           onClick={onUpgrade}

@@ -1,7 +1,7 @@
 import { useMemo, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Flame, ChevronRight, Sparkles,
   TrendingUp, Send,
@@ -16,14 +16,18 @@ import { weeklyStats } from "@/data/mock-listening";
 import { useM3Store } from "@/stores/useM3Store";
 import { levelToOrganismStage } from "@/types/m3";
 import { useActiveIdentity } from "@/hooks/useActiveIdentity";
-import { ALL_PSYCHOLOGY, PSYCHOLOGY_COLORS, genesToDimensions, arrayToProfile } from "@/data/dimensions";
+import { ALL_PSYCHOLOGY, PSYCHOLOGY_COLORS, genesToDimensions, arrayToProfile, profileToArray } from "@/data/dimensions";
+import { DIMENSION_KEYS_6D } from "@/types/dimensions";
 import type { DimensionKey6D } from "@/types/dimensions";
-import { DimensionRadar } from "@/components/mind/DimensionRadar";
+import { DashboardRadar } from "@/components/mind/DashboardRadar";
+import { SpotifyMiniPlayer } from "@/components/dashboard/SpotifyMiniPlayer";
+import { useNowPlaying } from "@/hooks/useNowPlaying";
+import { useDemoFlow } from "@/hooks/useDemoFlow";
 import { useChatStore } from "@/stores/useChatStore";
 import { MiniOrganism } from "@/components/mind/MiniOrganism";
 import { ChatMessage, TypingIndicator } from "@/components/chat/ChatMessage";
 
-const DIM_KEYS: DimensionKey6D[] = ["discovery", "intensity", "flow", "depth", "trace", "sharing"];
+const DIM_KEYS: DimensionKey6D[] = [...DIMENSION_KEYS_6D];
 
 export function Dashboard() {
   const navigate = useNavigate();
@@ -62,6 +66,11 @@ export function Dashboard() {
   }, [genes]);
   const avgDimStrength = useMemo(() => DIM_KEYS.reduce((s, k) => s + dim6D[k], 0) / 6, [dim6D]);
   const dim6DProfile = useMemo(() => arrayToProfile(genesToDimensions(genes).psychology), [genes]);
+  const total6D = useMemo(() => profileToArray(dim6DProfile), [dim6DProfile]);
+
+  // Now playing & demo flow
+  const { track: nowPlayingTrack, isPlaying, isDemo } = useNowPlaying();
+  const flow6D = useDemoFlow(total6D, isPlaying);
 
   const brainQuote = useMemo(() => generateBrainQuote(identity.family, persona.id, t), [identity.family, persona.id, t]);
 
@@ -145,6 +154,22 @@ export function Dashboard() {
           <span className="text-xs font-mono text-slate-500">{xp.toLocaleString()} XP</span>
         </div>
       </motion.div>
+
+      {/* ── TOP-RIGHT: Spotify Mini-Player ──────────────────────── */}
+      <AnimatePresence>
+        {nowPlayingTrack && (
+          <motion.div
+            key="mini-player"
+            initial={{ opacity: 0, x: 30, filter: "blur(8px)" }}
+            animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+            exit={{ opacity: 0, x: 30, filter: "blur(8px)" }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed top-20 right-12 z-30"
+          >
+            <SpotifyMiniPlayer track={nowPlayingTrack} isDemo={isDemo} accentColor={color} />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ═══ MAIN LAYOUT ══════════════════════════════════════════ */}
       <div className="relative z-10 h-full flex flex-col px-5 sm:px-8 md:px-10 pt-10 pb-24">
@@ -404,49 +429,71 @@ export function Dashboard() {
               </div>
 
               {/* Radar with orbital rings — fills remaining space */}
-              <div className="flex-1 flex items-center justify-center relative overflow-hidden">
-                {/* Orbit rings — matching Landing palette */}
-                {(["consonance", "prediction", "tempo", "salience", "emotion"] as const).map((b, i) => {
-                  const bColor = beliefColors[b].primary;
-                  const radius = 185 + i * 30;
-                  return (
-                    <div key={b} className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                      <div
-                        className="absolute rounded-full"
-                        style={{
-                          width: radius * 2, height: radius * 2,
-                          background: `conic-gradient(from ${i * 72}deg, ${bColor}30, ${bColor}18 8%, ${bColor}0A 20%, transparent 40%, transparent 100%)`,
-                          maskImage: `radial-gradient(transparent ${radius - 2}px, black ${radius - 1}px, black ${radius + 1}px, transparent ${radius + 2}px)`,
-                          WebkitMaskImage: `radial-gradient(transparent ${radius - 2}px, black ${radius - 1}px, black ${radius + 1}px, transparent ${radius + 2}px)`,
-                          animation: `orbit ${26 + i * 5}s linear infinite`,
-                        }}
-                      />
-                      <div
-                        className="absolute rounded-full"
-                        style={{
-                          width: radius * 2, height: radius * 2,
-                          border: `1px solid ${bColor}06`,
-                        }}
-                      />
-                      <motion.div
-                        className="absolute"
-                        style={{
-                          width: 5, height: 5, borderRadius: "50%",
-                          background: bColor,
-                          boxShadow: `0 0 10px ${bColor}80, 0 0 25px ${bColor}40`,
-                          left: `calc(50% + ${radius}px - 2.5px)`,
-                          top: "calc(50% - 2.5px)",
-                          transformOrigin: `${-radius + 2.5}px 2.5px`,
-                          animation: `orbit ${26 + i * 5}s linear infinite`,
-                        }}
-                      />
-                    </div>
-                  );
-                })}
-                {/* Radar chart — single persona color, neutral labels */}
-                <div className="relative z-10">
-                  <DimensionRadar profile={dim6DProfile} color={color} size={440} />
+              <div className="flex-1 flex items-center justify-center relative">
+                {/* Orbit rings — own overflow-hidden layer so radar labels aren't clipped */}
+                <div className="absolute inset-0 overflow-hidden">
+                  {(["consonance", "prediction", "tempo", "salience", "emotion"] as const).map((b, i) => {
+                    const bColor = beliefColors[b].primary;
+                    const radius = 185 + i * 30;
+                    return (
+                      <div key={b} className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <div
+                          className="absolute rounded-full"
+                          style={{
+                            width: radius * 2, height: radius * 2,
+                            background: `conic-gradient(from ${i * 72}deg, ${bColor}30, ${bColor}18 8%, ${bColor}0A 20%, transparent 40%, transparent 100%)`,
+                            maskImage: `radial-gradient(transparent ${radius - 2}px, black ${radius - 1}px, black ${radius + 1}px, transparent ${radius + 2}px)`,
+                            WebkitMaskImage: `radial-gradient(transparent ${radius - 2}px, black ${radius - 1}px, black ${radius + 1}px, transparent ${radius + 2}px)`,
+                            animation: `orbit ${26 + i * 5}s linear infinite`,
+                          }}
+                        />
+                        <div
+                          className="absolute rounded-full"
+                          style={{
+                            width: radius * 2, height: radius * 2,
+                            border: `1px solid ${bColor}06`,
+                          }}
+                        />
+                        <motion.div
+                          className="absolute"
+                          style={{
+                            width: 5, height: 5, borderRadius: "50%",
+                            background: bColor,
+                            boxShadow: `0 0 10px ${bColor}80, 0 0 25px ${bColor}40`,
+                            left: `calc(50% + ${radius}px - 2.5px)`,
+                            top: "calc(50% - 2.5px)",
+                            transformOrigin: `${-radius + 2.5}px 2.5px`,
+                            animation: `orbit ${26 + i * 5}s linear infinite`,
+                          }}
+                        />
+                      </div>
+                    );
+                  })}
                 </div>
+                {/* Radar chart — red total + animated flow (labels must not be clipped) */}
+                <div className="relative z-10">
+                  <DashboardRadar
+                    total={total6D}
+                    flow={flow6D}
+                    color={color}
+                    size={380}
+                    showFlow={isPlaying}
+                  />
+                </div>
+              </div>
+
+              {/* Radar legend */}
+              <div className="flex-shrink-0 flex items-center justify-center gap-5 py-1.5 border-t border-white/[0.04]">
+                <div className="flex items-center gap-1.5">
+                  <div className="w-3 h-[2px] rounded-full bg-red-500" />
+                  <span className="text-[9px] font-display text-slate-500">Total</span>
+                </div>
+                {isPlaying && (
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-3 h-[2px] rounded-full" style={{ background: color }} />
+                    <span className="text-[9px] font-display text-slate-500">Flow</span>
+                  </div>
+                )}
               </div>
 
               {/* Weekly Evolution bars — bottom strip */}

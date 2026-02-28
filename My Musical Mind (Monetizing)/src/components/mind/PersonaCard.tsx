@@ -62,7 +62,7 @@ export function PersonaCard({ persona, compact = false }: Props) {
       }}
       onClick={() => navigate(`/info/${persona.id}`)}
     >
-      {/* Character Avatar — centered visual */}
+      {/* Character Avatar */}
       <div className="flex justify-center mb-3 -mt-1">
         <CharacterAvatar
           personaId={persona.id}
@@ -73,7 +73,7 @@ export function PersonaCard({ persona, compact = false }: Props) {
         />
       </div>
 
-      {/* Header row — ID badge + population */}
+      {/* Header row */}
       <div className="flex items-center justify-between mb-2">
         <div
           className="w-6 h-6 rounded-md flex items-center justify-center font-display font-bold text-[10px]"
