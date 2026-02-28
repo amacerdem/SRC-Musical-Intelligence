@@ -8,7 +8,7 @@
   ],
   "duration_s": 30.0,
   "n_frames": 5168,
-  "fps": 1569.11,
+  "fps": 2721.87,
   "signal": {
     "energy": 0.508,
     "valence": 0.5164,
@@ -20,14 +20,14 @@
     "duration": 30.0
   },
   "genes": {
-    "entropy": 0.481,
-    "resolution": 0.5334,
-    "tension": 0.4949,
-    "resonance": 0.538,
-    "plasticity": 0.5685
+    "entropy": 0.913,
+    "resolution": 0.1014,
+    "tension": 0.6522,
+    "resonance": 0.1014,
+    "plasticity": 0.913
   },
-  "dominant_gene": "plasticity",
-  "dominant_family": "Kineticists",
+  "dominant_gene": "entropy",
+  "dominant_family": "Explorers",
   "beliefs": {
     "means": [
       0.5236,

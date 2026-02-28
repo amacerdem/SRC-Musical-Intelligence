@@ -8,7 +8,7 @@
   ],
   "duration_s": 30.0,
   "n_frames": 5168,
-  "fps": 2012.29,
+  "fps": 2556.0,
   "signal": {
     "energy": 0.4963,
     "valence": 0.5139,
@@ -20,14 +20,14 @@
     "duration": 30.0
   },
   "genes": {
-    "entropy": 0.4824,
-    "resolution": 0.5317,
-    "tension": 0.4694,
-    "resonance": 0.535,
-    "plasticity": 0.5666
+    "entropy": 0.1268,
+    "resolution": 0.1594,
+    "tension": 0.4565,
+    "resonance": 0.2681,
+    "plasticity": 0.1014
   },
-  "dominant_gene": "plasticity",
-  "dominant_family": "Kineticists",
+  "dominant_gene": "tension",
+  "dominant_family": "Alchemists",
   "beliefs": {
     "means": [
       0.5701,

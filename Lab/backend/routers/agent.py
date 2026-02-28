@@ -372,6 +372,7 @@ async def chat_stream(req: ChatRequest):
                     "search_knowledge": ("Bilgi tabanı aranıyor...", "Searching knowledge..."),
                     "get_persona_info": ("Persona bilgisi alınıyor...", "Getting persona info..."),
                     "get_temporal_journey": ("Zamansal yolculuk analiz ediliyor...", "Analyzing temporal journey..."),
+                    "get_belief_timeline": ("İnanç zaman çizelgesi oluşturuluyor...", "Building belief timeline..."),
                     "get_brain_activation": ("Beyin aktivasyonu okunuyor...", "Reading brain activation..."),
                 }
                 for tn in tool_names:

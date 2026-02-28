@@ -69,6 +69,12 @@ export function AudioInput({ accentColor }: Props) {
 
 /* ── Dataset Search ──────────────────────────────────────────────────── */
 
+/** Map catalog IDs → v4.0 pipeline IDs (when a newer analysis exists) */
+const V4_TRACK_IDS: Record<string, string> = {
+  "pyotr_ilyich_tchaikovsky_berliner_philharmoniker_mstislav_rostropovich__swan_lake_suite_op_20a_i_scene_swan_theme_modera":
+    "tchaikovsky__swan_lake_suite_op20a_scene",
+};
+
 function DatasetSearch({ accentColor, onSelect }: { accentColor: string; onSelect: (detail: any) => void }) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<MICatalogTrack[]>([]);
@@ -76,7 +82,7 @@ function DatasetSearch({ accentColor, onSelect }: { accentColor: string; onSelec
 
   useEffect(() => {
     const labTracks = miDataService.getAllTracks().filter(
-      (t) => t.categories?.includes("Lab")
+      (t) => t.id.includes("swan_lake")
     );
     if (!query.trim()) {
       setResults(labTracks);
@@ -92,7 +98,9 @@ function DatasetSearch({ accentColor, onSelect }: { accentColor: string; onSelec
   const handleSelect = async (track: MICatalogTrack) => {
     setLoading(true);
     try {
-      const detail = await miDataService.getTrackDetail(track.id);
+      // Use v4.0 pipeline data when available
+      const resolvedId = V4_TRACK_IDS[track.id] ?? track.id;
+      const detail = await miDataService.getTrackDetail(resolvedId);
       onSelect(detail);
     } finally {
       setLoading(false);

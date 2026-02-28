@@ -8,7 +8,7 @@
   ],
   "duration_s": 30.0,
   "n_frames": 5168,
-  "fps": 518.16,
+  "fps": 1570.73,
   "signal": {
     "energy": 0.5079,
     "valence": 0.5139,
@@ -20,14 +20,14 @@
     "duration": 30.0
   },
   "genes": {
-    "entropy": 0.4794,
-    "resolution": 0.53,
-    "tension": 0.4962,
-    "resonance": 0.5412,
-    "plasticity": 0.5646
+    "entropy": 0.058,
+    "resolution": 0.971,
+    "tension": 0.192,
+    "resonance": 0.4601,
+    "plasticity": 0.0507
   },
-  "dominant_gene": "plasticity",
-  "dominant_family": "Kineticists",
+  "dominant_gene": "resolution",
+  "dominant_family": "Architects",
   "beliefs": {
     "means": [
       0.5172,

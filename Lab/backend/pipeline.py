@@ -230,12 +230,24 @@ def _fix_processing_depths(nuclei: List[Any]) -> None:
 # Pipeline singleton
 # ---------------------------------------------------------------------------
 
+def _select_device() -> torch.device:
+    """Pick the best available torch device: MPS (Apple Silicon) > CUDA > CPU."""
+    if torch.backends.mps.is_available():
+        return torch.device("mps")
+    if torch.cuda.is_available():
+        return torch.device("cuda")
+    return torch.device("cpu")
+
+
 class MIPipeline:
     """Wraps the full R³→H³→C³ pipeline for the Lab backend."""
 
-    def __init__(self) -> None:
+    def __init__(self, device: torch.device | str | None = None) -> None:
         print("[MI-Pipeline] Initializing...")
         t0 = time.perf_counter()
+
+        self.device = torch.device(device) if device else _select_device()
+        print(f"[MI-Pipeline] Device: {self.device}")
 
         from Musical_Intelligence.ear.r3 import R3Extractor
         from Musical_Intelligence.ear.h3 import H3Extractor
@@ -290,6 +302,10 @@ class MIPipeline:
             status_callback("loading", 0.0)
         waveform, mel, duration_s = _load_audio(audio_name, excerpt_s)
         n_frames = mel.shape[-1]
+
+        # Move tensors to device (mel computed on CPU for torchaudio compat)
+        mel = mel.to(self.device)
+        waveform = waveform.to(self.device)
 
         # Phase 2: R³ extraction
         if status_callback:

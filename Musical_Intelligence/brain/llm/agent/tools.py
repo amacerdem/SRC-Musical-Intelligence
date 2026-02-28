@@ -211,6 +211,40 @@ TOOLS = [
         },
     },
     {
+        "name": "get_belief_timeline",
+        "description": (
+            "Get frame-level belief trajectories for a track — downsampled to 16 "
+            "time points with peak/valley moments and timestamps. Use this when "
+            "the user asks about specific moments in a song, how a belief changes "
+            "over time, or wants a detailed temporal story of the listening experience. "
+            "Much more precise than get_temporal_journey — uses frame-level data "
+            "(~5ms resolution) instead of segment averages."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "track_id": {
+                    "type": "string",
+                    "description": "Track ID to get timeline for",
+                },
+                "belief_keys": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                    "description": (
+                        "Specific belief keys to track over time "
+                        "(e.g. ['wanting', 'harmonic_stability', 'beat_entrainment']). "
+                        "If omitted, returns top 10 most notable beliefs."
+                    ),
+                },
+                "n_points": {
+                    "type": "integer",
+                    "description": "Number of timeline points (default 16, max 32)",
+                },
+            },
+            "required": ["track_id"],
+        },
+    },
+    {
         "name": "get_brain_activation",
         "description": (
             "Get the brain region activation map (RAM 26D) for a track — "
@@ -260,6 +294,7 @@ def handle_tool_call(
         "search_knowledge": _handle_search_knowledge,
         "get_persona_info": _handle_get_persona,
         "get_temporal_journey": _handle_temporal_journey,
+        "get_belief_timeline": _handle_belief_timeline,
         "get_brain_activation": _handle_brain_activation,
     }
 
@@ -550,6 +585,31 @@ def _handle_temporal_journey(
     result["track_id"] = track_id
     result["artist"] = track.get("artist", "")
     result["title"] = track.get("title", "")
+    return result
+
+
+def _handle_belief_timeline(
+    inputs: dict[str, Any], tier: str
+) -> dict[str, Any]:
+    """Get frame-level belief trajectories for a track."""
+    from .track_data import get_belief_timeline, search_tracks
+
+    track_id = inputs.get("track_id", "")
+    if not track_id:
+        return {"error": "track_id is required."}
+
+    belief_keys = inputs.get("belief_keys")
+    n_points = min(inputs.get("n_points", 16), 32)
+
+    result = get_belief_timeline(track_id, belief_keys=belief_keys, n_points=n_points)
+    if "error" in result:
+        # Try fuzzy search fallback
+        results = search_tracks(track_id, limit=1)
+        if results:
+            result = get_belief_timeline(
+                results[0]["id"], belief_keys=belief_keys, n_points=n_points,
+            )
+
     return result
 
 

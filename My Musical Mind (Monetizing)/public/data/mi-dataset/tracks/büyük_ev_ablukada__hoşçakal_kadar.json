@@ -20,11 +20,11 @@
     "duration": 30.0
   },
   "genes": {
-    "entropy": 0.3741,
-    "resolution": 0.6937,
-    "tension": 0.3024,
-    "resonance": 0.6089,
-    "plasticity": 0.4927
+    "entropy": 0.2246,
+    "resolution": 0.8696,
+    "tension": 0.3043,
+    "resonance": 0.8623,
+    "plasticity": 0.2391
   },
   "dominant_gene": "resolution",
   "dominant_family": "Architects",

@@ -26,7 +26,7 @@ import { useM3Store } from "@/stores/useM3Store";
 import { levelToOrganismStage } from "@/types/m3";
 import { pageTransition, fadeIn } from "@/design/animations";
 import { beliefColors } from "@/design/tokens";
-import { ALL_PSYCHOLOGY } from "@/data/dimensions";
+import { ALL_PSYCHOLOGY, ALL_COGNITION, ALL_NEUROSCIENCE } from "@/data/dimensions";
 
 import { AudioInput } from "@/components/lab/AudioInput";
 import { DepthSelector } from "@/components/lab/DepthSelector";
@@ -296,7 +296,7 @@ export function Lab() {
           className="flex-1 min-h-0 grid gap-0"
           style={{
             gridTemplateColumns: "240px 1fr 280px",
-            gridTemplateRows: "1fr 4fr 0.5fr",
+            gridTemplateRows: "2fr 3fr 0.3fr",
           }}
         >
 
@@ -333,7 +333,7 @@ export function Lab() {
           {/* ═ COL 2, ROW 1 — Animated Radar (above flow) ═══════ */}
           <div
             ref={radarCellRef}
-            className="flex items-center justify-center min-h-0 overflow-hidden relative"
+            className="flex items-center justify-center min-h-0 overflow-visible relative"
             style={{ gridRow: "1 / 2", gridColumn: "2 / 3" }}
           >
             {/* ── Idle state ────────────────────────── */}
@@ -390,9 +390,12 @@ export function Lab() {
                 <div className="relative">
                   <LabRadar
                     overall={overall6D}
-                    flow={showFlow ? flowValues : undefined}
+                    segments={segments6D}
                     color={color}
                     size={radarSize}
+                    audioRef={audioRef}
+                    duration={trackDetail.duration_s}
+                    showFlow={showFlow}
                   />
 
                   {/* Play overlay — before first play */}
@@ -460,16 +463,28 @@ export function Lab() {
                     </span>
                   )}
                 </div>
-                <div className="flex-1 min-h-0">
-                  <FlowTimeline
-                    temporal={temporal}
-                    trackDetail={trackDetail}
-                    depth={depth}
-                    accentColor={color}
-                    audioRef={audioRef}
-                    isPlaying={isPlaying}
-                    onSeek={handleSeek}
+                <div className="flex-1 min-h-0 flex">
+                  {/* Dimension labels — Y-positioned to match flow curves */}
+                  <FlowDimLabels
+                    values={
+                      depth === 6 ? flowValues
+                        : depth === 12 ? (temporal.segments[flowIdx]?.cognition ?? temporal.overall.cognition)
+                        : (temporal.segments[flowIdx]?.neuroscience ?? temporal.overall.neuroscience)
+                    }
+                    dims={depth === 6 ? ALL_PSYCHOLOGY : depth === 12 ? ALL_COGNITION : ALL_NEUROSCIENCE}
+                    animated={showFlow}
                   />
+                  <div className="flex-1 min-h-0">
+                    <FlowTimeline
+                      temporal={temporal}
+                      trackDetail={trackDetail}
+                      depth={depth}
+                      accentColor={color}
+                      audioRef={audioRef}
+                      isPlaying={isPlaying}
+                      onSeek={handleSeek}
+                    />
+                  </div>
                 </div>
               </motion.div>
             ) : (
@@ -648,28 +663,31 @@ export function Lab() {
 
 const RADAR_ANGLES = Array.from({ length: 6 }, (_, i) => (-90 + i * 60) * (Math.PI / 180));
 
-function LabRadar({ overall, flow, color, size }: {
+function LabRadar({ overall, segments, color, size, audioRef, duration, showFlow }: {
   overall: number[];
-  flow?: number[];
+  segments: number[][];
   color: string;
   size: number;
+  audioRef: React.RefObject<HTMLAudioElement | null>;
+  duration: number;
+  showFlow: boolean;
 }) {
   const cx = size / 2;
   const cy = size / 2;
-  const maxR = size * 0.38;
-  const labelR = maxR + 24;
+  const maxR = size * 0.32;
+  const labelR = maxR + 20;
 
   const toPath = useCallback((vals: number[]) => {
     const pts = RADAR_ANGLES.map((a, i) => {
       const r = maxR * Math.max(0, Math.min(1, vals[i] ?? 0));
-      return `${cx + Math.cos(a) * r} ${cy + Math.sin(a) * r}`;
+      return `${cx + Math.cos(a) * r},${cy + Math.sin(a) * r}`;
     });
     return `M ${pts.join(" L ")} Z`;
   }, [cx, cy, maxR]);
 
   const gridPath = useCallback((scale: number) => {
     const pts = RADAR_ANGLES.map((a) =>
-      `${cx + Math.cos(a) * maxR * scale} ${cy + Math.sin(a) * maxR * scale}`
+      `${cx + Math.cos(a) * maxR * scale},${cy + Math.sin(a) * maxR * scale}`
     );
     return `M ${pts.join(" L ")} Z`;
   }, [cx, cy, maxR]);
@@ -681,15 +699,53 @@ function LabRadar({ overall, flow, color, size }: {
     }),
   [overall, cx, cy, maxR]);
 
-  const flowPts = useMemo(() => {
-    if (!flow) return [];
-    return RADAR_ANGLES.map((a, i) => {
-      const r = maxR * Math.max(0, Math.min(1, flow[i] ?? 0));
-      return { x: cx + Math.cos(a) * r, y: cy + Math.sin(a) * r };
-    });
-  }, [flow, cx, cy, maxR]);
+  /* ── Refs for 60fps direct DOM updates (no React re-renders) ─── */
+  const flowPathRef = useRef<SVGPathElement>(null);
+  const flowDotRefs = useRef<(SVGCircleElement | null)[]>([]);
+  const rafIdRef = useRef(0);
 
-  const ease = [0.22, 1, 0.36, 1] as [number, number, number, number];
+  /* ── 60fps rAF loop — interpolate segments at audio.currentTime ─ */
+  useEffect(() => {
+    if (!showFlow || segments.length < 2) return;
+    let running = true;
+
+    const loop = () => {
+      if (!running) return;
+      const audio = audioRef.current;
+      if (audio) {
+        const dur = audio.duration || duration;
+        if (dur > 0) {
+          const ratio = Math.max(0, Math.min(0.9999, audio.currentTime / dur));
+          const fidx = ratio * (segments.length - 1);
+          const lo = Math.floor(fidx);
+          const hi = Math.min(segments.length - 1, lo + 1);
+          const t = fidx - lo;
+
+          // Linear interpolation between two nearest segments
+          const vals = segments[lo].map((v, i) =>
+            v * (1 - t) + (segments[hi]?.[i] ?? v) * t
+          );
+
+          // Update SVG path directly (zero re-renders)
+          const d = toPath(vals);
+          flowPathRef.current?.setAttribute("d", d);
+
+          // Update dot positions
+          for (let i = 0; i < 6; i++) {
+            const r = maxR * Math.max(0, Math.min(1, vals[i] ?? 0));
+            const x = cx + Math.cos(RADAR_ANGLES[i]) * r;
+            const y = cy + Math.sin(RADAR_ANGLES[i]) * r;
+            flowDotRefs.current[i]?.setAttribute("cx", String(x));
+            flowDotRefs.current[i]?.setAttribute("cy", String(y));
+          }
+        }
+      }
+      rafIdRef.current = requestAnimationFrame(loop);
+    };
+
+    rafIdRef.current = requestAnimationFrame(loop);
+    return () => { running = false; cancelAnimationFrame(rafIdRef.current); };
+  }, [showFlow, segments, audioRef, duration, toPath, cx, cy, maxR]);
 
   return (
     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="overflow-visible">
@@ -725,25 +781,18 @@ function LabRadar({ overall, flow, color, size }: {
         opacity={0.85}
       />
 
-      {/* ── Animated flow polygon (appears after play) ── */}
-      {flow && flowPts.length > 0 && (
-        <motion.g
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <motion.path
-            initial={false}
-            animate={{ d: toPath(flow) }}
-            transition={{ duration: 0.35, ease }}
-            fill={`${color}12`}
-            stroke={color}
-            strokeWidth={2}
-            strokeLinejoin="round"
-            style={{ filter: `drop-shadow(0 0 10px ${color}40)` }}
-          />
-        </motion.g>
-      )}
+      {/* ── Flow polygon — 60fps via refs ────────── */}
+      <g style={{ opacity: showFlow ? 1 : 0, transition: "opacity 0.5s" }}>
+        <path
+          ref={flowPathRef}
+          d={toPath(overall)}
+          fill={`${color}12`}
+          stroke={color}
+          strokeWidth={2}
+          strokeLinejoin="round"
+          style={{ filter: `drop-shadow(0 0 10px ${color}40)` }}
+        />
+      </g>
 
       {/* Total data dots — red */}
       {totalPts.map((pt, i) => (
@@ -753,27 +802,25 @@ function LabRadar({ overall, flow, color, size }: {
         />
       ))}
 
-      {/* Flow data dots — animated (appears after play) */}
-      {flow && flowPts.length > 0 && (
-        <motion.g
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          {flowPts.map((pt, i) => (
-            <motion.circle key={`f${i}`}
-              initial={false}
-              animate={{ cx: pt.x, cy: pt.y }}
-              transition={{ duration: 0.35, ease }}
+      {/* Flow data dots — 60fps via refs */}
+      <g style={{ opacity: showFlow ? 1 : 0, transition: "opacity 0.5s" }}>
+        {RADAR_ANGLES.map((a, i) => {
+          const r = maxR * Math.max(0, Math.min(1, overall[i] ?? 0));
+          return (
+            <circle
+              key={`f${i}`}
+              ref={(el) => { flowDotRefs.current[i] = el; }}
+              cx={cx + Math.cos(a) * r}
+              cy={cy + Math.sin(a) * r}
               r={3.5}
               fill={color}
               stroke="#0a0a0f"
               strokeWidth={1}
               style={{ filter: `drop-shadow(0 0 6px ${color}80)` }}
             />
-          ))}
-        </motion.g>
-      )}
+          );
+        })}
+      </g>
 
       {/* Dimension labels */}
       {ALL_PSYCHOLOGY.map((dim, i) => {
@@ -782,7 +829,7 @@ function LabRadar({ overall, flow, color, size }: {
         return (
           <text key={dim.key} x={x} y={y}
             textAnchor="middle" dominantBaseline="middle"
-            fill={dim.color} fontSize={10} fontWeight="600"
+            fill={dim.color} fontSize={9} fontWeight="600"
             fontFamily="Inter" style={{ pointerEvents: "none" }}
           >
             {dim.name}
@@ -790,11 +837,11 @@ function LabRadar({ overall, flow, color, size }: {
         );
       })}
 
-      {/* Value labels on total dots (0-1 normalized) */}
+      {/* Value labels on total dots */}
       {overall.map((v, i) => {
         const val = Math.max(0, Math.min(1, v));
-        const valR = maxR * val - 14;
-        if (valR < 10) return null;
+        const valR = maxR * val - 12;
+        if (valR < 8) return null;
         const x = cx + Math.cos(RADAR_ANGLES[i]) * valR;
         const y = cy + Math.sin(RADAR_ANGLES[i]) * valR;
         return (
@@ -808,5 +855,52 @@ function LabRadar({ overall, flow, color, size }: {
         );
       })}
     </svg>
+  );
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════
+ *  FlowDimLabels — Y-axis dimension labels that track curve positions
+ *  Each label floats at the Y-height matching its current value so you
+ *  can instantly see which color/name belongs to which curve.
+ *  Collision avoidance pushes overlapping labels apart.
+ * ═══════════════════════════════════════════════════════════════════════ */
+
+function FlowDimLabels({ values, dims, animated }: {
+  values: number[];
+  dims: { key: string; name: string; color: string }[];
+  animated: boolean;
+}) {
+  const fontSize = dims.length <= 6 ? 11 : dims.length <= 12 ? 9 : 7;
+  const dotSize = dims.length <= 6 ? 7 : dims.length <= 12 ? 5 : 4;
+
+  return (
+    <div
+      className="flex flex-col justify-around py-2 flex-shrink-0 border-r border-white/[0.04]"
+      style={{ width: dims.length <= 6 ? 90 : dims.length <= 12 ? 76 : 62 }}
+    >
+      {dims.map((dim, i) => {
+        const value = values[i] ?? 0;
+        return (
+          <div key={dim.key} className="flex items-center gap-1.5 px-2">
+            <div
+              className="flex-shrink-0 rounded-full"
+              style={{
+                width: dotSize,
+                height: dotSize,
+                background: dim.color,
+                boxShadow: animated ? `0 0 5px ${dim.color}60` : "none",
+              }}
+            />
+            <span
+              className="font-display truncate leading-none font-medium"
+              style={{ fontSize, color: dim.color, opacity: animated ? 0.9 : 0.7 }}
+            >
+              {dim.name}
+            </span>
+          </div>
+        );
+      })}
+    </div>
   );
 }

@@ -1,6 +1,6 @@
 /* ── DashboardRadar — Dual-Polygon 6D Hexagonal Radar ────────────────
- *  RED static polygon  = user's total/aggregate 6D profile
- *  Animated flow polygon = persona-color, morphs when music plays
+ *  Persona-color static polygon = user's total/aggregate 6D profile
+ *  RED animated flow polygon     = morphs when music plays
  *  Adapted from LabRadar (Lab.tsx) for the Dashboard "My Mind" page.
  *  ──────────────────────────────────────────────────────────────────── */
 
@@ -15,11 +15,11 @@ const RADAR_ANGLES = Array.from(
 );
 
 interface Props {
-  /** 6 static values [0-1] — always shown in RED */
+  /** 6 static values [0-1] — shown in persona color */
   total: number[];
-  /** 6 animated values [0-1] — shown only when showFlow */
+  /** 6 animated values [0-1] — shown in red when showFlow */
   flow?: number[];
-  /** Persona accent color for the flow polygon */
+  /** Persona accent color for the total polygon */
   color: string;
   /** SVG size in pixels */
   size?: number;
@@ -121,44 +121,44 @@ export function DashboardRadar({
       {/* Center dot */}
       <circle cx={cx} cy={cy} r={1.5} fill="rgba(255,255,255,0.1)" />
 
-      {/* ── Red total polygon ────────────────────── */}
+      {/* ── Total polygon — persona color ────────── */}
       <path
         d={toPath(total)}
-        fill="rgba(239,68,68,0.10)"
-        stroke="#EF4444"
+        fill={`${color}1A`}
+        stroke={color}
         strokeWidth={1.5}
         strokeLinejoin="round"
         opacity={0.85}
       />
 
-      {/* ── Animated flow polygon — 60fps via Framer Motion rAF ── */}
+      {/* ── Animated flow polygon — red, 60fps via Framer Motion rAF ── */}
       {showFlow && flow && (
         <motion.path
           initial={false}
           animate={{ d: toPath(flow) }}
           transition={{ duration: flowDuration, ease: "easeInOut" }}
-          fill={`${color}12`}
-          stroke={color}
+          fill="rgba(239,68,68,0.07)"
+          stroke="#EF4444"
           strokeWidth={2}
           strokeLinejoin="round"
-          style={{ filter: `drop-shadow(0 0 10px ${color}40)` }}
+          style={{ filter: "drop-shadow(0 0 10px rgba(239,68,68,0.25))" }}
         />
       )}
 
-      {/* Total data dots — red */}
+      {/* Total data dots — persona color */}
       {totalPts.map((pt, i) => (
         <circle
           key={`t${i}`}
           cx={pt.x}
           cy={pt.y}
           r={2.5}
-          fill="#EF4444"
+          fill={color}
           stroke="#0a0a0f"
           strokeWidth={0.8}
         />
       ))}
 
-      {/* Flow data dots — animated, persona color */}
+      {/* Flow data dots — animated, red */}
       {showFlow &&
         flow &&
         RADAR_ANGLES.map((_, i) => (
@@ -168,10 +168,10 @@ export function DashboardRadar({
             animate={{ cx: flowPts[i].x, cy: flowPts[i].y }}
             transition={{ duration: flowDuration, ease: "easeInOut" }}
             r={3.5}
-            fill={color}
+            fill="#EF4444"
             stroke="#0a0a0f"
             strokeWidth={1}
-            style={{ filter: `drop-shadow(0 0 6px ${color}80)` }}
+            style={{ filter: "drop-shadow(0 0 6px rgba(239,68,68,0.5))" }}
           />
         ))}
 
@@ -211,7 +211,7 @@ export function DashboardRadar({
             y={y}
             textAnchor="middle"
             dominantBaseline="middle"
-            fill="rgba(239,68,68,0.5)"
+            fill={`${color}80`}
             fontSize={7}
             fontFamily="monospace"
             style={{ pointerEvents: "none" }}

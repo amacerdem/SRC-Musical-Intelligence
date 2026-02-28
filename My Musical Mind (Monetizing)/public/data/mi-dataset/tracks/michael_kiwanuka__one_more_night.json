@@ -8,7 +8,7 @@
   ],
   "duration_s": 30.0,
   "n_frames": 5168,
-  "fps": 1614.26,
+  "fps": 2275.33,
   "signal": {
     "energy": 0.5125,
     "valence": 0.5144,
@@ -20,11 +20,11 @@
     "duration": 30.0
   },
   "genes": {
-    "entropy": 0.4832,
-    "resolution": 0.5306,
-    "tension": 0.5028,
-    "resonance": 0.5407,
-    "plasticity": 0.5686
+    "entropy": 0.8188,
+    "resolution": 0.2355,
+    "tension": 0.8261,
+    "resonance": 0.2174,
+    "plasticity": 0.8514
   },
   "dominant_gene": "plasticity",
   "dominant_family": "Kineticists",

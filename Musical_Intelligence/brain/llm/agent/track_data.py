@@ -226,6 +226,88 @@ def get_listening_profile() -> dict[str, Any]:
     }
 
 
+def load_beliefs_full(track_id: str) -> dict | None:
+    """Load frame-level beliefs_full JSON for a track."""
+    path = TRACKS_DIR / f"{track_id}_beliefs_full.json"
+    if not path.exists():
+        return None
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def get_belief_timeline(
+    track_id: str,
+    belief_keys: list[str] | None = None,
+    n_points: int = 16,
+) -> dict[str, Any]:
+    """Downsample beliefs_full into compact LLM-friendly trajectories.
+
+    Returns per-belief: n_points values, peak/valley with timestamps.
+    """
+    _ensure_belief_keys()
+    bf = load_beliefs_full(track_id)
+    if not bf:
+        return {"error": f"No beliefs_full data for '{track_id}'."}
+
+    duration = bf.get("duration_s", 30.0)
+
+    # Flatten all beliefs across F1-F9
+    all_b: dict[str, dict] = {}
+    for fdata in bf.get("functions", {}).values():
+        for bk, bv in fdata.get("beliefs", {}).items():
+            all_b[bk] = bv
+
+    # Pick belief keys: explicit or top-10 notable
+    if not belief_keys:
+        track = load_track(track_id)
+        if track:
+            means = track.get("beliefs", {}).get("means", [])
+            stds = track.get("beliefs", {}).get("stds", [])
+            if means and stds:
+                scored = sorted(
+                    range(len(means)),
+                    key=lambda i: -(abs(means[i] - 0.5) * 0.6 + min(stds[i] * 10, 1.0) * 0.4),
+                )
+                belief_keys = [belief_index_to_key(i) for i in scored[:10]]
+        if not belief_keys:
+            belief_keys = list(all_b.keys())[:10]
+
+    time_labels = [round(i * duration / n_points, 1) for i in range(n_points)]
+    result: dict[str, Any] = {
+        "track_id": track_id, "duration_s": duration,
+        "n_points": n_points, "time_labels_s": time_labels, "beliefs": {},
+    }
+
+    for bk in belief_keys:
+        bd = all_b.get(bk)
+        if not bd:
+            result["beliefs"][bk] = {"error": "not found"}
+            continue
+        frames = bd.get("frames", [])
+        if not frames:
+            continue
+        nf = len(frames)
+        bs = max(1, nf // n_points)
+        traj = []
+        for i in range(n_points):
+            chunk = frames[i * bs: min((i + 1) * bs, nf)]
+            traj.append(round(sum(chunk) / len(chunk), 4) if chunk else 0.0)
+
+        peak_i = max(range(nf), key=lambda j: frames[j])
+        valley_i = min(range(nf), key=lambda j: frames[j])
+        meta = get_belief_meta(bk)
+        result["beliefs"][bk] = {
+            "trajectory": traj,
+            "mean": round(sum(frames) / nf, 4),
+            "peak": {"time_s": round(peak_i * duration / nf, 1), "value": round(frames[peak_i], 4)},
+            "valley": {"time_s": round(valley_i * duration / nf, 1), "value": round(frames[valley_i], 4)},
+            "function": meta.get("function", ""),
+            "type": bd.get("type", meta.get("type", "")),
+            "mechanism": bd.get("mechanism", meta.get("mechanism", "")),
+        }
+
+    return result
+
+
 def search_tracks(query: str, limit: int = 10) -> list[dict]:
     """Search tracks by artist, title, or ID. Case-insensitive fuzzy match."""
     query_lower = query.lower().strip()
@@ -397,27 +479,37 @@ def format_track_for_llm(
     tp = track.get("temporal_profile", {})
     if tier in ("premium", "research") and tp.get("belief_means_per_segment"):
         segs = tp["belief_means_per_segment"]
-        # Summarize temporal arc for key beliefs
-        _ensure_belief_keys()
-        key_indices = {
-            "harmonic_stability": 4,
-            "prediction_accuracy": 20 if len(_belief_keys) > 20 else -1,
-            "beat_entrainment": 36 if len(_belief_keys) > 36 else -1,
-            "wanting": 65 if len(_belief_keys) > 65 else -1,
-            "pleasure": 67 if len(_belief_keys) > 67 else -1,
-        }
-        # Use actual indices from belief metadata
-        for key in list(key_indices):
-            meta = get_belief_meta(key)
-            if meta and "index" in meta:
-                key_indices[key] = meta["index"]
+        n_segs = tp.get("segments", len(segs))
+        duration = track.get("duration_s", 0)
+        seg_dur = round(duration / max(n_segs, 1), 1) if duration else 0
 
+        # Top notable beliefs → temporal arcs (top 15 instead of just 5)
+        _ensure_belief_keys()
+        notable = _top_beliefs(means, stds, n=15)
         arcs = {}
-        for key, idx in key_indices.items():
+        for b in notable:
+            meta = get_belief_meta(b["key"])
+            idx = meta.get("index", -1) if meta else -1
             if 0 <= idx < len(means):
-                arcs[key] = _temporal_arc(segs, idx)
+                arcs[b["key"]] = _temporal_arc(segs, idx)
         result["temporal_arcs"] = arcs
-        result["temporal_segments"] = tp.get("segments", 8)
+        result["temporal_segments"] = n_segs
+        result["segment_duration_s"] = seg_dur
+
+        # Neurochemical temporal arcs
+        neuro_segs = tp.get("neuro_per_segment", [])
+        if neuro_segs:
+            result["neuro_temporal"] = {
+                "DA": [round(s[0], 3) for s in neuro_segs],
+                "NE": [round(s[1], 3) for s in neuro_segs],
+                "OPI": [round(s[2], 3) for s in neuro_segs],
+                "5HT": [round(s[3], 3) for s in neuro_segs],
+            }
+
+        # Reward temporal arc
+        rew_segs = tp.get("reward_per_segment", [])
+        if rew_segs:
+            result["reward_temporal"] = [round(r, 3) for r in rew_segs]
 
     # Full belief data — research tier only
     if tier == "research" and means:

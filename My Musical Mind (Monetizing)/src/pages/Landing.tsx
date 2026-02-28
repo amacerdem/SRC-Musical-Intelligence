@@ -163,7 +163,8 @@ export function Landing() {
   const stats = getRealStats();
   const profile = miDataService.isReady() ? miDataService.computeAggregateProfile() : null;
   const genes = profile?.genes ?? { entropy: 0.5, resolution: 0.5, tension: 0.5, resonance: 0.5, plasticity: 0.5 };
-  const dimensionProfile = arrayToProfile(genesToDimensions(genes).psychology);
+  const dim6DValues = genesToDimensions(genes).psychology;
+  const dimensionProfile = arrayToProfile(dim6DValues);
   const insights = getGeneInsights(genes, i18n.language);
   const phaseVars = {
     trackCount: String(stats.trackCount),
@@ -793,19 +794,18 @@ export function Landing() {
                           <div className="text-[11px] uppercase tracking-widest text-slate-600 font-display">{t("onboarding.evolving.hoursListening")}</div>
                         </div>
                       </div>
-                      {/* Gene bars */}
+                      {/* 6D Dimension bars */}
                       <AnimatePresence>
                         {progress > 25 && (
                           <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.6 }} className="space-y-2 mb-5">
-                            {GENE_NAMES.map((g, i) => {
-                              const val = genes[g];
-                              const geneColors: Record<string, string> = { entropy: "#F59E0B", resolution: "#6366F1", tension: "#EF4444", resonance: "#10B981", plasticity: "#8B5CF6" };
-                              const unlocked = progress > 25 + i * 12;
+                            {ALL_PSYCHOLOGY.map((dim, i) => {
+                              const val = dim6DValues[i] ?? 0;
+                              const unlocked = progress > 25 + i * 10;
                               return (
-                                <motion.div key={g} initial={{ opacity: 0, x: -10 }} animate={{ opacity: unlocked ? 1 : 0.15, x: 0 }} transition={{ delay: i * 0.15, duration: 0.4 }} className="flex items-center gap-3">
-                                  <span className="text-[10px] font-display font-light uppercase tracking-[0.1em] w-20 text-right" style={{ color: unlocked ? `${geneColors[g]}CC` : "#1E293B" }}>{g}</span>
+                                <motion.div key={dim.key} initial={{ opacity: 0, x: -10 }} animate={{ opacity: unlocked ? 1 : 0.15, x: 0 }} transition={{ delay: i * 0.15, duration: 0.4 }} className="flex items-center gap-3">
+                                  <span className="text-[10px] font-display font-light uppercase tracking-[0.1em] w-20 text-right" style={{ color: unlocked ? `${dim.color}CC` : "#1E293B" }}>{dim.name}</span>
                                   <div className="flex-1 h-[3px] rounded-full" style={{ background: "rgba(255,255,255,0.04)" }}>
-                                    <motion.div className="h-full rounded-full" initial={{ width: 0 }} animate={{ width: unlocked ? `${val * 100}%` : "0%" }} transition={{ duration: 1.2, delay: i * 0.15, ease: [0.22, 1, 0.36, 1] }} style={{ background: geneColors[g], boxShadow: unlocked ? `0 0 8px ${geneColors[g]}40` : "none" }} />
+                                    <motion.div className="h-full rounded-full" initial={{ width: 0 }} animate={{ width: unlocked ? `${val * 100}%` : "0%" }} transition={{ duration: 1.2, delay: i * 0.15, ease: [0.22, 1, 0.36, 1] }} style={{ background: dim.color, boxShadow: unlocked ? `0 0 8px ${dim.color}40` : "none" }} />
                                   </div>
                                   <span className="text-[10px] font-mono w-8" style={{ color: unlocked ? "#94A3B8" : "#0F172A" }}>{unlocked ? val.toFixed(2) : "—"}</span>
                                 </motion.div>

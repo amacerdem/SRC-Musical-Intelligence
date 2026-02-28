@@ -5,7 +5,7 @@
  * Exchanges the authorization code via Repetuare backend,
  * stores tokens in localStorage, then navigates back to the app.
  */
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Loader2, CheckCircle2, XCircle } from "lucide-react";
@@ -25,9 +25,11 @@ export function Callback() {
   const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
   const [errorMsg, setErrorMsg] = useState("");
   const setSpotifyConnected = useUserStore((s) => s.setSpotifyConnected);
+  const exchanged = useRef(false);
 
   useEffect(() => {
-    let cancelled = false;
+    if (exchanged.current) return;
+    exchanged.current = true;
 
     async function process() {
       const code = searchParams.get("code");
@@ -46,7 +48,6 @@ export function Callback() {
       }
 
       try {
-        // Exchange code via Repetuare backend
         const res = await fetch("/api/spotify/exchange", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -59,8 +60,6 @@ export function Callback() {
         }
 
         const data = await res.json();
-
-        if (cancelled) return;
 
         // Store tokens in localStorage for client-side API calls
         const expiresAt = Date.now() + (data.expires_in ?? 3600) * 1000;
@@ -80,21 +79,18 @@ export function Callback() {
         setStatus("success");
 
         setTimeout(() => {
-          if (cancelled) return;
           navigate(fromPath, {
             replace: true,
             state: { spotifyConnected: true, userName },
           });
         }, 1200);
       } catch (err: any) {
-        if (cancelled) return;
         setStatus("error");
         setErrorMsg(err.message || "Authentication failed");
       }
     }
 
     process();
-    return () => { cancelled = true; };
   }, [searchParams, navigate, setSpotifyConnected]);
 
   return (

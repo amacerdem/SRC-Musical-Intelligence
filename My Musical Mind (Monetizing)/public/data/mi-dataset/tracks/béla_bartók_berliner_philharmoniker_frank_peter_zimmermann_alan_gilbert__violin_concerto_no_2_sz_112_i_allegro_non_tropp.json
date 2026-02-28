@@ -20,14 +20,14 @@
     "duration": 30.0
   },
   "genes": {
-    "entropy": 0.4568,
-    "resolution": 0.6019,
-    "tension": 0.3917,
-    "resonance": 0.5218,
-    "plasticity": 0.5863
+    "entropy": 0.6014,
+    "resolution": 0.413,
+    "tension": 0.5362,
+    "resonance": 0.471,
+    "plasticity": 0.6449
   },
-  "dominant_gene": "resolution",
-  "dominant_family": "Architects",
+  "dominant_gene": "plasticity",
+  "dominant_family": "Kineticists",
   "beliefs": {
     "means": [
       0.5487,

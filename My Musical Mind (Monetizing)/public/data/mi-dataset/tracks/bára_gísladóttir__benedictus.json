@@ -20,14 +20,14 @@
     "duration": 30.0
   },
   "genes": {
-    "entropy": 0.4655,
-    "resolution": 0.6122,
-    "tension": 0.413,
-    "resonance": 0.5205,
-    "plasticity": 0.5887
+    "entropy": 0.7319,
+    "resolution": 0.4928,
+    "tension": 0.9457,
+    "resonance": 0.4275,
+    "plasticity": 0.7174
   },
-  "dominant_gene": "resolution",
-  "dominant_family": "Architects",
+  "dominant_gene": "tension",
+  "dominant_family": "Alchemists",
   "beliefs": {
     "means": [
       0.4696,

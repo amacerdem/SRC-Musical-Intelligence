@@ -65,6 +65,12 @@ interface Props {
 
 /* ── Helpers ─────────────────────────────────────────────────────────── */
 
+/** Strip alpha from hex color, returning base 6-char hex (e.g. "#38BDF8B0" → "#38BDF8") */
+function baseHex(col: string): string {
+  if (col.length === 9) return col.slice(0, 7); // #RRGGBBAA → #RRGGBB
+  return col; // already #RRGGBB or shorter
+}
+
 /** Catmull-Rom scalar interpolation */
 function cr(p0: number, p1: number, p2: number, p3: number, t: number): number {
   const t2 = t * t, t3 = t2 * t;
@@ -142,6 +148,23 @@ export function FlowTimeline({
   const neuroArr = trackDetail.temporal_profile.neuro_per_segment;
   const rewardArr = trackDetail.temporal_profile.reward_per_segment;
 
+  /* ── Auto-scale: compute global min/max across all segments ── */
+  const { dataMin, dataMax } = useMemo(() => {
+    let lo = Infinity, hi = -Infinity;
+    for (let s = 0; s < segCount; s++) {
+      const vals = getDimValues(s);
+      for (let d = 0; d < dimCount; d++) {
+        const v = vals[d] ?? 0;
+        if (v < lo) lo = v;
+        if (v > hi) hi = v;
+      }
+    }
+    if (!isFinite(lo) || !isFinite(hi) || lo === hi) return { dataMin: 0, dataMax: 1 };
+    // Add 8% padding so curves don't touch edges
+    const pad = (hi - lo) * 0.08;
+    return { dataMin: Math.max(0, lo - pad), dataMax: Math.min(1, hi + pad) };
+  }, [segCount, dimCount, getDimValues]);
+
   /* ── ResizeObserver ───────────────────────────────────── */
   useEffect(() => {
     const el = containerRef.current;
@@ -178,7 +201,9 @@ export function FlowTimeline({
     const sT = scrollRef.current;
 
     const t2x = (t: number) => ML + ((t - sT) / windowDur) * cW;
-    const v2y = (v: number) => MT + cH * (1 - Math.max(0, Math.min(1, v)));
+    // Auto-scaled: maps [dataMin..dataMax] to full canvas height
+    const range = dataMax - dataMin || 1;
+    const v2y = (v: number) => MT + cH * (1 - (v - dataMin) / range);
 
     /* ── Clear ───────────────────────────────────────── */
     ctx.clearRect(0, 0, W, H);
@@ -195,19 +220,22 @@ export function FlowTimeline({
       }
     }
 
-    /* ── 2. Grid ─────────────────────────────────────── */
-    // Horizontal
+    /* ── 2. Grid (auto-scaled) ────────────────────────── */
+    // Horizontal grid lines at 25/50/75% of data range
     ctx.lineWidth = 0.5;
-    for (const v of [0.25, 0.5, 0.75]) {
+    const gridSteps = [0.25, 0.5, 0.75];
+    for (const frac of gridSteps) {
+      const v = dataMin + frac * range;
       const y = v2y(v);
       ctx.strokeStyle = "rgba(255,255,255,0.04)";
       ctx.beginPath(); ctx.moveTo(ML, y); ctx.lineTo(ML + cW, y); ctx.stroke();
     }
-    // Y-axis labels
+    // Y-axis labels showing actual values
     ctx.fillStyle = "rgba(255,255,255,0.08)";
     ctx.font = "7px monospace";
     ctx.textAlign = "right";
-    for (const v of [0.25, 0.5, 0.75, 1.0]) {
+    for (const frac of [0, 0.25, 0.5, 0.75, 1.0]) {
+      const v = dataMin + frac * range;
       ctx.fillText(v.toFixed(1), ML + cW - 3, v2y(v) + 3);
     }
     // Base axis
@@ -253,7 +281,7 @@ export function FlowTimeline({
     for (let d = dimCount - 1; d >= 0; d--) {
       const dim = dimList[d];
       if (!dim) continue;
-      const col = dim.color;
+      const col = baseHex(dim.color);
 
       // Data points
       const pts: { x: number; y: number }[] = [];
@@ -360,16 +388,17 @@ export function FlowTimeline({
       for (let d = 0; d < Math.min(dimCount, vals.length); d++) {
         const dm = dimList[d];
         if (!dm) continue;
+        const dc = baseHex(dm.color);
         const y = v2y(vals[d] ?? 0);
         // Glow
         ctx.beginPath();
         ctx.arc(sx, y, depth <= 6 ? 5 : 3.5, 0, Math.PI * 2);
-        ctx.fillStyle = dm.color + "30";
+        ctx.fillStyle = dc + "30";
         ctx.fill();
         // Dot
         ctx.beginPath();
         ctx.arc(sx, y, depth <= 6 ? 3 : 2, 0, Math.PI * 2);
-        ctx.fillStyle = dm.color;
+        ctx.fillStyle = dc;
         ctx.fill();
         ctx.strokeStyle = "rgba(0,0,0,0.5)";
         ctx.lineWidth = 0.5;
@@ -379,6 +408,7 @@ export function FlowTimeline({
   }, [
     size, dpr, temporal, depth, dimCount, dimList, segCount, segDur,
     duration, windowDur, accentColor, rewardArr, neuroArr, getDimValues,
+    dataMin, dataMax,
   ]);
 
   /* ── rAF Loop ────────────────────────────────────────── */
@@ -421,7 +451,7 @@ export function FlowTimeline({
       const dim = dimList[i];
       const parentList = depth === 12 ? ALL_PSYCHOLOGY : depth === 24 ? ALL_COGNITION : undefined;
       const parent = dim?.parentKey ? parentList?.find(p => p.key === dim.parentKey) : undefined;
-      return { name: dim?.name ?? `D${i}`, value: v, color: dim?.color ?? "#94A3B8", parentName: parent?.name };
+      return { name: dim?.name ?? `D${i}`, value: v, color: baseHex(dim?.color ?? "#94A3B8"), parentName: parent?.name };
     });
 
     const neuro = neuroArr ? lerpSeg2D(neuroArr, t, duration) : [0, 0, 0, 0];
@@ -516,7 +546,7 @@ function FlowTooltip({ data, depth, accentColor, containerW }: {
   accentColor: string;
   containerW: number;
 }) {
-  const tw = depth <= 6 ? 180 : depth <= 12 ? 210 : 290;
+  const tw = depth <= 6 ? 220 : depth <= 12 ? 260 : 340;
   // Edge-aware positioning
   let leftPct = (data.posX / containerW) * 100;
   const leftPx = (leftPct / 100) * containerW;
@@ -555,14 +585,14 @@ function FlowTooltip({ data, depth, accentColor, containerW }: {
         }}
       >
         {/* Header */}
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-[10px] font-mono text-slate-400">{data.timeStr}</span>
-          <div className="flex items-center gap-1">
-            <span className="text-[7px] font-mono text-slate-600 uppercase tracking-wider">Reward</span>
-            <div className="w-10 h-[3px] rounded-full bg-white/5 overflow-hidden">
+        <div className="flex items-center justify-between mb-2.5">
+          <span className="text-xs font-mono text-slate-400">{data.timeStr}</span>
+          <div className="flex items-center gap-1.5">
+            <span className="text-[9px] font-mono text-slate-600 uppercase tracking-wider">Reward</span>
+            <div className="w-14 h-[4px] rounded-full bg-white/5 overflow-hidden">
               <div className="h-full rounded-full" style={{ width: `${data.reward * 100}%`, background: accentColor, opacity: 0.65 }} />
             </div>
-            <span className="text-[9px] font-mono" style={{ color: `${accentColor}90` }}>
+            <span className="text-[11px] font-mono" style={{ color: `${accentColor}90` }}>
               {data.reward.toFixed(2)}
             </span>
           </div>
@@ -582,7 +612,7 @@ function FlowTooltip({ data, depth, accentColor, containerW }: {
           <div className="space-y-1.5">
             {grouped.map((g, gi) => (
               <div key={gi}>
-                <div className="text-[7px] font-display text-slate-600 uppercase tracking-wider mb-0.5">
+                <div className="text-[9px] font-display text-slate-600 uppercase tracking-wider mb-0.5">
                   {g.parentName}
                 </div>
                 {g.items.map((d, di) => (
@@ -598,7 +628,7 @@ function FlowTooltip({ data, depth, accentColor, containerW }: {
           <div className="space-y-1">
             {grouped.map((g, gi) => (
               <div key={gi}>
-                <div className="text-[7px] font-display text-slate-600 uppercase tracking-wider mb-0.5">
+                <div className="text-[9px] font-display text-slate-600 uppercase tracking-wider mb-0.5">
                   {g.parentName}
                 </div>
                 <div className="grid grid-cols-2 gap-x-2 gap-y-0">
@@ -613,12 +643,12 @@ function FlowTooltip({ data, depth, accentColor, containerW }: {
 
         {/* Neurochemicals — visible at 12D+ */}
         {depth >= 12 && (
-          <div className="flex items-center gap-2 mt-2 pt-1.5 border-t border-white/[0.05]">
+          <div className="flex items-center gap-3 mt-2.5 pt-2 border-t border-white/[0.05]">
             {NEURO_LABELS.map((label, i) => (
-              <div key={label} className="flex items-center gap-0.5">
-                <div className="w-1 h-1 rounded-full" style={{ background: NEURO_COLORS[i] }} />
-                <span className="text-[7px] font-mono text-slate-600">{label}</span>
-                <span className="text-[8px] font-mono" style={{ color: NEURO_COLORS[i] + "90" }}>
+              <div key={label} className="flex items-center gap-1">
+                <div className="w-1.5 h-1.5 rounded-full" style={{ background: NEURO_COLORS[i] }} />
+                <span className="text-[9px] font-mono text-slate-600">{label}</span>
+                <span className="text-[10px] font-mono" style={{ color: NEURO_COLORS[i] + "90" }}>
                   {data.neuro[i]?.toFixed(2) ?? "0"}
                 </span>
               </div>
@@ -640,15 +670,15 @@ function DimRow({ name, value, color, compact = false }: {
   compact?: boolean;
 }) {
   return (
-    <div className="flex items-center gap-1">
-      <div className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: color }} />
+    <div className="flex items-center gap-1.5 py-[1px]">
+      <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: color }} />
       <span
-        className={`${compact ? "text-[7px]" : "text-[8px]"} font-display text-slate-400 flex-1 truncate`}
+        className={`${compact ? "text-[9px]" : "text-[11px]"} font-display text-slate-400 flex-1 truncate`}
       >
         {name}
       </span>
       <div
-        className={`${compact ? "w-6" : "w-10"} h-[2px] rounded-full bg-white/5 flex-shrink-0 overflow-hidden`}
+        className={`${compact ? "w-10" : "w-16"} h-[3px] rounded-full bg-white/5 flex-shrink-0 overflow-hidden`}
       >
         <div
           className="h-full rounded-full"
@@ -656,8 +686,8 @@ function DimRow({ name, value, color, compact = false }: {
         />
       </div>
       <span
-        className={`${compact ? "text-[6px]" : "text-[8px]"} font-mono flex-shrink-0`}
-        style={{ color: color + "90" }}
+        className={`${compact ? "text-[8px]" : "text-[10px]"} font-mono flex-shrink-0`}
+        style={{ color: baseHex(color) + "90" }}
       >
         {value.toFixed(2)}
       </span>
