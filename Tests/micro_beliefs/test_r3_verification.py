@@ -437,11 +437,11 @@ def test_f_pitch_chroma(runner: R3Runner) -> List[TestResult]:
     SALIENCE = 39
     INHARM = 40
 
-    # Load single notes for chroma identity
+    # Load single notes for chroma identity (octave 5, better mel resolution)
     note_names = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"]
     single_notes = {}
     for i, name in enumerate(note_names):
-        single_notes[name] = _load(runner, g, f"{i+1:02d}_single_{name}4")
+        single_notes[name] = _load(runner, g, f"{i+1:02d}_single_{name}5")
 
     # Test 1: Each single note activates its own chroma bin most
     chroma_correct = 0
@@ -455,7 +455,7 @@ def test_f_pitch_chroma(runner: R3Runner) -> List[TestResult]:
 
     results.append(TestResult(
         name="F.1 Chroma identity (12 notes)",
-        passed=chroma_correct >= 9,  # Allow 3 misses (mel resolution)
+        passed=chroma_correct >= 11,  # Octave 5: ~1 mel bin/semitone → ≥11 expected
         detail=f"{chroma_correct}/12 correct dominant chroma",
         values={"correct": float(chroma_correct)},
     ))

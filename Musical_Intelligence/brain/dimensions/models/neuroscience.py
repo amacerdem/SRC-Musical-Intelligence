@@ -19,32 +19,39 @@ if TYPE_CHECKING:
     from torch import Tensor
 
 # Belief indices (0-130)
-# F2
+# F2 Prediction
 _PREDICTION_ACCURACY = 20
 _INFORMATION_CONTENT = 25
 _SEQUENCE_MATCH = 31
-# F3
+# F3 Attention
+_SALIENCE_NETWORK = 34
+_SENSORY_LOAD = 35
 _PRECISION_WEIGHTING = 39
+_AESTHETIC_ENGAGEMENT = 40
 _BEAT_ENTRAINMENT = 42
 _METER_HIERARCHY = 44
 _SELECTIVE_GAIN = 46
-# F4
+# F4 Memory
 _AUTOBIOGRAPHICAL_RETRIEVAL = 50
+_EMOTIONAL_COLORING = 51
+_MEMORY_VIVIDNESS = 52
 _NOSTALGIA_INTENSITY = 53
 _SELF_RELEVANCE = 55
 _CONSOLIDATION_STRENGTH = 57
 _EPISODIC_ENCODING = 59
-# F5
+# F5 Emotion
 _ANS_DOMINANCE = 60
 _CHILLS_INTENSITY = 61
+_DRIVING_SIGNAL = 62
 _EMOTIONAL_AROUSAL = 63
 _MODE_DETECTION = 66
 _PERCEIVED_HAPPY = 67
 _PERCEIVED_SAD = 68
 _NOSTALGIA_AFFECT = 70
-# F6
+# F6 Reward
 _DA_CAUDATE = 74
 _DA_NACC = 75
+_TEMPORAL_PHASE = 77
 _WANTING_RAMP = 78
 _CHILLS_PROXIMITY = 79
 _LIKING = 81
@@ -52,19 +59,21 @@ _PLEASURE = 83
 _PREDICTION_ERROR = 84
 _PREDICTION_MATCH = 85
 _WANTING = 89
-# F7
+# F7 Motor
 _AUDITORY_MOTOR_COUPLING = 90
 _GROOVE_QUALITY = 92
+_MOTOR_PREPARATION = 95
 _KINEMATIC_EFFICIENCY = 96
 _PERIOD_ENTRAINMENT = 98
+_PERIOD_LOCK_STRENGTH = 99
 _TIMING_PRECISION = 100
-# F8
+# F8 Learning
 _STATISTICAL_MODEL = 109
 _TRAINED_TIMBRE = 111
 _EXPERTISE_ENHANCEMENT = 114
 _NETWORK_SPECIALIZATION = 119
 _WITHIN_CONNECTIVITY = 120
-# F9
+# F9 Social
 _COLLECTIVE_PLEASURE = 121
 _ENTRAINMENT_QUALITY = 122
 _GROUP_FLOW = 123
@@ -84,23 +93,27 @@ def compute_prediction_error(beliefs: Tensor) -> Tensor:
 
     Measures the brain's surprise signal: how much reality deviates from
     internal model predictions. Central to predictive coding (Friston 2005).
+    Salience network activation captures PE tracking (replaces ACC region).
     """
     pe = beliefs[:, :, _PREDICTION_ERROR]
     info = beliefs[:, :, _INFORMATION_CONTENT]
+    salience = beliefs[:, :, _SALIENCE_NETWORK]
 
-    return (0.60 * pe + 0.40 * info).clamp(0, 1)
+    return (0.40 * pe + 0.25 * info + 0.35 * salience).clamp(0, 1)
 
 
 def compute_precision(beliefs: Tensor) -> Tensor:
     """Precision — confidence of predictions (π_eff).
 
     Precision weighting determines how much prediction errors update beliefs.
-    High precision = confident predictions. (Feldman 2010).
+    High precision = confident predictions. Selective gain captures
+    attention-driven precision modulation (replaces insula region).
     """
     pw = beliefs[:, :, _PRECISION_WEIGHTING]
     pred_acc = beliefs[:, :, _PREDICTION_ACCURACY]
+    gain = beliefs[:, :, _SELECTIVE_GAIN]
 
-    return (0.55 * pw + 0.45 * pred_acc).clamp(0, 1)
+    return (0.35 * pw + 0.30 * pred_acc + 0.35 * gain).clamp(0, 1)
 
 
 def compute_information_content(beliefs: Tensor) -> Tensor:
@@ -146,25 +159,32 @@ def compute_motor_period_lock(beliefs: Tensor) -> Tensor:
     """Period Lock — motor system convergence to auditory period.
 
     Motor period adaptation (Thaut 2015). When locked, movement
-    becomes effortless and automatic.
+    becomes effortless and automatic. Period lock strength captures
+    motor tracking quality (replaces SMA region).
     """
     period = beliefs[:, :, _PERIOD_ENTRAINMENT]
     kinematic = beliefs[:, :, _KINEMATIC_EFFICIENCY]
+    lock = beliefs[:, :, _PERIOD_LOCK_STRENGTH]
 
-    return (0.55 * period + 0.45 * kinematic).clamp(0, 1)
+    return (0.35 * period + 0.30 * kinematic + 0.35 * lock).clamp(0, 1)
 
 
 def compute_auditory_motor_bind(beliefs: Tensor) -> Tensor:
     """Motor Binding — strength of auditory-motor coupling.
 
     The dorsal auditory stream that transforms hearing into movement
-    (Zatorre 2007, dual-stream model).
+    (Zatorre 2007, dual-stream model). Motor preparation captures
+    basal ganglia processing (replaces putamen). Period lock strength
+    captures premotor cortex function (replaces PMC).
     """
     coupling = beliefs[:, :, _AUDITORY_MOTOR_COUPLING]
-    beat = beliefs[:, :, _BEAT_ENTRAINMENT]
-    kinematic = beliefs[:, :, _KINEMATIC_EFFICIENCY]
+    motor_prep = beliefs[:, :, _MOTOR_PREPARATION]
+    lock = beliefs[:, :, _PERIOD_LOCK_STRENGTH]
+    groove = beliefs[:, :, _GROOVE_QUALITY]
 
-    return (0.50 * coupling + 0.25 * beat + 0.25 * kinematic).clamp(0, 1)
+    return (
+        0.35 * coupling + 0.25 * motor_prep + 0.20 * lock + 0.20 * groove
+    ).clamp(0, 1)
 
 
 def compute_timing_precision(beliefs: Tensor) -> Tensor:
@@ -197,37 +217,56 @@ def compute_autonomic_arousal(beliefs: Tensor) -> Tensor:
     """ANS Arousal — autonomic nervous system activation.
 
     Heart rate, skin conductance, pupil dilation. Driven by ANS dominance
-    and emotional arousal (Koelsch 2014).
+    and emotional arousal. Sensory load captures arousal-driven
+    attention demand (replaces NE neurochemical).
+
+    Sources: Koelsch 2014.
     """
     ans = beliefs[:, :, _ANS_DOMINANCE]
     arousal = beliefs[:, :, _EMOTIONAL_AROUSAL]
+    load = beliefs[:, :, _SENSORY_LOAD]
 
-    return (0.55 * ans + 0.45 * arousal).clamp(0, 1)
+    return (0.35 * ans + 0.30 * arousal + 0.35 * load).clamp(0, 1)
 
 
 def compute_nostalgia_circuit(beliefs: Tensor) -> Tensor:
     """Nostalgia Circuit — nostalgia network activation.
 
     Music-evoked autobiographical memory activates hippocampus→vmPFC→NAcc
-    (Janata 2009). Nostalgia increases self-esteem and social connectedness.
+    (Janata 2009). Autobiographical retrieval replaces hippocampus region.
+    Self-relevance replaces vmPFC region.
     """
     nostalgia_int = beliefs[:, :, _NOSTALGIA_INTENSITY]
     nostalgia_aff = beliefs[:, :, _NOSTALGIA_AFFECT]
+    autobio = beliefs[:, :, _AUTOBIOGRAPHICAL_RETRIEVAL]
+    self_rel = beliefs[:, :, _SELF_RELEVANCE]
 
-    return (0.55 * nostalgia_int + 0.45 * nostalgia_aff).clamp(0, 1)
+    return (
+        0.25 * nostalgia_int + 0.25 * nostalgia_aff
+        + 0.25 * autobio + 0.25 * self_rel
+    ).clamp(0, 1)
 
 
 def compute_chills_pathway(beliefs: Tensor) -> Tensor:
     """Chills Pathway — frisson/chills response.
 
     Peak emotional response: piloerection, skin conductance spike, shivers.
-    (Blood & Zatorre 2001).
+    ANS dominance captures autonomic activation (replaces PAG region).
+    Driving signal captures hypothalamic drive (replaces hypothalamus).
+    Pleasure captures hedonic opioid response (replaces OPI neurochemical).
+
+    Sources: Blood & Zatorre 2001.
     """
     chills = beliefs[:, :, _CHILLS_INTENSITY]
     chills_prox = beliefs[:, :, _CHILLS_PROXIMITY]
-    arousal = beliefs[:, :, _EMOTIONAL_AROUSAL]
+    ans = beliefs[:, :, _ANS_DOMINANCE]
+    drive = beliefs[:, :, _DRIVING_SIGNAL]
+    pleasure = beliefs[:, :, _PLEASURE]
 
-    return (0.40 * chills + 0.30 * chills_prox + 0.30 * arousal).clamp(0, 1)
+    return (
+        0.25 * chills + 0.20 * chills_prox + 0.20 * ans
+        + 0.15 * drive + 0.20 * pleasure
+    ).clamp(0, 1)
 
 
 # ======================================================================
@@ -238,50 +277,70 @@ def compute_da_anticipation(beliefs: Tensor) -> Tensor:
     """DA Anticipation — caudate dopamine ramp before peak experience.
 
     Wanting signal: caudate DA ramps 10-15s before pleasure peak.
-    Anatomically distinct from consummation (Salimpoor 2011).
+    Temporal phase captures reward timing (replaces caudate region).
+
+    Sources: Salimpoor 2011.
     """
     caudate_da = beliefs[:, :, _DA_CAUDATE]
     wanting_ramp = beliefs[:, :, _WANTING_RAMP]
+    phase = beliefs[:, :, _TEMPORAL_PHASE]
 
-    return (0.55 * caudate_da + 0.45 * wanting_ramp).clamp(0, 1)
+    return (0.35 * caudate_da + 0.30 * wanting_ramp + 0.35 * phase).clamp(0, 1)
 
 
 def compute_da_consummation(beliefs: Tensor) -> Tensor:
     """DA Consummation — NAcc dopamine burst at peak pleasure.
 
     Liking signal: NAcc DA fires at the moment of musical pleasure.
-    Correlates with chills and willingness to pay (Salimpoor 2013).
+    Pleasure captures reward circuit output (replaces NAcc region).
+    DA caudate captures overall dopamine state (replaces DA neurochemical).
+
+    Sources: Salimpoor 2013.
     """
     nacc_da = beliefs[:, :, _DA_NACC]
     wanting = beliefs[:, :, _WANTING]
+    pleasure = beliefs[:, :, _PLEASURE]
+    caudate_da = beliefs[:, :, _DA_CAUDATE]
 
-    return (0.55 * nacc_da + 0.45 * wanting).clamp(0, 1)
+    return (
+        0.30 * nacc_da + 0.25 * wanting + 0.25 * pleasure + 0.20 * caudate_da
+    ).clamp(0, 1)
 
 
 def compute_hedonic_tone(beliefs: Tensor) -> Tensor:
     """Hedonic Tone — consummatory pleasure.
 
     Consummatory pleasure distinct from wanting. Liking = OPI in NAcc shell.
-    Blocked by naltrexone, enhanced by music (Ferreri 2019, PNAS).
+    Chills intensity captures opioid-mediated pleasure (replaces OPI neurochemical).
+    Aesthetic engagement captures evaluative processing (replaces OFC region).
+
+    Sources: Ferreri 2019, PNAS.
     """
     liking = beliefs[:, :, _LIKING]
     pleasure = beliefs[:, :, _PLEASURE]
+    chills = beliefs[:, :, _CHILLS_INTENSITY]
+    engagement = beliefs[:, :, _AESTHETIC_ENGAGEMENT]
 
-    return (0.55 * liking + 0.45 * pleasure).clamp(0, 1)
+    return (
+        0.30 * liking + 0.25 * pleasure + 0.20 * chills + 0.25 * engagement
+    ).clamp(0, 1)
 
 
 def compute_reward_pe(beliefs: Tensor) -> Tensor:
     """Reward PE — reward prediction error (better/worse than expected).
 
     TD error: δ = R + γV' − V. Positive RPE → DA burst → reinforcement.
-    Negative RPE → DA dip → aversion (Schultz 1997).
+    DA NAcc captures VTA dopaminergic output (replaces VTA region).
+
+    Sources: Schultz 1997.
     """
     pe = beliefs[:, :, _PREDICTION_ERROR]
     match = beliefs[:, :, _PREDICTION_MATCH]
+    da = beliefs[:, :, _DA_NACC]
 
     # PE * (1 - match): high PE AND low match = large RPE
     rpe = pe * (1.0 - match)
-    return (0.65 * rpe + 0.35 * pe).clamp(0, 1)
+    return (0.40 * rpe + 0.25 * pe + 0.35 * da).clamp(0, 1)
 
 
 # ======================================================================
@@ -292,36 +351,47 @@ def compute_episodic_encoding(beliefs: Tensor) -> Tensor:
     """Episodic Encoding — strength of new memory formation.
 
     Hippocampal binding of sensory, emotional, and contextual features into
-    a single episodic trace (Squire 2004). Consolidation during encoding.
+    a single episodic trace. Emotional coloring captures hippocampal
+    memory binding (replaces hippocampus region).
+
+    Sources: Squire 2004.
     """
     encoding = beliefs[:, :, _EPISODIC_ENCODING]
     consolidation = beliefs[:, :, _CONSOLIDATION_STRENGTH]
+    coloring = beliefs[:, :, _EMOTIONAL_COLORING]
 
-    return (0.55 * encoding + 0.45 * consolidation).clamp(0, 1)
+    return (0.35 * encoding + 0.30 * consolidation + 0.35 * coloring).clamp(0, 1)
 
 
 def compute_autobiographical(beliefs: Tensor) -> Tensor:
     """Autobiographical — connection to personal life story.
 
     Music-evoked autobiographical memories (MEAMs) occur ~once per day.
-    Hippocampus→vmPFC→default mode network (Janata 2009).
+    Hippocampus→vmPFC→default mode network. Emotional coloring captures
+    hippocampal association (replaces vmPFC region).
+
+    Sources: Janata 2009.
     """
     autobio = beliefs[:, :, _AUTOBIOGRAPHICAL_RETRIEVAL]
     self_rel = beliefs[:, :, _SELF_RELEVANCE]
+    coloring = beliefs[:, :, _EMOTIONAL_COLORING]
 
-    return (0.55 * autobio + 0.45 * self_rel).clamp(0, 1)
+    return (0.35 * autobio + 0.30 * self_rel + 0.35 * coloring).clamp(0, 1)
 
 
 def compute_statistical_learning(beliefs: Tensor) -> Tensor:
     """Statistical Learning — implicit learning of musical regularities.
 
     Tracking transitional probabilities of melodic/harmonic sequences.
-    The brain's internal generative model (Saffran 1999, Pearce 2018).
+    Prediction accuracy captures learned model quality (replaces STG region).
+
+    Sources: Saffran 1999, Pearce 2018.
     """
     stat = beliefs[:, :, _STATISTICAL_MODEL]
     seq = beliefs[:, :, _SEQUENCE_MATCH]
+    pred_acc = beliefs[:, :, _PREDICTION_ACCURACY]
 
-    return (0.55 * stat + 0.45 * seq).clamp(0, 1)
+    return (0.35 * stat + 0.30 * seq + 0.35 * pred_acc).clamp(0, 1)
 
 
 def compute_expertise_effect(beliefs: Tensor) -> Tensor:
@@ -348,7 +418,10 @@ def compute_neural_synchrony(beliefs: Tensor) -> Tensor:
     """Neural Sync — inter-brain phase synchronization during shared listening.
 
     Hyperscanning studies show phase-locking between listeners' EEG/fMRI
-    signals during shared musical experience (Hasson 2012).
+    signals during shared musical experience. Entrainment quality captures
+    social temporal processing (replaces STS region).
+
+    Sources: Hasson 2012.
     """
     sync = beliefs[:, :, _NEURAL_SYNCHRONY]
     entrainment = beliefs[:, :, _ENTRAINMENT_QUALITY]
@@ -360,36 +433,49 @@ def compute_social_bonding(beliefs: Tensor) -> Tensor:
     """Social Bond — music-mediated social cohesion.
 
     Synchronized music-making releases endorphins and oxytocin,
-    promoting "self-other merging" (Tarr 2014, Savage 2021).
+    promoting "self-other merging". Self-relevance captures vmPFC
+    function. Synchrony reward captures shared pleasure (replaces OPI).
+
+    Sources: Tarr 2014, Savage 2021.
     """
     bonding = beliefs[:, :, _SOCIAL_BONDING]
     flow = beliefs[:, :, _GROUP_FLOW]
+    self_rel = beliefs[:, :, _SELF_RELEVANCE]
+    sync_rew = beliefs[:, :, _SYNCHRONY_REWARD]
 
-    return (0.55 * bonding + 0.45 * flow).clamp(0, 1)
+    return (
+        0.25 * bonding + 0.25 * flow + 0.25 * self_rel + 0.25 * sync_rew
+    ).clamp(0, 1)
 
 
 def compute_social_prediction(beliefs: Tensor) -> Tensor:
     """Social Prediction — predicting others' musical intentions.
 
     Theory of mind applied to music: anticipating a co-performer's next move.
-    TPJ/STS activation during joint music-making (Novembre 2016).
+    Entrainment quality captures social temporal processing (replaces STS region).
+
+    Sources: Novembre 2016.
     """
     spe = beliefs[:, :, _SOCIAL_PREDICTION_ERROR]
     coord = beliefs[:, :, _SOCIAL_COORDINATION]
+    entrainment = beliefs[:, :, _ENTRAINMENT_QUALITY]
 
-    return (0.50 * spe + 0.50 * coord).clamp(0, 1)
+    return (0.35 * spe + 0.35 * coord + 0.30 * entrainment).clamp(0, 1)
 
 
 def compute_collective_reward(beliefs: Tensor) -> Tensor:
     """Collective Reward — shared pleasure amplification.
 
     Music heard together is rated as more pleasurable than alone.
-    Shared reward circuits + social reward (Tarr 2014).
+    Pleasure captures reward circuit output (replaces NAcc region).
+
+    Sources: Tarr 2014.
     """
     sync_rew = beliefs[:, :, _SYNCHRONY_REWARD]
     collective = beliefs[:, :, _COLLECTIVE_PLEASURE]
+    pleasure = beliefs[:, :, _PLEASURE]
 
-    return (0.50 * sync_rew + 0.50 * collective).clamp(0, 1)
+    return (0.30 * sync_rew + 0.35 * collective + 0.35 * pleasure).clamp(0, 1)
 
 
 # ======================================================================

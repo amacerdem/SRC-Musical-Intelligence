@@ -336,10 +336,12 @@ def generate_f_pitch_chroma():
     print(f"\n=== GROUP F: PITCH & CHROMA [25:41] ===")
 
     # --- Individual chroma identity (12 pitch classes) ---
-    # 01-12: Single notes for each pitch class (all in octave 4)
+    # 01-12: Single notes for each pitch class (octave 5, MIDI 72-83).
+    # Octave 5 chosen because mel bins resolve ~1 semitone at this range,
+    # whereas octave 4 has only ~0.66 bins/semitone (insufficient).
     note_names = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"]
-    for i, (midi_num, name) in enumerate(zip(range(60, 72), note_names)):
-        save(midi_note(midi_num, 4.0, PIANO, 80), g, f"{i+1:02d}_single_{name}4")
+    for i, (midi_num, name) in enumerate(zip(range(72, 84), note_names)):
+        save(midi_note(midi_num, 4.0, PIANO, 80), g, f"{i+1:02d}_single_{name}5")
 
     # --- Pitch height ---
     # 13: C2 — very low pitch_height

@@ -23,7 +23,7 @@ ENERGY = Dimension(
     layer="psychology",
     description="Is this loud/intense or quiet/gentle?",
     agreement="very_high",
-    belief_indices=(34, 63),  # salience, emotional_arousal
+    belief_indices=(16, 34, 35, 63),  # spectral_complexity, salience, sensory_load, emotional_arousal
 )
 VALENCE = Dimension(
     index=1, key="valence",
@@ -31,7 +31,7 @@ VALENCE = Dimension(
     layer="psychology",
     description="Does this sound happy or sad?",
     agreement="high",
-    belief_indices=(4, 67, 68),  # harmonic_stability, happy, sad
+    belief_indices=(4, 67, 68, 81, 89),  # harmonic_stability, happy, sad, liking, wanting
 )
 TEMPO = Dimension(
     index=2, key="tempo",
@@ -39,7 +39,7 @@ TEMPO = Dimension(
     layer="psychology",
     description="Is this fast or slow?",
     agreement="very_high",
-    belief_indices=(42, 98),  # beat_entrainment, period_entrainment
+    belief_indices=(42, 95, 98),  # beat_entrainment, motor_preparation, period_entrainment
 )
 TENSION = Dimension(
     index=3, key="tension",
@@ -47,7 +47,7 @@ TENSION = Dimension(
     layer="psychology",
     description="Do I feel strain or release?",
     agreement="high",
-    belief_indices=(88, 63, 34),  # tension, emotional_arousal, salience
+    belief_indices=(34, 60, 63, 80, 88),  # salience, ans_dominance, emotional_arousal, harmonic_tension, tension
 )
 GROOVE = Dimension(
     index=4, key="groove",
@@ -55,7 +55,7 @@ GROOVE = Dimension(
     layer="psychology",
     description="Do I want to move my body?",
     agreement="high",
-    belief_indices=(42, 92),  # beat_entrainment, groove_quality
+    belief_indices=(42, 90, 92, 95, 99),  # beat_entrainment, aud_motor_coupling, groove_quality, motor_prep, period_lock
 )
 COMPLEXITY = Dimension(
     index=5, key="complexity",
@@ -77,7 +77,7 @@ MELODIC_HOOK = Dimension(
     layer="cognition",
     description="Is the melody catchy/memorable?",
     agreement="high",
-    belief_indices=(8, 10, 47, 48),  # pitch_prominence, pitch_identity, melodic_recognition, memory_preservation
+    belief_indices=(8, 10, 13, 47, 48),  # pitch_prominence, pitch_identity, spectral_temporal_synergy, melodic_recognition, memory_preservation
 )
 HARMONIC_DEPTH = Dimension(
     index=1, key="harmonic_depth",
@@ -85,7 +85,7 @@ HARMONIC_DEPTH = Dimension(
     layer="cognition",
     description="Simple chords or rich/complex?",
     agreement="medium",
-    belief_indices=(4, 5, 6, 80),  # harmonic_stability, template_match, interval_quality, harmonic_tension
+    belief_indices=(4, 5, 6, 21, 80),  # harmonic_stability, template_match, interval_quality, prediction_hierarchy, harmonic_tension
 )
 RHYTHMIC_DRIVE = Dimension(
     index=2, key="rhythmic_drive",
@@ -101,7 +101,7 @@ TIMBRAL_COLOR = Dimension(
     layer="cognition",
     description="Warm/organic or cold/electronic?",
     agreement="medium",
-    belief_indices=(11, 15, 16, 111),  # aesthetic_quality, timbral_character, spectral_complexity, trained_timbre
+    belief_indices=(11, 13, 15, 16, 111),  # aesthetic_quality, spectral_temporal_synergy, timbral_character, spectral_complexity, trained_timbre
 )
 EMOTIONAL_ARC = Dimension(
     index=4, key="emotional_arc",
@@ -109,7 +109,7 @@ EMOTIONAL_ARC = Dimension(
     layer="cognition",
     description="Which specific emotion? Joy? Awe? Nostalgia?",
     agreement="high",
-    belief_indices=(63, 67, 68, 70),  # emotional_arousal, happy, sad, nostalgia_affect
+    belief_indices=(63, 64, 67, 68, 70),  # emotional_arousal, emotion_certainty, happy, sad, nostalgia_affect
 )
 SURPRISE = Dimension(
     index=5, key="surprise",
@@ -117,7 +117,7 @@ SURPRISE = Dimension(
     layer="cognition",
     description="Did something unexpected happen?",
     agreement="medium",
-    belief_indices=(25, 84),  # information_content, prediction_error
+    belief_indices=(21, 25, 75, 84),  # prediction_hierarchy, information_content, da_nacc, prediction_error
 )
 MOMENTUM = Dimension(
     index=6, key="momentum",
@@ -125,7 +125,7 @@ MOMENTUM = Dimension(
     layer="cognition",
     description="Building to somewhere or going in circles?",
     agreement="high",
-    belief_indices=(79, 82, 88, 89),  # chills_proximity, peak_detection, tension, wanting
+    belief_indices=(78, 79, 82, 88, 89),  # wanting_ramp, chills_proximity, peak_detection, tension, wanting
 )
 NARRATIVE = Dimension(
     index=7, key="narrative",
@@ -133,7 +133,7 @@ NARRATIVE = Dimension(
     layer="cognition",
     description="Is this a journey with chapters, or a loop?",
     agreement="medium",
-    belief_indices=(58, 101, 104, 106),  # episodic_boundary, context_depth, phrase_boundary, structure_pred
+    belief_indices=(17, 58, 101, 104, 106),  # abstract_future, episodic_boundary, context_depth, phrase_boundary, structure_pred
 )
 FAMILIARITY = Dimension(
     index=8, key="familiarity",
@@ -141,7 +141,7 @@ FAMILIARITY = Dimension(
     layer="cognition",
     description="Do I recognize these patterns/style?",
     agreement="medium",
-    belief_indices=(20, 31, 54, 109),  # prediction_accuracy, sequence_match, retrieval_prob, statistical_model
+    belief_indices=(20, 31, 51, 54, 109),  # prediction_accuracy, sequence_match, emotional_coloring, retrieval_prob, statistical_model
 )
 PLEASURE = Dimension(
     index=9, key="pleasure",
@@ -149,7 +149,7 @@ PLEASURE = Dimension(
     layer="cognition",
     description="Am I enjoying this? Do I want more?",
     agreement="high",
-    belief_indices=(81, 83, 89),  # liking, pleasure, wanting
+    belief_indices=(74, 75, 81, 83, 89),  # da_caudate, da_nacc, liking, pleasure, wanting
 )
 SPACE = Dimension(
     index=10, key="space",
@@ -157,7 +157,7 @@ SPACE = Dimension(
     layer="cognition",
     description="Intimate whisper or cathedral vastness?",
     agreement="medium",
-    belief_indices=(16, 35, 36),  # spectral_complexity, sensory_load, attention_capture
+    belief_indices=(13, 16, 35, 36, 60),  # spectral_temporal_synergy, spectral_complexity, sensory_load, attention_capture, ans_dominance
 )
 REPETITION = Dimension(
     index=11, key="repetition",
@@ -179,13 +179,13 @@ PREDICTION_ERROR = Dimension(
     index=0, key="prediction_error",
     name="Prediction Error", name_tr="Tahmin Hatası",
     layer="neuroscience", parent_key="predictive",
-    belief_indices=(25, 84),
+    belief_indices=(25, 34, 84),  # information_content, salience, prediction_error
 )
 PRECISION = Dimension(
     index=1, key="precision",
     name="Precision", name_tr="Hassasiyet",
     layer="neuroscience", parent_key="predictive",
-    belief_indices=(20, 39),
+    belief_indices=(20, 39, 46),  # prediction_accuracy, precision_weighting, selective_gain
 )
 INFORMATION_CONTENT = Dimension(
     index=2, key="information_content",
@@ -211,13 +211,13 @@ MOTOR_PERIOD_LOCK = Dimension(
     index=5, key="motor_period_lock",
     name="Period Lock", name_tr="Periyot Kilidi",
     layer="neuroscience", parent_key="sensorimotor",
-    belief_indices=(96, 98),
+    belief_indices=(96, 98, 99),  # kinematic_efficiency, period_entrainment, period_lock_strength
 )
 AUDITORY_MOTOR_BIND = Dimension(
     index=6, key="auditory_motor_bind",
     name="Motor Binding", name_tr="Motor Bağlama",
     layer="neuroscience", parent_key="sensorimotor",
-    belief_indices=(90, 42, 96),  # auditory_motor_coupling, beat_entrainment, kinematic_efficiency
+    belief_indices=(90, 92, 95, 99),  # auditory_motor_coupling, groove_quality, motor_preparation, period_lock_strength
 )
 TIMING_PRECISION = Dimension(
     index=7, key="timing_precision",
@@ -237,19 +237,19 @@ AUTONOMIC_AROUSAL = Dimension(
     index=9, key="autonomic_arousal",
     name="ANS Arousal", name_tr="Otonom Uyarılma",
     layer="neuroscience", parent_key="emotion",
-    belief_indices=(60, 63),
+    belief_indices=(35, 60, 63),  # sensory_load, ans_dominance, emotional_arousal
 )
 NOSTALGIA_CIRCUIT = Dimension(
     index=10, key="nostalgia_circuit",
     name="Nostalgia Circuit", name_tr="Nostalji Devresi",
     layer="neuroscience", parent_key="emotion",
-    belief_indices=(53, 70),
+    belief_indices=(50, 53, 55, 70),  # autobiographical_retrieval, nostalgia_intensity, self_relevance, nostalgia_affect
 )
 CHILLS_PATHWAY = Dimension(
     index=11, key="chills_pathway",
     name="Chills Pathway", name_tr="Tüylenme Yolu",
     layer="neuroscience", parent_key="emotion",
-    belief_indices=(61, 79, 63),  # chills_intensity, chills_proximity, emotional_arousal
+    belief_indices=(60, 61, 62, 79, 83),  # ans_dominance, chills_intensity, driving_signal, chills_proximity, pleasure
 )
 
 # --- Reward System (12-15) ---
@@ -257,25 +257,25 @@ DA_ANTICIPATION = Dimension(
     index=12, key="da_anticipation",
     name="DA Anticipation", name_tr="DA Beklenti",
     layer="neuroscience", parent_key="reward",
-    belief_indices=(74, 78),
+    belief_indices=(74, 77, 78),  # da_caudate, temporal_phase, wanting_ramp
 )
 DA_CONSUMMATION = Dimension(
     index=13, key="da_consummation",
     name="DA Consummation", name_tr="DA Tüketim",
     layer="neuroscience", parent_key="reward",
-    belief_indices=(75, 89),
+    belief_indices=(74, 75, 83, 89),  # da_caudate, da_nacc, pleasure, wanting
 )
 HEDONIC_TONE = Dimension(
     index=14, key="hedonic_tone",
     name="Hedonic Tone", name_tr="Hedonik Ton",
     layer="neuroscience", parent_key="reward",
-    belief_indices=(81, 83),
+    belief_indices=(40, 61, 81, 83),  # aesthetic_engagement, chills_intensity, liking, pleasure
 )
 REWARD_PE = Dimension(
     index=15, key="reward_pe",
     name="Reward PE", name_tr="Ödül TH",
     layer="neuroscience", parent_key="reward",
-    belief_indices=(84, 85),
+    belief_indices=(75, 84, 85),  # da_nacc, prediction_error, prediction_match
 )
 
 # --- Memory & Learning (16-19) ---
@@ -283,19 +283,19 @@ EPISODIC_ENCODING = Dimension(
     index=16, key="episodic_encoding",
     name="Episodic Encoding", name_tr="Epizodik Kodlama",
     layer="neuroscience", parent_key="memory",
-    belief_indices=(57, 59),
+    belief_indices=(51, 57, 59),  # emotional_coloring, consolidation_strength, episodic_encoding
 )
 AUTOBIOGRAPHICAL = Dimension(
     index=17, key="autobiographical",
     name="Autobiographical", name_tr="Otobiyografik",
     layer="neuroscience", parent_key="memory",
-    belief_indices=(50, 55),
+    belief_indices=(50, 51, 55),  # autobiographical_retrieval, emotional_coloring, self_relevance
 )
 STATISTICAL_LEARNING = Dimension(
     index=18, key="statistical_learning",
     name="Statistical Learning", name_tr="İstatistiksel Öğrenme",
     layer="neuroscience", parent_key="memory",
-    belief_indices=(31, 109),
+    belief_indices=(20, 31, 109),  # prediction_accuracy, sequence_match, statistical_model
 )
 EXPERTISE_EFFECT = Dimension(
     index=19, key="expertise_effect",
@@ -309,23 +309,23 @@ NEURAL_SYNCHRONY = Dimension(
     index=20, key="neural_synchrony",
     name="Neural Sync", name_tr="Nöral Senkron",
     layer="neuroscience", parent_key="social",
-    belief_indices=(128, 122),  # neural_synchrony, entrainment_quality
+    belief_indices=(122, 128),  # entrainment_quality, neural_synchrony
 )
 SOCIAL_BONDING = Dimension(
     index=21, key="social_bonding",
     name="Social Bond", name_tr="Sosyal Bağ",
     layer="neuroscience", parent_key="social",
-    belief_indices=(123, 124),
+    belief_indices=(55, 123, 124, 126),  # self_relevance, group_flow, social_bonding, synchrony_reward
 )
 SOCIAL_PREDICTION = Dimension(
     index=22, key="social_prediction",
     name="Social Prediction", name_tr="Sosyal Tahmin",
     layer="neuroscience", parent_key="social",
-    belief_indices=(125, 130),
+    belief_indices=(122, 125, 130),  # entrainment_quality, social_prediction_error, social_coordination
 )
 COLLECTIVE_REWARD = Dimension(
     index=23, key="collective_reward",
     name="Collective Reward", name_tr="Kolektif Ödül",
     layer="neuroscience", parent_key="social",
-    belief_indices=(121, 126),
+    belief_indices=(83, 121, 126),  # pleasure, collective_pleasure, synchrony_reward
 )

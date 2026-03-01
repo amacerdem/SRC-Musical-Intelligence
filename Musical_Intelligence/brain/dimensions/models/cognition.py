@@ -34,10 +34,13 @@ _INTERVAL_QUALITY = 6
 _PITCH_PROMINENCE = 8
 _PITCH_IDENTITY = 10
 _AESTHETIC_QUALITY = 11
+_SPECTRAL_TEMPORAL_SYNERGY = 13
 _TIMBRAL_CHARACTER = 15
 _SPECTRAL_COMPLEXITY = 16
 # F2 Prediction
+_ABSTRACT_FUTURE = 17
 _PREDICTION_ACCURACY = 20
+_PREDICTION_HIERARCHY = 21
 _INFORMATION_CONTENT = 25
 _SEQUENCE_MATCH = 31
 # F3 Attention
@@ -48,15 +51,20 @@ _METER_HIERARCHY = 44
 # F4 Memory
 _MELODIC_RECOGNITION = 47
 _MEMORY_PRESERVATION = 48
-_NOSTALGIA_INTENSITY = 53
+_EMOTIONAL_COLORING = 51
 _RETRIEVAL_PROBABILITY = 54
 _EPISODIC_BOUNDARY = 58
 # F5 Emotion
+_ANS_DOMINANCE = 60
 _EMOTIONAL_AROUSAL = 63
+_EMOTION_CERTAINTY = 64
 _PERCEIVED_HAPPY = 67
 _PERCEIVED_SAD = 68
 _NOSTALGIA_AFFECT = 70
 # F6 Reward
+_DA_CAUDATE = 74
+_DA_NACC = 75
+_WANTING_RAMP = 78
 _CHILLS_PROXIMITY = 79
 _HARMONIC_TENSION = 80
 _LIKING = 81
@@ -85,7 +93,8 @@ def compute_melodic_hook(beliefs: Tensor) -> Tensor:
 
     Combines pitch salience (how prominent the melodic line is), pattern
     recognition (how well-formed the contour), memorability (stickiness),
-    and melodic recognition.
+    melodic recognition, and spectral-temporal synergy (temporal auditory
+    integration, replaces STG region).
 
     Sources: Zatorre 2012 (pitch processing in STG/HG), Jakubowski 2017 (earworms).
     """
@@ -93,9 +102,11 @@ def compute_melodic_hook(beliefs: Tensor) -> Tensor:
     identity = beliefs[:, :, _PITCH_IDENTITY]
     memory = beliefs[:, :, _MEMORY_PRESERVATION]
     recognition = beliefs[:, :, _MELODIC_RECOGNITION]
+    synergy = beliefs[:, :, _SPECTRAL_TEMPORAL_SYNERGY]
 
     return (
-        0.30 * pitch + 0.25 * identity + 0.30 * memory + 0.15 * recognition
+        0.25 * pitch + 0.20 * identity + 0.25 * memory
+        + 0.15 * recognition + 0.15 * synergy
     ).clamp(0, 1)
 
 
@@ -105,8 +116,9 @@ def compute_harmonic_depth(beliefs: Tensor) -> Tensor:
     "Three-chord pop or jazz-level voicings?"
 
     Uses harmonic stability inversely (low stability = complex/adventurous),
-    template match (how standard the progressions are), and interval quality
-    (consonance/dissonance balance).
+    template match (how standard the progressions are), interval quality
+    (consonance/dissonance balance), and prediction hierarchy (harmonic
+    syntax processing, replaces IFG region).
 
     Sources: Koelsch 2005 (ERAN in IFG), Lerdahl 2001 (tonal tension model).
     """
@@ -114,11 +126,12 @@ def compute_harmonic_depth(beliefs: Tensor) -> Tensor:
     template = beliefs[:, :, _HARMONIC_TEMPLATE_MATCH]
     interval = beliefs[:, :, _INTERVAL_QUALITY]
     h_tension = beliefs[:, :, _HARMONIC_TENSION]
+    hierarchy = beliefs[:, :, _PREDICTION_HIERARCHY]
 
     # Invert stability: low stability = more harmonic depth
     depth = (
-        0.35 * (1.0 - stability) + 0.25 * (1.0 - template)
-        + 0.25 * interval + 0.15 * h_tension
+        0.25 * (1.0 - stability) + 0.20 * (1.0 - template) + 0.20 * interval
+        + 0.15 * h_tension + 0.20 * hierarchy
     )
     return depth.clamp(0, 1)
 
@@ -151,7 +164,8 @@ def compute_timbral_color(beliefs: Tensor) -> Tensor:
     "Acoustic guitar warmth or synthesizer crispness?"
 
     Timbral character directly measures the spectral identity.
-    Spectral complexity adds density of overtones.
+    Spectral complexity adds density of overtones. Spectral-temporal
+    synergy captures primary auditory encoding (replaces A1_HG region).
 
     Sources: Menon 2002 (timbre in A1), McAdams 1999 (timbre space dimensions).
     """
@@ -159,9 +173,11 @@ def compute_timbral_color(beliefs: Tensor) -> Tensor:
     complexity = beliefs[:, :, _SPECTRAL_COMPLEXITY]
     aesthetic = beliefs[:, :, _AESTHETIC_QUALITY]
     trained = beliefs[:, :, _TRAINED_TIMBRE_RECOGNITION]
+    synergy = beliefs[:, :, _SPECTRAL_TEMPORAL_SYNERGY]
 
     return (
-        0.40 * timbre + 0.25 * complexity + 0.15 * aesthetic + 0.20 * trained
+        0.30 * timbre + 0.20 * complexity + 0.15 * aesthetic
+        + 0.15 * trained + 0.20 * synergy
     ).clamp(0, 1)
 
 
@@ -170,7 +186,8 @@ def compute_emotional_arc(beliefs: Tensor) -> Tensor:
 
     "Joy? Awe? Nostalgia? Or a confusing mix?"
 
-    Combines emotional arousal magnitude, valence clarity, and nostalgia.
+    Combines emotional arousal magnitude, valence clarity, nostalgia,
+    and emotion certainty (emotional salience/clarity, replaces amygdala).
     High emotion_arc = strong, clear emotional character.
 
     Sources: GEMS (Zentner 2008), Eerola & Vuoskoski 2011.
@@ -179,10 +196,13 @@ def compute_emotional_arc(beliefs: Tensor) -> Tensor:
     sad = beliefs[:, :, _PERCEIVED_SAD]
     arousal = beliefs[:, :, _EMOTIONAL_AROUSAL]
     nostalgia = beliefs[:, :, _NOSTALGIA_AFFECT]
+    certainty = beliefs[:, :, _EMOTION_CERTAINTY]
 
     # Emotional clarity = max of (happy, sad, nostalgia) * arousal strength
     emo_max = torch.max(torch.max(happy, sad), nostalgia)
-    return (0.45 * emo_max + 0.35 * arousal + 0.20 * nostalgia).clamp(0, 1)
+    return (
+        0.30 * emo_max + 0.25 * arousal + 0.20 * certainty + 0.25 * nostalgia
+    ).clamp(0, 1)
 
 
 def compute_surprise(beliefs: Tensor) -> Tensor:
@@ -191,14 +211,20 @@ def compute_surprise(beliefs: Tensor) -> Tensor:
     "Did something unexpected just happen? That chord change was wild!"
 
     Prediction error is THE core signal. Information content measures
-    how unlikely the event was under the learned model.
+    how unlikely the event was. DA NAcc captures phasic surprise response
+    (replaces DA neurochemical). Prediction hierarchy captures syntactic
+    violation processing (replaces IFG region).
 
     Sources: Huron 2006 (ITPRA), Koelsch 2006 (harmonic expectancy violations).
     """
     pe = beliefs[:, :, _PREDICTION_ERROR]
     info = beliefs[:, :, _INFORMATION_CONTENT]
+    da = beliefs[:, :, _DA_NACC]
+    hierarchy = beliefs[:, :, _PREDICTION_HIERARCHY]
 
-    return (0.60 * pe + 0.40 * info).clamp(0, 1)
+    return (
+        0.30 * pe + 0.25 * info + 0.20 * da + 0.25 * hierarchy
+    ).clamp(0, 1)
 
 
 def compute_momentum(beliefs: Tensor) -> Tensor:
@@ -208,6 +234,7 @@ def compute_momentum(beliefs: Tensor) -> Tensor:
 
     Rising tension + approaching peak + wanting ramp = forward momentum.
     Chills proximity signals approaching peak experience.
+    Wanting ramp captures the anticipatory DA ramp (replaces DA neurochemical).
 
     Sources: Huron 2006 (sweet anticipation), Salimpoor 2011 (DA ramp).
     """
@@ -215,9 +242,11 @@ def compute_momentum(beliefs: Tensor) -> Tensor:
     peak = beliefs[:, :, _PEAK_DETECTION]
     chills_prox = beliefs[:, :, _CHILLS_PROXIMITY]
     wanting = beliefs[:, :, _WANTING]
+    wanting_ramp = beliefs[:, :, _WANTING_RAMP]
 
     return (
-        0.30 * tension + 0.25 * peak + 0.25 * chills_prox + 0.20 * wanting
+        0.25 * tension + 0.20 * peak + 0.20 * chills_prox
+        + 0.15 * wanting + 0.20 * wanting_ramp
     ).clamp(0, 1)
 
 
@@ -229,6 +258,7 @@ def compute_narrative(beliefs: Tensor) -> Tensor:
     Context depth measures nested structural layers (phrase > section > piece).
     Phrase and structure predictions indicate hierarchical form awareness.
     Episodic boundary detection marks "chapter breaks."
+    Abstract future prediction captures executive planning (replaces dlPFC region).
 
     Sources: Lerdahl & Jackendoff 1983 (GTTM), Sridharan 2007 (event segmentation).
     """
@@ -236,9 +266,11 @@ def compute_narrative(beliefs: Tensor) -> Tensor:
     phrase = beliefs[:, :, _PHRASE_BOUNDARY_PRED]
     structure = beliefs[:, :, _STRUCTURE_PRED]
     boundary = beliefs[:, :, _EPISODIC_BOUNDARY]
+    abstract = beliefs[:, :, _ABSTRACT_FUTURE]
 
     return (
-        0.30 * depth + 0.30 * structure + 0.25 * phrase + 0.15 * boundary
+        0.25 * depth + 0.20 * structure + 0.20 * phrase
+        + 0.15 * boundary + 0.20 * abstract
     ).clamp(0, 1)
 
 
@@ -249,6 +281,8 @@ def compute_familiarity(beliefs: Tensor) -> Tensor:
 
     Sequence match indicates pattern recognition. Prediction accuracy rises
     with familiarity. Statistical model captures learned regularities.
+    Emotional coloring captures hippocampal memory associations
+    (replaces hippocampus region).
 
     Sources: Janata 2009 (familiarity in hippocampus), Berlyne 1971 (inverted-U).
     """
@@ -256,9 +290,11 @@ def compute_familiarity(beliefs: Tensor) -> Tensor:
     pred_acc = beliefs[:, :, _PREDICTION_ACCURACY]
     stat_model = beliefs[:, :, _STATISTICAL_MODEL]
     retrieval = beliefs[:, :, _RETRIEVAL_PROBABILITY]
+    coloring = beliefs[:, :, _EMOTIONAL_COLORING]
 
     return (
-        0.30 * seq_match + 0.30 * pred_acc + 0.25 * stat_model + 0.15 * retrieval
+        0.25 * seq_match + 0.25 * pred_acc + 0.20 * stat_model
+        + 0.15 * retrieval + 0.15 * coloring
     ).clamp(0, 1)
 
 
@@ -268,15 +304,21 @@ def compute_pleasure(beliefs: Tensor) -> Tensor:
     "Am I enjoying this? Do I want it to continue?"
 
     Wanting (anticipatory) + liking (consummatory) + pleasure integration.
-    Inverted-U familiarity modulation: too novel or too familiar reduces pleasure.
+    DA NAcc captures reward circuit activation (replaces NAcc region).
+    DA caudate captures anticipatory reward (replaces DA neurochemical).
 
     Sources: Berridge 2003 (wanting vs liking), Salimpoor 2011 (DA and music).
     """
     wanting = beliefs[:, :, _WANTING]
     liking = beliefs[:, :, _LIKING]
     pleasure = beliefs[:, :, _PLEASURE]
+    da_nacc = beliefs[:, :, _DA_NACC]
+    da_caudate = beliefs[:, :, _DA_CAUDATE]
 
-    return (0.35 * wanting + 0.35 * liking + 0.30 * pleasure).clamp(0, 1)
+    return (
+        0.20 * wanting + 0.20 * liking + 0.20 * pleasure
+        + 0.20 * da_nacc + 0.20 * da_caudate
+    ).clamp(0, 1)
 
 
 def compute_space(beliefs: Tensor) -> Tensor:
@@ -286,14 +328,22 @@ def compute_space(beliefs: Tensor) -> Tensor:
 
     Spectral complexity correlates with perceived spaciousness (more frequencies
     = richer reverberant field). Sensory load increases with spatial complexity.
+    Spectral-temporal synergy captures temporal auditory processing
+    (replaces STG region). ANS dominance captures interoceptive immersion
+    (replaces insula region).
 
     Sources: Bregman 1990 (auditory scene analysis), Craig 2009 (insula interoception).
     """
     complexity = beliefs[:, :, _SPECTRAL_COMPLEXITY]
     load = beliefs[:, :, _SENSORY_LOAD]
     attention = beliefs[:, :, _ATTENTION_CAPTURE]
+    synergy = beliefs[:, :, _SPECTRAL_TEMPORAL_SYNERGY]
+    ans = beliefs[:, :, _ANS_DOMINANCE]
 
-    return (0.45 * complexity + 0.30 * load + 0.25 * attention).clamp(0, 1)
+    return (
+        0.25 * complexity + 0.20 * load + 0.15 * attention
+        + 0.20 * synergy + 0.20 * ans
+    ).clamp(0, 1)
 
 
 def compute_repetition(beliefs: Tensor) -> Tensor:
