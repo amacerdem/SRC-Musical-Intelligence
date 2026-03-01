@@ -5,7 +5,7 @@ Three tiers selected for falsifiability (listener validation ability):
     12D Cognition    — informed listener, some music knowledge
     24D Neuroscience — expert, requires neuroscience / music cognition
 
-Each tier is independently computed from (beliefs, ram, neuro).
+Each tier is independently computed from beliefs only.
 NO tier derives from another tier's output.
 Computation models: ``dimensions/models/{psychology,cognition,neuroscience}.py``
 """
@@ -47,7 +47,7 @@ TENSION = Dimension(
     layer="psychology",
     description="Do I feel strain or release?",
     agreement="high",
-    belief_indices=(88,),  # tension
+    belief_indices=(88, 63, 34),  # tension, emotional_arousal, salience
 )
 GROOVE = Dimension(
     index=4, key="groove",
@@ -217,7 +217,7 @@ AUDITORY_MOTOR_BIND = Dimension(
     index=6, key="auditory_motor_bind",
     name="Motor Binding", name_tr="Motor Bağlama",
     layer="neuroscience", parent_key="sensorimotor",
-    belief_indices=(90,),
+    belief_indices=(90, 42, 96),  # auditory_motor_coupling, beat_entrainment, kinematic_efficiency
 )
 TIMING_PRECISION = Dimension(
     index=7, key="timing_precision",
@@ -249,7 +249,7 @@ CHILLS_PATHWAY = Dimension(
     index=11, key="chills_pathway",
     name="Chills Pathway", name_tr="Tüylenme Yolu",
     layer="neuroscience", parent_key="emotion",
-    belief_indices=(61,),
+    belief_indices=(61, 79, 63),  # chills_intensity, chills_proximity, emotional_arousal
 )
 
 # --- Reward System (12-15) ---
@@ -309,7 +309,7 @@ NEURAL_SYNCHRONY = Dimension(
     index=20, key="neural_synchrony",
     name="Neural Sync", name_tr="Nöral Senkron",
     layer="neuroscience", parent_key="social",
-    belief_indices=(128,),
+    belief_indices=(128, 122),  # neural_synchrony, entrainment_quality
 )
 SOCIAL_BONDING = Dimension(
     index=21, key="social_bonding",

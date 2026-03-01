@@ -374,11 +374,7 @@ class MIPipeline:
         # Phase 9: Independent 3-tier dimensions (6D + 12D + 24D)
         from Musical_Intelligence.brain.dimensions import DimensionInterpreter
         dim_interp = DimensionInterpreter()
-        dim_result = dim_interp.interpret_numpy(
-            beliefs_131,
-            ram=ram[0].cpu().numpy(),
-            neuro=neuro[0].cpu().numpy(),
-        )
+        dim_result = dim_interp.interpret_numpy(beliefs_131)
 
         # Ψ³ domains
         psi_dict = {

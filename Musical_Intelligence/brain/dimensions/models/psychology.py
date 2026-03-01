@@ -1,6 +1,6 @@
 """6D Psychology tier — gut-level dimensions, zero training needed.
 
-Each function computes one dimension from (beliefs, ram, neuro) → (B, T).
+Each function computes one dimension from beliefs → (B, T).
 A listener with NO musical training can validate these in 2 seconds.
 
 Dimensions:
@@ -17,21 +17,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Callable, Tuple
 
-import torch
-
-from Musical_Intelligence.brain.neurochemicals import DA, NE, OPI, _5HT
-from Musical_Intelligence.brain.regions import region_index
-
 if TYPE_CHECKING:
     from torch import Tensor
-
-# Pre-resolve region indices (module-level, once)
-_AMYGDALA = region_index("amygdala")
-_PUTAMEN = region_index("putamen")
-_SMA = region_index("SMA")
-_A1_HG = region_index("A1_HG")
-_STG = region_index("STG")
-_NAcc = region_index("NAcc")
 
 # Belief index constants (from beliefs.jsonl registry)
 _SALIENCE_NETWORK = 34          # F3 salience_network_activation
@@ -49,7 +36,7 @@ _SENSORY_LOAD = 35              # F3 sensory_load
 _ATTENTION_CAPTURE = 36         # F3 attention_capture
 
 
-def compute_energy(beliefs: Tensor, ram: Tensor, neuro: Tensor) -> Tensor:
+def compute_energy(beliefs: Tensor) -> Tensor:
     """Energy — perceived intensity/activation level.
 
     "Is this loud/intense or quiet/gentle?"
@@ -59,20 +46,16 @@ def compute_energy(beliefs: Tensor, ram: Tensor, neuro: Tensor) -> Tensor:
     Neonates show startle/calming responses — pre-verbal, pre-cultural.
 
     Sources:
-        - NE (norepinephrine): primary arousal neuromodulator (Doya 2002)
         - b34 salience_network_activation: attention-grabbing intensity
         - b63 emotional_arousal: felt activation (ANS coupling)
-        - ram[A1_HG]: primary auditory cortex activation level
     """
-    ne = neuro[:, :, NE]
     salience = beliefs[:, :, _SALIENCE_NETWORK]
     arousal = beliefs[:, :, _EMOTIONAL_AROUSAL]
-    a1 = ram[:, :, _A1_HG]
 
-    return (0.35 * ne + 0.25 * salience + 0.25 * arousal + 0.15 * a1).clamp(0, 1)
+    return (0.50 * salience + 0.50 * arousal).clamp(0, 1)
 
 
-def compute_valence(beliefs: Tensor, ram: Tensor, neuro: Tensor) -> Tensor:
+def compute_valence(beliefs: Tensor) -> Tensor:
     """Valence — positive-to-negative emotional coloring.
 
     "Does this sound happy or sad?"
@@ -83,22 +66,18 @@ def compute_valence(beliefs: Tensor, ram: Tensor, neuro: Tensor) -> Tensor:
     Sources:
         - b67 perceived_happy / b68 perceived_sad: direct emotion percepts
         - b4 harmonic_stability: consonance → positive valence
-        - neuro[DA]: reward tone (wanting)
-        - neuro[OPI]: hedonic tone (liking)
     """
     happy = beliefs[:, :, _PERCEIVED_HAPPY]
     sad = beliefs[:, :, _PERCEIVED_SAD]
     stability = beliefs[:, :, _HARMONIC_STABILITY]
-    da = neuro[:, :, DA]
-    opi = neuro[:, :, OPI]
 
-    # Happy-sad differential + consonance bias + reward tone
-    mood = 0.35 * happy - 0.25 * sad + 0.15 * stability + 0.15 * da + 0.10 * opi
-    # Shift and scale: raw range ~ [-0.25, 1.0] → [0, 1]
-    return (mood + 0.25).clamp(0, 1)
+    # Happy-sad differential + consonance bias
+    mood = 0.45 * happy - 0.30 * sad + 0.25 * stability
+    # Shift and scale: raw range ~ [-0.30, 0.70] → [0, 1]
+    return (mood + 0.30).clamp(0, 1)
 
 
-def compute_tempo(beliefs: Tensor, ram: Tensor, neuro: Tensor) -> Tensor:
+def compute_tempo(beliefs: Tensor) -> Tensor:
     """Tempo — perceived speed of musical events.
 
     "Is this fast or slow?"
@@ -110,16 +89,14 @@ def compute_tempo(beliefs: Tensor, ram: Tensor, neuro: Tensor) -> Tensor:
     Sources:
         - b98 period_entrainment: motor system's locked tempo estimate
         - b42 beat_entrainment: oscillatory coupling strength (fast = strong)
-        - ram[SMA]: supplementary motor area — rate of motor preparation
     """
     period = beliefs[:, :, _PERIOD_ENTRAINMENT]
     beat = beliefs[:, :, _BEAT_ENTRAINMENT]
-    sma = ram[:, :, _SMA]
 
-    return (0.45 * period + 0.35 * beat + 0.20 * sma).clamp(0, 1)
+    return (0.55 * period + 0.45 * beat).clamp(0, 1)
 
 
-def compute_tension(beliefs: Tensor, ram: Tensor, neuro: Tensor) -> Tensor:
+def compute_tension(beliefs: Tensor) -> Tensor:
     """Tension — felt strain, suspense, unresolved expectation vs. release.
 
     "Do I feel strain or release?"
@@ -129,21 +106,17 @@ def compute_tension(beliefs: Tensor, ram: Tensor, neuro: Tensor) -> Tensor:
 
     Sources:
         - b88 tension: F6 direct tension belief (harmonics + PE)
-        - ram[amygdala]: threat/salience detection center
-        - neuro[5HT]: inverse serotonin = tension (low 5HT → anxious)
-        - neuro[NE]: sympathetic arousal amplifies felt tension
+        - b63 emotional_arousal: arousal amplifies felt tension
+        - b34 salience_network_activation: threat/salience detection
     """
     tension_belief = beliefs[:, :, _TENSION]
-    amyg = ram[:, :, _AMYGDALA]
-    inv_serotonin = 1.0 - neuro[:, :, _5HT]
-    ne = neuro[:, :, NE]
+    arousal = beliefs[:, :, _EMOTIONAL_AROUSAL]
+    salience = beliefs[:, :, _SALIENCE_NETWORK]
 
-    return (
-        0.40 * tension_belief + 0.20 * amyg + 0.20 * inv_serotonin + 0.20 * ne
-    ).clamp(0, 1)
+    return (0.50 * tension_belief + 0.30 * arousal + 0.20 * salience).clamp(0, 1)
 
 
-def compute_groove(beliefs: Tensor, ram: Tensor, neuro: Tensor) -> Tensor:
+def compute_groove(beliefs: Tensor) -> Tensor:
     """Groove — the urge to move rhythmically.
 
     "Do I want to move my body?"
@@ -154,19 +127,15 @@ def compute_groove(beliefs: Tensor, ram: Tensor, neuro: Tensor) -> Tensor:
 
     Sources:
         - b92 groove_quality: direct groove assessment from F7
-        - ram[putamen]: basal ganglia beat processing (Grahn & Rowe 2009)
-        - ram[SMA]: motor planning for rhythmic movement
         - b42 beat_entrainment: entrainment enables groove
     """
     groove = beliefs[:, :, _GROOVE_QUALITY]
-    put = ram[:, :, _PUTAMEN]
-    sma = ram[:, :, _SMA]
     beat = beliefs[:, :, _BEAT_ENTRAINMENT]
 
-    return (0.40 * groove + 0.20 * put + 0.20 * sma + 0.20 * beat).clamp(0, 1)
+    return (0.55 * groove + 0.45 * beat).clamp(0, 1)
 
 
-def compute_complexity(beliefs: Tensor, ram: Tensor, neuro: Tensor) -> Tensor:
+def compute_complexity(beliefs: Tensor) -> Tensor:
     """Complexity — perceived density of simultaneous musical events.
 
     "How much stuff is going on?"

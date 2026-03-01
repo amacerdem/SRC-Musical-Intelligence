@@ -6,13 +6,13 @@ Three independent tiers (NOT hierarchically derived):
     Cognition    (12D) — informed listener          (basic tier)
     Neuroscience (24D) — expert, neuroscience       (premium tier)
 
-Each tier is independently computed from (beliefs, ram, neuro).
+Each tier is independently computed from beliefs only.
 
 Usage::
 
     from Musical_Intelligence.brain.dimensions import DimensionInterpreter
     interpreter = DimensionInterpreter()
-    state = interpreter.interpret(beliefs, ram, neuro)  # → DimensionState
+    state = interpreter.interpret(beliefs)  # → DimensionState
 """
 
 from ._dimension import Dimension
