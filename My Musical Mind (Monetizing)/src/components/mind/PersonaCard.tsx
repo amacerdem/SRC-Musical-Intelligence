@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { CharacterAvatar } from "@/svg/characters";
+import { PersonaAvatar } from "@/components/mind/PersonaAvatar";
 import type { Persona } from "@/types/mind";
 import { getPersonaDimensions } from "@/data/persona-dimensions";
 import { DIMENSION_KEYS_6D } from "@/types/dimensions";
@@ -26,7 +26,7 @@ export function PersonaCard({ persona, compact = false }: Props) {
       >
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 flex-shrink-0">
-            <CharacterAvatar
+            <PersonaAvatar
               personaId={persona.id}
               color={persona.color}
               family={persona.family}
@@ -64,7 +64,7 @@ export function PersonaCard({ persona, compact = false }: Props) {
     >
       {/* Character Avatar */}
       <div className="flex justify-center mb-3 -mt-1">
-        <CharacterAvatar
+        <PersonaAvatar
           personaId={persona.id}
           color={persona.color}
           family={persona.family}

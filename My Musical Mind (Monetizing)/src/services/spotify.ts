@@ -98,19 +98,68 @@ export function isConnected(): boolean {
 
 /* ── API Helpers ────────────────────────────────────────────────────── */
 
+/**
+ * Tracks endpoints that returned 401/403, suppressing repeated calls for 60s.
+ * Key = path prefix (e.g. "/me/player"), value = timestamp when block expires.
+ */
+const _blockedEndpoints: Map<string, number> = new Map();
+const BLOCK_TTL_MS = 60_000; // suppress retries for 60s
+
+function endpointBlockKey(path: string): string {
+  // Normalize: strip query params
+  const base = path.split("?")[0];
+  // These two endpoints use different scopes — don't group with /me/player
+  if (base === "/me/player/recently-played") return base;
+  if (base === "/me/player/currently-playing") return base;
+  // Group playback-control endpoints (/me/player, /me/player/queue, etc.)
+  if (base.startsWith("/me/player")) return "/me/player";
+  if (base.startsWith("/me/playlists")) return "/me/playlists";
+  return base;
+}
+
 async function apiFetch<T>(path: string): Promise<T> {
   const token = await getValidToken();
   if (!token) throw new Error("No valid Spotify token");
+
+  // Check if this endpoint family is temporarily blocked
+  const blockKey = endpointBlockKey(path);
+  const blockedUntil = _blockedEndpoints.get(blockKey);
+  if (blockedUntil && Date.now() < blockedUntil) {
+    throw new Error(`Spotify API blocked (cached): ${blockKey}`);
+  }
 
   const res = await fetch(`${API_BASE}${path}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
 
   if (!res.ok) {
+    // Cache 401/403 to prevent polling spam
+    if (res.status === 401 || res.status === 403) {
+      _blockedEndpoints.set(blockKey, Date.now() + BLOCK_TTL_MS);
+    }
     throw new Error(`Spotify API ${res.status}: ${path}`);
   }
 
+  // Clear any previous block on success
+  _blockedEndpoints.delete(blockKey);
+
   return res.json() as Promise<T>;
+}
+
+/** PUT/POST helper for player control endpoints (no JSON body expected back) */
+async function apiCommand(path: string, method: "PUT" | "POST" = "PUT"): Promise<void> {
+  const token = await getValidToken();
+  if (!token) throw new Error("No valid Spotify token");
+
+  const res = await fetch(`${API_BASE}${path}`, {
+    method,
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  // 204 No Content is the expected success for player endpoints
+  if (!res.ok && res.status !== 204) {
+    throw new Error(`Spotify API ${res.status}: ${path}`);
+  }
 }
 
 /**
@@ -150,6 +199,34 @@ interface SpotifyAudioFeatures {
   acousticness: number;
   instrumentalness: number;
   speechiness: number;
+}
+
+interface SpotifyArtist {
+  id: string;
+  name: string;
+  genres: string[];
+  images: { url: string }[];
+  followers: { total: number };
+  popularity: number;
+}
+
+export interface SpotifyUserProfile {
+  id: string;
+  display_name: string;
+  images: { url: string }[];
+  followers: { total: number };
+  product: string; // "free" | "premium" etc.
+  country: string;
+}
+
+export interface SpotifyArtistInfo {
+  id: string;
+  name: string;
+  image: string;
+  genres: string[];
+  followers: number;
+  popularity: number;
+  family: NeuralFamily;
 }
 
 /* ── Genre → NeuralFamily mapping ───────────────────────────────────── */
@@ -330,6 +407,177 @@ export async function getInitialBatch(): Promise<MockTrack[]> {
   return all;
 }
 
+/* ── Playback State ────────────────────────────────────────────────── */
+
+export interface PlaybackState {
+  is_playing: boolean;
+  progress_ms: number;
+  duration_ms: number;
+  shuffle_state: boolean;
+  repeat_state: "off" | "track" | "context";
+  track: MockTrack | null;
+}
+
+/** Get full playback state (currently playing + progress + controls) */
+export async function getPlaybackState(): Promise<PlaybackState | null> {
+  try {
+    const data = await apiFetch<{
+      is_playing: boolean;
+      progress_ms: number;
+      item: SpotifyTrack | null;
+      shuffle_state: boolean;
+      repeat_state: "off" | "track" | "context";
+    }>("/me/player");
+
+    if (!data || !data.item) return null;
+
+    const features = await fetchAudioFeatures(data.item.id);
+    return {
+      is_playing: data.is_playing,
+      progress_ms: data.progress_ms ?? 0,
+      duration_ms: data.item.duration_ms,
+      shuffle_state: data.shuffle_state ?? false,
+      repeat_state: data.repeat_state ?? "off",
+      track: toMockTrack(data.item, features[0], []),
+    };
+  } catch {
+    return null;
+  }
+}
+
+/* ── Player Controls ──────────────────────────────────────────────── */
+
+/** Resume / start playback */
+export async function play(): Promise<void> {
+  await apiCommand("/me/player/play");
+}
+
+/** Pause playback */
+export async function pause(): Promise<void> {
+  await apiCommand("/me/player/pause");
+}
+
+/** Skip to next track */
+export async function skipToNext(): Promise<void> {
+  await apiCommand("/me/player/next", "POST");
+}
+
+/** Skip to previous track */
+export async function skipToPrevious(): Promise<void> {
+  await apiCommand("/me/player/previous", "POST");
+}
+
+/** Toggle shuffle */
+export async function setShuffle(state: boolean): Promise<void> {
+  await apiCommand(`/me/player/shuffle?state=${state}`);
+}
+
+/** Set repeat mode */
+export async function setRepeat(state: "off" | "track" | "context"): Promise<void> {
+  await apiCommand(`/me/player/repeat?state=${state}`);
+}
+
+/** Set volume (0–100) */
+export async function setVolume(percent: number): Promise<void> {
+  await apiCommand(`/me/player/volume?volume_percent=${Math.round(percent)}`);
+}
+
+/** Seek to position in current track */
+export async function seekTo(positionMs: number): Promise<void> {
+  await apiCommand(`/me/player/seek?position_ms=${Math.round(positionMs)}`);
+}
+
+/* ── Additional Data Endpoints ────────────────────────────────────── */
+
+/** Get user's Spotify profile */
+export async function getUserProfile(): Promise<SpotifyUserProfile | null> {
+  try {
+    return await apiFetch<SpotifyUserProfile>("/me");
+  } catch {
+    return null;
+  }
+}
+
+/** Get user's top artists */
+export async function getTopArtists(
+  timeRange: "short_term" | "medium_term" | "long_term" = "medium_term",
+  limit = 20,
+): Promise<SpotifyArtistInfo[]> {
+  try {
+    const data = await apiFetch<{ items: SpotifyArtist[] }>(
+      `/me/top/artists?time_range=${timeRange}&limit=${limit}`,
+    );
+    return data.items.map((a) => ({
+      id: a.id,
+      name: a.name,
+      image: a.images[0]?.url ?? "",
+      genres: a.genres ?? [],
+      followers: a.followers?.total ?? 0,
+      popularity: a.popularity ?? 0,
+      family: guessFamily(a.genres ?? []),
+    }));
+  } catch {
+    return [];
+  }
+}
+
+/** Get user's playlists */
+export interface SpotifyPlaylistInfo {
+  id: string;
+  name: string;
+  image: string;
+  trackCount: number;
+  owner: string;
+  isPublic: boolean;
+}
+
+export async function getUserPlaylists(limit = 20): Promise<SpotifyPlaylistInfo[]> {
+  try {
+    const data = await apiFetch<{
+      items: {
+        id: string;
+        name: string;
+        images: { url: string }[];
+        tracks: { total: number };
+        owner: { display_name: string };
+        public: boolean;
+      }[];
+    }>(`/me/playlists?limit=${limit}`);
+    return data.items.map((p) => ({
+      id: p.id,
+      name: p.name,
+      image: p.images[0]?.url ?? "",
+      trackCount: p.tracks.total,
+      owner: p.owner.display_name,
+      isPublic: p.public ?? false,
+    }));
+  } catch {
+    return [];
+  }
+}
+
+/** Get the user's playback queue */
+export async function getQueue(): Promise<{ currentTrack: MockTrack | null; queue: MockTrack[] }> {
+  try {
+    const data = await apiFetch<{
+      currently_playing: SpotifyTrack | null;
+      queue: SpotifyTrack[];
+    }>("/me/player/queue");
+    const allTracks = [data.currently_playing, ...data.queue].filter(Boolean) as SpotifyTrack[];
+    const ids = allTracks.map((t) => t.id).join(",");
+    const features = ids ? await fetchAudioFeatures(ids) : [];
+    const current = data.currently_playing
+      ? toMockTrack(data.currently_playing, features[0] ?? null, [])
+      : null;
+    const queue = data.queue.map((t, i) =>
+      toMockTrack(t, features[i + (data.currently_playing ? 1 : 0)] ?? null, []),
+    );
+    return { currentTrack: current, queue };
+  } catch {
+    return { currentTrack: null, queue: [] };
+  }
+}
+
 export const SpotifyService = {
   startAuthFlow,
   refreshAccessToken,
@@ -341,6 +589,19 @@ export const SpotifyService = {
   getCurrentlyPlaying,
   getSavedTracks,
   getInitialBatch,
+  getPlaybackState,
+  play,
+  pause,
+  skipToNext,
+  skipToPrevious,
+  setShuffle,
+  setRepeat,
+  setVolume,
+  seekTo,
+  getUserProfile,
+  getTopArtists,
+  getUserPlaylists,
+  getQueue,
 };
 
 // Debug: expose to browser console

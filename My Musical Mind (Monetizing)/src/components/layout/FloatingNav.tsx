@@ -5,8 +5,8 @@ import {
   Radio,
   BookOpen,
   Search,
-  Headphones,
   FlaskConical,
+  Music,
 } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -20,12 +20,12 @@ import { MiniOrganism } from "@/components/mind/MiniOrganism";
 import { useDesktop, useMobile } from "@/hooks/useMediaQuery";
 import { LanguageToggle } from "./LanguageToggle";
 
-/* 5 main pages */
+/* 6 main pages */
 const mainNav = [
+  { to: "/listen",    icon: Music,         labelKey: "nav.listen",    belief: "tempo" as const },
   { to: "/my-mind",   icon: Brain,         labelKey: "nav.mind",      belief: "reward" as const },
   { to: "/lab",       icon: FlaskConical,  labelKey: "nav.lab",       belief: "consonance" as const },
   { to: "/live",      icon: Radio,         labelKey: "nav.field",     belief: "tempo" as const },
-  { to: "/spotify",   icon: Headphones,    labelKey: "nav.spotify",   belief: "prediction" as const },
   { to: "/info",      icon: BookOpen,      labelKey: "nav.info",      belief: "salience" as const },
 ];
 

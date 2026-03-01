@@ -26,6 +26,7 @@ import { useNowPlaying } from "@/hooks/useNowPlaying";
 import { useDemoFlow } from "@/hooks/useDemoFlow";
 import { useChatStore } from "@/stores/useChatStore";
 import { MiniOrganism } from "@/components/mind/MiniOrganism";
+import { PersonaAvatar } from "@/components/mind/PersonaAvatar";
 import { ChatMessage, TypingIndicator } from "@/components/chat/ChatMessage";
 
 /* Lab imports */
@@ -292,7 +293,7 @@ export function Dashboard() {
       </AnimatePresence>
 
       {/* ═══ MAIN LAYOUT ══════════════════════════════════════════ */}
-      <div className="relative z-10 h-full flex flex-col px-5 sm:px-8 md:px-10 pt-10 pb-24">
+      <div className="relative z-10 h-full flex flex-col px-5 sm:px-8 md:px-10 -mt-8 pb-24">
 
         {/* ── TOP: Persona Identity — prominent, personal ──────── */}
         <motion.div {...cinematicReveal} className="text-center pt-1 pb-2">
@@ -312,6 +313,22 @@ export function Dashboard() {
             transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
             className="flex items-center justify-center gap-3"
           >
+            {/* Persona Character Avatar — left of name */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.85 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1.2, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
+              className="relative flex-shrink-0"
+            >
+              <PersonaAvatar
+                personaId={persona.id}
+                color={color}
+                family={identity.family}
+                size={52}
+                level={personaLevel}
+                showAura
+              />
+            </motion.div>
             <h1
               className="text-3xl md:text-4xl lg:text-5xl font-display font-bold tracking-tight leading-none"
               style={{ color }}

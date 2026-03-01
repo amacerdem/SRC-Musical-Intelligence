@@ -7,8 +7,10 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
+import { useMemo } from "react";
 import { ArrowLeft, Users, Sparkles } from "lucide-react";
 import { getPersona, personas } from "@/data/personas";
+import { FAMILY_COLORS } from "@/data/persona-levels";
 import { NARRATIVE_SECTIONS } from "@/data/persona-narratives";
 import { MindOrganismCanvas } from "@/components/mind/MindOrganismCanvas";
 import { PersonaCard } from "@/components/mind/PersonaCard";
@@ -25,22 +27,27 @@ import { useM3Store } from "@/stores/useM3Store";
 import { FAMILY_MORPHOLOGY, levelToOrganismStage, GENE_NAMES, GENE_COLORS } from "@/types/m3";
 import type { FamilyMorphology } from "@/canvas/mind-organism";
 import { DimensionSunburst } from "@/components/mind/DimensionSunburst";
-import { CharacterAvatar } from "@/svg/characters";
+import { PersonaAvatar } from "@/components/mind/PersonaAvatar";
+import type { NeuralFamily } from "@/types/mind";
+
+const FAMILY_ORDER: NeuralFamily[] = [
+  "Alchemists", "Architects", "Explorers", "Anchors", "Kineticists",
+];
+
+const FAMILY_DESC: Record<NeuralFamily, string> = {
+  Alchemists:  "Transformation & tension — intensity and dramatic resolution",
+  Architects:  "Structure & order — patterns, intervals, and form",
+  Explorers:   "Novelty & chaos — the unexpected and uncharted",
+  Anchors:     "Emotion & memory — deep feeling and human connection",
+  Kineticists: "Drive & energy — rhythm-first, pulse-seeking",
+};
 
 export function PersonaDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const persona = getPersona(Number(id));
   const m3Mind = useM3Store((s) => s.mind);
-
-  if (!persona) {
-    return (
-      <motion.div {...pageTransition} className="flex items-center justify-center h-96 bg-black">
-        <p className="text-slate-500 text-lg font-body font-light">{t("personaDetail.notFound")}</p>
-      </motion.div>
-    );
-  }
+  const persona = getPersona(id ? Number(id) : (m3Mind?.activePersonaId ?? 24))!;
 
   const isMyPersona = m3Mind?.activePersonaId === persona.id;
   const personaLevel = isMyPersona ? (m3Mind?.level ?? 1) : 1;
@@ -53,8 +60,17 @@ export function PersonaDetail() {
 
   const familyPersonas = personas.filter(p => p.family === persona.family && p.id !== persona.id);
 
+  const familyGroups = useMemo(() =>
+    FAMILY_ORDER.map((family) => ({
+      family,
+      color: FAMILY_COLORS[family],
+      desc: FAMILY_DESC[family],
+      members: personas.filter((p) => p.family === family),
+    })),
+  []);
+
   return (
-    <motion.div {...pageTransition} className="min-h-screen bg-black relative pb-24">
+    <motion.div {...pageTransition} className="min-h-screen bg-black relative pb-24 -mt-14">
       {/* Full-screen organism background */}
       <div className="absolute inset-0 opacity-10 pointer-events-none">
         <MindOrganismCanvas
@@ -77,30 +93,22 @@ export function PersonaDetail() {
         style={{ backgroundColor: persona.color }}
       />
 
-      {/* Back button */}
-      <div className="relative z-20 pt-4 px-4">
-        <Button variant="ghost" size="sm" onClick={() => navigate("/info")}>
-          <ArrowLeft size={16} className="mr-2" />
-          {t("personaDetail.allPersonas")}
-        </Button>
-      </div>
-
       {/* Hero — Persona Identity */}
       <motion.div variants={staggerChildren} initial="initial" animate="animate" className="relative z-10">
-        <motion.div variants={cinematicReveal} className="text-center mb-10 pt-4">
+        <motion.div variants={cinematicReveal} className="text-center mb-6 -mt-4">
           {/* Character Avatar + Organism side by side */}
-          <div className="flex items-center justify-center gap-6 mb-6">
+          <div className="flex items-center justify-center gap-6 mb-1">
             {/* 2D Character */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             >
-              <CharacterAvatar
+              <PersonaAvatar
                 personaId={persona.id}
                 color={persona.color}
                 family={persona.family}
-                size={120}
+                size={480}
                 level={personaLevel}
                 showAura
               />
@@ -127,16 +135,16 @@ export function PersonaDetail() {
           </div>
 
           {/* Family badge */}
-          <div className="flex items-center justify-center gap-2 mb-3">
+          <div className="flex items-center justify-center gap-2 mb-1">
             <NucleusDot color={persona.color} size={4} active />
             <span className="hud-label text-[10px]">{persona.family}</span>
           </div>
 
           {/* Persona name */}
-          <h1 className="text-4xl md:text-5xl font-display font-bold text-slate-100 tracking-tight mb-2">
+          <h1 className="text-4xl md:text-5xl font-display font-bold text-slate-100 tracking-tight mb-1">
             {t(`personas.${persona.id}.name`)}
           </h1>
-          <p className="text-base text-slate-500 italic font-body font-light mb-4">
+          <p className="text-base text-slate-500 italic font-body font-light mb-2">
             "{t(`personas.${persona.id}.tagline`)}"
           </p>
 
@@ -354,6 +362,48 @@ export function PersonaDetail() {
             </motion.div>
           </div>
         </div>
+
+        {/* ── All Personas Atlas ─────────────────────────────────── */}
+        <motion.div
+          variants={slideUp}
+          initial="initial"
+          animate="animate"
+          className="max-w-7xl mx-auto mt-20 px-4"
+        >
+          <div className="text-center mb-10">
+            <span className="hud-label mb-2 block">{t("infoHub.personaAtlas")}</span>
+            <h2 className="text-2xl font-display font-bold text-slate-200 mb-2">
+              {t("infoHub.personaAtlasTitle")}
+            </h2>
+            <p className="hud-label max-w-md mx-auto leading-relaxed text-xs">
+              {t("infoHub.personaAtlasSubtitle")}
+            </p>
+          </div>
+
+          <div className="space-y-12">
+            {familyGroups.map(({ family, color: fColor, desc, members }) => (
+              <div key={family}>
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="w-2.5 h-2.5 rounded-full" style={{ background: fColor, boxShadow: `0 0 12px ${fColor}60` }} />
+                  <h3 className="text-lg font-display font-bold" style={{ color: fColor }}>
+                    {family}
+                  </h3>
+                  <div className="flex-1 h-px" style={{ background: `${fColor}15` }} />
+                  <span className="text-[10px] font-body text-slate-600 font-light max-w-xs text-right">
+                    {desc}
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
+                  {members.map((p) => (
+                    <div key={p.id} className="spatial-card p-0 overflow-hidden">
+                      <PersonaCard persona={p} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
       </motion.div>
     </motion.div>
   );

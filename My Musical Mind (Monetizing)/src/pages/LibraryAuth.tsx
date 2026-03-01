@@ -20,7 +20,7 @@ export function LibraryAuth() {
 
     if (authOk && SpotifyService.isConnected()) {
       setSpotifyConnected(true);
-      navigate(hasCompletedOnboarding ? "/spotify" : "/onboarding", {
+      navigate(hasCompletedOnboarding ? "/my-mind" : "/onboarding", {
         replace: true,
         state: { spotifyConnected: true },
       });

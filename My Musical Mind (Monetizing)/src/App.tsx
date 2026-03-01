@@ -16,12 +16,12 @@ import { Dashboard } from "@/pages/Dashboard";
 import { PersonaDetail } from "@/pages/PersonaDetail";
 import { ExploreAE } from "@/pages/ExploreAE";
 import { ResonanceField } from "@/pages/ResonanceField";
-import { InfoHub } from "@/pages/InfoHub";
 import { M3Hub } from "@/pages/M3Hub";
 import { Callback } from "@/pages/Callback";
 import { LibraryAuth } from "@/pages/LibraryAuth";
-import { SpotifyProfile } from "@/pages/SpotifyProfile";
+
 import { Lab } from "@/pages/Lab";
+import { Listen } from "@/pages/Listen";
 
 export default function App() {
   const { hasCompletedOnboarding } = useUserStore();
@@ -56,8 +56,14 @@ export default function App() {
           <Route path="/callback" element={<Callback />} />
           <Route path="/library" element={<LibraryAuth />} />
 
-          {/* App routes (with shell) — 5 main pages */}
+          {/* App routes (with shell) — 6 main pages */}
           <Route element={<AppShell />}>
+            <Route
+              path="/listen"
+              element={
+                hasCompletedOnboarding ? <Listen /> : <Navigate to="/" />
+              }
+            />
             <Route
               path="/my-mind"
               element={
@@ -67,7 +73,7 @@ export default function App() {
             <Route
               path="/lab"
               element={
-                hasCompletedOnboarding ? <Dashboard /> : <Navigate to="/" />
+                hasCompletedOnboarding ? <Lab /> : <Navigate to="/" />
               }
             />
             <Route
@@ -77,14 +83,8 @@ export default function App() {
               }
             />
             <Route path="/live" element={<ResonanceField />} />
-            <Route path="/info" element={<InfoHub />} />
+            <Route path="/info" element={<PersonaDetail />} />
             <Route path="/info/:id" element={<PersonaDetail />} />
-            <Route
-              path="/spotify"
-              element={
-                hasCompletedOnboarding ? <SpotifyProfile /> : <Navigate to="/" />
-              }
-            />
           </Route>
 
           {/* Redirects for removed/old routes */}
@@ -94,12 +94,13 @@ export default function App() {
           <Route path="/friends/:userId" element={<Navigate to="/my-mind" replace />} />
           <Route path="/leaderboard" element={<Navigate to="/my-mind" replace />} />
           <Route path="/arena" element={<Navigate to="/live" replace />} />
-          <Route path="/listen" element={<Navigate to="/my-mind" replace />} />
+          {/* /listen is now a real route — no redirect needed */}
           <Route path="/social/:userId" element={<Navigate to="/my-mind" replace />} />
           <Route path="/social" element={<Navigate to="/my-mind" replace />} />
           <Route path="/personas/:id" element={<Navigate to="/info" replace />} />
           <Route path="/personas" element={<Navigate to="/info" replace />} />
           <Route path="/explorer" element={<Navigate to="/my-mind" replace />} />
+          <Route path="/spotify" element={<Navigate to="/my-mind" replace />} />
 
           {/* Fallback */}
           <Route path="*" element={<Navigate to="/" />} />
