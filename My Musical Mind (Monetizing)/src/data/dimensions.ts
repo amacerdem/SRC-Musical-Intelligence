@@ -294,42 +294,47 @@ export interface AcousticDimension {
   color: string;
 }
 
-/** R³ indices for each acoustic depth level */
-export const ACOUSTIC_R3_6D  = [10, 13, 0, 42, 21, 51];
-export const ACOUSTIC_R3_12D = [...ACOUSTIC_R3_6D, 12, 41, 37, 11, 22, 48];
-export const ACOUSTIC_R3_24D = [...ACOUSTIC_R3_12D, 4, 47, 17, 14, 59, 44, 8, 50, 60, 91, 94, 16];
+/** R³ indices for each acoustic depth level
+ *  Selected for perceptual salience AND temporal variation.
+ *  Group G (rhythm) excluded — clip-constant in current R³ implementation. */
+export const ACOUSTIC_R3_6D  = [10, 7, 0, 61, 21, 51];
+export const ACOUSTIC_R3_12D = [...ACOUSTIC_R3_6D, 12, 39, 37, 11, 22, 93];
+export const ACOUSTIC_R3_24D = [...ACOUSTIC_R3_12D, 4, 3, 17, 14, 59, 5, 23, 95, 60, 91, 94, 16];
 
-/** All 24 acoustic dimensions — 6D=first 6, 12D=first 12, 24D=all 24 */
+/** All 24 acoustic dimensions — 6D=first 6, 12D=first 12, 24D=all 24
+ *  R³ indices verified against R3-ONTOLOGY-BOUNDARY.md §Appendix A.
+ *  Group G (rhythm) excluded — all 10 features are clip-constant scalars
+ *  in the current R³ implementation (whole-clip autocorrelation). */
 const ALL_ACOUSTIC: AcousticDimension[] = [
   // ── 6D Essential Sound ──────────────────────────────────
-  { index: 0,  key: "loudness",    name: "Loudness",    nameTr: "Gürlük",       r3Index: 10, color: "#FF6B35" },
-  { index: 1,  key: "brightness",  name: "Brightness",  nameTr: "Parlaklık",    r3Index: 13, color: "#FFD166" },
-  { index: 2,  key: "roughness",   name: "Roughness",   nameTr: "Pürüz",        r3Index: 0,  color: "#06D6A0" },
-  { index: 3,  key: "beat",        name: "Beat",        nameTr: "Ritim",        r3Index: 42, color: "#118AB2" },
-  { index: 4,  key: "movement",    name: "Movement",    nameTr: "Hareket",      r3Index: 21, color: "#EF476F" },
-  { index: 5,  key: "harmony",     name: "Harmony",     nameTr: "Harmoni",      r3Index: 51, color: "#7209B7" },
+  { index: 0,  key: "loudness",     name: "Loudness",     nameTr: "Gürlük",         r3Index: 10, color: "#FF6B35" },  // B: perceptual loudness
+  { index: 1,  key: "power",        name: "Power",        nameTr: "Güç",            r3Index: 7,  color: "#FFD166" },  // B: amplitude (raw energy)
+  { index: 2,  key: "roughness",    name: "Roughness",    nameTr: "Pürüz",          r3Index: 0,  color: "#06D6A0" },  // A: sensory roughness
+  { index: 3,  key: "tonality",     name: "Tonality",     nameTr: "Tonalite",       r3Index: 61, color: "#118AB2" },  // H: diatonicity
+  { index: 4,  key: "movement",     name: "Movement",     nameTr: "Hareket",        r3Index: 21, color: "#EF476F" },  // D: spectral flux
+  { index: 5,  key: "harmony",      name: "Harmony",      nameTr: "Harmoni",        r3Index: 51, color: "#7209B7" },  // H: key clarity
 
   // ── +6 → 12D Detailed Sound ─────────────────────────────
-  { index: 6,  key: "warmth",      name: "Warmth",      nameTr: "Sıcaklık",     r3Index: 12, color: "#FF8C61" },
-  { index: 7,  key: "tempo",       name: "Tempo",       nameTr: "Tempo",        r3Index: 41, color: "#73D2DE" },
-  { index: 8,  key: "pitch",       name: "Pitch",       nameTr: "Perde",        r3Index: 37, color: "#B388EB" },
-  { index: 9,  key: "attack",      name: "Attack",      nameTr: "Atak",         r3Index: 11, color: "#FF4365" },
-  { index: 10, key: "richness",    name: "Richness",    nameTr: "Zenginlik",    r3Index: 22, color: "#88D498" },
-  { index: 11, key: "density",     name: "Density",     nameTr: "Yoğunluk",     r3Index: 48, color: "#F0C987" },
+  { index: 6,  key: "warmth",       name: "Warmth",       nameTr: "Sıcaklık",       r3Index: 12, color: "#FF8C61" },  // C: warmth
+  { index: 7,  key: "clarity",      name: "Clarity",      nameTr: "Netlik",         r3Index: 39, color: "#73D2DE" },  // F: pitch salience
+  { index: 8,  key: "pitch",        name: "Pitch",        nameTr: "Perde",          r3Index: 37, color: "#B388EB" },  // F: pitch height
+  { index: 9,  key: "attack",       name: "Attack",       nameTr: "Atak",           r3Index: 11, color: "#FF4365" },  // B: onset strength
+  { index: 10, key: "richness",     name: "Richness",     nameTr: "Zenginlik",      r3Index: 22, color: "#88D498" },  // D: distribution entropy
+  { index: 11, key: "perceived_vol",name: "Perceived Vol", nameTr: "Algılanan Ses", r3Index: 93, color: "#F0C987" },  // K: A-weighted loudness
 
   // ── +12 → 24D Full Analysis ──────────────────────────────
-  { index: 12, key: "consonance",  name: "Consonance",  nameTr: "Uyum",         r3Index: 4,  color: "#FF9F43" },
-  { index: 13, key: "groove",      name: "Groove",      nameTr: "Groove",       r3Index: 47, color: "#45B7D1" },
-  { index: 14, key: "harmonicity", name: "Harmonicity", nameTr: "Harmoniklik",  r3Index: 17, color: "#9B59B6" },
-  { index: 15, key: "tonalness",   name: "Tonalness",   nameTr: "Tonalite",     r3Index: 14, color: "#E17055" },
-  { index: 16, key: "chord_flow",  name: "Chord Flow",  nameTr: "Akor Akışı",   r3Index: 59, color: "#2ECC71" },
-  { index: 17, key: "syncopation", name: "Syncopation", nameTr: "Senkop",       r3Index: 44, color: "#F368E0" },
-  { index: 18, key: "velocity",    name: "Velocity",    nameTr: "Hız",          r3Index: 8,  color: "#FFA07A" },
-  { index: 19, key: "regularity",  name: "Regularity",  nameTr: "Düzenlilik",   r3Index: 50, color: "#20B2AA" },
-  { index: 20, key: "stability",   name: "Stability",   nameTr: "Kararlılık",   r3Index: 60, color: "#C39BD3" },
-  { index: 21, key: "sharpness",   name: "Sharpness",   nameTr: "Keskinlik",    r3Index: 91, color: "#EB984E" },
-  { index: 22, key: "bass_weight", name: "Bass Weight", nameTr: "Bas Ağırlığı", r3Index: 94, color: "#5DADE2" },
-  { index: 23, key: "smoothness",  name: "Smoothness",  nameTr: "Pürüzsüzlük",  r3Index: 16, color: "#58D68D" },
+  { index: 12, key: "consonance",    name: "Consonance",    nameTr: "Uyum",           r3Index: 4,  color: "#FF9F43" },  // A: sensory pleasantness
+  { index: 13, key: "fusion",        name: "Fusion",        nameTr: "Kaynaşma",       r3Index: 3,  color: "#45B7D1" },  // A: Stumpf fusion
+  { index: 14, key: "harmonicity",   name: "Harmonicity",   nameTr: "Harmoniklik",    r3Index: 17, color: "#9B59B6" },  // C: spectral autocorrelation
+  { index: 15, key: "tonalness",     name: "Tonalness",     nameTr: "Tonallik",       r3Index: 14, color: "#E17055" },  // C: tonalness
+  { index: 16, key: "chord_flow",    name: "Chord Flow",    nameTr: "Akor Akışı",     r3Index: 59, color: "#2ECC71" },  // H: harmonic change
+  { index: 17, key: "inharmonicity", name: "Inharmonicity", nameTr: "İnharmoniklik",  r3Index: 5,  color: "#F368E0" },  // A: inharmonicity
+  { index: 18, key: "evenness",      name: "Evenness",      nameTr: "Düzgünlük",      r3Index: 23, color: "#FFA07A" },  // D: distribution flatness
+  { index: 19, key: "voice_quality", name: "Voice Quality", nameTr: "Ses Kalitesi",   r3Index: 95, color: "#20B2AA" },  // K: Hammarberg index
+  { index: 20, key: "stability",     name: "Stability",     nameTr: "Kararlılık",     r3Index: 60, color: "#C39BD3" },  // H: tonal stability
+  { index: 21, key: "sharpness",     name: "Sharpness",     nameTr: "Keskinlik",      r3Index: 91, color: "#EB984E" },  // K: Zwicker sharpness
+  { index: 22, key: "bass_weight",   name: "Bass Weight",   nameTr: "Bas Ağırlığı",   r3Index: 94, color: "#5DADE2" },  // K: alpha ratio
+  { index: 23, key: "smoothness",    name: "Smoothness",    nameTr: "Pürüzsüzlük",    r3Index: 16, color: "#58D68D" },  // C: spectral smoothness
 ];
 
 export const ALL_ACOUSTIC_6D:  AcousticDimension[] = ALL_ACOUSTIC.slice(0, 6);

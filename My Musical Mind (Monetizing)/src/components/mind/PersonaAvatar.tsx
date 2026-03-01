@@ -1,6 +1,7 @@
 /* ── PersonaAvatar — Wrapper that prefers custom PNG over SVG CharacterAvatar ── */
 import { CharacterAvatar } from "@/svg/characters";
 import type { NeuralFamily } from "@/types/mind";
+import type { PersonaLevel } from "@/types/m3";
 
 /** Custom transparent-PNG persona images (override SVG CharacterAvatar) */
 const PERSONA_IMAGES: Record<number, string> = {
@@ -12,7 +13,7 @@ interface PersonaAvatarProps {
   color: string;
   family: NeuralFamily;
   size?: number;
-  level?: number;
+  level?: number | PersonaLevel;
   showAura?: boolean;
   className?: string;
 }
@@ -45,7 +46,7 @@ export function PersonaAvatar({
       color={color}
       family={family}
       size={size}
-      level={level}
+      level={level as PersonaLevel}
       showAura={showAura}
       className={className}
     />

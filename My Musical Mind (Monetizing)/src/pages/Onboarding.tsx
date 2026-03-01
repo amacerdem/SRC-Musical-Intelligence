@@ -1116,7 +1116,7 @@ function EvolvingStep({ progress, phase, userName }: { progress: number; phase: 
   const activeBeliefs = ANALYSIS_PHASES
     .slice(0, Math.floor((progress / 100) * ANALYSIS_PHASES.length) + 1)
     .map(p => p.belief)
-    .filter((b): b is keyof typeof beliefColors => b !== null);
+    .filter((b): b is NonNullable<typeof b> => b !== null);
   const uniqueBeliefs = [...new Set(activeBeliefs)];
 
   return (
