@@ -283,3 +283,241 @@ def diatonic_scale(start: int = C4, n: int = 8) -> List[int]:
 def chromatic_scale(start: int = C4, n: int = 13) -> List[int]:
     """Chromatic ascending scale."""
     return [start + i for i in range(n)]
+
+
+# ── Extended Primitives (R³ verification) ────────────────────────────
+
+C2 = 36
+D2, E2, F2, G2, A2, B2 = 38, 40, 41, 43, 45, 47
+
+def midi_isochronous(
+    pitch: int = 60,
+    bpm: float = 120.0,
+    n_beats: int = 16,
+    program: int = PIANO,
+    velocity: int = 80,
+) -> Tensor:
+    """Isochronous (equally spaced) note sequence at exact BPM.
+
+    Ground truth: tempo = bpm, isochrony_nPVI ≈ 1.0 (perfect regularity).
+    """
+    ioi = 60.0 / bpm
+    note_dur = ioi * 0.85
+
+    pm = pretty_midi.PrettyMIDI()
+    inst = pretty_midi.Instrument(program=program)
+    for i in range(n_beats):
+        t = i * ioi
+        inst.notes.append(pretty_midi.Note(
+            velocity=velocity, pitch=pitch,
+            start=t, end=t + note_dur,
+        ))
+    pm.instruments.append(inst)
+    return _render(pm)
+
+
+def midi_crescendo(
+    pitch: int = 60,
+    n_steps: int = 12,
+    step_dur: float = 0.4,
+    v_start: int = 20,
+    v_end: int = 120,
+    program: int = PIANO,
+) -> Tensor:
+    """Notes with linearly increasing velocity (crescendo).
+
+    Ground truth: amplitude ramps up, velocity_A positive.
+    """
+    pm = pretty_midi.PrettyMIDI()
+    inst = pretty_midi.Instrument(program=program)
+    for i in range(n_steps):
+        v = int(v_start + (v_end - v_start) * i / max(n_steps - 1, 1))
+        t = i * step_dur
+        inst.notes.append(pretty_midi.Note(
+            velocity=v, pitch=pitch,
+            start=t, end=t + step_dur - 0.02,
+        ))
+    pm.instruments.append(inst)
+    return _render(pm)
+
+
+def midi_decrescendo(
+    pitch: int = 60,
+    n_steps: int = 12,
+    step_dur: float = 0.4,
+    v_start: int = 120,
+    v_end: int = 20,
+    program: int = PIANO,
+) -> Tensor:
+    """Notes with linearly decreasing velocity (decrescendo).
+
+    Ground truth: amplitude ramps down, velocity_A negative.
+    """
+    return midi_crescendo(pitch, n_steps, step_dur, v_start, v_end, program)
+
+
+def midi_tremolo(
+    pitch: int = 60,
+    rate_hz: float = 4.0,
+    duration_s: float = 4.0,
+    program: int = PIANO,
+    velocity: int = 80,
+) -> Tensor:
+    """Rapid repeated notes at a specific Hz rate.
+
+    Ground truth: modulation energy peaks at rate_hz.
+    """
+    ioi = 1.0 / rate_hz
+    note_dur = ioi * 0.7
+    n_notes = int(duration_s * rate_hz)
+
+    pm = pretty_midi.PrettyMIDI()
+    inst = pretty_midi.Instrument(program=program)
+    for i in range(n_notes):
+        t = i * ioi
+        inst.notes.append(pretty_midi.Note(
+            velocity=velocity, pitch=pitch,
+            start=t, end=t + note_dur,
+        ))
+    pm.instruments.append(inst)
+    return _render(pm)
+
+
+def midi_syncopated(
+    pitch: int = 60,
+    bpm: float = 120.0,
+    n_bars: int = 4,
+    program: int = PIANO,
+    velocity: int = 80,
+) -> Tensor:
+    """Syncopated pattern — accents on offbeats.
+
+    Pattern per bar (in 8th notes): rest-HIT-rest-HIT-rest-HIT-rest-rest
+    Ground truth: high syncopation_index, lower metricality.
+    """
+    eighth = 60.0 / bpm / 2.0
+    note_dur = eighth * 0.8
+
+    pm = pretty_midi.PrettyMIDI()
+    inst = pretty_midi.Instrument(program=program)
+    offbeats = [1, 3, 5]
+    for bar in range(n_bars):
+        bar_start = bar * 8 * eighth
+        for pos in offbeats:
+            t = bar_start + pos * eighth
+            inst.notes.append(pretty_midi.Note(
+                velocity=velocity, pitch=pitch,
+                start=t, end=t + note_dur,
+            ))
+    pm.instruments.append(inst)
+    return _render(pm)
+
+
+def midi_polyrhythm(
+    pitch1: int = 60,
+    pitch2: int = 67,
+    beats1: int = 3,
+    beats2: int = 4,
+    duration_s: float = 6.0,
+    program: int = PIANO,
+    velocity: int = 80,
+) -> Tensor:
+    """Polyrhythm: two voices with different beat subdivisions.
+
+    Ground truth: complex rhythm, lower metricality, lower rhythmic_regularity.
+    """
+    cycle_dur = duration_s / 2.0
+    ioi1 = cycle_dur / beats1
+    ioi2 = cycle_dur / beats2
+
+    pm = pretty_midi.PrettyMIDI()
+    inst = pretty_midi.Instrument(program=program)
+
+    for cycle in range(2):
+        offset = cycle * cycle_dur
+        for i in range(beats1):
+            t = offset + i * ioi1
+            inst.notes.append(pretty_midi.Note(
+                velocity=velocity, pitch=pitch1,
+                start=t, end=t + ioi1 * 0.7,
+            ))
+        for i in range(beats2):
+            t = offset + i * ioi2
+            inst.notes.append(pretty_midi.Note(
+                velocity=velocity - 15, pitch=pitch2,
+                start=t, end=t + ioi2 * 0.7,
+            ))
+    pm.instruments.append(inst)
+    return _render(pm)
+
+
+def midi_irregular_rhythm(
+    pitch: int = 60,
+    n_notes: int = 12,
+    program: int = PIANO,
+    velocity: int = 80,
+    seed: int = 42,
+) -> Tensor:
+    """Notes with irregular (non-isochronous) timing.
+
+    Ground truth: low isochrony_nPVI, low rhythmic_regularity.
+    """
+    rng = np.random.RandomState(seed)
+    iois = rng.uniform(0.15, 0.8, size=n_notes).tolist()
+
+    pm = pretty_midi.PrettyMIDI()
+    inst = pretty_midi.Instrument(program=program)
+    t = 0.0
+    for ioi in iois:
+        note_dur = min(ioi * 0.8, 0.5)
+        inst.notes.append(pretty_midi.Note(
+            velocity=velocity, pitch=pitch,
+            start=t, end=t + note_dur,
+        ))
+        t += ioi
+    pm.instruments.append(inst)
+    return _render(pm)
+
+
+def midi_key_progression(
+    keys: List[int],
+    dur_per_key: float = 3.0,
+    program: int = PIANO,
+    velocity: int = 70,
+) -> Tensor:
+    """Chord progression through different keys (modulation).
+
+    Each key plays a I-IV-V-I cadence.
+    Ground truth: harmonic_change spikes at key boundaries, tonal_stability dips.
+    """
+    pm = pretty_midi.PrettyMIDI()
+    inst = pretty_midi.Instrument(program=program)
+    t = 0.0
+    chord_dur = dur_per_key / 4.0
+
+    for root in keys:
+        for p in [root, root + 4, root + 7]:
+            inst.notes.append(pretty_midi.Note(
+                velocity=velocity, pitch=p, start=t, end=t + chord_dur,
+            ))
+        t += chord_dur
+        iv = root + 5
+        for p in [iv, iv + 4, iv + 7]:
+            inst.notes.append(pretty_midi.Note(
+                velocity=velocity, pitch=p, start=t, end=t + chord_dur,
+            ))
+        t += chord_dur
+        v = root + 7
+        for p in [v, v + 4, v + 7]:
+            inst.notes.append(pretty_midi.Note(
+                velocity=velocity, pitch=p, start=t, end=t + chord_dur,
+            ))
+        t += chord_dur
+        for p in [root, root + 4, root + 7]:
+            inst.notes.append(pretty_midi.Note(
+                velocity=velocity, pitch=p, start=t, end=t + chord_dur,
+            ))
+        t += chord_dur
+
+    pm.instruments.append(inst)
+    return _render(pm)

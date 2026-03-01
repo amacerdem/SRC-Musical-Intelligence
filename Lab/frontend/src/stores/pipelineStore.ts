@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { useAudioStore } from './audioStore'
 import { useC3Store } from './c3Store'
 import { useH3Store } from './h3Store'
+import { useR3Store } from './r3Store'
 
 interface AudioItem {
   name: string
@@ -154,10 +155,12 @@ export const usePipelineStore = create<PipelineState>((set, get) => ({
       )
     }
 
-    // Auto-load beliefs into c3Store
+    // Auto-load R³, C³, H³ data
+    useR3Store.getState().clear()
     useC3Store.getState().clear()
     useH3Store.getState().clear()
     await Promise.all([
+      useR3Store.getState().loadR3(experimentId),
       useC3Store.getState().loadBeliefs(experimentId),
       useH3Store.getState().loadRegistry(experimentId),
     ])
