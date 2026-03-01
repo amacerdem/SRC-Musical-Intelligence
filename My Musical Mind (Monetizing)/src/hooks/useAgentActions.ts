@@ -8,7 +8,7 @@
 
 import { useCallback, useRef } from "react";
 import { SpotifyService } from "@/services/spotify";
-import { miDataService } from "@/services/MIDataService";
+import { miDataService, MIDataService } from "@/services/MIDataService";
 import type { AgentAction } from "@/services/agent";
 import type { MockTrack } from "@/services/SpotifySimulator";
 
@@ -46,28 +46,9 @@ export function useAgentActions(controls: PlayerControls) {
         } else {
           // Demo mode: find track in MI dataset and set as current
           const trackId = action.track_id ?? "";
-          const catalog = miDataService.getCatalog();
-          const catalogTrack = catalog.find((t) => t.id === trackId);
+          const catalogTrack = miDataService.findTrack(trackId);
           if (catalogTrack) {
-            // Convert catalog track to MockTrack format
-            const mockTrack: MockTrack = {
-              id: catalogTrack.id,
-              name: catalogTrack.title,
-              artist: catalogTrack.artist,
-              albumArt: "",
-              durationSec: catalogTrack.duration_s,
-              genre: catalogTrack.categories?.[0] ?? "Unknown",
-              dominantFamily: catalogTrack.dominant_family ?? "Alchemists",
-              features: {
-                energy: catalogTrack.signal?.energy ?? 0.5,
-                valence: catalogTrack.signal?.valence ?? 0.5,
-                danceability: catalogTrack.signal?.danceability ?? 0.5,
-                acousticness: catalogTrack.signal?.acousticness ?? 0.5,
-                harmonicComplexity: catalogTrack.signal?.harmonic_complexity ?? 0.5,
-                timbralBrightness: catalogTrack.signal?.timbral_brightness ?? 0.5,
-              },
-              genes: catalogTrack.genes ?? { entropy: 0.5, resolution: 0.5, tension: 0.5, resonance: 0.5, plasticity: 0.5 },
-            };
+            const mockTrack = MIDataService.toMockTrack(catalogTrack);
             c.setCurrentTrack(mockTrack);
             c.setIsPlaying(true);
             c.setProgressMs(0);

@@ -78,10 +78,15 @@ void main() {
 
   vec4 mvPos = modelViewMatrix * vec4(position, 1.0);
   gl_Position = projectionMatrix * mvPos;
-  gl_PointSize = aSize * uPointScale;
+
+  // Remap amplitude: raw 0-1 → compressed range with visible floor
+  // Weakest visible peak (~0.04) → size 0.35, alpha 0.30
+  // Strongest peak (1.0) → size 1.0, alpha 1.0
+  float sizeRemap = 0.3 + aSize * 0.7;
+  gl_PointSize = sizeRemap * uPointScale;
 
   vColor = color;
-  vAlpha = aSize;
+  vAlpha = 0.25 + aSize * 0.75;
 }
 `;
 

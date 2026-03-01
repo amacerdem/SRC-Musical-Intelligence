@@ -285,6 +285,294 @@
       "famous": "Famous Minds",
       "compatible": "Compatibility",
       "shadow": "The Shadow"
+    },
+    "1": {
+      "section": {
+        "intro": "You are wired for the rush. Your brain doesn't just listen to music — it hunts for the moment when tension snaps into release. That split-second neurochemical cascade is your definition of 'good music.' You're not passive; you're a predator of peak moments.",
+        "listening": "You skip ahead. You replay the drop. You build playlists around climactic moments, not albums. Your sessions tend to be short but intense — you're after density, not duration. Background music doesn't exist for you; either you're locked in or you've moved on.",
+        "emotion": "Your emotional landscape is defined by spikes, not curves. You feel music in bursts of euphoria followed by restless searching. When music hits right, you experience a full-body response — chills, goosebumps, involuntary movement. The gap between peaks can feel like withdrawal.",
+        "social": "You're the friend who sends a timestamped link: 'skip to 3:47.' You connect with people through shared peak moments rather than shared playlists. In group listening, you watch others' faces right before the drop. Your taste can feel intense to calmer minds.",
+        "growth": "Your edge is your ability to detect and anticipate reward. Your growth lies in learning to appreciate the build, not just the payoff. Try sitting with tension longer. The deepest drops come after the longest builds — and the quietest passages hold their own kind of power.",
+        "famous": "Skrillex, Hans Zimmer, and Beethoven share your neural wiring — artists who engineer moments of maximum impact. They understand that silence before the storm is what makes the thunder meaningful.",
+        "compatible": "You resonate most with Tension Architects (who build what you crave) and Contrast Addicts (who share your love of extremes). Minimal Zen minds may feel slow to you, but they hold a kind of depth you haven't discovered yet.",
+        "shadow": "Your shadow is addiction to intensity. When everything needs to be a peak moment, you miss the beauty of sustained quietness. You might dismiss entire genres as 'boring' because they don't deliver the hit fast enough. Not every moment needs to be extraordinary."
+      }
+    },
+    "2": {
+      "section": {
+        "intro": "You hear the mathematics of beauty. Where others feel music, you perceive the geometry of intervals — the precision of a perfect fifth, the warmth of a major third. For you, consonance isn't just pleasant; it's a kind of truth.",
+        "listening": "You gravitate toward tonal clarity. Complex harmonies intrigue you when they resolve cleanly; unresolved dissonance feels like an unfinished sentence. You notice voice leading, key changes, and intonation errors that fly past most listeners. Your library is rich in classical, jazz, and carefully produced recordings.",
+        "emotion": "Your emotional responses are deeply tied to harmonic structure. A well-placed chord change can bring tears; a sloppy modulation can genuinely irritate you. You experience beauty as a form of mathematical satisfaction — when the intervals align, something inside you clicks into place.",
+        "social": "You're the listener who can explain exactly why a particular passage is moving. You share music by pointing out specific harmonic moments. Your friends may find your analysis intimidating, but those who share your ear become lifelong musical companions.",
+        "growth": "Your strength is harmonic awareness. Your growth lies in tolerating — and eventually appreciating — imperfection. Microtonal music, detuned instruments, and intentional dissonance are your frontier. The ear that finds beauty in roughness is even more powerful than one that only hears purity.",
+        "famous": "Bach, Debussy, and Jacob Collier share your obsession with harmonic perfection. They hear intervals as colors and build entire worlds from the mathematics of sound.",
+        "compatible": "You connect deeply with Pattern Hunters (who map structure like you) and Resolution Junkies (who share your love of harmonic closure). Chaos Explorers challenge you — their love of noise opposes your need for purity, but the tension can be productive.",
+        "shadow": "Your shadow is rigidity. When only 'correct' harmony satisfies you, you close yourself off from entire musical traditions. Some of the most transformative music in history was built on rules that were deliberately broken."
+      }
+    },
+    "3": {
+      "section": {
+        "intro": "You thrive in the entropy. Where others hear noise, you hear new potential. Glitches, dissonance, and broken structures aren't obstacles — they're invitations. Your brain is wired to extract signal from chaos, and that makes you a rare kind of listener.",
+        "listening": "Your playlists are kaleidoscopic. You jump between genres with no friction — jazz to noise to ambient to hip-hop in a single session. You're drawn to the experimental edges of any genre. Algorithmic recommendations bore you because they cluster around what you already know.",
+        "emotion": "You feel a unique thrill when you hear something you genuinely cannot predict. Confusion isn't distressing; it's exciting. You experience a kind of joy that most people only feel with familiar music, but you feel it with the unknown. Your emotional range is wide because your tolerance for the unexpected is high.",
+        "social": "You're the musical scout of your friend group — always bringing back discoveries nobody has heard of. You bond with people over shared weirdness rather than shared hits. Your recommendations come with a caveat: 'trust me, give it 30 seconds.'",
+        "growth": "Your advantage is fearless listening. Your growth path is learning when to stay instead of always moving on. Depth comes from repetition, not just exploration. The chaos you love has layers that only reveal themselves with patience.",
+        "famous": "Björk, John Coltrane, and Aphex Twin share your appetite for the uncharted. They turned confusion into art and proved that the edge of understanding is where the most interesting things happen.",
+        "compatible": "You click with Sonic Nomads (fellow travelers) and Edge Runners (who push even further). Harmonic Purists may frustrate you, but their precision can ground your chaos in surprising ways.",
+        "shadow": "Your shadow is restlessness disguised as curiosity. When you can't sit still with any music for long, you may be running from depth rather than toward novelty. Some of the richest experiences require you to stay in one place."
+      }
+    },
+    "4": {
+      "section": {
+        "intro": "In structure and repetition, you find infinite depth. While complex minds seek chaos, yours constructs cathedrals out of silence and subtle variation. You understand something most listeners miss: less isn't a limitation — it's a choice that amplifies everything that remains.",
+        "listening": "You listen on loop. Not because you're not paying attention, but because each repetition reveals a new layer. You're drawn to ambient, minimalist, and process-based music. A single sustained chord can hold your attention for minutes. Your listening sessions tend to be long, immersive, and deeply focused.",
+        "emotion": "Your emotional world is subtle but profound. You don't need dramatic peaks to feel moved — a gentle shift in texture or a slowly evolving drone can produce deep tranquility or quiet ecstasy. You experience music as meditation, where the boundary between listener and sound dissolves.",
+        "social": "You're the calm center in musical conversations. You don't argue about taste; you simply listen more deeply than most people realize is possible. Your recommendations tend to be 'acquired tastes' — music that rewards patience. You connect with people who understand that silence is part of the composition.",
+        "growth": "Your strength is depth of attention. Your growth lies in engaging with complexity — dense arrangements, polyrhythmic structures, or chaotic textures. Not everything profound is quiet. Learning to find stillness inside loudness would expand your already deep perception.",
+        "famous": "Brian Eno, Ryuichi Sakamoto, and Steve Reich share your understanding that repetition is not stasis — it's a slow revelation. They build worlds from almost nothing and prove that minimalism is the opposite of emptiness.",
+        "compatible": "You resonate with Quiet Observers (who share your depth) and Ambient Flow minds (who understand texture over time). Dopamine Seekers live in a different universe — but they can teach you about the power of sudden, explosive change.",
+        "shadow": "Your shadow is avoidance disguised as serenity. When minimalism becomes a retreat from engagement, you risk mistaking numbness for peace. True depth means being able to sit with intensity, not just with calm."
+      }
+    },
+    "5": {
+      "section": {
+        "intro": "You have a deep craving for closure. The perfect cadence isn't just a sound — it's a physiological relief. Your brain builds harmonic expectations with unusual precision, and when those expectations are met, you experience a satisfaction that borders on the physical.",
+        "listening": "You're drawn to music with clear harmonic direction — progressions that 'go somewhere.' Unresolved endings frustrate you. You notice when a song avoids its expected resolution, and you may unconsciously complete the cadence in your mind. Your library favors well-structured compositions over ambient or experimental forms.",
+        "emotion": "Your emotional life is deeply shaped by completion. You feel genuine tension during a suspended chord and genuine relief when it resolves. This isn't just preference — it's how your neural reward system is wired. The V-I cadence triggers a measurable pleasure response in your brain.",
+        "social": "You're the friend who says 'wait for it...' before the resolution hits. You share music that delivers satisfying endings. In conversation, you're drawn to people who complete their thoughts and follow through — the same pattern that satisfies you in sound.",
+        "growth": "Your strength is harmonic prediction. Your growth lies in learning to enjoy the unresolved. Try music that deliberately avoids cadences — modal jazz, ambient, or aleatoric compositions. Your brain's craving for closure is powerful, but learning to suspend it opens entirely new dimensions of listening.",
+        "famous": "Mozart, Adele, and Max Richter share your instinct for satisfying resolution. They understand that the power of an ending is proportional to the tension that preceded it.",
+        "compatible": "You connect with Tension Architects (who build the suspense you need) and Harmonic Purists (who share your tonal awareness). Chaos Explorers operate in the space you find most uncomfortable, which makes them your most valuable growth partner.",
+        "shadow": "Your shadow is intolerance for ambiguity. When every musical idea must resolve, you lose access to the vast territory of open-ended beauty. Some of the most profound music in the world is the kind that leaves you hanging — and that discomfort is the point."
+      }
+    },
+    "6": {
+      "section": {
+        "intro": "You are the master of the build-up. While others crave the destination, you understand that the journey — the careful layering of dissonance and suspension — is the true alchemy. You don't just tolerate tension; you savor it, stretch it, and architect it into structures of extraordinary anticipation.",
+        "listening": "You listen for the architecture of suspense. Long build-ups, slow crescendos, and pieces that delay their resolution are your natural habitat. You notice when a producer adds a new layer, when a harmony starts to pull toward resolution, and exactly when the tension becomes almost unbearable.",
+        "emotion": "Your emotional world is built on anticipation. You feel the most alive in the moments before resolution — not after. This puts you in a unique position: you experience a sustained emotional intensity that peak-seekers only feel in bursts. The build is your drug.",
+        "social": "You're the person who says 'don't skip ahead' when listening with friends. You evangelize patience. You share music by describing the journey, not the destination. Your deep appreciation for structure makes you a fascinating conversationalist about music.",
+        "growth": "Your strength is architectural patience. Your growth lies in learning to appreciate sudden, unearned resolution — the beauty of a chord that resolves without warning, or a piece that jumps to its climax without a build.",
+        "famous": "Wagner, Radiohead, and Ennio Morricone share your genius for sustained tension. They understood that anticipation is an emotion in itself — not just a prelude to satisfaction.",
+        "compatible": "You pair beautifully with Dopamine Seekers (who crave the payoff you build) and Dramatic Arcs (who share your love of narrative structure). Raw Energy minds may seem crude to you, but their directness can be refreshing.",
+        "shadow": "Your shadow is the belief that nothing is worth having unless it's been earned through suffering. When you dismiss music that gives its gifts freely, you reveal a rigidity masquerading as sophistication. Sometimes the most alchemical thing is simplicity."
+      }
+    },
+    "7": {
+      "section": {
+        "intro": "You live in the extremes. The whisper and the scream. You don't just hear dynamic range — you feel it as a physical force. For you, music without contrast is just flat noise. The silence before the thunder is as essential as the thunder itself.",
+        "listening": "You seek out music with dramatic dynamic shifts. A track that stays at one volume level will lose you instantly. You're drawn to genres that weaponize contrast — post-rock crescendos, orchestral fortissimo after pianissimo, electronic drops that emerge from silence.",
+        "emotion": "Your emotional life is shaped by transitions, not states. You don't feel 'happy' or 'sad' from music — you feel the shift between them. The moment a quiet passage explodes into full volume, your nervous system fires in a way that nothing else replicates. You're wired for the pivot point.",
+        "social": "You share music by describing the moment: 'It's silent for two minutes, then...' You're the friend who insists on proper speakers. You struggle to explain your experience to people who listen at constant volume. When you find someone who lives for the contrast, the bond is immediate.",
+        "growth": "Your edge is sensitivity to dynamic range. Your growth lies in finding contrast in subtlety — micro-dynamics within quiet passages, the difference between three kinds of silence. The loudest music is less impactful than the shift from nothing to something.",
+        "famous": "Mogwai, Mahler, and Billie Eilish share your mastery of extremes. They prove that the space between loud and quiet is where all the drama lives.",
+        "compatible": "You connect with Dopamine Seekers (who share your love of impact) and Tension Architects (who build the silence you need). Ambient Flow minds operate in a single dynamic layer — your opposite, but their consistency can teach you about sustained beauty.",
+        "shadow": "Your shadow is numbness to the middle. When you only respond to extremes, you lose the ability to hear the vast emotional territory between whisper and scream. Most of life — and most of music — lives in the middle range."
+      }
+    },
+    "8": {
+      "section": {
+        "intro": "You feel the architecture of emotion. Music isn't sound to you — it's story. Every piece has a beginning, a conflict, and a resolution, and your brain maps these arcs with the precision of a novelist. A melody isn't just beautiful; it's a character whose journey you follow.",
+        "listening": "You prefer long-form music. Albums over singles, symphonies over movements, concept records over playlists. You listen from beginning to end and feel genuinely incomplete if you skip a track. Structure matters to you: verse-chorus-bridge isn't just a format — it's a narrative with rising action and denouement.",
+        "emotion": "Your emotional responses are cumulative. You don't react to individual moments so much as to the arc that connects them. A melody that returns after a long absence can devastate you. You feel music as memory, narrative, and identity braided together.",
+        "social": "You're the friend who says 'you have to listen to the whole album.' You share music by describing what it means, not how it sounds. You connect with people through shared emotional narratives — the song that defined a summer, the album that got you through a loss.",
+        "growth": "Your strength is narrative intelligence. Your growth lies in appreciating the formless — music without beginning, middle, or end. Ambient drones, improvised jazz, and generative compositions can teach you that not everything meaningful follows a story arc.",
+        "famous": "Tchaikovsky, Pink Floyd, and Kendrick Lamar share your gift for musical storytelling. They build worlds that unfold in time, where every note serves a larger purpose.",
+        "compatible": "You resonate with Tension Architects (who share your love of structure) and Nostalgic Souls (who also anchor music in personal meaning). Chaos Explorers may seem random to you, but their formlessness is its own kind of narrative.",
+        "shadow": "Your shadow is the need for meaning. When every piece must 'say something,' you lose access to the joy of pure sound. Sometimes music is just vibration, and that's enough."
+      }
+    },
+    "9": {
+      "section": {
+        "intro": "You decode the blueprints of sound. Recurring motifs, hidden symmetries, inversions — your mind maps the architecture of a piece in real-time. While others feel the music, you're simultaneously reading the structural DNA beneath it.",
+        "listening": "You listen analytically, even when you don't intend to. You catch the moment a theme returns in a new key, notice when a rhythm has been displaced by one beat, and register subtle variations in recurring phrases. Your library spans anything with structural complexity — fugues, progressive rock, through-composed jazz.",
+        "emotion": "Your deepest emotional responses are triggered by recognition. When a motif you've been tracking finally transforms or resolves, you feel a satisfaction that's part intellectual, part visceral. It's the pleasure of a puzzle solving itself in real-time.",
+        "social": "You're the friend who says 'did you notice how the bass line from the intro comes back inverted in the bridge?' People either find this brilliant or exhausting. When someone else catches a pattern you noticed, it's electric.",
+        "growth": "Your strength is structural awareness. Your growth lies in learning to let patterns wash over you without tracking them. Try listening with your body instead of your mind. The patterns will still be there when you come back.",
+        "famous": "Bach, Tool, and Coltrane share your obsession with hidden structure. They embedded patterns within patterns, creating music that rewards the analytical mind while still moving the heart.",
+        "compatible": "You click with Harmonic Purists (who share your analytical ear) and Precision Minds (who appreciate your attention to detail). Emotional Anchors can teach you that music's power doesn't always come from its architecture.",
+        "shadow": "Your shadow is analysis as avoidance. When you're always mapping structure, you may be keeping the music at arm's length. The mind that tracks every pattern sometimes does so because feeling the music directly is too vulnerable."
+      }
+    },
+    "10": {
+      "section": {
+        "intro": "A traveler of the sonic landscape. You refuse to settle in one genre or timbre. Your mind demands constant novelty; familiarity feels like stagnation. You're not just open-minded — you're constitutionally incapable of staying in one musical place for long.",
+        "listening": "Your listening history is a world map. In a single week you might cross Malian kora music, Norwegian black metal, Japanese city pop, and Brazilian baile funk. You don't organize by genre; you organize by mood, texture, or era. Your discovery rate is off the charts.",
+        "emotion": "You feel the thrill of the new like others feel nostalgia. First listens are sacred — the moment of encountering something you've never heard before produces a response that repeat listens can never match. Your emotional palette is broad because you've been exposed to so many different musical vocabularies.",
+        "social": "You're the ultimate music recommender. Friends come to you when they want something different. You connect with people by expanding their horizons. Your own musical identity can seem elusive — 'what kind of music do you like?' is a question you genuinely struggle to answer.",
+        "growth": "Your strength is breadth. Your growth lies in choosing depth. Pick one album and listen to it twenty times. By the tenth listen, you'll hear layers you missed. By the twentieth, you'll understand why some people listen to the same song for years.",
+        "famous": "David Bowie, Herbie Hancock, and Flying Lotus share your restless sonic appetite. They refused to be categorized and proved that the most interesting artists are the ones who keep moving.",
+        "compatible": "You connect with Chaos Explorers (fellow entropy lovers) and Curious Wanderers (who share your energy). Nostalgic Souls are your opposite — they find depth in revisiting; you find it in discovering. Together, you balance each other.",
+        "shadow": "Your shadow is the inability to commit. When every new sound is more exciting than the last, you build breadth without depth. You know a little about everything but may not know anything deeply enough to be truly moved by it."
+      }
+    },
+    "11": {
+      "section": {
+        "intro": "Your cognition is guided by the heart. You don't analyze music; you feel it resonate in your chest. Emotional truth is your only metric. Where others hear structure or pattern, you hear a direct line to human feeling — and that's the only thing that matters.",
+        "listening": "You listen based on mood, not genre. Your playlists have names like 'rainy mornings' or 'when everything is too much.' You're drawn to voices that carry genuine emotion — technical perfection matters less than authenticity. A cracked voice singing truth will always beat a perfect voice singing nothing.",
+        "emotion": "Your emotional range is the widest of all personas. Music can make you cry, laugh, rage, and feel profound peace — sometimes in a single sitting. You experience music as a direct emotional transmission; the boundary between the music's feeling and your feeling barely exists.",
+        "social": "You're the friend people go to when they need music for a feeling. You connect through emotional resonance rather than musical knowledge. When someone shares a song that moves them, you feel it with them — even if it's not your usual taste.",
+        "growth": "Your strength is emotional intelligence through sound. Your growth lies in developing analytical awareness — learning to name what you feel and understand why a particular chord triggers that response. When you add 'why' to 'what you feel,' your experience becomes even richer.",
+        "famous": "Adele, Nina Simone, and Jeff Buckley share your raw emotional wiring. They proved that technical mastery means nothing without emotional truth, and that vulnerability is the most powerful instrument.",
+        "compatible": "You resonate with Nostalgic Souls (who anchor emotion in memory) and Tonal Dreamers (who share your texture-first experience). Pattern Hunters live in a cerebral world that can seem cold to you, but their structure can give your feelings a framework.",
+        "shadow": "Your shadow is emotional overwhelm. When you can't separate your feelings from the music's feelings, you lose yourself. You might avoid certain music because it hits too hard, or use music as emotional regulation instead of experiencing it freely."
+      }
+    },
+    "12": {
+      "section": {
+        "intro": "You don't just hear rhythm; your neurons fire in sync with it. Movement, groove, and pulse are the fundamental languages of your mind. Before you understand a piece intellectually or emotionally, your body has already decoded it. You are rhythm incarnate.",
+        "listening": "You evaluate music by how it makes you move. The head-nod test is real for you — if your body doesn't respond in the first few bars, you move on. You're drawn to genres where rhythm is king: hip-hop, house, afrobeat, dancehall, drum and bass.",
+        "emotion": "Your emotional responses are tied to groove. A locked-in pocket makes you feel joy; a broken rhythm creates genuine anxiety. You experience tempo changes physically — a sudden BPM shift feels like turbulence. Your peak moments come when the groove is so perfect that you lose awareness of everything except the pulse.",
+        "social": "You're the friend who evaluates a DJ by their timing, not their track selection. On the dance floor, you find the pocket first and stay in it longest. You connect with people through shared movement — dancing together creates a bond that conversation can't match.",
+        "growth": "Your strength is rhythmic intelligence. Your growth lies in exploring music where rhythm is deliberately absent. Free jazz, arrhythmic ambient, or rubato classical can expand your perception beyond the grid. Rhythm is your home, but occasionally leaving home is how you grow.",
+        "famous": "J Dilla, Fela Kuti, and Steve Gadd share your supernatural rhythmic sense. They proved that groove isn't just timing — it's feeling, and the smallest micro-timing shifts change everything.",
+        "compatible": "You connect with Groove Mechanics (who share your micro-timing obsession) and Dynamic Storms (who bring the energy). Quiet Observers live in a rhythm-free world — their stillness can teach you that music exists beyond the beat.",
+        "shadow": "Your shadow is rhythm as cage. When you can only engage with music that has a clear pulse, you close yourself off from the vast world of unmetered sound. The silence between beats is also music."
+      }
+    },
+    "13": {
+      "section": {
+        "intro": "You drift in the textures and colors of sound. Gravity has no hold on you. While others anchor to melody or rhythm, you float in the atmosphere — the overtones, the reverb tails, the harmonic clouds that hover around the notes. You hear the air between the sounds.",
+        "listening": "You're drawn to music that creates spaces rather than tells stories. Ambient, drone, shoegaze, and atmospheric soundscapes are your natural habitat. You don't need lyrics, melody, or even rhythm — you need texture. You might listen to a single track for 40 minutes and feel like it lasted five.",
+        "emotion": "Your emotional world is atmospheric. You don't feel sharp emotions — you feel immersed in emotional weather. A warm pad makes you feel safe; a cold, distant reverb makes you feel alone in a vast space. Your experience is about states of being rather than moments of feeling.",
+        "social": "You're the friend who puts on background music that transforms the entire mood of a room. People don't always notice what you've chosen, but they notice how they feel. You connect through shared spaces rather than shared songs.",
+        "growth": "Your strength is tonal sensitivity. Your growth lies in engaging with foreground music — sharp melodies, aggressive rhythms, and lyrics that demand attention. Stepping into the foreground can feel uncomfortable, but it's where new dimensions await.",
+        "famous": "Sigur Rós, Harold Budd, and Cocteau Twins share your gift for sonic atmosphere. They proved that music can be a place you inhabit rather than a story you follow.",
+        "compatible": "You resonate with Ambient Flow minds (who share your temporal dissolution) and Quiet Observers (who understand subtlety). Dopamine Seekers live in the opposite world — their intensity might overwhelm you, but it can also wake you up.",
+        "shadow": "Your shadow is detachment. When you only inhabit atmosphere, you avoid the vulnerability of engaging directly with musical content. Floating is peaceful, but sometimes the most meaningful thing is to land."
+      }
+    },
+    "14": {
+      "section": {
+        "intro": "A hurricane of cognition. You crave high energy, high density, high impact. Your mind doesn't just handle sensory overload — it thrives on it. While others need music filtered and organized, you want everything at once, full volume, maximum bandwidth.",
+        "listening": "You're drawn to dense, layered, high-energy music. Double-kick metal, maximalist electronic, orchestral fortissimo, dense jazz fusion — anything that fills every frequency band simultaneously. You evaluate music partly by its intensity and partly by the number of simultaneous events you can track.",
+        "emotion": "Your emotional state during music is best described as exhilaration. You feel most alive when sound is overwhelming — when the music is so dense that it bypasses analysis entirely and becomes pure physical experience. Your peak moments feel like controlled chaos: everything at once, perfectly aligned.",
+        "social": "You're the friend who turns it up. You prefer concerts over headphones, festivals over living rooms. You connect with people in high-energy environments where words aren't necessary — the shared physical experience of loud, dense music creates bonds that conversation can't.",
+        "growth": "Your strength is processing bandwidth. Your growth lies in the extreme opposite: silence, space, and minimal sound. Your brain is so efficient at handling density that it may have forgotten how to handle emptiness. One quiet track a day could reveal an entirely new dimension.",
+        "famous": "Meshuggah, Max Richter (at his most layered), and Flying Lotus share your appetite for density. They pack extraordinary amounts of information into every moment and trust the listener to sort it out.",
+        "compatible": "You connect with Raw Energy minds (who share your intensity) and Rhythmic Pulses (who bring the motor drive). Minimal Zen minds are your polar opposite — but their emptiness might be the most challenging and rewarding frontier for your brain.",
+        "shadow": "Your shadow is overstimulation as escape. When you always need more, louder, denser, you may be drowning out something you don't want to hear — internal silence. The noise is thrilling, but what's underneath it?"
+      }
+    },
+    "15": {
+      "section": {
+        "intro": "Silence speaks to you. You find your center in the spaces between notes. While others track melody, rhythm, or harmony, you listen to what's not being played. You understand that silence is not the absence of music — it's the canvas on which music is painted.",
+        "listening": "You listen at low volumes. You prefer intimate recordings — solo piano, chamber music, fingerpicked guitar, field recordings. You notice room tone, breath sounds, and the natural decay of notes. Your ideal listening environment is completely still.",
+        "emotion": "Your emotional world is deep and still, like a lake. You don't need dramatic shifts to feel moved — a single note held for a long time, or the way a pianist's pedal changes the resonance, can produce profound emotion. Your feelings are subtle but persistent, like tides rather than waves.",
+        "social": "You're the listener others don't realize is listening. In a group, you're quiet, but you hear everything. You share music by creating conditions for deep listening rather than pushing specific tracks. When you recommend something, it comes with a soft insistence that suggests you've heard something others will need time to find.",
+        "growth": "Your strength is micro-perception. Your growth lies in engaging with loudness and density. Your finely tuned sensitivity can handle more than you think — and there is beauty in overwhelming sound that your quiet world can't reach.",
+        "famous": "Arvo Pärt, Nils Frahm, and Ryuichi Sakamoto share your reverence for silence and subtlety. They proved that the quietest music is often the most powerful.",
+        "compatible": "You connect with Tonal Dreamers (who share your atmospheric sensitivity) and Minimal Zen minds (who understand the power of less). Dynamic Storms are your opposite — their density might overwhelm you, but it also contains hidden quiet that only you can hear.",
+        "shadow": "Your shadow is withdrawal. When you retreat so deeply into silence that loudness becomes threatening, you've turned sensitivity into avoidance. The world is loud; your gift is hearing the quiet inside it, not hiding from the noise."
+      }
+    },
+    "16": {
+      "section": {
+        "intro": "You feel the micro-timing that makes a head nod. The Pocket. You understand the mechanics of motion and the subtle friction that creates groove. Where others hear a beat, you hear the microscopic push and pull between instruments that makes rhythm feel alive.",
+        "listening": "You evaluate music by its pocket. A perfectly quantized beat feels dead to you; a slightly swung hi-hat or a bass sitting just behind the beat feels alive. You're drawn to funk, neo-soul, hip-hop, and any genre where micro-timing is the secret ingredient.",
+        "emotion": "Your emotional life is tied to groove quality. When the pocket locks in — when every instrument breathes together in imperfect synchronization — you feel a satisfaction that's almost spiritual. It's not excitement; it's alignment. Everything in the right place at the right micro-moment.",
+        "social": "You're the friend who air-drums the exact ghost notes the drummer plays. On the dance floor, you don't just move — you inhabit the timing. You can tell within seconds whether someone 'gets it' or just hears the surface beat.",
+        "growth": "Your strength is micro-timing awareness. Your growth lies in listening to music where groove is intentionally absent — free improvisation, through-composed classical, or arrhythmic electronic. When you remove the pocket, you discover entirely new dimensions.",
+        "famous": "James Brown, D'Angelo, and Questlove share your supernatural feel for the pocket. They understood that groove is measured in milliseconds and that the difference between mechanical and magical is almost too small to see — but impossible to miss.",
+        "compatible": "You connect deeply with Rhythmic Pulses (who share your body-first listening) and Raw Energy minds (who bring physical intensity). Pattern Hunters can help you understand why certain grooves feel so right.",
+        "shadow": "Your shadow is groove elitism. When you dismiss music because its timing isn't 'pocket enough,' you close yourself off to vast musical traditions where groove isn't the point. Not all great music swings."
+      }
+    },
+    "17": {
+      "section": {
+        "intro": "You exist in a state of flow. Time dissolves into texture. You anchor yourself in the present moment, washed over by sound. While others listen to music as a sequence of events, you experience it as a continuous field — a sonic environment you inhabit rather than observe.",
+        "listening": "You prefer music without clear beginnings or endings. Ambient, generative, and process-based compositions are your home. You might put on a piece that runs for hours and lose track of when it started. Your listening isn't focused — it's more like breathing. You co-exist with it.",
+        "emotion": "Your emotional experience of music is dissolution — the gradual softening of the boundary between self and sound. You don't feel distinct emotions; you feel states: expanded, dissolved, present, held. Music is less something you experience and more something you become part of.",
+        "social": "You transform spaces. You curate environments, not playlists. People in your presence often don't notice the music, but they feel inexplicably calm or present. You share music as a gift of atmosphere — 'put this on while you work' rather than 'listen to this song.'",
+        "growth": "Your strength is present-moment awareness. Your growth lies in engaging with music that demands active attention — lyrics that tell stories, melodies that develop, rhythms that shift. Your flow state is beautiful, but being jolted out of it can reveal dimensions you've never accessed.",
+        "famous": "Brian Eno, Stars of the Lid, and William Basinski share your understanding that music can be an environment rather than an event. They dissolved the boundary between composition and atmosphere.",
+        "compatible": "You connect with Tonal Dreamers (who share your textural sensitivity) and Quiet Observers (who understand subtlety). Dopamine Seekers live in a world of peaks that feels jarring to you — but their intensity is the exact medicine for your tendency toward dissolution.",
+        "shadow": "Your shadow is dissociation masked as transcendence. When 'becoming one with the music' means losing yourself entirely, flow becomes escape. True presence means being aware of yourself within the experience, not disappearing into it."
+      }
+    },
+    "18": {
+      "section": {
+        "intro": "You perceive music as a transformative narrative. You don't hear notes; you hear scenes, conflicts, and resolutions. Every piece is a movie playing behind your eyes. Your brain automatically maps musical events onto dramatic arcs, turning sound into cinema.",
+        "listening": "You're drawn to music with clear dramatic structure: overtures, film scores, concept albums, and progressive rock. You listen for the plot — the introduction of themes, the rising tension, the climactic confrontation, the resolution. Even in a three-minute pop song, you hear a compressed dramatic arc.",
+        "emotion": "Your emotional responses follow narrative logic. You feel anticipation during the introduction, tension during the development, catharsis at the climax, and resolution at the end. If a piece doesn't follow this arc, you feel something is missing — like a movie without a third act.",
+        "social": "You describe music in cinematic terms: 'imagine a vast landscape opening up, then the strings enter like a storm approaching.' You share music by building context and narrative. People who listen with you often say you changed how they hear a piece.",
+        "growth": "Your strength is dramatic perception. Your growth lies in appreciating music that defies narrative — static pieces, generative compositions, and improvisations that wander without destination. Not all sound needs to tell a story.",
+        "famous": "John Williams, Hans Zimmer, and Ennio Morricone share your gift for musical storytelling. They proved that music alone can carry the emotional weight of an entire film.",
+        "compatible": "You connect with Structural Romantics (who share your narrative instinct) and Tension Architects (who build the dramatic arcs you crave). Ambient Flow minds seem plotless, but their formlessness is its own kind of drama — the drama of pure existence.",
+        "shadow": "Your shadow is the need for narrative. When everything must tell a story, you impose meaning where none is needed. Sometimes the most powerful musical experience is one that simply exists — no hero's journey, no resolution, just sound being itself."
+      }
+    },
+    "19": {
+      "section": {
+        "intro": "Your listening is a question, not an answer. You explore sound with innocent curiosity, unburdened by the need for predefined structures or judgments. 'What happens if?' is the question your brain asks every time it encounters new music. You approach sound the way a child approaches the world: with wonder.",
+        "listening": "You have no fixed genre preferences — you follow curiosity wherever it leads. Today it might be 17th-century harpsichord music; tomorrow, experimental field recordings. You don't have guilty pleasures because you don't have musical guilt. Everything is worth exploring.",
+        "emotion": "Your dominant musical emotion is wonder. Where others feel pleasure, tension, or nostalgia, you feel the thrill of encountering something genuinely new. Your emotional responses are diverse because you're not filtering through expectations — you meet each sound on its own terms.",
+        "social": "You're the friend who asks 'have you ever tried listening to...' followed by something completely unexpected. You don't push your taste because you don't have a fixed taste to push. You connect with people by helping them hear familiar things in unfamiliar ways.",
+        "growth": "Your strength is openness. Your growth lies in developing commitment — choosing one artist, one genre, or one tradition and going genuinely deep. Curiosity without follow-through is sampling; curiosity with depth is understanding.",
+        "famous": "Leonard Bernstein, Pharrell Williams, and Nils Frahm share your boundless musical curiosity. They crossed boundaries not to prove a point but because their curiosity simply wouldn't let them stay put.",
+        "compatible": "You connect with Sonic Nomads (who share your wandering nature) and Chaos Explorers (who push into the unknown). Precision Minds may seem rigid, but their focus is exactly the discipline your curiosity needs to transform into mastery.",
+        "shadow": "Your shadow is superficiality dressed as openness. When you taste everything but commit to nothing, your curiosity becomes a kind of avoidance. True exploration requires going deep enough to get lost — not just visiting the surface of a thousand places."
+      }
+    },
+    "20": {
+      "section": {
+        "intro": "Accuracy is your aesthetic. You hear the grid behind the music. Every deviation in pitch or time stands out like a flare. You seek the perfect execution — the recording where every note is exactly where it should be, every timbre pristine, every detail intentional.",
+        "listening": "You prefer high-fidelity recordings and well-produced music. You notice compression artifacts, pitch inconsistencies, and timing errors that pass undetected by most listeners. Your library skews toward genres that reward precision: classical performance, impeccable jazz, and meticulously produced electronic music.",
+        "emotion": "Your emotional reward comes from accuracy. When everything is perfectly aligned — pitch, timing, production, performance — you experience deep satisfaction. Conversely, a flat note or a sloppy edit creates genuine discomfort. Your emotional relationship with music is mediated by a standard of excellence you can't turn off.",
+        "social": "You're the friend who notices production quality before songwriting. You share music by highlighting technical excellence. You may frustrate friends who care more about feeling than fidelity, but those who share your ear become precision allies.",
+        "growth": "Your strength is perceptual accuracy. Your growth lies in learning to love imperfection — lo-fi recordings, live takes with mistakes, and intentionally rough production. Some of the most powerful recordings in history are technically flawed.",
+        "famous": "Glenn Gould, Steely Dan, and Kraftwerk share your obsession with precision. They proved that when every detail is perfected, the result transcends technique and becomes art.",
+        "compatible": "You connect with Pattern Hunters (who share your analytical mind) and Harmonic Purists (who care about interval accuracy). Chaos Explorers deliberately break everything you value — and that's exactly why they're your most important growth partner.",
+        "shadow": "Your shadow is perfection as prison. When the only music that satisfies you is flawless, you've turned your gift into a limitation. The most human quality of music — what separates it from a perfect algorithm — is its imperfection."
+      }
+    },
+    "21": {
+      "section": {
+        "intro": "Subtlety is fine, but power is truth. You respond to the visceral impact of sound waves hitting the body. Music is a physical force for you — measured not in notes or chords but in energy delivered straight to the chest.",
+        "listening": "You listen loud. You prefer music with high energy density — metal, hard electronic, punk, orchestral at full blast. The physical sensation of bass vibrating your ribcage is part of the experience. Headphones are second-best; you want speakers you can feel.",
+        "emotion": "Your emotional experience is fundamentally physical. You don't feel emotion as a mental state — you feel it as a bodily force. Goosebumps, elevated heart rate, involuntary headbanging, the urge to scream along. When music is powerful enough, your emotional response is indistinguishable from a fight-or-flight response — and you love it.",
+        "social": "You're the friend who moshes. You connect through shared physical experience — concerts, festivals, car rides at max volume. Your musical bonds are forged in loud environments where conversation is impossible and shared energy is everything.",
+        "growth": "Your strength is physical engagement. Your growth lies in discovering that power doesn't require volume. A single cello note at pianissimo can carry extraordinary force. Train your body to feel the energy in stillness.",
+        "famous": "Metallica, Rage Against the Machine, and Stravinsky share your understanding that music is a physical force. They weaponized sound and proved that impact is its own form of beauty.",
+        "compatible": "You connect with Dynamic Storms (who share your intensity) and Rhythmic Pulses (who bring the physical groove). Quiet Observers live in a world of whispers — their sensitivity might seem fragile, but they hear things in silence that you haven't discovered yet.",
+        "shadow": "Your shadow is volume as armor. When you always need it louder, harder, more intense, you may be using sonic force to avoid vulnerability. The strongest listeners are the ones who can be moved by a whisper."
+      }
+    },
+    "22": {
+      "section": {
+        "intro": "Your mind is a library of the past on fire. Music is the key to unlocking forgotten times. You don't just remember songs — you remember who you were when you heard them. For you, music and memory are inseparable, and every melody carries the weight of a life already lived.",
+        "listening": "You return to the same music repeatedly — not out of laziness but out of devotion. The songs that defined your adolescence still move you more than anything new. You create associations between music and life events automatically. Your library is a personal timeline.",
+        "emotion": "Your dominant emotion is bittersweet recognition. When a familiar melody plays, you feel joy and loss blended together — the happiness of the memory mixed with the ache of time passed. New music rarely produces this depth of feeling, which is why you keep returning to the old.",
+        "social": "You're the friend who says 'this was our song.' You share music as shared history, not shared taste. Your deepest bonds are with people who were present during the formative listening moments of your life. You can date friendships by the music you associate with them.",
+        "growth": "Your strength is emotional depth through memory. Your growth lies in building new associations — deliberately attaching new music to new experiences. Your memory system is powerful; feed it fresh material. The next song that defines a chapter of your life might be one you haven't heard yet.",
+        "famous": "Bruce Springsteen, Joni Mitchell, and Radiohead share your gift for music that becomes inseparable from the listener's personal history. Their music doesn't just sound good — it becomes part of who you are.",
+        "compatible": "You resonate with Emotional Anchors (who share your depth of feeling) and Structural Romantics (who connect music to narrative). Sonic Nomads are your opposite — their novelty-seeking challenges your attachment to the familiar, but they can help you build new memories.",
+        "shadow": "Your shadow is nostalgia as trap. When you can only be moved by music from your past, you've stopped growing. The most precious musical memories of your life might still be ahead of you — but only if you let new music in."
+      }
+    },
+    "23": {
+      "section": {
+        "intro": "You live on the boundary of what is considered 'music.' You push your perception to the edge, finding beauty in the breakdown of the signal. Where others hear noise, static, or error, you hear a new language being born. You are the avant-garde of listening.",
+        "listening": "Your library contains things most people wouldn't classify as music — industrial noise, musique concrète, harsh electronics, deconstructed club, glitch. You're drawn to the point where organized sound dissolves into pure sensation. You seek the extremes of every genre.",
+        "emotion": "Your emotional responses come from confrontation. When music challenges your ability to process it — when it's too fast, too dense, too strange, or too harsh — you feel alive. Comfort is boring; the edge of your comprehension is where you find meaning.",
+        "social": "You're the friend with music taste that nobody else understands — and you've made peace with that. When you find someone who shares your extremity, the connection is profound and immediate.",
+        "growth": "Your strength is perceptual courage. Your growth lies in returning to the center — finding the radical in the conventional. The most subversive act for an edge-dweller might be listening to a pop song and allowing it to move you.",
+        "famous": "Merzbow, Autechre, and John Cage share your conviction that the boundaries of music are meant to be dissolved. They proved that the most radical act is expanding the definition of what music can be.",
+        "compatible": "You connect with Chaos Explorers (who share your love of disorder) and Sonic Nomads (who appreciate your willingness to go further). Harmonic Purists are your philosophical opposite — but their devotion to beauty mirrors your devotion to truth.",
+        "shadow": "Your shadow is transgression as identity. When being extreme becomes who you are rather than what you explore, you've turned a frontier into a fortress. The edge is only meaningful in relation to the center."
+      }
+    },
+    "24": {
+      "section": {
+        "intro": "You are a rare anomaly in the musical mind landscape. You belong to no single family because you embody them all. Your brain operates across all dimensions simultaneously — high tolerance for chaos and high craving for structure, deep emotional resonance and sharp analytical precision. You are the universal listener.",
+        "listening": "Your listening defies categorization. In a single session, you might move from a Bach fugue to a noise track to a pop ballad, and each one engages a different dimension of your mind equally. You don't have a 'type' — you have a full spectrum. Your playlists confuse algorithms because you genuinely engage with everything.",
+        "emotion": "Your emotional range is the widest of all personas. You can feel the intellectual satisfaction of a perfect fugue, the visceral thrill of a bass drop, the tender ache of a nostalgic melody, and the disorienting wonder of an avant-garde experiment — all with equal intensity. Most people specialize; you generalize at a high level.",
+        "social": "You're the bridge between musical worlds. You can talk to the metalhead, the jazz purist, the ambient listener, and the pop fan — and connect with each genuinely. You don't just tolerate different tastes; you inhabit them. This makes you an extraordinary companion but can make your own identity feel elusive.",
+        "growth": "Your strength is dimensional balance. Your growth lies in identifying and developing your weakest dimension — the one area where your response is merely 'good' instead of 'deep.' Even a Renaissance Mind has a frontier. Find yours and push into it.",
+        "famous": "Mozart, Prince, and Kendrick Lamar share your multidimensional genius. They defied categorization not by rejecting convention but by mastering every convention and then transcending them all.",
+        "compatible": "You resonate with nearly everyone to some degree — that's your gift. Your deepest connections tend to be with other Renaissance Minds (rare as they are) and with specialists who can take you deeper into territories you've only visited. Every persona is your potential teacher.",
+        "shadow": "Your shadow is the jack-of-all-trades paradox. When you're good at everything, you may never achieve the transcendent depth that comes from total commitment to one dimension. Your breadth is extraordinary — but somewhere inside, there may be a dimension waiting for your undivided attention."
+      }
     }
   },
   "infoHub": {

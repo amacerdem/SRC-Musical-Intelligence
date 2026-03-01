@@ -48,7 +48,9 @@
     "featureBreakdown": "\u00d6zellik Da\u011f\u0131l\u0131m\u0131",
     "familyMix": "N\u00f6ral Aile Kar\u0131\u015f\u0131m\u0131",
     "topGenres": "En \u00c7ok Dinlenen T\u00fcrler",
-    "openSpotify": "Spotify'da A\u00e7"
+    "openSpotify": "Spotify'da A\u00e7",
+    "tabPlayer": "Oynat\u0131c\u0131",
+    "tabChat": "Sohbet"
   },
   "landing": {
     "subtitle": "M\u00dcZ\u0130KAL Z\u0130HN\u0130M",
@@ -1301,6 +1303,10 @@
     "error": "Bağlantı hatası. Sunucu çalışıyor mu?",
     "retry": "Tekrar dene",
     "clear": "Sohbeti temizle",
-    "title": "Zihnin"
+    "title": "Zihnin",
+    "listenWelcome": "M\u00fczik arkada\u015f\u0131n\u0131m. \u00c7alan par\u00e7a hakk\u0131nda soru sor, \u015fark\u0131 iste ya da m\u00fczik hakk\u0131nda sohbet et!",
+    "listenSuggestion1": "Ne \u00e7al\u0131yor?",
+    "listenSuggestion2": "Sakin bir \u015fey \u00e7al",
+    "listenSuggestion3": "Bu par\u00e7ay\u0131 analiz et"
   }
 }

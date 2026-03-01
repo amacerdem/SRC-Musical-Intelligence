@@ -1,5 +1,5 @@
 /* ── Lab — Scientific Analysis Studio ────────────────────────────────
- *  Full-screen 2-panel layout: Temporal Flow (top) + Mel Spectrogram (bottom).
+ *  Full-screen 2-panel layout: NeuroAcoustic (top) + Mel Spectrogram (bottom).
  *  Pure scientific instrument feel — no chat, no organism, no radar.
  *
  *  Mel spectrogram uses pre-computed data from the MI analysis pipeline
@@ -353,7 +353,7 @@ export function Lab() {
         {/* ── 2-PANEL GRID ─────────────────────────────────────────── */}
         <div className="flex-1 min-h-0 flex flex-col gap-0">
 
-          {/* ═ PANEL 1 — Temporal Flow (~35%) ═══════════════════════ */}
+          {/* ═ PANEL 1 — NeuroAcoustic (~35%) ═══════════════════════ */}
           <div
             className="min-h-0 border border-white/[0.04] rounded-t-xl overflow-hidden"
             style={{ flex: "0 0 35%" }}
@@ -369,7 +369,7 @@ export function Lab() {
                 <div className="flex items-center gap-2 mb-0.5 flex-shrink-0">
                   <Activity size={10} className="text-slate-600" />
                   <span className="text-[9px] font-display font-light tracking-[0.12em] uppercase text-slate-500">
-                    Temporal Flow
+                    NeuroAcoustic
                   </span>
                 </div>
 
@@ -402,7 +402,7 @@ export function Lab() {
                 <div className="flex flex-col items-center gap-3">
                   <Activity size={16} className="text-slate-800" />
                   <span className="text-[9px] font-display font-light tracking-[0.12em] uppercase text-slate-700">
-                    Temporal Flow
+                    NeuroAcoustic
                   </span>
                   {phase === "idle" && (
                     <p className="text-[10px] text-slate-700 font-body text-center max-w-[200px]">

@@ -479,10 +479,10 @@ export function Dashboard() {
                 </div>
               )}
 
-              {messages.map((msg) => (
+              {messages.filter((msg) => msg.role !== "system").map((msg) => (
                 <ChatMessage
                   key={msg.id}
-                  role={msg.role}
+                  role={msg.role as "user" | "assistant"}
                   content={msg.content}
                   accentColor={color}
                 />

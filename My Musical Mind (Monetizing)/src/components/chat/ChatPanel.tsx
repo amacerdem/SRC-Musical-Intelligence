@@ -85,10 +85,10 @@ export function ChatPanel({ personaName, accentColor }: Props) {
           </div>
         )}
 
-        {messages.map((msg) => (
+        {messages.filter((msg) => msg.role !== "system").map((msg) => (
           <ChatMessage
             key={msg.id}
-            role={msg.role}
+            role={msg.role as "user" | "assistant"}
             content={msg.content}
             accentColor={accentColor}
           />

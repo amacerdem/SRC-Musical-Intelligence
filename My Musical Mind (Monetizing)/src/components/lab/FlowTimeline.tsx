@@ -274,7 +274,7 @@ export function FlowTimeline({
       }
     }
 
-    /* ── 4. Dimension curves ─────────────────────────── */
+    /* ── 4. Dimension curves — neon glow ─────────────── */
     const seg0 = Math.max(0, Math.floor(sT / segDur) - 2);
     const seg1 = Math.min(segCount - 1, Math.ceil((sT + windowDur) / segDur) + 2);
 
@@ -283,16 +283,17 @@ export function FlowTimeline({
       if (!dim) continue;
       const col = baseHex(dim.color);
 
-      // Data points
-      const pts: { x: number; y: number }[] = [];
+      // Data points with raw value
+      const pts: { x: number; y: number; v: number }[] = [];
       for (let s = seg0; s <= seg1; s++) {
         const vals = getDimValues(s);
-        pts.push({ x: t2x(s * segDur), y: v2y(vals[d] ?? 0) });
+        const v = vals[d] ?? 0;
+        pts.push({ x: t2x(s * segDur), y: v2y(v), v });
       }
       if (pts.length < 2) continue;
 
-      // Catmull-Rom spline
-      const sp: { x: number; y: number }[] = [];
+      // Catmull-Rom spline — also interpolate value for glow
+      const sp: { x: number; y: number; v: number }[] = [];
       const p = [pts[0], ...pts, pts[pts.length - 1]];
       const res = 14; // sub-segments
       for (let i = 1; i < p.length - 2; i++) {
@@ -301,6 +302,7 @@ export function FlowTimeline({
           sp.push({
             x: cr(p[i - 1].x, p[i].x, p[i + 1].x, p[i + 2].x, tt),
             y: cr(p[i - 1].y, p[i].y, p[i + 1].y, p[i + 2].y, tt),
+            v: cr(p[i - 1].v, p[i].v, p[i + 1].v, p[i + 2].v, tt),
           });
         }
       }
@@ -319,21 +321,50 @@ export function FlowTimeline({
       ctx.fillStyle = ag;
       ctx.fill();
 
-      // Glow stroke
-      ctx.beginPath();
-      ctx.moveTo(sp[0].x, sp[0].y);
-      for (let i = 1; i < sp.length; i++) ctx.lineTo(sp[i].x, sp[i].y);
-      ctx.strokeStyle = col + "20";
-      ctx.lineWidth = depth <= 6 ? 5 : depth <= 12 ? 3.5 : 2.5;
+      // ── Neon glow passes — value-dependent ─────────
+      // Draw in chunks; each chunk's glow scales with local signal value
+      const CHUNK = 25;
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
-      ctx.stroke();
 
-      // Main stroke
+      for (let start = 0; start < sp.length - 1; start += CHUNK) {
+        const end = Math.min(sp.length - 1, start + CHUNK);
+
+        // Average normalized value in this chunk (0-1 within data range)
+        let avgV = 0;
+        for (let i = start; i <= end; i++) {
+          avgV += Math.max(0, Math.min(1, (sp[i].v - dataMin) / range));
+        }
+        avgV /= (end - start + 1);
+
+        const glow = Math.pow(avgV, 0.7); // non-linear: emphasize peaks
+
+        // Skip glow for very low values
+        if (glow < 0.08) continue;
+
+        // Outer neon glow
+        const outerA = Math.round(glow * 40); // 0-40
+        if (outerA > 2) {
+          ctx.beginPath();
+          ctx.moveTo(sp[start].x, sp[start].y);
+          for (let i = start + 1; i <= end; i++) ctx.lineTo(sp[i].x, sp[i].y);
+          ctx.shadowBlur = 6 + glow * 14;
+          ctx.shadowColor = col;
+          ctx.strokeStyle = col + outerA.toString(16).padStart(2, "0");
+          ctx.lineWidth = depth <= 6 ? 4 + glow * 4 : depth <= 12 ? 3 + glow * 3 : 2 + glow * 2;
+          ctx.stroke();
+        }
+      }
+
+      // Reset shadow
+      ctx.shadowBlur = 0;
+      ctx.shadowColor = "transparent";
+
+      // Core line — uniform, full spline
       ctx.beginPath();
       ctx.moveTo(sp[0].x, sp[0].y);
       for (let i = 1; i < sp.length; i++) ctx.lineTo(sp[i].x, sp[i].y);
-      ctx.strokeStyle = col + "CC";
+      ctx.strokeStyle = col + "D0";
       ctx.lineWidth = depth <= 6 ? 1.5 : depth <= 12 ? 1 : 0.65;
       ctx.stroke();
     }
