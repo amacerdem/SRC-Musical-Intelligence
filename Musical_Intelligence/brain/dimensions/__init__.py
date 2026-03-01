@@ -1,16 +1,18 @@
-"""Hierarchical Dimension System — 131 beliefs → 24D → 12D → 6D.
+"""3-Tier Falsifiability Dimension System — independent 6D + 12D + 24D.
 
-Three-layer binary tree mapping C³ beliefs to user-facing dimensions:
+Three independent tiers (NOT hierarchically derived):
 
-    Psychology  (6D)  — experiential terms  (free tier)
-    Cognition   (12D) — music cognition     (basic tier)
-    Neuroscience (24D) — neuroscience terms  (premium tier)
+    Psychology   (6D)  — gut-level, zero training  (free tier)
+    Cognition    (12D) — informed listener          (basic tier)
+    Neuroscience (24D) — expert, neuroscience       (premium tier)
+
+Each tier is independently computed from (beliefs, ram, neuro).
 
 Usage::
 
     from Musical_Intelligence.brain.dimensions import DimensionInterpreter
     interpreter = DimensionInterpreter()
-    state = interpreter.interpret(beliefs_tensor)  # (B, T, 131) → DimensionState
+    state = interpreter.interpret(beliefs, ram, neuro)  # → DimensionState
 """
 
 from ._dimension import Dimension
@@ -20,8 +22,10 @@ from .registry import (
     ALL_NEUROSCIENCE,
     ALL_PSYCHOLOGY,
     COGNITION_NAMES,
+    COGNITION_NAMES_TR,
     DIM_BY_KEY,
     NEUROSCIENCE_NAMES,
+    NEUROSCIENCE_NAMES_TR,
     NUM_COGNITION,
     NUM_NEUROSCIENCE,
     NUM_PSYCHOLOGY,
@@ -42,5 +46,7 @@ __all__ = [
     "PSYCHOLOGY_NAMES",
     "PSYCHOLOGY_NAMES_TR",
     "COGNITION_NAMES",
+    "COGNITION_NAMES_TR",
     "NEUROSCIENCE_NAMES",
+    "NEUROSCIENCE_NAMES_TR",
 ]

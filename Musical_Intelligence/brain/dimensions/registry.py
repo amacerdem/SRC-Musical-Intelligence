@@ -1,7 +1,9 @@
 """Registry — collects all 42 dimensions into lookup structures.
 
-This is the single source of truth for the hierarchical dimension tree.
-Three layers: Psychology (6D), Cognition (12D), Neuroscience (24D).
+Three independent tiers (NOT hierarchically derived):
+    Psychology   (6D)  — gut-level, free tier
+    Cognition    (12D) — informed listener, basic tier
+    Neuroscience (24D) — expert, premium tier
 
 Pattern follows: Musical_Intelligence/brain/regions/registry.py
 """
@@ -11,58 +13,58 @@ from typing import Dict, Tuple
 
 from ._dimension import Dimension
 
-# --- 24D Neuroscience (leaf nodes) ---
+# --- 6D Psychology ---
 from .tree import (
-    PREDICTIVE_PROCESSING,
-    INFORMATION_ENTROPY,
-    SEQUENCE_LEARNING,
-    SENSORY_ENCODING,
-    HARMONIC_TENSION,
-    AUTONOMIC_AROUSAL,
-    SENSORY_SALIENCE,
-    AESTHETIC_APPRAISAL,
-    OSCILLATION_COUPLING,
-    MOTOR_PERIOD_LOCKING,
-    AUDITORY_MOTOR,
-    HIERARCHICAL_CONTEXT,
-    VALENCE_MODE,
-    NOSTALGIA_CIRCUITRY,
-    DOPAMINERGIC_DRIVE,
-    HEDONIC_VALUATION,
-    HIPPOCAMPAL_BINDING,
-    AUTOBIOGRAPHICAL,
-    PITCH_MELODY,
-    PERCEPTUAL_LEARNING,
-    STRUCTURAL_PREDICTION,
-    EXPERTISE_NETWORK,
-    INTERPERSONAL_SYNC,
-    SOCIAL_REWARD,
+    COMPLEXITY,
+    ENERGY,
+    GROOVE,
+    TEMPO,
+    TENSION,
+    VALENCE,
 )
 
 # --- 12D Cognition ---
 from .tree import (
-    EXPECTANCY,
-    INFORMATION_RATE,
-    TENSION_ARC,
-    SONIC_IMPACT,
-    ENTRAINMENT,
-    GROOVE,
-    CONTAGION,
-    REWARD,
-    EPISODIC_RESONANCE,
-    RECOGNITION,
-    SYNCHRONY,
-    BONDING,
+    EMOTIONAL_ARC,
+    FAMILIARITY,
+    HARMONIC_DEPTH,
+    MELODIC_HOOK,
+    MOMENTUM,
+    NARRATIVE,
+    PLEASURE,
+    REPETITION,
+    RHYTHMIC_DRIVE,
+    SPACE,
+    SURPRISE,
+    TIMBRAL_COLOR,
 )
 
-# --- 6D Psychology ---
+# --- 24D Neuroscience ---
 from .tree import (
-    DISCOVERY,
-    INTENSITY,
-    FLOW,
-    DEPTH,
-    TRACE,
-    SHARING,
+    AUDITORY_MOTOR_BIND,
+    AUTOBIOGRAPHICAL,
+    AUTONOMIC_AROUSAL,
+    CHILLS_PATHWAY,
+    COLLECTIVE_REWARD,
+    DA_ANTICIPATION,
+    DA_CONSUMMATION,
+    EPISODIC_ENCODING,
+    EXPERTISE_EFFECT,
+    HEDONIC_TONE,
+    INFORMATION_CONTENT,
+    MODEL_UNCERTAINTY,
+    MOTOR_PERIOD_LOCK,
+    NEURAL_SYNCHRONY,
+    NOSTALGIA_CIRCUIT,
+    OSCILLATION_COUPLING,
+    PRECISION,
+    PREDICTION_ERROR,
+    REWARD_PE,
+    SOCIAL_BONDING,
+    SOCIAL_PREDICTION,
+    STATISTICAL_LEARNING,
+    TIMING_PRECISION,
+    VALENCE_MODE,
 )
 
 # ======================================================================
@@ -70,28 +72,28 @@ from .tree import (
 # ======================================================================
 
 ALL_PSYCHOLOGY: Tuple[Dimension, ...] = (
-    DISCOVERY, INTENSITY, FLOW, DEPTH, TRACE, SHARING,
+    ENERGY, VALENCE, TEMPO, TENSION, GROOVE, COMPLEXITY,
 )
 
 ALL_COGNITION: Tuple[Dimension, ...] = (
-    EXPECTANCY, INFORMATION_RATE, TENSION_ARC, SONIC_IMPACT,
-    ENTRAINMENT, GROOVE, CONTAGION, REWARD,
-    EPISODIC_RESONANCE, RECOGNITION, SYNCHRONY, BONDING,
+    MELODIC_HOOK, HARMONIC_DEPTH, RHYTHMIC_DRIVE, TIMBRAL_COLOR,
+    EMOTIONAL_ARC, SURPRISE, MOMENTUM, NARRATIVE,
+    FAMILIARITY, PLEASURE, SPACE, REPETITION,
 )
 
 ALL_NEUROSCIENCE: Tuple[Dimension, ...] = (
-    PREDICTIVE_PROCESSING, INFORMATION_ENTROPY,
-    SEQUENCE_LEARNING, SENSORY_ENCODING,
-    HARMONIC_TENSION, AUTONOMIC_AROUSAL,
-    SENSORY_SALIENCE, AESTHETIC_APPRAISAL,
-    OSCILLATION_COUPLING, MOTOR_PERIOD_LOCKING,
-    AUDITORY_MOTOR, HIERARCHICAL_CONTEXT,
-    VALENCE_MODE, NOSTALGIA_CIRCUITRY,
-    DOPAMINERGIC_DRIVE, HEDONIC_VALUATION,
-    HIPPOCAMPAL_BINDING, AUTOBIOGRAPHICAL,
-    PITCH_MELODY, PERCEPTUAL_LEARNING,
-    STRUCTURAL_PREDICTION, EXPERTISE_NETWORK,
-    INTERPERSONAL_SYNC, SOCIAL_REWARD,
+    # Predictive Processing (0-3)
+    PREDICTION_ERROR, PRECISION, INFORMATION_CONTENT, MODEL_UNCERTAINTY,
+    # Sensorimotor (4-7)
+    OSCILLATION_COUPLING, MOTOR_PERIOD_LOCK, AUDITORY_MOTOR_BIND, TIMING_PRECISION,
+    # Emotion Circuitry (8-11)
+    VALENCE_MODE, AUTONOMIC_AROUSAL, NOSTALGIA_CIRCUIT, CHILLS_PATHWAY,
+    # Reward System (12-15)
+    DA_ANTICIPATION, DA_CONSUMMATION, HEDONIC_TONE, REWARD_PE,
+    # Memory & Learning (16-19)
+    EPISODIC_ENCODING, AUTOBIOGRAPHICAL, STATISTICAL_LEARNING, EXPERTISE_EFFECT,
+    # Social Cognition (20-23)
+    NEURAL_SYNCHRONY, SOCIAL_BONDING, SOCIAL_PREDICTION, COLLECTIVE_REWARD,
 )
 
 # ======================================================================
@@ -121,22 +123,6 @@ for _dim in ALL_PSYCHOLOGY + ALL_COGNITION + ALL_NEUROSCIENCE:
 PSYCHOLOGY_NAMES: Tuple[str, ...] = tuple(d.name for d in ALL_PSYCHOLOGY)
 PSYCHOLOGY_NAMES_TR: Tuple[str, ...] = tuple(d.name_tr for d in ALL_PSYCHOLOGY)
 COGNITION_NAMES: Tuple[str, ...] = tuple(d.name for d in ALL_COGNITION)
+COGNITION_NAMES_TR: Tuple[str, ...] = tuple(d.name_tr for d in ALL_COGNITION)
 NEUROSCIENCE_NAMES: Tuple[str, ...] = tuple(d.name for d in ALL_NEUROSCIENCE)
-
-# ======================================================================
-# Integrity check — all 131 beliefs must appear exactly once
-# ======================================================================
-
-_all_leaf_indices: set = set()
-for _d in ALL_NEUROSCIENCE:
-    for _idx in _d.belief_indices:
-        assert _idx not in _all_leaf_indices, (
-            f"Belief {_idx} appears in multiple 24D nodes"
-        )
-        _all_leaf_indices.add(_idx)
-
-assert _all_leaf_indices == set(range(131)), (
-    f"Belief coverage mismatch. "
-    f"Missing: {set(range(131)) - _all_leaf_indices}, "
-    f"Extra: {_all_leaf_indices - set(range(131))}"
-)
+NEUROSCIENCE_NAMES_TR: Tuple[str, ...] = tuple(d.name_tr for d in ALL_NEUROSCIENCE)

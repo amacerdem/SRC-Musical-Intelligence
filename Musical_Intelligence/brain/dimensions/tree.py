@@ -1,313 +1,331 @@
-"""Hierarchical Dimension Tree — 6D → 12D → 24D → 131 beliefs.
+"""Dimension definitions — 6D + 12D + 24D independent tiers.
 
-Binary tree structure:
-    6 Psychology nodes  (experiential, free tier)
-    12 Cognition nodes  (music cognition, basic tier)
-    24 Neuroscience nodes (neuroscience, premium tier)
+Three tiers selected for falsifiability (listener validation ability):
+    6D  Psychology   — gut-level, zero training needed
+    12D Cognition    — informed listener, some music knowledge
+    24D Neuroscience — expert, requires neuroscience / music cognition
 
-Each 6D splits into 2×12D, each 12D splits into 2×24D.
-Each 24D maps to a disjoint subset of the 131 C³ beliefs.
-All 131 beliefs (indices 0-130) appear exactly once.
-
-Belief index source: Lab/frontend/src/data/beliefs.ts
+Each tier is independently computed from (beliefs, ram, neuro).
+NO tier derives from another tier's output.
+Computation models: ``dimensions/models/{psychology,cognition,neuroscience}.py``
 """
 from __future__ import annotations
 
 from ._dimension import Dimension
 
 # ======================================================================
-# 24D — NEUROSCIENCE LAYER (leaf nodes, each maps to belief indices)
+# 6D — PSYCHOLOGY (gut-level, free tier)
 # ======================================================================
 
-# --- Discovery / Expectancy ---
-PREDICTIVE_PROCESSING = Dimension(
-    index=0, key="predictive_processing",
-    name="Pattern Sense", name_tr="Örüntü Algısı",
-    layer="neuroscience", parent_key="expectancy",
-    belief_indices=(20, 21, 28, 84, 85),
+ENERGY = Dimension(
+    index=0, key="energy",
+    name="Energy", name_tr="Enerji",
+    layer="psychology",
+    description="Is this loud/intense or quiet/gentle?",
+    agreement="very_high",
+    belief_indices=(34, 63),  # salience, emotional_arousal
 )
-INFORMATION_ENTROPY = Dimension(
-    index=1, key="information_entropy",
-    name="Wonder", name_tr="Hayret",
-    layer="neuroscience", parent_key="expectancy",
-    belief_indices=(3, 7, 17, 19, 30),
+VALENCE = Dimension(
+    index=1, key="valence",
+    name="Valence", name_tr="Duygu Tonu",
+    layer="psychology",
+    description="Does this sound happy or sad?",
+    agreement="high",
+    belief_indices=(4, 67, 68),  # harmonic_stability, happy, sad
+)
+TEMPO = Dimension(
+    index=2, key="tempo",
+    name="Tempo", name_tr="Hız",
+    layer="psychology",
+    description="Is this fast or slow?",
+    agreement="very_high",
+    belief_indices=(42, 98),  # beat_entrainment, period_entrainment
+)
+TENSION = Dimension(
+    index=3, key="tension",
+    name="Tension", name_tr="Gerilim",
+    layer="psychology",
+    description="Do I feel strain or release?",
+    agreement="high",
+    belief_indices=(88,),  # tension
+)
+GROOVE = Dimension(
+    index=4, key="groove",
+    name="Groove", name_tr="Hareket",
+    layer="psychology",
+    description="Do I want to move my body?",
+    agreement="high",
+    belief_indices=(42, 92),  # beat_entrainment, groove_quality
+)
+COMPLEXITY = Dimension(
+    index=5, key="complexity",
+    name="Density", name_tr="Yoğunluk",
+    layer="psychology",
+    description="How much stuff is going on?",
+    agreement="high",
+    belief_indices=(16, 35, 36, 101),  # spectral_complexity, sensory_load, attention_capture, context_depth
 )
 
-# --- Discovery / Information Rate ---
-SEQUENCE_LEARNING = Dimension(
-    index=2, key="sequence_learning",
-    name="Learning", name_tr="Öğrenme",
-    layer="neuroscience", parent_key="information_rate",
-    belief_indices=(18, 24, 25, 29, 31),
+
+# ======================================================================
+# 12D — COGNITION (informed listener, basic tier)
+# ======================================================================
+
+MELODIC_HOOK = Dimension(
+    index=0, key="melodic_hook",
+    name="Melody", name_tr="Melodi",
+    layer="cognition",
+    description="Is the melody catchy/memorable?",
+    agreement="high",
+    belief_indices=(8, 10, 47, 48),  # pitch_prominence, pitch_identity, melodic_recognition, memory_preservation
 )
-SENSORY_ENCODING = Dimension(
-    index=3, key="sensory_encoding",
-    name="Sound Awareness", name_tr="Ses Farkındalığı",
-    layer="neuroscience", parent_key="information_rate",
-    belief_indices=(0, 13, 16, 33, 35, 39),
+HARMONIC_DEPTH = Dimension(
+    index=1, key="harmonic_depth",
+    name="Harmony", name_tr="Armoni",
+    layer="cognition",
+    description="Simple chords or rich/complex?",
+    agreement="medium",
+    belief_indices=(4, 5, 6, 80),  # harmonic_stability, template_match, interval_quality, harmonic_tension
+)
+RHYTHMIC_DRIVE = Dimension(
+    index=2, key="rhythmic_drive",
+    name="Rhythm", name_tr="Ritim",
+    layer="cognition",
+    description="Basic beat or layered/syncopated?",
+    agreement="high",
+    belief_indices=(42, 44, 90, 92, 94),  # beat_entrainment, meter_hierarchy, aud_motor, groove, meter_structure
+)
+TIMBRAL_COLOR = Dimension(
+    index=3, key="timbral_color",
+    name="Timbre", name_tr="Tını",
+    layer="cognition",
+    description="Warm/organic or cold/electronic?",
+    agreement="medium",
+    belief_indices=(11, 15, 16, 111),  # aesthetic_quality, timbral_character, spectral_complexity, trained_timbre
+)
+EMOTIONAL_ARC = Dimension(
+    index=4, key="emotional_arc",
+    name="Emotion", name_tr="Duygu",
+    layer="cognition",
+    description="Which specific emotion? Joy? Awe? Nostalgia?",
+    agreement="high",
+    belief_indices=(63, 67, 68, 70),  # emotional_arousal, happy, sad, nostalgia_affect
+)
+SURPRISE = Dimension(
+    index=5, key="surprise",
+    name="Surprise", name_tr="Sürpriz",
+    layer="cognition",
+    description="Did something unexpected happen?",
+    agreement="medium",
+    belief_indices=(25, 84),  # information_content, prediction_error
+)
+MOMENTUM = Dimension(
+    index=6, key="momentum",
+    name="Momentum", name_tr="İvme",
+    layer="cognition",
+    description="Building to somewhere or going in circles?",
+    agreement="high",
+    belief_indices=(79, 82, 88, 89),  # chills_proximity, peak_detection, tension, wanting
+)
+NARRATIVE = Dimension(
+    index=7, key="narrative",
+    name="Story", name_tr="Hikaye",
+    layer="cognition",
+    description="Is this a journey with chapters, or a loop?",
+    agreement="medium",
+    belief_indices=(58, 101, 104, 106),  # episodic_boundary, context_depth, phrase_boundary, structure_pred
+)
+FAMILIARITY = Dimension(
+    index=8, key="familiarity",
+    name="Familiarity", name_tr="Tanıdıklık",
+    layer="cognition",
+    description="Do I recognize these patterns/style?",
+    agreement="medium",
+    belief_indices=(20, 31, 54, 109),  # prediction_accuracy, sequence_match, retrieval_prob, statistical_model
+)
+PLEASURE = Dimension(
+    index=9, key="pleasure",
+    name="Pleasure", name_tr="Haz",
+    layer="cognition",
+    description="Am I enjoying this? Do I want more?",
+    agreement="high",
+    belief_indices=(81, 83, 89),  # liking, pleasure, wanting
+)
+SPACE = Dimension(
+    index=10, key="space",
+    name="Space", name_tr="Mekan",
+    layer="cognition",
+    description="Intimate whisper or cathedral vastness?",
+    agreement="medium",
+    belief_indices=(16, 35, 36),  # spectral_complexity, sensory_load, attention_capture
+)
+REPETITION = Dimension(
+    index=11, key="repetition",
+    name="Repetition", name_tr="Tekrar",
+    layer="cognition",
+    description="Same loop over and over, or always changing?",
+    agreement="high",
+    belief_indices=(20, 25, 31, 85),  # prediction_accuracy, information_content, sequence_match, prediction_match
 )
 
-# --- Intensity / Tension Arc ---
-HARMONIC_TENSION = Dimension(
-    index=4, key="harmonic_tension",
-    name="Harmonic Pull", name_tr="Harmonik Çekim",
-    layer="neuroscience", parent_key="tension_arc",
-    belief_indices=(4, 5, 6, 80, 82, 88),
+
+# ======================================================================
+# 24D — NEUROSCIENCE (expert, premium tier)
+# Organized into 6 domains × 4 parameters
+# ======================================================================
+
+# --- Predictive Processing (0-3) ---
+PREDICTION_ERROR = Dimension(
+    index=0, key="prediction_error",
+    name="Prediction Error", name_tr="Tahmin Hatası",
+    layer="neuroscience", parent_key="predictive",
+    belief_indices=(25, 84),
+)
+PRECISION = Dimension(
+    index=1, key="precision",
+    name="Precision", name_tr="Hassasiyet",
+    layer="neuroscience", parent_key="predictive",
+    belief_indices=(20, 39),
+)
+INFORMATION_CONTENT = Dimension(
+    index=2, key="information_content",
+    name="Information Content", name_tr="Bilgi İçeriği",
+    layer="neuroscience", parent_key="predictive",
+    belief_indices=(25,),
+)
+MODEL_UNCERTAINTY = Dimension(
+    index=3, key="model_uncertainty",
+    name="Model Uncertainty", name_tr="Model Belirsizliği",
+    layer="neuroscience", parent_key="predictive",
+    belief_indices=(20, 31, 46),
+)
+
+# --- Sensorimotor (4-7) ---
+OSCILLATION_COUPLING = Dimension(
+    index=4, key="oscillation_coupling",
+    name="Beat Coupling", name_tr="Ritim Bağı",
+    layer="neuroscience", parent_key="sensorimotor",
+    belief_indices=(42, 44),
+)
+MOTOR_PERIOD_LOCK = Dimension(
+    index=5, key="motor_period_lock",
+    name="Period Lock", name_tr="Periyot Kilidi",
+    layer="neuroscience", parent_key="sensorimotor",
+    belief_indices=(96, 98),
+)
+AUDITORY_MOTOR_BIND = Dimension(
+    index=6, key="auditory_motor_bind",
+    name="Motor Binding", name_tr="Motor Bağlama",
+    layer="neuroscience", parent_key="sensorimotor",
+    belief_indices=(90,),
+)
+TIMING_PRECISION = Dimension(
+    index=7, key="timing_precision",
+    name="Timing Precision", name_tr="Zamanlama Hassasiyeti",
+    layer="neuroscience", parent_key="sensorimotor",
+    belief_indices=(100,),
+)
+
+# --- Emotion Circuitry (8-11) ---
+VALENCE_MODE = Dimension(
+    index=8, key="valence_mode",
+    name="Valence Mode", name_tr="Duygu Modu",
+    layer="neuroscience", parent_key="emotion",
+    belief_indices=(66, 67, 68),
 )
 AUTONOMIC_AROUSAL = Dimension(
-    index=5, key="autonomic_arousal",
-    name="Chills", name_tr="Tüyler Diken",
-    layer="neuroscience", parent_key="tension_arc",
-    belief_indices=(22, 23, 26, 60, 62, 63),
+    index=9, key="autonomic_arousal",
+    name="ANS Arousal", name_tr="Otonom Uyarılma",
+    layer="neuroscience", parent_key="emotion",
+    belief_indices=(60, 63),
+)
+NOSTALGIA_CIRCUIT = Dimension(
+    index=10, key="nostalgia_circuit",
+    name="Nostalgia Circuit", name_tr="Nostalji Devresi",
+    layer="neuroscience", parent_key="emotion",
+    belief_indices=(53, 70),
+)
+CHILLS_PATHWAY = Dimension(
+    index=11, key="chills_pathway",
+    name="Chills Pathway", name_tr="Tüylenme Yolu",
+    layer="neuroscience", parent_key="emotion",
+    belief_indices=(61,),
 )
 
-# --- Intensity / Sonic Impact ---
-SENSORY_SALIENCE = Dimension(
-    index=6, key="sensory_salience",
-    name="Attention Grab", name_tr="Dikkat Çekme",
-    layer="neuroscience", parent_key="sonic_impact",
-    belief_indices=(15, 34, 36, 37, 38, 61),
-)
-AESTHETIC_APPRAISAL = Dimension(
-    index=7, key="aesthetic_appraisal",
-    name="Beauty Sense", name_tr="Güzellik Hissi",
-    layer="neuroscience", parent_key="sonic_impact",
-    belief_indices=(11, 12, 14, 27, 40, 41),
-)
-
-# --- Flow / Entrainment ---
-OSCILLATION_COUPLING = Dimension(
-    index=8, key="oscillation_coupling",
-    name="Beat Lock", name_tr="Ritim Kilidi",
-    layer="neuroscience", parent_key="entrainment",
-    belief_indices=(42, 43, 44, 45, 46),
-)
-MOTOR_PERIOD_LOCKING = Dimension(
-    index=9, key="motor_period_locking",
-    name="Body Pulse", name_tr="Beden Nabzı",
-    layer="neuroscience", parent_key="entrainment",
-    belief_indices=(96, 97, 98, 99, 100),
-)
-
-# --- Flow / Groove ---
-AUDITORY_MOTOR = Dimension(
-    index=10, key="auditory_motor",
-    name="Movement Urge", name_tr="Hareket Dürtüsü",
-    layer="neuroscience", parent_key="groove",
-    belief_indices=(90, 91, 92, 93, 95),
-)
-HIERARCHICAL_CONTEXT = Dimension(
-    index=11, key="hierarchical_context",
-    name="Musical Story", name_tr="Müzikal Hikaye",
-    layer="neuroscience", parent_key="groove",
-    belief_indices=(94, 101, 102, 103, 105),
-)
-
-# --- Depth / Contagion ---
-VALENCE_MODE = Dimension(
-    index=12, key="valence_mode",
-    name="Mood Color", name_tr="Duygu Rengi",
-    layer="neuroscience", parent_key="contagion",
-    belief_indices=(64, 65, 66, 67, 68),
-)
-NOSTALGIA_CIRCUITRY = Dimension(
-    index=13, key="nostalgia_circuitry",
-    name="Time Travel", name_tr="Zaman Yolculuğu",
-    layer="neuroscience", parent_key="contagion",
-    belief_indices=(69, 70, 71, 72, 73),
-)
-
-# --- Depth / Reward ---
-DOPAMINERGIC_DRIVE = Dimension(
-    index=14, key="dopaminergic_drive",
-    name="Craving", name_tr="Özlem",
+# --- Reward System (12-15) ---
+DA_ANTICIPATION = Dimension(
+    index=12, key="da_anticipation",
+    name="DA Anticipation", name_tr="DA Beklenti",
     layer="neuroscience", parent_key="reward",
-    belief_indices=(74, 75, 76, 77, 78),
+    belief_indices=(74, 78),
 )
-HEDONIC_VALUATION = Dimension(
-    index=15, key="hedonic_valuation",
-    name="Bliss", name_tr="Keyif",
+DA_CONSUMMATION = Dimension(
+    index=13, key="da_consummation",
+    name="DA Consummation", name_tr="DA Tüketim",
     layer="neuroscience", parent_key="reward",
-    belief_indices=(79, 81, 83, 86, 87, 89),
+    belief_indices=(75, 89),
+)
+HEDONIC_TONE = Dimension(
+    index=14, key="hedonic_tone",
+    name="Hedonic Tone", name_tr="Hedonik Ton",
+    layer="neuroscience", parent_key="reward",
+    belief_indices=(81, 83),
+)
+REWARD_PE = Dimension(
+    index=15, key="reward_pe",
+    name="Reward PE", name_tr="Ödül TH",
+    layer="neuroscience", parent_key="reward",
+    belief_indices=(84, 85),
 )
 
-# --- Trace / Episodic Resonance ---
-HIPPOCAMPAL_BINDING = Dimension(
-    index=16, key="hippocampal_binding",
-    name="Déjà Vu", name_tr="Déjà Vu",
-    layer="neuroscience", parent_key="episodic_resonance",
-    belief_indices=(47, 48, 49, 54, 57, 58, 59),
+# --- Memory & Learning (16-19) ---
+EPISODIC_ENCODING = Dimension(
+    index=16, key="episodic_encoding",
+    name="Episodic Encoding", name_tr="Epizodik Kodlama",
+    layer="neuroscience", parent_key="memory",
+    belief_indices=(57, 59),
 )
 AUTOBIOGRAPHICAL = Dimension(
     index=17, key="autobiographical",
-    name="Life Story", name_tr="Yaşam Öyküsü",
-    layer="neuroscience", parent_key="episodic_resonance",
-    belief_indices=(50, 51, 52, 53, 55, 56),
+    name="Autobiographical", name_tr="Otobiyografik",
+    layer="neuroscience", parent_key="memory",
+    belief_indices=(50, 55),
+)
+STATISTICAL_LEARNING = Dimension(
+    index=18, key="statistical_learning",
+    name="Statistical Learning", name_tr="İstatistiksel Öğrenme",
+    layer="neuroscience", parent_key="memory",
+    belief_indices=(31, 109),
+)
+EXPERTISE_EFFECT = Dimension(
+    index=19, key="expertise_effect",
+    name="Expertise Effect", name_tr="Uzmanlık Etkisi",
+    layer="neuroscience", parent_key="memory",
+    belief_indices=(111, 114, 119, 120),
 )
 
-# --- Trace / Recognition ---
-PITCH_MELODY = Dimension(
-    index=18, key="pitch_melody",
-    name="Melodic Ear", name_tr="Melodik Kulak",
-    layer="neuroscience", parent_key="recognition",
-    belief_indices=(1, 2, 8, 9, 10, 32),
+# --- Social Cognition (20-23) ---
+NEURAL_SYNCHRONY = Dimension(
+    index=20, key="neural_synchrony",
+    name="Neural Sync", name_tr="Nöral Senkron",
+    layer="neuroscience", parent_key="social",
+    belief_indices=(128,),
 )
-PERCEPTUAL_LEARNING = Dimension(
-    index=19, key="perceptual_learning",
-    name="Trained Ear", name_tr="Eğitimli Kulak",
-    layer="neuroscience", parent_key="recognition",
-    belief_indices=(107, 108, 109, 110, 111, 112, 113),
+SOCIAL_BONDING = Dimension(
+    index=21, key="social_bonding",
+    name="Social Bond", name_tr="Sosyal Bağ",
+    layer="neuroscience", parent_key="social",
+    belief_indices=(123, 124),
 )
-
-# --- Sharing / Synchrony ---
-STRUCTURAL_PREDICTION = Dimension(
-    index=20, key="structural_prediction",
-    name="Musical Intuition", name_tr="Müzikal Sezgi",
-    layer="neuroscience", parent_key="synchrony",
-    belief_indices=(104, 106, 114, 115),
+SOCIAL_PREDICTION = Dimension(
+    index=22, key="social_prediction",
+    name="Social Prediction", name_tr="Sosyal Tahmin",
+    layer="neuroscience", parent_key="social",
+    belief_indices=(125, 130),
 )
-EXPERTISE_NETWORK = Dimension(
-    index=21, key="expertise_network",
-    name="Mastery", name_tr="Ustalık",
-    layer="neuroscience", parent_key="synchrony",
-    belief_indices=(116, 117, 118, 119, 120),
-)
-
-# --- Sharing / Bonding ---
-INTERPERSONAL_SYNC = Dimension(
-    index=22, key="interpersonal_sync",
-    name="Shared Pulse", name_tr="Ortak Nabız",
-    layer="neuroscience", parent_key="bonding",
-    belief_indices=(122, 123, 124, 128, 130),
-)
-SOCIAL_REWARD = Dimension(
-    index=23, key="social_reward",
-    name="Together Joy", name_tr="Birlikte Neşe",
-    layer="neuroscience", parent_key="bonding",
-    belief_indices=(121, 125, 126, 127, 129),
-)
-
-
-# ======================================================================
-# 12D — MUSIC COGNITION LAYER (each aggregates 2 neuroscience children)
-# ======================================================================
-
-EXPECTANCY = Dimension(
-    index=0, key="expectancy",
-    name="Anticipation", name_tr="Önsezi",
-    layer="cognition", parent_key="discovery",
-    belief_indices=PREDICTIVE_PROCESSING.belief_indices + INFORMATION_ENTROPY.belief_indices,
-)
-INFORMATION_RATE = Dimension(
-    index=1, key="information_rate",
-    name="Surprise", name_tr="Sürpriz",
-    layer="cognition", parent_key="discovery",
-    belief_indices=SEQUENCE_LEARNING.belief_indices + SENSORY_ENCODING.belief_indices,
-)
-
-TENSION_ARC = Dimension(
-    index=2, key="tension_arc",
-    name="Tension", name_tr="Gerilim",
-    layer="cognition", parent_key="intensity",
-    belief_indices=HARMONIC_TENSION.belief_indices + AUTONOMIC_AROUSAL.belief_indices,
-)
-SONIC_IMPACT = Dimension(
-    index=3, key="sonic_impact",
-    name="Impact", name_tr="Etki",
-    layer="cognition", parent_key="intensity",
-    belief_indices=SENSORY_SALIENCE.belief_indices + AESTHETIC_APPRAISAL.belief_indices,
-)
-
-ENTRAINMENT = Dimension(
-    index=4, key="entrainment",
-    name="Sync", name_tr="Senkron",
-    layer="cognition", parent_key="flow",
-    belief_indices=OSCILLATION_COUPLING.belief_indices + MOTOR_PERIOD_LOCKING.belief_indices,
-)
-GROOVE = Dimension(
-    index=5, key="groove",
-    name="Groove", name_tr="Groove",
-    layer="cognition", parent_key="flow",
-    belief_indices=AUDITORY_MOTOR.belief_indices + HIERARCHICAL_CONTEXT.belief_indices,
-)
-
-CONTAGION = Dimension(
-    index=6, key="contagion",
-    name="Empathy", name_tr="Empati",
-    layer="cognition", parent_key="depth",
-    belief_indices=VALENCE_MODE.belief_indices + NOSTALGIA_CIRCUITRY.belief_indices,
-)
-REWARD = Dimension(
-    index=7, key="reward",
-    name="Pleasure", name_tr="Haz",
-    layer="cognition", parent_key="depth",
-    belief_indices=DOPAMINERGIC_DRIVE.belief_indices + HEDONIC_VALUATION.belief_indices,
-)
-
-EPISODIC_RESONANCE = Dimension(
-    index=8, key="episodic_resonance",
-    name="Nostalgia", name_tr="Nostalji",
-    layer="cognition", parent_key="trace",
-    belief_indices=HIPPOCAMPAL_BINDING.belief_indices + AUTOBIOGRAPHICAL.belief_indices,
-)
-RECOGNITION = Dimension(
-    index=9, key="recognition",
-    name="Familiarity", name_tr="Tanıdıklık",
-    layer="cognition", parent_key="trace",
-    belief_indices=PITCH_MELODY.belief_indices + PERCEPTUAL_LEARNING.belief_indices,
-)
-
-SYNCHRONY = Dimension(
-    index=10, key="synchrony",
-    name="Togetherness", name_tr="Birliktelik",
-    layer="cognition", parent_key="sharing",
-    belief_indices=STRUCTURAL_PREDICTION.belief_indices + EXPERTISE_NETWORK.belief_indices,
-)
-BONDING = Dimension(
-    index=11, key="bonding",
-    name="Bonding", name_tr="Bağlanma",
-    layer="cognition", parent_key="sharing",
-    belief_indices=INTERPERSONAL_SYNC.belief_indices + SOCIAL_REWARD.belief_indices,
-)
-
-
-# ======================================================================
-# 6D — PSYCHOLOGY LAYER (experiential, each aggregates 2 cognition children)
-# ======================================================================
-
-DISCOVERY = Dimension(
-    index=0, key="discovery",
-    name="Curiosity", name_tr="Merak",
-    layer="psychology", parent_key=None,
-    belief_indices=EXPECTANCY.belief_indices + INFORMATION_RATE.belief_indices,
-)
-INTENSITY = Dimension(
-    index=1, key="intensity",
-    name="Energy", name_tr="Enerji",
-    layer="psychology", parent_key=None,
-    belief_indices=TENSION_ARC.belief_indices + SONIC_IMPACT.belief_indices,
-)
-FLOW = Dimension(
-    index=2, key="flow",
-    name="Rhythm", name_tr="Ritim",
-    layer="psychology", parent_key=None,
-    belief_indices=ENTRAINMENT.belief_indices + GROOVE.belief_indices,
-)
-DEPTH = Dimension(
-    index=3, key="depth",
-    name="Emotion", name_tr="Duygu",
-    layer="psychology", parent_key=None,
-    belief_indices=CONTAGION.belief_indices + REWARD.belief_indices,
-)
-TRACE = Dimension(
-    index=4, key="trace",
-    name="Memory", name_tr="Hafıza",
-    layer="psychology", parent_key=None,
-    belief_indices=EPISODIC_RESONANCE.belief_indices + RECOGNITION.belief_indices,
-)
-SHARING = Dimension(
-    index=5, key="sharing",
-    name="Connection", name_tr="Bağ",
-    layer="psychology", parent_key=None,
-    belief_indices=SYNCHRONY.belief_indices + BONDING.belief_indices,
+COLLECTIVE_REWARD = Dimension(
+    index=23, key="collective_reward",
+    name="Collective Reward", name_tr="Kolektif Ödül",
+    layer="neuroscience", parent_key="social",
+    belief_indices=(121, 126),
 )

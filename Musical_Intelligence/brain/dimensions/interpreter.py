@@ -1,106 +1,114 @@
-"""DimensionInterpreter — aggregates 131 beliefs into 6D/12D/24D hierarchy.
+"""DimensionInterpreter — computes 6D/12D/24D via independent model functions.
 
-Follows the PsiInterpreter pattern from ``brain/psi_interpreter.py``.
-Each 24D node = mean of its belief subset.
-Each 12D node = mean of its 2 child 24D values.
-Each  6D node = mean of its 2 child 12D values.
+Each tier is independently computed from (beliefs, ram, neuro).
+NO tier derives from another tier's output.
+
+Usage::
+
+    interpreter = DimensionInterpreter()
+    state = interpreter.interpret(beliefs, ram, neuro)  # → DimensionState
 """
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Dict, List, Tuple
+from typing import TYPE_CHECKING, Dict
 
 import numpy as np
 import torch
 
 from Musical_Intelligence.contracts.dataclasses.brain_output import DimensionState
 
-from .registry import ALL_COGNITION, ALL_NEUROSCIENCE, ALL_PSYCHOLOGY
+from .models import COGNITION_MODELS, NEUROSCIENCE_MODELS, PSYCHOLOGY_MODELS
 
 if TYPE_CHECKING:
     from torch import Tensor
 
 
 class DimensionInterpreter:
-    """Maps 131 C³ beliefs → hierarchical DimensionState.
+    """Maps C³ outputs → independent 3-tier DimensionState.
 
-    Pre-computes index tensors at construction time for fast gather operations.
+    Each of the 42 dimensions (6+12+24) has its own computation model
+    that reads directly from (beliefs, ram, neuro). Models are pure
+    functions defined in ``dimensions/models/``.
     """
 
     def __init__(self) -> None:
-        # Pre-compute belief index lists for each 24D node
-        self._neuro_indices: List[Tuple[int, ...]] = [
-            d.belief_indices for d in ALL_NEUROSCIENCE
-        ]
-        # Pre-compute parent mappings: 12D → which 24D children
-        self._cog_children: List[Tuple[int, int]] = []
-        neuro_by_parent: Dict[str, List[int]] = {}
-        for d in ALL_NEUROSCIENCE:
-            neuro_by_parent.setdefault(d.parent_key, []).append(d.index)
-        for d in ALL_COGNITION:
-            children = neuro_by_parent.get(d.key, [])
-            assert len(children) == 2, f"Cognition dim {d.key!r} has {len(children)} children, expected 2"
-            self._cog_children.append((children[0], children[1]))
+        self._psy_models = PSYCHOLOGY_MODELS
+        self._cog_models = COGNITION_MODELS
+        self._neuro_models = NEUROSCIENCE_MODELS
 
-        # Pre-compute parent mappings: 6D → which 12D children
-        self._psy_children: List[Tuple[int, int]] = []
-        cog_by_parent: Dict[str, List[int]] = {}
-        for d in ALL_COGNITION:
-            cog_by_parent.setdefault(d.parent_key, []).append(d.index)
-        for d in ALL_PSYCHOLOGY:
-            children = cog_by_parent.get(d.key, [])
-            assert len(children) == 2, f"Psychology dim {d.key!r} has {len(children)} children, expected 2"
-            self._psy_children.append((children[0], children[1]))
-
-    def interpret(self, beliefs: Tensor) -> DimensionState:
-        """Compute hierarchical dimensions from belief tensor.
+    def interpret(
+        self,
+        beliefs: Tensor,
+        ram: Tensor,
+        neuro: Tensor,
+    ) -> DimensionState:
+        """Compute all 3 tiers from C³ outputs.
 
         Args:
             beliefs: ``(B, T, 131)`` belief values.
+            ram:     ``(B, T, 26)``  Region Activation Map.
+            neuro:   ``(B, T, 4)``   neurochemical state [DA, NE, OPI, 5HT].
 
         Returns:
             DimensionState with psychology (B,T,6), cognition (B,T,12),
             neuroscience (B,T,24).
         """
-        B, T = beliefs.shape[:2]
-        device = beliefs.device
+        # 6D: each model independently computes (B, T) from sources
+        psy = torch.stack(
+            [m(beliefs, ram, neuro) for m in self._psy_models], dim=-1,
+        )
 
-        # 24D: mean of belief subsets
-        neuro = torch.zeros(B, T, 24, device=device)
-        for i, indices in enumerate(self._neuro_indices):
-            idx = torch.tensor(indices, dtype=torch.long, device=device)
-            neuro[:, :, i] = beliefs.index_select(-1, idx).mean(dim=-1)
+        # 12D: each model independently computes (B, T) from sources
+        cog = torch.stack(
+            [m(beliefs, ram, neuro) for m in self._cog_models], dim=-1,
+        )
 
-        # 12D: mean of 2 child 24D values
-        cog = torch.zeros(B, T, 12, device=device)
-        for i, (c0, c1) in enumerate(self._cog_children):
-            cog[:, :, i] = (neuro[:, :, c0] + neuro[:, :, c1]) * 0.5
-
-        # 6D: mean of 2 child 12D values
-        psy = torch.zeros(B, T, 6, device=device)
-        for i, (c0, c1) in enumerate(self._psy_children):
-            psy[:, :, i] = (cog[:, :, c0] + cog[:, :, c1]) * 0.5
+        # 24D: each model independently computes (B, T) from sources
+        ns = torch.stack(
+            [m(beliefs, ram, neuro) for m in self._neuro_models], dim=-1,
+        )
 
         return DimensionState(
             psychology=psy.clamp(0, 1),
             cognition=cog.clamp(0, 1),
-            neuroscience=neuro.clamp(0, 1),
+            neuroscience=ns.clamp(0, 1),
         )
 
-    def interpret_numpy(self, beliefs: np.ndarray) -> Dict[str, np.ndarray]:
+    def interpret_numpy(
+        self,
+        beliefs: np.ndarray,
+        ram: np.ndarray | None = None,
+        neuro: np.ndarray | None = None,
+    ) -> Dict[str, np.ndarray]:
         """Convenience: numpy (T, 131) → dict of numpy arrays.
 
         Used by the Lab pipeline where data is already in numpy format.
 
         Args:
             beliefs: ``(T, 131)`` numpy array.
+            ram:     ``(T, 26)``  numpy array, or None (zeros used).
+            neuro:   ``(T, 4)``   numpy array, or None (0.5 baseline used).
 
         Returns:
             Dict with keys ``"dim_6d"`` (T,6), ``"dim_12d"`` (T,12),
             ``"dim_24d"`` (T,24).
         """
+        T = beliefs.shape[0]
+
         # Add batch dimension, convert to torch
-        t = torch.from_numpy(beliefs).unsqueeze(0)  # (1, T, 131)
-        state = self.interpret(t)
+        b = torch.from_numpy(beliefs).unsqueeze(0).float()  # (1, T, 131)
+
+        if ram is not None:
+            r = torch.from_numpy(ram).unsqueeze(0).float()  # (1, T, 26)
+        else:
+            r = torch.zeros(1, T, 26)
+
+        if neuro is not None:
+            n = torch.from_numpy(neuro).unsqueeze(0).float()  # (1, T, 4)
+        else:
+            n = torch.full((1, T, 4), 0.5)  # Baseline
+
+        state = self.interpret(b, r, n)
         return {
             "dim_6d": state.psychology[0].cpu().numpy(),
             "dim_12d": state.cognition[0].cpu().numpy(),
