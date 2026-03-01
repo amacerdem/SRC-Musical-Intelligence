@@ -29,12 +29,13 @@ export interface ChatResponse {
 }
 
 export interface AgentAction {
-  type: "play_track" | "control_playback" | "get_now_playing";
+  type: "play_track" | "queue_tracks" | "control_playback" | "get_now_playing";
   track_id?: string;
   track_name?: string;
   artist?: string;
   command?: string;
   value?: number;
+  tracks?: { track_id: string; track_name: string; artist: string; dominant_family?: string }[];
 }
 
 export interface SystemEventRequest {

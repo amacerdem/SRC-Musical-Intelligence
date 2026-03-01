@@ -18,6 +18,7 @@ export interface PlayerControls {
   setIsPlaying: (p: boolean) => void;
   setProgressMs: (ms: number) => void;
   setDurationMs: (ms: number) => void;
+  setQueueTracks?: (tracks: MockTrack[]) => void;
   syncPlaybackState: () => Promise<void>;
   handlePlayPause: () => Promise<void>;
   handleNext: () => Promise<void>;
@@ -87,6 +88,44 @@ export function useAgentActions(controls: PlayerControls) {
           case "repeat_cycle":
             await c.handleRepeat();
             break;
+        }
+        break;
+      }
+
+      case "queue_tracks": {
+        const tracks = action.tracks ?? [];
+        if (tracks.length === 0) break;
+
+        // Build mock tracks from the action data
+        const mockTracks: MockTrack[] = tracks.map((t) => {
+          const catalogTrack = miDataService.findTrack(t.track_id);
+          if (catalogTrack) return MIDataService.toMockTrack(catalogTrack);
+          // Fallback: create minimal mock from action data
+          return {
+            id: t.track_id,
+            name: t.track_name,
+            artist: t.artist,
+            album: "",
+            albumArt: "",
+            durationSec: 240,
+            previewUrl: null,
+            dominantFamily: (t.dominant_family ?? "Explorers") as MockTrack["dominantFamily"],
+            genre: "Unknown",
+            spotifyUri: null,
+          };
+        });
+
+        // Set first track as current, rest as queue
+        const [first, ...rest] = mockTracks;
+        c.setCurrentTrack(first);
+        c.setIsPlaying(true);
+        c.setProgressMs(0);
+        c.setDurationMs(first.durationSec * 1000);
+        if (c.setQueueTracks) c.setQueueTracks(rest);
+
+        if (c.isSpotifyConnected) {
+          try { await SpotifyService.play(); } catch { /* best-effort */ }
+          setTimeout(() => c.syncPlaybackState(), 500);
         }
         break;
       }

@@ -267,10 +267,12 @@ TOOLS = [
     {
         "name": "play_track",
         "description": (
-            "Play a specific track. Search by name/artist keywords or provide "
-            "a direct track_id from a previous search_tracks result. Returns an "
-            "action for the frontend to execute. Works with both Spotify and "
-            "demo mode. Use this when the user says 'play X', 'put on X', etc."
+            "Play a specific track IMMEDIATELY. Search by name/artist keywords or "
+            "provide a direct track_id. Returns an action for the frontend to execute. "
+            "IMPORTANT: When the user asks to play music, suggest a song, or says "
+            "'play something' — call this tool DIRECTLY without asking questions. "
+            "Make the decision yourself based on the user's profile and explain "
+            "your choice AFTER playing."
         ),
         "input_schema": {
             "type": "object",
@@ -284,6 +286,41 @@ TOOLS = [
                     "description": "Direct track ID if already known from search_tracks",
                 },
             },
+        },
+    },
+    {
+        "name": "queue_tracks",
+        "description": (
+            "Queue multiple tracks (5-10) to play in sequence. Use this when "
+            "the user asks for a playlist, queue, or multiple songs. Accepts a "
+            "list of queries or track_ids. Returns actions for the frontend to "
+            "queue all tracks. After calling this tool, explain the theme or "
+            "reasoning behind the queue you built."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "tracks": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "query": {
+                                "type": "string",
+                                "description": "Track name, artist, or search keywords",
+                            },
+                            "track_id": {
+                                "type": "string",
+                                "description": "Direct track ID if already known",
+                            },
+                        },
+                    },
+                    "description": "List of tracks to queue (5-10 items)",
+                    "minItems": 1,
+                    "maxItems": 15,
+                },
+            },
+            "required": ["tracks"],
         },
     },
     {
@@ -361,6 +398,7 @@ def handle_tool_call(
         "get_belief_timeline": _handle_belief_timeline,
         "get_brain_activation": _handle_brain_activation,
         "play_track": _handle_play_track,
+        "queue_tracks": _handle_queue_tracks,
         "control_playback": _handle_control_playback,
         "get_now_playing": _handle_get_now_playing,
     }
@@ -833,6 +871,63 @@ def _handle_play_track(
                 else "Unknown"
             ),
         },
+    }
+
+
+def _handle_queue_tracks(
+    inputs: dict[str, Any], tier: str
+) -> dict[str, Any]:
+    """Queue multiple tracks and return action descriptors for each."""
+    from .track_data import search_tracks, load_track
+
+    tracks_input = inputs.get("tracks", [])
+    if not tracks_input:
+        return {"error": "Provide a list of tracks to queue."}
+
+    queued = []
+    failed = []
+
+    for item in tracks_input:
+        track_id = item.get("track_id")
+        query = item.get("query", "")
+
+        if not track_id and not query:
+            continue
+
+        # Resolve track
+        if not track_id:
+            results = search_tracks(query, limit=1)
+            if not results:
+                failed.append(query)
+                continue
+            track_id = results[0]["id"]
+
+        track = load_track(track_id)
+        if not track:
+            failed.append(track_id)
+            continue
+
+        queued.append({
+            "track_id": track_id,
+            "track_name": track.get("title", ""),
+            "artist": track.get("artist", ""),
+            "dominant_family": track.get("dominant_family", ""),
+        })
+
+    if not queued:
+        return {"error": "No matching tracks found for the queue."}
+
+    return {
+        "action": {
+            "type": "queue_tracks",
+            "tracks": queued,
+        },
+        "queued_count": len(queued),
+        "failed": failed,
+        "tracks": [
+            {"title": t["track_name"], "artist": t["artist"]}
+            for t in queued
+        ],
     }
 
 

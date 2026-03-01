@@ -143,6 +143,7 @@ export function ListenPanel({ accentColor }: Props) {
     setIsPlaying,
     setProgressMs,
     setDurationMs,
+    setQueueTracks,
     syncPlaybackState,
     handlePlayPause,
     handleNext,
@@ -267,6 +268,15 @@ export function ListenPanel({ accentColor }: Props) {
 
   type ListTab = "queue" | "top" | "recent";
   const [activeTab, setActiveTab] = useState<ListTab>("queue");
+
+  // Auto-switch to queue tab when agent builds a queue
+  const prevQueueLenRef = useRef(0);
+  useEffect(() => {
+    if (queueTracks.length > prevQueueLenRef.current && prevQueueLenRef.current === 0) {
+      setActiveTab("queue");
+    }
+    prevQueueLenRef.current = queueTracks.length;
+  }, [queueTracks]);
 
   const LIST_TABS: { key: ListTab; icon: React.ElementType; labelTr: string; labelEn: string; count: () => number }[] = [
     { key: "queue",  icon: ListMusic,  labelTr: "Sıradaki",        labelEn: "Up Next",    count: () => queueTracks.length },

@@ -407,6 +407,7 @@ async def chat_stream(req: ChatRequest):
                     "get_belief_timeline": ("İnanç zaman çizelgesi oluşturuluyor...", "Building belief timeline..."),
                     "get_brain_activation": ("Beyin aktivasyonu okunuyor...", "Reading brain activation..."),
                     "play_track": ("Parça çalınıyor...", "Playing track..."),
+                    "queue_tracks": ("Kuyruk oluşturuluyor...", "Building queue..."),
                     "control_playback": ("Oynatma kontrol ediliyor...", "Controlling playback..."),
                     "get_now_playing": ("Şu an çalan alınıyor...", "Getting now playing..."),
                 }
