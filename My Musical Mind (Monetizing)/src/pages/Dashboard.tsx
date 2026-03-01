@@ -35,6 +35,9 @@ import { AudioInput } from "@/components/lab/AudioInput";
 import { DepthSelector } from "@/components/lab/DepthSelector";
 import { FlowTimeline } from "@/components/lab/FlowTimeline";
 
+/* Listen imports */
+import { ListenPanel } from "@/components/listen/ListenPanel";
+
 const DIM_KEYS: DimensionKey6D[] = [...DIMENSION_KEYS_6D];
 
 /** Concept-appropriate point labels for Weekly Evolution */
@@ -57,6 +60,7 @@ export function Dashboard() {
   const navigate = useNavigate();
   const location = useLocation();
   const labMode = location.pathname === "/lab";
+  const listenMode = location.pathname === "/listen";
   const { t, i18n } = useTranslation();
   const isTr = i18n.language === "tr";
   const { mind, level, xp, streak, displayName } = useUserStore();
@@ -529,9 +533,21 @@ export function Dashboard() {
             </div>{/* /content layer */}
           </motion.div>
 
-          {/* ═ RIGHT — Animated switch between Mind & Lab ═ */}
+          {/* ═ RIGHT — Animated switch between Mind, Lab & Listen ═ */}
           <AnimatePresence mode="wait">
-            {labMode ? (
+            {listenMode ? (
+              /* ── LISTEN PANEL ──────────────────────────── */
+              <motion.div
+                key="listen"
+                initial={{ opacity: 0, x: 30, filter: "blur(10px)" }}
+                animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+                exit={{ opacity: 0, x: -30, filter: "blur(10px)" }}
+                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                className="flex flex-col min-h-0 overflow-hidden spatial-card"
+              >
+                <ListenPanel accentColor={color} />
+              </motion.div>
+            ) : labMode ? (
               /* ── LAB PANEL ─────────────────────────────── */
               <motion.div
                 key="lab"

@@ -21,7 +21,6 @@ import { Callback } from "@/pages/Callback";
 import { LibraryAuth } from "@/pages/LibraryAuth";
 
 import { Lab } from "@/pages/Lab";
-import { Listen } from "@/pages/Listen";
 
 export default function App() {
   const { hasCompletedOnboarding } = useUserStore();
@@ -61,7 +60,7 @@ export default function App() {
             <Route
               path="/listen"
               element={
-                hasCompletedOnboarding ? <Listen /> : <Navigate to="/" />
+                hasCompletedOnboarding ? <Dashboard /> : <Navigate to="/" />
               }
             />
             <Route

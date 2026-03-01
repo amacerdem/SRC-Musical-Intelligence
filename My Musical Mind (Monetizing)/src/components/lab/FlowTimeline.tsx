@@ -25,10 +25,11 @@ import {
 
 /* ── Constants ───────────────────────────────────────────────────────── */
 
-const WINDOW_DURATION = 24; // seconds visible at once
+const WINDOW_DURATION = 12; // seconds visible (matches SpectralPeaks)
+const DIM_LABELS_W = 54;    // px, left strip width (matches SpectralPeaks piano roll)
 const NEURO_LABELS = ["DA", "NE", "OPI", "5HT"] as const;
 const NEURO_COLORS = ["#22C55E", "#EF4444", "#38BDF8", "#A855F7"] as const;
-const PLAYHEAD_ANCHOR = 0.3; // playhead stays at 30% from left
+const PLAYHEAD_ANCHOR = 0.7; // playhead at 70% from left (matches SpectralPeaks)
 
 /* ── Types ───────────────────────────────────────────────────────────── */
 
@@ -195,7 +196,7 @@ export function FlowTimeline({
     const W = size.w, H = size.h;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    const MT = 10, MB = 20, ML = 0, MR = 0;
+    const MT = 10, MB = 16, ML = DIM_LABELS_W, MR = 0;
     const cW = W - ML - MR;
     const cH = H - MT - MB;
     const sT = scrollRef.current;
@@ -208,42 +209,73 @@ export function FlowTimeline({
     /* ── Clear ───────────────────────────────────────── */
     ctx.clearRect(0, 0, W, H);
 
+    /* ── 0. Dimension label strip (left) ─────────────── */
+    ctx.fillStyle = "rgba(6,6,14,0.95)";
+    ctx.fillRect(0, 0, DIM_LABELS_W, H);
+
+    const curSegIdx = Math.max(0, Math.min(segCount - 1, Math.round(currentTime / segDur)));
+    const curVals = getDimValues(curSegIdx);
+    const sortedDims = dimList.map((dim: { key: string; name: string; color: string }, i: number) => ({ dim, value: curVals[i] ?? 0 }));
+    sortedDims.sort((a: { value: number }, b: { value: number }) => b.value - a.value);
+
+    const labelFont = dimCount <= 6 ? 9 : dimCount <= 12 ? 7 : 6;
+    const dotR = dimCount <= 6 ? 3 : dimCount <= 12 ? 2.5 : 2;
+    const slotH = (H - 8) / Math.max(1, sortedDims.length);
+
+    ctx.font = `500 ${labelFont}px 'JetBrains Mono', monospace`;
+    ctx.textAlign = "left";
+    ctx.textBaseline = "middle";
+
+    for (let i = 0; i < sortedDims.length; i++) {
+      const { dim } = sortedDims[i];
+      const y = 4 + slotH * (i + 0.5);
+      const col = baseHex(dim.color);
+
+      ctx.beginPath();
+      ctx.arc(8, y, dotR, 0, Math.PI * 2);
+      ctx.fillStyle = col;
+      ctx.fill();
+
+      const maxChars = dimCount <= 6 ? 7 : dimCount <= 12 ? 6 : 5;
+      const name = dim.name.length > maxChars ? dim.name.slice(0, maxChars) : dim.name;
+      ctx.fillStyle = col + "C0";
+      ctx.fillText(name, 8 + dotR + 5, y);
+    }
+
+    // Right border separator
+    ctx.strokeStyle = "rgba(255,255,255,0.06)";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(DIM_LABELS_W - 0.5, 0);
+    ctx.lineTo(DIM_LABELS_W - 0.5, H);
+    ctx.stroke();
+
     /* ── 1. Reward heat-map background ───────────────── */
     if (rewardArr && rewardArr.length > 0) {
       const stripW = Math.max(2, cW / 120);
       for (let x = ML; x < ML + cW; x += stripW) {
         const t = sT + ((x - ML) / cW) * windowDur;
         const r = lerpSeg(rewardArr, t, duration);
-        const a = Math.max(0, Math.min(0.07, r * 0.1));
+        const a = Math.max(0, Math.min(0.03, r * 0.05));
         ctx.fillStyle = `rgba(255,200,100,${a})`;
         ctx.fillRect(x, MT, stripW + 0.5, cH);
       }
     }
 
-    /* ── 2. Grid (auto-scaled) ────────────────────────── */
-    // Horizontal grid lines at 25/50/75% of data range
+    /* ── 2. Grid ───────────────────────────────────── */
     ctx.lineWidth = 0.5;
-    const gridSteps = [0.25, 0.5, 0.75];
-    for (const frac of gridSteps) {
+    for (const frac of [0.25, 0.5, 0.75]) {
       const v = dataMin + frac * range;
       const y = v2y(v);
       ctx.strokeStyle = "rgba(255,255,255,0.04)";
       ctx.beginPath(); ctx.moveTo(ML, y); ctx.lineTo(ML + cW, y); ctx.stroke();
     }
-    // Y-axis labels showing actual values
-    ctx.fillStyle = "rgba(255,255,255,0.08)";
-    ctx.font = "7px monospace";
-    ctx.textAlign = "right";
-    for (const frac of [0, 0.25, 0.5, 0.75, 1.0]) {
-      const v = dataMin + frac * range;
-      ctx.fillText(v.toFixed(1), ML + cW - 3, v2y(v) + 3);
-    }
     // Base axis
-    ctx.strokeStyle = "rgba(255,255,255,0.06)";
+    ctx.strokeStyle = "rgba(255,255,255,0.04)";
     ctx.beginPath(); ctx.moveTo(ML, MT + cH); ctx.lineTo(ML + cW, MT + cH); ctx.stroke();
 
-    // Vertical time markers
-    const tStep = windowDur <= 8 ? 1 : windowDur <= 16 ? 2 : 4;
+    // Vertical time markers (2s intervals, matching SpectralPeaks)
+    const tStep = 2;
     const tStart = Math.ceil(sT / tStep) * tStep;
     ctx.textAlign = "center";
     for (let t = tStart; t <= sT + windowDur + 0.01; t += tStep) {
@@ -253,9 +285,9 @@ export function FlowTimeline({
       ctx.lineWidth = 0.5;
       ctx.beginPath(); ctx.moveTo(x, MT); ctx.lineTo(x, MT + cH); ctx.stroke();
       const m = Math.floor(t / 60), s = Math.floor(t % 60);
-      ctx.fillStyle = "rgba(255,255,255,0.18)";
-      ctx.font = "8px monospace";
-      ctx.fillText(`${m}:${s.toString().padStart(2, "0")}`, x, H - 5);
+      ctx.fillStyle = "rgba(255,255,255,0.15)";
+      ctx.font = "7px 'JetBrains Mono', monospace";
+      ctx.fillText(`${m}:${s.toString().padStart(2, "0")}`, x, H - 4);
     }
 
     /* ── 3. Neurochemical indicator strips (bottom) ──── */
@@ -369,17 +401,17 @@ export function FlowTimeline({
       ctx.stroke();
     }
 
-    /* ── 5. Playhead ─────────────────────────────────── */
+    /* ── 5. Playhead (matching SpectralPeaks style) ── */
     const px = t2x(currentTime);
     if (px >= ML - 12 && px <= ML + cW + 12) {
       // Wide glow
-      const gw = 24;
+      const gw = 28;
       const pg = ctx.createLinearGradient(px - gw, 0, px + gw, 0);
       pg.addColorStop(0, "transparent");
-      pg.addColorStop(0.5, accentColor + "12");
+      pg.addColorStop(0.5, accentColor + "0A");
       pg.addColorStop(1, "transparent");
       ctx.fillStyle = pg;
-      ctx.fillRect(px - gw, MT, gw * 2, cH);
+      ctx.fillRect(px - gw, MT - 2, gw * 2, cH + 4);
 
       // Core line
       ctx.beginPath();
@@ -390,15 +422,6 @@ export function FlowTimeline({
       ctx.globalAlpha = 0.9;
       ctx.stroke();
       ctx.globalAlpha = 1;
-
-      // Top triangle
-      ctx.beginPath();
-      ctx.moveTo(px - 4, MT - 6);
-      ctx.lineTo(px + 4, MT - 6);
-      ctx.lineTo(px, MT);
-      ctx.closePath();
-      ctx.fillStyle = accentColor;
-      ctx.fill();
     }
 
     /* ── 6. Hover crosshair + dots ──────────────────── */
@@ -525,9 +548,6 @@ export function FlowTimeline({
     targetScrollRef.current = Math.max(0, Math.min(maxS, targetScrollRef.current + delta));
   }, [duration, windowDur]);
 
-  /* ── Scroll indicator ────────────────────────────────── */
-  const winRatio = Math.min(1, windowDur / duration);
-
   return (
     <div ref={containerRef} className="relative w-full h-full">
       <canvas
@@ -538,18 +558,6 @@ export function FlowTimeline({
         onClick={handleClick}
         onWheel={handleWheel}
       />
-
-      {/* Scroll position indicator */}
-      {duration > windowDur && (
-        <div className="absolute bottom-0 left-0 right-0 h-[2px]" style={{ background: "rgba(255,255,255,0.03)" }}>
-          <motion.div
-            className="absolute top-0 h-full rounded-full"
-            style={{ background: `${accentColor}30`, width: `${winRatio * 100}%` }}
-            animate={{ left: `${(scrollRef.current / Math.max(0.01, duration - windowDur)) * (1 - winRatio) * 100}%` }}
-            transition={{ duration: 0.1 }}
-          />
-        </div>
-      )}
 
       {/* Tooltip overlay */}
       <AnimatePresence>

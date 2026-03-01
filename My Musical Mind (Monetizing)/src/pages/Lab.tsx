@@ -25,7 +25,6 @@ import {
 import { useLabStore } from "@/stores/useLabStore";
 import { useActiveIdentity } from "@/hooks/useActiveIdentity";
 import { pageTransition, fadeIn } from "@/design/animations";
-import { ALL_PSYCHOLOGY, ALL_COGNITION, ALL_NEUROSCIENCE } from "@/data/dimensions";
 import { miDataService } from "@/services/MIDataService";
 import type { MICatalogTrack } from "@/types/mi-dataset";
 
@@ -168,7 +167,6 @@ export function Lab() {
     }
   }, [isPlaying]);
 
-  const flowValues = segments6D[flowIdx] ?? temporal?.overall.psychology ?? [];
 
   /* ── Seek handler ───────────────────────────────── */
   const handleSeek = useCallback((ratio: number) => {
@@ -373,28 +371,16 @@ export function Lab() {
                   </span>
                 </div>
 
-                <div className="flex-1 min-h-0 flex">
-                  {/* Dimension labels */}
-                  <FlowDimLabels
-                    values={
-                      depth === 6 ? flowValues
-                        : depth === 12 ? (temporal.segments[flowIdx]?.cognition ?? temporal.overall.cognition)
-                        : (temporal.segments[flowIdx]?.neuroscience ?? temporal.overall.neuroscience)
-                    }
-                    dims={depth === 6 ? ALL_PSYCHOLOGY : depth === 12 ? ALL_COGNITION : ALL_NEUROSCIENCE}
-                    animated={hasEverPlayed}
+                <div className="flex-1 min-h-0">
+                  <FlowTimeline
+                    temporal={temporal}
+                    trackDetail={trackDetail}
+                    depth={depth}
+                    accentColor={color}
+                    audioRef={audioRef}
+                    isPlaying={isPlaying}
+                    onSeek={handleSeek}
                   />
-                  <div className="flex-1 min-h-0">
-                    <FlowTimeline
-                      temporal={temporal}
-                      trackDetail={trackDetail}
-                      depth={depth}
-                      accentColor={color}
-                      audioRef={audioRef}
-                      isPlaying={isPlaying}
-                      onSeek={handleSeek}
-                    />
-                  </div>
                 </div>
               </motion.div>
             ) : (
@@ -469,48 +455,3 @@ export function Lab() {
 }
 
 
-/* ═══════════════════════════════════════════════════════════════════════
- *  FlowDimLabels — Y-axis dimension labels that track curve positions
- * ═══════════════════════════════════════════════════════════════════════ */
-
-function FlowDimLabels({ values, dims, animated }: {
-  values: number[];
-  dims: { key: string; name: string; color: string }[];
-  animated: boolean;
-}) {
-  const fontSize = dims.length <= 6 ? 11 : dims.length <= 12 ? 9 : 7;
-  const dotSize = dims.length <= 6 ? 7 : dims.length <= 12 ? 5 : 4;
-
-  const sorted = useMemo(() => {
-    const items = dims.map((dim, i) => ({ dim, value: values[i] ?? 0 }));
-    items.sort((a, b) => b.value - a.value);
-    return items;
-  }, [dims, values]);
-
-  return (
-    <div
-      className="flex flex-col justify-around py-2 flex-shrink-0 border-r border-white/[0.04]"
-      style={{ width: dims.length <= 6 ? 90 : dims.length <= 12 ? 76 : 62 }}
-    >
-      {sorted.map(({ dim }) => (
-        <div key={dim.key} className="flex items-center gap-1.5 px-2">
-          <div
-            className="flex-shrink-0 rounded-full"
-            style={{
-              width: dotSize,
-              height: dotSize,
-              background: dim.color,
-              boxShadow: animated ? `0 0 5px ${dim.color}60` : "none",
-            }}
-          />
-          <span
-            className="font-display truncate leading-none font-medium"
-            style={{ fontSize, color: dim.color, opacity: animated ? 0.9 : 0.7 }}
-          >
-            {dim.name}
-          </span>
-        </div>
-      ))}
-    </div>
-  );
-}

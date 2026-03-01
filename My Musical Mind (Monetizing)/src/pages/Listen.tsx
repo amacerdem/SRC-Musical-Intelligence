@@ -71,9 +71,9 @@ import {
 
 /* ── Constants ─────────────────────────────────────────────────── */
 
-const SPOTIFY_GREEN = "#1DB954";
+export const SPOTIFY_GREEN = "#1DB954";
 
-const FAMILY_COLORS: Record<string, string> = {
+export const FAMILY_COLORS: Record<string, string> = {
   Alchemists: "#A855F7",
   Architects: "#38BDF8",
   Explorers: "#84CC16",
@@ -99,8 +99,8 @@ const FEATURE_LABELS: Record<string, string> = {
   timbralBrightness: "Brightness",
 };
 
-type TimeRange = "short_term" | "medium_term" | "long_term";
-const TIME_TABS: { key: TimeRange; labelEn: string; labelTr: string }[] = [
+export type TimeRange = "short_term" | "medium_term" | "long_term";
+export const TIME_TABS: { key: TimeRange; labelEn: string; labelTr: string }[] = [
   { key: "short_term", labelEn: "4 Weeks", labelTr: "4 Hafta" },
   { key: "medium_term", labelEn: "6 Months", labelTr: "6 Ay" },
   { key: "long_term", labelEn: "All Time", labelTr: "Tüm Zamanlar" },
@@ -110,7 +110,7 @@ const ease = [0.22, 1, 0.36, 1] as const;
 
 /* ── Helpers ───────────────────────────────────────────────────── */
 
-function formatDuration(sec: number) {
+export function formatDuration(sec: number) {
   const m = Math.floor(sec / 60);
   const s = sec % 60;
   return `${m}:${s.toString().padStart(2, "0")}`;
@@ -143,7 +143,7 @@ function familyDistribution(tracks: MockTrack[]) {
 
 /* ── Spotify Logo ──────────────────────────────────────────────── */
 
-function SpotifyLogo({ size = 20 }: { size?: number }) {
+export function SpotifyLogo({ size = 20 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill={SPOTIFY_GREEN}>
       <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" />
@@ -153,7 +153,7 @@ function SpotifyLogo({ size = 20 }: { size?: number }) {
 
 /* ── Equalizer Bars ────────────────────────────────────────────── */
 
-function EqualizerBars({ color = SPOTIFY_GREEN, count = 5 }: { color?: string; count?: number }) {
+export function EqualizerBars({ color = SPOTIFY_GREEN, count = 5 }: { color?: string; count?: number }) {
   return (
     <div className="flex gap-[3px] items-end">
       {Array.from({ length: count }, (_, i) => (
@@ -193,7 +193,7 @@ function FeatureBarRow({ label, value, color }: { label: string; value: number; 
 
 /* ── Now Playing Hero ──────────────────────────────────────────── */
 
-interface NowPlayingProps {
+export interface NowPlayingProps {
   track: MockTrack | null;
   accentColor: string;
   isPlaying: boolean;
@@ -212,7 +212,7 @@ interface NowPlayingProps {
   connected: boolean;
 }
 
-function NowPlayingHero({
+export function NowPlayingHero({
   track, accentColor, isPlaying, shuffleOn, repeatMode,
   progressMs, durationMs, volume,
   onPlayPause, onNext, onPrev, onShuffle, onRepeat, onSeek, onVolume,
@@ -220,10 +220,9 @@ function NowPlayingHero({
 }: NowPlayingProps) {
   if (!track) {
     return (
-      <Card className="text-center py-12">
-        <Pause size={36} className="mx-auto mb-4 text-slate-600" />
-        <p className="text-base text-slate-400 font-display">Nothing playing right now</p>
-        <p className="text-xs text-slate-600 mt-2">Play something on Spotify to see it here</p>
+      <Card className="text-center py-6">
+        <Music2 size={24} className="mx-auto mb-2 text-slate-700" />
+        <p className="text-sm text-slate-500 font-display">Nothing playing</p>
       </Card>
     );
   }
@@ -344,7 +343,7 @@ function NowPlayingHero({
 
 /* ── Track Row ─────────────────────────────────────────────────── */
 
-function TrackRow({ track, index, compact = false }: { track: MockTrack; index: number; compact?: boolean }) {
+export function TrackRow({ track, index, compact = false }: { track: MockTrack; index: number; compact?: boolean }) {
   const familyColor = FAMILY_COLORS[track.dominantFamily] || "#6366F1";
   return (
     <motion.div variants={slideUp} className="flex items-center gap-3 py-2 px-3 rounded-xl transition-all duration-300 hover:bg-white/[0.04] group">
