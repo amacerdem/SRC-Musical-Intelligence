@@ -638,6 +638,7 @@ export function Dashboard() {
                             audioRef={labAudioRef}
                             isPlaying={labPlaying}
                             onSeek={handleLabSeek}
+                            labMode="neuro"
                           />
                         </div>
                       </div>

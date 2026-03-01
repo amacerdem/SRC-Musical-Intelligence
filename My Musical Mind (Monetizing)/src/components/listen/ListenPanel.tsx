@@ -64,10 +64,15 @@ export function ListenPanel({ accentColor }: Props) {
   const [volume, setVolume] = useState(70);
   const progressTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
+  // Cooldown: prevent Spotify poll from overriding agent's track choice
+  const agentOverrideUntilRef = useRef(0);
+
   // ── Playback handlers ────────────────────────────────────────────
 
   const syncPlaybackState = useCallback(async () => {
     if (!isSpotifyConnected) return;
+    // Skip if agent recently set a track (10s cooldown)
+    if (Date.now() < agentOverrideUntilRef.current) return;
     try {
       const state = await SpotifyService.getPlaybackState();
       if (state) {
@@ -137,9 +142,15 @@ export function ListenPanel({ accentColor }: Props) {
 
   // ── Agent integration ─────────────────────────────────────────────
 
+  // Wrap setCurrentTrack for agent: also sets cooldown to prevent poll override
+  const setCurrentTrackFromAgent = useCallback((t: MockTrack | null) => {
+    agentOverrideUntilRef.current = Date.now() + 15_000; // 15s cooldown
+    setCurrentTrack(t);
+  }, []);
+
   const { handleAction } = useAgentActions({
     isSpotifyConnected,
-    setCurrentTrack,
+    setCurrentTrack: setCurrentTrackFromAgent,
     setIsPlaying,
     setProgressMs,
     setDurationMs,

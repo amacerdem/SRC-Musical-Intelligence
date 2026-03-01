@@ -17,7 +17,6 @@ export function PersonaSection({ section, personaId, color }: Props) {
   const bodyKey = sectionI18nKey(personaId, section.key);
   const body = t(bodyKey);
 
-  // If the i18n key returns itself (no translation), show a placeholder
   const hasContent = body !== bodyKey;
 
   return (
@@ -26,33 +25,31 @@ export function PersonaSection({ section, personaId, color }: Props) {
       variants={slideUp}
       className="scroll-mt-24"
     >
-      <div className="mb-3 flex items-center gap-2">
+      <div className="flex items-start gap-2">
         <span
-          className="text-sm font-display"
+          className="text-xs mt-0.5 opacity-60"
           style={{ color }}
         >
           {section.iconEmoji}
         </span>
-        <h2
-          className="text-lg font-display font-semibold"
-          style={{ color }}
-        >
-          {t(section.labelKey)}
-        </h2>
+        <div className="flex-1 min-w-0">
+          <h2
+            className="text-xs font-display font-semibold uppercase tracking-wider mb-1"
+            style={{ color }}
+          >
+            {t(section.labelKey)}
+          </h2>
+          {hasContent ? (
+            <p className="text-[13px] text-slate-400/90 leading-[1.55] font-body font-light">
+              {body}
+            </p>
+          ) : (
+            <p className="text-[13px] text-slate-700 italic font-body font-light">
+              {t("persona.sections.comingSoon")}
+            </p>
+          )}
+        </div>
       </div>
-      <div
-        className="h-[1px] mb-5"
-        style={{ background: `linear-gradient(90deg, ${color}30, transparent)` }}
-      />
-      {hasContent ? (
-        <p className="text-sm text-slate-400 leading-relaxed font-body font-light whitespace-pre-line">
-          {body}
-        </p>
-      ) : (
-        <p className="text-sm text-slate-700 italic font-body font-light">
-          {t("persona.sections.comingSoon")}
-        </p>
-      )}
     </motion.section>
   );
 }

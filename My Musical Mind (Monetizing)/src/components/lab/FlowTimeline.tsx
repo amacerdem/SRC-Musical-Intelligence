@@ -21,7 +21,15 @@ import {
   ALL_PSYCHOLOGY,
   ALL_COGNITION,
   ALL_NEUROSCIENCE,
+  ALL_ACOUSTIC_6D,
+  ALL_ACOUSTIC_12D,
+  ALL_ACOUSTIC_24D,
+  ACOUSTIC_R3_6D,
+  ACOUSTIC_R3_12D,
+  ACOUSTIC_R3_24D,
 } from "@/data/dimensions";
+
+export type LabMode = "neuro" | "acoustic";
 
 /* ── Constants ───────────────────────────────────────────────────────── */
 
@@ -62,6 +70,7 @@ interface Props {
   audioRef: React.RefObject<HTMLAudioElement | null>;
   isPlaying: boolean;
   onSeek: (ratio: number) => void;
+  labMode: LabMode;
 }
 
 /* ── Helpers ─────────────────────────────────────────────────────────── */
@@ -111,7 +120,7 @@ function lerpSeg2D(arr: number[][], time: number, duration: number): number[] {
 
 export function FlowTimeline({
   temporal, trackDetail, depth, accentColor,
-  audioRef, isPlaying, onSeek,
+  audioRef, isPlaying, onSeek, labMode,
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -131,20 +140,27 @@ export function FlowTimeline({
   const windowDur = Math.min(WINDOW_DURATION, duration);
   const dpr = typeof window !== "undefined" ? Math.min(window.devicePixelRatio || 1, 2) : 1;
 
-  const dimCount = depth;
   const dimList = useMemo(() => {
-    if (depth === 6) return ALL_PSYCHOLOGY;
-    if (depth === 12) return ALL_COGNITION;
-    return ALL_NEUROSCIENCE;
-  }, [depth]);
+    if (labMode === "acoustic") {
+      return depth === 6 ? ALL_ACOUSTIC_6D : depth === 12 ? ALL_ACOUSTIC_12D : ALL_ACOUSTIC_24D;
+    }
+    return depth === 6 ? ALL_PSYCHOLOGY : depth === 12 ? ALL_COGNITION : ALL_NEUROSCIENCE;
+  }, [depth, labMode]);
+  const dimCount = dimList.length;
 
   const getDimValues = useCallback((segIdx: number): number[] => {
+    if (labMode === "acoustic") {
+      const r3seg = temporal.r3Segments?.[segIdx];
+      if (!r3seg) return new Array(dimCount).fill(0);
+      const indices = depth === 6 ? ACOUSTIC_R3_6D : depth === 12 ? ACOUSTIC_R3_12D : ACOUSTIC_R3_24D;
+      return indices.map(i => r3seg[i] ?? 0);
+    }
     const s = temporal.segments[segIdx];
     if (!s) return [];
     if (depth === 6) return s.psychology;
     if (depth === 12) return s.cognition;
     return s.neuroscience;
-  }, [temporal, depth]);
+  }, [temporal, depth, labMode, dimCount]);
 
   const neuroArr = trackDetail.temporal_profile.neuro_per_segment;
   const rewardArr = trackDetail.temporal_profile.reward_per_segment;
@@ -210,7 +226,8 @@ export function FlowTimeline({
     ctx.clearRect(0, 0, W, H);
 
     /* ── 0. Dimension label strip (left) ─────────────── */
-    ctx.fillStyle = "rgba(6,6,14,0.95)";
+    const isAcoustic = labMode === "acoustic";
+    ctx.fillStyle = isAcoustic ? "rgba(14,8,6,0.95)" : "rgba(6,6,14,0.95)";
     ctx.fillRect(0, 0, DIM_LABELS_W, H);
 
     const curSegIdx = Math.max(0, Math.min(segCount - 1, Math.round(currentTime / segDur)));
@@ -250,8 +267,8 @@ export function FlowTimeline({
     ctx.lineTo(DIM_LABELS_W - 0.5, H);
     ctx.stroke();
 
-    /* ── 1. Reward heat-map background ───────────────── */
-    if (rewardArr && rewardArr.length > 0) {
+    /* ── 1. Reward heat-map background (NeuroAcoustic only) ── */
+    if (!isAcoustic && rewardArr && rewardArr.length > 0) {
       const stripW = Math.max(2, cW / 120);
       for (let x = ML; x < ML + cW; x += stripW) {
         const t = sT + ((x - ML) / cW) * windowDur;
@@ -290,8 +307,8 @@ export function FlowTimeline({
       ctx.fillText(`${m}:${s.toString().padStart(2, "0")}`, x, H - 4);
     }
 
-    /* ── 3. Neurochemical indicator strips (bottom) ──── */
-    if (neuroArr && neuroArr.length > 0 && depth >= 12) {
+    /* ── 3. Neurochemical indicator strips (bottom, NeuroAcoustic only) ── */
+    if (!isAcoustic && neuroArr && neuroArr.length > 0 && depth >= 12) {
       const stripH = 2;
       const baseY = MT + cH - NEURO_COLORS.length * (stripH + 1);
       for (let ni = 0; ni < NEURO_COLORS.length; ni++) {
@@ -462,7 +479,7 @@ export function FlowTimeline({
   }, [
     size, dpr, temporal, depth, dimCount, dimList, segCount, segDur,
     duration, windowDur, accentColor, rewardArr, neuroArr, getDimValues,
-    dataMin, dataMax,
+    dataMin, dataMax, labMode,
   ]);
 
   /* ── rAF Loop ────────────────────────────────────────── */
@@ -494,25 +511,28 @@ export function FlowTimeline({
 
   /* ── Tooltip builder ─────────────────────────────────── */
   const buildTooltip = useCallback((hv: HoverInfo): TooltipData | null => {
-    const seg = temporal.segments[hv.segIdx];
-    if (!seg) return null;
-
-    const vals = depth === 6 ? seg.psychology : depth === 12 ? seg.cognition : seg.neuroscience;
     const t = hv.segIdx * segDur;
     const m = Math.floor(t / 60), s = Math.floor(t % 60);
 
+    const vals = getDimValues(hv.segIdx);
+    if (!vals || vals.length === 0) return null;
+
     const dims: TooltipDim[] = vals.map((v, i) => {
       const dim = dimList[i];
+      if (labMode === "acoustic") {
+        return { name: dim?.name ?? `A${i}`, value: v, color: baseHex(dim?.color ?? "#FF6B35") };
+      }
       const parentList = depth === 12 ? ALL_PSYCHOLOGY : depth === 24 ? ALL_COGNITION : undefined;
-      const parent = dim?.parentKey ? parentList?.find(p => p.key === dim.parentKey) : undefined;
+      const pk = dim && "parentKey" in dim ? (dim as { parentKey?: string }).parentKey : undefined;
+      const parent = pk ? parentList?.find((p: { key: string }) => p.key === pk) : undefined;
       return { name: dim?.name ?? `D${i}`, value: v, color: baseHex(dim?.color ?? "#94A3B8"), parentName: parent?.name };
     });
 
-    const neuro = neuroArr ? lerpSeg2D(neuroArr, t, duration) : [0, 0, 0, 0];
-    const reward = rewardArr ? lerpSeg(rewardArr, t, duration) : 0;
+    const neuro = labMode === "neuro" && neuroArr ? lerpSeg2D(neuroArr, t, duration) : [0, 0, 0, 0];
+    const reward = labMode === "neuro" && rewardArr ? lerpSeg(rewardArr, t, duration) : 0;
 
     return { timeStr: `${m}:${s.toString().padStart(2, "0")}`, dims, reward, neuro, posX: hv.canvasX };
-  }, [temporal, depth, dimList, segDur, duration, neuroArr, rewardArr]);
+  }, [temporal, depth, dimList, segDur, duration, neuroArr, rewardArr, labMode, getDimValues]);
 
   /* ── Mouse handlers ──────────────────────────────────── */
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLCanvasElement>) => {
@@ -567,6 +587,7 @@ export function FlowTimeline({
             depth={depth}
             accentColor={accentColor}
             containerW={size.w}
+            labMode={labMode}
           />
         )}
       </AnimatePresence>
@@ -579,12 +600,14 @@ export function FlowTimeline({
  *  FlowTooltip — Depth-layered hover information
  * ════════════════════════════════════════════════════════════════════════ */
 
-function FlowTooltip({ data, depth, accentColor, containerW }: {
+function FlowTooltip({ data, depth, accentColor, containerW, labMode }: {
   data: TooltipData;
   depth: DepthLevel;
   accentColor: string;
   containerW: number;
+  labMode: LabMode;
 }) {
+  const isAcoustic = labMode === "acoustic";
   const tw = depth <= 6 ? 220 : depth <= 12 ? 260 : 340;
   // Edge-aware positioning
   let leftPct = (data.posX / containerW) * 100;
@@ -617,7 +640,7 @@ function FlowTooltip({ data, depth, accentColor, containerW }: {
       <div
         className="rounded-xl px-3 py-2.5"
         style={{
-          background: "rgba(6,6,14,0.93)",
+          background: isAcoustic ? "rgba(14,8,6,0.93)" : "rgba(6,6,14,0.93)",
           backdropFilter: "blur(20px)",
           border: "1px solid rgba(255,255,255,0.07)",
           boxShadow: `0 8px 32px rgba(0,0,0,0.55), 0 0 24px ${accentColor}06`,
@@ -626,28 +649,30 @@ function FlowTooltip({ data, depth, accentColor, containerW }: {
         {/* Header */}
         <div className="flex items-center justify-between mb-2.5">
           <span className="text-xs font-mono text-slate-400">{data.timeStr}</span>
-          <div className="flex items-center gap-1.5">
-            <span className="text-[9px] font-mono text-slate-600 uppercase tracking-wider">Reward</span>
-            <div className="w-14 h-[4px] rounded-full bg-white/5 overflow-hidden">
-              <div className="h-full rounded-full" style={{ width: `${data.reward * 100}%`, background: accentColor, opacity: 0.65 }} />
+          {!isAcoustic && (
+            <div className="flex items-center gap-1.5">
+              <span className="text-[9px] font-mono text-slate-600 uppercase tracking-wider">Reward</span>
+              <div className="w-14 h-[4px] rounded-full bg-white/5 overflow-hidden">
+                <div className="h-full rounded-full" style={{ width: `${data.reward * 100}%`, background: accentColor, opacity: 0.65 }} />
+              </div>
+              <span className="text-[11px] font-mono" style={{ color: `${accentColor}90` }}>
+                {data.reward.toFixed(2)}
+              </span>
             </div>
-            <span className="text-[11px] font-mono" style={{ color: `${accentColor}90` }}>
-              {data.reward.toFixed(2)}
-            </span>
-          </div>
+          )}
         </div>
 
-        {/* ── 6D: flat list ─────────────────────────────── */}
-        {depth === 6 && (
-          <div className="space-y-0.5">
+        {/* ── Flat list (6D or Acoustic mode) ──────────── */}
+        {(depth === 6 || isAcoustic) && (
+          <div className={`space-y-0.5 ${isAcoustic && depth === 24 ? "grid grid-cols-2 gap-x-2 gap-y-0 space-y-0" : ""}`}>
             {data.dims.map((d, i) => (
-              <DimRow key={i} name={d.name} value={d.value} color={d.color} />
+              <DimRow key={i} name={d.name} value={d.value} color={d.color} compact={isAcoustic && depth >= 12} />
             ))}
           </div>
         )}
 
-        {/* ── 12D: grouped by parent ───────────────────── */}
-        {depth === 12 && grouped && (
+        {/* ── 12D: grouped by parent (NeuroAcoustic) ──── */}
+        {!isAcoustic && depth === 12 && grouped && (
           <div className="space-y-1.5">
             {grouped.map((g, gi) => (
               <div key={gi}>
@@ -662,8 +687,8 @@ function FlowTooltip({ data, depth, accentColor, containerW }: {
           </div>
         )}
 
-        {/* ── 24D: compact 2-column grouped ────────────── */}
-        {depth === 24 && grouped && (
+        {/* ── 24D: compact 2-column grouped (NeuroAcoustic) ── */}
+        {!isAcoustic && depth === 24 && grouped && (
           <div className="space-y-1">
             {grouped.map((g, gi) => (
               <div key={gi}>
@@ -680,8 +705,8 @@ function FlowTooltip({ data, depth, accentColor, containerW }: {
           </div>
         )}
 
-        {/* Neurochemicals — visible at 12D+ */}
-        {depth >= 12 && (
+        {/* Neurochemicals — visible at 12D+ (NeuroAcoustic only) */}
+        {!isAcoustic && depth >= 12 && (
           <div className="flex items-center gap-3 mt-2.5 pt-2 border-t border-white/[0.05]">
             {NEURO_LABELS.map((label, i) => (
               <div key={label} className="flex items-center gap-1">

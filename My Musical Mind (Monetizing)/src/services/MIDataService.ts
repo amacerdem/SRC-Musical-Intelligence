@@ -252,6 +252,39 @@ class MIDataService {
     return this.getAllTracks().find((t) => t.id === id);
   }
 
+  /** Fuzzy find track by name and/or artist */
+  findTrackFuzzy(name?: string, artist?: string): MICatalogTrack | undefined {
+    if (!name && !artist) return undefined;
+    const tracks = this.getAllTracks();
+    const nl = (name ?? "").toLowerCase();
+    const al = (artist ?? "").toLowerCase();
+
+    // Exact title + artist match
+    if (nl && al) {
+      const exact = tracks.find(
+        (t) => t.title.toLowerCase() === nl && t.artist.toLowerCase() === al,
+      );
+      if (exact) return exact;
+    }
+
+    // Partial match scoring
+    let best: MICatalogTrack | undefined;
+    let bestScore = 0;
+    for (const t of tracks) {
+      let score = 0;
+      const tl = t.title.toLowerCase();
+      const ta = t.artist.toLowerCase();
+      if (nl && tl === nl) score += 50;
+      else if (nl && tl.includes(nl)) score += 30;
+      else if (nl && nl.includes(tl)) score += 20;
+      if (al && ta === al) score += 50;
+      else if (al && ta.includes(al)) score += 30;
+      else if (al && al.includes(ta)) score += 20;
+      if (score > bestScore) { bestScore = score; best = t; }
+    }
+    return bestScore >= 20 ? best : undefined;
+  }
+
   /* ── Static Adapters ──────────────────────────────────────────── */
 
   static toMockTrack(ct: MICatalogTrack): MockTrack {

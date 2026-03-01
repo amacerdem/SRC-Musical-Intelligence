@@ -16,8 +16,12 @@ import {
 } from "@/services/agent";
 import { useUserStore } from "./useUserStore";
 import { useM3Store } from "./useM3Store";
+import { miDataService } from "@/services/MIDataService";
 import { personas } from "@/data/personas";
 import { getDominantType } from "@/types/m3";
+
+/** Detect if a user message is a music playback command */
+const MUSIC_INTENT_RE = /\b(çal|değiştir|degistir|aç|baslat|başlat|dinle|koy|play|put on|suggest|listen|queue|kuyruk|liste|müzik|muzik|şarkı|sarki|song|track|parça|parca|bir şey|bi şey|next|skip|öneri|recommend)\b/i;
 
 export interface ChatMessage {
   id: string;
@@ -176,6 +180,7 @@ export const useChatStore = create<ChatState>()(
 
         try {
           const req = buildChatRequest(trimmed, get().sessionId);
+          let actionFired = false;
           const res = await apiSendMessageStream(
             req,
             (status) => set({ statusText: status, streamingContent: null }),
@@ -185,6 +190,7 @@ export const useChatStore = create<ChatState>()(
             })),
             // Dispatch agent actions to the registered handler
             (action) => {
+              actionFired = true;
               const handler = get().actionHandler;
               if (handler) handler(action);
             },
@@ -196,6 +202,41 @@ export const useChatStore = create<ChatState>()(
             content: res.message,
             timestamp: new Date().toISOString(),
           };
+
+          // Fallback: if no action event was emitted but user asked for music,
+          // try to play a track anyway.
+          if (!actionFired && res.message) {
+            const handler = get().actionHandler;
+            if (handler) {
+              // Try 1: Extract "Çalıyor: X — Y" or "Playing: X by Y" from agent text
+              const playMatch = res.message.match(
+                /(?:Çalıyor|çalıyor|Playing|playing|▶️)[:\s—–-]+['"]?([^'"\n—–]+?)['"]?\s*(?:—|–|-|by)\s*([^\n(]+)/i,
+              );
+              if (playMatch) {
+                handler({
+                  type: "play_track",
+                  track_name: playMatch[1].trim(),
+                  artist: playMatch[2].trim(),
+                });
+              } else if (MUSIC_INTENT_RE.test(trimmed)) {
+                // Try 2: User message was a music command but agent didn't play —
+                // auto-pick a track from MI catalog
+                const genes = useM3Store.getState().mind?.genes;
+                const tracks = genes
+                  ? miDataService.getRecommendations(genes, 5)
+                  : miDataService.getAllTracks().slice(0, 5);
+                if (tracks.length > 0) {
+                  const pick = tracks[Math.floor(Math.random() * tracks.length)];
+                  handler({
+                    type: "play_track",
+                    track_id: pick.id,
+                    track_name: pick.title,
+                    artist: pick.artist,
+                  });
+                }
+              }
+            }
+          }
 
           set((s) => ({
             messages: [...s.messages, assistantMsg],

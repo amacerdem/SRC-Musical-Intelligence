@@ -38,23 +38,43 @@ export function useAgentActions(controls: PlayerControls) {
 
     switch (action.type) {
       case "play_track": {
+        // Resolve track: try ID first, then fuzzy name/artist match
+        const trackId = action.track_id ?? "";
+        let catalogTrack = trackId ? miDataService.findTrack(trackId) : undefined;
+        if (!catalogTrack) {
+          catalogTrack = miDataService.findTrackFuzzy(action.track_name, action.artist);
+        }
+
+        if (catalogTrack) {
+          const mockTrack = MIDataService.toMockTrack(catalogTrack);
+          c.setCurrentTrack(mockTrack);
+          c.setIsPlaying(true);
+          c.setProgressMs(0);
+          c.setDurationMs(catalogTrack.duration_s * 1000);
+        } else if (action.track_name) {
+          // No catalog match — create mock from action data so UI still updates
+          c.setCurrentTrack({
+            id: trackId || `agent_${Date.now()}`,
+            name: action.track_name,
+            artist: action.artist ?? "Unknown",
+            albumArt: "",
+            durationSec: 240,
+            dominantFamily: "Explorers",
+            genre: "Unknown",
+            features: {
+              energy: 0.5, valence: 0.5, tempo: 120, danceability: 0.5,
+              acousticness: 0.3, harmonicComplexity: 0.5, timbralBrightness: 0.5,
+            },
+          });
+          c.setIsPlaying(true);
+          c.setProgressMs(0);
+          c.setDurationMs(240_000);
+        }
+
+        // Sync Spotify if connected
         if (c.isSpotifyConnected) {
-          // Spotify mode: trigger sync after brief delay for playback to start
-          try {
-            await SpotifyService.play();
-          } catch { /* best-effort */ }
+          try { await SpotifyService.play(); } catch { /* best-effort */ }
           setTimeout(() => c.syncPlaybackState(), 500);
-        } else {
-          // Demo mode: find track in MI dataset and set as current
-          const trackId = action.track_id ?? "";
-          const catalogTrack = miDataService.findTrack(trackId);
-          if (catalogTrack) {
-            const mockTrack = MIDataService.toMockTrack(catalogTrack);
-            c.setCurrentTrack(mockTrack);
-            c.setIsPlaying(true);
-            c.setProgressMs(0);
-            c.setDurationMs(catalogTrack.duration_s * 1000);
-          }
         }
         break;
       }
@@ -105,13 +125,14 @@ export function useAgentActions(controls: PlayerControls) {
             id: t.track_id,
             name: t.track_name,
             artist: t.artist,
-            album: "",
             albumArt: "",
             durationSec: 240,
-            previewUrl: null,
             dominantFamily: (t.dominant_family ?? "Explorers") as MockTrack["dominantFamily"],
             genre: "Unknown",
-            spotifyUri: null,
+            features: {
+              energy: 0.5, valence: 0.5, tempo: 120, danceability: 0.5,
+              acousticness: 0.3, harmonicComplexity: 0.5, timbralBrightness: 0.5,
+            },
           };
         });
 

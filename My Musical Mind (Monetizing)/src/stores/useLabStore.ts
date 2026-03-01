@@ -29,6 +29,8 @@ export interface TemporalDimensions {
   frameCount: number;
   /** Source: "full" = _beliefs_full.json, "summary" = main JSON fallback */
   source: "full" | "summary";
+  /** Per-segment R³ 97D vectors (from r3_per_segment in track JSON) */
+  r3Segments?: number[][];
 }
 
 export interface LabState {
@@ -66,7 +68,8 @@ function computeFromSummary(detail: MITrackDetail): TemporalDimensions {
     (beliefs) => computeLabDimensions(beliefs)
   );
   const overall = computeLabDimensions(detail.beliefs.means);
-  return { segments, overall, frameCount: 0, source: "summary" };
+  const r3Segments = detail.temporal_profile.r3_per_segment;
+  return { segments, overall, frameCount: 0, source: "summary", r3Segments };
 }
 
 /** Async: fetch _beliefs_full.json, downsample, compute dimensions */
@@ -126,6 +129,8 @@ export const useLabStore = create<LabState>((set, get) => ({
     computeFromFull(detail.id).then((fullTemporal) => {
       // Only update if this track is still selected
       if (fullTemporal && get().trackId === detail.id) {
+        // Preserve R³ segments from summary (full beliefs don't include R³)
+        fullTemporal.r3Segments = summaryTemporal.r3Segments;
         set({ temporal: fullTemporal });
       }
     });

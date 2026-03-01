@@ -239,16 +239,18 @@ export function PersonaDetail() {
             </motion.div>
 
             {/* Content — narrative sections */}
-            <motion.div variants={staggerChildren} initial="initial" animate="animate" className="col-span-12 lg:col-span-9 space-y-12">
+            <motion.div variants={staggerChildren} initial="initial" animate="animate" className="col-span-12 lg:col-span-9 space-y-5">
               {/* Narrative sections */}
-              {NARRATIVE_SECTIONS.map((section) => (
-                <PersonaSection
-                  key={section.key}
-                  section={section}
-                  personaId={persona.id}
-                  color={persona.color}
-                />
-              ))}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
+                {NARRATIVE_SECTIONS.map((section) => (
+                  <PersonaSection
+                    key={section.key}
+                    section={section}
+                    personaId={persona.id}
+                    color={persona.color}
+                  />
+                ))}
+              </div>
 
               {/* Compatible personas */}
               <div className="spatial-card p-8">

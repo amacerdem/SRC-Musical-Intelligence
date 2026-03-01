@@ -280,3 +280,58 @@ export function getLabDim(depth: 6 | 12 | 24, index: number): LabDimension | und
   if (depth === 12) return ALL_COGNITION[index];
   return ALL_NEUROSCIENCE[index];
 }
+
+// =====================================================================
+// ACOUSTIC DIMENSIONS — Direct R³ perceptual signals
+// =====================================================================
+
+export interface AcousticDimension {
+  index: number;
+  key: string;
+  name: string;
+  nameTr: string;
+  r3Index: number;      // index into R³ 97D vector
+  color: string;
+}
+
+/** R³ indices for each acoustic depth level */
+export const ACOUSTIC_R3_6D  = [10, 13, 0, 42, 21, 51];
+export const ACOUSTIC_R3_12D = [...ACOUSTIC_R3_6D, 12, 41, 37, 11, 22, 48];
+export const ACOUSTIC_R3_24D = [...ACOUSTIC_R3_12D, 4, 47, 17, 14, 59, 44, 8, 50, 60, 91, 94, 16];
+
+/** All 24 acoustic dimensions — 6D=first 6, 12D=first 12, 24D=all 24 */
+const ALL_ACOUSTIC: AcousticDimension[] = [
+  // ── 6D Essential Sound ──────────────────────────────────
+  { index: 0,  key: "loudness",    name: "Loudness",    nameTr: "Gürlük",       r3Index: 10, color: "#FF6B35" },
+  { index: 1,  key: "brightness",  name: "Brightness",  nameTr: "Parlaklık",    r3Index: 13, color: "#FFD166" },
+  { index: 2,  key: "roughness",   name: "Roughness",   nameTr: "Pürüz",        r3Index: 0,  color: "#06D6A0" },
+  { index: 3,  key: "beat",        name: "Beat",        nameTr: "Ritim",        r3Index: 42, color: "#118AB2" },
+  { index: 4,  key: "movement",    name: "Movement",    nameTr: "Hareket",      r3Index: 21, color: "#EF476F" },
+  { index: 5,  key: "harmony",     name: "Harmony",     nameTr: "Harmoni",      r3Index: 51, color: "#7209B7" },
+
+  // ── +6 → 12D Detailed Sound ─────────────────────────────
+  { index: 6,  key: "warmth",      name: "Warmth",      nameTr: "Sıcaklık",     r3Index: 12, color: "#FF8C61" },
+  { index: 7,  key: "tempo",       name: "Tempo",       nameTr: "Tempo",        r3Index: 41, color: "#73D2DE" },
+  { index: 8,  key: "pitch",       name: "Pitch",       nameTr: "Perde",        r3Index: 37, color: "#B388EB" },
+  { index: 9,  key: "attack",      name: "Attack",      nameTr: "Atak",         r3Index: 11, color: "#FF4365" },
+  { index: 10, key: "richness",    name: "Richness",    nameTr: "Zenginlik",    r3Index: 22, color: "#88D498" },
+  { index: 11, key: "density",     name: "Density",     nameTr: "Yoğunluk",     r3Index: 48, color: "#F0C987" },
+
+  // ── +12 → 24D Full Analysis ──────────────────────────────
+  { index: 12, key: "consonance",  name: "Consonance",  nameTr: "Uyum",         r3Index: 4,  color: "#FF9F43" },
+  { index: 13, key: "groove",      name: "Groove",      nameTr: "Groove",       r3Index: 47, color: "#45B7D1" },
+  { index: 14, key: "harmonicity", name: "Harmonicity", nameTr: "Harmoniklik",  r3Index: 17, color: "#9B59B6" },
+  { index: 15, key: "tonalness",   name: "Tonalness",   nameTr: "Tonalite",     r3Index: 14, color: "#E17055" },
+  { index: 16, key: "chord_flow",  name: "Chord Flow",  nameTr: "Akor Akışı",   r3Index: 59, color: "#2ECC71" },
+  { index: 17, key: "syncopation", name: "Syncopation", nameTr: "Senkop",       r3Index: 44, color: "#F368E0" },
+  { index: 18, key: "velocity",    name: "Velocity",    nameTr: "Hız",          r3Index: 8,  color: "#FFA07A" },
+  { index: 19, key: "regularity",  name: "Regularity",  nameTr: "Düzenlilik",   r3Index: 50, color: "#20B2AA" },
+  { index: 20, key: "stability",   name: "Stability",   nameTr: "Kararlılık",   r3Index: 60, color: "#C39BD3" },
+  { index: 21, key: "sharpness",   name: "Sharpness",   nameTr: "Keskinlik",    r3Index: 91, color: "#EB984E" },
+  { index: 22, key: "bass_weight", name: "Bass Weight", nameTr: "Bas Ağırlığı", r3Index: 94, color: "#5DADE2" },
+  { index: 23, key: "smoothness",  name: "Smoothness",  nameTr: "Pürüzsüzlük",  r3Index: 16, color: "#58D68D" },
+];
+
+export const ALL_ACOUSTIC_6D:  AcousticDimension[] = ALL_ACOUSTIC.slice(0, 6);
+export const ALL_ACOUSTIC_12D: AcousticDimension[] = ALL_ACOUSTIC.slice(0, 12);
+export const ALL_ACOUSTIC_24D: AcousticDimension[] = ALL_ACOUSTIC;

@@ -30,6 +30,7 @@ import type { MICatalogTrack } from "@/types/mi-dataset";
 
 import { DepthSelector } from "@/components/lab/DepthSelector";
 import { FlowTimeline } from "@/components/lab/FlowTimeline";
+import type { LabMode } from "@/components/lab/FlowTimeline";
 import { SpectralPeaks } from "@/components/lab/SpectralPeaks";
 import type { MelData } from "@/components/lab/peakExtractor";
 
@@ -100,7 +101,8 @@ export function Lab() {
   const [hasEverPlayed, setHasEverPlayed] = useState(false);
   const [flowIdx, setFlowIdx] = useState(0);
   const [melData, setMelData] = useState<MelData | null>(null);
-  const [peakCount, setPeakCount] = useState<4 | 8 | 16>(8);
+  const [peakCount, setPeakCount] = useState<4 | 8 | 16>(4);
+  const [labMode, setLabMode] = useState<LabMode>("acoustic");
 
   // Initialize audio element + load mel data when track changes
   useEffect(() => {
@@ -364,11 +366,38 @@ export function Lab() {
                 className="h-full flex flex-col px-2 py-1"
               >
                 {/* Panel header */}
-                <div className="flex items-center gap-2 mb-0.5 flex-shrink-0">
-                  <Activity size={10} className="text-slate-600" />
-                  <span className="text-[9px] font-display font-light tracking-[0.12em] uppercase text-slate-500">
-                    NeuroAcoustic
-                  </span>
+                <div className="flex items-center gap-3 mb-1 flex-shrink-0">
+                  {/* Mode toggle */}
+                  <div className="flex items-center rounded-xl overflow-hidden"
+                    style={{
+                      border: "1px solid rgba(255,255,255,0.1)",
+                      background: "rgba(0,0,0,0.25)",
+                    }}
+                  >
+                    <button
+                      onClick={() => setLabMode("acoustic")}
+                      className="px-3.5 py-1.5 text-[11px] font-display font-semibold tracking-[0.06em] uppercase transition-all relative"
+                      style={{
+                        background: labMode === "acoustic" ? "#FF6B3522" : "transparent",
+                        color: labMode === "acoustic" ? "#FF6B35" : "rgba(255,255,255,0.3)",
+                        borderRight: "1px solid rgba(255,255,255,0.06)",
+                        boxShadow: labMode === "acoustic" ? "inset 0 -2px 0 #FF6B3580, 0 0 12px #FF6B3510" : "none",
+                      }}
+                    >
+                      Acoustic
+                    </button>
+                    <button
+                      onClick={() => setLabMode("neuro")}
+                      className="px-3.5 py-1.5 text-[11px] font-display font-semibold tracking-[0.06em] uppercase transition-all relative"
+                      style={{
+                        background: labMode === "neuro" ? `${color}22` : "transparent",
+                        color: labMode === "neuro" ? color : "rgba(255,255,255,0.3)",
+                        boxShadow: labMode === "neuro" ? `inset 0 -2px 0 ${color}80, 0 0 12px ${color}10` : "none",
+                      }}
+                    >
+                      NeuroAcoustic
+                    </button>
+                  </div>
                 </div>
 
                 <div className="flex-1 min-h-0">
@@ -380,6 +409,7 @@ export function Lab() {
                     audioRef={audioRef}
                     isPlaying={isPlaying}
                     onSeek={handleSeek}
+                    labMode={labMode}
                   />
                 </div>
               </motion.div>
@@ -388,7 +418,7 @@ export function Lab() {
                 <div className="flex flex-col items-center gap-3">
                   <Activity size={16} className="text-slate-800" />
                   <span className="text-[9px] font-display font-light tracking-[0.12em] uppercase text-slate-700">
-                    NeuroAcoustic
+                    {labMode === "acoustic" ? "Acoustic" : "NeuroAcoustic"}
                   </span>
                   {phase === "idle" && (
                     <p className="text-[10px] text-slate-700 font-body text-center max-w-[200px]">

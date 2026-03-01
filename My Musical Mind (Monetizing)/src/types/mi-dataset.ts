@@ -88,6 +88,7 @@ export interface MITrackDetail {
     neuro_per_segment?: number[][];        // segments × 4 (DA, NE, OPI, 5HT)
     ram_per_segment?: number[][];          // segments × 26
     reward_per_segment?: number[];         // segments × 1 scalar
+    r3_per_segment?: number[][];           // segments × 97 (R³ perceptual features)
   };
 }
 
