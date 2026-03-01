@@ -59,6 +59,33 @@ class ChatResponse(BaseModel):
     tokens_in: int = 0
     tokens_out: int = 0
     cost_usd: float = 0.0
+    actions: list[dict[str, Any]] = Field(default_factory=list)
+
+
+class SystemEventRequest(BaseModel):
+    """System event from frontend (track changes, etc.)."""
+
+    user_id: str
+    session_id: str | None = None
+    event_type: str  # "track_changed", "playback_paused", etc.
+    data: dict[str, Any] = Field(default_factory=dict)
+    language: str = "tr"
+
+    # User profile (same as ChatRequest)
+    persona_id: int = 1
+    persona_name: str = "Dopamine Seeker"
+    family: str = "Alchemists"
+    level: int = 1
+    tier: str = "free"
+    genes: dict[str, float] = Field(
+        default_factory=lambda: {
+            "entropy": 0.5,
+            "resolution": 0.5,
+            "tension": 0.5,
+            "resonance": 0.5,
+            "plasticity": 0.5,
+        }
+    )
 
 
 class InterpretRequest(BaseModel):
@@ -200,12 +227,16 @@ async def chat(req: ChatRequest):
 
                 # Execute each tool and collect results
                 tool_results = []
+                collected_actions: list[dict] = []
                 for tool_block in tool_use_blocks:
                     result = handle_tool_call(
                         tool_name=tool_block.name,
                         tool_input=tool_block.input,
                         user_tier=req.tier,
                     )
+                    # Collect frontend actions from tool results
+                    if "action" in result:
+                        collected_actions.append(result["action"])
                     tool_results.append({
                         "type": "tool_result",
                         "tool_use_id": tool_block.id,
@@ -246,6 +277,7 @@ async def chat(req: ChatRequest):
         tokens_in=tokens_in,
         tokens_out=tokens_out,
         cost_usd=cost,
+        actions=collected_actions if api_key else [],
     )
 
 
@@ -374,6 +406,9 @@ async def chat_stream(req: ChatRequest):
                     "get_temporal_journey": ("Zamansal yolculuk analiz ediliyor...", "Analyzing temporal journey..."),
                     "get_belief_timeline": ("İnanç zaman çizelgesi oluşturuluyor...", "Building belief timeline..."),
                     "get_brain_activation": ("Beyin aktivasyonu okunuyor...", "Reading brain activation..."),
+                    "play_track": ("Parça çalınıyor...", "Playing track..."),
+                    "control_playback": ("Oynatma kontrol ediliyor...", "Controlling playback..."),
+                    "get_now_playing": ("Şu an çalan alınıyor...", "Getting now playing..."),
                 }
                 for tn in tool_names:
                     tr_label, en_label = tool_labels.get(tn, (f"{tn}...", f"{tn}..."))
@@ -402,6 +437,9 @@ async def chat_stream(req: ChatRequest):
                         tool_input=tool_block.input,
                         user_tier=req.tier,
                     )
+                    # Emit frontend action via SSE
+                    if "action" in result:
+                        yield _sse_event("action", result["action"])
                     tool_results.append({
                         "type": "tool_result",
                         "tool_use_id": tool_block.id,
@@ -446,6 +484,63 @@ async def chat_stream(req: ChatRequest):
             "X-Accel-Buffering": "no",
         },
     )
+
+
+# ── System Event Endpoint (proactive agent) ────────────────────────
+
+
+def _build_system_event_message(event_type: str, data: dict, lang: str) -> str:
+    """Convert a system event into a prompt-formatted message."""
+    if event_type == "track_changed":
+        name = data.get("track_name", "?")
+        artist = data.get("artist", "?")
+        family = data.get("family", "")
+        genre = data.get("genre", "")
+        if lang == "tr":
+            return (
+                f"[SİSTEM: Şu an çalan parça değişti → '{name}' — {artist} "
+                f"({genre}, {family}). Kısa ve doğal bir yorum yap, "
+                f"parçanın müzikal karakteri hakkında 1-2 cümle söyle.]"
+            )
+        return (
+            f"[SYSTEM: Now playing changed → '{name}' by {artist} "
+            f"({genre}, {family}). Make a brief, natural comment about "
+            f"this track's musical character in 1-2 sentences.]"
+        )
+
+    if event_type == "playback_paused":
+        if lang == "tr":
+            return "[SİSTEM: Kullanıcı müziği duraklattı. Gerekirse kısa tepki ver.]"
+        return "[SYSTEM: User paused playback. React briefly if appropriate.]"
+
+    return f"[SYSTEM: {event_type} — {_json.dumps(data, ensure_ascii=False)}]"
+
+
+@router.post("/chat/system-event")
+async def system_event_stream(req: SystemEventRequest):
+    """Handle system events (track changes, etc.) and generate proactive insights.
+
+    Converts the system event into a hidden context message and streams
+    the agent's proactive response via SSE.
+    """
+    system_message = _build_system_event_message(
+        req.event_type, req.data, req.language,
+    )
+
+    chat_req = ChatRequest(
+        user_id=req.user_id,
+        session_id=req.session_id,
+        message=system_message,
+        language=req.language,
+        persona_id=req.persona_id,
+        persona_name=req.persona_name,
+        family=req.family,
+        level=req.level,
+        tier=req.tier,
+        genes=req.genes,
+    )
+
+    return await chat_stream(chat_req)
 
 
 # ── History Endpoint ────────────────────────────────────────────────

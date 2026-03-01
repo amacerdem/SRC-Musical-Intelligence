@@ -16,7 +16,7 @@ export function MindChat() {
   const personaName = persona?.name ?? "Musical Mind";
 
   // Hide on immersive pages, dashboard, and lab (chat is embedded there)
-  const hidden = location.pathname === "/live" || location.pathname === "/my-mind" || location.pathname === "/lab";
+  const hidden = location.pathname === "/live" || location.pathname === "/my-mind" || location.pathname === "/lab" || location.pathname === "/listen";
   if (hidden) return null;
 
   return (

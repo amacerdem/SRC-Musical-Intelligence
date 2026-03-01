@@ -1,8 +1,12 @@
 /**
- * Listen — Main listening hub with full Spotify integration.
+ * Listen — Agent-driven music companion with split-view layout.
  *
- * Shows persona character, currently playing with real controls,
- * queue, top tracks/artists, playlists, audio DNA, user profile.
+ * Left panel (40%): Inline chat with the Musical Mind agent.
+ * Right panel (60%): Now playing, queue, library, audio DNA.
+ * Mobile: Tab-based switching between Chat and Player views.
+ *
+ * The agent can control playback via tool calls (play_track,
+ * control_playback) and proactively comments on track changes.
  */
 import { useEffect, useState, useMemo, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -24,10 +28,12 @@ import {
   VolumeX,
   ExternalLink,
   Mic2,
-  Disc3,
   TrendingUp,
   Library,
   RefreshCw,
+  ChevronDown,
+  MessageCircle,
+  Headphones,
 } from "lucide-react";
 import {
   RadarChart,
@@ -38,7 +44,6 @@ import {
 } from "recharts";
 import { SpotifyService } from "@/services/spotify";
 import type {
-  PlaybackState,
   SpotifyUserProfile,
   SpotifyArtistInfo,
   SpotifyPlaylistInfo,
@@ -49,9 +54,13 @@ import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { useUserStore } from "@/stores/useUserStore";
 import { useM3Store } from "@/stores/useM3Store";
+import { useChatStore } from "@/stores/useChatStore";
 import { useActiveIdentity } from "@/hooks/useActiveIdentity";
+import { useMobile } from "@/hooks/useMediaQuery";
+import { useAgentActions } from "@/hooks/useAgentActions";
 import { getPersona } from "@/data/personas";
 import { CharacterAvatar } from "@/svg/characters/CharacterAvatar";
+import { ListenChat } from "@/components/listen/ListenChat";
 import {
   pageTransition,
   staggerChildren,
@@ -241,12 +250,12 @@ function NowPlayingHero({
         }}
       />
 
-      <div className="relative flex items-center gap-6 p-6 md:p-8">
+      <div className="relative flex items-center gap-5 p-5 md:p-6">
         {track.albumArt ? (
           <motion.img
             src={track.albumArt}
             alt=""
-            className="w-28 h-28 md:w-36 md:h-36 rounded-2xl object-cover shadow-2xl flex-shrink-0"
+            className="w-24 h-24 md:w-28 md:h-28 rounded-2xl object-cover shadow-2xl flex-shrink-0"
             animate={{
               boxShadow: isPlaying
                 ? [`0 0 20px ${accentColor}20, 0 8px 32px rgba(0,0,0,0.5)`, `0 0 40px ${accentColor}35, 0 8px 32px rgba(0,0,0,0.5)`, `0 0 20px ${accentColor}20, 0 8px 32px rgba(0,0,0,0.5)`]
@@ -255,13 +264,13 @@ function NowPlayingHero({
             transition={{ duration: 4, repeat: isPlaying ? Infinity : 0, ease: "easeInOut" }}
           />
         ) : (
-          <div className="w-28 h-28 md:w-36 md:h-36 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ background: `${SPOTIFY_GREEN}15` }}>
-            <Music2 size={48} className="text-slate-600" />
+          <div className="w-24 h-24 md:w-28 md:h-28 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ background: `${SPOTIFY_GREEN}15` }}>
+            <Music2 size={40} className="text-slate-600" />
           </div>
         )}
 
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2.5 mb-3">
+          <div className="flex items-center gap-2.5 mb-2">
             {isPlaying ? <EqualizerBars color={accentColor} /> : (
               <div className="flex gap-[3px] items-end">
                 {Array.from({ length: 5 }, (_, i) => (
@@ -274,10 +283,10 @@ function NowPlayingHero({
             </span>
           </div>
 
-          <h2 className="text-2xl md:text-3xl font-display font-bold text-white truncate mb-1">{track.name}</h2>
-          <p className="text-base text-slate-400 truncate mb-4">{track.artist}</p>
+          <h2 className="text-xl md:text-2xl font-display font-bold text-white truncate mb-0.5">{track.name}</h2>
+          <p className="text-sm text-slate-400 truncate mb-3">{track.artist}</p>
 
-          <div className="mb-4">
+          <div className="mb-3">
             <div
               className="h-1.5 rounded-full bg-white/[0.08] overflow-hidden cursor-pointer"
               onClick={(e) => {
@@ -288,30 +297,30 @@ function NowPlayingHero({
             >
               <div className="h-full rounded-full transition-all duration-300" style={{ width: `${progressPct}%`, background: `linear-gradient(90deg, ${accentColor}, ${SPOTIFY_GREEN})` }} />
             </div>
-            <div className="flex justify-between mt-1.5">
+            <div className="flex justify-between mt-1">
               <span className="text-[10px] font-mono text-slate-600">{formatDuration(Math.floor(progressMs / 1000))}</span>
               <span className="text-[10px] font-mono text-slate-600">{formatDuration(Math.floor(durationMs / 1000))}</span>
             </div>
           </div>
 
-          <div className="flex items-center gap-4">
-            <button onClick={onShuffle} disabled={!connected} className={`transition-colors ${connected ? "hover:text-white" : "opacity-40 cursor-default"}`} style={{ color: shuffleOn ? accentColor : "#64748B" }}><Shuffle size={16} /></button>
-            <button onClick={onPrev} disabled={!connected} className={`text-slate-400 transition-colors ${connected ? "hover:text-white active:scale-90" : "opacity-40 cursor-default"}`}><SkipBack size={18} /></button>
+          <div className="flex items-center gap-3">
+            <button onClick={onShuffle} disabled={!connected} className={`transition-colors ${connected ? "hover:text-white" : "opacity-40 cursor-default"}`} style={{ color: shuffleOn ? accentColor : "#64748B" }}><Shuffle size={15} /></button>
+            <button onClick={onPrev} disabled={!connected} className={`text-slate-400 transition-colors ${connected ? "hover:text-white active:scale-90" : "opacity-40 cursor-default"}`}><SkipBack size={17} /></button>
             <button
               onClick={onPlayPause} disabled={!connected}
-              className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${connected ? "hover:scale-105 active:scale-95" : "opacity-60 cursor-default"}`}
+              className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${connected ? "hover:scale-105 active:scale-95" : "opacity-60 cursor-default"}`}
               style={{ background: `linear-gradient(135deg, ${accentColor}, ${SPOTIFY_GREEN})`, boxShadow: isPlaying ? `0 0 20px ${accentColor}40` : `0 0 12px ${accentColor}20` }}
             >
-              {isPlaying ? <Pause size={22} className="text-white" /> : <Play size={22} className="text-white ml-0.5" />}
+              {isPlaying ? <Pause size={20} className="text-white" /> : <Play size={20} className="text-white ml-0.5" />}
             </button>
-            <button onClick={onNext} disabled={!connected} className={`text-slate-400 transition-colors ${connected ? "hover:text-white active:scale-90" : "opacity-40 cursor-default"}`}><SkipForward size={18} /></button>
-            <button onClick={onRepeat} disabled={!connected} className={`transition-colors ${connected ? "hover:text-white" : "opacity-40 cursor-default"}`} style={{ color: repeatMode !== "off" ? accentColor : "#64748B" }}><RepeatIcon size={16} /></button>
+            <button onClick={onNext} disabled={!connected} className={`text-slate-400 transition-colors ${connected ? "hover:text-white active:scale-90" : "opacity-40 cursor-default"}`}><SkipForward size={17} /></button>
+            <button onClick={onRepeat} disabled={!connected} className={`transition-colors ${connected ? "hover:text-white" : "opacity-40 cursor-default"}`} style={{ color: repeatMode !== "off" ? accentColor : "#64748B" }}><RepeatIcon size={15} /></button>
             <div className="ml-auto flex items-center gap-2">
               <button onClick={() => onVolume(volume > 0 ? 0 : 70)} disabled={!connected} className="text-slate-600 hover:text-slate-300 transition-colors">
-                {volume === 0 ? <VolumeX size={14} /> : <Volume2 size={14} />}
+                {volume === 0 ? <VolumeX size={13} /> : <Volume2 size={13} />}
               </button>
               <div
-                className="w-20 h-1.5 rounded-full bg-white/[0.08] overflow-hidden cursor-pointer"
+                className="w-16 h-1.5 rounded-full bg-white/[0.08] overflow-hidden cursor-pointer"
                 onClick={(e) => { if (!connected) return; const rect = e.currentTarget.getBoundingClientRect(); onVolume(Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100))); }}
               >
                 <div className="h-full rounded-full transition-all duration-200" style={{ width: `${volume}%`, background: `${accentColor}80` }} />
@@ -320,7 +329,7 @@ function NowPlayingHero({
           </div>
         </div>
 
-        <div className="hidden md:flex flex-col items-end gap-2 self-start flex-shrink-0">
+        <div className="hidden lg:flex flex-col items-end gap-2 self-start flex-shrink-0">
           <Badge label={track.genre} color={familyColor} />
           <Badge label={track.dominantFamily} color={familyColor} size="sm" />
           <div className="flex items-center gap-1.5 mt-2">
@@ -397,6 +406,59 @@ function PlaylistCard({ playlist }: { playlist: SpotifyPlaylistInfo }) {
   );
 }
 
+/* ── Collapsible Section ───────────────────────────────────────── */
+
+function CollapsibleSection({
+  title,
+  icon: Icon,
+  count,
+  color,
+  defaultOpen = false,
+  children,
+}: {
+  title: string;
+  icon: React.ElementType;
+  count?: number;
+  color: string;
+  defaultOpen?: boolean;
+  children: React.ReactNode;
+}) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div>
+      <button
+        onClick={() => setOpen(!open)}
+        className="flex items-center gap-2 mb-2 w-full group"
+      >
+        <Icon size={15} style={{ color }} />
+        <h2 className="text-sm font-display font-semibold text-slate-300 uppercase tracking-wider">
+          {title}
+        </h2>
+        {count != null && (
+          <span className="text-xs font-mono text-slate-600">{count}</span>
+        )}
+        <ChevronDown
+          size={14}
+          className={`ml-auto text-slate-600 transition-transform ${open ? "rotate-180" : ""}`}
+        />
+      </button>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="overflow-hidden"
+          >
+            {children}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
 /* ══════════════════════════════════════════════════════════════════
    ██  MAIN LISTEN PAGE
    ══════════════════════════════════════════════════════════════════ */
@@ -404,6 +466,7 @@ function PlaylistCard({ playlist }: { playlist: SpotifyPlaylistInfo }) {
 export function Listen() {
   const { t, i18n } = useTranslation();
   const isTr = i18n.language === "tr";
+  const isMobile = useMobile();
   const { mind } = useUserStore();
   const m3Mind = useM3Store((s) => s.mind);
   const identity = useActiveIdentity();
@@ -411,6 +474,9 @@ export function Listen() {
   const persona = activePersonaId ? getPersona(activePersonaId) : null;
   const personaLevel = m3Mind?.level ?? 1;
   const color = identity.color;
+
+  // Mobile tab
+  const [mobileTab, setMobileTab] = useState<"player" | "chat">("player");
 
   // Data state
   const [currentTrack, setCurrentTrack] = useState<MockTrack | null>(null);
@@ -435,18 +501,9 @@ export function Listen() {
   const [volume, setVolume] = useState(70);
   const progressTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  // Local progress ticker
-  useEffect(() => {
-    if (progressTimerRef.current) clearInterval(progressTimerRef.current);
-    if (isPlaying && currentTrack) {
-      progressTimerRef.current = setInterval(() => {
-        setProgressMs((p) => Math.min(p + 1000, durationMs));
-      }, 1000);
-    }
-    return () => { if (progressTimerRef.current) clearInterval(progressTimerRef.current); };
-  }, [isPlaying, currentTrack, durationMs]);
+  // ── Agent integration ──────────────────────────────────────────
 
-  // Sync playback state (with fallback to currently-playing endpoint)
+  // Sync playback state
   const syncPlaybackState = useCallback(async () => {
     if (!isSpotifyConnected) return;
     try {
@@ -461,7 +518,6 @@ export function Listen() {
         return;
       }
     } catch { /* silent */ }
-    // Fallback: getCurrentlyPlaying uses a different scope that may still work
     try {
       const track = await SpotifyService.getCurrentlyPlaying();
       if (track) {
@@ -471,86 +527,6 @@ export function Listen() {
       }
     } catch { /* silent */ }
   }, [isSpotifyConnected]);
-
-  // Initial fetch
-  useEffect(() => {
-    const connected = SpotifyService.isConnected();
-    setIsSpotifyConnected(connected);
-
-    async function fetchData() {
-      setLoading(true);
-      try {
-        if (connected) {
-          const [playback, current, recent, saved, top, artists, lists, q, profile] = await Promise.all([
-            SpotifyService.getPlaybackState().catch(() => null),
-            SpotifyService.getCurrentlyPlaying().catch(() => null),
-            SpotifyService.getRecentlyPlayed(50),
-            SpotifyService.getSavedTracks(50),
-            SpotifyService.getTopTracks("medium_term", 50),
-            SpotifyService.getTopArtists("medium_term", 20),
-            SpotifyService.getUserPlaylists(20),
-            SpotifyService.getQueue().catch(() => ({ currentTrack: null, queue: [] })),
-            SpotifyService.getUserProfile(),
-          ]);
-          if (playback) {
-            setCurrentTrack(playback.track);
-            setIsPlaying(playback.is_playing);
-            setShuffleOn(playback.shuffle_state);
-            setRepeatMode(playback.repeat_state);
-            setProgressMs(playback.progress_ms);
-            setDurationMs(playback.duration_ms);
-          } else if (current) {
-            // Fallback: at least show the current track
-            setCurrentTrack(current);
-            setIsPlaying(true);
-            setDurationMs(current.durationSec * 1000);
-            // Scope mismatch: full playback state failed but basic currently-playing worked
-            setNeedsReauth(true);
-          }
-          setRecentTracks(recent);
-          setSavedTracks(saved);
-          setTopTracks(top);
-          setTopArtists(artists);
-          setPlaylists(lists);
-          setQueueTracks(q.queue);
-          setUserProfile(profile);
-        } else {
-          const current = await SpotifySimulator.getCurrentTrack();
-          const history = SpotifySimulator.getRecentHistory();
-          const batch = SpotifySimulator.getInitialBatch();
-          setCurrentTrack(current);
-          setDurationMs(current.durationSec * 1000);
-          setRecentTracks(history);
-          setSavedTracks(batch.slice(0, 15));
-        }
-      } catch (err) {
-        console.error("Listen fetch error:", err);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchData();
-  }, []);
-
-  // Refetch top tracks/artists when time range changes
-  useEffect(() => {
-    if (!isSpotifyConnected) return;
-    (async () => {
-      const [top, artists] = await Promise.all([
-        SpotifyService.getTopTracks(timeRange, 50),
-        SpotifyService.getTopArtists(timeRange, 20),
-      ]);
-      setTopTracks(top);
-      setTopArtists(artists);
-    })();
-  }, [timeRange, isSpotifyConnected]);
-
-  // Poll playback state every 5s
-  useEffect(() => {
-    if (!isSpotifyConnected) return;
-    const interval = setInterval(syncPlaybackState, 5_000);
-    return () => clearInterval(interval);
-  }, [isSpotifyConnected, syncPlaybackState]);
 
   // Player control handlers
   const handlePlayPause = useCallback(async () => {
@@ -598,6 +574,139 @@ export function Listen() {
     catch (err) { console.error("Volume error:", err); }
   }, [isSpotifyConnected]);
 
+  // Agent actions hook
+  const { handleAction } = useAgentActions({
+    isSpotifyConnected,
+    setCurrentTrack,
+    setIsPlaying,
+    setProgressMs,
+    setDurationMs,
+    syncPlaybackState,
+    handlePlayPause,
+    handleNext,
+    handlePrev,
+    handleShuffle,
+    handleRepeat,
+    handleVolume,
+    volume,
+  });
+
+  // Register action handler with chat store
+  const setActionHandler = useChatStore((s) => s.setActionHandler);
+  useEffect(() => {
+    setActionHandler(handleAction);
+    return () => setActionHandler(null);
+  }, [handleAction, setActionHandler]);
+
+  // Proactive: detect track changes and notify agent
+  const prevTrackKeyRef = useRef<string | null>(null);
+  const sendSystemEvent = useChatStore((s) => s.sendSystemEvent);
+
+  useEffect(() => {
+    if (!currentTrack) return;
+    const trackKey = `${currentTrack.id}-${currentTrack.name}`;
+    if (prevTrackKeyRef.current && prevTrackKeyRef.current !== trackKey) {
+      sendSystemEvent("track_changed", {
+        track_name: currentTrack.name,
+        artist: currentTrack.artist,
+        family: currentTrack.dominantFamily,
+        genre: currentTrack.genre,
+      });
+    }
+    prevTrackKeyRef.current = trackKey;
+  }, [currentTrack, sendSystemEvent]);
+
+  // ── Data loading ───────────────────────────────────────────────
+
+  // Local progress ticker
+  useEffect(() => {
+    if (progressTimerRef.current) clearInterval(progressTimerRef.current);
+    if (isPlaying && currentTrack) {
+      progressTimerRef.current = setInterval(() => {
+        setProgressMs((p) => Math.min(p + 1000, durationMs));
+      }, 1000);
+    }
+    return () => { if (progressTimerRef.current) clearInterval(progressTimerRef.current); };
+  }, [isPlaying, currentTrack, durationMs]);
+
+  // Initial fetch
+  useEffect(() => {
+    const connected = SpotifyService.isConnected();
+    setIsSpotifyConnected(connected);
+
+    async function fetchData() {
+      setLoading(true);
+      try {
+        if (connected) {
+          const [playback, current, recent, saved, top, artists, lists, q, profile] = await Promise.all([
+            SpotifyService.getPlaybackState().catch(() => null),
+            SpotifyService.getCurrentlyPlaying().catch(() => null),
+            SpotifyService.getRecentlyPlayed(50),
+            SpotifyService.getSavedTracks(50),
+            SpotifyService.getTopTracks("medium_term", 50),
+            SpotifyService.getTopArtists("medium_term", 20),
+            SpotifyService.getUserPlaylists(20),
+            SpotifyService.getQueue().catch(() => ({ currentTrack: null, queue: [] })),
+            SpotifyService.getUserProfile(),
+          ]);
+          if (playback) {
+            setCurrentTrack(playback.track);
+            setIsPlaying(playback.is_playing);
+            setShuffleOn(playback.shuffle_state);
+            setRepeatMode(playback.repeat_state);
+            setProgressMs(playback.progress_ms);
+            setDurationMs(playback.duration_ms);
+          } else if (current) {
+            setCurrentTrack(current);
+            setIsPlaying(true);
+            setDurationMs(current.durationSec * 1000);
+            setNeedsReauth(true);
+          }
+          setRecentTracks(recent);
+          setSavedTracks(saved);
+          setTopTracks(top);
+          setTopArtists(artists);
+          setPlaylists(lists);
+          setQueueTracks(q.queue);
+          setUserProfile(profile);
+        } else {
+          const current = await SpotifySimulator.getCurrentTrack();
+          const history = SpotifySimulator.getRecentHistory();
+          const batch = SpotifySimulator.getInitialBatch();
+          setCurrentTrack(current);
+          setDurationMs(current.durationSec * 1000);
+          setRecentTracks(history);
+          setSavedTracks(batch.slice(0, 15));
+        }
+      } catch (err) {
+        console.error("Listen fetch error:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchData();
+  }, []);
+
+  // Refetch top tracks/artists when time range changes
+  useEffect(() => {
+    if (!isSpotifyConnected) return;
+    (async () => {
+      const [top, artists] = await Promise.all([
+        SpotifyService.getTopTracks(timeRange, 50),
+        SpotifyService.getTopArtists(timeRange, 20),
+      ]);
+      setTopTracks(top);
+      setTopArtists(artists);
+    })();
+  }, [timeRange, isSpotifyConnected]);
+
+  // Poll playback state every 5s
+  useEffect(() => {
+    if (!isSpotifyConnected) return;
+    const interval = setInterval(syncPlaybackState, 5_000);
+    return () => clearInterval(interval);
+  }, [isSpotifyConnected, syncPlaybackState]);
+
   // Computed
   const radarData = useMemo(() => averageFeatures(topTracks), [topTracks]);
   const familyDist = useMemo(() => familyDistribution(topTracks), [topTracks]);
@@ -608,6 +717,8 @@ export function Listen() {
   }, [topTracks]);
 
   if (!mind || !persona) return null;
+
+  const personaName = t(`personas.${persona.id}.name`);
 
   if (loading && recentTracks.length === 0) {
     return (
@@ -620,129 +731,175 @@ export function Listen() {
     );
   }
 
-  return (
-    <motion.div {...pageTransition} className="pb-32">
+  // Shared player props
+  const nowPlayingProps: NowPlayingProps = {
+    track: currentTrack, accentColor: color, isPlaying, shuffleOn,
+    repeatMode, progressMs, durationMs, volume,
+    onPlayPause: handlePlayPause, onNext: handleNext, onPrev: handlePrev,
+    onShuffle: handleShuffle, onRepeat: handleRepeat, onSeek: handleSeek, onVolume: handleVolume,
+    connected: isSpotifyConnected && !needsReauth,
+  };
 
-      {/* ── Persona Header + User Profile ───────────────────────────── */}
-      <motion.header variants={cinematicReveal} initial="initial" animate="animate" className="flex items-center gap-5 mb-8">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.85 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, delay: 0.05, ease }}
-          className="relative flex-shrink-0"
-        >
-          <CharacterAvatar personaId={persona.id} color={color} family={identity.family} size={72} level={personaLevel} showAura />
-        </motion.div>
+  /* ── Mobile Layout ──────────────────────────────────────────────── */
 
-        <div className="flex-1 min-w-0">
-          <h1 className="text-2xl md:text-3xl font-display font-bold" style={{ color }}>
-            {t(`personas.${persona.id}.name`)}
-          </h1>
-          <p className="text-sm text-slate-500 font-display font-light italic mt-0.5">
-            "{t(`personas.${persona.id}.tagline`)}"
-          </p>
-          {userProfile && (
-            <div className="flex items-center gap-3 mt-2">
-              {userProfile.images?.[0] && (
-                <img src={userProfile.images[0].url} alt="" className="w-5 h-5 rounded-full object-cover" />
-              )}
-              <span className="text-[11px] font-mono text-slate-500">{userProfile.display_name}</span>
-              <span className="text-[10px] font-mono text-slate-600">·</span>
-              <span className="text-[10px] font-mono text-slate-600">{userProfile.followers?.total ?? 0} followers</span>
-              <Badge label={userProfile.product === "premium" ? "Premium" : "Free"} color={SPOTIFY_GREEN} size="sm" />
-            </div>
-          )}
-        </div>
-
-        <div className="flex items-center gap-2 flex-shrink-0">
-          {isSpotifyConnected ? (
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full" style={{ background: `${SPOTIFY_GREEN}12`, border: `1px solid ${SPOTIFY_GREEN}25` }}>
-              <SpotifyLogo size={16} />
-              <span className="text-[11px] font-display font-medium" style={{ color: SPOTIFY_GREEN }}>{t("listen.connected")}</span>
-            </div>
-          ) : (
-            <button
-              onClick={() => SpotifyService.startAuthFlow({ fromPath: "/listen" })}
-              className="flex items-center gap-2 px-4 py-2 rounded-full transition-all hover:scale-105"
-              style={{ background: SPOTIFY_GREEN, boxShadow: `0 0 20px ${SPOTIFY_GREEN}30` }}
-            >
-              <SpotifyLogo size={16} />
-              <span className="text-[12px] font-display font-bold text-black">{t("listen.connectSpotify")}</span>
-            </button>
-          )}
-        </div>
-      </motion.header>
-
-      {/* ── Scope Upgrade Banner ────────────────────────────────────── */}
-      {needsReauth && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-6 flex items-center gap-3 px-5 py-3 rounded-xl"
-          style={{
-            background: `linear-gradient(135deg, ${SPOTIFY_GREEN}12, rgba(255,255,255,0.03))`,
-            border: `1px solid ${SPOTIFY_GREEN}25`,
-          }}
-        >
-          <RefreshCw size={16} style={{ color: SPOTIFY_GREEN }} />
-          <span className="text-xs text-slate-400 flex-1">
-            {isTr
-              ? "Tam kontrol için Spotify bağlantını güncelle (play/pause/skip/queue)"
-              : "Update your Spotify connection for full control (play/pause/skip/queue)"}
-          </span>
+  if (isMobile) {
+    return (
+      <div className="flex flex-col h-[calc(100vh-56px)] -mx-4 -mt-16">
+        {/* Tab bar */}
+        <div className="flex border-b border-white/[0.06] flex-shrink-0 bg-black/80 backdrop-blur-md">
           <button
-            onClick={() => {
-              SpotifyService.clearTokens();
-              SpotifyService.startAuthFlow({ fromPath: "/listen" });
-            }}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-display font-bold text-black transition-all hover:scale-105"
-            style={{ background: SPOTIFY_GREEN, boxShadow: `0 0 12px ${SPOTIFY_GREEN}30` }}
+            onClick={() => setMobileTab("player")}
+            className={`flex-1 flex items-center justify-center gap-2 py-3 text-xs font-display font-medium transition-all ${
+              mobileTab === "player" ? "text-white" : "text-slate-500"
+            }`}
+            style={mobileTab === "player" ? { borderBottom: `2px solid ${color}` } : { borderBottom: "2px solid transparent" }}
           >
-            <SpotifyLogo size={14} />
-            {isTr ? "Yeniden Bağlan" : "Reconnect"}
+            <Headphones size={14} />
+            {t("listen.tabPlayer")}
           </button>
-        </motion.div>
-      )}
+          <button
+            onClick={() => setMobileTab("chat")}
+            className={`flex-1 flex items-center justify-center gap-2 py-3 text-xs font-display font-medium transition-all ${
+              mobileTab === "chat" ? "text-white" : "text-slate-500"
+            }`}
+            style={mobileTab === "chat" ? { borderBottom: `2px solid ${color}` } : { borderBottom: "2px solid transparent" }}
+          >
+            <MessageCircle size={14} />
+            {t("listen.tabChat")}
+          </button>
+        </div>
 
-      {/* ── Now Playing Hero ────────────────────────────────────────── */}
-      <motion.section variants={slideUp} initial="initial" animate="animate" className="mb-8">
-        <NowPlayingHero
-          track={currentTrack} accentColor={color} isPlaying={isPlaying} shuffleOn={shuffleOn}
-          repeatMode={repeatMode} progressMs={progressMs} durationMs={durationMs} volume={volume}
-          onPlayPause={handlePlayPause} onNext={handleNext} onPrev={handlePrev}
-          onShuffle={handleShuffle} onRepeat={handleRepeat} onSeek={handleSeek} onVolume={handleVolume}
-          connected={isSpotifyConnected && !needsReauth}
-        />
-      </motion.section>
-
-      {/* ── Queue (Up Next) ─────────────────────────────────────────── */}
-      {queueTracks.length > 0 && (
-        <motion.section variants={slideUp} initial="initial" animate="animate" className="mb-8">
-          <div className="flex items-center gap-2 mb-3">
-            <ListMusic size={15} style={{ color }} />
-            <h2 className="text-sm font-display font-semibold text-slate-300 uppercase tracking-wider">{t("listen.statQueue")}</h2>
-            <span className="text-xs font-mono text-slate-600">{queueTracks.length}</span>
+        {/* Tab content */}
+        {mobileTab === "player" ? (
+          <div className="flex-1 overflow-y-auto px-4 py-4 space-y-5">
+            <NowPlayingHero {...nowPlayingProps} />
+            {queueTracks.length > 0 && (
+              <CollapsibleSection title={t("listen.statQueue")} icon={ListMusic} count={queueTracks.length} color={color}>
+                <Card className="max-h-[280px] overflow-y-auto">
+                  <motion.div variants={staggerChildren} initial="initial" animate="animate" className="space-y-0.5">
+                    {queueTracks.slice(0, 10).map((track, i) => (
+                      <TrackRow key={`q-${track.id}-${i}`} track={track} index={i} compact />
+                    ))}
+                  </motion.div>
+                </Card>
+              </CollapsibleSection>
+            )}
+            <CollapsibleSection title={t("listen.recentlyPlayed")} icon={Clock} count={recentTracks.length} color={color}>
+              <Card className="max-h-[320px] overflow-y-auto">
+                <motion.div variants={staggerChildren} initial="initial" animate="animate" className="space-y-0.5">
+                  {recentTracks.slice(0, 15).map((track, i) => (
+                    <TrackRow key={`r-${track.id}-${i}`} track={track} index={i} compact />
+                  ))}
+                </motion.div>
+              </Card>
+            </CollapsibleSection>
           </div>
-          <Card className="max-h-[320px] overflow-y-auto">
-            <motion.div variants={staggerChildren} initial="initial" animate="animate" className="space-y-0.5">
-              {queueTracks.slice(0, 15).map((track, i) => (
-                <TrackRow key={`q-${track.id}-${i}`} track={track} index={i} />
-              ))}
-            </motion.div>
-          </Card>
-        </motion.section>
-      )}
+        ) : (
+          <div className="flex-1">
+            <ListenChat personaName={personaName} accentColor={color} />
+          </div>
+        )}
+      </div>
+    );
+  }
 
-      {/* ── Top Tracks (with time range tabs) ──────────────────────── */}
-      {isSpotifyConnected && (
-        <motion.section variants={slideUp} initial="initial" animate="animate" className="mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2">
-              <TrendingUp size={15} style={{ color }} />
-              <h2 className="text-sm font-display font-semibold text-slate-300 uppercase tracking-wider">{t("listen.topTracks")}</h2>
-              <span className="text-xs font-mono text-slate-600">{topTracks.length}</span>
-            </div>
-            <div className="flex gap-1 p-0.5 rounded-full" style={{ background: "rgba(255,255,255,0.04)" }}>
+  /* ── Desktop Split-View Layout ──────────────────────────────────── */
+
+  return (
+    <div className="flex h-[calc(100vh-4rem)] -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-12 xl:-mx-16 -mt-16">
+      {/* Left Panel: Chat (40%) */}
+      <div className="w-[38%] min-w-[320px] max-w-[460px] flex-shrink-0">
+        <ListenChat personaName={personaName} accentColor={color} />
+      </div>
+
+      {/* Right Panel: Player (60%) */}
+      <div className="flex-1 overflow-y-auto px-6 py-6 space-y-6">
+
+        {/* ── Persona Header + Spotify Status ────────────────────── */}
+        <motion.header variants={cinematicReveal} initial="initial" animate="animate" className="flex items-center gap-4">
+          <CharacterAvatar personaId={persona.id} color={color} family={identity.family} size={56} level={personaLevel} showAura />
+          <div className="flex-1 min-w-0">
+            <h1 className="text-xl md:text-2xl font-display font-bold" style={{ color }}>
+              {personaName}
+            </h1>
+            <p className="text-xs text-slate-500 font-display font-light italic mt-0.5 truncate">
+              "{t(`personas.${persona.id}.tagline`)}"
+            </p>
+            {userProfile && (
+              <div className="flex items-center gap-2 mt-1.5">
+                {userProfile.images?.[0] && (
+                  <img src={userProfile.images[0].url} alt="" className="w-4 h-4 rounded-full object-cover" />
+                )}
+                <span className="text-[10px] font-mono text-slate-500">{userProfile.display_name}</span>
+                <Badge label={userProfile.product === "premium" ? "Premium" : "Free"} color={SPOTIFY_GREEN} size="sm" />
+              </div>
+            )}
+          </div>
+          <div className="flex items-center gap-2 flex-shrink-0">
+            {isSpotifyConnected ? (
+              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full" style={{ background: `${SPOTIFY_GREEN}12`, border: `1px solid ${SPOTIFY_GREEN}25` }}>
+                <SpotifyLogo size={14} />
+                <span className="text-[10px] font-display font-medium" style={{ color: SPOTIFY_GREEN }}>{t("listen.connected")}</span>
+              </div>
+            ) : (
+              <button
+                onClick={() => SpotifyService.startAuthFlow({ fromPath: "/listen" })}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all hover:scale-105"
+                style={{ background: SPOTIFY_GREEN, boxShadow: `0 0 16px ${SPOTIFY_GREEN}30` }}
+              >
+                <SpotifyLogo size={14} />
+                <span className="text-[11px] font-display font-bold text-black">{t("listen.connectSpotify")}</span>
+              </button>
+            )}
+          </div>
+        </motion.header>
+
+        {/* ── Reauth Banner ────────────────────────────────────── */}
+        {needsReauth && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex items-center gap-3 px-4 py-2.5 rounded-xl"
+            style={{
+              background: `linear-gradient(135deg, ${SPOTIFY_GREEN}12, rgba(255,255,255,0.03))`,
+              border: `1px solid ${SPOTIFY_GREEN}25`,
+            }}
+          >
+            <RefreshCw size={14} style={{ color: SPOTIFY_GREEN }} />
+            <span className="text-xs text-slate-400 flex-1">
+              {isTr ? "Tam kontrol için Spotify bağlantını güncelle" : "Update Spotify connection for full control"}
+            </span>
+            <button
+              onClick={() => { SpotifyService.clearTokens(); SpotifyService.startAuthFlow({ fromPath: "/listen" }); }}
+              className="flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-display font-bold text-black transition-all hover:scale-105"
+              style={{ background: SPOTIFY_GREEN }}
+            >
+              <SpotifyLogo size={12} />
+              {isTr ? "Yeniden Bağlan" : "Reconnect"}
+            </button>
+          </motion.div>
+        )}
+
+        {/* ── Now Playing Hero ────────────────────────────────── */}
+        <NowPlayingHero {...nowPlayingProps} />
+
+        {/* ── Queue ───────────────────────────────────────────── */}
+        {queueTracks.length > 0 && (
+          <CollapsibleSection title={t("listen.statQueue")} icon={ListMusic} count={queueTracks.length} color={color} defaultOpen>
+            <Card className="max-h-[300px] overflow-y-auto">
+              <motion.div variants={staggerChildren} initial="initial" animate="animate" className="space-y-0.5">
+                {queueTracks.slice(0, 15).map((track, i) => (
+                  <TrackRow key={`q-${track.id}-${i}`} track={track} index={i} />
+                ))}
+              </motion.div>
+            </Card>
+          </CollapsibleSection>
+        )}
+
+        {/* ── Top Tracks ──────────────────────────────────────── */}
+        {isSpotifyConnected && (
+          <CollapsibleSection title={t("listen.topTracks")} icon={TrendingUp} count={topTracks.length} color={color}>
+            <div className="flex gap-1 p-0.5 rounded-full mb-3" style={{ background: "rgba(255,255,255,0.04)" }}>
               {TIME_TABS.map((tab) => (
                 <button
                   key={tab.key}
@@ -758,186 +915,141 @@ export function Listen() {
                 </button>
               ))}
             </div>
-          </div>
+            <Card className="max-h-[400px] overflow-y-auto">
+              <AnimatePresence mode="wait">
+                <motion.div key={timeRange} variants={staggerChildren} initial="initial" animate="animate" exit={{ opacity: 0 }} className="space-y-0.5">
+                  {topTracks.slice(0, 20).map((track, i) => (
+                    <TrackRow key={track.id} track={track} index={i} />
+                  ))}
+                  {topTracks.length === 0 && <p className="text-center text-sm text-slate-600 py-6">{t("listen.noTopTracks")}</p>}
+                </motion.div>
+              </AnimatePresence>
+            </Card>
+          </CollapsibleSection>
+        )}
 
-          <Card className="max-h-[520px] overflow-y-auto">
-            <AnimatePresence mode="wait">
-              <motion.div key={timeRange} variants={staggerChildren} initial="initial" animate="animate" exit={{ opacity: 0 }} className="space-y-0.5">
-                {topTracks.slice(0, 30).map((track, i) => (
-                  <TrackRow key={track.id} track={track} index={i} />
+        {/* ── Top Artists ──────────────────────────────────────── */}
+        {isSpotifyConnected && topArtists.length > 0 && (
+          <CollapsibleSection title={t("listen.topArtists")} icon={Mic2} count={topArtists.length} color={color}>
+            <Card className="max-h-[350px] overflow-y-auto">
+              <motion.div variants={staggerChildren} initial="initial" animate="animate" className="space-y-0.5">
+                {topArtists.map((artist, i) => (
+                  <ArtistCard key={artist.id} artist={artist} index={i} />
                 ))}
-                {topTracks.length === 0 && <p className="text-center text-sm text-slate-600 py-6">{t("listen.noTopTracks")}</p>}
               </motion.div>
-            </AnimatePresence>
-          </Card>
-        </motion.section>
-      )}
-
-      {/* ── Top Artists ─────────────────────────────────────────────── */}
-      {isSpotifyConnected && topArtists.length > 0 && (
-        <motion.section variants={slideUp} initial="initial" animate="animate" className="mb-8">
-          <div className="flex items-center gap-2 mb-3">
-            <Mic2 size={15} style={{ color }} />
-            <h2 className="text-sm font-display font-semibold text-slate-300 uppercase tracking-wider">{t("listen.topArtists")}</h2>
-            <span className="text-xs font-mono text-slate-600">{topArtists.length}</span>
-          </div>
-
-          <Card className="max-h-[420px] overflow-y-auto">
-            <motion.div variants={staggerChildren} initial="initial" animate="animate" className="space-y-0.5">
-              {topArtists.map((artist, i) => (
-                <ArtistCard key={artist.id} artist={artist} index={i} />
-              ))}
-            </motion.div>
-          </Card>
-        </motion.section>
-      )}
-
-      {/* ── Two-Column: Recently Played + Saved ────────────────────── */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
-        <motion.section variants={slideUp} initial="initial" animate="animate">
-          <div className="flex items-center gap-2 mb-3">
-            <Clock size={15} style={{ color }} />
-            <h2 className="text-sm font-display font-semibold text-slate-300 uppercase tracking-wider">{t("listen.recentlyPlayed")}</h2>
-            <span className="text-xs font-mono text-slate-600">{recentTracks.length}</span>
-          </div>
-          <Card className="max-h-[480px] overflow-y-auto">
-            <motion.div variants={staggerChildren} initial="initial" animate="animate" className="space-y-0.5">
-              {recentTracks.map((track, i) => (
-                <TrackRow key={`${track.id}-${i}`} track={track} index={i} />
-              ))}
-              {recentTracks.length === 0 && <p className="text-center text-sm text-slate-600 py-8">{t("listen.noRecent")}</p>}
-            </motion.div>
-          </Card>
-        </motion.section>
-
-        <motion.section variants={slideUp} initial="initial" animate="animate">
-          <div className="flex items-center gap-2 mb-3">
-            <Heart size={15} style={{ color }} />
-            <h2 className="text-sm font-display font-semibold text-slate-300 uppercase tracking-wider">{t("listen.savedTracks")}</h2>
-            <span className="text-xs font-mono text-slate-600">{savedTracks.length}</span>
-          </div>
-          <Card className="max-h-[480px] overflow-y-auto">
-            <motion.div variants={staggerChildren} initial="initial" animate="animate" className="space-y-0.5">
-              {savedTracks.map((track, i) => (
-                <TrackRow key={track.id} track={track} index={i} compact />
-              ))}
-              {savedTracks.length === 0 && <p className="text-center text-sm text-slate-600 py-8">{t("listen.noSaved")}</p>}
-            </motion.div>
-          </Card>
-        </motion.section>
-      </div>
-
-      {/* ── Audio DNA (Radar + Features + Family Mix) ───────────────── */}
-      {isSpotifyConnected && topTracks.length > 0 && (
-        <motion.section variants={slideUp} initial="initial" animate="animate" className="mb-8">
-          <div className="flex items-center gap-2 mb-4">
-            <Disc3 size={16} style={{ color }} />
-            <h2 className="text-sm font-display font-semibold text-slate-300 uppercase tracking-wider">{t("listen.audioDna")}</h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Card>
-              <p className="hud-label mb-3">{t("listen.avgFeatures")}</p>
-              {radarData.length > 0 ? (
-                <ResponsiveContainer width="100%" height={220}>
-                  <RadarChart data={radarData} cx="50%" cy="50%" outerRadius="72%">
-                    <PolarGrid stroke="rgba(255,255,255,0.06)" />
-                    <PolarAngleAxis dataKey="feature" tick={{ fill: "#64748B", fontSize: 10 }} tickLine={false} />
-                    <Radar name="Audio DNA" dataKey="value" stroke={color} fill={color} fillOpacity={0.15} strokeWidth={1.5} />
-                  </RadarChart>
-                </ResponsiveContainer>
-              ) : (
-                <div className="h-[220px] flex items-center justify-center text-xs text-slate-600">No data</div>
-              )}
             </Card>
+          </CollapsibleSection>
+        )}
 
-            <Card>
-              <p className="hud-label mb-4">{t("listen.featureBreakdown")}</p>
-              <div className="space-y-3">
-                {radarData.map((d) => (
-                  <FeatureBarRow key={d.feature} label={d.feature} value={d.value} color={d.color} />
+        {/* ── Recently Played + Saved ──────────────────────────── */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <CollapsibleSection title={t("listen.recentlyPlayed")} icon={Clock} count={recentTracks.length} color={color}>
+            <Card className="max-h-[380px] overflow-y-auto">
+              <motion.div variants={staggerChildren} initial="initial" animate="animate" className="space-y-0.5">
+                {recentTracks.map((track, i) => (
+                  <TrackRow key={`r-${track.id}-${i}`} track={track} index={i} compact />
                 ))}
-              </div>
+                {recentTracks.length === 0 && <p className="text-center text-sm text-slate-600 py-8">{t("listen.noRecent")}</p>}
+              </motion.div>
             </Card>
+          </CollapsibleSection>
 
-            <Card>
-              <p className="hud-label mb-4">{t("listen.familyMix")}</p>
-              <div className="space-y-2 mb-6">
-                {familyDist.map((f) => (
-                  <div key={f.name} className="flex items-center gap-2">
-                    <div className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: f.color, boxShadow: `0 0 8px ${f.color}40` }} />
-                    <span className="text-xs text-slate-400 flex-1">{f.name}</span>
-                    <span className="text-xs font-mono text-slate-500">{f.count}</span>
-                    <div className="w-16 h-1 rounded-full bg-white/[0.04] overflow-hidden">
-                      <motion.div className="h-full rounded-full" style={{ backgroundColor: f.color }} initial={{ width: 0 }} animate={{ width: `${(f.count / topTracks.length) * 100}%` }} transition={{ duration: 0.8, ease }} />
-                    </div>
-                  </div>
+          <CollapsibleSection title={t("listen.savedTracks")} icon={Heart} count={savedTracks.length} color={color}>
+            <Card className="max-h-[380px] overflow-y-auto">
+              <motion.div variants={staggerChildren} initial="initial" animate="animate" className="space-y-0.5">
+                {savedTracks.map((track, i) => (
+                  <TrackRow key={`s-${track.id}`} track={track} index={i} compact />
                 ))}
-              </div>
-              <p className="hud-label mb-3">{t("listen.topGenres")}</p>
-              <div className="flex flex-wrap gap-1.5">
-                {topGenres.map((g) => (
-                  <Badge key={g.genre} label={`${g.genre} (${g.count})`} color={color} size="sm" />
-                ))}
-                {topGenres.length === 0 && <span className="text-xs text-slate-600">—</span>}
-              </div>
+                {savedTracks.length === 0 && <p className="text-center text-sm text-slate-600 py-8">{t("listen.noSaved")}</p>}
+              </motion.div>
             </Card>
-          </div>
-        </motion.section>
-      )}
-
-      {/* ── Playlists ──────────────────────────────────────────────── */}
-      {isSpotifyConnected && playlists.length > 0 && (
-        <motion.section variants={slideUp} initial="initial" animate="animate" className="mb-8">
-          <div className="flex items-center gap-2 mb-3">
-            <Library size={15} style={{ color }} />
-            <h2 className="text-sm font-display font-semibold text-slate-300 uppercase tracking-wider">{t("listen.playlists")}</h2>
-            <span className="text-xs font-mono text-slate-600">{playlists.length}</span>
-          </div>
-          <Card className="max-h-[380px] overflow-y-auto">
-            <motion.div variants={staggerChildren} initial="initial" animate="animate" className="space-y-0.5">
-              {playlists.map((p) => (
-                <PlaylistCard key={p.id} playlist={p} />
-              ))}
-            </motion.div>
-          </Card>
-        </motion.section>
-      )}
-
-      {/* ── Stats Row ──────────────────────────────────────────────── */}
-      <motion.section variants={slideUp} initial="initial" animate="animate">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {[
-            { label: t("listen.statNowPlaying"), value: currentTrack ? "1" : "—", icon: Music2 },
-            { label: t("listen.statRecent"), value: recentTracks.length, icon: Clock },
-            { label: t("listen.statSaved"), value: savedTracks.length, icon: Heart },
-            { label: t("listen.statTopTracks"), value: topTracks.length, icon: TrendingUp },
-          ].map((stat) => (
-            <Card key={stat.label} className="text-center py-4">
-              <stat.icon size={16} className="mx-auto mb-2 text-slate-600" />
-              <p className="text-lg font-display font-bold text-white">{stat.value}</p>
-              <p className="hud-label mt-1">{stat.label}</p>
-            </Card>
-          ))}
+          </CollapsibleSection>
         </div>
-      </motion.section>
 
-      {/* ── Open in Spotify ─────────────────────────────────────────── */}
-      {isSpotifyConnected && (
-        <motion.div variants={slideUp} initial="initial" animate="animate" className="mt-6 text-center">
-          <a
-            href="https://open.spotify.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full transition-all hover:scale-105"
-            style={{ background: `${SPOTIFY_GREEN}12`, border: `1px solid ${SPOTIFY_GREEN}20` }}
-          >
-            <SpotifyLogo size={18} />
-            <span className="text-sm font-display" style={{ color: SPOTIFY_GREEN }}>{t("listen.openSpotify")}</span>
-            <ExternalLink size={12} style={{ color: SPOTIFY_GREEN }} />
-          </a>
-        </motion.div>
-      )}
-    </motion.div>
+        {/* ── Audio DNA ────────────────────────────────────────── */}
+        {isSpotifyConnected && topTracks.length > 0 && (
+          <CollapsibleSection title={t("listen.audioDna")} icon={Music2} color={color}>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <Card>
+                <p className="hud-label mb-3">{t("listen.avgFeatures")}</p>
+                {radarData.length > 0 ? (
+                  <ResponsiveContainer width="100%" height={200}>
+                    <RadarChart data={radarData} cx="50%" cy="50%" outerRadius="72%">
+                      <PolarGrid stroke="rgba(255,255,255,0.06)" />
+                      <PolarAngleAxis dataKey="feature" tick={{ fill: "#64748B", fontSize: 10 }} tickLine={false} />
+                      <Radar name="Audio DNA" dataKey="value" stroke={color} fill={color} fillOpacity={0.15} strokeWidth={1.5} />
+                    </RadarChart>
+                  </ResponsiveContainer>
+                ) : (
+                  <div className="h-[200px] flex items-center justify-center text-xs text-slate-600">No data</div>
+                )}
+              </Card>
+
+              <Card>
+                <p className="hud-label mb-4">{t("listen.featureBreakdown")}</p>
+                <div className="space-y-3">
+                  {radarData.map((d) => (
+                    <FeatureBarRow key={d.feature} label={d.feature} value={d.value} color={d.color} />
+                  ))}
+                </div>
+              </Card>
+
+              <Card>
+                <p className="hud-label mb-4">{t("listen.familyMix")}</p>
+                <div className="space-y-2 mb-4">
+                  {familyDist.map((f) => (
+                    <div key={f.name} className="flex items-center gap-2">
+                      <div className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: f.color, boxShadow: `0 0 8px ${f.color}40` }} />
+                      <span className="text-xs text-slate-400 flex-1">{f.name}</span>
+                      <span className="text-xs font-mono text-slate-500">{f.count}</span>
+                      <div className="w-16 h-1 rounded-full bg-white/[0.04] overflow-hidden">
+                        <motion.div className="h-full rounded-full" style={{ backgroundColor: f.color }} initial={{ width: 0 }} animate={{ width: `${(f.count / topTracks.length) * 100}%` }} transition={{ duration: 0.8, ease }} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <p className="hud-label mb-2">{t("listen.topGenres")}</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {topGenres.map((g) => (
+                    <Badge key={g.genre} label={`${g.genre} (${g.count})`} color={color} size="sm" />
+                  ))}
+                  {topGenres.length === 0 && <span className="text-xs text-slate-600">—</span>}
+                </div>
+              </Card>
+            </div>
+          </CollapsibleSection>
+        )}
+
+        {/* ── Playlists ────────────────────────────────────────── */}
+        {isSpotifyConnected && playlists.length > 0 && (
+          <CollapsibleSection title={t("listen.playlists")} icon={Library} count={playlists.length} color={color}>
+            <Card className="max-h-[320px] overflow-y-auto">
+              <motion.div variants={staggerChildren} initial="initial" animate="animate" className="space-y-0.5">
+                {playlists.map((p) => (
+                  <PlaylistCard key={p.id} playlist={p} />
+                ))}
+              </motion.div>
+            </Card>
+          </CollapsibleSection>
+        )}
+
+        {/* ── Open in Spotify ──────────────────────────────────── */}
+        {isSpotifyConnected && (
+          <div className="text-center pb-4">
+            <a
+              href="https://open.spotify.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full transition-all hover:scale-105"
+              style={{ background: `${SPOTIFY_GREEN}12`, border: `1px solid ${SPOTIFY_GREEN}20` }}
+            >
+              <SpotifyLogo size={16} />
+              <span className="text-xs font-display" style={{ color: SPOTIFY_GREEN }}>{t("listen.openSpotify")}</span>
+              <ExternalLink size={11} style={{ color: SPOTIFY_GREEN }} />
+            </a>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }

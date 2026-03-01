@@ -25,6 +25,30 @@ export interface ChatResponse {
   tokens_in: number;
   tokens_out: number;
   cost_usd: number;
+  actions?: AgentAction[];
+}
+
+export interface AgentAction {
+  type: "play_track" | "control_playback" | "get_now_playing";
+  track_id?: string;
+  track_name?: string;
+  artist?: string;
+  command?: string;
+  value?: number;
+}
+
+export interface SystemEventRequest {
+  user_id: string;
+  session_id?: string;
+  event_type: string;
+  data: Record<string, unknown>;
+  language: string;
+  persona_id: number;
+  persona_name: string;
+  family: string;
+  level: number;
+  tier: string;
+  genes: Record<string, number>;
 }
 
 export interface AgentHealth {
@@ -49,23 +73,18 @@ export async function sendMessage(req: ChatRequest): Promise<ChatResponse> {
   return res.json();
 }
 
-/** SSE streaming chat — receives status updates + final response. */
-export async function sendMessageStream(
-  req: ChatRequest,
-  onStatus: (text: string) => void,
-  onToken: (text: string) => void,
+/* ── Shared SSE Parser ──────────────────────────────────────────── */
+
+interface SSECallbacks {
+  onStatus: (text: string) => void;
+  onToken: (text: string) => void;
+  onAction?: (action: AgentAction) => void;
+}
+
+async function parseSSEStream(
+  res: Response,
+  callbacks: SSECallbacks,
 ): Promise<ChatResponse> {
-  const res = await fetch("/api/agent/chat/stream", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(req),
-  });
-
-  if (!res.ok) {
-    const detail = await res.text().catch(() => res.statusText);
-    throw new Error(`Agent chat failed (${res.status}): ${detail}`);
-  }
-
   const reader = res.body?.getReader();
   if (!reader) throw new Error("No response stream");
 
@@ -80,7 +99,6 @@ export async function sendMessageStream(
 
     buffer += decoder.decode(value, { stream: true });
 
-    // Parse SSE events from buffer
     const parts = buffer.split("\n\n");
     buffer = parts.pop() ?? "";
 
@@ -103,9 +121,11 @@ export async function sendMessageStream(
       try {
         const parsed = JSON.parse(data);
         if (eventType === "status") {
-          onStatus(parsed.text ?? "");
+          callbacks.onStatus(parsed.text ?? "");
         } else if (eventType === "token") {
-          onToken(parsed.text ?? "");
+          callbacks.onToken(parsed.text ?? "");
+        } else if (eventType === "action") {
+          callbacks.onAction?.(parsed as AgentAction);
         } else if (eventType === "done") {
           result = parsed as ChatResponse;
         } else if (eventType === "error") {
@@ -120,6 +140,47 @@ export async function sendMessageStream(
   if (errorDetail) throw new Error(errorDetail);
   if (!result) throw new Error("No response received");
   return result;
+}
+
+/** SSE streaming chat — receives status updates + final response. */
+export async function sendMessageStream(
+  req: ChatRequest,
+  onStatus: (text: string) => void,
+  onToken: (text: string) => void,
+  onAction?: (action: AgentAction) => void,
+): Promise<ChatResponse> {
+  const res = await fetch("/api/agent/chat/stream", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(req),
+  });
+
+  if (!res.ok) {
+    const detail = await res.text().catch(() => res.statusText);
+    throw new Error(`Agent chat failed (${res.status}): ${detail}`);
+  }
+
+  return parseSSEStream(res, { onStatus, onToken, onAction });
+}
+
+/** SSE streaming system event — for proactive agent messages. */
+export async function sendSystemEventStream(
+  req: SystemEventRequest,
+  onStatus: (text: string) => void,
+  onToken: (text: string) => void,
+): Promise<ChatResponse> {
+  const res = await fetch("/api/agent/chat/system-event", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(req),
+  });
+
+  if (!res.ok) {
+    const detail = await res.text().catch(() => res.statusText);
+    throw new Error(`System event failed (${res.status}): ${detail}`);
+  }
+
+  return parseSSEStream(res, { onStatus, onToken });
 }
 
 export async function getHistory(

@@ -4,11 +4,11 @@
  *  and family-morphology organism visualization.
  *  ──────────────────────────────────────────────────────────────── */
 
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { useMemo } from "react";
-import { ArrowLeft, Users, Sparkles } from "lucide-react";
+import { Users, Sparkles } from "lucide-react";
 import { getPersona, personas } from "@/data/personas";
 import { FAMILY_COLORS } from "@/data/persona-levels";
 import { NARRATIVE_SECTIONS } from "@/data/persona-narratives";
@@ -17,17 +17,17 @@ import { PersonaCard } from "@/components/mind/PersonaCard";
 import { PersonaSidebar } from "@/components/persona/PersonaSidebar";
 import { PersonaSection } from "@/components/persona/PersonaSection";
 import { PersonaLevelTrack } from "@/components/persona/PersonaLevelTrack";
-import { PersonaEvolutionVisual } from "@/components/persona/PersonaEvolutionVisual";
+
 import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
 import { NucleusDot } from "@/components/mind/NucleusDot";
-import { MindTypeRing } from "@/components/mind/MindTypeRing";
 import { pageTransition, staggerChildren, slideUp, cinematicReveal } from "@/design/animations";
 import { useM3Store } from "@/stores/useM3Store";
-import { FAMILY_MORPHOLOGY, levelToOrganismStage, GENE_NAMES, GENE_COLORS } from "@/types/m3";
+import { FAMILY_MORPHOLOGY, levelToOrganismStage } from "@/types/m3";
 import type { FamilyMorphology } from "@/canvas/mind-organism";
-import { DimensionSunburst } from "@/components/mind/DimensionSunburst";
+import { DashboardRadar } from "@/components/mind/DashboardRadar";
 import { PersonaAvatar } from "@/components/mind/PersonaAvatar";
+import { getPersonaDimensions } from "@/data/persona-dimensions";
+import { profileToArray } from "@/data/dimensions";
 import type { NeuralFamily } from "@/types/mind";
 
 const FAMILY_ORDER: NeuralFamily[] = [
@@ -44,7 +44,6 @@ const FAMILY_DESC: Record<NeuralFamily, string> = {
 
 export function PersonaDetail() {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
   const { t } = useTranslation();
   const m3Mind = useM3Store((s) => s.mind);
   const persona = getPersona(id ? Number(id) : (m3Mind?.activePersonaId ?? 24))!;
@@ -60,6 +59,8 @@ export function PersonaDetail() {
 
   const familyPersonas = personas.filter(p => p.family === persona.family && p.id !== persona.id);
 
+  const personaDim6D = useMemo(() => profileToArray(getPersonaDimensions(persona.id)), [persona.id]);
+
   const familyGroups = useMemo(() =>
     FAMILY_ORDER.map((family) => ({
       family,
@@ -70,7 +71,7 @@ export function PersonaDetail() {
   []);
 
   return (
-    <motion.div {...pageTransition} className="min-h-screen bg-black relative pb-24 -mt-14">
+    <motion.div {...pageTransition} className="min-h-screen bg-black relative pb-24 -mt-36">
       {/* Full-screen organism background */}
       <div className="absolute inset-0 opacity-10 pointer-events-none">
         <MindOrganismCanvas
@@ -89,76 +90,136 @@ export function PersonaDetail() {
 
       {/* Ambient glow */}
       <div
-        className="absolute top-32 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full blur-[200px] opacity-8 pointer-events-none"
+        className="absolute top-64 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full blur-[200px] opacity-8 pointer-events-none"
         style={{ backgroundColor: persona.color }}
       />
 
       {/* Hero — Persona Identity */}
       <motion.div variants={staggerChildren} initial="initial" animate="animate" className="relative z-10">
-        <motion.div variants={cinematicReveal} className="text-center mb-6 -mt-4">
-          {/* Character Avatar + Organism side by side */}
-          <div className="flex items-center justify-center gap-6 mb-1">
-            {/* 2D Character */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <PersonaAvatar
-                personaId={persona.id}
-                color={persona.color}
-                family={persona.family}
-                size={480}
-                level={personaLevel}
-                showAura
-              />
-            </motion.div>
+        <motion.div variants={cinematicReveal} className="mb-4 -mt-10">
+          {/* Hero layout: Identity left, Avatar center, Strengths right */}
+          <div className="relative max-w-7xl mx-auto px-4">
+            <div className="flex items-end justify-center gap-0">
+              {/* Left: Identity */}
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+                className="hidden lg:flex flex-col items-end text-right flex-shrink-0 w-[260px] pb-8"
+              >
+                <div className="flex items-center gap-2 mb-2">
+                  <NucleusDot color={persona.color} size={4} active />
+                  <span className="hud-label text-[10px]">{persona.family}</span>
+                </div>
 
-            {/* Organism avatar */}
-            <motion.div
-              className="relative w-24 h-24"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <MindOrganismCanvas
-                color={persona.color}
-                stage={organismStage}
-                intensity={0.8}
-                breathRate={4}
-                familyMorphology={morphology}
-                variant="micro"
-                className="w-full h-full"
-                interactive={false}
-              />
-            </motion.div>
-          </div>
+                <h1 className="text-4xl font-display font-bold text-slate-100 tracking-tight mb-1 leading-tight">
+                  {t(`personas.${persona.id}.name`)}
+                </h1>
+                <p className="text-sm text-slate-500 italic font-body font-light mb-3">
+                  "{t(`personas.${persona.id}.tagline`)}"
+                </p>
 
-          {/* Family badge */}
-          <div className="flex items-center justify-center gap-2 mb-1">
-            <NucleusDot color={persona.color} size={4} active />
-            <span className="hud-label text-[10px]">{persona.family}</span>
-          </div>
+                <Badge label={t("common.ofListeners", { pct: persona.populationPct })} color={persona.color} size="md" />
 
-          {/* Persona name */}
-          <h1 className="text-4xl md:text-5xl font-display font-bold text-slate-100 tracking-tight mb-1">
-            {t(`personas.${persona.id}.name`)}
-          </h1>
-          <p className="text-base text-slate-500 italic font-body font-light mb-2">
-            "{t(`personas.${persona.id}.tagline`)}"
-          </p>
+                <div className="mt-5 w-full max-w-[220px]">
+                  <PersonaLevelTrack currentLevel={personaLevel} color={persona.color} />
+                </div>
 
-          {/* Badges row */}
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <Badge label={t("common.ofListeners", { pct: persona.populationPct })} color={persona.color} size="md" />
-            {isMyPersona && (
-              <Badge label={`L${personaLevel}/12`} color={persona.color} size="md" />
-            )}
-          </div>
+              </motion.div>
 
-          {/* Level track */}
-          <div className="max-w-md mx-auto px-8 mb-8">
-            <PersonaLevelTrack currentLevel={personaLevel} color={persona.color} />
+              {/* Center: Avatar + Organism */}
+              <div className="flex items-end gap-4 flex-shrink-0">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <PersonaAvatar
+                    personaId={persona.id}
+                    color={persona.color}
+                    family={persona.family}
+                    size={480}
+                    level={personaLevel}
+                    showAura
+                  />
+                </motion.div>
+
+                <motion.div
+                  className="relative w-20 h-20 mb-8"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <MindOrganismCanvas
+                    color={persona.color}
+                    stage={organismStage}
+                    intensity={0.8}
+                    breathRate={4}
+                    familyMorphology={morphology}
+                    variant="micro"
+                    className="w-full h-full"
+                    interactive={false}
+                  />
+                </motion.div>
+              </div>
+
+              {/* Right: Strengths + Famous Minds */}
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                className="hidden lg:flex flex-col items-start flex-shrink-0 w-[260px] pb-8 space-y-5"
+              >
+                <div>
+                  <div className="flex items-center gap-2 mb-3">
+                    <Sparkles size={14} style={{ color: persona.color }} />
+                    <span className="hud-label">{t("personaDetail.strengths")}</span>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {persona.strengths.map((_, i) => (
+                      <Badge key={i} label={t(`personas.${persona.id}.strengths.${i}`)} color={persona.color} size="md" />
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <span className="hud-label mb-3 block">{t("personaDetail.famousMinds")}</span>
+                  <div className="flex flex-wrap gap-2">
+                    {persona.famousMinds.map((name) => (
+                      <div
+                        key={name}
+                        className="px-3 py-1.5 rounded-lg text-sm font-body font-light text-slate-400"
+                        style={{
+                          background: `${persona.color}08`,
+                          border: `1px solid ${persona.color}15`,
+                        }}
+                      >
+                        {name}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+              </motion.div>
+            </div>
+
+            {/* Mobile identity — shown only on small screens */}
+            <div className="lg:hidden text-center mt-2">
+              <div className="flex items-center justify-center gap-2 mb-1">
+                <NucleusDot color={persona.color} size={4} active />
+                <span className="hud-label text-[10px]">{persona.family}</span>
+              </div>
+              <h1 className="text-3xl font-display font-bold text-slate-100 tracking-tight mb-1">
+                {t(`personas.${persona.id}.name`)}
+              </h1>
+              <p className="text-sm text-slate-500 italic font-body font-light mb-2">
+                "{t(`personas.${persona.id}.tagline`)}"
+              </p>
+              <Badge label={t("common.ofListeners", { pct: persona.populationPct })} color={persona.color} size="md" />
+              <div className="max-w-xs mx-auto px-4 mt-4">
+                <PersonaLevelTrack currentLevel={personaLevel} color={persona.color} />
+              </div>
+            </div>
           </div>
         </motion.div>
 
@@ -170,60 +231,9 @@ export function PersonaDetail() {
               <div className="sticky top-24">
                 <PersonaSidebar color={persona.color} />
 
-                {/* Dimension Sunburst — 6D / 12D / 24D concentric rings */}
-                <div className="mt-6">
-                  <DimensionSunburst color={persona.color} size={240} />
-                </div>
-
-                {/* Gene DNA — 5 genes */}
-                <div className="mt-6 p-4 rounded-xl" style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.04)" }}>
-                  <span className="hud-label mb-3 block">{t("personaDetail.geneDna")}</span>
-                  <div className="flex justify-center mb-4">
-                    <MindTypeRing genes={persona.genes} size={140} showLabels={false} />
-                  </div>
-                  <div className="space-y-2">
-                    {GENE_NAMES.map((gene, i) => {
-                      const pct = Math.round(persona.genes[gene] * 100);
-                      const color = GENE_COLORS[gene];
-                      const isDominant = pct === Math.max(...GENE_NAMES.map(g => Math.round(persona.genes[g] * 100)));
-                      return (
-                        <div key={gene}>
-                          <div className="flex items-center justify-between mb-0.5">
-                            <div className="flex items-center gap-1.5">
-                              <div
-                                className="w-1.5 h-1.5 rounded-full"
-                                style={{
-                                  background: color,
-                                  boxShadow: isDominant ? `0 0 6px ${color}80` : "none",
-                                }}
-                              />
-                              <span
-                                className="hud-label text-[8px]"
-                                style={{ color: isDominant ? color : undefined }}
-                              >
-                                {t(`m3.gene.${gene}`)}
-                              </span>
-                            </div>
-                            <span className="text-[9px] font-mono" style={{ color }}>
-                              {pct}
-                            </span>
-                          </div>
-                          <div className="w-full h-[3px] rounded-full bg-white/5 overflow-hidden">
-                            <motion.div
-                              className="h-full rounded-full"
-                              style={{
-                                backgroundColor: color,
-                                boxShadow: isDominant ? `0 0 10px ${color}40` : "none",
-                              }}
-                              initial={{ width: 0 }}
-                              animate={{ width: `${pct}%` }}
-                              transition={{ duration: 1, delay: 0.2 + i * 0.06, ease: [0.22, 1, 0.36, 1] }}
-                            />
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
+                {/* Mind Profile — 6D Radar */}
+                <div className="mt-6 flex justify-center">
+                  <DashboardRadar total={personaDim6D} color={persona.color} size={240} />
                 </div>
               </div>
             </motion.div>
@@ -239,48 +249,6 @@ export function PersonaDetail() {
                   color={persona.color}
                 />
               ))}
-
-              {/* Strengths */}
-              <div className="spatial-card p-8">
-                <div className="flex items-center gap-2 mb-5">
-                  <Sparkles size={14} style={{ color: persona.color }} />
-                  <span className="hud-label">{t("personaDetail.strengths")}</span>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {persona.strengths.map((_, i) => (
-                    <Badge key={i} label={t(`personas.${persona.id}.strengths.${i}`)} color={persona.color} size="md" />
-                  ))}
-                </div>
-              </div>
-
-              {/* Famous Minds */}
-              <div className="spatial-card p-8">
-                <span className="hud-label mb-5 block">{t("personaDetail.famousMinds")}</span>
-                <div className="flex flex-wrap gap-3">
-                  {persona.famousMinds.map((name) => (
-                    <div
-                      key={name}
-                      className="px-4 py-2 rounded-xl text-sm font-body font-light text-slate-400"
-                      style={{
-                        background: `${persona.color}08`,
-                        border: `1px solid ${persona.color}15`,
-                      }}
-                    >
-                      {name}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Evolution visual — 12 levels */}
-              <div className="spatial-card p-8">
-                <span className="hud-label mb-6 block">{t("personaDetail.evolutionPath")}</span>
-                <PersonaEvolutionVisual
-                  color={persona.color}
-                  family={persona.family}
-                  currentLevel={personaLevel}
-                />
-              </div>
 
               {/* Compatible personas */}
               <div className="spatial-card p-8">
@@ -309,55 +277,9 @@ export function PersonaDetail() {
                 </div>
               )}
 
-              {/* Mobile genes (hidden on desktop) */}
-              <div className="lg:hidden spatial-card p-8">
-                <span className="hud-label mb-4 block">{t("personaDetail.geneDna")}</span>
-                <div className="flex justify-center mb-5">
-                  <MindTypeRing genes={persona.genes} size={160} />
-                </div>
-                <div className="space-y-2.5">
-                  {GENE_NAMES.map((gene, i) => {
-                    const pct = Math.round(persona.genes[gene] * 100);
-                    const color = GENE_COLORS[gene];
-                    const isDominant = pct === Math.max(...GENE_NAMES.map(g => Math.round(persona.genes[g] * 100)));
-                    return (
-                      <div key={gene}>
-                        <div className="flex items-center justify-between mb-0.5">
-                          <div className="flex items-center gap-1.5">
-                            <div
-                              className="w-1.5 h-1.5 rounded-full"
-                              style={{
-                                background: color,
-                                boxShadow: isDominant ? `0 0 6px ${color}80` : "none",
-                              }}
-                            />
-                            <span
-                              className="hud-label text-[9px]"
-                              style={{ color: isDominant ? color : undefined }}
-                            >
-                              {t(`m3.gene.${gene}`)}
-                            </span>
-                          </div>
-                          <span className="text-[10px] font-mono" style={{ color }}>
-                            {pct}
-                          </span>
-                        </div>
-                        <div className="w-full h-[3px] rounded-full bg-white/5 overflow-hidden">
-                          <motion.div
-                            className="h-full rounded-full"
-                            style={{
-                              backgroundColor: color,
-                              boxShadow: isDominant ? `0 0 10px ${color}40` : "none",
-                            }}
-                            initial={{ width: 0 }}
-                            animate={{ width: `${pct}%` }}
-                            transition={{ duration: 1, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
-                          />
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
+              {/* Mobile radar (hidden on desktop) */}
+              <div className="lg:hidden flex justify-center">
+                <DashboardRadar total={personaDim6D} color={persona.color} size={280} />
               </div>
             </motion.div>
           </div>

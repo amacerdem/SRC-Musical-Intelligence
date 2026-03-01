@@ -263,6 +263,70 @@ TOOLS = [
             "required": ["track_id"],
         },
     },
+    # ── Music Control Tools (frontend-executed actions) ────────────
+    {
+        "name": "play_track",
+        "description": (
+            "Play a specific track. Search by name/artist keywords or provide "
+            "a direct track_id from a previous search_tracks result. Returns an "
+            "action for the frontend to execute. Works with both Spotify and "
+            "demo mode. Use this when the user says 'play X', 'put on X', etc."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "query": {
+                    "type": "string",
+                    "description": "Track name, artist, or search keywords",
+                },
+                "track_id": {
+                    "type": "string",
+                    "description": "Direct track ID if already known from search_tracks",
+                },
+            },
+        },
+    },
+    {
+        "name": "control_playback",
+        "description": (
+            "Control music playback: pause, resume, skip to next/previous track, "
+            "adjust volume, toggle shuffle, cycle repeat mode. Use when the user "
+            "says 'pause', 'stop', 'next', 'skip', 'louder', 'quieter', 'shuffle', "
+            "'repeat', 'durdur', 'sonraki', 'önceki', 'sesini aç/kıs'."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "command": {
+                    "type": "string",
+                    "enum": [
+                        "pause", "resume", "next", "previous",
+                        "volume_up", "volume_down",
+                        "shuffle_toggle", "repeat_cycle",
+                    ],
+                    "description": "Playback command to execute",
+                },
+                "value": {
+                    "type": "number",
+                    "description": "Optional numeric value (e.g. volume percentage 0-100)",
+                },
+            },
+            "required": ["command"],
+        },
+    },
+    {
+        "name": "get_now_playing",
+        "description": (
+            "Get information about the currently playing track — title, artist, "
+            "progress, features, family, genre. Use when the user asks 'what's "
+            "playing?', 'ne çalıyor?', or when you need context about the "
+            "current track before making a comment or recommendation."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {},
+        },
+    },
 ]
 
 
@@ -296,6 +360,9 @@ def handle_tool_call(
         "get_temporal_journey": _handle_temporal_journey,
         "get_belief_timeline": _handle_belief_timeline,
         "get_brain_activation": _handle_brain_activation,
+        "play_track": _handle_play_track,
+        "control_playback": _handle_control_playback,
+        "get_now_playing": _handle_get_now_playing,
     }
 
     handler = handlers.get(tool_name)
@@ -712,3 +779,94 @@ def _handle_get_persona(
             return card
 
     return {"error": f"Persona not found: id={persona_id}, name={persona_name}"}
+
+
+# ── Music Control Handlers (frontend-executed actions) ───────────
+
+
+def _handle_play_track(
+    inputs: dict[str, Any], tier: str
+) -> dict[str, Any]:
+    """Search for a track and return a play action descriptor.
+
+    The backend does NOT control playback directly — it returns an
+    action dict that the frontend interprets and dispatches to
+    SpotifyService or the local AudioPlayer.
+    """
+    from .track_data import search_tracks, load_track
+
+    track_id = inputs.get("track_id")
+    query = inputs.get("query", "")
+
+    if not track_id and not query:
+        return {"error": "Provide either query or track_id."}
+
+    # Resolve track
+    if not track_id:
+        results = search_tracks(query, limit=1)
+        if not results:
+            return {
+                "error": f"No tracks found for '{query}'.",
+                "suggestion": "Try a different search term or ask the user for more detail.",
+            }
+        track_id = results[0]["id"]
+
+    track = load_track(track_id)
+    if not track:
+        return {"error": f"Track '{track_id}' not found."}
+
+    return {
+        "action": {
+            "type": "play_track",
+            "track_id": track_id,
+            "track_name": track.get("title", ""),
+            "artist": track.get("artist", ""),
+        },
+        "track_info": {
+            "title": track.get("title"),
+            "artist": track.get("artist"),
+            "duration_s": track.get("duration_s"),
+            "dominant_family": track.get("dominant_family"),
+            "genre": (
+                track.get("categories", ["Unknown"])[0]
+                if track.get("categories")
+                else "Unknown"
+            ),
+        },
+    }
+
+
+def _handle_control_playback(
+    inputs: dict[str, Any], tier: str
+) -> dict[str, Any]:
+    """Return a playback control action descriptor."""
+    command = inputs.get("command", "")
+    value = inputs.get("value")
+
+    valid_commands = {
+        "pause", "resume", "next", "previous",
+        "volume_up", "volume_down",
+        "shuffle_toggle", "repeat_cycle",
+    }
+    if command not in valid_commands:
+        return {"error": f"Unknown command: {command}. Valid: {sorted(valid_commands)}"}
+
+    action: dict[str, Any] = {"type": "control_playback", "command": command}
+    if value is not None:
+        action["value"] = value
+
+    return {"action": action, "result": f"Playback command '{command}' sent to frontend."}
+
+
+def _handle_get_now_playing(
+    inputs: dict[str, Any], tier: str
+) -> dict[str, Any]:
+    """Return a get_now_playing action descriptor.
+
+    The actual track data comes from the frontend via the action response —
+    the backend doesn't have direct access to the user's playback state.
+    """
+    return {
+        "action": {"type": "get_now_playing"},
+        "message": "Requesting current playback state from the frontend.",
+    }

@@ -31,7 +31,8 @@ import type { MICatalogTrack } from "@/types/mi-dataset";
 
 import { DepthSelector } from "@/components/lab/DepthSelector";
 import { FlowTimeline } from "@/components/lab/FlowTimeline";
-import { MelSpectrogram, type MelData } from "@/components/lab/MelSpectrogram";
+import { SpectralPeaks } from "@/components/lab/SpectralPeaks";
+import type { MelData } from "@/components/lab/peakExtractor";
 
 /* ── Track ID → audio file mapping ──────────────── */
 const TRACK_AUDIO: Record<string, string> = {
@@ -100,6 +101,7 @@ export function Lab() {
   const [hasEverPlayed, setHasEverPlayed] = useState(false);
   const [flowIdx, setFlowIdx] = useState(0);
   const [melData, setMelData] = useState<MelData | null>(null);
+  const [peakCount, setPeakCount] = useState<4 | 8 | 16>(8);
 
   // Initialize audio element + load mel data when track changes
   useEffect(() => {
@@ -316,13 +318,34 @@ export function Lab() {
             )}
           </div>
 
-          {/* Right: Depth selector */}
+          {/* Right: Peak count + Depth selector */}
           <div className="flex items-center gap-3">
             {hasAnalysis && (
               <span className="text-[8px] font-mono text-slate-700">
                 {temporal.source === "full" ? `${temporal.frameCount} frames` : "64 seg"}
               </span>
             )}
+
+            {/* Peak count selector */}
+            <div className="flex items-center gap-0.5 rounded-lg overflow-hidden"
+              style={{ border: "1px solid rgba(255,255,255,0.06)" }}
+            >
+              {([4, 8, 16] as const).map((n) => (
+                <button
+                  key={n}
+                  onClick={() => setPeakCount(n)}
+                  className="px-2 py-1 text-[9px] font-mono transition-all"
+                  style={{
+                    background: peakCount === n ? `${color}18` : "transparent",
+                    color: peakCount === n ? color : "rgba(255,255,255,0.3)",
+                    fontWeight: peakCount === n ? 700 : 400,
+                  }}
+                >
+                  {n}P
+                </button>
+              ))}
+            </div>
+
             <DepthSelector depth={depth} onChange={setDepth} accentColor={color} />
           </div>
         </motion.div>
@@ -407,20 +430,21 @@ export function Lab() {
                 <div className="flex items-center gap-2 mb-0.5 flex-shrink-0">
                   <Waves size={10} className="text-slate-600" />
                   <span className="text-[9px] font-display font-light tracking-[0.12em] uppercase text-slate-500">
-                    Mel Spectrogram
+                    Spectral Peaks
                   </span>
                   <span className="text-[7px] font-mono text-slate-700">
-                    A0–C8 · log₂ · MI Pipeline{melData ? ` · ${melData.nMels} mel · ${melData.frameRate.toFixed(0)}Hz` : ""}
+                    A0–C8 · log₂ · {peakCount} peaks/frame{melData ? ` · ${melData.frameRate.toFixed(0)}Hz` : ""}
                   </span>
                 </div>
 
                 <div className="flex-1 min-h-0">
-                  <MelSpectrogram
+                  <SpectralPeaks
                     melData={melData}
                     audioRef={audioRef}
                     isPlaying={isPlaying}
                     duration={trackDetail.duration_s}
                     accentColor={color}
+                    peakCount={peakCount}
                     onSeek={handleSeek}
                   />
                 </div>
@@ -430,7 +454,7 @@ export function Lab() {
                 <div className="flex flex-col items-center gap-3">
                   <Waves size={16} className="text-slate-800" />
                   <span className="text-[9px] font-display font-light tracking-[0.12em] uppercase text-slate-700">
-                    Mel Spectrogram
+                    Spectral Peaks
                   </span>
                 </div>
               </div>

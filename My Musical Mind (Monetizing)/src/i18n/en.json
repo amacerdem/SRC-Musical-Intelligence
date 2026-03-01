@@ -48,7 +48,9 @@
     "featureBreakdown": "Feature Breakdown",
     "familyMix": "Neural Family Mix",
     "topGenres": "Top Genres",
-    "openSpotify": "Open in Spotify"
+    "openSpotify": "Open in Spotify",
+    "tabPlayer": "Player",
+    "tabChat": "Chat"
   },
   "landing": {
     "subtitle": "MY MUSICAL MIND",
@@ -1301,6 +1303,10 @@
     "error": "Connection error. Is the server running?",
     "retry": "Retry",
     "clear": "Clear chat",
-    "title": "Your Mind"
+    "title": "Your Mind",
+    "listenWelcome": "I'm your music companion. Ask me about what's playing, request songs, or just chat about music!",
+    "listenSuggestion1": "What's playing?",
+    "listenSuggestion2": "Play something chill",
+    "listenSuggestion3": "Analyze this track"
   }
 }

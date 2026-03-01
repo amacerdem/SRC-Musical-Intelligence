@@ -14,7 +14,7 @@ export function AppShell() {
   const { color, morphology } = useActiveIdentity();
   const stage = mind?.stage ?? 1;
   const isMobile = useMobile();
-  const isImmersive = location.pathname === "/live" || location.pathname === "/lab";
+  const isImmersive = location.pathname === "/live" || location.pathname === "/lab" || location.pathname === "/listen";
 
   return (
     <div className="min-h-screen bg-black relative">
