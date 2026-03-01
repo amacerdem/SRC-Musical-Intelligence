@@ -150,7 +150,12 @@ export function FlowTimeline({
 
   const getDimValues = useCallback((segIdx: number): number[] => {
     if (labMode === "acoustic") {
-      const r3seg = temporal.r3Segments?.[segIdx];
+      const r3 = temporal.r3Segments;
+      if (!r3 || r3.length === 0) return new Array(dimCount).fill(0);
+      // Remap segIdx from belief-segment space to R³-segment space
+      const ratio = segIdx / Math.max(1, segCount - 1);
+      const r3Idx = Math.min(r3.length - 1, Math.round(ratio * (r3.length - 1)));
+      const r3seg = r3[r3Idx];
       if (!r3seg) return new Array(dimCount).fill(0);
       const indices = depth === 6 ? ACOUSTIC_R3_6D : depth === 12 ? ACOUSTIC_R3_12D : ACOUSTIC_R3_24D;
       return indices.map(i => r3seg[i] ?? 0);
@@ -160,7 +165,7 @@ export function FlowTimeline({
     if (depth === 6) return s.psychology;
     if (depth === 12) return s.cognition;
     return s.neuroscience;
-  }, [temporal, depth, labMode, dimCount]);
+  }, [temporal, depth, labMode, dimCount, segCount]);
 
   const neuroArr = trackDetail.temporal_profile.neuro_per_segment;
   const rewardArr = trackDetail.temporal_profile.reward_per_segment;

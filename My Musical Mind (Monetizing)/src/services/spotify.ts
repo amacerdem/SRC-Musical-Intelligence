@@ -147,13 +147,17 @@ async function apiFetch<T>(path: string): Promise<T> {
 }
 
 /** PUT/POST helper for player control endpoints (no JSON body expected back) */
-async function apiCommand(path: string, method: "PUT" | "POST" = "PUT"): Promise<void> {
+async function apiCommand(path: string, method: "PUT" | "POST" = "PUT", body?: object): Promise<void> {
   const token = await getValidToken();
   if (!token) throw new Error("No valid Spotify token");
 
+  const headers: Record<string, string> = { Authorization: `Bearer ${token}` };
+  if (body) headers["Content-Type"] = "application/json";
+
   const res = await fetch(`${API_BASE}${path}`, {
     method,
-    headers: { Authorization: `Bearer ${token}` },
+    headers,
+    body: body ? JSON.stringify(body) : undefined,
   });
 
   // 204 No Content is the expected success for player endpoints
@@ -578,6 +582,45 @@ export async function getQueue(): Promise<{ currentTrack: MockTrack | null; queu
   }
 }
 
+/* ── Search & Direct Playback ──────────────────────────────────────── */
+
+export interface SpotifySearchResult {
+  id: string;
+  uri: string;
+  name: string;
+  artist: string;
+  albumArt: string;
+  durationMs: number;
+}
+
+/** Search Spotify catalog for tracks by name/artist query */
+export async function searchTracks(query: string, limit = 5): Promise<SpotifySearchResult[]> {
+  const data = await apiFetch<{
+    tracks: {
+      items: (SpotifyTrack & { uri: string })[];
+    };
+  }>(`/search?q=${encodeURIComponent(query)}&type=track&limit=${limit}`);
+
+  return data.tracks.items.map((t) => ({
+    id: t.id,
+    uri: t.uri,
+    name: t.name,
+    artist: t.artists.map((a) => a.name).join(", "),
+    albumArt: t.album.images[0]?.url ?? "",
+    durationMs: t.duration_ms,
+  }));
+}
+
+/** Play a specific track by Spotify URI (e.g. "spotify:track:6rqhFgbbKwnb9MLmUQDhG6") */
+export async function playTrack(spotifyUri: string): Promise<void> {
+  await apiCommand("/me/player/play", "PUT", { uris: [spotifyUri] });
+}
+
+/** Add a track to Spotify's playback queue */
+export async function addToQueue(spotifyUri: string): Promise<void> {
+  await apiCommand(`/me/player/queue?uri=${encodeURIComponent(spotifyUri)}`, "POST");
+}
+
 export const SpotifyService = {
   startAuthFlow,
   refreshAccessToken,
@@ -602,6 +645,9 @@ export const SpotifyService = {
   getTopArtists,
   getUserPlaylists,
   getQueue,
+  searchTracks,
+  playTrack,
+  addToQueue,
 };
 
 // Debug: expose to browser console
