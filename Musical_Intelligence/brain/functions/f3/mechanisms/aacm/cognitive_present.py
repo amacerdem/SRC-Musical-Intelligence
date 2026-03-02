@@ -74,13 +74,13 @@ def compute_cognitive_present(
 
     # -- P0: N1/P2 Engagement --
     # ERP-indexed engagement from aesthetic engagement (M0) and
-    # attentional capture (E0), modulated by roughness (dissonance drives
-    # a different pattern of engagement via salience network).
-    # Sarasso 2019: N1/P2 larger for consonant than dissonant intervals.
+    # attentional capture (E0), modulated by consonance (inverted roughness).
+    # Sarasso 2019: N1/P2 larger for consonant than dissonant intervals —
+    # consonance enhances engagement while roughness (dissonance) reduces it.
     p0 = torch.sigmoid(
         0.35 * m0
         + 0.35 * e0
-        + 0.30 * roughness_100ms
+        + 0.30 * (1.0 - roughness_100ms)
     )
 
     # -- P1: Aesthetic Judgment --

@@ -11,6 +11,7 @@ import { DimensionRadar } from "@/components/mind/DimensionRadar";
 import { genesToDimensions, arrayToProfile } from "@/data/dimensions";
 import { personas, getPersona } from "@/data/personas";
 import { beliefColors } from "@/design/tokens";
+import { PersonaAvatar } from "@/components/mind/PersonaAvatar";
 import { LanguageToggle } from "@/components/layout/LanguageToggle";
 import { SpotifyService } from "@/services/spotify";
 import { miDataService } from "@/services/MIDataService";
@@ -1465,11 +1466,11 @@ function RevealStep({ personaId, mind, displayName, onEnter }: {
         <AnimatePresence>
           {(phase === "name" || phase === "radar" || phase === "ready") && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }} className="text-center">
-              <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 0.4, y: 0 }} transition={{ duration: 1 }} className="text-sm font-display font-light text-slate-500 tracking-[0.2em] uppercase mb-6">
+              <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 0.4, y: 0 }} transition={{ duration: 1 }} className="text-sm font-display font-light text-slate-500 tracking-[0.2em] uppercase mb-4">
                 {displayName && displayName !== "You" ? `${displayName}, ${t("onboarding.reveal.youAre")}` : t("onboarding.reveal.youAreDefault")}
               </motion.p>
 
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold mb-5 leading-none flex justify-center flex-wrap">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-3 leading-none flex justify-center flex-wrap">
                 {persona.name.split("").map((char, i) => (
                   <motion.span
                     key={i}
@@ -1487,7 +1488,7 @@ function RevealStep({ personaId, mind, displayName, onEnter }: {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.5 }}
                 transition={{ delay: persona.name.length * 0.06 + 0.5, duration: 1 }}
-                className="text-xl text-slate-500 font-display font-light italic"
+                className="text-lg text-slate-500 font-display font-light italic"
               >
                 "{persona.tagline}"
               </motion.p>
@@ -1498,7 +1499,7 @@ function RevealStep({ personaId, mind, displayName, onEnter }: {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: persona.name.length * 0.06 + 1.2, duration: 0.8 }}
-                  className="flex items-center gap-3 mt-5 px-5 py-2.5 rounded-full mx-auto"
+                  className="flex items-center gap-3 mt-4 px-5 py-2.5 rounded-full mx-auto"
                   style={{ background: `${color}08`, border: `1px solid ${color}15` }}
                 >
                   <Brain size={16} style={{ color }} />
@@ -1519,16 +1520,22 @@ function RevealStep({ personaId, mind, displayName, onEnter }: {
           )}
         </AnimatePresence>
 
-        {/* Radar */}
+        {/* Persona Avatar + Radar — side by side, centered */}
         <AnimatePresence>
           {(phase === "radar" || phase === "ready") && (
             <motion.div
               initial={{ opacity: 0, scale: 0.6, filter: "blur(15px)" }}
               animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
               transition={{ duration: 1.2, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-10"
+              className="mt-8 flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10"
             >
-              <DimensionRadar profile={dim6DProfile} color={color} size={400} />
+              <PersonaAvatar
+                personaId={personaId}
+                color={color}
+                family={persona.family}
+                size={340}
+              />
+              <DimensionRadar profile={dim6DProfile} color={color} size={340} />
             </motion.div>
           )}
         </AnimatePresence>
@@ -1536,7 +1543,7 @@ function RevealStep({ personaId, mind, displayName, onEnter }: {
         {/* CTA + Description */}
         <AnimatePresence>
           {phase === "ready" && (
-            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.5 }} className="mt-10 text-center max-w-lg">
+            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.5 }} className="mt-8 text-center max-w-lg">
               <p className="text-base text-slate-500 mb-3 leading-relaxed font-light">{persona.description}</p>
               <motion.p initial={{ opacity: 0 }} animate={{ opacity: 0.3 }} transition={{ delay: 1, duration: 1.5 }} className="text-xs font-display font-light text-slate-600 tracking-[0.2em] uppercase mb-8">
                 {t("onboarding.reveal.thisIsYourMind")}

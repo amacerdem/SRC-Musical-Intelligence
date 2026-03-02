@@ -24,23 +24,21 @@ TRACKS_DIR = DATASET_DIR / "tracks"
 
 # ── Dimension Key Names ────────────────────────────────────────────
 
-DIM_6D = ["discovery", "intensity", "flow", "depth", "trace", "sharing"]
+DIM_6D = ["energy", "valence", "tempo", "tension", "groove", "complexity"]
 
 DIM_12D = [
-    "expectancy", "information_rate", "tension_arc", "sonic_impact",
-    "entrainment", "groove", "contagion", "reward",
-    "episodic_resonance", "recognition", "synchrony", "bonding",
+    "melodic_hook", "harmonic_depth", "rhythmic_drive", "timbral_color",
+    "emotional_arc", "surprise", "momentum", "narrative",
+    "familiarity", "pleasure", "space", "repetition",
 ]
 
 DIM_24D = [
-    "predictive_processing", "information_entropy", "sequence_learning",
-    "sensory_encoding", "harmonic_tension", "autonomic_arousal",
-    "sensory_salience", "aesthetic_appraisal", "oscillation_coupling",
-    "motor_period_locking", "auditory_motor", "hierarchical_context",
-    "valence_mode", "nostalgia_circuitry", "dopaminergic_drive",
-    "hedonic_valuation", "hippocampal_binding", "autobiographical",
-    "pitch_melody", "perceptual_learning", "structural_prediction",
-    "expertise_network", "interpersonal_sync", "social_reward",
+    "prediction_error", "precision", "information_content", "model_uncertainty",
+    "oscillation_coupling", "motor_period_lock", "auditory_motor_bind", "timing_precision",
+    "valence_mode", "autonomic_arousal", "nostalgia_circuit", "chills_pathway",
+    "da_anticipation", "da_consummation", "hedonic_tone", "reward_pe",
+    "episodic_encoding", "autobiographical", "statistical_learning", "expertise_effect",
+    "neural_synchrony", "social_bonding", "social_prediction", "collective_reward",
 ]
 
 FUNCTION_NAMES = {

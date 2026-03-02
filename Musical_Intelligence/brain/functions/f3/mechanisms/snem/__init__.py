@@ -101,30 +101,32 @@ _ENERGY_CHANGE = 22       # energy_change (D group)
 _COUPLING = 25            # x_l0l5 (F group)
 
 
-# -- 14 H3 Demand Specifications ----------------------------------------------
+# -- 13 H3 Demand Specifications ----------------------------------------------
 # Aligned with layer code (extraction / temporal_integration / cognitive_present
-# / forecast). Mostly L2 (integration) for bidirectional context, one L0.
+# / forecast). Beat periodicity uses H20 (5s) for multi-cycle accumulation;
+# meter hierarchy uses flux entropy at H16/H20; temporal integration uses
+# micro-horizon features for short-term dynamics.
 
 _SNEM_H3_DEMANDS: Tuple[H3DemandSpec, ...] = (
-    # === Extraction layer (8 tuples) ===
-    _h3(_SPECTRAL_FLUX, "spectral_flux", 16, 14, 2,
-        "Flux periodicity H16 L2 — beat periodicity at 1s",
+    # === Extraction layer (7 tuples) ===
+    # Beat (E0): H20 periodicity for multi-cycle regularity
+    _h3(_LOUDNESS, "loudness", 20, 14, 0,
+        "Loudness periodicity H20 L0 — beat periodicity at 5s",
         "Nozaradan 2011"),
-    _h3(_ONSET_STRENGTH, "onset_strength", 16, 14, 2,
-        "Onset periodicity H16 L2 — onset periodicity at 1s",
+    _h3(_ONSET_STRENGTH, "onset_strength", 20, 14, 0,
+        "Onset periodicity H20 L0 — onset periodicity at 5s",
         "Nozaradan 2011"),
-    _h3(_AMPLITUDE, "amplitude", 16, 1, 2,
-        "Amplitude mean H16 L2 — beat salience context",
+    _h3(_ONSET_STRENGTH, "onset_strength", 16, 2, 0,
+        "Onset std H16 L0 — onset variability at 1s",
         "Large 2008"),
-    _h3(_COUPLING, "coupling", 16, 14, 2,
-        "Coupling periodicity H16 L2 — metric structure 1s",
+    # Meter (E1): flux entropy for accent-pattern diversity
+    _h3(_SPECTRAL_FLUX, "spectral_flux", 20, 20, 0,
+        "Flux entropy H20 L0 — meter entropy at 5s",
         "Grahn 2007"),
-    _h3(_COUPLING, "coupling", 3, 14, 2,
-        "Coupling periodicity H3 L2 — fast metric cue 100ms",
+    _h3(_SPECTRAL_FLUX, "spectral_flux", 16, 20, 0,
+        "Flux entropy H16 L0 — meter entropy at 1s",
         "Grahn 2007"),
-    _h3(_COUPLING, "coupling", 16, 21, 2,
-        "Coupling zero-crossings H16 L2 — phase resets 1s",
-        "Large 2008"),
+    # Selective (E2): short-term enhancement cues
     _h3(_SPECTRAL_CHANGE, "spectral_change", 4, 8, 0,
         "Spectral change velocity H4 L0 — enhancement cue",
         "Nozaradan 2018"),
@@ -153,7 +155,7 @@ _SNEM_H3_DEMANDS: Tuple[H3DemandSpec, ...] = (
         "Large 2008"),
 )
 
-assert len(_SNEM_H3_DEMANDS) == 14
+assert len(_SNEM_H3_DEMANDS) == 13
 
 
 class SNEM(Relay):

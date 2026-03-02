@@ -6,9 +6,9 @@ Three forward predictions for beat onset, meter position, and enhancement:
   F1: meter_position_pred   — Metric position prediction (0=weak, 1=downbeat) [0, 1]
   F2: enhancement_pred      — SS-EP enhancement ~0.75s ahead [0, 1]
 
-H3 consumed:
-    (10, 16, 14, 2)  flux periodicity H16 L2       — beat periodicity 1s (reused)
-    (25, 16, 14, 2)  coupling periodicity H16 L2   — metric structure 1s (reused)
+H3 consumed (reuses E-layer demands):
+    (8, 20, 14, 0)   loudness periodicity H20 L0 — beat periodicity at 5s
+    (10, 20, 20, 0)  flux entropy H20 L0         — meter entropy at 5s
 
 See Building/C3-Brain/F3-Attention-and-Salience/mechanisms/snem/SNEM-forecast.md
 """
@@ -19,9 +19,9 @@ from typing import Dict, Tuple
 import torch
 from torch import Tensor
 
-# -- H3 tuples ----------------------------------------------------------------
-_FLUX_PERIOD_1S = (10, 16, 14, 2)
-_COUPLING_PERIOD_1S = (25, 16, 14, 2)
+# -- H3 tuples (reused from extraction) ---------------------------------------
+_LOUD_PERIOD_H20 = (8, 20, 14, 0)       # beat periodicity at 5s
+_FLUX_ENTROPY_H20 = (10, 20, 20, 0)     # meter entropy at 5s
 
 
 def compute_forecast(
@@ -42,25 +42,27 @@ def compute_forecast(
     e0, e1, e2 = e_outputs
     (_p0, _p1, _p2) = p_outputs
 
-    flux_period_1s = h3_features[_FLUX_PERIOD_1S]
-    coupling_period_1s = h3_features[_COUPLING_PERIOD_1S]
+    loud_period_h20 = h3_features[_LOUD_PERIOD_H20]
+    flux_entropy_h20 = h3_features[_FLUX_ENTROPY_H20]
 
     # F0: Beat onset prediction — next beat ~0.5s
-    # Vuust 2022: predictive coding generates beat expectations
+    # Vuust 2022: predictive coding generates beat expectations.
+    # Loudness periodicity at 5s provides sustained rhythmic context.
     f0 = torch.sigmoid(
-        0.50 * e0 + 0.50 * flux_period_1s
+        0.50 * e0 + 0.50 * loud_period_h20
     )
 
     # F1: Meter position prediction — 0=weak beat, 1=downbeat
-    # Grahn 2007: metric structure from coupling drives position predictions
+    # Grahn 2007: metric structure drives position predictions.
+    # Flux entropy at 5s reflects accent-pattern diversity.
     f1 = torch.sigmoid(
-        0.50 * e1 + 0.50 * coupling_period_1s
+        0.50 * e1 + 0.50 * flux_entropy_h20
     )
 
     # F2: Enhancement prediction — SS-EP ~0.75s ahead
-    # Nozaradan 2018: enhancement prediction from SS-EP + selective gain
+    # Nozaradan 2018: enhancement prediction from SS-EP + selective gain.
     f2 = torch.sigmoid(
-        0.50 * e2 + 0.50 * flux_period_1s
+        0.50 * e2 + 0.50 * loud_period_h20
     )
 
     return f0, f1, f2
