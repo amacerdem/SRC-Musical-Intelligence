@@ -16,7 +16,6 @@ import { personas } from "@/data/personas";
 import { beliefColors } from "@/design/tokens";
 import { useActiveIdentity } from "@/hooks/useActiveIdentity";
 import { NucleusDot } from "@/components/mind/NucleusDot";
-import { MiniOrganism } from "@/components/mind/MiniOrganism";
 import { useDesktop, useMobile } from "@/hooks/useMediaQuery";
 import { LanguageToggle } from "./LanguageToggle";
 
@@ -107,32 +106,6 @@ export function FloatingNav() {
           })}
         </div>
       </motion.nav>
-
-      {/* Top-left: M³ identity with MiniOrganism */}
-      <motion.div
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, delay: 0.5 }}
-        className="fixed top-5 left-4 md:left-6 z-40"
-        style={{ top: "calc(env(safe-area-inset-top, 0px) + 20px)" }}
-      >
-        <NavLink to="/m3" className="group flex items-center gap-2.5">
-          <div className="relative">
-            <div className="absolute -inset-1 opacity-80 group-hover:opacity-100 transition-opacity duration-500">
-              <MiniOrganism color={accentColor} stage={1} size={32} />
-            </div>
-            <div
-              className="relative z-10 w-7 h-7 rounded-lg flex items-center justify-center text-[10px] font-display font-bold text-white/90 group-hover:text-white transition-all duration-300"
-              style={{
-                background: `linear-gradient(135deg, ${accentColor}30, ${accentColor}10)`,
-                border: `1px solid ${accentColor}15`,
-              }}
-            >
-              M³
-            </div>
-          </div>
-        </NavLink>
-      </motion.div>
 
       {/* Top-right: Level + Search */}
       <motion.div

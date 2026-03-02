@@ -16,7 +16,6 @@ import { Dashboard } from "@/pages/Dashboard";
 import { PersonaDetail } from "@/pages/PersonaDetail";
 import { ExploreAE } from "@/pages/ExploreAE";
 import { ResonanceField } from "@/pages/ResonanceField";
-import { M3Hub } from "@/pages/M3Hub";
 import { Callback } from "@/pages/Callback";
 import { LibraryAuth } from "@/pages/LibraryAuth";
 
@@ -75,13 +74,7 @@ export default function App() {
                 hasCompletedOnboarding ? <Lab /> : <Navigate to="/" />
               }
             />
-            <Route
-              path="/m3"
-              element={
-                hasCompletedOnboarding ? <M3Hub /> : <Navigate to="/" />
-              }
-            />
-            <Route path="/live" element={<ResonanceField />} />
+<Route path="/live" element={<ResonanceField />} />
             <Route path="/info" element={<PersonaDetail />} />
             <Route path="/info/:id" element={<PersonaDetail />} />
           </Route>

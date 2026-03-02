@@ -17,7 +17,7 @@ interface Props {
 
 export function DepthSelector({ depth, onChange, accentColor }: Props) {
   return (
-    <div className="flex items-center gap-1 p-1 rounded-xl" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}>
+    <div className="flex items-center gap-1 p-1 rounded-xl" style={{ background: "rgba(0,0,0,0.3)", backdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.1)" }}>
       {DEPTHS.map(({ value, label, sub }) => {
         const active = depth === value;
         return (

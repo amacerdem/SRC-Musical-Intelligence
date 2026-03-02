@@ -390,15 +390,13 @@ export function Lab() {
             )}
           </div>
 
-          {/* Right: Depth selector */}
+          {/* Right: Frame info */}
           <div className="flex items-center gap-3">
             {hasAnalysis && (
               <span className="text-[8px] font-mono text-slate-700">
                 {temporal.source === "full" ? `${temporal.frameCount} frames` : "64 seg"}
               </span>
             )}
-
-            <DepthSelector depth={depth} onChange={setDepth} accentColor={color} />
           </div>
         </motion.div>
 
@@ -440,8 +438,10 @@ export function Lab() {
               />
             </div>
 
-            {/* Mode selector — centered below waveform */}
-            <div className="flex justify-center pt-3">
+            {/* Controls below waveform — depth left, mode center */}
+            <div className="flex items-center justify-center pt-3 gap-4">
+              <DepthSelector depth={depth} onChange={setDepth} accentColor={color} />
+
               <div className="flex items-center rounded-xl overflow-hidden"
                 style={{
                   border: "1px solid rgba(255,255,255,0.1)",
