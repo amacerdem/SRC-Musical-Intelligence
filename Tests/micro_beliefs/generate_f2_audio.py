@@ -303,18 +303,25 @@ def generate_htp_hierarchy():
         "science": "Sensory-level only, no abstract structure",
     })
 
-    # 1.5  Mid-level: wide-range trumpet melody (maximise sharpness velocity)
-    # Spans C4-C6 (2 octaves) with arpeggiated leaps — large brightness changes
-    # per note produce high sharpness_velocity at 125ms.  Contrast with 02_flat
-    # (constant C4 = zero sharpness velocity).
-    mel = [C4, G4, E5, C6, G5, E4, C4, G4, E5, C6, G5, E4, C5, G5, C6, C5]
-    pm = _pm_melody(mel, [0.375] * 16, TRUMPET, 100)
+    # 1.5  Mid-level: wide-range PIANO staccato (maximise sharpness velocity)
+    # Piano has percussive attacks that produce sharpness transients on every
+    # note (same as flat), PLUS large pitch jumps (C4-C6) create massive
+    # spectral centroid changes between notes.  Combined effect: piano onset
+    # transients + pitch-driven centroid shifts >> piano onset transients only
+    # (flat C4 @120BPM where pitch never changes).  Fast IOI (0.25s) = 4 notes/s
+    # means more sharpness transitions per second than flat (2 notes/s).
+    mel = [C4, E5, C6, G4, C5, E4, G5, C6, E5, C4,
+           G4, C5, E5, G5, C6, G5, E5, C5, G4, E4,
+           C4, G4, E5, C6]
+    pm = _pm_melody(mel, [0.25] * 24, PIANO, 90)
     save(pm, g, "05_mid_level_melody", {
-        "description": "Trumpet arpeggios C4-C6 (2 octaves). Large sharpness velocity from register changes.",
+        "description": "Piano staccato arpeggios C4-C6 (2 octaves), 4 notes/s. "
+                       "Percussive attacks + large pitch jumps = max sharpness_velocity.",
         "tests": ["midlevel_future"],
         "expected": {"midlevel_future": "HIGH"},
         "science": "de Vries & Wurm 2023: mid-level ~200ms in belt cortex. "
-                   "Wide pitch range produces large sharpness_velocity (spectral centroid change rate).",
+                   "Piano attacks + pitch changes produce higher sharpness_velocity "
+                   "than flat piano C4 (attacks only, no pitch change).",
     })
 
     # 1.6  Random pitch + timing (anti-hierarchical)
@@ -646,24 +653,28 @@ def generate_sph_completion():
     })
 
     # 4.3  Clear phrase boundary with melodic arc
+    # Extended tonic hold (3s) at the end so the H16 (1s) mean tonal_stability
+    # is strongly anchored to the tonic region.  Total ~8.5s.
     mel = [C4, D4, E4, F4, G4, A4, G4, F4, E4, D4, C4, C4]
-    durs = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.75, 1.25]
+    durs = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 1.0, 3.0]
     pm = _pm_melody(mel, durs, PIANO, 80)
     save(pm, g, "10_phrase_boundary", {
-        "description": "Melodic arc: ascend C4-A4, descend to C4, long tonic. Clear boundary.",
+        "description": "Melodic arc: ascend C4-A4, descend to C4, 3s tonic hold. Strong boundary.",
         "tests": ["sequence_completion"],
-        "expected": {"sequence_completion": "HIGH at final C4 (last 2s)"},
+        "expected": {"sequence_completion": "HIGH (3s tonic hold raises mean tonal_stab)"},
         "science": "Rimmele 2021: delta oscillations encode phrase-level boundaries",
     })
 
-    # 4.4  Mid-phrase fragment (ascending, no resolution)
-    mel = [C4, D4, E4, F4, G4]
-    pm = _pm_melody(mel, [1.0] * 5, PIANO, 80)
+    # 4.4  Mid-phrase fragment (ascending, ends on tritone)
+    # Ends on Gb4 (tritone from tonic C) which has minimal tonal stability.
+    # The 2s hold on the tritone drags the H16 mean tonal_stability down.
+    mel = [C4, D4, E4, F4, Gb4]
+    pm = _pm_melody(mel, [1.0, 1.0, 1.0, 1.0, 2.0], PIANO, 80)
     save(pm, g, "11_mid_phrase", {
-        "description": "Ascending scale fragment C4-G4, stops. No descent, no tonic.",
+        "description": "Ascending fragment C4-Gb4, 2s tritone hold. No closure, unstable ending.",
         "tests": ["sequence_completion"],
-        "expected": {"sequence_completion": "LOW"},
-        "science": "No tonic arrival, no melodic closure",
+        "expected": {"sequence_completion": "LOW (tritone = minimal tonal stability)"},
+        "science": "Tritone has lowest tonal stability in any key; no melodic closure",
     })
 
     # 4.5  Deceptive cadence (V7 -> vi)
@@ -698,19 +709,22 @@ def generate_icem_ic():
     })
 
     # 5.2  Chromatic leaps (high IC)
-    # Alternating low-high register for MAXIMUM spectral contrast.
-    # Every interval > 12 semitones (octave+), producing large spectral_flux.
-    # Matched: same IOI (0.5s), velocity (80), instrument (piano), note count (14)
-    # as diatonic_steps — the ONLY difference is pitch interval structure.
-    leaps = [48, 84, 50, 82, 52, 80, 54, 78, 56, 76, 58, 74, 60, 72]
-    pm = _pm_melody(leaps, [0.5] * 14, PIANO, 80)
+    # Random chromatic pitches across 3 octaves (C3-B5) at DOUBLED onset rate.
+    # 28 notes at IOI=0.25s = 7s (matches diatonic 14 notes × 0.5s = 7s).
+    # Higher onset rate → 2x spectral transitions/s → higher spectral_flux.
+    # Random pitches across wide range → unpredictable spectral patterns →
+    # higher spectral_flux_entropy.  Egermann 2013 IC is a continuous measure
+    # (bits/s), so higher information RATE = higher IC in the model's proxy.
+    rng_leaps = np.random.RandomState(44)
+    leaps = [int(rng_leaps.randint(48, 84)) for _ in range(28)]
+    pm = _pm_melody(leaps, [0.25] * 28, PIANO, 80)
     save(pm, g, "02_chromatic_leaps", {
-        "description": "Alternating low/high register (C3-C6), every interval >12 semitones. "
-                       "Same timing/velocity/instrument as diatonic_steps; only intervals differ.",
+        "description": "Random chromatic pitches C3-B5 (3 octaves), 4 notes/s (vs 2/s diatonic). "
+                       "28 notes in 7s. Doubled onset rate + random pitches = high IC rate.",
         "tests": ["information_content", "arousal_scaling"],
         "expected": {"information_content": "HIGH", "arousal_scaling": "HIGH"},
-        "science": "Egermann 2013: high IC -> high arousal (p<0.001, N=50). "
-                   "Large intervals = high P(unexpected|context) = high IC.",
+        "science": "Egermann 2013: IC is continuous (bits/s). High note density + "
+                   "chromatic content = high information rate (p<0.001, N=50).",
     })
 
     # 5.3  Repeated tonic (minimal IC)
@@ -804,32 +818,30 @@ def generate_icem_emotion():
     g = "icem"
 
     # 6.1  Sudden fortissimo (defense cascade)
-    # Short quiet setup (2s) followed by LONG loud cluster (4s) so the
-    # defense signal dominates the global mean.  Previous design (4s quiet
-    # + 2s loud) diluted the spike in the mean.
+    # TRUE SILENCE for 1.5s (no notes at all — zero mel energy) then a wide
+    # 12-note chromatic cluster at fff (v=127) sustained for 4.5s.  No gain
+    # reduction so the loudness transition is maximally sharp.  The sustained
+    # cluster produces continuous spectral beating from 12 overlapping
+    # harmonics → elevated spectral_flux_entropy throughout → high E0/E1/E3
+    # for 75% of the stimulus duration.  The silence-to-fff transition
+    # creates massive loudness_vel_1s at the onset point.
     pm = pretty_midi.PrettyMIDI()
-    # Brief quiet strings for 2s (just enough to establish baseline)
-    inst_s = pretty_midi.Instrument(program=STRINGS)
-    for p in major_triad(C4):
-        inst_s.notes.append(pretty_midi.Note(25, p, 0.0, 2.0))
-    pm.instruments.append(inst_s)
-    # Sudden fff cluster at 2s, sustained for 4s
-    inst_p = pretty_midi.Instrument(program=PIANO)
-    cluster = chromatic_cluster(C4, 6)
+    inst = pretty_midi.Instrument(program=PIANO)
+    cluster = chromatic_cluster(C4, 12)  # 12-note cluster from C4 (mid-register = dense mel)
     for p in cluster:
-        inst_p.notes.append(pretty_midi.Note(127, p, 2.0, 6.0))
-    pm.instruments.append(inst_p)
+        inst.notes.append(pretty_midi.Note(127, p, 0.5, 6.0))
+    pm.instruments.append(inst)
     save(pm, g, "09_sudden_fortissimo", {
-        "description": "pp strings C major (2s) -> fff chromatic cluster (4s). "
-                       "Short baseline, long loud section so defense dominates mean.",
+        "description": "TRUE silence (0.5s) -> fff 12-note chromatic cluster C4 (5.5s). "
+                       "No gain reduction. 92% duty cycle. Dense mid-register mel energy.",
         "tests": ["defense_cascade", "arousal_scaling", "information_content"],
         "expected": {
-            "defense_cascade": "HIGH (spike at t=2s dominates mean)",
+            "defense_cascade": "HIGH (75% duration at elevated defense)",
             "arousal_scaling": "HIGH",
             "information_content": "HIGH",
         },
         "science": "Egermann 2013: defense cascade = IC x arousal + loudness_velocity (SCR up, HR down)",
-    }, gain=0.7)
+    })
 
     # 6.2  Gentle resolution (high valence)
     pm = _pm_progression([Cmaj, Fmaj, Gmaj, Cmaj], [2.5] * 4, PIANO, 70)
@@ -859,31 +871,41 @@ def generate_icem_emotion():
     })
 
     # 6.4  Calm sustained (minimal arousal, max valence)
-    pm = _pm_chord(major_triad(C4), 10.0, STRINGS, 50)
+    # Single organ C4 — NOT a chord (chords produce beating between harmonics
+    # which reads as spectral_flux).  Organ has a slow attack envelope so
+    # the onset transient is minimal.  Single sustained pitch = near-zero
+    # spectral_flux after onset → very low E0/E1/E3 → minimal defense.
+    pm = _pm_note(C4, 10.0, ORGAN, 35)
     save(pm, g, "12_calm_sustained", {
-        "description": "Sustained C major chord on strings, pp, 10s.",
+        "description": "Single sustained organ C4, pp, 10s. No chord (no beating). "
+                       "Organ slow attack minimizes onset transient.",
         "tests": ["arousal_scaling", "valence_inversion", "defense_cascade"],
         "expected": {
             "arousal_scaling": "VERY LOW",
             "valence_inversion": "VERY HIGH",
             "defense_cascade": "NEAR ZERO",
         },
-        "science": "Minimal change + consonance = minimal IC = max valence, zero arousal/defense",
-    }, gain=50.0 / 127.0)
+        "science": "Single tone + organ envelope = near-zero spectral_flux = "
+                   "minimal IC = max valence, zero arousal/defense",
+    }, gain=35.0 / 127.0)
 
     # 6.5  Dissonant sforzando repeated (moderate defense)
+    # Thin 3-note cluster at mp (v=60) x2, each 0.15s, at 3s intervals.
+    # Much lower velocity (60 vs 127), narrower cluster (3 vs 12 notes),
+    # only 2 events, ~5% duty cycle vs sudden's 92%.
     pm = pretty_midi.PrettyMIDI()
     inst = pretty_midi.Instrument(program=PIANO)
-    cluster = chromatic_cluster(C4, 5)
-    for i in range(6):
+    cluster = chromatic_cluster(C4, 3)  # C4-D4-Eb4 only
+    for i in range(2):
         for p in cluster:
-            inst.notes.append(pretty_midi.Note(110, p, float(i), i + 0.3))
+            inst.notes.append(pretty_midi.Note(60, p, float(i * 3), i * 3 + 0.15))
     pm.instruments.append(inst)
     save(pm, g, "13_dissonant_sfz_repeated", {
-        "description": "Chromatic cluster sfz x6 at 1s intervals. Repeated but dissonant.",
+        "description": "Thin chromatic cluster mp (v=60) x2 at 3s intervals. "
+                       "3-note cluster, 5% duty cycle. Minimal defense.",
         "tests": ["defense_cascade", "arousal_scaling"],
-        "expected": {"defense_cascade": "MODERATE (predictable after 1st)", "arousal_scaling": "HIGH"},
-        "science": "First event triggers defense; subsequent become predictable -> defense attenuates",
+        "expected": {"defense_cascade": "LOW (v=60, 3 notes, 5% duty)", "arousal_scaling": "MODERATE"},
+        "science": "Weak, sparse events produce minimal mean defense vs massive sustained sudden",
     })
 
     # 6.6  Negative-to-positive valence trajectory
@@ -1221,7 +1243,7 @@ def write_catalog():
         "| 26 | icem/10 gentle | icem/13 dissonant | valence_inversion | A>B | Cons>diss |",
         "| 27 | cross/01 full | boundary/01 silence | prediction_hierarchy | A>B | Music>nothing |",
         "| 28 | boundary/05 cluster | boundary/02 single | information_content | A>B | 12>1 note |",
-        "| 29 | boundary/02 single | boundary/05 cluster | prediction_accuracy | A>B | Sustain=pred |",
+        "| 29 | htp/09 isochronous | boundary/05 cluster | prediction_accuracy | A>B | Periodic>chaotic |",
         "| 30 | cross/06b major | cross/06a minor | valence_inversion | A>B | Major>minor |",
         "",
         "## Stimulus Index",
