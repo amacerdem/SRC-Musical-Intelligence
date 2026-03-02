@@ -25,6 +25,8 @@ interface Props {
   size?: number;
   /** Whether to render the animated flow polygon */
   showFlow?: boolean;
+  /** Optional 6 description strings shown below each axis label */
+  descs?: string[];
 }
 
 export function DashboardRadar({
@@ -33,11 +35,12 @@ export function DashboardRadar({
   color,
   size = 440,
   showFlow = false,
+  descs,
 }: Props) {
   const cx = size / 2;
   const cy = size / 2;
   const maxR = size * 0.38;
-  const labelR = maxR + 24;
+  const labelR = maxR + 32;
 
   const toPath = useCallback(
     (vals: number[]) => {
@@ -179,21 +182,36 @@ export function DashboardRadar({
       {ALL_PSYCHOLOGY.map((dim, i) => {
         const x = cx + Math.cos(RADAR_ANGLES[i]) * labelR;
         const y = cy + Math.sin(RADAR_ANGLES[i]) * labelR;
+        const desc = descs?.[i];
         return (
-          <text
-            key={dim.key}
-            x={x}
-            y={y}
-            textAnchor="middle"
-            dominantBaseline="middle"
-            fill={dim.color}
-            fontSize={10}
-            fontWeight="600"
-            fontFamily="Inter"
-            style={{ pointerEvents: "none" }}
-          >
-            {dim.name}
-          </text>
+          <g key={dim.key} style={{ pointerEvents: "none" }}>
+            <text
+              x={x}
+              y={desc ? y - 8 : y}
+              textAnchor="middle"
+              dominantBaseline="middle"
+              fill={dim.color}
+              fontSize={12.8}
+              fontWeight="700"
+              fontFamily="Inter"
+            >
+              {dim.name}
+            </text>
+            {desc && (
+              <text
+                x={x}
+                y={y + 10}
+                textAnchor="middle"
+                dominantBaseline="middle"
+                fill="rgba(203,213,225,0.7)"
+                fontSize={11}
+                fontFamily="Inter"
+                fontWeight="400"
+              >
+                {desc}
+              </text>
+            )}
+          </g>
         );
       })}
 

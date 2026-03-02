@@ -151,23 +151,27 @@ def compute_extraction(
     x_l4l5_mean = x_l4l5.mean(dim=-1)                    # (B, T)
 
     # -- Derived signals --
-    # Consonance composite: higher = more consonant (roughness inverted)
+    # Consonance composite: higher = more consonant.
+    # Includes Sethares 1993 (partial-pair beating) alongside Plomp-Levelt
+    # roughness for robust noise vs harmonic differentiation — ratio-based
+    # measures (helmholtz, stumpf) don't penalize broadband noise because
+    # it lacks discrete partials.
     consonance = (
-        0.30 * (1.0 - roughness)
-        + 0.25 * helmholtz
-        + 0.25 * stumpf
-        + 0.20 * pleasantness
+        0.25 * (1.0 - roughness)
+        + 0.20 * (1.0 - sethares)
+        + 0.15 * helmholtz
+        + 0.15 * stumpf
+        + 0.25 * pleasantness
     )
 
-    # Temporal flow: energy dynamics + onset clarity + spectral stability
-    # Spectral stability gated by consonance — temporal stationarity in
-    # broadband noise is NOT forward flow, only spectrally coherent
-    # stability counts. Kim 2019: temporal integrity requires musically
-    # structured content, not mere stationarity.
+    # Temporal flow: energy dynamics + onset clarity + spectral stability.
+    # ALL terms gated by consonance — temporal stationarity in broadband
+    # noise is NOT forward flow.  Kim 2019: temporal integrity requires
+    # musically structured content, not mere stationarity or loudness.
     temporal_flow = (
         0.35 * amplitude * onset
         + 0.35 * (1.0 - spectral_change.abs()) * consonance.clamp(min=0.1)
-        + 0.30 * loudness
+        + 0.30 * loudness * consonance.clamp(min=0.1)
     )
 
     # -- E0: Spectral Integrity --
@@ -188,7 +192,7 @@ def compute_extraction(
     # Koelsch 2014: temporal expectation resolution engages reward circuit
     # only for musically structured stimuli.
     e1 = _wsig(
-        0.30 * spec_change_mean * energy_vel.clamp(min=0.1)
+        0.30 * spec_change_mean * energy_vel.clamp(min=0.1) * consonance.clamp(min=0.1)
         + 0.30 * temporal_flow
         + 0.20 * onset * amplitude
         + 0.20 * (1.0 - energy_change.abs()) * loudness * consonance.clamp(min=0.1)

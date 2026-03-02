@@ -40,14 +40,14 @@ import { ListenPanel } from "@/components/listen/ListenPanel";
 
 const DIM_KEYS: DimensionKey6D[] = [...DIMENSION_KEYS_6D];
 
-/** Concept-appropriate point labels for Weekly Evolution */
-const POINT_LABELS: Record<string, { en: string; tr: string }> = {
-  discovery: { en: "Spark",    tr: "Kıvılcım" },
-  intensity: { en: "Surge",    tr: "Dalga" },
-  flow:      { en: "Pulse",    tr: "Nabız" },
-  depth:     { en: "Bloom",    tr: "Çiçek" },
-  trace:     { en: "Echo",     tr: "Yankı" },
-  sharing:   { en: "Sync",     tr: "Senkron" },
+/** Concept-appropriate point labels + human-readable descriptions for Weekly Evolution */
+const POINT_LABELS: Record<string, { en: string; tr: string; desc: string; descTr: string }> = {
+  energy:     { en: "Surge",    tr: "Dalga",     desc: "Intensity & power",     descTr: "Yoğunluk ve güç" },
+  valence:    { en: "Bloom",    tr: "Çiçek",     desc: "Happy vs. sad",         descTr: "Neşe mi hüzün mü" },
+  tempo:      { en: "Pulse",    tr: "Nabız",     desc: "Speed of the beat",     descTr: "Ritmin hızı" },
+  tension:    { en: "Spark",    tr: "Kıvılcım",  desc: "Suspense & drama",      descTr: "Gerilim ve süspans" },
+  groove:     { en: "Sync",     tr: "Senkron",   desc: "Urge to move",          descTr: "Hareket dürtüsü" },
+  complexity: { en: "Echo",     tr: "Yankı",     desc: "Layers & detail",       descTr: "Katman ve detay" },
 };
 
 /* ── Audio-file mapping (shared with Lab) ──────── */
@@ -97,6 +97,10 @@ export function Dashboard() {
   const avgDimStrength = useMemo(() => DIM_KEYS.reduce((s, k) => s + dim6D[k], 0) / 6, [dim6D]);
   const dim6DProfile = useMemo(() => arrayToProfile(genesToDimensions(genes).psychology), [genes]);
   const total6D = useMemo(() => profileToArray(dim6DProfile), [dim6DProfile]);
+  const dimDescs = useMemo(() => ALL_PSYCHOLOGY.map((d) => {
+    const pl = POINT_LABELS[d.key];
+    return isTr ? pl.descTr : pl.desc;
+  }), [isTr]);
 
   // Now playing & demo flow
   const { track: nowPlayingTrack, isPlaying, isDemo } = useNowPlaying();
@@ -254,7 +258,7 @@ export function Dashboard() {
         <div
           className="absolute inset-0"
           style={{
-            background: `radial-gradient(ellipse 40% 35% at 80% 70%, ${PSYCHOLOGY_COLORS.trace}04 0%, transparent 50%)`,
+            background: `radial-gradient(ellipse 40% 35% at 80% 70%, ${PSYCHOLOGY_COLORS.complexity}04 0%, transparent 50%)`,
           }}
         />
       </div>
@@ -744,7 +748,7 @@ export function Dashboard() {
                       })}
                     </div>
                     <div className="relative z-10">
-                      <DashboardRadar total={total6D} flow={flow6D} color={color} size={380} showFlow={isPlaying} />
+                      <DashboardRadar total={total6D} flow={flow6D} color={color} size={380} showFlow={isPlaying} descs={dimDescs} />
                     </div>
                   </div>
 

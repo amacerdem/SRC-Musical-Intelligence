@@ -73,12 +73,19 @@ function colorOf6D(i: number): string {
   return ALL_PSYCHOLOGY[i]?.color ?? "#888";
 }
 
-function parent6Dof12D(i: number) {
-  return Math.floor(i / 2);
-}
-function parent6Dof24D(i: number) {
-  return Math.floor(i / 4);
-}
+/** 12D index → 6D parent index via parentKey chain */
+const PARENT_6D_OF_12D: number[] = ALL_COGNITION.map((cog) => {
+  const idx = ALL_PSYCHOLOGY.findIndex((p) => p.key === cog.parentKey);
+  return idx >= 0 ? idx : 0;
+});
+
+/** 24D index → 6D grandparent index via parentKey chain */
+const PARENT_6D_OF_24D: number[] = ALL_NEUROSCIENCE.map((neuro) => {
+  const cogParent = ALL_COGNITION.find((c) => c.key === neuro.parentKey);
+  if (!cogParent) return 0;
+  const idx = ALL_PSYCHOLOGY.findIndex((p) => p.key === cogParent.parentKey);
+  return idx >= 0 ? idx : 0;
+});
 
 function lighten(hex: string, amt: number): string {
   // Handle hex with alpha suffix (e.g. "#38BDF8B0")
@@ -187,11 +194,11 @@ export function DimensionSunburst({
     [d6],
   );
   const sectors12D = useMemo(
-    () => mkRingSectors(ANGLES_12D, d12, R12_BASE, R12_MAX, (i) => colorOf6D(parent6Dof12D(i)), 0.15),
+    () => mkRingSectors(ANGLES_12D, d12, R12_BASE, R12_MAX, (i) => colorOf6D(PARENT_6D_OF_12D[i]), 0.15),
     [d12],
   );
   const sectors24D = useMemo(
-    () => mkRingSectors(ANGLES_24D, d24, R24_BASE, R24_MAX, (i) => colorOf6D(parent6Dof24D(i)), 0.25),
+    () => mkRingSectors(ANGLES_24D, d24, R24_BASE, R24_MAX, (i) => colorOf6D(PARENT_6D_OF_24D[i]), 0.25),
     [d24],
   );
 
@@ -335,7 +342,7 @@ export function DimensionSunburst({
             return (
               <circle
                 key={`d12-${i}`} cx={p.x} cy={p.y} r={2.5}
-                fill={lighten(colorOf6D(parent6Dof12D(i)), 0.15)}
+                fill={lighten(colorOf6D(PARENT_6D_OF_12D[i]), 0.15)}
                 stroke="#0a0a0f" strokeWidth={0.8}
                 className="cursor-pointer"
                 onMouseEnter={(e) =>
@@ -354,7 +361,7 @@ export function DimensionSunburst({
             return (
               <circle
                 key={`d24-${i}`} cx={p.x} cy={p.y} r={2}
-                fill={lighten(colorOf6D(parent6Dof24D(i)), 0.25)}
+                fill={lighten(colorOf6D(PARENT_6D_OF_24D[i]), 0.25)}
                 stroke="#0a0a0f" strokeWidth={0.6}
                 className="cursor-pointer"
                 onMouseEnter={(e) =>
@@ -421,7 +428,7 @@ export function DimensionSunburst({
             <text
               key={`lbl12-${i}`} x={p.x} y={p.y}
               textAnchor="middle" dominantBaseline="middle"
-              fill={canSeeCog ? `${colorOf6D(parent6Dof12D(i))}88` : "rgba(255,255,255,0.08)"}
+              fill={canSeeCog ? `${colorOf6D(PARENT_6D_OF_12D[i])}88` : "rgba(255,255,255,0.08)"}
               fontSize={6.5} fontFamily="var(--font-mono)"
               style={{ pointerEvents: "none" }}
             >

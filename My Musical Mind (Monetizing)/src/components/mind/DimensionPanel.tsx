@@ -18,7 +18,7 @@ import type { DimensionLayer } from "@/types/dimensions";
 import {
   ALL_PSYCHOLOGY,
   ALL_COGNITION,
-  COGNITION_CHILDREN,
+  COGNITION_DISPLAY_GROUPS,
   getLabDim,
 } from "@/data/dimensions";
 
@@ -150,7 +150,7 @@ export function DimensionPanel({ accentColor = "#A855F7", compact = false }: Pro
                     {key === "cognition" && (
                       <div className="mt-2 flex flex-wrap gap-1">
                         {ALL_PSYCHOLOGY.map((psych) => {
-                          const children = COGNITION_CHILDREN[psych.key];
+                          const children = COGNITION_DISPLAY_GROUPS[psych.key];
                           if (!children) return null;
                           return (
                             <span

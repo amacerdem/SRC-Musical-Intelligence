@@ -11,10 +11,10 @@ both dimensions. This predicts how the listener's aesthetic judgment will
 evolve -- will the music maintain, increase, or decrease its aesthetic
 appeal?
 
-F1 predicts the reward circuit response based on current aesthetic value,
-temporal quality, and interaction strength. NAcc/caudate/putamen reward
-signals for temporal integrity (Menon & Levitin 2005). This forecasts
-whether the music will continue to produce reward responses.
+F1 predicts the reward circuit response weighted toward temporal integrity
+(60%) and vmPFC-IFG connectivity (40%). Kim 2019: temporal disruption
+reduces NAcc/putamen/GP (d=-1.433 to -1.635). This forecasts whether the
+music will continue to produce reward responses.
 
 F2 predicts the evolution of vmPFC-IFG connectivity based on current
 connectivity state, aesthetic integration, and binding quality. This
@@ -62,10 +62,9 @@ def compute_forecast(
     aesthetic value (M0) project forward. Predicts whether the aesthetic
     appeal will be maintained.
 
-    F1 (reward_response_pred) predicts reward circuit response. Aesthetic
-    value (M0) + temporal quality (P1) + interaction (E2) project expected
-    NAcc/caudate activation.
-    Menon & Levitin 2005: reward circuit tracks aesthetic value.
+    F1 (reward_response_pred) predicts reward circuit response. Temporal
+    integrity (E1, 60%) + vmPFC-IFG connectivity (E3, 40%).
+    Kim 2019: temporal disruption reduces NAcc/putamen/GP (d=-1.433).
 
     F2 (connectivity_pred) predicts vmPFC-IFG connectivity evolution.
     Current connectivity (E3) + aesthetic integration (E2) + binding
@@ -99,18 +98,15 @@ def compute_forecast(
 
     # -- F1: Reward Response Prediction --
     # Predicts reward circuit (NAcc/caudate/putamen) response trajectory.
-    # Aesthetic value (M0) as the primary reward driver. Temporal quality
-    # (P1) provides forward flow prediction. Interaction (E2) gates the
-    # reward -- requires both dimensions for full reward.
-    # Third term gates aesthetic response by spectral integrity (E0) rather
-    # than temporal integrity (E1) alone, because NAcc activation requires
-    # musically structured (spectrally coherent) stimuli, not mere temporal
-    # stationarity. Blood & Zatorre 2001: NAcc correlates with consonance.
-    # Menon & Levitin 2005: NAcc activation tracks aesthetic value.
+    # Weighted toward temporal integrity (E1, 0.6) because the reward
+    # circuit is primarily driven by temporal predictability in Kim 2019
+    # (behavioral d=-1.433 to -1.635). vmPFC-IFG connectivity (E3, 0.4)
+    # reflects the integration pathway that supports reward.
+    # Kim 2019: temporal disruption reduces NAcc/putamen/GP.
+    # Design doc: f_reward = sigma(0.6 * f02 + 0.4 * f04)
     f1 = torch.sigmoid(
-        0.35 * m0 * p1.clamp(min=0.1)
-        + 0.35 * e2 * m1
-        + 0.30 * p2 * e0
+        0.60 * e1    # temporal integrity (f02)
+        + 0.40 * e3  # vmPFC-IFG connectivity (f04)
     )
 
     # -- F2: Connectivity Prediction --

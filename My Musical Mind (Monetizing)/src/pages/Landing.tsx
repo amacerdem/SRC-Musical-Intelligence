@@ -43,14 +43,14 @@ const INSTITUTIONS = [
 const ANALYSIS_PHASES: { key: string; dimension: DimensionKey6D | null }[] = [
   { key: "onboarding.evolving.phases.p1", dimension: null },
   { key: "onboarding.evolving.phases.p2", dimension: null },
-  { key: "onboarding.evolving.phases.p3", dimension: "discovery" },
-  { key: "onboarding.evolving.phases.p4", dimension: "discovery" },
-  { key: "onboarding.evolving.phases.p5", dimension: "flow" },
-  { key: "onboarding.evolving.phases.p6", dimension: "intensity" },
-  { key: "onboarding.evolving.phases.p7", dimension: "depth" },
-  { key: "onboarding.evolving.phases.p8", dimension: "trace" },
-  { key: "onboarding.evolving.phases.p9", dimension: "sharing" },
-  { key: "onboarding.evolving.phases.p10", dimension: "sharing" },
+  { key: "onboarding.evolving.phases.p3", dimension: "energy" },
+  { key: "onboarding.evolving.phases.p4", dimension: "energy" },
+  { key: "onboarding.evolving.phases.p5", dimension: "tempo" },
+  { key: "onboarding.evolving.phases.p6", dimension: "tension" },
+  { key: "onboarding.evolving.phases.p7", dimension: "valence" },
+  { key: "onboarding.evolving.phases.p8", dimension: "groove" },
+  { key: "onboarding.evolving.phases.p9", dimension: "complexity" },
+  { key: "onboarding.evolving.phases.p10", dimension: "complexity" },
 ];
 
 /* ── Real stats from MI dataset ──────────────────────────────────── */

@@ -1,15 +1,18 @@
 /* ── Persona Dimension Profiles — 24 personas × 6D radar ─────────
  *  Each persona has a canonical 6D dimension fingerprint:
  *
- *    Discovery (Keşif)    — Novelty-seeking, expectancy
- *    Intensity (Gerilim)  — Tension, arousal, sonic impact
- *    Flow (Ritim)         — Entrainment, groove, motor coupling
- *    Depth (Duygu)        — Emotional contagion, reward
- *    Trace (Hafıza)       — Memory, recognition, episodic resonance
- *    Sharing (Bağ)        — Social synchrony, bonding
+ *    Energy (Enerji)         — Perceived intensity/activation
+ *    Valence (Duygu Tonu)    — Positive-to-negative emotional coloring
+ *    Tempo (Hız)             — Perceived speed of musical events
+ *    Tension (Gerilim)       — Felt strain, suspense vs. release
+ *    Groove (Hareket)        — The urge to move rhythmically
+ *    Complexity (Yoğunluk)   — Perceived density of events
  *
- *  Derived from each persona's gene profile and family alignment.
- *  Values in [0, 1].
+ *  Computed from each persona's 5-gene profile using multi-gene formulas,
+ *  then amplified on the family's dominant dimension (+30%).
+ *  Values in [0.15, 0.95].
+ *
+ *  Source of truth: Musical_Intelligence/brain/dimensions/tree.py
  *  ──────────────────────────────────────────────────────────────── */
 
 import type { DimensionProfile } from "@/types/dimensions";
@@ -19,39 +22,39 @@ import type { DimensionProfile } from "@/types/dimensions";
  * Maps persona.id → DimensionProfile.
  */
 export const PERSONA_DIMENSIONS: Record<number, DimensionProfile> = {
-  // ─── ALCHEMISTS (tension dominant → high Intensity) ──────────
-  1:  { discovery: 0.65, intensity: 0.90, flow: 0.40, depth: 0.55, trace: 0.35, sharing: 0.25 },
-  6:  { discovery: 0.55, intensity: 0.95, flow: 0.30, depth: 0.30, trace: 0.45, sharing: 0.25 },
-  7:  { discovery: 0.60, intensity: 0.80, flow: 0.35, depth: 0.40, trace: 0.30, sharing: 0.20 },
-  18: { discovery: 0.50, intensity: 0.85, flow: 0.25, depth: 0.65, trace: 0.40, sharing: 0.30 },
+  // ─── ALCHEMISTS (tension gene dominant → tension dim amplified ×1.3) ──────
+  1:  { energy: 0.54, valence: 0.38, tempo: 0.46, tension: 0.80, groove: 0.51, complexity: 0.39 },  // Dopamine Seeker
+  6:  { energy: 0.55, valence: 0.29, tempo: 0.45, tension: 0.78, groove: 0.40, complexity: 0.52 },  // Tension Architect
+  7:  { energy: 0.57, valence: 0.31, tempo: 0.52, tension: 0.75, groove: 0.46, complexity: 0.46 },  // Contrast Addict
+  18: { energy: 0.48, valence: 0.44, tempo: 0.38, tension: 0.81, groove: 0.47, complexity: 0.44 },  // Dramatic Arc
 
-  // ─── ARCHITECTS (resolution dominant → high Trace) ─────
-  2:  { discovery: 0.70, intensity: 0.20, flow: 0.20, depth: 0.45, trace: 0.80, sharing: 0.30 },
-  4:  { discovery: 0.30, intensity: 0.15, flow: 0.25, depth: 0.55, trace: 0.60, sharing: 0.20 },
-  5:  { discovery: 0.60, intensity: 0.50, flow: 0.20, depth: 0.35, trace: 0.75, sharing: 0.25 },
-  9:  { discovery: 0.75, intensity: 0.25, flow: 0.25, depth: 0.25, trace: 0.85, sharing: 0.35 },
-  20: { discovery: 0.65, intensity: 0.25, flow: 0.35, depth: 0.20, trace: 0.80, sharing: 0.30 },
+  // ─── ARCHITECTS (resolution gene dominant → complexity dim amplified ×1.3) ─
+  2:  { energy: 0.15, valence: 0.46, tempo: 0.15, tension: 0.20, groove: 0.23, complexity: 0.51 },  // Harmonic Purist
+  4:  { energy: 0.15, valence: 0.47, tempo: 0.15, tension: 0.20, groove: 0.27, complexity: 0.40 },  // Minimal Zen
+  5:  { energy: 0.25, valence: 0.42, tempo: 0.21, tension: 0.31, groove: 0.26, complexity: 0.62 },  // Resolution Junkie
+  9:  { energy: 0.24, valence: 0.36, tempo: 0.25, tension: 0.22, groove: 0.22, complexity: 0.59 },  // Pattern Hunter
+  20: { energy: 0.22, valence: 0.38, tempo: 0.24, tension: 0.16, groove: 0.25, complexity: 0.50 },  // Precision Mind
 
-  // ─── EXPLORERS (entropy dominant → high Discovery) ──────────
-  3:  { discovery: 0.95, intensity: 0.70, flow: 0.35, depth: 0.15, trace: 0.20, sharing: 0.15 },
-  10: { discovery: 0.90, intensity: 0.55, flow: 0.40, depth: 0.20, trace: 0.15, sharing: 0.20 },
-  19: { discovery: 0.80, intensity: 0.40, flow: 0.35, depth: 0.35, trace: 0.30, sharing: 0.25 },
-  23: { discovery: 0.90, intensity: 0.75, flow: 0.25, depth: 0.15, trace: 0.15, sharing: 0.15 },
-  24: { discovery: 0.75, intensity: 0.65, flow: 0.55, depth: 0.55, trace: 0.60, sharing: 0.50 },
+  // ─── EXPLORERS (entropy gene dominant → complexity dim amplified ×1.3) ─────
+  3:  { energy: 0.55, valence: 0.15, tempo: 0.52, tension: 0.48, groove: 0.28, complexity: 0.70 },  // Chaos Explorer
+  10: { energy: 0.52, valence: 0.20, tempo: 0.52, tension: 0.42, groove: 0.31, complexity: 0.63 },  // Sonic Nomad
+  19: { energy: 0.40, valence: 0.31, tempo: 0.41, tension: 0.39, groove: 0.30, complexity: 0.59 },  // Curious Wanderer
+  23: { energy: 0.54, valence: 0.15, tempo: 0.50, tension: 0.49, groove: 0.27, complexity: 0.68 },  // Edge Runner
+  24: { energy: 0.51, valence: 0.46, tempo: 0.51, tension: 0.50, groove: 0.45, complexity: 0.72 },  // Renaissance Mind
 
-  // ─── ANCHORS (resonance dominant → high Depth) ──────────
-  8:  { discovery: 0.40, intensity: 0.50, flow: 0.25, depth: 0.85, trace: 0.55, sharing: 0.35 },
-  11: { discovery: 0.30, intensity: 0.40, flow: 0.25, depth: 0.90, trace: 0.35, sharing: 0.35 },
-  13: { discovery: 0.30, intensity: 0.15, flow: 0.20, depth: 0.80, trace: 0.40, sharing: 0.20 },
-  15: { discovery: 0.35, intensity: 0.20, flow: 0.20, depth: 0.75, trace: 0.45, sharing: 0.25 },
-  17: { discovery: 0.25, intensity: 0.15, flow: 0.25, depth: 0.85, trace: 0.30, sharing: 0.20 },
-  22: { discovery: 0.25, intensity: 0.15, flow: 0.20, depth: 0.80, trace: 0.75, sharing: 0.30 },
+  // ─── ANCHORS (resonance gene dominant → valence dim amplified ×1.3) ────────
+  8:  { energy: 0.24, valence: 0.73, tempo: 0.22, tension: 0.41, groove: 0.42, complexity: 0.29 },  // Structural Romantic
+  11: { energy: 0.22, valence: 0.73, tempo: 0.21, tension: 0.41, groove: 0.44, complexity: 0.21 },  // Emotional Anchor
+  13: { energy: 0.15, valence: 0.63, tempo: 0.15, tension: 0.28, groove: 0.32, complexity: 0.19 },  // Tonal Dreamer
+  15: { energy: 0.15, valence: 0.63, tempo: 0.15, tension: 0.28, groove: 0.31, complexity: 0.21 },  // Quiet Observer
+  17: { energy: 0.15, valence: 0.62, tempo: 0.15, tension: 0.28, groove: 0.35, complexity: 0.15 },  // Ambient Flow
+  22: { energy: 0.15, valence: 0.73, tempo: 0.15, tension: 0.29, groove: 0.37, complexity: 0.19 },  // Nostalgic Soul
 
-  // ─── KINETICISTS (plasticity dominant → high Flow) ───
-  12: { discovery: 0.35, intensity: 0.50, flow: 0.90, depth: 0.30, trace: 0.25, sharing: 0.40 },
-  14: { discovery: 0.60, intensity: 0.85, flow: 0.75, depth: 0.20, trace: 0.20, sharing: 0.25 },
-  16: { discovery: 0.30, intensity: 0.30, flow: 0.92, depth: 0.25, trace: 0.35, sharing: 0.45 },
-  21: { discovery: 0.45, intensity: 0.70, flow: 0.75, depth: 0.20, trace: 0.15, sharing: 0.20 },
+  // ─── KINETICISTS (plasticity gene dominant → groove dim amplified ×1.3) ────
+  12: { energy: 0.45, valence: 0.39, tempo: 0.54, tension: 0.26, groove: 0.68, complexity: 0.26 },  // Rhythmic Pulse
+  14: { energy: 0.65, valence: 0.35, tempo: 0.68, tension: 0.47, groove: 0.72, complexity: 0.47 },  // Dynamic Storm
+  16: { energy: 0.40, valence: 0.42, tempo: 0.51, tension: 0.20, groove: 0.66, complexity: 0.27 },  // Groove Mechanic
+  21: { energy: 0.53, valence: 0.30, tempo: 0.59, tension: 0.35, groove: 0.64, complexity: 0.32 },  // Raw Energy
 };
 
 /**
@@ -60,8 +63,8 @@ export const PERSONA_DIMENSIONS: Record<number, DimensionProfile> = {
  */
 export function getPersonaDimensions(personaId: number): DimensionProfile {
   return PERSONA_DIMENSIONS[personaId] ?? {
-    discovery: 0.5, intensity: 0.5, flow: 0.5,
-    depth: 0.5, trace: 0.5, sharing: 0.5,
+    energy: 0.5, valence: 0.5, tempo: 0.5,
+    tension: 0.5, groove: 0.5, complexity: 0.5,
   };
 }
 
@@ -70,7 +73,7 @@ export function getPersonaDimensions(personaId: number): DimensionProfile {
  */
 export function getDominantDimension(personaId: number): keyof DimensionProfile {
   const profile = getPersonaDimensions(personaId);
-  let maxKey: keyof DimensionProfile = "discovery";
+  let maxKey: keyof DimensionProfile = "energy";
   let maxVal = -1;
   for (const [key, val] of Object.entries(profile) as [keyof DimensionProfile, number][]) {
     if (val > maxVal) {
@@ -85,9 +88,9 @@ export function getDominantDimension(personaId: number): keyof DimensionProfile 
  * Family → typical dimension emphasis.
  */
 export const FAMILY_DIMENSION_EMPHASIS: Record<string, keyof DimensionProfile> = {
-  Alchemists:  "intensity",
-  Architects:  "trace",
-  Explorers:   "discovery",
-  Anchors:     "depth",
-  Kineticists: "flow",
+  Alchemists:  "tension",
+  Architects:  "complexity",
+  Explorers:   "complexity",
+  Anchors:     "valence",
+  Kineticists: "groove",
 };

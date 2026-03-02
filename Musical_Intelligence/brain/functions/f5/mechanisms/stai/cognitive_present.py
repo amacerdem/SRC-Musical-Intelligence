@@ -28,9 +28,9 @@ H3 demands consumed (5 tuples):
   (20, 2, 0, 2)  tristimulus3 value H2 L2   -- high-harmonic energy 17ms
 
 R3 features:
-  [0] roughness, [2] helmholtz_kang, [3] stumpf_fusion,
-  [4] sensory_pleasantness, [12] warmth, [14] tonalness,
-  [18:21] tristimulus1-3, [7] amplitude, [8] loudness
+  [0] roughness, [1] sethares_dissonance, [2] helmholtz_kang,
+  [3] stumpf_fusion, [4] sensory_pleasantness, [12] warmth,
+  [14] tonalness, [18:21] tristimulus1-3, [7] amplitude, [8] loudness
 
 Koelsch 2014: STG/Heschl's for spectral quality, vmPFC/OFC for value.
 Blood & Zatorre 2001: vmPFC activation correlates with aesthetic response.
@@ -56,6 +56,7 @@ _TRIST3_VAL_H2 = (20, 2, 0, 2)        # tristimulus3 value H2 L2
 
 # -- R3 feature indices -------------------------------------------------------
 _ROUGHNESS = 0
+_SETHARES = 1
 _HELMHOLTZ = 2
 _STUMPF_FUSION = 3
 _SENSORY_PLEASANTNESS = 4
@@ -120,6 +121,7 @@ def compute_cognitive_present(
 
     # -- R3 features --
     roughness = r3_features[..., _ROUGHNESS]              # (B, T)
+    sethares = r3_features[..., _SETHARES]                # (B, T)
     helmholtz = r3_features[..., _HELMHOLTZ]              # (B, T)
     stumpf = r3_features[..., _STUMPF_FUSION]             # (B, T)
     pleasantness = r3_features[..., _SENSORY_PLEASANTNESS]  # (B, T)
@@ -138,12 +140,13 @@ def compute_cognitive_present(
         + 0.15 * tonal_mean
     )
 
-    # Consonance composite
+    # Consonance composite (consistent with extraction layer)
     consonance = (
-        0.30 * (1.0 - roughness)
-        + 0.25 * helmholtz
-        + 0.25 * stumpf
-        + 0.20 * pleasantness
+        0.25 * (1.0 - roughness)
+        + 0.20 * (1.0 - sethares)
+        + 0.15 * helmholtz
+        + 0.15 * stumpf
+        + 0.25 * pleasantness
     )
 
     # -- P0: Spectral Quality --

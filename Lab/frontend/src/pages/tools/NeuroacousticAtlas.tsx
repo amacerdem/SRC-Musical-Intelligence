@@ -57,7 +57,7 @@ export function NeuroacousticAtlas() {
   }, [selected])
 
   return (
-    <div className="flex flex-col h-full min-h-0">
+    <div className="relative flex flex-col h-full min-h-0">
       {/* Header */}
       <header className="shrink-0 px-8 pt-5 pb-2">
         <h1 className="text-xl font-semibold tracking-tight">Neuroacoustic Atlas</h1>
@@ -128,6 +128,7 @@ export function NeuroacousticAtlas() {
             { color: '#60a5fa', label: 'Appraisal' },
             { color: '#fbbf24', label: 'Anticipation' },
             { color: '#22c55e', label: 'Psychology Dim' },
+            { color: '#3b82f6', label: 'Cognition Dim' },
             { color: '#8b5cf6', label: 'Neuroscience Dim' },
           ].map(item => (
             <div key={item.label} className="flex items-center gap-1.5">

@@ -1,11 +1,11 @@
-/* ── Dimension Types — Hierarchical 6D → 12D → 24D ───────────────
- *  Binary tree: 6 Psychology → 12 Cognition → 24 Neuroscience.
- *  Each leaf (24D) aggregates 5-7 beliefs by mean.
- *  Parents = mean of their 2 children.
+/* ── Dimension Types — 6D + 12D + 24D Independent Tiers ─────────────
+ *  Three falsifiability tiers, each computed independently from beliefs.
+ *  NO tier derives from another tier's output.
  *
- *  6D:  Discovery, Intensity, Flow, Depth, Trace, Sharing
- *  12D: 2 children per 6D parent
- *  24D: 2 children per 12D parent
+ *  6D:  Energy, Valence, Tempo, Tension, Groove, Density
+ *  12D: Melody, Harmony, Rhythm, Timbre, Emotion, Surprise,
+ *       Momentum, Story, Familiarity, Pleasure, Space, Repetition
+ *  24D: 6 domains × 4 (predictive, sensorimotor, emotion, reward, memory, social)
  *
  *  Source of truth: Musical_Intelligence/brain/dimensions/tree.py
  *  ──────────────────────────────────────────────────────────────── */
@@ -15,16 +15,16 @@ export type DimensionLayer = "psychology" | "cognition" | "neuroscience" | "rese
 
 /** 6D radar profile — one value per psychology dimension */
 export interface DimensionProfile {
-  discovery: number;    // 0-1 — Keşif
-  intensity: number;    // 0-1 — Gerilim
-  flow: number;         // 0-1 — Ritim
-  depth: number;        // 0-1 — Duygu
-  trace: number;        // 0-1 — Hafıza
-  sharing: number;      // 0-1 — Bağ
+  energy: number;       // 0-1 — Enerji
+  valence: number;      // 0-1 — Duygu Tonu
+  tempo: number;        // 0-1 — Hız
+  tension: number;      // 0-1 — Gerilim
+  groove: number;       // 0-1 — Hareket
+  complexity: number;   // 0-1 — Yoğunluk
 }
 
 export const DIMENSION_KEYS_6D = [
-  "discovery", "intensity", "flow", "depth", "trace", "sharing",
+  "energy", "valence", "tempo", "tension", "groove", "complexity",
 ] as const;
 
 export type DimensionKey6D = (typeof DIMENSION_KEYS_6D)[number];

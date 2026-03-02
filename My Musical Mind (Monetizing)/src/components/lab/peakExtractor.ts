@@ -178,3 +178,72 @@ export function extractPeaks(mel: MelData): PeakBuffers {
 
   return { positions, colors, sizes, ranks, totalPoints };
 }
+
+/* ── Note naming ─────────────────────────────────────────────────────── */
+
+const NOTE_NAMES_FULL = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+
+/** Frequency → note name like "A4", "C#5" */
+export function freqToNoteName(freq: number): string {
+  const semitone = 12 * Math.log2(freq / 440);
+  const midi = Math.round(semitone + 69);
+  const name = NOTE_NAMES_FULL[((midi - 12) % 12 + 12) % 12];
+  const octave = Math.floor((midi - 12) / 12);
+  return `${name}${octave}`;
+}
+
+/* ── Nearest peak lookup for tooltip ─────────────────────────────────── */
+
+export interface NearestPeakInfo {
+  freq: number;
+  noteName: string;
+  amplitude: number;
+  rank: number;
+}
+
+/** Find the peak closest to (time, yFrac) within threshold distance */
+export function findNearestPeak(
+  peaks: PeakBuffers,
+  time: number,
+  yFrac: number,
+  frameRate: number,
+  peakCount: 4 | 8 | 16,
+  threshold: number = 0.03,
+): NearestPeakInfo | null {
+  // Determine frame range to search (±2 frames around target time)
+  const frame = Math.round(time * frameRate);
+  const f0 = Math.max(0, frame - 2);
+  const f1 = Math.min(Math.floor(peaks.totalPoints / MAX_PEAKS) - 1, frame + 2);
+
+  let bestDist = Infinity;
+  let bestIdx = -1;
+
+  for (let f = f0; f <= f1; f++) {
+    for (let p = 0; p < peakCount; p++) {
+      const idx = f * MAX_PEAKS + p;
+      if (peaks.sizes[idx] < 0.01) continue;
+
+      const px = peaks.positions[idx * 3];      // time in seconds
+      const py = peaks.positions[idx * 3 + 1];  // log2 normalized y (0-1)
+
+      const dt = (px - time) / 0.1;  // normalize time diff (0.1s = 1 unit)
+      const dy = (py - yFrac) / 0.05; // normalize freq diff
+      const dist = dt * dt + dy * dy;
+
+      if (dist < bestDist) {
+        bestDist = dist;
+        bestIdx = idx;
+      }
+    }
+  }
+
+  if (bestIdx < 0 || bestDist > (threshold / 0.05) * (threshold / 0.05) * 4) return null;
+
+  const freq = Math.pow(2, LOG2_MIN + peaks.positions[bestIdx * 3 + 1] * LOG2_RANGE);
+  return {
+    freq,
+    noteName: freqToNoteName(freq),
+    amplitude: peaks.sizes[bestIdx],
+    rank: peaks.ranks[bestIdx],
+  };
+}
