@@ -1449,10 +1449,8 @@ function RevealStep({ personaId, mind, displayName, onEnter }: {
         style={{ background: `radial-gradient(ellipse 70% 60% at 50% 45%, ${color}18, transparent 70%)` }}
       />
 
-      {/* Content */}
-      <div className="relative z-10 flex flex-col items-center h-full px-6 py-6" style={{ scrollbarWidth: "none" }}>
-        {/* Spacer — push content to center when it fits, scroll when it doesn't */}
-        <div className="flex-1 min-h-0" />
+      {/* Content — single viewport, no scroll */}
+      <div className="relative z-10 flex flex-col items-center justify-center h-full px-6 overflow-hidden">
 
         <AnimatePresence>
           {phase === "void" && (
@@ -1464,43 +1462,52 @@ function RevealStep({ personaId, mind, displayName, onEnter }: {
           )}
         </AnimatePresence>
 
-        {/* Persona Avatar + Radar — side by side, centered */}
+        {/* Persona Avatar + Radar — large, side by side */}
         <AnimatePresence>
           {(phase === "name" || phase === "radar" || phase === "ready") && (
             <motion.div
-              initial={{ opacity: 0, scale: 0.8, filter: "blur(20px)" }}
-              animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+              initial={{ opacity: 0, y: 30, filter: "blur(20px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
-              className="flex items-center justify-center gap-8"
+              className="flex items-center justify-center gap-10"
             >
-              <div className="flex-shrink-0 relative" style={{ filter: `drop-shadow(0 0 40px ${color}30)` }}>
+              {/* Persona PNG — large, fallback to persona-24 if specific PNG missing */}
+              <motion.div
+                className="flex-shrink-0 relative"
+                style={{ filter: `drop-shadow(0 0 50px ${color}35)` }}
+                initial={{ x: 0 }}
+                animate={{ x: (phase === "radar" || phase === "ready") ? -10 : 0 }}
+                transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+              >
                 <img
                   src={`/avatars/persona-${personaId}-${persona.name.toLowerCase().replace(/\s+/g, "-")}.png`}
                   alt={persona.name}
                   className="object-contain"
-                  style={{ width: 220, height: 308 }}
+                  style={{ width: 300, height: 420 }}
+                  onError={(e) => { (e.target as HTMLImageElement).src = "/avatars/persona-24-renaissance-mind.png"; }}
                 />
-              </div>
+              </motion.div>
+
+              {/* Radar — slides in from right */}
               {(phase === "radar" || phase === "ready") && (
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.6, filter: "blur(15px)" }}
-                  animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-                  transition={{ duration: 1.2, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                  initial={{ opacity: 0, x: 60, filter: "blur(12px)" }}
+                  animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+                  transition={{ duration: 1.2, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
                   className="flex-shrink-0"
                 >
-                  <DimensionRadar profile={dim6DProfile} color={color} size={220} />
+                  <DimensionRadar profile={dim6DProfile} color={color} size={260} />
                 </motion.div>
               )}
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* Name — character-by-character */}
+        {/* Name + info — compact block below avatar */}
         <AnimatePresence>
           {(phase === "name" || phase === "radar" || phase === "ready") && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }} className="text-center mt-4">
-              {/* Persona name — big title */}
-              <h1 className="text-3xl md:text-5xl font-display font-bold mb-2 leading-none flex justify-center flex-wrap">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }} className="text-center mt-5">
+              <h1 className="text-4xl md:text-6xl font-display font-bold mb-1.5 leading-none flex justify-center flex-wrap">
                 {persona.name.split("").map((char, i) => (
                   <motion.span
                     key={i}
@@ -1514,12 +1521,11 @@ function RevealStep({ personaId, mind, displayName, onEnter }: {
                 ))}
               </h1>
 
-              {/* "X's Musical Mind" — small subtitle */}
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.5 }}
                 transition={{ delay: persona.name.length * 0.06 + 0.5, duration: 1 }}
-                className="text-sm text-slate-500 font-display font-light mb-1"
+                className="text-sm text-slate-500 font-display font-light"
               >
                 {displayName && displayName !== "You"
                   ? `${displayName}'s Musical Mind`
@@ -1530,7 +1536,7 @@ function RevealStep({ personaId, mind, displayName, onEnter }: {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.4 }}
                 transition={{ delay: persona.name.length * 0.06 + 0.8, duration: 1 }}
-                className="text-base text-slate-400 font-display font-light italic"
+                className="text-sm text-slate-400 font-display font-light italic mt-0.5"
               >
                 "{persona.tagline}"
               </motion.p>
@@ -1541,18 +1547,18 @@ function RevealStep({ personaId, mind, displayName, onEnter }: {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: persona.name.length * 0.06 + 1.2, duration: 0.8 }}
-                  className="flex items-center gap-3 mt-3 px-5 py-2 rounded-full mx-auto"
+                  className="inline-flex items-center gap-2.5 mt-2.5 px-4 py-1.5 rounded-full"
                   style={{ background: `${color}08`, border: `1px solid ${color}15` }}
                 >
-                  <Brain size={16} style={{ color }} />
-                  <span className="text-sm font-display font-medium" style={{ color }}>
+                  <Brain size={14} style={{ color }} />
+                  <span className="text-xs font-display font-medium" style={{ color }}>
                     L{m3Mind.level}/12 · {persona.family}
                   </span>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full" style={{ background: `${color}15`, color }}>
+                  <span className="text-[9px] font-mono px-1.5 py-0.5 rounded-full" style={{ background: `${color}15`, color }}>
                     {t(`m3.stage.${m3Mind.stage}`)}
                   </span>
                   {m3Mind.frozen && (
-                    <span className="text-[10px] font-mono text-slate-500 px-2 py-0.5 rounded-full bg-white/[0.04]">
+                    <span className="text-[9px] font-mono text-slate-500 px-1.5 py-0.5 rounded-full bg-white/[0.04]">
                       {t("m3.frozen.title")}
                     </span>
                   )}
@@ -1562,14 +1568,11 @@ function RevealStep({ personaId, mind, displayName, onEnter }: {
           )}
         </AnimatePresence>
 
-        {/* CTA + Description */}
+        {/* CTA — appears at bottom */}
         <AnimatePresence>
           {phase === "ready" && (
-            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.5 }} className="mt-4 text-center max-w-lg">
-              <p className="text-sm text-slate-500 mb-2 leading-relaxed font-light">{persona.description}</p>
-              <motion.p initial={{ opacity: 0 }} animate={{ opacity: 0.3 }} transition={{ delay: 1, duration: 1.5 }} className="text-xs font-display font-light text-slate-600 tracking-[0.2em] uppercase mb-4">
-                {t("onboarding.reveal.thisIsYourMind")}
-              </motion.p>
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.5 }} className="mt-5 text-center max-w-md">
+              <p className="text-xs text-slate-500 mb-3 leading-relaxed font-light">{persona.description}</p>
               <button
                 onClick={onEnter}
                 className="group relative px-8 py-3 rounded-full transition-all duration-500 hover:scale-[1.03]"
@@ -1577,15 +1580,12 @@ function RevealStep({ personaId, mind, displayName, onEnter }: {
                 onMouseEnter={(e) => { e.currentTarget.style.background = `${color}18`; e.currentTarget.style.boxShadow = `0 0 50px ${color}20`; }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = `${color}08`; e.currentTarget.style.boxShadow = "none"; }}
               >
-                <span className="text-base font-display font-medium text-slate-200">{t("onboarding.reveal.enterMind")}</span>
-                <ArrowRight size={18} className="inline ml-2 text-slate-400 group-hover:translate-x-1 transition-transform" />
+                <span className="text-sm font-display font-medium text-slate-200">{t("onboarding.reveal.enterMind")}</span>
+                <ArrowRight size={16} className="inline ml-2 text-slate-400 group-hover:translate-x-1 transition-transform" />
               </button>
             </motion.div>
           )}
         </AnimatePresence>
-
-        {/* Bottom spacer */}
-        <div className="flex-1 min-h-0" />
       </div>
     </motion.div>
   );

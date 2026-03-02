@@ -288,16 +288,16 @@ def get_belief_timeline(
         traj = []
         for i in range(n_points):
             chunk = frames[i * bs: min((i + 1) * bs, nf)]
-            traj.append(round(sum(chunk) / len(chunk), 4) if chunk else 0.0)
+            traj.append(round(sum(chunk) / len(chunk), 2) if chunk else 0.0)
 
         peak_i = max(range(nf), key=lambda j: frames[j])
         valley_i = min(range(nf), key=lambda j: frames[j])
         meta = get_belief_meta(bk)
         result["beliefs"][bk] = {
             "trajectory": traj,
-            "mean": round(sum(frames) / nf, 4),
-            "peak": {"time_s": round(peak_i * duration / nf, 1), "value": round(frames[peak_i], 4)},
-            "valley": {"time_s": round(valley_i * duration / nf, 1), "value": round(frames[valley_i], 4)},
+            "mean": round(sum(frames) / nf, 2),
+            "peak": {"time_s": round(peak_i * duration / nf, 1), "value": round(frames[peak_i], 2)},
+            "valley": {"time_s": round(valley_i * duration / nf, 1), "value": round(frames[valley_i], 2)},
             "function": meta.get("function", ""),
             "type": bd.get("type", meta.get("type", "")),
             "mechanism": bd.get("mechanism", meta.get("mechanism", "")),
@@ -506,13 +506,13 @@ def format_track_for_llm(
         # Reward temporal arc
         rew_segs = tp.get("reward_per_segment", [])
         if rew_segs:
-            result["reward_temporal"] = [round(r, 3) for r in rew_segs]
+            result["reward_temporal"] = [round(r, 2) for r in rew_segs]
 
     # Full belief data — research tier only
     if tier == "research" and means:
         _ensure_belief_keys()
         result["all_beliefs"] = {
-            belief_index_to_key(i): {"mean": round(m, 4), "std": round(s, 4)}
+            belief_index_to_key(i): {"mean": round(m, 3), "std": round(s, 3)}
             for i, (m, s) in enumerate(zip(means, stds))
         }
 
@@ -562,7 +562,7 @@ def format_beliefs_for_llm(
     if not belief_keys:
         return {
             "track_id": track.get("id", ""),
-            "notable_beliefs": _top_beliefs(means, stds, n=15),
+            "notable_beliefs": _top_beliefs(means, stds),
         }
 
     result_beliefs = {}
@@ -576,8 +576,8 @@ def format_beliefs_for_llm(
             result_beliefs[key] = {"error": f"Index {idx} out of range"}
             continue
         result_beliefs[key] = {
-            "value": round(means[idx], 4),
-            "std": round(stds[idx], 4),
+            "value": round(means[idx], 2),
+            "std": round(stds[idx], 2),
             "polarity": _polarity(means[idx]),
             "function": meta["function"],
             "type": meta["type"],

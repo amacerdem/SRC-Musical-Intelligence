@@ -2,12 +2,12 @@ import { motion } from "framer-motion";
 import { ALL_PSYCHOLOGY } from "@/data/dimensions";
 
 const dimensions = [
-  { key: "discovery",  orbit: 90,  speed: 24, startAngle: 330 },
-  { key: "intensity",  orbit: 110, speed: 28, startAngle: 55 },
-  { key: "flow",       orbit: 130, speed: 32, startAngle: 120 },
-  { key: "depth",      orbit: 150, speed: 26, startAngle: 185 },
-  { key: "trace",      orbit: 170, speed: 30, startAngle: 250 },
-  { key: "sharing",    orbit: 190, speed: 34, startAngle: 315 },
+  { key: "energy",     orbit: 90,  speed: 24, startAngle: 330 },
+  { key: "valence",    orbit: 110, speed: 28, startAngle: 55 },
+  { key: "tempo",      orbit: 130, speed: 32, startAngle: 120 },
+  { key: "tension",    orbit: 150, speed: 26, startAngle: 185 },
+  { key: "groove",     orbit: 170, speed: 30, startAngle: 250 },
+  { key: "complexity", orbit: 190, speed: 34, startAngle: 315 },
 ];
 
 const dimColors: Record<string, string> = {};

@@ -449,10 +449,10 @@ export function Dashboard() {
               </motion.div>
               <div className="flex-1">
                 <div className="text-sm font-display font-medium text-white/90">
-                  {t(`personas.${persona.id}.name`)}
+                  {displayName && displayName !== "You" ? `${displayName}'s Musical Mind` : t("chat.title")}
                 </div>
                 <div className="text-[10px] font-mono" style={{ color: `${color}70` }}>
-                  {t("chat.title")}
+                  {t(`personas.${persona.id}.name`)}
                 </div>
               </div>
               <div
@@ -463,7 +463,7 @@ export function Dashboard() {
                   border: `1px solid ${color}15`,
                 }}
               >
-                {identity.family}
+                {persona.family}
               </div>
             </div>
 
