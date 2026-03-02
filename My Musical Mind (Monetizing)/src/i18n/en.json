@@ -1600,7 +1600,7 @@
     "labSubtitle": "Analysis",
     "labAskMe": "Ask me!",
     "labWelcome": "I'm here as your Lab assistant",
-    "labWelcomeDetail": "Ask me about spectral analysis, acoustic features, and neurological models.",
+    "labWelcomeDetail": "Ask me about spectral analysis, acoustic features, and neurological models. Shift+drag on the waveform to select a region for detailed analysis.",
     "labPlaceholder": "Ask about the analysis..."
   }
 }

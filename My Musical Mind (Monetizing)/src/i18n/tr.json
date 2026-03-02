@@ -1888,7 +1888,7 @@
     "labSubtitle": "Analiz",
     "labAskMe": "Bana sor!",
     "labWelcome": "Lab asistan\u0131n olarak buraday\u0131m",
-    "labWelcomeDetail": "Spektral analiz, akustik \u00f6zellikler ve n\u00f6rolojik modeller hakk\u0131nda sorular sorabilirsin.",
+    "labWelcomeDetail": "Spektral analiz, akustik \u00f6zellikler ve n\u00f6rolojik modeller hakk\u0131nda sorular sorabilirsin. Dalga formunda Shift+s\u00fcr\u00fckle ile b\u00f6lge se\u00e7erek detayl\u0131 analiz yapabilirsin.",
     "labPlaceholder": "Analiz hakk\u0131nda sor..."
   }
 }

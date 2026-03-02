@@ -3,6 +3,9 @@
  *  the waveform. Clicking it smoothly expands a chat panel on the
  *  left side. The agent auto-loads current track context and starts
  *  fresh each time.
+ *
+ *  When a region is selected on the waveform (Shift+drag), the panel
+ *  auto-opens with a greeting and region-specific analysis context.
  *  ──────────────────────────────────────────────────────────────────── */
 
 import { useState, useEffect, useRef, useCallback } from "react";
@@ -14,7 +17,8 @@ import { ChatMessage, TypingIndicator } from "@/components/chat/ChatMessage";
 import { MiniOrganism } from "@/components/mind/MiniOrganism";
 import type { MITrackDetail } from "@/types/mi-dataset";
 import type { MelData } from "./peakExtractor";
-import type { TemporalDimensions } from "@/stores/useLabStore";
+import type { TemporalDimensions, RegionSelection } from "@/stores/useLabStore";
+import { DIMENSION_KEYS_6D } from "@/types/dimensions";
 
 /* ── Types ───────────────────────────────────────────────────────────── */
 
@@ -23,6 +27,7 @@ interface Props {
   trackDetail: MITrackDetail | null;
   melData: MelData | null;
   temporal: TemporalDimensions | null;
+  region?: RegionSelection | null;
 }
 
 /* ── Orb color ───────────────────────────────────────────────────────── */
@@ -30,10 +35,66 @@ interface Props {
 const ORB_COLOR = "#22C55E";
 const PANEL_WIDTH = 475;
 
+/* ── Helpers ─────────────────────────────────────────────────────────── */
+
+function fmtSec(sec: number): string {
+  const m = Math.floor(sec / 60);
+  const s = Math.floor(sec % 60);
+  return `${m}:${s.toString().padStart(2, "0")}`;
+}
+
+/** Build a context block describing the selected region's data */
+function buildRegionContext(
+  region: RegionSelection,
+  temporal: TemporalDimensions | null,
+  trackDetail: MITrackDetail | null,
+): string {
+  const lines: string[] = [];
+
+  // Track context
+  if (trackDetail) {
+    lines.push(`[MI Lab Analysis Context]`);
+    lines.push(`Track: "${trackDetail.title}" by ${trackDetail.artist}`);
+    lines.push(`Duration: ${trackDetail.duration_s.toFixed(1)}s (${Math.floor(trackDetail.duration_s / 60)}m ${Math.floor(trackDetail.duration_s % 60)}s)`);
+  }
+
+  // Region info
+  const regionDur = region.endSec - region.startSec;
+  lines.push(``);
+  lines.push(`[Selected Region: ${region.startSec.toFixed(1)}s – ${region.endSec.toFixed(1)}s (${regionDur.toFixed(1)}s)]`);
+
+  // Extract segment-level data for the region
+  if (temporal && temporal.segments.length > 0 && trackDetail) {
+    const duration = trackDetail.duration_s;
+    const nSegs = temporal.segments.length;
+    const startIdx = Math.max(0, Math.round((region.startSec / duration) * (nSegs - 1)));
+    const endIdx = Math.min(nSegs - 1, Math.round((region.endSec / duration) * (nSegs - 1)));
+    lines.push(`Segment range: ${startIdx}–${endIdx} of ${nSegs}`);
+
+    // Compute 6D averages for the region
+    const count = endIdx - startIdx + 1;
+    if (count > 0) {
+      const avgs = new Array(6).fill(0);
+      for (let i = startIdx; i <= endIdx; i++) {
+        const psych = temporal.segments[i].psychology;
+        for (let d = 0; d < 6; d++) avgs[d] += psych[d];
+      }
+      for (let d = 0; d < 6; d++) avgs[d] /= count;
+
+      lines.push(`Psychology (6D averages):`);
+      DIMENSION_KEYS_6D.forEach((key, i) => {
+        lines.push(`  ${key}: ${avgs[i].toFixed(3)}`);
+      });
+    }
+  }
+
+  return lines.join("\n");
+}
+
 /* ── Component ──────────────────────────────────────────────────────── */
 
-export function LabAgent({ accentColor, trackDetail, melData, temporal }: Props) {
-  const { t } = useTranslation();
+export function LabAgent({ accentColor, trackDetail, melData, temporal, region }: Props) {
+  const { t, i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -45,11 +106,45 @@ export function LabAgent({ accentColor, trackDetail, melData, temporal }: Props)
   const error = useChatStore((s) => s.error);
   const sendMessage = useChatStore((s) => s.sendMessage);
   const clearChat = useChatStore((s) => s.clearChat);
+  const injectAssistantMessage = useChatStore((s) => s.injectAssistantMessage);
 
   /* ── Input state ────────────────────────────────── */
   const [text, setText] = useState("");
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  /* ── Track last region to detect changes ──────── */
+  const lastRegionRef = useRef<string | null>(null);
+
+  /* ── Auto-open on region selection ─────────────── */
+  useEffect(() => {
+    if (!region) {
+      lastRegionRef.current = null;
+      return;
+    }
+
+    // Create a key to detect new region vs same region
+    const regionKey = `${region.startSec.toFixed(2)}-${region.endSec.toFixed(2)}`;
+    if (regionKey === lastRegionRef.current) return;
+    lastRegionRef.current = regionKey;
+
+    // Open panel, clear chat, inject greeting
+    clearChat();
+    setIsOpen(true);
+
+    const startStr = fmtSec(region.startSec);
+    const endStr = fmtSec(region.endSec);
+
+    const isTr = i18n.language === "tr";
+    const greeting = isTr
+      ? `Seçilen bölgeyi görüyorum (**${startStr}** – **${endStr}**). Ne gibi detaylar bilmek istiyorsun? Merak ettiğin nedir?`
+      : `I see the selected region (**${startStr}** – **${endStr}**). What details would you like to know? What are you curious about?`;
+
+    // Small delay to let clearChat take effect
+    setTimeout(() => {
+      injectAssistantMessage(greeting);
+    }, 50);
+  }, [region, clearChat, injectAssistantMessage, i18n.language]);
 
   /* ── Auto-scroll ────────────────────────────────── */
   useEffect(() => {
@@ -70,35 +165,46 @@ export function LabAgent({ accentColor, trackDetail, melData, temporal }: Props)
     setIsOpen(true);
   }, [clearChat]);
 
-  /* ── Send handler — first message gets track context prepended ── */
+  /* ── Send handler — first user message gets context prepended ── */
   const handleSend = useCallback(() => {
     const trimmed = text.trim();
     if (!trimmed || isLoading) return;
 
-    // If this is the first message, prepend full analysis context
-    if (messages.length === 0 && trackDetail) {
-      const lines = [
-        `[MI Lab Analysis Context]`,
-        `Track: "${trackDetail.title}" by ${trackDetail.artist}`,
-        `Duration: ${trackDetail.duration_s.toFixed(1)}s (${Math.floor(trackDetail.duration_s / 60)}m ${Math.floor(trackDetail.duration_s % 60)}s)`,
-      ];
-      if (melData) {
-        lines.push(`Mel spectrogram: ${melData.nMels} bins × ${melData.nFrames} frames @ ${melData.frameRate.toFixed(2)} Hz`);
-        lines.push(`Mel duration: ${(melData.nFrames / melData.frameRate).toFixed(1)}s`);
+    // Count only user messages (greeting is assistant, doesn't count)
+    const userMsgCount = messages.filter((m) => m.role === "user").length;
+
+    // If this is the first user message, prepend analysis context
+    if (userMsgCount === 0 && trackDetail) {
+      let ctx: string;
+
+      if (region) {
+        // Region-specific context
+        ctx = buildRegionContext(region, temporal, trackDetail);
+      } else {
+        // Full track context (existing behavior)
+        const lines = [
+          `[MI Lab Analysis Context]`,
+          `Track: "${trackDetail.title}" by ${trackDetail.artist}`,
+          `Duration: ${trackDetail.duration_s.toFixed(1)}s (${Math.floor(trackDetail.duration_s / 60)}m ${Math.floor(trackDetail.duration_s % 60)}s)`,
+        ];
+        if (melData) {
+          lines.push(`Mel spectrogram: ${melData.nMels} bins × ${melData.nFrames} frames @ ${melData.frameRate.toFixed(2)} Hz`);
+          lines.push(`Mel duration: ${(melData.nFrames / melData.frameRate).toFixed(1)}s`);
+        }
+        if (temporal) {
+          lines.push(`Temporal data: ${temporal.frameCount} segments, source=${temporal.source}`);
+        }
+        ctx = lines.join("\n");
       }
-      if (temporal) {
-        lines.push(`Temporal data: ${temporal.frameCount} segments, source=${temporal.source}`);
-        lines.push(`Segment keys: ${temporal.segments.length > 0 ? Object.keys(temporal.segments[0].psychology).join(", ") : "n/a"}`);
-      }
-      const ctx = lines.join("\n") + `\n\n${trimmed}`;
-      sendMessage(ctx);
+
+      sendMessage(ctx + `\n\n${trimmed}`);
     } else {
       sendMessage(trimmed);
     }
 
     setText("");
     if (inputRef.current) inputRef.current.style.height = "auto";
-  }, [text, isLoading, sendMessage, messages.length, trackDetail]);
+  }, [text, isLoading, sendMessage, messages, trackDetail, melData, temporal, region]);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -318,6 +424,19 @@ export function LabAgent({ accentColor, trackDetail, melData, temporal }: Props)
                 <span className="text-[10px] font-mono text-slate-600 flex-shrink-0">
                   {trackArtist}
                 </span>
+                {/* Region badge */}
+                {region && (
+                  <span
+                    className="ml-auto text-[9px] font-mono px-2 py-0.5 rounded-full flex-shrink-0"
+                    style={{
+                      background: `${ORB_COLOR}15`,
+                      color: `${ORB_COLOR}cc`,
+                      border: `1px solid ${ORB_COLOR}30`,
+                    }}
+                  >
+                    {fmtSec(region.startSec)} – {fmtSec(region.endSec)}
+                  </span>
+                )}
               </div>
             )}
 

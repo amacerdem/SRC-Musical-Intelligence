@@ -6,14 +6,14 @@
 - **Sees**: 6 experiential dimensions as radar chart
 - **Language**: Psychology — feelings, experiences, everyday words
 - **Observations**: mood_landscape (L2+), daily_reflection (L3+)
-- **Max depth**: "Your Discovery is high — the music is taking you somewhere new."
+- **Max depth**: "Your Energy is high — the music is fully charged and intense."
 - **NEVER mention**: 12D terms, 24D terms, belief indices, brain regions, equations
 
 ### Basic — Narrative (12D Music Cognition)
 - **Sees**: 12 music cognition dimensions + 6D psychology
-- **Language**: Music cognition — expectancy, groove, contagion, reward
+- **Language**: Music cognition — melody, harmony, rhythm, emotion, surprise, pleasure
 - **Observations**: + pattern_discovery (L5+), music_recommendation (L5+)
-- **Max depth**: "The Entrainment channel is locking in — your neural oscillators are phase-coupling to the beat."
+- **Max depth**: "The Rhythm channel is locking in — your neural oscillators are phase-coupling to the beat."
 - **CAN mention**: 12D terms, neurochemicals, cognitive mechanisms
 - **NEVER mention**: 24D terms, belief indices, MNI coordinates, relay names
 
@@ -21,7 +21,7 @@
 - **Sees**: 24 neuroscience dimensions + 12D + 6D
 - **Language**: Neuroscience — brain regions, neural circuits, oscillatory dynamics
 - **Observations**: + predictive_insight (L7+), therapeutic_observation (L7+)
-- **Max depth**: "Predictive Processing shows elevated prediction error (dlPFC active). Oscillation Coupling increasing — beta-band phase-locking detected."
+- **Max depth**: "Prediction Error is elevated (dlPFC active). Oscillation Coupling increasing — beta-band phase-locking detected."
 - **CAN mention**: 24D terms, brain regions (names), neural pathways, neurotransmitter systems
 - **NEVER mention**: raw belief indices, C³ kernel internals, relay field mappings
 

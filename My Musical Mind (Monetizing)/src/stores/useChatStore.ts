@@ -50,6 +50,7 @@ interface ChatState {
   sendMessage: (text: string) => Promise<void>;
   sendSystemEvent: (eventType: string, data: Record<string, unknown>) => Promise<void>;
   setActionHandler: (handler: ((action: AgentAction) => void) | null) => void;
+  injectAssistantMessage: (content: string) => void;
   clearChat: () => void;
 }
 
@@ -295,6 +296,16 @@ export const useChatStore = create<ChatState>()(
           // System events are best-effort — don't show error
           set({ isLoading: false, statusText: null, streamingContent: null });
         }
+      },
+
+      injectAssistantMessage: (content: string) => {
+        const msg: ChatMessage = {
+          id: uid(),
+          role: "assistant",
+          content,
+          timestamp: new Date().toISOString(),
+        };
+        set((s) => ({ messages: [...s.messages, msg] }));
       },
 
       clearChat: () => set({

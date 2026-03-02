@@ -20,6 +20,11 @@ export type AnalysisPhase = "idle" | "loading" | "analyzing" | "done" | "error";
 /** Default number of temporal segments for dimension curves */
 const TEMPORAL_SEGMENTS = 200;
 
+export interface RegionSelection {
+  startSec: number;
+  endSec: number;
+}
+
 export interface TemporalDimensions {
   /** Per-segment dimension states */
   segments: DimensionState[];
@@ -51,6 +56,9 @@ export interface LabState {
   depth: DepthLevel;
   temporal: TemporalDimensions | null;
 
+  /* ── Region Selection ─────────────────────────────── */
+  region: RegionSelection | null;
+
   /* ── Actions ────────────────────────────────────── */
   setActiveTab: (tab: AudioSource) => void;
   setDepth: (depth: DepthLevel) => void;
@@ -59,6 +67,8 @@ export interface LabState {
   setExperimentId: (id: string) => void;
   setProgress: (pct: number) => void;
   setTemporal: (temporal: TemporalDimensions) => void;
+  setRegion: (region: RegionSelection | null) => void;
+  clearRegion: () => void;
   reset: () => void;
 }
 
@@ -108,6 +118,7 @@ export const useLabStore = create<LabState>((set, get) => ({
   progress: 0,
   depth: 6,
   temporal: null,
+  region: null,
 
   setActiveTab: (tab) => set({ activeTab: tab, audioSource: tab }),
 
@@ -144,6 +155,10 @@ export const useLabStore = create<LabState>((set, get) => ({
 
   setTemporal: (temporal) => set({ temporal }),
 
+  setRegion: (region) => set({ region }),
+
+  clearRegion: () => set({ region: null }),
+
   reset: () =>
     set({
       trackDetail: null,
@@ -152,5 +167,6 @@ export const useLabStore = create<LabState>((set, get) => ({
       experimentId: null,
       progress: 0,
       temporal: null,
+      region: null,
     }),
 }));

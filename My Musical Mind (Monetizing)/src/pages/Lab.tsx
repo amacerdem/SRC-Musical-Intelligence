@@ -105,6 +105,8 @@ export function Lab() {
   const temporal = useLabStore((s) => s.temporal);
   const phase = useLabStore((s) => s.phase);
   const selectTrack = useLabStore((s) => s.selectTrack);
+  const region = useLabStore((s) => s.region);
+  const setRegion = useLabStore((s) => s.setRegion);
 
   const hasAnalysis = phase === "done" && trackDetail && temporal;
   const duration = trackDetail?.duration_s ?? 0;
@@ -436,6 +438,8 @@ export function Lab() {
                 viewport={viewport}
                 accentColor={color}
                 samples={waveformSamples}
+                region={region}
+                onRegionChange={setRegion}
               />
             </div>
 
@@ -443,7 +447,7 @@ export function Lab() {
             <div className="flex items-center pt-2">
               {/* Left: M³ Agent orb */}
               <div className="flex-1 flex justify-start pl-2">
-                <LabAgent accentColor={color} trackDetail={trackDetail} melData={melData} temporal={temporal} />
+                <LabAgent accentColor={color} trackDetail={trackDetail} melData={melData} temporal={temporal} region={region} />
               </div>
 
               {/* Center: Mode + Depth stacked */}

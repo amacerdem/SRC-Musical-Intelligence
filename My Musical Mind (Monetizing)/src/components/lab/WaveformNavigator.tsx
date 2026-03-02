@@ -7,12 +7,14 @@
  *  - Min/max per-pixel waveform rendering
  *  - Viewport rectangle (scroll..scroll+window)
  *  - Click-to-jump, drag-to-pan
+ *  - Shift+drag region selection for M³ analysis
  *  - Playhead indicator
  *  - 60fps cursor sync via rAF
  *  ──────────────────────────────────────────────────────────────────── */
 
 import { useRef, useEffect, useState, useCallback } from "react";
 import type { ViewportState } from "./useViewport";
+import type { RegionSelection } from "@/stores/useLabStore";
 
 /* ── Constants ───────────────────────────────────────────────────────── */
 
@@ -20,6 +22,7 @@ const NAV_HEIGHT = 72;
 const TICK_HEIGHT = 16;          // Time ruler strip below waveform
 const TOTAL_HEIGHT = NAV_HEIGHT + TICK_HEIGHT;
 const FRAME_RATE = 172.27;
+const REGION_COLOR = "#22C55E";  // Green for region selection
 
 /* ── Types ───────────────────────────────────────────────────────────── */
 
@@ -29,12 +32,15 @@ interface Props {
   viewport: ViewportState;
   accentColor: string;
   samples?: Float32Array | null;
+  region?: RegionSelection | null;
+  onRegionChange?: (region: RegionSelection | null) => void;
 }
 
 /* ── Component ──────────────────────────────────────────────────────── */
 
 export function WaveformNavigator({
   audioRef, duration, viewport, accentColor, samples,
+  region, onRegionChange,
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -43,6 +49,11 @@ export function WaveformNavigator({
   const rafRef = useRef(0);
   const draggingRef = useRef(false);
   const dpr = typeof window !== "undefined" ? Math.min(window.devicePixelRatio || 1, 2) : 1;
+
+  /* ── Region selection refs ─────────────────────── */
+  const regionSelectingRef = useRef(false);
+  const regionStartFracRef = useRef(0);
+  const regionLiveFracRef = useRef(0);  // live end while dragging
 
   /* ── ResizeObserver ─────────────────────────────── */
   useEffect(() => {
@@ -62,6 +73,17 @@ export function WaveformNavigator({
     c.width = width * dpr;
     c.height = TOTAL_HEIGHT * dpr;
   }, [width, dpr]);
+
+  /* ── ESC key to clear region ───────────────────── */
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && region && onRegionChange) {
+        onRegionChange(null);
+      }
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [region, onRegionChange]);
 
   /* ── Draw function ─────────────────────────────── */
   const draw = useCallback(() => {
@@ -105,6 +127,77 @@ export function WaveformNavigator({
       ctx.fillRect(0, H / 2 - 1, W, 2);
     }
 
+    // ── Region highlight (committed or live) ────
+    const fmtSec = (sec: number) => {
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      return `${m}:${s.toString().padStart(2, "0")}`;
+    };
+
+    // Determine region to draw: live drag takes priority, then committed
+    let drawRegionStartSec: number | null = null;
+    let drawRegionEndSec: number | null = null;
+
+    if (regionSelectingRef.current) {
+      const f1 = regionStartFracRef.current;
+      const f2 = regionLiveFracRef.current;
+      drawRegionStartSec = Math.min(f1, f2) * duration;
+      drawRegionEndSec = Math.max(f1, f2) * duration;
+    } else if (region) {
+      drawRegionStartSec = region.startSec;
+      drawRegionEndSec = region.endSec;
+    }
+
+    if (drawRegionStartSec !== null && drawRegionEndSec !== null) {
+      const rX = (drawRegionStartSec / duration) * W;
+      const rW = ((drawRegionEndSec - drawRegionStartSec) / duration) * W;
+
+      // Region fill
+      ctx.fillStyle = REGION_COLOR + "25";
+      ctx.fillRect(rX, 0, rW, H);
+
+      // Region border lines (dashed)
+      ctx.save();
+      ctx.setLineDash([4, 3]);
+      ctx.strokeStyle = REGION_COLOR + "90";
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(rX, 0); ctx.lineTo(rX, H);
+      ctx.moveTo(rX + rW, 0); ctx.lineTo(rX + rW, H);
+      ctx.stroke();
+      ctx.restore();
+
+      // Region time labels
+      const rStartLabel = fmtSec(drawRegionStartSec);
+      const rEndLabel = fmtSec(drawRegionEndSec);
+      ctx.font = "bold 9px ui-monospace, monospace";
+      ctx.textBaseline = "top";
+
+      // Start label
+      const rslW = ctx.measureText(rStartLabel).width;
+      const rslX = Math.max(1, rX - rslW / 2);
+      ctx.fillStyle = "rgba(6,6,14,0.85)";
+      ctx.beginPath();
+      ctx.roundRect(rslX - 2, H - 14, rslW + 4, 12, 3);
+      ctx.fill();
+      ctx.fillStyle = REGION_COLOR + "DD";
+      ctx.fillText(rStartLabel, rslX, H - 13);
+
+      // End label
+      const relW = ctx.measureText(rEndLabel).width;
+      const relX = Math.min(W - relW - 1, rX + rW - relW / 2);
+      ctx.fillStyle = "rgba(6,6,14,0.85)";
+      ctx.beginPath();
+      ctx.roundRect(relX - 2, H - 14, relW + 4, 12, 3);
+      ctx.fill();
+      ctx.fillStyle = REGION_COLOR + "DD";
+      ctx.fillText(rEndLabel, relX, H - 13);
+
+      // Top edge glow
+      ctx.fillStyle = REGION_COLOR + "15";
+      ctx.fillRect(rX, 0, rW, 2);
+    }
+
     // ── Viewport rectangle ──────────────────────
     const scroll = viewport.scrollRef.current;
     const window_ = viewport.windowRef.current;
@@ -128,11 +221,6 @@ export function WaveformNavigator({
     // ── Viewport time label (above viewport rect) ──
     const vpStartSec = scroll;
     const vpEndSec = Math.min(scroll + window_, duration);
-    const fmtSec = (sec: number) => {
-      const m = Math.floor(sec / 60);
-      const s = Math.floor(sec % 60);
-      return `${m}:${s.toString().padStart(2, "0")}`;
-    };
     const vpLabel = `${fmtSec(vpStartSec)} — ${fmtSec(vpEndSec)}`;
     ctx.font = "bold 10px ui-monospace, monospace";
     ctx.textBaseline = "bottom";
@@ -256,7 +344,7 @@ export function WaveformNavigator({
       ctx.lineTo(x, rulerY + 3);
       ctx.stroke();
     }
-  }, [width, dpr, duration, samples, accentColor, viewport, audioRef]);
+  }, [width, dpr, duration, samples, accentColor, viewport, audioRef, region]);
 
   drawRef.current = draw;
 
@@ -280,24 +368,63 @@ export function WaveformNavigator({
   }, []);
 
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
-    draggingRef.current = true;
     const frac = getTimeFrac(e);
+
+    if (e.shiftKey && onRegionChange) {
+      // Shift+drag → region selection mode
+      regionSelectingRef.current = true;
+      regionStartFracRef.current = frac;
+      regionLiveFracRef.current = frac;
+      return;
+    }
+
+    // Normal: click-to-jump / drag-to-pan
+    draggingRef.current = true;
     viewport.handleNavigatorSeek(frac);
-  }, [getTimeFrac, viewport]);
+  }, [getTimeFrac, viewport, onRegionChange]);
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    if (regionSelectingRef.current) {
+      regionLiveFracRef.current = getTimeFrac(e);
+      return;
+    }
+
     if (!draggingRef.current) return;
     const frac = getTimeFrac(e);
     viewport.handleNavigatorDrag(frac - (viewport.windowRef.current / duration) / 2);
   }, [getTimeFrac, viewport, duration]);
 
   const handleMouseUp = useCallback(() => {
+    if (regionSelectingRef.current && onRegionChange) {
+      regionSelectingRef.current = false;
+      const f1 = regionStartFracRef.current;
+      const f2 = regionLiveFracRef.current;
+      const startSec = Math.min(f1, f2) * duration;
+      const endSec = Math.max(f1, f2) * duration;
+      // Minimum 0.5s selection to avoid accidental clicks
+      if (endSec - startSec >= 0.5) {
+        onRegionChange({ startSec, endSec });
+      }
+      return;
+    }
+
     draggingRef.current = false;
-  }, []);
+  }, [duration, onRegionChange]);
 
   const handleMouseLeave = useCallback(() => {
+    if (regionSelectingRef.current && onRegionChange) {
+      // Finalize on leave too
+      regionSelectingRef.current = false;
+      const f1 = regionStartFracRef.current;
+      const f2 = regionLiveFracRef.current;
+      const startSec = Math.min(f1, f2) * duration;
+      const endSec = Math.max(f1, f2) * duration;
+      if (endSec - startSec >= 0.5) {
+        onRegionChange({ startSec, endSec });
+      }
+    }
     draggingRef.current = false;
-  }, []);
+  }, [duration, onRegionChange]);
 
   return (
     <div
