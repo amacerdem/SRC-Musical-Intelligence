@@ -1,11 +1,11 @@
 # F1 Temporal Belief Diagnostics Report
 
-**Date:** 2026-02-27 01:51
+**Date:** 2026-03-02 11:08
 **Pipeline:** R3 (97D) -> H3 -> C3 (131 beliefs)
 **Test cases:** 16
 **Total assertions:** 36 (+ 11 baseline)
 **Passed:** 36/36 (100.0%)
-**Elapsed:** 31.4s
+**Elapsed:** 21.4s
 
 > **TARGET MET: 100.0% >= 85%**
 
@@ -39,14 +39,14 @@
 
 | Test | Assertion | Seg A | Val A | Seg B | Val B | Diff | Result |
 |------|-----------|-------|-------|-------|-------|------|--------|
-| consonance_gradient | Consonant > diminished | major | 0.6026 | dim | 0.4600 | +0.1427 | PASS |
-| consonance_gradient | Diminished > cluster | dim | 0.4600 | cluster | 0.2693 | +0.1907 | PASS |
-| consonance_gradient | Major > cluster (full gradient) | major | 0.6026 | cluster | 0.2693 | +0.3334 | PASS |
-| dissonance_resolution | Resolution increases stability | cluster | 0.2694 | major | 0.6026 | -0.3333 | PASS |
-| cadence_V7_I | Tonic more stable than dominant | V7 | 0.4359 | I | 0.6031 | -0.1672 | PASS |
-| interval_quality_sweep | Octave more stable | octave | 0.7268 | m2 | 0.4388 | +0.2881 | PASS |
-| tension_release | Tonic more stable than cluster | cluster | 0.2694 | I | 0.6032 | -0.3338 | PASS |
-| aesthetic_gradient | Consonant progression > cluster | beautiful | 0.4646 | harsh | 0.3119 | +0.1527 | PASS |
+| consonance_gradient | Consonant > diminished | major | 0.5633 | dim | 0.4193 | +0.1440 | PASS |
+| consonance_gradient | Diminished > cluster | dim | 0.4193 | cluster | 0.2217 | +0.1976 | PASS |
+| consonance_gradient | Major > cluster (full gradient) | major | 0.5633 | cluster | 0.2217 | +0.3416 | PASS |
+| dissonance_resolution | Resolution increases stability | cluster | 0.2221 | major | 0.5635 | -0.3414 | PASS |
+| cadence_V7_I | Tonic more stable than dominant | V7 | 0.3826 | I | 0.5623 | -0.1797 | PASS |
+| interval_quality_sweep | Octave more stable | octave | 0.6976 | m2 | 0.3991 | +0.2985 | PASS |
+| tension_release | Tonic more stable than cluster | cluster | 0.2221 | I | 0.5640 | -0.3419 | PASS |
+| aesthetic_gradient | Consonant progression > cluster | beautiful | 0.4019 | harsh | 0.2546 | +0.1473 | PASS |
 
 ### interval_quality (BCH / Appraisal)
 
@@ -64,8 +64,8 @@
 
 | Test | Assertion | Seg A | Val A | Seg B | Val B | Diff | Result |
 |------|-----------|-------|-------|-------|-------|------|--------|
-| consonance_gradient | Triad matches template > cluster | major | 0.7255 | cluster | 0.4832 | +0.2423 | PASS |
-| cadence_V7_I | Tonic matches template better | V7 | 0.6242 | I | 0.7266 | -0.1023 | PASS |
+| consonance_gradient | Triad matches template > cluster | major | 0.6013 | cluster | 0.3576 | +0.2437 | PASS |
+| cadence_V7_I | Tonic matches template better | V7 | 0.4802 | I | 0.5993 | -0.1190 | PASS |
 
 ### consonance_trajectory (BCH / Anticipation)
 
@@ -73,7 +73,7 @@
 
 | Test | Assertion | Seg A | Val A | Seg B | Val B | Diff | Result |
 |------|-----------|-------|-------|-------|-------|------|--------|
-| cadence_V7_I | Forecasts resolution | V7 | 0.5066 | I | 0.6114 | -0.1048 | PASS |
+| cadence_V7_I | Forecasts resolution | V7 | 0.3739 | I | 0.4889 | -0.1150 | PASS |
 
 ### pitch_prominence (PSCL / Core)
 
@@ -81,9 +81,9 @@
 
 | Test | Assertion | Seg A | Val A | Seg B | Val B | Diff | Result |
 |------|-----------|-------|-------|-------|-------|------|--------|
-| pitch_clarity_gradient | Single note clearer pitch than chord | single | 0.6817 | triad | 0.6213 | +0.0604 | PASS |
-| pitch_clarity_gradient | Single note clearer than cluster | single | 0.6817 | cluster | 0.5626 | +0.1191 | PASS |
-| melody_vs_static | Both segments have pitch prominence (baseline) (baseline) | melody | 0.6069 | sustained | 0.6417 | -0.0347 | PASS |
+| pitch_clarity_gradient | Single note clearer pitch than chord | single | 0.6572 | triad | 0.6039 | +0.0532 | PASS |
+| pitch_clarity_gradient | Single note clearer than cluster | single | 0.6572 | cluster | 0.5420 | +0.1152 | PASS |
+| melody_vs_static | Both segments have pitch prominence (baseline) (baseline) | melody | 0.5913 | sustained | 0.6168 | -0.0255 | PASS |
 
 ### pitch_continuation (PSCL / Anticipation)
 
@@ -91,7 +91,7 @@
 
 | Test | Assertion | Seg A | Val A | Seg B | Val B | Diff | Result |
 |------|-----------|-------|-------|-------|-------|------|--------|
-| stepwise_melody | Pitch continuation present during melody (baseline) | melody | 0.5702 | melody | 0.5702 | +0.0000 | PASS |
+| stepwise_melody | Pitch continuation present during melody (baseline) | melody | 0.4684 | melody | 0.4684 | +0.0000 | PASS |
 
 ### pitch_identity (PCCR / Core)
 
@@ -99,9 +99,9 @@
 
 | Test | Assertion | Seg A | Val A | Seg B | Val B | Diff | Result |
 |------|-----------|-------|-------|-------|-------|------|--------|
-| octave_equivalence | C4 stronger pitch identity than C3 (register effect) | C4 | 0.2953 | C3 | 0.2580 | +0.0373 | PASS |
-| octave_equivalence | C4 pitch identity present (baseline) (baseline) | C4 | 0.2953 | C4 | 0.2953 | +0.0000 | PASS |
-| chroma_change | C4 has pitch identity (baseline) (baseline) | C4 | 0.2893 | C4 | 0.2893 | +0.0000 | PASS |
+| octave_equivalence | C4 stronger pitch identity than C3 (register effect) | C4 | 0.3022 | C3 | 0.2660 | +0.0362 | PASS |
+| octave_equivalence | C4 pitch identity present (baseline) (baseline) | C4 | 0.3022 | C4 | 0.3022 | +0.0000 | PASS |
+| chroma_change | C4 has pitch identity (baseline) (baseline) | C4 | 0.2959 | C4 | 0.2959 | +0.0000 | PASS |
 
 ### octave_equivalence (PCCR / Appraisal)
 
@@ -109,7 +109,7 @@
 
 | Test | Assertion | Seg A | Val A | Seg B | Val B | Diff | Result |
 |------|-----------|-------|-------|-------|-------|------|--------|
-| chroma_change | Octave equiv present for single note (baseline) (baseline) | C4 | 0.3349 | C4 | 0.3349 | +0.0000 | PASS |
+| chroma_change | Octave equiv present for single note (baseline) (baseline) | C4 | 0.3372 | C4 | 0.3372 | +0.0000 | PASS |
 
 ### spectral_complexity (SDED / Appraisal)
 
@@ -130,10 +130,10 @@
 
 | Test | Assertion | Seg A | Val A | Seg B | Val B | Diff | Result |
 |------|-----------|-------|-------|-------|-------|------|--------|
-| consonance_gradient | Dissonance drives salience | cluster | 0.8247 | major | 0.6360 | +0.1887 | PASS |
-| dissonance_resolution | Cluster drives more salience | cluster | 0.8233 | major | 0.6364 | +0.1868 | PASS |
-| tension_release | Cluster > tonic salience | cluster | 0.8231 | I | 0.6362 | +0.1869 | PASS |
-| tension_release | V7 > tonic salience | V7 | 0.7833 | I | 0.6362 | +0.1471 | PASS |
+| consonance_gradient | Dissonance drives salience | cluster | 0.8029 | major | 0.6014 | +0.2015 | PASS |
+| dissonance_resolution | Cluster drives more salience | cluster | 0.8027 | major | 0.6014 | +0.2013 | PASS |
+| tension_release | Cluster > tonic salience | cluster | 0.8024 | I | 0.6010 | +0.2014 | PASS |
+| tension_release | V7 > tonic salience | V7 | 0.7548 | I | 0.6010 | +0.1538 | PASS |
 
 ### melodic_contour_tracking (MPG / Appraisal)
 
@@ -141,9 +141,9 @@
 
 | Test | Assertion | Seg A | Val A | Seg B | Val B | Diff | Result |
 |------|-----------|-------|-------|-------|-------|------|--------|
-| melody_vs_static | Melody contour tracking active (baseline) (baseline) | melody | 0.5609 | melody | 0.5609 | +0.0000 | PASS |
-| ascending_descending | Both segments have contour (ascending may be higher) | ascending | 0.5634 | descending | 0.5532 | +0.0102 | PASS |
-| stepwise_melody | Contour tracking active during melody (baseline) | melody | 0.5645 | melody | 0.5645 | +0.0000 | PASS |
+| melody_vs_static | Melody contour tracking active (baseline) (baseline) | melody | 0.4680 | melody | 0.4680 | +0.0000 | PASS |
+| ascending_descending | Both segments have contour (ascending may be higher) | ascending | 0.4806 | descending | 0.4767 | +0.0039 | PASS |
+| stepwise_melody | Contour tracking active during melody (baseline) | melody | 0.4737 | melody | 0.4737 | +0.0000 | PASS |
 
 ### contour_continuation (MPG / Anticipation)
 
@@ -151,7 +151,7 @@
 
 | Test | Assertion | Seg A | Val A | Seg B | Val B | Diff | Result |
 |------|-----------|-------|-------|-------|-------|------|--------|
-| stepwise_melody | Contour continuation during stepwise motion (baseline) | melody | 0.6446 | melody | 0.6446 | +0.0000 | PASS |
+| stepwise_melody | Contour continuation during stepwise motion (baseline) | melody | 0.5980 | melody | 0.5980 | +0.0000 | PASS |
 
 ### timbral_character (MIAA / Core)
 
@@ -177,9 +177,9 @@
 
 | Test | Assertion | Seg A | Val A | Seg B | Val B | Diff | Result |
 |------|-----------|-------|-------|-------|-------|------|--------|
-| consonance_gradient | Consonant = more aesthetic | major | 0.3145 | cluster | 0.1844 | +0.1302 | PASS |
-| aesthetic_gradient | Beautiful progression > harsh cluster | beautiful | 0.2579 | harsh | 0.1969 | +0.0610 | PASS |
-| aesthetic_surprise | Consonance > dissonance aesthetically | consonant | 0.3114 | dissonant | 0.1820 | +0.1293 | PASS |
+| consonance_gradient | Consonant = more aesthetic | major | 0.2828 | cluster | 0.1824 | +0.1004 | PASS |
+| aesthetic_gradient | Beautiful progression > harsh cluster | beautiful | 0.2370 | harsh | 0.1920 | +0.0449 | PASS |
+| aesthetic_surprise | Consonance > dissonance aesthetically | consonant | 0.2806 | dissonant | 0.1814 | +0.0991 | PASS |
 
 ### spectral_temporal_synergy (STAI / Appraisal)
 
@@ -187,8 +187,8 @@
 
 | Test | Assertion | Seg A | Val A | Seg B | Val B | Diff | Result |
 |------|-----------|-------|-------|-------|-------|------|--------|
-| consonance_gradient | Consonant = higher synergy | major | 0.3350 | cluster | 0.1876 | +0.1473 | PASS |
-| aesthetic_gradient | Consonant flow > static cluster | beautiful | 0.2530 | harsh | 0.2015 | +0.0515 | PASS |
+| consonance_gradient | Consonant = higher synergy | major | 0.3119 | cluster | 0.1860 | +0.1259 | PASS |
+| aesthetic_gradient | Consonant flow > static cluster | beautiful | 0.2369 | harsh | 0.1974 | +0.0396 | PASS |
 
 ### reward_response_pred (STAI / Anticipation)
 
@@ -196,8 +196,8 @@
 
 | Test | Assertion | Seg A | Val A | Seg B | Val B | Diff | Result |
 |------|-----------|-------|-------|-------|-------|------|--------|
-| aesthetic_gradient | Beautiful predicts more reward | beautiful | 0.3785 | harsh | 0.3495 | +0.0290 | PASS |
-| aesthetic_surprise | Consonant predicts reward > dissonant | consonant | 0.4083 | dissonant | 0.3423 | +0.0661 | PASS |
+| aesthetic_gradient | Beautiful predicts more reward | beautiful | 0.3672 | harsh | 0.3469 | +0.0204 | PASS |
+| aesthetic_surprise | Consonant predicts reward > dissonant | consonant | 0.3913 | dissonant | 0.3417 | +0.0496 | PASS |
 
 ## Test Audio Stimuli
 

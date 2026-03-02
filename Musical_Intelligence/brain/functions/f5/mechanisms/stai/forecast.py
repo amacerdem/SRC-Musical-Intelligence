@@ -102,12 +102,15 @@ def compute_forecast(
     # Aesthetic value (M0) as the primary reward driver. Temporal quality
     # (P1) provides forward flow prediction. Interaction (E2) gates the
     # reward -- requires both dimensions for full reward.
+    # Third term gates aesthetic response by spectral integrity (E0) rather
+    # than temporal integrity (E1) alone, because NAcc activation requires
+    # musically structured (spectrally coherent) stimuli, not mere temporal
+    # stationarity. Blood & Zatorre 2001: NAcc correlates with consonance.
     # Menon & Levitin 2005: NAcc activation tracks aesthetic value.
-    # Blood & Zatorre 2001: reward circuit anticipation.
     f1 = torch.sigmoid(
         0.35 * m0 * p1.clamp(min=0.1)
         + 0.35 * e2 * m1
-        + 0.30 * p2 * e1
+        + 0.30 * p2 * e0
     )
 
     # -- F2: Connectivity Prediction --

@@ -278,3 +278,31 @@ body {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   Neuroacoustic Atlas — Neural Graph Animations
+   ═══════════════════════════════════════════════════════════════ */
+
+@keyframes atlas-pulse {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+
+@keyframes atlas-pulse-strong {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+@keyframes atlas-flow {
+  to { stroke-dashoffset: -24; }
+}
+
+@keyframes atlas-breathe {
+  0%, 100% { r: 80; opacity: 0.04; }
+  50% { r: 90; opacity: 0.09; }
+}
+
+@keyframes atlas-halo {
+  0%, 100% { opacity: 0.12; }
+  50% { opacity: 0.22; }
+}

@@ -159,10 +159,14 @@ def compute_extraction(
         + 0.20 * pleasantness
     )
 
-    # Temporal flow: energy dynamics + onset clarity + spectral change
+    # Temporal flow: energy dynamics + onset clarity + spectral stability
+    # Spectral stability gated by consonance — temporal stationarity in
+    # broadband noise is NOT forward flow, only spectrally coherent
+    # stability counts. Kim 2019: temporal integrity requires musically
+    # structured content, not mere stationarity.
     temporal_flow = (
         0.35 * amplitude * onset
-        + 0.35 * (1.0 - spectral_change.abs())  # stability = forward flow
+        + 0.35 * (1.0 - spectral_change.abs()) * consonance.clamp(min=0.1)
         + 0.30 * loudness
     )
 
@@ -179,12 +183,15 @@ def compute_extraction(
 
     # -- E1: Temporal Integrity --
     # Forward flow quality. Energy dynamics and change rates at phrase horizon.
-    # Koelsch 2014: temporal expectation resolution engages reward circuit.
+    # Stability terms (energy_change, spectral_change) gated by consonance
+    # to prevent broadband noise from scoring high on temporal integrity.
+    # Koelsch 2014: temporal expectation resolution engages reward circuit
+    # only for musically structured stimuli.
     e1 = _wsig(
         0.30 * spec_change_mean * energy_vel.clamp(min=0.1)
         + 0.30 * temporal_flow
         + 0.20 * onset * amplitude
-        + 0.20 * (1.0 - energy_change.abs()) * loudness
+        + 0.20 * (1.0 - energy_change.abs()) * loudness * consonance.clamp(min=0.1)
     )
 
     # -- E2: Aesthetic Integration --

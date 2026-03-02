@@ -1,4 +1,4 @@
-import { useRef, useState, useCallback, type ReactNode, type WheelEvent, type MouseEvent } from 'react'
+import { useRef, useState, useCallback, useEffect, type ReactNode, type WheelEvent, type MouseEvent } from 'react'
 
 interface Props {
   width: number
@@ -12,8 +12,8 @@ const ZOOM_SPEED = 0.001
 
 export function AtlasCanvas({ width, height, children }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
-  const [pan, setPan] = useState({ x: 0, y: 0 })
-  const [scale, setScale] = useState(0.45)
+  const [pan, setPan] = useState({ x: 40, y: 20 })
+  const [scale, setScale] = useState(0.55)
   const [dragging, setDragging] = useState(false)
   const dragStart = useRef({ x: 0, y: 0, panX: 0, panY: 0 })
 
@@ -65,11 +65,30 @@ export function AtlasCanvas({ width, height, children }: Props) {
     setScale(s)
   }, [width, height])
 
+  // Auto-fit on first render
+  const didFit = useRef(false)
+  useEffect(() => {
+    if (!didFit.current && containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect()
+      if (rect.width > 0 && rect.height > 0) {
+        didFit.current = true
+        const sx = rect.width / width
+        const sy = rect.height / height
+        const s = Math.min(sx, sy) * 0.88
+        setPan({
+          x: (rect.width - width * s) / 2,
+          y: (rect.height - height * s) / 2,
+        })
+        setScale(s)
+      }
+    }
+  })
+
   return (
     <div
       ref={containerRef}
-      className="relative w-full flex-1 overflow-hidden rounded-xl"
-      style={{ background: 'var(--color-bg-base)', cursor: dragging ? 'grabbing' : 'grab' }}
+      className="relative w-full h-full overflow-hidden rounded-xl"
+      style={{ background: 'var(--color-bg-base)', cursor: dragging ? 'grabbing' : 'grab', minHeight: 400 }}
       onWheel={handleWheel}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
