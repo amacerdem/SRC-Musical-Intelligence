@@ -25,6 +25,7 @@ import { useM3Store } from "@/stores/useM3Store";
 import { FAMILY_MORPHOLOGY, levelToOrganismStage } from "@/types/m3";
 import type { FamilyMorphology } from "@/canvas/mind-organism";
 import { DashboardRadar } from "@/components/mind/DashboardRadar";
+import { ALL_PSYCHOLOGY } from "@/data/dimensions";
 import { PersonaAvatar } from "@/components/mind/PersonaAvatar";
 import { getPersonaDimensions } from "@/data/persona-dimensions";
 import { profileToArray } from "@/data/dimensions";
@@ -233,7 +234,7 @@ export function PersonaDetail() {
 
                 {/* Mind Profile — 6D Radar */}
                 <div className="mt-6 flex justify-center">
-                  <DashboardRadar total={personaDim6D} color={persona.color} size={240} />
+                  <DashboardRadar total={personaDim6D} dims={ALL_PSYCHOLOGY} color={persona.color} size={240} />
                 </div>
               </div>
             </motion.div>
@@ -281,7 +282,7 @@ export function PersonaDetail() {
 
               {/* Mobile radar (hidden on desktop) */}
               <div className="lg:hidden flex justify-center">
-                <DashboardRadar total={personaDim6D} color={persona.color} size={280} />
+                <DashboardRadar total={personaDim6D} dims={ALL_PSYCHOLOGY} color={persona.color} size={280} />
               </div>
             </motion.div>
           </div>

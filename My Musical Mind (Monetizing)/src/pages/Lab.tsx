@@ -1,24 +1,25 @@
 /* ── Lab — Scientific Analysis Studio ────────────────────────────────
- *  Full-screen 2-panel layout: NeuroAcoustic (top) + Mel Spectrogram (bottom).
- *  Pure scientific instrument feel — no chat, no organism, no radar.
- *
- *  Mel spectrogram uses pre-computed data from the MI analysis pipeline
- *  (128 mel bins × T frames @ 172.27 Hz), loaded as a binary file.
+ *  Full-screen layered scope: SpectralPeaks (WebGL) + FlowOverlay (Canvas 2D)
+ *  stacked with PianoStrip left, WaveformNavigator bottom.
  *
  *  ┌──────────────────────────────────────────────────────────────┐
- *  │  🧪 Lab   [Track ▾]  ▶ ‖  0:42/3:12   [6D|12D|24D]        │
- *  ├──────────────────────────────────────────────────────────────┤
- *  │  DimLabels │  TEMPORAL FLOW (FlowTimeline canvas)            │
- *  ├────────────┼─────────────────────────────────────────────────┤
- *  │  🎹 Piano  │  MEL SPECTROGRAM (MI Pipeline data)             │
- *  │  Roll      │  log2 freq axis, 4 peak markers                 │
- *  └────────────┴─────────────────────────────────────────────────┘
+ *  │  🧪 Lab [Track▾] [Acoustic|Neuro] ▶ 0:42/3:12 [4P] [6D]   │
+ *  ├─────┬────────────────────────────────────────────────────────┤
+ *  │ 🎹  │  LAYERED SCOPE (flex-1)                               │
+ *  │ P   │  ┌ z:0  SpectralPeaks (WebGL peaks + bloom)         ┐ │
+ *  │ i   │  │ z:10 FlowOverlay (Canvas 2D neon curves)         │ │
+ *  │ a   │  │ z:20 InteractionLayer (hover, seek, scroll, zoom)│ │
+ *  │ n   │  │ z:30 LayerToggles (floating pills)               │ │
+ *  │ o   │  └ z:40 ScopeTooltip                                ┘ │
+ *  ├─────┴────────────────────────────────────────────────────────┤
+ *  │  WAVEFORM NAVIGATOR (48px, entire piece)                     │
+ *  └──────────────────────────────────────────────────────────────┘
  *  ──────────────────────────────────────────────────────────────────── */
 
 import { useRef, useEffect, useMemo, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import {
-  FlaskConical, Clock, Music2, Activity, Play, Pause,
+  FlaskConical, Clock, Music2, Play, Pause,
   ChevronDown, Waves,
 } from "lucide-react";
 
@@ -29,10 +30,13 @@ import { miDataService } from "@/services/MIDataService";
 import type { MICatalogTrack } from "@/types/mi-dataset";
 
 import { DepthSelector } from "@/components/lab/DepthSelector";
-import { FlowTimeline } from "@/components/lab/FlowTimeline";
-import type { LabMode } from "@/components/lab/FlowTimeline";
-import { SpectralPeaks } from "@/components/lab/SpectralPeaks";
+import { LayeredScope } from "@/components/lab/LayeredScope";
+import { PianoStrip } from "@/components/lab/PianoStrip";
+import { WaveformNavigator } from "@/components/lab/WaveformNavigator";
+import { useViewport } from "@/components/lab/useViewport";
+import { extractPeaks } from "@/components/lab/peakExtractor";
 import type { MelData } from "@/components/lab/peakExtractor";
+import type { LabMode } from "@/components/lab/FlowOverlay";
 
 /* ── Track ID → audio file mapping ──────────────── */
 const TRACK_AUDIO: Record<string, string> = {
@@ -56,10 +60,34 @@ async function loadMelBinary(trackId: string): Promise<MelData | null> {
     const nMels = view.getUint32(0, true);
     const nFrames = view.getUint32(4, true);
     const frameRate = view.getFloat32(8, true);
-    // 4 reserved bytes at offset 12
     const centerFreqs = new Float32Array(buf, 16, nMels);
     const data = new Uint8Array(buf, 16 + nMels * 4);
     return { nMels, nFrames, frameRate, centerFreqs, data };
+  } catch {
+    return null;
+  }
+}
+
+/* ── Decode audio to mono Float32Array for waveform navigator ── */
+async function decodeAudioSamples(url: string): Promise<Float32Array | null> {
+  try {
+    const resp = await fetch(url);
+    if (!resp.ok) return null;
+    const buf = await resp.arrayBuffer();
+    const ctx = new AudioContext();
+    const decoded = await ctx.decodeAudioData(buf);
+    const mono = decoded.getChannelData(0);
+    // Downsample to ~4000 points for waveform drawing
+    const targetLen = 4000;
+    if (mono.length <= targetLen) return mono;
+    const step = mono.length / targetLen;
+    const out = new Float32Array(targetLen);
+    for (let i = 0; i < targetLen; i++) {
+      const idx = Math.floor(i * step);
+      out[i] = mono[idx];
+    }
+    await ctx.close();
+    return out;
   } catch {
     return null;
   }
@@ -78,6 +106,35 @@ export function Lab() {
   const selectTrack = useLabStore((s) => s.selectTrack);
 
   const hasAnalysis = phase === "done" && trackDetail && temporal;
+  const duration = trackDetail?.duration_s ?? 0;
+
+  /* ── Block browser zoom/scroll on the entire Lab page ── */
+  const pageRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = pageRef.current;
+    if (!el) return;
+
+    // Block ctrl+wheel (browser zoom) on the whole page
+    const onWheel = (e: WheelEvent) => {
+      if (e.ctrlKey || e.metaKey) {
+        e.preventDefault();
+      }
+    };
+    el.addEventListener("wheel", onWheel, { passive: false });
+
+    // Block pinch-to-zoom gesture events
+    const onGesture = (e: Event) => { e.preventDefault(); };
+    el.addEventListener("gesturestart", onGesture);
+    el.addEventListener("gesturechange", onGesture);
+    el.addEventListener("gestureend", onGesture);
+
+    return () => {
+      el.removeEventListener("wheel", onWheel);
+      el.removeEventListener("gesturestart", onGesture);
+      el.removeEventListener("gesturechange", onGesture);
+      el.removeEventListener("gestureend", onGesture);
+    };
+  }, []);
 
   /* ── Track catalog for dropdown ─────────────────── */
   const labTracks = useMemo(() =>
@@ -101,12 +158,21 @@ export function Lab() {
   const [hasEverPlayed, setHasEverPlayed] = useState(false);
   const [flowIdx, setFlowIdx] = useState(0);
   const [melData, setMelData] = useState<MelData | null>(null);
-  const [peakCount, setPeakCount] = useState<4 | 8 | 16>(4);
-  const [labMode, setLabMode] = useState<LabMode>("acoustic");
+  const peakCount = 4 as const;
+  const [labMode, setLabMode] = useState<LabMode>("spectral");
+  const [waveformSamples, setWaveformSamples] = useState<Float32Array | null>(null);
 
-  // Initialize audio element + load mel data when track changes
+  /* ── Shared viewport (scroll + zoom) ─────────────── */
+  const viewport = useViewport(duration);
+
+  /* ── Extracted peaks (memoized) ──────────────────── */
+  const peaks = useMemo(() => {
+    if (!melData) return null;
+    return extractPeaks(melData);
+  }, [melData]);
+
+  // Initialize audio element + load mel data + decode waveform when track changes
   useEffect(() => {
-    // Cleanup previous
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.src = "";
@@ -116,10 +182,10 @@ export function Lab() {
     setHasEverPlayed(false);
     setFlowIdx(0);
     setMelData(null);
+    setWaveformSamples(null);
 
     if (!trackDetail) return;
 
-    // Audio element setup
     const audioUrl = TRACK_AUDIO[trackDetail.id];
     let audio: HTMLAudioElement | null = null;
     if (audioUrl) {
@@ -142,9 +208,11 @@ export function Lab() {
 
       audio.addEventListener("timeupdate", onTimeUpdate);
       audio.addEventListener("ended", onEnded);
+
+      // Decode audio for waveform navigator
+      decodeAudioSamples(audioUrl).then(setWaveformSamples);
     }
 
-    // Load pre-computed mel spectrogram
     loadMelBinary(trackDetail.id).then(setMelData);
 
     return () => {
@@ -168,7 +236,6 @@ export function Lab() {
       setIsPlaying(true);
     }
   }, [isPlaying]);
-
 
   /* ── Seek handler ───────────────────────────────── */
   const handleSeek = useCallback((ratio: number) => {
@@ -207,9 +274,14 @@ export function Lab() {
   const [showTrackMenu, setShowTrackMenu] = useState(false);
 
   return (
-    <motion.div {...pageTransition} className="relative h-screen overflow-hidden">
+    <motion.div
+      ref={pageRef}
+      {...pageTransition}
+      className="relative h-screen overflow-hidden"
+      style={{ touchAction: "none", overscrollBehavior: "none" }}
+    >
 
-      {/* ── Ambient background — scientific dark ─────────────────────── */}
+      {/* ── Ambient background ─────────────────────────────────────────── */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0" style={{ background: `radial-gradient(ellipse 80% 60% at 50% 20%, ${color}06 0%, transparent 60%)` }} />
         <div className="absolute inset-0" style={{ background: `radial-gradient(ellipse 40% 50% at 10% 90%, rgba(99,102,241,0.02) 0%, transparent 50%)` }} />
@@ -220,7 +292,7 @@ export function Lab() {
       {/* ═══ MAIN ═════════════════════════════════════════════════════ */}
       <div className="relative z-10 h-full flex flex-col px-5 sm:px-8 md:px-10 pt-5 pb-20">
 
-        {/* Click-outside overlay for track menu (must be inside z-10 context so z-50 menu is above) */}
+        {/* Click-outside overlay for track menu */}
         {showTrackMenu && (
           <div
             className="fixed inset-0 z-40"
@@ -318,7 +390,7 @@ export function Lab() {
             )}
           </div>
 
-          {/* Right: Peak count + Depth selector */}
+          {/* Right: Depth selector */}
           <div className="flex items-center gap-3">
             {hasAnalysis && (
               <span className="text-[8px] font-mono text-slate-700">
@@ -326,162 +398,60 @@ export function Lab() {
               </span>
             )}
 
-            {/* Peak count selector */}
-            <div className="flex items-center gap-0.5 rounded-lg overflow-hidden"
-              style={{ border: "1px solid rgba(255,255,255,0.06)" }}
-            >
-              {([4, 8, 16] as const).map((n) => (
-                <button
-                  key={n}
-                  onClick={() => setPeakCount(n)}
-                  className="px-2 py-1 text-[9px] font-mono transition-all"
-                  style={{
-                    background: peakCount === n ? `${color}18` : "transparent",
-                    color: peakCount === n ? color : "rgba(255,255,255,0.3)",
-                    fontWeight: peakCount === n ? 700 : 400,
-                  }}
-                >
-                  {n}P
-                </button>
-              ))}
-            </div>
-
             <DepthSelector depth={depth} onChange={setDepth} accentColor={color} />
           </div>
         </motion.div>
 
-        {/* ── 2-PANEL GRID ─────────────────────────────────────────── */}
-        <div className="flex-1 min-h-0 flex flex-col gap-0">
-
-          {/* ═ PANEL 1 — NeuroAcoustic (~35%) ═══════════════════════ */}
-          <div
-            className="min-h-0 border border-white/[0.04] rounded-t-xl overflow-hidden"
-            style={{ flex: "0 0 35%" }}
+        {/* ── LAYERED SCOPE + NAVIGATOR ─────────────────────────────── */}
+        {hasAnalysis ? (
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            className="flex-1 min-h-0 flex flex-col"
           >
-            {hasAnalysis ? (
-              <motion.div
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2, duration: 0.6 }}
-                className="h-full flex flex-col px-2 py-1"
-              >
-                {/* Panel header */}
-                <div className="flex items-center gap-3 mb-1 flex-shrink-0">
-                  {/* Mode toggle */}
-                  <div className="flex items-center rounded-xl overflow-hidden"
-                    style={{
-                      border: "1px solid rgba(255,255,255,0.1)",
-                      background: "rgba(0,0,0,0.25)",
-                    }}
-                  >
-                    <button
-                      onClick={() => setLabMode("acoustic")}
-                      className="px-3.5 py-1.5 text-[11px] font-display font-semibold tracking-[0.06em] uppercase transition-all relative"
-                      style={{
-                        background: labMode === "acoustic" ? "#FF6B3522" : "transparent",
-                        color: labMode === "acoustic" ? "#FF6B35" : "rgba(255,255,255,0.3)",
-                        borderRight: "1px solid rgba(255,255,255,0.06)",
-                        boxShadow: labMode === "acoustic" ? "inset 0 -2px 0 #FF6B3580, 0 0 12px #FF6B3510" : "none",
-                      }}
-                    >
-                      Acoustic
-                    </button>
-                    <button
-                      onClick={() => setLabMode("neuro")}
-                      className="px-3.5 py-1.5 text-[11px] font-display font-semibold tracking-[0.06em] uppercase transition-all relative"
-                      style={{
-                        background: labMode === "neuro" ? `${color}22` : "transparent",
-                        color: labMode === "neuro" ? color : "rgba(255,255,255,0.3)",
-                        boxShadow: labMode === "neuro" ? `inset 0 -2px 0 ${color}80, 0 0 12px ${color}10` : "none",
-                      }}
-                    >
-                      NeuroAcoustic
-                    </button>
-                  </div>
-                </div>
+            {/* Scope + PianoStrip */}
+            <div className="flex-1 min-h-0 flex border border-white/[0.04] rounded-t-xl overflow-hidden">
+              <PianoStrip />
+              <LayeredScope
+                melData={melData}
+                temporal={temporal}
+                trackDetail={trackDetail}
+                depth={depth}
+                accentColor={color}
+                audioRef={audioRef}
+                isPlaying={isPlaying}
+                peakCount={peakCount}
+                onSeek={handleSeek}
+                viewport={viewport}
+                labMode={labMode}
+                peaks={peaks}
+              />
+            </div>
 
-                <div className="flex-1 min-h-0">
-                  <FlowTimeline
-                    temporal={temporal}
-                    trackDetail={trackDetail}
-                    depth={depth}
-                    accentColor={color}
-                    audioRef={audioRef}
-                    isPlaying={isPlaying}
-                    onSeek={handleSeek}
-                    labMode={labMode}
-                  />
-                </div>
-              </motion.div>
-            ) : (
-              <div className="h-full flex items-center justify-center">
-                <div className="flex flex-col items-center gap-3">
-                  <Activity size={16} className="text-slate-800" />
-                  <span className="text-[9px] font-display font-light tracking-[0.12em] uppercase text-slate-700">
-                    {labMode === "acoustic" ? "Acoustic" : "NeuroAcoustic"}
-                  </span>
-                  {phase === "idle" && (
-                    <p className="text-[10px] text-slate-700 font-body text-center max-w-[200px]">
-                      Select a track to begin analysis
-                    </p>
-                  )}
-                </div>
-              </div>
-            )}
+            {/* Waveform Navigator */}
+            <div className="border border-t-0 border-white/[0.04] rounded-b-xl overflow-hidden">
+              <WaveformNavigator
+                audioRef={audioRef}
+                duration={duration}
+                viewport={viewport}
+                accentColor={color}
+                samples={waveformSamples}
+              />
+            </div>
+          </motion.div>
+        ) : (
+          <div className="flex-1 min-h-0 flex items-center justify-center border border-white/[0.04] rounded-xl">
+            <div className="flex flex-col items-center gap-3">
+              <Waves size={20} className="text-slate-800" />
+              <span className="text-[10px] font-display font-light tracking-[0.12em] uppercase text-slate-700">
+                {phase === "idle" ? "Select a track to begin analysis" : "Loading..."}
+              </span>
+            </div>
           </div>
-
-          {/* ═ PANEL 2 — Mel Spectrogram (~65%) ════════════════════ */}
-          <div
-            className="min-h-0 border border-t-0 border-white/[0.04] rounded-b-xl overflow-hidden"
-            style={{ flex: "0 0 65%" }}
-          >
-            {hasAnalysis ? (
-              <motion.div
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.35, duration: 0.6 }}
-                className="h-full flex flex-col px-2 py-1"
-              >
-                {/* Panel header */}
-                <div className="flex items-center gap-2 mb-0.5 flex-shrink-0">
-                  <Waves size={10} className="text-slate-600" />
-                  <span className="text-[9px] font-display font-light tracking-[0.12em] uppercase text-slate-500">
-                    Spectral Peaks
-                  </span>
-                  <span className="text-[7px] font-mono text-slate-700">
-                    A0–C8 · log₂ · {peakCount} peaks/frame{melData ? ` · ${melData.frameRate.toFixed(0)}Hz` : ""}
-                  </span>
-                </div>
-
-                <div className="flex-1 min-h-0">
-                  <SpectralPeaks
-                    melData={melData}
-                    audioRef={audioRef}
-                    isPlaying={isPlaying}
-                    duration={trackDetail.duration_s}
-                    accentColor={color}
-                    peakCount={peakCount}
-                    onSeek={handleSeek}
-                  />
-                </div>
-              </motion.div>
-            ) : (
-              <div className="h-full flex items-center justify-center">
-                <div className="flex flex-col items-center gap-3">
-                  <Waves size={16} className="text-slate-800" />
-                  <span className="text-[9px] font-display font-light tracking-[0.12em] uppercase text-slate-700">
-                    Spectral Peaks
-                  </span>
-                </div>
-              </div>
-            )}
-          </div>
-
-        </div>
+        )}
       </div>
 
     </motion.div>
   );
 }
-
-

@@ -1,11 +1,11 @@
 # F1 Temporal Belief Diagnostics Report
 
-**Date:** 2026-03-02 11:39
+**Date:** 2026-03-02 11:58
 **Pipeline:** R3 (97D) -> H3 -> C3 (131 beliefs)
 **Test cases:** 16
 **Total assertions:** 36 (+ 11 baseline)
 **Passed:** 36/36 (100.0%)
-**Elapsed:** 25.2s
+**Elapsed:** 28.5s
 
 > **TARGET MET: 100.0% >= 85%**
 
@@ -177,9 +177,9 @@
 
 | Test | Assertion | Seg A | Val A | Seg B | Val B | Diff | Result |
 |------|-----------|-------|-------|-------|-------|------|--------|
-| consonance_gradient | Consonant = more aesthetic | major | 0.2546 | cluster | 0.1719 | +0.0828 | PASS |
-| aesthetic_gradient | Beautiful progression > harsh cluster | beautiful | 0.2179 | harsh | 0.1796 | +0.0383 | PASS |
-| aesthetic_surprise | Consonance > dissonance aesthetically | consonant | 0.2524 | dissonant | 0.1714 | +0.0810 | PASS |
+| consonance_gradient | Consonant = more aesthetic | major | 0.2546 | cluster | 0.1718 | +0.0828 | PASS |
+| aesthetic_gradient | Beautiful progression > harsh cluster | beautiful | 0.2160 | harsh | 0.1793 | +0.0367 | PASS |
+| aesthetic_surprise | Consonance > dissonance aesthetically | consonant | 0.2524 | dissonant | 0.1713 | +0.0811 | PASS |
 
 ### spectral_temporal_synergy (STAI / Appraisal)
 
@@ -187,8 +187,8 @@
 
 | Test | Assertion | Seg A | Val A | Seg B | Val B | Diff | Result |
 |------|-----------|-------|-------|-------|-------|------|--------|
-| consonance_gradient | Consonant = higher synergy | major | 0.2862 | cluster | 0.1752 | +0.1110 | PASS |
-| aesthetic_gradient | Consonant flow > static cluster | beautiful | 0.2201 | harsh | 0.1851 | +0.0350 | PASS |
+| consonance_gradient | Consonant = higher synergy | major | 0.2861 | cluster | 0.1751 | +0.1111 | PASS |
+| aesthetic_gradient | Consonant flow > static cluster | beautiful | 0.2180 | harsh | 0.1847 | +0.0333 | PASS |
 
 ### reward_response_pred (STAI / Anticipation)
 
@@ -196,8 +196,8 @@
 
 | Test | Assertion | Seg A | Val A | Seg B | Val B | Diff | Result |
 |------|-----------|-------|-------|-------|-------|------|--------|
-| aesthetic_gradient | Beautiful predicts more reward | beautiful | 0.3575 | harsh | 0.3399 | +0.0176 | PASS |
-| aesthetic_surprise | Consonant predicts reward > dissonant | consonant | 0.3806 | dissonant | 0.3356 | +0.0450 | PASS |
+| aesthetic_gradient | Beautiful predicts more reward | beautiful | 0.3768 | harsh | 0.3599 | +0.0169 | PASS |
+| aesthetic_surprise | Consonant predicts reward > dissonant | consonant | 0.4010 | dissonant | 0.3555 | +0.0456 | PASS |
 
 ## Test Audio Stimuli
 

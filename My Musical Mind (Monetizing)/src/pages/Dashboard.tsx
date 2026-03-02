@@ -17,7 +17,7 @@ import { weeklyStats } from "@/data/mock-listening";
 import { useM3Store } from "@/stores/useM3Store";
 import { levelToOrganismStage } from "@/types/m3";
 import { useActiveIdentity } from "@/hooks/useActiveIdentity";
-import { ALL_PSYCHOLOGY, ALL_COGNITION, ALL_NEUROSCIENCE, PSYCHOLOGY_COLORS, genesToDimensions, arrayToProfile, profileToArray } from "@/data/dimensions";
+import { ALL_PSYCHOLOGY, ALL_COGNITION, ALL_NEUROSCIENCE, PSYCHOLOGY_COLORS, genesToDimensions } from "@/data/dimensions";
 import { DIMENSION_KEYS_6D } from "@/types/dimensions";
 import type { DimensionKey6D } from "@/types/dimensions";
 import { DashboardRadar } from "@/components/mind/DashboardRadar";
@@ -48,6 +48,22 @@ const POINT_LABELS: Record<string, { en: string; tr: string; desc: string; descT
   tension:    { en: "Spark",    tr: "Kıvılcım",  desc: "Suspense & drama",      descTr: "Gerilim ve süspans" },
   groove:     { en: "Sync",     tr: "Senkron",   desc: "Urge to move",          descTr: "Hareket dürtüsü" },
   complexity: { en: "Echo",     tr: "Yankı",     desc: "Layers & detail",       descTr: "Katman ve detay" },
+};
+
+/** Short 12D descriptions shown inside the radar chart */
+const COG_DESCS: Record<string, { en: string; tr: string }> = {
+  melodic_hook:   { en: "Catchy tune",       tr: "Akılda kalıcı" },
+  harmonic_depth: { en: "Chord richness",    tr: "Akor zenginliği" },
+  rhythmic_drive: { en: "Beat layers",       tr: "Ritim katmanı" },
+  timbral_color:  { en: "Sound texture",     tr: "Ses dokusu" },
+  emotional_arc:  { en: "Felt emotion",      tr: "Hissedilen duygu" },
+  surprise:       { en: "The unexpected",    tr: "Beklenmedik an" },
+  momentum:       { en: "Forward push",      tr: "İleriye itme" },
+  narrative:      { en: "Story arc",         tr: "Hikaye akışı" },
+  familiarity:    { en: "Known patterns",    tr: "Tanıdık örüntü" },
+  pleasure:       { en: "Pure enjoyment",    tr: "Saf keyif" },
+  space:          { en: "Sonic depth",       tr: "Ses derinliği" },
+  repetition:     { en: "Loop vs. change",   tr: "Tekrar mı değişim mi" },
 };
 
 /* ── Audio-file mapping (shared with Lab) ──────── */
@@ -90,21 +106,36 @@ export function Dashboard() {
   const xpForNext = level * 200;
   const xpProgress = Math.min(100, (xp % xpForNext) / xpForNext * 100);
   const genes = m3Mind?.genes ?? { entropy: 0.5, resolution: 0.5, tension: 0.5, resonance: 0.5, plasticity: 0.5 };
-  const dim6D = useMemo(() => {
-    const d = genesToDimensions(genes);
-    return Object.fromEntries(DIM_KEYS.map((k, i) => [k, d.psychology[i]])) as Record<DimensionKey6D, number>;
-  }, [genes]);
+  const allDims = useMemo(() => genesToDimensions(genes), [genes]);
+  const dim6D = useMemo(() =>
+    Object.fromEntries(DIM_KEYS.map((k, i) => [k, allDims.psychology[i]])) as Record<DimensionKey6D, number>,
+    [allDims],
+  );
   const avgDimStrength = useMemo(() => DIM_KEYS.reduce((s, k) => s + dim6D[k], 0) / 6, [dim6D]);
-  const dim6DProfile = useMemo(() => arrayToProfile(genesToDimensions(genes).psychology), [genes]);
-  const total6D = useMemo(() => profileToArray(dim6DProfile), [dim6DProfile]);
-  const dimDescs = useMemo(() => ALL_PSYCHOLOGY.map((d) => {
-    const pl = POINT_LABELS[d.key];
-    return isTr ? pl.descTr : pl.desc;
-  }), [isTr]);
+  const total6D = allDims.psychology;
+  // Radar depth toggle (6D / 12D / 24D)
+  const [radarDepth, setRadarDepth] = useState<6 | 12 | 24>(6);
+  const radarTotal = useMemo(() =>
+    radarDepth === 6 ? allDims.psychology : radarDepth === 12 ? allDims.cognition : allDims.neuroscience,
+    [radarDepth, allDims],
+  );
+  const radarDims = radarDepth === 6 ? ALL_PSYCHOLOGY : radarDepth === 12 ? ALL_COGNITION : ALL_NEUROSCIENCE;
+
+  const radarDescs = useMemo(() => {
+    if (radarDepth === 6) return ALL_PSYCHOLOGY.map((d) => {
+      const pl = POINT_LABELS[d.key];
+      return isTr ? pl.descTr : pl.desc;
+    });
+    if (radarDepth === 12) return ALL_COGNITION.map((d) => {
+      const cd = COG_DESCS[d.key];
+      return cd ? (isTr ? cd.tr : cd.en) : "";
+    });
+    return undefined; // 24D: too many axes for descriptions
+  }, [radarDepth, isTr]);
 
   // Now playing & demo flow
   const { track: nowPlayingTrack, isPlaying, isDemo } = useNowPlaying();
-  const flow6D = useDemoFlow(total6D, isPlaying);
+  const radarFlow = useDemoFlow(radarTotal, isPlaying);
 
   const brainQuote = useMemo(() => generateBrainQuote(identity.family, persona.id, t), [identity.family, persona.id, t]);
 
@@ -720,6 +751,24 @@ export function Dashboard() {
                     </div>
                   </div>
 
+                  {/* Radar depth toggle */}
+                  <div className="flex-shrink-0 flex items-center justify-center gap-1 py-1.5">
+                    {([6, 12, 24] as const).map((d) => (
+                      <button
+                        key={d}
+                        onClick={() => setRadarDepth(d)}
+                        className="px-2.5 py-1 rounded-full text-[10px] font-mono transition-all duration-300"
+                        style={{
+                          background: radarDepth === d ? `${color}20` : "transparent",
+                          color: radarDepth === d ? color : "rgba(148,163,184,0.5)",
+                          border: `1px solid ${radarDepth === d ? `${color}40` : "rgba(255,255,255,0.04)"}`,
+                        }}
+                      >
+                        {d}D
+                      </button>
+                    ))}
+                  </div>
+
                   {/* Radar with orbital rings */}
                   <div className="flex-1 flex items-center justify-center relative">
                     <div className="absolute inset-0 overflow-hidden">
@@ -748,7 +797,15 @@ export function Dashboard() {
                       })}
                     </div>
                     <div className="relative z-10">
-                      <DashboardRadar total={total6D} flow={flow6D} color={color} size={380} showFlow={isPlaying} descs={dimDescs} />
+                      <DashboardRadar
+                        total={radarTotal}
+                        flow={radarFlow}
+                        dims={radarDims}
+                        color={color}
+                        size={380}
+                        showFlow={isPlaying}
+                        descs={radarDescs}
+                      />
                     </div>
                   </div>
 

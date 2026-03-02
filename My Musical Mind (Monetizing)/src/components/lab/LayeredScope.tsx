@@ -6,7 +6,7 @@
  *  and wheel/click event routing.
  *  ──────────────────────────────────────────────────────────────────── */
 
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import type { DepthLevel, TemporalDimensions } from "@/stores/useLabStore";
 import type { MITrackDetail } from "@/types/mi-dataset";
 import type { MelData, PeakBuffers } from "./peakExtractor";
@@ -92,14 +92,37 @@ export function LayeredScope({
     });
   }, [peaks, melData, peakCount]);
 
-  /* ── Wheel handler (routed to shared viewport) ─────── */
-  const handleWheel = useCallback((e: React.WheelEvent<HTMLDivElement>) => {
-    e.stopPropagation();
-    const rect = containerRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    const mouseXFrac = (e.clientX - rect.left) / rect.width;
-    viewport.handleWheel(e, mouseXFrac);
-  }, [viewport]);
+  /* ── Native non-passive wheel listener (blocks browser zoom/scroll) ── */
+  const viewportRef = useRef(viewport);
+  viewportRef.current = viewport;
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const rect = el.getBoundingClientRect();
+      const mouseXFrac = (e.clientX - rect.left) / rect.width;
+      viewportRef.current.handleWheel(e, mouseXFrac);
+    };
+
+    // { passive: false } is critical — allows preventDefault on wheel
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
+  }, []);
+
+  /* ── Block keyboard zoom (Ctrl+Plus/Minus/Zero) ────── */
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && (e.key === "+" || e.key === "-" || e.key === "=" || e.key === "0")) {
+        e.preventDefault();
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
 
   /* ── Mouse handlers for interaction layer ──────────── */
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
@@ -130,8 +153,11 @@ export function LayeredScope({
     <div
       ref={containerRef}
       className="relative w-full h-full overflow-hidden"
-      style={{ background: labMode === "acoustic" ? "rgba(14,8,6,1)" : "rgba(6,6,14,1)" }}
-      onWheel={handleWheel}
+      style={{
+        background: labMode === "acoustic" ? "rgba(14,8,6,1)" : "rgba(6,6,14,1)",  /* spectral + neuro share dark blue */
+        touchAction: "none",
+        overscrollBehavior: "none",
+      }}
     >
       {/* z:0 — WebGL spectral peaks */}
       <SpectralPeaks
@@ -143,28 +169,30 @@ export function LayeredScope({
         peakCount={peakCount}
         onSeek={onSeek}
         viewport={viewport}
-        showPeaks={layers.peaks}
-        showBloom={layers.bloom}
-        showGrid={layers.grid}
+        showPeaks={labMode === "spectral" ? true : layers.peaks}
+        showBloom={labMode === "spectral" ? true : layers.bloom}
+        showGrid={labMode === "spectral" ? true : layers.grid}
       />
 
-      {/* z:10 — Canvas 2D flow curves */}
-      <FlowOverlay
-        temporal={temporal}
-        trackDetail={trackDetail}
-        depth={depth}
-        accentColor={accentColor}
-        audioRef={audioRef}
-        isPlaying={isPlaying}
-        viewport={viewport}
-        labMode={labMode}
-        showCurves={layers.curves}
-        showReward={layers.reward}
-        showNeuro={layers.neuro}
-        hoverX={hoverX}
-        hoverContainerW={containerW}
-        onHoverData={handleFlowHover}
-      />
+      {/* z:10 — Canvas 2D flow curves (hidden in spectral mode) */}
+      {labMode !== "spectral" && (
+        <FlowOverlay
+          temporal={temporal}
+          trackDetail={trackDetail}
+          depth={depth}
+          accentColor={accentColor}
+          audioRef={audioRef}
+          isPlaying={isPlaying}
+          viewport={viewport}
+          labMode={labMode}
+          showCurves={layers.curves}
+          showReward={layers.reward}
+          showNeuro={layers.neuro}
+          hoverX={hoverX}
+          hoverContainerW={containerW}
+          onHoverData={handleFlowHover}
+        />
+      )}
 
       {/* z:20 — Interaction layer (transparent, receives pointer events) */}
       <div
@@ -175,21 +203,25 @@ export function LayeredScope({
         onClick={handleClick}
       />
 
-      {/* z:30 — Layer toggles (pointer-events-auto for clicks) */}
-      <div style={{ zIndex: 30 }} className="absolute top-0 right-0 pointer-events-auto">
-        <LayerToggles layers={layers} onToggle={handleToggle} />
-      </div>
+      {/* z:30 — Layer toggles (hidden in spectral mode) */}
+      {labMode !== "spectral" && (
+        <div style={{ zIndex: 30 }} className="absolute top-0 right-0 pointer-events-auto">
+          <LayerToggles layers={layers} onToggle={handleToggle} />
+        </div>
+      )}
 
-      {/* z:40 — Tooltip */}
-      <div style={{ zIndex: 40 }} className="absolute inset-x-0 bottom-0 pointer-events-none">
-        <ScopeTooltip
-          data={tooltipData}
-          depth={depth}
-          accentColor={accentColor}
-          containerW={containerW}
-          labMode={labMode}
-        />
-      </div>
+      {/* z:40 — Tooltip (hidden in spectral mode) */}
+      {labMode !== "spectral" && (
+        <div style={{ zIndex: 40 }} className="absolute inset-x-0 bottom-0 pointer-events-none">
+          <ScopeTooltip
+            data={tooltipData}
+            depth={depth}
+            accentColor={accentColor}
+            containerW={containerW}
+            labMode={labMode}
+          />
+        </div>
+      )}
     </div>
   );
 }

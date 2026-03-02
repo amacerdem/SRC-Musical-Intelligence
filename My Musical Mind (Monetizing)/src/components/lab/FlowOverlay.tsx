@@ -27,7 +27,7 @@ import {
   ACOUSTIC_R3_24D,
 } from "@/data/dimensions";
 
-export type LabMode = "neuro" | "acoustic";
+export type LabMode = "spectral" | "acoustic" | "neuro";
 
 /* ── Constants ───────────────────────────────────────────────────────── */
 
@@ -217,6 +217,12 @@ export function FlowOverlay({
 
     const isAcoustic = labMode === "acoustic";
 
+    /* ── 0. Dim spectral layer when curves are visible ── */
+    if (showCurves) {
+      ctx.fillStyle = isAcoustic ? "rgba(14,8,6,0.55)" : "rgba(6,6,14,0.55)";
+      ctx.fillRect(0, 0, W, H);
+    }
+
     /* ── 1. Reward heat-map (NeuroAcoustic, showReward) ── */
     if (!isAcoustic && showReward && rewardArr && rewardArr.length > 0) {
       const stripW = Math.max(2, cW / 120);
@@ -266,9 +272,9 @@ export function FlowOverlay({
       const seg0 = Math.max(0, Math.floor(sT / segDur) - 2);
       const seg1 = Math.min(segCount - 1, Math.ceil((sT + windowDur) / segDur) + 2);
 
-      // Zoom-relative curve width
+      // Zoom-relative curve width — thicker for emphasis
       const zoomScale = Math.sqrt(INITIAL_WINDOW / Math.max(2, windowDur));
-      const coreWidth = (depth <= 6 ? 1.5 : depth <= 12 ? 1 : 0.65) * Math.max(0.4, Math.min(2, zoomScale));
+      const coreWidth = (depth <= 6 ? 2.5 : depth <= 12 ? 1.8 : 1.2) * Math.max(0.5, Math.min(2.5, zoomScale));
 
       for (let d = dimCount - 1; d >= 0; d--) {
         const dim = dimList[d];
@@ -299,10 +305,10 @@ export function FlowOverlay({
         }
         if (sp.length < 2) continue;
 
-        // Area fill
+        // Area fill — stronger for emphasis
         const ag = ctx.createLinearGradient(0, MT, 0, MT + cH);
-        ag.addColorStop(0, col + "10");
-        ag.addColorStop(1, col + "01");
+        ag.addColorStop(0, col + "20");
+        ag.addColorStop(1, col + "04");
         ctx.beginPath();
         ctx.moveTo(sp[0].x, sp[0].y);
         for (let i = 1; i < sp.length; i++) ctx.lineTo(sp[i].x, sp[i].y);
@@ -324,18 +330,18 @@ export function FlowOverlay({
             avgV += Math.max(0, Math.min(1, (sp[i].v - dataMin) / range));
           }
           avgV /= (end - start + 1);
-          const glow = Math.pow(avgV, 0.7);
-          if (glow < 0.08) continue;
+          const glow = Math.pow(avgV, 0.6);
+          if (glow < 0.05) continue;
 
-          const outerA = Math.round(glow * 40);
+          const outerA = Math.round(glow * 70);
           if (outerA > 2) {
             ctx.beginPath();
             ctx.moveTo(sp[start].x, sp[start].y);
             for (let i = start + 1; i <= end; i++) ctx.lineTo(sp[i].x, sp[i].y);
-            ctx.shadowBlur = 6 + glow * 14;
+            ctx.shadowBlur = 10 + glow * 22;
             ctx.shadowColor = col;
-            ctx.strokeStyle = col + outerA.toString(16).padStart(2, "0");
-            ctx.lineWidth = (depth <= 6 ? 4 + glow * 4 : depth <= 12 ? 3 + glow * 3 : 2 + glow * 2) * zoomScale;
+            ctx.strokeStyle = col + Math.min(outerA, 255).toString(16).padStart(2, "0");
+            ctx.lineWidth = (depth <= 6 ? 6 + glow * 6 : depth <= 12 ? 4 + glow * 5 : 3 + glow * 3) * zoomScale;
             ctx.stroke();
           }
         }
@@ -347,7 +353,7 @@ export function FlowOverlay({
         ctx.beginPath();
         ctx.moveTo(sp[0].x, sp[0].y);
         for (let i = 1; i < sp.length; i++) ctx.lineTo(sp[i].x, sp[i].y);
-        ctx.strokeStyle = col + "D0";
+        ctx.strokeStyle = col + "F0";
         ctx.lineWidth = coreWidth;
         ctx.stroke();
 
@@ -387,16 +393,23 @@ export function FlowOverlay({
         if (!dm) continue;
         const dc = baseHex(dm.color);
         const y = v2y(vals[d] ?? 0);
+        // Outer glow ring
         ctx.beginPath();
-        ctx.arc(sx, y, depth <= 6 ? 5 : 3.5, 0, Math.PI * 2);
-        ctx.fillStyle = dc + "30";
+        ctx.arc(sx, y, depth <= 6 ? 10 : depth <= 12 ? 7 : 5.5, 0, Math.PI * 2);
+        ctx.fillStyle = dc + "20";
         ctx.fill();
+        // Mid ring
         ctx.beginPath();
-        ctx.arc(sx, y, depth <= 6 ? 3 : 2, 0, Math.PI * 2);
+        ctx.arc(sx, y, depth <= 6 ? 7 : depth <= 12 ? 5 : 4, 0, Math.PI * 2);
+        ctx.fillStyle = dc + "50";
+        ctx.fill();
+        // Core dot
+        ctx.beginPath();
+        ctx.arc(sx, y, depth <= 6 ? 4.5 : depth <= 12 ? 3.5 : 2.5, 0, Math.PI * 2);
         ctx.fillStyle = dc;
         ctx.fill();
-        ctx.strokeStyle = "rgba(0,0,0,0.5)";
-        ctx.lineWidth = 0.5;
+        ctx.strokeStyle = "rgba(0,0,0,0.6)";
+        ctx.lineWidth = 0.8;
         ctx.stroke();
       }
     }

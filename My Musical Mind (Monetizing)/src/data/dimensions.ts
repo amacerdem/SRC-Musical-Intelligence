@@ -38,33 +38,33 @@ export const ALL_NEUROSCIENCE: LabDimension[] = [
   // Predictive Processing (0-3)
   { index: 0,  key: "prediction_error",     name: "Prediction Error",  nameTr: "Tahmin Hatas\u0131",       beliefIndices: [25, 34, 84],             color: "#38BDF8",   parentKey: "melodic_hook" },
   { index: 1,  key: "precision",            name: "Precision",         nameTr: "Hassasiyet",           beliefIndices: [20, 39, 46],             color: "#38BDF8CC", parentKey: "harmonic_depth" },
-  { index: 2,  key: "information_content",  name: "Information",       nameTr: "Bilgi \u0130\u00e7eri\u011fi",     beliefIndices: [25],                     color: "#38BDF899", parentKey: "surprise" },
-  { index: 3,  key: "model_uncertainty",    name: "Uncertainty",       nameTr: "Belirsizlik",          beliefIndices: [20, 31, 46],             color: "#38BDF877", parentKey: "harmonic_depth" },
+  { index: 2,  key: "information_content",  name: "Information Content", nameTr: "Bilgi \u0130\u00e7eri\u011fi",  beliefIndices: [25],                     color: "#38BDF899", parentKey: "surprise" },
+  { index: 3,  key: "model_uncertainty",    name: "Model Uncertainty",  nameTr: "Model Belirsizli\u011fi",  beliefIndices: [20, 31, 46],             color: "#38BDF877", parentKey: "harmonic_depth" },
   // Sensorimotor (4-7)
   { index: 4,  key: "oscillation_coupling", name: "Beat Coupling",     nameTr: "Ritim Ba\u011f\u0131",          beliefIndices: [42, 44],                 color: "#22C55E",   parentKey: "rhythmic_drive" },
   { index: 5,  key: "motor_period_lock",    name: "Period Lock",       nameTr: "Periyot Kilidi",       beliefIndices: [96, 98, 99],             color: "#22C55ECC", parentKey: "rhythmic_drive" },
   { index: 6,  key: "auditory_motor_bind",  name: "Motor Binding",     nameTr: "Motor Ba\u011flama",         beliefIndices: [90, 92, 95, 99],         color: "#22C55E99", parentKey: "timbral_color" },
-  { index: 7,  key: "timing_precision",     name: "Timing",            nameTr: "Zamanlama",            beliefIndices: [100],                    color: "#22C55E77", parentKey: "timbral_color" },
+  { index: 7,  key: "timing_precision",     name: "Timing Precision",  nameTr: "Zamanlama Hassasiyeti", beliefIndices: [100],                    color: "#22C55E77", parentKey: "timbral_color" },
   // Emotion Circuitry (8-11)
   { index: 8,  key: "valence_mode",         name: "Valence Mode",      nameTr: "Duygu Modu",           beliefIndices: [66, 67, 68],             color: "#A855F7",   parentKey: "emotional_arc" },
   { index: 9,  key: "autonomic_arousal",    name: "ANS Arousal",       nameTr: "Otonom Uyar\u0131lma",      beliefIndices: [35, 60, 63],             color: "#A855F7CC", parentKey: "emotional_arc" },
-  { index: 10, key: "nostalgia_circuit",    name: "Nostalgia",         nameTr: "Nostalji",             beliefIndices: [50, 53, 55, 70],         color: "#A855F799", parentKey: "narrative" },
-  { index: 11, key: "chills_pathway",       name: "Chills",            nameTr: "T\u00fcylenme",             beliefIndices: [60, 61, 62, 79, 83],     color: "#A855F777", parentKey: "pleasure" },
+  { index: 10, key: "nostalgia_circuit",    name: "Nostalgia Circuit", nameTr: "Nostalji Devresi",     beliefIndices: [50, 53, 55, 70],         color: "#A855F799", parentKey: "narrative" },
+  { index: 11, key: "chills_pathway",       name: "Chills Pathway",    nameTr: "T\u00fcylenme Yolu",        beliefIndices: [60, 61, 62, 79, 83],     color: "#A855F777", parentKey: "pleasure" },
   // Reward System (12-15)
   { index: 12, key: "da_anticipation",      name: "DA Anticipation",   nameTr: "DA Beklenti",          beliefIndices: [74, 77, 78],             color: "#F59E0B",   parentKey: "momentum" },
   { index: 13, key: "da_consummation",      name: "DA Consummation",   nameTr: "DA T\u00fcketim",           beliefIndices: [74, 75, 83, 89],         color: "#F59E0BCC", parentKey: "momentum" },
   { index: 14, key: "hedonic_tone",         name: "Hedonic Tone",      nameTr: "Hedonik Ton",          beliefIndices: [40, 61, 81, 83],         color: "#F59E0B99", parentKey: "pleasure" },
   { index: 15, key: "reward_pe",            name: "Reward PE",         nameTr: "\u00d6d\u00fcl TH",              beliefIndices: [75, 84, 85],             color: "#F59E0B77", parentKey: "surprise" },
   // Memory & Learning (16-19)
-  { index: 16, key: "episodic_encoding",    name: "Episodic Memory",   nameTr: "Epizodik Haf\u0131za",      beliefIndices: [51, 57, 59],             color: "#FBBF24",   parentKey: "melodic_hook" },
-  { index: 17, key: "autobiographical",     name: "Life Story",        nameTr: "Ya\u015fam \u00d6yk\u00fcs\u00fc",       beliefIndices: [50, 51, 55],             color: "#FBBF24CC", parentKey: "narrative" },
-  { index: 18, key: "statistical_learning", name: "Pattern Learning",  nameTr: "\u00d6r\u00fcnt\u00fc \u00d6\u011frenme",    beliefIndices: [20, 31, 109],            color: "#FBBF2499", parentKey: "familiarity" },
-  { index: 19, key: "expertise_effect",     name: "Expertise",         nameTr: "Uzmanl\u0131k",             beliefIndices: [111, 114, 119, 120],     color: "#FBBF2477", parentKey: "familiarity" },
+  { index: 16, key: "episodic_encoding",    name: "Episodic Encoding", nameTr: "Epizodik Kodlama",     beliefIndices: [51, 57, 59],             color: "#FBBF24",   parentKey: "melodic_hook" },
+  { index: 17, key: "autobiographical",     name: "Autobiographical",  nameTr: "Otobiyografik",        beliefIndices: [50, 51, 55],             color: "#FBBF24CC", parentKey: "narrative" },
+  { index: 18, key: "statistical_learning", name: "Statistical Learning", nameTr: "\u0130statistiksel \u00d6\u011frenme", beliefIndices: [20, 31, 109],     color: "#FBBF2499", parentKey: "familiarity" },
+  { index: 19, key: "expertise_effect",     name: "Expertise Effect",  nameTr: "Uzmanl\u0131k Etkisi",      beliefIndices: [111, 114, 119, 120],     color: "#FBBF2477", parentKey: "familiarity" },
   // Social Cognition (20-23)
   { index: 20, key: "neural_synchrony",     name: "Neural Sync",       nameTr: "N\u00f6ral Senkron",        beliefIndices: [122, 128],               color: "#EC4899",   parentKey: "space" },
   { index: 21, key: "social_bonding",       name: "Social Bond",       nameTr: "Sosyal Ba\u011f",           beliefIndices: [55, 123, 124, 126],      color: "#EC4899CC", parentKey: "space" },
   { index: 22, key: "social_prediction",    name: "Social Prediction", nameTr: "Sosyal Tahmin",        beliefIndices: [122, 125, 130],          color: "#EC489999", parentKey: "repetition" },
-  { index: 23, key: "collective_reward",    name: "Collective Joy",    nameTr: "Kolektif \u00d6d\u00fcl",        beliefIndices: [83, 121, 126],           color: "#EC489977", parentKey: "repetition" },
+  { index: 23, key: "collective_reward",    name: "Collective Reward", nameTr: "Kolektif \u00d6d\u00fcl",        beliefIndices: [83, 121, 126],           color: "#EC489977", parentKey: "repetition" },
 ];
 
 // =====================================================================
