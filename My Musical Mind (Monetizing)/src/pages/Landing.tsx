@@ -240,9 +240,12 @@ export function Landing() {
       if (prog >= 100) {
         clearInterval(interval);
 
-        // Deterministic persona from real MI dataset
-        const profile = miDataService.computeAggregateProfile();
-        const derivedPersonaId = derivePersonaFromGenes(profile.genes);
+        // Use Spotify-derived profile if available, else fall back to local MI dataset
+        const sp = useUserStore.getState().spotifyProfile;
+        const profile = sp && sp.stats.total_tracks > 0
+          ? { genes: sp.genes, totalTracks: sp.stats.total_tracks, totalMinutes: sp.stats.total_minutes, dominantFamily: sp.dominant_family, dominantGene: sp.dominant_gene }
+          : miDataService.computeAggregateProfile();
+        const derivedPersonaId = sp ? sp.persona_id : derivePersonaFromGenes(profile.genes);
         const derivedPersona = getPersona(derivedPersonaId);
         setSelectedPersonaId(derivedPersona.id);
 

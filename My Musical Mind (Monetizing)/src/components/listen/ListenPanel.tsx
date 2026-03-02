@@ -220,13 +220,29 @@ export function ListenPanel({ accentColor }: Props) {
       setLoading(true);
       try {
         if (connected) {
-          const [playback, current, recent, top, q] = await Promise.all([
-            SpotifyService.getPlaybackState().catch(() => null),
-            SpotifyService.getCurrentlyPlaying().catch(() => null),
-            SpotifyService.getRecentlyPlayed(20).catch(() => []),
-            SpotifyService.getTopTracks("medium_term", 20).catch(() => []),
-            SpotifyService.getQueue().catch(() => ({ currentTrack: null, queue: [] as MockTrack[] })),
+          console.log("[ListenPanel] Spotify connected, fetching data...");
+          const results = await Promise.allSettled([
+            SpotifyService.getPlaybackState(),
+            SpotifyService.getCurrentlyPlaying(),
+            SpotifyService.getRecentlyPlayed(20),
+            SpotifyService.getTopTracks("medium_term", 20),
+            SpotifyService.getQueue(),
           ]);
+          // Log any failures
+          const labels = ["playbackState", "currentlyPlaying", "recentlyPlayed", "topTracks", "queue"];
+          results.forEach((r, i) => {
+            if (r.status === "rejected") console.warn(`[ListenPanel] ${labels[i]} failed:`, r.reason?.message ?? r.reason);
+          });
+          const playback = results[0].status === "fulfilled" ? results[0].value : null;
+          const current = results[1].status === "fulfilled" ? results[1].value : null;
+          const recent = results[2].status === "fulfilled" ? results[2].value : [] as MockTrack[];
+          const top = results[3].status === "fulfilled" ? results[3].value : [] as MockTrack[];
+          const q = results[4].status === "fulfilled" ? results[4].value : { currentTrack: null, queue: [] as MockTrack[] };
+          console.log("[ListenPanel] Results:", {
+            playback: !!playback, current: !!current,
+            recent: (recent as MockTrack[]).length, top: (top as MockTrack[]).length,
+            queue: (q as { queue: MockTrack[] }).queue.length,
+          });
           if (playback) {
             setCurrentTrack(playback.track);
             setIsPlaying(playback.is_playing);
@@ -242,6 +258,7 @@ export function ListenPanel({ accentColor }: Props) {
           }
           // If Spotify returned nothing useful, fall back to demo
           if (!playback && !current && (recent as MockTrack[]).length === 0) {
+            console.warn("[ListenPanel] All Spotify calls empty, falling back to demo");
             await loadDemo();
           } else {
             setRecentTracks(recent as MockTrack[]);
@@ -249,11 +266,11 @@ export function ListenPanel({ accentColor }: Props) {
             setQueueTracks((q as { queue: MockTrack[] }).queue);
           }
         } else {
+          console.log("[ListenPanel] Not connected, loading demo");
           await loadDemo();
         }
       } catch (err) {
         console.error("ListenPanel fetch error:", err);
-        // Spotify completely failed — fall back to demo
         try { await loadDemo(); } catch { /* silent */ }
       } finally {
         setLoading(false);

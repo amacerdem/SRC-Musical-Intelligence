@@ -264,9 +264,12 @@ export function Onboarding() {
       if (progress >= 100) {
         clearInterval(interval);
 
-        // Deterministic persona from real MI dataset (not random)
-        const profile = miDataService.computeAggregateProfile();
-        const derivedPersonaId = derivePersonaFromGenes(profile.genes);
+        // Use Spotify-derived profile if available, else fall back to local MI dataset
+        const sp = useUserStore.getState().spotifyProfile;
+        const profile = sp && sp.stats.total_tracks > 0
+          ? { genes: sp.genes, totalTracks: sp.stats.total_tracks, totalMinutes: sp.stats.total_minutes, dominantFamily: sp.dominant_family, dominantGene: sp.dominant_gene }
+          : miDataService.computeAggregateProfile();
+        const derivedPersonaId = sp ? sp.persona_id : derivePersonaFromGenes(profile.genes);
         const derivedPersona = getPersona(derivedPersonaId);
         setPersona(derivedPersona.id);
 
@@ -1084,9 +1087,12 @@ function EvolvingStep({ progress, phase, userName }: { progress: number; phase: 
   const orgStage = progress > 70 ? 2 : 1 as const;
   const orgIntensity = 0.15 + progress * 0.007;
 
-  // Real data from MI dataset
+  // Real data from Spotify profile or MI dataset
   const stats = getRealStats();
-  const profile = miDataService.isReady() ? miDataService.computeAggregateProfile() : null;
+  const spProfile = useUserStore.getState().spotifyProfile;
+  const profile = spProfile && spProfile.stats.total_tracks > 0
+    ? { genes: spProfile.genes, dominantGene: spProfile.dominant_gene, dominantFamily: spProfile.dominant_family }
+    : miDataService.isReady() ? miDataService.computeAggregateProfile() : null;
   const genes = profile?.genes ?? { entropy: 0.5, resolution: 0.5, tension: 0.5, resonance: 0.5, plasticity: 0.5 };
   const insights = getGeneInsights(genes, i18n.language);
 

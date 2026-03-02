@@ -25,6 +25,13 @@ export default function App() {
   const { hasCompletedOnboarding } = useUserStore();
   const [dataReady, setDataReady] = useState(false);
 
+  /* Restore Spotify connection state from stored tokens */
+  useEffect(() => {
+    if (window.location.pathname === "/callback") return;
+    const hasToken = !!localStorage.getItem("spotify_access_token");
+    useUserStore.getState().setSpotifyConnected(hasToken);
+  }, []);
+
   useEffect(() => {
     miDataService.init().then(() => {
       initLibraryTracks();

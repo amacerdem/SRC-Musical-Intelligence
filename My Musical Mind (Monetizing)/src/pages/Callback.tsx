@@ -10,6 +10,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Loader2, CheckCircle2, XCircle } from "lucide-react";
 import { useUserStore } from "@/stores/useUserStore";
+import { fetchSpotifyMIProfile } from "@/services/SpotifyProfileService";
 
 const STORAGE_KEYS = {
   accessToken: "spotify_access_token",
@@ -25,6 +26,7 @@ export function Callback() {
   const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
   const [errorMsg, setErrorMsg] = useState("");
   const setSpotifyConnected = useUserStore((s) => s.setSpotifyConnected);
+  const setSpotifyProfile = useUserStore((s) => s.setSpotifyProfile);
   const exchanged = useRef(false);
 
   useEffect(() => {
@@ -67,6 +69,14 @@ export function Callback() {
         localStorage.setItem(STORAGE_KEYS.refreshToken, data.refresh_token ?? "");
         localStorage.setItem(STORAGE_KEYS.expiresAt, String(expiresAt));
 
+        setSpotifyConnected(true);
+
+        // Fetch MI profile from Spotify library (runs while user sees "Connected!")
+        const miProfile = await fetchSpotifyMIProfile();
+        if (miProfile) {
+          setSpotifyProfile(miProfile);
+        }
+
         // Retrieve pre-auth context
         const fromPath = sessionStorage.getItem(STORAGE_KEYS.preAuthPath) ?? "/onboarding";
         const userName = sessionStorage.getItem(STORAGE_KEYS.preAuthUserName) ?? "";
@@ -75,7 +85,6 @@ export function Callback() {
         sessionStorage.removeItem(STORAGE_KEYS.preAuthPath);
         sessionStorage.removeItem(STORAGE_KEYS.preAuthUserName);
 
-        setSpotifyConnected(true);
         setStatus("success");
 
         setTimeout(() => {
@@ -108,7 +117,7 @@ export function Callback() {
               Connecting to Spotify...
             </p>
             <p className="text-sm text-slate-600 font-display font-light mt-2">
-              Exchanging authorization
+              Analyzing your listening profile...
             </p>
           </>
         )}

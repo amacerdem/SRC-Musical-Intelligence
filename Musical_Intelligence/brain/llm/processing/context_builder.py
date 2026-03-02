@@ -139,6 +139,41 @@ def build_layer1(user_profile: dict[str, Any], language: str = "tr") -> str:
         else:
             lines.append(f"- **Current 6D**: {dim_str}")
 
+    # Spotify listening profile (if available)
+    sp = user_profile.get("spotify_profile")
+    if sp:
+        lines.append("")
+        if language == "tr":
+            lines.append("### Dinleme Profili (Spotify)")
+            lines.append(f"- **Kütüphane**: {sp.get('total_tracks', 0)} parça, {round(sp.get('total_minutes', 0) / 60, 1)} saat")
+            top_genres = sp.get("top_genres", [])
+            if top_genres:
+                lines.append(f"- **Favori türler**: {', '.join(top_genres[:8])}")
+            lines.append(f"- **Tür çeşitliliği**: {sp.get('genre_diversity', 0):.2f}")
+            lines.append(f"- **Sanatçı sayısı**: {sp.get('artist_count', 0)}")
+            fd = sp.get("family_distribution", {})
+            if fd:
+                fd_str = ", ".join(f"{k} %{round(v / max(sum(fd.values()), 1) * 100)}" for k, v in sorted(fd.items(), key=lambda x: -x[1]))
+                lines.append(f"- **Aile dağılımı**: {fd_str}")
+            ts = sp.get("taste_shift", 0)
+            if ts > 0.05:
+                lines.append(f"- **Zevk evrimi**: {ts:+.2f} (kısa vs uzun dönem farkı)")
+        else:
+            lines.append("### Listening Profile (Spotify)")
+            lines.append(f"- **Library**: {sp.get('total_tracks', 0)} tracks, {round(sp.get('total_minutes', 0) / 60, 1)} hours")
+            top_genres = sp.get("top_genres", [])
+            if top_genres:
+                lines.append(f"- **Top genres**: {', '.join(top_genres[:8])}")
+            lines.append(f"- **Genre diversity**: {sp.get('genre_diversity', 0):.2f}")
+            lines.append(f"- **Unique artists**: {sp.get('artist_count', 0)}")
+            fd = sp.get("family_distribution", {})
+            if fd:
+                fd_str = ", ".join(f"{k} {round(v / max(sum(fd.values()), 1) * 100)}%" for k, v in sorted(fd.items(), key=lambda x: -x[1]))
+                lines.append(f"- **Family distribution**: {fd_str}")
+            ts = sp.get("taste_shift", 0)
+            if ts > 0.05:
+                lines.append(f"- **Taste evolution**: {ts:+.2f} (short vs long term shift)")
+
     # Persona-specific conversation guidance
     if persona_card:
         lines.append("")

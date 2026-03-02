@@ -48,6 +48,7 @@ class ChatRequest(BaseModel):
         }
     )
     dimensions_6d: dict[str, float] | None = None
+    spotify_profile: dict[str, Any] | None = None
 
 
 class ChatResponse(BaseModel):
@@ -143,7 +144,7 @@ async def chat(req: ChatRequest):
     from Musical_Intelligence.brain.llm.agent.conversation import ConversationManager
     from Musical_Intelligence.brain.llm.agent.context_builder import build_api_request
     from Musical_Intelligence.brain.llm.agent.router import estimate_cost
-    from Musical_Intelligence.brain.llm.agent.tools import handle_tool_call
+    from Musical_Intelligence.brain.llm.agent.tools import handle_tool_call, set_spotify_profile
 
     # Build user profile dict
     user_profile = {
@@ -157,6 +158,11 @@ async def chat(req: ChatRequest):
     }
     if req.dimensions_6d:
         user_profile["dimensions_6d"] = req.dimensions_6d
+    if req.spotify_profile:
+        user_profile["spotify_profile"] = req.spotify_profile
+
+    # Inject Spotify profile into tool system
+    set_spotify_profile(req.spotify_profile)
 
     # Get conversation history
     mgr = ConversationManager()
@@ -184,6 +190,7 @@ async def chat(req: ChatRequest):
             total_in = 0
             total_out = 0
             response_text = ""
+            collected_actions: list[dict] = []
             messages = api_request.pop("messages")
 
             for _round in range(MAX_TOOL_ROUNDS):
@@ -227,7 +234,6 @@ async def chat(req: ChatRequest):
 
                 # Execute each tool and collect results
                 tool_results = []
-                collected_actions: list[dict] = []
                 for tool_block in tool_use_blocks:
                     result = handle_tool_call(
                         tool_name=tool_block.name,
@@ -304,7 +310,7 @@ async def chat_stream(req: ChatRequest):
         from Musical_Intelligence.brain.llm.agent.conversation import ConversationManager
         from Musical_Intelligence.brain.llm.agent.context_builder import build_api_request
         from Musical_Intelligence.brain.llm.agent.router import estimate_cost
-        from Musical_Intelligence.brain.llm.agent.tools import handle_tool_call
+        from Musical_Intelligence.brain.llm.agent.tools import handle_tool_call, set_spotify_profile
 
         lang = req.language
 
@@ -325,6 +331,11 @@ async def chat_stream(req: ChatRequest):
         }
         if req.dimensions_6d:
             user_profile["dimensions_6d"] = req.dimensions_6d
+        if req.spotify_profile:
+            user_profile["spotify_profile"] = req.spotify_profile
+
+        # Inject Spotify profile into tool system
+        set_spotify_profile(req.spotify_profile)
 
         mgr = ConversationManager()
         session_id = req.session_id or mgr.create_session(req.user_id)
@@ -412,6 +423,7 @@ async def chat_stream(req: ChatRequest):
                     "control_playback": ("Oynatma kontrol ediliyor...", "Controlling playback..."),
                     "get_now_playing": ("Şu an çalan alınıyor...", "Getting now playing..."),
                     "recommend_tracks": ("Kişisel öneriler hazırlanıyor...", "Preparing personalized recommendations..."),
+                    "get_spotify_listening_profile": ("Spotify dinleme profili yükleniyor...", "Loading Spotify listening profile..."),
                 }
                 for tn in tool_names:
                     tr_label, en_label = tool_labels.get(tn, (f"{tn}...", f"{tn}..."))

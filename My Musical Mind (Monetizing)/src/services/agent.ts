@@ -16,6 +16,15 @@ export interface ChatRequest {
   tier: string;
   genes: Record<string, number>;
   dimensions_6d?: Record<string, number>;
+  spotify_profile?: {
+    total_tracks: number;
+    total_minutes: number;
+    top_genres: string[];
+    genre_diversity: number;
+    artist_count: number;
+    family_distribution: Record<string, number>;
+    taste_shift: number;
+  };
 }
 
 export interface ChatResponse {

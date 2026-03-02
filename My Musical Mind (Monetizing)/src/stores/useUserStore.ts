@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { MindProfile, EvolutionStage, SubTrait } from "@/types/mind";
+import type { SpotifyMIProfile } from "@/services/SpotifyProfileService";
 
 interface UserState {
   /* identity */
@@ -13,6 +14,7 @@ interface UserState {
 
   /* spotify */
   spotifyConnected: boolean;
+  spotifyProfile: SpotifyMIProfile | null;
 
   /* progression */
   level: number;
@@ -31,6 +33,7 @@ interface UserState {
   setMind: (mind: MindProfile) => void;
   setDisplayName: (name: string) => void;
   setSpotifyConnected: (connected: boolean) => void;
+  setSpotifyProfile: (profile: SpotifyMIProfile | null) => void;
   completeOnboarding: (mind: MindProfile, displayName?: string) => void;
   addXP: (amount: number) => void;
   evolve: (stage: EvolutionStage, subTrait?: SubTrait) => void;
@@ -45,6 +48,7 @@ const INITIAL_STATE = {
   mind: null as MindProfile | null,
   hasCompletedOnboarding: false,
   spotifyConnected: false,
+  spotifyProfile: null as SpotifyMIProfile | null,
   level: 1,
   xp: 0,
   streak: 0,
@@ -64,20 +68,27 @@ export const useUserStore = create<UserState>()(
       setMind: (mind) => set({ mind }),
       setDisplayName: (displayName) => set({ displayName }),
       setSpotifyConnected: (spotifyConnected) => set({ spotifyConnected }),
+      setSpotifyProfile: (spotifyProfile) => set({ spotifyProfile }),
 
       completeOnboarding: (mind, displayName) =>
         set((s) => {
-          // Pull real stats from MI dataset if available
-          let realTracks = 138, realHours = 10, realMinutes = 598;
-          try {
-            const { miDataService } = require("@/services/MIDataService");
-            if (miDataService.isReady()) {
-              const tracks = miDataService.getAllTracks();
-              realTracks = tracks.length;
-              realMinutes = Math.round(tracks.reduce((sum: number, t: { duration_s: number }) => sum + t.duration_s, 0) / 60);
-              realHours = Math.round(realMinutes / 60 * 10) / 10;
-            }
-          } catch { /* fallback to defaults */ }
+          // Prefer Spotify profile stats if available, else fall back to MI dataset
+          let realTracks = 138, realHours = 10;
+          const sp = s.spotifyProfile;
+          if (sp && sp.stats.total_tracks > 0) {
+            realTracks = sp.stats.total_tracks;
+            realHours = Math.round(sp.stats.total_minutes / 60 * 10) / 10;
+          } else {
+            try {
+              const { miDataService } = require("@/services/MIDataService");
+              if (miDataService.isReady()) {
+                const tracks = miDataService.getAllTracks();
+                realTracks = tracks.length;
+                const realMinutes = Math.round(tracks.reduce((sum: number, t: { duration_s: number }) => sum + t.duration_s, 0) / 60);
+                realHours = Math.round(realMinutes / 60 * 10) / 10;
+              }
+            } catch { /* fallback to defaults */ }
+          }
           return {
             mind,
             hasCompletedOnboarding: true,
@@ -145,6 +156,7 @@ export const useUserStore = create<UserState>()(
         mind: state.mind,
         hasCompletedOnboarding: state.hasCompletedOnboarding,
         spotifyConnected: state.spotifyConnected,
+        spotifyProfile: state.spotifyProfile,
         level: state.level,
         xp: state.xp,
         streak: state.streak,

@@ -84,7 +84,7 @@ function buildChatRequest(
   const persona = personas.find((p) => p.id === personaId);
   const family = mind ? getDominantType(mind.genes) : "Alchemists";
 
-  return {
+  const req: ChatRequest = {
     user_id: userStore.displayName || "anonymous",
     session_id: sessionId ?? undefined,
     message,
@@ -96,6 +96,25 @@ function buildChatRequest(
     tier: mapTier(mind?.tier ?? "free"),
     genes: { ...genes },
   };
+
+  // Attach Spotify listening profile if available
+  const sp = userStore.spotifyProfile;
+  if (sp && sp.stats.total_tracks > 0) {
+    req.spotify_profile = {
+      total_tracks: sp.stats.total_tracks,
+      total_minutes: sp.stats.total_minutes,
+      top_genres: Object.entries(sp.genre_distribution)
+        .sort(([, a], [, b]) => b - a)
+        .slice(0, 10)
+        .map(([g]) => g),
+      genre_diversity: sp.listening_diversity?.genre_entropy ?? 0,
+      artist_count: sp.stats.unique_artists,
+      family_distribution: sp.family_distribution,
+      taste_shift: sp.listening_diversity?.taste_shift ?? 0,
+    };
+  }
+
+  return req;
 }
 
 /** Build a SystemEventRequest from current store state */

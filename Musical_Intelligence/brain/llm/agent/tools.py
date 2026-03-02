@@ -370,6 +370,22 @@ TOOLS = [
         },
     },
     {
+        "name": "get_spotify_listening_profile",
+        "description": (
+            "Get the connected user's Spotify listening profile with MI analysis. "
+            "Returns their gene profile derived from real Spotify data, top genres, "
+            "family distribution across their library, listening diversity metrics "
+            "(genre entropy, artist entropy, tempo range), and taste evolution over time. "
+            "Use this when you want to understand the user's real musical identity, "
+            "comment on their listening patterns, or personalize deep recommendations. "
+            "Only available if the user connected their Spotify account."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {},
+        },
+    },
+    {
         "name": "recommend_tracks",
         "description": (
             "Get personalized track recommendations based on the user's gene "
@@ -426,6 +442,7 @@ def handle_tool_call(
     """
     handlers = {
         "get_listening_profile": _handle_listening_profile,
+        "get_spotify_listening_profile": _handle_spotify_listening_profile,
         "search_tracks": _handle_search_tracks,
         "analyze_track": _handle_analyze_track,
         "get_current_dimensions": _handle_get_dimensions,
@@ -463,6 +480,46 @@ def _handle_listening_profile(
     from .track_data import get_listening_profile
 
     return get_listening_profile()
+
+
+# ── Spotify Listening Profile Handler ─────────────────────────────
+
+# Thread-local storage for per-request spotify profile injection
+_spotify_profile_store: dict[str, Any] = {}
+
+
+def set_spotify_profile(profile: dict[str, Any] | None) -> None:
+    """Inject Spotify profile for the current request (called by router)."""
+    _spotify_profile_store.clear()
+    if profile:
+        _spotify_profile_store.update(profile)
+
+
+def _handle_spotify_listening_profile(
+    inputs: dict[str, Any], tier: str
+) -> dict[str, Any]:
+    """Get user's Spotify-derived MI listening profile."""
+    if not _spotify_profile_store:
+        return {
+            "error": "No Spotify profile available. The user has not connected their Spotify account.",
+            "suggestion": "Use get_listening_profile for the local music library instead.",
+        }
+
+    sp = _spotify_profile_store
+    result: dict[str, Any] = {
+        "source": "spotify",
+        "stats": {
+            "total_tracks": sp.get("total_tracks", 0),
+            "total_minutes": sp.get("total_minutes", 0),
+            "artist_count": sp.get("artist_count", 0),
+        },
+        "top_genres": sp.get("top_genres", []),
+        "genre_diversity": sp.get("genre_diversity", 0),
+        "family_distribution": sp.get("family_distribution", {}),
+        "taste_shift": sp.get("taste_shift", 0),
+    }
+
+    return result
 
 
 # ── Track Data Handlers ────────────────────────────────────────────
