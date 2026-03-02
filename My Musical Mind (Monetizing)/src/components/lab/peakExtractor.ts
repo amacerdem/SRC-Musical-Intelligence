@@ -35,72 +35,70 @@ const LOG2_RANGE = LOG2_MAX - LOG2_MIN;
 const MAX_PEAKS = 16;
 const AMP_THRESHOLD = 10; // uint8, out of 255
 
-/* ── Note-spectrum color anchors (semitone → [H, S, L]) ────────── */
+/* ── Diatonic pitch-class color spectrum (S³-VI reference) ────────────
+ *  7 diatonic anchors mapped to ROYGBIV, direct RGB interpolation.
+ *  Ported from S³-VI/ColorSpectrum/freqToColor.js.
+ *  Octave-repeating: same note class = same color regardless of octave.
+ *
+ *  Segments (semitone boundaries):
+ *    C [0,2)  D [2,4)  E [4,5)  F [5,7)  G [7,9)  A [9,11)  B [11,12)
+ *  ── */
 
-const NOTE_ANCHORS: [number, [number, number, number]][] = [
-  [0,  [0,   100, 50]],  // C  = red
-  [2,  [30,  100, 50]],  // D  = orange
-  [4,  [54,  100, 50]],  // E  = yellow
-  [5,  [140, 100, 42]],  // F  = green
-  [7,  [180, 100, 42]],  // G  = cyan
-  [9,  [225, 100, 55]],  // A  = blue
-  [11, [270, 100, 50]],  // B  = purple
+const DIATONIC_COLORS: [number, number, number][] = [
+  [1.000, 0.000, 0.000],  // C  — Red
+  [1.000, 0.498, 0.000],  // D  — Orange
+  [1.000, 1.000, 0.000],  // E  — Yellow
+  [0.000, 1.000, 0.000],  // F  — Green
+  [0.000, 1.000, 1.000],  // G  — Cyan
+  [0.000, 0.000, 1.000],  // A  — Blue
+  [0.545, 0.000, 1.000],  // B  — Purple
 ];
 
-function noteToHSL(semitone: number): [number, number, number] {
-  const s = ((semitone % 12) + 12) % 12;
-  let lo = NOTE_ANCHORS[NOTE_ANCHORS.length - 1];
-  let hi = NOTE_ANCHORS[0];
-  for (let i = 0; i < NOTE_ANCHORS.length - 1; i++) {
-    if (s >= NOTE_ANCHORS[i][0] && s < NOTE_ANCHORS[i + 1][0]) {
-      lo = NOTE_ANCHORS[i];
-      hi = NOTE_ANCHORS[i + 1];
-      break;
+const DIATONIC_SEGMENTS: [number, number][] = [
+  [0, 2],   // C → D
+  [2, 4],   // D → E
+  [4, 5],   // E → F
+  [5, 7],   // F → G
+  [7, 9],   // G → A
+  [9, 11],  // A → B
+  [11, 12], // B → C (wrap)
+];
+
+/** Frequency → diatonic-spectrum RGB in [0,1] range.
+ *  Direct RGB interpolation between 7 ROYGBIV anchors.
+ *  Octave-repeating: C=Red, D=Orange, E=Yellow, F=Green, G=Cyan, A=Blue, B=Purple. */
+export function freqToColor(freq: number): [number, number, number] {
+  const midi = 69 + 12 * Math.log2(freq / 440);
+  const pc = ((midi % 12) + 12) % 12; // continuous pitch class 0-12
+
+  // Find diatonic segment
+  for (let i = 0; i < DIATONIC_SEGMENTS.length; i++) {
+    const [start, end] = DIATONIC_SEGMENTS[i];
+    const next = (i + 1) % 7;
+
+    if (i < 6 ? (pc >= start && pc < end) : (pc >= start || pc < DIATONIC_SEGMENTS[0][0])) {
+      // Compute interpolation factor within segment
+      let t: number;
+      if (i < 6) {
+        t = (pc - start) / (end - start);
+      } else {
+        // B→C wrap: segment is [11, 12/0)
+        t = pc >= start
+          ? (pc - start) / (12 - start)
+          : (pc + 12 - start) / (12 - start);
+      }
+
+      const c0 = DIATONIC_COLORS[i];
+      const c1 = DIATONIC_COLORS[next];
+      return [
+        c0[0] + t * (c1[0] - c0[0]),
+        c0[1] + t * (c1[1] - c0[1]),
+        c0[2] + t * (c1[2] - c0[2]),
+      ];
     }
   }
-  if (s >= NOTE_ANCHORS[NOTE_ANCHORS.length - 1][0]) {
-    lo = NOTE_ANCHORS[NOTE_ANCHORS.length - 1];
-    hi = NOTE_ANCHORS[0];
-    const range = 12 - lo[0] + hi[0];
-    const t = (s - lo[0]) / range;
-    return [
-      lo[1][0] + t * (hi[1][0] + 360 - lo[1][0]),
-      lo[1][1] + t * (hi[1][1] - lo[1][1]),
-      lo[1][2] + t * (hi[1][2] - lo[1][2]),
-    ];
-  }
-  const range = hi[0] - lo[0];
-  const t = range > 0 ? (s - lo[0]) / range : 0;
-  return [
-    lo[1][0] + t * (hi[1][0] - lo[1][0]),
-    lo[1][1] + t * (hi[1][1] - lo[1][1]),
-    lo[1][2] + t * (hi[1][2] - lo[1][2]),
-  ];
-}
 
-function hslToRgb01(h: number, s: number, l: number): [number, number, number] {
-  h = ((h % 360) + 360) % 360;
-  s /= 100; l /= 100;
-  const c = (1 - Math.abs(2 * l - 1)) * s;
-  const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
-  const m = l - c / 2;
-  let r = 0, g = 0, b = 0;
-  if (h < 60)       { r = c; g = x; }
-  else if (h < 120) { r = x; g = c; }
-  else if (h < 180) { g = c; b = x; }
-  else if (h < 240) { g = x; b = c; }
-  else if (h < 300) { r = x; b = c; }
-  else              { r = c; b = x; }
-  return [r + m, g + m, b + m]; // 0-1 range for GPU
-}
-
-/** Frequency → note-spectrum RGB in [0,1] range, full saturation.
- *  Amplitude/brightness is handled by the shader (alpha + point size),
- *  so colors stay vivid and distinguishable at all amplitudes. */
-export function freqToColor(freq: number): [number, number, number] {
-  const semitone = 12 * Math.log2(freq / 16.3516);
-  const [h, s, l] = noteToHSL(semitone);
-  return hslToRgb01(h, s, l);
+  return DIATONIC_COLORS[0]; // fallback: red
 }
 
 /** Frequency → normalized log2 position (0 = A0 bottom, 1 = C8 top) */
@@ -199,6 +197,49 @@ export interface NearestPeakInfo {
   noteName: string;
   amplitude: number;
   rank: number;
+}
+
+/* ── All peaks at a given time (for spectral tooltip) ─────────────── */
+
+export interface PeakAtTime {
+  freq: number;
+  noteName: string;
+  amplitude: number;
+  rank: number;
+  yNorm: number;        // 0-1 log2 normalized vertical position
+  color: [number, number, number]; // RGB 0-1
+}
+
+/** Return all visible peaks at a given time, sorted high→low frequency */
+export function findAllPeaksAtTime(
+  peaks: PeakBuffers,
+  time: number,
+  frameRate: number,
+  peakCount: 4 | 8 | 16,
+): PeakAtTime[] {
+  const nFrames = Math.floor(peaks.totalPoints / MAX_PEAKS);
+  const frame = Math.max(0, Math.min(nFrames - 1, Math.round(time * frameRate)));
+
+  const result: PeakAtTime[] = [];
+  for (let p = 0; p < peakCount; p++) {
+    const idx = frame * MAX_PEAKS + p;
+    if (peaks.sizes[idx] < 0.01) continue;
+
+    const yNorm = peaks.positions[idx * 3 + 1];
+    const freq = Math.pow(2, LOG2_MIN + yNorm * LOG2_RANGE);
+
+    result.push({
+      freq,
+      noteName: freqToNoteName(freq),
+      amplitude: peaks.sizes[idx],
+      rank: peaks.ranks[idx],
+      yNorm,
+      color: freqToColor(freq),
+    });
+  }
+
+  result.sort((a, b) => b.freq - a.freq); // high → low
+  return result;
 }
 
 /** Find the peak closest to (time, yFrac) within threshold distance */

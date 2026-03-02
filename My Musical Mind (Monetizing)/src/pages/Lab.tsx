@@ -136,7 +136,7 @@ export function Lab() {
     };
   }, []);
 
-  /* ── Track catalog for dropdown ─────────────────── */
+  /* ── Track catalog ─────────────────────────────── */
   const labTracks = useMemo(() =>
     miDataService.getAllTracks().filter(
       (t) => t.id.includes("swan_lake") && t.duration_s > 60
@@ -472,13 +472,115 @@ export function Lab() {
             </div>
           </motion.div>
         ) : (
-          <div className="flex-1 min-h-0 flex items-center justify-center border border-white/[0.04] rounded-xl">
-            <div className="flex flex-col items-center gap-3">
-              <Waves size={20} className="text-slate-800" />
-              <span className="text-[10px] font-display font-light tracking-[0.12em] uppercase text-slate-700">
-                {phase === "idle" ? "Select a track to begin analysis" : "Loading..."}
-              </span>
-            </div>
+          <div className="flex-1 min-h-0 flex items-center justify-center">
+            {phase !== "idle" ? (
+              /* Loading state */
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="flex flex-col items-center gap-4"
+              >
+                <div
+                  className="w-12 h-12 rounded-2xl flex items-center justify-center animate-pulse"
+                  style={{ background: `${color}12`, border: `1px solid ${color}20` }}
+                >
+                  <FlaskConical size={22} style={{ color: `${color}80` }} />
+                </div>
+                <span className="text-xs font-display text-slate-500 tracking-wider">Analyzing...</span>
+              </motion.div>
+            ) : (
+              /* Welcome state */
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, ease: "easeOut" }}
+                className="flex flex-col items-center max-w-2xl w-full px-4"
+              >
+                {/* Icon */}
+                <div
+                  className="w-16 h-16 rounded-2xl flex items-center justify-center mb-5"
+                  style={{
+                    background: `linear-gradient(135deg, ${color}10, ${color}05)`,
+                    border: `1px solid ${color}15`,
+                    boxShadow: `0 8px 32px ${color}08`,
+                  }}
+                >
+                  <FlaskConical size={28} style={{ color: `${color}50` }} />
+                </div>
+
+                {/* Title */}
+                <h2 className="text-xl font-display font-bold text-white/85 mb-1.5 tracking-tight">
+                  Welcome to your Mind Lab
+                </h2>
+                <p className="text-[13px] font-display text-slate-500 mb-8 text-center leading-relaxed max-w-sm">
+                  Explore how your brain processes music through spectral,
+                  acoustic, and neuroacoustic analysis.
+                </p>
+
+                {/* Prompt */}
+                <span className="text-[9px] font-display text-slate-600 uppercase tracking-[0.15em] mb-3">
+                  Choose a piece to explore
+                </span>
+
+                {/* Track cards */}
+                <div
+                  className="w-full max-h-[42vh] overflow-y-auto rounded-xl"
+                  style={{
+                    scrollbarWidth: "thin",
+                    scrollbarColor: `${color}30 transparent`,
+                  }}
+                >
+                  <div className="space-y-1.5 p-1">
+                    {labTracks.map((track) => {
+                      const mins = Math.floor(track.duration_s / 60);
+                      const secs = Math.floor(track.duration_s % 60).toString().padStart(2, "0");
+                      return (
+                        <button
+                          key={track.id}
+                          onClick={() => handleTrackSelect(track)}
+                          className="w-full flex items-center gap-3.5 px-4 py-3 rounded-xl text-left transition-all group hover:scale-[1.01]"
+                          style={{
+                            background: "rgba(255,255,255,0.015)",
+                            border: "1px solid rgba(255,255,255,0.04)",
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.background = `${color}08`;
+                            e.currentTarget.style.borderColor = `${color}18`;
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.background = "rgba(255,255,255,0.015)";
+                            e.currentTarget.style.borderColor = "rgba(255,255,255,0.04)";
+                          }}
+                        >
+                          {/* Album art placeholder */}
+                          <div
+                            className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                            style={{ background: `${color}0A` }}
+                          >
+                            <Music2 size={15} style={{ color: `${color}50` }} />
+                          </div>
+
+                          {/* Info */}
+                          <div className="flex-1 min-w-0">
+                            <div className="text-[13px] font-display text-slate-300 group-hover:text-white truncate transition-colors">
+                              {track.title}
+                            </div>
+                            <div className="text-[11px] text-slate-600 truncate">
+                              {track.artist}
+                            </div>
+                          </div>
+
+                          {/* Duration */}
+                          <span className="text-[10px] font-mono text-slate-700 flex-shrink-0">
+                            {mins}:{secs}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </motion.div>
+            )}
           </div>
         )}
       </div>
