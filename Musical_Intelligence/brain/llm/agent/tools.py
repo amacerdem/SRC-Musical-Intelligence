@@ -641,10 +641,10 @@ def _handle_compare_tracks(
         deltas = {}
         for i, key in enumerate(DIM_6D):
             if i < len(dims_a) and i < len(dims_b):
-                delta = round(dims_b[i] - dims_a[i], 3)
+                delta = round(dims_b[i] - dims_a[i], 2)
                 deltas[key] = {
-                    "a": round(dims_a[i], 3),
-                    "b": round(dims_b[i], 3),
+                    "a": round(dims_a[i], 2),
+                    "b": round(dims_b[i], 2),
                     "delta": delta,
                     "direction": "higher" if delta > 0.05 else ("lower" if delta < -0.05 else "similar"),
                 }
@@ -1093,16 +1093,17 @@ def _handle_get_now_playing(
 # ── Recommendation Handler ───────────────────────────────────────
 
 
-# Mood → 6D dimension affinity (which dimensions should be high/low)
-_MOOD_FILTERS: dict[str, dict[str, tuple[float, float]]] = {
-    "energetic": {"energy": (0.65, 1.0), "tempo": (0.6, 1.0)},
-    "calm": {"energy": (0.0, 0.4), "tension": (0.0, 0.35), "tempo": (0.0, 0.45)},
-    "emotional": {"valence": (0.6, 1.0)},
-    "groovy": {"groove": (0.6, 1.0), "tempo": (0.5, 1.0)},
-    "complex": {"complexity": (0.6, 1.0)},
-    "intense": {"tension": (0.65, 1.0), "energy": (0.6, 1.0)},
-    "surprising": {"tension": (0.55, 1.0), "complexity": (0.5, 1.0)},
-    "nostalgic": {"valence": (0.5, 1.0), "complexity": (0.35, 0.7)},
+# Mood → gene affinity (which genes should be high/low for this mood)
+# Genes have wide variance (0.09-0.95) so thresholds work well here.
+_MOOD_GENE_FILTERS: dict[str, dict[str, tuple[float, float]]] = {
+    "energetic": {"plasticity": (0.55, 1.0), "tension": (0.5, 1.0)},
+    "calm": {"tension": (0.0, 0.35), "entropy": (0.0, 0.4)},
+    "emotional": {"resonance": (0.55, 1.0)},
+    "groovy": {"plasticity": (0.6, 1.0)},
+    "complex": {"entropy": (0.55, 1.0)},
+    "intense": {"tension": (0.6, 1.0)},
+    "surprising": {"entropy": (0.6, 1.0)},
+    "nostalgic": {"resonance": (0.5, 1.0), "resolution": (0.4, 1.0)},
 }
 
 
@@ -1122,31 +1123,29 @@ def _handle_recommend_tracks(
     tracks = catalog.get("tracks", [])
 
     scored: list[tuple[float, dict]] = []
-    mood_filter = _MOOD_FILTERS.get(mood, {})
+    mood_filter = _MOOD_GENE_FILTERS.get(mood, {})
 
     for t in tracks:
         tid = t.get("id", "")
         if tid in exclude_ids:
             continue
 
-        # Gene match score
-        genes = t.get("genes", {})
-        match = _gene_match_score(user_genes, genes) if genes else 0.5
-        if match is None:
-            match = 0.5
-
-        # Mood filter: check if track's 6D values fall within mood ranges
         track_data = load_track(tid)
         if not track_data:
             continue
 
-        dims = track_data.get("dimensions", {}).get("psychology_6d", [])
+        # Gene match score
+        genes = track_data.get("genes", {})
+        match = _gene_match_score(user_genes, genes) if genes else 0.5
+        if match is None:
+            match = 0.5
+
+        # Mood filter: check if track's gene values fall within mood ranges
         mood_bonus = 0.0
         mood_pass = True
-        if mood_filter and dims and len(dims) >= 6:
-            dim_dict = dict(zip(DIM_6D, dims))
-            for dim_key, (lo, hi) in mood_filter.items():
-                val = dim_dict.get(dim_key, 0.5)
+        if mood_filter and genes:
+            for gene_key, (lo, hi) in mood_filter.items():
+                val = genes.get(gene_key, 0.5)
                 if lo <= val <= hi:
                     mood_bonus += 0.1
                 else:
@@ -1175,7 +1174,7 @@ def _handle_recommend_tracks(
             "artist": track_data.get("artist", ""),
             "dominant_family": track_data.get("dominant_family", ""),
             "dominant_gene": track_data.get("dominant_gene", ""),
-            "match_score": round(score, 3),
+            "match_score": round(score, 2),
         }
         dims = track_data.get("dimensions", {})
         if "psychology_6d" in dims:

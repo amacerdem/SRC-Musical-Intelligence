@@ -313,6 +313,22 @@ def build_full_context(
     return system_prompt, messages
 
 
+def _smart_max_tokens(user_message: str) -> int:
+    """Choose max_tokens based on message intent.
+
+    Playback commands need short responses (512), analysis needs more (1024).
+    """
+    playback_keywords = [
+        "play", "çal", "queue", "kuyruk", "next", "pause", "dur", "skip",
+        "sonraki", "önceki", "durdur", "devam", "resume", "shuffle", "repeat",
+        "sesini", "volume", "louder", "quieter",
+    ]
+    msg_lower = user_message.lower()
+    if any(kw in msg_lower for kw in playback_keywords):
+        return 512
+    return 1024
+
+
 def build_api_request(
     user_message: str,
     user_profile: dict[str, Any],
@@ -322,6 +338,9 @@ def build_api_request(
     use_local_embeddings: bool = False,
 ) -> dict[str, Any]:
     """Build a complete Claude API request body.
+
+    Uses prompt caching: static context (Layer 0-2.5) is marked with
+    cache_control so the API caches it across turns (~90% input savings).
 
     Args:
         user_message: Current user message.
@@ -337,23 +356,73 @@ def build_api_request(
     from Musical_Intelligence.brain.llm.agent.router import route_message
     from Musical_Intelligence.brain.llm.agent.tools import TOOLS
 
-    system_prompt, messages = build_full_context(
-        user_message=user_message,
-        user_profile=user_profile,
-        language=language,
-        conversation_history=conversation_history,
+    tier = user_profile.get("tier", "free")
+
+    # Build layers
+    layer0 = build_layer0(language)
+    layer1 = build_layer1(user_profile, language)
+    layer2 = build_layer2(tier, language)
+    layer2_5 = build_layer2_5(language)
+
+    static_context = f"{layer0}\n\n---\n\n{layer1}\n\n---\n\n{layer2}"
+    if layer2_5:
+        static_context += f"\n\n---\n\n{layer2_5}"
+
+    # Dynamic layers (per-query RAG, not cached)
+    layer3 = build_layer3(
+        query=user_message,
+        user_tier=tier,
+        use_local_embeddings=use_local_embeddings,
+    )
+    layer4 = build_layer4(
+        query=user_message,
+        user_tier=tier,
         use_local_embeddings=use_local_embeddings,
     )
 
+    dynamic_parts = []
+    if layer3:
+        header = "## Relevant Knowledge" if language == "en" else "## İlgili Bilgi"
+        dynamic_parts.append(f"{header}\n\n{layer3}")
+    if layer4:
+        header = "## Literature" if language == "en" else "## Literatür"
+        dynamic_parts.append(f"{header}\n\n{layer4}")
+    dynamic_context = "\n\n---\n\n".join(dynamic_parts) if dynamic_parts else ""
+
+    # Build system prompt with cache_control for static content
+    system_blocks = [
+        {
+            "type": "text",
+            "text": static_context,
+            "cache_control": {"type": "ephemeral"},
+        },
+    ]
+    if dynamic_context:
+        system_blocks.append({"type": "text", "text": dynamic_context})
+
+    # Build messages
+    messages: list[dict[str, str]] = []
+    if conversation_history:
+        max_conv_tokens = CONTEXT_BUDGET["conversation"]
+        total = 0
+        trimmed: list[dict[str, str]] = []
+        for msg in reversed(conversation_history):
+            msg_tokens = estimate_tokens(msg["content"])
+            if total + msg_tokens > max_conv_tokens:
+                break
+            trimmed.insert(0, msg)
+            total += msg_tokens
+        messages.extend(trimmed)
+    messages.append({"role": "user", "content": user_message})
+
     if model is None:
-        tier = user_profile.get("tier", "free")
         turn_count = len(conversation_history) if conversation_history else 0
         model = route_message(user_message, tier, turn_count)
 
     return {
         "model": model,
-        "max_tokens": 1024,
-        "system": system_prompt,
+        "max_tokens": _smart_max_tokens(user_message),
+        "system": system_blocks,
         "messages": messages,
         "tools": TOOLS,
     }

@@ -411,6 +411,7 @@ async def chat_stream(req: ChatRequest):
                     "queue_tracks": ("Kuyruk oluşturuluyor...", "Building queue..."),
                     "control_playback": ("Oynatma kontrol ediliyor...", "Controlling playback..."),
                     "get_now_playing": ("Şu an çalan alınıyor...", "Getting now playing..."),
+                    "recommend_tracks": ("Kişisel öneriler hazırlanıyor...", "Preparing personalized recommendations..."),
                 }
                 for tn in tool_names:
                     tr_label, en_label = tool_labels.get(tn, (f"{tn}...", f"{tn}..."))
@@ -493,22 +494,56 @@ async def chat_stream(req: ChatRequest):
 
 
 def _build_system_event_message(event_type: str, data: dict, lang: str) -> str:
-    """Convert a system event into a prompt-formatted message."""
+    """Convert a system event into a prompt-formatted message.
+
+    For track_changed events, enriches with MI data (6D, genes, neurochemicals)
+    so the agent can provide data-driven commentary.
+    """
     if event_type == "track_changed":
         name = data.get("track_name", "?")
         artist = data.get("artist", "?")
         family = data.get("family", "")
         genre = data.get("genre", "")
+        track_id = data.get("track_id", "")
+
+        # Try to load MI data for richer context
+        mi_context = ""
+        if track_id:
+            try:
+                from Musical_Intelligence.brain.llm.agent.track_data import (
+                    DIM_6D, load_track,
+                )
+                track = load_track(track_id)
+                if track:
+                    dims = track.get("dimensions", {}).get("psychology_6d", [])
+                    if dims and len(dims) >= 6:
+                        dim_str = ", ".join(
+                            f"{k}={round(v, 2)}"
+                            for k, v in zip(DIM_6D, dims)
+                        )
+                        mi_context += f" 6D: [{dim_str}]."
+                    gene = track.get("dominant_gene", "")
+                    if gene:
+                        mi_context += f" Dominant gene: {gene}."
+                    neuro = track.get("neuro_4d", {})
+                    if neuro:
+                        top_neuro = max(neuro, key=neuro.get)
+                        mi_context += f" Top neurochemical: {top_neuro} ({round(neuro[top_neuro], 2)})."
+            except Exception:
+                pass  # MI enrichment is best-effort
+
         if lang == "tr":
             return (
                 f"[SİSTEM: Şu an çalan parça değişti → '{name}' — {artist} "
-                f"({genre}, {family}). Kısa ve doğal bir yorum yap, "
-                f"parçanın müzikal karakteri hakkında 1-2 cümle söyle.]"
+                f"({genre}, {family}).{mi_context} Kısa ve doğal bir yorum yap, "
+                f"parçanın müzikal karakteri hakkında 1-2 cümle söyle. "
+                f"MI verilerini referans göster.]"
             )
         return (
             f"[SYSTEM: Now playing changed → '{name}' by {artist} "
-            f"({genre}, {family}). Make a brief, natural comment about "
-            f"this track's musical character in 1-2 sentences.]"
+            f"({genre}, {family}).{mi_context} Make a brief, natural comment about "
+            f"this track's musical character in 1-2 sentences. "
+            f"Reference the MI data.]"
         )
 
     if event_type == "playback_paused":

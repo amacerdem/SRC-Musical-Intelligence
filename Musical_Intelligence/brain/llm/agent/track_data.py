@@ -363,7 +363,7 @@ def search_tracks(query: str, limit: int = 10) -> list[dict]:
 
 def _named_dims(values: list[float], keys: list[str]) -> dict[str, float]:
     """Map dimension values to named keys."""
-    return {k: round(v, 3) for k, v in zip(keys, values) if v is not None}
+    return {k: round(v, 2) for k, v in zip(keys, values) if v is not None}
 
 
 def _polarity(value: float) -> str:
@@ -382,7 +382,7 @@ def _polarity(value: float) -> str:
 def _top_beliefs(
     means: list[float],
     stds: list[float],
-    n: int = 15,
+    n: int = 10,
 ) -> list[dict]:
     """Find the most notable beliefs (extreme values + high variance)."""
     _ensure_belief_keys()
@@ -395,12 +395,11 @@ def _top_beliefs(
         notability = extremity * 0.6 + min(s * 10, 1.0) * 0.4
         scored.append({
             "key": key,
-            "value": round(m, 3),
-            "std": round(s, 3),
+            "value": round(m, 2),
+            "std": round(s, 2),
             "polarity": _polarity(m),
             "function": meta.get("function", ""),
             "type": meta.get("type", ""),
-            "mechanism": meta.get("mechanism", ""),
             "what": meta.get("what_en", ""),
         })
     scored.sort(key=lambda x: -(abs(x["value"] - 0.5) * 0.6 + x["std"] * 4))
@@ -412,7 +411,7 @@ def _temporal_arc(
     belief_idx: int,
 ) -> list[float]:
     """Extract a single belief's trajectory across temporal segments."""
-    return [round(seg[belief_idx], 3) for seg in segments if len(seg) > belief_idx]
+    return [round(seg[belief_idx], 2) for seg in segments if len(seg) > belief_idx]
 
 
 def format_track_for_llm(
@@ -463,7 +462,7 @@ def format_track_for_llm(
     stds = beliefs.get("stds", [])
 
     if tier in ("basic", "premium", "research") and means:
-        result["notable_beliefs"] = _top_beliefs(means, stds, n=15)
+        result["notable_beliefs"] = _top_beliefs(means, stds, n=10)
 
     # 24D — premium+ tier
     if tier in ("premium", "research") and "neuroscience_24d" in dims:
@@ -481,9 +480,9 @@ def format_track_for_llm(
         duration = track.get("duration_s", 0)
         seg_dur = round(duration / max(n_segs, 1), 1) if duration else 0
 
-        # Top notable beliefs → temporal arcs (top 15 instead of just 5)
+        # Top notable beliefs → temporal arcs
         _ensure_belief_keys()
-        notable = _top_beliefs(means, stds, n=15)
+        notable = _top_beliefs(means, stds, n=10)
         arcs = {}
         for b in notable:
             meta = get_belief_meta(b["key"])
@@ -498,10 +497,10 @@ def format_track_for_llm(
         neuro_segs = tp.get("neuro_per_segment", [])
         if neuro_segs:
             result["neuro_temporal"] = {
-                "DA": [round(s[0], 3) for s in neuro_segs],
-                "NE": [round(s[1], 3) for s in neuro_segs],
-                "OPI": [round(s[2], 3) for s in neuro_segs],
-                "5HT": [round(s[3], 3) for s in neuro_segs],
+                "DA": [round(s[0], 2) for s in neuro_segs],
+                "NE": [round(s[1], 2) for s in neuro_segs],
+                "OPI": [round(s[2], 2) for s in neuro_segs],
+                "5HT": [round(s[3], 2) for s in neuro_segs],
             }
 
         # Reward temporal arc

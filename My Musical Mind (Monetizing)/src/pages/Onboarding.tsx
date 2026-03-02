@@ -1450,7 +1450,7 @@ function RevealStep({ personaId, mind, displayName, onEnter }: {
       />
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center h-full px-6 overflow-y-auto py-12" style={{ scrollbarWidth: "none" }}>
+      <div className="relative z-10 flex flex-col items-center h-full px-6 py-6" style={{ scrollbarWidth: "none" }}>
         {/* Spacer — push content to center when it fits, scroll when it doesn't */}
         <div className="flex-1 min-h-0" />
 
@@ -1478,7 +1478,7 @@ function RevealStep({ personaId, mind, displayName, onEnter }: {
                   src={`/avatars/persona-${personaId}-${persona.name.toLowerCase().replace(/\s+/g, "-")}.png`}
                   alt={persona.name}
                   className="object-contain"
-                  style={{ width: 360, height: 504 }}
+                  style={{ width: 220, height: 308 }}
                 />
               </div>
               {(phase === "radar" || phase === "ready") && (
@@ -1488,7 +1488,7 @@ function RevealStep({ personaId, mind, displayName, onEnter }: {
                   transition={{ duration: 1.2, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
                   className="flex-shrink-0"
                 >
-                  <DimensionRadar profile={dim6DProfile} color={color} size={340} />
+                  <DimensionRadar profile={dim6DProfile} color={color} size={220} />
                 </motion.div>
               )}
             </motion.div>
@@ -1498,35 +1498,41 @@ function RevealStep({ personaId, mind, displayName, onEnter }: {
         {/* Name — character-by-character */}
         <AnimatePresence>
           {(phase === "name" || phase === "radar" || phase === "ready") && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }} className="text-center mt-6">
-              {(() => {
-                const title = displayName && displayName !== "You"
-                  ? `${displayName}'s Musical Mind`
-                  : "Your Musical Mind";
-                return (
-                  <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold mb-4 leading-none flex justify-center flex-wrap">
-                    {title.split("").map((char, i) => (
-                      <motion.span
-                        key={i}
-                        initial={{ opacity: 0, y: 50, scale: 0.3, filter: "blur(15px)" }}
-                        animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-                        transition={{ duration: 0.7, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
-                        style={{ color, display: "inline-block" }}
-                      >
-                        {char === " " ? "\u00A0" : char}
-                      </motion.span>
-                    ))}
-                  </h1>
-                );
-              })()}
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }} className="text-center mt-4">
+              {/* Persona name — big title */}
+              <h1 className="text-3xl md:text-5xl font-display font-bold mb-2 leading-none flex justify-center flex-wrap">
+                {persona.name.split("").map((char, i) => (
+                  <motion.span
+                    key={i}
+                    initial={{ opacity: 0, y: 30, scale: 0.3, filter: "blur(15px)" }}
+                    animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+                    transition={{ duration: 0.7, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
+                    style={{ color, display: "inline-block" }}
+                  >
+                    {char === " " ? "\u00A0" : char}
+                  </motion.span>
+                ))}
+              </h1>
 
+              {/* "X's Musical Mind" — small subtitle */}
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.5 }}
-                transition={{ delay: 1.5, duration: 1 }}
-                className="text-xl text-slate-400 font-display font-light"
+                transition={{ delay: persona.name.length * 0.06 + 0.5, duration: 1 }}
+                className="text-sm text-slate-500 font-display font-light mb-1"
               >
-                {persona.name} — <span className="italic">"{persona.tagline}"</span>
+                {displayName && displayName !== "You"
+                  ? `${displayName}'s Musical Mind`
+                  : "Your Musical Mind"}
+              </motion.p>
+
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.4 }}
+                transition={{ delay: persona.name.length * 0.06 + 0.8, duration: 1 }}
+                className="text-base text-slate-400 font-display font-light italic"
+              >
+                "{persona.tagline}"
               </motion.p>
 
               {/* M³ Birth Badge */}
@@ -1535,7 +1541,7 @@ function RevealStep({ personaId, mind, displayName, onEnter }: {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: persona.name.length * 0.06 + 1.2, duration: 0.8 }}
-                  className="flex items-center gap-3 mt-4 px-5 py-2.5 rounded-full mx-auto"
+                  className="flex items-center gap-3 mt-3 px-5 py-2 rounded-full mx-auto"
                   style={{ background: `${color}08`, border: `1px solid ${color}15` }}
                 >
                   <Brain size={16} style={{ color }} />
@@ -1559,14 +1565,14 @@ function RevealStep({ personaId, mind, displayName, onEnter }: {
         {/* CTA + Description */}
         <AnimatePresence>
           {phase === "ready" && (
-            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.5 }} className="mt-6 text-center max-w-lg">
-              <p className="text-base text-slate-500 mb-3 leading-relaxed font-light">{persona.description}</p>
-              <motion.p initial={{ opacity: 0 }} animate={{ opacity: 0.3 }} transition={{ delay: 1, duration: 1.5 }} className="text-xs font-display font-light text-slate-600 tracking-[0.2em] uppercase mb-6">
+            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.5 }} className="mt-4 text-center max-w-lg">
+              <p className="text-sm text-slate-500 mb-2 leading-relaxed font-light">{persona.description}</p>
+              <motion.p initial={{ opacity: 0 }} animate={{ opacity: 0.3 }} transition={{ delay: 1, duration: 1.5 }} className="text-xs font-display font-light text-slate-600 tracking-[0.2em] uppercase mb-4">
                 {t("onboarding.reveal.thisIsYourMind")}
               </motion.p>
               <button
                 onClick={onEnter}
-                className="group relative px-10 py-4 rounded-full transition-all duration-500 hover:scale-[1.03]"
+                className="group relative px-8 py-3 rounded-full transition-all duration-500 hover:scale-[1.03]"
                 style={{ background: `${color}08`, border: `1px solid ${color}20` }}
                 onMouseEnter={(e) => { e.currentTarget.style.background = `${color}18`; e.currentTarget.style.boxShadow = `0 0 50px ${color}20`; }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = `${color}08`; e.currentTarget.style.boxShadow = "none"; }}

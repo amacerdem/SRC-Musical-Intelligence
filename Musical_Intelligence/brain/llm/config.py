@@ -45,8 +45,8 @@ CHROMA_DIR = LLM_ROOT / "chroma_db"
 CONTEXT_BUDGET = {
     "persona": 1500,
     "user_profile": 500,
-    "vocabulary": 2000,
-    "interpretation_guide": 2400,
+    "vocabulary": 1500,
+    "interpretation_guide": 1800,
     "knowledge_rag": 2000,
     "literature_rag": 1500,
     "conversation": 2000,
