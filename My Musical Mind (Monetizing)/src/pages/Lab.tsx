@@ -291,7 +291,7 @@ export function Lab() {
       <div className="cinematic-vignette z-[2]" />
 
       {/* ═══ MAIN ═════════════════════════════════════════════════════ */}
-      <div className="relative z-10 h-full flex flex-col px-5 sm:px-8 md:px-10 pt-5 pb-20">
+      <div className="relative z-10 h-full flex flex-col px-5 sm:px-8 md:px-10 pt-5 pb-4">
 
         {/* Click-outside overlay for track menu */}
         {showTrackMenu && (
@@ -381,11 +381,11 @@ export function Lab() {
             )}
 
             {/* Time */}
-            {hasAnalysis && hasEverPlayed && (
+            {hasAnalysis && (
               <div className="flex items-center gap-1.5 text-slate-500">
                 <Clock size={11} />
                 <span className="text-[10px] font-mono" style={{ color: `${color}70` }}>
-                  {flowTime} / {totalTime}
+                  {flowTime || "0:00"} / {totalTime}
                 </span>
               </div>
             )}
@@ -440,7 +440,7 @@ export function Lab() {
             </div>
 
             {/* Controls below waveform — orb left, mode+depth center */}
-            <div className="flex items-center pt-3">
+            <div className="flex items-center pt-2">
               {/* Left: M³ Agent orb */}
               <div className="flex-1 flex justify-start pl-2">
                 <LabAgent accentColor={color} trackDetail={trackDetail} melData={melData} temporal={temporal} />

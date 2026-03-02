@@ -16,7 +16,7 @@ import type { ViewportState } from "./useViewport";
 
 /* ── Constants ───────────────────────────────────────────────────────── */
 
-const NAV_HEIGHT = 48;
+const NAV_HEIGHT = 72;
 const TICK_HEIGHT = 16;          // Time ruler strip below waveform
 const TOTAL_HEIGHT = NAV_HEIGHT + TICK_HEIGHT;
 const FRAME_RATE = 172.27;
@@ -72,8 +72,9 @@ export function WaveformNavigator({
 
     const W = width;
     const H = NAV_HEIGHT;
+    const TH = TOTAL_HEIGHT;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.clearRect(0, 0, W, H);
+    ctx.clearRect(0, 0, W, TH);
 
     // Background
     ctx.fillStyle = "rgba(6,6,14,0.90)";
@@ -124,6 +125,37 @@ export function WaveformNavigator({
     ctx.fillStyle = accentColor + "08";
     ctx.fillRect(vpX, 0, vpW, H);
 
+    // ── Viewport time label (above viewport rect) ──
+    const vpStartSec = scroll;
+    const vpEndSec = Math.min(scroll + window_, duration);
+    const fmtSec = (sec: number) => {
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      return `${m}:${s.toString().padStart(2, "0")}`;
+    };
+    const vpLabel = `${fmtSec(vpStartSec)} — ${fmtSec(vpEndSec)}`;
+    ctx.font = "bold 10px ui-monospace, monospace";
+    ctx.textBaseline = "bottom";
+    ctx.fillStyle = accentColor + "CC";
+    const vpLabelW = ctx.measureText(vpLabel).width;
+    const vpLabelX = Math.max(2, Math.min(W - vpLabelW - 2, vpX + vpW / 2 - vpLabelW / 2));
+    // Label background pill
+    const pillPad = 4;
+    const pillH = 14;
+    const pillY = 4;
+    ctx.fillStyle = "rgba(6,6,14,0.85)";
+    ctx.beginPath();
+    ctx.roundRect(vpLabelX - pillPad, pillY, vpLabelW + pillPad * 2, pillH, 4);
+    ctx.fill();
+    ctx.strokeStyle = accentColor + "40";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.roundRect(vpLabelX - pillPad, pillY, vpLabelW + pillPad * 2, pillH, 4);
+    ctx.stroke();
+    // Label text
+    ctx.fillStyle = accentColor + "DD";
+    ctx.fillText(vpLabel, vpLabelX, pillY + pillH - 2);
+
     // ── Playhead ────────────────────────────────
     const ct = audioRef.current?.currentTime ?? 0;
     if (ct >= 0 && ct <= duration) {
@@ -142,6 +174,31 @@ export function WaveformNavigator({
       ctx.arc(px, 3, 2.5, 0, Math.PI * 2);
       ctx.fillStyle = accentColor;
       ctx.fill();
+
+      // ── Playhead time label ──────────────────
+      const phLabel = fmtSec(ct);
+      ctx.font = "bold 10px ui-monospace, monospace";
+      ctx.textBaseline = "bottom";
+      const phLabelW = ctx.measureText(phLabel).width;
+      const phPillPad = 3;
+      const phPillH = 13;
+      const phPillY = H - phPillH - 4;
+      // Position: prefer right of playhead, flip left if near edge
+      let phLabelX = px + 5;
+      if (phLabelX + phLabelW + phPillPad * 2 > W) phLabelX = px - phLabelW - phPillPad * 2 - 5;
+      // Pill background
+      ctx.fillStyle = accentColor + "20";
+      ctx.beginPath();
+      ctx.roundRect(phLabelX - phPillPad, phPillY, phLabelW + phPillPad * 2, phPillH, 3);
+      ctx.fill();
+      ctx.strokeStyle = accentColor + "60";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.roundRect(phLabelX - phPillPad, phPillY, phLabelW + phPillPad * 2, phPillH, 3);
+      ctx.stroke();
+      // Text
+      ctx.fillStyle = accentColor;
+      ctx.fillText(phLabel, phLabelX, phPillY + phPillH - 2);
     }
 
     // ── Top border ──────────────────────────────
@@ -151,6 +208,54 @@ export function WaveformNavigator({
     ctx.moveTo(0, 0.5);
     ctx.lineTo(W, 0.5);
     ctx.stroke();
+
+    // ── Time ruler strip ──────────────────────
+    // Choose interval based on duration
+    let interval: number;
+    if (duration <= 30)       interval = 5;
+    else if (duration <= 120) interval = 15;
+    else if (duration <= 300) interval = 30;
+    else                      interval = 60;
+
+    const rulerY = H;
+    ctx.fillStyle = "rgba(6,6,14,0.70)";
+    ctx.fillRect(0, rulerY, W, TICK_HEIGHT);
+
+    ctx.font = `${9 * (dpr > 1 ? 1 : 1)}px ui-monospace, monospace`;
+    ctx.textBaseline = "top";
+
+    for (let t = 0; t <= duration; t += interval) {
+      const x = (t / duration) * W;
+      const m = Math.floor(t / 60);
+      const s = Math.floor(t % 60);
+      const label = `${m}:${s.toString().padStart(2, "0")}`;
+
+      // Tick mark
+      ctx.strokeStyle = "rgba(255,255,255,0.12)";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(x, rulerY);
+      ctx.lineTo(x, rulerY + 4);
+      ctx.stroke();
+
+      // Label
+      ctx.fillStyle = "rgba(255,255,255,0.30)";
+      const tw = ctx.measureText(label).width;
+      const lx = Math.max(1, Math.min(W - tw - 1, x - tw / 2));
+      ctx.fillText(label, lx, rulerY + 4);
+    }
+
+    // Sub-ticks at half intervals
+    const subInterval = interval / 2;
+    for (let t = subInterval; t < duration; t += interval) {
+      const x = (t / duration) * W;
+      ctx.strokeStyle = "rgba(255,255,255,0.06)";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(x, rulerY);
+      ctx.lineTo(x, rulerY + 3);
+      ctx.stroke();
+    }
   }, [width, dpr, duration, samples, accentColor, viewport, audioRef]);
 
   drawRef.current = draw;
@@ -198,7 +303,7 @@ export function WaveformNavigator({
     <div
       ref={containerRef}
       className="w-full cursor-pointer select-none"
-      style={{ height: NAV_HEIGHT }}
+      style={{ height: TOTAL_HEIGHT }}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
@@ -207,7 +312,7 @@ export function WaveformNavigator({
       <canvas
         ref={canvasRef}
         className="block w-full"
-        style={{ height: NAV_HEIGHT }}
+        style={{ height: TOTAL_HEIGHT }}
       />
     </div>
   );
