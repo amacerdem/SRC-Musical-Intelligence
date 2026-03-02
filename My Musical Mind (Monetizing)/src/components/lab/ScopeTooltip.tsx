@@ -9,7 +9,7 @@
 import { useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { DepthLevel } from "@/stores/useLabStore";
-import type { LabMode } from "./FlowTimeline";
+import type { LabMode } from "./FlowOverlay";
 
 /* ── Types ───────────────────────────────────────────────────────────── */
 

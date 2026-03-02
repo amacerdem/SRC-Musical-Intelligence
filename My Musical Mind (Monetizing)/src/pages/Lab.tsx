@@ -439,6 +439,37 @@ export function Lab() {
                 samples={waveformSamples}
               />
             </div>
+
+            {/* Mode selector — centered below waveform */}
+            <div className="flex justify-center pt-3">
+              <div className="flex items-center rounded-xl overflow-hidden"
+                style={{
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  background: "rgba(0,0,0,0.3)",
+                  backdropFilter: "blur(12px)",
+                }}
+              >
+                {([
+                  { key: "spectral" as const, label: "Spectral", col: "#60a5fa" },
+                  { key: "acoustic" as const, label: "Acoustic", col: "#FF6B35" },
+                  { key: "neuro" as const, label: "NeuroAcoustic", col: color },
+                ]).map((mode, i) => (
+                  <button
+                    key={mode.key}
+                    onClick={() => setLabMode(mode.key)}
+                    className="px-4 py-2 text-[11px] font-display font-semibold tracking-[0.06em] uppercase transition-all"
+                    style={{
+                      background: labMode === mode.key ? `${mode.col}18` : "transparent",
+                      color: labMode === mode.key ? mode.col : "rgba(255,255,255,0.25)",
+                      borderRight: i < 2 ? "1px solid rgba(255,255,255,0.06)" : "none",
+                      boxShadow: labMode === mode.key ? `inset 0 -2px 0 ${mode.col}80, 0 0 12px ${mode.col}10` : "none",
+                    }}
+                  >
+                    {mode.label}
+                  </button>
+                ))}
+              </div>
+            </div>
           </motion.div>
         ) : (
           <div className="flex-1 min-h-0 flex items-center justify-center border border-white/[0.04] rounded-xl">
