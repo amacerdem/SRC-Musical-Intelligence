@@ -106,6 +106,44 @@ function freqToLog2Norm(freq: number): number {
   return (Math.log2(freq) - LOG2_MIN) / LOG2_RANGE;
 }
 
+/* ── Parabolic interpolation for sub-bin frequency estimation ────────
+ *  Given amplitudes at bins (b-1, b, b+1), estimates the true peak
+ *  offset δ ∈ [-0.5, +0.5] from bin center using:
+ *    δ = 0.5 × (α − γ) / (α − 2β + γ)
+ *  where α = amp[b-1], β = amp[b], γ = amp[b+1].
+ *  Frequency is interpolated in log2 space (mel bins are ~log-spaced).
+ *  ──────────────────────────────────────────────────────────────────── */
+
+function interpolateFreq(
+  centerFreqs: Float32Array,
+  data: Uint8Array,
+  frameOff: number,
+  b: number,
+  nMels: number,
+): number {
+  if (b <= 0 || b >= nMels - 1) return centerFreqs[b];
+
+  const alpha = data[frameOff + b - 1]; // left neighbor
+  const beta  = data[frameOff + b];     // peak bin
+  const gamma = data[frameOff + b + 1]; // right neighbor
+
+  const denom = alpha - 2 * beta + gamma;
+  if (denom >= 0) return centerFreqs[b]; // concave check — no valid peak shape
+
+  const delta = 0.5 * (alpha - gamma) / denom; // offset in bins, [-0.5, +0.5]
+
+  // Interpolate in log2 space for mel-scale accuracy
+  const log2f0 = Math.log2(centerFreqs[b]);
+  const log2Left  = Math.log2(centerFreqs[b - 1]);
+  const log2Right = Math.log2(centerFreqs[b + 1]);
+
+  const log2Step = delta < 0
+    ? log2f0 - log2Left    // step toward left neighbor
+    : log2Right - log2f0;  // step toward right neighbor
+
+  return Math.pow(2, log2f0 + delta * log2Step);
+}
+
 /* ── Main extraction function ─────────────────────────────────────── */
 
 export function extractPeaks(mel: MelData): PeakBuffers {
@@ -124,14 +162,24 @@ export function extractPeaks(mel: MelData): PeakBuffers {
     const frameOff = t * nMels;
     const timeS = t / frameRate;
 
-    // Collect peaks above threshold within piano range
+    // Collect LOCAL MAXIMA above threshold within piano range
+    // A local maximum is a bin with amplitude > both neighbors
     framePeaks.length = 0;
-    for (let b = 0; b < nMels; b++) {
+    for (let b = 1; b < nMels - 1; b++) {
       const amp = data[frameOff + b];
+      if (amp <= AMP_THRESHOLD) continue;
+
       const freq = centerFreqs[b];
-      if (amp > AMP_THRESHOLD && freq >= PIANO_MIN_HZ && freq <= PIANO_MAX_HZ) {
-        framePeaks.push({ amp, freq, bin: b });
-      }
+      if (freq < PIANO_MIN_HZ || freq > PIANO_MAX_HZ) continue;
+
+      // Local maximum check
+      const left  = data[frameOff + b - 1];
+      const right = data[frameOff + b + 1];
+      if (amp < left || amp < right) continue;
+
+      // Parabolic sub-bin frequency interpolation
+      const interpFreq = interpolateFreq(centerFreqs, data, frameOff, b, nMels);
+      framePeaks.push({ amp, freq: interpFreq, bin: b });
     }
 
     // Sort by amplitude descending
