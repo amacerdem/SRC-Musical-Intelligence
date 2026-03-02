@@ -169,7 +169,7 @@ def compute_extraction(
     # noise is NOT forward flow.  Kim 2019: temporal integrity requires
     # musically structured content, not mere stationarity or loudness.
     temporal_flow = (
-        0.35 * amplitude * onset
+        0.35 * amplitude * onset * consonance.clamp(min=0.1)
         + 0.35 * (1.0 - spectral_change.abs()) * consonance.clamp(min=0.1)
         + 0.30 * loudness * consonance.clamp(min=0.1)
     )
@@ -194,7 +194,7 @@ def compute_extraction(
     e1 = _wsig(
         0.30 * spec_change_mean * energy_vel.clamp(min=0.1) * consonance.clamp(min=0.1)
         + 0.30 * temporal_flow
-        + 0.20 * onset * amplitude
+        + 0.20 * onset * amplitude * consonance.clamp(min=0.1)
         + 0.20 * (1.0 - energy_change.abs()) * loudness * consonance.clamp(min=0.1)
     )
 

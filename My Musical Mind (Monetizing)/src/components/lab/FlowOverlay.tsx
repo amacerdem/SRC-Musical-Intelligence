@@ -96,6 +96,9 @@ interface Props {
   showCurves: boolean;
   showReward: boolean;
   showNeuro: boolean;
+  /** Mouse X in container pixels, or null if not hovering */
+  hoverX: number | null;
+  hoverContainerW: number;
   onHoverData: (data: FlowHoverData | null) => void;
 }
 
@@ -106,7 +109,8 @@ interface Props {
 export function FlowOverlay({
   temporal, trackDetail, depth, accentColor,
   audioRef, isPlaying, viewport, labMode,
-  showCurves, showReward, showNeuro, onHoverData,
+  showCurves, showReward, showNeuro,
+  hoverX, hoverContainerW, onHoverData,
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -402,30 +406,18 @@ export function FlowOverlay({
     dataMin, dataMax, labMode, viewport, showCurves, showReward, showNeuro,
   ]);
 
-  /* ── rAF Loop (reads from shared viewport, no scroll logic) ── */
+  /* ── Sync hover from prop ───────────────────────────── */
   useEffect(() => {
-    let running = true;
-    const loop = () => {
-      if (!running) return;
-      draw();
-      rafRef.current = requestAnimationFrame(loop);
-    };
-    rafRef.current = requestAnimationFrame(loop);
-    return () => { running = false; cancelAnimationFrame(rafRef.current); };
-  }, [draw]);
-
-  /* ── Public hover handler (called by LayeredScope) ────── */
-  const handleHover = useCallback((canvasX: number | null, containerW: number) => {
-    if (canvasX === null) {
+    if (hoverX === null || hoverContainerW <= 0) {
       hoverRef.current = null;
       onHoverData(null);
       return;
     }
     const windowDur = viewport.windowRef.current;
     const sT = viewport.scrollRef.current;
-    const t = sT + (canvasX / containerW) * windowDur;
+    const t = sT + (hoverX / hoverContainerW) * windowDur;
     const si = Math.max(0, Math.min(segCount - 1, Math.round(t / segDur)));
-    hoverRef.current = { canvasX: (canvasX / containerW) * size.w, time: t, segIdx: si };
+    hoverRef.current = { canvasX: (hoverX / hoverContainerW) * size.w, time: t, segIdx: si };
 
     // Build tooltip data
     const vals = getDimValues(si);
@@ -447,7 +439,7 @@ export function FlowOverlay({
     const reward = labMode === "neuro" && rewardArr ? lerpSeg(rewardArr, t, duration) : 0;
 
     onHoverData({
-      canvasX,
+      canvasX: hoverX,
       time: t,
       segIdx: si,
       dims,
@@ -455,11 +447,19 @@ export function FlowOverlay({
       neuro,
       timeStr: `${m}:${s.toString().padStart(2, "0")}`,
     });
-  }, [viewport, segCount, segDur, size, getDimValues, dimList, depth, labMode, neuroArr, rewardArr, duration, onHoverData]);
+  }, [hoverX, hoverContainerW, viewport, segCount, segDur, size, getDimValues, dimList, depth, labMode, neuroArr, rewardArr, duration, onHoverData]);
 
-  // Expose handleHover via ref pattern
-  const handleHoverRef = useRef(handleHover);
-  handleHoverRef.current = handleHover;
+  /* ── rAF Loop (reads from shared viewport, no scroll logic) ── */
+  useEffect(() => {
+    let running = true;
+    const loop = () => {
+      if (!running) return;
+      draw();
+      rafRef.current = requestAnimationFrame(loop);
+    };
+    rafRef.current = requestAnimationFrame(loop);
+    return () => { running = false; cancelAnimationFrame(rafRef.current); };
+  }, [draw]);
 
   return (
     <div
@@ -470,13 +470,7 @@ export function FlowOverlay({
       <canvas
         ref={canvasRef}
         style={{ width: "100%", height: "100%" }}
-        data-flow-overlay="true"
-      />
+        />
     </div>
   );
 }
-
-// Export the hover handler type for LayeredScope
-export type FlowOverlayHandle = {
-  handleHover: (canvasX: number | null, containerW: number) => void;
-};
