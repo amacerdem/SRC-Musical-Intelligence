@@ -32,7 +32,9 @@ TOOLS = [
         "name": "search_tracks",
         "description": (
             "Search the user's music library for tracks by artist name, "
-            "song title, or keywords. Returns matching tracks with IDs. "
+            "song title, or keywords. Returns matching tracks with IDs and "
+            "gene/family info. For mood-based searches, include gene-related terms "
+            "(e.g., 'high tension' → intense tracks, 'groovy' → plasticity tracks). "
             "ALWAYS use this first to find a track before calling analyze_track."
         ),
         "input_schema": {
@@ -268,11 +270,13 @@ TOOLS = [
         "name": "play_track",
         "description": (
             "Play a specific track IMMEDIATELY. Search by name/artist keywords or "
-            "provide a direct track_id. Returns an action for the frontend to execute. "
+            "provide a direct track_id. Returns an action for the frontend to execute, "
+            "along with the track's MI analysis (6D dimensions, genes, top beliefs). "
             "IMPORTANT: When the user asks to play music, suggest a song, or says "
             "'play something' — call this tool DIRECTLY without asking questions. "
-            "Make the decision yourself based on the user's profile and explain "
-            "your choice AFTER playing."
+            "Consider the user's genes, persona, and current dimensions when choosing. "
+            "After playing, explain your choice referencing MI data (gene alignment, "
+            "dimension match, belief patterns)."
         ),
         "input_schema": {
             "type": "object",
@@ -293,9 +297,10 @@ TOOLS = [
         "description": (
             "Queue multiple tracks (5-10) to play in sequence. Use this when "
             "the user asks for a playlist, queue, or multiple songs. Accepts a "
-            "list of queries or track_ids. Returns actions for the frontend to "
-            "queue all tracks. After calling this tool, explain the theme or "
-            "reasoning behind the queue you built."
+            "list of queries or track_ids. Returns actions for the frontend with "
+            "MI data per track (6D dimensions, gene match). Build thematic queues "
+            "with a narrative arc (e.g., start calm → build tension → climax → "
+            "resolve). After calling, explain the energy/gene progression of the queue."
         ),
         "input_schema": {
             "type": "object",
@@ -364,6 +369,38 @@ TOOLS = [
             "properties": {},
         },
     },
+    {
+        "name": "recommend_tracks",
+        "description": (
+            "Get personalized track recommendations based on the user's gene "
+            "profile and optional mood filter. Returns top-matching tracks scored "
+            "by gene alignment. Use when the user says 'recommend something', "
+            "'suggest music', 'what should I listen to?', 'bana bir şey öner', "
+            "'ne dinlemeliyim?'. Can filter by mood: energetic, calm, emotional, "
+            "groovy, complex, intense, surprising."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "mood": {
+                    "type": "string",
+                    "description": (
+                        "Optional mood filter: energetic, calm, emotional, groovy, "
+                        "complex, intense, surprising, nostalgic"
+                    ),
+                },
+                "count": {
+                    "type": "integer",
+                    "description": "Number of recommendations (default 5, max 10)",
+                },
+                "exclude_ids": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                    "description": "Track IDs to exclude (e.g., recently played)",
+                },
+            },
+        },
+    },
 ]
 
 
@@ -374,6 +411,7 @@ def handle_tool_call(
     tool_name: str,
     tool_input: dict[str, Any],
     user_tier: str = "free",
+    user_genes: dict[str, float] | None = None,
 ) -> dict[str, Any]:
     """Route a tool call to the appropriate handler.
 
@@ -381,6 +419,7 @@ def handle_tool_call(
         tool_name: Name of the tool being called.
         tool_input: Input parameters from the LLM.
         user_tier: User's subscription tier for access control.
+        user_genes: User's 5-gene profile for match scoring.
 
     Returns:
         Tool result dict to feed back to the LLM.
@@ -401,12 +440,16 @@ def handle_tool_call(
         "queue_tracks": _handle_queue_tracks,
         "control_playback": _handle_control_playback,
         "get_now_playing": _handle_get_now_playing,
+        "recommend_tracks": _handle_recommend_tracks,
     }
 
     handler = handlers.get(tool_name)
     if not handler:
         return {"error": f"Unknown tool: {tool_name}"}
 
+    # Pass user_genes to handlers that use it
+    if tool_name in ("play_track", "queue_tracks", "recommend_tracks"):
+        return handler(tool_input, user_tier, user_genes=user_genes)
     return handler(tool_input, user_tier)
 
 
@@ -819,13 +862,85 @@ def _handle_get_persona(
     return {"error": f"Persona not found: id={persona_id}, name={persona_name}"}
 
 
+# ── Music Control Helpers ─────────────────────────────────────────
+
+
+def _gene_match_score(
+    user_genes: dict[str, float] | None,
+    track_genes: dict[str, float],
+) -> float | None:
+    """Cosine similarity between user and track gene profiles (0-1)."""
+    if not user_genes or not track_genes:
+        return None
+    keys = ["entropy", "resolution", "tension", "resonance", "plasticity"]
+    u = [user_genes.get(k, 0.5) for k in keys]
+    t = [track_genes.get(k, 0.5) for k in keys]
+    dot = sum(a * b for a, b in zip(u, t))
+    mag_u = sum(a * a for a in u) ** 0.5
+    mag_t = sum(a * a for a in t) ** 0.5
+    if mag_u == 0 or mag_t == 0:
+        return 0.0
+    return round(dot / (mag_u * mag_t), 3)
+
+
+def _enrich_track_info(
+    track: dict[str, Any],
+    user_genes: dict[str, float] | None = None,
+    include_beliefs: bool = True,
+) -> dict[str, Any]:
+    """Build enriched track info with MI data for tool results."""
+    from .track_data import DIM_6D, _named_dims, _top_beliefs
+
+    info: dict[str, Any] = {
+        "title": track.get("title"),
+        "artist": track.get("artist"),
+        "duration_s": track.get("duration_s"),
+        "dominant_family": track.get("dominant_family"),
+        "dominant_gene": track.get("dominant_gene"),
+        "genre": (
+            track.get("categories", ["Unknown"])[0]
+            if track.get("categories")
+            else "Unknown"
+        ),
+    }
+
+    # 6D dimensions
+    dims = track.get("dimensions", {})
+    if "psychology_6d" in dims:
+        info["dimensions_6d"] = _named_dims(dims["psychology_6d"], DIM_6D)
+
+    # Gene profile + match score
+    genes = track.get("genes", {})
+    if genes:
+        info["genes"] = {k: round(v, 2) for k, v in genes.items()}
+        match = _gene_match_score(user_genes, genes)
+        if match is not None:
+            info["gene_match"] = match
+
+    # Top notable beliefs (compact)
+    if include_beliefs:
+        beliefs = track.get("beliefs", {})
+        means = beliefs.get("means", [])
+        stds = beliefs.get("stds", [])
+        if means and stds:
+            top = _top_beliefs(means, stds, n=3)
+            info["top_beliefs"] = [
+                {"key": b["key"], "value": b["value"], "what": b["what"][:80]}
+                for b in top
+            ]
+
+    return info
+
+
 # ── Music Control Handlers (frontend-executed actions) ───────────
 
 
 def _handle_play_track(
-    inputs: dict[str, Any], tier: str
+    inputs: dict[str, Any],
+    tier: str,
+    user_genes: dict[str, float] | None = None,
 ) -> dict[str, Any]:
-    """Search for a track and return a play action descriptor.
+    """Search for a track and return a play action descriptor with MI data.
 
     The backend does NOT control playback directly — it returns an
     action dict that the frontend interprets and dispatches to
@@ -860,31 +975,24 @@ def _handle_play_track(
             "track_name": track.get("title", ""),
             "artist": track.get("artist", ""),
         },
-        "track_info": {
-            "title": track.get("title"),
-            "artist": track.get("artist"),
-            "duration_s": track.get("duration_s"),
-            "dominant_family": track.get("dominant_family"),
-            "genre": (
-                track.get("categories", ["Unknown"])[0]
-                if track.get("categories")
-                else "Unknown"
-            ),
-        },
+        "track_info": _enrich_track_info(track, user_genes=user_genes),
     }
 
 
 def _handle_queue_tracks(
-    inputs: dict[str, Any], tier: str
+    inputs: dict[str, Any],
+    tier: str,
+    user_genes: dict[str, float] | None = None,
 ) -> dict[str, Any]:
-    """Queue multiple tracks and return action descriptors for each."""
-    from .track_data import search_tracks, load_track
+    """Queue multiple tracks and return action descriptors with MI data."""
+    from .track_data import DIM_6D, _named_dims, search_tracks, load_track
 
     tracks_input = inputs.get("tracks", [])
     if not tracks_input:
         return {"error": "Provide a list of tracks to queue."}
 
     queued = []
+    tracks_detail = []
     failed = []
 
     for item in tracks_input:
@@ -907,12 +1015,30 @@ def _handle_queue_tracks(
             failed.append(track_id)
             continue
 
+        # Action payload (lightweight, for frontend)
         queued.append({
             "track_id": track_id,
             "track_name": track.get("title", ""),
             "artist": track.get("artist", ""),
             "dominant_family": track.get("dominant_family", ""),
         })
+
+        # Detail payload (enriched, for LLM context)
+        detail: dict[str, Any] = {
+            "title": track.get("title", ""),
+            "artist": track.get("artist", ""),
+            "dominant_family": track.get("dominant_family", ""),
+            "dominant_gene": track.get("dominant_gene", ""),
+        }
+        dims = track.get("dimensions", {})
+        if "psychology_6d" in dims:
+            detail["dimensions_6d"] = _named_dims(dims["psychology_6d"], DIM_6D)
+        genes = track.get("genes", {})
+        if genes:
+            match = _gene_match_score(user_genes, genes)
+            if match is not None:
+                detail["gene_match"] = match
+        tracks_detail.append(detail)
 
     if not queued:
         return {"error": "No matching tracks found for the queue."}
@@ -924,10 +1050,7 @@ def _handle_queue_tracks(
         },
         "queued_count": len(queued),
         "failed": failed,
-        "tracks": [
-            {"title": t["track_name"], "artist": t["artist"]}
-            for t in queued
-        ],
+        "tracks": tracks_detail,
     }
 
 
@@ -964,4 +1087,108 @@ def _handle_get_now_playing(
     return {
         "action": {"type": "get_now_playing"},
         "message": "Requesting current playback state from the frontend.",
+    }
+
+
+# ── Recommendation Handler ───────────────────────────────────────
+
+
+# Mood → 6D dimension affinity (which dimensions should be high/low)
+_MOOD_FILTERS: dict[str, dict[str, tuple[float, float]]] = {
+    "energetic": {"energy": (0.65, 1.0), "tempo": (0.6, 1.0)},
+    "calm": {"energy": (0.0, 0.4), "tension": (0.0, 0.35), "tempo": (0.0, 0.45)},
+    "emotional": {"valence": (0.6, 1.0)},
+    "groovy": {"groove": (0.6, 1.0), "tempo": (0.5, 1.0)},
+    "complex": {"complexity": (0.6, 1.0)},
+    "intense": {"tension": (0.65, 1.0), "energy": (0.6, 1.0)},
+    "surprising": {"tension": (0.55, 1.0), "complexity": (0.5, 1.0)},
+    "nostalgic": {"valence": (0.5, 1.0), "complexity": (0.35, 0.7)},
+}
+
+
+def _handle_recommend_tracks(
+    inputs: dict[str, Any],
+    tier: str,
+    user_genes: dict[str, float] | None = None,
+) -> dict[str, Any]:
+    """Recommend tracks by gene profile match + mood filter."""
+    from .track_data import DIM_6D, _named_dims, load_catalog, load_track
+
+    mood = inputs.get("mood", "").lower().strip()
+    count = min(inputs.get("count", 5), 10)
+    exclude_ids = set(inputs.get("exclude_ids", []))
+
+    catalog = load_catalog()
+    tracks = catalog.get("tracks", [])
+
+    scored: list[tuple[float, dict]] = []
+    mood_filter = _MOOD_FILTERS.get(mood, {})
+
+    for t in tracks:
+        tid = t.get("id", "")
+        if tid in exclude_ids:
+            continue
+
+        # Gene match score
+        genes = t.get("genes", {})
+        match = _gene_match_score(user_genes, genes) if genes else 0.5
+        if match is None:
+            match = 0.5
+
+        # Mood filter: check if track's 6D values fall within mood ranges
+        track_data = load_track(tid)
+        if not track_data:
+            continue
+
+        dims = track_data.get("dimensions", {}).get("psychology_6d", [])
+        mood_bonus = 0.0
+        mood_pass = True
+        if mood_filter and dims and len(dims) >= 6:
+            dim_dict = dict(zip(DIM_6D, dims))
+            for dim_key, (lo, hi) in mood_filter.items():
+                val = dim_dict.get(dim_key, 0.5)
+                if lo <= val <= hi:
+                    mood_bonus += 0.1
+                else:
+                    mood_pass = False
+
+        if mood_filter and not mood_pass:
+            continue
+
+        score = match + mood_bonus
+        scored.append((score, track_data))
+
+    scored.sort(key=lambda x: -x[0])
+    top = scored[:count]
+
+    if not top:
+        return {
+            "recommendations": [],
+            "message": f"No tracks found matching mood='{mood}'." if mood else "No tracks available.",
+        }
+
+    recommendations = []
+    for score, track_data in top:
+        rec: dict[str, Any] = {
+            "track_id": track_data.get("id", ""),
+            "title": track_data.get("title", ""),
+            "artist": track_data.get("artist", ""),
+            "dominant_family": track_data.get("dominant_family", ""),
+            "dominant_gene": track_data.get("dominant_gene", ""),
+            "match_score": round(score, 3),
+        }
+        dims = track_data.get("dimensions", {})
+        if "psychology_6d" in dims:
+            rec["dimensions_6d"] = _named_dims(dims["psychology_6d"], DIM_6D)
+        genes = track_data.get("genes", {})
+        if genes:
+            gene_match = _gene_match_score(user_genes, genes)
+            if gene_match is not None:
+                rec["gene_match"] = gene_match
+        recommendations.append(rec)
+
+    return {
+        "recommendations": recommendations,
+        "count": len(recommendations),
+        "mood_filter": mood or None,
     }

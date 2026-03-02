@@ -233,6 +233,7 @@ async def chat(req: ChatRequest):
                         tool_name=tool_block.name,
                         tool_input=tool_block.input,
                         user_tier=req.tier,
+                        user_genes=req.genes,
                     )
                     # Collect frontend actions from tool results
                     if "action" in result:
@@ -437,6 +438,7 @@ async def chat_stream(req: ChatRequest):
                         tool_name=tool_block.name,
                         tool_input=tool_block.input,
                         user_tier=req.tier,
+                        user_genes=req.genes,
                     )
                     # Emit frontend action via SSE
                     if "action" in result:

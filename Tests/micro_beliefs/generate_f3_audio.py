@@ -1211,7 +1211,7 @@ def write_catalog():
         "| 6 | snem/11 strong_4_4 | snem/13 uniform | meter_hierarchy | A>B | Grahn 2007: accent > uniform |",
         "| 7 | snem/12 waltz_3_4 | snem/13 uniform | meter_hierarchy | A>B | Ternary accent > uniform |",
         "| 8 | snem/11 strong_4_4 | snem/14 random_acc | meter_hierarchy | A>B | Periodic > random accent |",
-        "| 9 | snem/15 melody_chords | snem/09 sustained | meter_hierarchy | A>B | Metric music > no onsets |",
+        "| 9 | snem/12 waltz_3_4 | snem/04 random | meter_hierarchy | A>B | Metric accent pattern > aperiodic |",
         "| 10 | snem/17 march | snem/14 random_acc | meter_position_pred | A>B | Binary pattern > random |",
         "| 11 | iacm/02 cluster | iacm/01 P5 | attention_capture | A>B | Basinski 2025 P3a |",
         "| 12 | iacm/02 cluster | iacm/07 single | attention_capture | A>B | Inharmonic > tonal |",
