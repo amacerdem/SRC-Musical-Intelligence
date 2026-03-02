@@ -249,7 +249,7 @@ Fsharp_maj = major_triad(Gb4 - 12)  # F#3 = Gb3
 Dm7 = _min7(D3)
 G7_ext = dominant_seventh(G3)
 Cmaj7 = _maj7(C3)
-Am7 = _min7(A3 - 12)  # A2
+Am7 = _min7(A3)  # A3 — same register as Dm7/Cmaj7
 
 
 # =====================================================================
@@ -303,14 +303,18 @@ def generate_htp_hierarchy():
         "science": "Sensory-level only, no abstract structure",
     })
 
-    # 1.5  Mid-level: bright trumpet melody
-    mel = [C5, D5, E5, F5, G5, A5, B5, C6, B5, A5, G5, F5, E5, D5, C5, D5]
+    # 1.5  Mid-level: wide-range trumpet melody (maximise sharpness velocity)
+    # Spans C4-C6 (2 octaves) with arpeggiated leaps — large brightness changes
+    # per note produce high sharpness_velocity at 125ms.  Contrast with 02_flat
+    # (constant C4 = zero sharpness velocity).
+    mel = [C4, G4, E5, C6, G5, E4, C4, G4, E5, C6, G5, E4, C5, G5, C6, C5]
     pm = _pm_melody(mel, [0.375] * 16, TRUMPET, 100)
     save(pm, g, "05_mid_level_melody", {
-        "description": "Bright trumpet melody C5-C6 (8th notes). High sharpness velocity.",
+        "description": "Trumpet arpeggios C4-C6 (2 octaves). Large sharpness velocity from register changes.",
         "tests": ["midlevel_future"],
         "expected": {"midlevel_future": "HIGH"},
-        "science": "de Vries & Wurm 2023: mid-level ~200ms in belt cortex",
+        "science": "de Vries & Wurm 2023: mid-level ~200ms in belt cortex. "
+                   "Wide pitch range produces large sharpness_velocity (spectral centroid change rate).",
     })
 
     # 1.6  Random pitch + timing (anti-hierarchical)
@@ -579,33 +583,33 @@ def generate_sph_memory():
         "science": "No repeated pattern -> no memory match -> persistent PE",
     })
 
-    # 3.7  Gradual learning: intro -> repeat -> vary
+    # 3.7  Gradual learning: intro -> repeat -> vary (continuous, no gaps)
     motif = [C4, Eb4, G4, Bb4]
-    varied = [C4, Eb4, Ab4, Bb4]  # one note changed
+    varied = [C4, Eb4, Ab4, Bb4]  # one note changed (G4 -> Ab4)
     pm = pretty_midi.PrettyMIDI()
     inst = pretty_midi.Instrument(program=PIANO)
     t = 0.0
-    # Section A (0-5s): introduce motif x4
+    note_dur = 0.35
+    ioi = 0.375
+    # Section A (0-6s): introduce motif x4 — first exposure
     for rep in range(4):
         for p in motif:
-            inst.notes.append(pretty_midi.Note(80, p, t, t + 0.28))
-            t += 0.3125
-    # Pad to 5s
-    t = 5.0
-    # Section B (5-10s): repeat same motif x4
+            inst.notes.append(pretty_midi.Note(80, p, t, t + note_dur))
+            t += ioi
+    # Section B (6-12s): repeat same motif x4 — consolidation (continuous)
     for rep in range(4):
         for p in motif:
-            inst.notes.append(pretty_midi.Note(80, p, t, t + 0.28))
-            t += 0.3125
-    t = 10.0
-    # Section C (10-15s): varied motif x4
+            inst.notes.append(pretty_midi.Note(80, p, t, t + note_dur))
+            t += ioi
+    # Section C (12-18s): varied motif x4 — partial match
     for rep in range(4):
         for p in varied:
-            inst.notes.append(pretty_midi.Note(80, p, t, t + 0.28))
-            t += 0.3125
+            inst.notes.append(pretty_midi.Note(80, p, t, t + note_dur))
+            t += ioi
     pm.instruments.append(inst)
     save(pm, g, "07_gradual_learning", {
-        "description": "Intro motif(5s) -> repeat same(5s) -> vary one note(5s).",
+        "description": "Motif x4 (intro) -> same x4 (consolidation) -> varied x4 (partial match). "
+                       "Continuous stream, no gaps, so H3 memory accumulates across sections.",
         "tests": ["sequence_match"],
         "expected": {"sequence_match": "LOW(A) -> HIGH(B) -> MODERATE(C)"},
         "science": "Bonetti 2024: memory match builds with repetition, partial match with variation",
@@ -630,15 +634,15 @@ def generate_sph_completion():
         "science": "Bonetti 2024: cingulate assumes top hierarchy position at final tone; Rimmele 2021: delta for boundaries",
     })
 
-    # 4.2  Half cadence (ends on IV, no resolution)
+    # 4.2  Half cadence (ends on V, no resolution to I)
     pm = _pm_progression(
-        [Cmaj, Cmaj, Fmaj, Fmaj], [2.0] * 4, PIANO, 70,
+        [Cmaj, Fmaj, Gmaj, Gmaj], [2.0] * 4, PIANO, 70,
     )
     save(pm, g, "09_half_cadence", {
-        "description": "I-I-IV-IV, ending on subdominant. No cadential resolution.",
+        "description": "I-IV-V-V, ending on dominant. Half cadence — no resolution to tonic.",
         "tests": ["sequence_completion"],
-        "expected": {"sequence_completion": "LOW (no V-I resolution)"},
-        "science": "No tonic arrival = no phrase boundary marker",
+        "expected": {"sequence_completion": "LOW (V without I resolution)"},
+        "science": "Half cadence ends on V; no tonic arrival = no phrase boundary",
     })
 
     # 4.3  Clear phrase boundary with melodic arc
@@ -694,23 +698,19 @@ def generate_icem_ic():
     })
 
     # 5.2  Chromatic leaps (high IC)
-    rng = np.random.RandomState(44)
-    pool = list(range(36, 85))
-    rng.shuffle(pool)
-    pitches = pool[:20]
-    iois = rng.uniform(0.3, 0.7, size=20).tolist()
-    pm = pretty_midi.PrettyMIDI()
-    inst = pretty_midi.Instrument(program=PIANO)
-    t = 0.0
-    for p, ioi in zip(pitches, iois):
-        inst.notes.append(pretty_midi.Note(90, int(p), t, t + ioi * 0.8))
-        t += ioi
-    pm.instruments.append(inst)
+    # Alternating low-high register for MAXIMUM spectral contrast.
+    # Every interval > 12 semitones (octave+), producing large spectral_flux.
+    # Matched: same IOI (0.5s), velocity (80), instrument (piano), note count (14)
+    # as diatonic_steps — the ONLY difference is pitch interval structure.
+    leaps = [48, 84, 50, 82, 52, 80, 54, 78, 56, 76, 58, 74, 60, 72]
+    pm = _pm_melody(leaps, [0.5] * 14, PIANO, 80)
     save(pm, g, "02_chromatic_leaps", {
-        "description": "Random chromatic pitches [36-84] with large leaps, seed=44.",
+        "description": "Alternating low/high register (C3-C6), every interval >12 semitones. "
+                       "Same timing/velocity/instrument as diatonic_steps; only intervals differ.",
         "tests": ["information_content", "arousal_scaling"],
         "expected": {"information_content": "HIGH", "arousal_scaling": "HIGH"},
-        "science": "Egermann 2013: high IC -> high arousal (p<0.001, N=50)",
+        "science": "Egermann 2013: high IC -> high arousal (p<0.001, N=50). "
+                   "Large intervals = high P(unexpected|context) = high IC.",
     })
 
     # 5.3  Repeated tonic (minimal IC)
@@ -804,25 +804,29 @@ def generate_icem_emotion():
     g = "icem"
 
     # 6.1  Sudden fortissimo (defense cascade)
+    # Short quiet setup (2s) followed by LONG loud cluster (4s) so the
+    # defense signal dominates the global mean.  Previous design (4s quiet
+    # + 2s loud) diluted the spike in the mean.
     pm = pretty_midi.PrettyMIDI()
-    # Quiet strings for 4s
+    # Brief quiet strings for 2s (just enough to establish baseline)
     inst_s = pretty_midi.Instrument(program=STRINGS)
     for p in major_triad(C4):
-        inst_s.notes.append(pretty_midi.Note(25, p, 0.0, 4.0))
+        inst_s.notes.append(pretty_midi.Note(25, p, 0.0, 2.0))
     pm.instruments.append(inst_s)
-    # Sudden fff cluster at 4s
+    # Sudden fff cluster at 2s, sustained for 4s
     inst_p = pretty_midi.Instrument(program=PIANO)
     cluster = chromatic_cluster(C4, 6)
     for p in cluster:
-        inst_p.notes.append(pretty_midi.Note(127, p, 4.0, 6.0))
+        inst_p.notes.append(pretty_midi.Note(127, p, 2.0, 6.0))
     pm.instruments.append(inst_p)
     save(pm, g, "09_sudden_fortissimo", {
-        "description": "pp strings C major (4s) -> fff chromatic cluster (2s). Maximum surprise.",
+        "description": "pp strings C major (2s) -> fff chromatic cluster (4s). "
+                       "Short baseline, long loud section so defense dominates mean.",
         "tests": ["defense_cascade", "arousal_scaling", "information_content"],
         "expected": {
-            "defense_cascade": "SPIKE at t=4s",
-            "arousal_scaling": "SPIKE",
-            "information_content": "SPIKE",
+            "defense_cascade": "HIGH (spike at t=2s dominates mean)",
+            "arousal_scaling": "HIGH",
+            "information_content": "HIGH",
         },
         "science": "Egermann 2013: defense cascade = IC x arousal + loudness_velocity (SCR up, HR down)",
     }, gain=0.7)
@@ -1205,7 +1209,7 @@ def write_catalog():
         "| 14 | sph/08 authentic | sph/11 mid_phrase | sequence_completion | A>B | Bonetti 2024 |",
         "| 15 | sph/08 authentic | sph/12 deceptive | sequence_completion | A>B | I>vi |",
         "| 16 | sph/10 phrase_end | sph/11 mid_phrase | sequence_completion | A>B | Arc closure |",
-        "| 17 | sph/08 authentic | sph/09 half | sequence_completion | A>B | V-I>IV |",
+        "| 17 | sph/08 authentic | sph/09 half | sequence_completion | A>B | V-I > half cadence |",
         "| 18 | icem/02 chromatic | icem/01 diatonic | information_content | A>B | Egermann 2013 |",
         "| 19 | icem/06 cluster | icem/03 repeated | information_content | A>B | Max vs min |",
         "| 20 | icem/01 diatonic | icem/02 chromatic | valence_inversion | A>B | IC->valence inv |",

@@ -17,6 +17,8 @@ import type { ViewportState } from "./useViewport";
 /* ── Constants ───────────────────────────────────────────────────────── */
 
 const NAV_HEIGHT = 48;
+const TICK_HEIGHT = 16;          // Time ruler strip below waveform
+const TOTAL_HEIGHT = NAV_HEIGHT + TICK_HEIGHT;
 const FRAME_RATE = 172.27;
 
 /* ── Types ───────────────────────────────────────────────────────────── */
@@ -58,7 +60,7 @@ export function WaveformNavigator({
     const c = canvasRef.current;
     if (!c) return;
     c.width = width * dpr;
-    c.height = NAV_HEIGHT * dpr;
+    c.height = TOTAL_HEIGHT * dpr;
   }, [width, dpr]);
 
   /* ── Draw function ─────────────────────────────── */

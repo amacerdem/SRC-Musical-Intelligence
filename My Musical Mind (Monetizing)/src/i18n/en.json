@@ -1595,6 +1595,12 @@
     "listenWelcome": "I'm your music companion. Ask me about what's playing, request songs, or just chat about music!",
     "listenSuggestion1": "What's playing?",
     "listenSuggestion2": "Play something chill",
-    "listenSuggestion3": "Analyze this track"
+    "listenSuggestion3": "Analyze this track",
+    "labTitle": "Lab Assistant",
+    "labSubtitle": "Analysis",
+    "labAskMe": "Ask me!",
+    "labWelcome": "I'm here as your Lab assistant",
+    "labWelcomeDetail": "Ask me about spectral analysis, acoustic features, and neurological models.",
+    "labPlaceholder": "Ask about the analysis..."
   }
 }

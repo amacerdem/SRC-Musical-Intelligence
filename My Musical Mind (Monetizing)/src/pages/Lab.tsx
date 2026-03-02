@@ -37,6 +37,7 @@ import { useViewport } from "@/components/lab/useViewport";
 import { extractPeaks } from "@/components/lab/peakExtractor";
 import type { MelData } from "@/components/lab/peakExtractor";
 import type { LabMode } from "@/components/lab/FlowOverlay";
+import { LabAgent } from "@/components/lab/LabAgent";
 
 /* ── Track ID → audio file mapping ──────────────── */
 const TRACK_AUDIO: Record<string, string> = {
@@ -438,37 +439,55 @@ export function Lab() {
               />
             </div>
 
-            {/* Controls below waveform — depth left, mode center */}
-            <div className="flex items-center justify-center pt-3 gap-4">
-              <DepthSelector depth={depth} onChange={setDepth} accentColor={color} />
-
-              <div className="flex items-center rounded-xl overflow-hidden"
-                style={{
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  background: "rgba(0,0,0,0.3)",
-                  backdropFilter: "blur(12px)",
-                }}
-              >
-                {([
-                  { key: "spectral" as const, label: "Spectral", col: "#60a5fa" },
-                  { key: "acoustic" as const, label: "Acoustic", col: "#FF6B35" },
-                  { key: "neuro" as const, label: "NeuroAcoustic", col: color },
-                ]).map((mode, i) => (
-                  <button
-                    key={mode.key}
-                    onClick={() => setLabMode(mode.key)}
-                    className="px-4 py-2 text-[11px] font-display font-semibold tracking-[0.06em] uppercase transition-all"
-                    style={{
-                      background: labMode === mode.key ? `${mode.col}18` : "transparent",
-                      color: labMode === mode.key ? mode.col : "rgba(255,255,255,0.25)",
-                      borderRight: i < 2 ? "1px solid rgba(255,255,255,0.06)" : "none",
-                      boxShadow: labMode === mode.key ? `inset 0 -2px 0 ${mode.col}80, 0 0 12px ${mode.col}10` : "none",
-                    }}
-                  >
-                    {mode.label}
-                  </button>
-                ))}
+            {/* Controls below waveform — orb left, mode+depth center */}
+            <div className="flex items-center pt-3">
+              {/* Left: M³ Agent orb */}
+              <div className="flex-1 flex justify-start pl-2">
+                <LabAgent accentColor={color} trackDetail={trackDetail} melData={melData} temporal={temporal} />
               </div>
+
+              {/* Center: Mode + Depth stacked */}
+              <div className="flex flex-col items-center gap-2">
+                {/* Mode selector — primary, larger */}
+                <div className="flex items-center rounded-2xl overflow-hidden"
+                  style={{
+                    border: "1px solid rgba(255,255,255,0.12)",
+                    background: "rgba(0,0,0,0.35)",
+                    backdropFilter: "blur(16px)",
+                    boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
+                  }}
+                >
+                  {([
+                    { key: "spectral" as const, label: "Spectral", col: "#60a5fa" },
+                    { key: "acoustic" as const, label: "Acoustic", col: "#FF6B35" },
+                    { key: "neuro" as const, label: "NeuroAcoustic", col: color },
+                  ]).map((mode, i) => {
+                    const active = labMode === mode.key;
+                    return (
+                      <button
+                        key={mode.key}
+                        onClick={() => setLabMode(mode.key)}
+                        className="relative px-6 py-2.5 text-[13px] font-display font-bold tracking-[0.08em] uppercase transition-all duration-300"
+                        style={{
+                          background: active ? `${mode.col}20` : "transparent",
+                          color: active ? mode.col : "rgba(255,255,255,0.25)",
+                          borderRight: i < 2 ? "1px solid rgba(255,255,255,0.06)" : "none",
+                          boxShadow: active ? `inset 0 -2.5px 0 ${mode.col}, 0 0 20px ${mode.col}15` : "none",
+                          textShadow: active ? `0 0 12px ${mode.col}60` : "none",
+                        }}
+                      >
+                        {mode.label}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Depth selector — secondary, smaller */}
+                <DepthSelector depth={depth} onChange={setDepth} accentColor={color} />
+              </div>
+
+              {/* Right: balance spacer */}
+              <div className="flex-1" />
             </div>
           </motion.div>
         ) : (

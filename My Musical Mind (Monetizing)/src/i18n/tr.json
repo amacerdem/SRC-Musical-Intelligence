@@ -1883,6 +1883,12 @@
     "listenWelcome": "M\u00fczik arkada\u015f\u0131n\u0131m. \u00c7alan par\u00e7a hakk\u0131nda soru sor, \u015fark\u0131 iste ya da m\u00fczik hakk\u0131nda sohbet et!",
     "listenSuggestion1": "Ne \u00e7al\u0131yor?",
     "listenSuggestion2": "Sakin bir \u015fey \u00e7al",
-    "listenSuggestion3": "Bu par\u00e7ay\u0131 analiz et"
+    "listenSuggestion3": "Bu par\u00e7ay\u0131 analiz et",
+    "labTitle": "Lab Asistan\u0131",
+    "labSubtitle": "Analiz",
+    "labAskMe": "Bana sor!",
+    "labWelcome": "Lab asistan\u0131n olarak buraday\u0131m",
+    "labWelcomeDetail": "Spektral analiz, akustik \u00f6zellikler ve n\u00f6rolojik modeller hakk\u0131nda sorular sorabilirsin.",
+    "labPlaceholder": "Analiz hakk\u0131nda sor..."
   }
 }
