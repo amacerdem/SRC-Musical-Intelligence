@@ -3,7 +3,7 @@
 **Layer**: Recognition & Preservation (R)
 **Indices**: [0:3]
 **Scope**: internal
-**Activation**: sigmoid
+**Activation**: linear+clamp (BCH-style, no sigmoid cascade)
 
 ---
 
@@ -11,9 +11,9 @@
 
 | Idx | Name | Range | Scientific Basis |
 |-----|------|-------|-----------------|
-| 0 | R0:f07_preserved | [0, 1] | Preserved memory index. Angular/lingual gyrus pathway. sigma(familiarity * stumpf * warmth * preservation_factor). High even in moderate AD because angular gyrus is among last regions to atrophy. Jacobsen et al. 2015: SMA/pre-SMA and ACC show least cortical atrophy in AD (VBM, N=32). |
-| 1 | R1:f08_melodic | [0, 1] | Melodic recognition accuracy. STG + Angular Gyrus pathway. sigma(familiarity * tonalness * trist_mean * preservation_factor). Preserved through moderate AD because melodic templates are cortically stored. Sikka et al. 2015: older adults shift to L-angular + L-superior-frontal gyrus for melody recognition (fMRI, N=40). |
-| 2 | R2:f09_scaffold | [0, 1] | Memory scaffold efficacy. Music as cognitive aid. sigma(retrieval * x_l5l7.mean * (1/entropy) * preservation_factor). Therapeutic intervention metric — how effectively music can scaffold access to otherwise locked memories. Derks-Dijkman et al. 2024: 28/37 studies show musical mnemonic benefit (systematic review). |
+| 0 | R0:f07_preserved | [0, 1] | Preserved memory index. Angular/lingual gyrus pathway. 0.90 * (0.35*familiarity*stumpf + 0.35*warmth*preservation + 0.30*cortical_strength). BCH-style additive pairwise — no sigmoid cascade. High even in moderate AD because angular gyrus is among last regions to atrophy. Jacobsen et al. 2015: SMA/pre-SMA and ACC show least cortical atrophy in AD (VBM, N=32). |
+| 1 | R1:f08_melodic | [0, 1] | Melodic recognition accuracy. STG + Angular Gyrus pathway. 0.90 * (0.35*familiarity*tonalness + 0.35*trist*preservation + 0.30*tonalness*trist). BCH-style additive pairwise. Preserved through moderate AD because melodic templates are cortically stored. Sikka et al. 2015: older adults shift to L-angular + L-superior-frontal gyrus for melody recognition (fMRI, N=40). |
+| 2 | R2:f09_scaffold | [0, 1] | Memory scaffold efficacy. Music as cognitive aid. 0.85 * (0.35*retrieval*x_l5l7 + 0.35*x_l5l7*preservation + 0.30*retrieval*inv_entropy_norm). BCH-style additive pairwise. Therapeutic intervention metric — how effectively music can scaffold access to otherwise locked memories. Derks-Dijkman et al. 2024: 28/37 studies show musical mnemonic benefit (systematic review). |
 
 ---
 

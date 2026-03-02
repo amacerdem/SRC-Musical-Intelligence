@@ -31,7 +31,6 @@ from __future__ import annotations
 
 from typing import Dict, Tuple
 
-import torch
 from torch import Tensor
 
 # -- H3 tuples ----------------------------------------------------------------
@@ -98,37 +97,47 @@ def compute_extraction(
     r3_x_l5l7_mean = r3_features[..., _X_L5L7_START:_X_L5L7_END].mean(dim=-1)
 
     # Familiarity proxy: sustained warmth over 5s (H20 L0)
-    familiarity = torch.sigmoid(warmth_mean)
+    # BCH-style: no intermediate sigmoid — preserve dynamic range
+    familiarity = warmth_mean.clamp(0.0, 1.0)
 
     # Preservation factor: cortical pathway strength
     # High cortical features (warmth, tonalness, trist) = highly preserved
     # Low episodic dependency = high preservation
     cortical_strength = 0.35 * r3_warmth + 0.35 * r3_tonalness + 0.30 * r3_trist_mean
-    preservation_factor = torch.sigmoid(
+    preservation_factor = (
         cortical_strength * (1.0 - _HIPPOCAMPAL_DEP["cortical"])
         - r3_entropy * _HIPPOCAMPAL_DEP["episodic"]
-    )
+    ).clamp(0.0, 1.0)
 
     # Retrieval proxy for R2: roughness-modulated emotional retrieval
-    retrieval = torch.sigmoid(roughness_val * (1.0 - _HIPPOCAMPAL_DEP["emotional"]))
+    retrieval = (roughness_val * (1.0 - _HIPPOCAMPAL_DEP["emotional"])).clamp(0.0, 1.0)
 
     # R0: Preserved memory index -- angular/lingual gyrus pathway
     # Jacobsen 2015: SMA/pre-SMA and ACC show least cortical atrophy in AD
-    r0 = torch.sigmoid(
-        familiarity * stumpf_val * warmth_val * preservation_factor
+    # BCH-style additive pairwise: familiarity*stumpf + warmth*preservation + cortical
+    r0 = 0.90 * (
+        0.35 * familiarity * stumpf_val
+        + 0.35 * warmth_val * preservation_factor
+        + 0.30 * cortical_strength
     )
 
     # R1: Melodic recognition -- STG + angular gyrus pathway
     # Sikka 2015: older adults shift to L-angular for melody recognition
-    r1 = torch.sigmoid(
-        familiarity * tonalness_val * trist1_val * preservation_factor
+    # BCH-style additive pairwise: familiarity*tonalness + trist*preservation + tonal*trist
+    r1 = 0.90 * (
+        0.35 * familiarity * tonalness_val
+        + 0.35 * trist1_val * preservation_factor
+        + 0.30 * tonalness_val * trist1_val
     )
 
     # R2: Memory scaffold efficacy -- music as cognitive aid
     # Derks-Dijkman 2024: 28/37 studies show musical mnemonic benefit
+    # BCH-style additive pairwise: retrieval*x_l5l7 + x_l5l7*preservation + retrieval*inv_ent
     inv_entropy = 1.0 / (entropy_val.abs() + 1e-6)
-    r2 = torch.sigmoid(
-        retrieval * r3_x_l5l7_mean * inv_entropy * preservation_factor
+    r2 = 0.85 * (
+        0.35 * retrieval * r3_x_l5l7_mean
+        + 0.35 * r3_x_l5l7_mean * preservation_factor
+        + 0.30 * retrieval * inv_entropy.clamp(0.0, 3.0) / 3.0
     )
 
     return r0, r1, r2

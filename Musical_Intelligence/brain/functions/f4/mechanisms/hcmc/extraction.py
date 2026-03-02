@@ -152,11 +152,14 @@ def compute_extraction(
     # Liu et al. 2024: hippocampal replay drives mPFC consolidation.
     # f21 = sigma(0.35 * x_l5l7.mean * harmonicity_mean_5s
     #           + 0.35 * harmonicity * tonalness_autocorr_5s
-    #           + 0.30 * (1-entropy) * tonalness)
+    #           + 0.30 * (1-entropy) * harmonicity * tonalness)
+    # Harmonicity gate on Term 3: prevents inharmonic stimuli from
+    # bypassing the harmonic quality requirement for cortical consolidation.
+    # Liu et al. 2024: durable cortical storage requires harmonic templates.
     e2 = torch.sigmoid(
         0.35 * x_l5l7.mean(dim=-1) * harm_mean_5s
         + 0.35 * harmonicity * tonal_autocorr_5s
-        + 0.30 * (1.0 - entropy) * tonalness
+        + 0.30 * (1.0 - entropy) * harmonicity * tonalness
     )
 
     return e0, e1, e2

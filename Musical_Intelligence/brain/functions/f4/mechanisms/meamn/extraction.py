@@ -29,7 +29,6 @@ from __future__ import annotations
 
 from typing import Dict, Tuple
 
-import torch
 from torch import Tensor
 
 # -- H3 tuples ----------------------------------------------------------------
@@ -84,30 +83,32 @@ def compute_extraction(
     # -- Derived signals --
     retrieval = 0.50 * stumpf_mean_1s + 0.50 * stumpf_mean_5s
     familiarity_proxy = 0.50 * warmth_val_1s + 0.50 * warmth_mean_5s
-    arousal = torch.sigmoid(loudness * loud_val_1s)
+    arousal = (loudness * loud_val_1s).clamp(0.0, 1.0)  # no intermediate sigmoid
     valence = 1.0 - roughness
 
     # E0: Autobiographical retrieval -- hippocampus + mPFC + PCC hub
     # Janata 2009: dorsal MPFC tracks tonal space movement during
     # autobiographically salient songs (t(9)=5.784, p<0.0003)
-    # f01 = sigma(0.80 * x_l0l5.mean * retrieval * stumpf)
-    e0 = torch.sigmoid(
-        0.80 * x_l0l5.mean(dim=-1) * retrieval * stumpf
+    # BCH-style additive pairwise: x_l0l5*retrieval + retrieval*stumpf + x_l0l5*stumpf
+    e0 = 0.90 * (
+        0.40 * x_l0l5.mean(dim=-1) * retrieval
+        + 0.30 * retrieval * stumpf
+        + 0.30 * x_l0l5.mean(dim=-1) * stumpf
     )
 
     # E1: Nostalgia response -- hippocampus + STG melodic trace
     # Sakakibara 2025: acoustic similarity triggers nostalgia (eta_p^2=0.636)
-    # f02 = sigma(0.70 * x_l5l7.mean * familiarity)
-    e1 = torch.sigmoid(
-        0.70 * x_l5l7.mean(dim=-1) * familiarity_proxy
-    )
+    # BCH-style scaled product (2-way, safe dynamic range)
+    e1 = 0.85 * x_l5l7.mean(dim=-1) * familiarity_proxy
 
     # E2: Emotional memory coloring -- amygdala affective tagging
     # Context-dependent study 2021: multimodal integration in STS and
     # hippocampus (d=0.17, p<0.0001)
-    # f03 = sigma(0.60 * (1-roughness) * loudness * arousal)
-    e2 = torch.sigmoid(
-        0.60 * valence * loudness * arousal
+    # BCH-style additive pairwise: valence*loudness + valence*arousal + loudness*arousal
+    e2 = 0.85 * (
+        0.40 * valence * loudness
+        + 0.30 * valence * arousal
+        + 0.30 * loudness * arousal
     )
 
     return e0, e1, e2

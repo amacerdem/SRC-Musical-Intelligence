@@ -1,0 +1,55 @@
+# Nature Neuroscience figure style
+# Based on Nature journal formatting guidelines
+
+# Font
+font.family: Arial
+font.size: 7
+font.weight: normal
+
+# Axes
+axes.labelsize: 8
+axes.titlesize: 8
+axes.titleweight: bold
+axes.linewidth: 0.5
+axes.spines.top: False
+axes.spines.right: False
+axes.labelpad: 4
+
+# Ticks
+xtick.labelsize: 7
+ytick.labelsize: 7
+xtick.major.width: 0.5
+ytick.major.width: 0.5
+xtick.major.size: 3
+ytick.major.size: 3
+xtick.minor.visible: False
+ytick.minor.visible: False
+xtick.direction: out
+ytick.direction: out
+
+# Lines
+lines.linewidth: 0.75
+lines.markersize: 3
+
+# Legend
+legend.fontsize: 6
+legend.frameon: False
+legend.handlelength: 1.5
+
+# Figure
+figure.figsize: 3.5, 3.0
+figure.dpi: 300
+figure.facecolor: white
+
+# Saving
+savefig.dpi: 300
+savefig.bbox: tight
+savefig.pad_inches: 0.05
+savefig.format: pdf
+savefig.facecolor: white
+
+# Grid
+axes.grid: False
+
+# Colors — Nature-compatible palette
+axes.prop_cycle: cycler('color', ['2171b5', 'cb181d', '238b45', '6a3d9a', 'ff7f00', '984ea3', 'a65628', 'f781bf'])

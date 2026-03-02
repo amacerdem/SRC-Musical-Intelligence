@@ -59,29 +59,29 @@ def compute_temporal_integration(
     amp_vel_1s = h3_features[_AMP_VEL_1S]
 
     # Derived signals from doc formulas
-    # Familiarity = familiarity_proxy.mean() [from entropy, warmth]
-    familiarity = torch.sigmoid(
-        1.0 - 0.50 * entropy_val_1s - 0.50 * entropy_mean_5s
-    )
+    # Familiarity = 1 - entropy (no intermediate sigmoid — BCH pattern)
+    familiarity = (1.0 - 0.50 * entropy_val_1s - 0.50 * entropy_mean_5s).clamp(0.0, 1.0)
 
-    # EmotionalIntensity = |Valence| * Arousal [from R3 + affect dynamics]
-    emotional_intensity = pleas_val_1s * torch.sigmoid(loud_mean_5s * amp_vel_1s)
+    # EmotionalIntensity = |Valence| * Arousal (no intermediate sigmoid)
+    emotional_intensity = (
+        pleas_val_1s * (loud_mean_5s * amp_vel_1s).clamp(0.0, 1.0)
+    ).clamp(0.0, 1.0)
 
     # SelfRelevance = retrieval_dynamics.mean() [hippocampal binding]
     self_relevance = e0  # E0 is the retrieval dynamics signal
 
-    # M0: MEAM Retrieval -- triple-product model
+    # M0: MEAM Retrieval -- additive pairwise (BCH pattern)
     # Janata 2009: MEAMs require familiarity x emotion x self-relevance
-    # retrieval * familiarity * emotional_intensity
-    m0 = torch.sigmoid(
-        1.0 * e0 * familiarity * emotional_intensity
+    # Pairwise products preserve interaction without triple-product collapse
+    m0 = 0.90 * (
+        0.40 * e0 * familiarity
+        + 0.30 * e0 * emotional_intensity
+        + 0.30 * familiarity * emotional_intensity
     )
 
-    # M1: P(recall | music) -- logistic regression
+    # M1: P(recall | music) -- logistic regression (sigmoid is correct here)
     # Derks-Dijkman 2024: 28/37 studies show musical mnemonic benefit
     # sigma(beta_0 + beta_1*Familiarity + beta_2*Arousal + beta_3*Valence)
-    # Arousal = sigma(R3.loudness * R3.amplitude) -> use loud_mean_5s * amp_vel_1s
-    # Valence = 1 - roughness -> use pleas_val_1s as proxy
     arousal = torch.sigmoid(loud_mean_5s * amp_vel_1s)
     m1 = torch.sigmoid(
         -0.50 + 0.40 * familiarity + 0.35 * arousal + 0.25 * pleas_val_1s

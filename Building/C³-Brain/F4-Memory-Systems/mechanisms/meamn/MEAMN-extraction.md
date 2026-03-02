@@ -3,7 +3,7 @@
 **Layer**: Extraction (E)
 **Indices**: [0:3]
 **Scope**: internal
-**Activation**: sigmoid
+**Activation**: linear+clamp (BCH-style, no sigmoid cascade)
 
 ---
 
@@ -11,9 +11,9 @@
 
 | Idx | Name | Range | Scientific Basis |
 |-----|------|-------|-----------------|
-| 0 | E0:f01_retrieval | [0, 1] | Autobiographical retrieval activation. Hippocampus + mPFC + PCC hub. f01 = sigma(0.80 * x_l0l5.mean * retrieval * stumpf). Janata 2009: dorsal MPFC (BA 8/9) tracks tonal space movement during autobiographically salient songs (t(9)=5.784, p<0.0003). |
-| 1 | E1:f02_nostalgia | [0, 1] | Nostalgia response intensity. Hippocampus + STG melodic trace. f02 = sigma(0.70 * x_l5l7.mean * familiarity). Sakakibara 2025: acoustic similarity alone triggers nostalgia (eta_p^2=0.636). |
-| 2 | E2:f03_emotion | [0, 1] | Emotional memory coloring. Amygdala affective tagging. f03 = sigma(0.60 * (1-roughness) * loudness * arousal). Context-dependent study 2021: multimodal integration in STS and hippocampus (d=0.17, p<0.0001). |
+| 0 | E0:f01_retrieval | [0, 1] | Autobiographical retrieval activation. Hippocampus + mPFC + PCC hub. f01 = 0.90 * (0.40*x_l0l5.mean*retrieval + 0.30*retrieval*stumpf + 0.30*x_l0l5.mean*stumpf). BCH-style additive pairwise — no sigmoid cascade. Janata 2009: dorsal MPFC (BA 8/9) tracks tonal space movement during autobiographically salient songs (t(9)=5.784, p<0.0003). |
+| 1 | E1:f02_nostalgia | [0, 1] | Nostalgia response intensity. Hippocampus + STG melodic trace. f02 = 0.85 * x_l5l7.mean * familiarity_proxy. BCH-style scaled product (2-way, safe dynamic range). Sakakibara 2025: acoustic similarity alone triggers nostalgia (eta_p^2=0.636). |
+| 2 | E2:f03_emotion | [0, 1] | Emotional memory coloring. Amygdala affective tagging. f03 = 0.85 * (0.40*valence*loudness + 0.30*valence*arousal + 0.30*loudness*arousal). BCH-style additive pairwise. Context-dependent study 2021: multimodal integration in STS and hippocampus (d=0.17, p<0.0001). |
 
 ---
 

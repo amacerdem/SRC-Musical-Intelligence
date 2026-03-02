@@ -12,11 +12,13 @@
 Stimuli rationale:
   - MEAMN reads R³ via: warmth[12], stumpf_fusion[3], roughness[0],
     loudness[10], x_l0l5[25:33], x_l5l7[41:49]
-  - E0:f01_retrieval = σ(0.80 × x_l0l5.mean × retrieval × stumpf)
+  - E0:f01_retrieval = 0.90 × (0.40×x_l0l5×retrieval + 0.30×retrieval×stumpf
+    + 0.30×x_l0l5×stumpf)  [BCH-style additive pairwise]
     where retrieval = 0.50×stumpf_mean_1s + 0.50×stumpf_mean_5s
-  - E1:f02_nostalgia = σ(0.70 × x_l5l7.mean × familiarity_proxy)
+  - E1:f02_nostalgia = 0.85 × x_l5l7.mean × familiarity_proxy
     where familiarity = 0.50×warmth_val_1s + 0.50×warmth_mean_5s
-  - E2:f03_emotion = σ(0.60 × (1-roughness) × loudness × arousal)
+  - E2:f03_emotion = 0.85 × (0.40×valence×loudness + 0.30×valence×arousal
+    + 0.30×loudness×arousal)  [BCH-style additive pairwise]
 
 Science:
   - Janata 2009: mPFC tracks tonal space, N=13, p<0.0003
@@ -80,29 +82,42 @@ class TestAutobiographicalRetrieval:
         )[self.BELIEF]
         assert_greater(res_organ, res_cluster, "organ_cmaj", "cluster_12")
 
-    def test_melody_above_silence(self, runner):
-        """Piano melody >> silence for retrieval.
+    def test_melody_above_cluster(self, runner):
+        """Piano melody >> chromatic cluster for retrieval.
 
-        Structured melodic input provides stumpf_fusion + x_l0l5 drive,
-        whereas silence produces baseline (~0.56) retrieval.
+        Structured melodic input provides high stumpf_fusion + x_l0l5 drive.
+        Cluster has low stumpf (dissonant) → low retrieval binding.
+        Janata 2009: tonal coherence drives mPFC autobiographical retrieval.
         """
         melody = diatonic_scale(MC4, 8)
         res_mel = runner.run(
             midi_melody(melody, [0.5] * 8, program=PIANO, velocity=80),
             [self.BELIEF],
         )[self.BELIEF]
-        res_sil = runner.run(silence(6.0), [self.BELIEF])[self.BELIEF]
-        assert_greater(res_mel, res_sil, "piano_melody", "silence")
+        res_cluster = runner.run(
+            midi_chord(chromatic_cluster(MC4, 12), 6.0,
+                       program=PIANO, velocity=110),
+            [self.BELIEF],
+        )[self.BELIEF]
+        assert_greater(res_mel, res_cluster, "piano_melody", "cluster")
 
-    def test_strings_above_silence(self, runner):
-        """Strings melody >> near-silence for retrieval."""
+    def test_strings_above_cluster(self, runner):
+        """Strings melody >> chromatic cluster for retrieval.
+
+        Warm timbral melody provides familiarity + consonance drive.
+        Cluster has maximal roughness → minimal autobiographical binding.
+        """
         melody = diatonic_scale(MC4, 8)
         res_str = runner.run(
             midi_melody(melody, [0.75] * 8, program=STRINGS, velocity=70),
             [self.BELIEF],
         )[self.BELIEF]
-        res_sil = runner.run(silence(6.0), [self.BELIEF])[self.BELIEF]
-        assert_greater(res_str, res_sil, "strings_melody", "silence")
+        res_cluster = runner.run(
+            midi_chord(chromatic_cluster(MC4, 12), 6.0,
+                       program=PIANO, velocity=110),
+            [self.BELIEF],
+        )[self.BELIEF]
+        assert_greater(res_str, res_cluster, "strings_melody", "cluster")
 
     def test_consonance_hierarchy(self, runner):
         """P1 (unison) > P5 > m2 for retrieval — follows stumpf_fusion.
@@ -291,8 +306,13 @@ class TestEmotionalColoring:
         )[self.BELIEF]
         assert_greater(res_cons, res_diss, "consonant", "dissonant")
 
-    def test_rich_texture_above_silence(self, runner):
-        """Flute+organ ensemble >> silence for emotional coloring."""
+    def test_rich_texture_above_noise(self, runner):
+        """Flute+organ ensemble >> noise for emotional coloring.
+
+        Rich consonant ensemble: high valence (low roughness) + high loudness + arousal.
+        Noise: roughness ≈ 1 → valence ≈ 0, suppresses emotional coloring.
+        E2 = 0.85 × (0.40×valence×loudness + 0.30×valence×arousal + 0.30×loudness×arousal).
+        """
         melody_notes = [E5, D5, MC5, E5, F5]
         melody_durs = [1.0] * 5
         chord_notes = [major_triad(MC4), minor_triad(A3),
@@ -305,8 +325,8 @@ class TestEmotionalColoring:
             ),
             [self.BELIEF],
         )[self.BELIEF]
-        res_sil = runner.run(silence(5.0), [self.BELIEF])[self.BELIEF]
-        assert_greater(res_rich, res_sil, "flute_organ", "silence")
+        res_noise = runner.run(noise(5.0), [self.BELIEF])[self.BELIEF]
+        assert_greater(res_rich, res_noise, "flute_organ", "noise")
 
     def test_transition_rising(self, runner):
         """Noise→harmonic crossfade should show rising emotional coloring."""

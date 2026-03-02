@@ -1,0 +1,39 @@
+# MI Validation Infrastructure — Dependencies
+# Install: pip install -r requirements.txt
+
+# ── Neuroscience analysis ──
+mne>=1.6.0
+mne-bids>=0.14
+nilearn>=0.10.0
+nibabel>=5.0.0
+
+# ── Statistical analysis ──
+rsatoolbox>=0.1.0
+himalaya>=0.4.0
+scikit-learn>=1.4.0
+scipy>=1.12.0
+statsmodels>=0.14.0
+
+# ── Visualization ──
+matplotlib>=3.8.0
+seaborn>=0.13.0
+
+# ── Data management ──
+h5py>=3.10.0
+pandas>=2.1.0
+requests>=2.31.0
+tqdm>=4.66.0
+
+# ── Audio / MIDI ──
+pretty_midi>=0.2.10
+librosa>=0.10.0
+
+# ── OpenNeuro data access ──
+openneuro-py>=2024.1.0
+datalad>=1.0.0
+
+# ── Music prediction benchmark ──
+idyompy>=0.5.0
+
+# ── Already installed (MI core) ──
+# torch, torchaudio, numpy, soundfile, pytest

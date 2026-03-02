@@ -3,7 +3,7 @@
 **Layer**: Extraction (E)
 **Indices**: [0:3]
 **Scope**: internal
-**Activation**: sigmoid
+**Activation**: sigmoid (E0, E1) / linear+clamp with harmonicity gate (E2)
 
 ---
 
@@ -13,7 +13,7 @@
 |-----|------|-------|-----------------|
 | 0 | E0:fast_binding | [0, 1] | Hippocampal initial encoding. CA3 autoassociative binding of features. f19 = sigma(0.35 * x_l0l5.mean * stumpf_mean_1s + 0.35 * stumpf * stumpf_mean_1s + 0.30 * onset_str * loudness). Rolls 2013: CA3 autoassociative network for fast pattern binding. |
 | 1 | E1:episodic_seg | [0, 1] | Event boundary detection. Hippocampal segmentation at spectral flux boundaries. f20 = sigma(0.40 * flux * flux_mean_1s + 0.30 * entropy * flux + 0.30 * onset_str * flux). Zacks et al. 2007: event boundaries trigger encoding. |
-| 2 | E2:cortical_storage | [0, 1] | Long-term cortical pattern storage. mPFC + PCC consolidation via hippocampal replay. f21 = sigma(0.35 * x_l5l7.mean * harmonicity_mean_5s + 0.35 * harmonicity * tonalness_autocorr_5s + 0.30 * (1-entropy) * tonalness). Liu et al. 2024: hippocampal replay drives mPFC consolidation. |
+| 2 | E2:cortical_storage | [0, 1] | Long-term cortical pattern storage. mPFC + PCC consolidation via hippocampal replay. f21 = sigma(0.35 * x_l5l7.mean * harmonicity_mean_5s + 0.35 * harmonicity * tonalness_autocorr_5s + 0.30 * (1-entropy) * harmonicity * tonalness). Harmonicity gate on Term 3 ensures inharmonic stimuli are suppressed in consolidation pathway. Liu et al. 2024: hippocampal replay drives mPFC consolidation. |
 
 ---
 

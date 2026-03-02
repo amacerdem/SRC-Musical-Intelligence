@@ -71,7 +71,8 @@ def compute_temporal_integration(
     r3_x_l5l7_mean = r3_features[..., _X_L5L7_START:_X_L5L7_END].mean(dim=-1)
 
     # Familiarity proxy: sustained warmth stability over 36s
-    familiarity = torch.sigmoid(warmth_stab_36s)
+    # No intermediate sigmoid — preserve dynamic range (BCH pattern)
+    familiarity = warmth_stab_36s.clamp(0.0, 1.0)
 
     # Preservation factor from R-layer: reuse R0 as cortical pathway strength
     preservation_factor = r0
