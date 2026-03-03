@@ -1,0 +1,237 @@
+% ============================================================================
+% Musical Intelligence — Unique Value Proposition
+% Mart 2026 | v3.0 — Minimalist 2-Column
+% ============================================================================
+\documentclass[9pt,a4paper,twocolumn]{extarticle}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[turkish]{babel}
+\usepackage[a4paper, top=14mm, bottom=14mm, left=12mm, right=12mm, columnsep=7mm]{geometry}
+
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{microtype}
+
+\usepackage[dvipsnames,svgnames]{xcolor}
+\definecolor{mi}{RGB}{99, 102, 241}
+\definecolor{dk}{RGB}{15, 23, 42}
+\definecolor{gr}{RGB}{107, 114, 128}
+\definecolor{lt}{RGB}{229, 231, 235}
+\definecolor{bg}{RGB}{248, 250, 252}
+
+\usepackage{tikz}
+\usetikzlibrary{babel}
+
+\usepackage{enumitem}
+\setlist[itemize]{nosep, left=0pt, label={\textcolor{mi}{\footnotesize\textbullet}}, itemsep=0.5pt}
+
+\usepackage{tabularx, booktabs, colortbl, array}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\usepackage{fancyhdr, lastpage, parskip}
+\setlength{\parskip}{2pt}
+\setlength{\parindent}{0pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[C]{\footnotesize\color{gr}\thepage\,/\,\pageref{LastPage}}
+
+% --- Minimal commands ---
+\newcommand{\uscore}[1]{%
+  \begin{tikzpicture}[baseline=-0.4ex]
+    \foreach \x in {1,...,10} {
+      \pgfmathparse{int(\x <= #1)}
+      \ifnum\pgfmathresult=1
+        \fill[mi] ({(\x-1)*0.18},0) circle (0.06);
+      \else
+        \fill[lt] ({(\x-1)*0.18},0) circle (0.06);
+      \fi
+    }
+  \end{tikzpicture}%
+}
+
+\newcommand{\uvp}[4]{%
+  \noindent\textbf{\textcolor{dk}{#1}} \hfill {\scriptsize\uscore{#2}}\\[-2pt]
+  {\small #3}\\[-1pt]
+  {\scriptsize\textcolor{gr}{#4}}\par\vspace{4pt}
+}
+
+\newcommand{\secline}{{\color{mi}\hrule height 0.6pt}\vspace{4pt}}
+
+\usepackage{titlesec}
+\titleformat{\section}{\large\bfseries\color{dk}}{}{0pt}{}[\secline]
+\titlespacing{\section}{0pt}{8pt}{2pt}
+
+% ============================================================================
+\begin{document}
+
+% === HEADER (one-column) ===
+\twocolumn[{%
+\begin{center}
+{\fontsize{22}{26}\selectfont\textbf{\textcolor{dk}{Musical Intelligence}}}\\[3pt]
+{\normalsize\textcolor{mi}{Unique Value Proposition}}\\[6pt]
+{\small\textcolor{dk}{M\"uzik dinlerken beyninde ne oldu\u{g}unu anlayan ve buna g\"ore sana rehberlik eden d\"unyadaki tek platform.}}\\[4pt]
+{\scriptsize\textcolor{gr}{Mart 2026 \quad|\quad 448 bilimsel \c{c}al\i \c{s}maya dayal\i{} \quad|\quad 131 bilissel \"ol\c{c}\"um \quad|\quad 0 do\u{g}rudan rakip}}
+\end{center}
+\vspace{4pt}
+{\color{mi}\hrule height 0.8pt}
+\vspace{6pt}
+}]
+
+% ============================================================================
+\section{\c{S}u An Yap\i labiliyor}
+
+\uvp{1. M\"uzikal DNA Ke\c{s}fi}{8}{%
+Spotify hesab\i n\i{} ba\u{g}la, 30 saniyede m\"uzikal ki\c{s}ili\u{g}ini \"o\u{g}ren. Dinleme ge\c{c}mi\c{s}in 5 ``m\"uzikal gene'' d\"on\"u\c{s}\"ur: ke\c{s}if i\c{s}tah\i, detay hassasiyeti, dramatik e\u{g}ilim, duygusal derinlik, zevk esnekli\u{g}i.}{%
+Spotify ``be\u{g}enilen \c{s}ark\i lar'' g\"osterir. MI \textbf{neden} be\u{g}endi\u{g}ini s\"oyler.}
+
+\uvp{2. 24 M\"uzikal Persona}{7}{%
+``Simyac\i'', ``Mimar'', ``Ka\c{s}if'', ``\c{C}\i pa'', ``Kinetik'' --- 5 aileden 24 karakter tipi. Gen profiline g\"ore hangi persona oldu\u{g}unu ke\c{s}fet. Avatar, a\c{c}\i klama, \"oneri stili --- hepsi personana g\"ore.}{%
+16Personalities testi gibi ama m\"uzik i\c{c}in --- ve ger\c{c}ek dinleme verisine dayal\i.}
+
+\uvp{3. \c{S}ark\i{} R\"ontgeni}{10}{%
+Herhangi bir \c{s}ark\i y\i{} y\"ukle --- beyninin onu nas\i l i\c{s}ledi\u{g}ini g\"or. Saniyede 172 kez taranarak 131 farkl\i{} bilissel durum hesaplan\i r: dikkat, haf\i za, duygu, hareket d\"urt\"us\"u, \"od\"ul, s\"urpriz. Sonu\c{c}: \c{s}ark\i n\i n ``beyin filmi''.}{%
+Shazam \c{s}ark\i y\i{} tan\i r. MI \c{s}ark\i n\i n seni \textbf{nas\i l etkiledi\u{g}ini} g\"osterir.}
+
+\uvp{4. AI M\"uzik Dan\i \c{s}man\i}{9}{%
+``Bu \c{s}ark\i{} neden beni a\u{g}lat\i yor?'' diye sor, bilimsel cevap al. 11 farkl\i{} ara\c{c}la donat\i lm\i \c{s} ki\c{s}isel yapay zeka: \c{s}ark\i{} analiz eder, profili okur, par\c{c}alar\i{} kar\c{s}\i la\c{s}t\i r\i r. Personana g\"ore konu\c{s}ur.}{%
+ChatGPT m\"uzik hakk\i nda genel bilgi verir. MI ajan\i{} \c{s}ark\i y\i{} \textbf{senin beynin \"uzerinden} analiz eder.}
+
+\uvp{5. Derinlik Se\c{c}ici}{8}{%
+Ayn\i{} analiz 3 katmanda: \textbf{6 boyut} (herkes anlar: mutlu/h\"uz\"unl\"u, sakin/co\c{s}kulu) $\rightarrow$ \textbf{12 boyut} (merakl\i lar i\c{c}in: tahmin, dikkat, haf\i za) $\rightarrow$ \textbf{24 boyut} (uzmanlar i\c{c}in: beyin b\"olgesi, n\"orokimyasal). \.Istedi\u{g}in kadar derine in.}{%
+Freemium modele do\u{g}al e\c{s}leme: \"ucretsiz=6D, premium=12D, profesyonel=24D.}
+
+\uvp{6. An\i nda Profil}{7}{%
+Dosya y\"ukleme yok, kay\i t formu yok. Spotify'a giri\c{s} yap --- sistem top par\c{c}alar\i n\i, son dinlediklerini ve kaydettiklerini tarayarak an\i nda MI profili olu\c{s}turur. S\i f\i r s\"urt\"unme.}{%
+Kullan\i c\i{} ilk 30 saniyede de\u{g}er g\"or\"ur --- ``aha an\i'' hemen ger\c{c}ekle\c{s}ir.}
+
+\uvp{7. \c{S}ark\i{} Kar\c{s}\i la\c{s}t\i rma}{7}{%
+\.Iki \c{s}ark\i y\i{} yan yana koy --- 131 boyutta farklar\i n\i{} g\"or. ``Neden A \c{s}ark\i s\i{} beni dans ettirirken B \c{s}ark\i s\i{} h\"uz\"unlendiriyor?'' sorusuna veri odakl\i{} cevap.}{%
+Hi\c{c}bir platformda b\"oyle bir kar\c{s}\i la\c{s}t\i rma arac\i{} yok.}
+
+\uvp{8. Bilimsel G\"uvenilirlik}{9}{%
+2.847 makale tarand\i, 448 dahil edildi. 1.116 ampirik iddia, 634 etki b\"uy\"ukl\"u\u{g}\"u. Nature Neuroscience hedefli manuscript haz\i r. Bu bir ``m\"uzik AI uygulamas\i'' de\u{g}il --- bilimsel bir platform.}{%
+Brain.fm ``bilime dayal\i'' der ama neye dayal\i{} oldu\u{g}unu a\c{c}\i klamaz. MI her \c{c}al\i \c{s}may\i{} g\"osterebilir.}
+
+% ============================================================================
+\section{1--2 Ay \.I\c{c}inde}
+
+\uvp{9. Canl\i{} Beyin Haritas\i}{9}{%
+\c{S}ark\i{} \c{c}alarken 26 beyin b\"olgesinin aktivasyonunu 3D olarak canl\i{} izle. Dopamin alt\i n, serotonin mavi, opioid ye\c{s}il olarak parlar. ``Beyninin m\"uzi\u{g}e dans edi\c{s}ini izle.''}{%
+D\"unyada m\"uzik dinlerken beyin aktivasyonunu ger\c{c}ek zamanl\i{} g\"orselle\c{s}tiren ba\c{s}ka uygulama yok.}
+
+\uvp{10. Duygu Zaman \c{C}izelgesi}{8}{%
+\c{S}ark\i n\i n her saniyesinde 14 duygusal boyut: valans, uyar\i lma, gerilim, \"urperme, nostalji, hu\c{s}u, huzur\ldots\ Timeline \"uzerinde g\"orselle\c{s}tirilir. ``0:45'te h\"uz\"un ba\c{s}l\i yor, 2:35'te katarsis.''}{%
+Spotify ``enerji: y\"uksek'' der. MI \c{s}ark\i n\i n duygusal \textbf{hikayesini} anlat\i r.}
+
+\uvp{11. Groove ve Hareket Analizi}{7}{%
+Ritim s\"ur\"uklenmesi, hareket d\"urt\"us\"u, senkronizasyon g\"uc\"u, groove yo\u{g}unlu\u{g}u. ``Bu \c{s}ark\i n\i n groove puan\i{} 8.7 --- ba\c{s} sallama d\"urt\"us\"u 2:10'da zirve.''}{%
+Spotify ``dans edilebilirlik'' verir. MI motor korteksin ger\c{c}ekte ne yapt\i \u{g}\i n\i{} \"ol\c{c}er.}
+
+\uvp{12. Duo: Birlikte Dinle}{8}{%
+Arkada\c{s}\i nla ayn\i{} \c{s}ark\i y\i{} dinle --- m\"uzikal uyumu g\"or. Hangi boyutlarda \"ort\"u\c{s}\"uyorsunuz? Combo sistemi, ba\c{s}ar\i mlar, g\"orevler ile oyunla\c{s}t\i r\i lm\i \c{s}.}{%
+Spotify Blend playlist yapar. MI iki beynin m\"uzi\u{g}e \textbf{nas\i l farkl\i{} tepki verdi\u{g}ini} g\"osterir.}
+
+\uvp{13. \"{U}rperme Tahmini}{8}{%
+\c{S}ark\i n\i n sende ``chills'' (t\"uylerin diken diken olmas\i) yaratma olas\i l\i \u{g}\i n\i{} ve hangi anlarda olabilece\u{g}ini tahmin eder. Opioid + dopamin + s\"urpriz etkile\c{s}imine dayal\i.}{%
+Blood \& Zatorre 2001 ara\c{s}t\i rmas\i na dayanan hesaplamal\i{} \"urperme modeli --- d\"unyada ilk.}
+
+\uvp{14. Hat\i ra Defteri}{7}{%
+``Bu \c{s}ark\i{} neden farkl\i{} hissettiriyor?'' --- A\c{s}inal\i k g\"uc\"u, tan\i ma g\"uveni, anlam y\"ukleme analizi. ``Tekrar dinlemekten s\i k\i lm\i yorsun \c{c}\"unk\"u a\c{s}inal\i k y\"uksek ama s\"urpriz potansiyeli hala var.''}{%
+Hi\c{c}bir platform ``neden bu \c{s}ark\i y\i{} tekrar dinliyorsun'' sorusuna bilimsel cevap vermiyor.}
+
+\uvp{15. Tam Mobil Uygulama}{5}{%
+React + Three.js WebGL, 21 sayfa, Spotify entegrasyonu, Framer Motion animasyonlar, T\"urk\c{c}e/\.Ingilizce. Persona ke\c{s}fi, analiz lab\i, sohbet, g\"orselle\c{s}tirme --- tek uygulamada.}{%
+Teknoloji haz\i r, pazar fark\i{} i\c{c}erikte.}
+
+% ============================================================================
+\section{3--6 Ay \.I\c{c}inde}
+
+\uvp{16. S\"urpriz Dedekt\"or\"u}{9}{%
+\c{S}ark\i y\i{} senin gibi ``bekleyerek'' dinler ve beklentinin k\i r\i ld\i \u{g}\i{} anlar\i{} i\c{s}aretler. ``2:42'deki mod\"ulasyon beyninin bekledi\u{g}i \c{c}\"oz\"ulmenin tersini yap\i yor --- bu y\"uzden \c{c}ok etkili.''}{%
+M\"uzik ele\c{s}tirmenlerinin sezgisel yapt\i \u{g}\i n\i{} ilk kez hesaplamal\i{} yapan sistem.}
+
+\uvp{17. Dopamin Haritas\i}{10}{%
+Beyninin hangi anlarda ``istiyorum'' (\textit{wanting}) ve ``be\u{g}eniyorum'' (\textit{liking}) sinyali g\"onderdi\u{g}ini g\"or. Dopamin, serotonin, opioid, norepinefrin --- 4 n\"orokimyasal\i n anl\i k seviyesi.}{%
+M\"uzik dinlerken n\"orokimyasal dinamikleri modelleyen \textbf{d\"unyada ba\c{s}ka hi\c{c}bir \"ur\"un yok}.}
+
+\uvp{18. Ruh Hali Navigat\"or\"u}{9}{%
+``Stresli hissediyorum, sakinle\c{s}mek istiyorum'' $\rightarrow$ \textbf{senin} kognitif profiline g\"ore o ge\c{c}i\c{s}i sa\u{g}layacak \c{s}ark\i{} s\i ras\i{} \"onerir. Ayn\i{} ``chill'' playlist herkese \c{c}al\i \c{s}maz --- bu sistem senin beynine g\"ore \c{c}al\i \c{s}\i r.}{%
+Spotify playlist'i herkese ayn\i. MI'n\i n \"onerisi kognitif profile \"ozel.}
+
+\uvp{19. Dikkat Radar\i}{8}{%
+\c{S}ark\i da dikkatinin nereye kayd\i \u{g}\i n\i{} g\"or. \c{C}al\i \c{s}ma m\"uzi\u{g}i se\c{c}erken hangi \c{s}ark\i lar\i n dikkatini da\u{g}\i tmadan arka planda kald\i \u{g}\i n\i{} bil.}{%
+Brain.fm m\"uzik \"uretir. MI herhangi bir \c{s}ark\i n\i n dikkat etkisini \"ol\c{c}er.}
+
+\uvp{20. \c{C}al\i \c{s}ma M\"uzi\u{g}i Optimizer}{8}{%
+K\"ut\"uphanenden dikkat da\u{g}\i tmayan, odak art\i ran \c{s}ark\i lar\i{} otomatik filtrele. ``Senin beynin i\c{c}in en iyi \c{c}al\i \c{s}ma \c{s}ark\i lar\i'' listesi. Dikkat + belirginlik + motor d\"urt\"u analizine dayal\i.}{%
+Ki\c{s}iye \"ozel ``odak m\"uzi\u{g}i'' --- \"uretilmi\c{s} de\u{g}il, senin k\"ut\"uphanenden se\c{c}ilmi\c{s}.}
+
+% ============================================================================
+\section{6--12 Ay \.I\c{c}inde}
+
+\uvp{21. M\"uzikal Evrim Takibi}{9}{%
+Haftal\i k/ayl\i k dinleme verisinden zevkinin nas\i l de\u{g}i\c{s}ti\u{g}ini izle. ``Son 3 ayda ke\c{s}if i\c{s}tah\i n \%18 artt\i. Eskiden rahats\i z eden karma\c{s}\i kl\i k art\i k ho\c{s}una gidiyor.''}{%
+M\"uzikal zevk de\u{g}i\c{s}imini bilimsel olarak takip eden hi\c{c}bir \"ur\"un yok.}
+
+\uvp{22. Sosyal Rezonans}{8}{%
+Konserde, partide, arabada --- grup dinleme deneyimini \"ol\c{c}. ``Salonun \%73'\"u ayn\i{} anda \"urperme ya\c{s}ad\i.'' Arkada\c{s} grubu i\c{c}in m\"uzikal uyumluluk skoru.}{%
+M\"uzik dinlemenin sosyal boyutunu modelleyen d\"unyadaki tek giri\c{s}im.}
+
+\uvp{23. Uyku/Rahatlama Rehberi}{7}{%
+Uyku \"oncesi profil analizi: hangi \c{s}ark\i lar serotonin y\"ukseltiyor, hangileri uyar\i lma d\"u\c{s}\"ur\"uyor? Ki\c{s}isel ``uyku m\"uzi\u{g}i'' listesi --- \"uretilmi\c{s} de\u{g}il, ger\c{c}ek m\"uzikten se\c{c}ilmi\c{s}.}{%
+Endel yapay ses \"uretiyor. MI senin m\"uzi\u{g}inden en uygununu se\c{c}iyor.}
+
+% ============================================================================
+\section{Yol Haritas\i{} (Tasar\i m A\c{s}amas\i nda)}
+
+\uvp{24. Terapi Modu}{10}{%
+Ruh sa\u{g}l\i \u{g}\i{} profesyonelleri i\c{c}in: anksiyete, stres, depresyon, uyku --- ki\c{s}inin kognitif profiline g\"ore kalibre edilmi\c{s} m\"uzik se\c{c}imi. Klinik do\u{g}rulama ile.}{%
+LUCID ve Rubato Life sens\"or gerektiriyor. MI sadece ses ile \c{c}al\i \c{s}\i r.}
+
+\uvp{25. M\"uzik \"Uretimi (Compose)}{9}{%
+``Beni \c{s}u hissettirsin'' de --- MI o m\"uzi\u{g}i \"uretsin. Hedef kognitif durum $\rightarrow$ m\"uzik. ``Dopamin patlamas\i{} + nostalji + hafif gerilim'' = sana \"ozel par\c{c}a.}{%
+Suno/Udio metinden m\"uzik yapar. MI, hedef \textbf{beyin durumundan} m\"uzik yapar.}
+
+\uvp{26. E\c{s}-Yarat\i m (Hybrid)}{10}{%
+M\"uzik yaparken MI sana ger\c{c}ek zamanl\i{} geri bildirim verir. ``Bu nota gerilimi \%23 art\i rd\i, dopamin beklentisi olu\c{s}turdu.'' Best\"eciler ve prod\"ukt\"orler i\c{c}in.}{%
+Hi\c{c}bir DAW kognitif geri bildirim vermiyor.}
+
+\uvp{27. Konser/Canl\i{} Analiz}{8}{%
+Canl\i{} performans\i{} ger\c{c}ek zamanl\i{} analiz et. Sanat\c{c}\i lar i\c{c}in: ``Seyirci 2. \c{s}ark\i da dikkat kaybetti, 5. \c{s}ark\i da doruk noktas\i.'' Set listesi optimizasyonu.}{%
+Konser deneyimini kognitif olarak analiz eden ilk ara\c{c}.}
+
+\uvp{28. E\u{g}itim Modu}{7}{%
+M\"uzik \"o\u{g}rencileri i\c{c}in: ``Bu par\c{c}ay\i{} \c{c}alarken dinleyicinin dikkati 3. \"ol\c{c}\"ude d\"u\c{s}\"uyor --- dinamik kontrastla d\"uzelt.'' Performans geri bildirimi.}{%
+M\"uzik e\u{g}itiminde dinleyici perspektifinden geri bildirim veren ilk sistem.}
+
+% ============================================================================
+\vspace{2pt}
+\section{Neden Ba\c{s}ka Kimse Yapam\i yor?}
+
+\vspace{-2pt}
+\begin{footnotesize}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\columnwidth}{@{}L{1.8cm} L{4.7cm}@{}}
+\toprule
+\textbf{Rakipler} & \textbf{MI Fark\i} \\
+\midrule
+Suno, Udio & M\"uzik \textit{\"uretiyor}. MI \textit{anl\i yor}. \\
+Spotify, Apple & \c{S}ark\i{} \textit{\"oneriyor}. MI \textit{neden} sevdi\u{g}ini a\c{c}\i kl\i yor. \\
+Bridge, Cyanite & Etiket \textit{yap\i \c{s}t\i r\i yor}. MI beyin haritas\i{} \c{c}\i kar\i yor. \\
+Brain.fm, Endel & Ses \textit{\"uretiyor}. MI her m\"uzi\u{g}i analiz ediyor. \\
+LUCID, Rubato & Sens\"or \textit{gerektiriyor}. MI sadece ses ile. \\
+C-BMI (Japonya) & EEG \textit{gerektiriyor}. MI telefondan \c{c}al\i \c{s}\i yor. \\
+\bottomrule
+\end{tabularx}
+\end{footnotesize}
+
+\vspace{6pt}
+\begin{center}
+{\small\textcolor{dk}{\textbf{448 \c{c}al\i \c{s}ma. 131 \"ol\c{c}\"um. 96 n\"orobilim modeli. 756 dosya kod.}}}\\[2pt]
+{\small\textcolor{mi}{\textbf{0 do\u{g}rudan rakip.}}}
+\end{center}
+
+\end{document}
