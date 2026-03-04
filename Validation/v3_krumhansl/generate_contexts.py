@@ -1,8 +1,14 @@
 """Generate tonal context stimuli for Krumhansl profile extraction.
 
-Creates short audio clips that establish a tonal context (key),
-followed by each of the 12 probe tones. MI's response to the probe
-tones should correlate with the Krumhansl-Kessler profile.
+Two stimulus types:
+1. Simultaneous: Tonic chord + probe tone sounding together (2s).
+   BCH consonance directly measures how well each probe fits the key.
+2. Sequential: I-IV-V-I cadence (3s) → silence (0.5s) → probe (1s).
+   Traditional probe-tone paradigm for cognitive/predictive measures.
+
+The simultaneous design is preferred because BCH consonance hierarchy
+(Sethares 1993 + Plomp-Levelt) directly captures the acoustic basis of
+tonal stability that underlies Krumhansl-Kessler profiles.
 """
 from __future__ import annotations
 
@@ -30,19 +36,24 @@ def generate_tonal_context(
     key: str = "C",
     mode: str = "major",
     context_duration_s: float = 3.0,
-    probe_duration_s: float = 1.0,
+    probe_duration_s: float = 2.0,
     sr: int = SAMPLE_RATE,
     output_dir: Path | None = None,
 ) -> List[Tuple[int, Path]]:
-    """Generate 12 context+probe stimuli for a key.
+    """Generate 12 stimuli with probe tone over tonic chord.
 
-    Each stimulus: [tonic chord (3s)] → [silence (0.5s)] → [probe tone (1s)]
+    Each stimulus:
+      [I-IV-V-I cadence (3s)]  → establishes tonal context
+      [tonic chord + probe tone (2s)] → BCH measures consonance fit
+
+    The probe tone is mixed with the sustained tonic chord so that BCH
+    consonance directly captures how consonant each probe is within the key.
 
     Args:
         key: Root pitch class.
         mode: 'major' or 'minor'.
-        context_duration_s: Duration of tonal context.
-        probe_duration_s: Duration of probe tone.
+        context_duration_s: Duration of cadence context.
+        probe_duration_s: Duration of chord+probe overlay.
         sr: Sample rate.
         output_dir: Directory for output WAV files.
 
@@ -63,20 +74,36 @@ def generate_tonal_context(
     }
     root_offset = key_map.get(key, 0)
 
-    # Build context chord (I-IV-V-I cadence as block chord for simplicity)
+    # Build cadence context
     context = _generate_cadence(root_offset, mode, context_duration_s, sr)
 
-    # Silence gap
-    gap = np.zeros(int(0.5 * sr), dtype=np.float32)
+    # Tonic chord intervals
+    if mode == "major":
+        tonic_intervals = [0, 4, 7]   # I: root, M3, P5
+    else:
+        tonic_intervals = [0, 3, 7]   # i: root, m3, P5
 
     results = []
     for pc in range(12):
-        # Probe tone
-        probe_freq = PROBE_FREQUENCIES[(pc + root_offset) % 12]
-        probe = _generate_tone(probe_freq, probe_duration_s, sr)
+        # Tonic chord sustained during probe
+        tonic_chord = np.zeros(int(probe_duration_s * sr), dtype=np.float32)
+        for semitone in tonic_intervals:
+            midi = 60 + root_offset + semitone
+            freq = _midi_to_freq(midi)
+            tonic_chord += _generate_tone(freq, probe_duration_s, sr, amplitude=0.25)
 
-        # Concatenate: context + gap + probe
-        stimulus = np.concatenate([context, gap, probe])
+        # Probe tone (higher amplitude to be salient above chord)
+        probe_freq = PROBE_FREQUENCIES[(pc + root_offset) % 12]
+        probe = _generate_tone(probe_freq, probe_duration_s, sr, amplitude=0.4)
+
+        # Mix: tonic chord + probe simultaneously
+        probe_section = tonic_chord + probe
+
+        # Small gap between cadence and probe section
+        gap = np.zeros(int(0.2 * sr), dtype=np.float32)
+
+        # Concatenate: cadence context + gap + simultaneous chord+probe
+        stimulus = np.concatenate([context, gap, probe_section])
 
         # Normalize
         peak = np.abs(stimulus).max()

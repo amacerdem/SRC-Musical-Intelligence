@@ -368,23 +368,34 @@ class MIBridge:
             )
 
         # Apply neurochemical gains if specified (pharmacological simulation)
+        # Uses ADDITIVE shift model: drug effect = (gain - 1.0) × baseline
+        #   Levodopa (DA gain=1.5): shift = +0.25 → DA increases
+        #   Risperidone (DA gain=0.3): shift = -0.35 → DA decreases
+        #   Naltrexone (OPI gain=0.1): shift = -0.45 → OPI decreases
         if neuro_gains is not None:
-            gain_tensor = torch.ones(4, device=self.device)
-            gain_tensor[DA] = neuro_gains.get("DA", 1.0)
-            gain_tensor[NE] = neuro_gains.get("NE", 1.0)
-            gain_tensor[OPI] = neuro_gains.get("OPI", 1.0)
-            gain_tensor[_5HT] = neuro_gains.get("5HT", 1.0)
-            # Scale deviations from baseline
-            deviation = neuro - NEURO_BASELINE
-            neuro = NEURO_BASELINE + deviation * gain_tensor.unsqueeze(0).unsqueeze(0)
+            channel_map = {"DA": DA, "NE": NE, "OPI": OPI, "5HT": _5HT}
+            for ch_name, ch_idx in channel_map.items():
+                gain = neuro_gains.get(ch_name, 1.0)
+                if gain != 1.0:
+                    shift = (gain - 1.0) * NEURO_BASELINE
+                    neuro[:, :, ch_idx] = neuro[:, :, ch_idx] + shift
             neuro.clamp_(0.0, 1.0)
 
         # Assemble belief tensor
         tensor = self._assemble_tensor(outputs)
         psi = self.psi_interpreter.interpret(tensor, ram, neuro)
 
-        # Reward signal
+        # Reward signal with neurochemical modulation (REWARD-FORMULA.md v3.0):
+        # Base reward from belief dynamics
         reward = tensor.mean(dim=-1) if tensor.shape[-1] > 0 else torch.zeros(1, n_frames)
+
+        # DA modulates reward seeking/anticipation (Ferreri 2019, Salimpoor 2011)
+        # OPI modulates hedonic pleasure/liking (Mallik 2017, Berridge 2007)
+        da_state = neuro[:, :, DA]    # (B, T)
+        opi_state = neuro[:, :, OPI]  # (B, T)
+        da_mod = 1.0 + 0.5 * (da_state - NEURO_BASELINE)    # centered: 1.0 at baseline
+        opi_mod = 1.0 + 0.6 * (opi_state - NEURO_BASELINE)  # centered: 1.0 at baseline
+        reward = reward * da_mod * opi_mod
 
         elapsed = time.perf_counter() - t0
         fps = n_frames / elapsed if elapsed > 0 else 0.0

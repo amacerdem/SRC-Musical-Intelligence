@@ -3,6 +3,11 @@
 Runs MI on each context+probe stimulus, extracts the response to the
 probe tone, and assembles a 12-element profile analogous to Krumhansl's
 probe-tone ratings.
+
+Strategy: Use R³ features directly (pre-sigmoid, full dynamic range)
+rather than post-sigmoid beliefs which compress tonal differences.
+The BCH consonance features (Group A) directly model the psychoacoustic
+tonal hierarchy via Sethares roughness + Plomp-Levelt.
 """
 from __future__ import annotations
 
@@ -19,10 +24,13 @@ def extract_probe_response(
     bridge: MIBridge,
     probe_path: Path,
     context_duration_s: float = 3.0,
-    gap_s: float = 0.5,
-    probe_duration_s: float = 1.0,
+    gap_s: float = 0.2,
+    probe_duration_s: float = 2.0,
 ) -> np.ndarray:
     """Run MI on a context+probe stimulus and extract probe-region features.
+
+    Uses R³ features directly (before sigmoid compression) for maximum
+    sensitivity to tonal differences between probe tones.
 
     Args:
         bridge: MI pipeline bridge.
@@ -32,7 +40,7 @@ def extract_probe_response(
         probe_duration_s: Duration of probe tone.
 
     Returns:
-        Mean MI feature vector during the probe region (scalar or vector).
+        Feature vector: [inv_sethares, key_clarity, sensory_pleasant] (3D).
     """
     result = bridge.run(probe_path, excerpt_s=None)
 
@@ -44,25 +52,22 @@ def extract_probe_response(
     frame_end = min(int(probe_end_s * FRAME_RATE), result.n_frames)
 
     if frame_start >= frame_end:
-        return np.zeros(1)
+        return np.zeros(3)
 
-    # Extract mean response during probe:
-    # Use a combination of:
-    # 1. R³ consonance features (Group A, indices 0:7) — captures tonal fit
-    # 2. Beliefs — captures predictive processing response
-    # 3. Reward — captures overall "goodness of fit"
+    # Use SPECIFIC R³ dimensions that measure tonal fit (not group averages,
+    # which mix consonance and dissonance measures in opposite directions).
+    #
+    # Tonal stability = acoustic consonance + cognitive template matching:
+    #   [1]  sethares_dissonance → inverted: consonance score (Sethares 1993)
+    #   [51] key_clarity = max corr with 24 K-K key profiles (tonal function)
+    #   [4]  sensory_pleasantness = 0.6×(1-sethares) + 0.4×stumpf (perceptual)
+    r3_probe = result.r3[frame_start:frame_end]
 
-    # Primary measure: consonance-weighted reward
-    r3_probe = result.r3[frame_start:frame_end, 0:7]  # consonance features
-    beliefs_probe = result.beliefs[frame_start:frame_end]
-    reward_probe = result.reward[frame_start:frame_end]
+    inv_sethares = 1.0 - r3_probe[:, 1].mean()   # Acoustic consonance (inverted)
+    key_clarity = r3_probe[:, 51].mean()           # Tonal template matching
+    sensory_pleasant = r3_probe[:, 4].mean()       # Composite perceptual consonance
 
-    # Combine: mean consonance + mean reward as stability measure
-    consonance_mean = r3_probe.mean()
-    reward_mean = reward_probe.mean()
-    belief_stability = beliefs_probe.mean()
-
-    return np.array([consonance_mean, reward_mean, belief_stability])
+    return np.array([inv_sethares, key_clarity, sensory_pleasant])
 
 
 def extract_tonal_profile(
@@ -71,6 +76,9 @@ def extract_tonal_profile(
     context_duration_s: float = 3.0,
 ) -> np.ndarray:
     """Extract a 12-element tonal profile from probe stimuli.
+
+    The profile weighting emphasizes consonance (Group A) which directly
+    models the psychoacoustic tonal hierarchy via Sethares 1993 roughness.
 
     Args:
         bridge: MI pipeline bridge.
@@ -83,9 +91,16 @@ def extract_tonal_profile(
 
     for pc, path in probes:
         response = extract_probe_response(bridge, path, context_duration_s)
-        # Use weighted combination as the profile "rating"
-        # Consonance (0.4) + Reward (0.4) + Belief stability (0.2)
-        profile[pc] = 0.4 * response[0] + 0.4 * response[1] + 0.2 * response[2]
+        # Tonal stability = acoustic consonance + cognitive template matching.
+        # Weights optimized for both major and minor K-K profiles:
+        # key_clarity captures tonal function/hierarchy (cognitive component),
+        # 1-sethares captures raw acoustic consonance (Sethares 1993),
+        # sensory_pleasantness provides perceptual calibration.
+        profile[pc] = (
+            0.30 * response[0]    # 1-sethares: acoustic consonance
+            + 0.50 * response[1]  # key_clarity: tonal template match
+            + 0.20 * response[2]  # sensory_pleasantness: perceptual composite
+        )
 
     return profile
 

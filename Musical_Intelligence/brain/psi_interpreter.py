@@ -5,7 +5,7 @@ new neural computation. It maps tensor + ram + neuro → PsiState using
 established neuro-cognitive correspondences.
 
 Dimensions are organized into 6 cognitive domains:
-    Affect:    valence, arousal, tension, dominance
+    Affect:    valence, arousal, tension, dominance  (Laeng 2021 calibrated)
     Emotion:   joy, sadness, fear, awe, nostalgia, tenderness, serenity
     Aesthetic:  beauty, groove, flow, surprise, closure
     Bodily:    chills, movement_urge, breathing_change, tension_release
@@ -67,20 +67,28 @@ class PsiInterpreter:
     def _compute_affect(self, neuro: Tensor, ram: Tensor) -> Tensor:
         """Core emotional coordinates: valence, arousal, tension, dominance.
 
-        Mappings (Doya 2002, Russell 1980, Koelsch 2014):
-            valence  = f(DA, OPI)     — reward + hedonic tone
-            arousal  = f(NE)          — sympathetic activation
+        Mappings (Doya 2002, Russell 1980, Koelsch 2014, Laeng 2021):
+            valence  = f(DA, OPI)     — cognitive reward evaluation (DA-dominant)
+            arousal  = f(NE, OPI)     — sympathetic + hedonic-bodily activation
             tension  = f(amygdala, 5HT) — threat/salience detection
             dominance = f(dlPFC)      — executive control / agency
+
+        Laeng 2021 dissociation: OPI blockade reduces physiological arousal
+        (pupil dilation) but preserves cognitive valence judgments. This
+        constrains the OPI weight: small for valence, larger for arousal.
         """
         B, T = neuro.shape[:2]
         device = neuro.device
 
-        # Valence: DA→wanting + OPI→liking, normalized
-        valence = 0.6 * neuro[:, :, DA] + 0.4 * neuro[:, :, OPI]
+        # Valence: cognitive goodness evaluation — DA-dominant
+        # OPI contributes slightly (hedonic tone colors evaluation) but
+        # cognitive valence persists under opioid blockade (Laeng 2021)
+        valence = 0.9 * neuro[:, :, DA] + 0.1 * neuro[:, :, OPI]
 
-        # Arousal: primarily NE-driven
-        arousal = neuro[:, :, NE]
+        # Arousal: sympathetic activation (NE) + hedonic-bodily response (OPI)
+        # OPI drives chills, piloerection, pupil dilation (Blood & Zatorre 2001)
+        # Laeng 2021: opioid blockade reduces physiological arousal to music
+        arousal = 0.7 * neuro[:, :, NE] + 0.3 * neuro[:, :, OPI]
 
         # Tension: amygdala activation + inverse serotonin
         amygdala_idx = region_index("amygdala")
