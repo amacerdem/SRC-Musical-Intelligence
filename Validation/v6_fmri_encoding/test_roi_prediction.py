@@ -35,7 +35,7 @@ class TestROIPrediction:
         roi_signals = extract_roi_signals(subject)
 
         # Find stimulus audio
-        stim_files = list(fmri_dataset_dir.rglob("stimuli/*.wav"))
+        stim_files = list(fmri_dataset_dir.rglob("stimuli/**/*.wav"))
         if not stim_files:
             pytest.skip("No stimulus audio in fMRI dataset")
 

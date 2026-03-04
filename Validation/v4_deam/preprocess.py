@@ -82,22 +82,27 @@ def resample_mi_to_deam(
 def align_and_trim(
     mi_resampled: np.ndarray,
     annotation: np.ndarray,
+    annotation_start_s: float = 15.0,
+    target_hz: float = 2.0,
 ) -> Tuple[np.ndarray, np.ndarray]:
     """Align MI and annotation arrays to the same length.
 
     DEAM annotations start 15s into the song (after the initial segment).
-    MI processes from the beginning. We trim to the overlapping region.
+    MI processes from the beginning. We offset MI to match annotation timing.
 
     Returns:
         Tuple of (mi_trimmed, annotation_trimmed) with same length.
     """
-    # DEAM annotations cover seconds 15-60 of the 45s excerpt
-    # At 2Hz: 90 samples for 45s, but annotations start at 15s
-    # MI processes the full audio from time 0
+    # DEAM annotations start at 15s. At 2Hz, that's 30 samples into the MI output.
+    offset = int(annotation_start_s * target_hz)
 
-    # Simple alignment: use minimum length
-    n = min(len(mi_resampled), len(annotation))
-    return mi_resampled[:n], annotation[:n]
+    if offset >= len(mi_resampled):
+        # MI output too short for offset
+        return np.array([]), np.array([])
+
+    mi_aligned = mi_resampled[offset:]
+    n = min(len(mi_aligned), len(annotation))
+    return mi_aligned[:n], annotation[:n]
 
 
 def _load_deam_rows_csv(csv_path: Path) -> Dict[int, np.ndarray]:

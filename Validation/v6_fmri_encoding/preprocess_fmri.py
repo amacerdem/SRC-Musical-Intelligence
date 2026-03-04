@@ -58,7 +58,7 @@ def load_fmri_subject(
     img_clean = clean_img(
         img_smooth,
         detrend=True,
-        standardize="zscore",
+        standardize="zscore_sample",
         high_pass=1 / 128.0,
         t_r=tr,
     )

@@ -37,16 +37,23 @@ def extract_roi_signals(
     # Get MNI coordinates for all 26 regions
     coords = [MNI_COORDINATES[name] for name in REGION_NAMES]
 
-    # Create spherical masker
-    masker = NiftiSpheresMasker(
-        seeds=coords,
-        radius=roi_radius_mm,
-        standardize=True,
-        detrend=False,  # already done in preprocessing
-    )
+    # Extract each ROI individually to handle regions outside brain coverage
+    n_regions = len(coords)
+    roi_signals = np.zeros((n_timepoints, n_regions))
 
-    # Extract time series
-    roi_signals = masker.fit_transform(img)  # (n_TRs, 26)
+    for i, (name, coord) in enumerate(zip(REGION_NAMES, coords)):
+        try:
+            masker = NiftiSpheresMasker(
+                seeds=[coord],
+                radius=roi_radius_mm,
+                standardize="zscore_sample",
+                detrend=False,
+            )
+            signal = masker.fit_transform(img)  # (n_TRs, 1)
+            roi_signals[:, i] = signal[:, 0]
+        except ValueError:
+            # Region outside brain coverage — leave as zeros
+            print(f"[V6] Warning: ROI {name} at {coord} outside brain coverage")
 
     return roi_signals
 
@@ -68,13 +75,24 @@ def extract_roi_signals_from_nifti(
 
     coords = [MNI_COORDINATES[name] for name in REGION_NAMES]
 
-    masker = NiftiSpheresMasker(
-        seeds=coords,
-        radius=roi_radius_mm,
-        standardize=True,
-    )
+    n_regions = len(coords)
+    import nibabel as nib
+    img = nib.load(nifti_path)
+    n_timepoints = img.shape[3]
 
-    roi_signals = masker.fit_transform(nifti_path)
+    roi_signals = np.zeros((n_timepoints, n_regions))
+    for i, (name, coord) in enumerate(zip(REGION_NAMES, coords)):
+        try:
+            masker = NiftiSpheresMasker(
+                seeds=[coord],
+                radius=roi_radius_mm,
+                standardize="zscore_sample",
+            )
+            signal = masker.fit_transform(nifti_path)
+            roi_signals[:, i] = signal[:, 0]
+        except ValueError:
+            print(f"[V6] Warning: ROI {name} at {coord} outside brain coverage")
+
     return roi_signals
 
 
