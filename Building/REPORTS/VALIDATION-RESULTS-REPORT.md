@@ -167,7 +167,7 @@ These modules are designed and test-ready. They require external dataset downloa
 
 | Module | Corpus | Source | Status |
 |--------|--------|--------|--------|
-| V2 IDyOM | Essen Folksong Collection | GitHub (apmcleod) | Not downloaded |
+| V2 IDyOM | Essen Folksong Collection | GitHub (ccarh) | Not downloaded |
 
 Tests marked `@requires_download` and `@slow`. Requires `pretty_midi` + `fluidsynth` for synthesis.
 

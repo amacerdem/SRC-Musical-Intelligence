@@ -1293,7 +1293,7 @@
       }
     }
   ],
-  "last_updated": "2026-03-04T11:42:35.874406",
+  "last_updated": "2026-03-04T12:14:05.778926",
   "phase2": {
     "total_seeds": 38,
     "genre_distribution": {
@@ -1358,5 +1358,5 @@
       "novelty": 0.494
     }
   },
-  "phase3_catalog_size": 1630
+  "phase3_catalog_size": 4115
 }

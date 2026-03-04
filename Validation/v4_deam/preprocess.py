@@ -28,24 +28,21 @@ def load_annotations(
     if annotations_dir is None:
         annotations_dir = DEAM_DIR / "annotations"
 
-    # DEAM has per-song CSV files or a single large CSV
-    # Try single CSV first
-    csv_path = annotations_dir / f"continuous_{annotation_type}_mean.csv"
-    if csv_path.exists():
-        return _load_csv_annotations(csv_path)
+    # Try to find the averaged annotations CSV (rglob for nested DEAM structure)
+    csv_candidates = list(annotations_dir.rglob(f"{annotation_type}.csv"))
+    if not csv_candidates:
+        csv_candidates = list(annotations_dir.rglob(f"*{annotation_type}*.csv"))
 
-    # Try individual files
-    annotations = {}
-    for f in sorted(annotations_dir.rglob(f"*{annotation_type}*.csv")):
-        song_id = _extract_song_id(f.stem)
-        if song_id is not None:
-            data = np.loadtxt(f, delimiter=",", skiprows=1)
-            if data.ndim == 1:
-                annotations[song_id] = data
-            else:
-                annotations[song_id] = data[:, -1]  # last column = mean
+    # Prefer the "averaged per song / dynamic" version
+    for cand in csv_candidates:
+        if "averaged" in str(cand) and "dynamic" in str(cand):
+            return _load_deam_rows_csv(cand)
 
-    return annotations
+    # Fallback: use first match
+    if csv_candidates:
+        return _load_deam_rows_csv(csv_candidates[0])
+
+    return {}
 
 
 def load_song_ids(audio_dir: Optional[Path] = None) -> List[Tuple[int, Path]]:
@@ -58,7 +55,7 @@ def load_song_ids(audio_dir: Optional[Path] = None) -> List[Tuple[int, Path]]:
         audio_dir = DEAM_DIR / "audio"
 
     songs = []
-    for wav in sorted(audio_dir.rglob("*.wav")):
+    for wav in sorted(audio_dir.rglob("*.mp3")):
         song_id = _extract_song_id(wav.stem)
         if song_id is not None:
             songs.append((song_id, wav))
@@ -103,24 +100,31 @@ def align_and_trim(
     return mi_resampled[:n], annotation[:n]
 
 
-def _load_csv_annotations(csv_path: Path) -> Dict[int, np.ndarray]:
-    """Load from single CSV with songs as columns."""
+def _load_deam_rows_csv(csv_path: Path) -> Dict[int, np.ndarray]:
+    """Load DEAM CSV where songs are rows, time samples are columns.
+
+    Format: song_id, sample_15000ms, sample_15500ms, ...
+    Values at 2Hz (500ms intervals) from 15s to ~60s.
+    """
     annotations = {}
     with open(csv_path, "r") as f:
         reader = csv.reader(f)
-        header = next(reader)
-        song_ids = [int(h) for h in header[1:] if h.isdigit()]
-
-        data_rows = []
+        next(reader)  # skip header
         for row in reader:
-            data_rows.append([float(v) if v else np.nan for v in row[1:]])
-
-        data = np.array(data_rows)
-        for i, song_id in enumerate(song_ids):
-            if i < data.shape[1]:
-                col = data[:, i]
-                annotations[song_id] = col[~np.isnan(col)]
-
+            if not row:
+                continue
+            try:
+                song_id = int(row[0])
+            except (ValueError, IndexError):
+                continue
+            values = []
+            for v in row[1:]:
+                try:
+                    values.append(float(v))
+                except (ValueError, TypeError):
+                    break
+            if values:
+                annotations[song_id] = np.array(values)
     return annotations
 
 

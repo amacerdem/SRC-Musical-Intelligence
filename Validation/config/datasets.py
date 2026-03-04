@@ -15,7 +15,7 @@ DATASETS = {
     "idyom_corpora": {
         "description": "Essen Folksong Collection + other melodic corpora",
         "urls": {
-            "essen": "https://github.com/apmcleod/essen-folksong-collection",
+            "essen": "https://github.com/ccarh/essen-folksong-collection",
         },
         "size_mb": 10,
         "license": "Public domain / research use",
@@ -36,9 +36,9 @@ DATASETS = {
         "description": "1,802 songs with 2Hz continuous valence/arousal annotations",
         "urls": {
             "annotations": "https://cvml.unige.ch/databases/DEAM/DEAM_Annotations.zip",
-            "audio_45s": "https://cvml.unige.ch/databases/DEAM/DEAM_audio/MEMD_audio_wav_45s.zip",
+            "audio": "https://cvml.unige.ch/databases/DEAM/DEAM_audio.zip",
         },
-        "size_gb": 15.0,
+        "size_gb": 1.3,
         "license": "CC BY-NC-SA 4.0",
         "source": "Aljanaki et al. 2017, MediaEval",
         "download": "http",

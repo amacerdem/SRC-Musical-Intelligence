@@ -12,7 +12,7 @@ from Validation.infrastructure.downloader import clone_repo
 
 # ── Corpus sources ──
 CORPUS_URLS = {
-    "essen": "https://github.com/apmcleod/essen-folksong-collection",
+    "essen": "https://github.com/ccarh/essen-folksong-collection",
 }
 
 

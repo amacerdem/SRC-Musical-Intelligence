@@ -9,7 +9,7 @@ from Validation.infrastructure.downloader import download_and_extract
 
 # DEAM URLs (University of Geneva)
 DEAM_ANNOTATIONS_URL = "https://cvml.unige.ch/databases/DEAM/DEAM_Annotations.zip"
-DEAM_AUDIO_45S_URL = "https://cvml.unige.ch/databases/DEAM/MEMD_audio_wav_45s.zip"
+DEAM_AUDIO_URL = "https://cvml.unige.ch/databases/DEAM/DEAM_audio.zip"
 
 
 def download_annotations(force: bool = False) -> Path:
@@ -22,9 +22,9 @@ def download_annotations(force: bool = False) -> Path:
 
 
 def download_audio(force: bool = False) -> Path:
-    """Download DEAM 45-second audio excerpts (~15 GB)."""
+    """Download DEAM audio excerpts (~1.3 GB)."""
     return download_and_extract(
-        DEAM_AUDIO_45S_URL,
+        DEAM_AUDIO_URL,
         DEAM_DIR / "audio",
         force=force,
     )
