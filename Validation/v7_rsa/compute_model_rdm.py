@@ -19,18 +19,22 @@ def compute_belief_rdm(
     bridge: MIBridge,
     audio_paths: List[Path],
     excerpt_s: float = 30.0,
-    metric: str = "correlation",
+    metric: str = "euclidean",
 ) -> np.ndarray:
     """Compute RDM from MI's 131-belief representations.
 
     For each stimulus, computes mean belief vector, then pairwise
     dissimilarity across all stimuli.
 
+    Uses euclidean distance because post-sigmoid beliefs cluster near 0.5,
+    making correlation distance very small. Euclidean distance captures the
+    absolute magnitude of cognitive-state differences between stimuli.
+
     Args:
         bridge: MI pipeline bridge.
         audio_paths: List of stimulus audio paths.
         excerpt_s: Max duration per stimulus.
-        metric: Distance metric ('correlation', 'euclidean', 'cosine').
+        metric: Distance metric ('euclidean', 'correlation', 'cosine').
 
     Returns:
         (N, N) RDM matrix (symmetric, zero diagonal).
