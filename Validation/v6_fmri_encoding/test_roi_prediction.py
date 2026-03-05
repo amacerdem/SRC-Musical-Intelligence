@@ -53,7 +53,7 @@ class TestROIPrediction:
     """MI features should predict fMRI BOLD in music-related brain regions."""
 
     @pytest.fixture(scope="class")
-    def fmri_results(self, mi_bridge, fmri_dataset_dir):
+    def fmri_results(self, mi_bridge, fmri_dataset_dir, module_data):
         """Load fMRI, extract ROIs, run MI, fit models.
 
         Uses classicalMusic task with matching classical stimuli to ensure
@@ -100,6 +100,9 @@ class TestROIPrediction:
             torch.mps.empty_cache()
 
         results = compare_feature_sets(mi_features, roi_signals)
+
+        # Stash for auto-reporting
+        module_data["v6"] = results
 
         # Clean up temp
         concat_path.unlink(missing_ok=True)

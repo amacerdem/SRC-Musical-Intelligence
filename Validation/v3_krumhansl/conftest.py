@@ -21,15 +21,19 @@ def c_minor_probes():
 
 
 @pytest.fixture(scope="session")
-def mi_major_profile(mi_bridge, c_major_probes):
+def mi_major_profile(mi_bridge, c_major_probes, module_data):
     """MI's tonal profile for C major."""
-    return extract_tonal_profile(mi_bridge, c_major_probes)
+    profile = extract_tonal_profile(mi_bridge, c_major_probes)
+    module_data.setdefault("v3", {})["mi_major"] = profile
+    return profile
 
 
 @pytest.fixture(scope="session")
-def mi_minor_profile(mi_bridge, c_minor_probes):
+def mi_minor_profile(mi_bridge, c_minor_probes, module_data):
     """MI's tonal profile for C minor."""
-    return extract_tonal_profile(mi_bridge, c_minor_probes)
+    profile = extract_tonal_profile(mi_bridge, c_minor_probes)
+    module_data.setdefault("v3", {})["mi_minor"] = profile
+    return profile
 
 
 @pytest.fixture(scope="session")

@@ -20,13 +20,31 @@ class TestMIvsBaselines:
     """Compare MI and baseline model RDMs."""
 
     @pytest.fixture(scope="class")
-    def model_rdms(self, mi_bridge, rsa_stimuli):
+    def model_rdms(self, mi_bridge, rsa_stimuli, module_data):
         """Compute all model RDMs."""
         rdms = {}
         rdms["mi_beliefs"] = compute_belief_rdm(mi_bridge, rsa_stimuli)
         rdms["mi_r3"] = compute_r3_rdm(mi_bridge, rsa_stimuli)
         rdms["acoustic_mfcc"] = compute_acoustic_rdm(rsa_stimuli)
         rdms["spectral_mel"] = compute_spectral_rdm(rsa_stimuli)
+
+        # Stash for auto-reporting
+        stimulus_names = [p.stem for p in rsa_stimuli]
+        comparisons = []
+        for name in ("mi_beliefs", "mi_r3", "acoustic_mfcc", "spectral_mel"):
+            from Validation.v7_rsa.compare_rdms import rdm_correlation
+            rho, p = rdm_correlation(rdms["mi_beliefs"], rdms[name])
+            comparisons.append({
+                "model_name": name,
+                "spearman_rho": float(rho),
+                "p_permutation": float(p),
+            })
+        module_data["v7"] = {
+            "comparisons": comparisons,
+            "rdms": rdms,
+            "stimulus_names": stimulus_names,
+        }
+
         return rdms
 
     def test_belief_rdm_not_flat(self, model_rdms):

@@ -27,7 +27,7 @@ class TestValenceArousal:
     """MI continuous emotion should correlate with human DEAM ratings."""
 
     @pytest.fixture(scope="class")
-    def deam_results(self, mi_bridge, deam_audio_dir, deam_annotations_dir):
+    def deam_results(self, mi_bridge, deam_audio_dir, deam_annotations_dir, module_data):
         """Load DEAM, run MI, compute correlations."""
         # Load annotations
         valence_ann = load_annotations(deam_annotations_dir, "valence")
@@ -62,6 +62,10 @@ class TestValenceArousal:
             per_song.append(corr)
 
         aggregate = aggregate_correlations(per_song)
+
+        # Stash for auto-reporting
+        module_data["v4"] = {"per_song": per_song, "aggregate": aggregate}
+
         return {"per_song": per_song, "aggregate": aggregate}
 
     def test_arousal_positive_correlation(self, deam_results):

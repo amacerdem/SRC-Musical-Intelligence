@@ -22,7 +22,7 @@ class TestEncodingAccuracy:
     """MI features should predict EEG responses to music."""
 
     @pytest.fixture(scope="class")
-    def encoding_results(self, mi_bridge, nmed_t_dir):
+    def encoding_results(self, mi_bridge, nmed_t_dir, module_data):
         """Run encoding models for first subject."""
         # Find first subject
         sub_dirs = sorted(d for d in nmed_t_dir.iterdir()
@@ -53,6 +53,10 @@ class TestEncodingAccuracy:
 
         # Fit models
         results = compare_models(all_features, subject["eeg"], subject["sfreq"])
+
+        # Stash for auto-reporting
+        module_data["v5"] = results
+
         return results
 
     def test_mi_full_beats_envelope(self, encoding_results):

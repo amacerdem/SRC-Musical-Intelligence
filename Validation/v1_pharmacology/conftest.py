@@ -33,18 +33,24 @@ def test_stimulus(test_audio_dir) -> Path:
 
 
 @pytest.fixture(scope="session")
-def ferreri_results(pharma_sim, test_stimulus):
+def ferreri_results(pharma_sim, test_stimulus, module_data):
     """Run Ferreri et al. 2019 battery: levodopa, risperidone, placebo."""
-    return pharma_sim.simulate_battery(test_stimulus, FERRERI_TARGETS, excerpt_s=15.0)
+    results = pharma_sim.simulate_battery(test_stimulus, FERRERI_TARGETS, excerpt_s=15.0)
+    module_data.setdefault("v1", {})["ferreri"] = results
+    return results
 
 
 @pytest.fixture(scope="session")
-def mallik_results(pharma_sim, test_stimulus):
+def mallik_results(pharma_sim, test_stimulus, module_data):
     """Run Mallik et al. 2017 battery: naltrexone, placebo."""
-    return pharma_sim.simulate_battery(test_stimulus, MALLIK_TARGETS, excerpt_s=15.0)
+    results = pharma_sim.simulate_battery(test_stimulus, MALLIK_TARGETS, excerpt_s=15.0)
+    module_data.setdefault("v1", {})["mallik"] = results
+    return results
 
 
 @pytest.fixture(scope="session")
-def laeng_results(pharma_sim, test_stimulus):
+def laeng_results(pharma_sim, test_stimulus, module_data):
     """Run Laeng et al. 2021 battery: naltrexone, placebo."""
-    return pharma_sim.simulate_battery(test_stimulus, LAENG_TARGETS, excerpt_s=15.0)
+    results = pharma_sim.simulate_battery(test_stimulus, LAENG_TARGETS, excerpt_s=15.0)
+    module_data.setdefault("v1", {})["laeng"] = results
+    return results

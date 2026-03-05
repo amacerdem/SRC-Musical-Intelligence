@@ -98,16 +98,118 @@ def main() -> None:
     failed = len(results) - passed - skipped
     print(f"  {passed} passed, {skipped} skipped, {failed} failed")
 
-    if do_report and failed == 0:
+    if do_report:
         print(f"\n{'='*60}")
-        print(f"  Generating reports...")
+        print(f"  Compiling master report from per-module summaries...")
         print(f"{'='*60}")
-        subprocess.run(
-            [sys.executable, "-m", "Validation.manuscript.compile_results"],
-            cwd=str(PROJECT_ROOT),
-        )
+        _compile_runner_report(results, selected, total_elapsed)
 
     sys.exit(1 if failed > 0 else 0)
+
+
+def _compile_runner_report(
+    results: dict, selected: list, total_elapsed: float,
+) -> None:
+    """Compile a master report from run_all.py results + per-module summaries."""
+    import json
+    import platform
+    from datetime import datetime, timezone
+
+    results_dir = VALIDATION_ROOT / "results"
+    results_dir.mkdir(parents=True, exist_ok=True)
+
+    # Collect per-module summaries
+    module_summaries = {}
+    for tag, module_dir, label in selected:
+        dirname = module_dir  # e.g. "v1_pharmacology"
+        summary_file = results_dir / dirname / f"{tag}_summary.txt"
+        if summary_file.exists():
+            module_summaries[tag] = summary_file.read_text()
+
+    # Build JSON
+    report = {
+        "meta": {
+            "generated_at": datetime.now(timezone.utc).isoformat(),
+            "runner": "run_all.py",
+            "python_version": sys.version,
+            "platform": platform.platform(),
+            "hostname": platform.node(),
+        },
+        "summary": {
+            "total_modules": len(selected),
+            "passed": sum(1 for r in results.values() if r["returncode"] == 0),
+            "failed": sum(1 for r in results.values()
+                          if r["returncode"] not in (0, 5)),
+            "skipped": sum(1 for r in results.values() if r["returncode"] == 5),
+            "total_duration_s": round(total_elapsed, 2),
+        },
+        "modules": {
+            tag: {
+                "label": label,
+                "status": "PASS" if results[tag]["returncode"] == 0 else (
+                    "SKIP" if results[tag]["returncode"] == 5 else "FAIL"
+                ),
+                "duration_s": round(results[tag]["elapsed"], 2),
+                "has_summary": tag in module_summaries,
+            }
+            for tag, _, label in selected
+        },
+    }
+
+    json_path = results_dir / "master_report.json"
+    json_path.write_text(json.dumps(report, indent=2))
+
+    # Build Markdown
+    lines = [
+        "# MI Validation Suite — Master Report",
+        "",
+        f"**Generated:** {report['meta']['generated_at']}",
+        f"**Platform:** {report['meta']['platform']}",
+        f"**Runner:** run_all.py (subprocess per module)",
+        "",
+        "---",
+        "",
+        "## Summary",
+        "",
+        f"| Metric | Value |",
+        f"|--------|-------|",
+        f"| Modules | {report['summary']['total_modules']} |",
+        f"| Passed | {report['summary']['passed']} |",
+        f"| Failed | {report['summary']['failed']} |",
+        f"| Skipped | {report['summary']['skipped']} |",
+        f"| Duration | {report['summary']['total_duration_s']:.1f}s |",
+        "",
+        "---",
+        "",
+        "## Module Results",
+        "",
+        "| Module | Status | Duration |",
+        "|--------|--------|----------|",
+    ]
+    for tag, _, label in selected:
+        m = report["modules"][tag]
+        lines.append(f"| {label} | {m['status']} | {m['duration_s']:.1f}s |")
+
+    # Inline per-module summaries
+    lines.extend(["", "---", "", "## Detailed Per-Module Reports", ""])
+    for tag, _, label in selected:
+        if tag in module_summaries:
+            lines.extend([
+                f"### {label}",
+                "",
+                "```",
+                module_summaries[tag].strip(),
+                "```",
+                "",
+            ])
+        else:
+            lines.append(f"### {label}\n\n*No summary report generated.*\n")
+
+    md_path = results_dir / "master_report.md"
+    md_path.write_text("\n".join(lines))
+
+    print(f"  JSON: {json_path}")
+    print(f"  MD:   {md_path}")
 
 
 if __name__ == "__main__":

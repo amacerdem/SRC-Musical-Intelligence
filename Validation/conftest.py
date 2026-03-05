@@ -4,6 +4,11 @@ Memory-optimized for 8 GB RAM (MacBook Air M2):
   - Aggressive gc.collect() + torch MPS cache cleanup between tests
   - Reduced excerpt durations (15s default instead of 30s)
   - Sequential execution only — never run multiple pytest sessions in parallel
+
+Auto-reporting:
+  - pytest_runtest_makereport collects per-test outcomes
+  - pytest_sessionfinish generates master_report.json + master_report.md
+  - Per-module report.py generators called with stashed fixture data
 """
 from __future__ import annotations
 
@@ -13,6 +18,11 @@ from pathlib import Path
 
 import pytest
 import torch
+
+
+# ── Result collection for auto-reporting ──
+_TEST_RESULTS: list[dict] = []
+_MODULE_DATA: dict = {}
 
 # Ensure project root is on sys.path
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -25,6 +35,40 @@ if str(VALIDATION_ROOT) not in sys.path:
     sys.path.insert(0, str(VALIDATION_ROOT))
 
 from Validation.config.paths import TEST_AUDIO, ensure_dirs
+
+
+# ── Auto-report hook: collect per-test outcomes ──
+
+@pytest.hookimpl(tryfirst=True, hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    """Collect per-test outcome, duration, and assertion details."""
+    outcome = yield
+    rep = outcome.get_result()
+    if rep.when == "call":
+        _TEST_RESULTS.append({
+            "nodeid": item.nodeid,
+            "outcome": rep.outcome,
+            "duration": round(rep.duration, 4),
+            "longrepr": str(rep.longrepr) if rep.longrepr else None,
+        })
+    elif rep.when == "setup" and rep.skipped:
+        _TEST_RESULTS.append({
+            "nodeid": item.nodeid,
+            "outcome": "skipped",
+            "duration": 0.0,
+            "longrepr": str(rep.longrepr) if rep.longrepr else None,
+        })
+
+
+def pytest_sessionfinish(session, exitstatus):
+    """Generate master report at end of test session."""
+    if not _TEST_RESULTS:
+        return
+    try:
+        from Validation.infrastructure.master_report import compile_master_report
+        compile_master_report(_TEST_RESULTS, _MODULE_DATA)
+    except Exception as e:
+        print(f"\n[Master Report] Generation failed: {e}")
 
 
 # ── Memory management (critical for 8 GB RAM) ──
@@ -115,3 +159,9 @@ def result_cache():
     """Session-scoped result cache."""
     from Validation.infrastructure.cache import ResultCache
     return ResultCache()
+
+
+@pytest.fixture(scope="session")
+def module_data():
+    """Shared stash for per-module result data — used by auto-reporting."""
+    return _MODULE_DATA

@@ -36,7 +36,7 @@ class TestConvergentValidity:
     """IDyOM IC should correlate with MI information content belief."""
 
     @pytest.fixture(scope="class")
-    def corpus_data(self, idyom_corpus_dir, mi_bridge):
+    def corpus_data(self, idyom_corpus_dir, mi_bridge, module_data):
         """Load corpus, run IDyOM, run MI, compare."""
         # Load melodies
         melodies = load_kern_melodies(idyom_corpus_dir, max_melodies=50)
@@ -56,6 +56,12 @@ class TestConvergentValidity:
         # Compare
         comparisons = compare_per_melody(idyom_results, mi_results)
         aggregate = aggregate_comparison(comparisons)
+
+        # Stash for auto-reporting
+        module_data["v2"] = {
+            "comparisons": comparisons,
+            "aggregate": aggregate,
+        }
 
         return {
             "comparisons": comparisons,
