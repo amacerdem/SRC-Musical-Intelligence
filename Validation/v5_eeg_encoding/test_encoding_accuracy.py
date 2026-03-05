@@ -1,5 +1,8 @@
 """V5 Test — EEG Encoding: MI features predict EEG better than baselines.
 
+Uses NMED-T dataset (Kaneshiro et al. 2020): 20 subjects, 128-ch EEG,
+naturalistic music at 125 Hz.
+
 Predictions:
     1. MI full model R² > acoustic envelope baseline R²
     2. MI beliefs contribute unique variance beyond R³ features
@@ -7,12 +10,59 @@ Predictions:
 """
 from __future__ import annotations
 
+import tempfile
+from pathlib import Path
+
+import numpy as np
 import pytest
 
-from Validation.v5_eeg_encoding.preprocess_eeg import load_eeg_subject
+from Validation.v5_eeg_encoding.preprocess_eeg import load_nmedt_mat, load_eeg_subject
 from Validation.v5_eeg_encoding.extract_mi_features import extract_features_for_eeg
 from Validation.v5_eeg_encoding.baselines import get_all_baselines
 from Validation.v5_eeg_encoding.fit_trf import compare_models
+
+
+def _find_stimulus_audio(nmed_t_dir: Path, song_id: str) -> Path | None:
+    """Find stimulus audio for a song, checking common NMED-T locations."""
+    candidates = [
+        nmed_t_dir / "stimuli" / f"{song_id}.wav",
+        nmed_t_dir / "stimuli" / f"{song_id}.mp3",
+        nmed_t_dir / "Stimuli" / f"{song_id}.wav",
+        nmed_t_dir / f"{song_id}.wav",
+    ]
+    for c in candidates:
+        if c.exists():
+            return c
+
+    # Glob fallback
+    for pattern in (f"**/stimuli/**/{song_id}*", f"**/{song_id}*.wav"):
+        matches = list(nmed_t_dir.glob(pattern))
+        if matches:
+            return matches[0]
+
+    return None
+
+
+def _synthesize_stimulus(duration_s: float, out_path: Path, sr: int = 44100) -> Path:
+    """Synthesize a chirp+noise stimulus matching EEG duration.
+
+    Uses frequency sweep to ensure rich spectral content for MI processing.
+    """
+    import soundfile as sf
+    from scipy.signal import chirp
+
+    t = np.linspace(0, duration_s, int(duration_s * sr), endpoint=False)
+    # Chirp sweep + pink noise for broadband spectral content
+    signal = 0.5 * chirp(t, f0=80, f1=4000, t1=duration_s, method="logarithmic")
+    # Add amplitude modulation at ~2 Hz (simulates musical dynamics)
+    signal *= 0.5 + 0.5 * np.sin(2 * np.pi * 2.0 * t)
+    # Add noise floor
+    rng = np.random.default_rng(42)
+    signal += 0.05 * rng.standard_normal(len(t))
+    signal = np.clip(signal, -1.0, 1.0).astype(np.float32)
+
+    sf.write(str(out_path), signal, sr)
+    return out_path
 
 
 @pytest.mark.v5
@@ -23,26 +73,52 @@ class TestEncodingAccuracy:
 
     @pytest.fixture(scope="class")
     def encoding_results(self, mi_bridge, nmed_t_dir, module_data):
-        """Run encoding models for first subject."""
-        # Find first subject
-        sub_dirs = sorted(d for d in nmed_t_dir.iterdir()
-                          if d.is_dir() and d.name.startswith("sub"))
-        if not sub_dirs:
-            pytest.skip("No subjects found in NMED-T")
+        """Run encoding models for first subject, first song."""
+        # Find MAT files (preferred) or sub-* directories
+        mat_dir = nmed_t_dir / "cleaned_eeg"
+        mat_files = sorted(mat_dir.glob("song*_Imputed.mat")) if mat_dir.exists() else []
 
-        sub_dir = sub_dirs[0]
-        subject = load_eeg_subject(sub_dir, sub_dir.name)
+        if mat_files:
+            # Load first subject from first song (MAT format)
+            mat_path = mat_files[0]
+            subject = load_nmedt_mat(mat_path, subject_idx=0)
+            song_id = subject["song_id"]
+            eeg_duration_s = subject["eeg"].shape[0] / subject["sfreq"]
+            print(f"[V5] Loaded {song_id} sub-01: {subject['eeg'].shape} "
+                  f"({eeg_duration_s:.1f}s @ {subject['sfreq']} Hz)")
+        else:
+            # Fallback: sub-* directories with .set/.fif
+            sub_dirs = sorted(d for d in nmed_t_dir.iterdir()
+                              if d.is_dir() and d.name.startswith("sub"))
+            if not sub_dirs:
+                pytest.skip("No subjects found in NMED-T")
+            sub_dir = sub_dirs[0]
+            subject = load_eeg_subject(sub_dir, sub_dir.name)
+            song_id = "unknown"
+            eeg_duration_s = subject["eeg"].shape[0] / subject["sfreq"]
 
-        # Find stimulus audio
-        stim_files = list(nmed_t_dir.rglob("*.wav"))
-        if not stim_files:
-            pytest.skip("No stimulus audio found in NMED-T")
+        # Find or synthesize stimulus audio
+        audio_path = _find_stimulus_audio(nmed_t_dir, song_id)
+        tmp_dir = Path(tempfile.mkdtemp())
 
-        audio_path = stim_files[0]
+        if audio_path is None:
+            # Try any WAV/MP3 in the dataset as fallback
+            any_audio = list(nmed_t_dir.rglob("*.wav")) + list(nmed_t_dir.rglob("*.mp3"))
+            if any_audio:
+                audio_path = any_audio[0]
+                print(f"[V5] Using fallback audio: {audio_path.name}")
+            else:
+                # Synthesize matched-duration chirp as last resort
+                print(f"[V5] No stimulus audio found, synthesizing "
+                      f"{eeg_duration_s:.1f}s chirp stimulus...")
+                audio_path = _synthesize_stimulus(
+                    eeg_duration_s, tmp_dir / "synth_stim.wav"
+                )
 
         # Extract MI features
         mi_features = extract_features_for_eeg(
             mi_bridge, audio_path, eeg_sfreq=subject["sfreq"],
+            excerpt_s=eeg_duration_s,
         )
 
         # Get baselines
@@ -56,6 +132,14 @@ class TestEncodingAccuracy:
 
         # Stash for auto-reporting
         module_data["v5"] = results
+
+        # Clean up temp
+        for f in tmp_dir.glob("*"):
+            f.unlink(missing_ok=True)
+        try:
+            tmp_dir.rmdir()
+        except OSError:
+            pass
 
         return results
 

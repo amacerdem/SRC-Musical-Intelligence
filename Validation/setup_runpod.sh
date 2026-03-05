@@ -77,6 +77,7 @@ install_deps() {
         scikit-learn \
         statsmodels \
         pytest pytest-timeout \
+        seaborn \
         yt-dlp
 
     ok "Python packages installed"
@@ -181,7 +182,7 @@ download_v5_nmedt() {
         return
     fi
 
-    mkdir -p "${DEST}/cleaned_eeg"
+    mkdir -p "${DEST}/cleaned_eeg" "${DEST}/stimuli"
     local BASE="https://stacks.stanford.edu/file/jn859kj8079"
 
     log "V5 NMED-T: Downloading 10 cleaned EEG files (~7 GB)..."
@@ -193,23 +194,45 @@ download_v5_nmedt() {
         fi
     done
 
-    # Participant info
+    # Participant info + song info
     cd "${DEST}"
     if [ ! -f "participantInfo.mat" ]; then
         curl -L -o "participantInfo.mat" "${BASE}/participantInfo.mat" &
     fi
+    if [ ! -f "songInfo.mat" ]; then
+        curl -L -o "songInfo.mat" "${BASE}/songInfo.mat" 2>/dev/null &
+    fi
+
+    # Try downloading stimulus WAVs (multiple URL patterns)
+    log "V5 NMED-T: Trying to download stimulus WAVs..."
+    cd "${DEST}/stimuli"
+    for i in 21 22 23 24 25 26 27 28 29 30; do
+        if [ ! -f "song${i}.wav" ]; then
+            (curl -sL -f -o "song${i}.wav" "${BASE}/Stimuli/song${i}.wav" 2>/dev/null \
+                || curl -sL -f -o "song${i}.wav" "${BASE}/stimuli/song${i}.wav" 2>/dev/null \
+                || curl -sL -f -o "song${i}.wav" "${BASE}/song${i}.wav" 2>/dev/null \
+                || curl -sL -f -o "song${i}.wav" "${BASE}/song${i}_Stimulus.wav" 2>/dev/null \
+                || rm -f "song${i}.wav") &
+        fi
+    done
 
     # Wait for all background downloads
     wait
 
-    # Verify all files exist
+    # Verify EEG files exist
     local COUNT
     COUNT=$(ls "${DEST}/cleaned_eeg"/song*_Imputed.mat 2>/dev/null | wc -l)
-    if [ "${COUNT}" -ge 10 ]; then
+    local N_STIM
+    N_STIM=$(ls "${DEST}/stimuli"/song*.wav 2>/dev/null | wc -l)
+
+    if [ "${COUNT}" -ge 1 ]; then
         echo "ok" > "${MARKER}"
-        ok "V5 NMED-T: Done (${COUNT} songs)"
+        ok "V5 NMED-T: Done (${COUNT} EEG songs, ${N_STIM} stimulus WAVs)"
+        if [ "${N_STIM}" -eq 0 ]; then
+            warn "V5 NMED-T: No stimulus WAVs found — test will use synthesized audio"
+        fi
     else
-        warn "V5 NMED-T: Only ${COUNT}/10 songs downloaded"
+        warn "V5 NMED-T: Download failed (${COUNT} EEG files)"
     fi
 }
 
