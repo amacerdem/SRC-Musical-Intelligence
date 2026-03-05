@@ -344,13 +344,18 @@ def main():
             except (json.JSONDecodeError, UnicodeDecodeError):
                 meta = {}
 
-        # Register in audio catalog temporarily
+        # Register in audio catalog and redirect AUDIO_DIR to input directory.
+        # _load_audio uses module-level AUDIO_DIR from both config and pipeline,
+        # so we must patch both references.
         catalog_key = f"__batch_{i}"
         AUDIO_CATALOG[catalog_key] = mp3_path.name
-        # Point AUDIO_DIR to input directory
+
         import Lab.backend.config as cfg
-        orig_audio_dir = cfg.AUDIO_DIR
+        import Lab.backend.pipeline as pipe_mod
+        orig_cfg_dir = cfg.AUDIO_DIR
+        orig_pipe_dir = pipe_mod.AUDIO_DIR
         cfg.AUDIO_DIR = input_dir
+        pipe_mod.AUDIO_DIR = input_dir
 
         try:
             t1 = time.perf_counter()
@@ -410,7 +415,8 @@ def main():
 
         finally:
             # Cleanup
-            cfg.AUDIO_DIR = orig_audio_dir
+            cfg.AUDIO_DIR = orig_cfg_dir
+            pipe_mod.AUDIO_DIR = orig_pipe_dir
             AUDIO_CATALOG.pop(catalog_key, None)
             gc.collect()
 
