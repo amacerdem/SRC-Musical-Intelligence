@@ -1,0 +1,104 @@
+{
+  "total_tracks": 4357,
+  "total_artists": 1177,
+  "total_size_mb": 1992.3,
+  "genres": {
+    "pop_mainstream": {
+      "target": 750,
+      "collected": 684,
+      "artists": 179,
+      "fill_rate": "91.2%"
+    },
+    "rock_alternative": {
+      "target": 600,
+      "collected": 544,
+      "artists": 115,
+      "fill_rate": "90.7%"
+    },
+    "hiphop_rap": {
+      "target": 500,
+      "collected": 454,
+      "artists": 157,
+      "fill_rate": "90.8%"
+    },
+    "electronic_dance": {
+      "target": 500,
+      "collected": 446,
+      "artists": 125,
+      "fill_rate": "89.2%"
+    },
+    "rnb_soul_funk": {
+      "target": 400,
+      "collected": 336,
+      "artists": 110,
+      "fill_rate": "84.0%"
+    },
+    "jazz_fusion": {
+      "target": 350,
+      "collected": 333,
+      "artists": 87,
+      "fill_rate": "95.1%"
+    },
+    "classical_orchestral_film": {
+      "target": 350,
+      "collected": 312,
+      "artists": 125,
+      "fill_rate": "89.1%"
+    },
+    "metal_punk": {
+      "target": 250,
+      "collected": 236,
+      "artists": 51,
+      "fill_rate": "94.4%"
+    },
+    "latin_reggaeton": {
+      "target": 250,
+      "collected": 186,
+      "artists": 66,
+      "fill_rate": "74.4%"
+    },
+    "turkish_anatolian": {
+      "target": 250,
+      "collected": 250,
+      "artists": 61,
+      "fill_rate": "100.0%"
+    },
+    "folk_acoustic": {
+      "target": 250,
+      "collected": 190,
+      "artists": 49,
+      "fill_rate": "76.0%"
+    },
+    "ambient_downtempo": {
+      "target": 200,
+      "collected": 107,
+      "artists": 30,
+      "fill_rate": "53.5%"
+    },
+    "world_regional": {
+      "target": 150,
+      "collected": 132,
+      "artists": 49,
+      "fill_rate": "88.0%"
+    },
+    "blues_country": {
+      "target": 100,
+      "collected": 95,
+      "artists": 27,
+      "fill_rate": "95.0%"
+    },
+    "experimental_idm": {
+      "target": 100,
+      "collected": 52,
+      "artists": 15,
+      "fill_rate": "52.0%"
+    }
+  },
+  "failed_artists": [
+    {
+      "genre": "world_regional",
+      "name": "Oud Meets West",
+      "reason": "not_found"
+    }
+  ]
+}
