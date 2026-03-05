@@ -76,7 +76,8 @@ install_deps() {
         pretty_midi \
         scikit-learn \
         statsmodels \
-        pytest pytest-timeout
+        pytest pytest-timeout \
+        yt-dlp
 
     ok "Python packages installed"
 }
@@ -126,8 +127,8 @@ download_datasets() {
     # ── V6b: OpenNeuro ds003720 (~40 GB) ──
     download_v6_ds003720
 
-    # ── V7: RSA (uses Test-Audio, no separate download) ──
-    ok "V7 RSA: No download needed (uses Test-Audio)"
+    # ── V7: RSA (Test-Audio — download public domain recordings) ──
+    download_v7_test_audio
 
     log "All datasets downloaded!"
     du -sh "${DATASETS}"/*/ 2>/dev/null || true
@@ -260,6 +261,58 @@ download_v6_ds003720() {
     ok "V6 ds003720: Done"
 }
 
+# ── V7: Test-Audio (public domain classical recordings via yt-dlp) ──
+download_v7_test_audio() {
+    local DEST="${MI_DIR}/Test-Audio"
+    if [ -d "${DEST}" ] && [ "$(ls "${DEST}"/*.wav 2>/dev/null | wc -l)" -ge 3 ]; then
+        ok "V7 Test-Audio: Already downloaded ($(ls "${DEST}"/*.wav | wc -l) WAVs)"
+        return
+    fi
+
+    mkdir -p "${DEST}"
+    pip install -q yt-dlp
+
+    log "V7 Test-Audio: Downloading public domain classical recordings..."
+
+    # Bach Cello Suite No. 1 BWV 1007 - Prelude (public domain composition)
+    yt-dlp -x --audio-format wav --audio-quality 0 \
+        -o "${DEST}/Cello Suite No. 1 in G Major, BWV 1007 I. Prélude.%(ext)s" \
+        "ytsearch1:Bach Cello Suite No 1 Prelude BWV 1007 audio" \
+        2>/dev/null || warn "Bach Cello Suite download failed"
+
+    # Beethoven Pathetique Sonata Op.13 I. Grave (public domain composition)
+    yt-dlp -x --audio-format wav --audio-quality 0 \
+        -o "${DEST}/Beethoven - Pathetique Sonata Op13 I. Grave - Allegro.%(ext)s" \
+        "ytsearch1:Beethoven Pathetique Sonata Op 13 Grave Allegro audio" \
+        2>/dev/null || warn "Beethoven Pathetique download failed"
+
+    # Tchaikovsky Swan Lake - Swan Theme (public domain composition)
+    yt-dlp -x --audio-format wav --audio-quality 0 \
+        -o "${DEST}/Swan Lake Suite, Op. 20a_ I. Scene _Swan Theme_. Moderato - Pyotr Ilyich Tchaikovsky.%(ext)s" \
+        "ytsearch1:Tchaikovsky Swan Lake Swan Theme Moderato audio" \
+        2>/dev/null || warn "Swan Lake download failed"
+
+    # Zimmer - Herald of the Change
+    yt-dlp -x --audio-format wav --audio-quality 0 \
+        -o "${DEST}/Herald of the Change - Hans Zimmer.%(ext)s" \
+        "ytsearch1:Hans Zimmer Herald of the Change audio" \
+        2>/dev/null || warn "Herald of the Change download failed"
+
+    # Duel of the Fates
+    yt-dlp -x --audio-format wav --audio-quality 0 \
+        -o "${DEST}/Duel of the Fates - Epic Version.%(ext)s" \
+        "ytsearch1:Duel of the Fates epic version audio" \
+        2>/dev/null || warn "Duel of the Fates download failed"
+
+    local N_WAV
+    N_WAV=$(ls "${DEST}"/*.wav 2>/dev/null | wc -l)
+    if [ "${N_WAV}" -ge 3 ]; then
+        ok "V7 Test-Audio: Done (${N_WAV} WAVs)"
+    else
+        warn "V7 Test-Audio: Only ${N_WAV} WAVs (need ≥3 for RSA)"
+    fi
+}
+
 # ============================================================================
 # 5. VERIFY & REPORT
 # ============================================================================
@@ -329,9 +382,15 @@ verify_datasets() {
     # V7 - RSA
     echo -n "  V7 RSA (Test-Audio)                : "
     if [ -d "${MI_DIR}/Test-Audio" ]; then
-        echo -e "${GREEN}READY${NC}"
+        local N_WAV
+        N_WAV=$(ls "${MI_DIR}/Test-Audio"/*.wav 2>/dev/null | wc -l)
+        if [ "${N_WAV}" -ge 3 ]; then
+            echo -e "${GREEN}READY${NC} (${N_WAV} WAVs)"
+        else
+            echo -e "${YELLOW}WARN${NC} (only ${N_WAV} WAVs, need ≥3)"
+        fi
     else
-        echo -e "${YELLOW}WARN${NC} (Test-Audio not found, V7 may skip)"
+        echo -e "${RED}MISSING${NC}"; ALL_OK=false
     fi
 
     echo "═══════════════════════════════════════════════════════"
