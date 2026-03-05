@@ -289,8 +289,8 @@ def main():
     output_dir.mkdir(parents=True, exist_ok=True)
     excerpt_s = args.excerpt if args.excerpt > 0 else None
 
-    # Discover tracks
-    mp3_files = sorted(input_dir.glob("*.mp3"))
+    # Discover tracks (skip macOS resource fork files)
+    mp3_files = sorted(f for f in input_dir.glob("*.mp3") if not f.name.startswith("._"))
     print(f"[Batch] Input:   {input_dir}")
     print(f"[Batch] Output:  {output_dir}")
     print(f"[Batch] Tracks:  {len(mp3_files)}")
@@ -338,8 +338,11 @@ def main():
         meta_path = input_dir / f"{stem}.json"
         meta = {}
         if meta_path.exists():
-            with open(meta_path) as f:
-                meta = json.load(f)
+            try:
+                with open(meta_path, encoding="utf-8", errors="replace") as f:
+                    meta = json.load(f)
+            except (json.JSONDecodeError, UnicodeDecodeError):
+                meta = {}
 
         # Register in audio catalog temporarily
         catalog_key = f"__batch_{i}"
