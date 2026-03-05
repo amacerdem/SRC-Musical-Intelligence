@@ -12,7 +12,8 @@ def fit_encoding_model(
     features: np.ndarray,
     roi_signals: np.ndarray,
     n_splits: int = 5,
-    alpha: float = 100.0,
+    alpha: float = 1.0,
+    time_series: bool = True,
 ) -> Dict:
     """Fit encoding model: MI features → fMRI ROI signals.
 
@@ -20,7 +21,8 @@ def fit_encoding_model(
         features: (T, D) MI feature matrix (HRF-convolved, TR-resampled).
         roi_signals: (T, 26) ROI BOLD signals.
         n_splits: CV folds.
-        alpha: Ridge regularization.
+        alpha: Ridge regularization (ignored when time_series=True).
+        time_series: Use TimeSeriesSplit + RidgeCV (recommended for fMRI).
 
     Returns:
         Dict with 'r2_per_roi' (26,), 'mean_r2', 'significant_rois'.
@@ -36,7 +38,9 @@ def fit_encoding_model(
         y = Y[:, roi]
         if np.std(y) < 1e-10:
             continue
-        mean_r2, fold_r2s = cross_validated_r2(X, y, n_splits=n_splits, alpha=alpha)
+        mean_r2, fold_r2s = cross_validated_r2(
+            X, y, n_splits=n_splits, alpha=alpha, time_series=time_series,
+        )
         r2_per_roi[roi] = mean_r2
 
     return {

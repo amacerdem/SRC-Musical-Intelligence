@@ -136,6 +136,7 @@ def cross_validated_r2(
     n_splits: int = 5,
     alpha: float = 1.0,
     seed: int = 42,
+    time_series: bool = False,
 ) -> Tuple[float, np.ndarray]:
     """K-fold cross-validated R² using Ridge regression.
 
@@ -143,17 +144,24 @@ def cross_validated_r2(
         X: Feature matrix (n_samples, n_features).
         y: Target vector (n_samples,) or (n_samples, n_targets).
         n_splits: Number of CV folds.
-        alpha: Ridge regularization.
+        alpha: Ridge regularization (ignored when time_series=True).
         seed: Random seed.
+        time_series: If True, use TimeSeriesSplit + RidgeCV for
+            temporally ordered data (e.g. fMRI BOLD).
 
     Returns:
         Tuple of (mean_r2, per_fold_r2).
     """
-    from sklearn.linear_model import Ridge
-    from sklearn.model_selection import KFold, cross_val_score
+    from sklearn.linear_model import Ridge, RidgeCV
+    from sklearn.model_selection import KFold, TimeSeriesSplit, cross_val_score
 
-    model = Ridge(alpha=alpha)
-    cv = KFold(n_splits=n_splits, shuffle=True, random_state=seed)
+    if time_series:
+        model = RidgeCV(alphas=[0.01, 0.1, 1.0, 10.0, 100.0, 1000.0])
+        cv = TimeSeriesSplit(n_splits=n_splits)
+    else:
+        model = Ridge(alpha=alpha)
+        cv = KFold(n_splits=n_splits, shuffle=True, random_state=seed)
+
     scores = cross_val_score(model, X, y, cv=cv, scoring="r2")
     return scores.mean(), scores
 

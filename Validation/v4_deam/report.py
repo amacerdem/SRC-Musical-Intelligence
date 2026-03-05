@@ -79,6 +79,23 @@ def generate_summary_report(aggregate: Dict, per_song: List[Dict]) -> str:
         "",
     ]
 
+    # Optimal-lag summary
+    max_r_a = aggregate.get("mean_max_r_arousal", aggregate["mean_r_arousal"])
+    max_r_v = aggregate.get("mean_max_r_valence", aggregate["mean_r_valence"])
+    opt_lag_a = aggregate.get("mean_optimal_lag_arousal", 0.0)
+    opt_lag_v = aggregate.get("mean_optimal_lag_valence", 0.0)
+
+    lines.extend([
+        "─── Optimal Time-Lag Analysis (±5s) ───",
+        "",
+        f"  Arousal:  max r = {max_r_a:.4f}  (mean lag = {opt_lag_a:+.1f}s)",
+        f"  Valence:  max r = {max_r_v:.4f}  (mean lag = {opt_lag_v:+.1f}s)",
+        f"  Improvement over zero-lag:",
+        f"    Arousal: {max_r_a - aggregate['mean_r_arousal']:+.4f}",
+        f"    Valence: {max_r_v - aggregate['mean_r_valence']:+.4f}",
+        "",
+    ])
+
     # Arousal vs Valence comparison
     r_diff = r_a - r_v
     diff_mean = float(np.mean(r_diff))

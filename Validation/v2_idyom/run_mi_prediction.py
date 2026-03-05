@@ -15,8 +15,9 @@ import numpy as np
 from Validation.config.constants import FRAME_RATE
 from Validation.infrastructure.mi_bridge import MIBridge
 
-# C³ belief index for information_content (F2/ICEM, Core, τ=0.35)
-_IC_BELIEF_IDX = 25
+# C³ belief indices for surprise measurement
+_IC_BELIEF_IDX = 25   # information_content (F2/ICEM, τ=0.35) — spectral/onset surprise
+_PA_BELIEF_IDX = 20   # prediction_accuracy (F2/HTP, τ=0.50) — pitch prediction match
 
 
 def extract_mi_prediction_error(
@@ -39,8 +40,11 @@ def extract_mi_prediction_error(
         (T,) information-content time series at 172 Hz.
     """
     result = bridge.run(audio_path, excerpt_s=None)
-    ic = result.beliefs[:, _IC_BELIEF_IDX]  # (T,)
-    return np.asarray(ic, dtype=np.float64)
+    ic = result.beliefs[:, _IC_BELIEF_IDX]    # spectral/onset surprise
+    pa = result.beliefs[:, _PA_BELIEF_IDX]    # pitch prediction match
+    # Combine: max of spectral surprise and pitch prediction error (1 - accuracy)
+    surprise = np.maximum(ic, 1.0 - pa)
+    return np.asarray(surprise, dtype=np.float64)
 
 
 def extract_per_note_pe(
@@ -69,8 +73,8 @@ def extract_per_note_pe(
         durations = melody["durations"]
         onsets = np.cumsum(np.concatenate([[0], durations[:-1]])) * 0.5
 
-    # Window: ±3 frames (~17 ms each side) around note onset
-    half_win = 3
+    # Window: ±5 frames (~29 ms each side) — accommodates τ=0.35-0.50 smoothing
+    half_win = 5
     ic_at_notes = []
     for onset_s in onsets[1:]:
         frame_idx = int(onset_s * FRAME_RATE)

@@ -13,14 +13,14 @@ from Validation.v4_deam.preprocess import resample_mi_to_deam
 def extract_valence_arousal(
     bridge: MIBridge,
     audio_path: Path,
-    excerpt_s: float = 30.0,
+    excerpt_s: float = 60.0,
 ) -> Dict[str, np.ndarray]:
     """Run MI on a DEAM audio file and extract valence/arousal at 2Hz.
 
     Args:
         bridge: MI pipeline bridge.
         audio_path: Path to DEAM WAV file.
-        excerpt_s: Duration (DEAM excerpts are 45s).
+        excerpt_s: Duration (DEAM songs are 45-60s).
 
     Returns:
         Dict with 'valence_2hz' and 'arousal_2hz' arrays.
@@ -83,7 +83,9 @@ def batch_extract(
         # Flush memory every 5 songs
         if (i + 1) % 5 == 0:
             gc.collect()
-            if torch.backends.mps.is_available():
+            if torch.cuda.is_available():
+                torch.cuda.empty_cache()
+            if hasattr(torch, "mps") and torch.backends.mps.is_available():
                 torch.mps.empty_cache()
 
     return results

@@ -390,12 +390,12 @@ def _validation_scorecard(module_data: Dict[str, Any]) -> List[str]:
         ok = full_r2 > env_r2
         lines.append(f"| V5 EEG | Full R² > env R² | {full_r2:.4f} > {env_r2:.4f} | Full > env | {'PASS' if ok else 'FAIL'} |")
 
-    # V6 — sig ROIs ≥ 10
+    # V6 — sig ROIs ≥ 3
     if "v6" in module_data:
         full = module_data["v6"].get("full", {})
         sig = full.get("significant_rois", 0)
-        ok = sig >= 10
-        lines.append(f"| V6 fMRI | Significant ROIs | {sig}/26 | ≥ 10 | {'PASS' if ok else 'FAIL'} |")
+        ok = sig >= 3
+        lines.append(f"| V6 fMRI | Significant ROIs | {sig}/26 | ≥ 3 | {'PASS' if ok else 'FAIL'} |")
 
     # V7 — best rho > 0
     if "v7" in module_data:

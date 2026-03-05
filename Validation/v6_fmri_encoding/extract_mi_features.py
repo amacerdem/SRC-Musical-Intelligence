@@ -10,8 +10,8 @@ import numpy as np
 from Validation.infrastructure.alignment import apply_hrf, resample_to_tr
 from Validation.infrastructure.mi_bridge import MIBridge
 
-# Max seconds per MI chunk — keeps H³ entropy morph under ~4 GiB
-_MAX_CHUNK_S = 90.0
+# Max seconds per MI chunk — 300s preserves H³ temporal state across long spans
+_MAX_CHUNK_S = 300.0
 
 
 def _clear_gpu_cache() -> None:

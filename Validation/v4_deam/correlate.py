@@ -65,6 +65,10 @@ def aggregate_correlations(
     """
     val_rs = [s["r_valence"] for s in per_song if "r_valence" in s]
     aro_rs = [s["r_arousal"] for s in per_song if "r_arousal" in s]
+    max_val_rs = [s["max_r_valence"] for s in per_song if "max_r_valence" in s]
+    max_aro_rs = [s["max_r_arousal"] for s in per_song if "max_r_arousal" in s]
+    opt_lag_val = [s["optimal_lag_valence"] for s in per_song if "optimal_lag_valence" in s]
+    opt_lag_aro = [s["optimal_lag_arousal"] for s in per_song if "optimal_lag_arousal" in s]
 
     return {
         "n_songs": len(per_song),
@@ -76,4 +80,8 @@ def aggregate_correlations(
         "std_r_arousal": float(np.std(aro_rs)) if aro_rs else 0.0,
         "n_sig_valence_005": sum(1 for s in per_song if s.get("p_valence", 1) < 0.05),
         "n_sig_arousal_005": sum(1 for s in per_song if s.get("p_arousal", 1) < 0.05),
+        "mean_max_r_valence": float(np.mean(max_val_rs)) if max_val_rs else 0.0,
+        "mean_max_r_arousal": float(np.mean(max_aro_rs)) if max_aro_rs else 0.0,
+        "mean_optimal_lag_valence": float(np.mean(opt_lag_val)) if opt_lag_val else 0.0,
+        "mean_optimal_lag_arousal": float(np.mean(opt_lag_aro)) if opt_lag_aro else 0.0,
     }
