@@ -75,6 +75,10 @@ def _synthesize_stimulus(duration_s: float, out_path: Path, sr: int = 44100) -> 
 class TestEncodingAccuracy:
     """MI features should predict EEG responses to music."""
 
+    # Limit EEG to 60s and 10 best channels to fit within 600s timeout
+    _MAX_EEG_S = 60.0
+    _MAX_CHANNELS = 10
+
     @pytest.fixture(scope="class")
     def encoding_results(self, mi_bridge, nmed_t_dir, module_data):
         """Run encoding models for first subject, first song."""
@@ -87,9 +91,6 @@ class TestEncodingAccuracy:
             mat_path = mat_files[0]
             subject = load_nmedt_mat(mat_path, subject_idx=0)
             song_id = subject["song_id"]
-            eeg_duration_s = subject["eeg"].shape[0] / subject["sfreq"]
-            print(f"[V5] Loaded {song_id} sub-01: {subject['eeg'].shape} "
-                  f"({eeg_duration_s:.1f}s @ {subject['sfreq']} Hz)")
         else:
             # Fallback: sub-* directories with .set/.fif
             sub_dirs = sorted(d for d in nmed_t_dir.iterdir()
@@ -99,7 +100,24 @@ class TestEncodingAccuracy:
             sub_dir = sub_dirs[0]
             subject = load_eeg_subject(sub_dir, sub_dir.name)
             song_id = "unknown"
-            eeg_duration_s = subject["eeg"].shape[0] / subject["sfreq"]
+
+        eeg = subject["eeg"]  # (T, C)
+        sfreq = subject["sfreq"]
+
+        # Trim to _MAX_EEG_S to keep TRF fitting fast
+        max_samples = int(self._MAX_EEG_S * sfreq)
+        if eeg.shape[0] > max_samples:
+            eeg = eeg[:max_samples]
+
+        # Select top channels by variance (reduces 128→10 channels)
+        if eeg.shape[1] > self._MAX_CHANNELS:
+            ch_var = np.var(eeg, axis=0)
+            top_idx = np.argsort(ch_var)[-self._MAX_CHANNELS:]
+            eeg = eeg[:, np.sort(top_idx)]
+
+        eeg_duration_s = eeg.shape[0] / sfreq
+        print(f"[V5] EEG: {eeg.shape} ({eeg_duration_s:.1f}s, "
+              f"{eeg.shape[1]} channels @ {sfreq} Hz)")
 
         # Find or synthesize stimulus audio
         audio_path = _find_stimulus_audio(nmed_t_dir, song_id)
@@ -123,18 +141,18 @@ class TestEncodingAccuracy:
 
         # Extract MI features
         mi_features = extract_features_for_eeg(
-            mi_bridge, audio_path, eeg_sfreq=subject["sfreq"],
+            mi_bridge, audio_path, eeg_sfreq=sfreq,
             excerpt_s=eeg_duration_s,
         )
 
         # Get baselines
-        baselines = get_all_baselines(audio_path, eeg_sfreq=subject["sfreq"])
+        baselines = get_all_baselines(audio_path, eeg_sfreq=sfreq)
 
         # Combine
         all_features = {**baselines, **mi_features}
 
         # Fit models
-        results = compare_models(all_features, subject["eeg"], subject["sfreq"])
+        results = compare_models(all_features, eeg, sfreq)
 
         # Flag whether real stimulus was used
         results["_has_real_stimulus"] = has_real_stimulus

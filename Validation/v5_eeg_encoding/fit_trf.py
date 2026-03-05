@@ -14,8 +14,8 @@ def fit_trf(
     features: np.ndarray,
     eeg: np.ndarray,
     sfreq: float,
-    tmin: float = -0.1,
-    tmax: float = 0.4,
+    tmin: float = 0.0,
+    tmax: float = 0.25,
     alphas: Optional[List[float]] = None,
     n_splits: int = 5,
 ) -> Dict:
@@ -37,6 +37,7 @@ def fit_trf(
     """
     from sklearn.linear_model import RidgeCV
     from sklearn.model_selection import KFold
+    from sklearn.preprocessing import StandardScaler
 
     if alphas is None:
         alphas = [1e-1, 1e0, 1e1, 1e2, 1e3, 1e4]
@@ -44,15 +45,28 @@ def fit_trf(
     # Create lagged feature matrix
     X_lagged = _create_lagged_matrix(features, sfreq, tmin, tmax)
 
+    # PCA when lagged features > 500 (prevents timeout on 258D × 17 lags)
+    n_lagged_raw = X_lagged.shape[1]
+    if n_lagged_raw > 500:
+        from sklearn.decomposition import PCA
+        max_comp = min(50, X_lagged.shape[0] // 5, n_lagged_raw)
+        if max_comp > 0:
+            X_lagged = StandardScaler().fit_transform(X_lagged)
+            X_lagged = PCA(n_components=max_comp).fit_transform(X_lagged)
+
     # Align lengths
     n = min(X_lagged.shape[0], eeg.shape[0])
     X = X_lagged[:n]
     y = eeg[:n]
 
+    # Standardize features for Ridge
+    scaler = StandardScaler()
+    X = scaler.fit_transform(X)
+
     # Cross-validated ridge regression
     cv = KFold(n_splits=n_splits, shuffle=False)
     r2_per_channel = np.zeros(y.shape[1])
-    all_r2_folds = []
+    best_alpha_val = alphas[0]
 
     for ch in range(y.shape[1]):
         y_ch = y[:, ch]
@@ -62,6 +76,8 @@ def fit_trf(
             model = RidgeCV(alphas=alphas)
             model.fit(X[train_idx], y_ch[train_idx])
             y_pred = model.predict(X[test_idx])
+            if ch == 0:
+                best_alpha_val = float(model.alpha_)
 
             ss_res = np.sum((y_ch[test_idx] - y_pred) ** 2)
             ss_tot = np.sum((y_ch[test_idx] - y_ch[test_idx].mean()) ** 2)
@@ -69,19 +85,13 @@ def fit_trf(
             fold_r2s.append(r2)
 
         r2_per_channel[ch] = np.mean(fold_r2s)
-        all_r2_folds.append(fold_r2s)
-
-    # Fit final model on all data for weights
-    final_model = RidgeCV(alphas=alphas)
-    # Fit on first channel for weight extraction
-    final_model.fit(X, y[:, 0])
 
     return {
         "r2_per_channel": r2_per_channel,
         "mean_r2": float(r2_per_channel.mean()),
-        "best_alpha": float(final_model.alpha_),
+        "best_alpha": best_alpha_val,
         "n_features": features.shape[1],
-        "n_lagged_features": X.shape[1],
+        "n_lagged_features": n_lagged_raw,
         "n_timepoints": n,
     }
 
