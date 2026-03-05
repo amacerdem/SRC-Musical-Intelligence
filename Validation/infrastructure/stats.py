@@ -140,13 +140,17 @@ def cross_validated_r2(
 ) -> Tuple[float, np.ndarray]:
     """K-fold cross-validated R² using Ridge regression.
 
+    When time_series=True, uses a Pipeline(StandardScaler, PCA, RidgeCV)
+    with TimeSeriesSplit.  PCA reduces dimensionality when D > N/3 to
+    avoid curse-of-dimensionality in high-D fMRI encoding.
+
     Args:
         X: Feature matrix (n_samples, n_features).
         y: Target vector (n_samples,) or (n_samples, n_targets).
         n_splits: Number of CV folds.
         alpha: Ridge regularization (ignored when time_series=True).
         seed: Random seed.
-        time_series: If True, use TimeSeriesSplit + RidgeCV for
+        time_series: If True, use TimeSeriesSplit + RidgeCV + PCA for
             temporally ordered data (e.g. fMRI BOLD).
 
     Returns:
@@ -156,7 +160,21 @@ def cross_validated_r2(
     from sklearn.model_selection import KFold, TimeSeriesSplit, cross_val_score
 
     if time_series:
-        model = RidgeCV(alphas=[0.01, 0.1, 1.0, 10.0, 100.0, 1000.0])
+        from sklearn.decomposition import PCA
+        from sklearn.pipeline import Pipeline
+        from sklearn.preprocessing import StandardScaler
+
+        n_samples, n_features = X.shape
+        alphas = [0.01, 0.1, 1.0, 10.0, 100.0, 1000.0, 10000.0, 100000.0]
+
+        steps = [("scaler", StandardScaler())]
+        # PCA when features outnumber samples/3 (curse of dimensionality)
+        max_components = min(20, n_features, n_samples // 3)
+        if n_features > max_components > 0:
+            steps.append(("pca", PCA(n_components=max_components)))
+        steps.append(("ridge", RidgeCV(alphas=alphas)))
+
+        model = Pipeline(steps)
         cv = TimeSeriesSplit(n_splits=n_splits)
     else:
         model = Ridge(alpha=alpha)
