@@ -1,7 +1,9 @@
-"""Run MI's F2 prediction error on melodic corpora.
+"""Run MI's prediction error on melodic corpora.
 
-Extracts prediction error (PE) from MI's F2 (Prediction) function
-for comparison with IDyOM's information content.
+Extracts C³ information-content belief (#25) from MI's full pipeline for
+comparison with IDyOM's information content.  Both measure melodic surprise:
+IDyOM via conditional probability, MI via Bayesian belief update on the
+"current event is unexpected" hypothesis (F2/ICEM).
 """
 from __future__ import annotations
 
@@ -13,39 +15,32 @@ import numpy as np
 from Validation.config.constants import FRAME_RATE
 from Validation.infrastructure.mi_bridge import MIBridge
 
+# C³ belief index for information_content (F2/ICEM, Core, τ=0.35)
+_IC_BELIEF_IDX = 25
+
 
 def extract_mi_prediction_error(
     bridge: MIBridge,
     audio_path: Path,
 ) -> np.ndarray:
-    """Run MI on audio and extract prediction error time series.
+    """Run MI on audio and extract information-content time series.
 
-    The F2 (Prediction) function generates prediction errors that are
-    analogous to IDyOM's information content — both measure surprise.
+    Uses C³ belief #25 (information_content) which is the Bayesian posterior
+    for "the current event is unexpected".  This is MI's direct analogue of
+    IDyOM's information content: both quantify melodic surprise, but MI
+    derives it from acoustic features via the full R³→H³→C³ pipeline while
+    IDyOM uses conditional pitch probabilities.
 
     Args:
         bridge: MI pipeline bridge.
         audio_path: Path to WAV file.
 
     Returns:
-        (T,) prediction error time series.
+        (T,) information-content time series at 172 Hz.
     """
     result = bridge.run(audio_path, excerpt_s=None)
-
-    # F2 prediction error is captured in the beliefs tensor
-    # The prediction-related beliefs (indices vary by implementation)
-    # Use the full belief tensor variance as a proxy for prediction error
-    beliefs = result.beliefs  # (T, 131)
-
-    # Prediction error proxy: frame-to-frame belief change magnitude
-    if beliefs.shape[0] > 1:
-        pe = np.sqrt(np.sum(np.diff(beliefs, axis=0) ** 2, axis=1))
-        # Pad to match original length
-        pe = np.concatenate([[pe[0]], pe])
-    else:
-        pe = np.zeros(beliefs.shape[0])
-
-    return pe
+    ic = result.beliefs[:, _IC_BELIEF_IDX]  # (T,)
+    return np.asarray(ic, dtype=np.float64)
 
 
 def extract_per_note_pe(
@@ -53,7 +48,10 @@ def extract_per_note_pe(
     melody: Dict,
     audio_path: Path,
 ) -> np.ndarray:
-    """Extract MI prediction error at each note onset.
+    """Extract MI information content at each note onset.
+
+    For each onset, takes the *peak* IC in a small window around the
+    onset time, which is more robust than a single-frame sample.
 
     Args:
         bridge: MI pipeline bridge.
@@ -61,45 +59,58 @@ def extract_per_note_pe(
         audio_path: Corresponding WAV file.
 
     Returns:
-        (N_notes-1,) PE at each note onset (excluding first).
+        (N_notes-1,) IC at each note onset (excluding first).
     """
-    pe_timeseries = extract_mi_prediction_error(bridge, audio_path)
+    ic_timeseries = extract_mi_prediction_error(bridge, audio_path)
+    T = len(ic_timeseries)
 
     onsets = melody.get("onsets")
     if onsets is None:
-        # Estimate onsets from durations
         durations = melody["durations"]
         onsets = np.cumsum(np.concatenate([[0], durations[:-1]])) * 0.5
 
-    # Sample PE at note onsets (skip first note as IDyOM does)
-    pe_at_notes = []
+    # Window: ±3 frames (~17 ms each side) around note onset
+    half_win = 3
+    ic_at_notes = []
     for onset_s in onsets[1:]:
         frame_idx = int(onset_s * FRAME_RATE)
-        frame_idx = min(frame_idx, len(pe_timeseries) - 1)
-        pe_at_notes.append(pe_timeseries[frame_idx])
+        lo = max(0, frame_idx - half_win)
+        hi = min(T, frame_idx + half_win + 1)
+        ic_at_notes.append(float(ic_timeseries[lo:hi].max()))
 
-    return np.array(pe_at_notes)
+    return np.array(ic_at_notes)
 
 
 def run_mi_on_corpus(
     bridge: MIBridge,
     melody_audio_pairs: List[Tuple[Dict, Path]],
 ) -> List[Dict]:
-    """Run MI prediction error extraction on a full corpus.
+    """Run MI information content extraction on a full corpus.
+
+    Memory-optimized: flushes cache every 10 melodies for 8 GB RAM.
 
     Args:
         bridge: MI pipeline bridge.
         melody_audio_pairs: List of (melody_dict, wav_path) from corpora.melodies_to_audio().
 
     Returns:
-        List of dicts with 'pe' (per-note PE), 'melody_name'.
+        List of dicts with 'pe' (per-note IC), 'melody_name'.
     """
+    import gc
+    import torch
+
     results = []
-    for melody, audio_path in melody_audio_pairs:
-        print(f"[V2-MI] Processing {melody['name']}...")
+    n = len(melody_audio_pairs)
+    for i, (melody, audio_path) in enumerate(melody_audio_pairs):
+        print(f"[V2-MI] Processing {melody['name']} ({i + 1}/{n})...")
         pe = extract_per_note_pe(bridge, melody, audio_path)
         results.append({
             "pe": pe,
             "melody_name": melody["name"],
         })
+        # Flush memory every 10 melodies
+        if (i + 1) % 10 == 0:
+            gc.collect()
+            if torch.backends.mps.is_available():
+                torch.mps.empty_cache()
     return results

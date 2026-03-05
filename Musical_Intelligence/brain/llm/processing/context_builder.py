@@ -174,6 +174,63 @@ def build_layer1(user_profile: dict[str, Any], language: str = "tr") -> str:
             if ts > 0.05:
                 lines.append(f"- **Taste evolution**: {ts:+.2f} (short vs long term shift)")
 
+    # Feed listening history (if available)
+    lh = user_profile.get("listening_history")
+    if lh and lh.get("total_tracks", 0) > 0:
+        lines.append("")
+        if language == "tr":
+            lines.append("### Feed Dinleme Geçmişi")
+            lines.append(f"- **Toplam**: {lh['total_tracks']} parça, {round(lh.get('total_listening_minutes', 0), 1)} dakika")
+            lines.append(f"- **Beğeniler**: {lh.get('total_likes', 0)}, **Kaydedilenler**: {lh.get('total_saves', 0)}")
+            rl = lh.get("recent_likes", [])
+            if rl:
+                like_str = "; ".join(f"{t['title']} — {t['artist']}" for t in rl[:5])
+                lines.append(f"- **Son beğenilenler**: {like_str}")
+            rs = lh.get("recent_saves", [])
+            if rs:
+                save_str = "; ".join(f"{t['title']} — {t['artist']}" for t in rs[:3])
+                lines.append(f"- **Son kaydedilenler**: {save_str}")
+            tlg = lh.get("top_liked_genres", [])
+            if tlg:
+                lines.append(f"- **Favori türler (beğeni)**: {', '.join(tlg[:5])}")
+            tla = lh.get("top_liked_artists", [])
+            if tla:
+                lines.append(f"- **Favori sanatçılar (beğeni)**: {', '.join(tla[:5])}")
+            ac = lh.get("avg_controls", {})
+            if ac:
+                ctrl_str = ", ".join(f"{k}={v:.2f}" for k, v in ac.items())
+                lines.append(f"- **Ortalama 6D tercihi**: {ctrl_str}")
+            cd = lh.get("control_drift", {})
+            if cd:
+                drift_str = ", ".join(f"{k}={v:+.2f}" for k, v in cd.items())
+                lines.append(f"- **6D kayma (son oturumlarda)**: {drift_str}")
+        else:
+            lines.append("### Feed Listening History")
+            lines.append(f"- **Total**: {lh['total_tracks']} tracks, {round(lh.get('total_listening_minutes', 0), 1)} minutes")
+            lines.append(f"- **Likes**: {lh.get('total_likes', 0)}, **Saves**: {lh.get('total_saves', 0)}")
+            rl = lh.get("recent_likes", [])
+            if rl:
+                like_str = "; ".join(f"{t['title']} — {t['artist']}" for t in rl[:5])
+                lines.append(f"- **Recent likes**: {like_str}")
+            rs = lh.get("recent_saves", [])
+            if rs:
+                save_str = "; ".join(f"{t['title']} — {t['artist']}" for t in rs[:3])
+                lines.append(f"- **Recent saves**: {save_str}")
+            tlg = lh.get("top_liked_genres", [])
+            if tlg:
+                lines.append(f"- **Top liked genres**: {', '.join(tlg[:5])}")
+            tla = lh.get("top_liked_artists", [])
+            if tla:
+                lines.append(f"- **Top liked artists**: {', '.join(tla[:5])}")
+            ac = lh.get("avg_controls", {})
+            if ac:
+                ctrl_str = ", ".join(f"{k}={v:.2f}" for k, v in ac.items())
+                lines.append(f"- **Average 6D preference**: {ctrl_str}")
+            cd = lh.get("control_drift", {})
+            if cd:
+                drift_str = ", ".join(f"{k}={v:+.2f}" for k, v in cd.items())
+                lines.append(f"- **6D drift (recent sessions)**: {drift_str}")
+
     # Persona-specific conversation guidance
     if persona_card:
         lines.append("")

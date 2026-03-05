@@ -13,7 +13,7 @@ from Validation.v4_deam.preprocess import resample_mi_to_deam
 def extract_valence_arousal(
     bridge: MIBridge,
     audio_path: Path,
-    excerpt_s: float = 45.0,
+    excerpt_s: float = 30.0,
 ) -> Dict[str, np.ndarray]:
     """Run MI on a DEAM audio file and extract valence/arousal at 2Hz.
 
@@ -51,21 +51,39 @@ def batch_extract(
 ) -> Dict[int, Dict[str, np.ndarray]]:
     """Run MI on multiple DEAM songs.
 
+    Memory-optimized: flushes MPS/CUDA cache every 5 songs to stay
+    within 8 GB RAM on MacBook Air M2.
+
     Args:
         bridge: MI pipeline bridge.
         songs: List of (song_id, wav_path) from preprocess.load_song_ids().
         max_songs: Maximum number of songs to process.
 
     Returns:
-        Dict mapping song_id → valence/arousal dict.
+        Dict mapping song_id → valence/arousal dict (only 2 Hz arrays kept).
     """
+    import gc
+    import torch
+
     results = {}
-    for i, (song_id, wav_path) in enumerate(songs[:max_songs]):
-        print(f"[V4] Processing song {song_id} ({i + 1}/{min(len(songs), max_songs)})...")
+    n = min(len(songs), max_songs)
+    for i, (song_id, wav_path) in enumerate(songs[:n]):
+        print(f"[V4] Processing song {song_id} ({i + 1}/{n})...")
         try:
-            results[song_id] = extract_valence_arousal(bridge, wav_path)
+            out = extract_valence_arousal(bridge, wav_path)
+            # Keep only 2 Hz arrays — drop 172 Hz to save ~95% memory per song
+            results[song_id] = {
+                "valence_2hz": out["valence_2hz"],
+                "arousal_2hz": out["arousal_2hz"],
+            }
         except Exception as e:
             print(f"[V4] Error processing song {song_id}: {e}")
             continue
+
+        # Flush memory every 5 songs
+        if (i + 1) % 5 == 0:
+            gc.collect()
+            if torch.backends.mps.is_available():
+                torch.mps.empty_cache()
 
     return results

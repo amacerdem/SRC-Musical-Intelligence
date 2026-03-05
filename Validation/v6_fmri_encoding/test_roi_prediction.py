@@ -7,13 +7,43 @@ Predictions:
 """
 from __future__ import annotations
 
+import gc
+import tempfile
+from pathlib import Path
+
+import numpy as np
 import pytest
+import torch
 
 from Validation.config.constants import REGION_NAMES
 from Validation.v6_fmri_encoding.preprocess_fmri import load_fmri_subject
 from Validation.v6_fmri_encoding.extract_rois import extract_roi_signals
 from Validation.v6_fmri_encoding.extract_mi_features import extract_features_for_fmri
 from Validation.v6_fmri_encoding.fit_encoding import compare_feature_sets
+
+
+def _concatenate_stimuli(audio_files: list[Path], out_path: Path) -> Path:
+    """Concatenate multiple audio files into one WAV for MI processing."""
+    import soundfile as sf
+
+    segments = []
+    target_sr = None
+    for f in sorted(audio_files):
+        try:
+            data, sr = sf.read(str(f), dtype="float32")
+            if data.ndim == 2:
+                data = data.mean(axis=1)
+            if target_sr is None:
+                target_sr = sr
+            segments.append(data)
+        except Exception:
+            continue
+
+    if not segments:
+        return None
+    combined = np.concatenate(segments)
+    sf.write(str(out_path), combined, target_sr)
+    return out_path
 
 
 @pytest.mark.v6
@@ -24,26 +54,55 @@ class TestROIPrediction:
 
     @pytest.fixture(scope="class")
     def fmri_results(self, mi_bridge, fmri_dataset_dir):
-        """Load fMRI, extract ROIs, run MI, fit models."""
-        # Load first subject
+        """Load fMRI, extract ROIs, run MI, fit models.
+
+        Uses classicalMusic task with matching classical stimuli to ensure
+        proper stimulus—BOLD alignment.
+        """
+        # Load first subject — classicalMusic task (continuous music listening)
         sub_dirs = sorted(d for d in fmri_dataset_dir.iterdir()
                           if d.is_dir() and d.name.startswith("sub"))
         if not sub_dirs:
             pytest.skip("No subjects in fMRI dataset")
 
-        subject = load_fmri_subject(fmri_dataset_dir, sub_dirs[0].name)
+        subject = load_fmri_subject(
+            fmri_dataset_dir, sub_dirs[0].name, task="classicalMusic",
+        )
         roi_signals = extract_roi_signals(subject)
 
-        # Find stimulus audio
-        stim_files = list(fmri_dataset_dir.rglob("stimuli/**/*.wav"))
+        # Use matching classical music stimuli (not generated clips)
+        stim_dir = fmri_dataset_dir / "stimuli" / "classical"
+        stim_files = sorted(stim_dir.glob("*.mp3")) + sorted(stim_dir.glob("*.wav"))
+        if not stim_files:
+            # Fallback: try any music stimulus
+            stim_files = sorted(fmri_dataset_dir.rglob("stimuli/**/*.wav"))
+            stim_files += sorted(fmri_dataset_dir.rglob("stimuli/**/*.mp3"))
         if not stim_files:
             pytest.skip("No stimulus audio in fMRI dataset")
 
+        # Concatenate stimuli to match fMRI duration
+        scan_duration = roi_signals.shape[0] * subject["tr"]
+        tmp_dir = Path(tempfile.mkdtemp())
+        concat_path = tmp_dir / "classical_concat.wav"
+        concat_path = _concatenate_stimuli(stim_files, concat_path)
+        if concat_path is None:
+            pytest.skip("Could not read stimulus audio files")
+
         mi_features = extract_features_for_fmri(
-            mi_bridge, stim_files[0], tr=subject["tr"],
+            mi_bridge, concat_path,
+            tr=subject["tr"],
+            excerpt_s=scan_duration,
         )
 
+        # Memory cleanup before fitting
+        gc.collect()
+        if torch.backends.mps.is_available():
+            torch.mps.empty_cache()
+
         results = compare_feature_sets(mi_features, roi_signals)
+
+        # Clean up temp
+        concat_path.unlink(missing_ok=True)
         return results
 
     def test_auditory_regions_predicted(self, fmri_results):

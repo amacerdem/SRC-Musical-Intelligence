@@ -39,9 +39,17 @@ def compare_per_melody(
         ic = ic[:n]
         pe = pe[:n]
 
+        # Skip melodies with constant IC or PE (causes NaN correlations)
+        if np.std(ic) < 1e-10 or np.std(pe) < 1e-10:
+            continue
+
         r, p, ci = pearson_with_ci(ic, pe)
         rho, p_rho, _ = spearman_with_ci(ic, pe)
         mi = mutual_information(ic, pe)
+
+        # Guard against NaN from numerical edge cases
+        if np.isnan(r) or np.isnan(rho):
+            continue
 
         comparisons.append({
             "melody_name": idyom_r["melody_name"],

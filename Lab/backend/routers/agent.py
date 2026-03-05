@@ -49,6 +49,7 @@ class ChatRequest(BaseModel):
     )
     dimensions_6d: dict[str, float] | None = None
     spotify_profile: dict[str, Any] | None = None
+    listening_history: dict[str, Any] | None = None
 
 
 class ChatResponse(BaseModel):
@@ -160,6 +161,8 @@ async def chat(req: ChatRequest):
         user_profile["dimensions_6d"] = req.dimensions_6d
     if req.spotify_profile:
         user_profile["spotify_profile"] = req.spotify_profile
+    if req.listening_history:
+        user_profile["listening_history"] = req.listening_history
 
     # Inject Spotify profile into tool system
     set_spotify_profile(req.spotify_profile)
@@ -333,6 +336,8 @@ async def chat_stream(req: ChatRequest):
             user_profile["dimensions_6d"] = req.dimensions_6d
         if req.spotify_profile:
             user_profile["spotify_profile"] = req.spotify_profile
+        if req.listening_history:
+            user_profile["listening_history"] = req.listening_history
 
         # Inject Spotify profile into tool system
         set_spotify_profile(req.spotify_profile)

@@ -75,34 +75,38 @@ def _run_with_idyompy(melodies: List[Dict], order: int) -> List[Dict]:
 def _run_simplified_model(melodies: List[Dict], order: int) -> List[Dict]:
     """Simplified n-gram model as fallback when IDyOMpy is unavailable.
 
-    Uses a simple conditional probability model:
-    P(note_t | note_{t-1}, ..., note_{t-n})
-    IC = -log2(P)
+    Uses a leave-one-out conditional probability model:
+    For each melody, trains on all OTHER melodies, then computes
+    IC = -log2(P(note_t | context)) with backoff.
+    This avoids circular training where the test melody inflates predictions.
     """
     from collections import Counter, defaultdict
 
-    # Build n-gram counts from all melodies
-    ngram_counts: Dict[int, Dict] = {}
-    for n in range(1, order + 1):
-        ngram_counts[n] = defaultdict(Counter)
+    def _build_ngram_counts(pitch_lists, order):
+        counts = {}
+        for n in range(1, order + 1):
+            counts[n] = defaultdict(Counter)
+        for pitches in pitch_lists:
+            for n in range(1, min(order + 1, len(pitches))):
+                for i in range(n, len(pitches)):
+                    context = tuple(pitches[i - n:i])
+                    counts[n][context][pitches[i]] += 1
+        return counts
 
-    for melody in melodies:
-        pitches = melody["pitches"].tolist()
-        for n in range(1, min(order + 1, len(pitches))):
-            for i in range(n, len(pitches)):
-                context = tuple(pitches[i - n:i])
-                target = pitches[i]
-                ngram_counts[n][context][target] += 1
+    all_pitch_lists = [m["pitches"].tolist() for m in melodies]
 
-    # Compute IC per note using backoff
     results = []
-    for melody in melodies:
-        pitches = melody["pitches"].tolist()
+    for j, melody in enumerate(melodies):
+        # Leave-one-out: train on all melodies except j
+        train_lists = all_pitch_lists[:j] + all_pitch_lists[j + 1:]
+        ngram_counts = _build_ngram_counts(train_lists, order)
+
+        pitches = all_pitch_lists[j]
         ic_values = []
         entropy_values = []
 
         for i in range(1, len(pitches)):
-            ic = 4.0  # default
+            ic = 4.0  # default (unseen)
             entropy = 4.0
             actual = pitches[i]
 
@@ -112,14 +116,16 @@ def _run_simplified_model(melodies: List[Dict], order: int) -> List[Dict]:
                 if context in ngram_counts[n]:
                     counts = ngram_counts[n][context]
                     total = sum(counts.values())
-                    prob = counts.get(actual, 0) / total
-                    if prob > 0:
-                        ic = -np.log2(prob)
-                        entropy = -sum(
-                            (c / total) * np.log2(c / total)
-                            for c in counts.values() if c > 0
-                        )
-                        break
+                    # Add-one smoothing for unseen continuations
+                    vocab = set(counts.keys()) | {actual}
+                    prob = (counts.get(actual, 0) + 1) / (total + len(vocab))
+                    ic = -np.log2(prob)
+                    entropy = -sum(
+                        ((c + 1) / (total + len(vocab)))
+                        * np.log2((c + 1) / (total + len(vocab)))
+                        for c in counts.values()
+                    )
+                    break
 
             ic_values.append(ic)
             entropy_values.append(entropy)
