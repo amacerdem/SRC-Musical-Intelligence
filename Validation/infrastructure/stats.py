@@ -168,14 +168,16 @@ def cross_validated_r2(
         alphas = [0.01, 0.1, 1.0, 10.0, 100.0, 1000.0, 10000.0, 100000.0]
 
         steps = [("scaler", StandardScaler())]
-        # PCA when features outnumber samples/3 (curse of dimensionality)
-        max_components = min(20, n_features, n_samples // 3)
+        # PCA when features outnumber samples/5 (conservative for fMRI)
+        max_components = min(10, n_features, max(1, n_samples // 5))
         if n_features > max_components > 0:
             steps.append(("pca", PCA(n_components=max_components)))
         steps.append(("ridge", RidgeCV(alphas=alphas)))
 
         model = Pipeline(steps)
-        cv = TimeSeriesSplit(n_splits=n_splits)
+        # Fewer folds for short time series — more training data per fold
+        ts_splits = min(n_splits, 3) if n_samples < 300 else n_splits
+        cv = TimeSeriesSplit(n_splits=ts_splits)
     else:
         model = Ridge(alpha=alpha)
         cv = KFold(n_splits=n_splits, shuffle=True, random_state=seed)
