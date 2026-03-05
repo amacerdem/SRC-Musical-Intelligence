@@ -142,16 +142,11 @@ def _generate_module_reports(module_data: Dict[str, Any]) -> None:
         except Exception as e:
             print(f"[Report] V4 report generation failed: {e}")
 
-    # V5 — EEG (if data ever becomes available)
+    # V5 — EEG Encoding
     if "v5" in module_data:
         try:
-            # V5 has no report.py yet — just save raw results as JSON
-            d = module_data["v5"]
-            from Validation.config.paths import V5_RESULTS
-            V5_RESULTS.mkdir(parents=True, exist_ok=True)
-            (V5_RESULTS / "v5_summary.json").write_text(
-                json.dumps(d, indent=2, default=str)
-            )
+            from Validation.v5_eeg_encoding.report import generate_summary_report
+            generate_summary_report(module_data["v5"])
         except Exception as e:
             print(f"[Report] V5 report generation failed: {e}")
 
@@ -293,6 +288,18 @@ def _build_markdown(
 
         lines.extend(["", "---", ""])
 
+    # ── Validation Scorecard ──
+    lines.extend(_validation_scorecard(module_data))
+    lines.extend(["", "---", ""])
+
+    # ── Cross-Module Summary ──
+    lines.extend(_cross_module_summary(module_data))
+    lines.extend(["", "---", ""])
+
+    # ── Figure Index ──
+    lines.extend(_figure_index())
+    lines.extend(["", "---", ""])
+
     # ── Inline per-module summaries if files exist ──
     lines.extend([
         "## Per-Module Summary Reports",
@@ -328,6 +335,124 @@ def _module_dirname(tag: str) -> str:
         "v7": "rsa",
     }
     return mapping.get(tag, tag)
+
+
+def _validation_scorecard(module_data: Dict[str, Any]) -> List[str]:
+    """Generate a scorecard table: primary metric per module + pass/fail."""
+    lines = [
+        "## Validation Scorecard",
+        "",
+        "| Module | Primary Metric | Value | Threshold | Status |",
+        "|--------|---------------|-------|-----------|--------|",
+    ]
+
+    # V1 — directional concordance
+    if "v1" in module_data:
+        ferreri = module_data["v1"].get("ferreri", [])
+        if ferreri:
+            # Check if levodopa increased reward
+            placebo = ferreri[2] if len(ferreri) > 2 else None
+            if placebo and len(ferreri) > 0:
+                levo = ferreri[0]
+                delta = levo.reward_mean - placebo.reward_mean
+                ok = delta > 0
+                lines.append(f"| V1 Pharmacology | Levodopa Δ reward | {delta:+.4f} | > 0 | {'PASS' if ok else 'FAIL'} |")
+
+    # V2 — mean r > 0
+    if "v2" in module_data:
+        agg = module_data["v2"].get("aggregate", {})
+        r = agg.get("mean_pearson_r", 0)
+        ok = r > 0
+        lines.append(f"| V2 IDyOM | Mean Pearson r | {r:.4f} | > 0 | {'PASS' if ok else 'FAIL'} |")
+
+    # V3 — profile correlation
+    if "v3" in module_data:
+        from scipy.stats import pearsonr
+        mi_maj = module_data["v3"].get("mi_major")
+        if mi_maj is not None:
+            from Validation.v3_krumhansl.profiles import MAJOR_PROFILE
+            r, _ = pearsonr(mi_maj, MAJOR_PROFILE)
+            ok = r > 0.5
+            lines.append(f"| V3 Krumhansl | Major profile r | {r:.4f} | > 0.5 | {'PASS' if ok else 'FAIL'} |")
+
+    # V4 — mean arousal r > 0
+    if "v4" in module_data:
+        agg = module_data["v4"].get("aggregate", {})
+        r = agg.get("mean_r_arousal", 0)
+        ok = r > 0
+        lines.append(f"| V4 DEAM | Mean arousal r | {r:.4f} | > 0 | {'PASS' if ok else 'FAIL'} |")
+
+    # V5 — full > envelope
+    if "v5" in module_data:
+        d = module_data["v5"]
+        full_r2 = d.get("full", {}).get("mean_r2", 0)
+        env_r2 = d.get("envelope", {}).get("mean_r2", 0)
+        ok = full_r2 > env_r2
+        lines.append(f"| V5 EEG | Full R² > env R² | {full_r2:.4f} > {env_r2:.4f} | Full > env | {'PASS' if ok else 'FAIL'} |")
+
+    # V6 — sig ROIs ≥ 10
+    if "v6" in module_data:
+        full = module_data["v6"].get("full", {})
+        sig = full.get("significant_rois", 0)
+        ok = sig >= 10
+        lines.append(f"| V6 fMRI | Significant ROIs | {sig}/26 | ≥ 10 | {'PASS' if ok else 'FAIL'} |")
+
+    # V7 — best rho > 0
+    if "v7" in module_data:
+        comps = module_data["v7"].get("comparisons", [])
+        if comps:
+            best = max(comps, key=lambda c: c["spearman_rho"])
+            ok = best["spearman_rho"] > 0
+            lines.append(f"| V7 RSA | Best Spearman ρ | {best['spearman_rho']:.4f} | > 0 | {'PASS' if ok else 'FAIL'} |")
+
+    return lines
+
+
+def _cross_module_summary(module_data: Dict[str, Any]) -> List[str]:
+    """Cross-module convergent validity matrix."""
+    lines = [
+        "## Cross-Module Summary",
+        "",
+        "Which MI components contribute to which validations:",
+        "",
+        "| Component | V1 | V2 | V3 | V4 | V5 | V6 | V7 |",
+        "|-----------|----|----|----|----|----|----|----| ",
+        "| R³ (perceptual) | — | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |",
+        "| H³ (temporal) | — | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |",
+        "| C³ beliefs | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |",
+        "| Neurochemicals | ✓ | — | — | ✓ | ✓ | ✓ | — |",
+        "| RAM (brain regions) | — | — | — | — | ✓ | ✓ | — |",
+        "| Ψ³ (psychology) | ✓ | — | — | ✓ | — | — | — |",
+    ]
+    return lines
+
+
+def _figure_index() -> List[str]:
+    """List all generated figures."""
+    from Validation.config.paths import FIGURES
+    lines = [
+        "## Figure Index",
+        "",
+    ]
+
+    if not FIGURES.exists():
+        lines.append("*No figures directory found.*")
+        return lines
+
+    figure_files = sorted(FIGURES.rglob("*.pdf")) + sorted(FIGURES.rglob("*.png"))
+    if not figure_files:
+        lines.append("*No figures generated yet.*")
+        return lines
+
+    current_subdir = None
+    for f in sorted(figure_files):
+        subdir = f.parent.name if f.parent != FIGURES else "root"
+        if subdir != current_subdir:
+            current_subdir = subdir
+            lines.append(f"\n**{subdir}/**")
+        lines.append(f"- `{f.name}`")
+
+    return lines
 
 
 def _module_detail_md(tag: str, data: Dict[str, Any]) -> List[str]:

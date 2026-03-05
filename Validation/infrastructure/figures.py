@@ -201,6 +201,115 @@ def heatmap(
     return fig
 
 
+def forest_plot(
+    labels: List[str],
+    estimates: np.ndarray,
+    ci_lower: np.ndarray,
+    ci_upper: np.ndarray,
+    xlabel: str = "Effect size",
+    title: str = "",
+    zero_line: bool = True,
+    name: Optional[str] = None,
+) -> plt.Figure:
+    """Horizontal forest plot with confidence intervals.
+
+    Args:
+        labels: Per-item labels (y-axis).
+        estimates: Point estimates.
+        ci_lower, ci_upper: Lower/upper CI bounds.
+        xlabel: X-axis label.
+        title: Plot title.
+        zero_line: Draw vertical line at x=0.
+        name: Optional filename to save.
+
+    Returns:
+        Matplotlib figure.
+    """
+    apply_nature_style()
+    n = len(labels)
+    fig_height = max(3.0, n * 0.18 + 1.0)
+    fig, ax = plt.subplots(figsize=(5, fig_height))
+
+    y_pos = np.arange(n)
+    xerr_lower = estimates - ci_lower
+    xerr_upper = ci_upper - estimates
+
+    ax.errorbar(
+        estimates, y_pos,
+        xerr=[xerr_lower, xerr_upper],
+        fmt="o", markersize=3, color="#2171b5",
+        ecolor="#6baed6", elinewidth=0.6, capsize=2, capthick=0.5,
+    )
+
+    if zero_line:
+        ax.axvline(x=0, color="grey", linewidth=0.5, linestyle="--")
+
+    ax.set_yticks(y_pos)
+    ax.set_yticklabels(labels, fontsize=5)
+    ax.set_xlabel(xlabel)
+    ax.set_title(title)
+    ax.invert_yaxis()
+
+    if name:
+        save_figure(fig, name)
+
+    return fig
+
+
+def volcano_plot(
+    effects: np.ndarray,
+    pvalues: np.ndarray,
+    labels: Optional[List[str]] = None,
+    alpha: float = 0.05,
+    xlabel: str = "Effect size (r)",
+    title: str = "",
+    name: Optional[str] = None,
+) -> plt.Figure:
+    """Volcano plot: effect size vs. -log10(p-value).
+
+    Args:
+        effects: Effect size values (x-axis).
+        pvalues: Raw p-values (transformed to -log10).
+        labels: Optional per-point labels.
+        alpha: Significance threshold line.
+        xlabel: X-axis label.
+        title: Plot title.
+        name: Optional filename to save.
+
+    Returns:
+        Matplotlib figure.
+    """
+    apply_nature_style()
+    fig, ax = plt.subplots(figsize=(4, 3.5))
+
+    neg_log_p = -np.log10(np.clip(pvalues, 1e-300, 1.0))
+    sig_mask = pvalues < alpha
+
+    ax.scatter(effects[~sig_mask], neg_log_p[~sig_mask],
+               s=8, alpha=0.5, color="#bdd7e7", edgecolors="none", label="n.s.")
+    ax.scatter(effects[sig_mask], neg_log_p[sig_mask],
+               s=12, alpha=0.7, color="#cb181d", edgecolors="none", label=f"p < {alpha}")
+
+    ax.axhline(y=-np.log10(alpha), color="grey", linewidth=0.5, linestyle="--")
+
+    if labels is not None:
+        for i, lbl in enumerate(labels):
+            if sig_mask[i]:
+                ax.annotate(lbl, (effects[i], neg_log_p[i]),
+                            fontsize=4, xytext=(3, 3),
+                            textcoords="offset points")
+
+    ax.set_xlabel(xlabel)
+    ax.set_ylabel("-log₁₀(p)")
+    ax.set_title(title)
+    ax.legend(fontsize=5, loc="upper right")
+
+    if name:
+        save_figure(fig, name)
+
+    return fig
+
+
 def brain_regions_plot(
     activations: np.ndarray,
     region_names: List[str],

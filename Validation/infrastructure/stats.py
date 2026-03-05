@@ -179,6 +179,43 @@ def mutual_information(
     return float(mi)
 
 
+def fisher_z_mean_ci(
+    r_values: np.ndarray,
+    n_values: np.ndarray,
+    alpha: float = 0.05,
+) -> tuple[float, float, float]:
+    """Compute Fisher-z weighted mean correlation with CI.
+
+    Properly averages correlation coefficients via arctanh transform,
+    weighted by sample size. Returns back-transformed mean and CI.
+
+    Args:
+        r_values: Array of Pearson r values.
+        n_values: Array of per-sample N values.
+        alpha: Significance level for CI.
+
+    Returns:
+        Tuple of (mean_r, ci_lower, ci_upper) in r-space.
+    """
+    r_values = np.asarray(r_values, dtype=np.float64)
+    n_values = np.asarray(n_values, dtype=np.float64)
+
+    # Clamp r to avoid arctanh(±1) = ±inf
+    r_clamp = np.clip(r_values, -0.9999, 0.9999)
+    z_values = np.arctanh(r_clamp)
+    weights = n_values - 3  # Fisher z variance ≈ 1/(n-3)
+    weights = np.maximum(weights, 1)
+
+    z_mean = np.average(z_values, weights=weights)
+    se_z = 1.0 / np.sqrt(np.sum(weights))
+
+    z_crit = stats.norm.ppf(1 - alpha / 2)
+    z_lower = z_mean - z_crit * se_z
+    z_upper = z_mean + z_crit * se_z
+
+    return float(np.tanh(z_mean)), float(np.tanh(z_lower)), float(np.tanh(z_upper))
+
+
 # ── Internal helpers ──
 
 def _pearson_r(x: np.ndarray, y: np.ndarray) -> float:
