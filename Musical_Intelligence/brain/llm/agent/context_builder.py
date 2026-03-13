@@ -13,9 +13,9 @@ Usage:
     from Musical_Intelligence.brain.llm.agent.context_builder import build_full_context
 
     system_prompt, messages = build_full_context(
-        user_message="Neden bazı şarkılar ürperti veriyor?",
+        user_message="Why do some songs give me chills?",
         user_profile=profile,
-        language="tr",
+        language="en",
     )
 """
 
@@ -72,7 +72,7 @@ def _load_guide_entries() -> dict[str, dict[str, str]]:
 # ── Layer 2.5: Interpretation Guide ──────────────────────────────────
 
 
-def build_layer2_5(language: str = "tr") -> str:
+def build_layer2_5(language: str = "en") -> str:
     """Build the always-on interpretation guide layer.
 
     Embeds 5 critical analysis framework entries directly in the system
@@ -230,7 +230,7 @@ def build_layer4(
 def build_full_context(
     user_message: str,
     user_profile: dict[str, Any],
-    language: str = "tr",
+    language: str = "en",
     conversation_history: list[dict[str, str]] | None = None,
     use_local_embeddings: bool = False,
 ) -> tuple[str, list[dict[str, str]]]:
@@ -316,14 +316,20 @@ def build_full_context(
 def _smart_max_tokens(user_message: str) -> int:
     """Choose max_tokens based on message intent.
 
-    Playback commands need short responses (512), analysis needs more (1024).
+    System events need ultra-short responses (150), playback commands
+    need short responses (512), analysis/chat needs more (1024).
     """
+    msg_lower = user_message.lower()
+
+    # System event messages are wrapped in [SYSTEM: ...] or [SİSTEM: ...]
+    if msg_lower.startswith("[system:") or msg_lower.startswith("[si̇stem:") or msg_lower.startswith("[sistem:"):
+        return 150
+
     playback_keywords = [
         "play", "çal", "queue", "kuyruk", "next", "pause", "dur", "skip",
         "sonraki", "önceki", "durdur", "devam", "resume", "shuffle", "repeat",
         "sesini", "volume", "louder", "quieter",
     ]
-    msg_lower = user_message.lower()
     if any(kw in msg_lower for kw in playback_keywords):
         return 512
     return 1024
@@ -332,7 +338,7 @@ def _smart_max_tokens(user_message: str) -> int:
 def build_api_request(
     user_message: str,
     user_profile: dict[str, Any],
-    language: str = "tr",
+    language: str = "en",
     conversation_history: list[dict[str, str]] | None = None,
     model: str | None = None,
     use_local_embeddings: bool = False,

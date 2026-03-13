@@ -1,6 +1,6 @@
 """Gene Profile Interpreter — musical gene matching and persona alignment.
 
-5 genes: entropy, resolution, tension, resonance, plasticity
+6 genes: energy, valence, tempo, tension, groove, density
 5 families: Explorers, Architects, Alchemists, Anchors, Kineticists
 """
 
@@ -13,53 +13,62 @@ from .polarity import classify_value, polarity_label
 # ── Gene → Family Mapping ───────────────────────────────────────
 
 GENE_FAMILY = {
-    "entropy": "Explorers",
-    "resolution": "Architects",
+    "energy": "Explorers",
+    "valence": "Anchors",
+    "tempo": "Kineticists",
     "tension": "Alchemists",
-    "resonance": "Anchors",
-    "plasticity": "Kineticists",
+    "groove": "Kineticists",
+    "density": "Architects",
 }
 
 _GENE_INFO: dict[str, dict[str, str]] = {
-    "entropy": {
-        "name_en": "Entropy",
-        "name_tr": "Entropi",
-        "high_en": "Seeks novelty, unpredictability, and the unknown. Thrives on musical surprise.",
-        "high_tr": "Yenilik, öngörülemezlik ve bilinmeyeni arar. Müzikal sürprizle gelişir.",
-        "low_en": "Prefers familiar, predictable structures. Comfort in the known.",
-        "low_tr": "Tanıdık, öngörülebilir yapıları tercih eder. Bilinenin konforu.",
+    "energy": {
+        "name_en": "Energy",
+        "name_tr": "Enerji",
+        "high_en": "Drawn to intense, powerful, driving music. High arousal and sonic force.",
+        "high_tr": "Yoğun, güçlü, sürükleyici müziğe çekilir. Yüksek uyarılma ve sonik güç.",
+        "low_en": "Prefers quiet, calm, gentle musical landscapes.",
+        "low_tr": "Sessiz, sakin, yumuşak müzikal manzaraları tercih eder.",
     },
-    "resolution": {
-        "name_en": "Resolution",
-        "name_tr": "Çözünürlük",
-        "high_en": "Sensitive to detail, fine structure, and harmonic clarity. Hears everything.",
-        "high_tr": "Detaya, ince yapıya ve harmonik netliğe duyarlı. Her şeyi duyar.",
-        "low_en": "Focuses on big-picture gestures rather than fine detail.",
-        "low_tr": "İnce detaydan ziyade büyük-resim hareketlerine odaklanır.",
+    "valence": {
+        "name_en": "Valence",
+        "name_tr": "Valans",
+        "high_en": "Gravitates toward happy, uplifting, bright music. Emotional positivity.",
+        "high_tr": "Mutlu, yükseltici, parlak müziğe yönelir. Duygusal pozitiflik.",
+        "low_en": "Drawn to sad, dark, melancholic tones. Emotional depth through shadow.",
+        "low_tr": "Hüzünlü, karanlık, melankolik tonlara çekilir. Gölge yoluyla duygusal derinlik.",
+    },
+    "tempo": {
+        "name_en": "Tempo",
+        "name_tr": "Tempo",
+        "high_en": "Loves fast, energetic pacing. Thrives on speed and momentum.",
+        "high_tr": "Hızlı, enerjik tempoya bayılır. Hız ve ivmeden beslenip gelişir.",
+        "low_en": "Prefers slow, spacious, unhurried musical flow.",
+        "low_tr": "Yavaş, geniş, acele etmeyen müzikal akışı tercih eder.",
     },
     "tension": {
         "name_en": "Tension",
         "name_tr": "Gerilim",
-        "high_en": "Appetite for harmonic and rhythmic tension. Loves build-ups, dissonance, and drama.",
-        "high_tr": "Harmonik ve ritmik gerilime iştah. Birikimleri, disonansı ve dramayı sever.",
-        "low_en": "Prefers resolved, consonant, smooth musical surfaces.",
-        "low_tr": "Çözülmüş, konsonant, pürüzsüz müzikal yüzeyleri tercih eder.",
+        "high_en": "Appetite for dissonance, suspense, and dark energy. Loves build-ups and drama.",
+        "high_tr": "Disonans, gerilim ve karanlık enerjiye iştah. Birikimleri ve dramayı sever.",
+        "low_en": "Prefers consonance, resolution, and smooth musical surfaces.",
+        "low_tr": "Konsonans, çözünürlük ve pürüzsüz müzikal yüzeyleri tercih eder.",
     },
-    "resonance": {
-        "name_en": "Resonance",
-        "name_tr": "Rezonans",
-        "high_en": "Deep emotional and memory engagement. Music touches the soul.",
-        "high_tr": "Derin duygusal ve hafıza bağlanması. Müzik ruha dokunur.",
-        "low_en": "Listens more analytically, less emotional immersion.",
-        "low_tr": "Daha analitik dinler, daha az duygusal daldırma.",
+    "groove": {
+        "name_en": "Groove",
+        "name_tr": "Groove",
+        "high_en": "Strong rhythmic and motor engagement. Music moves the body. Dance-oriented.",
+        "high_tr": "Güçlü ritmik ve motor bağlanma. Müzik vücudu hareket ettirir. Dans odaklı.",
+        "low_en": "Cerebral listening style. Less physically responsive to rhythm.",
+        "low_tr": "Beynsel dinleme stili. Ritme daha az fiziksel tepki.",
     },
-    "plasticity": {
-        "name_en": "Plasticity",
-        "name_tr": "Plastisite",
-        "high_en": "Strong motor coupling and rhythmic flexibility. Music moves the body.",
-        "high_tr": "Güçlü motor bağlanma ve ritmik esneklik. Müzik vücudu hareket ettirir.",
-        "low_en": "Less physically responsive. Cerebral listening style.",
-        "low_tr": "Daha az fiziksel tepki. Beynsel dinleme stili.",
+    "density": {
+        "name_en": "Density",
+        "name_tr": "Yoğunluk",
+        "high_en": "Loves layered, intricate arrangements. Drawn to structural complexity.",
+        "high_tr": "Katmanlı, karmaşık düzenlemelere bayılır. Yapısal karmaşıklığa çekilir.",
+        "low_en": "Prefers minimal, simple textures. Clarity over complexity.",
+        "low_tr": "Minimal, basit dokuları tercih eder. Karmaşıklık yerine netlik.",
     },
 }
 
@@ -76,7 +85,7 @@ def interpret_genes(
     """Interpret track gene profile and match against user.
 
     Args:
-        track_genes: {entropy, resolution, tension, resonance, plasticity} → float
+        track_genes: {energy, valence, tempo, tension, groove, density} → float
         language: "tr" or "en"
         user_genes: Optional user's gene profile for matching.
         user_persona_family: Optional user's persona family.

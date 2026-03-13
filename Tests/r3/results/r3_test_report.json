@@ -2,7 +2,7 @@
   "total": 191,
   "passed": 191,
   "failed": 0,
-  "elapsed_s": 1.0453919999999925,
+  "elapsed_s": 0.5030059999553487,
   "tests": [
     {
       "name": "A_bounds_pure440_dim0",

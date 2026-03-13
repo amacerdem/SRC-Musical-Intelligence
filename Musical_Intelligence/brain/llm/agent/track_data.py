@@ -1,4 +1,4 @@
-"""Track Analysis Data Service — loads pre-computed MI analysis for 138 tracks.
+"""Track Analysis Data Service — loads pre-computed MI analysis from catalog.
 
 Provides lookup, search, and LLM-friendly formatting of track analysis data
 produced by the MI Pipeline v4.0 (R³→H³→C³, 88 mechanisms, 131 beliefs).
@@ -15,7 +15,7 @@ from Musical_Intelligence.brain.llm.config import KNOWLEDGE_DIR, PROJECT_ROOT
 
 DATASET_DIR = (
     PROJECT_ROOT
-    / "My Musical Mind (Monetizing)"
+    / "My Musical Mind (Test-01)"
     / "public"
     / "data"
     / "mi-dataset"
@@ -24,7 +24,7 @@ TRACKS_DIR = DATASET_DIR / "tracks"
 
 # ── Dimension Key Names ────────────────────────────────────────────
 
-DIM_6D = ["energy", "valence", "tempo", "tension", "groove", "complexity"]
+DIM_6D = ["energy", "valence", "tempo", "tension", "groove", "density"]
 
 DIM_12D = [
     "melodic_hook", "harmonic_depth", "rhythmic_drive", "timbral_color",
@@ -173,8 +173,8 @@ def get_listening_profile() -> dict[str, Any]:
 
     family_counts: dict[str, int] = {}
     gene_sums: dict[str, float] = {
-        "entropy": 0, "resolution": 0, "tension": 0,
-        "resonance": 0, "plasticity": 0,
+        "energy": 0, "valence": 0, "tempo": 0,
+        "tension": 0, "groove": 0, "density": 0,
     }
     n = 0
 

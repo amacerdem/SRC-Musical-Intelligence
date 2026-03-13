@@ -6,7 +6,7 @@ Layer 2: Vocabulary (M3-LOGOS term rules, tier-gated names)
 
 Usage:
     from Musical_Intelligence.brain.llm.processing.context_builder import build_context
-    ctx = build_context(user_profile=profile, language="tr")
+    ctx = build_context(user_profile=profile, language="en")
 """
 
 from __future__ import annotations
@@ -55,7 +55,7 @@ def _load_jsonl(name: str) -> list[dict]:
 # ── Layer 0: Persona ────────────────────────────────────────────────
 
 
-def build_layer0(language: str = "tr") -> str:
+def build_layer0(language: str = "en") -> str:
     """Assemble Layer 0: persona + guardrails.
 
     Args:
@@ -73,7 +73,7 @@ def build_layer0(language: str = "tr") -> str:
 # ── Layer 1: User Profile ──────────────────────────────────────────
 
 
-def build_layer1(user_profile: dict[str, Any], language: str = "tr") -> str:
+def build_layer1(user_profile: dict[str, Any], language: str = "en") -> str:
     """Assemble Layer 1: user-specific context injection.
 
     Args:
@@ -84,7 +84,7 @@ def build_layer1(user_profile: dict[str, Any], language: str = "tr") -> str:
             - family: str (Alchemists/Architects/Explorers/Anchors/Kineticists)
             - level: int (1-12)
             - tier: str (free/basic/premium/research)
-            - genes: dict[str, float] (entropy/resolution/tension/resonance/plasticity)
+            - genes: dict[str, float] (energy/valence/tempo/tension/groove/density)
             - dimensions_6d: dict[str, float] (current snapshot, optional)
             - listening_hours: float (optional)
         language: "tr" or "en"
@@ -257,7 +257,7 @@ def build_layer1(user_profile: dict[str, Any], language: str = "tr") -> str:
 # ── Layer 2: Vocabulary ─────────────────────────────────────────────
 
 
-def build_layer2(tier: str = "free", language: str = "tr") -> str:
+def build_layer2(tier: str = "free", language: str = "en") -> str:
     """Assemble Layer 2: tier-gated vocabulary and dimension names.
 
     Args:
@@ -321,7 +321,7 @@ def build_layer2(tier: str = "free", language: str = "tr") -> str:
 
 def build_context(
     user_profile: dict[str, Any],
-    language: str = "tr",
+    language: str = "en",
 ) -> str:
     """Build the complete Layer 0-2 system prompt.
 
@@ -348,7 +348,7 @@ def estimate_tokens(text: str) -> int:
 
 def build_context_with_budget(
     user_profile: dict[str, Any],
-    language: str = "tr",
+    language: str = "en",
 ) -> dict[str, Any]:
     """Build context and return with token estimates per layer.
 

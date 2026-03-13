@@ -17,11 +17,11 @@ TOOLS = [
     {
         "name": "get_listening_profile",
         "description": (
-            "Get the user's complete listening profile — recently played tracks, "
-            "saved/liked tracks, top tracks, persona family distribution across "
-            "their library, and average gene profile. Use this when the user asks "
-            "about their listening habits, favorite music, library summary, or "
-            "when you want to personalize a recommendation based on their taste."
+            "Get statistics about the MI music catalog — category distribution, "
+            "family breakdown, and average gene profile across available tracks. "
+            "NOTE: This is the MI reference catalog (not the user's personal library). "
+            "For the user's personal listening profile, use get_spotify_listening_profile instead. "
+            "Use this tool when you need catalog overview or want to find tracks by category."
         ),
         "input_schema": {
             "type": "object",
@@ -34,7 +34,7 @@ TOOLS = [
             "Search the user's music library for tracks by artist name, "
             "song title, or keywords. Returns matching tracks with IDs and "
             "gene/family info. For mood-based searches, include gene-related terms "
-            "(e.g., 'high tension' → intense tracks, 'groovy' → plasticity tracks). "
+            "(e.g., 'high tension' → intense tracks, 'groovy' → groove tracks). "
             "ALWAYS use this first to find a track before calling analyze_track."
         ),
         "input_schema": {
@@ -417,6 +417,27 @@ TOOLS = [
             },
         },
     },
+    {
+        "name": "fetch_spotify_link",
+        "description": (
+            "Fetch and analyze tracks from a Spotify URL (album, playlist, or single track). "
+            "When the user shares a Spotify link like 'https://open.spotify.com/album/...', "
+            "call this tool to fetch all tracks and compute MI gene profiles for each. "
+            "Returns track list with 6D genes, dominant family/gene, and aggregate averages. "
+            "Works without user Spotify login — uses app-level API access. "
+            "ALWAYS call this tool when you see a Spotify URL in the user's message."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "url": {
+                    "type": "string",
+                    "description": "Spotify URL (album, playlist, or track link)",
+                },
+            },
+            "required": ["url"],
+        },
+    },
 ]
 
 
@@ -435,7 +456,7 @@ def handle_tool_call(
         tool_name: Name of the tool being called.
         tool_input: Input parameters from the LLM.
         user_tier: User's subscription tier for access control.
-        user_genes: User's 5-gene profile for match scoring.
+        user_genes: User's 6-gene profile for match scoring.
 
     Returns:
         Tool result dict to feed back to the LLM.
@@ -443,6 +464,7 @@ def handle_tool_call(
     handlers = {
         "get_listening_profile": _handle_listening_profile,
         "get_spotify_listening_profile": _handle_spotify_listening_profile,
+        "fetch_spotify_link": _handle_fetch_spotify_link,
         "search_tracks": _handle_search_tracks,
         "analyze_track": _handle_analyze_track,
         "get_current_dimensions": _handle_get_dimensions,
@@ -502,7 +524,7 @@ def _handle_spotify_listening_profile(
     if not _spotify_profile_store:
         return {
             "error": "No Spotify profile available. The user has not connected their Spotify account.",
-            "suggestion": "Use get_listening_profile for the local music library instead.",
+            "suggestion": "Ask the user to connect their Spotify account or share a playlist link.",
         }
 
     sp = _spotify_profile_store
@@ -520,6 +542,42 @@ def _handle_spotify_listening_profile(
     }
 
     return result
+
+
+# ── Spotify Link Fetch Handler ───────────────────────────────────────
+
+# Per-request store for Spotify link fetch results (set by router)
+_spotify_fetch_store: dict[str, Any] = {}
+
+
+def set_spotify_fetch_result(result: dict[str, Any] | None) -> None:
+    """Inject Spotify link fetch result for the current request (called by router)."""
+    _spotify_fetch_store.clear()
+    if result:
+        _spotify_fetch_store.update(result)
+
+
+def _handle_fetch_spotify_link(
+    inputs: dict[str, Any], tier: str
+) -> dict[str, Any]:
+    """Fetch and analyze tracks from a Spotify URL."""
+    url = inputs.get("url", "")
+    if not url:
+        return {"error": "A Spotify URL is required."}
+
+    # If the router already fetched this URL, return cached result
+    if _spotify_fetch_store and _spotify_fetch_store.get("_url") == url:
+        result = dict(_spotify_fetch_store)
+        result.pop("_url", None)
+        return result
+
+    # Otherwise, tell the router to fetch it (deferred execution)
+    return {
+        "_action": "fetch_spotify_link",
+        "_url": url,
+        "status": "pending",
+        "message": "Spotify link fetch will be handled by the backend router.",
+    }
 
 
 # ── Track Data Handlers ────────────────────────────────────────────
@@ -929,7 +987,7 @@ def _gene_match_score(
     """Cosine similarity between user and track gene profiles (0-1)."""
     if not user_genes or not track_genes:
         return None
-    keys = ["entropy", "resolution", "tension", "resonance", "plasticity"]
+    keys = ["energy", "valence", "tempo", "tension", "groove", "density"]
     u = [user_genes.get(k, 0.5) for k in keys]
     t = [track_genes.get(k, 0.5) for k in keys]
     dot = sum(a * b for a, b in zip(u, t))
@@ -1153,14 +1211,14 @@ def _handle_get_now_playing(
 # Mood → gene affinity (which genes should be high/low for this mood)
 # Genes have wide variance (0.09-0.95) so thresholds work well here.
 _MOOD_GENE_FILTERS: dict[str, dict[str, tuple[float, float]]] = {
-    "energetic": {"plasticity": (0.55, 1.0), "tension": (0.5, 1.0)},
-    "calm": {"tension": (0.0, 0.35), "entropy": (0.0, 0.4)},
-    "emotional": {"resonance": (0.55, 1.0)},
-    "groovy": {"plasticity": (0.6, 1.0)},
-    "complex": {"entropy": (0.55, 1.0)},
-    "intense": {"tension": (0.6, 1.0)},
-    "surprising": {"entropy": (0.6, 1.0)},
-    "nostalgic": {"resonance": (0.5, 1.0), "resolution": (0.4, 1.0)},
+    "energetic": {"energy": (0.6, 1.0), "groove": (0.55, 1.0)},
+    "calm": {"energy": (0.0, 0.35), "tension": (0.0, 0.35)},
+    "emotional": {"valence": (0.0, 0.4), "tension": (0.4, 1.0)},
+    "groovy": {"groove": (0.6, 1.0)},
+    "complex": {"density": (0.55, 1.0)},
+    "intense": {"energy": (0.6, 1.0), "tension": (0.6, 1.0)},
+    "surprising": {"density": (0.55, 1.0), "tension": (0.5, 1.0)},
+    "nostalgic": {"valence": (0.3, 0.6), "energy": (0.2, 0.5)},
 }
 
 

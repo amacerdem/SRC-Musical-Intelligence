@@ -44,3 +44,20 @@ node_modules/
 
 # Repetuare
 Repetuare/
+
+# Large files / datasets
+Validation/datasets/
+References/
+MI-Results/
+Musical_Intelligence.zip
+enriched_catalog.json
+enriched_catalog.json.gz
+test-classics/
+test-results/
+*.zip
+
+# LaTeX artifacts
+*.aux
+*.bbl
+*.blg
+*.out
