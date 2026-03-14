@@ -58,8 +58,23 @@ if str(PROJECT_ROOT) not in sys.path:
 # PART 1: Data Generation
 # ======================================================================
 
+_DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+_MEL_TRANSFORM = None
+
+
+def _get_mel_transform():
+    global _MEL_TRANSFORM
+    if _MEL_TRANSFORM is None:
+        import torchaudio
+        _MEL_TRANSFORM = torchaudio.transforms.MelSpectrogram(
+            sample_rate=SAMPLE_RATE, n_fft=N_FFT,
+            hop_length=HOP_LENGTH, n_mels=N_MELS, power=2.0,
+        ).to(_DEVICE)
+    return _MEL_TRANSFORM
+
+
 def load_audio(filepath: Path) -> Tuple[Tensor, Tensor, float]:
-    """Load audio → (waveform, mel, duration_s) via ffmpeg."""
+    """Load audio → (waveform, mel, duration_s) via ffmpeg. Mel on GPU if available."""
     cmd = [
         "ffmpeg", "-i", str(filepath),
         "-f", "f32le", "-acodec", "pcm_f32le",
@@ -78,20 +93,17 @@ def load_audio(filepath: Path) -> Tuple[Tensor, Tensor, float]:
     pad_len = N_FFT // 2
     edge_l = waveform[:, :1].expand(-1, pad_len)
     edge_r = waveform[:, -1:].expand(-1, pad_len)
-    waveform_padded = torch.cat([edge_l, waveform, edge_r], dim=-1)
+    waveform_padded = torch.cat([edge_l, waveform, edge_r], dim=-1).to(_DEVICE)
 
-    import torchaudio
-    mel_transform = torchaudio.transforms.MelSpectrogram(
-        sample_rate=SAMPLE_RATE, n_fft=N_FFT,
-        hop_length=HOP_LENGTH, n_mels=N_MELS, power=2.0,
-    )
+    mel_transform = _get_mel_transform()
     mel = mel_transform(waveform_padded)
     pad_frames = pad_len // HOP_LENGTH
     mel = mel[:, :, pad_frames: mel.shape[-1] - pad_frames]
     mel = torch.log1p(mel)
     mel_max = mel.amax(dim=(-2, -1), keepdim=True).clamp(min=1e-8)
     mel = mel / mel_max
-    return waveform, mel, duration_s
+    # waveform stays on CPU (only needed for sr), mel on GPU
+    return waveform.to(_DEVICE), mel, duration_s
 
 
 _FUNCTION_IDS = ("f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "f9")
