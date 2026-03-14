@@ -20,6 +20,7 @@ from __future__ import annotations
 import argparse
 import importlib
 import json
+import multiprocessing as mp
 import subprocess
 import sys
 import time
@@ -153,7 +154,84 @@ def fix_depths(nuclei):
             n.PROCESSING_DEPTH = min_depth
 
 
-def generate_training_data():
+def _init_worker(data_dir_str, h3_tuple_order_list):
+    """Initialize MI pipeline in each worker process."""
+    global _W_NUCLEI, _W_H3_DEMAND, _W_H3_ORDER, _W_N_H3
+    global _W_R3, _W_H3, _W_EXEC, _W_BELIEFS, _W_DIM
+    global _W_DATA_DIR
+
+    _W_DATA_DIR = Path(data_dir_str)
+    _W_H3_ORDER = [tuple(t) for t in h3_tuple_order_list]
+    _W_N_H3 = len(_W_H3_ORDER)
+
+    _W_NUCLEI = collect_mechanisms()
+    fix_depths(_W_NUCLEI)
+
+    _W_H3_DEMAND = set()
+    for m in _W_NUCLEI:
+        for spec in m.h3_demand:
+            _W_H3_DEMAND.add(spec.as_tuple())
+
+    from Musical_Intelligence.ear.r3 import R3Extractor
+    from Musical_Intelligence.ear.h3 import H3Extractor
+    from Musical_Intelligence.brain.executor import execute
+    from Musical_Intelligence.brain.beliefs import compute_beliefs
+    from Musical_Intelligence.brain.dimensions import DimensionInterpreter
+
+    _W_R3 = R3Extractor()
+    _W_H3 = H3Extractor()
+    _W_EXEC = execute
+    _W_BELIEFS = compute_beliefs
+    _W_DIM = DimensionInterpreter()
+
+
+def _process_segment(seg_path_str):
+    """Process a single segment in a worker process. Returns (stem, ok)."""
+    seg_path = Path(seg_path_str)
+    out_file = _W_DATA_DIR / f"{seg_path.stem}.npz"
+    if out_file.exists():
+        return (seg_path.stem, True)
+
+    try:
+        waveform, mel, dur = load_audio(seg_path)
+        with torch.no_grad():
+            r3_out = _W_R3.extract(mel, audio=waveform, sr=SAMPLE_RATE)
+            h3_out = _W_H3.extract(r3_out.features, _W_H3_DEMAND)
+            outputs, _, _ = _W_EXEC(_W_NUCLEI, h3_out.features, r3_out.features)
+
+        T = r3_out.features.shape[1]
+        r3_np = r3_out.features[0].cpu().numpy()
+        mel_np = mel[0].cpu().numpy()
+
+        h3_np = np.zeros((T, _W_N_H3), dtype=np.float32)
+        for j, tup in enumerate(_W_H3_ORDER):
+            if tup in h3_out.features:
+                h3_np[:, j] = h3_out.features[tup][0].cpu().numpy()
+
+        relays = {n.NAME: outputs[n.NAME][0].cpu().numpy()
+                  for n in _W_NUCLEI if n.NAME in outputs}
+        beliefs = _W_BELIEFS(relays, _W_NUCLEI, normalize=True)
+
+        dim_result = _W_DIM.interpret_numpy(beliefs)
+        dims_10 = np.concatenate(
+            [dim_result["musical_5d"], dim_result["emotional_5d"]], axis=-1,
+        ).astype(np.float32)
+
+        np.savez_compressed(
+            out_file,
+            mel=mel_np.astype(np.float32),
+            r3=r3_np.astype(np.float32),
+            h3=h3_np,
+            beliefs=beliefs.astype(np.float32),
+            dims=dims_10,
+        )
+        return (seg_path.stem, True)
+
+    except Exception as e:
+        return (seg_path.stem, False, str(e))
+
+
+def generate_training_data(num_workers=1):
     """Run MI pipeline on all segments, save (mel, r3, h3, beliefs, dims) per segment."""
     DATA_DIR.mkdir(exist_ok=True)
 
@@ -164,7 +242,7 @@ def generate_training_data():
     )
     print(f"Found {len(segments)} segments", flush=True)
 
-    # Initialize pipeline
+    # Initialize pipeline (main process, for h3 tuple order)
     print("Initializing MI pipeline...", flush=True)
     nuclei = collect_mechanisms()
     fix_depths(nuclei)
@@ -174,94 +252,130 @@ def generate_training_data():
         for spec in m.h3_demand:
             h3_demand.add(spec.as_tuple())
 
-    # Canonical H³ tuple ordering (frozen across all segments)
     h3_tuple_order = sorted(h3_demand)
     n_h3 = len(h3_tuple_order)
-
-    from Musical_Intelligence.ear.r3 import R3Extractor
-    from Musical_Intelligence.ear.h3 import H3Extractor
-    from Musical_Intelligence.brain.executor import execute
-    from Musical_Intelligence.brain.beliefs import compute_beliefs
-    from Musical_Intelligence.brain.dimensions import DimensionInterpreter
-
-    r3_extractor = R3Extractor()
-    h3_extractor = H3Extractor()
-    dim_interp = DimensionInterpreter()
-
     print(f"Ready: {len(nuclei)} mechanisms, {n_h3} H³ demands\n", flush=True)
 
-    # Save H³ tuple ordering for reproducibility
     with open(DATA_DIR / "h3_tuple_order.json", "w") as f:
         json.dump([list(t) for t in h3_tuple_order], f)
+
+    # Filter out already-completed segments
+    todo = []
+    manifest = []
+    for seg_path in segments:
+        out_file = DATA_DIR / f"{seg_path.stem}.npz"
+        if out_file.exists():
+            manifest.append(seg_path.stem)
+        else:
+            todo.append(seg_path)
+
+    cached = len(manifest)
+    print(f"  {cached} cached, {len(todo)} to process (workers={num_workers})\n", flush=True)
+
+    if not todo:
+        print("All segments already cached!", flush=True)
+        with open(DATA_DIR / "manifest.json", "w") as f:
+            json.dump(manifest, f)
+        return manifest
 
     t0 = time.perf_counter()
     completed = 0
     failed = 0
-    manifest = []
 
-    for i, seg_path in enumerate(segments):
-        out_file = DATA_DIR / f"{seg_path.stem}.npz"
-        if out_file.exists():
-            manifest.append(seg_path.stem)
-            completed += 1
-            if (i + 1) % 200 == 0:
-                print(f"  [{i+1:4d}/{len(segments)}] skipped (cached)", flush=True)
-            continue
+    if num_workers > 1:
+        # Multiprocessing mode
+        h3_order_list = [list(t) for t in h3_tuple_order]
+        with mp.Pool(
+            processes=num_workers,
+            initializer=_init_worker,
+            initargs=(str(DATA_DIR), h3_order_list),
+        ) as pool:
+            for i, result in enumerate(pool.imap_unordered(
+                _process_segment,
+                [str(p) for p in todo],
+                chunksize=4,
+            )):
+                if len(result) == 2:
+                    manifest.append(result[0])
+                    completed += 1
+                else:
+                    failed += 1
+                    if failed <= 10:
+                        print(f"  FAILED: {result[0][:40]} — {result[2]}", flush=True)
 
-        try:
-            waveform, mel, dur = load_audio(seg_path)
-            with torch.no_grad():
-                r3_out = r3_extractor.extract(mel, audio=waveform, sr=SAMPLE_RATE)
-                h3_out = h3_extractor.extract(r3_out.features, h3_demand)
-                outputs, _, _ = execute(nuclei, h3_out.features, r3_out.features)
+                done = i + 1
+                if done % 50 == 0 or done == 1:
+                    elapsed = time.perf_counter() - t0
+                    rate = done / elapsed if elapsed > 0 else 0
+                    eta = (len(todo) - done) / rate if rate > 0 else 0
+                    print(f"  [{cached+done:4d}/{len(segments)}]  {rate:.1f} seg/s  "
+                          f"ETA {eta:.0f}s  OK={cached+completed} FAIL={failed}", flush=True)
+    else:
+        # Single-process mode (original)
+        from Musical_Intelligence.ear.r3 import R3Extractor
+        from Musical_Intelligence.ear.h3 import H3Extractor
+        from Musical_Intelligence.brain.executor import execute
+        from Musical_Intelligence.brain.beliefs import compute_beliefs
+        from Musical_Intelligence.brain.dimensions import DimensionInterpreter
 
-            T = r3_out.features.shape[1]
-            r3_np = r3_out.features[0].cpu().numpy()  # (T, 97)
-            mel_np = mel[0].cpu().numpy()               # (128, T)
+        r3_extractor = R3Extractor()
+        h3_extractor = H3Extractor()
+        dim_interp = DimensionInterpreter()
 
-            # H³ → dense (T, N_h3) in canonical order
-            h3_np = np.zeros((T, n_h3), dtype=np.float32)
-            for j, tup in enumerate(h3_tuple_order):
-                if tup in h3_out.features:
-                    h3_np[:, j] = h3_out.features[tup][0].cpu().numpy()
+        for i, seg_path in enumerate(todo):
+            try:
+                waveform, mel, dur = load_audio(seg_path)
+                with torch.no_grad():
+                    r3_out = r3_extractor.extract(mel, audio=waveform, sr=SAMPLE_RATE)
+                    h3_out = h3_extractor.extract(r3_out.features, h3_demand)
+                    outputs, _, _ = execute(nuclei, h3_out.features, r3_out.features)
 
-            # Beliefs with mech-norm
-            relays = {n.NAME: outputs[n.NAME][0].cpu().numpy()
-                      for n in nuclei if n.NAME in outputs}
-            beliefs = compute_beliefs(relays, nuclei, normalize=True)  # (T, 131)
+                T = r3_out.features.shape[1]
+                r3_np = r3_out.features[0].cpu().numpy()
+                mel_np = mel[0].cpu().numpy()
 
-            # 5+5 dimensions (ground truth from original formulas)
-            dim_result = dim_interp.interpret_numpy(beliefs)
-            dims_10 = np.concatenate(
-                [dim_result["musical_5d"], dim_result["emotional_5d"]], axis=-1,
-            ).astype(np.float32)  # (T, 10)
+                h3_np = np.zeros((T, n_h3), dtype=np.float32)
+                for j, tup in enumerate(h3_tuple_order):
+                    if tup in h3_out.features:
+                        h3_np[:, j] = h3_out.features[tup][0].cpu().numpy()
 
-            np.savez_compressed(
-                out_file,
-                mel=mel_np.astype(np.float32),      # (128, T)
-                r3=r3_np.astype(np.float32),         # (T, 97)
-                h3=h3_np,                             # (T, N_h3)
-                beliefs=beliefs.astype(np.float32),   # (T, 131)
-                dims=dims_10,                          # (T, 10)
-            )
-            manifest.append(seg_path.stem)
-            completed += 1
+                relays = {n.NAME: outputs[n.NAME][0].cpu().numpy()
+                          for n in nuclei if n.NAME in outputs}
+                beliefs = compute_beliefs(relays, nuclei, normalize=True)
 
-        except Exception as e:
-            failed += 1
-            if failed <= 5:
-                print(f"  [{i+1:4d}] FAILED: {seg_path.name[:50]} — {e}", flush=True)
+                dim_result = dim_interp.interpret_numpy(beliefs)
+                dims_10 = np.concatenate(
+                    [dim_result["musical_5d"], dim_result["emotional_5d"]], axis=-1,
+                ).astype(np.float32)
 
-        if (i + 1) % 50 == 0 or i == 0:
-            elapsed = time.perf_counter() - t0
-            rate = (i + 1) / elapsed if elapsed > 0 else 0
-            eta = (len(segments) - i - 1) / rate if rate > 0 else 0
-            print(f"  [{i+1:4d}/{len(segments)}]  {rate:.1f} seg/s  "
-                  f"ETA {eta:.0f}s  OK={completed} FAIL={failed}", flush=True)
+                out_file = DATA_DIR / f"{seg_path.stem}.npz"
+                np.savez_compressed(
+                    out_file,
+                    mel=mel_np.astype(np.float32),
+                    r3=r3_np.astype(np.float32),
+                    h3=h3_np,
+                    beliefs=beliefs.astype(np.float32),
+                    dims=dims_10,
+                )
+                manifest.append(seg_path.stem)
+                completed += 1
+
+            except Exception as e:
+                failed += 1
+                if failed <= 5:
+                    print(f"  [{cached+i+1:4d}] FAILED: {seg_path.name[:50]} — {e}", flush=True)
+
+            done = i + 1
+            if done % 50 == 0 or done == 1:
+                elapsed = time.perf_counter() - t0
+                rate = done / elapsed if elapsed > 0 else 0
+                eta = (len(todo) - done) / rate if rate > 0 else 0
+                print(f"  [{cached+done:4d}/{len(segments)}]  {rate:.1f} seg/s  "
+                      f"ETA {eta:.0f}s  OK={cached+completed} FAIL={failed}", flush=True)
 
     elapsed = time.perf_counter() - t0
-    print(f"\nData generation done: {completed}/{len(segments)} in {elapsed:.0f}s "
-          f"({elapsed/60:.1f}min)", flush=True)
+    print(f"\nData generation done: {cached+completed}/{len(segments)} in {elapsed:.0f}s "
+          f"({elapsed/60:.1f}min), {failed} failed", flush=True)
 
     with open(DATA_DIR / "manifest.json", "w") as f:
         json.dump(manifest, f)
@@ -813,6 +927,8 @@ def main():
                         help="Directory for training data (npz files)")
     parser.add_argument("--model-dir", type=str, default=None,
                         help="Directory to save trained models")
+    parser.add_argument("--workers", type=int, default=1,
+                        help="Number of parallel workers for data generation")
     parser.add_argument("--epochs", type=int, default=50)
     parser.add_argument("--batch-size", type=int, default=16)
     parser.add_argument("--lr", type=float, default=1e-3)
@@ -833,7 +949,7 @@ def main():
             manifest = json.load(f)
         print(f"Loaded manifest: {len(manifest)} segments", flush=True)
     else:
-        manifest = generate_training_data()
+        manifest = generate_training_data(num_workers=args.workers)
 
     model = train(manifest, epochs=args.epochs, batch_size=args.batch_size,
                   lr=args.lr, chunk_size=args.chunk_size)
