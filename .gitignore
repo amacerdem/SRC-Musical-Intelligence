@@ -29,6 +29,12 @@ run_5d_analysis.py
 test-classics/
 test-results/
 
+# Training artifacts (generated, not tracked)
+training_data/
+trained_models/
+corpus_mech_stats.npz
+*.npz
+
 # Python
 __pycache__/
 *.py[cod]
