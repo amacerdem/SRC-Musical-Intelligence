@@ -1,7 +1,7 @@
 """Brain Orchestrator — top-level entry point for C³ processing.
 
 Transforms R³ spectral features and H³ temporal demands into a complete
-``BrainOutput`` with four channels: tensor, RAM, neuro, and Ψ³.
+``BrainOutput`` with three channels: tensor, RAM, and neuro.
 
 Usage:
     orchestrator = BrainOrchestrator(nuclei=[bch, ...])
@@ -17,7 +17,6 @@ import torch
 FUNCTION_ORDER = ("F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9")
 
 from Musical_Intelligence.brain.executor import execute
-from Musical_Intelligence.brain.psi_interpreter import PsiInterpreter
 from Musical_Intelligence.contracts.bases.nucleus import Nucleus
 from Musical_Intelligence.contracts.dataclasses.brain_output import BrainOutput
 
@@ -35,10 +34,8 @@ class BrainOrchestrator:
     def __init__(
         self,
         nuclei: List[Nucleus],
-        psi_interpreter: PsiInterpreter | None = None,
     ) -> None:
         self.nuclei = nuclei
-        self.psi = psi_interpreter or PsiInterpreter()
 
         # Validate nuclei
         for n in nuclei:
@@ -62,7 +59,7 @@ class BrainOrchestrator:
             cross_unit_inputs: Optional cross-unit pathway tensors.
 
         Returns:
-            ``BrainOutput`` with tensor, ram, neuro, psi.
+            ``BrainOutput`` with tensor, ram, neuro.
         """
         # Execute all nuclei in depth order
         outputs, ram, neuro = execute(
@@ -72,14 +69,10 @@ class BrainOrchestrator:
         # Assemble scope-filtered tensor (external + hybrid dims)
         tensor = self._assemble_tensor(outputs)
 
-        # Ψ³ cognitive interpretation
-        psi = self.psi.interpret(tensor, ram, neuro)
-
         return BrainOutput(
             tensor=tensor,
             ram=ram,
             neuro=neuro,
-            psi=psi,
         )
 
     def _assemble_tensor(self, outputs: Dict[str, Tensor]) -> Tensor:

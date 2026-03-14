@@ -45,6 +45,9 @@ node_modules/
 # Repetuare
 Repetuare/
 
+# Legacy
+Legacy/
+
 # Large files / datasets
 Validation/datasets/
 References/

@@ -1,52 +1,30 @@
-"""3-Tier Falsifiability Dimension System — independent 6D + 12D + 24D.
+"""Dual-Radar Dimension System — 5+5 intuitive bipolar axes.
 
-Three independent tiers (NOT hierarchically derived):
+Two independent radars, each with 5 bipolar dimensions:
 
-    Psychology   (6D)  — gut-level, zero training  (free tier)
-    Cognition    (12D) — informed listener          (basic tier)
-    Neuroscience (24D) — expert, neuroscience       (premium tier)
+Radar 1: "What You Hear" (Musical Character)
+    Slow↔Fast, Quiet↔Loud, Light↔Heavy, Smooth↔Rough, Thin↔Deep
 
-Each tier is independently computed from beliefs only.
+Radar 2: "How It Feels" (Emotional Feel)
+    Sad↔Happy, Chill↔Hyped, Soft↔Hard, Surprising↔Predictable, Dreamy↔Focused
+
+Each dimension is independently computed from beliefs only.
 
 Usage::
 
     from Musical_Intelligence.brain.dimensions import DimensionInterpreter
     interpreter = DimensionInterpreter()
-    state = interpreter.interpret(beliefs)  # → DimensionState
+    result = interpreter.interpret_numpy(beliefs)  # → dict of numpy arrays
 """
 
-from ._dimension import Dimension
 from .interpreter import DimensionInterpreter
-from .registry import (
-    ALL_COGNITION,
-    ALL_NEUROSCIENCE,
-    ALL_PSYCHOLOGY,
-    COGNITION_NAMES,
-    COGNITION_NAMES_TR,
-    DIM_BY_KEY,
-    NEUROSCIENCE_NAMES,
-    NEUROSCIENCE_NAMES_TR,
-    NUM_COGNITION,
-    NUM_NEUROSCIENCE,
-    NUM_PSYCHOLOGY,
-    PSYCHOLOGY_NAMES,
-    PSYCHOLOGY_NAMES_TR,
-)
+from .models.musical import MUSICAL_NAMES, MUSICAL_LABELS
+from .models.emotional import EMOTIONAL_NAMES, EMOTIONAL_LABELS
 
 __all__ = [
-    "Dimension",
     "DimensionInterpreter",
-    "ALL_PSYCHOLOGY",
-    "ALL_COGNITION",
-    "ALL_NEUROSCIENCE",
-    "DIM_BY_KEY",
-    "NUM_PSYCHOLOGY",
-    "NUM_COGNITION",
-    "NUM_NEUROSCIENCE",
-    "PSYCHOLOGY_NAMES",
-    "PSYCHOLOGY_NAMES_TR",
-    "COGNITION_NAMES",
-    "COGNITION_NAMES_TR",
-    "NEUROSCIENCE_NAMES",
-    "NEUROSCIENCE_NAMES_TR",
+    "MUSICAL_NAMES",
+    "MUSICAL_LABELS",
+    "EMOTIONAL_NAMES",
+    "EMOTIONAL_LABELS",
 ]

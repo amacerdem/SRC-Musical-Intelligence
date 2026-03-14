@@ -1,19 +1,15 @@
-"""Dimension computation models — 42 independent functions across 3 tiers.
+"""Dimension computation models — 10 independent functions across 2 radars.
 
-Each tier's models compute independently from (beliefs, ram, neuro).
-No tier derives from another tier's output.
+Radar 1: "What You Hear" (Musical Character, 5D)
+    speed, volume, weight, texture, depth
 
-Tiers:
-    Psychology   (6D)  — gut-level, zero training needed to validate.
-    Cognition    (12D) — informed listener, some music knowledge.
-    Neuroscience (24D) — expert, requires music cognition / neuroscience.
+Radar 2: "How It Feels" (Emotional Feel, 5D)
+    mood, energy, hardness, predictability, focus
 """
-from .cognition import COGNITION_MODELS
-from .neuroscience import NEUROSCIENCE_MODELS
-from .psychology import PSYCHOLOGY_MODELS
+from .emotional import EMOTIONAL_MODELS
+from .musical import MUSICAL_MODELS
 
 __all__ = [
-    "PSYCHOLOGY_MODELS",
-    "COGNITION_MODELS",
-    "NEUROSCIENCE_MODELS",
+    "MUSICAL_MODELS",
+    "EMOTIONAL_MODELS",
 ]

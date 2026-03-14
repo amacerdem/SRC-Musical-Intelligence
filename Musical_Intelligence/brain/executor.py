@@ -1,12 +1,14 @@
 """Depth-ordered execution engine for C³ nuclei.
 
-Executes nuclei in depth order (0→5), applying RegionLinks (→ RAM) and
-NeuroLinks (→ neuro) after each nucleus's compute().
+Executes nuclei in depth order (0→5).
 
 Scope-aware routing: downstream nuclei see only routable dims
 (internal + hybrid) from upstream nuclei.
 
 See TERMINOLOGY.md Sections 6 and 13 for the full execution specification.
+
+Note: Region activation (RAM) and neurochemical accumulation are disabled.
+    RAM and neuro tensors are returned as zeros for backward compatibility.
 """
 from __future__ import annotations
 
@@ -15,8 +17,6 @@ from typing import TYPE_CHECKING, Dict, List, Tuple
 
 import torch
 
-from Musical_Intelligence.brain.neurochemicals import accumulate_neuro, init_neuro
-from Musical_Intelligence.brain.regions import NUM_REGIONS, region_index
 from Musical_Intelligence.contracts.bases.nucleus import (
     Associator,
     Encoder,
@@ -29,6 +29,10 @@ from Musical_Intelligence.contracts.bases.nucleus import (
 if TYPE_CHECKING:
     from torch import Tensor
 
+# RAM and neuro dimensions (kept for backward compatibility)
+_NUM_REGIONS = 26
+_NUM_NEURO = 4
+
 
 def execute(
     nuclei: List[Nucleus],
@@ -36,7 +40,7 @@ def execute(
     r3_features: Tensor,
     cross_unit_inputs: Dict[str, Tensor] | None = None,
 ) -> Tuple[Dict[str, Tensor], Tensor, Tensor]:
-    """Execute nuclei in depth order, building RAM and neuro tensors.
+    """Execute nuclei in depth order.
 
     Args:
         nuclei: All nuclei to execute (will be sorted by PROCESSING_DEPTH).
@@ -47,15 +51,15 @@ def execute(
     Returns:
         Tuple of:
             outputs: Dict mapping nucleus NAME → full ``(B, T, OUTPUT_DIM)``
-            ram: ``(B, T, 26)`` Region Activation Map
-            neuro: ``(B, T, 4)`` neurochemical state
+            ram: ``(B, T, 26)`` zeros (region activation disabled)
+            neuro: ``(B, T, 4)`` zeros (neurochemical accumulation disabled)
     """
     B, T = r3_features.shape[0], r3_features.shape[1]
     device = r3_features.device
 
-    # Initialize RAM and neuro
-    ram = torch.zeros(B, T, NUM_REGIONS, device=device)
-    neuro = init_neuro(B, T, device)
+    # RAM and neuro disabled — return zeros for backward compatibility
+    ram = torch.zeros(B, T, _NUM_REGIONS, device=device)
+    neuro = torch.zeros(B, T, _NUM_NEURO, device=device)
 
     # Sort by depth
     sorted_nuclei = sorted(nuclei, key=lambda n: n.PROCESSING_DEPTH)
@@ -76,12 +80,6 @@ def execute(
                 nucleus, h3_features, r3_features, outputs, cross,
             )
             outputs[nucleus.NAME] = output
-
-            # Apply RegionLinks → RAM
-            _apply_region_links(ram, nucleus, output)
-
-            # Apply NeuroLinks → neuro
-            accumulate_neuro(neuro, nucleus, output)
 
     return outputs, ram, neuro
 
@@ -150,27 +148,3 @@ def _scope_filter_upstream(
     return filtered
 
 
-def _apply_region_links(
-    ram: Tensor,
-    nucleus: Nucleus,
-    output: Tensor,
-) -> None:
-    """Apply RegionLinks: accumulate nucleus output dims into RAM.
-
-    For each RegionLink, the corresponding output dimension's value
-    (weighted) is added to the appropriate RAM channel.
-    """
-    dim_names = nucleus.dimension_names
-    name_to_idx = {name: i for i, name in enumerate(dim_names)}
-
-    for rl in nucleus.region_links:
-        dim_idx = name_to_idx.get(rl.dim_name)
-        if dim_idx is None:
-            continue
-        try:
-            reg_idx = region_index(rl.region)
-        except KeyError:
-            continue
-
-        # Accumulate: RAM[region] += output[dim] * weight
-        ram[:, :, reg_idx] = ram[:, :, reg_idx] + output[:, :, dim_idx] * rl.weight
