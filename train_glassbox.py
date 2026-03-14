@@ -155,10 +155,20 @@ def fix_depths(nuclei):
 
 
 def _init_worker(data_dir_str, h3_tuple_order_list):
-    """Initialize MI pipeline in each worker process."""
+    """Initialize MI pipeline in each worker process (CPU-only to avoid CUDA fork issues)."""
     global _W_NUCLEI, _W_H3_DEMAND, _W_H3_ORDER, _W_N_H3
     global _W_R3, _W_H3, _W_EXEC, _W_BELIEFS, _W_DIM
-    global _W_DATA_DIR
+    global _W_DATA_DIR, _W_DEVICE, _W_MEL_TRANSFORM
+
+    import os
+    os.environ["CUDA_VISIBLE_DEVICES"] = ""  # Force CPU in workers
+
+    import torchaudio
+    _W_DEVICE = torch.device("cpu")
+    _W_MEL_TRANSFORM = torchaudio.transforms.MelSpectrogram(
+        sample_rate=SAMPLE_RATE, n_fft=N_FFT,
+        hop_length=HOP_LENGTH, n_mels=N_MELS, power=2.0,
+    )
 
     _W_DATA_DIR = Path(data_dir_str)
     _W_H3_ORDER = [tuple(t) for t in h3_tuple_order_list]
@@ -185,6 +195,37 @@ def _init_worker(data_dir_str, h3_tuple_order_list):
     _W_DIM = DimensionInterpreter()
 
 
+def _load_audio_cpu(filepath):
+    """Load audio on CPU for worker processes."""
+    cmd = [
+        "ffmpeg", "-i", str(filepath),
+        "-f", "f32le", "-acodec", "pcm_f32le",
+        "-ar", str(SAMPLE_RATE), "-ac", "1",
+        "-v", "quiet", "-",
+    ]
+    result = subprocess.run(cmd, capture_output=True, timeout=60)
+    if result.returncode != 0:
+        raise RuntimeError(f"ffmpeg failed on {filepath.name}")
+    samples = np.frombuffer(result.stdout, dtype=np.float32)
+    if len(samples) == 0:
+        raise RuntimeError(f"Empty audio: {filepath.name}")
+    waveform = torch.from_numpy(samples.copy()).unsqueeze(0)
+    duration_s = waveform.shape[-1] / SAMPLE_RATE
+
+    pad_len = N_FFT // 2
+    edge_l = waveform[:, :1].expand(-1, pad_len)
+    edge_r = waveform[:, -1:].expand(-1, pad_len)
+    waveform_padded = torch.cat([edge_l, waveform, edge_r], dim=-1)
+
+    mel = _W_MEL_TRANSFORM(waveform_padded)
+    pad_frames = pad_len // HOP_LENGTH
+    mel = mel[:, :, pad_frames: mel.shape[-1] - pad_frames]
+    mel = torch.log1p(mel)
+    mel_max = mel.amax(dim=(-2, -1), keepdim=True).clamp(min=1e-8)
+    mel = mel / mel_max
+    return waveform, mel, duration_s
+
+
 def _process_segment(seg_path_str):
     """Process a single segment in a worker process. Returns (stem, ok)."""
     seg_path = Path(seg_path_str)
@@ -193,7 +234,7 @@ def _process_segment(seg_path_str):
         return (seg_path.stem, True)
 
     try:
-        waveform, mel, dur = load_audio(seg_path)
+        waveform, mel, dur = _load_audio_cpu(seg_path)
         with torch.no_grad():
             r3_out = _W_R3.extract(mel, audio=waveform, sr=SAMPLE_RATE)
             h3_out = _W_H3.extract(r3_out.features, _W_H3_DEMAND)
