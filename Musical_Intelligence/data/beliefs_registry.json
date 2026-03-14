@@ -1,0 +1,1572 @@
+[
+  {
+    "index": 0,
+    "mechanism": "CSG",
+    "sourceDims": [
+      {
+        "name": "P0:salience_network",
+        "weight": 0.4
+      },
+      {
+        "name": "E0:salience_activation",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 1,
+    "mechanism": "MPG",
+    "sourceDims": [
+      {
+        "name": "F0:phrase_boundary_pred",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 2,
+    "mechanism": "MPG",
+    "sourceDims": [
+      {
+        "name": "P1:contour_state",
+        "weight": 0.45
+      },
+      {
+        "name": "E2:contour_complexity",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 3,
+    "mechanism": "BCH",
+    "sourceDims": [
+      {
+        "name": "F0:consonance_forecast",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 4,
+    "mechanism": "BCH",
+    "sourceDims": [
+      {
+        "name": "P0:consonance_signal",
+        "weight": 0.5
+      },
+      {
+        "name": "P1:template_match",
+        "weight": 0.3
+      },
+      {
+        "name": "E2:hierarchy",
+        "weight": 0.2
+      }
+    ]
+  },
+  {
+    "index": 5,
+    "mechanism": "BCH",
+    "sourceDims": [
+      {
+        "name": "P1:template_match",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 6,
+    "mechanism": "BCH",
+    "sourceDims": [
+      {
+        "name": "E2:hierarchy",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 7,
+    "mechanism": "PSCL",
+    "sourceDims": [
+      {
+        "name": "F0:pitch_continuation",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 8,
+    "mechanism": "PSCL",
+    "sourceDims": [
+      {
+        "name": "P0:pitch_prominence_sig",
+        "weight": 0.6
+      },
+      {
+        "name": "P1:hg_cortical_response",
+        "weight": 0.25
+      }
+    ]
+  },
+  {
+    "index": 9,
+    "mechanism": "PCCR",
+    "sourceDims": [
+      {
+        "name": "P1:octave_equivalence_index",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 10,
+    "mechanism": "PCCR",
+    "sourceDims": [
+      {
+        "name": "P0:chroma_identity_signal",
+        "weight": 0.55
+      },
+      {
+        "name": "P2:chroma_salience",
+        "weight": 0.25
+      }
+    ]
+  },
+  {
+    "index": 11,
+    "mechanism": "STAI",
+    "sourceDims": [
+      {
+        "name": "E2:aesthetic_integration",
+        "weight": 0.4
+      },
+      {
+        "name": "P2:aesthetic_response",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 12,
+    "mechanism": "STAI",
+    "sourceDims": [
+      {
+        "name": "F1:reward_response_pred",
+        "weight": 0.5
+      },
+      {
+        "name": "P2:aesthetic_response",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 13,
+    "mechanism": "STAI",
+    "sourceDims": [
+      {
+        "name": "M1:spectral_temporal_interaction",
+        "weight": 0.5
+      },
+      {
+        "name": "E2:aesthetic_integration",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 14,
+    "mechanism": "MIAA",
+    "sourceDims": [
+      {
+        "name": "F2:recognition_pred",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 15,
+    "mechanism": "MIAA",
+    "sourceDims": [
+      {
+        "name": "P0:melody_retrieval",
+        "weight": 0.5
+      },
+      {
+        "name": "E0:imagery_activation",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 16,
+    "mechanism": "SDED",
+    "sourceDims": [
+      {
+        "name": "M0:detection_function",
+        "weight": 0.4
+      },
+      {
+        "name": "P0:roughness_detection",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 17,
+    "mechanism": "HTP",
+    "sourceDims": [
+      {
+        "name": "F0:abstract_future_500ms",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 18,
+    "mechanism": "HTP",
+    "sourceDims": [
+      {
+        "name": "E3:hierarchy_gradient",
+        "weight": 0.5
+      },
+      {
+        "name": "P2:abstract_prediction",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 19,
+    "mechanism": "HTP",
+    "sourceDims": [
+      {
+        "name": "F1:midlevel_future_200ms",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 20,
+    "mechanism": "HTP",
+    "sourceDims": [
+      {
+        "name": "P0:sensory_match",
+        "weight": 0.5
+      },
+      {
+        "name": "P1:pitch_prediction",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 21,
+    "mechanism": "HTP",
+    "sourceDims": [
+      {
+        "name": "E0:high_level_lead",
+        "weight": 0.4
+      },
+      {
+        "name": "E1:mid_level_lead",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 22,
+    "mechanism": "ICEM",
+    "sourceDims": [
+      {
+        "name": "F0:arousal_change_1_3s",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 23,
+    "mechanism": "ICEM",
+    "sourceDims": [
+      {
+        "name": "E1:arousal_response",
+        "weight": 0.4
+      },
+      {
+        "name": "M1:arousal_pred",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 24,
+    "mechanism": "ICEM",
+    "sourceDims": [
+      {
+        "name": "E3:defense_cascade",
+        "weight": 0.5
+      },
+      {
+        "name": "M3:scr_pred",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 25,
+    "mechanism": "ICEM",
+    "sourceDims": [
+      {
+        "name": "E0:information_content",
+        "weight": 0.4
+      },
+      {
+        "name": "M0:ic_value",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 26,
+    "mechanism": "ICEM",
+    "sourceDims": [
+      {
+        "name": "E2:valence_response",
+        "weight": 0.4
+      },
+      {
+        "name": "M2:valence_pred",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 27,
+    "mechanism": "ICEM",
+    "sourceDims": [
+      {
+        "name": "F1:valence_shift_2_5s",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 28,
+    "mechanism": "SPH",
+    "sourceDims": [
+      {
+        "name": "E1:alpha_beta_error",
+        "weight": 0.4
+      },
+      {
+        "name": "P1:prediction_error",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 29,
+    "mechanism": "SPH",
+    "sourceDims": [
+      {
+        "name": "M2:gamma_power",
+        "weight": 0.4
+      },
+      {
+        "name": "M3:alpha_beta_power",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 30,
+    "mechanism": "SPH",
+    "sourceDims": [
+      {
+        "name": "F1:sequence_completion_2s",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 31,
+    "mechanism": "SPH",
+    "sourceDims": [
+      {
+        "name": "E0:gamma_match",
+        "weight": 0.4
+      },
+      {
+        "name": "P0:memory_match",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 32,
+    "mechanism": "CSG",
+    "sourceDims": [
+      {
+        "name": "P1:affective_evaluation",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 33,
+    "mechanism": "CSG",
+    "sourceDims": [
+      {
+        "name": "F1:processing_pred",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 34,
+    "mechanism": "CSG",
+    "sourceDims": [
+      {
+        "name": "P0:salience_network",
+        "weight": 0.4
+      },
+      {
+        "name": "E0:salience_activation",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 35,
+    "mechanism": "CSG",
+    "sourceDims": [
+      {
+        "name": "P2:sensory_load",
+        "weight": 0.6
+      },
+      {
+        "name": "E1:sensory_evidence",
+        "weight": 0.4
+      }
+    ]
+  },
+  {
+    "index": 36,
+    "mechanism": "IACM",
+    "sourceDims": [
+      {
+        "name": "E0:inharmonic_capture",
+        "weight": 0.4
+      },
+      {
+        "name": "M0:attention_capture",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 37,
+    "mechanism": "IACM",
+    "sourceDims": [
+      {
+        "name": "F1:attention_shift_pred",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 38,
+    "mechanism": "IACM",
+    "sourceDims": [
+      {
+        "name": "P1:spectral_encoding",
+        "weight": 0.6
+      },
+      {
+        "name": "M2:object_perception_or",
+        "weight": 0.4
+      }
+    ]
+  },
+  {
+    "index": 39,
+    "mechanism": "IACM",
+    "sourceDims": [
+      {
+        "name": "E2:precision_weighting",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 40,
+    "mechanism": "AACM",
+    "sourceDims": [
+      {
+        "name": "P0:n1p2_engagement",
+        "weight": 0.6
+      },
+      {
+        "name": "M0:aesthetic_engagement",
+        "weight": 0.4
+      }
+    ]
+  },
+  {
+    "index": 41,
+    "mechanism": "AACM",
+    "sourceDims": [
+      {
+        "name": "P1:aesthetic_judgment",
+        "weight": 0.6
+      },
+      {
+        "name": "E2:savoring_effect",
+        "weight": 0.4
+      }
+    ]
+  },
+  {
+    "index": 42,
+    "mechanism": "SNEM",
+    "sourceDims": [
+      {
+        "name": "P0:beat_locked_activity",
+        "weight": 0.4
+      },
+      {
+        "name": "M0:ssep_enhancement",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 43,
+    "mechanism": "SNEM",
+    "sourceDims": [
+      {
+        "name": "F0:beat_onset_pred",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 44,
+    "mechanism": "SNEM",
+    "sourceDims": [
+      {
+        "name": "M0:ssep_enhancement",
+        "weight": 0.4
+      },
+      {
+        "name": "E1:meter_entrainment",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 45,
+    "mechanism": "SNEM",
+    "sourceDims": [
+      {
+        "name": "F1:meter_position_pred",
+        "weight": 0.5
+      },
+      {
+        "name": "M2:beat_salience",
+        "weight": 0.5
+      }
+    ]
+  },
+  {
+    "index": 46,
+    "mechanism": "SNEM",
+    "sourceDims": [
+      {
+        "name": "P2:selective_gain",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 47,
+    "mechanism": "MMP",
+    "sourceDims": [
+      {
+        "name": "P1:melodic_identification",
+        "weight": 0.6
+      },
+      {
+        "name": "R1:melodic_recognition",
+        "weight": 0.4
+      }
+    ]
+  },
+  {
+    "index": 48,
+    "mechanism": "MMP",
+    "sourceDims": [
+      {
+        "name": "C0:preservation_index",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 49,
+    "mechanism": "MMP",
+    "sourceDims": [
+      {
+        "name": "F2:scaffold_fc",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 50,
+    "mechanism": "MEAMN",
+    "sourceDims": [
+      {
+        "name": "P0:memory_state",
+        "weight": 0.4
+      },
+      {
+        "name": "E0:f01_retrieval",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 51,
+    "mechanism": "MEAMN",
+    "sourceDims": [
+      {
+        "name": "P1:emotional_color",
+        "weight": 0.4
+      },
+      {
+        "name": "E2:f03_emotion",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 52,
+    "mechanism": "MEAMN",
+    "sourceDims": [
+      {
+        "name": "E0:f01_retrieval",
+        "weight": 0.5
+      },
+      {
+        "name": "P1:emotional_color",
+        "weight": 0.5
+      }
+    ]
+  },
+  {
+    "index": 53,
+    "mechanism": "MEAMN",
+    "sourceDims": [
+      {
+        "name": "P2:nostalgia_link",
+        "weight": 0.4
+      },
+      {
+        "name": "E1:f02_nostalgia",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 54,
+    "mechanism": "MEAMN",
+    "sourceDims": [
+      {
+        "name": "P0:memory_state",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 55,
+    "mechanism": "MEAMN",
+    "sourceDims": [
+      {
+        "name": "F2:self_ref_fc",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 56,
+    "mechanism": "MEAMN",
+    "sourceDims": [
+      {
+        "name": "F0:mem_vividness_fc",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 57,
+    "mechanism": "HCMC",
+    "sourceDims": [
+      {
+        "name": "P2:storage_state",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 58,
+    "mechanism": "HCMC",
+    "sourceDims": [
+      {
+        "name": "P1:segmentation_state",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 59,
+    "mechanism": "HCMC",
+    "sourceDims": [
+      {
+        "name": "P0:binding_state",
+        "weight": 0.4
+      },
+      {
+        "name": "E0:fast_binding",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 60,
+    "mechanism": "AAC",
+    "sourceDims": [
+      {
+        "name": "E1:ans_response",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 61,
+    "mechanism": "AAC",
+    "sourceDims": [
+      {
+        "name": "I0:chills_intensity",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 62,
+    "mechanism": "AAC",
+    "sourceDims": [
+      {
+        "name": "P1:driving_signal",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 63,
+    "mechanism": "AAC",
+    "sourceDims": [
+      {
+        "name": "E0:emotional_arousal",
+        "weight": 0.5
+      },
+      {
+        "name": "P0:current_intensity",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 64,
+    "mechanism": "VMM",
+    "sourceDims": [
+      {
+        "name": "P2:emotion_certainty",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 65,
+    "mechanism": "VMM",
+    "sourceDims": [
+      {
+        "name": "R0:happy_pathway",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 66,
+    "mechanism": "VMM",
+    "sourceDims": [
+      {
+        "name": "C0:mode_detection_state",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 67,
+    "mechanism": "VMM",
+    "sourceDims": [
+      {
+        "name": "P0:perceived_happy",
+        "weight": 0.4
+      },
+      {
+        "name": "V1:mode_signal",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 68,
+    "mechanism": "VMM",
+    "sourceDims": [
+      {
+        "name": "P1:perceived_sad",
+        "weight": 0.4
+      },
+      {
+        "name": "1-V1:mode_signal",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 69,
+    "mechanism": "VMM",
+    "sourceDims": [
+      {
+        "name": "R1:sad_pathway",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 70,
+    "mechanism": "NEMAC",
+    "sourceDims": [
+      {
+        "name": "W0:nostalgia_intens",
+        "weight": 0.4
+      },
+      {
+        "name": "E1:nostalgia",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 71,
+    "mechanism": "NEMAC",
+    "sourceDims": [
+      {
+        "name": "F1:vividness_pred",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 72,
+    "mechanism": "NEMAC",
+    "sourceDims": [
+      {
+        "name": "M0:mpfc_activation",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 73,
+    "mechanism": "NEMAC",
+    "sourceDims": [
+      {
+        "name": "W1:wellbeing_enhance",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 74,
+    "mechanism": "DAED",
+    "sourceDims": [
+      {
+        "name": "caudate_activation",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 75,
+    "mechanism": "DAED",
+    "sourceDims": [
+      {
+        "name": "nacc_activation",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 76,
+    "mechanism": "DAED",
+    "sourceDims": [
+      {
+        "name": "dissociation_index",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 77,
+    "mechanism": "DAED",
+    "sourceDims": [
+      {
+        "name": "temporal_phase",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 78,
+    "mechanism": "DAED",
+    "sourceDims": [
+      {
+        "name": "f03:wanting_index",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 79,
+    "mechanism": "SRP",
+    "sourceDims": [
+      {
+        "name": "F1:chills_proximity",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 80,
+    "mechanism": "SRP",
+    "sourceDims": [
+      {
+        "name": "M0:harmonic_tension",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 81,
+    "mechanism": "SRP",
+    "sourceDims": [
+      {
+        "name": "P1:liking",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 82,
+    "mechanism": "SRP",
+    "sourceDims": [
+      {
+        "name": "M2:peak_detection",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 83,
+    "mechanism": "SRP",
+    "sourceDims": [
+      {
+        "name": "P2:pleasure",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 84,
+    "mechanism": "SRP",
+    "sourceDims": [
+      {
+        "name": "C2:prediction_error",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 85,
+    "mechanism": "SRP",
+    "sourceDims": [
+      {
+        "name": "T1:prediction_match",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 86,
+    "mechanism": "SRP",
+    "sourceDims": [
+      {
+        "name": "F2:resolution_expect",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 87,
+    "mechanism": "SRP",
+    "sourceDims": [
+      {
+        "name": "F0:reward_forecast",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 88,
+    "mechanism": "SRP",
+    "sourceDims": [
+      {
+        "name": "T0:tension",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 89,
+    "mechanism": "SRP",
+    "sourceDims": [
+      {
+        "name": "P0:wanting",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 90,
+    "mechanism": "HGSIC",
+    "sourceDims": [
+      {
+        "name": "coupling_strength",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 91,
+    "mechanism": "HGSIC",
+    "sourceDims": [
+      {
+        "name": "f01:beat_gamma",
+        "weight": 0.5
+      },
+      {
+        "name": "pstg_activation",
+        "weight": 0.5
+      }
+    ]
+  },
+  {
+    "index": 92,
+    "mechanism": "HGSIC",
+    "sourceDims": [
+      {
+        "name": "groove_index",
+        "weight": 0.5
+      },
+      {
+        "name": "f03:motor_groove",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 93,
+    "mechanism": "HGSIC",
+    "sourceDims": [
+      {
+        "name": "groove_prediction",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 94,
+    "mechanism": "HGSIC",
+    "sourceDims": [
+      {
+        "name": "f02:meter_integration",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 95,
+    "mechanism": "HGSIC",
+    "sourceDims": [
+      {
+        "name": "motor_preparation",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 96,
+    "mechanism": "PEOM",
+    "sourceDims": [
+      {
+        "name": "f02:velocity_optimization",
+        "weight": 0.4
+      },
+      {
+        "name": "velocity",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 97,
+    "mechanism": "PEOM",
+    "sourceDims": [
+      {
+        "name": "next_beat_pred_T",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 98,
+    "mechanism": "PEOM",
+    "sourceDims": [
+      {
+        "name": "f01:period_entrainment",
+        "weight": 0.5
+      },
+      {
+        "name": "period_lock_strength",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 99,
+    "mechanism": "PEOM",
+    "sourceDims": [
+      {
+        "name": "period_lock_strength",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 100,
+    "mechanism": "PEOM",
+    "sourceDims": [
+      {
+        "name": "f03:variability_reduction",
+        "weight": 0.5
+      },
+      {
+        "name": "cv_reduction",
+        "weight": 0.5
+      }
+    ]
+  },
+  {
+    "index": 101,
+    "mechanism": "HMCE",
+    "sourceDims": [
+      {
+        "name": "context_depth",
+        "weight": 0.5
+      },
+      {
+        "name": "f01:short_context",
+        "weight": 0.2
+      }
+    ]
+  },
+  {
+    "index": 102,
+    "mechanism": "HMCE",
+    "sourceDims": [
+      {
+        "name": "f03:long_context",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 103,
+    "mechanism": "HMCE",
+    "sourceDims": [
+      {
+        "name": "f02:medium_context",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 104,
+    "mechanism": "HMCE",
+    "sourceDims": [
+      {
+        "name": "phrase_boundary_pred",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 105,
+    "mechanism": "HMCE",
+    "sourceDims": [
+      {
+        "name": "f01:short_context",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 106,
+    "mechanism": "HMCE",
+    "sourceDims": [
+      {
+        "name": "structure_pred",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 107,
+    "mechanism": "SLEE",
+    "sourceDims": [
+      {
+        "name": "f02:detection_accuracy",
+        "weight": 0.6
+      },
+      {
+        "name": "P0:expectation_formation",
+        "weight": 0.4
+      }
+    ]
+  },
+  {
+    "index": 108,
+    "mechanism": "SLEE",
+    "sourceDims": [
+      {
+        "name": "f03:multisensory_integration",
+        "weight": 0.6
+      },
+      {
+        "name": "P1:cross_modal_binding",
+        "weight": 0.4
+      }
+    ]
+  },
+  {
+    "index": 109,
+    "mechanism": "SLEE",
+    "sourceDims": [
+      {
+        "name": "f01:statistical_model",
+        "weight": 0.4
+      },
+      {
+        "name": "M0:exposure_model",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 110,
+    "mechanism": "TSCP",
+    "sourceDims": [
+      {
+        "name": "f03:plasticity_magnitude",
+        "weight": 0.6
+      },
+      {
+        "name": "M0:enhancement_function",
+        "weight": 0.4
+      }
+    ]
+  },
+  {
+    "index": 111,
+    "mechanism": "TSCP",
+    "sourceDims": [
+      {
+        "name": "f01:trained_timbre_response",
+        "weight": 0.4
+      },
+      {
+        "name": "P2:timbre_identity",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 112,
+    "mechanism": "ECT",
+    "sourceDims": [
+      {
+        "name": "f02:between_reduction",
+        "weight": 0.6
+      },
+      {
+        "name": "network_isolation",
+        "weight": 0.4
+      }
+    ]
+  },
+  {
+    "index": 113,
+    "mechanism": "ECT",
+    "sourceDims": [
+      {
+        "name": "transfer_limit",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 114,
+    "mechanism": "ESME",
+    "sourceDims": [
+      {
+        "name": "f04:expertise_enhancement",
+        "weight": 0.5
+      },
+      {
+        "name": "M0:mmn_expertise_function",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 115,
+    "mechanism": "ESME",
+    "sourceDims": [
+      {
+        "name": "F2:developmental_trajectory",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 116,
+    "mechanism": "ESME",
+    "sourceDims": [
+      {
+        "name": "f01:pitch_mmn",
+        "weight": 0.6
+      },
+      {
+        "name": "P0:pitch_deviance_detection",
+        "weight": 0.4
+      }
+    ]
+  },
+  {
+    "index": 117,
+    "mechanism": "ESME",
+    "sourceDims": [
+      {
+        "name": "f02:rhythm_mmn",
+        "weight": 0.6
+      },
+      {
+        "name": "P1:rhythm_deviance_detection",
+        "weight": 0.4
+      }
+    ]
+  },
+  {
+    "index": 118,
+    "mechanism": "ESME",
+    "sourceDims": [
+      {
+        "name": "f03:timbre_mmn",
+        "weight": 0.6
+      },
+      {
+        "name": "P2:timbre_deviance_detection",
+        "weight": 0.4
+      }
+    ]
+  },
+  {
+    "index": 119,
+    "mechanism": "EDNR",
+    "sourceDims": [
+      {
+        "name": "f03:compartmentalization",
+        "weight": 0.4
+      },
+      {
+        "name": "f04:expertise_signature",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 120,
+    "mechanism": "EDNR",
+    "sourceDims": [
+      {
+        "name": "f01:within_connectivity",
+        "weight": 0.6
+      },
+      {
+        "name": "current_compartm",
+        "weight": 0.4
+      }
+    ]
+  },
+  {
+    "index": 121,
+    "mechanism": "SSRI",
+    "sourceDims": [
+      {
+        "name": "F1:flow_sustain_pred",
+        "weight": 0.5
+      },
+      {
+        "name": "f05:collective_pleasure",
+        "weight": 0.5
+      }
+    ]
+  },
+  {
+    "index": 122,
+    "mechanism": "SSRI",
+    "sourceDims": [
+      {
+        "name": "f04:entrainment_quality",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 123,
+    "mechanism": "SSRI",
+    "sourceDims": [
+      {
+        "name": "f03:group_flow_state",
+        "weight": 0.6
+      },
+      {
+        "name": "M1:synchrony_amplification",
+        "weight": 0.4
+      }
+    ]
+  },
+  {
+    "index": 124,
+    "mechanism": "SSRI",
+    "sourceDims": [
+      {
+        "name": "f02:social_bonding_index",
+        "weight": 0.6
+      },
+      {
+        "name": "P1:endorphin_proxy",
+        "weight": 0.4
+      }
+    ]
+  },
+  {
+    "index": 125,
+    "mechanism": "SSRI",
+    "sourceDims": [
+      {
+        "name": "M0:social_prediction_error",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 126,
+    "mechanism": "SSRI",
+    "sourceDims": [
+      {
+        "name": "f01:synchrony_reward",
+        "weight": 0.7
+      },
+      {
+        "name": "P0:prefrontal_coupling",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 127,
+    "mechanism": "NSCP",
+    "sourceDims": [
+      {
+        "name": "F2:catchiness_pred",
+        "weight": 1.0
+      }
+    ]
+  },
+  {
+    "index": 128,
+    "mechanism": "NSCP",
+    "sourceDims": [
+      {
+        "name": "E0:f22_neural_synchrony",
+        "weight": 0.5
+      },
+      {
+        "name": "M0:isc_magnitude",
+        "weight": 0.3
+      }
+    ]
+  },
+  {
+    "index": 129,
+    "mechanism": "DDSMI",
+    "sourceDims": [
+      {
+        "name": "E2:f15_visual_modulation",
+        "weight": 0.6
+      },
+      {
+        "name": "M2:mTRF_balance",
+        "weight": 0.4
+      }
+    ]
+  },
+  {
+    "index": 130,
+    "mechanism": "DDSMI",
+    "sourceDims": [
+      {
+        "name": "E0:f13_social_coordination",
+        "weight": 0.5
+      },
+      {
+        "name": "P0:partner_sync",
+        "weight": 0.3
+      }
+    ]
+  }
+]

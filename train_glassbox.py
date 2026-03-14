@@ -51,9 +51,7 @@ MODEL_DIR = _DEFAULT_MODEL_DIR
 
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
-APP_BACKEND = PROJECT_ROOT / "My Musical Mind (Test-01)" / "backend"
-if str(APP_BACKEND) not in sys.path:
-    sys.path.insert(0, str(APP_BACKEND))
+# beliefs module is now in Musical_Intelligence/brain/beliefs.py
 
 
 # ======================================================================
@@ -171,7 +169,7 @@ def generate_training_data():
     from Musical_Intelligence.ear.r3 import R3Extractor
     from Musical_Intelligence.ear.h3 import H3Extractor
     from Musical_Intelligence.brain.executor import execute
-    from beliefs import compute_beliefs
+    from Musical_Intelligence.brain.beliefs import compute_beliefs
     from Musical_Intelligence.brain.dimensions import DimensionInterpreter
 
     r3_extractor = R3Extractor()
