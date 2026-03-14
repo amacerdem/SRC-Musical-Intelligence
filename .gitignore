@@ -1,3 +1,34 @@
+# =============================================
+# Only Musical_Intelligence/ is tracked in git.
+# Everything else is local-only.
+# =============================================
+
+# Top-level directories (local-only)
+Building/
+Dataset-RunPod/
+Docs/
+Lab/
+Legacy/
+Literature/
+My Musical Mind*/
+References/
+Repetuare/
+Team/
+Test-Audio/
+Tests/
+Validation/
+MI-Results/
+
+# Top-level files (local-only)
+analysis_5d_result.json
+enriched_catalog.json
+enriched_catalog.json.gz
+Musical_Intelligence.zip
+revising_dimensions.md
+run_5d_analysis.py
+test-classics/
+test-results/
+
 # Python
 __pycache__/
 *.py[cod]
@@ -29,34 +60,12 @@ env/
 .coverage
 htmlcov/
 
-# Large binary files
-Test-Audio/
-Literature/c3/papers/
-Lab/Experiments/
-Lab/Demo_Analysis/data/*.bin
-
 # Node
 node_modules/
 
 # Misc
 *.log
 .env
-
-# Repetuare
-Repetuare/
-
-# Legacy
-Legacy/
-
-# Large files / datasets
-Validation/datasets/
-References/
-MI-Results/
-Musical_Intelligence.zip
-enriched_catalog.json
-enriched_catalog.json.gz
-test-classics/
-test-results/
 *.zip
 
 # LaTeX artifacts
