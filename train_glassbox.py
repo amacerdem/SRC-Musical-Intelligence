@@ -295,14 +295,20 @@ class R3Head(nn.Module):
 class H3Head(nn.Module):
     """R³(97,T) → H³(N_h3,T) — replaces multi-scale temporal morphology.
 
-    Dilated convolutions with exponentially growing receptive field
-    capture what H³'s 32 horizons (micro→ultra) compute explicitly.
-    Receptive field: ~500 frames ≈ 3s at 172Hz.
+    Two-stage architecture:
+      1. Dilated Conv: local context (~3s receptive field at 172Hz)
+      2. Transformer Encoder: global context (full piece, via self-attention)
+
+    This mirrors H³'s 32 horizons: micro/meso via conv, macro/ultra via attention.
+    Positional encoding uses sinusoidal (time-aware, handles variable lengths).
     """
 
-    def __init__(self, n_h3: int = 637):
+    def __init__(self, n_h3: int = 637, d_model: int = 256,
+                 n_heads: int = 8, n_layers: int = 4, max_len: int = 8192):
         super().__init__()
-        self.net = nn.Sequential(
+
+        # Stage 1: Dilated conv for local features (~3s)
+        self.local_conv = nn.Sequential(
             nn.Conv1d(97, 256, 7, padding=3),
             nn.GELU(),
             nn.BatchNorm1d(256),
@@ -315,21 +321,58 @@ class H3Head(nn.Module):
             nn.GELU(),
             nn.BatchNorm1d(384),
 
-            nn.Conv1d(384, 384, 5, padding=16, dilation=8),
+            nn.Conv1d(384, d_model, 5, padding=16, dilation=8),
             nn.GELU(),
-            nn.BatchNorm1d(384),
-
-            nn.Conv1d(384, 256, 5, padding=32, dilation=16),
-            nn.GELU(),
-            nn.BatchNorm1d(256),
-
-            nn.Conv1d(256, n_h3, 1),
-            # No activation — H³ values can be signed [-1, 1]
-            nn.Tanh(),
+            nn.BatchNorm1d(d_model),
         )
 
+        # Positional encoding (sinusoidal, no learnable limit)
+        self.register_buffer("pe", self._sinusoidal_pe(max_len, d_model))
+
+        # Stage 2: Transformer encoder for global context
+        encoder_layer = nn.TransformerEncoderLayer(
+            d_model=d_model,
+            nhead=n_heads,
+            dim_feedforward=d_model * 4,
+            dropout=0.1,
+            activation="gelu",
+            batch_first=True,
+        )
+        self.transformer = nn.TransformerEncoder(encoder_layer, num_layers=n_layers)
+
+        # Projection to H³ output
+        self.proj = nn.Sequential(
+            nn.Linear(d_model, n_h3),
+            nn.Tanh(),  # H³ values in [-1, 1]
+        )
+
+    @staticmethod
+    def _sinusoidal_pe(max_len: int, d_model: int) -> Tensor:
+        pe = torch.zeros(max_len, d_model)
+        pos = torch.arange(max_len).unsqueeze(1).float()
+        div = torch.exp(torch.arange(0, d_model, 2).float() * (-np.log(10000.0) / d_model))
+        pe[:, 0::2] = torch.sin(pos * div)
+        pe[:, 1::2] = torch.cos(pos * div)
+        return pe.unsqueeze(0)  # (1, max_len, d_model)
+
     def forward(self, r3: Tensor) -> Tensor:
-        return self.net(r3)
+        """r3: (B, 97, T) → h3: (B, N_h3, T)"""
+        # Local conv: (B, 97, T) → (B, d_model, T)
+        x = self.local_conv(r3)
+
+        # Conv1d output → Transformer input: (B, d_model, T) → (B, T, d_model)
+        x = x.transpose(1, 2)
+
+        # Add positional encoding
+        T = x.shape[1]
+        x = x + self.pe[:, :T, :]
+
+        # Global attention
+        x = self.transformer(x)  # (B, T, d_model)
+
+        # Project to H³: (B, T, d_model) → (B, T, N_h3) → (B, N_h3, T)
+        x = self.proj(x)
+        return x.transpose(1, 2)
 
 
 class BeliefHead(nn.Module):
