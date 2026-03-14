@@ -40,9 +40,14 @@ N_FFT = 2048
 FRAME_RATE = SAMPLE_RATE / HOP_LENGTH  # 172.27 Hz
 
 PROJECT_ROOT = Path(__file__).resolve().parent
-SEGMENTS_DIR = PROJECT_ROOT / "Legacy" / "test-classics" / "segments"
-DATA_DIR = PROJECT_ROOT / "training_data"
-MODEL_DIR = PROJECT_ROOT / "trained_models"
+_DEFAULT_AUDIO_DIR = PROJECT_ROOT / "Legacy" / "test-classics" / "segments"
+_DEFAULT_DATA_DIR = PROJECT_ROOT / "training_data"
+_DEFAULT_MODEL_DIR = PROJECT_ROOT / "trained_models"
+
+# These are set from CLI args in main()
+SEGMENTS_DIR = _DEFAULT_AUDIO_DIR
+DATA_DIR = _DEFAULT_DATA_DIR
+MODEL_DIR = _DEFAULT_MODEL_DIR
 
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
@@ -142,7 +147,11 @@ def generate_training_data():
     """Run MI pipeline on all segments, save (mel, r3, h3, beliefs, dims) per segment."""
     DATA_DIR.mkdir(exist_ok=True)
 
-    segments = sorted(SEGMENTS_DIR.glob("*.mp3"))
+    segments = sorted(
+        p for ext in ("*.mp3", "*.wav", "*.flac")
+        for p in SEGMENTS_DIR.rglob(ext)
+        if not p.name.startswith("._")
+    )
     print(f"Found {len(segments)} segments", flush=True)
 
     # Initialize pipeline
@@ -788,11 +797,26 @@ def evaluate(model: GlassBoxMI, manifest: List[str]):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--train-only", action="store_true")
+    parser.add_argument("--audio-dir", type=str, default=None,
+                        help="Directory containing audio files (mp3/wav/flac)")
+    parser.add_argument("--data-dir", type=str, default=None,
+                        help="Directory for training data (npz files)")
+    parser.add_argument("--model-dir", type=str, default=None,
+                        help="Directory to save trained models")
     parser.add_argument("--epochs", type=int, default=50)
     parser.add_argument("--batch-size", type=int, default=16)
     parser.add_argument("--lr", type=float, default=1e-3)
     parser.add_argument("--chunk-size", type=int, default=512)
     args = parser.parse_args()
+
+    # Override global paths if provided
+    global SEGMENTS_DIR, DATA_DIR, MODEL_DIR
+    if args.audio_dir:
+        SEGMENTS_DIR = Path(args.audio_dir)
+    if args.data_dir:
+        DATA_DIR = Path(args.data_dir)
+    if args.model_dir:
+        MODEL_DIR = Path(args.model_dir)
 
     if args.train_only:
         with open(DATA_DIR / "manifest.json") as f:
