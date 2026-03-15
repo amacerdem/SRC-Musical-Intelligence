@@ -451,7 +451,8 @@ def train(args):
     print(f"Val:   {len(val_names)} seg ({len(val_ds)} chunks)", flush=True)
 
     # Detect N_h3 from first sample
-    n_h3 = train_ds.tensors[0][2].shape[0]
+    sample = train_ds[0]
+    n_h3 = sample[2].shape[0]
     print(f"H³ dim: {n_h3}", flush=True)
 
     # DataLoader
