@@ -729,9 +729,9 @@ def train(manifest: List[str], epochs: int = 50, batch_size: int = 16,
           f"Val: {len(val_manifest)} seg ({len(val_ds)} chunks)", flush=True)
 
     train_dl = DataLoader(train_ds, batch_size=batch_size, shuffle=True,
-                          num_workers=0, pin_memory=True)
+                          num_workers=4, pin_memory=True, persistent_workers=True)
     val_dl = DataLoader(val_ds, batch_size=batch_size, shuffle=False,
-                        num_workers=0, pin_memory=True)
+                        num_workers=4, pin_memory=True, persistent_workers=True)
 
     model = GlassBoxMI(n_h3=n_h3).to(device)
     n_params = sum(p.numel() for p in model.parameters())
