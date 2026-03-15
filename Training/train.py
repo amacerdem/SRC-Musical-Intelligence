@@ -452,7 +452,7 @@ def train(args):
 
     # Detect N_h3 from first sample
     sample = train_ds[0]
-    n_h3 = sample[2].shape[0]
+    n_h3 = sample["h3"].shape[0]
     print(f"H³ dim: {n_h3}", flush=True)
 
     # DataLoader
