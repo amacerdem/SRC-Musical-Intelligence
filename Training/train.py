@@ -251,12 +251,13 @@ class GlassBoxMI(nn.Module):
 # ======================================================================
 
 class MIDataset(Dataset):
-    """Preload NPZ into RAM as numpy, slice chunks from memory."""
+    """Pre-slice all chunks into contiguous tensors at init time.
+
+    __getitem__ is a single index into pre-built tensors — zero CPU work.
+    """
 
     def __init__(self, data_dir: Path, manifest: List[str], chunk_size: int = 512):
-        self.chunk_size = chunk_size
-        self.chunks: List[Tuple[int, int]] = []  # (segment_idx, start_frame)
-        self.segments: List[Dict[str, np.ndarray]] = []
+        mel_list, r3_list, h3_list, bel_list, dim_list = [], [], [], [], []
 
         print(f"  Preloading {len(manifest)} segments into RAM...", flush=True)
         skipped = 0
@@ -266,45 +267,62 @@ class MIDataset(Dataset):
                 skipped += 1
                 continue
             with np.load(path) as data:
-                seg = {k: data[k] for k in ["mel", "r3", "h3", "beliefs", "dims"]}
-            seg_idx = len(self.segments)
-            self.segments.append(seg)
-            T = seg["r3"].shape[0]
+                mel_np = data["mel"]    # (128, T)
+                r3_np = data["r3"]      # (T, 97)
+                h3_np = data["h3"]      # (T, N_h3)
+                bel_np = data["beliefs"]  # (T, 131)
+                dim_np = data["dims"]   # (T, 10)
+
+            T = r3_np.shape[0]
             n_chunks = max(1, T // chunk_size)
             for c in range(n_chunks):
-                self.chunks.append((seg_idx, c * chunk_size))
+                s = c * chunk_size
+                e = s + chunk_size
+
+                m = mel_np[:, s:e]
+                r = r3_np[s:e]
+                h = h3_np[s:e]
+                b = bel_np[s:e]
+                d = dim_np[s:e]
+
+                Tc = m.shape[1]
+                if Tc < chunk_size:
+                    m = np.pad(m, ((0, 0), (0, chunk_size - Tc)))
+                    r = np.pad(r, ((0, chunk_size - Tc), (0, 0)))
+                    h = np.pad(h, ((0, chunk_size - Tc), (0, 0)))
+                    b = np.pad(b, ((0, chunk_size - Tc), (0, 0)))
+                    d = np.pad(d, ((0, chunk_size - Tc), (0, 0)))
+
+                mel_list.append(m)           # (128, C)
+                r3_list.append(r.T)          # (97, C)
+                h3_list.append(h.T)          # (N_h3, C)
+                bel_list.append(b.T)         # (131, C)
+                dim_list.append(d.T)         # (10, C)
+
             if (i + 1) % 1000 == 0:
-                print(f"    {i+1}/{len(manifest)} loaded ({len(self.chunks)} chunks)", flush=True)
-        print(f"  Done: {len(self.chunks)} chunks from {len(self.segments)} segments", flush=True)
+                print(f"    {i+1}/{len(manifest)} loaded ({len(mel_list)} chunks)", flush=True)
+
+        n_seg = len(manifest) - skipped
+        n_chunks = len(mel_list)
+        print(f"  Stacking {n_chunks} chunks into tensors...", flush=True)
+        self.mel = torch.from_numpy(np.stack(mel_list).astype(np.float32))
+        self.r3 = torch.from_numpy(np.stack(r3_list).astype(np.float32))
+        self.h3 = torch.from_numpy(np.stack(h3_list).astype(np.float32))
+        self.beliefs = torch.from_numpy(np.stack(bel_list).astype(np.float32))
+        self.dims = torch.from_numpy(np.stack(dim_list).astype(np.float32))
+        del mel_list, r3_list, h3_list, bel_list, dim_list
+        print(f"  Done: {n_chunks} chunks from {n_seg} segments", flush=True)
 
     def __len__(self):
-        return len(self.chunks)
+        return self.mel.shape[0]
 
     def __getitem__(self, idx):
-        seg_idx, start = self.chunks[idx]
-        end = start + self.chunk_size
-        seg = self.segments[seg_idx]
-
-        mel = seg["mel"][:, start:end]
-        r3 = seg["r3"][start:end]
-        h3 = seg["h3"][start:end]
-        beliefs = seg["beliefs"][start:end]
-        dims = seg["dims"][start:end]
-
-        Tc = mel.shape[1]
-        if Tc < self.chunk_size:
-            mel = np.pad(mel, ((0, 0), (0, self.chunk_size - Tc)))
-            r3 = np.pad(r3, ((0, self.chunk_size - Tc), (0, 0)))
-            h3 = np.pad(h3, ((0, self.chunk_size - Tc), (0, 0)))
-            beliefs = np.pad(beliefs, ((0, self.chunk_size - Tc), (0, 0)))
-            dims = np.pad(dims, ((0, self.chunk_size - Tc), (0, 0)))
-
         return {
-            "mel": torch.from_numpy(mel.copy()),
-            "r3": torch.from_numpy(r3.T.copy()),
-            "h3": torch.from_numpy(h3.T.copy()),
-            "beliefs": torch.from_numpy(beliefs.T.copy()),
-            "dims": torch.from_numpy(dims.T.copy()),
+            "mel": self.mel[idx],
+            "r3": self.r3[idx],
+            "h3": self.h3[idx],
+            "beliefs": self.beliefs[idx],
+            "dims": self.dims[idx],
         }
 
 
@@ -452,8 +470,7 @@ def train(args):
     print(f"Val:   {len(val_names)} seg ({len(val_ds)} chunks)", flush=True)
 
     # Detect N_h3 from first sample
-    sample = train_ds[0]
-    n_h3 = sample["h3"].shape[0]
+    n_h3 = train_ds.h3.shape[1]
     print(f"H³ dim: {n_h3}", flush=True)
 
     # DataLoader — num_workers=0 since data is preloaded in RAM
