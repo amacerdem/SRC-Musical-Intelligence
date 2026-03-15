@@ -650,54 +650,64 @@ class GlassBoxMI(nn.Module):
 # ======================================================================
 
 class MIDataset(Dataset):
-    """Loads pre-computed (mel, r3, h3, beliefs, dims) chunks."""
+    """Loads pre-computed (mel, r3, h3, beliefs, dims) chunks — preloaded into RAM."""
 
     def __init__(self, data_dir: Path, manifest: List[str], chunk_size: int = 512):
-        self.data_dir = data_dir
-        self.manifest = manifest
         self.chunk_size = chunk_size
+        self.tensors: List[Tuple[torch.Tensor, ...]] = []  # preloaded chunks
 
-        self.chunks: List[Tuple[int, int]] = []
-        for fi, name in enumerate(manifest):
+        print(f"  Preloading {len(manifest)} segments into RAM...", flush=True)
+        skipped = 0
+        for i, name in enumerate(manifest):
             path = data_dir / f"{name}.npz"
             if not path.exists():
+                skipped += 1
                 continue
             with np.load(path) as data:
-                T = data["r3"].shape[0]
+                mel = data["mel"]       # (128, T)
+                r3 = data["r3"]         # (T, 97)
+                h3 = data["h3"]         # (T, N_h3)
+                beliefs = data["beliefs"]  # (T, 131)
+                dims = data["dims"]     # (T, 10)
+
+            T = mel.shape[1]
             n_chunks = max(1, T // chunk_size)
             for c in range(n_chunks):
-                self.chunks.append((fi, c * chunk_size))
+                s = c * chunk_size
+                e = s + chunk_size
+                m = mel[:, s:e]
+                r = r3[s:e]
+                h = h3[s:e]
+                b = beliefs[s:e]
+                d = dims[s:e]
+
+                Tc = m.shape[1]
+                if Tc < chunk_size:
+                    m = np.pad(m, ((0, 0), (0, chunk_size - Tc)))
+                    r = np.pad(r, ((0, chunk_size - Tc), (0, 0)))
+                    h = np.pad(h, ((0, chunk_size - Tc), (0, 0)))
+                    b = np.pad(b, ((0, chunk_size - Tc), (0, 0)))
+                    d = np.pad(d, ((0, chunk_size - Tc), (0, 0)))
+
+                self.tensors.append((
+                    torch.from_numpy(m.copy()),        # (128, chunk)
+                    torch.from_numpy(r.T.copy()),      # (97, chunk)
+                    torch.from_numpy(h.T.copy()),      # (N_h3, chunk)
+                    torch.from_numpy(b.T.copy()),      # (131, chunk)
+                    torch.from_numpy(d.T.copy()),      # (10, chunk)
+                ))
+
+            if (i + 1) % 1000 == 0:
+                print(f"    {i+1}/{len(manifest)} loaded ({len(self.tensors)} chunks)", flush=True)
+
+        print(f"  Done: {len(self.tensors)} chunks from {len(manifest)-skipped} segments", flush=True)
 
     def __len__(self):
-        return len(self.chunks)
+        return len(self.tensors)
 
     def __getitem__(self, idx):
-        fi, start = self.chunks[idx]
-        end = start + self.chunk_size
-        path = self.data_dir / f"{self.manifest[fi]}.npz"
-
-        with np.load(path) as data:
-            mel = data["mel"][:, start:end]          # (128, T)
-            r3 = data["r3"][start:end]                # (T, 97)
-            h3 = data["h3"][start:end]                # (T, N_h3)
-            beliefs = data["beliefs"][start:end]      # (T, 131)
-            dims = data["dims"][start:end]            # (T, 10)
-
-        T = mel.shape[1]
-        if T < self.chunk_size:
-            mel = np.pad(mel, ((0, 0), (0, self.chunk_size - T)))
-            r3 = np.pad(r3, ((0, self.chunk_size - T), (0, 0)))
-            h3 = np.pad(h3, ((0, self.chunk_size - T), (0, 0)))
-            beliefs = np.pad(beliefs, ((0, self.chunk_size - T), (0, 0)))
-            dims = np.pad(dims, ((0, self.chunk_size - T), (0, 0)))
-
-        return {
-            "mel": torch.from_numpy(mel),               # (128, chunk)
-            "r3": torch.from_numpy(r3.T),               # (97, chunk)
-            "h3": torch.from_numpy(h3.T),               # (N_h3, chunk)
-            "beliefs": torch.from_numpy(beliefs.T),      # (131, chunk)
-            "dims": torch.from_numpy(dims.T),            # (10, chunk)
-        }
+        mel, r3, h3, beliefs, dims = self.tensors[idx]
+        return {"mel": mel, "r3": r3, "h3": h3, "beliefs": beliefs, "dims": dims}
 
 
 # ======================================================================
@@ -729,9 +739,9 @@ def train(manifest: List[str], epochs: int = 50, batch_size: int = 16,
           f"Val: {len(val_manifest)} seg ({len(val_ds)} chunks)", flush=True)
 
     train_dl = DataLoader(train_ds, batch_size=batch_size, shuffle=True,
-                          num_workers=4, pin_memory=True, persistent_workers=True)
+                          num_workers=0, pin_memory=True)
     val_dl = DataLoader(val_ds, batch_size=batch_size, shuffle=False,
-                        num_workers=4, pin_memory=True, persistent_workers=True)
+                        num_workers=0, pin_memory=True)
 
     model = GlassBoxMI(n_h3=n_h3).to(device)
     n_params = sum(p.numel() for p in model.parameters())
