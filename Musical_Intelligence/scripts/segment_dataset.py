@@ -24,6 +24,7 @@ import time
 SEGMENT_DURATION = 24  # seconds
 SAMPLE_RATE = 44100
 CHANNELS = 1  # mono for MI pipeline
+MAX_FILE_SIZE = 250 * 1024 * 1024  # 250 MB — skip likely full-album downloads
 
 
 def sanitize_name(name):
@@ -165,10 +166,25 @@ def process_dataset(input_dir, output_dir, watch=False):
 
             input_path = os.path.join(input_dir, wav_file)
 
+            # Skip if file was deleted (by cleanup running in parallel)
+            if not os.path.exists(input_path):
+                continue
+
+            # Check file size — skip full-album downloads
+            try:
+                size1 = os.path.getsize(input_path)
+            except OSError:
+                continue
+            if size1 > MAX_FILE_SIZE:
+                print(f"  [{i:3d}/{len(wav_files)}] SKIP (too large {size1//(1024*1024)}MB): {wav_file}")
+                continue
+
             # Check if file is still being written (size changing)
-            size1 = os.path.getsize(input_path)
             time.sleep(0.5)
-            size2 = os.path.getsize(input_path)
+            try:
+                size2 = os.path.getsize(input_path)
+            except OSError:
+                continue
             if size1 != size2:
                 continue  # still downloading
 
