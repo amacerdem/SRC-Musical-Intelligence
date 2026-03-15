@@ -251,44 +251,45 @@ class GlassBoxMI(nn.Module):
 # ======================================================================
 
 class MIDataset(Dataset):
-    """Lazy-loading dataset — reads NPZ from disk on demand, zero preload."""
+    """Preload NPZ into RAM as numpy, slice chunks from memory."""
 
     def __init__(self, data_dir: Path, manifest: List[str], chunk_size: int = 512):
-        self.data_dir = data_dir
         self.chunk_size = chunk_size
-        self.chunks: List[Tuple[str, int]] = []  # (filename, start_frame)
+        self.chunks: List[Tuple[int, int]] = []  # (segment_idx, start_frame)
+        self.segments: List[Dict[str, np.ndarray]] = []
 
-        print(f"  Indexing {len(manifest)} segments...", flush=True)
+        print(f"  Preloading {len(manifest)} segments into RAM...", flush=True)
         skipped = 0
         for i, name in enumerate(manifest):
             path = data_dir / f"{name}.npz"
             if not path.exists():
                 skipped += 1
                 continue
-            # Only read shape, not full data
             with np.load(path) as data:
-                T = data["r3"].shape[0]
+                seg = {k: data[k] for k in ["mel", "r3", "h3", "beliefs", "dims"]}
+            seg_idx = len(self.segments)
+            self.segments.append(seg)
+            T = seg["r3"].shape[0]
             n_chunks = max(1, T // chunk_size)
             for c in range(n_chunks):
-                self.chunks.append((name, c * chunk_size))
-            if (i + 1) % 2000 == 0:
-                print(f"    {i+1}/{len(manifest)} indexed ({len(self.chunks)} chunks)", flush=True)
-        print(f"  Done: {len(self.chunks)} chunks from {len(manifest)-skipped} segments", flush=True)
+                self.chunks.append((seg_idx, c * chunk_size))
+            if (i + 1) % 1000 == 0:
+                print(f"    {i+1}/{len(manifest)} loaded ({len(self.chunks)} chunks)", flush=True)
+        print(f"  Done: {len(self.chunks)} chunks from {len(self.segments)} segments", flush=True)
 
     def __len__(self):
         return len(self.chunks)
 
     def __getitem__(self, idx):
-        name, start = self.chunks[idx]
+        seg_idx, start = self.chunks[idx]
         end = start + self.chunk_size
-        path = self.data_dir / f"{name}.npz"
+        seg = self.segments[seg_idx]
 
-        with np.load(path) as data:
-            mel = data["mel"][:, start:end]
-            r3 = data["r3"][start:end]
-            h3 = data["h3"][start:end]
-            beliefs = data["beliefs"][start:end]
-            dims = data["dims"][start:end]
+        mel = seg["mel"][:, start:end]
+        r3 = seg["r3"][start:end]
+        h3 = seg["h3"][start:end]
+        beliefs = seg["beliefs"][start:end]
+        dims = seg["dims"][start:end]
 
         Tc = mel.shape[1]
         if Tc < self.chunk_size:
@@ -455,16 +456,9 @@ def train(args):
     n_h3 = sample["h3"].shape[0]
     print(f"H³ dim: {n_h3}", flush=True)
 
-    # DataLoader
-    n_workers = min(8, len(train_ds) // args.batch_size)
-    n_workers = max(0, n_workers)
-    print(f"DataLoader workers: {n_workers}", flush=True)
-    train_dl = DataLoader(train_ds, batch_size=args.batch_size, shuffle=True,
-                          num_workers=n_workers, pin_memory=True,
-                          persistent_workers=n_workers > 0, prefetch_factor=4 if n_workers > 0 else None)
-    val_dl = DataLoader(val_ds, batch_size=args.batch_size, shuffle=False,
-                        num_workers=n_workers, pin_memory=True,
-                        persistent_workers=n_workers > 0, prefetch_factor=4 if n_workers > 0 else None)
+    # DataLoader — num_workers=0 since data is preloaded in RAM
+    train_dl = DataLoader(train_ds, batch_size=args.batch_size, shuffle=True, pin_memory=True)
+    val_dl = DataLoader(val_ds, batch_size=args.batch_size, shuffle=False, pin_memory=True)
 
     # Model
     model = GlassBoxMI(n_h3=n_h3).to(device)
