@@ -130,7 +130,9 @@ def run_mi_pipeline(mel: torch.Tensor, device: torch.device):
         }
 
     except Exception as e:
-        print(f"    Symbolic pipeline failed ({e}), using neural approximation", flush=True)
+        if not hasattr(run_mi_pipeline, '_warned'):
+            print(f"    Symbolic pipeline unavailable ({e}), using neural proxy for all segments", flush=True)
+            run_mi_pipeline._warned = True
         return run_neural_pipeline(mel, device)
 
 
